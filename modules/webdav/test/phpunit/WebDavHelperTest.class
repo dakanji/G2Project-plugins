@@ -505,19 +505,19 @@ class WebDavHelperTest extends GalleryTestCase {
 		}
 
 		$expectedProps   = array();
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'creationdate',
 			10000000
 		);
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'displayname',
 			empty($itemTitle) ? $item->getPathComponent() : $itemTitle
 		);
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'getlastmodified',
 			20000000
 		);
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'supportedlock',
 			array(
 				array(
@@ -526,19 +526,19 @@ class WebDavHelperTest extends GalleryTestCase {
 				),
 			)
 		);
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'lockdiscovery',
 			array()
 		);
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'getcontentlength',
 			300
 		);
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'getcontenttype',
 			'application/unknown'
 		);
-		$expectedProps[] = WebDavServer::getInstance()->mkprop(
+		$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 			'resourcetype',
 			null
 		);
@@ -558,7 +558,7 @@ class WebDavHelperTest extends GalleryTestCase {
 
 			if ($accessInfo['read'] && !in_array($memberName, $defaultMembers)) {
 				$getter          = 'get' . $memberName;
-				$expectedProps[] = WebDavServer::getInstance()->mkprop(
+				$expectedProps[] = WebDavServer::getSingleton()->mkprop(
 					WEBDAV_GALLERY_NAMESPACE,
 					$memberName,
 					$item->$getter()

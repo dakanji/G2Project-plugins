@@ -189,7 +189,7 @@ class RewriteSimpleHelperTest extends GalleryTestCase {
 		if (empty($language)) {
 			$language = array('en', 'US');
 		}
-		list($null, $defaultLanguages) = GalleryTranslator::getInstance()->getLanguageData();
+		list($null, $defaultLanguages) = GalleryTranslator::getSingleton()->getLanguageData();
 
 		$language = explode('_', $language);
 
