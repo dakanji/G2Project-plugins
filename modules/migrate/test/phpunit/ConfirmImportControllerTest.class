@@ -2397,8 +2397,11 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		if ($cmp = strcmp($a['permission'], $b['permission'])) {
 			return $cmp;
 		}
-		list($aKey, $aVal) = each($a);
-		list($bKey, $bVal) = each($b);
+		$aKey = array_keys($a)[0];
+		$aVal = array_values($a)[0];
+
+		$bKey = array_keys($b)[0];
+		$bVal = array_values($b)[0];
 
 		if ($cmp = strcmp($aKey, $bKey)) {
 			return $cmp;

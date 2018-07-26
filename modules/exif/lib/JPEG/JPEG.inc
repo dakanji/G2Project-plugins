@@ -1723,7 +1723,7 @@ class JPEG // extends PEAR
 
 		reset($EXIFNames);
 
-		while (list($tag, $name) = each($EXIFNames)) {
+		foreach($EXIFNames as $tag => $name) {
 			$type = $EXIFTypeInfo[$tag][0];
 			$count = $EXIFTypeInfo[$tag][1];
 			$value = null;
@@ -2327,7 +2327,7 @@ class JPEG // extends PEAR
 
 			reset($this->_info['adobe']['raw']);
 
-			while (list($key) = each($this->_info['adobe']['raw'])) {
+			foreach($this->_info['adobe']['raw'] as $key => $vNil) {
 				$pos = $this->_write8BIM(
 							$data,
 							$pos,
@@ -2375,8 +2375,7 @@ class JPEG // extends PEAR
 
 		reset($this->_info['iptc']);
 
-
-		while (list($label) = each($this->_info['iptc'])) {
+		foreach($this->_info['iptc'] as $label => $vNil) {
 			$value =& $this->_info['iptc'][$label];
 			$type = -1;
 
@@ -2830,7 +2829,7 @@ class JPEG // extends PEAR
 		$names2Tags = array();
 		reset($tags2Names);
 
-		while (list($tag, $name) = each($tags2Names)) {
+		foreach($tags2Names as $tag => $name) {
 			$names2Tags[$name] = $tag;
 		}
 
