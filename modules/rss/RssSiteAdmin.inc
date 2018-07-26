@@ -174,7 +174,7 @@ class RssSiteAdminView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		$form['formName']               = 'RssSiteAdmin';
 		$RssSiteAdmin                   = array();
 		$RssSiteAdmin['rssVersionList'] = array('0.91', '2.0');

@@ -222,7 +222,7 @@ class AdminQuotasView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		GalleryCoreApi::requireOnce('modules/quotas/classes/GalleryQuotasHelper.class');
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();

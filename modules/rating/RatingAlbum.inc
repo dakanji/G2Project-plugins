@@ -127,7 +127,7 @@ class RatingAlbumView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		$theme =& $template->getVariableByReference('theme');
 
 		list($limit, $itemId) = GalleryUtilities::getRequestVariables('limit', 'itemId');

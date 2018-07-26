@@ -127,7 +127,7 @@ class KeywordAlbumView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		$theme =& $template->getVariableByReference('theme');
 
 		list($keyword, $itemId) = GalleryUtilities::getRequestVariables('keyword', 'itemId');

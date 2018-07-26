@@ -174,7 +174,7 @@ class ItemCreateReplicaSingleView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
 
 		list($ret, $item) = $this->getItem();

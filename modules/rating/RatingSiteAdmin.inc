@@ -98,7 +98,7 @@ class RatingSiteAdminView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		GalleryCoreApi::requireOnce('modules/rating/classes/RatingHelper.class');
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();

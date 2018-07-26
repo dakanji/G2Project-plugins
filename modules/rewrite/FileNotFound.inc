@@ -42,7 +42,7 @@ class FileNotFoundView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
 		$phpVm        = $gallery->getPhpVm();
 		$urlGenerator =& $gallery->getUrlGenerator();

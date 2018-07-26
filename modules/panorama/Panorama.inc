@@ -29,7 +29,7 @@ class PanoramaView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		GalleryCoreApi::requireOnce('modules/panorama/classes/PanoramaHelper.class');
 
 		list($ret, $item) = $this->getItem();

@@ -36,7 +36,7 @@ class ShowAllCommentsView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		GalleryCoreApi::requireOnce('modules/comment/classes/GalleryCommentHelper.class');
 
 		list($ret, $item) = $this->getItem();

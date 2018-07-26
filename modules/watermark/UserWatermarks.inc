@@ -99,7 +99,7 @@ class UserWatermarksView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
-	public function loadTemplate(&$template, &$form) {
+	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
 		GalleryCoreApi::requireOnce('modules/watermark/classes/WatermarkHelper.class');
 
