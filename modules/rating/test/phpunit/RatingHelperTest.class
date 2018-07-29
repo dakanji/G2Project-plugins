@@ -98,7 +98,7 @@ class RatingHelperTest extends GalleryTestCase {
 			$this->failWithStatus($ret);
 		} else {
 			// Init a new translator so that we reset our locale
-			$translator = GalleryTranslator::getSingleton();
+			$translator = GalleryTranslator::doStatic();
 			$translator->init($languageCode);
 		}
 

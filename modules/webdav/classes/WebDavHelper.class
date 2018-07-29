@@ -536,7 +536,7 @@ class WebDavHelper {
 		}
 
 		if (!empty($locks) && !$webDavServer->check_locks_helper($locks, $path)) {
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'423 Locked'
 			);
 
@@ -687,7 +687,7 @@ class WebDavHelper {
 		$file = array('path' => $path, 'props' => array());
 
 		// Build standard DAV: properties
-		$file['props'][] = WebDavServer::getSingleton()->mkprop(
+		$file['props'][] = WebDavServer::doStatic()->mkprop(
 			'creationdate',
 			$item->getCreationTimestamp()
 		);
@@ -696,12 +696,12 @@ class WebDavHelper {
 		if (empty($displayName)) {
 			$displayName = $item->getPathComponent();
 		}
-		$file['props'][] = WebDavServer::getSingleton()->mkprop(
+		$file['props'][] = WebDavServer::doStatic()->mkprop(
 			'displayname',
 			$displayName
 		);
 		$file['props'][] =
-		WebDavServer::getSingleton()->mkprop(
+		WebDavServer::doStatic()->mkprop(
 			'getlastmodified',
 			$item->getModificationTimestamp()
 		);
@@ -712,7 +712,7 @@ class WebDavHelper {
 		* Any DAV compliant resource that supports the LOCK method MUST support the supportedlock
 		* property.
 		*/
-		$file['props'][] = WebDavServer::getSingleton()->mkprop(
+		$file['props'][] = WebDavServer::doStatic()->mkprop(
 			'supportedlock',
 			array(
 				array(
@@ -732,7 +732,7 @@ class WebDavHelper {
 			return $ret;
 		}
 
-		$file['props'][] = WebDavServer::getSingleton()->mkprop(
+		$file['props'][] = WebDavServer::doStatic()->mkprop(
 			'lockdiscovery',
 			$locks
 		);
@@ -742,15 +742,15 @@ class WebDavHelper {
 				$file['path'] = "$path/";
 			}
 
-			$file['props'][] = WebDavServer::getSingleton()->mkprop(
+			$file['props'][] = WebDavServer::doStatic()->mkprop(
 				'getcontentlength',
 				0
 			);
-			$file['props'][] = WebDavServer::getSingleton()->mkprop(
+			$file['props'][] = WebDavServer::doStatic()->mkprop(
 				'getcontenttype',
 				'httpd/unix-directory'
 			);
-			$file['props'][] = WebDavServer::getSingleton()->mkprop(
+			$file['props'][] = WebDavServer::doStatic()->mkprop(
 				'resourcetype',
 				'collection'
 			);
@@ -765,15 +765,15 @@ class WebDavHelper {
 			if (method_exists($item, 'getMimeType')) {
 				$mimeType = $item->getMimeType();
 			}
-			$file['props'][] = WebDavServer::getSingleton()->mkprop(
+			$file['props'][] = WebDavServer::doStatic()->mkprop(
 				'getcontentlength',
 				$size
 			);
-			$file['props'][] = WebDavServer::getSingleton()->mkprop(
+			$file['props'][] = WebDavServer::doStatic()->mkprop(
 				'getcontenttype',
 				$mimeType
 			);
-			$file['props'][] = WebDavServer::getSingleton()->mkprop(
+			$file['props'][] = WebDavServer::doStatic()->mkprop(
 				'resourcetype',
 				null
 			);
@@ -800,7 +800,7 @@ class WebDavHelper {
 					$value = $item->$getter();
 					// Ignore array valued properties
 					if (!is_array($value) && !is_object($value)) {
-						$file['props'][] = WebDavServer::getSingleton()->mkprop(
+						$file['props'][] = WebDavServer::doStatic()->mkprop(
 							WEBDAV_GALLERY_NAMESPACE,
 							$memberName,
 							$value
@@ -1139,7 +1139,7 @@ class WebDavHelper {
 			* 415 (Unsupported Media Type) - The server does not support the request type of the
 			* body.
 			*/
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'415 Unsupported Media Type'
 			);
 
@@ -1160,7 +1160,7 @@ class WebDavHelper {
 			* 405 (Method Not Allowed) - MKCOL can only be executed on a deleted/non-existent
 			* resource.
 			*/
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'405 Method Not Allowed'
 			);
 
@@ -1177,7 +1177,7 @@ class WebDavHelper {
 				* 409 (Conflict) - A resource cannot be created at the destination until one or
 				* more intermediate collections have been created.
 				*/
-				WebDavServer::getSingleton()->setResponseStatus(
+				WebDavServer::doStatic()->setResponseStatus(
 					'409 Conflict'
 				);
 			}
@@ -1215,7 +1215,7 @@ class WebDavHelper {
 				* namespace, or 2) the parent collection of the Request-URI exists but cannot
 				* accept members.
 				*/
-				WebDavServer::getSingleton()->setResponseStatus(
+				WebDavServer::doStatic()->setResponseStatus(
 					'403 Forbidden'
 				);
 			}
@@ -1224,7 +1224,7 @@ class WebDavHelper {
 		}
 
 		// 201 (Created) - The collection or structured resource was created in its entirety.
-		WebDavServer::getSingleton()->setResponseStatus(
+		WebDavServer::doStatic()->setResponseStatus(
 			'201 Created'
 		);
 	}
@@ -1312,7 +1312,7 @@ class WebDavHelper {
 		// RFC2518 9.2 last paragraph
 		if (GalleryUtilities::getServerVar('HTTP_DEPTH') != null
 		&& GalleryUtilities::getServerVar('HTTP_DEPTH') != 'infinity') {
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'400 Bad Request'
 			);
 
@@ -1366,7 +1366,7 @@ class WebDavHelper {
 			return $ret;
 		}
 
-		WebDavServer::getSingleton()->setResponseStatus(
+		WebDavServer::doStatic()->setResponseStatus(
 			'204 No Content'
 		);
 
@@ -1437,7 +1437,7 @@ class WebDavHelper {
 			* 415 (Unsupported Media Type) - The server does not support the request type of the
 			* body.
 			*/
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'415 Unsupported Media Type'
 			);
 
@@ -1455,7 +1455,7 @@ class WebDavHelper {
 			* 502 (Bad Gateway) - This may occur when the destination is on another server and the
 			* destination server refuses to accept the resource.
 			*/
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'502 Bad Gateway'
 			);
 
@@ -1466,7 +1466,7 @@ class WebDavHelper {
 		$pathComponent = basename($webDavOptions['dest']);
 
 		if (!$platform->isLegalPathComponent($pathComponent)) {
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'403 Forbidden'
 			);
 
@@ -1642,7 +1642,7 @@ class WebDavHelper {
 			* it.  A client MUST NOT submit a Depth header on a MOVE on a collection with any value
 			* but "infinity".
 			*/
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'400 Bad Request'
 			);
 
@@ -1657,7 +1657,7 @@ class WebDavHelper {
 				* 409 (Conflict) - A resource cannot be created at the destination until
 				* one or more intermediate collections have been created.
 				*/
-				WebDavServer::getSingleton()->setResponseStatus(
+				WebDavServer::doStatic()->setResponseStatus(
 					'409 Conflict'
 				);
 			}
@@ -1713,7 +1713,7 @@ class WebDavHelper {
 				* properties listed in the propertybehavior XML element or the Overwrite header is
 				* "F" and the state of the destination resource is non-null.
 				*/
-				WebDavServer::getSingleton()->setResponseStatus(
+				WebDavServer::doStatic()->setResponseStatus(
 					'412 Precondition Failed'
 				);
 
@@ -1850,7 +1850,7 @@ class WebDavHelper {
 			* 201 (Created) - The source resource was successfully copied.  The copy operation
 			* resulted in the creation of a new resource.
 			*/
-			WebDavServer::getSingleton()->setResponseStatus(
+			WebDavServer::doStatic()->setResponseStatus(
 				'201 Created'
 			);
 
@@ -1873,7 +1873,7 @@ class WebDavHelper {
 		* 204 (No Content) - The source resource was successfully copied to a pre-existing
 		* destination resource.
 		*/
-		WebDavServer::getSingleton()->setResponseStatus(
+		WebDavServer::doStatic()->setResponseStatus(
 			'204 No Content'
 		);
 
@@ -2041,7 +2041,7 @@ class WebDavHelper {
 				* 412 (Precondition Failed) - The included lock token was not enforceable on this
 				* resource or the server could not satisfy the request in the lockinfo XML element.
 				*/
-				WebDavServer::getSingleton()->setResponseStatus(
+				WebDavServer::doStatic()->setResponseStatus(
 					'412 Precondition Failed'
 				);
 
@@ -2072,7 +2072,7 @@ class WebDavHelper {
 				* 412 (Precondition Failed) - The included lock token was not enforceable on this
 				* resource or the server could not satisfy the request in the lockinfo XML element.
 				*/
-				WebDavServer::getSingleton()->setResponseStatus(
+				WebDavServer::doStatic()->setResponseStatus(
 					'412 Precondition Failed'
 				);
 
@@ -2254,7 +2254,7 @@ class WebDavHelper {
 		* The 204 (No Content) status code is used instead of 200 (OK) because there is no response
 		* entity body.
 		*/
-		WebDavServer::getSingleton()->setResponseStatus(
+		WebDavServer::doStatic()->setResponseStatus(
 			'204 No Content'
 		);
 
@@ -2281,7 +2281,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 	/**
 	 * Load Singleton
 	 */
-	 public static function getSingleton() {
+	 public static function doStatic() {
  		static $singleton;
 
  		if (!isset($singleton)) {
