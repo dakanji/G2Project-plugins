@@ -34,7 +34,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		parent::__construct($methodName, 'watermark', 'WatermarkOption');
 	}
 
-	public function setUp() {
+	public function setUp($x1=NULL) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -247,7 +247,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 			}
 
 			// For Oracle, null is replaced with '' when loading data from the database
-			$this->assert(
+			$this->assertTrue(
 				in_array($derivative->getPostFilterOperations(), array(null, '')),
 				'postFilterOperations not empty'
 			);
@@ -298,7 +298,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 					return $ret;
 				}
 				// For Oracle, null is replaced with '' when loading data from the database
-				$this->assert(
+				$this->assertTrue(
 					in_array($derivative->getPostFilterOperations(), array(null, '')),
 					"postFilterOperations not empty for test item $j"
 				);
@@ -319,7 +319,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		}
 
 		// For Oracle, null is replaced with '' when loading data from the database
-		$this->assert(
+		$this->assertTrue(
 			in_array($derivative->getPostFilterOperations(), array(null, '')),
 			'postFilterOperations not empty'
 		);
@@ -360,7 +360,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 			// For Oracle, null is replaced with '' when loading data from the database
-			$this->assert(
+			$this->assertTrue(
 				in_array($derivative->getPostFilterOperations(), array(null, '')),
 				"postFilterOperations not empty for test item $j"
 			);
@@ -432,7 +432,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		}
 
 		// For Oracle, null is replaced with '' when loading data from the database
-		$this->assert(
+		$this->assertTrue(
 			in_array($derivative->getPostFilterOperations(), array(null, '')),
 			'postFilterOperations not empty'
 		);

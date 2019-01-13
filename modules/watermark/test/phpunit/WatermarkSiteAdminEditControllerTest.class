@@ -32,7 +32,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'watermark.WatermarkSiteAdminEdit');
 	}
 
-	public function setUp() {
+	public function setUp($x1=NULL) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -105,9 +105,9 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('foo bar', $this->_watermark->getName());
 		$this->assertEquals('25.51', $this->_watermark->getXPercentage());
 		$this->assertEquals('50.12', $this->_watermark->getYPercentage());
-		$this->assert($this->_watermark->getApplyToPreferred(), 'missing preferred');
-		$this->assert($this->_watermark->getApplyToResizes(), 'missing resizes');
-		$this->assert($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
+		$this->assertTrue($this->_watermark->getApplyToPreferred(), 'missing preferred');
+		$this->assertTrue($this->_watermark->getApplyToResizes(), 'missing resizes');
+		$this->assertTrue($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
 	}
 
 	public function testEditWatermarkThumbnailOnly() {
@@ -143,9 +143,9 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('foo bar', $this->_watermark->getName());
 		$this->assertEquals('25.51', $this->_watermark->getXPercentage());
 		$this->assertEquals('50.12', $this->_watermark->getYPercentage());
-		$this->assert(!$this->_watermark->getApplyToPreferred(), 'shouldn\'t have preferred');
-		$this->assert(!$this->_watermark->getApplyToResizes(), 'shouldn\'t have resizes');
-		$this->assert($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
+		$this->assertTrue(!$this->_watermark->getApplyToPreferred(), 'shouldn\'t have preferred');
+		$this->assertTrue(!$this->_watermark->getApplyToResizes(), 'shouldn\'t have resizes');
+		$this->assertTrue($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
 	}
 
 	public function testEditMissingEverything() {

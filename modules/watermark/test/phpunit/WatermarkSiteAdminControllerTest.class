@@ -34,7 +34,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'watermark.WatermarkSiteAdmin');
 	}
 
-	public function setUp() {
+	public function setUp($x1=NULL) {
 		global $gallery;
 
 		$ret = parent::setUp();
@@ -152,7 +152,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(isset($map[$this->_expectedName]), 'Watermark is missing');
+		$this->assertTrue(isset($map[$this->_expectedName]), 'Watermark is missing');
 	}
 
 	public function testAddDuplicate() {
@@ -193,8 +193,8 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(isset($map[$this->_expectedName]), 'Watermark is missing');
-		$this->assert(isset($map['_' . $this->_expectedName]), 'Watermark 2 is missing');
+		$this->assertTrue(isset($map[$this->_expectedName]), 'Watermark is missing');
+		$this->assertTrue(isset($map['_' . $this->_expectedName]), 'Watermark 2 is missing');
 	}
 
 	public function testAddWrongMimeType() {
@@ -240,7 +240,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 				'Watermark mime type incorrect'
 			);
 		} else {
-			$this->assert(false, 'Expected object is not a watermark!');
+			$this->assertTrue(false, 'Expected object is not a watermark!');
 		}
 	}
 
@@ -287,7 +287,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(empty($defaultWatermarkId), 'The default Watermark Id was not removed');
+		$this->assertTrue(empty($defaultWatermarkId), 'The default Watermark Id was not removed');
 		// Verify that it's gone
 		$ret = $this->_verifyMissing($idToDelete);
 
@@ -366,9 +366,9 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assert(!empty($defaultWatermarkId), 'Expected new default watermark');
+		$this->assertTrue(!empty($defaultWatermarkId), 'Expected new default watermark');
 		// If there are several watermarks, we can't be sure which one will be selected
-		$this->assert(
+		$this->assertTrue(
 			(int)$defaultWatermarkId != (int)$idToDelete,
 			'Unexpected default watermark id'
 		);
@@ -383,7 +383,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assert(!empty($forceDefaultWatermark), '$forceDefaultWatermark is empty');
+		$this->assertTrue(!empty($forceDefaultWatermark), '$forceDefaultWatermark is empty');
 	}
 
 	public function testDeleteInUse() {
@@ -495,7 +495,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assert(isset($map[$expectedName]), 'Watermark is missing');
+		$this->assertTrue(isset($map[$expectedName]), 'Watermark is missing');
 
 		if (GalleryUtilities::isA($map[$expectedName], 'WatermarkImage')) {
 			$this->assertEquals(
@@ -513,7 +513,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			// We're expecting the same name, but the . changed to _ in the file extension
 			$this->assertEquals($expectedName, basename($path));
 		} else {
-			$this->assert(false, 'Object is not a watermark');
+			$this->assertTrue(false, 'Object is not a watermark');
 		}
 	}
 

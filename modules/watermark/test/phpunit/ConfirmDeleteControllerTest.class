@@ -32,7 +32,7 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'watermark.ConfirmDelete');
 	}
 
-	public function setUp() {
+	public function setUp($x1=NULL) {
 		global $gallery;
 		$ret = parent::setUp();
 
