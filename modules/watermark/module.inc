@@ -159,6 +159,7 @@ class WatermarkModule extends GalleryModule {
 						$ids[] = (int)$result[0];
 					}
 
+					$ids = array();
 					list($ret, $lock) = GalleryCoreApi::acquireWriteLock($ids);
 
 					if ($ret) {
@@ -453,6 +454,8 @@ class WatermarkModule extends GalleryModule {
 	 *       version.
 	 */
 	public function getRewriteRules() {
+		global $gallery;
+
 		// Ensure the rewrite module is compatible, 'pattern' is optional since v1.1.8 of rewrite
 		list($ret, $rewrite) = GalleryCoreApi::loadPlugin('module', 'rewrite', true);
 
