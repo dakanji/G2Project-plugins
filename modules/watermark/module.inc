@@ -35,7 +35,7 @@ class WatermarkModule extends GalleryModule {
 		$this->setName($gallery->i18n('Watermark'));
 		$this->setDescription($gallery->i18n('Watermark your images'));
 		// Update "upgrade()" too!
-		$this->setVersion('1.1.8');
+		$this->setVersion('1.1.9');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews');
@@ -233,6 +233,7 @@ class WatermarkModule extends GalleryModule {
 			case '1.1.5':
 			case '1.1.6':
 			case '1.1.7':
+			case '1.1.8':
 			case 'end of upgrade path':
 				/*
 				 * Leave this bogus case at the end of legit case statements so that we
