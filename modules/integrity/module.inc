@@ -16,16 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- */
-
-/**
+ *
  * Integrity Check Module
  * @package Integrity
  * @author Alan Harder <alan.harder@sun.com>
  * @version $Revision: 1173 $
  */
 class IntegrityModule extends GalleryModule {
-
 	public function __construct() {
 		global $gallery;
 
@@ -42,10 +39,16 @@ class IntegrityModule extends GalleryModule {
 	/**
 	 * @see GalleryModule::performFactoryRegistrations()
 	 */
-	function performFactoryRegistrations() {
+	public function performFactoryRegistrations() {
 		$ret = GalleryCoreApi::registerFactoryImplementation(
-				'MaintenanceTask', 'IntegrityCheckTask', 'IntegrityCheckTask',
-				'modules/integrity/classes/IntegrityCheckTask.class', 'integrity', null);
+			'MaintenanceTask',
+			'IntegrityCheckTask',
+			'IntegrityCheckTask',
+			'modules/integrity/classes/IntegrityCheckTask.class',
+			'integrity',
+			null
+		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -53,5 +56,3 @@ class IntegrityModule extends GalleryModule {
 		return null;
 	}
 }
-
-
