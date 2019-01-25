@@ -67,17 +67,27 @@ class AlbumSelectCallbacks {
 				if ($ret) {
 					return $ret;
 				}
-				$sessionPermissions                            = implode('-', array_diff($aclIdsWithSessionPermissions, $aclIds));
-				$cachePathInfo                                 = array(
+				$sessionPermissions = implode('-', array_diff($aclIdsWithSessionPermissions, $aclIds));
+				
+				$cachePathInfo = array(
 					'type'   => 'module-data',
 					'module' => 'albumselect',
 					'itemId' => $userId . '_' . $sessionPermissions
 					. '_' . $languageCode
-					. '_' . substr(md5(serialize(array(
-						$callbackParams,
-						$rootAlbumId,
-					))), 0, 5),
+					. '_' . substr(
+						md5(
+							serialize(
+								array(
+									$callbackParams,
+									$rootAlbumId,
+								)
+							)
+						),
+						0,
+						5
+					),
 				);
+				
 				list($treeList, $titles, $titlesForJs, $links) = GalleryDataCache::getFromDisk($cachePathInfo);
 
 				if (!isset($titles) || !isset($treeList) || !isset($titlesForJs) || !isset($links)) {

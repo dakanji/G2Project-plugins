@@ -80,9 +80,11 @@ class RestrictMimeOptionTest extends ItemAddOptionTestCase {
 	}
 
 	public function tearDown() {
-		$ret = GalleryCoreApi::removeMimeType(array(
-			'mimeType' => array('test/file', 'test/bad'),
-		));
+		$ret = GalleryCoreApi::removeMimeType(
+			array(
+				'mimeType' => array('test/file', 'test/bad'),
+			)
+		);
 
 		if ($ret) {
 			$this->failWithStatus($ret);

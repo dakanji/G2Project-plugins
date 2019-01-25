@@ -154,10 +154,12 @@ class MigrateModule extends GalleryModule {
 	public function getRewriteRules() {
 		global $gallery;
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$url          = $urlGenerator->generateUrl(array(
-			'view'    => 'core.SiteAdmin',
-			'subView' => 'migrate.SelectGallery',
-		));
+		$url          = $urlGenerator->generateUrl(
+			array(
+				'view'    => 'core.SiteAdmin',
+				'subView' => 'migrate.SelectGallery',
+			)
+		);
 
 		return array(
 			array(

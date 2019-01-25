@@ -378,13 +378,16 @@ class ItemCreateReplicaControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[destination]', $this->_album->getId());
 
 		$results = $this->handleRequest();
-		$this->assertEquals(array(
-			'delegate' => array(
-				'view'    => 'core.ItemAdmin',
-				'subView' => 'replica.ItemCreateReplica',
+		$this->assertEquals(
+			array(
+				'delegate' => array(
+					'view'    => 'core.ItemAdmin',
+					'subView' => 'replica.ItemCreateReplica',
+				),
+				'status'   => array(),
+				'error'    => array('form[error][sources][empty]'),
 			),
-			'status'   => array(),
-			'error'    => array('form[error][sources][empty]'),
-		), $results);
+			$results
+		);
 	}
 }

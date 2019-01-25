@@ -227,8 +227,10 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryTheme.class');
 class DynamicAlbumTestTheme extends GalleryTheme {
 	public function __construct() {
 		$this->setId('dynamicalbumTest');
-		$this->setStandardSettings(array(
-			'perPage' => 9,
-		));
+		$this->setStandardSettings(
+			array(
+				'perPage' => 9,
+			)
+		);
 	}
 }

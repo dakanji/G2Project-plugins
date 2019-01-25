@@ -171,9 +171,12 @@ class AdminDigibugView extends GalleryView {
 			$form['formName'] = 'AdminDigibug';
 		}
 		$template->style('modules/digibug/digibug.css');
-		$template->setVariable('AdminDigibug', array(
-			'isConfigure' => !$isActive,
-		));
+		$template->setVariable(
+			'AdminDigibug',
+			array(
+				'isConfigure' => !$isActive,
+			)
+		);
 		$template->setVariable('controller', 'digibug.AdminDigibug');
 
 		return array(

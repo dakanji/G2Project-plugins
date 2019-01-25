@@ -54,7 +54,8 @@ class WatermarkHelper {
 		$aclMarkers = GalleryUtilities::makeMarkers($aclIds);
 
 		$data  = array();
-		$query = sprintf('
+		$query = sprintf(
+			'
 		SELECT
 		[WatermarkImage::id]
 		FROM
@@ -63,7 +64,9 @@ class WatermarkHelper {
 		[GalleryAccessSubscriberMap::itemId] = [WatermarkImage::id]
 		AND
 		[GalleryAccessSubscriberMap::accessListId] IN (%s)
-		', $aclMarkers);
+		',
+			$aclMarkers
+		);
 		$data  = $aclIds;
 
 		if (!empty($substring)) {
@@ -824,9 +827,12 @@ class WatermarkHelper {
 		$template->javascript('lib/yui/utilities.js');
 		$template->javascript('modules/watermark/watermark.js');
 
-		$template->setVariable($formName, array(
-			'watermark' => (array)$watermark,
-		));
+		$template->setVariable(
+			$formName,
+			array(
+				'watermark' => (array)$watermark,
+			)
+		);
 		$template->setVariable('controller', "watermark.$formName");
 
 		return null;

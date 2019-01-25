@@ -322,9 +322,11 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		);
 		$this->assertEquals($expected, $results);
 
-		$ret = GalleryCoreApi::removeMimeType(array(
-			'extension' => 'yyy',
-		));
+		$ret = GalleryCoreApi::removeMimeType(
+			array(
+				'extension' => 'yyy',
+			)
+		);
 
 		if ($ret) {
 			return $ret;

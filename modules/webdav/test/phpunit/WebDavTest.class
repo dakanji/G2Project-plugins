@@ -284,7 +284,10 @@ class WebDavTest extends GalleryTestCase {
 		);
 
 		$path = ltrim($path, '/');
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:multistatus xmlns:D="DAV:">
   <D:response xmlns:G="http://gallery2.org/dav/props/" ' .
 				'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
@@ -292,11 +295,11 @@ class WebDavTest extends GalleryTestCase {
     <D:propstat>
       <D:prop>
         <D:creationdate ns1:dt="dateTime.tz">'
-		. gmdate('Y-m-d\TH:i:s\Z', $this->_item->getCreationTimestamp()) . '</D:creationdate>
+				. gmdate('Y-m-d\TH:i:s\Z', $this->_item->getCreationTimestamp()) . '</D:creationdate>
         <D:displayname>' . $this->_item->getTitle() . '</D:displayname>
         <D:getlastmodified ns1:dt="dateTime.rfc1123">'
-		. gmdate('D, d M Y H:i:s', $this->_item->getModificationTimestamp())
-		. ' UTC</D:getlastmodified>
+				. gmdate('D, d M Y H:i:s', $this->_item->getModificationTimestamp())
+				. ' UTC</D:getlastmodified>
         <G:summary>' . $this->_item->getSummary() . '</G:summary>
         <G:description>' . $this->_item->getDescription() . '</G:description>
         <G:keywords>' . $this->_item->getKeywords() . '</G:keywords>
@@ -305,7 +308,10 @@ class WebDavTest extends GalleryTestCase {
     </D:propstat>
   </D:response>
 </D:multistatus>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 	}
 
 	public function testPropfindWithoutViewPermission() {
@@ -413,7 +419,10 @@ class WebDavTest extends GalleryTestCase {
 		$itemPath = ltrim($itemPath, '/');
 
 		// The sub-album without view permissions shouldn't be listed
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:multistatus xmlns:D="DAV:">
   <D:response xmlns:G="http://gallery2.org/dav/props/" ' .
 				'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
@@ -421,26 +430,29 @@ class WebDavTest extends GalleryTestCase {
     <D:propstat>
       <D:prop>
         <D:creationdate ns1:dt="dateTime.tz">'
-		. gmdate('Y-m-d\TH:i:s\Z', $this->_album->getCreationTimestamp())
-		. '</D:creationdate>
+				. gmdate('Y-m-d\TH:i:s\Z', $this->_album->getCreationTimestamp())
+				. '</D:creationdate>
       </D:prop>
       <D:status>HTTP/1.1 200 OK</D:status>
     </D:propstat>
   </D:response>
   <D:response xmlns:G="http://gallery2.org/dav/props/" '
-			. 'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
+				. 'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
     <D:href>' . $this->_getHref($itemPath) . '</D:href>
     <D:propstat>
       <D:prop>
         <D:creationdate ns1:dt="dateTime.tz">'
-		. gmdate('Y-m-d\TH:i:s\Z', $this->_item->getCreationTimestamp())
-		. '</D:creationdate>
+				. gmdate('Y-m-d\TH:i:s\Z', $this->_item->getCreationTimestamp())
+				. '</D:creationdate>
       </D:prop>
       <D:status>HTTP/1.1 200 OK</D:status>
     </D:propstat>
   </D:response>
 </D:multistatus>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 	}
 
 	public function testPropfindCollectionDepth0() {
@@ -489,7 +501,10 @@ class WebDavTest extends GalleryTestCase {
 
 		$path = ltrim($path, '/');
 
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:multistatus xmlns:D="DAV:">
   <D:response xmlns:G="http://gallery2.org/dav/props/" ' .
 				'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
@@ -497,14 +512,17 @@ class WebDavTest extends GalleryTestCase {
     <D:propstat>
       <D:prop>
         <D:creationdate ns1:dt="dateTime.tz">'
-		. gmdate('Y-m-d\TH:i:s\Z', $this->_album->getCreationTimestamp())
-		. '</D:creationdate>
+				. gmdate('Y-m-d\TH:i:s\Z', $this->_album->getCreationTimestamp())
+				. '</D:creationdate>
       </D:prop>
       <D:status>HTTP/1.1 200 OK</D:status>
     </D:propstat>
   </D:response>
 </D:multistatus>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 	}
 
 	public function testPropfindCollectionDepth1() {
@@ -581,7 +599,10 @@ class WebDavTest extends GalleryTestCase {
 		$subAlbumPath = ltrim($subAlbumPath, '/');
 
 		// The sub-album without view permissions shouldn't be listed
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:multistatus xmlns:D="DAV:">
   <D:response xmlns:G="http://gallery2.org/dav/props/" ' .
 				'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
@@ -589,38 +610,41 @@ class WebDavTest extends GalleryTestCase {
     <D:propstat>
       <D:prop>
         <D:creationdate ns1:dt="dateTime.tz">'
-		. gmdate('Y-m-d\TH:i:s\Z', $this->_album->getCreationTimestamp())
-		. '</D:creationdate>
+				. gmdate('Y-m-d\TH:i:s\Z', $this->_album->getCreationTimestamp())
+				. '</D:creationdate>
       </D:prop>
       <D:status>HTTP/1.1 200 OK</D:status>
     </D:propstat>
   </D:response>
   <D:response xmlns:G="http://gallery2.org/dav/props/" '
-			. 'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
+				. 'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
     <D:href>' . $this->_getHref($itemPath) . '</D:href>
     <D:propstat>
       <D:prop>
         <D:creationdate ns1:dt="dateTime.tz">'
-		. gmdate('Y-m-d\TH:i:s\Z', $this->_item->getCreationTimestamp())
-		. '</D:creationdate>
+				. gmdate('Y-m-d\TH:i:s\Z', $this->_item->getCreationTimestamp())
+				. '</D:creationdate>
       </D:prop>
       <D:status>HTTP/1.1 200 OK</D:status>
     </D:propstat>
   </D:response>
   <D:response xmlns:G="http://gallery2.org/dav/props/" '
-			. 'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
+				. 'xmlns:ns1="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882">
     <D:href>' . $this->_getHref($subAlbumPath) . '</D:href>
     <D:propstat>
       <D:prop>
         <D:creationdate ns1:dt="dateTime.tz">'
-		. gmdate('Y-m-d\TH:i:s\Z', $this->_subAlbum->getCreationTimestamp())
-		. '</D:creationdate>
+				. gmdate('Y-m-d\TH:i:s\Z', $this->_subAlbum->getCreationTimestamp())
+				. '</D:creationdate>
       </D:prop>
       <D:status>HTTP/1.1 200 OK</D:status>
     </D:propstat>
   </D:response>
 </D:multistatus>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 	}
 
 	public function testProppatch() {
@@ -678,7 +702,10 @@ class WebDavTest extends GalleryTestCase {
 		);
 
 		$path = ltrim($path, '/');
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:multistatus xmlns:D="DAV:">
   <D:response xmlns:G="http://gallery2.org/dav/props/">
     <D:href>' . $this->_getHref($path) . '</D:href>
@@ -693,7 +720,10 @@ class WebDavTest extends GalleryTestCase {
     </D:propstat>
   </D:response>
 </D:multistatus>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 
 		list($ret, $this->_item) = $this->_item->refresh();
 
@@ -762,7 +792,10 @@ class WebDavTest extends GalleryTestCase {
 		);
 
 		$path = ltrim($path, '/');
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:multistatus xmlns:D="DAV:">
   <D:response xmlns:G="http://gallery2.org/dav/props/">
     <D:href>' . $this->_getHref($path) . '</D:href>
@@ -777,7 +810,10 @@ class WebDavTest extends GalleryTestCase {
     </D:propstat>
   </D:response>
 </D:multistatus>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 
 		list($ret, $this->_item) = $this->_item->refresh();
 
@@ -1810,7 +1846,10 @@ class WebDavTest extends GalleryTestCase {
 			$this->_headers
 		);
 
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:prop xmlns:D="DAV:">
   <D:lockdiscovery>
     <D:activelock>
@@ -1823,7 +1862,10 @@ class WebDavTest extends GalleryTestCase {
           </D:activelock>
   </D:lockdiscovery>
 </D:prop>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 
 		return array(null, $lock);
 	}
@@ -1851,9 +1893,12 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
-			'status' => 'HTTP/1.0 204 No Content',
-		), $this->_headers);
+		$this->assertEquals(
+			array(
+				'status' => 'HTTP/1.0 204 No Content',
+			),
+			$this->_headers
+		);
 
 		$this->assertEquals('', $output);
 
@@ -1948,7 +1993,10 @@ class WebDavTest extends GalleryTestCase {
 			$this->_headers
 		);
 
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:prop xmlns:D="DAV:">
   <D:lockdiscovery>
     <D:activelock>
@@ -1961,7 +2009,10 @@ class WebDavTest extends GalleryTestCase {
           </D:activelock>
   </D:lockdiscovery>
 </D:prop>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 
 		$this->_headers = array();
 
@@ -2040,14 +2091,20 @@ class WebDavTest extends GalleryTestCase {
 			$this->_headers
 		);
 
-		$this->assertEquals(preg_split("/\r?\n/", '<?xml version="1.0" encoding="utf-8" ?>
+		$this->assertEquals(
+			preg_split(
+				"/\r?\n/",
+				'<?xml version="1.0" encoding="utf-8" ?>
 <D:multistatus xmlns:D="DAV:">
   <D:response>
     <D:href>' . $this->_getHref($lock['path']) . '</D:href>
     <D:status>HTTP/1.1 423 Locked</D:status>
   </D:response>
 </D:multistatus>
-'), preg_split("/\r?\n/", $output));
+'
+			),
+			preg_split("/\r?\n/", $output)
+		);
 
 		$this->_headers = array();
 
@@ -2300,9 +2357,12 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(GALLERY_ERROR | ERROR_BAD_PATH, $ret->getErrorCode());
 
-		$this->assertEquals(array(
-			'status' => 'HTTP/1.0 200 OK',
-		), $this->_headers);
+		$this->assertEquals(
+			array(
+				'status' => 'HTTP/1.0 200 OK',
+			),
+			$this->_headers
+		);
 
 		$this->assertEquals('', $output);
 
@@ -2327,9 +2387,12 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(GALLERY_ERROR | ERROR_BAD_PATH, $ret->getErrorCode());
 
-		$this->assertEquals(array(
-			'status' => 'HTTP/1.0 200 OK',
-		), $this->_headers);
+		$this->assertEquals(
+			array(
+				'status' => 'HTTP/1.0 200 OK',
+			),
+			$this->_headers
+		);
 
 		$this->assertEquals('', $output);
 	}

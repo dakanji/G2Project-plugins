@@ -308,9 +308,11 @@ class GalleryRemoteController extends GalleryController {
 			$response->setProperty('status_text', 'Password incorrect.');
 
 			$event = GalleryCoreApi::newEvent('Gallery::FailedLogin');
-			$event->setData(array(
-				'userName' => $form['uname'],
-			));
+			$event->setData(
+				array(
+					'userName' => $form['uname'],
+				)
+			);
 			list($ret, $ignored) = GalleryCoreApi::postEvent($event);
 
 			if ($ret) {
@@ -1093,17 +1095,20 @@ class GalleryRemoteController extends GalleryController {
 		}
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$response->setProperty('baseurl', str_replace(
-			'&amp;',
-			'&',
-			GalleryUrlGenerator::appendParamsToUrl(
-				$urlGenerator->getCurrentUrlDir(true) . GALLERY_MAIN_PHP,
-				array(
-					'view'   => 'core.DownloadItem',
-					'itemId' => '',
+		$response->setProperty(
+			'baseurl',
+			str_replace(
+				'&amp;',
+				'&',
+				GalleryUrlGenerator::appendParamsToUrl(
+					$urlGenerator->getCurrentUrlDir(true) . GALLERY_MAIN_PHP,
+					array(
+						'view'   => 'core.DownloadItem',
+						'itemId' => '',
+					)
 				)
 			)
-		));
+		);
 		$response->setProperty('image_count', $i - 1);
 		$response->setProperty('status', $grStatusCodes['SUCCESS']);
 		$response->setProperty('status_text', 'Fetch-album-images successful.');

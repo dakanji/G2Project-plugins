@@ -160,9 +160,13 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		$this->assert($ret, 'status');
 		$this->assertEquals('w/The%20Quick_Brown%23Fox/Jumps%20Over_The_Lazy_Dog', $url, 'url');
-		$this->assertEquals(array(
-			'controller' => 'webdav.WebDav',
-		), $params, 'params');
+		$this->assertEquals(
+			array(
+				'controller' => 'webdav.WebDav',
+			),
+			$params,
+			'params'
+		);
 		$this->assertEquals($item, $entity, 'entity');
 
 		// Use valid inputs
@@ -184,9 +188,13 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		$this->assert($ret, 'status');
 		$this->assertEquals('w/The%20Quick_Brown%23Fox/Jumps%20Over_The_Lazy_Dog', $url, 'url');
-		$this->assertEquals(array(
-			'controller' => 'webdav.WebDav',
-		), $params, 'params');
+		$this->assertEquals(
+			array(
+				'controller' => 'webdav.WebDav',
+			),
+			$params,
+			'params'
+		);
 		$this->assertEquals(null, $entity, 'entity');
 	}
 }

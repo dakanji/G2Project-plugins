@@ -258,9 +258,11 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
-					array('Test::Event1', 'Test::EventHandler1'),
-				)),
+				new UnitTestStorageSearchResults(
+					array(
+						array('Test::Event1', 'Test::EventHandler1'),
+					)
+				),
 			)
 		);
 		$storage->setReply(
@@ -293,10 +295,12 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
-					array($userId),
-					array($this->_users['User1']->getId()),
-				)),
+				new UnitTestStorageSearchResults(
+					array(
+						array($userId),
+						array($this->_users['User1']->getId()),
+					)
+				),
 			)
 		);
 
@@ -355,9 +359,11 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
-					array('Test::Event1', 'Test::EventHandler1'),
-				)),
+				new UnitTestStorageSearchResults(
+					array(
+						array('Test::Event1', 'Test::EventHandler1'),
+					)
+				),
 			)
 		);
 
@@ -424,9 +430,11 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
-					array('Test::Event2', 'Test::EventHandler1'),
-				)),
+				new UnitTestStorageSearchResults(
+					array(
+						array('Test::Event2', 'Test::EventHandler1'),
+					)
+				),
 			)
 		);
 
@@ -497,9 +505,12 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 		$redirect['view']    = 'core.UserAdmin';
 		$redirect['subView'] = 'notification.NotificationUserAdmin';
 
-		$unsubscribeUrl = $urlGenerator->generateUrl($redirect, array(
-			'forceFullUrl' => true,
-		));
+		$unsubscribeUrl = $urlGenerator->generateUrl(
+			$redirect,
+			array(
+				'forceFullUrl' => true,
+			)
+		);
 
 		foreach ($this->_users as $userName => $user) {
 			if ($userName === 'User2') {
@@ -570,20 +581,22 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
+				new UnitTestStorageSearchResults(
 					array(
-						'Test::Event2',
-						$this->_users['User1']->getId(),
-						'Test:EventHandler',
-						'Test::Event2',
-					),
-					array(
-						'Test::Event1',
-						$this->_users['User3']->getId(),
-						'Test:EventHandler',
-						'test::event',
-					),
-				)),
+						array(
+							'Test::Event2',
+							$this->_users['User1']->getId(),
+							'Test:EventHandler',
+							'Test::Event2',
+						),
+						array(
+							'Test::Event1',
+							$this->_users['User3']->getId(),
+							'Test:EventHandler',
+							'test::event',
+						),
+					)
+				),
 			)
 		);
 

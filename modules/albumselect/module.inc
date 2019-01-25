@@ -174,10 +174,12 @@ class AlbumSelectModule extends GalleryModule {
 		}
 
 		if ($invalidateCache) {
-			GalleryDataCache::removeFromDisk(array(
-				'type'   => 'module-data',
-				'module' => 'albumselect',
-			));
+			GalleryDataCache::removeFromDisk(
+				array(
+					'type'   => 'module-data',
+					'module' => 'albumselect',
+				)
+			);
 		}
 
 		return array(null, null);

@@ -39,9 +39,12 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 			return $ret;
 		}
 
-		list($ret, $this->_rootAlbum) = $this->_createRandomAlbum($this->_getRootId(), array(
-			'orderBy' => 'orderWeight',
-		));
+		list($ret, $this->_rootAlbum) = $this->_createRandomAlbum(
+			$this->_getRootId(),
+			array(
+				'orderBy' => 'orderWeight',
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -563,8 +566,11 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][addFromLocalServer]', 1);
 		GalleryUtilities::putRequestVariable('form[localServerPath]', dirname($path));
 		GalleryUtilities::putRequestVariable('form[set][title]', 1);
-		GalleryUtilities::putRequestVariable('form[localServerDirectories][' .
-		urlencode(basename($path)) . '][selected]', 1);
+		GalleryUtilities::putRequestVariable(
+			'form[localServerDirectories][' .
+			urlencode(basename($path)) . '][selected]',
+			1
+		);
 
 		$results = $this->handleRequest($this->_rootAlbum);
 		$this->assertEquals(array(array(), array()), $results);
@@ -605,18 +611,21 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 			$this->assert(false, 'missing id of added item');
 		} else {
 			$id = $results[1]['addedFiles'][0]['id'];
-			$this->assertEquals(array(
-				array(),
+			$this->assertEquals(
 				array(
-					'addedFiles' => array(
-						array(
-							'fileName' => 'foo',
-							'id'       => $id,
-							'warnings' => array(),
+					array(),
+					array(
+						'addedFiles' => array(
+							array(
+								'fileName' => 'foo',
+								'id'       => $id,
+								'warnings' => array(),
+							),
 						),
 					),
 				),
-			), $results);
+				$results
+			);
 		}
 	}
 

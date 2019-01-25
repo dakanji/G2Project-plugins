@@ -73,11 +73,13 @@ class CustomFieldHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array(
-			$this->_album,
-			$this->_item,
-			$this->_item2,
-		));
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(
+			array(
+				$this->_album,
+				$this->_item,
+				$this->_item2,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -99,38 +101,41 @@ class CustomFieldHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$ret = CustomFieldHelper::saveParameters(array(
-			'common' => array(
-				array(
-					'field'   => 'Category',
-					'summary' => true,
-					'detail'  => false,
-					'choices' => array('A', 'B', 'C'),
+		$ret = CustomFieldHelper::saveParameters(
+			array(
+				'common' => array(
+					array(
+						'field'   => 'Category',
+						'summary' => true,
+						'detail'  => false,
+						'choices' => array('A', 'B', 'C'),
+					),
+				),
+				'album' => array(
+					array(
+						'field'   => 'Catalog Id',
+						'summary' => false,
+						'detail'  => true,
+						'choices' => array(),
+					),
+					array(
+						'field'   => 'Year',
+						'summary' => false,
+						'detail'  => true,
+						'choices' => array(),
+					),
+				),
+				'photo' => array(
+					array(
+						'field'   => 'Photographer',
+						'summary' => true,
+						'detail'  => true,
+						'choices' => array(),
+					),
 				),
 			),
-			'album' => array(
-				array(
-					'field'   => 'Catalog Id',
-					'summary' => false,
-					'detail'  => true,
-					'choices' => array(),
-				),
-				array(
-					'field'   => 'Year',
-					'summary' => false,
-					'detail'  => true,
-					'choices' => array(),
-				),
-			),
-			'photo' => array(
-				array(
-					'field'   => 'Photographer',
-					'summary' => true,
-					'detail'  => true,
-					'choices' => array(),
-				),
-			),
-		), $this->_album->getId());
+			$this->_album->getId()
+		);
 
 		if ($ret) {
 			return $ret;
@@ -153,11 +158,14 @@ class CustomFieldHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array(
-			$this->_album,
-			$this->_item,
-			$this->_item2,
-		), 'detail');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(
+			array(
+				$this->_album,
+				$this->_item,
+				$this->_item2,
+			),
+			'detail'
+		);
 
 		if ($ret) {
 			return $ret;

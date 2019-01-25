@@ -284,16 +284,19 @@ class WebDavView extends GalleryView {
 			GalleryUtilities::getServerVar('REQUEST_METHOD')
 		);
 
-		if (!in_array($requestMethod, array(
-			'options',
-			'propfind',
-			'proppatch',
-			'mkcol',
-			'delete',
-			'move',
-			'lock',
-			'unlock',
-		))
+		if (!in_array(
+			$requestMethod,
+			array(
+				'options',
+				'propfind',
+				'proppatch',
+				'mkcol',
+				'delete',
+				'move',
+				'lock',
+				'unlock',
+			)
+		)
 		) {
 			// If we just completed a PUT request and got delegated here, just silently return
 			if ($requestMethod == 'put') {

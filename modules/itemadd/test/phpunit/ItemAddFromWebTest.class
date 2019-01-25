@@ -48,9 +48,12 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			return $ret;
 		}
 
-		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId(), array(
-			'orderBy' => 'orderWeight',
-		));
+		list($ret, $this->_album) = $this->_createRandomAlbum(
+			$this->_getRootId(),
+			array(
+				'orderBy' => 'orderWeight',
+			)
+		);
 
 		if ($ret) {
 			return $ret;

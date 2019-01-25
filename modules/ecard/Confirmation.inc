@@ -37,9 +37,12 @@ class ConfirmationView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$template->setVariable('Confirmation', array(
-			'itemId' => $item->getId(),
-		));
+		$template->setVariable(
+			'Confirmation',
+			array(
+				'itemId' => $item->getId(),
+			)
+		);
 
 		return array(
 			null,

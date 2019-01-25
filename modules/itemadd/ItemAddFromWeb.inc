@@ -159,9 +159,13 @@ class ItemAddFromWeb extends ItemAddPlugin {
 					}
 				}
 				$gallery->guaranteeTimeLimit(60);
-				$templateAdapter->updateProgressBar($module->translate(
-					'Adding items'
-				), '', $i++ / $totalUrls);
+				$templateAdapter->updateProgressBar(
+					$module->translate(
+						'Adding items'
+					),
+					'',
+					$i++ / $totalUrls
+				);
 				$ret = $storage->checkPoint();
 
 				if ($ret) {
@@ -252,8 +256,12 @@ class ItemAddFromWeb extends ItemAddPlugin {
 					}
 				} else {
 					// Check for <base href="..."/> element
-					if (preg_match('#<base(?:\W|\W[^>]*?\W)href\s*=\s*'
-					. '(?:"(.*?)"|\'(.*?)\'|([^\'"> ]*)).*?>#si', $buffer, $matches)
+					if (preg_match(
+						'#<base(?:\W|\W[^>]*?\W)href\s*=\s*'
+						. '(?:"(.*?)"|\'(.*?)\'|([^\'"> ]*)).*?>#si',
+						$buffer,
+						$matches
+					)
 					) {
 						/**
 						 * @todo Use real HTML parser to avoid parsing HTML comments etc.

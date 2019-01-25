@@ -610,9 +610,13 @@ class KeywordAlbumCallbacksTest extends GalleryTestCase {
 			if ($ret) {
 				return $ret;
 			}
-			$this->assertEquals(array(
-				'keywords' => $expected[$i],
-			), $block, "output $i");
+			$this->assertEquals(
+				array(
+					'keywords' => $expected[$i],
+				),
+				$block,
+				"output $i"
+			);
 		}
 	}
 
@@ -652,9 +656,13 @@ class KeywordAlbumCallbacksTest extends GalleryTestCase {
 			if ($ret) {
 				return $ret;
 			}
-			$this->assertEquals(array(
-				'keywords' => $split,
-			), $block, $keywords);
+			$this->assertEquals(
+				array(
+					'keywords' => $split,
+				),
+				$block,
+				$keywords
+			);
 		}
 
 		$ret = GalleryCoreApi::setPluginParameter('module', 'keyalbum', 'split', ',;');
@@ -694,9 +702,13 @@ class KeywordAlbumCallbacksTest extends GalleryTestCase {
 			if ($ret) {
 				return $ret;
 			}
-			$this->assertEquals(array(
-				'keywords' => $split,
-			), $block, "phase 2: $keywords");
+			$this->assertEquals(
+				array(
+					'keywords' => $split,
+				),
+				$block,
+				"phase 2: $keywords"
+			);
 		}
 	}
 

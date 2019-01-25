@@ -107,9 +107,12 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 	}
 
 	public function testLoadTemplateHigh() {
-		$result = $this->_plugin->loadTemplate($this->_form, array(
-			'level' => 'HIGH',
-		));
+		$result = $this->_plugin->loadTemplate(
+			$this->_form,
+			array(
+				'level' => 'HIGH',
+			)
+		);
 		$this->assertEquals(
 			array(
 				null,
@@ -162,17 +165,23 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 	public function testLoadTemplateLow() {
 		global $gallery;
-		$result = $this->_plugin->loadTemplate($this->_form, array(
-			'level' => 'LOW',
-		));
+		$result = $this->_plugin->loadTemplate(
+			$this->_form,
+			array(
+				'level' => 'LOW',
+			)
+		);
 		$this->assertEquals(array(null, null, null), $result);
 
 		$session =& $gallery->getSession();
 		$session->put('captcha.failedAttempts', 3);
 
-		$result = $this->_plugin->loadTemplate($this->_form, array(
-			'level' => 'LOW',
-		));
+		$result = $this->_plugin->loadTemplate(
+			$this->_form,
+			array(
+				'level' => 'LOW',
+			)
+		);
 		$this->assertEquals(
 			array(
 				null,
@@ -200,15 +209,21 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 	public function testValidateHigh() {
 		// Test with HIGH level
 		$this->_form['CaptchaValidationPlugin']['word'] = '1234';
-		$result                                         = $this->_plugin->performValidation($this->_form, array(
-			'level' => 'HIGH',
-		));
+		$result                                         = $this->_plugin->performValidation(
+			$this->_form,
+			array(
+				'level' => 'HIGH',
+			)
+		);
 		$this->assertEquals(array(null, array(), true), $result, 'pass');
 
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
-		$result                                         = $this->_plugin->performValidation($this->_form, array(
-			'level' => 'HIGH',
-		));
+		$result                                         = $this->_plugin->performValidation(
+			$this->_form,
+			array(
+				'level' => 'HIGH',
+			)
+		);
 		$this->assertEquals(
 			array(
 				null,
@@ -350,9 +365,12 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$session =& $gallery->getSession();
 
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
-		$result                                         = $this->_plugin->performValidation($this->_form, array(
-			'level' => 'HIGH',
-		));
+		$result                                         = $this->_plugin->performValidation(
+			$this->_form,
+			array(
+				'level' => 'HIGH',
+			)
+		);
 		$this->assertEquals(
 			array(
 				null,
@@ -367,9 +385,12 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 		// Retry now fails, even with previously correct key
 		$this->_form['CaptchaValidationPlugin']['word'] = '1234';
-		$result                                         = $this->_plugin->performValidation($this->_form, array(
-			'level' => 'HIGH',
-		));
+		$result                                         = $this->_plugin->performValidation(
+			$this->_form,
+			array(
+				'level' => 'HIGH',
+			)
+		);
 		$this->assertEquals(
 			array(
 				null,

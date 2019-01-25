@@ -58,10 +58,13 @@ class PanoramaView extends GalleryView {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
-		$template->setVariable('Panorama', array(
-			'item'       => (array)$item,
-			'appletHtml' => $renderer->render('HTML', $image, $item, array()),
-		));
+		$template->setVariable(
+			'Panorama',
+			array(
+				'item'       => (array)$item,
+				'appletHtml' => $renderer->render('HTML', $image, $item, array()),
+			)
+		);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'panorama');
 

@@ -124,56 +124,68 @@ class ImageBlockHelper {
 				if ($heading && $plural) {
 					switch ($block) {
 						case 'randomImage':
-							$title = $module->translate(array(
-								'one'   => 'Random Image',
-								'many'  => 'Random Images',
-								'count' => $plural,
-							));
+							$title = $module->translate(
+								array(
+									'one'   => 'Random Image',
+									'many'  => 'Random Images',
+									'count' => $plural,
+								)
+							);
 
 							break;
 
 						case 'recentImage':
-							$title = $module->translate(array(
-								'one'   => 'Newest Image',
-								'many'  => 'Newest Images',
-								'count' => $plural,
-							));
+							$title = $module->translate(
+								array(
+									'one'   => 'Newest Image',
+									'many'  => 'Newest Images',
+									'count' => $plural,
+								)
+							);
 
 							break;
 
 						case 'viewedImage':
-							$title = $module->translate(array(
-								'one'   => 'Most Viewed Image',
-								'many'  => 'Most Viewed Images',
-								'count' => $plural,
-							));
+							$title = $module->translate(
+								array(
+									'one'   => 'Most Viewed Image',
+									'many'  => 'Most Viewed Images',
+									'count' => $plural,
+								)
+							);
 
 							break;
 
 						case 'randomAlbum':
-							$title = $module->translate(array(
-								'one'   => 'Random Album',
-								'many'  => 'Random Albums',
-								'count' => $plural,
-							));
+							$title = $module->translate(
+								array(
+									'one'   => 'Random Album',
+									'many'  => 'Random Albums',
+									'count' => $plural,
+								)
+							);
 
 							break;
 
 						case 'recentAlbum':
-							$title = $module->translate(array(
-								'one'   => 'Newest Album',
-								'many'  => 'Newest Albums',
-								'count' => $plural,
-							));
+							$title = $module->translate(
+								array(
+									'one'   => 'Newest Album',
+									'many'  => 'Newest Albums',
+									'count' => $plural,
+								)
+							);
 
 							break;
 
 						case 'viewedAlbum':
-							$title = $module->translate(array(
-								'one'   => 'Most Viewed Album',
-								'many'  => 'Most Viewed Albums',
-								'count' => $plural,
-							));
+							$title = $module->translate(
+								array(
+									'one'   => 'Most Viewed Album',
+									'many'  => 'Most Viewed Albums',
+									'count' => $plural,
+								)
+							);
 
 							break;
 

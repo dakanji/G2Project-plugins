@@ -206,11 +206,14 @@ class NotificationHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret) = GalleryCoreApi::loadEntitiesById(array(
-			$this->_album->getId(),
-			$this->_item1->getId(),
-			$this->_item2->getId(),
-		), 'GalleryItem');
+		list($ret) = GalleryCoreApi::loadEntitiesById(
+			array(
+				$this->_album->getId(),
+				$this->_item1->getId(),
+				$this->_item2->getId(),
+			),
+			'GalleryItem'
+		);
 
 		if ($ret) {
 			return $ret;
@@ -916,11 +919,13 @@ class NotificationHelperTest extends GalleryTestCase {
 		$itemTypeName = $this->_album->itemTypeName();
 		$itemTypeName = $itemTypeName[1];
 
-		$msg = $module->translate(array(
-			'arg1' => $itemTypeName,
-			'arg2' => $url,
-			'text' => "A new %s has been added. To view it, click here: \n%s",
-		));
+		$msg = $module->translate(
+			array(
+				'arg1' => $itemTypeName,
+				'arg2' => $url,
+				'text' => "A new %s has been added. To view it, click here: \n%s",
+			)
+		);
 		$this->assertEquals($msg, $testMsg, 'Single item not formatted propery');
 
 		$event = GalleryCoreApi::newEvent('Gallery::ItemAdded');
@@ -932,11 +937,13 @@ class NotificationHelperTest extends GalleryTestCase {
 		$itemTypeName = $this->_item1->itemTypeName();
 		$itemTypeName = $itemTypeName[1];
 
-		$msg                 = $module->translate(array(
-			'arg1' => $itemTypeName,
-			'arg2' => $url,
-			'text' => "A new %s has been added. To view it, click here: \n%s",
-		));
+		$msg                 = $module->translate(
+			array(
+				'arg1' => $itemTypeName,
+				'arg2' => $url,
+				'text' => "A new %s has been added. To view it, click here: \n%s",
+			)
+		);
 		list($ret, $testMsg) = $notifier->getNotificationMessage();
 
 		if ($ret) {
@@ -967,10 +974,12 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
-					array($userId),
-					array($this->_user2->getId()),
-				)),
+				new UnitTestStorageSearchResults(
+					array(
+						array($userId),
+						array($this->_user2->getId()),
+					)
+				),
 			)
 		);
 
@@ -1012,10 +1021,12 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
-					array($userId),
-					array($this->_user2->getId()),
-				)),
+				new UnitTestStorageSearchResults(
+					array(
+						array($userId),
+						array($this->_user2->getId()),
+					)
+				),
 			)
 		);
 		$storage->setReply(
@@ -1095,10 +1106,12 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(
-					array($notificationName, $this->_user->getId(), 'Test::EventHandler'),
-					array($notificationName, $userId, 'Test::EventHandler'),
-				)),
+				new UnitTestStorageSearchResults(
+					array(
+						array($notificationName, $this->_user->getId(), 'Test::EventHandler'),
+						array($notificationName, $userId, 'Test::EventHandler'),
+					)
+				),
 			)
 		);
 

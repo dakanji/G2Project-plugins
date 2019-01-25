@@ -80,8 +80,13 @@ class DcrawToolkitHelper {
 			|| !@$platform->is_file($dcrawPath)
 		) {
 			return array(
-				GalleryCoreApi::error(ERROR_BAD_PATH, null, null, '"' . $dcrawPath
-								. '" is not a file or is not specified in open_basedir.'),
+				GalleryCoreApi::error(
+					ERROR_BAD_PATH,
+					null,
+					null,
+					'"' . $dcrawPath
+					. '" is not a file or is not specified in open_basedir.'
+				),
 				null,
 				null,
 			);

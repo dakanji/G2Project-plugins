@@ -65,31 +65,33 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$ret = CustomFieldHelper::saveParameters(array(
-			'common' => array(
-				array(
-					'field'   => 'Catalog Id',
-					'summary' => false,
-					'detail'  => true,
-					'choices' => array(),
+		$ret = CustomFieldHelper::saveParameters(
+			array(
+				'common' => array(
+					array(
+						'field'   => 'Catalog Id',
+						'summary' => false,
+						'detail'  => true,
+						'choices' => array(),
+					),
 				),
-			),
-			'album'  => array(),
-			'photo'  => array(
-				array(
-					'field'   => 'Location',
-					'summary' => true,
-					'detail'  => true,
-					'choices' => array(),
+				'album'  => array(),
+				'photo'  => array(
+					array(
+						'field'   => 'Location',
+						'summary' => true,
+						'detail'  => true,
+						'choices' => array(),
+					),
+					array(
+						'field'   => 'Category',
+						'summary' => false,
+						'detail'  => false,
+						'choices' => array('A', 'B'),
+					),
 				),
-				array(
-					'field'   => 'Category',
-					'summary' => false,
-					'detail'  => false,
-					'choices' => array('A', 'B'),
-				),
-			),
-		));
+			)
+		);
 
 		if ($ret) {
 			return $ret;

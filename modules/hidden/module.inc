@@ -38,8 +38,12 @@ class HiddenModule extends GalleryModule {
 
 		$this->setId('hidden');
 		$this->setName($gallery->i18n('Hidden Items'));
-		$this->setDescription($gallery->i18n('Hide items/albums from guests until directly ' .
-						 'accessed with the right URL'));
+		$this->setDescription(
+			$gallery->i18n(
+				'Hide items/albums from guests until directly ' .
+				'accessed with the right URL'
+			)
+		);
 		$this->setVersion('1.0.9');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $this->translate('Display'));
@@ -72,10 +76,12 @@ class HiddenModule extends GalleryModule {
 			}
 
 			$gallery->guaranteeTimeLimit(60);
-			$ret = $storage->execute('INSERT INTO [ItemHiddenMap] ([::itemId])
+			$ret = $storage->execute(
+				'INSERT INTO [ItemHiddenMap] ([::itemId])
 				   SELECT [GalleryEntity::id]
 				     FROM [GalleryEntity]
-				    WHERE [GalleryEntity::onLoadHandlers] LIKE \'%|Hidden|%\'');
+				    WHERE [GalleryEntity::onLoadHandlers] LIKE \'%|Hidden|%\''
+			);
 
 			if ($ret) {
 				return $ret;

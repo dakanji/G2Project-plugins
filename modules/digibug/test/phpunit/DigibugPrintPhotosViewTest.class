@@ -157,10 +157,13 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		$itemId       = $this->_item->getId();
 		$publicItemId = $this->_publicItem->getId();
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
-		$session->put('digibug.cart', array(
-			$itemId       => 1,
-			$publicItemId => 1,
-		));
+		$session->put(
+			'digibug.cart',
+			array(
+				$itemId       => 1,
+				$publicItemId => 1,
+			)
+		);
 
 		$ret = GalleryCoreApi::removeItemPermissions($itemId);
 

@@ -80,73 +80,78 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 			return $ret;
 		}
 
-		$ret = CustomFieldHelper::saveParameters(array(
-			'common' => array(
-				array(
-					'field'   => 'Catalog Id',
-					'summary' => false,
-					'detail'  => true,
-					'choices' => array(),
+		$ret = CustomFieldHelper::saveParameters(
+			array(
+				'common' => array(
+					array(
+						'field'   => 'Catalog Id',
+						'summary' => false,
+						'detail'  => true,
+						'choices' => array(),
+					),
+					array(
+						'field'   => 'My Data',
+						'summary' => true,
+						'detail'  => true,
+						'choices' => array(),
+					),
 				),
-				array(
-					'field'   => 'My Data',
-					'summary' => true,
-					'detail'  => true,
-					'choices' => array(),
+				'album'  => array(),
+				'photo'  => array(
+					array(
+						'field'   => 'Location',
+						'summary' => true,
+						'detail'  => true,
+						'choices' => array(),
+					),
+					array(
+						'field'   => 'Category',
+						'summary' => false,
+						'detail'  => false,
+						'choices' => array('A', 'B'),
+					),
 				),
-			),
-			'album'  => array(),
-			'photo'  => array(
-				array(
-					'field'   => 'Location',
-					'summary' => true,
-					'detail'  => true,
-					'choices' => array(),
-				),
-				array(
-					'field'   => 'Category',
-					'summary' => false,
-					'detail'  => false,
-					'choices' => array('A', 'B'),
-				),
-			),
-		));
+			)
+		);
 
 		if ($ret) {
 			return $ret;
 		}
-		$ret = CustomFieldHelper::saveParameters(array(
-			'common' => array(
-				array(
-					'field'   => 'Category',
-					'summary' => true,
-					'detail'  => false,
-					'choices' => array('A', 'B', 'C'),
+		$ret = CustomFieldHelper::saveParameters(
+			array(
+				'common' => array(
+					array(
+						'field'   => 'Category',
+						'summary' => true,
+						'detail'  => false,
+						'choices' => array('A', 'B', 'C'),
+					),
+				),
+				'album' => array(
+					array(
+						'field'   => 'Catalog Id',
+						'summary' => false,
+						'detail'  => true,
+						'choices' => array(),
+					),
+					array(
+						'field'   => 'Year',
+						'summary' => false,
+						'detail'  => true,
+						'choices' => array(),
+					),
+				),
+				'photo' => array(
+					array(
+						'field'   => 'Photographer',
+						'summary' => true,
+						'detail'  => true,
+						'choices' => array(),
+					),
 				),
 			),
-			'album' => array(
-				array(
-					'field'   => 'Catalog Id',
-					'summary' => false,
-					'detail'  => true,
-					'choices' => array(),
-				),
-				array(
-					'field'   => 'Year',
-					'summary' => false,
-					'detail'  => true,
-					'choices' => array(),
-				),
-			),
-			'photo' => array(
-				array(
-					'field'   => 'Photographer',
-					'summary' => true,
-					'detail'  => true,
-					'choices' => array(),
-				),
-			),
-		), $this->_albumS->getId());
+			$this->_albumS->getId()
+		);
 
 		if ($ret) {
 			return $ret;
@@ -297,11 +302,15 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[common][newField]', 'Photo Fun');
 		GalleryUtilities::putRequestVariable('form[action][add][common]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
-		$this->assertEquals(array(
-			array(),
-			'<div class="giError">' .
-			$this->_translate('Field name already in use') . '</div>',
-		), $results, 'Add Duplicate');
+		$this->assertEquals(
+			array(
+				array(),
+				'<div class="giError">' .
+				$this->_translate('Field name already in use') . '</div>',
+			),
+			$results,
+			'Add Duplicate'
+		);
 
 		// Add picklist
 		GalleryUtilities::removeFormVariables('form');
@@ -365,10 +374,14 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[photo][detail][0]', 'on');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
-		$this->assertEquals(array(
-			array(),
-			$this->_translate('Display settings saved successfully'),
-		), $results, 'Update Display');
+		$this->assertEquals(
+			array(
+				array(),
+				$this->_translate('Display settings saved successfully'),
+			),
+			$results,
+			'Update Display'
+		);
 
 		// Check data so far
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters(

@@ -79,7 +79,8 @@ class CustomFieldSearch extends GallerySearchInterface_1_0 {
 		}
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
-		$countQuery = sprintf('
+		$countQuery = sprintf(
+			'
 	SELECT
 	  COUNT([CustomFieldMap::itemId])
 	FROM
@@ -90,9 +91,12 @@ class CustomFieldSearch extends GallerySearchInterface_1_0 {
 	  [GalleryAccessSubscriberMap::accessListId] IN (%s)
 	  AND
 	  [CustomFieldMap::value] LIKE ?
-	', $aclMarkers);
+	',
+			$aclMarkers
+		);
 
-		$query = sprintf('
+		$query = sprintf(
+			'
 	SELECT
 	  [CustomFieldMap::itemId],
 	  [CustomFieldMap::field],
@@ -107,7 +111,9 @@ class CustomFieldSearch extends GallerySearchInterface_1_0 {
 	  [CustomFieldMap::value] LIKE ?
 	ORDER BY
 	  [CustomFieldMap::itemId] DESC
-	', $aclMarkers);
+	',
+			$aclMarkers
+		);
 
 		$data   = $aclIds;
 		$data[] = '%' . $criteria . '%';

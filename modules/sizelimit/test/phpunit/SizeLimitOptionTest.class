@@ -99,11 +99,14 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			'height'       => 1024,
-			'width'        => 1024,
-			'keepOriginal' => 0,
-		), $params);
+		$this->assertEquals(
+			array(
+				'height'       => 1024,
+				'width'        => 1024,
+				'keepOriginal' => 0,
+			),
+			$params
+		);
 	}
 
 	public function testDimHeight() {
@@ -124,11 +127,14 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			'height'       => 768,
-			'width'        => 768,
-			'keepOriginal' => 1,
-		), $params);
+		$this->assertEquals(
+			array(
+				'height'       => 768,
+				'width'        => 768,
+				'keepOriginal' => 1,
+			),
+			$params
+		);
 	}
 
 	public function testDimXY() {
@@ -148,11 +154,14 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			'keepOriginal' => '0',
-			'width'        => '1024',
-			'height'       => '768',
-		), $params);
+		$this->assertEquals(
+			array(
+				'keepOriginal' => '0',
+				'width'        => '1024',
+				'height'       => '768',
+			),
+			$params
+		);
 	}
 
 	public function testSize() {
@@ -171,10 +180,13 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			'keepOriginal' => 0,
-			'size'         => 2000,
-		), $params);
+		$this->assertEquals(
+			array(
+				'keepOriginal' => 0,
+				'size'         => 2000,
+			),
+			$params
+		);
 	}
 
 	public function testBadSize() {
@@ -245,10 +257,13 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			'keepOriginal' => 0,
-			'size'         => 2000,
-		), $params);
+		$this->assertEquals(
+			array(
+				'keepOriginal' => 0,
+				'size'         => 2000,
+			),
+			$params
+		);
 
 		$platform->clearstatcache();
 		list($ret, $this->_item) = $this->_item->refresh();
@@ -284,10 +299,13 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			'keepOriginal' => 0,
-			'size'         => 2000,
-		), $params);
+		$this->assertEquals(
+			array(
+				'keepOriginal' => 0,
+				'size'         => 2000,
+			),
+			$params
+		);
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters(
 			'module',
@@ -298,10 +316,13 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			'keepOriginal' => 0,
-			'size'         => 2000,
-		), $params);
+		$this->assertEquals(
+			array(
+				'keepOriginal' => 0,
+				'size'         => 2000,
+			),
+			$params
+		);
 	}
 
 	/**

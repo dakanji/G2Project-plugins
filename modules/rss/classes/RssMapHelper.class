@@ -265,9 +265,12 @@ class RssMapHelper {
 	 * @return GalleryStatus a status code
 	 */
 	public static function deleteFeed($feedName) {
-		$ret = GalleryCoreApi::removeMapEntry('RssMap', array(
-			'feedName' => $feedName,
-		));
+		$ret = GalleryCoreApi::removeMapEntry(
+			'RssMap',
+			array(
+				'feedName' => $feedName,
+			)
+		);
 
 		if ($ret) {
 			return $ret;

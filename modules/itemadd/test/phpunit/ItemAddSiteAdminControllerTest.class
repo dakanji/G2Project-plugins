@@ -122,12 +122,14 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[uploadLocalServer][newDir]', __DIR__);
 		GalleryUtilities::putRequestVariable('form[action][addUploadLocalServerDir]', 1);
 
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => 'b',
-			3 => null,
-			4 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => 'b',
+				3 => null,
+				4 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -344,10 +346,12 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 		$platform =& $gallery->getPlatform();
 		$saveDir  = $platform->getcwd();
 
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -467,10 +471,12 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testAddUploadLocalServerDirWithSymlink() {
 		// If symlink in the path check open_basedir with realpath but store given path
 		global $gallery;
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -519,13 +525,15 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[uploadLocalServer][selectedDir]', '2');
 		GalleryUtilities::putRequestVariable('form[action][removeUploadLocalServerDir]', 1);
 
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => 'x',
-			3 => 'b',
-			4 => 'c',
-			5 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => 'x',
+				3 => 'b',
+				4 => 'c',
+				5 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;

@@ -320,12 +320,15 @@ class ChooseObjectsView extends GalleryView {
 
 		foreach ($hierarchy as $childAlbumName => $subHierarchy) {
 			$gallery->guaranteeTimeLimit(30);
-			$data = array_merge($data, $this->_createG1DepthTree(
-				$albumList,
-				$childAlbumName,
-				$subHierarchy,
-				$depth + 1
-			));
+			$data = array_merge(
+				$data,
+				$this->_createG1DepthTree(
+					$albumList,
+					$childAlbumName,
+					$subHierarchy,
+					$depth + 1
+				)
+			);
 		}
 
 		return $data;

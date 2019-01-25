@@ -123,8 +123,10 @@ class WatermarkOption extends ItemAddOption {
 				if ($ret) {
 					return array($ret, null, null);
 				}
-				$message = $module->translate('Error: Missing watermark. Please see the Event Logs '
-					   . 'page in the Site Admin.');
+				$message = $module->translate(
+					'Error: Missing watermark. Please see the Event Logs '
+					. 'page in the Site Admin.'
+				);
 
 				return array(null, array($message), array());
 			}

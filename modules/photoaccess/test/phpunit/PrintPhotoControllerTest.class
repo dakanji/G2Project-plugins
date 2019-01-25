@@ -181,8 +181,12 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 		$platform->setReply('feof', array('testFd'), false);
 		$platform->setReply('fgets', array('testFd', 4096), '');
 		$platform->setReply('feof', array('testFd'), false);
-		$platform->setReply('fread', array('testFd', 4096), '<add-cart-response request-url="' .
-		$requestUrl . '" redirect-url="' . $redirectUrl . '"/>');
+		$platform->setReply(
+			'fread',
+			array('testFd', 4096),
+			'<add-cart-response request-url="' .
+			$requestUrl . '" redirect-url="' . $redirectUrl . '"/>'
+		);
 		$platform->setReply('feof', array('testFd'), true);
 		$platform->setReply('fclose', array('testFd'), true);
 
@@ -218,11 +222,13 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 
 	public function testPrintSecondPhoto() {
 		global $gallery;
-		$gallery->setPlatform($this->_getTestPlatform(
-			'EXISTING_FRAGMENT',
-			'/REQUEST_URL2?foo=1&#38;bar=2',
-			'/REDIRECT_URL2?foo=1&#38;bar=2'
-		));
+		$gallery->setPlatform(
+			$this->_getTestPlatform(
+				'EXISTING_FRAGMENT',
+				'/REQUEST_URL2?foo=1&#38;bar=2',
+				'/REDIRECT_URL2?foo=1&#38;bar=2'
+			)
+		);
 
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo->getId());
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');

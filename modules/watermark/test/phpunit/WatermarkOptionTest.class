@@ -420,8 +420,10 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		$form['WatermarkOption']['watermarkId'] = -1;
 		$result                                 = $this->_handleRequestAfterAdd($form, $this->_items);
 
-		$message = $module->translate('Error: Missing watermark. Please see the Event Logs page in '
-					   . 'the Site Admin.');
+		$message = $module->translate(
+			'Error: Missing watermark. Please see the Event Logs page in '
+			. 'the Site Admin.'
+		);
 
 		$this->assertEquals(array(array($message), $this->_noWarnings), $result);
 

@@ -208,21 +208,25 @@ class PhotoAccessCartPluginTest extends GalleryTestCase {
 
 		$platform = new UnitTestPlatform();
 		$platform->setReply('fsockopen', array('www.photoworks.com', 80, '', '', 5), 'testFd');
-		$platform->setReply('fwrite', array(
-			'testFd',
-			'fuzzy' => '{POST /sbo/anonCartXML.jsp HTTP/1\.0.*xml_request.*return-url.*ViewCart'
-			// First image/url/thumb use new sessionid
-			. '.*image\+id%3D%22' . $this->_sourceIds[0] . '%.*url.*' . $this->_sourceIds[0]
-			. '.*' . $session->getKey() . '%3D(?!' . $session->getId() . ')[A-Za-z0-9]+%'
-			. '.*thumb-url.*' . $this->_sourceIds[0] // src not thumb, as thumb has watermark
-			. '.*' . $session->getKey() . '%3D(?!' . $session->getId() . ')[A-Za-z0-9]+%'
-			// Second image not included (not print perm), 3rd is public so no session ids
-			. '(?!.*' . $session->getKey() . ')'
-			. '.*image\+id%3D%22' . $this->_sourceIds[2] . '%.*url.*' . $this->_sourceIds[2]
-			. '.*thumb-url.*' . $this->_thumbIds[2]
-			. '}s',
-			'',
-		), 100);
+		$platform->setReply(
+			'fwrite',
+			array(
+				'testFd',
+				'fuzzy' => '{POST /sbo/anonCartXML.jsp HTTP/1\.0.*xml_request.*return-url.*ViewCart'
+				// First image/url/thumb use new sessionid
+				. '.*image\+id%3D%22' . $this->_sourceIds[0] . '%.*url.*' . $this->_sourceIds[0]
+				. '.*' . $session->getKey() . '%3D(?!' . $session->getId() . ')[A-Za-z0-9]+%'
+				. '.*thumb-url.*' . $this->_sourceIds[0] // src not thumb, as thumb has watermark
+				. '.*' . $session->getKey() . '%3D(?!' . $session->getId() . ')[A-Za-z0-9]+%'
+				// Second image not included (not print perm), 3rd is public so no session ids
+				. '(?!.*' . $session->getKey() . ')'
+				. '.*image\+id%3D%22' . $this->_sourceIds[2] . '%.*url.*' . $this->_sourceIds[2]
+				. '.*thumb-url.*' . $this->_thumbIds[2]
+				. '}s',
+				'',
+			),
+			100
+		);
 		$platform->setReply('fflush', array('testFd'), true);
 		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
 		$platform->setReply('feof', array('testFd'), false);
@@ -244,9 +248,12 @@ class PhotoAccessCartPluginTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
-			'href' => 'http://www.photoworks.com/REDIRECT_URL',
-		), $urlParams);
+		$this->assertEquals(
+			array(
+				'href' => 'http://www.photoworks.com/REDIRECT_URL',
+			),
+			$urlParams
+		);
 	}
 }
 

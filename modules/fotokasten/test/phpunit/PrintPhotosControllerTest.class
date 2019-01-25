@@ -252,11 +252,14 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 	public function testPrintCart() {
 		global $gallery;
 		$session =& $gallery->getSession();
-		$session->put('fotokasten.cart', array(
-			$this->_items[0]->getId() => 1,
-			$this->_items[1]->getId() => 1,
-			$this->_items[2]->getId() => 2,
-		));
+		$session->put(
+			'fotokasten.cart',
+			array(
+				$this->_items[0]->getId() => 1,
+				$this->_items[1]->getId() => 1,
+				$this->_items[2]->getId() => 2,
+			)
+		);
 
 		$result = $this->handleRequest();
 		$this->assertEquals(

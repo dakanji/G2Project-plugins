@@ -58,9 +58,11 @@ class MimeAdminController extends GalleryController {
 			$status['saved'] = true;
 		} elseif (isset($form['action']['delete'])) {
 			$mimeType = $form['action']['delete'];
-			$ret      = GalleryCoreApi::removeMimeType(array(
-				'mimeType' => $mimeType,
-			));
+			$ret      = GalleryCoreApi::removeMimeType(
+				array(
+					'mimeType' => $mimeType,
+				)
+			);
 
 			if ($ret) {
 				return array($ret, null);

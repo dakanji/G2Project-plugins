@@ -269,9 +269,11 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 
 		if (empty($extensions)) {
 			// Delete mime entry in case test failed..
-			$ret = GalleryCoreApi::removeMimeType(array(
-				'mimeType' => 'Test/Test',
-			));
+			$ret = GalleryCoreApi::removeMimeType(
+				array(
+					'mimeType' => 'Test/Test',
+				)
+			);
 
 			if ($ret) {
 				return $ret;

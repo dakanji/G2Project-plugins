@@ -340,7 +340,7 @@ class ItemCreateReplicaView extends GalleryView {
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$ItemCreateReplica                = array();
-		$ItemCreateReplica['canCancel']   = (boolean)GalleryUtilities::getRequestVariables('return');
+		$ItemCreateReplica['canCancel']   = (bool)GalleryUtilities::getRequestVariables('return');
 		$ItemCreateReplica['peers']       = $peers;
 		$ItemCreateReplica['albumTree']   = GalleryUtilities::createAlbumTree($albums);
 		$ItemCreateReplica['page']        = $page;

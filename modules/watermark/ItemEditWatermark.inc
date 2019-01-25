@@ -135,11 +135,13 @@ class ItemEditWatermark extends ItemEditPlugin {
 		global $gallery;
 		$storage      =& $gallery->getStorage();
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$redirect     = $urlGenerator->generateUrl(array(
-			'view'    => 'core.ItemAdmin',
-			'subView' => 'core.ItemEdit',
-			'itemId'  => $item->getId(),
-		));
+		$redirect     = $urlGenerator->generateUrl(
+			array(
+				'view'    => 'core.ItemAdmin',
+				'subView' => 'core.ItemEdit',
+				'itemId'  => $item->getId(),
+			)
+		);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'watermark');
 

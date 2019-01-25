@@ -119,8 +119,10 @@ class DownloadRegistryFileView extends GalleryView {
 
 		if ($ret) {
 			if ($gallery->getDebug()) {
-				$gallery->debug('publishxp.DownloadRegistryFile, failed to get the session ' .
-				'language. Error: ' . $ret->getAsText());
+				$gallery->debug(
+					'publishxp.DownloadRegistryFile, failed to get the session ' .
+					'language. Error: ' . $ret->getAsText()
+				);
 			}
 			$languageCode = '';
 		}
@@ -129,8 +131,10 @@ class DownloadRegistryFileView extends GalleryView {
 
 		if ($ret) {
 			if ($gallery->getDebug()) {
-				$gallery->debug('publishxp.DownloadRegistryFile, failed to get the default ' .
-				'language. Error: ' . $ret->getAsText());
+				$gallery->debug(
+					'publishxp.DownloadRegistryFile, failed to get the default ' .
+					'language. Error: ' . $ret->getAsText()
+				);
 			}
 			$defaultLanguageCode = 'en_US';
 		}

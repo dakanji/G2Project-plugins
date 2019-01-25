@@ -215,13 +215,21 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			'GalleryTest 2_script_evil'
 		);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-		$this->_platform->setReply('file_exists', array(
-			'fuzzy' => '{.*GalleryTest 2}',
-		), false);
-		$this->_platform->setReply('mkdir', array(
-			'fuzzy'  => '{.*GalleryTest 2}',
-			'fuzzy2' => '{\d+}',
-		), true);
+		$this->_platform->setReply(
+			'file_exists',
+			array(
+				'fuzzy' => '{.*GalleryTest 2}',
+			),
+			false
+		);
+		$this->_platform->setReply(
+			'mkdir',
+			array(
+				'fuzzy'  => '{.*GalleryTest 2}',
+				'fuzzy2' => '{\d+}',
+			),
+			true
+		);
 
 		// Image creation
 		$testImages = array('ajipankachile5.jpg0', 'californiadriedchile5.jpg0', 'a<script>b.jpg0');
@@ -427,12 +435,14 @@ class ItemAddFromPicasaTestToolkit {
 		$platform =& $gallery->getPlatform();
 
 		// Pseudo extract call to verify that the toolkit was called
-		$platform->exec(array(
+		$platform->exec(
 			array(
-				'0' => 'test_extract',
-				'1' => '/picasaimport.tmp',
-			),
-		));
+				array(
+					'0' => 'test_extract',
+					'1' => '/picasaimport.tmp',
+				),
+			)
+		);
 
 		return array(null, $mimeType, $context);
 	}

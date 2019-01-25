@@ -143,9 +143,12 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function _deleteUserOrGroupQuota($userOrGroupId) {
-		$ret = GalleryCoreApi::removeMapEntry('QuotasMap', array(
-			'userOrGroupId' => $userOrGroupId,
-		));
+		$ret = GalleryCoreApi::removeMapEntry(
+			'QuotasMap',
+			array(
+				'userOrGroupId' => $userOrGroupId,
+			)
+		);
 
 		if ($ret) {
 			return $ret;

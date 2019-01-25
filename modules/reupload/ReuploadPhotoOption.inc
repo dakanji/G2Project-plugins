@@ -116,8 +116,10 @@ class ReuploadPhotoOption extends ItemEditOption {
 
 			if ($ret) {
 				if ($gallery->getDebug()) {
-					$gallery->debug('Failed to rescan item after reupload. ' .
-					'This is the error stack trace: ' . $ret->getAsText());
+					$gallery->debug(
+						'Failed to rescan item after reupload. ' .
+						'This is the error stack trace: ' . $ret->getAsText()
+					);
 				}
 				$platform->copy($tmpfname, $path);
 				$platform->unlink($tmpfname);
@@ -196,19 +198,23 @@ class ReuploadPhotoOption extends ItemEditOption {
 		}
 
 		if ($maxFileSize >= 1024 * 1024) {
-			$maxFileSize = $module->translate(array(
-				'one'   => '%d megabyte',
-				'many'  => '%d megabytes',
-				'count' => (int)($maxFileSize / (1024 * 1024)),
-				'arg1'  => (int)($maxFileSize / (1024 * 1024)),
-			));
+			$maxFileSize = $module->translate(
+				array(
+					'one'   => '%d megabyte',
+					'many'  => '%d megabytes',
+					'count' => (int)($maxFileSize / (1024 * 1024)),
+					'arg1'  => (int)($maxFileSize / (1024 * 1024)),
+				)
+			);
 		} elseif ($maxFileSize >= 1024) {
-			$maxFileSize = $module->translate(array(
-				'one'   => '%d kilobytes',
-				'many'  => '%d kilobytes',
-				'count' => (int)($maxFileSize / (1024)),
-				'arg1'  => (int)($maxFileSize / (1024)),
-			));
+			$maxFileSize = $module->translate(
+				array(
+					'one'   => '%d kilobytes',
+					'many'  => '%d kilobytes',
+					'count' => (int)($maxFileSize / (1024)),
+					'arg1'  => (int)($maxFileSize / (1024)),
+				)
+			);
 		}
 
 		list($ret, $hasLinkedEntity) = $this->_hasLinkedEntity($item);

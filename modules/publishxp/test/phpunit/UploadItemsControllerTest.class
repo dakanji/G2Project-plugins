@@ -57,9 +57,11 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		global $gallery;
-		$ret = GalleryCoreApi::removeMimeType(array(
-			'extension' => 'phpunit_ext',
-		));
+		$ret = GalleryCoreApi::removeMimeType(
+			array(
+				'extension' => 'phpunit_ext',
+			)
+		);
 
 		if ($ret) {
 			$this->failWithStatus($ret);
@@ -240,9 +242,11 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		$session =& $gallery->getSession();
 		$session->put(
 			'publishxp.extraOptionsForm',
-			serialize(array(
-				'optionValue' => 'myOptionValue',
-			))
+			serialize(
+				array(
+					'optionValue' => 'myOptionValue',
+				)
+			)
 		);
 
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);

@@ -133,16 +133,19 @@ class RssMapTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals($feeds, array(
+		$this->assertEquals(
+			$feeds,
 			array(
-				'name'    => $this->_name,
-				'itemId'  => $this->_root->getId(),
-				'ownerId' => $gallery->getActiveUserId(),
-				'params'  => array(
-					'itemId' => $this->_root->getId(),
+				array(
+					'name'    => $this->_name,
+					'itemId'  => $this->_root->getId(),
+					'ownerId' => $gallery->getActiveUserId(),
+					'params'  => array(
+						'itemId' => $this->_root->getId(),
+					),
 				),
-			),
-		));
+			)
+		);
 	}
 
 	public function testFetchFeedNames() {

@@ -112,10 +112,12 @@ class AlbumSelectTest extends GalleryTestCase {
 		$gallery->setConfig('defaultAlbumId', $this->_rootAlbumId);
 		$gallery->setConfig('breadcrumbRootId', $this->_rootAlbumId);
 		$_SERVER['REQUEST_URI'] = $this->_originalRequestUri;
-		GalleryDataCache::removeFromDisk(array(
-			'type'   => 'module-data',
-			'module' => 'albumselect',
-		));
+		GalleryDataCache::removeFromDisk(
+			array(
+				'type'   => 'module-data',
+				'module' => 'albumselect',
+			)
+		);
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -233,12 +235,15 @@ class AlbumSelectTest extends GalleryTestCase {
 		$exptectedNodeIds = array();
 
 		foreach ($data['tree'] as $idx => $node) {
-			if (in_array($node['id'], array(
-				$this->_album->getId(),
-				$this->_subalbum[1]->getId(),
-				$this->_subalbum[2]->getId(),
-				$this->_subalbum[3]->getId(),
-			))
+			if (in_array(
+				$node['id'],
+				array(
+					$this->_album->getId(),
+					$this->_subalbum[1]->getId(),
+					$this->_subalbum[2]->getId(),
+					$this->_subalbum[3]->getId(),
+				)
+			)
 			) {
 				$exptectedNodeIds[] = $nodeId;
 
@@ -400,10 +405,18 @@ class AlbumSelectTest extends GalleryTestCase {
 			'type'   => 'module-data',
 			'module' => 'albumselect',
 			'itemId' => $userId . '__' . $languageCode .
-			'_' . substr(md5(serialize(array(
-				$callbackParams,
-				$rootAlbumId,
-			))), 0, 5),
+			'_' . substr(
+				md5(
+					serialize(
+						array(
+							$callbackParams,
+							$rootAlbumId,
+						)
+					)
+				),
+				0,
+				5
+			),
 		);
 
 		// Call it a first time

@@ -107,9 +107,12 @@ class ImageUploadHelperTest extends GalleryTestCase {
 				'userName' => $this->_user->getUserName(),
 			)
 		);
-		$this->assertEquals(array(
-			'success' => '2',
-		), $status);
+		$this->assertEquals(
+			array(
+				'success' => '2',
+			),
+			$status
+		);
 	}
 }
 

@@ -150,10 +150,12 @@ class CartHelperTest extends GalleryTestCase {
 	}
 
 	public function testSetCartItemCounts() {
-		$ret = CartHelper::setCartItemCounts(array(
-			2 => 3,
-			4 => 5,
-		));
+		$ret = CartHelper::setCartItemCounts(
+			array(
+				2 => 3,
+				4 => 5,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -166,10 +168,13 @@ class CartHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
-			2 => 3,
-			4 => 5,
-		), $newCartItemCounts);
+		$this->assertEquals(
+			array(
+				2 => 3,
+				4 => 5,
+			),
+			$newCartItemCounts
+		);
 	}
 
 	public function testSetCartItemCounts2() {
@@ -181,10 +186,12 @@ class CartHelperTest extends GalleryTestCase {
 		}
 
 		// Fill it again
-		$ret = CartHelper::setCartItemCounts(array(
-			2 => 3,
-			4 => 5,
-		));
+		$ret = CartHelper::setCartItemCounts(
+			array(
+				2 => 3,
+				4 => 5,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -197,10 +204,13 @@ class CartHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
-			2 => 3,
-			4 => 5,
-		), $newCartItemCounts);
+		$this->assertEquals(
+			array(
+				2 => 3,
+				4 => 5,
+			),
+			$newCartItemCounts
+		);
 	}
 
 	public function testLoadCartItems() {
@@ -247,9 +257,13 @@ class CartHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
-			$item->getId() => 2,
-		), $cartItemCounts, 'deleted invalid');
+		$this->assertEquals(
+			array(
+				$item->getId() => 2,
+			),
+			$cartItemCounts,
+			'deleted invalid'
+		);
 	}
 
 	// Make sure it works even when the cart is empty

@@ -408,9 +408,11 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 
 		$results = $this->handleRequest(ERROR_PERMISSION_DENIED);
 
-		list($ret, $this->_user2) = $this->_createUser(array(
-			'locked' => 1,
-		));
+		list($ret, $this->_user2) = $this->_createUser(
+			array(
+				'locked' => 1,
+			)
+		);
 
 		if ($ret) {
 			return $ret;

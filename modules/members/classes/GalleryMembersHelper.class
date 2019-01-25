@@ -51,7 +51,8 @@ class GalleryMembersHelper {
 		}
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
-		$query = sprintf('
+		$query = sprintf(
+			'
 		SELECT
 		COUNT([GalleryItem::id])
 		FROM
@@ -62,7 +63,9 @@ class GalleryMembersHelper {
 		[GalleryAccessSubscriberMap::itemId] = [GalleryItem::id]
 		AND
 		[GalleryAccessSubscriberMap::accessListId] IN (%s)
-		', $aclMarkers);
+		',
+			$aclMarkers
+		);
 
 		$data = array_merge(array((int)$userId), $aclIds);
 
@@ -117,7 +120,8 @@ class GalleryMembersHelper {
 		}
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
-		$query = sprintf('
+		$query = sprintf(
+			'
 		SELECT
 		[GalleryItem::id], [GalleryEntity::creationTimestamp]
 		FROM
@@ -132,7 +136,9 @@ class GalleryMembersHelper {
 		[GalleryAccessSubscriberMap::accessListId] IN (%s)
 		ORDER BY
 		[GalleryEntity::creationTimestamp] ' . $direction . '
-		', $aclMarkers);
+		',
+			$aclMarkers
+		);
 
 		$data   = array();
 		$data[] = (int)$userId;

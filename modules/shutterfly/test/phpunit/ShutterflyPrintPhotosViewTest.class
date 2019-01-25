@@ -157,10 +157,13 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		$itemId       = $this->_item->getId();
 		$publicItemId = $this->_publicItem->getId();
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
-		$session->put('shutterfly.cart', array(
-			$itemId       => 1,
-			$publicItemId => 1,
-		));
+		$session->put(
+			'shutterfly.cart',
+			array(
+				$itemId       => 1,
+				$publicItemId => 1,
+			)
+		);
 
 		$ret = GalleryCoreApi::removeItemPermissions($itemId);
 

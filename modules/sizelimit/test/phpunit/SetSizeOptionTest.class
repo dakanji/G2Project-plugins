@@ -47,13 +47,13 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		// Register dummy toolkit and operations
 		$ret = GalleryCoreApi::registerFactoryImplementation(
-		'GalleryToolkit',
-		'SetSizeOptionTestToolkit',
-		'SetSizeOptionTestToolkit',
-		'modules/sizelimit/test/phpunit/SetSizeOptionTest.class',
-		'sizelimitTest',
-		null
-	);
+			'GalleryToolkit',
+			'SetSizeOptionTestToolkit',
+			'SetSizeOptionTestToolkit',
+			'modules/sizelimit/test/phpunit/SetSizeOptionTest.class',
+			'sizelimitTest',
+			null
+		);
 
 		if ($ret) {
 			return $ret;
@@ -62,12 +62,17 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		// applying size limits uses 'compress'
 		$ret = GalleryCoreApi::registerToolkitOperation(
-		'SetSizeOptionTestToolkit',
-		array('image/known'),
-		'compress',
-		array(array('type' => 'int', 'description' => 'size')),
-		'desc'
-	);
+			'SetSizeOptionTestToolkit',
+			array('image/known'),
+			'compress',
+			array(
+				array(
+					'type'        => 'int',
+					'description' => 'size',
+				),
+			),
+			'desc'
+		);
 
 		if ($ret) {
 			return $ret;
@@ -75,13 +80,21 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		// applying dimension limits uses 'scale'
 		$ret = GalleryCoreApi::registerToolkitOperation(
-		'SetSizeOptionTestToolkit',
-		array('image/known'),
-		'scale',
-		array(array('type' => 'int', 'description' => 'width'),
-		array('type' => 'int', 'description' => 'height'), ),
-		'desc'
-	);
+			'SetSizeOptionTestToolkit',
+			array('image/known'),
+			'scale',
+			array(
+				array(
+					'type'        => 'int',
+					'description' => 'width',
+				),
+				array(
+					'type'        => 'int',
+					'description' => 'height',
+				),
+			),
+			'desc'
+		);
 
 		if ($ret) {
 			return $ret;
@@ -89,12 +102,12 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		// we will return dimensions to whoever asks
 		$ret = GalleryCoreApi::registerToolkitProperty(
-		'SetSizeOptionTestToolkit',
-		array('image/known', 'image/unknown'),
-		'dimensions',
-		'int,int',
-		'desc'
-	);
+			'SetSizeOptionTestToolkit',
+			array('image/known', 'image/unknown'),
+			'dimensions',
+			'int,int',
+			'desc'
+		);
 
 		if ($ret) {
 			return $ret;
@@ -109,12 +122,13 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		$this->_items = array();
 		// Sample photo image file that can be resized/compressed
-		list($ret, $this->_items[0]) =
-		$this->_createRandomDataItem(
+		list($ret, $this->_items[0]) = $this->_createRandomDataItem(
 			$this->_album->getId(),
 			'image/known',
-					 array('summary' => 'original summary 0',
-					 'description' => 'original description 0', )
+			array(
+				'summary'     => 'original summary 0',
+				'description' => 'original description 0',
+			)
 		);
 
 		if ($ret) {
@@ -123,12 +137,13 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		$this->_itemsUnknown = array();
 		// Not all file types can be resized/compressed. Here is an example of such item
-		list($ret, $this->_itemsUnknown[0]) =
-		$this->_createRandomDataItem(
+		list($ret, $this->_itemsUnknown[0]) = $this->_createRandomDataItem(
 			$this->_album->getId(),
 			'image/unknown',
-					 array('summary' => 'plagiarized summary',
-						   'description' => 'plagiarized description', )
+			array(
+				'summary'     => 'plagiarized summary',
+				'description' => 'plagiarized description',
+			)
 		);
 
 		if ($ret) {
@@ -143,14 +158,21 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$this->_noWarnings = array(array());
-		$this->_noErrors = array();
+		$this->_noErrors   = array();
 
-		$this->_expectWarnings = array(array(
-		$module->translate(array('text' => 'WARNING: Cannot resize mime type %s',
-					 'arg1' => $this->_itemsUnknown[0]->getMimeType(), )),
-		$module->translate(array('text' => 'WARNING: Cannot compress mime type %s',
-					 'arg1' => $this->_itemsUnknown[0]->getMimeType(), )), ));
-		$this->_expectResize = array('scale');
+		$this->_expectWarnings = array(
+			array(
+				$module->translate(array(
+					'text' => 'WARNING: Cannot resize mime type %s',
+					'arg1' => $this->_itemsUnknown[0]->getMimeType(),
+				)),
+				$module->translate(array(
+					'text' => 'WARNING: Cannot compress mime type %s',
+					'arg1' => $this->_itemsUnknown[0]->getMimeType(),
+				)),
+			),
+		);
+		$this->_expectResize   = array('scale');
 		$this->_expectCompress = array('compress');
 	}
 
@@ -168,14 +190,18 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		global $gallery;
 		$platform =& $gallery->getPlatform();
 
-		foreach (array('width' => 768, 'height' => 1024, 'keepOriginal' => 0) as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'keepOriginal' => 0,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -209,14 +235,18 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		global $gallery;
 		$platform =& $gallery->getPlatform();
 
-		foreach (array('width' => 768, 'height' => 1024, 'keepOriginal' => 0) as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'keepOriginal' => 0,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-			$key,
-			$value,
-							  $this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -226,20 +256,21 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$totalTestItems = 3;
 
 		for ($j = 1; $j < $totalTestItems; $j++) {
-			list($ret, $this->_items[$j]) =
-		$this->_createRandomDataItem(
-			$this->_album->getId(),
-			'image/known',
-						 array('summary' => "original summary $j",
-						 'description' => "original description $j", )
-		);
+			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
+				$this->_album->getId(),
+				'image/known',
+				array(
+					'summary'     => "original summary $j",
+					'description' => "original description $j",
+				)
+			);
 
 			if ($ret) {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j-1];
-			$this->_expectResize[] = $this->_expectResize[$j-1];
+			$this->_noWarnings[]   = $this->_noWarnings[$j - 1];
+			$this->_expectResize[] = $this->_expectResize[$j - 1];
 		}
 
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), $this->_items);
@@ -270,14 +301,18 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	public function testChangeDimKeepOriginal() {
 		global $gallery;
 
-		foreach (array('width' => 768, 'height' => 1024, 'keepOriginal' => 1) as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'keepOriginal' => 1,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -288,8 +323,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals($this->_noWarnings, $warnings);
 
 		// Check to see if we have a preferred source
-		list($ret, $resized) =
-		GalleryCoreApi::fetchPreferredSource($this->_items[0]);
+		list($ret, $resized) = GalleryCoreApi::fetchPreferredSource($this->_items[0]);
 
 		if ($ret) {
 			return $ret;
@@ -313,14 +347,18 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	public function testMultipleChangeDimKeepOriginal() {
 		global $gallery;
 
-		foreach (array('width' => 768, 'height' => 1024, 'keepOriginal' => 1) as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'keepOriginal' => 1,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -330,20 +368,21 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$totalTestItems = 3;
 
 		for ($j = 1; $j < $totalTestItems; $j++) {
-			list($ret, $this->_items[$j]) =
-		$this->_createRandomDataItem(
-			$this->_album->getId(),
-			'image/known',
-						 array('summary' => "original summary $j",
-						 'description' => "original description $j", )
-		);
+			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
+				$this->_album->getId(),
+				'image/known',
+				array(
+					'summary'     => "original summary $j",
+					'description' => "original description $j",
+				)
+			);
 
 			if ($ret) {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j-1];
-			$this->_expectResize[] = $this->_expectResize[$j-1];
+			$this->_noWarnings[]   = $this->_noWarnings[$j - 1];
+			$this->_expectResize[] = $this->_expectResize[$j - 1];
 		}
 
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), $this->_items);
@@ -353,8 +392,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
 			// Check to see if we have a preferred source
-			list($ret, $resized) =
-		GalleryCoreApi::fetchPreferredSource($this->_items[$j]);
+			list($ret, $resized) = GalleryCoreApi::fetchPreferredSource($this->_items[$j]);
 
 			if ($ret) {
 				return $ret;
@@ -380,14 +418,17 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		global $gallery;
 		$platform =& $gallery->getPlatform();
 
-		foreach (array('size' => 1000, 'keepOriginal' => 0) as $key => $value) {
+		foreach (array(
+			'size'         => 1000,
+			'keepOriginal' => 0,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -408,8 +449,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals(1000, $this->_items[0]->getSize(), 'Size');
 		$operation = GalleryUtilities::getRequestVariables('operation');
 		$this->assertEquals($this->_expectCompress, $operation, 'operation');
-		list($ret, $preferred) =
-		GalleryCoreApi::fetchPreferredSource($this->_items[0]);
+		list($ret, $preferred) = GalleryCoreApi::fetchPreferredSource($this->_items[0]);
 
 		if ($ret) {
 			return $ret;
@@ -422,14 +462,17 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		global $gallery;
 		$platform =& $gallery->getPlatform();
 
-		foreach (array('size' => 1000, 'keepOriginal' => 0) as $key => $value) {
+		foreach (array(
+			'size'         => 1000,
+			'keepOriginal' => 0,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -439,20 +482,21 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$totalTestItems = 3;
 
 		for ($j = 1; $j < $totalTestItems; $j++) {
-			list($ret, $this->_items[$j]) =
-		$this->_createRandomDataItem(
-			$this->_album->getId(),
-			'image/known',
-						 array('summary' => "original summary $j",
-						 'description' => "original description $j", )
-		);
+			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
+				$this->_album->getId(),
+				'image/known',
+				array(
+					'summary'     => "original summary $j",
+					'description' => "original description $j",
+				)
+			);
 
 			if ($ret) {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j-1];
-			$this->_expectCompress[] = $this->_expectCompress[$j-1];
+			$this->_noWarnings[]     = $this->_noWarnings[$j - 1];
+			$this->_expectCompress[] = $this->_expectCompress[$j - 1];
 		}
 
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), $this->_items);
@@ -470,8 +514,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 			// check item size (in KB)
 			$this->assertEquals(1000, $this->_items[$j]->getSize(), 'Size');
-			list($ret, $preferred) =
-		GalleryCoreApi::fetchPreferredSource($this->_items[$j]);
+			list($ret, $preferred) = GalleryCoreApi::fetchPreferredSource($this->_items[$j]);
 
 			if ($ret) {
 				return $ret;
@@ -484,14 +527,17 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 	// change size, keep original
 	public function testChangeSizeKeepOriginal() {
-		foreach (array('size' => 1000, 'keepOriginal' => 1) as $key => $value) {
+		foreach (array(
+			'size'         => 1000,
+			'keepOriginal' => 1,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -502,8 +548,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals($this->_noWarnings, $warnings);
 
 		// Check to see if we have a preferred source
-		list($ret, $resized) =
-		GalleryCoreApi::fetchPreferredSource($this->_items[0]);
+		list($ret, $resized) = GalleryCoreApi::fetchPreferredSource($this->_items[0]);
 
 		if ($ret) {
 			return $ret;
@@ -526,14 +571,17 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 	// change size on multiple items, keep originals
 	public function testMultipleChangeSizeKeepOriginal() {
-		foreach (array('size' => 1000, 'keepOriginal' => 1) as $key => $value) {
+		foreach (array(
+			'size'         => 1000,
+			'keepOriginal' => 1,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -543,20 +591,21 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$totalTestItems = 3;
 
 		for ($j = 1; $j < $totalTestItems; $j++) {
-			list($ret, $this->_items[$j]) =
-		$this->_createRandomDataItem(
-			$this->_album->getId(),
-			'image/known',
-						 array('summary' => "original summary $j",
-						 'description' => "original description $j", )
-		);
+			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
+				$this->_album->getId(),
+				'image/known',
+				array(
+					'summary'     => "original summary $j",
+					'description' => "original description $j",
+				)
+			);
 
 			if ($ret) {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j-1];
-			$this->_expectCompress[] = $this->_expectCompress[$j-1];
+			$this->_noWarnings[]     = $this->_noWarnings[$j - 1];
+			$this->_expectCompress[] = $this->_expectCompress[$j - 1];
 		}
 
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), $this->_items);
@@ -565,8 +614,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
 			// Check to see if we have a preferred source
-			list($ret, $resized) =
-		GalleryCoreApi::fetchPreferredSource($this->_items[$j]);
+			list($ret, $resized) = GalleryCoreApi::fetchPreferredSource($this->_items[$j]);
 
 			if ($ret) {
 				return $ret;
@@ -591,18 +639,23 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	// change dimensions AND size, keep original
 	public function testChangeBothKeepOriginal() {
 		global $gallery;
-		$platform =& $gallery->getPlatform();
+		$platform                    =& $gallery->getPlatform();
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
-		foreach (array('width' => 768, 'height' => 1024, 'size' => 1000, 'keepOriginal' => 1)
-		as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
+			'keepOriginal' => 1,
+		)
+ as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -628,10 +681,10 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 		$this->assertEquals(
-		'scale|768,1024;compress|1000',
-				$resized->getDerivativeOperations(),
-		'Operations'
-	);
+			'scale|768,1024;compress|1000',
+			$resized->getDerivativeOperations(),
+			'Operations'
+		);
 		$this->assertEquals(768, $resized->getWidth(), 'Width');
 		$this->assertEquals(1024, $resized->getHeight(), 'Height');
 		$this->assertEquals(1000, $resized->getDerivativeSize(), 'Size');
@@ -643,15 +696,20 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	public function testMultipleChangeBothKeepOriginal() {
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
-		foreach (array('width' => 768, 'height' => 1024, 'size' => 1000, 'keepOriginal' => 1)
-		as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
+			'keepOriginal' => 1,
+		)
+ as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -661,21 +719,22 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$totalTestItems = 3;
 
 		for ($j = 1; $j < $totalTestItems; $j++) {
-			list($ret, $this->_items[$j]) =
-		$this->_createRandomDataItem(
-			$this->_album->getId(),
-			'image/known',
-						 array('summary' => "original summary $j",
-						   'description' => "original description $j", )
-		);
+			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
+				$this->_album->getId(),
+				'image/known',
+				array(
+					'summary'     => "original summary $j",
+					'description' => "original description $j",
+				)
+			);
 
 			if ($ret) {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j-1];
-			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j*2)-2];
-			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j*2)-1];
+			$this->_noWarnings[]           = $this->_noWarnings[$j - 1];
+			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 2];
+			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 1];
 		}
 
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), $this->_items);
@@ -699,10 +758,10 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 			$this->assertEquals(
-			'scale|768,1024;compress|1000',
+				'scale|768,1024;compress|1000',
 				$resized->getDerivativeOperations(),
 				'Operations'
-		);
+			);
 			$this->assertEquals(768, $resized->getWidth(), 'Width');
 			$this->assertEquals(1024, $resized->getHeight(), 'Height');
 			$this->assertEquals(1000, $resized->getDerivativeSize(), 'Size');
@@ -714,18 +773,23 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	// change dimensions AND size, don't keep original
 	public function testChangeBothNoOriginal() {
 		global $gallery;
-		$platform =& $gallery->getPlatform();
+		$platform                    =& $gallery->getPlatform();
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
-		foreach (array('width' => 768, 'height' => 1024, 'size' => 1000, 'keepOriginal' => 0)
-		as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
+			'keepOriginal' => 0,
+		)
+ as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -757,18 +821,23 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	// change dimensions AND size on multiple items, don't keep originals
 	public function testMultipleChangeBothNoOriginal() {
 		global $gallery;
-		$platform =& $gallery->getPlatform();
+		$platform                    =& $gallery->getPlatform();
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
-		foreach (array('width' => 768, 'height' => 1024, 'size' => 1000, 'keepOriginal' => 0)
-		as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
+			'keepOriginal' => 0,
+		)
+ as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -778,21 +847,22 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$totalTestItems = 3;
 
 		for ($j = 1; $j < $totalTestItems; $j++) {
-			list($ret, $this->_items[$j]) =
-		$this->_createRandomDataItem(
-			$this->_album->getId(),
-			'image/known',
-						 array('summary' => "original summary $j",
-						   'description' => "original description $j", )
-		);
+			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
+				$this->_album->getId(),
+				'image/known',
+				array(
+					'summary'     => "original summary $j",
+					'description' => "original description $j",
+				)
+			);
 
 			if ($ret) {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j-1];
-			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j*2)-2];
-			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j*2)-1];
+			$this->_noWarnings[]           = $this->_noWarnings[$j - 1];
+			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 2];
+			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 1];
 		}
 
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), $this->_items);
@@ -821,15 +891,20 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 	// try to change size and dimensions for unsupported file format
 	public function testUnknownFormat() {
-		foreach (array('width' => 768, 'height' => 1024, 'size' => 1000, 'keepOriginal' => 0)
-		as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
+			'keepOriginal' => 0,
+		)
+ as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -842,15 +917,20 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 	// try to change size and dimensions for unsupported file format on multiple files
 	public function testMultipleUnknownFormat() {
-		foreach (array('width' => 768, 'height' => 1024, 'size' => 1000, 'keepOriginal' => 0)
-		as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
+			'keepOriginal' => 0,
+		)
+ as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -862,13 +942,14 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$totalTestItems = 3;
 
 		for ($j = 1; $j < $totalTestItems; $j++) {
-			list($ret, $this->_itemsUnknown[$j]) =
-		$this->_createRandomDataItem(
-			$this->_album->getId(),
-			'image/unknown',
-						 array('summary' => "plagiarized summary $j",
-						   'description' => "plagiarized description $j", )
-		);
+			list($ret, $this->_itemsUnknown[$j]) = $this->_createRandomDataItem(
+				$this->_album->getId(),
+				'image/unknown',
+				array(
+					'summary'     => "plagiarized summary $j",
+					'description' => "plagiarized description $j",
+				)
+			);
 
 			if ($ret) {
 				return $ret;
@@ -884,15 +965,20 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 	// ensure no change when image is already smaller than limits (don't stretch)
 	public function testBelowLimits() {
-		foreach (array('width' => 1800, 'height' => 2400, 'size' => 30000, 'keepOriginal' => 0)
-		as $key => $value) {
+		foreach (array(
+			'width'        => 1800,
+			'height'       => 2400,
+			'size'         => 30000,
+			'keepOriginal' => 0,
+		)
+ as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -919,40 +1005,40 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	public function testChangeDimDropResizes() {
 		global $gallery;
 		$platform =& $gallery->getPlatform();
-		$id = $this->_items[0]->getId();
-		$item =& $this->_items[0];
+		$id       = $this->_items[0]->getId();
+		$item     =& $this->_items[0];
 
 		// Add resizes and a thumbnail, that is usually done before sizelimit does its job
 		list($ret, $thumbnail) = $this->_createDerivative(
-		$item,
-		$id,
-							   DERIVATIVE_TYPE_IMAGE_THUMBNAIL,
-							   'thumbnail|2000',
-							   'test/file'
-	);
+			$item,
+			$id,
+			DERIVATIVE_TYPE_IMAGE_THUMBNAIL,
+			'thumbnail|2000',
+			'test/file'
+		);
 
 		if ($ret) {
 			return $ret;
 		}
 
 		list($ret, $tooLargeResize) = $this->_createDerivative(
-		$item,
-		$id,
-								DERIVATIVE_TYPE_IMAGE_RESIZE,
-								'scale|800,1400',
-								'test/file'
-	);
+			$item,
+			$id,
+			DERIVATIVE_TYPE_IMAGE_RESIZE,
+			'scale|800,1400',
+			'test/file'
+		);
 
 		if ($ret) {
 			return $ret;
 		}
 		list($ret, $smallResize) = $this->_createDerivative(
-		$item,
-		$id,
-								 DERIVATIVE_TYPE_IMAGE_RESIZE,
-								 'scale|600,800',
-								 'test/file'
-	);
+			$item,
+			$id,
+			DERIVATIVE_TYPE_IMAGE_RESIZE,
+			'scale|600,800',
+			'test/file'
+		);
 
 		if ($ret) {
 			return $ret;
@@ -965,14 +1051,18 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals(null, $ret, 'verify thumb before test');
 
 		// Set the sizelimit settings for the album
-		foreach (array('width' => 768, 'height' => 1024, 'keepOriginal' => 0) as $key => $value) {
+		foreach (array(
+			'width'        => 768,
+			'height'       => 1024,
+			'keepOriginal' => 0,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
@@ -1011,10 +1101,10 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 
 		if (!empty($thumbTable[$id])) {
 			$this->assertEquals(
-			$thumbnail->getId(),
-			$thumbTable[$id]->getId(),
+				$thumbnail->getId(),
+				$thumbTable[$id]->getId(),
 				'same old thumbnail'
-		);
+			);
 		} else {
 			$this->assert(false, 'no thumbnail for our item id after test');
 		}
@@ -1057,7 +1147,7 @@ class SetSizeOptionTestPlatform extends GalleryPlatform {
 
 	public function file_exists($filename) {
 		$compressPerformed = GalleryUtilities::getRequestVariables('compressPerformed');
-		$resizePerformed = GalleryUtilities::getRequestVariables('resizePerformed');
+		$resizePerformed   = GalleryUtilities::getRequestVariables('resizePerformed');
 
 		// if we created a derivative make-believe that the file exists
 		if ($resizePerformed || $compressPerformed) {
@@ -1088,33 +1178,32 @@ class SetSizeOptionTestToolkit extends GalleryToolkit {
 		$mimeType,
 		$operationName,
 		$sourceFilename,
-				  $destFilename,
+		$destFilename,
 		$parameters,
-		$context=array()
+		$context = array()
 	) {
 		// Here we are pretending that conversion happened by setting the flag
 		switch ($operationName) {
-	case 'compress':
-		GalleryUtilities::putRequestVariable('compressPerformed', true);
-		GalleryUtilities::putRequestVariable('size_' . basename($destFilename), 1000);
+			case 'compress':
+				GalleryUtilities::putRequestVariable('compressPerformed', true);
+				GalleryUtilities::putRequestVariable('size_' . basename($destFilename), 1000);
 
-		break;
+				break;
 
-	case 'scale':
-		GalleryUtilities::putRequestVariable('resizePerformed', true);
-		GalleryUtilities::putRequestVariable(
-		'imagesize_' . basename($destFilename),
-			array(768, 1024)
-		);
+			case 'scale':
+				GalleryUtilities::putRequestVariable('resizePerformed', true);
+				GalleryUtilities::putRequestVariable(
+					'imagesize_' . basename($destFilename),
+					array(768, 1024)
+				);
 
-		break;
+				break;
 
-	default:
-		return
-		array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null, null);
-	}
+			default:
+				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null, null);
+		}
 
-		$operations = array();
+		$operations       = array();
 		$operationRequest = GalleryUtilities::getRequestVariables('operation');
 
 		if (!empty($operationRequest)) {
@@ -1134,16 +1223,16 @@ class SetSizeOptionTestToolkit extends GalleryToolkit {
 
 		// Our 'mime type' has to support dimensions
 		switch ($propertyName) {
-	case 'dimensions':
-		$platform =& $gallery->getPlatform();
-		$results = $platform->getimagesize($file);
-		$results = array((int)$results[0], (int)$results[1]);
+			case 'dimensions':
+				$platform =& $gallery->getPlatform();
+				$results  = $platform->getimagesize($file);
+				$results  = array((int)$results[0], (int)$results[1]);
 
-		break;
+				break;
 
-	default:
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
-	}
+			default:
+				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		}
 
 		return array(null, $results);
 	}

@@ -282,17 +282,25 @@ class DynamicAlbumTest extends GalleryTestCase {
 			);
 
 			if ($key == 'date') {
-				$this->assertEquals(array(
-					$this->_items[2]->getId(),
-					$this->_items[3]->getId(),
-					$this->_items[1]->getId(),
-				), $theme['allChildIds'], 'date: child ids');
+				$this->assertEquals(
+					array(
+						$this->_items[2]->getId(),
+						$this->_items[3]->getId(),
+						$this->_items[1]->getId(),
+					),
+					$theme['allChildIds'],
+					'date: child ids'
+				);
 			} elseif ($key == 'views') {
-				$this->assertEquals(array(
-					$this->_items[3]->getId(),
-					$this->_items[1]->getId(),
-					$this->_items[2]->getId(),
-				), $theme['allChildIds'], 'views: child ids');
+				$this->assertEquals(
+					array(
+						$this->_items[3]->getId(),
+						$this->_items[1]->getId(),
+						$this->_items[2]->getId(),
+					),
+					$theme['allChildIds'],
+					'views: child ids'
+				);
 			}
 		}
 	}

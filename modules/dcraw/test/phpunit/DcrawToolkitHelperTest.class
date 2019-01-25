@@ -74,12 +74,15 @@ class DcrawToolkitHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'name'    => 'dcraw',
-				'success' => true,
+				array(
+					'name'    => 'dcraw',
+					'success' => true,
+				),
 			),
-		), $testArray);
+			$testArray
+		);
 		$this->assertEquals('5.62', $version);
 	}
 
@@ -98,12 +101,15 @@ class DcrawToolkitHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'name'    => 'dcraw',
-				'success' => true,
+				array(
+					'name'    => 'dcraw',
+					'success' => true,
+				),
 			),
-		), $testArray);
+			$testArray
+		);
 		$this->assertEquals('6.35', $version);
 	}
 
@@ -122,12 +128,15 @@ class DcrawToolkitHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'name'    => 'dcraw',
-				'success' => true,
+				array(
+					'name'    => 'dcraw',
+					'success' => true,
+				),
 			),
-		), $testArray);
+			$testArray
+		);
 		$this->assertEquals('7.17', $version);
 	}
 
@@ -146,12 +155,15 @@ class DcrawToolkitHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'name'    => 'dcraw',
-				'success' => true,
+				array(
+					'name'    => 'dcraw',
+					'success' => true,
+				),
 			),
-		), $testArray);
+			$testArray
+		);
 		$this->assertEquals('7.73', $version);
 	}
 
@@ -171,12 +183,15 @@ class DcrawToolkitHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'name'    => 'dcraw',
-				'success' => true,
+				array(
+					'name'    => 'dcraw',
+					'success' => true,
+				),
 			),
-		), $testArray);
+			$testArray
+		);
 		$this->assertEquals('8.53', $version);
 	}
 

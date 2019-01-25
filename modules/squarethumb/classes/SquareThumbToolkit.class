@@ -235,9 +235,12 @@ class SquareThumbToolkit extends GalleryToolkit {
 			}
 			$platform->fwrite($fh, "P6\n$size $size\n255\n");
 			// Convert RGB hex string to 3 binary bytes
-			$row = str_repeat(chr(hexdec(substr($square['color'], 0, 2))) .
+			$row = str_repeat(
+				chr(hexdec(substr($square['color'], 0, 2))) .
 				  chr(hexdec(substr($square['color'], 2, 2))) .
-				  chr(hexdec(substr($square['color'], 4, 2))), $size);
+				chr(hexdec(substr($square['color'], 4, 2))),
+				$size
+			);
 
 			for ($i = 0; $i < $size; $i++) {
 				$platform->fwrite($fh, $row);

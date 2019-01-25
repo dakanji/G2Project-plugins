@@ -89,82 +89,100 @@ class WebDavHelperTest extends GalleryTestCase {
 		WebDavHelperTestHttpAuthInterface::_getConfiguration(true);
 
 		// Define requests
-		$this->_optionsRequest        = implode("\r\n", array(
-			'OPTIONS ' . $this->_urlGenerator->generateUrl(
-				array(
-					'controller' => 'webdav.WebDav',
-				),
-				array(
-					'forceServerRelativeUrl' => true,
-					'htmlEntities'           => false,
-				)
-			) . ' HTTP/1.0',
-			'Host: ' . $this->_urlGenerator->getHostName(),
-			'',
-			'',
-		));
-		$this->_alternativeUrlRequest = implode("\r\n", array(
-			'OPTIONS ' . $this->_urlGenerator->generateUrl(
-				array(
-					'href' => 'modules/webdav/data/options/',
-				),
-				array(
-					'forceServerRelativeUrl' => true,
-					'htmlEntities'           => false,
-				)
-			) . ' HTTP/1.0',
-			'Host: ' . $this->_urlGenerator->getHostName(),
-			'',
-			'',
-		));
+		$this->_optionsRequest        = implode(
+			"\r\n",
+			array(
+				'OPTIONS ' . $this->_urlGenerator->generateUrl(
+					array(
+						'controller' => 'webdav.WebDav',
+					),
+					array(
+						'forceServerRelativeUrl' => true,
+						'htmlEntities'           => false,
+					)
+				) . ' HTTP/1.0',
+				'Host: ' . $this->_urlGenerator->getHostName(),
+				'',
+				'',
+			)
+		);
+		$this->_alternativeUrlRequest = implode(
+			"\r\n",
+			array(
+				'OPTIONS ' . $this->_urlGenerator->generateUrl(
+					array(
+						'href' => 'modules/webdav/data/options/',
+					),
+					array(
+						'forceServerRelativeUrl' => true,
+						'htmlEntities'           => false,
+					)
+				) . ' HTTP/1.0',
+				'Host: ' . $this->_urlGenerator->getHostName(),
+				'',
+				'',
+			)
+		);
 
 		// Define success and failure responses
-		$this->_methodHandledResponse      = implode("\r\n", array(
-			'HTTP/1.1 200 OK',
-			'Date: Mon, 24 Nov 2003 05:40:03 GMT',
-			'Server: Apache/1.3.28 (Unix)',
-			'Allow: OPTIONS,GET,HEAD,POST',
-			'Content-Length: 0',
-			'Connection: close',
-			'Content-Type: text/html',
-			'',
-			'PASS_WEBDAV',
-		));
-		$this->_methodNotHandledResponse   = implode("\r\n", array(
-			'HTTP/1.1 200 OK',
-			'Date: Mon, 24 Nov 2003 05:40:03 GMT',
-			'Server: Apache/1.3.28 (Unix)',
-			'Allow: OPTIONS,GET,HEAD,POST',
-			'Content-Length: 0',
-			'Connection: close',
-			'Content-Type: text/html',
-			'',
-			'',
-		));
-		$this->_includesDavHeadersResponse = implode("\r\n", array(
-			'HTTP/1.1 200 OK',
-			'Date: Mon, 24 Nov 2003 05:40:03 GMT',
-			'Server: Apache/1.3.28 (Unix)',
-			'Allow: OPTIONS,PROPFIND,PROPPATCH,MKCOL,GET,HEAD,DELETE,PUT,MOVE,LOCK,UNLOCK',
-			'DAV: 1,2',
-			'MS-Author-Via: DAV',
-			'Content-Length: 0',
-			'Connection: close',
-			'Content-Type: text/html',
-			'',
-			'',
-		));
-		$this->_missingDavHeadersResponse  = implode("\r\n", array(
-			'HTTP/1.1 200 OK',
-			'Date: Mon, 24 Nov 2003 05:40:03 GMT',
-			'Server: Apache/1.3.28 (Unix)',
-			'Allow: OPTIONS,GET,HEAD,POST',
-			'Content-Length: 0',
-			'Connection: close',
-			'Content-Type: text/html',
-			'',
-			'',
-		));
+		$this->_methodHandledResponse      = implode(
+			"\r\n",
+			array(
+				'HTTP/1.1 200 OK',
+				'Date: Mon, 24 Nov 2003 05:40:03 GMT',
+				'Server: Apache/1.3.28 (Unix)',
+				'Allow: OPTIONS,GET,HEAD,POST',
+				'Content-Length: 0',
+				'Connection: close',
+				'Content-Type: text/html',
+				'',
+				'PASS_WEBDAV',
+			)
+		);
+		$this->_methodNotHandledResponse   = implode(
+			"\r\n",
+			array(
+				'HTTP/1.1 200 OK',
+				'Date: Mon, 24 Nov 2003 05:40:03 GMT',
+				'Server: Apache/1.3.28 (Unix)',
+				'Allow: OPTIONS,GET,HEAD,POST',
+				'Content-Length: 0',
+				'Connection: close',
+				'Content-Type: text/html',
+				'',
+				'',
+			)
+		);
+		$this->_includesDavHeadersResponse = implode(
+			"\r\n",
+			array(
+				'HTTP/1.1 200 OK',
+				'Date: Mon, 24 Nov 2003 05:40:03 GMT',
+				'Server: Apache/1.3.28 (Unix)',
+				'Allow: OPTIONS,PROPFIND,PROPPATCH,MKCOL,GET,HEAD,DELETE,PUT,MOVE,LOCK,UNLOCK',
+				'DAV: 1,2',
+				'MS-Author-Via: DAV',
+				'Content-Length: 0',
+				'Connection: close',
+				'Content-Type: text/html',
+				'',
+				'',
+			)
+		);
+		$this->_missingDavHeadersResponse  = implode(
+			"\r\n",
+			array(
+				'HTTP/1.1 200 OK',
+				'Date: Mon, 24 Nov 2003 05:40:03 GMT',
+				'Server: Apache/1.3.28 (Unix)',
+				'Allow: OPTIONS,GET,HEAD,POST',
+				'Content-Length: 0',
+				'Connection: close',
+				'Content-Type: text/html',
+				'',
+				'',
+			)
+		);
 
 		// Use WebDavHelperTestPlatform
 		$this->_platform = new WebDavHelperTestPlatform();
@@ -181,21 +199,24 @@ class WebDavHelperTest extends GalleryTestCase {
 			'LOCK',
 			'UNLOCK',
 		) as $requestMethod) {
-			$this->_requests[$requestMethod] = implode("\r\n", array(
-				$requestMethod . ' ' . $this->_urlGenerator->generateUrl(
-					array(
-						'view' => 'webdav.WebDavWorks',
-					),
-					array(
-						'forceServerRelativeUrl' => true,
-						'htmlEntities'           => false,
-					)
-				) . ' HTTP/1.0',
-				'Host: ' . $this->_urlGenerator->getHostName(),
-				'Content-length: 0', // IIS requires a Content-length at least for PUT requests
-				'',
-				'',
-			));
+			$this->_requests[$requestMethod] = implode(
+				"\r\n",
+				array(
+					$requestMethod . ' ' . $this->_urlGenerator->generateUrl(
+						array(
+							'view' => 'webdav.WebDavWorks',
+						),
+						array(
+							'forceServerRelativeUrl' => true,
+							'htmlEntities' => false,
+						)
+					) . ' HTTP/1.0',
+					'Host: ' . $this->_urlGenerator->getHostName(),
+					'Content-length: 0', // IIS requires a Content-length at least for PUT requests
+					'',
+					'',
+				)
+			);
 
 			$this->_platform->_messages[$this->_requests[$requestMethod]] = $this->_methodHandledResponse;
 		}
@@ -384,30 +405,34 @@ class WebDavHelperTest extends GalleryTestCase {
 	}
 
 	public function testCheckDavHeaders() {
-		$success = WebDavHelper::checkDavHeaders($this->_urlGenerator->generateUrl(
-			array(
-				'controller' => 'webdav.WebDav',
-			),
-			array(
-				'forceFullUrl' => true,
-				'htmlEntities' => false,
+		$success = WebDavHelper::checkDavHeaders(
+			$this->_urlGenerator->generateUrl(
+				array(
+					'controller' => 'webdav.WebDav',
+				),
+				array(
+					'forceFullUrl' => true,
+					'htmlEntities' => false,
+				)
 			)
-		));
+		);
 		$this->assert($success);
 	}
 
 	public function testCheckMissingDavHeaders() {
 		$this->_platform->_messages[$this->_optionsRequest] = $this->_missingDavHeadersResponse;
 
-		$success = WebDavHelper::checkDavHeaders($this->_urlGenerator->generateUrl(
-			array(
-				'controller' => 'webdav.WebDav',
-			),
-			array(
-				'forceFullUrl' => true,
-				'htmlEntities' => false,
+		$success = WebDavHelper::checkDavHeaders(
+			$this->_urlGenerator->generateUrl(
+				array(
+					'controller' => 'webdav.WebDav',
+				),
+				array(
+					'forceFullUrl' => true,
+					'htmlEntities' => false,
+				)
 			)
-		));
+		);
 		$this->assert(!$success);
 	}
 
@@ -424,12 +449,15 @@ class WebDavHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'path'  => $path,
-				'props' => $expectedProps,
+				array(
+					'path'  => $path,
+					'props' => $expectedProps,
+				),
 			),
-		), $files);
+			$files
+		);
 	}
 
 	public function testPropfindFilesIgnoresArraysAndObjectData() {
@@ -445,12 +473,15 @@ class WebDavHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'path'  => $path,
-				'props' => $expectedProps,
+				array(
+					'path'  => $path,
+					'props' => $expectedProps,
+				),
 			),
-		), $files);
+			$files
+		);
 	}
 
 	public function testPropfindFilesUsesPathComponentAsFallbackForTitle() {
@@ -466,12 +497,15 @@ class WebDavHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				'path'  => $path,
-				'props' => $expectedProps,
+				array(
+					'path'  => $path,
+					'props' => $expectedProps,
+				),
 			),
-		), $files);
+			$files
+		);
 	}
 
 	public function _preparePropfindFiles($addObjectAndArrayData = false, $itemTitle = 'This is the title') {

@@ -165,7 +165,8 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 		}
 		$searchString = implode(' OR ', $searchClause);
 
-		$countQuery = sprintf('
+		$countQuery = sprintf(
+			'
 	SELECT
 	  COUNT([MultiLangItemMap::itemId])
 	FROM
@@ -178,9 +179,12 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 	  [MultiLangItemMap::language] = ?
 	  AND
 	  (' . $searchString . ')
-	', $aclMarkers);
+	',
+			$aclMarkers
+		);
 
-		$query = sprintf('
+		$query = sprintf(
+			'
 	SELECT
 	  [MultiLangItemMap::itemId],
 	  [MultiLangItemMap::title],
@@ -198,7 +202,9 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 	  (' . $searchString . ')
 	ORDER BY
 	  [MultiLangItemMap::itemId] DESC
-	', $aclMarkers);
+	',
+			$aclMarkers
+		);
 
 		$data   = $aclIds;
 		$data[] = $languageCode;

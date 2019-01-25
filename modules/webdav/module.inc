@@ -365,15 +365,17 @@ class WebDavModule extends GalleryModule {
 			// Check that OPTIONS responses include the DAV headers
 			GalleryCoreApi::requireOnce('modules/webdav/classes/WebDavHelper.class');
 
-			if (WebDavHelper::checkDavHeaders($urlGenerator->generateUrl(
-				array(
-					'controller' => 'webdav.WebDav',
-				),
-				array(
-					'forceFullUrl' => true,
-					'htmlEntities' => false,
+			if (WebDavHelper::checkDavHeaders(
+				$urlGenerator->generateUrl(
+					array(
+						'controller' => 'webdav.WebDav',
+					),
+					array(
+						'forceFullUrl' => true,
+						'htmlEntities' => false,
+					)
 				)
-			))
+			)
 			) {
 				return $rules;
 			}

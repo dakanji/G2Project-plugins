@@ -2371,7 +2371,7 @@ class getid3_quicktime extends getid3_handler {
 						if ($denomninator == 0) {
 							$data[$i] = false;
 						} else {
-							$data[$i] = (double)$numerator / $denomninator;
+							$data[$i] = (float)$numerator / $denomninator;
 						}
 					}
 					$offset += (8 * $data_size);

@@ -185,15 +185,19 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
-		$this->_platform->setReply('copy', array(
-			sprintf(
-				'%s%s%s',
-				dirname(dirname(__DIR__)),
-				DIRECTORY_SEPARATOR,
-				'ZipCartAdmin.inc'
+		$this->_platform->setReply(
+			'copy',
+			array(
+				sprintf(
+					'%s%s%s',
+					dirname(dirname(__DIR__)),
+					DIRECTORY_SEPARATOR,
+					'ZipCartAdmin.inc'
+				),
+				'tempfile',
 			),
-			'tempfile',
-		), true);
+			true
+		);
 		$this->_platform->setReply(
 			'exec',
 			array(array(array('/validPath/zip', 'tempfile.zip', 'tempfile'))),
@@ -238,15 +242,19 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
-		$this->_platform->setReply('copy', array(
-			sprintf(
-				'%s%s%s',
-				dirname(dirname(__DIR__)),
-				DIRECTORY_SEPARATOR,
-				'ZipCartAdmin.inc'
+		$this->_platform->setReply(
+			'copy',
+			array(
+				sprintf(
+					'%s%s%s',
+					dirname(dirname(__DIR__)),
+					DIRECTORY_SEPARATOR,
+					'ZipCartAdmin.inc'
+				),
+				'tempfile',
 			),
-			'tempfile',
-		), true);
+			true
+		);
 		$this->_platform->setReply(
 			'exec',
 			array(array(array('/validPath/zip', 'tempfile.zip', 'tempfile'))),
@@ -308,15 +316,19 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
-		$this->_platform->setReply('copy', array(
-			sprintf(
-				'%s%s%s',
-				dirname(dirname(__DIR__)),
-				DIRECTORY_SEPARATOR,
-				'ZipCartAdmin.inc'
+		$this->_platform->setReply(
+			'copy',
+			array(
+				sprintf(
+					'%s%s%s',
+					dirname(dirname(__DIR__)),
+					DIRECTORY_SEPARATOR,
+					'ZipCartAdmin.inc'
+				),
+				'tempfile',
 			),
-			'tempfile',
-		), true);
+			true
+		);
 		$this->_platform->setReply(
 			'exec',
 			array(array(array('/validPath/unzip', 'tempfile.zip', 'tempfile'))),

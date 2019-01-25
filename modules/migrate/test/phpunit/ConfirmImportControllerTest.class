@@ -510,9 +510,12 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			array_keys($status['albumImportSuccess'])
 		);
 		$this->assertEquals(array(), $status['userImportFailure']);
-		$this->assertEquals(array(
-			'phpunit_foobar' => 1,
-		), $status['userImportSuccess']);
+		$this->assertEquals(
+			array(
+				'phpunit_foobar' => 1,
+			),
+			$status['userImportSuccess']
+		);
 		$this->assertEquals(array(), $status['albumImportFailure']);
 		$testAlbumId = $status['albumImportSuccess']['album03'];
 
@@ -1240,9 +1243,12 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals($ids[0], $itemId, 'G1->G2 mapping for testItem');
 
 		$ids[] = $testAlbumId;
-		$ret   = GalleryCoreApi::removeMapEntry('G1MigrateMap', array(
-			'itemId' => $ids,
-		));
+		$ret   = GalleryCoreApi::removeMapEntry(
+			'G1MigrateMap',
+			array(
+				'itemId' => $ids,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -2525,8 +2531,10 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryTheme.class');
 class ConfirmImportControllerTestTheme extends GalleryTheme {
 	public function __construct() {
 		$this->setId('confirmimportcontrollertest');
-		$this->setStandardSettings(array(
-			'perPage' => 9,
-		));
+		$this->setStandardSettings(
+			array(
+				'perPage' => 9,
+			)
+		);
 	}
 }

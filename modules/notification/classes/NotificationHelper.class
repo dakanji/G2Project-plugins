@@ -669,12 +669,15 @@ class NotificationHelper {
 			$itemId             = 0;
 			$canContainChildren = false;
 		}
-		$ret = GalleryCoreApi::addMapEntry('SubscriptionMap', array(
-			'userId'           => $userId,
-			'itemId'           => $itemId,
-			'notificationName' => $name,
-			'handlerName'      => $handler,
-		));
+		$ret = GalleryCoreApi::addMapEntry(
+			'SubscriptionMap',
+			array(
+				'userId'           => $userId,
+				'itemId'           => $itemId,
+				'notificationName' => $name,
+				'handlerName'      => $handler,
+			)
+		);
 
 		if ($ret) {
 			return $ret;

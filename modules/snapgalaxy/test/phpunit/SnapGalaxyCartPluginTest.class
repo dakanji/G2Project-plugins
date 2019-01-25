@@ -238,9 +238,12 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(
-			'href' => 'http://www.snapgalaxy.com/REDIRECT_URL',
-		), $urlParams);
+		$this->assertEquals(
+			array(
+				'href' => 'http://www.snapgalaxy.com/REDIRECT_URL',
+			),
+			$urlParams
+		);
 	}
 }
 

@@ -61,9 +61,12 @@ class ColorPackImpl extends ColorPackInterface_1_0 {
 
 		return array(
 			null,
-			array_merge(array(
-				'' => $this->translate('None'),
-			), $colorpacks),
+			array_merge(
+				array(
+					'' => $this->translate('None'),
+				),
+				$colorpacks
+			),
 		);
 	}
 

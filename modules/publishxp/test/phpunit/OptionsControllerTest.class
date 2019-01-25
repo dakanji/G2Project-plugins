@@ -114,15 +114,17 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(
-			serialize(array(
-				'action'     => array(
-					'setOptions' => '1',
-				),
-				'albumId'    => '2',
-				'SomeOption' => array(
-					'someValue' => '3',
-				),
-			)),
+			serialize(
+				array(
+					'action'     => array(
+						'setOptions' => '1',
+					),
+					'albumId'    => '2',
+					'SomeOption' => array(
+						'someValue' => '3',
+					),
+				)
+			),
 			$this->_mockSession->get('publishxp.extraOptionsForm')
 		);
 	}

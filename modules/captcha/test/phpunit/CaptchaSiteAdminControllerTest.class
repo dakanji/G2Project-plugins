@@ -222,9 +222,11 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function testBogusOptionLevel() {
-		CaptchaAdminOption::testOptions(array(
-			'testOptionId' => new CaptchaSiteAdminTestOption(),
-		));
+		CaptchaAdminOption::testOptions(
+			array(
+				'testOptionId' => new CaptchaSiteAdminTestOption(),
+			)
+		);
 
 		GalleryUtilities::putRequestVariable('form[action][save]', 1);
 		GalleryUtilities::putRequestVariable('form[failedAttemptThreshold]', 3);

@@ -244,10 +244,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->assert($quotaExists == false, 'A quota should not exist');
 
 		// give the user a user quota of 1MB
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-			'quotaSize'     => 1024,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+				'quotaSize'     => 1024,
+			)
+		);
 
 		// user has a user quota
 		list($ret, $quotaExists, $userDiskQuota) = GalleryQuotasHelper::getUserDiskQuota($this->_user->getId());
@@ -277,10 +279,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->assert($userDiskQuota == 1024, 'The user quota should be 1024 KB for this user');
 
 		// add a group quota of 2MB for the new group that our user is in
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-			'quotaSize'     => 2048,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+				'quotaSize'     => 2048,
+			)
+		);
 
 		// user has a user & group quota
 		list($ret, $quotaExists, $userDiskQuota) = GalleryQuotasHelper::getUserDiskQuota($this->_user->getId());
@@ -292,9 +296,11 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->assert($userDiskQuota == 1024, 'The user quota should be 1024 KB for this user');
 
 		// remove the user quota
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+			)
+		);
 
 		// user has a group quota(s) and no user quota
 		list($ret, $quotaExists, $userDiskQuota) = GalleryQuotasHelper::getUserDiskQuota($this->_user->getId());
@@ -307,9 +313,11 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->assert($userDiskQuota == 2048, 'The group quota should be 2048 KB for this user');
 
 		// remove our group quota
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+			)
+		);
 
 		// user doesn't have any quotas anymore
 		list($ret, $quotaExists, $userDiskQuota) = GalleryQuotasHelper::getUserDiskQuota($this->_user->getId());
@@ -340,10 +348,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->assert($groupQuotaExists == false, 'A quota should not exist');
 
 		// add a group quota of 4KB for the new group that our user is in
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-			'quotaSize'     => 4,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+				'quotaSize'     => 4,
+			)
+		);
 
 		// get the highest group quota perhaps our new one is highest?
 		list($ret, $groupQuotaExists, $groupQuotaInfo) = GalleryQuotasHelper::fetchHighestGroupQuota($this->_user->getId());
@@ -355,9 +365,11 @@ class QuotasHelperTest extends GalleryTestCase {
 
 		$this->assert($groupQuotaInfo['quota'] == 4, 'The group quota should be 4 KB');
 
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+			)
+		);
 	}
 
 	public function testHumanReadableFromKilobytes() {
@@ -397,10 +409,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		}
 		$this->assert($groupCount == count($groupIdList), 'Group count is incorrect');
 		// add a quota of 105 KB to this group
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-			'quotaSize'     => 105,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+				'quotaSize'     => 105,
+			)
+		);
 		// now we use that as the count (+1 for good measure)
 		list($ret, $groupIdList) = GalleryQuotasHelper::fetchQuotaGroupIdList($groupCount + 1);
 
@@ -416,9 +430,11 @@ class QuotasHelperTest extends GalleryTestCase {
 			$groupIdList[$this->_group->getId()],
 			'New group quota doesn\'t match up'
 		);
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+			)
+		);
 	}
 
 	public function testFetchQuotaGroupCount() {
@@ -428,19 +444,23 @@ class QuotasHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 		// add a quota of 99 KB to this group
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-			'quotaSize'     => 99,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+				'quotaSize'     => 99,
+			)
+		);
 		list($ret, $postGroupCount) = GalleryQuotasHelper::fetchQuotaGroupCount();
 
 		if ($ret) {
 			return $ret;
 		}
 		$this->assert($postGroupCount = $preGroupCount + 1, 'Group Counts do not match up');
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+			)
+		);
 	}
 
 	public function testFetchQuotaUserIdList() {
@@ -458,10 +478,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		}
 		$this->assert($userCount == count($userIdList), 'User count is incorrect');
 		// add a quota of 467 KB to this user
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-			'quotaSize'     => 467,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+				'quotaSize'     => 467,
+			)
+		);
 		// now we use that as the count (+1 for good measure)
 		list($ret, $userIdList) = GalleryQuotasHelper::fetchQuotaUserIdList($userCount + 1);
 
@@ -477,9 +499,11 @@ class QuotasHelperTest extends GalleryTestCase {
 			$userIdList[$this->_user->getId()],
 			'New User quota doesn\'t match up'
 		);
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+			)
+		);
 	}
 
 	public function testFetchQuotaUserCount() {
@@ -489,19 +513,23 @@ class QuotasHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 		// add a quota of 86 KB to this user
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-			'quotaSize'     => 86,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+				'quotaSize'     => 86,
+			)
+		);
 		list($ret, $postUserCount) = GalleryQuotasHelper::fetchQuotaUserCount();
 
 		if ($ret) {
 			return $ret;
 		}
 		$this->assert($postUserCount = $preUserCount + 1, 'User Counts do not match up');
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+			)
+		);
 	}
 
 	public function testFetchGroupQuota() {
@@ -514,10 +542,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->assert(empty($groupQuotaInfo), 'Group should have no quota information');
 
 		// add a quota of 47KB for this group
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-			'quotaSize'     => 47,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+				'quotaSize'     => 47,
+			)
+		);
 
 		list($ret, $quotaExists, $groupQuotaInfo) = GalleryQuotasHelper::FetchGroupQuota($this->_group->getId());
 
@@ -534,9 +564,11 @@ class QuotasHelperTest extends GalleryTestCase {
 			$groupQuotaInfo,
 			'Group should have quota information'
 		);
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+			)
+		);
 	}
 
 	public function testFetchUserQuota() {
@@ -549,10 +581,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->assert(empty($userQuotaInfo), 'User should have no quota information');
 
 		// add a quota of 86 KB to this user
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-			'quotaSize'     => 86,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+				'quotaSize'     => 86,
+			)
+		);
 
 		list($ret, $quotaExists, $userQuotaInfo) = GalleryQuotasHelper::fetchUserQuota($this->_user->getId());
 
@@ -569,9 +603,11 @@ class QuotasHelperTest extends GalleryTestCase {
 			$userQuotaInfo,
 			'User should have quota information'
 		);
-		$this->_removeMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-		));
+		$this->_removeMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+			)
+		);
 	}
 
 	// Test the Callback function
@@ -685,10 +721,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		GalleryDataCache::reset();
 
 		// add a quota of 501KB for this group
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_group->getId(),
-			'quotaSize'     => 501,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_group->getId(),
+				'quotaSize'     => 501,
+			)
+		);
 
 		// Check users quota Callback, he is in a group that has a quota
 		$callback = new QuotasCallbacks();
@@ -742,10 +780,12 @@ class QuotasHelperTest extends GalleryTestCase {
 		}
 
 		// add a quota of 401KB for this user
-		$this->_addMapEntry(array(
-			'userOrGroupId' => $this->_user->getId(),
-			'quotaSize'     => 401,
-		));
+		$this->_addMapEntry(
+			array(
+				'userOrGroupId' => $this->_user->getId(),
+				'quotaSize'     => 401,
+			)
+		);
 
 		// Check users quota again, now that she has a user quota of 401KB
 		$callback = new QuotasCallbacks();

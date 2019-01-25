@@ -1776,9 +1776,12 @@ class getid3_asf extends getid3_handler {
 				0x13 => 'Band Logotype',
 				0x14 => 'Publisher Logotype',
 			);
-			$lookup = array_map(function ($str) {
-				return getid3_lib::iconv_fallback('UTF-8', 'UTF-16LE', $str);
-			}, $lookup);
+			$lookup = array_map(
+				function ($str) {
+					return getid3_lib::iconv_fallback('UTF-8', 'UTF-16LE', $str);
+				},
+				$lookup
+			);
 		}
 
 		return isset($lookup[$WMpictureType]) ? $lookup[$WMpictureType] : '';

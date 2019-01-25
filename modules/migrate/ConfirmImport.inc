@@ -540,11 +540,13 @@ class ConfirmImportController extends GalleryController {
 				}
 
 				if (isset($album['summary'])) {
-					$newAlbumInstance->setDescription($this->convertHtml(
-						$markupType,
-						$album['summary'],
-						$sourceEncoding
-					));
+					$newAlbumInstance->setDescription(
+						$this->convertHtml(
+							$markupType,
+							$album['summary'],
+							$sourceEncoding
+						)
+					);
 				}
 				$newAlbumInstance->setKeywords('');
 
@@ -1151,10 +1153,12 @@ class ConfirmImportController extends GalleryController {
 						return $ret;
 					}
 
-					$newItem->setKeywords(GalleryCoreApi::convertToUtf8(
-						$importAlbumItem->keywords,
-						$sourceEncoding
-					));
+					$newItem->setKeywords(
+						GalleryCoreApi::convertToUtf8(
+							$importAlbumItem->keywords,
+							$sourceEncoding
+						)
+					);
 
 					if (isset($importAlbumItem->uploadDate)) {
 						$newItem->setCreationTimestamp($importAlbumItem->uploadDate);
@@ -1738,11 +1742,13 @@ class ConfirmImportController extends GalleryController {
 					$thumbsCreated++;
 					$templateAdapter->updateProgressBar(
 						$createThumbsMessage,
-						$module->translate(array(
-							'text' => 'Thumbnail %d of %d',
-							'arg1' => $thumbsCreated,
-							'arg2' => $itemsCreatedCount,
-						)),
+						$module->translate(
+							array(
+								'text' => 'Thumbnail %d of %d',
+								'arg1' => $thumbsCreated,
+								'arg2' => $itemsCreatedCount,
+							)
+						),
 						$thumbsCreated / $itemsCreatedCount
 					);
 				}

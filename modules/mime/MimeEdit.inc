@@ -74,9 +74,11 @@ class MimeEditController extends GalleryController {
 			}
 
 			if (empty($error)) {
-				$ret = GalleryCoreApi::removeMimeType(array(
-					'mimeType' => $form['mimeType'],
-				));
+				$ret = GalleryCoreApi::removeMimeType(
+					array(
+						'mimeType' => $form['mimeType'],
+					)
+				);
 
 				if ($ret) {
 					return array($ret, null);
