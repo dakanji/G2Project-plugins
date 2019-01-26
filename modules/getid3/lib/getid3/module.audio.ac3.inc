@@ -247,7 +247,7 @@ class getid3_ac3 extends getid3_handler {
 			$this->AC3header['bsi'] .= getid3_lib::BigEndian2Bin($this->fread($thisfile_ac3_raw_bsi['addbsi_length']));
 
 			$thisfile_ac3_raw_bsi['addbsi_data'] = substr($this->AC3header['bsi'], $this->BSIoffset, $thisfile_ac3_raw_bsi['addbsi_length'] * 8);
-			$this->BSIoffset += $thisfile_ac3_raw_bsi['addbsi_length'] * 8;
+			$this->BSIoffset                    += $thisfile_ac3_raw_bsi['addbsi_length'] * 8;
 		}
 
 		return true;
@@ -386,15 +386,15 @@ class getid3_ac3 extends getid3_handler {
 
 	public static function channelsEnabledLookup($acmod, $lfeon) {
 		$lookup = array(
-			'ch1'            => (bool)($acmod == 0),
-			'ch2'            => (bool)($acmod == 0),
-			'left'           => (bool)($acmod > 1),
-			'right'          => (bool)($acmod > 1),
-			'center'         => (bool)($acmod & 0x01),
-			'surround_mono'  => false,
-			'surround_left'  => false,
+			'ch1'  => (bool)($acmod == 0),
+			'ch2'  => (bool)($acmod == 0),
+			'left' => (bool)($acmod > 1),
+			'right' => (bool)($acmod > 1),
+			'center' => (bool)($acmod & 0x01),
+			'surround_mono' => false,
+			'surround_left' => false,
 			'surround_right' => false,
-			'lfe'            => $lfeon,
+			'lfe'  => $lfeon,
 		);
 
 		switch ($acmod) {
@@ -519,16 +519,16 @@ class getid3_ac3 extends getid3_handler {
 		$framesizeid = floor($frmsizecod / 2);
 
 		static $bitrateLookup = array(
-			0 => 32000,
-			1 => 40000,
-			2 => 48000,
-			3 => 56000,
-			4 => 64000,
-			5 => 80000,
-			6 => 96000,
-			7 => 112000,
-			8 => 128000,
-			9 => 160000,
+			0  => 32000,
+			1  => 40000,
+			2  => 48000,
+			3  => 56000,
+			4  => 64000,
+			5  => 80000,
+			6  => 96000,
+			7  => 112000,
+			8  => 128000,
+			9  => 160000,
 			10 => 192000,
 			11 => 224000,
 			12 => 256000,

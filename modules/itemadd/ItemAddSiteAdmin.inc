@@ -167,7 +167,7 @@ class ItemAddSiteAdminView extends GalleryView {
 		}
 
 		if ($form['formName'] != 'ItemAddSiteAdmin') {
-			$form['formName'] = 'ItemAddSiteAdmin';
+			$form['formName']                    = 'ItemAddSiteAdmin';
 			$form['uploadLocalServer']['newDir'] = '';
 
 			foreach (array('fromweb', 'fromserver') as $key) {

@@ -84,10 +84,10 @@ class AlbumSelectSiteAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		foreach (array(
-			'sort'               => 'manual',
-			'treeLines'          => '0',
-			'treeIcons'          => '1',
-			'treeCookies'        => '0',
+			'sort' => 'manual',
+			'treeLines' => '0',
+			'treeIcons' => '1',
+			'treeCookies' => '0',
 			'treeExpandCollapse' => '0',
 			'treeCloseSameLevel' => '1',
 		) as $key => $expectedValue) {

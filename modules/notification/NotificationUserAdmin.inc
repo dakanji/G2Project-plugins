@@ -149,7 +149,7 @@ class NotificationUserAdminController extends GalleryController {
 		}
 
 		$results[$returnOption] = array(
-			'view'    => 'core.UserAdmin',
+			'view' => 'core.UserAdmin',
 			'subView' => 'notification.NotificationUserAdmin',
 		);
 		$results['status']      = $status;
@@ -309,7 +309,7 @@ class NotificationUserAdminView extends GalleryView {
 
 					if (count($itemIds) > 0) {
 						// Filter out items that we (no longer) have access to
-						$permission = $instance->getPermission();
+						$permission                  = $instance->getPermission();
 						list($ret, $itemPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 						if ($ret) {

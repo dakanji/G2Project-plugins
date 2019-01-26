@@ -82,10 +82,10 @@ class AlbumSelectModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'sort'               => 'manual',
-			'treeLines'          => 1,
-			'treeIcons'          => 0,
-			'treeCookies'        => 0,
+			'sort' => 'manual',
+			'treeLines' => 1,
+			'treeIcons' => 0,
+			'treeCookies' => 0,
 			'treeExpandCollapse' => 0,
 			'treeCloseSameLevel' => 0,
 		) as $key => $value) {

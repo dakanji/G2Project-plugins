@@ -326,7 +326,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			return array($ret, null);
 		}
 
-		$photos = $picasaAlbum['images'];
+		$photos                = $picasaAlbum['images'];
 		$numberOfItemsImported = 1;
 
 		foreach ($photos as $j => $importAlbumItem) {
@@ -437,8 +437,8 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		$titleList = array(
 			'filename' => $module->translate('Base filename'),
-			'caption'  => $module->translate('Picasa Caption'),
-			''         => $module->translate('Blank'),
+			'caption' => $module->translate('Picasa Caption'),
+			'' => $module->translate('Blank'),
 		);
 
 		$template->setVariable(

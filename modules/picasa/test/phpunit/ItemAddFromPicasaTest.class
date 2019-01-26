@@ -388,7 +388,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 
 		// Perform the request and verify that we succeeded
 		list($error, $status) = $this->handleRequest($this->_temporaryAlbum);
-		$i = 0;
+		$i                    = 0;
 
 		$this->assertEquals(array(), $status, 'count of imported items');
 		$this->assertEquals(array('form[error][picasaZipPath][notsupported]'), $error);

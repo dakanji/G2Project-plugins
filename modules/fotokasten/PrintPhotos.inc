@@ -228,11 +228,11 @@ class PrintPhotosController extends GalleryController {
 		$this->affiliate_id      = $params['affiliateId'];
 		$this->affiliate_id_pass = $params['affiliateIdPass'];
 		$this->server            = array(
-			'soapaction'      => 'urn::sopainterop',
-			'endpoint'        => 'http://' . $this->affiliate_id . $this->nserver .
+			'soapaction' => 'urn::sopainterop',
+			'endpoint' => 'http://' . $this->affiliate_id . $this->nserver .
 						 $this->ftk_soap_path,
 			'methodNamespace' => 'http://soap.fotokasten.de',
-			'name'            => $this->affiliate_id . $this->nserver,
+			'name' => $this->affiliate_id . $this->nserver,
 		);
 
 		// get fotokasten session

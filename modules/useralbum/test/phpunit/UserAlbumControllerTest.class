@@ -258,7 +258,7 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 
 		$gallery->setActiveUser($this->_userWithAlbum);
 		$albumLink['YourAlbum'] = array(
-			'text'   => $module->translate('Your Album'),
+			'text' => $module->translate('Your Album'),
 			'params' => array(
 				'view'   => 'core.ShowItem',
 				'itemId' => $this->_userAlbumId,
@@ -274,7 +274,7 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 
 		$gallery->setActiveUser($this->_userWithoutAlbum);
 		$createLink['YourAlbum'] = array(
-			'text'   => $module->translate('Your Album'),
+			'text' => $module->translate('Your Album'),
 			'params' => array(
 				'controller' => 'useralbum.UserAlbum',
 			),

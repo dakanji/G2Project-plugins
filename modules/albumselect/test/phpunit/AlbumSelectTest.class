@@ -389,7 +389,7 @@ class AlbumSelectTest extends GalleryTestCase {
 		}
 
 		// Preparation
-		$userId = $gallery->getActiveUserId();
+		$userId                   = $gallery->getActiveUserId();
 		list($ret, $languageCode) = $gallery->getActiveLanguageCode();
 
 		if ($ret) {
@@ -402,7 +402,7 @@ class AlbumSelectTest extends GalleryTestCase {
 			return $ret;
 		}
 		$cachePathInfo = array(
-			'type'   => 'module-data',
+			'type' => 'module-data',
 			'module' => 'albumselect',
 			'itemId' => $userId . '__' . $languageCode .
 			'_' . substr(
@@ -537,8 +537,8 @@ class AlbumSelectTest extends GalleryTestCase {
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Force the URL generator to believe that relative URLs are fine
-		$baseUrl   = $urlGenerator->getCurrentUrlDir();
-		$serverUrl = $urlGenerator->makeUrl('/');
+		$baseUrl                = $urlGenerator->getCurrentUrlDir();
+		$serverUrl              = $urlGenerator->makeUrl('/');
 		$_SERVER['REQUEST_URI'] = substr($baseUrl, strlen($serverUrl) - 1) . GALLERY_MAIN_PHP;
 
 		$smarty    = new GallerySmarty();
@@ -607,7 +607,7 @@ class AlbumSelectTest extends GalleryTestCase {
 		);
 
 		// Then test with session permission
-		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($itemId));
+		$session->put(GALLERY_PERMISSION_SESSION_KEY, array( $itemId ));
 		// Don't use GalleryDataCache::reset() this test is about caching
 		GalleryDataCache::removeByPattern('[Aa]ccessList');
 		$ret = $callbacks->callback(
@@ -654,16 +654,16 @@ class AlbumSelectTest extends GalleryTestCase {
 		$albumNode  = count($data['tree']) - ($withSubAlbum2 ? 3 : 2);
 		$expected   = array();
 		$expected[] = array(
-			'id'         => $this->_album->getId(),
-			'nodeId'     => $albumNode,
+			'id' => $this->_album->getId(),
+			'nodeId' => $albumNode,
 			'parentNode' => 0,
-			'depth'      => 0,
+			'depth' => 0,
 		);
 		$expected[] = array(
-			'id'         => $this->_subalbum[1]->getId(),
-			'nodeId'     => $albumNode + 1,
+			'id' => $this->_subalbum[1]->getId(),
+			'nodeId' => $albumNode + 1,
 			'parentNode' => $albumNode,
-			'depth'      => 1,
+			'depth' => 1,
 		);
 
 		if ($withSubAlbum2) {
@@ -675,10 +675,10 @@ class AlbumSelectTest extends GalleryTestCase {
 			);
 		}
 		$expected[] = array(
-			'id'         => $this->_subalbum[3]->getId(),
-			'nodeId'     => $albumNode + ($withSubAlbum2 ? 3 : 2),
+			'id' => $this->_subalbum[3]->getId(),
+			'nodeId' => $albumNode + ($withSubAlbum2 ? 3 : 2),
 			'parentNode' => $albumNode,
-			'depth'      => 1,
+			'depth' => 1,
 		);
 		$this->assertEquals(
 			$expected,

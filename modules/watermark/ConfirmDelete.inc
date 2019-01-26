@@ -62,10 +62,10 @@ class ConfirmDeleteController extends GalleryController {
 		} // else $form['action']['cancel']
 
 		$results['redirect'] = isset($form['fromAdmin']) ? array(
-			'view'    => 'core.SiteAdmin',
+			'view' => 'core.SiteAdmin',
 			'subView' => 'watermark.WatermarkSiteAdmin',
 		) : array(
-			'view'    => 'core.UserAdmin',
+			'view' => 'core.UserAdmin',
 			'subView' => 'watermark.UserWatermarks',
 		);
 		$results['status']   = $status;

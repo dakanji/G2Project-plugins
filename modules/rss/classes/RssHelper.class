@@ -470,8 +470,8 @@ class RssHelper {
 		);
 
 		$itemSettings = array(
-			'title'       => $item->getSubject(),
-			'link'        => $url,
+			'title' => $item->getSubject(),
+			'link' => $url,
 			'description' => $item->getComment(),
 		);
 

@@ -51,8 +51,8 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$rand              = mt_rand();
-		$this->_randomName = 'phpunit_' . $rand . '.jpg';
+		$rand                = mt_rand();
+		$this->_randomName   = 'phpunit_' . $rand . '.jpg';
 		$this->_expectedName = 'phpunit_' . $rand . '_jpg';
 
 		// Get the list of watermarks before, then after delete any that we created
@@ -579,11 +579,11 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function _createTestWatermark() {
 		$name = 'phpunit_' . mt_rand() . '.jpg';
 		$form = array(
-			'action'   => array('add', '1'),
-			'name'     => array(
+			'action' => array('add', '1'),
+			'name' => array(
 				'1' => $name,
 			),
-			'type'     => array(
+			'type' => array(
 				'1' => 'image/jpeg',
 			),
 			'tmp_name' => array(

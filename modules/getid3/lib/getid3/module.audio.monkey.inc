@@ -102,16 +102,16 @@ class getid3_monkey extends getid3_handler {
 		$thisfile_monkeysaudio['flags']['24-bit']        = (bool)($thisfile_monkeysaudio_raw['nFormatFlags'] & 0x0008);
 		$thisfile_monkeysaudio['flags']['seek_elements'] = (bool)($thisfile_monkeysaudio_raw['nFormatFlags'] & 0x0010);
 		$thisfile_monkeysaudio['flags']['no_wav_header'] = (bool)($thisfile_monkeysaudio_raw['nFormatFlags'] & 0x0020);
-		$thisfile_monkeysaudio['version']     = $thisfile_monkeysaudio_raw['nVersion'] / 1000;
-		$thisfile_monkeysaudio['compression'] = $this->MonkeyCompressionLevelNameLookup($thisfile_monkeysaudio_raw['nCompressionLevel']);
+		$thisfile_monkeysaudio['version']                = $thisfile_monkeysaudio_raw['nVersion'] / 1000;
+		$thisfile_monkeysaudio['compression']            = $this->MonkeyCompressionLevelNameLookup($thisfile_monkeysaudio_raw['nCompressionLevel']);
 
 		if ($thisfile_monkeysaudio_raw['nVersion'] < 3980) {
 			$thisfile_monkeysaudio['samples_per_frame'] = $this->MonkeySamplesPerFrame($thisfile_monkeysaudio_raw['nVersion'], $thisfile_monkeysaudio_raw['nCompressionLevel']);
 		}
 		$thisfile_monkeysaudio['bits_per_sample'] = ($thisfile_monkeysaudio['flags']['24-bit'] ? 24 : ($thisfile_monkeysaudio['flags']['8-bit'] ? 8 : 16));
 		$thisfile_monkeysaudio['channels']        = $thisfile_monkeysaudio_raw['nChannels'];
-		$info['audio']['channels']            = $thisfile_monkeysaudio['channels'];
-		$thisfile_monkeysaudio['sample_rate'] = $thisfile_monkeysaudio_raw['nSampleRate'];
+		$info['audio']['channels']                = $thisfile_monkeysaudio['channels'];
+		$thisfile_monkeysaudio['sample_rate']     = $thisfile_monkeysaudio_raw['nSampleRate'];
 
 		if ($thisfile_monkeysaudio['sample_rate'] == 0) {
 			$info['error'][] = 'Corrupt MAC file: frequency == zero';
@@ -137,7 +137,7 @@ class getid3_monkey extends getid3_handler {
 
 			return false;
 		}
-		$info['playtime_seconds'] = $thisfile_monkeysaudio['playtime'];
+		$info['playtime_seconds']                   = $thisfile_monkeysaudio['playtime'];
 		$thisfile_monkeysaudio['compressed_size']   = $info['avdataend'] - $info['avdataoffset'];
 		$thisfile_monkeysaudio['uncompressed_size'] = $thisfile_monkeysaudio['samples'] * $thisfile_monkeysaudio['channels'] * ($thisfile_monkeysaudio['bits_per_sample'] / 8);
 
@@ -148,7 +148,7 @@ class getid3_monkey extends getid3_handler {
 		}
 		$thisfile_monkeysaudio['compression_ratio'] = $thisfile_monkeysaudio['compressed_size'] / ($thisfile_monkeysaudio['uncompressed_size'] + $thisfile_monkeysaudio_raw['nHeaderDataBytes']);
 		$thisfile_monkeysaudio['bitrate']           = (($thisfile_monkeysaudio['samples'] * $thisfile_monkeysaudio['channels'] * $thisfile_monkeysaudio['bits_per_sample']) / $thisfile_monkeysaudio['playtime']) * $thisfile_monkeysaudio['compression_ratio'];
-		$info['audio']['bitrate'] = $thisfile_monkeysaudio['bitrate'];
+		$info['audio']['bitrate']                   = $thisfile_monkeysaudio['bitrate'];
 
 		// add size of MAC header to avdataoffset
 		if ($thisfile_monkeysaudio_raw['nVersion'] >= 3980) {
@@ -190,7 +190,7 @@ class getid3_monkey extends getid3_handler {
 
 	public function MonkeyCompressionLevelNameLookup($compressionlevel) {
 		static $MonkeyCompressionLevelNameLookup = array(
-			0 => 'unknown',
+			0    => 'unknown',
 			1000 => 'fast',
 			2000 => 'normal',
 			3000 => 'high',

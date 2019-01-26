@@ -330,7 +330,7 @@ class AdminQuotasView extends GalleryView {
 			}
 		}
 
-		$AdminQuotas = array();
+		$AdminQuotas                    = array();
 		$AdminQuotas['totalGroupCount'] = $totalGroupCount;
 		$AdminQuotas['totalUserCount']  = $totalUserCount;
 

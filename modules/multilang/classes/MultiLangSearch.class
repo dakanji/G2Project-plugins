@@ -40,7 +40,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 		}
 
 		$info = array(
-			'name'        => $module->translate('MultiLanguage'),
+			'name' => $module->translate('MultiLanguage'),
 			'description' => $module->translate('MultiLanguage Captions'),
 		);
 
@@ -272,9 +272,9 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 		}
 
 		$data = array(
-			'start'   => $numRows == 0 ? 0 : $offset + 1,
-			'end'     => $numRows == 0 ? 0 : $offset + sizeof($searchResults),
-			'count'   => $numRows,
+			'start' => $numRows == 0 ? 0 : $offset + 1,
+			'end' => $numRows == 0 ? 0 : $offset + sizeof($searchResults),
+			'count' => $numRows,
 			'results' => $searchResults,
 		);
 

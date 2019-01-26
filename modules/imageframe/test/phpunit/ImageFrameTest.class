@@ -59,8 +59,8 @@ class ImageFrameTest extends GalleryTestCase {
 		}
 		$smarty = new Smarty();
 		$params = array(
-			'name'      => 'ImageFrame_counter',
-			'print'     => true,
+			'name' => 'ImageFrame_counter',
+			'print' => true,
 			'direction' => 'down',
 		);
 

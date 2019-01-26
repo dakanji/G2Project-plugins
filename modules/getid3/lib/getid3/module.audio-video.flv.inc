@@ -86,7 +86,7 @@ class getid3_flv extends getid3_handler {
 		$FLVdataLength = $info['avdataend'] - $info['avdataoffset'];
 		$FLVheader     = $this->fread(5);
 
-		$info['fileformat'] = 'flv';
+		$info['fileformat']                 = 'flv';
 		$info['flv']['header']['signature'] = substr($FLVheader, 0, 3);
 		$info['flv']['header']['version']   = getid3_lib::BigEndian2Int(substr($FLVheader, 3, 1));
 		$TypeFlags = getid3_lib::BigEndian2Int(substr($FLVheader, 4, 1));
@@ -107,10 +107,10 @@ class getid3_flv extends getid3_handler {
 		if ($FrameSizeDataLength > $FLVheaderFrameLength) {
 			$this->fseek($FrameSizeDataLength - $FLVheaderFrameLength, SEEK_CUR);
 		}
-		$Duration    = 0;
-		$found_video = false;
-		$found_audio = false;
-		$found_meta  = false;
+		$Duration                  = 0;
+		$found_video               = false;
+		$found_audio               = false;
+		$found_meta                = false;
 		$found_valid_meta_playtime = false;
 		$tagParseCount             = 0;
 		$info['flv']['framecount'] = array(
@@ -371,16 +371,16 @@ class getid3_flv extends getid3_handler {
 
 	public static function audioFormatLookup($id) {
 		static $lookup = array(
-			0 => 'Linear PCM, platform endian',
-			1 => 'ADPCM',
-			2 => 'mp3',
-			3 => 'Linear PCM, little endian',
-			4 => 'Nellymoser 16kHz mono',
-			5 => 'Nellymoser 8kHz mono',
-			6 => 'Nellymoser',
-			7 => 'G.711A-law logarithmic PCM',
-			8 => 'G.711 mu-law logarithmic PCM',
-			9 => 'reserved',
+			0  => 'Linear PCM, platform endian',
+			1  => 'ADPCM',
+			2  => 'mp3',
+			3  => 'Linear PCM, little endian',
+			4  => 'Nellymoser 16kHz mono',
+			5  => 'Nellymoser 8kHz mono',
+			6  => 'Nellymoser',
+			7  => 'G.711A-law logarithmic PCM',
+			8  => 'G.711 mu-law logarithmic PCM',
+			9  => 'reserved',
 			10 => 'AAC',
 			11 => 'Speex',
 			12 => false, // unknown?

@@ -60,7 +60,7 @@ class getid3_la extends getid3_handler {
 				if ($info['la']['version'] >= 0.3) {
 					$info['la']['fmt_size']    = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
 					$info['la']['header_size'] = 49 + $info['la']['fmt_size'] - 24;
-					$offset += 4;
+					$offset                   += 4;
 				} else {
 					// version 0.2 didn't support additional data blocks
 					$info['la']['header_size'] = 41;
@@ -81,7 +81,7 @@ class getid3_la extends getid3_handler {
 				$offset += 2;
 
 				$info['la']['channels'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 2));
-				$offset += 2;
+				$offset                += 2;
 
 				if ($info['la']['channels'] == 0) {
 					$info['error'][] = 'Corrupt LA file: channels == zero';
@@ -90,7 +90,7 @@ class getid3_la extends getid3_handler {
 				}
 
 				$info['la']['sample_rate'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
-				$offset += 4;
+				$offset                   += 4;
 
 				if ($info['la']['sample_rate'] == 0) {
 					$info['error'][] = 'Corrupt LA file: sample_rate == zero';
@@ -109,7 +109,7 @@ class getid3_la extends getid3_handler {
 				$offset               += 4;
 
 				$info['la']['raw']['flags'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 1));
-				$offset += 1;
+				$offset                    += 1;
 				$info['la']['flags']['seekable'] = (bool)($info['la']['raw']['flags'] & 0x01);
 
 				if ($info['la']['version'] >= 0.4) {
@@ -117,7 +117,7 @@ class getid3_la extends getid3_handler {
 				}
 
 				$info['la']['original_crc'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
-				$offset += 4;
+				$offset                    += 4;
 
 				// mikeØbevin*de
 				// Basically, the blocksize/seekevery are 61440/19 in La0.4 and 73728/16
@@ -140,7 +140,7 @@ class getid3_la extends getid3_handler {
 
 					for ($i = 0; $i < $info['la']['seekpoint_count']; $i++) {
 						$info['la']['seekpoints'][] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
-						$offset += 4;
+						$offset                    += 4;
 					}
 				}
 
@@ -149,7 +149,7 @@ class getid3_la extends getid3_handler {
 					// seekpoints. Following these is what I called the 'footer start',
 					// i.e. the position immediately after the La audio data is finished.
 					$info['la']['footerstart'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
-					$offset += 4;
+					$offset                   += 4;
 
 					if ($info['la']['footerstart'] > $info['filesize']) {
 						$info['warning'][]         = 'FooterStart value points to offset ' . $info['la']['footerstart'] . ' which is beyond end-of-file (' . $info['filesize'] . ')';

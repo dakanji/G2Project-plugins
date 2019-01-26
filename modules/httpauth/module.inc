@@ -359,8 +359,8 @@ class HttpAuthModule extends GalleryModule {
 
 		// Pass the Authorization header to Gallery in a request variable
 		$rules['authorization'] = array(
-			'comment'    => $this->translate('Authorization Header'),
-			'help'       => $this->translate(
+			'comment' => $this->translate('Authorization Header'),
+			'help' => $this->translate(
 				'Pass the Authorization header to Gallery in a request variable.'
 			),
 			'conditions' => array(
@@ -375,11 +375,11 @@ class HttpAuthModule extends GalleryModule {
 					) . '=',
 				),
 			),
-			'options'    => array(
+			'options' => array(
 				'baseUrl' => '%{REQUEST_URI}',
 			),
-			'flags'      => array('QSA'),
-			'keywords'   => array(
+			'flags' => array('QSA'),
+			'keywords' => array(
 				'authorization' => array(
 					'pattern' => '(.+)',
 					'help'    => $this->translate('Authorization header.'),

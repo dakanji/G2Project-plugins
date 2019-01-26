@@ -65,8 +65,8 @@ class LinkItemSiteAdminController extends GalleryController {
 		}
 
 		// Figure out where to redirect upon success
-		$method = empty($error) ? 'redirect' : 'delegate';
-		$results[$method]['view']    = 'core.SiteAdmin';
+		$method                   = empty($error) ? 'redirect' : 'delegate';
+		$results[$method]['view'] = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'linkitem.LinkItemSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;

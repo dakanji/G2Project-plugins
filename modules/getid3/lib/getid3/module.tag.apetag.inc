@@ -267,7 +267,7 @@ class getid3_apetag extends getid3_handler {
 				case 'cover art (studio)':
 					// list of possible cover arts from http://taglib-sharp.sourcearchive.com/documentation/2.0.3.0-2/Ape_2Tag_8cs-source.html
 					if (is_array($thisfile_ape_items_current['data'])) {
-						$info['warning'][] = 'APEtag "' . $item_key . '" should be flagged as Binary data, but was incorrectly flagged as UTF-8';
+						$info['warning'][]                  = 'APEtag "' . $item_key . '" should be flagged as Binary data, but was incorrectly flagged as UTF-8';
 						$thisfile_ape_items_current['data'] = implode("\x00", $thisfile_ape_items_current['data']);
 					}
 					list($thisfile_ape_items_current['filename'], $thisfile_ape_items_current['data']) = explode("\x00", $thisfile_ape_items_current['data'], 2);

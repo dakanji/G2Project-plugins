@@ -165,7 +165,7 @@ class getid3_bonk extends getid3_handler {
 
 				$thisfile_bonk_INFO['version']       = getid3_lib::LittleEndian2Int($this->fread(1));
 				$thisfile_bonk_INFO['entries_count'] = 0;
-				$NextInfoDataPair = $this->fread(5);
+				$NextInfoDataPair                    = $this->fread(5);
 
 				if (!$this->BonkIsValidTagName(substr($NextInfoDataPair, 1, 4))) {
 					while (!feof($this->getid3->fp)) {
@@ -210,7 +210,7 @@ class getid3_bonk extends getid3_handler {
 				if (class_exists('getid3_id3v2')) {
 					$getid3_temp = new getID3();
 					$getid3_temp->openfile($this->getid3->filename);
-					$getid3_id3v2 = new getid3_id3v2($getid3_temp);
+					$getid3_id3v2                  = new getid3_id3v2($getid3_temp);
 					$getid3_id3v2->StartingOffset  = $info['bonk'][' ID3']['offset'] + 2;
 					$info['bonk'][' ID3']['valid'] = $getid3_id3v2->Analyze();
 

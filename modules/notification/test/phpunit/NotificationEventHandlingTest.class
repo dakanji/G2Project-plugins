@@ -105,7 +105,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$cacheKey = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$cacheKey                = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
 		list($ret, $pluginParms) = GalleryCoreApi::fetchAllPluginParameters('module', 'notification');
 
 		if ($ret) {
@@ -168,8 +168,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			}
 
 			$this->_users[$userName] = $user;
-			$userId           = $user->getId();
-			$this->_userIds[] = $userId;
+			$userId                  = $user->getId();
+			$this->_userIds[]        = $userId;
 			$this->_markForCleanup($user);
 
 			list($ret) = GalleryCoreApi::fetchPermissionsForItems($entities, $userId);

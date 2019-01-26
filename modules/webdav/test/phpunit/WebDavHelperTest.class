@@ -42,7 +42,7 @@ class WebDavHelperTest extends GalleryTestCase {
 
 		// Initialize test URL generator
 		$this->_urlGenerator = new GalleryUrlGenerator();
-		$ret = $this->_urlGenerator->init('http://example.com/gallery2/main.php');
+		$ret                 = $this->_urlGenerator->init('http://example.com/gallery2/main.php');
 
 		if ($ret) {
 			return $ret;
@@ -50,9 +50,9 @@ class WebDavHelperTest extends GalleryTestCase {
 		$gallery->setUrlGenerator($this->_urlGenerator);
 
 		// Use WebDavHelperTestPhpVm
-		$this->_phpVm = new WebDavHelperTestPhpVm();
+		$this->_phpVm                    = new WebDavHelperTestPhpVm();
 		$this->_phpVm->_extension_loaded = true;
-		$gallery->_phpVm =& $this->_phpVm;
+		$gallery->_phpVm                 =& $this->_phpVm;
 
 		// Mock activate the HTTP auth and rewrite modules
 		$moduleStatus = array(

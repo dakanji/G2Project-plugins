@@ -150,26 +150,26 @@ class RssModule extends GalleryModule {
 		$rules   = array();
 		$rules[] = array(
 			'comment' => $this->translate('Simple RSS Feed'),
-			'match'   => array(
+			'match' => array(
 				'view' => 'rss.SimpleRender',
 			),
 			'pattern' => 'srss/%itemId%',
-			'help'    => $this->translate('Short URL for Simple RSS Feeds'),
+			'help' => $this->translate('Short URL for Simple RSS Feeds'),
 		);
 
 		$rules[] = array(
-			'comment'  => $this->translate('RSS Feed'),
-			'match'    => array(
+			'comment' => $this->translate('RSS Feed'),
+			'match' => array(
 				'view' => 'rss.Render',
 			),
-			'pattern'  => 'rss/%name%',
+			'pattern' => 'rss/%name%',
 			'keywords' => array(
 				'name' => array(
 					'pattern' => '([^\/\?]+)',
 					'help'    => $this->translate('The name of the configured RSS Feed'),
 				),
 			),
-			'help'     => $this->translate('Short URL for Configurable RSS Feeds'),
+			'help' => $this->translate('Short URL for Configurable RSS Feeds'),
 		);
 
 		return $rules;

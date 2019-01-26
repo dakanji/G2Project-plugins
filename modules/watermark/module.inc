@@ -470,18 +470,18 @@ class WatermarkModule extends GalleryModule {
 
 		$rules = array();
 		$rule  = array(
-			'comment'       => $this->translate('Watermark hotlinked images'),
-			'restrict'      => array(
+			'comment' => $this->translate('Watermark hotlinked images'),
+			'restrict' => array(
 				GalleryUtilities::prefixFormVariable('view') => 'core.DownloadItem',
 				GalleryUtilities::prefixFormVariable('itemId') => '([0-9]+)',
 			),
-			'queryString'   => array(
+			'queryString' => array(
 				'view'   => 'watermark.DownloadItem',
 				'itemId' => '%1',
 			),
-			'flags'         => array('L'),
+			'flags' => array('L'),
 			'exemptReferer' => 1,
-			'help'          => $this->translate(
+			'help' => $this->translate(
 				'Apply watermark to images downloaded from outside your Gallery. Select '
 				. 'which watermark to use in Watermark Site Admin.'
 			),

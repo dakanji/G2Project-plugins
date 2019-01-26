@@ -142,8 +142,8 @@ class CustomFieldHelperTest extends GalleryTestCase {
 		}
 
 		$itemFields = array(
-			'Catalog Id'   => '123',
-			'Year'         => 2010,
+			'Catalog Id' => '123',
+			'Year' => 2010,
 			'Photographer' => 'Jack Frost',
 		);
 		$ret        = CustomFieldHelper::saveFieldValues($this->_item, $itemFields);

@@ -134,9 +134,9 @@ class NotificationItemAdminController extends GalleryController {
 		}
 
 		$results[$returnOption] = array(
-			'view'    => 'core.ItemAdmin',
+			'view' => 'core.ItemAdmin',
 			'subView' => 'notification.NotificationItemAdmin',
-			'itemId'  => $itemId,
+			'itemId' => $itemId,
 		);
 		$results['status']      = $status;
 		$results['error']       = $error;
@@ -236,7 +236,7 @@ class NotificationItemAdminView extends GalleryView {
 			}
 
 			if (!$isAdminGroup) {
-				$permission = $instance->getPermission();
+				$permission                  = $instance->getPermission();
 				list($ret, $itemPermissions) = GalleryCoreApi::getPermissions($itemId);
 
 				if ($ret) {

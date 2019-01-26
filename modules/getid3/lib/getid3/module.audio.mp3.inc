@@ -444,7 +444,7 @@ class getid3_mp3 extends getid3_handler {
 		if (isset($MPEGaudioHeaderDecodeCache[$head4])) {
 			$MPEGheaderRawArray = $MPEGaudioHeaderDecodeCache[$head4];
 		} else {
-			$MPEGheaderRawArray = self::MPEGaudioHeaderDecode($head4);
+			$MPEGheaderRawArray                 = self::MPEGaudioHeaderDecode($head4);
 			$MPEGaudioHeaderDecodeCache[$head4] = $MPEGheaderRawArray;
 		}
 
@@ -1093,7 +1093,7 @@ class getid3_mp3 extends getid3_handler {
 	}
 
 	public function RecursiveFrameScanning(&$offset, &$nextframetestoffset, $ScanAsCBR) {
-		$info = &$this->getid3->info;
+		$info                = &$this->getid3->info;
 		$firstframetestarray = array(
 			'error'        => '',
 			'warning'      => '',
@@ -1425,7 +1425,7 @@ class getid3_mp3 extends getid3_handler {
 
 			return false;
 		}
-		$header = $this->fread($sync_seek_buffer_size);
+		$header                = $this->fread($sync_seek_buffer_size);
 		$sync_seek_buffer_size = strlen($header);
 		$SynchSeekOffset       = 0;
 
@@ -1489,7 +1489,7 @@ class getid3_mp3 extends getid3_handler {
 
 				$dummy = $info; // only overwrite real data if valid header found
 				if ($this->decodeMPEGaudioHeader($avdataoffset + $SynchSeekOffset, $dummy, true)) {
-					$info = $dummy;
+					$info                 = $dummy;
 					$info['avdataoffset'] = $avdataoffset + $SynchSeekOffset;
 
 					switch (isset($info['fileformat']) ? $info['fileformat'] : '') {
@@ -1507,9 +1507,9 @@ class getid3_mp3 extends getid3_handler {
 						if (!(abs($info['audio']['bitrate'] - $FirstFrameThisfileInfo['audio']['bitrate']) <= 1)) {
 							// If there is garbage data between a valid VBR header frame and a sequence
 							// of valid MPEG-audio frames the VBR data is no longer discarded.
-							$info = $FirstFrameThisfileInfo;
-							$info['avdataoffset']        = $FirstFrameAVDataOffset;
-							$info['fileformat']          = 'mp3';
+							$info                 = $FirstFrameThisfileInfo;
+							$info['avdataoffset'] = $FirstFrameAVDataOffset;
+							$info['fileformat']   = 'mp3';
 							$info['audio']['dataformat'] = 'mp3';
 							$dummy = $info;
 							unset($dummy['mpeg']['audio']);
@@ -1517,7 +1517,7 @@ class getid3_mp3 extends getid3_handler {
 							$GarbageOffsetEnd   = $avdataoffset + $SynchSeekOffset;
 
 							if ($this->decodeMPEGaudioHeader($GarbageOffsetEnd, $dummy, true, true)) {
-								$info = $dummy;
+								$info                 = $dummy;
 								$info['avdataoffset'] = $GarbageOffsetEnd;
 								$info['warning'][]    = 'apparently-valid VBR header not used because could not find ' . GETID3_MP3_VALID_CHECK_FRAMES . ' consecutive MPEG-audio frames immediately after VBR header (garbage data for ' . ($GarbageOffsetEnd - $GarbageOffsetStart) . ' bytes between ' . $GarbageOffsetStart . ' and ' . $GarbageOffsetEnd . '), but did find valid CBR stream starting at ' . $GarbageOffsetEnd;
 							} else {
@@ -1652,10 +1652,10 @@ class getid3_mp3 extends getid3_handler {
 						$max_scan_segments = 10;
 
 						// don't play with these numbers:
-						$FastMode          = false;
-						$SynchErrorsFound  = 0;
-						$frames_scanned    = 0;
-						$this_scan_segment = 0;
+						$FastMode                = false;
+						$SynchErrorsFound        = 0;
+						$frames_scanned          = 0;
+						$this_scan_segment       = 0;
 						$frames_scan_per_segment = ceil($max_frames_scan / $max_scan_segments);
 						$pct_data_scanned        = 0;
 

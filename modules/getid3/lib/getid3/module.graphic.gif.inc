@@ -19,9 +19,9 @@ class getid3_gif extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		$info['fileformat']          = 'gif';
-		$info['video']['dataformat'] = 'gif';
-		$info['video']['lossless']   = true;
+		$info['fileformat']                  = 'gif';
+		$info['video']['dataformat']         = 'gif';
+		$info['video']['lossless']           = true;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
 
 		$this->fseek($info['avdataoffset']);

@@ -20,10 +20,10 @@ class getid3_jpg extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		$info['fileformat']               = 'jpg';
-		$info['video']['dataformat']      = 'jpg';
-		$info['video']['lossless']        = false;
-		$info['video']['bits_per_sample'] = 24;
+		$info['fileformat']                  = 'jpg';
+		$info['video']['dataformat']         = 'jpg';
+		$info['video']['lossless']           = false;
+		$info['video']['bits_per_sample']    = 24;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
 
 		$this->fseek($info['avdataoffset']);

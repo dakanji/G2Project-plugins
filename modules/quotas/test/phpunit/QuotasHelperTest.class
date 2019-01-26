@@ -374,13 +374,13 @@ class QuotasHelperTest extends GalleryTestCase {
 
 	public function testHumanReadableFromKilobytes() {
 		$conversion = array(
-			'1024'       => array(1.00, $this->_MB),
-			'2048'       => array(2.00, $this->_MB),
-			'2.00'       => array(2.00, $this->_KB),
+			'1024' => array(1.00, $this->_MB),
+			'2048' => array(2.00, $this->_MB),
+			'2.00' => array(2.00, $this->_KB),
 			'2097152.00' => array(2.00, $this->_GB),
 			'2147483648' => array(2048.00, $this->_GB),
-			'46464'      => array(45.38, $this->_MB),
-			'46463'      => array(45.37, $this->_MB),
+			'46464' => array(45.38, $this->_MB),
+			'46463' => array(45.37, $this->_MB),
 		);
 
 		foreach ($conversion as $key => $value) {

@@ -66,7 +66,7 @@ class getid3_flac extends getid3_handler {
 			}
 
 			$info['flac'][$BlockTypeText]['raw'] = array();
-			$BlockTypeText_raw = &$info['flac'][$BlockTypeText]['raw'];
+			$BlockTypeText_raw                   = &$info['flac'][$BlockTypeText]['raw'];
 
 			$BlockTypeText_raw['offset']          = $BlockOffset;
 			$BlockTypeText_raw['last_meta_block'] = $LastBlockFlag;
@@ -213,16 +213,16 @@ class getid3_flac extends getid3_handler {
 		$info = &$this->getid3->info;
 
 		$info['flac']['STREAMINFO'] = array();
-		$streaminfo = &$info['flac']['STREAMINFO'];
+		$streaminfo                 = &$info['flac']['STREAMINFO'];
 
 		$streaminfo['min_block_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 0, 2));
 		$streaminfo['max_block_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 2, 2));
 		$streaminfo['min_frame_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 4, 3));
 		$streaminfo['max_frame_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 7, 3));
 
-		$SRCSBSS = getid3_lib::BigEndian2Bin(substr($BlockData, 10, 8));
-		$streaminfo['sample_rate']     = getid3_lib::Bin2Dec(substr($SRCSBSS, 0, 20));
-		$streaminfo['channels']        = getid3_lib::Bin2Dec(substr($SRCSBSS, 20, 3)) + 1;
+		$SRCSBSS                   = getid3_lib::BigEndian2Bin(substr($BlockData, 10, 8));
+		$streaminfo['sample_rate'] = getid3_lib::Bin2Dec(substr($SRCSBSS, 0, 20));
+		$streaminfo['channels']    = getid3_lib::Bin2Dec(substr($SRCSBSS, 20, 3)) + 1;
 		$streaminfo['bits_per_sample'] = getid3_lib::Bin2Dec(substr($SRCSBSS, 23, 5)) + 1;
 		$streaminfo['samples_stream']  = getid3_lib::Bin2Dec(substr($SRCSBSS, 28, 36));
 
@@ -442,16 +442,16 @@ class getid3_flac extends getid3_handler {
 
 	public static function pictureTypeLookup($type_id) {
 		static $lookup = array(
-			0 => 'Other',
-			1 => '32x32 pixels \'file icon\' (PNG only)',
-			2 => 'Other file icon',
-			3 => 'Cover (front)',
-			4 => 'Cover (back)',
-			5 => 'Leaflet page',
-			6 => 'Media (e.g. label side of CD)',
-			7 => 'Lead artist/lead performer/soloist',
-			8 => 'Artist/performer',
-			9 => 'Conductor',
+			0  => 'Other',
+			1  => '32x32 pixels \'file icon\' (PNG only)',
+			2  => 'Other file icon',
+			3  => 'Cover (front)',
+			4  => 'Cover (back)',
+			5  => 'Leaflet page',
+			6  => 'Media (e.g. label side of CD)',
+			7  => 'Lead artist/lead performer/soloist',
+			8  => 'Artist/performer',
+			9  => 'Conductor',
 			10 => 'Band/Orchestra',
 			11 => 'Composer',
 			12 => 'Lyricist/text writer',

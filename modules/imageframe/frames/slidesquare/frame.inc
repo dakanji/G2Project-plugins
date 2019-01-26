@@ -3,71 +3,71 @@
   // Contributed by: xlerb
 $frameData = array(
 
-	'name'    => $gallery->i18n('Slide (square)'),
-	'square'  => true,
+	'name'      => $gallery->i18n('Slide (square)'),
+	'square'    => true,
 
 	// Center, no width/height setting neccessary
 	// Try setting this to 'CC.png' to see the centering, then make your own appealing img.
-	'imageCC' => 'CC.gif',
+	'imageCC'   => 'CC.gif',
 
 	// Top Left
-	'imageTL' => 'TL.gif',
-	'widthTL' => 11,
-	'heightTL' => 11,
+	'imageTL'   => 'TL.gif',
+	'widthTL'   => 11,
+	'heightTL'  => 11,
 
 	// Top
-	'imageTTL' => '',
-	'widthTTL' => 0,
+	'imageTTL'  => '',
+	'widthTTL'  => 0,
 
-	'imageTT' => 'TT.gif',
-	'heightTT' => 11,
+	'imageTT'   => 'TT.gif',
+	'heightTT'  => 11,
 
-	'imageTTR' => '',
-	'widthTTR' => 0,
+	'imageTTR'  => '',
+	'widthTTR'  => 0,
 
 	// Top Right
-	'imageTR' => 'TR.gif',
-	'widthTR' => 11,
-	'heightTR' => 11,
+	'imageTR'   => 'TR.gif',
+	'widthTR'   => 11,
+	'heightTR'  => 11,
 
 	// Left
-	'imageLLT' => '',
+	'imageLLT'  => '',
 	'heightLLT' => 0,
 
-	'imageLL' => 'LL.gif',
-	'widthLL' => 11,
+	'imageLL'   => 'LL.gif',
+	'widthLL'   => 11,
 
-	'imageLLB' => '',
+	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
-	'imageRRT' => '',
+	'imageRRT'  => '',
 	'heightRRT' => 0,
 
-	'imageRR' => 'RR.gif',
-	'widthRR' => 11,
+	'imageRR'   => 'RR.gif',
+	'widthRR'   => 11,
 
-	'imageRRB' => '',
+	'imageRRB'  => '',
 	'heightRRB' => 0,
 
 	// Bottom Left
-	'imageBL' => 'BL.gif',
-	'widthBL' => 11,
-	'heightBL' => 11,
+	'imageBL'   => 'BL.gif',
+	'widthBL'   => 11,
+	'heightBL'  => 11,
 
 	// Bottom
-	'imageBBL' => '',
-	'widthBBL' => 0,
+	'imageBBL'  => '',
+	'widthBBL'  => 0,
 
-	'imageBB' => 'BB.gif',
-	'heightBB' => 11,
+	'imageBB'   => 'BB.gif',
+	'heightBB'  => 11,
 
-	'imageBBR' => '',
-	'widthBBR' => 0,
+	'imageBBR'  => '',
+	'widthBBR'  => 0,
 
 	// Bottom Right
-	'imageBR' => 'BR.gif',
-	'widthBR' => 11,
-	'heightBR' => 11,
+	'imageBR'   => 'BR.gif',
+	'widthBR'   => 11,
+	'heightBR'  => 11,
 
 );

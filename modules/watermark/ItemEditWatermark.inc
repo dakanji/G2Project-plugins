@@ -398,9 +398,9 @@ class ItemEditWatermark extends ItemEditPlugin {
 
 		$ItemEditWatermark = array(
 			'watermarks' => $watermarks,
-			'item'       => (array)$item,
-			'image'      => isset($displayImage) ? (array)$displayImage : null,
-			'isAlbum'    => GalleryUtilities::isA($item, 'GalleryAlbumItem'),
+			'item' => (array)$item,
+			'image' => isset($displayImage) ? (array)$displayImage : null,
+			'isAlbum' => GalleryUtilities::isA($item, 'GalleryAlbumItem'),
 		);
 
 		$template->javascript('lib/yui/utilities.js');

@@ -88,9 +88,9 @@ class ImageBlockModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'show'       => 'heading|title|date|views',
+			'show' => 'heading|title|date|views',
 			'albumFrame' => '',
-			'itemFrame'  => '',
+			'itemFrame' => '',
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);

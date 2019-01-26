@@ -95,7 +95,7 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 					$variablesArray = explode('|', $params['upload' . $type . 'Variables']);
 
 					foreach ($variablesArray as $variable) {
-						list($name, $value) = explode('=', $variable);
+						list($name, $value)                = explode('=', $variable);
 						$ItemAddUploadApplet[$type][$name] = $value;
 					}
 				}

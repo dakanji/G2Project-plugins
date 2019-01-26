@@ -159,7 +159,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		//
 		// Look for orphaned rows with no entry in Entity table
-		$message = $module->translate('Checking for orphaned entity data');
+		$message                   = $module->translate('Checking for orphaned entity data');
 		list($ret, $allEntityData) = GalleryCoreApi::describeEntity('GalleryEntity', true);
 
 		if ($ret) {

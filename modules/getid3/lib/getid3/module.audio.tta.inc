@@ -28,7 +28,7 @@ class getid3_tta extends getid3_handler {
 		$ttaheader = $this->fread(26);
 
 		$info['tta']['magic'] = substr($ttaheader, 0, 3);
-		$magic = 'TTA';
+		$magic                = 'TTA';
 
 		if ($info['tta']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['tta']['magic']) . '"';

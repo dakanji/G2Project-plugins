@@ -174,8 +174,8 @@ class WebDavModuleTest extends GalleryTestCase {
 	public function testGetItemLinks() {
 		global $gallery;
 
-		$items              = array($this->_item, $this->_subAlbum);
-		$wantsDetailedLinks = array(
+		$items                   = array($this->_item, $this->_subAlbum);
+		$wantsDetailedLinks      = array(
 			$this->_item->getId()     => true,
 			$this->_subAlbum->getId() => true,
 		);
@@ -211,7 +211,7 @@ class WebDavModuleTest extends GalleryTestCase {
 			)
 		);
 		$expected[$this->_subAlbum->getId()][0]['params'] = array(
-			'view'   => 'webdav.WebDavMount',
+			'view' => 'webdav.WebDavMount',
 			'itemId' => $this->_subAlbum->getId(),
 		);
 		$this->assertEquals($expected, $links, 'item links for summary');

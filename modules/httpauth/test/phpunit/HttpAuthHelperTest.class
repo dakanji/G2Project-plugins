@@ -560,7 +560,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testSetConfiguration() {
 		$this->_resetFactory = true;
-		$ret = $this->_authInterface->setConfiguration(false, true, false);
+		$ret                 = $this->_authInterface->setConfiguration(false, true, false);
 
 		if ($ret) {
 			return $ret;
@@ -586,7 +586,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testSetConfigurationDefaults() {
 		$this->_resetFactory = true;
-		$ret = $this->_authInterface->setConfiguration(true);
+		$ret                 = $this->_authInterface->setConfiguration(true);
 
 		if ($ret) {
 			return $ret;

@@ -64,7 +64,7 @@ class getid3_aac extends getid3_handler {
 			$bitoffset          = 0;
 
 			$info['aac']['header_type'] = 'ADIF';
-			$bitoffset += 32;
+			$bitoffset                 += 32;
 			$info['aac']['header']['mpeg_version'] = 4;
 
 			$info['aac']['header']['copyright'] = (bool)(substr($AACheaderBitstream, $bitoffset, 1) == '1');
@@ -75,9 +75,9 @@ class getid3_aac extends getid3_handler {
 				$bitoffset += 72;
 			}
 			$info['aac']['header']['original_copy'] = (bool)(substr($AACheaderBitstream, $bitoffset, 1) == '1');
-			$bitoffset += 1;
+			$bitoffset                    += 1;
 			$info['aac']['header']['home'] = (bool)(substr($AACheaderBitstream, $bitoffset, 1) == '1');
-			$bitoffset += 1;
+			$bitoffset                    += 1;
 			$info['aac']['header']['is_vbr'] = (bool)(substr($AACheaderBitstream, $bitoffset, 1) == '1');
 			$bitoffset += 1;
 

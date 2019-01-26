@@ -51,13 +51,13 @@ class RegisterModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'confirmation'     => 'admin',
-			'emailadmins'      => 1,
-			'emailusers'       => 1,
-			'subject'          => $this->translate('Account activation'),
-			'adminsubject'     => $this->translate('New user registration'),
-			'usersubject'      => $this->translate('Welcome to Gallery'),
-			'from'             => 'webmaster@' . GalleryUtilities::getServerVar('SERVER_NAME'),
+			'confirmation' => 'admin',
+			'emailadmins' => 1,
+			'emailusers' => 1,
+			'subject' => $this->translate('Account activation'),
+			'adminsubject' => $this->translate('New user registration'),
+			'usersubject' => $this->translate('Welcome to Gallery'),
+			'from' => 'webmaster@' . GalleryUtilities::getServerVar('SERVER_NAME'),
 			'validation.level' => 'HIGH',
 		) as $key => $value) {
 			if (!isset($params[$key])) {

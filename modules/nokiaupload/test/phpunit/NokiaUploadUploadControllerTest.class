@@ -145,7 +145,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 
 	public function testUploadEmptyFle() {
 		$_FILES['ImageData'] = array(
-			'size'     => 0,
+			'size' => 0,
 			'tmp_name' => '',
 		);
 		$results             = $this->handleRequest();
@@ -167,7 +167,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 
 	public function testUploadBadParent() {
 		$_FILES['ImageData'] = array(
-			'size'     => 1966,
+			'size' => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
 		GalleryUtilities::putRequestVariable('DirId', 'badId', false);
@@ -190,7 +190,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 
 	public function testUploadNoPermission() {
 		$_FILES['ImageData'] = array(
-			'size'     => 1966,
+			'size' => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
 		GalleryUtilities::putRequestVariable('DirId', $this->_subAlbum->getId(), false);
@@ -213,7 +213,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 
 	public function testUploadValidRequest() {
 		$_FILES['ImageData'] = array(
-			'size'     => 1966,
+			'size' => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
 		GalleryUtilities::putRequestVariable('Desc', 'this is the description', false);

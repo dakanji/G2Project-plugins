@@ -131,7 +131,7 @@ class NotificationSiteAdminController extends GalleryController {
 		}
 
 		$results[$returnOption] = array(
-			'view'    => 'core.SiteAdmin',
+			'view' => 'core.SiteAdmin',
 			'subView' => 'notification.NotificationSiteAdmin',
 		);
 

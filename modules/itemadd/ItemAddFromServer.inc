@@ -365,8 +365,8 @@ class ItemAddFromServer extends ItemAddPlugin {
 	 * @return GalleryStatus
 	 */
 	public function addItem($parentId, $file, $useSymlink, $textFields, &$status, &$error) {
-		$fileName = basename($file);
-		$base     = GalleryUtilities::getFileBase($fileName);
+		$fileName             = basename($file);
+		$base                 = GalleryUtilities::getFileBase($fileName);
 		list($ret, $mimeType) = GalleryCoreApi::getMimeType($fileName);
 
 		if ($ret) {
@@ -398,7 +398,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 		GalleryUtilities::sanitizeInputValues($safeFilename);
 		$status['addedFiles'][] = array(
 			'fileName' => $safeFilename,
-			'id'       => $newItem->getId(),
+			'id' => $newItem->getId(),
 			'warnings' => array(),
 		);
 
@@ -680,11 +680,11 @@ class ItemAddFromServer extends ItemAddPlugin {
 		if ($ret) {
 			return array($ret, null, null);
 		}
-		$localServerDirList = array();
+		$localServerDirList                = array();
 		$localServerDirListInSystemCharset = array();
 
 		for ($i = 1; !empty($param['uploadLocalServer.dir.' . $i]); $i++) {
-			$localServerDirList[] = $param['uploadLocalServer.dir.' . $i];
+			$localServerDirList[]                = $param['uploadLocalServer.dir.' . $i];
 			$localServerDirListInSystemCharset[] = GalleryCoreApi::convertFromUtf8($param['uploadLocalServer.dir.' . $i]);
 		}
 
@@ -844,7 +844,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 						$mimeTypeItem->itemTypeName(false)
 					);
 
-					$fileName = basename($path);
+					$fileName                   = basename($path);
 					$form['localServerFiles'][] = array(
 						'type'     => 'file',
 						'fileName' => GalleryCoreApi::convertToUtf8($fileName),

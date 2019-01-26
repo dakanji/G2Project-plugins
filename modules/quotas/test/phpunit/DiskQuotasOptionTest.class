@@ -218,7 +218,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$filesize = (int)($this->_platform->filesize(__FILE__) / 1024);
+		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
@@ -360,7 +360,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		$filesize = (int)($this->_platform->filesize(__FILE__) / 1024);
+		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
@@ -487,7 +487,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		$filesize = (int)($this->_platform->filesize(__FILE__) / 1024);
+		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(

@@ -60,7 +60,7 @@ class getid3_mpc extends getid3_handler {
 		// this is SV8
 		// http://trac.musepack.net/trac/wiki/SV8Specification
 
-		$info = &$this->getid3->info;
+		$info                = &$this->getid3->info;
 		$thisfile_mpc_header = &$info['mpc']['header'];
 
 		$keyNameSize            = 2;
@@ -111,9 +111,9 @@ class getid3_mpc extends getid3_handler {
 					$thisPacket['sample_count'] = $this->SV8variableLengthInteger(substr($MPCheaderData, $packet_offset, $maxHandledPacketLength), $packetLength);
 					$packet_offset             += $packetLength;
 
-					$packetLength = 0;
+					$packetLength                    = 0;
 					$thisPacket['beginning_silence'] = $this->SV8variableLengthInteger(substr($MPCheaderData, $packet_offset, $maxHandledPacketLength), $packetLength);
-					$packet_offset += $packetLength;
+					$packet_offset                  += $packetLength;
 
 					$otherUsefulData = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
 					$packet_offset  += 2;
@@ -143,7 +143,7 @@ class getid3_mpc extends getid3_handler {
 						$MPCheaderData .= $this->fread($moreBytesToRead);
 					}
 					$thisPacket['replaygain_version'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
-					$packet_offset += 1;
+					$packet_offset                   += 1;
 					$thisPacket['replaygain_title_gain'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
 					$packet_offset += 2;
 					$thisPacket['replaygain_title_peak'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
@@ -177,12 +177,12 @@ class getid3_mpc extends getid3_handler {
 					if ($moreBytesToRead > 0) {
 						$MPCheaderData .= $this->fread($moreBytesToRead);
 					}
-					$profile_pns            = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
-					$packet_offset         += 1;
-					$quality_int            = (($profile_pns & 0xF0) >> 4);
-					$quality_dec            = (($profile_pns & 0x0E) >> 3);
-					$thisPacket['quality']  = (float)$quality_int + ($quality_dec / 8);
-					$thisPacket['pns_tool'] = (bool)(($profile_pns & 0x01) >> 0);
+					$profile_pns                 = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
+					$packet_offset              += 1;
+					$quality_int                 = (($profile_pns & 0xF0) >> 4);
+					$quality_dec                 = (($profile_pns & 0x0E) >> 3);
+					$thisPacket['quality']       = (float)$quality_int + ($quality_dec / 8);
+					$thisPacket['pns_tool']      = (bool)(($profile_pns & 0x01) >> 0);
 					$thisPacket['version_major'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
 					$packet_offset              += 1;
 					$thisPacket['version_minor'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
@@ -198,9 +198,9 @@ class getid3_mpc extends getid3_handler {
 					break;
 
 				case 'SO': // Seek Table Offset
-					$packetLength = 0;
+					$packetLength                    = 0;
 					$thisPacket['seek_table_offset'] = $thisPacket['offset'] + $this->SV8variableLengthInteger(substr($MPCheaderData, $packet_offset, $maxHandledPacketLength), $packetLength);
-					$packet_offset += $packetLength;
+					$packet_offset                  += $packetLength;
 
 					break;
 
@@ -234,7 +234,7 @@ class getid3_mpc extends getid3_handler {
 		// this is SV7
 		// http://www.uni-jena.de/~pfk/mpp/sv8/header.html
 
-		$info = &$this->getid3->info;
+		$info                = &$this->getid3->info;
 		$thisfile_mpc_header = &$info['mpc']['header'];
 		$offset              = 0;
 
@@ -355,7 +355,7 @@ class getid3_mpc extends getid3_handler {
 	public function ParseMPCsv6() {
 		// this is SV4 - SV6
 
-		$info = &$this->getid3->info;
+		$info                = &$this->getid3->info;
 		$thisfile_mpc_header = &$info['mpc']['header'];
 		$offset              = 0;
 
@@ -433,16 +433,16 @@ class getid3_mpc extends getid3_handler {
 
 	public function MPCprofileNameLookup($profileid) {
 		static $MPCprofileNameLookup = array(
-			0 => 'no profile',
-			1 => 'Experimental',
-			2 => 'unused',
-			3 => 'unused',
-			4 => 'unused',
-			5 => 'below Telephone (q = 0.0)',
-			6 => 'below Telephone (q = 1.0)',
-			7 => 'Telephone (q = 2.0)',
-			8 => 'Thumb (q = 3.0)',
-			9 => 'Radio (q = 4.0)',
+			0  => 'no profile',
+			1  => 'Experimental',
+			2  => 'unused',
+			3  => 'unused',
+			4  => 'unused',
+			5  => 'below Telephone (q = 0.0)',
+			6  => 'below Telephone (q = 1.0)',
+			7  => 'Telephone (q = 2.0)',
+			8  => 'Thumb (q = 3.0)',
+			9  => 'Radio (q = 4.0)',
 			10 => 'Standard (q = 5.0)',
 			11 => 'Extreme (q = 6.0)',
 			12 => 'Insane (q = 7.0)',

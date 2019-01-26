@@ -51,7 +51,7 @@ class getid3_dts extends getid3_handler {
 			$this->readBinDataOffset     = 32;
 		} elseif ($this->isDependencyFor('matroska')) {
 			// Matroska contains DTS without syncword encoded as raw big-endian format
-			$encoding = 0;
+			$encoding                = 0;
 			$this->readBinDataOffset = 0;
 		} else {
 			unset($info['fileformat']);
@@ -86,21 +86,21 @@ class getid3_dts extends getid3_handler {
 			}
 		}
 
-		$info['dts']['raw']['frame_type']          = $this->readBinData($fhBS, 1);
-		$info['dts']['raw']['deficit_samples']     = $this->readBinData($fhBS, 5);
-		$info['dts']['flags']['crc_present']       = (bool)$this->readBinData($fhBS, 1);
-		$info['dts']['raw']['pcm_sample_blocks']   = $this->readBinData($fhBS, 7);
-		$info['dts']['raw']['frame_byte_size']     = $this->readBinData($fhBS, 14);
-		$info['dts']['raw']['channel_arrangement'] = $this->readBinData($fhBS, 6);
-		$info['dts']['raw']['sample_frequency']    = $this->readBinData($fhBS, 4);
-		$info['dts']['raw']['bitrate']             = $this->readBinData($fhBS, 5);
-		$info['dts']['flags']['embedded_downmix']  = (bool)$this->readBinData($fhBS, 1);
-		$info['dts']['flags']['dynamicrange']      = (bool)$this->readBinData($fhBS, 1);
-		$info['dts']['flags']['timestamp']         = (bool)$this->readBinData($fhBS, 1);
-		$info['dts']['flags']['auxdata']           = (bool)$this->readBinData($fhBS, 1);
-		$info['dts']['flags']['hdcd']              = (bool)$this->readBinData($fhBS, 1);
-		$info['dts']['raw']['extension_audio']     = $this->readBinData($fhBS, 3);
-		$info['dts']['flags']['extended_coding']   = (bool)$this->readBinData($fhBS, 1);
+		$info['dts']['raw']['frame_type']             = $this->readBinData($fhBS, 1);
+		$info['dts']['raw']['deficit_samples']        = $this->readBinData($fhBS, 5);
+		$info['dts']['flags']['crc_present']          = (bool)$this->readBinData($fhBS, 1);
+		$info['dts']['raw']['pcm_sample_blocks']      = $this->readBinData($fhBS, 7);
+		$info['dts']['raw']['frame_byte_size']        = $this->readBinData($fhBS, 14);
+		$info['dts']['raw']['channel_arrangement']    = $this->readBinData($fhBS, 6);
+		$info['dts']['raw']['sample_frequency']       = $this->readBinData($fhBS, 4);
+		$info['dts']['raw']['bitrate']                = $this->readBinData($fhBS, 5);
+		$info['dts']['flags']['embedded_downmix']     = (bool)$this->readBinData($fhBS, 1);
+		$info['dts']['flags']['dynamicrange']         = (bool)$this->readBinData($fhBS, 1);
+		$info['dts']['flags']['timestamp']            = (bool)$this->readBinData($fhBS, 1);
+		$info['dts']['flags']['auxdata']              = (bool)$this->readBinData($fhBS, 1);
+		$info['dts']['flags']['hdcd']                 = (bool)$this->readBinData($fhBS, 1);
+		$info['dts']['raw']['extension_audio']        = $this->readBinData($fhBS, 3);
+		$info['dts']['flags']['extended_coding']      = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['flags']['audio_sync_insertion'] = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['raw']['lfe_effects']            = $this->readBinData($fhBS, 2);
 		$info['dts']['flags']['predictor_history']    = (bool)$this->readBinData($fhBS, 1);
@@ -156,16 +156,16 @@ class getid3_dts extends getid3_handler {
 
 	public static function bitrateLookup($index) {
 		static $lookup = array(
-			0 => 32000,
-			1 => 56000,
-			2 => 64000,
-			3 => 96000,
-			4 => 112000,
-			5 => 128000,
-			6 => 192000,
-			7 => 224000,
-			8 => 256000,
-			9 => 320000,
+			0  => 32000,
+			1  => 56000,
+			2  => 64000,
+			3  => 96000,
+			4  => 112000,
+			5  => 128000,
+			6  => 192000,
+			7  => 224000,
+			8  => 256000,
+			9  => 320000,
 			10 => 384000,
 			11 => 448000,
 			12 => 512000,
@@ -195,16 +195,16 @@ class getid3_dts extends getid3_handler {
 
 	public static function sampleRateLookup($index) {
 		static $lookup = array(
-			0 => 'invalid',
-			1 => 8000,
-			2 => 16000,
-			3 => 32000,
-			4 => 'invalid',
-			5 => 'invalid',
-			6 => 11025,
-			7 => 22050,
-			8 => 44100,
-			9 => 'invalid',
+			0  => 'invalid',
+			1  => 8000,
+			2  => 16000,
+			3  => 32000,
+			4  => 'invalid',
+			5  => 'invalid',
+			6  => 11025,
+			7  => 22050,
+			8  => 44100,
+			9  => 'invalid',
 			10 => 'invalid',
 			11 => 12000,
 			12 => 24000,
@@ -283,16 +283,16 @@ class getid3_dts extends getid3_handler {
 
 	public static function channelArrangementLookup($index) {
 		static $lookup = array(
-			0 => 'A',
-			1 => 'A + B (dual mono)',
-			2 => 'L + R (stereo)',
-			3 => '(L+R) + (L-R) (sum-difference)',
-			4 => 'LT + RT (left and right total)',
-			5 => 'C + L + R',
-			6 => 'L + R + S',
-			7 => 'C + L + R + S',
-			8 => 'L + R + SL + SR',
-			9 => 'C + L + R + SL + SR',
+			0  => 'A',
+			1  => 'A + B (dual mono)',
+			2  => 'L + R (stereo)',
+			3  => '(L+R) + (L-R) (sum-difference)',
+			4  => 'LT + RT (left and right total)',
+			5  => 'C + L + R',
+			6  => 'L + R + S',
+			7  => 'C + L + R + S',
+			8  => 'L + R + SL + SR',
+			9  => 'C + L + R + SL + SR',
 			10 => 'CL + CR + L + R + SL + SR',
 			11 => 'C + L + R+ LR + RR + OV',
 			12 => 'CF + CR + LF + RF + LR + RR',

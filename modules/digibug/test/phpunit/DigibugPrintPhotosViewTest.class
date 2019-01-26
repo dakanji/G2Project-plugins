@@ -135,8 +135,8 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		$digibugSessionId = $matches[1][0];
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $digibugSessionId;
-		$digibugSession = new GallerySession();
-		$ret            = $digibugSession->init();
+		$digibugSession                = new GallerySession();
+		$ret = $digibugSession->init();
 
 		if ($ret) {
 			return $ret;
@@ -221,8 +221,8 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 			$digibugSessionId = $matches[1][0];
 
 			$_COOKIE[SESSION_ID_PARAMETER] = $digibugSessionId;
-			$digibugSession = new GallerySession();
-			$ret            = $digibugSession->init();
+			$digibugSession                = new GallerySession();
+			$ret = $digibugSession->init();
 
 			if ($ret) {
 				return $ret;

@@ -109,9 +109,9 @@ class getid3_pcd extends getid3_handler {
 		}
 
 		$RGBcolor = array(
-			'red'   => 0,
+			'red'  => 0,
 			'green' => 0,
-			'blue'  => 0,
+			'blue' => 0,
 		);
 
 		foreach ($RGBcolor as $rgbname => $dummy) {

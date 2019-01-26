@@ -321,8 +321,8 @@ class AdminGetid3Controller extends GalleryController {
 				}
 
 				$status['movedDown']['detailed'] = $count;
-				$redirect['view']    = 'core.SiteAdmin';
-				$redirect['subView'] = 'getid3.AdminGetid3';
+				$redirect['view']                = 'core.SiteAdmin';
+				$redirect['subView']             = 'getid3.AdminGetid3';
 			} else {
 				$error[] = 'form[error][detailed][missing]';
 			}
@@ -438,7 +438,7 @@ class AdminGetid3View extends GalleryView {
 
 		asort($availableList);
 
-		$AdminGetid3 = array();
+		$AdminGetid3                  = array();
 		$AdminGetid3['availableList'] = $availableList;
 		$AdminGetid3['summaryList']   = $summaryList;
 		$AdminGetid3['detailedList']  = $detailedList;

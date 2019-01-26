@@ -83,7 +83,7 @@ class PermalinksModule extends GalleryModule {
 		}
 
 		// Automatically activate the rewrite rules, if the rewrite module is active
-		$success = false;
+		$success                = false;
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 		if ($ret) {

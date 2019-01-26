@@ -219,9 +219,9 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$expectedHeaders          = array();
-		$expectedHeaders['allow'] = 'Allow: OPTIONS,PROPFIND,PROPPATCH,MKCOL,GET,HEAD,DELETE,PUT,MOVE,LOCK,UNLOCK';
-		$expectedHeaders['dav']   = 'DAV: 1,2';
+		$expectedHeaders                   = array();
+		$expectedHeaders['allow']          = 'Allow: OPTIONS,PROPFIND,PROPPATCH,MKCOL,GET,HEAD,DELETE,PUT,MOVE,LOCK,UNLOCK';
+		$expectedHeaders['dav']            = 'DAV: 1,2';
 		$expectedHeaders['content-length'] = 'Content-Length: 0';
 		$expectedHeaders['ms-author-via']  = 'MS-Author-Via: DAV';
 		$this->assertEquals($expectedHeaders, $this->_headers);
@@ -1824,7 +1824,7 @@ class WebDavTest extends GalleryTestCase {
 			return array($ret, null);
 		}
 
-		$path = ltrim($path, '/');
+		$path                   = ltrim($path, '/');
 		list($ret, list($lock)) = WebDavHelper::getLocks($path);
 
 		if ($ret) {
@@ -1972,7 +1972,7 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$path = ltrim($path, '/');
+		$path                   = ltrim($path, '/');
 		list($ret, list($lock)) = WebDavHelper::getLocks($path);
 
 		if ($ret) {

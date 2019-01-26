@@ -2,66 +2,66 @@
 // $Id: frame.inc 15342 2006-12-01 21:14:46Z andy_st $
 $frameData = array(
 
-	'name'    => $gallery->i18n('Shadow'),
+	'name'      => $gallery->i18n('Shadow'),
 
 	// Top Left
-	'imageTL' => '',
-	'widthTL' => 0,
-	'heightTL' => 0,
+	'imageTL'   => '',
+	'widthTL'   => 0,
+	'heightTL'  => 0,
 
 	// Top
-	'imageTTL' => '',
-	'widthTTL' => 0,
+	'imageTTL'  => '',
+	'widthTTL'  => 0,
 
-	'imageTT' => '',
-	'heightTT' => 0,
+	'imageTT'   => '',
+	'heightTT'  => 0,
 
-	'imageTTR' => '',
-	'widthTTR' => 0,
+	'imageTTR'  => '',
+	'widthTTR'  => 0,
 
 	// Top Right
-	'imageTR' => '',
-	'widthTR' => 0,
-	'heightTR' => 0,
+	'imageTR'   => '',
+	'widthTR'   => 0,
+	'heightTR'  => 0,
 
 	// Left
-	'imageLLT' => '',
+	'imageLLT'  => '',
 	'heightLLT' => 0,
 
-	'imageLL' => '',
-	'widthLL' => 0,
+	'imageLL'   => '',
+	'widthLL'   => 0,
 
-	'imageLLB' => '',
+	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
-	'imageRRT' => 'RRT.png',
+	'imageRRT'  => 'RRT.png',
 	'heightRRT' => 10,
 
-	'imageRR' => 'RR.png',
-	'widthRR' => 7,
+	'imageRR'   => 'RR.png',
+	'widthRR'   => 7,
 
-	'imageRRB' => '',
+	'imageRRB'  => '',
 	'heightRRB' => 0,
 
 	// Bottom Left
-	'imageBL' => '',
-	'widthBL' => 0,
-	'heightBL' => 0,
+	'imageBL'   => '',
+	'widthBL'   => 0,
+	'heightBL'  => 0,
 
 	// Bottom
-	'imageBBL' => 'BBL.png',
-	'widthBBL' => 9,
+	'imageBBL'  => 'BBL.png',
+	'widthBBL'  => 9,
 
-	'imageBB' => 'BB.png',
-	'heightBB' => 7,
+	'imageBB'   => 'BB.png',
+	'heightBB'  => 7,
 
-	'imageBBR' => '',
-	'widthBBR' => 0,
+	'imageBBR'  => '',
+	'widthBBR'  => 0,
 
 	// Bottom Right
-	'imageBR' => 'BR.png',
-	'widthBR' => 7,
-	'heightBR' => 7,
+	'imageBR'   => 'BR.png',
+	'widthBR'   => 7,
+	'heightBR'  => 7,
 
 );

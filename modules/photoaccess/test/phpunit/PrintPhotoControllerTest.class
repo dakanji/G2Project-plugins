@@ -130,7 +130,7 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 		}
 
 		// Empty out the plugin session id
-		$session =& $gallery->getSession();
+		$session                    =& $gallery->getSession();
 		$this->_saveCartUrlFragment = $session->get('photoaccess.cartUrlFragment');
 		$session->remove('photoaccess.cartUrlFragment');
 

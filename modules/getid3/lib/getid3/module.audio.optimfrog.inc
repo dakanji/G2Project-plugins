@@ -188,10 +188,10 @@ class getid3_optimfrog extends getid3_handler {
 					$BlockData .= $this->fread(14);
 					$this->fseek($BlockSize - 14, SEEK_CUR);
 
-					$COMPdata['crc_32'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 4));
-					$offset            += 4;
+					$COMPdata['crc_32']       = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 4));
+					$offset                  += 4;
 					$COMPdata['sample_count'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 4));
-					$offset += 4;
+					$offset                  += 4;
 					$COMPdata['raw']['sample_type'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 1));
 					$COMPdata['sample_type']        = $this->OptimFROGsampleTypeLookup($COMPdata['raw']['sample_type']);
 					$offset += 1;
@@ -252,7 +252,7 @@ class getid3_optimfrog extends getid3_handler {
 
 					$thisfile_ofr_thisblock['offset'] = $BlockOffset;
 					$thisfile_ofr_thisblock['size']   = $BlockSize;
-					$info['warning'][] = 'APEtag processing inside OptimFROG not supported in this version (' . $this->getid3->version() . ') of getID3()';
+					$info['warning'][]                = 'APEtag processing inside OptimFROG not supported in this version (' . $this->getid3->version() . ') of getID3()';
 
 					$this->fseek($BlockSize, SEEK_CUR);
 
@@ -315,16 +315,16 @@ class getid3_optimfrog extends getid3_handler {
 
 	public static function OptimFROGsampleTypeLookup($SampleType) {
 		static $OptimFROGsampleTypeLookup = array(
-			0 => 'unsigned int (8-bit)',
-			1 => 'signed int (8-bit)',
-			2 => 'unsigned int (16-bit)',
-			3 => 'signed int (16-bit)',
-			4 => 'unsigned int (24-bit)',
-			5 => 'signed int (24-bit)',
-			6 => 'unsigned int (32-bit)',
-			7 => 'signed int (32-bit)',
-			8 => 'float 0.24 (32-bit)',
-			9 => 'float 16.8 (32-bit)',
+			0  => 'unsigned int (8-bit)',
+			1  => 'signed int (8-bit)',
+			2  => 'unsigned int (16-bit)',
+			3  => 'signed int (16-bit)',
+			4  => 'unsigned int (24-bit)',
+			5  => 'signed int (24-bit)',
+			6  => 'unsigned int (32-bit)',
+			7  => 'signed int (32-bit)',
+			8  => 'float 0.24 (32-bit)',
+			9  => 'float 16.8 (32-bit)',
 			10 => 'float 24.0 (32-bit)',
 		);
 
@@ -333,16 +333,16 @@ class getid3_optimfrog extends getid3_handler {
 
 	public static function OptimFROGbitsPerSampleTypeLookup($SampleType) {
 		static $OptimFROGbitsPerSampleTypeLookup = array(
-			0 => 8,
-			1 => 8,
-			2 => 16,
-			3 => 16,
-			4 => 24,
-			5 => 24,
-			6 => 32,
-			7 => 32,
-			8 => 32,
-			9 => 32,
+			0  => 8,
+			1  => 8,
+			2  => 16,
+			3  => 16,
+			4  => 24,
+			5  => 24,
+			6  => 32,
+			7  => 32,
+			8  => 32,
+			9  => 32,
 			10 => 32,
 		);
 

@@ -236,8 +236,8 @@ class PhotoAccessHelper {
 		}
 		$lines[] = '</add-cart-request>';
 
-		$postData       = array();
-		$postData['cb'] = 'CB_GP';
+		$postData                = array();
+		$postData['cb']          = 'CB_GP';
 		$postData['xml_request'] = join('', $lines);
 
 		$gallery->guaranteeTimeLimit(30);

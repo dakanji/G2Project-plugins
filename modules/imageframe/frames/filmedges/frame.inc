@@ -3,66 +3,66 @@
   // Contributed by: KnightScene
 $frameData = array(
 
-	'name'    => $gallery->i18n('Film Edges'),
+	'name'      => $gallery->i18n('Film Edges'),
 
 	// Top Left
-	'imageTL' => 'TL.gif',
-	'widthTL' => 6,
-	'heightTL' => 18,
+	'imageTL'   => 'TL.gif',
+	'widthTL'   => 6,
+	'heightTL'  => 18,
 
 	// Top
-	'imageTTL' => 'TTL.gif',
-	'widthTTL' => 88,
+	'imageTTL'  => 'TTL.gif',
+	'widthTTL'  => 88,
 
-	'imageTT' => 'TT.gif',
-	'heightTT' => 18,
+	'imageTT'   => 'TT.gif',
+	'heightTT'  => 18,
 
-	'imageTTR' => '',
-	'widthTTR' => 0,
+	'imageTTR'  => '',
+	'widthTTR'  => 0,
 
 	// Top Right
-	'imageTR' => 'TR.gif',
-	'widthTR' => 8,
-	'heightTR' => 18,
+	'imageTR'   => 'TR.gif',
+	'widthTR'   => 8,
+	'heightTR'  => 18,
 
 	// Left
-	'imageLLT' => '',
+	'imageLLT'  => '',
 	'heightLLT' => 0,
 
-	'imageLL' => 'LL.gif',
-	'widthLL' => 6,
+	'imageLL'   => 'LL.gif',
+	'widthLL'   => 6,
 
-	'imageLLB' => '',
+	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
-	'imageRRT' => '',
+	'imageRRT'  => '',
 	'heightRRT' => 0,
 
-	'imageRR' => 'RR.gif',
-	'widthRR' => 8,
+	'imageRR'   => 'RR.gif',
+	'widthRR'   => 8,
 
-	'imageRRB' => '',
+	'imageRRB'  => '',
 	'heightRRB' => 0,
 
 	// Bottom Left
-	'imageBL' => 'BL.gif',
-	'widthBL' => 6,
-	'heightBL' => 18,
+	'imageBL'   => 'BL.gif',
+	'widthBL'   => 6,
+	'heightBL'  => 18,
 
 	// Bottom
-	'imageBBL' => 'BBL.gif',
-	'widthBBL' => 88,
+	'imageBBL'  => 'BBL.gif',
+	'widthBBL'  => 88,
 
-	'imageBB' => 'BB.gif',
-	'heightBB' => 18,
+	'imageBB'   => 'BB.gif',
+	'heightBB'  => 18,
 
-	'imageBBR' => '',
-	'widthBBR' => 0,
+	'imageBBR'  => '',
+	'widthBBR'  => 0,
 
 	// Bottom Right
-	'imageBR' => 'BR.gif',
-	'widthBR' => 8,
-	'heightBR' => 18,
+	'imageBR'   => 'BR.gif',
+	'widthBR'   => 8,
+	'heightBR'  => 18,
 
 );

@@ -41,9 +41,9 @@ class CustomFieldSearch extends GallerySearchInterface_1_0 {
 		}
 
 		$info = array(
-			'name'        => $module->translate('Custom Fields'),
+			'name' => $module->translate('Custom Fields'),
 			'description' => $module->translate('Custom Fields Module'),
-			'options'     => array(
+			'options' => array(
 				'customfield' => array(
 					'description' => $module->translate('Search custom fields'),
 					'enabled'     => 1,
@@ -157,9 +157,9 @@ class CustomFieldSearch extends GallerySearchInterface_1_0 {
 		}
 
 		$data = array(
-			'start'   => $numRows == 0 ? 0 : $offset + 1,
-			'end'     => $numRows == 0 ? 0 : $offset + sizeof($searchResults),
-			'count'   => $numRows,
+			'start' => $numRows == 0 ? 0 : $offset + 1,
+			'end' => $numRows == 0 ? 0 : $offset + sizeof($searchResults),
+			'count' => $numRows,
 			'results' => $searchResults,
 		);
 

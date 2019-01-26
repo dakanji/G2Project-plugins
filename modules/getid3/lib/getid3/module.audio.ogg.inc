@@ -309,7 +309,7 @@ class getid3_ogg extends getid3_handler {
 
 			if ($LastOggSpostion = strpos($LastChunkOfOgg, 'SggO')) {
 				$this->fseek($info['avdataend'] - ($LastOggSpostion + strlen('SggO')));
-				$info['avdataend'] = $this->ftell();
+				$info['avdataend']                = $this->ftell();
 				$info['ogg']['pageheader']['eos'] = $this->ParseOggPageHeader();
 				$info['ogg']['samples']           = $info['ogg']['pageheader']['eos']['pcm_abs_position'];
 
@@ -375,14 +375,14 @@ class getid3_ogg extends getid3_handler {
 		$info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['packet_type'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1));
 		$filedataoffset += 1;
 		$info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['stream_type'] = substr($filedata, $filedataoffset, 6); // hard-coded to 'vorbis'
-		$filedataoffset += 6;
+		$filedataoffset                 += 6;
 		$info['ogg']['bitstreamversion'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
-		$filedataoffset += 4;
+		$filedataoffset                 += 4;
 		$info['ogg']['numberofchannels'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1));
-		$filedataoffset           += 1;
-		$info['audio']['channels'] = $info['ogg']['numberofchannels'];
-		$info['ogg']['samplerate'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
-		$filedataoffset           += 4;
+		$filedataoffset                 += 1;
+		$info['audio']['channels']       = $info['ogg']['numberofchannels'];
+		$info['ogg']['samplerate']       = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
+		$filedataoffset                 += 4;
 
 		if ($info['ogg']['samplerate'] == 0) {
 			$info['error'][] = 'Corrupt Ogg file: sample rate == zero';
@@ -393,11 +393,11 @@ class getid3_ogg extends getid3_handler {
 		$info['ogg']['samples']         = 0; // filled in later
 		$info['ogg']['bitrate_average'] = 0; // filled in later
 		$info['ogg']['bitrate_max']     = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
-		$filedataoffset += 4;
+		$filedataoffset                += 4;
 		$info['ogg']['bitrate_nominal'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
-		$filedataoffset            += 4;
-		$info['ogg']['bitrate_min'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
-		$filedataoffset            += 4;
+		$filedataoffset                += 4;
+		$info['ogg']['bitrate_min']     = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
+		$filedataoffset                += 4;
 		$info['ogg']['blocksize_small'] = 2 ** (getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1)) & 0x0F);
 		$info['ogg']['blocksize_large'] = 2 ** ((getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1)) & 0xF0) >> 4);
 		$info['ogg']['stop_bit']        = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1)); // must be 1, marks end of packet
@@ -517,8 +517,8 @@ class getid3_ogg extends getid3_handler {
 
 		for ($i = 0; $i < $oggheader['page_segments']; $i++) {
 			$oggheader['segment_table'][$i] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1));
-			$filedataoffset           += 1;
-			$oggheader['page_length'] += $oggheader['segment_table'][$i];
+			$filedataoffset                += 1;
+			$oggheader['page_length']      += $oggheader['segment_table'][$i];
 		}
 		$oggheader['header_end_offset'] = $oggheader['page_start_offset'] + $filedataoffset;
 		$oggheader['page_end_offset']   = $oggheader['header_end_offset'] + $oggheader['page_length'];
@@ -575,7 +575,7 @@ class getid3_ogg extends getid3_handler {
 		$commentdataoffset   += 4;
 		$info['avdataoffset'] = $CommentStartOffset + $commentdataoffset;
 
-		$basicfields = array('TITLE', 'ARTIST', 'ALBUM', 'TRACKNUMBER', 'GENRE', 'DATE', 'DESCRIPTION', 'COMMENT');
+		$basicfields                   = array('TITLE', 'ARTIST', 'ALBUM', 'TRACKNUMBER', 'GENRE', 'DATE', 'DESCRIPTION', 'COMMENT');
 		$ThisFileInfo_ogg_comments_raw = &$info['ogg']['comments_raw'];
 
 		for ($i = 0; $i < $CommentsCount; $i++) {

@@ -156,10 +156,10 @@ class RssSiteAdminController extends GalleryController {
 		}
 
 		// figure out the method we will use
-		$method            = empty($error) ? 'redirect' : 'delegate';
-		$results['status'] = $status;
-		$results['error']  = $error;
-		$results[$method]['view']    = 'core.SiteAdmin';
+		$method                   = empty($error) ? 'redirect' : 'delegate';
+		$results['status']        = $status;
+		$results['error']         = $error;
+		$results[$method]['view'] = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'rss.RssSiteAdmin';
 		$results[$method]['mode']    = $mode;
 
@@ -175,8 +175,8 @@ class RssSiteAdminView extends GalleryView {
 	 * @see GalleryView::loadTemplate
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
-		$form['formName'] = 'RssSiteAdmin';
-		$RssSiteAdmin     = array();
+		$form['formName']               = 'RssSiteAdmin';
+		$RssSiteAdmin                   = array();
 		$RssSiteAdmin['rssVersionList'] = array('0.91', '2.0');
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();

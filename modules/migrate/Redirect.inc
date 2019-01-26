@@ -172,7 +172,7 @@ class RedirectController extends GalleryController {
 			 * If not, omit 'href' in redirect params which means we hope REQUEST_URI has been
 			 * rewritten to the correct path (that is the case on php 5.0.3 cgi at least).
 			 */
-			$urlGenerator =& $gallery->getUrlGenerator();
+			$urlGenerator                =& $gallery->getUrlGenerator();
 			$results['redirect']['href'] = $urlGenerator->makeUrl($scriptName);
 		}
 

@@ -24,9 +24,9 @@ class getid3_bmp extends getid3_handler {
 
 		// shortcuts
 		$info['bmp']['header']['raw'] = array();
-		$thisfile_bmp            = &$info['bmp'];
-		$thisfile_bmp_header     = &$thisfile_bmp['header'];
-		$thisfile_bmp_header_raw = &$thisfile_bmp_header['raw'];
+		$thisfile_bmp                 = &$info['bmp'];
+		$thisfile_bmp_header          = &$thisfile_bmp['header'];
+		$thisfile_bmp_header_raw      = &$thisfile_bmp_header['raw'];
 
 		// BITMAPFILEHEADER [14 bytes] - http://msdn.microsoft.com/library/en-us/gdi/bitmaps_62uq.asp
 		// all versions
@@ -95,9 +95,9 @@ class getid3_bmp extends getid3_handler {
 			return false;
 		}
 
-		$info['fileformat']          = 'bmp';
-		$info['video']['dataformat'] = 'bmp';
-		$info['video']['lossless']   = true;
+		$info['fileformat']                  = 'bmp';
+		$info['video']['dataformat']         = 'bmp';
+		$info['video']['lossless']           = true;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
 
 		if ($thisfile_bmp['type_os'] == 'OS/2') {
@@ -389,7 +389,7 @@ class getid3_bmp extends getid3_handler {
 							for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
 								for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col++) {
 									$thisfile_bmp['data'][$row][$col] = (ord($BMPpixelData[$pixeldataoffset + 2]) << 16) | (ord($BMPpixelData[$pixeldataoffset + 1]) << 8) | ord($BMPpixelData[$pixeldataoffset]);
-									$pixeldataoffset += 3;
+									$pixeldataoffset                 += 3;
 								}
 
 								while (($pixeldataoffset % 4) != 0) {
@@ -404,7 +404,7 @@ class getid3_bmp extends getid3_handler {
 							for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
 								for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col++) {
 									$thisfile_bmp['data'][$row][$col] = (ord($BMPpixelData[$pixeldataoffset + 3]) << 24) | (ord($BMPpixelData[$pixeldataoffset + 2]) << 16) | (ord($BMPpixelData[$pixeldataoffset + 1]) << 8) | ord($BMPpixelData[$pixeldataoffset]);
-									$pixeldataoffset += 4;
+									$pixeldataoffset                 += 4;
 								}
 
 								while (($pixeldataoffset % 4) != 0) {

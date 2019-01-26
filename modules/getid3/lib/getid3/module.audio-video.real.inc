@@ -131,7 +131,7 @@ class getid3_real extends getid3_handler {
 						$thisfile_real_chunks_currentchunk['num_streams'] = getid3_lib::BigEndian2Int(substr($ChunkData, $offset, 2));
 						$offset += 2;
 						$thisfile_real_chunks_currentchunk['flags_raw'] = getid3_lib::BigEndian2Int(substr($ChunkData, $offset, 2));
-						$offset += 2;
+						$offset                  += 2;
 						$info['playtime_seconds'] = $thisfile_real_chunks_currentchunk['duration'] / 1000;
 
 						if ($thisfile_real_chunks_currentchunk['duration'] > 0) {
@@ -242,7 +242,7 @@ class getid3_real extends getid3_handler {
 
 								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset = 0;
 								$thisfile_real_chunks_currentchunk_logicalfileinfo['logical_fileinfo_length'] = getid3_lib::BigEndian2Int(substr($thisfile_real_chunks_currentchunk_typespecificdata, $thisfile_real_chunks_currentchunk_logicalfileinfo_offset, 4));
-								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset += 4;
+								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset                    += 4;
 
 								//$thisfile_real_chunks_currentchunk_logicalfileinfo['unknown1']                = getid3_lib::BigEndian2Int(substr($thisfile_real_chunks_currentchunk_typespecificdata, $thisfile_real_chunks_currentchunk_logicalfileinfo_offset, 4));
 								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset += 4;

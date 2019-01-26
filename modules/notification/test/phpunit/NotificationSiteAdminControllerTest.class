@@ -105,8 +105,8 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$cacheKey   = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
-		$enabledMap = array(
+		$cacheKey                   = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$enabledMap                 = array(
 			'Test:TestEvent' => array(
 				'Test:EventHandler' => array(),
 			),

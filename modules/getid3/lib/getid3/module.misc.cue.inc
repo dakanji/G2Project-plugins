@@ -173,7 +173,7 @@ class getid3_cue extends getid3_handler {
 
 		return array(
 			'filename' => $line,
-			'type'     => $type,
+			'type' => $type,
 		);
 	}
 

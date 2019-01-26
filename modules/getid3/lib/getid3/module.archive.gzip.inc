@@ -85,10 +85,10 @@ class getid3_gzip extends getid3_handler {
 
 			$buff = "\x1F\x8B\x08" . $arr_members[$i];
 
-			$attr = unpack($unpack_header, substr($buff, 0, $start_length));
-			$thisInfo['filemtime']      = getid3_lib::LittleEndian2Int($attr['mtime']);
-			$thisInfo['raw']['id1']     = ord($attr['cmethod']);
-			$thisInfo['raw']['id2']     = ord($attr['cmethod']);
+			$attr                   = unpack($unpack_header, substr($buff, 0, $start_length));
+			$thisInfo['filemtime']  = getid3_lib::LittleEndian2Int($attr['mtime']);
+			$thisInfo['raw']['id1'] = ord($attr['cmethod']);
+			$thisInfo['raw']['id2'] = ord($attr['cmethod']);
 			$thisInfo['raw']['cmethod'] = ord($attr['cmethod']);
 			$thisInfo['raw']['os']      = ord($attr['os']);
 			$thisInfo['raw']['xflags']  = ord($attr['xflags']);

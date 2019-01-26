@@ -95,8 +95,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter      =& GalleryTestCase::getEntityCounter();
+		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -131,8 +131,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter      =& GalleryTestCase::getEntityCounter();
+		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -186,8 +186,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter      =& GalleryTestCase::getEntityCounter();
+		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -222,8 +222,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter      =& GalleryTestCase::getEntityCounter();
+		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -273,8 +273,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter      =& GalleryTestCase::getEntityCounter();
+		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {

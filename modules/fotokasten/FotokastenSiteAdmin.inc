@@ -84,8 +84,8 @@ class FotokastenSiteAdminController extends GalleryController {
 		}
 
 
-		$method = empty($error) ? 'redirect' : 'delegate';
-		$results[$method]['view']    = 'core.SiteAdmin';
+		$method                   = empty($error) ? 'redirect' : 'delegate';
+		$results[$method]['view'] = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'fotokasten.FotokastenSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;

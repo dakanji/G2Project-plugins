@@ -278,16 +278,16 @@ class WebDavModule extends GalleryModule {
 
 		// Use short URL because most WebDAV clients don't support query strings
 		$rules['connect'] = array(
-			'comment'  => $this->translate('Connect to WebDAV'),
-			'help'     => $this->translate(
+			'comment' => $this->translate('Connect to WebDAV'),
+			'help' => $this->translate(
 				'Use short URL because most WebDAV clients don\'t support query strings.'
 				. '  The Windows WebDAV client requires that you don\'t add a slash before the'
 				. ' %path% variable.'
 			),
-			'match'    => array(
+			'match' => array(
 				'controller' => 'webdav.WebDav',
 			),
-			'pattern'  => 'w%path%',
+			'pattern' => 'w%path%',
 			'keywords' => array(
 				'path' => array(
 					'pattern'  => '(/[^?]*)?',
@@ -299,16 +299,16 @@ class WebDavModule extends GalleryModule {
 
 		// Give davmount resources the correct extension
 		$rules['davmount'] = array(
-			'comment'  => $this->translate('Mount WebDAV'),
-			'help'     => $this->translate(
+			'comment' => $this->translate('Mount WebDAV'),
+			'help' => $this->translate(
 				'Give davmount resources the correct extension.'
 			),
-			'match'    => array(
+			'match' => array(
 				'view' => 'webdav.DownloadDavMount',
 			),
 
 			// TODO: How to work with the root album?
-			'pattern'  => 'v/%path%.davmount',
+			'pattern' => 'v/%path%.davmount',
 			'keywords' => array(
 				'path' => array(
 					'pattern'  => '([^?]+)',
@@ -316,7 +316,7 @@ class WebDavModule extends GalleryModule {
 					'help'     => $this->translate('Path to an item (eg. /album/image.jpg.html)'),
 				),
 			),
-			'onLoad'   => array('rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath'),
+			'onLoad' => array('rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath'),
 		);
 
 		/*
@@ -383,13 +383,13 @@ class WebDavModule extends GalleryModule {
 
 		// Redirect OPTIONS requests so we can set DAV headers
 		$rules['options'] = array(
-			'comment'    => $this->translate('OPTIONS Requests'),
-			'help'       => $this->translate(
+			'comment' => $this->translate('OPTIONS Requests'),
+			'help' => $this->translate(
 				'Redirect OPTIONS requests so we can set DAV headers.'
 			),
 
 			// Use trailing '/' to avoid 301 Moved Permanently
-			'match'      => array(
+			'match' => array(
 				'href' => 'modules/webdav/data/options/',
 			),
 			'conditions' => array(

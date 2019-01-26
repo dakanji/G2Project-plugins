@@ -116,7 +116,7 @@ class AdminMembersView extends GalleryView {
 				return array($ret, null);
 			}
 		}
-		$members = array();
+		$members                = array();
 		$members['memberViews'] = array(
 			$groupIds[1] => $module->translate('Everybody'),
 			$groupIds[2] => $module->translate('Registered Users'),

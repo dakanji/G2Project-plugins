@@ -144,10 +144,10 @@ class getid3_wavpack extends getid3_handler {
 				$info['wavpack']['blockheader']['flags_raw']     = getid3_lib::LittleEndian2Int(substr($wavpackheader, 24, 4));
 				$info['wavpack']['blockheader']['crc']           = getid3_lib::LittleEndian2Int(substr($wavpackheader, 28, 4));
 
-				$info['wavpack']['blockheader']['flags']['bytes_per_sample'] = 1 + ($info['wavpack']['blockheader']['flags_raw'] & 0x00000003);
-				$info['wavpack']['blockheader']['flags']['mono']             = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000004);
-				$info['wavpack']['blockheader']['flags']['hybrid']           = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000008);
-				$info['wavpack']['blockheader']['flags']['joint_stereo']     = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000010);
+				$info['wavpack']['blockheader']['flags']['bytes_per_sample']     = 1 + ($info['wavpack']['blockheader']['flags_raw'] & 0x00000003);
+				$info['wavpack']['blockheader']['flags']['mono']                 = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000004);
+				$info['wavpack']['blockheader']['flags']['hybrid']               = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000008);
+				$info['wavpack']['blockheader']['flags']['joint_stereo']         = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000010);
 				$info['wavpack']['blockheader']['flags']['cross_decorrelation']  = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000020);
 				$info['wavpack']['blockheader']['flags']['hybrid_noiseshape']    = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000040);
 				$info['wavpack']['blockheader']['flags']['ieee_32bit_float']     = (bool)($info['wavpack']['blockheader']['flags_raw'] & 0x00000080);

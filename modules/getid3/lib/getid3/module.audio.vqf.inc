@@ -48,9 +48,9 @@ class getid3_vqf extends getid3_handler {
 		}
 		$offset += 4;
 		$thisfile_vqf_raw['version'] = substr($VQFheaderData, $offset, 8);
-		$offset += 8;
+		$offset                  += 8;
 		$thisfile_vqf_raw['size'] = getid3_lib::BigEndian2Int(substr($VQFheaderData, $offset, 4));
-		$offset += 4;
+		$offset                  += 4;
 
 		while ($this->ftell() < $info['avdataend']) {
 			$ChunkBaseOffset = $this->ftell();
@@ -84,9 +84,9 @@ class getid3_vqf extends getid3_handler {
 					$thisfile_vqf_COMM    = &$thisfile_vqf['COMM'];
 
 					$thisfile_vqf_COMM['channel_mode'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
-					$chunkoffset += 4;
+					$chunkoffset                 += 4;
 					$thisfile_vqf_COMM['bitrate'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
-					$chunkoffset += 4;
+					$chunkoffset                 += 4;
 					$thisfile_vqf_COMM['sample_rate'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
 					$chunkoffset += 4;
 					$thisfile_vqf_COMM['security_level'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));

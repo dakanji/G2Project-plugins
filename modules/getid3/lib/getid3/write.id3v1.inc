@@ -76,7 +76,7 @@ class getid3_write_id3v1 {
 		// This function rewrites the ID3v1 tag with correct padding
 
 		// Initialize getID3 engine
-		$getID3 = new getID3();
+		$getID3                    = new getID3();
 		$getID3->option_tag_id3v2  = false;
 		$getID3->option_tag_apetag = false;
 		$getID3->option_tags_html  = false;
@@ -135,7 +135,7 @@ class getid3_write_id3v1 {
 		}
 		// 32-bit PHP will not return correct values for filesize() if file is >=2GB
 		// but getID3->analyze() has workarounds to get actual filesize
-		$getID3 = new getID3();
+		$getID3                    = new getID3();
 		$getID3->option_tag_id3v1  = false;
 		$getID3->option_tag_id3v2  = false;
 		$getID3->option_tag_apetag = false;

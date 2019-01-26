@@ -198,7 +198,7 @@ class getid3_nsv extends getid3_handler {
 
 		if (trim($info['nsv']['NSVf']['metadata']) != '') {
 			$info['nsv']['NSVf']['metadata'] = str_replace('`', "\x01", $info['nsv']['NSVf']['metadata']);
-			$CommentPairArray = explode("\x01" . ' ', $info['nsv']['NSVf']['metadata']);
+			$CommentPairArray                = explode("\x01" . ' ', $info['nsv']['NSVf']['metadata']);
 
 			foreach ($CommentPairArray as $CommentPair) {
 				if (strstr($CommentPair, '=' . "\x01")) {

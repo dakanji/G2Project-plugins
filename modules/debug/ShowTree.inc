@@ -106,10 +106,10 @@ class ShowTreeView extends GalleryView {
 			$entityTable[$entity->getId()] = (array)$entity;
 		}
 
-		$ShowTree              = array();
-		$ShowTree['parentIds'] = $parentIds;
-		$ShowTree['childIds']  = $childIds;
-		$ShowTree['entityId']  = $entityId;
+		$ShowTree                = array();
+		$ShowTree['parentIds']   = $parentIds;
+		$ShowTree['childIds']    = $childIds;
+		$ShowTree['entityId']    = $entityId;
 		$ShowTree['entityTable'] = $entityTable;
 		$ShowTree['isItem']      = $isItemTable;
 		$template->setVariable('ShowTree', $ShowTree);

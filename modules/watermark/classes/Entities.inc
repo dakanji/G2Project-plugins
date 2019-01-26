@@ -3,55 +3,55 @@
 $entityInfo['WatermarkImage'] = array(
 	'members' => array(
 		'applyToPreferred' => array(
-			'type'            => STORAGE_TYPE_BOOLEAN,
+			'type' => STORAGE_TYPE_BOOLEAN,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'applyToResizes'   => array(
-			'type'            => STORAGE_TYPE_BOOLEAN,
+		'applyToResizes' => array(
+			'type' => STORAGE_TYPE_BOOLEAN,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 		'applyToThumbnail' => array(
 			'type' => STORAGE_TYPE_BOOLEAN,
 		),
-		'name'             => array(
-			'type'            => STORAGE_TYPE_STRING,
-			'size'            => STORAGE_SIZE_MEDIUM,
-			'notNull'         => 1,
+		'name' => array(
+			'type' => STORAGE_TYPE_STRING,
+			'size' => STORAGE_SIZE_MEDIUM,
+			'notNull' => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'fileName'         => array(
-			'type'            => STORAGE_TYPE_STRING,
-			'size'            => STORAGE_SIZE_MEDIUM,
-			'notNull'         => 1,
+		'fileName' => array(
+			'type' => STORAGE_TYPE_STRING,
+			'size' => STORAGE_SIZE_MEDIUM,
+			'notNull' => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'mimeType'         => array(
-			'type'            => STORAGE_TYPE_STRING,
-			'size'            => STORAGE_SIZE_MEDIUM,
+		'mimeType' => array(
+			'type' => STORAGE_TYPE_STRING,
+			'size' => STORAGE_SIZE_MEDIUM,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'size'             => array(
+		'size' => array(
 			'type' => STORAGE_TYPE_INTEGER,
 		),
-		'width'            => array(
-			'type'            => STORAGE_TYPE_INTEGER,
+		'width' => array(
+			'type' => STORAGE_TYPE_INTEGER,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'height'           => array(
-			'type'            => STORAGE_TYPE_INTEGER,
+		'height' => array(
+			'type' => STORAGE_TYPE_INTEGER,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'ownerId'          => array(
+		'ownerId' => array(
 			'type' => STORAGE_TYPE_INTEGER,
 		),
-		'xPercentage'      => array(
-			'type'            => STORAGE_TYPE_STRING,
-			'size'            => STORAGE_SIZE_SMALL,
+		'xPercentage' => array(
+			'type' => STORAGE_TYPE_STRING,
+			'size' => STORAGE_SIZE_SMALL,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'yPercentage'      => array(
-			'type'            => STORAGE_TYPE_STRING,
-			'size'            => STORAGE_SIZE_SMALL,
+		'yPercentage' => array(
+			'type' => STORAGE_TYPE_STRING,
+			'size' => STORAGE_SIZE_SMALL,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 	),

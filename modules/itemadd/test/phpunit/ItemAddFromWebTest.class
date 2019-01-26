@@ -874,13 +874,13 @@ class ItemAddFromWebTestPlatform {
 					) {
 						$buffer[] = 'Content-Disposition: inline; filename="test4.jpg"';
 					}
-					$buffer[] = 'Last-Modified: Mon, 24 Nov 2003 05:40:00 GMT';
-					$buffer[] = 'Client-Date: Mon, 24 Nov 2003 05:40:03 GMT';
-					$buffer[] = 'Client-Peer: 209.237.226.157:80';
-					$buffer[] = 'Client-Response-Num: 1';
-					$buffer[] = '';
-					$buffer[] = 'test';
-					$buffer[] = '';
+					$buffer[]                   = 'Last-Modified: Mon, 24 Nov 2003 05:40:00 GMT';
+					$buffer[]                   = 'Client-Date: Mon, 24 Nov 2003 05:40:03 GMT';
+					$buffer[]                   = 'Client-Peer: 209.237.226.157:80';
+					$buffer[]                   = 'Client-Response-Num: 1';
+					$buffer[]                   = '';
+					$buffer[]                   = 'test';
+					$buffer[]                   = '';
 					$this->_readBuffer[$handle] = $buffer;
 
 					return strlen($string);
