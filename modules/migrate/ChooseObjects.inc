@@ -36,7 +36,7 @@ class ChooseObjectsController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
@@ -47,7 +47,7 @@ class ChooseObjectsController extends GalleryController {
 				$error[] = 'form[error][nothingSelected]';
 			}
 
-			foreach (array('title', 'summary', 'description') as $field) {
+			foreach (array( 'title', 'summary', 'description' ) as $field) {
 				if ($form['set'][$field] == 'custom' && empty($form['customfield'][$field])) {
 					$error[] = "form[error][emptyCustomField][$field]";
 				}
@@ -68,7 +68,7 @@ class ChooseObjectsController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -85,7 +85,7 @@ class ChooseObjectsView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$defaultLanguage = GalleryTranslator::doStatic()->getLanguageCodeFromRequest();
@@ -175,14 +175,14 @@ class ChooseObjectsView extends GalleryView {
 		$albumsPath = GalleryUtilities::getRequestVariables('albumsPath');
 
 		if ($albumsPath == null) {
-			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+			return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 		}
 
 		$existingUsers        = $newUsers = array();
 		list($ret, $allUsers) = Gallery1DataParser::getUserUids($albumsPath);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		foreach ($allUsers as $uid => $userName) {
@@ -230,21 +230,21 @@ class ChooseObjectsView extends GalleryView {
 		list($ret, $g1AlbumTree) = $this->_createG1AlbumTree($albumsPath);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Get ids of all albums where we can add new album items
 		list($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addAlbumItem');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Load all the album entities
 		list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds, 'GalleryAlbumItem');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$g2AlbumTree = GalleryUtilities::createAlbumTree($albums);
 
@@ -252,7 +252,7 @@ class ChooseObjectsView extends GalleryView {
 		list($ret, $customFieldInterface) = GalleryCoreApi::newFactoryInstance('CustomFieldInterface_1_0');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$ChooseObjects['albumsPath']            = $albumsPath;
@@ -284,13 +284,13 @@ class ChooseObjectsView extends GalleryView {
 		list($ret, $albumList) = Gallery1DataParser::getAlbumList($albumsPath);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $hierarchy) = Gallery1DataParser::getAlbumHierarchy($albumsPath);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$tree = array();
@@ -302,7 +302,7 @@ class ChooseObjectsView extends GalleryView {
 			);
 		}
 
-		return array(null, $tree);
+		return array( null, $tree );
 	}
 
 	/**

@@ -36,7 +36,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'multilang');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$info = array(
@@ -47,18 +47,18 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 		list($ret, $languageCode) = $gallery->getActiveLanguageCode();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $defaultLanguage) = GalleryCoreApi::getPluginParameter('module', 'core', 'default.language');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($languageCode == $defaultLanguage) {
 			$info['options'] = array();
 
-			return array(null, $info);
+			return array( null, $info );
 		}
 
 		// Get name for current language
@@ -83,7 +83,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 						'arg1' => $languageName,
 					)
 				),
-				'enabled'     => 1,
+				'enabled' => 1,
 			),
 			'summary' => array(
 				'description' => $module->translate(
@@ -92,7 +92,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 						'arg1' => $languageName,
 					)
 				),
-				'enabled'     => 1,
+				'enabled' => 1,
 			),
 			'description' => array(
 				'description' => $module->translate(
@@ -101,11 +101,11 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 						'arg1' => $languageName,
 					)
 				),
-				'enabled'     => 1,
+				'enabled' => 1,
 			),
 		);
 
-		return array(null, $info);
+		return array( null, $info );
 	}
 
 	/**
@@ -122,28 +122,28 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 				'results' => array(),
 			);
 
-			return array(null, $data);
+			return array( null, $data );
 		}
 
 		list($ret, $languageCode) = $gallery->getActiveLanguageCode();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $gallery->getActiveUserId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (empty($aclIds)) {
 			return array(
 				null,
 				array(
-					'start'   => 0,
-					'end'     => '0',
-					'count'   => 0,
+					'start' => 0,
+					'end' => '0',
+					'count' => 0,
 					'results' => array(),
 				),
 			);
@@ -217,7 +217,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 		list($ret, $results) = $gallery->search($countQuery, $data);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$result  = $results->nextResult();
 		$numRows = (int)$result[0];
@@ -228,19 +228,19 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 			array(
 				'limit' => array(
 					'offset' => $offset,
-					'count'  => $count,
+					'count' => $count,
 				),
 			)
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'multilang');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$label = array(
@@ -256,15 +256,15 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 				'itemId' => (int)$result[0],
 				'fields' => array(
 					array(
-						'key'   => $label[0],
+						'key' => $label[0],
 						'value' => $result[1],
 					),
 					array(
-						'key'   => $label[1],
+						'key' => $label[1],
 						'value' => $result[2],
 					),
 					array(
-						'key'   => $label[2],
+						'key' => $label[2],
 						'value' => $result[3],
 					),
 				),
@@ -278,6 +278,6 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 			'results' => $searchResults,
 		);
 
-		return array(null, $data);
+		return array( null, $data );
 	}
 }

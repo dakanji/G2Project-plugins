@@ -94,7 +94,7 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'status' => array(),
-				'error' => array('form[error][userName][disabled]'),
+				'error' => array( 'form[error][userName][disabled]' ),
 				'delegate' => array(
 					'view' => 'publishxp.PublishXpLogin',
 				),

@@ -38,8 +38,8 @@ class NewItemsModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getItemSummaries');
-		$this->setRequiredCoreApi(array(7, 27));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 27 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -48,7 +48,7 @@ class NewItemsModule extends GalleryModule {
 	public function upgrade($currentVersion, $x1 = null) {
 		if (!isset($currentVersion)) {
 			foreach (array(
-				'days.new'     => '7',
+				'days.new' => '7',
 				'days.updated' => '7',
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);
@@ -104,7 +104,7 @@ class NewItemsModule extends GalleryModule {
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'newitems');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$time        = time();
 		$newTime     = $time - $param['days.new'] * 86400;
@@ -127,7 +127,7 @@ class NewItemsModule extends GalleryModule {
 			}
 		}
 
-		return array(null, $summaries);
+		return array( null, $summaries );
 	}
 
 	/**

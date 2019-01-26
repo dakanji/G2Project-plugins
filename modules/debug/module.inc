@@ -38,8 +38,8 @@ class DebugModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getItemLinks');
-		$this->setRequiredCoreApi(array(7, 27));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 27 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -51,7 +51,7 @@ class DebugModule extends GalleryModule {
 		list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup($userId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($isAdmin) {
@@ -60,9 +60,9 @@ class DebugModule extends GalleryModule {
 
 				if (isset($wantsDetailedLinks[$itemId])) {
 					$links[$itemId][] = array(
-						'text'   => $this->translate('Show Debug Tree'),
+						'text' => $this->translate('Show Debug Tree'),
 						'params' => array(
-							'view'   => 'debug.ShowTree',
+							'view' => 'debug.ShowTree',
 							'itemId' => $itemId,
 						),
 					);
@@ -70,6 +70,6 @@ class DebugModule extends GalleryModule {
 			}
 		}
 
-		return array(null, $links);
+		return array( null, $links );
 	}
 }

@@ -37,7 +37,7 @@ class FeedListView extends GalleryView {
 		list($ret, $feeds) = RssMapHelper::fetchFeedsForItem();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$template->setVariable(

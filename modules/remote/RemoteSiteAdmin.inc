@@ -33,13 +33,13 @@ class RemoteSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
 
 		if (isset($form['action']['save'])) {
-			foreach (array('showItemAdd') as $key) {
+			foreach (array( 'showItemAdd' ) as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'remote',
@@ -48,7 +48,7 @@ class RemoteSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			$status['saved'] = 1;
@@ -63,7 +63,7 @@ class RemoteSiteAdminController extends GalleryController {
 			'error'    => $error,
 		);
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -78,7 +78,7 @@ class RemoteSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!isset($form['showItemAdd'])) {
@@ -90,7 +90,7 @@ class RemoteSiteAdminView extends GalleryView {
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'remote');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach ($params as $key => $value) {

@@ -43,7 +43,7 @@ class CartHelper {
 			$cartItemIds = array();
 		}
 
-		return array(null, $cartItemIds);
+		return array( null, $cartItemIds );
 	}
 
 	/**
@@ -124,7 +124,7 @@ class CartHelper {
 		list($ret, $cartItemIds) = CartHelper::fetchCartItemCounts();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$idList = array_keys($cartItemIds);
 
@@ -132,7 +132,7 @@ class CartHelper {
 			$ret = GalleryCoreApi::studyPermissions($idList);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 		$changed = false;
@@ -150,12 +150,12 @@ class CartHelper {
 					continue;
 				}
 
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			list($ret, $canView) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if ($canView) {
@@ -170,10 +170,10 @@ class CartHelper {
 			$ret = CartHelper::setCartItemCounts($cartItemIds);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
-		return array(null, $items);
+		return array( null, $items );
 	}
 }

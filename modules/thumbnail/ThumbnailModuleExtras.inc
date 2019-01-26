@@ -74,7 +74,7 @@ class ThumbnailModuleExtras {
 				}
 
 				$storage =& $gallery->getStorage();
-				$ret     = $storage->configureStore($module->getId(), array('ThumbnailImage:1.0'));
+				$ret     = $storage->configureStore($module->getId(), array( 'ThumbnailImage:1.0' ));
 
 				if ($ret) {
 					return $ret;
@@ -178,7 +178,7 @@ class ThumbnailModuleExtras {
 	      AND
 	      [GalleryChildEntity::parentId] IN (?,?)
 	    ';
-				list($ret, $results) = $gallery->search($query, array((int)$rootId, 0));
+				list($ret, $results) = $gallery->search($query, array( (int)$rootId, 0 ));
 
 				if ($ret) {
 					return $ret;
@@ -215,7 +215,7 @@ class ThumbnailModuleExtras {
 					foreach ($ids as $id) {
 						$gallery->guaranteeTimeLimit(30);
 						// Change the parent.
-						$ret = $storage->execute($parentIdQuery, array($containerId, $id));
+						$ret = $storage->execute($parentIdQuery, array( $containerId, $id ));
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
@@ -224,7 +224,7 @@ class ThumbnailModuleExtras {
 						}
 
 						// Add the necessary rows for a FileSystemEntity.
-						$ret = $storage->execute($fileSystemEntityQuery, array($id, $fileNames[$id]));
+						$ret = $storage->execute($fileSystemEntityQuery, array( $id, $fileNames[$id] ));
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
@@ -258,7 +258,7 @@ class ThumbnailModuleExtras {
 	      [GalleryChildEntity::parentId] <> ?
 	    ';
 				$gallery->guaranteeTimeLimit(30);
-				list($ret, $results) = $gallery->search($query, array($containerId));
+				list($ret, $results) = $gallery->search($query, array( $containerId ));
 
 				if ($ret) {
 					return $ret;
@@ -280,7 +280,7 @@ class ThumbnailModuleExtras {
 					foreach ($ids as $id) {
 						$gallery->guaranteeTimeLimit(30);
 						// Add the necessary rows for a FileSystemEntity.
-						$ret = $storage->execute($fileSystemEntityQuery, array($id, $fileNames[$id]));
+						$ret = $storage->execute($fileSystemEntityQuery, array( $id, $fileNames[$id] ));
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
@@ -388,7 +388,7 @@ class ThumbnailModuleExtras {
 				 * We no longer need the fileName in the ThumbnailImage class since it inherits
 				 * the pathComponent from FileSystemEntity.
 				 */
-				$ret = $storage->configureStore($module->getId(), array('ThumbnailImage:1.1'));
+				$ret = $storage->configureStore($module->getId(), array( 'ThumbnailImage:1.1' ));
 
 				if ($ret) {
 					return $ret;
@@ -434,14 +434,14 @@ class ThumbnailModuleExtras {
 		list($ret, $mimeTypeMap) = ThumbnailHelper::fetchMimeTypeMap();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!empty($mimeTypeMap)) {
 			$ret = ThumbnailHelper::registerToolkitOperation(array_keys($mimeTypeMap));
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
@@ -449,7 +449,7 @@ class ThumbnailModuleExtras {
 		list($ret, $toolkitMime) = ThumbnailHelper::fetchToolkitSupport();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$itemId = array();
 		GalleryCoreApi::requireOnce('modules/thumbnail/classes/ThumbnailImage.class');
@@ -482,27 +482,27 @@ class ThumbnailModuleExtras {
 							__DIR__ . '/images/' . $mimeImage,
 							'image/jpeg',
 							array(
-								'width'  => 400,
+								'width' => 400,
 								'height' => 352,
 							),
 							new ThumbnailImage()
 						);
 
 						if ($ret) {
-							return array($ret, null);
+							return array( $ret, null );
 						}
 					} else {
 						$ret = ThumbnailHelper::updateItem($itemId[$mimeImage], $mime);
 
 						if ($ret) {
-							return array($ret, null);
+							return array( $ret, null );
 						}
 					}
 				}
 			}
 		}
 
-		return array(null, null);
+		return array( null, null );
 	}
 
 	/**

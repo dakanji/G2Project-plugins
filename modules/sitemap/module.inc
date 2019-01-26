@@ -36,8 +36,8 @@ class SitemapModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 20));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 20 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -51,7 +51,7 @@ class SitemapModule extends GalleryModule {
 			),
 		);
 
-		return array(null, $data);
+		return array( null, $data );
 	}
 
 	/**

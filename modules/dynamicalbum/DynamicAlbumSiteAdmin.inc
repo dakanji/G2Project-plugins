@@ -33,13 +33,13 @@ class DynamicAlbumSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
 
 		if (isset($form['action']['save'])) {
-			foreach (array('size_date', 'size_views', 'size_random') as $key) {
+			foreach (array( 'size_date', 'size_views', 'size_random' ) as $key) {
 				if (!isset($form[$key]) || !is_numeric($form[$key])) {
 					$error[] = 'form[error][' . $key . ']';
 				}
@@ -50,7 +50,7 @@ class DynamicAlbumSiteAdminController extends GalleryController {
 			list($ret, $themeSettingsId) = GalleryCoreApi::getPluginParameter('module', 'dynamicalbum', 'themeSettingsId');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			list($ret, $error, $status) = GalleryCoreApi::handleThemeSettingsRequest(
@@ -60,7 +60,7 @@ class DynamicAlbumSiteAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$status = empty($status) ? array() : array(
 				'statusMessage' => $status,
@@ -88,11 +88,11 @@ class DynamicAlbumSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 
-			foreach (array('itemlink.date', 'itemlink.views', 'itemlink.random') as $key) {
+			foreach (array( 'itemlink.date', 'itemlink.views', 'itemlink.random' ) as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'dynamicalbum',
@@ -101,7 +101,7 @@ class DynamicAlbumSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			$status['saved'] = 1;
@@ -117,7 +117,7 @@ class DynamicAlbumSiteAdminController extends GalleryController {
 			'error'  => $error,
 		);
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -132,7 +132,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'DynamicAlbumSiteAdmin') {
@@ -154,7 +154,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 				list($ret, $form[strtr($key, '.', '_')]) = GalleryCoreApi::getPluginParameter('module', 'dynamicalbum', $key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		} else {
@@ -165,7 +165,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'dynamicalbum');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$defaultList = array(
 			'data'  => $module->translate('Show data items only'),
@@ -180,7 +180,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 		list($ret, $themeStatus) = GalleryCoreApi::fetchPluginStatus('theme');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		foreach ($themeStatus as $id => $status) {
@@ -188,7 +188,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 				list($ret, $theme) = GalleryCoreApi::loadPlugin('theme', $id);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$themeList[$id] = $theme->translate($theme->getName());
 			}
@@ -198,7 +198,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 		list($ret, $themeSettingsId) = GalleryCoreApi::getPluginParameter('module', 'dynamicalbum', 'themeSettingsId');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$ret = GalleryCoreApi::loadThemeSettingsForm(
 			$form['themeId'],
@@ -208,7 +208,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'DynamicAlbumSiteAdmin') {
@@ -218,7 +218,7 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 		$template->setVariable(
 			'DynamicAlbumSiteAdmin',
 			array(
-				'themeList'   => $themeList,
+				'themeList' => $themeList,
 				'defaultList' => $defaultList,
 			)
 		);

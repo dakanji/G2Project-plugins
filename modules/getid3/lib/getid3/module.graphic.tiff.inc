@@ -188,7 +188,7 @@ class getid3_tiff extends getid3_handler {
 						if (isset($info['tiff']['comments'][$TIFFcommentName])) {
 							$info['tiff']['comments'][$TIFFcommentName][] = $info['tiff']['ifd'][$IFDid]['fields'][$key]['raw']['data'];
 						} else {
-							$info['tiff']['comments'][$TIFFcommentName] = array($info['tiff']['ifd'][$IFDid]['fields'][$key]['raw']['data']);
+							$info['tiff']['comments'][$TIFFcommentName] = array( $info['tiff']['ifd'][$IFDid]['fields'][$key]['raw']['data'] );
 						}
 
 						break;

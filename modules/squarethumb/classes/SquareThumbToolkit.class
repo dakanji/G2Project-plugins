@@ -32,7 +32,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 	 * @see GalleryToolkit::getProperty
 	 */
 	public function getProperty($mimeType, $propertyName, $sourceFilename) {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 		list($ret, $square) = GalleryCoreApi::fetchAllPluginParameters('module', 'squarethumb');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Get dimensions
@@ -75,7 +75,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			list($ret, $toolkit) = GalleryCoreApi::getToolkitByProperty($mimeType, 'dimensions');
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!isset($toolkit)) {
@@ -93,7 +93,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			list($ret, $dimensions) = $toolkit->getProperty($mimeType, 'dimensions', $sourceFilename);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			list($width, $height) = $dimensions;
 		}
@@ -109,7 +109,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 				list($ret, $toolkit, $nextMime) = GalleryCoreApi::getToolkitByOperation($mimeType, $operation);
 
 				if ($ret) {
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 
 				if (isset($toolkit)) {
@@ -143,7 +143,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 				}
 			}
 
-			$args = ($width > $height) ? array(100 * (1 - $height / $width) / 2, 0, 100 * $height / $width, 100) : array(0, 100 * (1 - $width / $height) / 2, 100, 100 * $width / $height);
+			$args = ($width > $height) ? array( 100 * (1 - $height / $width) / 2, 0, 100 * $height / $width, 100 ) : array( 0, 100 * (1 - $width / $height) / 2, 100, 100 * $width / $height );
 			list($ret, $mimeType, $subContext) = $toolkit->performOperation(
 				$mimeType,
 				'crop',
@@ -154,7 +154,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$sourceFilename = $destFilename;
 		}
@@ -164,7 +164,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			list($ret, $toolkit) = $this->_getThumbnailToolkit($mimeType);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$subContext['next.toolkit']        = $subContext['next.operation'] = null;
 			list($ret, $mimeType, $subContext) = $toolkit->performOperation(
@@ -177,7 +177,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$sourceFilename = $destFilename;
 		}
@@ -193,7 +193,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!isset($toolkit)) {
@@ -211,7 +211,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			$tmpFilename = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'sqth_');
 
 			if (empty($tmpFilename)) {
-				return array(GalleryCoreApi::error(ERROR_BAD_PATH), null, null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PATH), null, null );
 			}
 
 			if (!$platform->copy($sourceFilename, $tmpFilename)) {
@@ -257,7 +257,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			if ($ret) {
 				@$platform->unlink($tmpFilename);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			// Overlay thumbnail image on square background
@@ -266,7 +266,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			if ($ret) {
 				@$platform->unlink($tmpFilename);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!isset($toolkit)) {
@@ -306,7 +306,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			@$platform->unlink($tmpFilename);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$sourceFilename = $destFilename;
 		}
@@ -325,7 +325,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 		$context['width']  = $subContext['width'];
 		$context['height'] = $subContext['height'];
 
-		return array(null, $mimeType, $context);
+		return array( null, $mimeType, $context );
 	}
 
 	/**
@@ -382,7 +382,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 		list($ret, $data) = GalleryCoreApi::getToolkitOperationMimeTypes('thumbnail');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!empty($data[$mimeType]) && $data[$mimeType][0] == 'SquareThumb') {
@@ -403,7 +403,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 		list($ret, $toolkit) = GalleryCoreApi::newFactoryInstanceById('GalleryToolkit', $data[$mimeType][0]);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!isset($toolkit)) {
@@ -418,6 +418,6 @@ class SquareThumbToolkit extends GalleryToolkit {
 			);
 		}
 
-		return array(null, $toolkit);
+		return array( null, $toolkit );
 	}
 }

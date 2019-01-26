@@ -35,7 +35,7 @@ class NotificationHandler_1_0 {
 	 * @abstract
 	 */
 	public function getDescription() {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 
 	/**
@@ -61,11 +61,11 @@ class NotificationHandler_1_0 {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', $moduleId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$text = $module->translate($translateParms);
 
-		return array(null, $text);
+		return array( null, $text );
 	}
 }

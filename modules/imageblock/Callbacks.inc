@@ -48,10 +48,10 @@ class ImageBlockCallbacks {
 
 						foreach (array(
 							'showHeading' => 'heading',
-							'showTitle'   => 'title',
-							'showViews'   => 'views',
-							'showOwner'   => 'owner',
-							'showDate'    => 'date',
+							'showTitle' => 'title',
+							'showViews' => 'views',
+							'showOwner' => 'owner',
+							'showDate' => 'date',
 						) as $blockVarName => $showMapName) {
 							if (empty($params[$blockVarName])) {
 								unset($showMap[$showMapName]);

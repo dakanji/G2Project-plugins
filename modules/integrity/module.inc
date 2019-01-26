@@ -32,8 +32,8 @@ class IntegrityModule extends GalleryModule {
 		$this->setVersion('0.1.2');
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('');
-		$this->setRequiredCoreApi(array(7, 4));
-		$this->setRequiredModuleApi(array(3, 0));
+		$this->setRequiredCoreApi(array( 7, 4 ));
+		$this->setRequiredModuleApi(array( 3, 0 ));
 	}
 
 	/**

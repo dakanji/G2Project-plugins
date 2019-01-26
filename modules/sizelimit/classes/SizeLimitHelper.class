@@ -246,7 +246,7 @@ class SizeLimitHelper {
 	 */
 	public static function _updateResizes($itemId, $imageWidth, $imageHeight) {
 		// Remove larger or equal sized resizes if necessary
-		list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));
+		list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array( $itemId ));
 
 		if ($ret) {
 			return $ret;

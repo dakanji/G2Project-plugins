@@ -478,7 +478,7 @@ class HTTP_WebDAV_Server {
 		$allow = $this->_allow();
 
 		// dav header
-		$dav = array(1); // assume we are always dav class 1 compliant
+		$dav = array( 1 ); // assume we are always dav class 1 compliant
 		if (in_array('LOCK', $allow) && in_array('UNLOCK', $allow)) {
 			$dav[] = 2; // dav class 2 requires that locking is supported
 		}
@@ -744,7 +744,7 @@ class HTTP_WebDAV_Server {
 
 		$response['responsedescription'] = $responsedescription;
 
-		$this->_multistatusResponseHelper(array($response));
+		$this->_multistatusResponseHelper(array( $response ));
 	}
 
 	// }}}
@@ -838,7 +838,7 @@ class HTTP_WebDAV_Server {
 						'last' => $end,
 					) : array(
 						'start' => $start,
-						'end'   => $end,
+						'end' => $end,
 					);
 				}
 			}
@@ -1299,7 +1299,7 @@ class HTTP_WebDAV_Server {
 
 					$range = array(
 						'start' => $matches[1],
-						'end'   => $matches[2],
+						'end' => $matches[2],
 					);
 
 					if (is_numeric($matches[3])) {
@@ -1711,7 +1711,7 @@ class HTTP_WebDAV_Server {
 
 			$lock = array();
 
-			foreach (array('scope', 'type', 'depth', 'owner') as $key) {
+			foreach (array( 'scope', 'type', 'depth', 'owner' ) as $key) {
 				$lock[$key] = $options[$key];
 			}
 
@@ -1730,7 +1730,7 @@ class HTTP_WebDAV_Server {
 			echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 			echo "<D:prop xmlns:D=\"DAV:\">\n";
 			echo "  <D:lockdiscovery>\n";
-			echo '    ' . $this->_activelocksResponseHelper(array($lock))
+			echo '    ' . $this->_activelocksResponseHelper(array( $lock ))
 				. "\n";
 			echo "  </D:lockdiscovery>\n";
 			echo "</D:prop>\n";
@@ -2083,7 +2083,7 @@ class HTTP_WebDAV_Server {
 	 */
 	public function _allow() {
 		// OPTIONS is always there
-		$allow = array('OPTIONS');
+		$allow = array( 'OPTIONS' );
 
 		// all other methods need both a method_wrapper() and a method()
 		// implementation
@@ -2250,7 +2250,7 @@ class HTTP_WebDAV_Server {
 				$uri  = substr($string, $pos, $pos2 - $pos);
 				$pos  = $pos2 + 1;
 
-				return array('URI', $uri);
+				return array( 'URI', $uri );
 
 			// ETags are enclosed in [...]
 			case '[':
@@ -2265,17 +2265,17 @@ class HTTP_WebDAV_Server {
 				$etag = substr($string, $pos + 1, $pos2 - $pos - 2);
 				$pos  = $pos2 + 1;
 
-				return array($type, $etag);
+				return array( $type, $etag );
 
 			// 'N' indicates negation
 			case 'N':
 				$pos += 2;
 
-				return array('NOT', 'Not');
+				return array( 'NOT', 'Not' );
 
 			// anything else is passed verbatim char by char
 			default:
-				return array('CHAR', $c);
+				return array( 'CHAR', $c );
 		}
 	}
 
@@ -2466,7 +2466,7 @@ class HTTP_WebDAV_Server {
 			}
 
 			// for both Tagged-list and No-tag-list productions
-			foreach (array($this->getHref($path), '') as $href) {
+			foreach (array( $this->getHref($path), '' ) as $href) {
 				if (!empty($conditions[$href])
 					&& in_array("<$lock[token]>", $conditions[$href])
 				) {

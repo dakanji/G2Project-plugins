@@ -108,11 +108,11 @@ class _parse_proppatch {
 		// set tag & data handlers
 		xml_set_element_handler(
 			$parser,
-			array(&$this, '_startElement'),
-			array(&$this, '_endElement')
+			array( &$this, '_startElement' ),
+			array( &$this, '_endElement' )
 		);
 
-		xml_set_character_data_handler($parser, array(&$this, '_data'));
+		xml_set_character_data_handler($parser, array( &$this, '_data' ));
 
 		// we want a case sensitive parser
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, false);

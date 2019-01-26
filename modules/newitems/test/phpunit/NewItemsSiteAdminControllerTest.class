@@ -61,7 +61,7 @@ class NewItemsSiteAdminControllerTest extends GalleryControllerTestCase {
 		list($ret, $this->_album) = $this->_createRandomAlbum(
 			$this->_getRootId(),
 			array(
-				'orderBy'        => 'NewItems',
+				'orderBy' => 'NewItems',
 				'orderDirection' => ORDER_DESCENDING,
 			)
 		);
@@ -80,7 +80,7 @@ class NewItemsSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'newitems.NewItemsSiteAdmin',
 				),
 				'status' => array(),
@@ -99,7 +99,7 @@ class NewItemsSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'newitems.NewItemsSiteAdmin',
 				),
 				'status' => array(
@@ -125,11 +125,11 @@ class NewItemsSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'newitems.NewItemsSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array('form[error][new]', 'form[error][updated]'),
+				'error' => array( 'form[error][new]', 'form[error][updated]' ),
 			),
 			$results
 		);
@@ -144,11 +144,11 @@ class NewItemsSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'newitems.NewItemsSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array('form[error][updated]'),
+				'error' => array( 'form[error][updated]' ),
 			),
 			$results
 		);
@@ -174,7 +174,7 @@ class NewItemsSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'newitems.NewItemsSiteAdmin',
 				),
 				'status' => array(

@@ -52,7 +52,7 @@ class LinkItemSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'linkitem.LinkItemSiteAdmin',
 				),
 				'status' => array(),
@@ -71,7 +71,7 @@ class LinkItemSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'linkitem.LinkItemSiteAdmin',
 				),
 				'status' => array(
@@ -84,8 +84,8 @@ class LinkItemSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		foreach (array(
 			'arrowWatermark' => '0',
-			'urlSnapshot'    => '1',
-			'snapshotExec'   => 'khtml2png %URL%',
+			'urlSnapshot' => '1',
+			'snapshotExec' => 'khtml2png %URL%',
 		) as $key => $expectedValue) {
 			list($ret, $value) = GalleryCoreApi::getPluginParameter('module', 'linkitem', $key);
 

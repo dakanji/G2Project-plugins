@@ -35,13 +35,13 @@ class SlideshowAppletView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'slideshowapplet');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $modules) = GalleryCoreApi::fetchPluginStatus('module');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$startId = null;
@@ -50,7 +50,7 @@ class SlideshowAppletView extends GalleryView {
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!$item->getCanContainChildren()) {
@@ -59,17 +59,17 @@ class SlideshowAppletView extends GalleryView {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($item->getParentId(), 'GalleryItem');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			list($ret, $canView) = GalleryCoreApi::hasItemPermission($item->getId(), 'core.view');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (!$canView) {
 				// Avoid information disclosure, act as if the item didn't exist.
-				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+				return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 			}
 		}
 
@@ -89,12 +89,12 @@ class SlideshowAppletView extends GalleryView {
 			list($ret, $cookiePath)       = $urlGenerator->getCookiePath(true);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			list($ret, $cookieDomain) = $session->getCookieDomain();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$SlideshowApplet['NoProtocolError'] = 0;
 			$SlideshowApplet['cookieName']      = $session->getKey();
@@ -109,7 +109,7 @@ class SlideshowAppletView extends GalleryView {
 			list($ret, $locale) = $gallery->getActiveLanguageCode();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$SlideshowApplet['locale'] = $locale;
 
@@ -121,10 +121,10 @@ class SlideshowAppletView extends GalleryView {
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'slideshowapplet');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
-			foreach (array('default', 'override') as $type) {
+			foreach (array( 'default', 'override' ) as $type) {
 				$SlideshowApplet[$type] = array();
 
 				if (!empty($params['slideshow' . $type . 'Variables'])) {
@@ -157,9 +157,9 @@ class SlideshowAppletView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'slideshowapplet');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $module->translate('slideshow (fullscreen)'));
+		return array( null, $module->translate('slideshow (fullscreen)') );
 	}
 }

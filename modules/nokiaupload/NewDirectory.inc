@@ -37,7 +37,7 @@ class NewDirectoryController extends GalleryController {
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
 
 		if (strstr($httpUserAgent, 'Nokia') === false) {
-			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null);
+			return array( GalleryCoreApi::error(ERROR_REQUEST_FORGED), null );
 		}
 
 		$results['delegate'] = array(
@@ -46,7 +46,7 @@ class NewDirectoryController extends GalleryController {
 		$results['status']   = ImageUploadHelper::createNewDirectory();
 		$results['error']    = array();
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	/**

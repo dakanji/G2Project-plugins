@@ -36,7 +36,7 @@ class PasswordOption extends ItemEditOption {
 		list($ret, $canChange) = GalleryCoreApi::hasItemPermission($item->getId(), 'core.changePermissions');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		/*
@@ -46,10 +46,10 @@ class PasswordOption extends ItemEditOption {
 		list($ret, $hasPassword) = PasswordHelper::hasPassword($item);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $canChange && ($hasPassword || $item->getCanContainChildren()));
+		return array( null, $canChange && ($hasPassword || $item->getCanContainChildren()) );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class PasswordOption extends ItemEditOption {
 		$form['PasswordOption']['hasPassword'] = $item->hasOnLoadHandler('Password');
 		$form['PasswordOption']['isAlbum']     = $item->getCanContainChildren();
 
-		return array(null, 'modules/password/templates/PasswordOption.tpl', 'modules_password');
+		return array( null, 'modules/password/templates/PasswordOption.tpl', 'modules_password' );
 	}
 
 	/**
@@ -72,14 +72,14 @@ class PasswordOption extends ItemEditOption {
 		$ret = GalleryCoreApi::assertHasItemPermission($item->getId(), 'core.changePermissions');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if (!empty($form['PasswordOption']['remove'])) {
 			$ret = PasswordHelper::removePassword($item, $useProgressBar);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		} elseif (!empty($form['PasswordOption']['password1'])
 			|| !empty($form['PasswordOption']['password2'])
@@ -97,7 +97,7 @@ class PasswordOption extends ItemEditOption {
 				);
 
 				if ($ret) {
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 			} else {
 				// Throw an error because both passwords do not match
@@ -105,7 +105,7 @@ class PasswordOption extends ItemEditOption {
 			}
 		}
 
-		return array(null, $error, $warning);
+		return array( null, $error, $warning );
 	}
 
 	/**

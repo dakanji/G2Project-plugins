@@ -35,8 +35,8 @@ class SizeLimitModule extends GalleryModule {
 		$this->setVersion('1.0.9');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
-		$this->setRequiredCoreApi(array(7, 34));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 34 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -49,7 +49,7 @@ class SizeLimitModule extends GalleryModule {
 			'SizelimitModule',
 			'modules/sizelimit/module.inc',
 			'sizelimit',
-			array('GalleryEntity::save')
+			array( 'GalleryEntity::save' )
 		);
 
 		if ($ret) {
@@ -62,7 +62,7 @@ class SizeLimitModule extends GalleryModule {
 			'SizeLimitOption',
 			'modules/sizelimit/SizeLimitOption.inc',
 			'sizelimit',
-			array('ItemEditAlbum')
+			array( 'ItemEditAlbum' )
 		);
 
 		if ($ret) {
@@ -107,7 +107,7 @@ class SizeLimitModule extends GalleryModule {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				foreach ($params as $param => $value) {
@@ -120,12 +120,12 @@ class SizeLimitModule extends GalleryModule {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 			}
 		}
 
-		return array(null, null);
+		return array( null, null );
 	}
 }

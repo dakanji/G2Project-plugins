@@ -59,6 +59,6 @@ class HiddenInterface_1_0 {
 	 *               boolean true if hidden
 	 */
 	public static function isHidden($item) {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 }

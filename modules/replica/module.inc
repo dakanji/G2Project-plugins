@@ -38,8 +38,8 @@ class ReplicaModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getItemAdminViews');
-		$this->setRequiredCoreApi(array(7, 42));
-		$this->setRequiredModuleApi(array(3, 9));
+		$this->setRequiredCoreApi(array( 7, 42 ));
+		$this->setRequiredModuleApi(array( 3, 9 ));
 	}
 
 	/**
@@ -63,7 +63,7 @@ class ReplicaModule extends GalleryModule {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 
 					if (!$count) {
@@ -71,19 +71,19 @@ class ReplicaModule extends GalleryModule {
 					}
 				}
 				$links[$itemId][] = array(
-					'text'   => $this->_translate('Create Replica'),
+					'text' => $this->_translate('Create Replica'),
 					'params' => array(
-						'view'       => 'core.ItemAdmin',
-						'subView'    => 'replica.ItemCreateReplica',
-						'itemId'     => $item->getParentId(),
+						'view' => 'core.ItemAdmin',
+						'subView' => 'replica.ItemCreateReplica',
+						'itemId' => $item->getParentId(),
 						'selectedId' => $itemId,
-						'return'     => 1,
+						'return' => 1,
 					),
 				);
 			}
 		}
 
-		return array(null, $links);
+		return array( null, $links );
 	}
 
 	/**
@@ -95,7 +95,7 @@ class ReplicaModule extends GalleryModule {
 		list($ret, $permissions) = GalleryCoreApi::getPermissions($item->getId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($item->getIsLinkable() && isset($permissions['core.viewSource'])) {
@@ -105,7 +105,7 @@ class ReplicaModule extends GalleryModule {
 			);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if ($count > 0) {
@@ -129,6 +129,6 @@ class ReplicaModule extends GalleryModule {
 			}
 		}
 
-		return array(null, $views);
+		return array( null, $views );
 	}
 }

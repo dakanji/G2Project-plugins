@@ -129,7 +129,7 @@ class PermalinksTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array('testAlias'), $aliases);
+		$this->assertEquals(array( 'testAlias' ), $aliases);
 
 		list($ret, $aliases) = PermalinksMapHelper::fetchAliasesForItem($this->_album->getId());
 
@@ -137,7 +137,7 @@ class PermalinksTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array('testAlias1'), $aliases);
+		$this->assertEquals(array( 'testAlias1' ), $aliases);
 	}
 
 	public function testCollision() {
@@ -242,7 +242,7 @@ class PermalinksTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array($album->pathComponent), $aliasesAlbum);
+		$this->assertEquals(array( $album->pathComponent ), $aliasesAlbum);
 
 		// Delete album: deletes sub-item and aliases
 		$ret = GalleryCoreApi::deleteEntityById($album->getId(), 'GalleryAlbumItem');
@@ -292,7 +292,7 @@ class PermalinksTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array($album->pathComponent), $aliasesAlbum);
+		$this->assertEquals(array( $album->pathComponent ), $aliasesAlbum);
 
 		// create another album with the same name, this creates a permalink
 		list($ret, $album1) = $this->_createRandomAlbum($album->getId());
@@ -308,6 +308,6 @@ class PermalinksTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array($album->pathComponent), $aliasesAlbum);
+		$this->assertEquals(array( $album->pathComponent ), $aliasesAlbum);
 	}
 }

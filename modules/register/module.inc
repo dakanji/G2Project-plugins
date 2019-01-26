@@ -36,8 +36,8 @@ class RegisterModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSystemLinks|getUserAdminViews|getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 35));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 35 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -109,7 +109,7 @@ class RegisterModule extends GalleryModule {
 	 * @see GalleryModule::getModuleEntityTypes
 	 */
 	public function getModuleEntityTypes() {
-		return array('GalleryPendingUser');
+		return array( 'GalleryPendingUser' );
 	}
 
 	/**
@@ -121,21 +121,21 @@ class RegisterModule extends GalleryModule {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($isAnonymous) {
 			$links['Register'] = array(
 				'text' => $this->translate('Register'),
 				'params' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
-					'return'  => 1,
+					'return' => 1,
 				),
 			);
 		}
 
-		return array(null, $links);
+		return array( null, $links );
 	}
 
 	/**
@@ -147,7 +147,7 @@ class RegisterModule extends GalleryModule {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser($user->getId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($isAnonymous) {
@@ -157,7 +157,7 @@ class RegisterModule extends GalleryModule {
 			);
 		}
 
-		return array(null, $views);
+		return array( null, $views );
 	}
 
 	/**

@@ -40,10 +40,10 @@ class UserWatermarkEditController extends GalleryController {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -63,7 +63,7 @@ class UserWatermarkEditView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		return array(

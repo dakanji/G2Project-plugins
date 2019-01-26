@@ -75,7 +75,7 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
 				'status' => array(
@@ -105,7 +105,7 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
 				'status' => array(
@@ -131,7 +131,7 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
 				'status' => array(
@@ -145,7 +145,7 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 		list($ret, $extensions) = GalleryCoreApi::convertMimeToExtensions('test/test');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$this->assertEquals(array(), $extensions, 'Delete results');
 	}

@@ -37,8 +37,8 @@ class WebCamModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 45));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 45 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -94,7 +94,7 @@ class WebCamModule extends GalleryModule {
 					}
 					list($ret, $handlers) = $storage->getFunctionSql(
 						'CONCAT',
-						array('[GalleryEntity::onLoadHandlers]', "'WebCam|'")
+						array( '[GalleryEntity::onLoadHandlers]', "'WebCam|'" )
 					);
 
 					if ($ret) {
@@ -201,7 +201,7 @@ class WebCamModule extends GalleryModule {
 	 * @see GalleryModule::getOnLoadHandlerIds
 	 */
 	public function getOnLoadHandlerIds() {
-		return array('WebCam');
+		return array( 'WebCam' );
 	}
 
 	/**
@@ -332,7 +332,7 @@ class WebCamModule extends GalleryModule {
 
 						return $ret;
 					}
-					$ret = GalleryCoreApi::expireDerivativeTreeBySourceIds(array($id));
+					$ret = GalleryCoreApi::expireDerivativeTreeBySourceIds(array( $id ));
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);

@@ -60,7 +60,7 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
 				'status' => array(
@@ -99,7 +99,7 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
 				'status' => array(
@@ -127,7 +127,7 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
 				'status' => array(
@@ -155,7 +155,7 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
 				'status' => array(),
@@ -191,7 +191,7 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
 				'status' => array(
@@ -252,8 +252,8 @@ class CaptchaSiteAdminTestOption extends CaptchaAdminOption {
 		return array(
 			null,
 			'test level',
-			array('module', 'captcha', $this->_param),
-			array('HIGH', 'LOW'),
+			array( 'module', 'captcha', $this->_param ),
+			array( 'HIGH', 'LOW' ),
 		);
 	}
 }

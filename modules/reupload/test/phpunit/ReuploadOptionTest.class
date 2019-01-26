@@ -65,7 +65,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'ReuploadOptionTestToolkit',
-			array('image/known'),
+			array( 'image/known' ),
 			'dimensions',
 			'int,int',
 			'desc'
@@ -95,7 +95,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 		list($errors, $warnings) = $this->_handleRequestAfterEdit($form, $this->_item);
 		$this->assertEquals(array(), $errors, 'Errors');
 		$this->assertEquals(
-			array($this->_translate('Reuploaded file successfully.')),
+			array( $this->_translate('Reuploaded file successfully.') ),
 			$warnings,
 			'Warnings'
 		);
@@ -115,7 +115,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 
 		// Perform the request and verify that we failed and filesize didn't change
 		list($errors, $warnings) = $this->_handleRequestAfterEdit($form, $this->_item);
-		$this->assertEquals(array('form[error][reupload][failure]'), $errors, 'Errors');
+		$this->assertEquals(array( 'form[error][reupload][failure]' ), $errors, 'Errors');
 		$this->assertEquals(array(), $warnings, 'Warnings');
 		$this->assertEquals($this->_itemSize, $this->_item->getSize(), 'Item size');
 	}
@@ -129,7 +129,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 
 		// Perform the request and verify that we failed and filesize didn't change
 		list($errors, $warnings) = $this->_handleRequestAfterEdit($form, $this->_item);
-		$this->assertEquals(array('form[error][reupload][toolkit]'), $errors, 'Errors');
+		$this->assertEquals(array( 'form[error][reupload][toolkit]' ), $errors, 'Errors');
 		$this->assertEquals(array(), $warnings, 'Warnings');
 		// Size might been changed, but transaction was aborted
 		list($ret, $item) = $this->_item->refresh();
@@ -216,12 +216,12 @@ class ReuploadOptionTestToolkit extends GalleryToolkit {
 			$dimensionRequest = GalleryUtilities::getRequestVariables('dimensions');
 
 			if ($dimensionRequest == 'bad_data') {
-				return array(GalleryCoreApi::error(ERROR_BAD_DATA_TYPE), null);
+				return array( GalleryCoreApi::error(ERROR_BAD_DATA_TYPE), null );
 			}
 
-			return array(null, array(2603, 1966));
+			return array( null, array( 2603, 1966 ) );
 		}
 
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 }

@@ -40,8 +40,8 @@ class ThumbnailModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 45));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 45 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -94,7 +94,7 @@ class ThumbnailModule extends GalleryModule {
 			'CustomThumbnailOption',
 			'modules/thumbnail/CustomThumbnailOption.inc',
 			'thumbnail',
-			array('ItemEditItem')
+			array( 'ItemEditItem' )
 		);
 
 		if ($ret) {
@@ -107,7 +107,7 @@ class ThumbnailModule extends GalleryModule {
 			'ThumbnailModule',
 			'modules/thumbnail/module.inc',
 			'thumbnail',
-			array('GalleryEntity::delete')
+			array( 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {
@@ -121,7 +121,7 @@ class ThumbnailModule extends GalleryModule {
 	 * @see GalleryModule::getModuleEntityTypes
 	 */
 	public function getModuleEntityTypes() {
-		return array('ThumbnailImage');
+		return array( 'ThumbnailImage' );
 	}
 
 	/**
@@ -132,16 +132,16 @@ class ThumbnailModule extends GalleryModule {
 		list($ret, $ignored) = ThumbnailModuleExtras::activate($postActivationEvent);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $redirect);
+		return array( null, $redirect );
 	}
 
 	/**
@@ -207,16 +207,16 @@ class ThumbnailModule extends GalleryModule {
 		) {
 			list($ret, $source) = GalleryCoreApi::loadEntitiesById(
 				$entity->getDerivativeSourceId(),
-				array('GalleryFileSystemEntity', 'GalleryDerivative')
+				array( 'GalleryFileSystemEntity', 'GalleryDerivative' )
 			);
 
 			if ($ret) {
 				if ($ret->getErrorCode() & ERROR_MISSING_OBJECT) {
 					// Already gone.. ok!
-					return array(null, null);
+					return array( null, null );
 				}
 
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (GalleryUtilities::isA($source, 'ThumbnailImage')) {
@@ -230,11 +230,11 @@ class ThumbnailModule extends GalleryModule {
 				GalleryDataCache::remove($key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		}
 
-		return array(null, null);
+		return array( null, null );
 	}
 }

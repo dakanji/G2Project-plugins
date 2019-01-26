@@ -41,7 +41,7 @@ class NewItemsHelper {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$count = 0;
@@ -50,7 +50,7 @@ class NewItemsHelper {
 			$count = (int)$result[0];
 		}
 
-		return array(null, $count);
+		return array( null, $count );
 	}
 
 	/**

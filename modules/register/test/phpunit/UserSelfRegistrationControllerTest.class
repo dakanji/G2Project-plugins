@@ -104,7 +104,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
 				'status' => array(),
@@ -154,9 +154,9 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'                  => 'core.UserAdmin',
-					'subView'               => 'register.SelfRegistrationSuccess',
-					'pending'               => true,
+					'view' => 'core.UserAdmin',
+					'subView' => 'register.SelfRegistrationSuccess',
+					'pending' => true,
 					'sentConfirmationEmail' => true,
 				),
 				'status' => array(),
@@ -209,9 +209,9 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'                  => 'core.UserAdmin',
-					'subView'               => 'register.SelfRegistrationSuccess',
-					'pending'               => true,
+					'view' => 'core.UserAdmin',
+					'subView' => 'register.SelfRegistrationSuccess',
+					'pending' => true,
 					'sentConfirmationEmail' => true,
 				),
 				'status' => array(),
@@ -255,7 +255,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
 				'status' => array(),
@@ -283,11 +283,11 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
 				'status' => array(),
-				'error' => array('form[error][email][invalid]'),
+				'error' => array( 'form[error][email][invalid]' ),
 			),
 			$results
 		);
@@ -310,11 +310,11 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
 				'status' => array(),
-				'error' => array('form[error][password2][mismatch]'),
+				'error' => array( 'form[error][password2][mismatch]' ),
 			),
 			$results
 		);
@@ -342,7 +342,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 					'pending' => true,
 				),
@@ -359,11 +359,11 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
 				'status' => array(),
-				'error' => array('form[error][userName][exists]'),
+				'error' => array( 'form[error][userName][exists]' ),
 			),
 			$results,
 			'Create duplicate'
@@ -404,7 +404,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
 				'status' => array(),
@@ -422,11 +422,11 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
 				'status' => array(),
-				'error' => array('form[error][userName][exists]'),
+				'error' => array( 'form[error][userName][exists]' ),
 			),
 			$results,
 			'Create duplicate'
@@ -457,26 +457,26 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 
 		$plugin1 = new UserSelfRegistrationControllerTestPlugin();
 		$plugin1->setErrors(
-			array('form[error][UserSelfRegistrationControllerTestPlugin1][anError]')
+			array( 'form[error][UserSelfRegistrationControllerTestPlugin1][anError]' )
 		);
 		$plugin1->setContinue(false);
 
 		$plugin2 = new UserSelfRegistrationControllerTestPlugin();
 		$plugin2->setErrors(
-			array('form[error][UserSelfRegistrationControllerTestPlugin2][anError]')
+			array( 'form[error][UserSelfRegistrationControllerTestPlugin2][anError]' )
 		);
 		$plugin2->setContinue(true);
-		$this->_controller->setPluginInstances(array($plugin1, $plugin2));
+		$this->_controller->setPluginInstances(array( $plugin1, $plugin2 ));
 
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
 				'status' => array(),
-				'error' => array('form[error][UserSelfRegistrationControllerTestPlugin1][anError]'),
+				'error' => array( 'form[error][UserSelfRegistrationControllerTestPlugin1][anError]' ),
 			),
 			$results
 		);
@@ -497,22 +497,22 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 
 		$plugin1 = new UserSelfRegistrationControllerTestPlugin();
 		$plugin1->setErrors(
-			array('form[error][UserSelfRegistrationControllerTestPlugin1][anError]')
+			array( 'form[error][UserSelfRegistrationControllerTestPlugin1][anError]' )
 		);
 		$plugin1->setContinue(true);
 
 		$plugin2 = new UserSelfRegistrationControllerTestPlugin();
 		$plugin2->setErrors(
-			array('form[error][UserSelfRegistrationControllerTestPlugin2][anError]')
+			array( 'form[error][UserSelfRegistrationControllerTestPlugin2][anError]' )
 		);
 		$plugin2->setContinue(false);
-		$this->_controller->setPluginInstances(array($plugin1, $plugin2));
+		$this->_controller->setPluginInstances(array( $plugin1, $plugin2 ));
 
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
 				'status' => array(),
@@ -550,7 +550,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$plugin->setErrors(array());
 		$plugin->setContinue(true);
 
-		$this->_controller->setPluginInstances(array($plugin));
+		$this->_controller->setPluginInstances(array( $plugin ));
 
 		$savePlatform =& $gallery->getPlatform();
 		$gallery->setPlatform(new RegisterDummyPlatform($savePlatform, $this));
@@ -559,7 +559,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
 				'status' => array(),
@@ -604,10 +604,10 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 
 		$plugin = new UserSelfRegistrationControllerTestPlugin();
 		$plugin->setErrors(
-			array('form[error][UserSelfRegistrationControllerTestPlugin1][anError]')
+			array( 'form[error][UserSelfRegistrationControllerTestPlugin1][anError]' )
 		);
 		$plugin->setContinue(false);
-		$this->_controller->setPluginInstances(array($plugin));
+		$this->_controller->setPluginInstances(array( $plugin ));
 
 		$savePlatform =& $gallery->getPlatform();
 		$gallery->setPlatform(new RegisterDummyPlatform($savePlatform, $this));
@@ -616,7 +616,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
 				'status' => array(),
@@ -717,6 +717,6 @@ class UserSelfRegistrationControllerTestPlugin extends GalleryValidationPlugin {
 	}
 
 	public function performValidation(&$form, $options = array()) {
-		return array(null, $this->_errors, $this->_continue);
+		return array( null, $this->_errors, $this->_continue );
 	}
 }

@@ -36,18 +36,18 @@ class UserWatermarksController extends GalleryController {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $isOn) = GalleryCoreApi::getPluginParameter('module', 'watermark', 'allowUserWatermarks');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$user = $gallery->getActiveUser();
 
 		if ($isAnonymous || $user->isLocked() || !$isOn) {
-			return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null);
+			return array( GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null );
 		}
 
 		$status = $error = array();
@@ -56,7 +56,7 @@ class UserWatermarksController extends GalleryController {
 			list($ret, $item) = WatermarkHelper::createWatermarkImage($form);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			$results['redirect']['view']        = 'core.UserAdmin';
@@ -70,7 +70,7 @@ class UserWatermarksController extends GalleryController {
 			list($ret, $wasDeleted) = WatermarkHelper::deleteWatermarkImageById($form['delete']['watermarkId']);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if ($wasDeleted) {
@@ -88,7 +88,7 @@ class UserWatermarksController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -106,24 +106,24 @@ class UserWatermarksView extends GalleryView {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $isOn) = GalleryCoreApi::getPluginParameter('module', 'watermark', 'allowUserWatermarks');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$user = $gallery->getActiveUser();
 
 		if ($isAnonymous || $user->isLocked() || !$isOn) {
-			return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null);
+			return array( GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null );
 		}
 
 		list($ret, $watermarks) = WatermarkHelper::fetchWatermarks();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		foreach ($watermarks as $id => $watermark) {
@@ -178,9 +178,9 @@ class UserWatermarksView extends GalleryView {
 		list($ret, $core) = GalleryCoreApi::loadPlugin('module', 'watermark');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $core->translate('user watermarks'));
+		return array( null, $core->translate('user watermarks') );
 	}
 }

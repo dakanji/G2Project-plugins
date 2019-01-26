@@ -69,7 +69,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 					),
 					array(
 						'forceServerRelativeUrl' => true,
-						'htmlEntities'           => false,
+						'htmlEntities' => false,
 					)
 				) . ' HTTP/1.0',
 				'Host: ' . $urlGenerator->getHostName(),
@@ -120,7 +120,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		foreach (array(
 			'httpAuthPlugin' => true,
-			'useGlobally'    => true,
+			'useGlobally' => true,
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'httpauth', $key, $value);
 
@@ -163,17 +163,17 @@ class HttpAuthModuleTest extends GalleryTestCase {
 	}
 
 	public function testGetRewriteRulesAuthorizationRuleActive() {
-		$this->_activeRules = array('authorization');
+		$this->_activeRules = array( 'authorization' );
 
 		$rules = $this->_module->getRewriteRules();
-		$this->assertEquals(array('authorization'), array_keys($rules));
+		$this->assertEquals(array( 'authorization' ), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesMissingAuthorization() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
 
 		$rules = $this->_module->getRewriteRules();
-		$this->assertEquals(array('authorization'), array_keys($rules));
+		$this->assertEquals(array( 'authorization' ), array_keys($rules));
 	}
 
 	public function testHandleEventActivatePlugin() {
@@ -181,7 +181,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		$event->setData(
 			array(
 				'pluginType' => 'module',
-				'pluginId'   => 'rewrite',
+				'pluginId' => 'rewrite',
 			)
 		);
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
@@ -190,7 +190,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(array('httpauth')), $this->_activateCalls);
+		$this->assertEquals(array( array( 'httpauth' ) ), $this->_activateCalls);
 	}
 
 	public function testHandleEventErrorPermissionDenied() {
@@ -215,7 +215,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'           => 'HTTP/1.0 401 Unauthorized',
+				'status' => 'HTTP/1.0 401 Unauthorized',
 				'www-authenticate' => "WWW-Authenticate: Basic realm='$params[authName]'",
 			),
 			$this->_headers
@@ -335,16 +335,16 @@ class HttpAuthModuleTestRewriteApi {
 	}
 
 	public function isCompatibleWithApi($version) {
-		return array(null, true);
+		return array( null, true );
 	}
 
 	public function fetchActiveRulesForModule($moduleId) {
-		return array(null, HttpAuthModuleTestRewriteApi::_fetchActiveRulesForModule($moduleId));
+		return array( null, HttpAuthModuleTestRewriteApi::_fetchActiveRulesForModule($moduleId) );
 	}
 
 	public function activateRewriteRulesForModule($moduleId) {
 		$activateCalls   =& HttpAuthModuleTestRewriteApi::_getActivateCalls();
-		$activateCalls[] = array($moduleId);
+		$activateCalls[] = array( $moduleId );
 	}
 }
 

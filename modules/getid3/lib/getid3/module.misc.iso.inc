@@ -80,12 +80,12 @@ class getid3_iso extends getid3_handler {
 
 
 		$thisfile_iso_primaryVD_raw['volume_descriptor_version'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 6, 1));
-		//$thisfile_iso_primaryVD_raw['unused_1']                      =                              substr($ISOheader,    7, 1);
+		//$thisfile_iso_primaryVD_raw['unused_1'] =                              substr($ISOheader,    7, 1);
 		$thisfile_iso_primaryVD_raw['system_identifier'] = substr($ISOheader, 8, 32);
 		$thisfile_iso_primaryVD_raw['volume_identifier'] = substr($ISOheader, 40, 32);
-		//$thisfile_iso_primaryVD_raw['unused_2']                      =                              substr($ISOheader,   72, 8);
+		//$thisfile_iso_primaryVD_raw['unused_2'] =                              substr($ISOheader,   72, 8);
 		$thisfile_iso_primaryVD_raw['volume_space_size'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 80, 4));
-		//$thisfile_iso_primaryVD_raw['unused_3']                      =                              substr($ISOheader,   88, 32);
+		//$thisfile_iso_primaryVD_raw['unused_3'] =                              substr($ISOheader,   88, 32);
 		$thisfile_iso_primaryVD_raw['volume_set_size']               = getid3_lib::LittleEndian2Int(substr($ISOheader, 120, 2));
 		$thisfile_iso_primaryVD_raw['volume_sequence_number']        = getid3_lib::LittleEndian2Int(substr($ISOheader, 124, 2));
 		$thisfile_iso_primaryVD_raw['logical_block_size']            = getid3_lib::LittleEndian2Int(substr($ISOheader, 128, 2));
@@ -107,9 +107,9 @@ class getid3_iso extends getid3_handler {
 		$thisfile_iso_primaryVD_raw['volume_expiration_date_time']   = substr($ISOheader, 847, 17);
 		$thisfile_iso_primaryVD_raw['volume_effective_date_time']    = substr($ISOheader, 864, 17);
 		$thisfile_iso_primaryVD_raw['file_structure_version']        = getid3_lib::LittleEndian2Int(substr($ISOheader, 881, 1));
-		//$thisfile_iso_primaryVD_raw['unused_4']                      = getid3_lib::LittleEndian2Int(substr($ISOheader,  882, 1));
+		//$thisfile_iso_primaryVD_raw['unused_4'] = getid3_lib::LittleEndian2Int(substr($ISOheader,  882, 1));
 		$thisfile_iso_primaryVD_raw['application_data'] = substr($ISOheader, 883, 512);
-		//$thisfile_iso_primaryVD_raw['unused_5']                      =                              substr($ISOheader, 1395, 653);
+		//$thisfile_iso_primaryVD_raw['unused_5'] =                              substr($ISOheader, 1395, 653);
 
 		$thisfile_iso_primaryVD['system_identifier']             = trim($thisfile_iso_primaryVD_raw['system_identifier']);
 		$thisfile_iso_primaryVD['volume_identifier']             = trim($thisfile_iso_primaryVD_raw['volume_identifier']);
@@ -154,10 +154,10 @@ class getid3_iso extends getid3_handler {
 		}
 
 		$thisfile_iso_supplementaryVD_raw['volume_descriptor_version'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 6, 1));
-		//$thisfile_iso_supplementaryVD_raw['unused_1']                  =                              substr($ISOheader,    7, 1);
+		//$thisfile_iso_supplementaryVD_raw['unused_1'] =                              substr($ISOheader,    7, 1);
 		$thisfile_iso_supplementaryVD_raw['system_identifier'] = substr($ISOheader, 8, 32);
 		$thisfile_iso_supplementaryVD_raw['volume_identifier'] = substr($ISOheader, 40, 32);
-		//$thisfile_iso_supplementaryVD_raw['unused_2']                  =                              substr($ISOheader,   72, 8);
+		//$thisfile_iso_supplementaryVD_raw['unused_2'] =                              substr($ISOheader,   72, 8);
 		$thisfile_iso_supplementaryVD_raw['volume_space_size'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 80, 4));
 
 		if ($thisfile_iso_supplementaryVD_raw['volume_space_size'] == 0) {
@@ -166,7 +166,7 @@ class getid3_iso extends getid3_handler {
 			//return false;
 		}
 
-		//$thisfile_iso_supplementaryVD_raw['unused_3']                       =                              substr($ISOheader,   88, 32);
+		//$thisfile_iso_supplementaryVD_raw['unused_3'] =                              substr($ISOheader,   88, 32);
 		$thisfile_iso_supplementaryVD_raw['volume_set_size']               = getid3_lib::LittleEndian2Int(substr($ISOheader, 120, 2));
 		$thisfile_iso_supplementaryVD_raw['volume_sequence_number']        = getid3_lib::LittleEndian2Int(substr($ISOheader, 124, 2));
 		$thisfile_iso_supplementaryVD_raw['logical_block_size']            = getid3_lib::LittleEndian2Int(substr($ISOheader, 128, 2));
@@ -188,9 +188,9 @@ class getid3_iso extends getid3_handler {
 		$thisfile_iso_supplementaryVD_raw['volume_expiration_date_time']   = substr($ISOheader, 847, 17);
 		$thisfile_iso_supplementaryVD_raw['volume_effective_date_time']    = substr($ISOheader, 864, 17);
 		$thisfile_iso_supplementaryVD_raw['file_structure_version']        = getid3_lib::LittleEndian2Int(substr($ISOheader, 881, 1));
-		//$thisfile_iso_supplementaryVD_raw['unused_4']                       = getid3_lib::LittleEndian2Int(substr($ISOheader,  882, 1));
+		//$thisfile_iso_supplementaryVD_raw['unused_4'] = getid3_lib::LittleEndian2Int(substr($ISOheader,  882, 1));
 		$thisfile_iso_supplementaryVD_raw['application_data'] = substr($ISOheader, 883, 512);
-		//$thisfile_iso_supplementaryVD_raw['unused_5']                       =                              substr($ISOheader, 1395, 653);
+		//$thisfile_iso_supplementaryVD_raw['unused_5'] =                              substr($ISOheader, 1395, 653);
 
 		$thisfile_iso_supplementaryVD['system_identifier']             = trim($thisfile_iso_supplementaryVD_raw['system_identifier']);
 		$thisfile_iso_supplementaryVD['volume_identifier']             = trim($thisfile_iso_supplementaryVD_raw['volume_identifier']);

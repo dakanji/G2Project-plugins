@@ -35,8 +35,8 @@ class MembersModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 27));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 27 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -52,7 +52,7 @@ class MembersModule extends GalleryModule {
 
 			foreach (array(
 				'canViewMembersModule' => $viewSelectedGroupId,
-				'canViewEmailAddress'  => 0,
+				'canViewEmailAddress' => 0,
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);
 

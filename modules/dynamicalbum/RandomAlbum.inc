@@ -32,7 +32,7 @@ class RandomAlbumView extends UpdatesAlbumView {
 		global $gallery;
 		$this->_view            = 'dynamicalbum.RandomAlbum';
 		$this->_title           = $gallery->i18n('Random Items');
-		$this->_itemType        = array($gallery->i18n('Random'), $gallery->i18n('random'));
+		$this->_itemType        = array( $gallery->i18n('Random'), $gallery->i18n('random') );
 		$this->_viewDescription = $gallery->i18n('random');
 		$this->_param           = 'random';
 	}

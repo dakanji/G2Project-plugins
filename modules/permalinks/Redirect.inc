@@ -42,13 +42,13 @@ class RedirectController extends GalleryController {
 		$alias = GalleryUtilities::getRequestVariables('filename');
 
 		if (empty($alias)) {
-			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+			return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 		}
 
 		list($ret, $itemId) = PermalinksMapHelper::fetchItemIdForAlias($alias);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Avoid information disclosure, act as if the item didn't exist.
@@ -56,12 +56,12 @@ class RedirectController extends GalleryController {
 			list($ret, $hasPermission) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
 		if (empty($itemId) || !$hasPermission) {
-			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 		}
 
 		// Delegate to the ShowItem view
@@ -76,6 +76,6 @@ class RedirectController extends GalleryController {
 			'error'    => array(),
 		);
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }

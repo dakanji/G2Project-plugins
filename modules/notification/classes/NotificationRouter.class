@@ -55,8 +55,7 @@ class NotificationRouter // extends GalleryEventListener
 			return array($ret, null);
 		}
 
-		list($ret, $active) =
-		NotificationHelper::getActiveNotificationsHandlers(array_keys($implementations));
+		list($ret, $active) = 		NotificationHelper::getActiveNotificationsHandlers(array_keys($implementations));
 
 		if ($ret) {
 			return array($ret, null);
@@ -122,8 +121,7 @@ class NotificationRouter // extends GalleryEventListener
 	 * @return GalleryStatus
 	 */
 	public function _fireNotification($name, $notification, $handler) {
-		list($ret, $handlerInstance) =
-		GalleryCoreApi::newFactoryInstanceById('NotificationHandler_1_0', $handler);
+		list($ret, $handlerInstance) = 		GalleryCoreApi::newFactoryInstanceById('NotificationHandler_1_0', $handler);
 
 		if ($ret) {
 			return $ret;

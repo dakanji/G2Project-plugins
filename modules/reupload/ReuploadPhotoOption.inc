@@ -41,30 +41,30 @@ class ReuploadPhotoOption extends ItemEditOption {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'reupload');
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!$platform->is_uploaded_file($inputFileName)
 				|| !$platform->file_exists($inputFileName)
 			) {
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null );
 			}
 
 			list($ret, $hasLinkedEntity) = $this->_hasLinkedEntity($item);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if ($hasLinkedEntity) {
 				// UI does not allow this
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null );
 			}
 
 			list($ret, $path) = $item->fetchPath();
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			/*
@@ -74,19 +74,19 @@ class ReuploadPhotoOption extends ItemEditOption {
 			list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLockParents($item->getId());
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			list($ret, $lockIds[]) = GalleryCoreApi::acquireWriteLock($item->getId());
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			list($ret, $item) = $item->refresh();
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			// take backup first
@@ -95,21 +95,21 @@ class ReuploadPhotoOption extends ItemEditOption {
 			if (!$tmpfname) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
+				return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
 			}
 
 			if (!$platform->copy($path, $tmpfname)) {
 				$platform->unlink($tmpfname);
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
+				return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
 			}
 
 			if (!$platform->copy($inputFileName, $path)) {
 				$platform->unlink($tmpfname);
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
+				return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
 			}
 
 			$ret = $item->rescan();
@@ -126,7 +126,7 @@ class ReuploadPhotoOption extends ItemEditOption {
 				GalleryCoreApi::releaseLocks($lockIds);
 				$error[] = 'form[error][reupload][toolkit]';
 
-				return array(null, $error, $status);
+				return array( null, $error, $status );
 			}
 
 			$ret = $item->save();
@@ -136,22 +136,22 @@ class ReuploadPhotoOption extends ItemEditOption {
 				$platform->unlink($tmpfname);
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$platform->unlink($tmpfname);
 			$ret = GalleryCoreApi::releaseLocks($lockIds);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$ret = GalleryCoreApi::invalidateDerivativeDimensionsBySourceIds(
-				array($item->getId())
+				array( $item->getId() )
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$status[] = $module->translate('Reuploaded file successfully.');
@@ -166,7 +166,7 @@ class ReuploadPhotoOption extends ItemEditOption {
 			}
 		}
 
-		return array(null, $error, $status);
+		return array( null, $error, $status );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class ReuploadPhotoOption extends ItemEditOption {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'reupload');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if ($template->hasVariable('ItemAdmin')) {
@@ -200,19 +200,19 @@ class ReuploadPhotoOption extends ItemEditOption {
 		if ($maxFileSize >= 1024 * 1024) {
 			$maxFileSize = $module->translate(
 				array(
-					'one'   => '%d megabyte',
-					'many'  => '%d megabytes',
+					'one' => '%d megabyte',
+					'many' => '%d megabytes',
 					'count' => (int)($maxFileSize / (1024 * 1024)),
-					'arg1'  => (int)($maxFileSize / (1024 * 1024)),
+					'arg1' => (int)($maxFileSize / (1024 * 1024)),
 				)
 			);
 		} elseif ($maxFileSize >= 1024) {
 			$maxFileSize = $module->translate(
 				array(
-					'one'   => '%d kilobytes',
-					'many'  => '%d kilobytes',
+					'one' => '%d kilobytes',
+					'many' => '%d kilobytes',
 					'count' => (int)($maxFileSize / (1024)),
-					'arg1'  => (int)($maxFileSize / (1024)),
+					'arg1' => (int)($maxFileSize / (1024)),
 				)
 			);
 		}
@@ -220,15 +220,15 @@ class ReuploadPhotoOption extends ItemEditOption {
 		list($ret, $hasLinkedEntity) = $this->_hasLinkedEntity($item);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		$template->setVariable(
 			'ReuploadPhotoOption',
 			array(
-				'maxFileSize'      => $maxFileSize,
+				'maxFileSize' => $maxFileSize,
 				'uploadsPermitted' => $fileUploadsBool,
-				'hasLinkedEntity'  => $hasLinkedEntity,
+				'hasLinkedEntity' => $hasLinkedEntity,
 			)
 		);
 
@@ -243,7 +243,7 @@ class ReuploadPhotoOption extends ItemEditOption {
 	 * @see ItemEditOption::isAppropriate
 	 */
 	public static function isAppropriate($item, $thumbnail) {
-		return array(null, GalleryUtilities::isA($item, 'GalleryPhotoItem'));
+		return array( null, GalleryUtilities::isA($item, 'GalleryPhotoItem') );
 	}
 
 	/**
@@ -260,11 +260,11 @@ class ReuploadPhotoOption extends ItemEditOption {
 			list($ret, $linkedIds) = GalleryCoreApi::fetchEntitiesLinkedTo($item->getId());
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$hasLink = !empty($linkedIds);
 		}
 
-		return array(null, $hasLink);
+		return array( null, $hasLink );
 	}
 }

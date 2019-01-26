@@ -79,16 +79,16 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		$subalbumId = $this->_subalbum->getId();
 
 		foreach (array(
-			array($albumId, 'test/file', true, 1, true),
-			array($albumId, 'test/file', false, 2, true),
-			array($albumId, 'test/file', false, 0, true),
-			array($albumId, 'test/file', false, 0, false),
-			array($albumId, 'test/blah', false, 0, true),
-			array($subalbumId, 'test/file', false, 1, true),
-			array($subalbumId, 'test/file', false, 0, true),
+			array( $albumId, 'test/file', true, 1, true ),
+			array( $albumId, 'test/file', false, 2, true ),
+			array( $albumId, 'test/file', false, 0, true ),
+			array( $albumId, 'test/file', false, 0, false ),
+			array( $albumId, 'test/blah', false, 0, true ),
+			array( $subalbumId, 'test/file', false, 1, true ),
+			array( $subalbumId, 'test/file', false, 0, true ),
 		) as $info) {
 			list($ret,
-			$this->_items[], $this->_preferreds[], $this->_resizes[], $this->_thumbnails[]) = call_user_func_array(array($this, '_createItem'), $info);
+			$this->_items[], $this->_preferreds[], $this->_resizes[], $this->_thumbnails[]) = call_user_func_array(array( $this, '_createItem' ), $info);
 
 			if ($ret) {
 				return $ret;
@@ -116,7 +116,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		list($ret, $item) = $this->_createRandomDataItem($parentId, $mimeType);
 
 		if ($ret) {
-			return array($ret, null, null, null, null);
+			return array( $ret, null, null, null, null );
 		}
 
 		$preferred = $thumbnail = null;
@@ -134,7 +134,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null, null, null, null);
+				return array( $ret, null, null, null, null );
 			}
 			$sourceId = $preferred->getId();
 		}
@@ -150,7 +150,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null, null, null, null);
+				return array( $ret, null, null, null, null );
 			}
 		}
 
@@ -165,11 +165,11 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null, null, null, null);
+				return array( $ret, null, null, null, null );
 			}
 		}
 
-		return array(null, $item, $preferred, $resizes, $thumbnail);
+		return array( null, $item, $preferred, $resizes, $thumbnail );
 	}
 
 	public function testWatermarkEverything() {
@@ -191,7 +191,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		);
 
 		// Verify the postfilters were applied successfully
-		foreach (array($this->_preferred, $this->_resize, $this->_thumbnail) as $derivative) {
+		foreach (array( $this->_preferred, $this->_resize, $this->_thumbnail ) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {
@@ -217,7 +217,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_item, $this->_preferred);
 		$this->assertEquals(
-			array(array('form[error][versions][missing]'), null),
+			array( array( 'form[error][versions][missing]' ), null ),
 			$results
 		);
 	}
@@ -227,12 +227,12 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_item, $this->_preferred);
 		$this->assertEquals(
-			array(array(), $this->_translate('Watermark removed successfully')),
+			array( array(), $this->_translate('Watermark removed successfully') ),
 			$results
 		);
 
 		// And verify that they're all gone
-		foreach (array($this->_preferred, $this->_resize, $this->_thumbnail) as $derivative) {
+		foreach (array( $this->_preferred, $this->_resize, $this->_thumbnail ) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {
@@ -278,7 +278,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		);
 
 		// Verify that we now have a preferred and that it has the right postfilter
-		list($ret, $preferredTable) = GalleryCoreApi::fetchPreferredsByItemIds(array($this->_item->getId()));
+		list($ret, $preferredTable) = GalleryCoreApi::fetchPreferredsByItemIds(array( $this->_item->getId() ));
 
 		if ($ret) {
 			return $ret;
@@ -300,7 +300,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			);
 
 			// Verify that the thumbnail and resize point to the preferred now
-			foreach (array($this->_resize, $this->_thumbnail) as $derivative) {
+			foreach (array( $this->_resize, $this->_thumbnail ) as $derivative) {
 				list($ret, $derivative) = $derivative->refresh();
 
 				if ($ret) {
@@ -351,7 +351,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		);
 
 		// Verify that the preferred is gone
-		list($ret, $preferredTable) = GalleryCoreApi::fetchPreferredsByItemIds(array($this->_item->getId()));
+		list($ret, $preferredTable) = GalleryCoreApi::fetchPreferredsByItemIds(array( $this->_item->getId() ));
 
 		if ($ret) {
 			return $ret;
@@ -360,7 +360,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		$this->assert(empty($preferredTable), 'Preferred should be gone, but isn\'t');
 
 		// Verify that the thumbnail and resize point to the item now
-		foreach (array($this->_resize, $this->_thumbnail) as $derivative) {
+		foreach (array( $this->_resize, $this->_thumbnail ) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {
@@ -403,7 +403,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 	public function _runBulkTest($message, $recursive, $applyToThumbnail, $location, $isApply = true) {
 		$preferred = null;
 		$results   = $this->handleRequest($this->_album, $preferred);
-		$this->assertEquals(array(array(), $this->_translate($message)), $results);
+		$this->assertEquals(array( array(), $this->_translate($message) ), $results);
 		$this->assertEquals(1, $this->_templateAdapter->getCallbackCount(), 'Callback count');
 		$ret = $this->_templateAdapter->runCallbacks();
 
@@ -425,7 +425,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			&& $isApply == ($recursive || $item->getParentId() == $this->_album->getId());
 
 			if (!isset($this->_preferreds[$i])) {
-				list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($item->getId()));
+				list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array( $item->getId() ));
 
 				if ($ret) {
 					return $ret;
@@ -440,7 +440,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 
 			foreach (array_merge(
 				$this->_resizes[$i],
-				array($this->_preferreds[$i], $this->_thumbnails[$i])
+				array( $this->_preferreds[$i], $this->_thumbnails[$i] )
 			) as $derivative) {
 				if (!isset($derivative)) {
 					continue;
@@ -572,35 +572,35 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ItemEditWatermarkPluginTestToolkit',
-			array($mimeType),
+			array( $mimeType ),
 			'composite',
 			array(
 				array(
-					'type'        => 'string',
+					'type' => 'string',
 					'description' => 'test',
 				),
 				array(
-					'type'        => 'string',
+					'type' => 'string',
 					'description' => 'test',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'test',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'test',
 				),
 				array(
-					'type'        => 'string',
+					'type' => 'string',
 					'description' => 'test',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'test',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'test',
 				),
 			),

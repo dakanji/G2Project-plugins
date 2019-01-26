@@ -33,16 +33,16 @@ class WebCamSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
 
 		if (isset($form['action']['save'])) {
 			if (!isset($form['fromweb'])
-				|| !in_array($form['fromweb'], array('on', 'off', 'admin'))
+				|| !in_array($form['fromweb'], array( 'on', 'off', 'admin' ))
 			) {
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 			}
 
 			if (isset($form['duration'])) {
@@ -61,7 +61,7 @@ class WebCamSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -71,7 +71,7 @@ class WebCamSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$status['saved'] = 1;
 			}
@@ -83,7 +83,7 @@ class WebCamSiteAdminController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -98,23 +98,23 @@ class WebCamSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'webcam');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'WebCamSiteAdmin') {
 			$form['formName'] = 'WebCamSiteAdmin';
 
-			foreach (array('fromweb', 'duration') as $key) {
+			foreach (array( 'fromweb', 'duration' ) as $key) {
 				list($ret, $form[$key]) = $module->getParameter($key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			// String conversion here may use comma as fraction separator, based on locale

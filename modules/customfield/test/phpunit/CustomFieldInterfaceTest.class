@@ -97,7 +97,7 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 	public function testInterface() {
 
 		// Create global fields..
-		list($ret, $duplicates) = $this->_interface->createCustomFields(array('One', 'Two'));
+		list($ret, $duplicates) = $this->_interface->createCustomFields(array( 'One', 'Two' ));
 
 		if ($ret) {
 			return $ret;
@@ -127,12 +127,12 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 		);
 
 		// Create global fields, with duplicate..
-		list($ret, $duplicates) = $this->_interface->createCustomFields(array('Test', 'Three', 'Two'));
+		list($ret, $duplicates) = $this->_interface->createCustomFields(array( 'Test', 'Three', 'Two' ));
 
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array('Test', 'Two'), $duplicates, 'Add global 2');
+		$this->assertEquals(array( 'Test', 'Two' ), $duplicates, 'Add global 2');
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'customfield');
 
@@ -158,7 +158,7 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 
 		// Create album-specific fields..
 		list($ret, $duplicates) = $this->_interface->createCustomFields(
-			array('Photographer', 'Location', 'One'),
+			array( 'Photographer', 'Location', 'One' ),
 			$this->_album->getId()
 		);
 
@@ -190,7 +190,7 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 			$this->_item->getId(),
 			array(
 				'Photographer' => 'Me',
-				'Location'     => 'Here',
+				'Location' => 'Here',
 			)
 		);
 
@@ -198,7 +198,7 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $data, $tmp, $isContainer) = CustomFieldHelper::fetchFieldValues(array($this->_item));
+		list($ret, $data, $tmp, $isContainer) = CustomFieldHelper::fetchFieldValues(array( $this->_item ));
 
 		if ($ret) {
 			return $ret;
@@ -206,7 +206,7 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				'Photographer' => 'Me',
-				'Location'     => 'Here',
+				'Location' => 'Here',
 			),
 			$data[$this->_item->getId()],
 			'Field values'

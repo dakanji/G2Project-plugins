@@ -46,7 +46,7 @@ class WebDavCallbacks {
 
 				$block =& $smarty->_tpl_vars['block'];
 				$block['webdav']['LoadMountLink'] = array(
-					'link'          => $link,
+					'link' => $link,
 					'hasPermission' => $hasPermission,
 				);
 

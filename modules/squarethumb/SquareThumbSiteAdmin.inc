@@ -33,14 +33,14 @@ class SquareThumbSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
 
 		if (isset($form['action']['save'])) {
 			if (empty($form['mode'])) {
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 			}
 
 			if ($form['mode'] == 'fit') {
@@ -51,11 +51,11 @@ class SquareThumbSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				if (!isset($toolkit)) {
-					return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+					return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 				}
 
 				if (empty($form['color'])) {
@@ -71,7 +71,7 @@ class SquareThumbSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 			}
@@ -85,7 +85,7 @@ class SquareThumbSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$status['saved'] = 1;
 			}
@@ -101,7 +101,7 @@ class SquareThumbSiteAdminController extends GalleryController {
 			'error'  => $error,
 		);
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -116,17 +116,17 @@ class SquareThumbSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'SquareThumbSiteAdmin') {
 			$form['formName'] = 'SquareThumbSiteAdmin';
 
-			foreach (array('mode', 'color') as $key) {
+			foreach (array( 'mode', 'color' ) as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'squarethumb', $key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		}
@@ -138,7 +138,7 @@ class SquareThumbSiteAdminView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$form['allowFitToSquareMode'] = isset($toolkit);
 		$form['mode']                 = $form['allowFitToSquareMode'] ? $form['mode'] : 'crop';

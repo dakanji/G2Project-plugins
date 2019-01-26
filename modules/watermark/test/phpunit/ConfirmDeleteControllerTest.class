@@ -117,7 +117,7 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(),
@@ -139,7 +139,7 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(),
@@ -157,7 +157,7 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(
@@ -194,7 +194,7 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(

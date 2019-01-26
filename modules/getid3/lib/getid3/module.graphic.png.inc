@@ -109,9 +109,9 @@ class getid3_png extends getid3_handler {
 					$paletteoffset = 0;
 
 					for ($i = 0; $i <= 255; $i++) {
-						//$thisfile_png_chunk_type_text['red'][$i]   = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
+						//$thisfile_png_chunk_type_text['red'][$i] = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						//$thisfile_png_chunk_type_text['green'][$i] = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
-						//$thisfile_png_chunk_type_text['blue'][$i]  = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
+						//$thisfile_png_chunk_type_text['blue'][$i] = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						$red   = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						$green = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						$blue  = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));

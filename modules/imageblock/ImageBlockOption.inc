@@ -41,7 +41,7 @@ class ImageBlockOption extends ItemEditOption {
 		list($ret, $currentlyDisabled) = ImageBlockHelper::getDisabledFlag($item->getId());
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if ($setDisabled != $currentlyDisabled) {
@@ -53,11 +53,11 @@ class ImageBlockOption extends ItemEditOption {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, $error, $warning);
+		return array( null, $error, $warning );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class ImageBlockOption extends ItemEditOption {
 		list($ret, $form['ImageBlockOption']['setDisabled']) = ImageBlockHelper::getDisabledFlag($item->getId());
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		return array(
@@ -81,7 +81,7 @@ class ImageBlockOption extends ItemEditOption {
 	 * @see ItemEditOption::isSupported
 	 */
 	public static function isAppropriate($item, $thumbnail) {
-		return array(null, GalleryUtilities::isA($item, 'GalleryAlbumItem'));
+		return array( null, GalleryUtilities::isA($item, 'GalleryAlbumItem') );
 	}
 
 	/**

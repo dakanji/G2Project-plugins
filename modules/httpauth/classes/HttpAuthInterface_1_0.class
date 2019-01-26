@@ -40,7 +40,7 @@ class HttpAuthInterface_1_0 {
 	 *                    false if it is only enabled for specific modules
 	 */
 	public function getConfiguration() {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null, null, null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null, null, null );
 	}
 
 	/**

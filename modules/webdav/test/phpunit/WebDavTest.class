@@ -234,7 +234,7 @@ class WebDavTest extends GalleryTestCase {
 			return $this->skip();
 		}
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.view'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.view' ));
 
 		if ($ret) {
 			return $ret;
@@ -277,7 +277,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 207 Multi-Status',
+				'status' => 'HTTP/1.0 207 Multi-Status',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -319,7 +319,7 @@ class WebDavTest extends GalleryTestCase {
 			return $this->skip();
 		}
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.edit', 'core.addDataItem'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.edit', 'core.addDataItem' ));
 
 		if ($ret) {
 			return $ret;
@@ -409,7 +409,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 207 Multi-Status',
+				'status' => 'HTTP/1.0 207 Multi-Status',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -493,7 +493,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 207 Multi-Status',
+				'status' => 'HTTP/1.0 207 Multi-Status',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -588,7 +588,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 207 Multi-Status',
+				'status' => 'HTTP/1.0 207 Multi-Status',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -652,7 +652,7 @@ class WebDavTest extends GalleryTestCase {
 			return $this->skip();
 		}
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.edit'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.edit' ));
 
 		if ($ret) {
 			return $ret;
@@ -695,7 +695,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 207 Multi-Status',
+				'status' => 'HTTP/1.0 207 Multi-Status',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -742,7 +742,7 @@ class WebDavTest extends GalleryTestCase {
 			return $this->skip();
 		}
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.edit'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.edit' ));
 
 		if ($ret) {
 			return $ret;
@@ -785,7 +785,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 207 Multi-Status',
+				'status' => 'HTTP/1.0 207 Multi-Status',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -832,7 +832,7 @@ class WebDavTest extends GalleryTestCase {
 			return $this->skip();
 		}
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.delete', 'core.addDataItem'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.delete', 'core.addDataItem' ));
 
 		if ($ret) {
 			return $ret;
@@ -885,7 +885,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'MKCOL';
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.addAlbumItem'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.addAlbumItem' ));
 
 		if ($ret) {
 			return $ret;
@@ -942,7 +942,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'MKCOL';
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.view', 'core.addDataItem'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.view', 'core.addDataItem' ));
 
 		if ($ret) {
 			return $ret;
@@ -979,7 +979,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.delete'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.delete' ));
 
 		if ($ret) {
 			return $ret;
@@ -1024,7 +1024,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.view', 'core.edit'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.view', 'core.edit' ));
 
 		if ($ret) {
 			return $ret;
@@ -1058,7 +1058,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.view', 'core.addDataItem'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.view', 'core.addDataItem' ));
 
 		if ($ret) {
 			return $ret;
@@ -1199,7 +1199,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.addAlbumItem', 'core.view'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.addAlbumItem', 'core.view' ));
 
 		if ($ret) {
 			return $ret;
@@ -1255,7 +1255,7 @@ class WebDavTest extends GalleryTestCase {
 
 		/** @todo Don't require core.addDataItem permission */
 		$ret = $this->_becomeGuestUserWithPermission(
-			array('core.view', 'core.edit', 'core.addDataItem')
+			array( 'core.view', 'core.edit', 'core.addDataItem' )
 		);
 
 		if ($ret) {
@@ -1313,7 +1313,7 @@ class WebDavTest extends GalleryTestCase {
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 
 		/** @todo Don't require core.addDataItem permission */
-		$ret = $this->_becomeGuestUserWithPermission(array('core.view', 'core.addDataItem'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.view', 'core.addDataItem' ));
 
 		if ($ret) {
 			return $ret;
@@ -1361,7 +1361,7 @@ class WebDavTest extends GalleryTestCase {
 
 		/** @todo Don't require core.addDataItem permission */
 		$ret = $this->_becomeGuestUserWithPermission(
-			array('core.view', 'core.edit', 'core.addDataItem')
+			array( 'core.view', 'core.edit', 'core.addDataItem' )
 		);
 
 		if ($ret) {
@@ -1731,7 +1731,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Become a user without core.edit permission
 		$ret = $this->_becomeGuestUserWithPermission(
-			array('core.view', 'core.addDataItem', 'core.delete', 'core.addAlbumItem')
+			array( 'core.view', 'core.addDataItem', 'core.delete', 'core.addAlbumItem' )
 		);
 
 		if ($ret) {
@@ -1797,7 +1797,7 @@ class WebDavTest extends GalleryTestCase {
 			list($ret, $path) = $this->_item->fetchLogicalPath();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
@@ -1821,14 +1821,14 @@ class WebDavTest extends GalleryTestCase {
 		ob_end_clean();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$path                   = ltrim($path, '/');
 		list($ret, list($lock)) = WebDavHelper::getLocks($path);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$this->assertEquals('exclusive', $lock['scope']);
@@ -1839,9 +1839,9 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 200 OK',
+				'status' => 'HTTP/1.0 200 OK',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
-				'lock-token'   => 'Lock-Token: <' . $lock['token'] . '>',
+				'lock-token' => 'Lock-Token: <' . $lock['token'] . '>',
 			),
 			$this->_headers
 		);
@@ -1867,7 +1867,7 @@ class WebDavTest extends GalleryTestCase {
 			preg_split("/\r?\n/", $output)
 		);
 
-		return array(null, $lock);
+		return array( null, $lock );
 	}
 
 	/**
@@ -1914,7 +1914,7 @@ class WebDavTest extends GalleryTestCase {
 			return $this->skip();
 		}
 
-		$ret = $this->_becomeGuestUserWithPermission(array('core.edit'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.edit' ));
 
 		if ($ret) {
 			return $ret;
@@ -1987,7 +1987,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 200 OK',
+				'status' => 'HTTP/1.0 200 OK',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -2085,7 +2085,7 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'       => 'HTTP/1.0 409 Conflict',
+				'status' => 'HTTP/1.0 409 Conflict',
 				'content-type' => 'Content-Type: text/xml; charset="utf-8"',
 			),
 			$this->_headers
@@ -2121,7 +2121,7 @@ class WebDavTest extends GalleryTestCase {
 		}
 
 		// Require edit or delete permission for locking
-		$ret = $this->_becomeGuestUserWithPermission(array('core.view'));
+		$ret = $this->_becomeGuestUserWithPermission(array( 'core.view' ));
 
 		if ($ret) {
 			return $ret;

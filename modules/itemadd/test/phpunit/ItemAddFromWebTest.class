@@ -173,7 +173,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			return $ret;
 		}
 		$results = $this->handleRequest($this->_album, ERROR_PERMISSION_DENIED);
-		$this->assertEquals(array(null, null), $results);
+		$this->assertEquals(array( null, null ), $results);
 	}
 
 	public function testAddChildrenFromWebPage() {
@@ -202,7 +202,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		GalleryUtilities::putRequestVariable('form[set][title]', 1);
 		GalleryUtilities::putRequestVariable('form[set][summary]', 1);
-		$basenames = array('test1', 'test2', 'test3', 'test4', 'apo\'strophe');
+		$basenames = array( 'test1', 'test2', 'test3', 'test4', 'apo\'strophe' );
 
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest($this->_album);
@@ -277,7 +277,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[set][title]', 1);
 		GalleryUtilities::putRequestVariable('form[set][summary]', 1);
 		GalleryUtilities::putRequestVariable('form[set][description]', 1);
-		$basenames = array('test1', 'test2', 'test3', 'test4', 'apo\'strophe');
+		$basenames = array( 'test1', 'test2', 'test3', 'test4', 'apo\'strophe' );
 
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest($this->_album);
@@ -318,7 +318,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array(array(), array()), $results);
+		$this->assertEquals(array( array(), array() ), $results);
 
 		$this->assertEquals(
 			'1',
@@ -345,7 +345,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			array(
 				'ItemAddFromWeb' => array(
 					'webPageUrlCount' => 9,
-					'recentUrls'      => array('http://www.test.com/t/index.php?foo=bar'),
+					'recentUrls' => array( 'http://www.test.com/t/index.php?foo=bar' ),
 				),
 			),
 			$template->_data,
@@ -367,45 +367,45 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'webPage' => 'http://www.test.com/t/index.php?foo=bar',
 				'webPageUrls' => array(
 					array(
-						'url'      => 'http://gallery.test.com/img.jpg',
+						'url' => 'http://gallery.test.com/img.jpg',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://www.test.com/blah.png',
+						'url' => 'http://www.test.com/blah.png',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://www.test.com/t/test.gif',
+						'url' => 'http://www.test.com/t/test.gif',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://www.test.com/t/test.mov',
+						'url' => 'http://www.test.com/t/test.mov',
 						'itemType' => $this->_movie,
 					),
 					array(
-						'url'      => 'http://www.test.com/a.mp3',
+						'url' => 'http://www.test.com/a.mp3',
 						'itemType' => $this->_audio,
 					),
 					array(
-						'url'      => 'ftp://test.com/b.bmp',
+						'url' => 'ftp://test.com/b.bmp',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://www.test.com/t/test.gif',
+						'url' => 'http://www.test.com/t/test.gif',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://blah.com/blah.jpg',
+						'url' => 'http://blah.com/blah.jpg',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'https://blah.com/blah.jpg',
+						'url' => 'https://blah.com/blah.jpg',
 						'itemType' => $this->_photo,
 					),
 				),
 				'set' => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -419,7 +419,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			'itemadd.view.ItemAddFromWeb.recentUrls',
 			array(
 				'http://www.test.com/page.php' => 1,
-				'http://blah.com/other.html'   => 1,
+				'http://blah.com/other.html' => 1,
 			)
 		);
 		$template  = new UnitTestTemplate();
@@ -440,7 +440,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			array(
 				'ItemAddFromWeb' => array(
 					'webPageUrlCount' => 0,
-					'recentUrls'      => array(
+					'recentUrls' => array(
 						'http://www.test.com/page.php',
 						'http://blah.com/other.html',
 					),
@@ -452,7 +452,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		$this->assertEquals(
 			array(
 				'http://www.test.com/page.php' => 1,
-				'http://blah.com/other.html'   => 1,
+				'http://blah.com/other.html' => 1,
 			),
 			$this->_session->get('itemadd.view.ItemAddFromWeb.recentUrls'),
 			'session urls'
@@ -471,8 +471,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 					),
 				),
 				'set'   => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -500,7 +500,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			array(
 				'ItemAddFromWeb' => array(
 					'webPageUrlCount' => 1,
-					'recentUrls'      => array(
+					'recentUrls' => array(
 						'http://www.test.com/img.jpg',
 					),
 				),
@@ -516,13 +516,13 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'webPage' => 'http://www.test.com/img.jpg',
 				'webPageUrls' => array(
 					array(
-						'url'      => 'http://www.test.com/img.jpg',
+						'url' => 'http://www.test.com/img.jpg',
 						'itemType' => $this->_photo,
 					),
 				),
 				'set' => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -549,7 +549,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			array(
 				'ItemAddFromWeb' => array(
 					'webPageUrlCount' => 1,
-					'recentUrls'      => array(
+					'recentUrls' => array(
 						'http://www.test.com/img2.jpg',
 					),
 				),
@@ -565,13 +565,13 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'webPage' => 'http://www.test.com/img2.jpg',
 				'webPageUrls' => array(
 					array(
-						'url'      => 'http://www.test.com/img2.jpg',
+						'url' => 'http://www.test.com/img2.jpg',
 						'itemType' => $this->_photo,
 					),
 				),
 				'set' => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -604,7 +604,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			array(
 				'ItemAddFromWeb' => array(
 					'webPageUrlCount' => 1,
-					'recentUrls'      => array(
+					'recentUrls' => array(
 						'http://blah.com/other.html',
 						'http://www.test.com/image.php?id=3&amp;sn=1',
 					),
@@ -630,13 +630,13 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'webPage' => 'http://www.test.com/image.php?id=3&amp;sn=1',
 				'webPageUrls' => array(
 					array(
-						'url'      => 'http://www.test.com/image.php?id=3&amp;sn=1',
+						'url' => 'http://www.test.com/image.php?id=3&amp;sn=1',
 						'itemType' => $this->_photo,
 					),
 				),
 				'set' => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -671,8 +671,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 					),
 				),
 				'set'   => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -708,8 +708,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 					),
 				),
 				'set'   => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -745,8 +745,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 					),
 				),
 				'set'   => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -773,7 +773,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			array(
 				'ItemAddFromWeb' => array(
 					'webPageUrlCount' => 4,
-					'recentUrls'      => array('http://www.test.com/t/index.php?base=abs'),
+					'recentUrls' => array( 'http://www.test.com/t/index.php?base=abs' ),
 				),
 			),
 			$template->_data,
@@ -795,25 +795,25 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'webPage' => 'http://www.test.com/t/index.php?base=abs',
 				'webPageUrls' => array(
 					array(
-						'url'      => 'http://gallery.test.com/img.jpg',
+						'url' => 'http://gallery.test.com/img.jpg',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://other.com/blah.png',
+						'url' => 'http://other.com/blah.png',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://other.com/images/test.gif',
+						'url' => 'http://other.com/images/test.gif',
 						'itemType' => $this->_photo,
 					),
 					array(
-						'url'      => 'http://other.com/images/test.mov',
+						'url' => 'http://other.com/images/test.mov',
 						'itemType' => $this->_movie,
 					),
 				),
 				'set' => array(
-					'title'       => 1,
-					'summary'     => 0,
+					'title' => 1,
+					'summary' => 0,
 					'description' => 0,
 				),
 			),
@@ -1097,12 +1097,12 @@ class ItemAddFromWebTestPlatform {
 			case 'test4.jpg':
 			case 'apo_strophe.jpg':
 			case 'evil_script_.jpg':
-				return array(100, 200);
+				return array( 100, 200 );
 		}
 
 		echo "unexpected getimagesize($filename)";
 
-		return array(0, 0);
+		return array( 0, 0 );
 	}
 
 	public function filesize($filename) {
@@ -1241,6 +1241,6 @@ class ItemAddFromWebTestPlatform {
 
 	public function exec($cmd) {
 		// In case add of jpeg tries to get 'colorspace' property
-		return array(true, array(''), array());
+		return array( true, array( '' ), array() );
 	}
 }

@@ -8,14 +8,12 @@
     var frm = document.getElementById('itemAdminForm');
     frm.elements["{g->formVar var="form[SizeLimitOption][dimensions][width]"}"].disabled = chk;
     frm.elements["{g->formVar var="form[SizeLimitOption][dimensions][height]"}"].disabled = chk;
-    frm.elements["{g->formVar var="form[SizeLimitOption][keepOriginal]"}"].disabled =
-      chk && frm.elements["{g->formVar var="form[SizeLimitOption][sizeChoice]"}"][0].checked;
+    frm.elements["{g->formVar var="form[SizeLimitOption][keepOriginal]"}"].disabled =       chk && frm.elements["{g->formVar var="form[SizeLimitOption][sizeChoice]"}"][0].checked;
   {rdelim}
   function SetSizeLimitOption_toggleSize(chk) {ldelim}
     var frm = document.getElementById('itemAdminForm');
     frm.elements["{g->formVar var="form[SizeLimitOption][filesize]"}"].disabled = chk;
-    frm.elements["{g->formVar var="form[SizeLimitOption][keepOriginal]"}"].disabled =
-      chk && frm.elements["{g->formVar var="form[SizeLimitOption][dimensionChoice]"}"][0].checked;
+    frm.elements["{g->formVar var="form[SizeLimitOption][keepOriginal]"}"].disabled =       chk && frm.elements["{g->formVar var="form[SizeLimitOption][dimensionChoice]"}"][0].checked;
   {rdelim}
   // ]]>
 </script>

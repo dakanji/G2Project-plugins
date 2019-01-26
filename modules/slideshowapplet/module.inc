@@ -35,8 +35,8 @@ class SlideshowAppletModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 27));
-		$this->setRequiredModuleApi(array(3, 9));
+		$this->setRequiredCoreApi(array( 7, 27 ));
+		$this->setRequiredModuleApi(array( 3, 9 ));
 	}
 
 	/**
@@ -138,9 +138,9 @@ class SlideshowAppletModule extends GalleryModule {
 
 				if ($showSlideshowLink) {
 					$links[$itemId][] = array(
-						'text'   => $this->translate('View Slideshow (Fullscreen)'),
+						'text' => $this->translate('View Slideshow (Fullscreen)'),
 						'params' => array(
-							'view'   => 'slideshowapplet.SlideshowApplet',
+							'view' => 'slideshowapplet.SlideshowApplet',
 							'itemId' => $itemId,
 						),
 					);
@@ -148,7 +148,7 @@ class SlideshowAppletModule extends GalleryModule {
 			}
 		}
 
-		return array(null, $links);
+		return array( null, $links );
 	}
 
 	/**
@@ -162,12 +162,12 @@ class SlideshowAppletModule extends GalleryModule {
 		$rule['match']    = array(
 			'view' => 'slideshowapplet.SlideshowApplet',
 		);
-		$rule['onLoad']   = array('rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath');
+		$rule['onLoad']   = array( 'rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath' );
 		$rule['pattern']  = 'v/%path%/slideshowapplet.html';
 		$rule['keywords'] = array(
 			'path' => array(
 				'pattern' => '([^?]+)',
-				'function' => array('rewrite', 'RewriteSimpleHelper', 'parsePath'),
+				'function' => array( 'rewrite', 'RewriteSimpleHelper', 'parsePath' ),
 				'help' => $this->translate('Path to an item (eg, /album/image.jpg.html)'),
 			),
 		);

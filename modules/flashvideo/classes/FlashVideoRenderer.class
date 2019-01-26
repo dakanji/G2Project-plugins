@@ -55,12 +55,12 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'serialNumber' => $entity->getSerialNumber(),
 			),
 			array(
-				'forceFullUrl'   => true,
+				'forceFullUrl' => true,
 				'forceSessionId' => true,
-				'htmlEntities'   => false,
+				'htmlEntities' => false,
 			)
 		);
-		list($width, $height, $title) = array($entity->getWidth(), $entity->getHeight(), $item->getTitle());
+		list($width, $height, $title) = array( $entity->getWidth(), $entity->getHeight(), $item->getTitle() );
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
 		$title = smarty_modifier_markup($title, 'strip');
 
@@ -113,19 +113,19 @@ class FlashVideoRenderer extends GalleryRenderer {
 		//$flashVars .= '&swfUrl=' . urlencode($playerUrl);
 
 		$itemId                = $item->getId();
-		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
+		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $itemId ));
 
 		if (!$ret && !empty($thumbnail)) {
 			$thumbUrl   = $urlGenerator->generateUrl(
 				array(
-					'view'         => 'core.DownloadItem',
-					'itemId'       => $thumbnail[$itemId]->getId(),
+					'view' => 'core.DownloadItem',
+					'itemId' => $thumbnail[$itemId]->getId(),
 					'serialNumber' => $thumbnail[$itemId]->getSerialNumber(),
 				),
 				array(
-					'forceFullUrl'   => true,
+					'forceFullUrl' => true,
 					'forceSessionId' => true,
-					'htmlEntities'   => false,
+					'htmlEntities' => false,
 				)
 			);
 			$flashVars .= '&thumbUrl=' . urlencode($thumbUrl);

@@ -44,22 +44,22 @@ class PanoramaHelper {
 		}
 
 		if (!isset($ids)) {
-			return array(null, array());
+			return array( null, array() );
 		}
 		list($ret, $preferredFullImages) = GalleryCoreApi::fetchPreferredsByItemIds($ids);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $resizedImages) = GalleryCoreApi::fetchResizesByItemIds($ids);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$ret = GalleryCoreApi::studyPermissions($ids);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$data = array();
@@ -73,7 +73,7 @@ class PanoramaHelper {
 			list($ret, $permissions) = GalleryCoreApi::getPermissions($id);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (isset($permissions['core.viewSource'])) {
@@ -98,6 +98,6 @@ class PanoramaHelper {
 			}
 		}
 
-		return array(null, $data);
+		return array( null, $data );
 	}
 }

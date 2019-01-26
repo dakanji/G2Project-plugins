@@ -153,8 +153,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			}
 
 			if (GalleryUtilities::isA($item, 'GalleryDerivative')) {
-				list($ret, $item) =
-			GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($item->getId());
+				list($ret, $item) = 			GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($item->getId());
 
 				if ($ret) {
 					return array($ret, null);
@@ -163,8 +162,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 				$derivativeMimeType = $item->getMimeType();
 
 				if ($derivativeMimeType != $itemMimeType) {
-					list($ret, $mimeExtensions) =
-			GalleryCoreApi::convertMimeToExtensions($derivativeMimeType);
+					list($ret, $mimeExtensions) = 			GalleryCoreApi::convertMimeToExtensions($derivativeMimeType);
 
 					if ($ret) {
 						return array($ret, null);

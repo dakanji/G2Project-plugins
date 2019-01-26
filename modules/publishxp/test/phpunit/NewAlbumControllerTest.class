@@ -116,7 +116,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'publishxp.SelectAlbum',
+					'view' => 'publishxp.SelectAlbum',
 					'albumId' => $albumId,
 				),
 				'status' => array(),
@@ -137,7 +137,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('test summary', $album->getSummary());
 		$this->assertEquals('test description', $album->getDescription());
 		// For Oracle, null is replaced with '' when loading data from the database
-		$this->assert(in_array($album->getKeywords(), array(null, '')), 'keywords should be empty');
+		$this->assert(in_array($album->getKeywords(), array( null, '' )), 'keywords should be empty');
 	}
 
 	public function testNewAlbumWithXss() {
@@ -157,7 +157,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'publishxp.SelectAlbum',
+					'view' => 'publishxp.SelectAlbum',
 					'albumId' => $albumId,
 				),
 				'status' => array(),
@@ -195,7 +195,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 					'view' => 'publishxp.NewAlbum',
 				),
 				'status' => array(),
-				'error' => array('form[error][pathComponent][invalid]'),
+				'error' => array( 'form[error][pathComponent][invalid]' ),
 			),
 			$results
 		);

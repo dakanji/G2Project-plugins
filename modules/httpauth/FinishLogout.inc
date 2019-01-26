@@ -38,7 +38,7 @@ class FinishLogoutView extends GalleryView {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($isAnonymous) {

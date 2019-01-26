@@ -98,7 +98,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(
@@ -139,7 +139,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(
@@ -174,7 +174,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(),
@@ -192,7 +192,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(
@@ -219,7 +219,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(),

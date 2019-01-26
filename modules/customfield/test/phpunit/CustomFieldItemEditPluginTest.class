@@ -84,31 +84,31 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 			array(
 				'common' => array(
 					array(
-						'field'   => 'Catalog Id',
+						'field' => 'Catalog Id',
 						'summary' => false,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 					array(
-						'field'   => 'My Data',
+						'field' => 'My Data',
 						'summary' => true,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 				),
 				'album' => array(),
 				'photo' => array(
 					array(
-						'field'   => 'Location',
+						'field' => 'Location',
 						'summary' => true,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 					array(
-						'field'   => 'Category',
+						'field' => 'Category',
 						'summary' => false,
-						'detail'  => false,
-						'choices' => array('A', 'B'),
+						'detail' => false,
+						'choices' => array( 'A', 'B' ),
 					),
 				),
 			)
@@ -121,31 +121,31 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 			array(
 				'common' => array(
 					array(
-						'field'   => 'Category',
+						'field' => 'Category',
 						'summary' => true,
-						'detail'  => false,
-						'choices' => array('A', 'B', 'C'),
+						'detail' => false,
+						'choices' => array( 'A', 'B', 'C' ),
 					),
 				),
 				'album' => array(
 					array(
-						'field'   => 'Catalog Id',
+						'field' => 'Catalog Id',
 						'summary' => false,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 					array(
-						'field'   => 'Year',
+						'field' => 'Year',
 						'summary' => false,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 				),
 				'photo' => array(
 					array(
-						'field'   => 'Photographer',
+						'field' => 'Photographer',
 						'summary' => true,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 				),
@@ -162,7 +162,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		// Reset
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
 		$results = $this->handleRequest($this->itemG, $this->_itemG);
-		$this->assertEquals(array(array(), null), $results, 'Reset');
+		$this->assertEquals(array( array(), null ), $results, 'Reset');
 
 		// Set field values (global settings)
 		GalleryUtilities::putRequestVariable('form[fields][Catalog Id]', '123');
@@ -173,11 +173,11 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_itemG, $this->_itemG);
 		$this->assertEquals(
-			array(array(), $this->_translate('Changes saved successfully')),
+			array( array(), $this->_translate('Changes saved successfully') ),
 			$results
 		);
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_itemG), 'summary');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_itemG ), 'summary');
 
 		if ($ret) {
 			return $ret;
@@ -190,7 +190,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 			'Summary data'
 		);
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_itemG), 'detail');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_itemG ), 'detail');
 
 		if ($ret) {
 			return $ret;
@@ -198,13 +198,13 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		$this->assertEquals(
 			array(
 				'Catalog Id' => '123',
-				'Location'   => 'There',
+				'Location' => 'There',
 			),
 			$data[$this->_itemG->getId()],
 			'Detail data'
 		);
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_itemG), null, 'photo');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_itemG ), null, 'photo');
 
 		if ($ret) {
 			return $ret;
@@ -212,9 +212,9 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		$this->assertEquals(
 			array(
 				'Catalog Id' => '123',
-				'My Data'    => '',
-				'Location'   => 'There',
-				'Category'   => 'B',
+				'My Data' => '',
+				'Location' => 'There',
+				'Category' => 'B',
 			),
 			$data[$this->_itemG->getId()],
 			'All data'
@@ -229,11 +229,11 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Changes saved successfully')),
+			array( array(), $this->_translate('Changes saved successfully') ),
 			$results
 		);
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_albumS), 'summary');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_albumS ), 'summary');
 
 		if ($ret) {
 			return $ret;
@@ -246,7 +246,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 			'Summary data 2'
 		);
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_albumS), 'detail');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_albumS ), 'detail');
 
 		if ($ret) {
 			return $ret;
@@ -260,7 +260,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 			'Detail data 2'
 		);
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_albumS), null, 'album');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_albumS ), null, 'album');
 
 		if ($ret) {
 			return $ret;
@@ -282,7 +282,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[cfAdmin]', '1');
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
-		$this->assertEquals(array(array(), null), $results, 'Reset 2');
+		$this->assertEquals(array( array(), null ), $results, 'Reset 2');
 
 		// Add field
 		GalleryUtilities::removeFormVariables('form');
@@ -291,7 +291,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][add][photo]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('New field added successfully')),
+			array( array(), $this->_translate('New field added successfully') ),
 			$results,
 			'Add Photo Field'
 		);
@@ -320,7 +320,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][picklist]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Picklist updated successfully')),
+			array( array(), $this->_translate('Picklist updated successfully') ),
 			$results,
 			'Set Picklist'
 		);
@@ -333,7 +333,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][picklist]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Picklist updated successfully')),
+			array( array(), $this->_translate('Picklist updated successfully') ),
 			$results,
 			'Update Picklist'
 		);
@@ -412,7 +412,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][go][common]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Field moved successfully')),
+			array( array(), $this->_translate('Field moved successfully') ),
 			$results,
 			'Move Field to Album'
 		);
@@ -424,7 +424,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][go][photo]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Field moved successfully')),
+			array( array(), $this->_translate('Field moved successfully') ),
 			$results,
 			'Move Field to Common'
 		);
@@ -436,7 +436,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][go][album]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Field moved successfully')),
+			array( array(), $this->_translate('Field moved successfully') ),
 			$results,
 			'Move Field to Common 2'
 		);
@@ -448,7 +448,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][go][common]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Field moved successfully')),
+			array( array(), $this->_translate('Field moved successfully') ),
 			$results,
 			'Move Field to Photo'
 		);
@@ -461,7 +461,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][go][album]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Field removed successfully')),
+			array( array(), $this->_translate('Field removed successfully') ),
 			$results,
 			'Remove Field'
 		);
@@ -495,7 +495,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][picklist]', '1');
 		$results = $this->handleRequest($this->_albumS, $this->_albumS);
 		$this->assertEquals(
-			array(array(), $this->_translate('Picklist updated successfully')),
+			array( array(), $this->_translate('Picklist updated successfully') ),
 			$results,
 			'Remove Picklist'
 		);
@@ -522,7 +522,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		);
 
 		// Check appropriate field values have been removed with settings changes
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_albumS));
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_albumS ));
 
 		if ($ret) {
 			return $ret;
@@ -557,18 +557,18 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_itemG, $this->_itemG);
 		$this->assertEquals(
-			array(array(), $this->_translate('Changes saved successfully')),
+			array( array(), $this->_translate('Changes saved successfully') ),
 			$results
 		);
 
-		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array($this->_itemG), 'summary');
+		list($ret, $data) = CustomFieldHelper::fetchFieldValues(array( $this->_itemG ), 'summary');
 
 		if ($ret) {
 			return $ret;
 		}
 		$this->assertEquals(
 			array(
-				'My Data'  => 'fun',
+				'My Data' => 'fun',
 				'Location' => '&lt;p&gt;Click&lt;/p&gt;',
 			),
 			$data[$this->_itemG->getId()],

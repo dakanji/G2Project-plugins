@@ -35,7 +35,7 @@ class AdminSnapGalaxyController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
@@ -48,7 +48,7 @@ class AdminSnapGalaxyController extends GalleryController {
 			}
 
 			if (empty($error)) {
-				foreach (array('snapgalaxyPartnerId') as $key) {
+				foreach (array( 'snapgalaxyPartnerId' ) as $key) {
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
 						'snapgalaxy',
@@ -57,7 +57,7 @@ class AdminSnapGalaxyController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 
@@ -84,7 +84,7 @@ class AdminSnapGalaxyController extends GalleryController {
 			$results['delegate']['subView'] = 'snapgalaxy.AdminSnapGalaxy';
 		}
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -99,15 +99,15 @@ class AdminSnapGalaxyView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'AdminSnapGalaxy') {
-			foreach (array('snapgalaxyPartnerId') as $key) {
+			foreach (array( 'snapgalaxyPartnerId' ) as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'snapgalaxy', $key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			$form['formName'] = 'AdminSnapGalaxy';

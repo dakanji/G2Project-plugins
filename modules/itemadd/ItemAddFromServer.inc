@@ -33,19 +33,19 @@ class ItemAddFromServer extends ItemAddPlugin {
 		list($ret, $param) = GalleryCoreApi::getPluginParameter('module', 'itemadd', 'fromserver');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($param == 'admin') {
 			list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$param = $isAdmin ? 'on' : 'off';
 		}
 
-		return array(null, $param == 'on');
+		return array( null, $param == 'on' );
 	}
 
 	/**
@@ -64,11 +64,11 @@ class ItemAddFromServer extends ItemAddPlugin {
 		list($ret, $hasPermission) = $this->isAppropriate();
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if (!$hasPermission) {
-			return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null, null);
+			return array( GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null, null );
 		}
 
 		if (isset($form['action']['addFromLocalServer'])
@@ -92,7 +92,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 			list($ret, $unused, $localServerDirList) = $this->fetchLocalServerDirList();
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!GalleryUtilities::isPathInList($dir, $localServerDirList)) {
@@ -110,7 +110,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'itemadd');
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$this->_addingItemsMessage = $module->translate('Adding items');
 			$this->_fileCountMessage   = $module->translate('Scanning directory');
@@ -118,7 +118,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 			list($ret, $lockId) = GalleryCoreApi::acquireReadLock($item->getId());
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			// In a first pass, recurse to count the total number of items scheduled to be added
@@ -183,7 +183,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
 
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 			}
 
@@ -234,7 +234,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
 
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 
 					if ($this->_addedItems++ % $this->_progressBatch == 0) {
@@ -250,7 +250,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
 
-							return array($ret, null, null);
+							return array( $ret, null, null );
 						}
 					}
 
@@ -260,7 +260,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 						list($ret, $optionErrors) = $addController->postprocessItems($form, $status);
 
 						if ($ret) {
-							return array($ret, null, null);
+							return array( $ret, null, null );
 						}
 						$error = array_merge($error, $optionErrors);
 
@@ -303,7 +303,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
 
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 					$this->_addedItems++; // Increment either way
 
@@ -320,7 +320,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
 
-							return array($ret, null, null);
+							return array( $ret, null, null );
 						}
 					}
 
@@ -338,7 +338,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
 
-							return array($ret, null, null);
+							return array( $ret, null, null );
 						}
 					}
 				}
@@ -347,11 +347,11 @@ class ItemAddFromServer extends ItemAddPlugin {
 			$ret = GalleryCoreApi::releaseLocks($lockId);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, $error, $status);
+		return array( null, $error, $status );
 	}
 
 	/**
@@ -412,7 +412,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 		if (!GalleryUtilities::isPathInList($path, $this->_localServerDirList)
 			|| GalleryUtilities::isPathInList(
 				$path,
-				array($gallery->getConfig('data.gallery.albums'))
+				array( $gallery->getConfig('data.gallery.albums') )
 			)
 			|| !$this->_platform->is_readable($path)
 		) {
@@ -421,7 +421,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 			 * directory list or we are trying to add from our own g2data albums.
 			 * Also protects against malformed form input like directory = ../foo
 			 */
-			return array(null, false);
+			return array( null, false );
 		}
 
 		// Create new Album
@@ -444,17 +444,17 @@ class ItemAddFromServer extends ItemAddPlugin {
 			if ($ret->getErrorCode() & ERROR_COLLISION) {
 				$error[] = 'form[error][pathComponent][collision]';
 
-				return array(null, false);
+				return array( null, false );
 			}
 
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!isset($album)) {
-			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 		}
 
-		return array(null, $album->getId());
+		return array( null, $album->getId() );
 	}
 
 	/**
@@ -678,7 +678,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'itemadd');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$localServerDirList                = array();
 		$localServerDirListInSystemCharset = array();
@@ -711,7 +711,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 		list($ret, $localServerDirList, $localServerDirListInSystemCharset) = $this->fetchLocalServerDirList();
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Look up the platform type
@@ -787,25 +787,25 @@ class ItemAddFromServer extends ItemAddPlugin {
 									continue;
 								}
 								$form['localServerFiles'][] = array(
-									'type'     => 'directory',
+									'type' => 'directory',
 									'fileName' => GalleryCoreApi::convertToUtf8($fileName),
 									'filePath' => GalleryCoreApi::convertToUtf8($filePath),
-									'fileKey'  => urlencode($fileName),
-									'legal'    => $legal,
-									'unknown'  => false,
+									'fileKey' => urlencode($fileName),
+									'legal' => $legal,
+									'unknown' => false,
 								);
 							} else {
 								list($ret, $mimeType) = GalleryCoreApi::getMimeType($fileName);
 
 								if ($ret) {
-									return array($ret, null, null);
+									return array( $ret, null, null );
 								}
 
 								if (!isset($mimeTypeItemMap[$mimeType])) {
 									list($ret, $mimeTypeItem) = GalleryCoreApi::newItemByMimeType($mimeType);
 
 									if ($ret) {
-										return array($ret, null, null);
+										return array( $ret, null, null );
 									}
 									// Get localized and english names:
 									$mimeTypeItem->setMimeType($mimeType);
@@ -816,12 +816,12 @@ class ItemAddFromServer extends ItemAddPlugin {
 								}
 
 								$form['localServerFiles'][] = array(
-									'type'     => 'file',
+									'type' => 'file',
 									'fileName' => GalleryCoreApi::convertToUtf8($fileName),
-									'stat'     => $platform->stat($filePath),
+									'stat' => $platform->stat($filePath),
 									'itemType' => $mimeTypeItemMap[$mimeType][0],
-									'unknown'  => $mimeTypeItemMap[$mimeType][3] == 'unknown',
-									'fileKey'  => urlencode($fileName),
+									'unknown' => $mimeTypeItemMap[$mimeType][3] == 'unknown',
+									'fileKey' => urlencode($fileName),
 								);
 							}
 						}
@@ -831,12 +831,12 @@ class ItemAddFromServer extends ItemAddPlugin {
 					list($ret, $mimeType) = GalleryCoreApi::getMimeType($path);
 
 					if ($ret) {
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 					list($ret, $mimeTypeItem) = GalleryCoreApi::newItemByMimeType($mimeType);
 
 					if ($ret) {
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 					$mimeTypeItem->setMimeType($mimeType);
 					$mimeTypeItemName = array_merge(
@@ -846,12 +846,12 @@ class ItemAddFromServer extends ItemAddPlugin {
 
 					$fileName                   = basename($path);
 					$form['localServerFiles'][] = array(
-						'type'     => 'file',
+						'type' => 'file',
 						'fileName' => GalleryCoreApi::convertToUtf8($fileName),
-						'stat'     => $platform->stat($path),
+						'stat' => $platform->stat($path),
 						'itemType' => $mimeTypeItemName[0],
-						'unknown'  => $mimeTypeItemName[3] == 'unknown',
-						'fileKey'  => urlencode($fileName),
+						'unknown' => $mimeTypeItemName[3] == 'unknown',
+						'fileKey' => urlencode($fileName),
 					);
 
 					// Change localServerPath from file path to parent dir
@@ -867,24 +867,24 @@ class ItemAddFromServer extends ItemAddPlugin {
 		);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$ItemAddFromServer = array(
-			'pathSeparator'        => $slash,
-			'localServerDirList'   => $localServerDirList,
+			'pathSeparator' => $slash,
+			'localServerDirList' => $localServerDirList,
 			'localServerFileCount' => isset($localServerFileCount) ? $localServerFileCount : null,
-			'canAddAlbum'          => $canAddAlbum,
+			'canAddAlbum' => $canAddAlbum,
 		);
 
 		if (!empty($form['localServerFiles'])) {
-			usort($form['localServerFiles'], array($this, '_sortFiles'));
+			usort($form['localServerFiles'], array( $this, '_sortFiles' ));
 			$accumulator = '';
 
 			foreach ($platform->splitPath($form['localServerPath']) as $element) {
 				$accumulator                        .= $element;
 				$ItemAddFromServer['pathElements'][] = array(
-					'name'  => $element,
-					'path'  => $accumulator,
+					'name' => $element,
+					'path' => $accumulator,
 					'legal' => GalleryUtilities::isPathInList(
 						GalleryCoreApi::convertFromUtf8($accumulator),
 						$localServerDirListInSystemCharset
@@ -944,10 +944,10 @@ class ItemAddFromServer extends ItemAddPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'itemadd');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $module->translate('From Local Server'));
+		return array( null, $module->translate('From Local Server') );
 	}
 
 	/**

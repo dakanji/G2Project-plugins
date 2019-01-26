@@ -37,8 +37,8 @@ class MultirootModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $this->translate('Display'));
 		$this->setCallbacks('');
-		$this->setRequiredCoreApi(array(7, 27));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 27 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -52,13 +52,13 @@ class MultirootModule extends GalleryModule {
 	 * @see GalleryModule::needsConfiguration
 	 */
 	public function needsConfiguration() {
-		return array(null, true);
+		return array( null, true );
 	}
 
 	/**
 	 * @see GalleryModule::autoConfigure
 	 */
 	public function autoConfigure() {
-		return array(null, false);
+		return array( null, false );
 	}
 }

@@ -44,7 +44,7 @@ class CustomFieldItemAdminController extends GalleryController {
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$itemId = $item->getId();
 
@@ -52,7 +52,7 @@ class CustomFieldItemAdminController extends GalleryController {
 			$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.edit');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			// Activate album-specific settings:
@@ -61,23 +61,23 @@ class CustomFieldItemAdminController extends GalleryController {
 				list($ret, $globalParam) = CustomFieldHelper::loadParameters();
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$ret = CustomFieldHelper::saveParameters($globalParam, $itemId);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				// Mark setId on existing field values
 				list($ret, $searchResults) = $gallery->search(
 					'SELECT [ChildEntity::id] FROM [ChildEntity] WHERE [ChildEntity::parentId]=?',
-					array($itemId)
+					array( $itemId )
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
-				$idList = array($itemId);
+				$idList = array( $itemId );
 
 				while ($rec = $searchResults->nextResult()) {
 					$idList[] = $rec[0];
@@ -93,14 +93,14 @@ class CustomFieldItemAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 
 			// Revert to global settings:
 			if ($adminMode == -2) {
 				// Remove album-specific settings
-				foreach (array('common', 'album', 'photo') as $set) {
+				foreach (array( 'common', 'album', 'photo' ) as $set) {
 					$ret = GalleryCoreApi::removePluginParameter(
 						'module',
 						'customfield',
@@ -112,13 +112,13 @@ class CustomFieldItemAdminController extends GalleryController {
 				list($ret, $globalParam) = CustomFieldHelper::loadParameters();
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				foreach (array(
 					'common' => 0,
-					'album'  => 1,
-					'photo'  => 2,
+					'album' => 1,
+					'photo' => 2,
 				) as $set => $setType) {
 					$fieldList = array();
 
@@ -146,7 +146,7 @@ class CustomFieldItemAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 				// Remove remaining field values
@@ -158,7 +158,7 @@ class CustomFieldItemAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 
@@ -174,6 +174,6 @@ class CustomFieldItemAdminController extends GalleryController {
 		$results['status'] = array();
 		$results['error']  = array();
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }

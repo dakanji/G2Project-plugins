@@ -33,7 +33,7 @@ class FotokastenSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
@@ -50,7 +50,7 @@ class FotokastenSiteAdminController extends GalleryController {
 			}
 
 			if (empty($error)) {
-				foreach (array('affiliateId', 'affiliateIdPass') as $key) {
+				foreach (array( 'affiliateId', 'affiliateIdPass' ) as $key) {
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
 						'fotokasten',
@@ -59,14 +59,14 @@ class FotokastenSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 				$status['saved'] = 1;
 			}
 		} elseif (isset($form['action']['useGalleryId'])) {
 			foreach (array(
-				'affiliateId'     => FOTOKASTEN_GALLERY_AFFILIATE_ID,
+				'affiliateId' => FOTOKASTEN_GALLERY_AFFILIATE_ID,
 				'affiliateIdPass' => FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD,
 			) as $key => $value) {
 				$ret = GalleryCoreApi::setPluginParameter(
@@ -77,7 +77,7 @@ class FotokastenSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			$status['usingGalleryId'] = 1;
@@ -90,7 +90,7 @@ class FotokastenSiteAdminController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -105,17 +105,17 @@ class FotokastenSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'FotokastenSiteAdmin') {
 			$form['formName'] = 'FotokastenSiteAdmin';
 
-			foreach (array('affiliateId', 'affiliateIdPass') as $key) {
+			foreach (array( 'affiliateId', 'affiliateIdPass' ) as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'fotokasten', $key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		}

@@ -39,8 +39,8 @@ class ThumbPageModule extends GalleryModule {
 		$this->setVersion('1.0.8');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
-		$this->setRequiredCoreApi(array(7, 34));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 34 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -79,7 +79,7 @@ class ThumbPageModule extends GalleryModule {
 			'ThumbPageModule',
 			'modules/thumbpage/module.inc',
 			'thumbpage',
-			array('Gallery::DeactivatePlugin')
+			array( 'Gallery::DeactivatePlugin' )
 		);
 
 		if ($ret) {
@@ -96,12 +96,12 @@ class ThumbPageModule extends GalleryModule {
 		list($ret, $page) = $this->_getSupportedMultiPageTypes();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $movie) = $this->_getSupportedMovieTypes();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (empty($page) && empty($movie)) {
@@ -109,7 +109,7 @@ class ThumbPageModule extends GalleryModule {
 			return array(
 				null,
 				array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'thumbpage.CantActivate',
 				),
 			);
@@ -117,22 +117,22 @@ class ThumbPageModule extends GalleryModule {
 		$ret = $this->setParameter('pageTypes', implode('|', $page));
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$ret = $this->setParameter('movieTypes', implode('|', $movie));
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $redirect);
+		return array( null, $redirect );
 	}
 
 	/**
@@ -153,12 +153,12 @@ class ThumbPageModule extends GalleryModule {
 		list($ret, $thumbnail) = GalleryCoreApi::getToolkitOperationMimeTypes('thumbnail');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $select) = GalleryCoreApi::getToolkitOperationMimeTypes('select-page');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$mimeTypes = array();
@@ -167,7 +167,7 @@ class ThumbPageModule extends GalleryModule {
 			list($ret, $properties) = GalleryCoreApi::getToolkitProperties($mimeType);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach ($properties as $tmp) {
@@ -179,7 +179,7 @@ class ThumbPageModule extends GalleryModule {
 			}
 		}
 
-		return array(null, $mimeTypes);
+		return array( null, $mimeTypes );
 	}
 
 	/**
@@ -195,14 +195,14 @@ class ThumbPageModule extends GalleryModule {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $select) = GalleryCoreApi::getToolkitOperationMimeTypes(
 			'select-offset'
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$mimeTypes = array();
@@ -214,7 +214,7 @@ class ThumbPageModule extends GalleryModule {
 			list($ret, $properties) = GalleryCoreApi::getToolkitProperties($mimeType);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach ($properties as $tmp) {
@@ -226,7 +226,7 @@ class ThumbPageModule extends GalleryModule {
 			}
 		}
 
-		return array(null, $mimeTypes);
+		return array( null, $mimeTypes );
 	}
 
 	/**
@@ -248,7 +248,7 @@ class ThumbPageModule extends GalleryModule {
 			list($ret, $isActive) = $this->isActive();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if ($isActive) {
@@ -256,11 +256,11 @@ class ThumbPageModule extends GalleryModule {
 				list($ret, $redirect) = $this->reactivate();
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		}
 
-		return array(null, null);
+		return array( null, null );
 	}
 }

@@ -36,7 +36,7 @@ class MembersProfileView extends GalleryView {
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!$result) {
@@ -53,7 +53,7 @@ class MembersProfileView extends GalleryView {
 		$userId = GalleryUtilities::getRequestVariables('userId');
 
 		if (empty($userId)) {
-			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+			return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 		}
 
 		if ($form['formName'] != 'MembersProfile') {
@@ -66,14 +66,14 @@ class MembersProfileView extends GalleryView {
 		list($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$MembersProfile['user'] = (array)$user;
 
 		list($ret, $lastItems) = GalleryMembersHelper::fetchLastUserItems($user->getId(), 0, 5, ORDER_DESCENDING);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$MembersProfile['lastItems'] = array();
@@ -85,14 +85,14 @@ class MembersProfileView extends GalleryView {
 		list($ret, $daysSinceCreation) = GalleryMembersHelper::daysSinceCreation($user->getId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$MembersProfile['daysSinceCreation'] = $daysSinceCreation;
 
 		list($ret, $canViewProfileEmail) = GalleryMembersHelper::canViewProfileEmail($gallery->getActiveUserId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$MembersProfile['canViewProfileEmail'] = $canViewProfileEmail;
 
@@ -101,7 +101,7 @@ class MembersProfileView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'members');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$template->title($module->translate('Members Profile'));

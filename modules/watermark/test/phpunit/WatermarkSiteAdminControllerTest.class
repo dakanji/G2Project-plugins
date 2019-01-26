@@ -103,7 +103,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
@@ -132,8 +132,8 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.SiteAdmin',
-					'subView'     => 'watermark.WatermarkSiteAdminEdit',
+					'view' => 'core.SiteAdmin',
+					'subView' => 'watermark.WatermarkSiteAdminEdit',
 					'watermarkId' => $expectedId,
 				),
 				'status' => array(
@@ -172,14 +172,14 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			$this->assertEquals(
 				array(
 					'redirect' => array(
-						'view'        => 'core.SiteAdmin',
-						'subView'     => 'watermark.WatermarkSiteAdminEdit',
+						'view' => 'core.SiteAdmin',
+						'subView' => 'watermark.WatermarkSiteAdminEdit',
 						'watermarkId' => $expectedId,
 					),
-					'status'   => array(
+					'status' => array(
 						'add' => 1,
 					),
-					'error'    => array(),
+					'error' => array(),
 				),
 				$results,
 				'Add'
@@ -214,8 +214,8 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.SiteAdmin',
-					'subView'     => 'watermark.WatermarkSiteAdminEdit',
+					'view' => 'core.SiteAdmin',
+					'subView' => 'watermark.WatermarkSiteAdminEdit',
 					'watermarkId' => $expectedId,
 				),
 				'status' => array(
@@ -269,7 +269,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
@@ -349,7 +349,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
@@ -426,10 +426,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.SiteAdmin',
-					'subView'     => 'watermark.ConfirmDelete',
+					'view' => 'core.SiteAdmin',
+					'subView' => 'watermark.ConfirmDelete',
 					'watermarkId' => $idToDelete,
-					'fromAdmin'   => 1,
+					'fromAdmin' => 1,
 				),
 				'status' => array(),
 				'error' => array(),
@@ -477,8 +477,8 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.SiteAdmin',
-					'subView'     => 'watermark.WatermarkSiteAdminEdit',
+					'view' => 'core.SiteAdmin',
+					'subView' => 'watermark.WatermarkSiteAdminEdit',
 					'watermarkId' => $expectedId,
 				),
 				'status' => array(
@@ -521,7 +521,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		list($ret, $watermarks) = WatermarkHelper::fetchWatermarks();
 
 		if ($ret) {
-			return array($this, null);
+			return array( $this, null );
 		}
 		$results = array();
 
@@ -529,7 +529,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results[$watermark->getFileName()] = $watermark;
 		}
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	public function testSave() {
@@ -542,7 +542,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
@@ -563,12 +563,12 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
 					'missingDefault' => 1,
-					'savedSettings'  => 1,
+					'savedSettings' => 1,
 				),
 				'error' => array(),
 			),
@@ -579,7 +579,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function _createTestWatermark() {
 		$name = 'phpunit_' . mt_rand() . '.jpg';
 		$form = array(
-			'action'   => array('add', '1'),
+			'action'   => array( 'add', '1' ),
 			'name'     => array(
 				'1' => $name,
 			),
@@ -594,9 +594,9 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 		list($ret, $watermark) = WatermarkHelper::createWatermarkImage($form);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $watermark);
+		return array( null, $watermark );
 	}
 }

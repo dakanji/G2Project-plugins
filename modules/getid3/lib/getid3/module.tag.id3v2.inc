@@ -448,7 +448,7 @@ class getid3_id3v2 extends getid3_handler {
 		}
 
 		if (!isset($thisfile_id3v2['comments']['year']) && !empty($thisfile_id3v2['comments']['recording_time'][0]) && preg_match('#^([0-9]{4})#', trim($thisfile_id3v2['comments']['recording_time'][0]), $matches)) {
-			$thisfile_id3v2['comments']['year'] = array($matches[1]);
+			$thisfile_id3v2['comments']['year'] = array( $matches[1] );
 		}
 
 
@@ -650,7 +650,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -754,7 +754,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -857,7 +857,7 @@ class getid3_id3v2 extends getid3_handler {
 						foreach ($IPLS_parts_sorted as $person) {
 							$IPLS_parts[] = array(
 								'position' => $position,
-								'person'   => $person,
+								'person' => $person,
 							);
 						}
 					}
@@ -872,7 +872,7 @@ class getid3_id3v2 extends getid3_handler {
 							$person       = $value;
 							$IPLS_parts[] = array(
 								'position' => $position,
-								'person'   => $person,
+								'person' => $person,
 							);
 							$position     = '';
 							$person       = '';
@@ -880,7 +880,7 @@ class getid3_id3v2 extends getid3_handler {
 					}
 				} else {
 					foreach ($IPLS_parts_unsorted as $key => $value) {
-						$IPLS_parts[] = array($value);
+						$IPLS_parts[] = array( $value );
 					}
 				}
 			} else {
@@ -1014,7 +1014,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -1125,7 +1125,7 @@ class getid3_id3v2 extends getid3_handler {
 				}
 				$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-				if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+				if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 					// if description only contains a BOM or terminator then make it blank
 					$frame_description = '';
 				}
@@ -1391,7 +1391,7 @@ class getid3_id3v2 extends getid3_handler {
 			// <Header for 'Attached picture', ID: 'APIC'>
 			// Text encoding      $xx
 			// ID3v2.3+ => MIME type          <text string> $00
-			// ID3v2.2  => Image format       $xx xx xx
+			// ID3v2.2 => Image format       $xx xx xx
 			// Picture type       $xx
 			// Description        <text string according to encoding> $00 (00)
 			// Picture data       <binary data>
@@ -1450,7 +1450,7 @@ class getid3_id3v2 extends getid3_handler {
 				}
 				$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-				if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+				if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 					// if description only contains a BOM or terminator then make it blank
 					$frame_description = '';
 				}
@@ -1505,7 +1505,7 @@ class getid3_id3v2 extends getid3_handler {
 						}
 						*/
 					} elseif (is_string($this->getid3->option_save_attachments)) {
-						$dir = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $this->getid3->option_save_attachments), DIRECTORY_SEPARATOR);
+						$dir = rtrim(str_replace(array( '/', '\\' ), DIRECTORY_SEPARATOR, $this->getid3->option_save_attachments), DIRECTORY_SEPARATOR);
 
 						if (!is_dir($dir) || !is_writable($dir)) {
 							// cannot write, skip
@@ -1533,7 +1533,7 @@ class getid3_id3v2 extends getid3_handler {
 							}
 							$comments_picture_data = array();
 
-							foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
+							foreach (array( 'data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength' ) as $picture_key) {
 								if (isset($parsedFrame[$picture_key])) {
 									$comments_picture_data[$picture_key] = $parsedFrame[$picture_key];
 								}
@@ -1591,7 +1591,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -1671,7 +1671,7 @@ class getid3_id3v2 extends getid3_handler {
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_description   = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -1714,7 +1714,7 @@ class getid3_id3v2 extends getid3_handler {
 			//   but only one with the same contents
 			// <Header for 'Linked information', ID: 'LINK'>
 			// ID3v2.3+ => Frame identifier   $xx xx xx xx
-			// ID3v2.2  => Frame identifier   $xx xx xx
+			// ID3v2.2 => Frame identifier   $xx xx xx
 			// URL                            <text string> $00
 			// ID and additional data         <text string(s)>
 
@@ -1876,7 +1876,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
+			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -2137,7 +2137,7 @@ class getid3_id3v2 extends getid3_handler {
 
 			$id3v2_chapter_entry = array();
 
-			foreach (array('id', 'time_begin', 'time_end', 'offset_begin', 'offset_end', 'chapter_name', 'chapter_description') as $id3v2_chapter_key) {
+			foreach (array( 'id', 'time_begin', 'time_end', 'offset_begin', 'offset_end', 'chapter_name', 'chapter_description' ) as $id3v2_chapter_key) {
 				if (isset($parsedFrame[$id3v2_chapter_key])) {
 					$id3v2_chapter_entry[$id3v2_chapter_key] = $parsedFrame[$id3v2_chapter_key];
 				}

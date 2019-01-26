@@ -90,7 +90,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		// Save/clear quotas for All Users,Everybody groups so they won't interfere with tests
 		$this->_saveQuota = array();
 
-		foreach (array('allUserGroup', 'everybodyGroup') as $groupName) {
+		foreach (array( 'allUserGroup', 'everybodyGroup' ) as $groupName) {
 			list($ret, $groupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.' . $groupName);
 
 			if ($ret) {
@@ -147,7 +147,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 				'QuotasMap',
 				array(
 					'userOrGroupId' => $groupId,
-					'quotaSize'     => $quota['quota'],
+					'quotaSize' => $quota['quota'],
 				)
 			);
 
@@ -190,7 +190,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(array(), $warnings, 'warnings');
 	}
@@ -200,7 +200,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize'     => '2000',
+				'quotaSize' => '2000',
 			)
 		);
 
@@ -219,7 +219,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
 			array(
@@ -245,7 +245,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize'     => '5',
+				'quotaSize' => '5',
 			)
 		);
 
@@ -259,10 +259,10 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
-			array(array(sprintf($this->_exceedMessage, 5, $this->_KB))),
+			array( array( sprintf($this->_exceedMessage, 5, $this->_KB) ) ),
 			$warnings,
 			'warnings'
 		);
@@ -284,7 +284,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize'     => '15',
+				'quotaSize' => '15',
 			)
 		);
 
@@ -310,12 +310,12 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item, $item2));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item, $item2 ));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
 			array(
-				array(sprintf($this->_usingMessage, $filesize, $this->_KB, 15, $this->_KB)),
-				array(sprintf($this->_exceedMessage, 15, $this->_KB)),
+				array( sprintf($this->_usingMessage, $filesize, $this->_KB, 15, $this->_KB) ),
+				array( sprintf($this->_exceedMessage, 15, $this->_KB) ),
 			),
 			$warnings,
 			'warnings'
@@ -341,7 +341,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize'     => '2000000',
+				'quotaSize' => '2000000',
 			)
 		);
 
@@ -361,7 +361,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
 			array(
@@ -385,7 +385,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize'     => '2047483648',
+				'quotaSize' => '2047483648',
 			)
 		);
 
@@ -400,7 +400,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 				'test/file',
 				array(
 					'ownerId' => $this->_user->getId(),
-					'size'    => 1073741824,
+					'size' => 1073741824,
 				),
 				__FILE__
 			);
@@ -457,7 +457,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize'     => '5',
+				'quotaSize' => '5',
 			)
 		);
 
@@ -468,7 +468,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_group2->getId(),
-				'quotaSize'     => '500',
+				'quotaSize' => '500',
 			)
 		);
 
@@ -488,7 +488,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
 			array(
@@ -515,7 +515,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize'     => '6',
+				'quotaSize' => '6',
 			)
 		);
 
@@ -526,7 +526,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize'     => '2',
+				'quotaSize' => '2',
 			)
 		);
 
@@ -537,7 +537,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $this->_group2->getId(),
-				'quotaSize'     => '200',
+				'quotaSize' => '200',
 			)
 		);
 
@@ -551,10 +551,10 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'errors');
 		$this->assertEquals(
-			array(array(sprintf($this->_exceedMessage, 6, $this->_KB))),
+			array( array( sprintf($this->_exceedMessage, 6, $this->_KB) ) ),
 			$warnings,
 			'warnings'
 		);

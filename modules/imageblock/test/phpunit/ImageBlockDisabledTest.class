@@ -62,11 +62,11 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ImageBlockToolkit',
-			array('image/gif'),
+			array( 'image/gif' ),
 			'testoperation',
 			array(
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'size',
 				),
 			),
@@ -155,48 +155,48 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		list($ret, $album) = $this->_createRandomAlbum($parentId);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		list($ret, $lockId) = GalleryCoreApi::acquireReadLock($album->getId());
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		$imagePath                   = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.gif');
 		list($ret, $photo, $thumbId) = $this->_addPhoto($album->getId(), $imagePath);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		list($ret, $tmpId) = $this->_addDerivative($album, $photo, DERIVATIVE_TYPE_IMAGE_THUMBNAIL, 150);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		$items   = array();
 		$items[] = $photo->getId();
 
-		return array(null, $album, $items);
+		return array( null, $album, $items );
 	}
 
 	public function _addPhoto($parentId, $imagePath) {
 		list($ret, $photo) = GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryPhotoItem');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		list($ret, $mimeType) = GalleryCoreApi::getMimeType($imagePath);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$ret = $photo->create(
 			$parentId,
@@ -206,13 +206,13 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$photo->setTitle('Test Item');
 		$ret = $photo->save();
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		// add thumbnail
 		list($ret, $thumbId) = $this->_addDerivative(
@@ -223,26 +223,26 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
-		return array(null, $photo, $thumbId);
+		return array( null, $photo, $thumbId );
 	}
 
 	public function _addDerivative(&$item, &$src, $derivativeType, $size) {
 		list($ret, $derivative) = GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $item->getEntityType());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!isset($derivative)) {
-			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 		}
 		$ret = $derivative->create($item->getId(), $derivativeType);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$derivative->setDerivativeSourceId($src->getId());
 		$derivative->setMimeType($src->getMimeType());
@@ -271,10 +271,10 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		$ret = $derivative->save();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $derivative->getId());
+		return array( null, $derivative->getId() );
 	}
 
 	public function assertBlock($block) {

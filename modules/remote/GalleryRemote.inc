@@ -104,7 +104,7 @@ class GalleryRemoteController extends GalleryController {
 						if ($ret) {
 							$gallery->debug('Unrecognized User Agent: ' . $httpUserAgent);
 
-							return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null);
+							return array( GalleryCoreApi::error(ERROR_REQUEST_FORGED), null );
 						}
 					}
 			}
@@ -242,7 +242,7 @@ class GalleryRemoteController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	/**
@@ -543,7 +543,7 @@ class GalleryRemoteController extends GalleryController {
 			list($ret, $parents) = GalleryCoreApi::loadEntitiesById($parentIds, 'GalleryItem');
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$albumsLoaded = array_merge($albumsLoaded, $parents);
@@ -552,11 +552,11 @@ class GalleryRemoteController extends GalleryController {
 			list($ret, $albumsLoaded, $albumIds) = $this->loadParentsToRoot($rootId, $albumIds, $albumsLoaded, $parents);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, $albumsLoaded, $albumIds);
+		return array( null, $albumsLoaded, $albumIds );
 	}
 
 	/**
@@ -714,7 +714,7 @@ class GalleryRemoteController extends GalleryController {
 
 		// Allow ItemAddOptions to process added item(s)
 		foreach ($optionInstances as $option) {
-			list($ret, $optionErrors, $optionWarnings) = $option->handleRequestAfterAdd($form, array($newItem));
+			list($ret, $optionErrors, $optionWarnings) = $option->handleRequestAfterAdd($form, array( $newItem ));
 
 			if ($ret) {
 				return $ret;
@@ -1103,7 +1103,7 @@ class GalleryRemoteController extends GalleryController {
 				GalleryUrlGenerator::appendParamsToUrl(
 					$urlGenerator->getCurrentUrlDir(true) . GALLERY_MAIN_PHP,
 					array(
-						'view'   => 'core.DownloadItem',
+						'view' => 'core.DownloadItem',
 						'itemId' => '',
 					)
 				)
@@ -1300,7 +1300,7 @@ class GalleryRemoteController extends GalleryController {
 
 		if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 			// if we have an album, get his thumbnail instead
-			list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($id));
+			list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $id ));
 
 			if ($ret) {
 				return $ret;
@@ -1311,7 +1311,7 @@ class GalleryRemoteController extends GalleryController {
 			$response->setProperty('image.thumb_height', $thumbs[$id]->getHeight());
 		} elseif (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 			// Load the derivatives for all those items
-			list($ret, $derivatives) = GalleryCoreApi::fetchDerivativesByItemIds(array($id));
+			list($ret, $derivatives) = GalleryCoreApi::fetchDerivativesByItemIds(array( $id ));
 
 			if ($ret) {
 				return $ret;

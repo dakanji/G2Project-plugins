@@ -112,7 +112,7 @@ class SitemapView extends GalleryView {
 		 [GalleryItemAttributesMap::parentSequence] LIKE ?)
 		AND
 		';
-				$data      = array($rootId, implode('/', $parents) . '/' . $rootId . '/%');
+				$data      = array( $rootId, implode('/', $parents) . '/' . $rootId . '/%' );
 			}
 
 			$query = sprintf(
@@ -161,12 +161,12 @@ class SitemapView extends GalleryView {
 				}
 				$loc        = $urlGenerator->generateUrl(
 					array(
-						'view'   => 'core.ShowItem',
+						'view' => 'core.ShowItem',
 						'itemId' => $result[0],
 					),
 					array(
 						'forceSessionId' => false,
-						'forceFullUrl'   => true,
+						'forceFullUrl' => true,
 					)
 				);
 				$lastmod    = gmstrftime('%Y-%m-%dT%H:%M:%S+00:00', $result[1]);

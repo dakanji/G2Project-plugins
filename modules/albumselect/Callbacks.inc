@@ -70,7 +70,7 @@ class AlbumSelectCallbacks {
 				$sessionPermissions = implode('-', array_diff($aclIdsWithSessionPermissions, $aclIds));
 
 				$cachePathInfo = array(
-					'type'   => 'module-data',
+					'type' => 'module-data',
 					'module' => 'albumselect',
 					'itemId' => $userId . '_' . $sessionPermissions
 					. '_' . $languageCode
@@ -216,11 +216,11 @@ class AlbumSelectCallbacks {
 						}
 						$links[$id] = $urlGenerator->generateUrl(
 							array(
-								'view'   => 'core.ShowItem',
+								'view' => 'core.ShowItem',
 								'itemId' => $id,
 							),
 							array(
-								'htmlEntities'   => false,
+								'htmlEntities' => false,
 								'forceServerRelativeUrl' => true,
 								'forceSessionId' => false,
 							)
@@ -248,7 +248,7 @@ class AlbumSelectCallbacks {
 
 					GalleryDataCache::putToDisk(
 						$cachePathInfo,
-						$dataToCache = array($treeList, $titles, $titlesForJs, $links)
+						$dataToCache = array( $treeList, $titles, $titlesForJs, $links )
 					);
 				}
 
@@ -276,11 +276,11 @@ class AlbumSelectCallbacks {
 				$block =& $smarty->_tpl_vars['block'];
 				$type  = isset($callbackParams['albumTree']) ? 'albumTree' : 'albumSelect';
 				$block['albumselect']['LoadAlbumData'][$type] = array(
-					'tree'        => $treeList,
-					'titles'      => $titles,
+					'tree' => $treeList,
+					'titles' => $titles,
 					'titlesForJs' => $titlesForJs,
-					'links'       => $links,
-					'params'      => $params,
+					'links' => $links,
+					'params' => $params,
 				);
 
 				if (isset($albumTreeName)) {
@@ -318,7 +318,7 @@ class AlbumSelectCallbacks {
 		&$titles
 	) {
 		if (isset($sorter)) {
-			uksort($tree, array($sorter, 'sort'));
+			uksort($tree, array( $sorter, 'sort' ));
 		}
 
 		foreach ($tree as $id => $list) {
@@ -378,10 +378,10 @@ class AlbumSelectCallbacks {
 
 			foreach ($subAlbums as $subAlbum) {
 				$treeList[] = array(
-					'id'         => $subAlbum->getId(),
-					'nodeId'     => ++$nodeId,
+					'id' => $subAlbum->getId(),
+					'nodeId' => ++$nodeId,
 					'parentNode' => $parentNode,
-					'depth'      => $depth,
+					'depth' => $depth,
 				);
 				$title      = $subAlbum->getTitle() ? $subAlbum->getTitle() : $subAlbum->getPathComponent();
 				$title      = preg_replace('/\r\n/', ' ', $title);

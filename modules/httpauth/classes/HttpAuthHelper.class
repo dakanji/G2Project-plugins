@@ -52,7 +52,7 @@ class HttpAuthHelper {
 		list($ret, $success) = HttpAuthHelper::checkHttpAuth();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Check for causes why Gallery can't access HTTP usernames and passwords
@@ -60,7 +60,7 @@ class HttpAuthHelper {
 			list($ret, $moduleStatus) = GalleryCoreApi::fetchPluginList('module');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (empty($moduleStatus['rewrite']['active'])) {
@@ -69,21 +69,21 @@ class HttpAuthHelper {
 				list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				if (!isset($rewriteApi)) {
-					return array(GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null);
+					return array( GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null );
 				}
 
-				list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array(1, 1));
+				list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array( 1, 1 ));
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				if (!$isCompatible) {
-					return array(GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null);
+					return array( GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null );
 				}
 
 				if ($rewriteApi->getParserType() != 'preGallery') {
@@ -92,7 +92,7 @@ class HttpAuthHelper {
 					list($ret, $activeRules) = $rewriteApi->fetchActiveRulesForModule('httpauth');
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 
 					if (!in_array('authorization', $activeRules)) {
@@ -109,7 +109,7 @@ class HttpAuthHelper {
 			$code |= HTTPAUTH_STATUS_MISSING_AUTHORIZATION;
 		}
 
-		return array(null, $code);
+		return array( null, $code );
 	}
 
 	/**
@@ -128,11 +128,11 @@ class HttpAuthHelper {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'httpauth');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (empty($params['httpAuthPlugin'])) {
-			return array(null, true);
+			return array( null, true );
 		}
 
 		/*
@@ -155,7 +155,7 @@ class HttpAuthHelper {
 			)
 		);
 
-		return array(null, trim($body) == "Basic\nUSERNAME\nPASSWORD");
+		return array( null, trim($body) == "Basic\nUSERNAME\nPASSWORD" );
 	}
 
 	/**
@@ -187,7 +187,7 @@ class HttpAuthHelper {
 			$authtype = 'Basic';
 		}
 
-		return array($authtype, $username, $password);
+		return array( $authtype, $username, $password );
 	}
 
 	/**
@@ -205,46 +205,46 @@ class HttpAuthHelper {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'httpauth');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!empty($params['regexAuthPlugin'])) {
 			if (!preg_match($params['authtypePattern'], $authtype)) {
 				// Reject authentication type
-				return array(null, null);
+				return array( null, null );
 			}
 
 			if (!preg_match($params['usernamePattern'], $username)) {
 				// Reject username
-				return array(null, null);
+				return array( null, null );
 			}
 
 			$username = preg_replace($params['usernamePattern'], $params['usernameReplace'], $username);
 		}
 
 		if (empty($username)) {
-			return array(null, null);
+			return array( null, null );
 		}
 
 		// Ignore disabled users, since we don't have a facility for showing an error
 		list($ret, $isDisabled) = GalleryCoreApi::isDisabledUsername($username);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($isDisabled) {
-			return array(null, null);
+			return array( null, null );
 		}
 
 		list($ret, $user) = GalleryCoreApi::fetchUserByUsername($username);
 
 		// ERROR_MISSING_OBJECT check to suppress error if username doesn't exist
 		if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $user);
+		return array( null, $user );
 	}
 
 	/**
@@ -303,7 +303,7 @@ class HttpAuthHelper {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'httpauth');
 
 		if ($ret) {
-			return array($ret, null, null, null);
+			return array( $ret, null, null, null );
 		}
 
 		return array(
@@ -329,9 +329,9 @@ class HttpAuthHelper {
 		}
 
 		foreach (array(
-			'httpAuthPlugin'   => $enableHttpAuth,
+			'httpAuthPlugin' => $enableHttpAuth,
 			'serverAuthPlugin' => $enableServerAuth,
-			'useGlobally'      => $useGlobally,
+			'useGlobally' => $useGlobally,
 		) as $key => $value) {
 			$ret = $module->setParameter($key, $value);
 

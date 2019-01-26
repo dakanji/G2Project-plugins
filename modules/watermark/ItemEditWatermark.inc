@@ -37,20 +37,20 @@ class ItemEditWatermark extends ItemEditPlugin {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'watermark');
 
 		if ($ret) {
-			return array($ret, null, null, null);
+			return array( $ret, null, null, null );
 		}
 
 		if ($params['forceDefaultWatermark'] && !empty($params['defaultWatermarkId'])) {
 			$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 			if ($ret) {
-				return array($ret, null, null, null);
+				return array( $ret, null, null, null );
 			}
 		}
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'watermark');
 
 		if ($ret) {
-			return array($ret, null, null, null);
+			return array( $ret, null, null, null );
 		}
 
 		if (isset($form['action']['save'])) {
@@ -65,7 +65,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 				list($ret, $watermark) = GalleryCoreApi::loadEntitiesById($form['watermarkId'], 'WatermarkImage');
 
 				if ($ret) {
-					return array($ret, null, null, null);
+					return array( $ret, null, null, null );
 				}
 
 				$which = array(
@@ -79,11 +79,11 @@ class ItemEditWatermark extends ItemEditPlugin {
 				if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 					$templateAdapter =& $gallery->getTemplateAdapter();
 					$templateAdapter->registerTrailerCallback(
-						array($this, 'bulkOperation'),
+						array( $this, 'bulkOperation' ),
 						array(
 							$item,
 							'apply',
-							array($watermark, null, $form['xPercent'], $form['yPercent'], $which),
+							array( $watermark, null, $form['xPercent'], $form['yPercent'], $which ),
 							!empty($form['recursive']),
 							$gallery->i18n('Apply watermark'),
 						)
@@ -99,7 +99,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 					);
 
 					if ($ret) {
-						return array($ret, null, null, null);
+						return array( $ret, null, null, null );
 					}
 				}
 				$status = $module->translate('Watermark applied successfully');
@@ -108,7 +108,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 				$templateAdapter =& $gallery->getTemplateAdapter();
 				$templateAdapter->registerTrailerCallback(
-					array($this, 'bulkOperation'),
+					array( $this, 'bulkOperation' ),
 					array(
 						$item,
 						'remove',
@@ -122,13 +122,13 @@ class ItemEditWatermark extends ItemEditPlugin {
 				$ret = $this->removeWatermark($item->getId());
 
 				if ($ret) {
-					return array($ret, null, null, null);
+					return array( $ret, null, null, null );
 				}
 			}
 			$status = $module->translate('Watermark removed successfully');
 		}
 
-		return array(null, $error, $status, isset($requiresProgressBar));
+		return array( null, $error, $status, isset($requiresProgressBar) );
 	}
 
 	public function bulkOperation($item, $operation, $params, $recursive, $message) {
@@ -193,7 +193,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 					} elseif ($this->isSupported($item, null)) {
 						$params[1] = $item;
 						$ret       = call_user_func_array(
-							array('WatermarkHelper', 'watermarkItem'),
+							array( 'WatermarkHelper', 'watermarkItem' ),
 							$params
 						);
 
@@ -216,7 +216,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 	}
 
 	public function removeWatermark($itemId) {
-		list($ret, $derivativeTable) = GalleryCoreApi::fetchDerivativesByItemIds(array($itemId));
+		list($ret, $derivativeTable) = GalleryCoreApi::fetchDerivativesByItemIds(array( $itemId ));
 
 		if ($ret) {
 			return $ret;
@@ -311,7 +311,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 		list($ret, $watermarks) = WatermarkHelper::fetchWatermarks();
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		foreach (array_keys($watermarks) as $watermarkId) {
@@ -323,10 +323,10 @@ class ItemEditWatermark extends ItemEditPlugin {
 
 		if (GalleryUtilities::isA($item, 'GalleryDataItem')) {
 			$displayImage            = $item;
-			list($ret, $derivatives) = GalleryCoreApi::fetchDerivativesByItemIds(array($itemId));
+			list($ret, $derivatives) = GalleryCoreApi::fetchDerivativesByItemIds(array( $itemId ));
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$derivatives = isset($derivatives[$itemId]) ? $derivatives[$itemId] : array();
 
@@ -454,7 +454,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 		}
 
 		// Ok we have no composite for the item .. but maybe we do for its preferred?
-		list($ret, $preferredTable) = GalleryCoreApi::fetchPreferredsByItemIds(array($item->getId()));
+		list($ret, $preferredTable) = GalleryCoreApi::fetchPreferredsByItemIds(array( $item->getId() ));
 
 		if ($ret) {
 			return false; // Swallow the error for now
@@ -483,9 +483,9 @@ class ItemEditWatermark extends ItemEditPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'watermark');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $module->translate('Watermark'));
+		return array( null, $module->translate('Watermark') );
 	}
 }

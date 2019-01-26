@@ -71,7 +71,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 		list($ret, $album) = $this->_createRandomAlbum($parentId);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if ($top) {
@@ -80,7 +80,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			$ret     = GalleryCoreApi::removeItemPermissions($albumId);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ret = GalleryCoreApi::addGroupPermission(
 				$albumId,
@@ -89,7 +89,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ret = GalleryCoreApi::addUserPermission(
 				$albumId,
@@ -98,7 +98,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ret = GalleryCoreApi::addUserPermission(
 				$albumId,
@@ -107,7 +107,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ret = GalleryCoreApi::addGroupPermission(
 				$albumId,
@@ -116,7 +116,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
@@ -126,11 +126,11 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			list($ret, $items[$i]) = $this->_createRandomDataItem($album->getId());
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, $album, $items);
+		return array( null, $album, $items );
 	}
 
 	public function testHiddenDeleteHandler() {
@@ -189,7 +189,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			'HiddenModule',
 			'modules/hidden/module.inc',
 			'hidden',
-			array('Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete')
+			array( 'Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {
@@ -269,7 +269,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			'HiddenModule',
 			'modules/hidden/module.inc',
 			'hidden',
-			array('Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete')
+			array( 'Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {
@@ -349,7 +349,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			'HiddenModule',
 			'modules/hidden/module.inc',
 			'hidden',
-			array('Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete')
+			array( 'Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {
@@ -433,7 +433,7 @@ class HiddenEventHandlerTest extends GalleryTestCase {
 			'HiddenModule',
 			'modules/hidden/module.inc',
 			'hidden',
-			array('Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete')
+			array( 'Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {

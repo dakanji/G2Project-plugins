@@ -48,11 +48,11 @@ class WebDavController extends GalleryController {
 			'WebDavModule',
 			'modules/webdav/module.inc',
 			'webdav',
-			array('Gallery::Error')
+			array( 'Gallery::Error' )
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		/*
@@ -69,7 +69,7 @@ class WebDavController extends GalleryController {
 			list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if ($isAnonymous) {
@@ -116,7 +116,7 @@ class WebDavController extends GalleryController {
 				fgets($handle);
 			}
 
-			return array(GalleryCoreApi::error(ERROR_BAD_PATH), null);
+			return array( GalleryCoreApi::error(ERROR_BAD_PATH), null );
 		}
 
 		// Silently legalize path component
@@ -138,20 +138,20 @@ class WebDavController extends GalleryController {
 				list($ret, $itemId) = GalleryCoreApi::getDefaultAlbumId();
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			} else {
 				list($ret, $itemId) = GalleryCoreApi::fetchItemIdByPath($path);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			// Until there's a better way to delegate to Show/DownloadItem
@@ -164,8 +164,8 @@ class WebDavController extends GalleryController {
 						'delegate' => array(
 							'view' => 'core.ShowItem',
 						),
-						'status'   => array(),
-						'error'    => array(),
+						'status' => array(),
+						'error' => array(),
 					),
 				);
 			}
@@ -176,8 +176,8 @@ class WebDavController extends GalleryController {
 					'delegate' => array(
 						'view' => 'core.DownloadItem',
 					),
-					'status'   => array(),
-					'error'    => array(),
+					'status' => array(),
+					'error' => array(),
 				),
 			);
 		}
@@ -197,7 +197,7 @@ class WebDavController extends GalleryController {
 					);
 				}
 
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			// Until there's a better way to delegate to ItemAdd
@@ -207,7 +207,7 @@ class WebDavController extends GalleryController {
 			list($ret, $data) = ItemAddController::handleRequest($form);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			/*
@@ -245,7 +245,7 @@ class WebDavController extends GalleryController {
 			list($ret2, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
 
 			if ($ret2) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (!$isAdmin && ($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
@@ -253,7 +253,7 @@ class WebDavController extends GalleryController {
 			}
 		}
 
-		return array($ret, null);
+		return array( $ret, null );
 	}
 }
 

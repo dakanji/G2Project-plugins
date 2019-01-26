@@ -38,7 +38,7 @@ class ConfirmPicasaImportController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// build framework for error and status arrays
@@ -50,8 +50,8 @@ class ConfirmPicasaImportController extends GalleryController {
 		} elseif (isset($form['action']['import'])) {
 			$templateAdapter =& $gallery->getTemplateAdapter();
 			$templateAdapter->registerTrailerCallback(
-				array($this, 'performImport'),
-				array($form)
+				array( $this, 'performImport' ),
+				array( $form )
 			);
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
@@ -65,7 +65,7 @@ class ConfirmPicasaImportController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	/**
@@ -360,7 +360,7 @@ class ConfirmPicasaImportView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$platform          =& $gallery->getPlatform();
@@ -372,12 +372,12 @@ class ConfirmPicasaImportView extends GalleryView {
 		list($ret, $album) = Picasa2DataParser::getAlbum($picasaXmlPath);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $targetAlbum) = GalleryCoreApi::loadEntitiesById($destinationAlbumId, 'GalleryAlbumItem');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$albumName                   = $album['albumName'];
@@ -388,7 +388,7 @@ class ConfirmPicasaImportView extends GalleryView {
 
 		if ($ret) {
 			if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		} else {
 			$existingAlbums[$albumName] = $existingAlbumId;

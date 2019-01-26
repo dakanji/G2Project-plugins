@@ -116,7 +116,7 @@ class Getid3Helper {
 			return;
 		}
 
-		$getID3        = new getID3();
+		$getID3 = new getID3();
 		$rawGetid3Data = $getID3->analyze($path);
 	}
 
@@ -215,7 +215,7 @@ class Getid3Helper {
 	public static function getId3Data($path, $viewMode) {
 		Getid3Helper::_fetchRawGetid3Data($path, $rawGetid3Data);
 		$getid3Keys = Getid3Helper::getGetid3Keys();
-		$results    = array();
+		$results = array();
 
 		list($ret, $properties) = Getid3Helper::getProperties($viewMode);
 
@@ -240,7 +240,7 @@ class Getid3Helper {
 				);
 
 				if (isset($value)) {
-					$value     = Getid3Helper::postProcessValue($property, $value);
+					$value = Getid3Helper::postProcessValue($property, $value);
 					$results[] = array(
 						'title' => $title,
 						'value' => $value,
@@ -384,7 +384,7 @@ class Getid3Helper {
 			// Adjust time by time zone offset
 			// Get difference to UTC in seconds, then add to time
 			$utcdiff = date('Z', $time);
-			$time    = $time + $utcdiff;
+			$time = $time + $utcdiff;
 
 			return $time;
 		}
@@ -438,7 +438,7 @@ class Getid3Helper {
 					$format = '$x $X';
 				}
 				$platform =& $gallery->getPlatform();
-				$value    = $platform->strftime($format, $time);
+				$value = $platform->strftime($format, $time);
 
 				break;
 		}
@@ -491,8 +491,7 @@ class Getid3Helper {
 	 * Retrieve a single value by path from a nested associative array.
 	 * The data source is an array like this:
 	 *
-	 * foo =>
-	 *   bar => (a => 1, b => 2, c => 3)
+	 * foo => 	 *   bar => (a => 1, b => 2, c => 3)
 	 *   baz => (d => 4, e => 5, f => 6)
 	 *
 	 * the key path is an array like this:

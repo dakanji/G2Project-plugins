@@ -33,7 +33,7 @@ class CaptchaConfigAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$results['status']   = $results['error'] = array();
@@ -42,7 +42,7 @@ class CaptchaConfigAdminController extends GalleryController {
 			'subView' => 'core.AdminPlugins',
 		);
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -59,7 +59,7 @@ class CaptchaConfigAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'CaptchaConfigAdmin') {

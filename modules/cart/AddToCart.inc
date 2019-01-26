@@ -37,7 +37,7 @@ class AddToCartController extends GalleryController {
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Figure out what ids we care about
@@ -45,16 +45,16 @@ class AddToCartController extends GalleryController {
 			list($ret, $ids) = GalleryCoreApi::fetchChildDataItemIds($item);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		} else {
-			$ids = array($item->getId());
+			$ids = array( $item->getId() );
 		}
 
 		$ret = CartHelper::addItemsToCart($ids);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Prepare our results
@@ -63,6 +63,6 @@ class AddToCartController extends GalleryController {
 		$results['status']             = array();
 		$results['error']              = array();
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }

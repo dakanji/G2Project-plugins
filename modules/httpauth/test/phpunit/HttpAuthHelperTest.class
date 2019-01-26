@@ -53,7 +53,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		$this->_parserType  =& HttpAuthHelperTestRewriteApi::_getParserType();
 		$this->_parserType  = 'preGallery';
 		$this->_activeRules =& HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule('httpauth');
-		$this->_activeRules = array('authorization');
+		$this->_activeRules = array( 'authorization' );
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'RewriteApi',
@@ -70,7 +70,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			),
 			array(
 				'forceServerRelativeUrl' => true,
-				'htmlEntities'           => false,
+				'htmlEntities' => false,
 			)
 		) . " HTTP/1.0\r\n"
 		. 'Host: ' . $urlGenerator->getHostName() . "\r\n"
@@ -553,8 +553,8 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(
-			array(true, false, true),
-			array($authPluginEnabled, $serverPluginEnabled, $usedGlobally)
+			array( true, false, true ),
+			array( $authPluginEnabled, $serverPluginEnabled, $usedGlobally )
 		);
 	}
 
@@ -618,7 +618,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'           => 'HTTP/1.0 401 Unauthorized',
+				'status' => 'HTTP/1.0 401 Unauthorized',
 				'www-authenticate' => "WWW-Authenticate: Basic realm='TEST_AUTH_NAME'",
 			),
 			$this->_headers
@@ -643,7 +643,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testRequestAuthenticationIgnoredIfHttpAuthNotEnabled() {
 		foreach (array(
-			'httpAuthPlugin'   => false,
+			'httpAuthPlugin' => false,
 			'serverAuthPlugin' => true,
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'httpauth', $key, $value);
@@ -673,7 +673,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'           => 'HTTP/1.0 401 Unauthorized',
+				'status' => 'HTTP/1.0 401 Unauthorized',
 				'www-authenticate' => "WWW-Authenticate: Basic realm='TEST_AUTH_NAME'",
 			),
 			$this->_headers
@@ -749,11 +749,11 @@ class HttpAuthHelperTestRewriteApi {
 	}
 
 	public function isCompatibleWithApi($version) {
-		return array(null, true);
+		return array( null, true );
 	}
 
 	public function fetchActiveRulesForModule($moduleId) {
-		return array(null, HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule($moduleId));
+		return array( null, HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule($moduleId) );
 	}
 
 	public function getParserType() {

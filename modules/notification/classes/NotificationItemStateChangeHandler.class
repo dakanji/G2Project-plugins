@@ -118,8 +118,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			$requiredPermission = $notification->getPermission();
 
 			foreach ($subscribers as $data) {
-				list($ret, $permissions) =
-			GalleryCoreApi::getPermissions($entity->getId(), $data[0]);
+				list($ret, $permissions) = 			GalleryCoreApi::getPermissions($entity->getId(), $data[0]);
 
 				if ($ret) {
 					return $ret;

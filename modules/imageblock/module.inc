@@ -39,8 +39,8 @@ class ImageBlockModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('blocks', $gallery->i18n('Blocks'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 47));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 47 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -54,16 +54,16 @@ class ImageBlockModule extends GalleryModule {
 		$ret = GalleryCoreApi::removeAllMapEntries('ImageBlockCacheMap');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $redirect);
+		return array( null, $redirect );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class ImageBlockModule extends GalleryModule {
 		$storage =& $gallery->getStorage();
 
 		if (!empty($currentVersion) && version_compare($currentVersion, '1.0.1', '<')) {
-			$ret = $storage->configureStore($this->getId(), array('ImageBlockCacheMap:1.0'));
+			$ret = $storage->configureStore($this->getId(), array( 'ImageBlockCacheMap:1.0' ));
 
 			if ($ret) {
 				return $ret;
@@ -121,7 +121,7 @@ class ImageBlockModule extends GalleryModule {
 
 		if (!empty($currentVersion) && version_compare($currentVersion, '1.1.5', '<=')) {
 			// Add ImageBlockCacheMap::random
-			$ret = $storage->configureStore($this->getId(), array('ImageBlockCacheMap:1.1'));
+			$ret = $storage->configureStore($this->getId(), array( 'ImageBlockCacheMap:1.1' ));
 
 			if ($ret) {
 				return $ret;
@@ -130,7 +130,7 @@ class ImageBlockModule extends GalleryModule {
 
 		if (!empty($currentVersion) && version_compare($currentVersion, '1.1.7', '<=')) {
 			// Add proper index with new ::random column
-			$ret = $storage->configureStore($this->getId(), array('ImageBlockCacheMap:1.2'));
+			$ret = $storage->configureStore($this->getId(), array( 'ImageBlockCacheMap:1.2' ));
 
 			if ($ret) {
 				return $ret;
@@ -150,7 +150,7 @@ class ImageBlockModule extends GalleryModule {
 			'ImageBlockHelper',
 			'modules/imageblock/classes/ImageBlockHelper.class',
 			'imageblock',
-			array('Gallery::ViewableTreeChange', 'GalleryEntity::delete', 'GalleryEntity::save')
+			array( 'Gallery::ViewableTreeChange', 'GalleryEntity::delete', 'GalleryEntity::save' )
 		);
 
 		if ($ret) {
@@ -163,7 +163,7 @@ class ImageBlockModule extends GalleryModule {
 			'ImageBlockOption',
 			'modules/imageblock/ImageBlockOption.inc',
 			'imageblock',
-			array('ItemEditAlbum')
+			array( 'ItemEditAlbum' )
 		);
 
 		if ($ret) {

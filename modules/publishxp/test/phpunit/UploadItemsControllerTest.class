@@ -283,7 +283,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 		// Make sure our option was called
 		$this->assertEquals(
-			array($entity->getId(), 'myOptionValue'),
+			array( $entity->getId(), 'myOptionValue' ),
 			UploadItemsControllerTestAddOption::getRequestData()
 		);
 
@@ -315,10 +315,10 @@ class UploadItemsControllerTestAddOption {
 	public function handleRequestAfterAdd($form, $items) {
 		GalleryUtilities::putRequestVariable(
 			'requestData',
-			array($items[0]->getId(), $form['optionValue'])
+			array( $items[0]->getId(), $form['optionValue'] )
 		);
 
-		return array(null, array(), array());
+		return array( null, array(), array() );
 	}
 
 	public function getRequestData() {

@@ -36,8 +36,8 @@ class QuotasModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 34));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 34 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -48,7 +48,7 @@ class QuotasModule extends GalleryModule {
 
 		if (!empty($currentVersion) && version_compare($currentVersion, '1.0.1', '<')) {
 			$storage =& $gallery->getStorage();
-			$ret     = $storage->configureStore($this->getId(), array('QuotasMap:1.0'));
+			$ret     = $storage->configureStore($this->getId(), array( 'QuotasMap:1.0' ));
 
 			if ($ret) {
 				return $ret;
@@ -92,7 +92,7 @@ class QuotasModule extends GalleryModule {
 			'QuotasModule',
 			'modules/quotas/module.inc',
 			'quotas',
-			array('GalleryEntity::delete')
+			array( 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {
@@ -140,14 +140,14 @@ class QuotasModule extends GalleryModule {
 					list($ret, $quotaExists, $groupQuota) = GalleryQuotasHelper::fetchGroupQuota($entity->getId());
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 					// If its a user, find if a user quota exists, if so delete it
 				} elseif (GalleryUtilities::isA($entity, 'GalleryUser')) {
 					list($ret, $quotaExists, $userQuota) = GalleryQuotasHelper::fetchUserQuota($entity->getId());
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 
@@ -160,12 +160,12 @@ class QuotasModule extends GalleryModule {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 			}
 		}
 
-		return array(null, $result);
+		return array( null, $result );
 	}
 }

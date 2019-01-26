@@ -36,14 +36,14 @@ class Getid3Toolkit extends GalleryToolkit {
 			case 'originationTimestamp':
 				GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
 				$timestamp = Getid3Helper::getOriginationTimestamp($sourceFilename);
-				$results   = array($timestamp);
+				$results   = array( $timestamp );
 
 				break;
 
 			default:
-				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+				return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 		}
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }

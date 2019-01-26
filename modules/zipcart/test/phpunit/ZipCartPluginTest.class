@@ -62,11 +62,11 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ZipCartToolkit',
-			array('test/jpeg'),
+			array( 'test/jpeg' ),
 			'testoperation',
 			array(
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'size',
 				),
 			),
@@ -79,7 +79,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ZipCartToolkit',
-			array('test/jpeg'),
+			array( 'test/jpeg' ),
 			'testconvert',
 			array(),
 			'desc'
@@ -183,7 +183,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 	public function tearDown() {
 		$ret = GalleryCoreApi::removeMimeType(
 			array(
-				'mimeType' => array('test/out'),
+				'mimeType' => array( 'test/out' ),
 			)
 		);
 
@@ -201,17 +201,17 @@ class ZipCartPluginTest extends GalleryTestCase {
 		list($ret, $item) = $this->_createRandomDataItem($parentId, $mimeType, array(), __FILE__, $itemType);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$ret = GalleryCoreApi::removeItemPermissions($item->getId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$ret = GalleryCoreApi::addGroupPermission($item->getId(), $this->_everybodyId, 'core.view');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (isset($permission)) {
@@ -222,27 +222,27 @@ class ZipCartPluginTest extends GalleryTestCase {
 			);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
-		return array(null, $item);
+		return array( null, $item );
 	}
 
 	public function _addDerivative($item, $derivativeType, $operation = null) {
 		list($ret, $derivative) = GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $item->getEntityType());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!isset($derivative)) {
-			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 		}
 		$ret = $derivative->create($item->getId(), $derivativeType);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$derivative->setDerivativeSourceId($item->getId());
 		$derivative->setMimeType($item->getMimeType());
@@ -251,10 +251,10 @@ class ZipCartPluginTest extends GalleryTestCase {
 		$ret = $derivative->save();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $derivative->getId());
+		return array( null, $derivative->getId() );
 	}
 
 	public function testZipCart() {
@@ -352,10 +352,10 @@ class ZipCartPluginTestPlatform {
 		if (count($cmds) == 1 && $cmds[0][1] == $gallery->_zipCartTempnam . '.zip') {
 			$gallery->_zipCartFiles = array_slice($cmds[0], 2);
 
-			return array(true, null, null);
+			return array( true, null, null );
 		}
 
-		return array(false, null, null);
+		return array( false, null, null );
 	}
 
 	public function getDirectorySeparator() {
@@ -470,6 +470,6 @@ class ZipCartToolkit extends GalleryToolkit {
 		}
 		$outputMimeType = ($operationName == 'testconvert' ? 'test/out' : $mimeType);
 
-		return array(null, $outputMimeType, $context);
+		return array( null, $outputMimeType, $context );
 	}
 }

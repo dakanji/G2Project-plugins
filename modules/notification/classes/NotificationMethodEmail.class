@@ -134,8 +134,8 @@ class NotificationMethodEmail extends NotificationHandler_1_0 {
 			$ret            = GalleryCoreApi::sendTemplatedEmail(
 				'modules/notification/templates/NotificationEmail.tpl',
 				array(
-					'body'           => $body,
-					'l10Domain'      => 'modules_notification',
+					'body' => $body,
+					'l10Domain' => 'modules_notification',
 					'unsubscribeUrl' => $unsubscribeUrl,
 				),
 				null,

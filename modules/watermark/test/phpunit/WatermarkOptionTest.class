@@ -144,7 +144,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 	public function testWatermarkItem() {
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
 		$result = $this->_handleRequestAfterAdd($form, $this->_images);
-		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
+		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
 
 		$expected = sprintf(
 			'composite|plugins_data/modules/watermark/' .
@@ -152,7 +152,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 			$this->_watermark->getFileName()
 		);
 
-		foreach (array($this->_thumbnails[0], $this->_resizes[0]) as $derivative) {
+		foreach (array( $this->_thumbnails[0], $this->_resizes[0] ) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {
@@ -214,7 +214,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
 		$result = $this->_handleRequestAfterAdd($form, $this->_images);
-		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
+		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
 
 		$expected = sprintf(
 			'composite|plugins_data/modules/watermark/' .
@@ -223,7 +223,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		);
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
-			foreach (array($this->_thumbnails[$j], $this->_resizes[$j]) as $derivative) {
+			foreach (array( $this->_thumbnails[$j], $this->_resizes[$j] ) as $derivative) {
 				list($ret, $derivative) = $derivative->refresh();
 
 				if ($ret) {
@@ -237,9 +237,9 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 	public function testWatermarkItemWithNoWatermark() {
 		$form['WatermarkOption']['watermarkId'] = '';
 		$result = $this->_handleRequestAfterAdd($form, $this->_images);
-		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
+		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
 
-		foreach (array($this->_thumbnails[0], $this->_resizes[0]) as $derivative) {
+		foreach (array( $this->_thumbnails[0], $this->_resizes[0] ) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {
@@ -248,7 +248,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 			// For Oracle, null is replaced with '' when loading data from the database
 			$this->assert(
-				in_array($derivative->getPostFilterOperations(), array(null, '')),
+				in_array($derivative->getPostFilterOperations(), array( null, '' )),
 				'postFilterOperations not empty'
 			);
 			$this->assertEquals(1, $derivative->getSerialNumber());
@@ -288,10 +288,10 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 		$form['WatermarkOption']['watermarkId'] = '';
 		$result = $this->_handleRequestAfterAdd($form, $this->_images);
-		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
+		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
-			foreach (array($this->_thumbnails[$j], $this->_resizes[$j]) as $derivative) {
+			foreach (array( $this->_thumbnails[$j], $this->_resizes[$j] ) as $derivative) {
 				list($ret, $derivative) = $derivative->refresh();
 
 				if ($ret) {
@@ -299,7 +299,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 				}
 				// For Oracle, null is replaced with '' when loading data from the database
 				$this->assert(
-					in_array($derivative->getPostFilterOperations(), array(null, '')),
+					in_array($derivative->getPostFilterOperations(), array( null, '' )),
 					"postFilterOperations not empty for test item $j"
 				);
 				$this->assertEquals(1, $derivative->getSerialNumber());
@@ -310,7 +310,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 	public function testWatermarkNonImage() {
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
 		$result = $this->_handleRequestAfterAdd($form, $this->_items);
-		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
+		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
 
 		list($ret, $derivative) = $this->_itemThumbnails[0]->refresh();
 
@@ -320,7 +320,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 		// For Oracle, null is replaced with '' when loading data from the database
 		$this->assert(
-			in_array($derivative->getPostFilterOperations(), array(null, '')),
+			in_array($derivative->getPostFilterOperations(), array( null, '' )),
 			'postFilterOperations not empty'
 		);
 		$this->assertEquals(1, $derivative->getSerialNumber());
@@ -351,7 +351,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		}
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
 		$result = $this->_handleRequestAfterAdd($form, $this->_items);
-		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
+		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
 			list($ret, $derivative) = $this->_itemThumbnails[$j]->refresh();
@@ -361,7 +361,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 			}
 			// For Oracle, null is replaced with '' when loading data from the database
 			$this->assert(
-				in_array($derivative->getPostFilterOperations(), array(null, '')),
+				in_array($derivative->getPostFilterOperations(), array( null, '' )),
 				"postFilterOperations not empty for test item $j"
 			);
 			$this->assertEquals(1, $derivative->getSerialNumber());
@@ -391,7 +391,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_images);
-		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
+		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
 
 		$expected = sprintf(
 			'composite|plugins_data/modules/watermark/' .
@@ -399,7 +399,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 			$this->_watermark->getFileName()
 		);
 
-		foreach (array($this->_thumbnails[0], $this->_resizes[0]) as $derivative) {
+		foreach (array( $this->_thumbnails[0], $this->_resizes[0] ) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {
@@ -425,7 +425,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 			. 'the Site Admin.'
 		);
 
-		$this->assertEquals(array(array($message), $this->_noWarnings), $result);
+		$this->assertEquals(array( array( $message ), $this->_noWarnings ), $result);
 
 		list($ret, $derivative) = $this->_itemThumbnails[0]->refresh();
 
@@ -435,7 +435,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 		// For Oracle, null is replaced with '' when loading data from the database
 		$this->assert(
-			in_array($derivative->getPostFilterOperations(), array(null, '')),
+			in_array($derivative->getPostFilterOperations(), array( null, '' )),
 			'postFilterOperations not empty'
 		);
 		$this->assertEquals(1, $derivative->getSerialNumber());

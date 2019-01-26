@@ -128,7 +128,7 @@ class RenderView extends GalleryView {
 		}
 
 		// check if comments are active
-		if (in_array($feedType, array('commentsAlbum', 'commentsPhoto', 'commentsRecursive'))) {
+		if (in_array($feedType, array( 'commentsAlbum', 'commentsPhoto', 'commentsRecursive' ))) {
 			// make sure that the comments module is active
 			list($ret, $modulestatus) = GalleryCoreApi::fetchPluginStatus('module');
 

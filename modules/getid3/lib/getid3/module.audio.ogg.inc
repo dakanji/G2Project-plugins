@@ -164,7 +164,7 @@ class getid3_ogg extends getid3_handler {
 			$info['video']['dataformat'] = 'theora';
 			$info['mime_type']           = 'video/ogg';
 			//$info['audio']['bitrate_mode'] = 'abr';
-			//$info['audio']['lossless']     = false;
+			//$info['audio']['lossless'] = false;
 			$info['video']['resolution_x'] = $info['ogg']['pageheader']['theora']['resolution_x'];
 			$info['video']['resolution_y'] = $info['ogg']['pageheader']['theora']['resolution_y'];
 
@@ -575,7 +575,7 @@ class getid3_ogg extends getid3_handler {
 		$commentdataoffset   += 4;
 		$info['avdataoffset'] = $CommentStartOffset + $commentdataoffset;
 
-		$basicfields                   = array('TITLE', 'ARTIST', 'ALBUM', 'TRACKNUMBER', 'GENRE', 'DATE', 'DESCRIPTION', 'COMMENT');
+		$basicfields                   = array( 'TITLE', 'ARTIST', 'ALBUM', 'TRACKNUMBER', 'GENRE', 'DATE', 'DESCRIPTION', 'COMMENT' );
 		$ThisFileInfo_ogg_comments_raw = &$info['ogg']['comments_raw'];
 
 		for ($i = 0; $i < $CommentsCount; $i++) {
@@ -696,12 +696,12 @@ class getid3_ogg extends getid3_handler {
 					$ogg = new self($this->getid3);
 					$ogg->setStringMode($data);
 					$info['ogg']['comments']['picture'][] = array(
-						'image_mime'   => $imageinfo['mime'],
-						'datalength'   => strlen($data),
-						'picturetype'  => 'cover art',
+						'image_mime' => $imageinfo['mime'],
+						'datalength' => strlen($data),
+						'picturetype' => 'cover art',
 						'image_height' => $imageinfo['height'],
-						'image_width'  => $imageinfo['width'],
-						'data'         => $ogg->saveAttachment('coverart', 0, strlen($data), $imageinfo['mime']),
+						'image_width' => $imageinfo['width'],
+						'data' => $ogg->saveAttachment('coverart', 0, strlen($data), $imageinfo['mime']),
 					);
 					unset($ogg);
 				} else {

@@ -104,8 +104,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.UserAdmin',
-					'subView'     => 'watermark.UserWatermarkEdit',
+					'view' => 'core.UserAdmin',
+					'subView' => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
 				'status' => array(),
@@ -132,11 +132,11 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(),
-				'error' => array('form[error][missingFile]'),
+				'error' => array( 'form[error][missingFile]' ),
 			),
 			$results
 		);
@@ -164,7 +164,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(
@@ -228,8 +228,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.UserAdmin',
-					'subView'     => 'watermark.ConfirmDelete',
+					'view' => 'core.UserAdmin',
+					'subView' => 'watermark.ConfirmDelete',
 					'watermarkId' => $watermark->getId(),
 				),
 				'status' => array(),
@@ -282,8 +282,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.UserAdmin',
-					'subView'     => 'watermark.UserWatermarkEdit',
+					'view' => 'core.UserAdmin',
+					'subView' => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
 				'status' => array(),
@@ -338,8 +338,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.UserAdmin',
-					'subView'     => 'watermark.UserWatermarkEdit',
+					'view' => 'core.UserAdmin',
+					'subView' => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
 				'status' => array(),
@@ -366,8 +366,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'        => 'core.UserAdmin',
-					'subView'     => 'watermark.UserWatermarkEdit',
+					'view' => 'core.UserAdmin',
+					'subView' => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
 				'status' => array(),
@@ -428,7 +428,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		list($ret, $watermarks) = WatermarkHelper::fetchWatermarks();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$results = array();
@@ -437,6 +437,6 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 			$results[$watermark->getFilename()] = $watermark;
 		}
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }

@@ -67,15 +67,15 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ThumbnailTestToolkit',
-			array('image/jpeg'),
+			array( 'image/jpeg' ),
 			'thumbnail',
 			array(
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'foo',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'foo',
 				),
 			),
@@ -116,7 +116,7 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 		$ret = GalleryCoreApi::unregisterToolkitOperation(
 			'Thumbnail',
 			'thumbnail',
-			array('test/fakemime', 'image/jpeg')
+			array( 'test/fakemime', 'image/jpeg' )
 		);
 
 		if ($ret) {
@@ -138,7 +138,7 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			__DIR__ . '/x',
 			__DIR__ . '/y',
-			array(150)
+			array( 150 )
 		);
 
 		if ($ret) {
@@ -156,7 +156,7 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 			'bad-operation',
 			__DIR__ . '/x',
 			__DIR__ . '/y',
-			array(150)
+			array( 150 )
 		);
 
 		if ($ret) {
@@ -177,7 +177,7 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			__DIR__ . '/x',
 			$gallery->getConfig('data.gallery.base') . '/unittest.jpg',
-			array(150)
+			array( 150 )
 		);
 
 		if ($ret) {
@@ -197,7 +197,7 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			__DIR__ . '/x',
 			$gallery->getConfig('data.gallery.base') . '/unittest.jpg',
-			array(150)
+			array( 150 )
 		);
 
 		if ($ret) {
@@ -241,9 +241,9 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 		$ret = GalleryCoreApi::updateMapEntry(
 			'GalleryToolkitOperationMimeTypeMap',
 			array(
-				'toolkitId'     => 'Thumbnail',
+				'toolkitId' => 'Thumbnail',
 				'operationName' => 'thumbnail',
-				'mimeType'      => 'image/jpeg',
+				'mimeType' => 'image/jpeg',
 			),
 			array(
 				'priority' => 1,
@@ -280,7 +280,7 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			__DIR__ . '/x',
 			$gallery->getConfig('data.gallery.base') . '/unittest.jpg',
-			array(150)
+			array( 150 )
 		);
 
 		if ($ret && $ret->getErrorCode() & ERROR_UNSUPPORTED_OPERATION) {
@@ -320,6 +320,6 @@ class ThumbnailTestToolkit {
 		$context = array()
 	) {
 		// Do nothing
-		return array(null, $mimeType, $context);
+		return array( null, $mimeType, $context );
 	}
 }

@@ -88,7 +88,7 @@ class CustomFieldHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				$this->_album->getId() => array(),
-				$this->_item->getId()  => array(),
+				$this->_item->getId() => array(),
 				$this->_item2->getId() => array(),
 			),
 			$data,
@@ -105,31 +105,31 @@ class CustomFieldHelperTest extends GalleryTestCase {
 			array(
 				'common' => array(
 					array(
-						'field'   => 'Category',
+						'field' => 'Category',
 						'summary' => true,
-						'detail'  => false,
-						'choices' => array('A', 'B', 'C'),
+						'detail' => false,
+						'choices' => array( 'A', 'B', 'C' ),
 					),
 				),
 				'album' => array(
 					array(
-						'field'   => 'Catalog Id',
+						'field' => 'Catalog Id',
 						'summary' => false,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 					array(
-						'field'   => 'Year',
+						'field' => 'Year',
 						'summary' => false,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 				),
 				'photo' => array(
 					array(
-						'field'   => 'Photographer',
+						'field' => 'Photographer',
 						'summary' => true,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 				),
@@ -174,7 +174,7 @@ class CustomFieldHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				$this->_album->getId() => $itemFields,
-				$this->_item->getId()  => $itemFields,
+				$this->_item->getId() => $itemFields,
 				$this->_item2->getId() => array(),
 			),
 			$data,

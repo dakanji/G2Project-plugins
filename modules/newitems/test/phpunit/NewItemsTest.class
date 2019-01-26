@@ -57,7 +57,7 @@ class NewItemsTest extends GalleryTestCase {
 		list($ret, $this->_album) = $this->_createRandomAlbum(
 			$this->_getRootId(),
 			array(
-				'orderBy'        => 'NewItems|title',
+				'orderBy' => 'NewItems|title',
 				'orderDirection' => ORDER_DESCENDING,
 			)
 		);
@@ -114,7 +114,7 @@ class NewItemsTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(
-			array($this->_items[2]->getId(), $this->_items[3]->getId(), $this->_items[1]->getId()),
+			array( $this->_items[2]->getId(), $this->_items[3]->getId(), $this->_items[1]->getId() ),
 			$childIds,
 			'order of child ids'
 		);

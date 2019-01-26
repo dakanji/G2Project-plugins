@@ -90,19 +90,19 @@ class getid3_nsv extends getid3_handler {
 
 		$info['nsv']['NSVs']['framerate_index'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-		//$info['nsv']['NSVs']['unknown1b']       = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+		//$info['nsv']['NSVs']['unknown1b'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-		//$info['nsv']['NSVs']['unknown1c']       = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+		//$info['nsv']['NSVs']['unknown1c'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-		//$info['nsv']['NSVs']['unknown1d']       = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+		//$info['nsv']['NSVs']['unknown1d'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-		//$info['nsv']['NSVs']['unknown2a']       = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+		//$info['nsv']['NSVs']['unknown2a'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-		//$info['nsv']['NSVs']['unknown2b']       = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+		//$info['nsv']['NSVs']['unknown2b'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-		//$info['nsv']['NSVs']['unknown2c']       = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+		//$info['nsv']['NSVs']['unknown2c'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-		//$info['nsv']['NSVs']['unknown2d']       = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+		//$info['nsv']['NSVs']['unknown2d'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
 
 		switch ($info['nsv']['NSVs']['audio_codec']) {
@@ -121,7 +121,7 @@ class getid3_nsv extends getid3_handler {
 			case 'MP3 ':
 			case 'NONE':
 			default:
-				//$info['nsv']['NSVs']['unknown3']     = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 4));
+				//$info['nsv']['NSVs']['unknown3'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 4));
 				$offset += 4;
 
 				break;

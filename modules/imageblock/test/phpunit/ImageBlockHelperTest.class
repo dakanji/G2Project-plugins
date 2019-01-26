@@ -35,11 +35,11 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		list($ret, $album) = $this->_createRandomAlbum($this->_getRootId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$this->_markForCleanup($album);
 
-		return array(null, $album);
+		return array( null, $album );
 	}
 
 	public function _createHierarchy() {
@@ -62,7 +62,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		list($ret, $album) = $this->_createRandomAlbum($parentId);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		$items = array();
@@ -71,11 +71,11 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			list($ret, $items[$i]) = $this->_createRandomDataItem($album->getId());
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, $album, $items);
+		return array( null, $album, $items );
 	}
 
 	public function testImageBlockHelperGetDisabledFlag() {
@@ -276,7 +276,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		// Verify the precondition of the test
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'ImageBlockDisabledMap',
-			array('itemId'),
+			array( 'itemId' ),
 			array(
 				'itemId' => $itemIds,
 			)
@@ -315,7 +315,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		// Verify the results
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'ImageBlockDisabledMap',
-			array('itemId'),
+			array( 'itemId' ),
 			array(
 				'itemId' => $itemIds,
 			)
@@ -545,8 +545,8 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		$isCachedQuery = 'SELECT COUNT(*) FROM [ImageBlockCacheMap] WHERE [ImageBlockCacheMap::userId] = ?';
 		$storage->setReply(
 			'search',
-			array($isCachedQuery, array($userId), array()),
-			array(null, new UnitTestStorageSearchResults(array(array(2))))
+			array( $isCachedQuery, array( $userId ), array() ),
+			array( null, new UnitTestStorageSearchResults(array( array( 2 ) )) )
 		);
 
 		$query = '
@@ -557,11 +557,11 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		. '[ImageBlockCacheMap::random] IS NOT NULL AND [ImageBlockDisabledMap::itemId] IS NULL';
 		$storage->setReply(
 			'search',
-			array($query, array($userId, 1), array()),
-			array(null, new UnitTestStorageSearchResults(array(array(5, 9))))
+			array( $query, array( $userId, 1 ), array() ),
+			array( null, new UnitTestStorageSearchResults(array( array( 5, 9 ) )) )
 		);
 
-		$phpVm->setReply('rand', array(5, 9), 7);
+		$phpVm->setReply('rand', array( 5, 9 ), 7);
 
 		$query = 'SELECT [ImageBlockCacheMap::itemId] FROM [ImageBlockCacheMap] '
 		   . 'LEFT JOIN [ImageBlockDisabledMap] ON '
@@ -571,14 +571,14 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		   . 'ORDER BY [ImageBlockCacheMap::random] ASC';
 		$storage->setReply(
 			'getFunctionSql',
-			array('LIMIT', array(2, $query)),
-			array(null, $query . ' LIMIT 2')
+			array( 'LIMIT', array( 2, $query ) ),
+			array( null, $query . ' LIMIT 2' )
 		);
 
 		$storage->setReply(
 			'search',
-			array($query . ' LIMIT 2', array($userId, 1, 6), array()),
-			array(null, new UnitTestStorageSearchResults(array(array(15, 4), array(19, 99))))
+			array( $query . ' LIMIT 2', array( $userId, 1, 6 ), array() ),
+			array( null, new UnitTestStorageSearchResults(array( array( 15, 4 ), array( 19, 99 ) )) )
 		);
 
 		list($ret, $results) = ImageBlockHelper::fetchViewableData('Image', 'random', 2);
@@ -590,11 +590,11 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				array(
-					'id'        => 15,
+					'id' => 15,
 					'viewCount' => 4,
 				),
 				array(
-					'id'        => 19,
+					'id' => 19,
 					'viewCount' => 99,
 				),
 			),
@@ -675,8 +675,8 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 		$storage->setReply(
 			'search',
-			array($query, array($gallery->getActiveUserId(), 1), array()),
-			array(null, new UnitTestStorageSearchResults(array(array(5, 9))))
+			array( $query, array( $gallery->getActiveUserId(), 1 ), array() ),
+			array( null, new UnitTestStorageSearchResults(array( array( 5, 9 ) )) )
 		);
 
 		list($ret, $range) = ImageBlockHelper::getRandomKeyRange($gallery->getActiveUserId(), 1);
@@ -685,7 +685,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array(5, 9), $range);
+		$this->assertEquals(array( 5, 9 ), $range);
 
 		$this->assert($storage->isComplete(), $storage->getRemaining());
 	}

@@ -86,7 +86,7 @@ class PanoramaHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $results) = PanoramaHelper::fetchViewableImages(array($this->_item));
+		list($ret, $results) = PanoramaHelper::fetchViewableImages(array( $this->_item ));
 
 		if ($ret) {
 			return $ret;
@@ -134,7 +134,7 @@ class PanoramaHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $results) = PanoramaHelper::fetchViewableImages(array($this->_item));
+		list($ret, $results) = PanoramaHelper::fetchViewableImages(array( $this->_item ));
 
 		if ($ret) {
 			return $ret;
@@ -182,7 +182,7 @@ class PanoramaHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $results) = PanoramaHelper::fetchViewableImages(array($this->_item));
+		list($ret, $results) = PanoramaHelper::fetchViewableImages(array( $this->_item ));
 
 		if ($ret) {
 			return $ret;
@@ -219,7 +219,7 @@ class PanoramaHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $results) = PanoramaHelper::fetchViewableImages(array($this->_item));
+		list($ret, $results) = PanoramaHelper::fetchViewableImages(array( $this->_item ));
 
 		if ($ret) {
 			return $ret;

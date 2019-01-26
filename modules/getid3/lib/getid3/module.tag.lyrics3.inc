@@ -180,7 +180,7 @@ class getid3_lyrics3 extends getid3_handler {
 
 					if (isset($ParsedLyrics3['raw']['IND'])) {
 						$i         = 0;
-						$flagnames = array('lyrics', 'timestamps', 'inhibitrandom');
+						$flagnames = array( 'lyrics', 'timestamps', 'inhibitrandom' );
 
 						foreach ($flagnames as $flagname) {
 							if (strlen($ParsedLyrics3['raw']['IND']) > $i++) {

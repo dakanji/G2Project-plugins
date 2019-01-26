@@ -38,7 +38,7 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'     => 'publishxp.NewAlbum',
+					'view' => 'publishxp.NewAlbum',
 					'parentId' => 1,
 				),
 				'status' => array(),
@@ -58,7 +58,7 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 					'view' => 'publishxp.SelectAlbum',
 				),
 				'status' => array(),
-				'error' => array('form[error][albumId][missing]'),
+				'error' => array( 'form[error][albumId][missing]' ),
 			),
 			$result
 		);
@@ -72,7 +72,7 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'publishxp.Options',
+					'view' => 'publishxp.Options',
 					'albumId' => 1,
 				),
 				'status' => array(),
@@ -92,7 +92,7 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 					'view' => 'publishxp.SelectAlbum',
 				),
 				'status' => array(),
-				'error' => array('form[error][albumId][missing]'),
+				'error' => array( 'form[error][albumId][missing]' ),
 			),
 			$result
 		);

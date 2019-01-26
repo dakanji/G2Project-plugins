@@ -189,7 +189,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'test');
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array(array(), array()), $results);
+		$this->assertEquals(array( array(), array() ), $results);
 
 		$template = null;
 
@@ -213,7 +213,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			'file://hoho' => array(),
 		) as $url => $error) {
 			$form                        = array(
-				'action'   => array(
+				'action' => array(
 					'checkUrl' => 1,
 				),
 				'formName' => 'ItemAddWebCam',
@@ -270,7 +270,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			'http://blah' => array(),
 		) as $url => $error) {
 			$form                        = array(
-				'action'   => array(
+				'action' => array(
 					'checkUrl' => 1,
 				),
 				'formName' => 'ItemAddWebCam',
@@ -294,10 +294,10 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 		$results = $this->handleRequest($this->_album);
 		$this->assertEquals(array(), $results[0], 'no error');
-		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
+		$this->assertEquals(array( 'addedFiles' ), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
 		$this->assertEquals(
-			array('fileName', 'id', 'warnings'),
+			array( 'fileName', 'id', 'warnings' ),
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
@@ -311,7 +311,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			return $ret;
 		}
 		$results = $this->handleRequest($this->_album, ERROR_PERMISSION_DENIED);
-		$this->assertEquals(array(null, null), $results);
+		$this->assertEquals(array( null, null ), $results);
 	}
 
 	public function testAddWebCamAltHeader() {
@@ -321,10 +321,10 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 		$results = $this->handleRequest($this->_album);
 		$this->assertEquals(array(), $results[0], 'should succeed');
-		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
+		$this->assertEquals(array( 'addedFiles' ), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
 		$this->assertEquals(
-			array('fileName', 'id', 'warnings'),
+			array( 'fileName', 'id', 'warnings' ),
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
@@ -336,7 +336,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'http://test.com/404.jpg');
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array('form[error][imageUrl][unavailable]'), $results[0], 'error');
+		$this->assertEquals(array( 'form[error][imageUrl][unavailable]' ), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
 
@@ -345,7 +345,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'http://test.com/test.html');
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array('form[error][imageUrl][notImage]'), $results[0], 'error');
+		$this->assertEquals(array( 'form[error][imageUrl][notImage]' ), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
 
@@ -354,7 +354,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'test://test.com/test.jpg');
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array('form[error][imageUrl][invalid]'), $results[0], 'error');
+		$this->assertEquals(array( 'form[error][imageUrl][invalid]' ), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
 
@@ -364,10 +364,10 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 		$results = $this->handleRequest($this->_album);
 		$this->assertEquals(array(), $results[0], 'no error');
-		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
+		$this->assertEquals(array( 'addedFiles' ), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
 		$this->assertEquals(
-			array('fileName', 'id', 'warnings'),
+			array( 'fileName', 'id', 'warnings' ),
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
@@ -403,7 +403,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'file:///tmp/test.jpg');
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array('form[error][imageUrl][invalid]'), $results[0], 'error');
+		$this->assertEquals(array( 'form[error][imageUrl][invalid]' ), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
 
@@ -417,10 +417,10 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		$results = $this->handleRequest($this->_album);
 		$this->assertEquals(array(), $results[0], 'no error');
 		$this->assertEquals(array(), $results[0], 'no error');
-		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
+		$this->assertEquals(array( 'addedFiles' ), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
 		$this->assertEquals(
-			array('fileName', 'id', 'warnings'),
+			array( 'fileName', 'id', 'warnings' ),
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
@@ -471,7 +471,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'ItemAddWebCamTestToolkit',
-			array('image/test'),
+			array( 'image/test' ),
 			'dimensions',
 			'int,int',
 			'Get the dimensions'
@@ -617,7 +617,7 @@ class ItemAddWebCamTestPlatform {
 			case 'test.jpg':
 			case 'testimage':
 			case 'foo_script_bar.jpg':
-				$result = array(100, 200);
+				$result = array( 100, 200 );
 
 				break;
 
@@ -771,7 +771,7 @@ class ItemAddWebCamTestPlatform {
 
 	public function exec($cmd) {
 		// In case add of jpeg tries to get 'colorspace' property
-		return array(true, array(''), array());
+		return array( true, array( '' ), array() );
 	}
 }
 

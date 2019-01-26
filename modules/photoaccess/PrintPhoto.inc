@@ -36,14 +36,14 @@ class PrintPhotoController extends GalleryController {
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$returnUrl = GalleryUtilities::getRequestVariables('returnUrl');
 		$ret       = $urlGenerator->assertIsInternalUrl($returnUrl);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		GalleryCoreApi::requireOnce('modules/photoaccess/classes/PhotoAccessHelper.class');
@@ -55,7 +55,7 @@ class PrintPhotoController extends GalleryController {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Prepare our results
@@ -63,6 +63,6 @@ class PrintPhotoController extends GalleryController {
 		$results['status']           = array();
 		$results['error']            = array();
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }

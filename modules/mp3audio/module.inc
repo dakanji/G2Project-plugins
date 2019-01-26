@@ -37,8 +37,8 @@ class MP3AudioModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('');
-		$this->setRequiredCoreApi(array(7, 27));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 27 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -93,7 +93,7 @@ class MP3AudioModule extends GalleryModule {
 		list($ret, $searchResults) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$ids = array();
 
@@ -106,7 +106,7 @@ class MP3AudioModule extends GalleryModule {
 			list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryDataItem');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach ($items as $item) {
@@ -114,14 +114,14 @@ class MP3AudioModule extends GalleryModule {
 					list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($item->getId());
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 					list($ret, $item) = $item->refresh();
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
 
-						return array($ret, null);
+						return array( $ret, null );
 					}
 					$item->setRenderer('MP3AudioRenderer');
 					$ret = $item->save();
@@ -129,29 +129,29 @@ class MP3AudioModule extends GalleryModule {
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
 
-						return array($ret, null);
+						return array( $ret, null );
 					}
 					$ret = GalleryCoreApi::releaseLocks($lockId);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 			}
 			$ret = $storage->checkPoint();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $redirect);
+		return array( null, $redirect );
 	}
 
 	/**

@@ -62,8 +62,8 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		// Activate the mock platform
 		$gallery->setPlatform($this->_platform);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-		$this->_platform->setReply('file_exists', array('/index.xml'), true);
-		$this->_platform->setReply('is_readable', array('/index.xml'), false);
+		$this->_platform->setReply('file_exists', array( '/index.xml' ), true);
+		$this->_platform->setReply('is_readable', array( '/index.xml' ), false);
 
 		GalleryUtilities::putRequestVariable('form[picasaXmlPath]', '/');
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
@@ -72,11 +72,11 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'picasa.SelectPicasaExportPath',
 				),
 				'status' => array(),
-				'error' => array('form[error][picasaXmlPath][invalid]'),
+				'error' => array( 'form[error][picasaXmlPath][invalid]' ),
 			),
 			$results
 		);
@@ -90,8 +90,8 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		// Activate the mock platform
 		$gallery->setPlatform($this->_platform);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-		$this->_platform->setReply('file_exists', array('/index.xml'), true);
-		$this->_platform->setReply('is_readable', array('/index.xml'), true);
+		$this->_platform->setReply('file_exists', array( '/index.xml' ), true);
+		$this->_platform->setReply('is_readable', array( '/index.xml' ), true);
 
 		$picasaXmlPath = '/';
 
@@ -103,9 +103,9 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'               => 'core.SiteAdmin',
-					'subView'            => 'picasa.ConfirmPicasaImport',
-					'picasaXmlPath'      => $picasaXmlPath,
+					'view' => 'core.SiteAdmin',
+					'subView' => 'picasa.ConfirmPicasaImport',
+					'picasaXmlPath' => $picasaXmlPath,
 					'destinationAlbumId' => '0',
 				),
 				'status' => array(),
@@ -126,11 +126,11 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'picasa.SelectPicasaExportPath',
 				),
 				'status' => array(),
-				'error' => array('form[error][picasaXmlPath][missing]'),
+				'error' => array( 'form[error][picasaXmlPath][missing]' ),
 			),
 			$results
 		);

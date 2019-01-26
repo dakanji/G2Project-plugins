@@ -141,13 +141,13 @@ class RssRenderTest extends GalleryControllerTestCase {
 		$feedUrl = urlencode(
 			$urlGenerator->generateUrl(
 				array(
-					'view'   => 'rss.SimpleRender',
+					'view' => 'rss.SimpleRender',
 					'itemId' => $this->_root->getId(),
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl'   => true,
-					'htmlEntities'   => false,
+					'forceFullUrl' => true,
+					'htmlEntities' => false,
 				)
 			)
 		);
@@ -209,8 +209,8 @@ class RssRenderTest extends GalleryControllerTestCase {
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl'   => true,
-					'htmlEntities'   => false,
+					'forceFullUrl' => true,
+					'htmlEntities' => false,
 				)
 			)
 		);

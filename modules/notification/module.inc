@@ -40,8 +40,8 @@ class NotificationModule extends GalleryModule {
 		);
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setVersion('1.0.3');
-		$this->setRequiredCoreApi(array(7, 37));
-		$this->setRequiredModuleApi(array(3, 9));
+		$this->setRequiredCoreApi(array( 7, 37 ));
+		$this->setRequiredModuleApi(array( 3, 9 ));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews|getItemLinks|getItemAdminViews');
 	}
 
@@ -71,7 +71,7 @@ class NotificationModule extends GalleryModule {
 			'NotificationItemStateChangeHandler',
 			$handlerPath,
 			'notification',
-			array('GalleryEntity::delete', 'GalleryEntity::save')
+			array( 'GalleryEntity::delete', 'GalleryEntity::save' )
 		);
 
 		if ($ret) {
@@ -99,91 +99,91 @@ class NotificationModule extends GalleryModule {
 			'ActivatePluginNotification',
 			'ActivatePluginNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::ActivatePlugin'),
+			array( 'Gallery::ActivatePlugin' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'DeactivatePluginNotification',
 			'DeactivatePluginNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::DeactivatePlugin'),
+			array( 'Gallery::DeactivatePlugin' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'ErrorNotification',
 			'ErrorNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::Error'),
+			array( 'Gallery::Error' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'ItemOrderNotification',
 			'ItemOrderNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::ItemOrder'),
+			array( 'Gallery::ItemOrder' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'LoginNotification',
 			'LoginNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::Login'),
+			array( 'Gallery::Login' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'FailedLoginNotification',
 			'FailedLoginNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::FailedLogin'),
+			array( 'Gallery::FailedLogin' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'LogoutNotification',
 			'LogoutNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::Logout'),
+			array( 'Gallery::Logout' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'RemovePermissionNotification',
 			'RemovePermissionNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::RemovePermission'),
+			array( 'Gallery::RemovePermission' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'UninstallPluginNotification',
 			'UninstallPluginNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::UninstallPlugin'),
+			array( 'Gallery::UninstallPlugin' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'AlbumStructureChangeNotification',
 			'AlbumStructureChangeNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::ViewableTreeChange'),
+			array( 'Gallery::ViewableTreeChange' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'SaveNotification',
 			'SaveNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('GalleryEntity::save'),
+			array( 'GalleryEntity::save' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'DeleteNotification',
 			'DeleteNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('GalleryEntity::delete'),
+			array( 'GalleryEntity::delete' ),
 		);
 		$events[] = array(
 			'NotificationEvent_1_0',
 			'ItemAddedNotification',
 			'ItemAddedNotification',
 			'modules/notification/classes/GalleryCoreEventNotifications.class',
-			array('Gallery::itemAdded'),
+			array( 'Gallery::itemAdded' ),
 		);
 
 		foreach ($events as $entry) {
@@ -253,7 +253,7 @@ class NotificationModule extends GalleryModule {
 		list($ret, $showView) = $this->_showWatch($userId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($showView) {
@@ -263,7 +263,7 @@ class NotificationModule extends GalleryModule {
 			);
 		}
 
-		return array(null, $views);
+		return array( null, $views );
 	}
 
 	/**
@@ -273,7 +273,7 @@ class NotificationModule extends GalleryModule {
 		list($ret, $showView) = $this->_showWatch();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		return array(
@@ -296,23 +296,23 @@ class NotificationModule extends GalleryModule {
 		list($ret, $showView) = $this->_showWatch($userId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($showView) {
 			foreach ($items as $item) {
 				$links[$item->getId()][] = array(
-					'text'   => $this->translate('Watch'),
+					'text' => $this->translate('Watch'),
 					'params' => array(
-						'view'    => 'core.ItemAdmin',
+						'view' => 'core.ItemAdmin',
 						'subView' => 'notification.NotificationItemAdmin',
-						'itemId'  => $item->getId(),
+						'itemId' => $item->getId(),
 					),
 				);
 			}
 		}
 
-		return array(null, $links);
+		return array( null, $links );
 	}
 
 	/**
@@ -347,7 +347,7 @@ class NotificationModule extends GalleryModule {
 				}
 				$count = $results->nextResult();
 
-				$select = array('eventClass', 'userId', 'methodClass', 'filter');
+				$select = array( 'eventClass', 'userId', 'methodClass', 'filter' );
 
 				$offset     = 0;
 				$blockCount = 200;
@@ -391,7 +391,7 @@ class NotificationModule extends GalleryModule {
 
 					while ($row = $results->nextResult()) {
 						$newRow                     = array(
-							'userId'      => $row[1],
+							'userId' => $row[1],
 							'handlerName' => 'NotificationMethodEmail',
 						);
 						$notificationName           = $row[0] == 'NotificationEventItemAdd' ? 'ItemAddedNotification' : 'CommentAddNotification';
@@ -404,7 +404,7 @@ class NotificationModule extends GalleryModule {
 						}
 						$enableMap[$notificationName]['NotificationMethodEmail'] = array(
 							'enabled' => true,
-							'public'  => true,
+							'public' => true,
 						);
 					}
 					$offset += $blockCount;
@@ -456,7 +456,7 @@ class NotificationModule extends GalleryModule {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser($userId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$show = false;
@@ -465,11 +465,11 @@ class NotificationModule extends GalleryModule {
 			list($ret, $notifications) = NotificationHelper::getEnabledNotifications();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$show = count($notifications) > 0;
 		}
 
-		return array(null, $show);
+		return array( null, $show );
 	}
 }

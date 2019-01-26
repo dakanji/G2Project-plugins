@@ -155,8 +155,7 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		// Add permission so album/item can appear in dailyImage, monthlyAlbum, etc.
-		list($ret, $this->_everybodyGroupId) =
-		GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
+		list($ret, $this->_everybodyGroupId) = 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
 
 		if ($ret) {
 			return $ret;
@@ -247,8 +246,7 @@ class ImageBlockTest extends GalleryTestCase {
 	}
 
 	public function _addDerivative(&$item, &$src, $derivativeType, $size, $forceSize=false) {
-		list($ret, $derivative) =
-		GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $src->getEntityType());
+		list($ret, $derivative) = 		GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $src->getEntityType());
 
 		if ($ret) {
 			return array($ret, null);

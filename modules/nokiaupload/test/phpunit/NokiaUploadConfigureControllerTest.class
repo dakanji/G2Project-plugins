@@ -94,8 +94,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function testGroupCollision() {
-		list($ret, $groupId) =
-		GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
+		list($ret, $groupId) = 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
 
 		if ($ret) {
 			return $ret;
@@ -154,8 +153,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		$this->assert(!empty($params['id.uploadAlbum']), 'album param');
 		$this->_groupId = $params['id.mobileGroup'];
 
-		list($ret, $perms) =
-		GalleryCoreApi::fetchAllPermissionsForItem($params['id.uploadAlbum'], true);
+		list($ret, $perms) = 		GalleryCoreApi::fetchAllPermissionsForItem($params['id.uploadAlbum'], true);
 
 		if ($ret) {
 			return $ret;

@@ -108,7 +108,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 		$ret = $mockAdapter->runCallbacks();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (is_array($expectedProgressBarDump)) {
@@ -125,7 +125,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 		$session =& $gallery->getSession();
 		$status  = $session->getStatus();
 
-		return array(null, $status);
+		return array( null, $status );
 	}
 
 	/**
@@ -139,7 +139,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'picasa.SelectPicasaExportPath',
 				),
 				'status' => array(),
@@ -207,22 +207,22 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 		);
 		// Calls that read the mock xml and create the album
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-		$this->_platform->setReply('file_exists', array('/index.xml'), true);
-		$this->_platform->setReply('is_readable', array('/index.xml'), true);
-		$this->_platform->setReply('file', array('/index.xml', ''), $testXmlData);
+		$this->_platform->setReply('file_exists', array( '/index.xml' ), true);
+		$this->_platform->setReply('is_readable', array( '/index.xml' ), true);
+		$this->_platform->setReply('file', array( '/index.xml', '' ), $testXmlData);
 		$this->_platform->setReply(
 			'legalizePathComponent',
-			array('GalleryTest 2<script>evil', false),
+			array( 'GalleryTest 2<script>evil', false ),
 			'GalleryTest 2_script_evil'
 		);
 		$this->_platform->setReply(
 			'isLegalPathComponent',
-			array('GalleryTest 2_script_evil', false),
+			array( 'GalleryTest 2_script_evil', false ),
 			true
 		);
 		$this->_platform->setReply(
 			'legalizePathComponent',
-			array('GalleryTest 2_script_evil', true),
+			array( 'GalleryTest 2_script_evil', true ),
 			'GalleryTest 2_script_evil'
 		);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
@@ -243,17 +243,17 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 		);
 
 		// Image creation
-		$testImages = array('ajipankachile5.jpg0', 'californiadriedchile5.jpg0', 'a<script>b.jpg0');
+		$testImages = array( 'ajipankachile5.jpg0', 'californiadriedchile5.jpg0', 'a<script>b.jpg0' );
 
 		foreach ($testImages as $testImage) {
 			$this->_platform->setReply(
 				'is_uploaded_file',
-				array('/images/' . $testImage . ''),
+				array( '/images/' . $testImage . '' ),
 				true
 			);
 			$this->_platform->setReply(
 				'legalizePathComponent',
-				array($testImage, false),
+				array( $testImage, false ),
 				$testImage
 			);
 			$this->_platform->setReply('getDirectorySeparator', array(), '/');
@@ -292,11 +292,11 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 
 		$results = $this->handleRequest();
 		$this->assertEquals(
-			array('GalleryTest 2&lt;script&gt;evil'),
+			array( 'GalleryTest 2&lt;script&gt;evil' ),
 			array_keys($status['albumImportSuccess'])
 		);
 		$this->assertEquals(
-			array('ajipankachile5.jpg0', 'californiadriedchile5.jpg0', 'a&lt;script&gt;b.jpg0'),
+			array( 'ajipankachile5.jpg0', 'californiadriedchile5.jpg0', 'a&lt;script&gt;b.jpg0' ),
 			array_keys($status['pictureImportSuccess'])
 		);
 		$this->assertEquals(array(), $status['albumImportFailure']);

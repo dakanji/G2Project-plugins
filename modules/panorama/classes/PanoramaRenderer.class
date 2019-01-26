@@ -62,12 +62,12 @@ class PanoramaRenderer extends GalleryRenderer {
 			case 'HTML':
 				$src         = $urlGenerator->generateUrl(
 					array(
-						'view'         => 'core.DownloadItem',
-						'itemId'       => $entity->getId(),
+						'view' => 'core.DownloadItem',
+						'itemId' => $entity->getId(),
 						'serialNumber' => $entity->getSerialNumber(),
 					),
 					array(
-						'forceFullUrl'   => true,
+						'forceFullUrl' => true,
 						'forceSessionId' => true,
 					)
 				);
@@ -88,7 +88,7 @@ class PanoramaRenderer extends GalleryRenderer {
 					)
 				);
 
-				list($width, $height) = array($entity->getWidth(), $entity->getHeight());
+				list($width, $height) = array( $entity->getWidth(), $entity->getHeight() );
 
 				$downloadText = $module->translate('Downloading the Panorama Applet');
 				$noAppletText = $module->translate('Your browser does not support Java applets');

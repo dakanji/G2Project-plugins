@@ -40,8 +40,8 @@ class RssModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
-		$this->setRequiredCoreApi(array(7, 34));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 34 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -70,13 +70,13 @@ class RssModule extends GalleryModule {
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'rss');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $modulestatus) = GalleryCoreApi::fetchPluginStatus('module');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		foreach ($items as $item) {
@@ -114,7 +114,7 @@ class RssModule extends GalleryModule {
 							$itemTypeNames[2]
 						),
 						'params' => array(
-							'view'   => 'rss.SimpleRender',
+							'view' => 'rss.SimpleRender',
 							'itemId' => $itemId,
 						),
 					);
@@ -124,23 +124,23 @@ class RssModule extends GalleryModule {
 			list($ret, $canConfigure) = RssMapHelper::canConfigureFeed($item, $param, $userId);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if ($canConfigure) {
 				$links[$itemId][] = array(
-					'text'   => $this->translate('Configure RSS Feeds'),
+					'text' => $this->translate('Configure RSS Feeds'),
 					'params' => array(
-						'view'    => 'core.ItemAdmin',
+						'view' => 'core.ItemAdmin',
 						'subView' => 'rss.EditFeed',
-						'itemId'  => $itemId,
-						'return'  => 1,
+						'itemId' => $itemId,
+						'return' => 1,
 					),
 				);
 			}
 		}
 
-		return array(null, $links);
+		return array( null, $links );
 	}
 
 	/**
@@ -166,7 +166,7 @@ class RssModule extends GalleryModule {
 			'keywords' => array(
 				'name' => array(
 					'pattern' => '([^\/\?]+)',
-					'help'    => $this->translate('The name of the configured RSS Feed'),
+					'help' => $this->translate('The name of the configured RSS Feed'),
 				),
 			),
 			'help'     => $this->translate('Short URL for Configurable RSS Feeds'),
@@ -185,7 +185,7 @@ class RssModule extends GalleryModule {
 			'RssModule',
 			'modules/rss/module.inc',
 			'rss',
-			array('GalleryEntity::delete')
+			array( 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {
@@ -211,20 +211,20 @@ class RssModule extends GalleryModule {
 				list($ret, $results) = RssMapHelper::fetchFeedsForItem($entity->getId());
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				foreach ($results as $feed) {
 					$ret = RssMapHelper::deleteFeed($feed['name']);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 			}
 		}
 
-		return array(null, null);
+		return array( null, null );
 	}
 
 	/**
@@ -240,18 +240,18 @@ class RssModule extends GalleryModule {
 				// Initial install
 
 				foreach (array(
-					'defaultVersion'        => '2.0',
-					'defaultCount'          => 10,
-					'maxCount'              => 50,
-					'allowSimpleFeed'       => 1,
+					'defaultVersion' => '2.0',
+					'defaultCount' => 10,
+					'maxCount' => 50,
+					'allowSimpleFeed' => 1,
 					'allowConfigurableFeed' => 0,
-					'allowAlbums'           => 0,
-					'allowPhotos'           => 0,
-					'allowPhotosRecursive'  => 0,
-					'allowCommentsAlbum'    => 0,
-					'allowCommentsPhoto'    => 0,
-					'defaultCopyright'      => '',
-					'defaultTtl'            => 120,
+					'allowAlbums' => 0,
+					'allowPhotos' => 0,
+					'allowPhotosRecursive' => 0,
+					'allowCommentsAlbum' => 0,
+					'allowCommentsPhoto' => 0,
+					'defaultCopyright' => '',
+					'defaultTtl' => 120,
 				) as $key => $value) {
 					$ret = $this->setParameter($key, $value);
 
@@ -263,8 +263,8 @@ class RssModule extends GalleryModule {
 				// Fall Through
 			case '1.0.0':
 				foreach (array(
-					'sfAlbumType'            => 'photos',
-					'sfDate'                 => 'new',
+					'sfAlbumType' => 'photos',
+					'sfDate' => 'new',
 					'sfPhotosRecursiveLimit' => 10,
 					'allowCommentsRecursive' => 0,
 				) as $key => $value) {
@@ -278,8 +278,8 @@ class RssModule extends GalleryModule {
 				// Fall Through
 			case '1.1.1':
 				foreach (array(
-					'maxAge'                     => 21,
-					'allowPhotosRandom'          => 0,
+					'maxAge' => 21,
+					'allowPhotosRandom' => 0,
 					'allowPhotosRandomRecursive' => 0,
 				) as $key => $value) {
 					$ret = $this->setParameter($key, $value);

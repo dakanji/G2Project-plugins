@@ -155,16 +155,14 @@ class WebDavHelper {
 			$code |= WEBDAV_STATUS_HTTPAUTH_MODULE_DISABLED;
 		} else {
 			// Ensure HTTP auth is enabled
-			list($ret, $httpAuthInterface) =
-			GalleryCoreApi::newFactoryInstance('HttpAuthInterface_1_0');
+			list($ret, $httpAuthInterface) = 			GalleryCoreApi::newFactoryInstance('HttpAuthInterface_1_0');
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
 			if (isset($httpAuthInterface)) {
-				list($ret, $httpAuthPluginEnabled, $serverAuthPluginEnabled) =
-				$httpAuthInterface->getConfiguration();
+				list($ret, $httpAuthPluginEnabled, $serverAuthPluginEnabled) = 				$httpAuthInterface->getConfiguration();
 
 				if ($ret) {
 					return array($ret, null);
@@ -291,8 +289,7 @@ class WebDavHelper {
 				'forceSessionId' => false,
 				'useAuthToken' => false, )
 			);
-			$link['script'] =
-			"this.style.behavior = 'url(#default#httpFolder)'; this.navigate('$url')";
+			$link['script'] = 			"this.style.behavior = 'url(#default#httpFolder)'; this.navigate('$url')";
 		}
 
 		if (strpos($userAgent, 'Konqueror') !== false) {
@@ -322,8 +319,7 @@ class WebDavHelper {
 
 		// dirname('foo') is '.' and \ for dirname ('/foo') on Windows
 		if (in_array($parentPath, array('.', '\\'))) {
-			list($ret, $parentId) =
-			GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
+			list($ret, $parentId) = 			GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 
 			if ($ret) {
 				return array($ret, null);
@@ -356,8 +352,7 @@ class WebDavHelper {
 			return array($ret, null);
 		}
 
-		list($ret, $memberAccessInfo) =
-		GalleryCoreApi::getExternalAccessMemberList($className);
+		list($ret, $memberAccessInfo) = 		GalleryCoreApi::getExternalAccessMemberList($className);
 
 		if ($ret) {
 			return array($ret, null);
@@ -700,8 +695,7 @@ class WebDavHelper {
 			'displayname',
 			$displayName
 		);
-		$file['props'][] =
-		WebDavServer::doStatic()->mkprop(
+		$file['props'][] = 		WebDavServer::doStatic()->mkprop(
 			'getlastmodified',
 			$item->getModificationTimestamp()
 		);
@@ -781,8 +775,7 @@ class WebDavHelper {
 
 		// Build Gallery properties
 		if (method_exists($item, 'getClassName')) {
-			list($ret, $memberInfo) =
-			GalleryCoreApi::getExternalAccessMemberList($item->getClassName());
+			list($ret, $memberInfo) = 			GalleryCoreApi::getExternalAccessMemberList($item->getClassName());
 
 			if ($ret) {
 				return $ret;
@@ -997,8 +990,7 @@ class WebDavHelper {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
 
-		list($ret, $memberInfo) =
-		GalleryCoreApi::getExternalAccessMemberList($item->getClassName());
+		list($ret, $memberInfo) = 		GalleryCoreApi::getExternalAccessMemberList($item->getClassName());
 
 		if ($ret) {
 			return $ret;
@@ -1622,8 +1614,7 @@ class WebDavHelper {
 		}
 
 		// Prepare data-structure from MOVE request
-		list($ret, $webDavOptions, $depth, $overwrite, $newPath) =
-		WebDavHelper::copyMoveRequestHelper();
+		list($ret, $webDavOptions, $depth, $overwrite, $newPath) = 		WebDavHelper::copyMoveRequestHelper();
 
 		if ($ret) {
 			return $ret;
@@ -1746,8 +1737,7 @@ class WebDavHelper {
 				return $ret;
 			}
 
-			list($ret, $lockIds[]) =
-			GalleryCoreApi::acquireReadLock(array($newParentId, $oldParentId));
+			list($ret, $lockIds[]) = 			GalleryCoreApi::acquireReadLock(array($newParentId, $oldParentId));
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
@@ -1983,8 +1973,7 @@ class WebDavHelper {
 		}
 
 		// Prepare data-structure from LOCK request
-		list($ret, $webDavOptions, $update, $scope, $type, $depth, $owner, $timeout, $token) =
-		WebDavHelper::lockRequestHelper();
+		list($ret, $webDavOptions, $update, $scope, $type, $depth, $owner, $timeout, $token) = 		WebDavHelper::lockRequestHelper();
 
 		if ($ret) {
 			return $ret;

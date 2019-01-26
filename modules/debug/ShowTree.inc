@@ -34,7 +34,7 @@ class ShowTreeView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Get the entity
@@ -44,14 +44,14 @@ class ShowTreeView extends GalleryView {
 			list($ret, $entity) = $this->getItem();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$entityId = $entity->getId();
 		} else {
 			list($ret, $entity) = GalleryCoreApi::loadEntitiesById($entityId, 'GalleryEntity');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
@@ -65,7 +65,7 @@ class ShowTreeView extends GalleryView {
 				list($ret, $parentIds) = GalleryCoreApi::fetchParentSequence($entityId, true);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			} elseif ($entity->getParentId()) {
 				$parentIds[] = $entity->getParentId();
@@ -76,11 +76,11 @@ class ShowTreeView extends GalleryView {
 				'
 		SELECT [::id] FROM [GalleryChildEntity] WHERE [::parentId] = ?
 	    ',
-				array($entityId)
+				array( $entityId )
 			);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			while ($result = $results->nextResult()) {
@@ -96,7 +96,7 @@ class ShowTreeView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 		$entityObjects[] = $entity;
@@ -117,7 +117,7 @@ class ShowTreeView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'debug');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$template->title($module->translate('Gallery Debug'));

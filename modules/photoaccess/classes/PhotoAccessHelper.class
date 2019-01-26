@@ -42,50 +42,50 @@ class PhotoAccessHelper {
 		list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryPhotoItem');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		foreach ($itemIds as $id) {
 			if (empty($permissions[$id]['core.view'])) {
 				// Avoid information disclosure, act as if the item didn't exist.
-				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+				return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 			}
 		}
 
 		list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds($itemIds);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds($itemIds);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds($itemIds);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// We want to know which are viewable to guests
 		list($ret, $anonymousUserId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds, $anonymousUserId, false);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$session         =& $gallery->getSession();
@@ -124,7 +124,7 @@ class PhotoAccessHelper {
 				$ret       = $pwSession->initEmpty(true, $gallery->getActiveUserId());
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 
@@ -141,14 +141,14 @@ class PhotoAccessHelper {
 			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
-						'view'   => 'core.DownloadItem',
+						'view' => 'core.DownloadItem',
 						'itemId' => $source->getId(),
 					),
 					$sessionParam
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl'   => true,
+					'forceFullUrl' => true,
 				)
 			);
 			$entry['imageWidth']  = $source->getWidth();
@@ -168,14 +168,14 @@ class PhotoAccessHelper {
 			$entry['thumbUrl'] = $urlGenerator->generateUrl(
 				array_merge(
 					array(
-						'view'   => 'core.DownloadItem',
+						'view' => 'core.DownloadItem',
 						'itemId' => $thumbSource->getId(),
 					),
 					$sessionParam
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl'   => true,
+					'forceFullUrl' => true,
 				)
 			);
 
@@ -196,7 +196,7 @@ class PhotoAccessHelper {
 			$ret = $pwSession->save();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
@@ -287,6 +287,6 @@ class PhotoAccessHelper {
 			);
 		}
 
-		return array(null, $redirectUrl);
+		return array( null, $redirectUrl );
 	}
 }

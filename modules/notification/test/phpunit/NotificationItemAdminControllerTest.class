@@ -45,7 +45,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			'Test::Event',
 			'modules/notification/test/phpunit/NotificationHelperTest.class',
 			'notification',
-			array('Test::Event')
+			array( 'Test::Event' )
 		);
 
 		if ($ret) {
@@ -72,7 +72,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			'NotificationRouter',
 			'modules/notification/classes/NotificationRouter.class',
 			'notification',
-			array('Test::Event')
+			array( 'Test::Event' )
 		);
 
 		if ($ret) {
@@ -103,7 +103,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$entities  = array($this->_testAlbum->getId(), $this->_childAlbum->getId());
+		$entities  = array( $this->_testAlbum->getId(), $this->_childAlbum->getId() );
 		list($ret) = GalleryCoreApi::loadEntitiesById($entities, 'GalleryAlbumItem');
 
 		if ($ret) {
@@ -189,9 +189,9 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			'getMapEntry',
 			array(
 				'GalleryUserGroupMap',
-				array('userId'),
+				array( 'userId' ),
 				array(
-					'userId'  => $activeUserId,
+					'userId' => $activeUserId,
 					'groupId' => $this->_adminGroupId,
 				),
 				array(
@@ -202,7 +202,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(array($activeUserId))),
+				new UnitTestStorageSearchResults(array( array( $activeUserId ) )),
 			)
 		);
 		$itemId = (string)$this->_testAlbum->getId();
@@ -231,9 +231,9 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'notification.NotificationItemAdmin',
-					'itemId'  => $itemId,
+					'itemId' => $itemId,
 				),
 				'status' => array(
 					'saved' => 1,
@@ -257,9 +257,9 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			'getMapEntry',
 			array(
 				'GalleryUserGroupMap',
-				array('userId'),
+				array( 'userId' ),
 				array(
-					'userId'  => $activeUserId,
+					'userId' => $activeUserId,
 					'groupId' => $this->_adminGroupId,
 				),
 				array(
@@ -270,7 +270,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(array($activeUserId))),
+				new UnitTestStorageSearchResults(array( array( $activeUserId ) )),
 			)
 		);
 		$storage->setReply(
@@ -278,10 +278,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'SubscriptionMap',
 				array(
-					'userId'           => $gallery->getActiveUserId(),
-					'itemId'           => $itemId,
+					'userId' => $gallery->getActiveUserId(),
+					'itemId' => $itemId,
 					'notificationName' => 'Test::Event',
-					'handlerId'        => 'Test::EventHandler',
+					'handlerId' => 'Test::EventHandler',
 				),
 			),
 			null
@@ -298,13 +298,13 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		}
 		$storage->setReply(
 			'acquireWriteLock',
-			array(array($hintLockId), 10),
+			array( array( $hintLockId ), 10 ),
 			array(
 				null,
 				array(
 					'lockId' => 42,
-					'type'   => LOCK_WRITE,
-					'ids'    => array(
+					'type' => LOCK_WRITE,
+					'ids' => array(
 						$hintLockId => true,
 					),
 				),
@@ -315,10 +315,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'SELECT COUNT(*) FROM [SubscriptionMap]
 		 WHERE [SubscriptionMap::notificationName] = ?',
-				array('Test::Event'),
+				array( 'Test::Event' ),
 				array(),
 			),
-			array(null, new UnitTestStorageSearchResults(array(array(0))))
+			array( null, new UnitTestStorageSearchResults(array( array( 0 ) )) )
 		);
 
 		$storage->setReply(
@@ -327,7 +327,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				'GalleryFactoryMap',
 				array(
 					'classType' => 'GalleryEventListener',
-					'implId'    => 'NotificationRouter',
+					'implId' => 'NotificationRouter',
 				),
 				array(
 					'hints' => serialize(null),
@@ -337,7 +337,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			null
 		);
 		$storage->setReply('isTransactional', array(), false);
-		$storage->setReply('releaseLocks', array(array(42)), null);
+		$storage->setReply('releaseLocks', array( array( 42 ) ), null);
 		$storage->setReply('checkPoint', array(), null);
 
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
@@ -356,9 +356,9 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'notification.NotificationItemAdmin',
-					'itemId'  => $itemId,
+					'itemId' => $itemId,
 				),
 				'status' => array(
 					'saved' => 1,
@@ -382,9 +382,9 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			'getMapEntry',
 			array(
 				'GalleryUserGroupMap',
-				array('userId'),
+				array( 'userId' ),
 				array(
-					'userId'  => $activeUserId,
+					'userId' => $activeUserId,
 					'groupId' => $this->_adminGroupId,
 				),
 				array(
@@ -395,7 +395,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			),
 			array(
 				null,
-				new UnitTestStorageSearchResults(array(array($activeUserId))),
+				new UnitTestStorageSearchResults(array( array( $activeUserId ) )),
 			)
 		);
 		list($ret, $hintLockId) = GalleryCoreApi::getPluginParameter(
@@ -409,29 +409,29 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		}
 		$storage->setReply(
 			'acquireWriteLock',
-			array(array($hintLockId), 10),
+			array( array( $hintLockId ), 10 ),
 			array(
 				null,
 				array(
 					'lockId' => 42,
-					'type'   => LOCK_WRITE,
-					'ids'    => array(
+					'type' => LOCK_WRITE,
+					'ids' => array(
 						$hintLockId => true,
 					),
 				),
 			)
 		);
 		$storage->setReply('isTransactional', array(), false);
-		$storage->setReply('releaseLocks', array(array(42)), null);
+		$storage->setReply('releaseLocks', array( array( 42 ) ), null);
 		$storage->setReply(
 			'addMapEntry',
 			array(
 				'SubscriptionMap',
 				array(
-					'userId'           => $gallery->getActiveUserId(),
-					'itemId'           => $itemId,
+					'userId' => $gallery->getActiveUserId(),
+					'itemId' => $itemId,
 					'notificationName' => 'Test::Event',
-					'handlerName'      => 'Test::EventHandler',
+					'handlerName' => 'Test::EventHandler',
 				),
 				array(),
 			),
@@ -441,13 +441,13 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			null,
 			new UnitTestStorageSearchResults(
 				array(
-					array($this->_childAlbum->getId(), 8),
+					array( $this->_childAlbum->getId(), 8 ),
 				)
 			),
 		);
 		// The album might use some presort
-		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
-		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
+		$storage->setReply('getFunctionSql', '*', array( null, '' ), true);
+		$storage->setReply('getFunctionSql', '*', array( null, '' ), true);
 		// The fetchChildItemIds() query
 		$storage->setReply('search', '*', $results);
 
@@ -455,10 +455,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			'getMapEntry',
 			array(
 				'SubscriptionMap',
-				array('notificationName', 'itemId'),
+				array( 'notificationName', 'itemId' ),
 				array(
 					'userId' => $activeUserId,
-					'itemId' => array($this->_childAlbum->getId()),
+					'itemId' => array( $this->_childAlbum->getId() ),
 				),
 				array(),
 			),
@@ -473,23 +473,23 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'SubscriptionMap',
 				array(
-					'userId'           => $gallery->getActiveUserId(),
-					'itemId'           => $this->_childAlbum->getId(),
+					'userId' => $gallery->getActiveUserId(),
+					'itemId' => $this->_childAlbum->getId(),
 					'notificationName' => 'Test::Event',
-					'handlerName'      => 'Test::EventHandler',
+					'handlerName' => 'Test::EventHandler',
 				),
 				array(),
 			),
 			null
 		);
 		// The album might use some presort
-		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
-		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
+		$storage->setReply('getFunctionSql', '*', array( null, '' ), true);
+		$storage->setReply('getFunctionSql', '*', array( null, '' ), true);
 		// The fetchChildItemIds() query
 		$storage->setReply(
 			'search',
 			'*',
-			array(null, new UnitTestStorageSearchResults(array(array()), 8))
+			array( null, new UnitTestStorageSearchResults(array( array() ), 8) )
 		);
 		$storage->setReply('checkPoint', array(), null);
 
@@ -511,9 +511,9 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'notification.NotificationItemAdmin',
-					'itemId'  => $itemId,
+					'itemId' => $itemId,
 				),
 				'status' => array(
 					'saved' => 1,

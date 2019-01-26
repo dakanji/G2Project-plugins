@@ -86,7 +86,7 @@ class MembersTest extends GalleryTestCase {
 				'application/unknown',
 				array(
 					'creationTimestamp' => $i * 1000,
-					'ownerId'           => $this->_user->getId(),
+					'ownerId' => $this->_user->getId(),
 				)
 			);
 
@@ -117,7 +117,7 @@ class MembersTest extends GalleryTestCase {
 				'application/unknown',
 				array(
 					'creationTimestamp' => $i * 1000,
-					'ownerId'           => $this->_user->getId(),
+					'ownerId' => $this->_user->getId(),
 				)
 			);
 		}
@@ -129,7 +129,7 @@ class MembersTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array($originalItems[1], $originalItems[2]), $items);
+		$this->assertEquals(array( $originalItems[1], $originalItems[2] ), $items);
 	}
 
 	public function testCanViewMembersModule() {

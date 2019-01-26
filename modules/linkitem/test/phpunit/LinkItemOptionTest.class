@@ -46,7 +46,7 @@ class LinkItemOptionTest extends ItemEditOptionTestCase {
 		}
 		$this->_markForCleanup($this->_album);
 
-		list($ret, $lockId) = GalleryCoreApi::acquireReadLock(array($this->_album->getId()));
+		list($ret, $lockId) = GalleryCoreApi::acquireReadLock(array( $this->_album->getId() ));
 
 		if ($ret) {
 			return $ret;
@@ -106,7 +106,7 @@ class LinkItemOptionTest extends ItemEditOptionTestCase {
 		);
 
 		list($error, $warning) = $this->_handleRequestAfterEdit($form, $this->_link);
-		$this->assertEquals(array('form[LinkItemOption][error][link][missing]'), $error);
+		$this->assertEquals(array( 'form[LinkItemOption][error][link][missing]' ), $error);
 		$this->assertEquals(array(), $warning);
 	}
 }

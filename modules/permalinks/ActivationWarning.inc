@@ -33,7 +33,7 @@ class ActivationWarningView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$template->setVariable('controller', 'permalinks.PermalinksSiteAdmin');

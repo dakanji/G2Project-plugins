@@ -34,17 +34,17 @@ class AdminEcardController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$results = $error = $status = array();
 
 		if (isset($form['action']['save'])) {
-			foreach (array('from', 'subject', 'bcc', 'header', 'footer', 'format') as $key) {
+			foreach (array( 'from', 'subject', 'bcc', 'header', 'footer', 'format' ) as $key) {
 				$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', $key, $form[$key]);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			$redirect['view']    = 'core.SiteAdmin';
@@ -64,7 +64,7 @@ class AdminEcardController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -79,17 +79,17 @@ class AdminEcardView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'AdminEcard') {
 			$form['formName'] = 'AdminEcard';
 
-			foreach (array('from', 'subject', 'bcc', 'header', 'footer', 'format') as $key) {
+			foreach (array( 'from', 'subject', 'bcc', 'header', 'footer', 'format' ) as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'ecard', $key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		}
@@ -97,7 +97,7 @@ class AdminEcardView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'ecard');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$AdminEcard = array(

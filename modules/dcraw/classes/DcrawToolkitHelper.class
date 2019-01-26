@@ -39,24 +39,24 @@ class DcrawToolkitHelper {
 		$results = array(
 			'operations' => array(
 				'convert-to-image/x-portable-pixmap' => array(
-					'params'         => array(),
-					'description'    => $gallery->i18n('Convert to a PPM'),
-					'mimeTypes'      => array('image/x-dcraw'),
+					'params' => array(),
+					'description' => $gallery->i18n('Convert to a PPM'),
+					'mimeTypes' => array( 'image/x-dcraw' ),
 					'outputMimeType' => 'image/x-portable-pixmap',
 				),
 			),
 			'properties' => array(
 				'dimensions' => array(
-					'type'        => 'int,int',
+					'type' => 'int,int',
 					'description' => $gallery->i18n(
 						'Get the width and height of the image'
 					),
-					'mimeTypes'   => 'image/x-dcraw',
+					'mimeTypes' => 'image/x-dcraw',
 				),
 			),
 		);
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	/**
@@ -96,10 +96,10 @@ class DcrawToolkitHelper {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'dcraw', true);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
-		list($success, $stdout, $stderr) = $platform->exec(array(array($dcrawPath)));
+		list($success, $stdout, $stderr) = $platform->exec(array( array( $dcrawPath ) ));
 		// $success will be 0 here, since we gave no arguments
 		$verCheck = implode(' ', array_merge($stdout, $stderr));
 		$version  = null;
@@ -109,7 +109,7 @@ class DcrawToolkitHelper {
 
 			if (version_compare($version, '5.40', '>=')) {
 				$testArray[] = array(
-					'name'    => 'dcraw',
+					'name' => 'dcraw',
 					'success' => true,
 				);
 			}
@@ -120,13 +120,13 @@ class DcrawToolkitHelper {
 				'name' => 'dcraw',
 				'success' => false,
 				'message' => array_merge(
-					array($module->translate('Binary output:')),
+					array( $module->translate('Binary output:') ),
 					$stdout,
 					$stderr
 				),
 			);
 		}
 
-		return array(null, $testArray, $version);
+		return array( null, $testArray, $version );
 	}
 }

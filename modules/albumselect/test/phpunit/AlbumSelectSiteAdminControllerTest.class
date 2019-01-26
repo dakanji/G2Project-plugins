@@ -52,7 +52,7 @@ class AlbumSelectSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'albumselect.AlbumSelectSiteAdmin',
 				),
 				'status' => array(),
@@ -72,7 +72,7 @@ class AlbumSelectSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'albumselect.AlbumSelectSiteAdmin',
 				),
 				'status' => array(

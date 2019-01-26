@@ -36,8 +36,8 @@ class DcrawToolkit extends GalleryToolkit {
 	public function getProperty($mimeType, $propertyName, $sourceFilename) {
 		global $gallery;
 
-		if (!in_array($mimeType, array('image/x-dcraw', 'image/x-adobe-dng'))) {
-			return array(GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null);
+		if (!in_array($mimeType, array( 'image/x-dcraw', 'image/x-adobe-dng' ))) {
+			return array( GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null );
 		}
 
 		switch ($propertyName) {
@@ -51,7 +51,7 @@ class DcrawToolkit extends GalleryToolkit {
 				list($ret, $toolkit) = GalleryCoreApi::getToolkitByProperty('image/x-portable-pixmap', 'dimensions');
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				if (isset($toolkit)) {
@@ -67,7 +67,7 @@ class DcrawToolkit extends GalleryToolkit {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 
 					// We now have a PPM file, get its dimensions
@@ -75,20 +75,20 @@ class DcrawToolkit extends GalleryToolkit {
 					$platform->unlink($tempfile);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				} else {
 					// We have no idea :-(
-					$results = array(0, 0);
+					$results = array( 0, 0 );
 				}
 
 				break;
 
 			default:
-				return array(GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null);
+				return array( GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null );
 		}
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	/**
@@ -104,8 +104,8 @@ class DcrawToolkit extends GalleryToolkit {
 	) {
 		global $gallery;
 
-		if (!in_array($mimeType, array('image/x-dcraw', 'image/x-adobe-dng'))) {
-			return array(GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null, null);
+		if (!in_array($mimeType, array( 'image/x-dcraw', 'image/x-adobe-dng' ))) {
+			return array( GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null, null );
 		}
 
 		switch ($operationName) {
@@ -113,7 +113,7 @@ class DcrawToolkit extends GalleryToolkit {
 				list($ret, $dcraw) = GalleryCoreApi::getPluginParameter('module', 'dcraw', 'path');
 
 				if ($ret) {
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 
 				$tmpDir      = $gallery->getConfig('data.gallery.tmp');
@@ -122,13 +122,13 @@ class DcrawToolkit extends GalleryToolkit {
 
 				if (empty($tmpFilename)) {
 					// This can happen if the $tmpDir path is bad
-					return array(GalleryCoreApi::error(ERROR_BAD_PATH), null, null);
+					return array( GalleryCoreApi::error(ERROR_BAD_PATH), null, null );
 				}
 
 				list($ret, $version) = GalleryCoreApi::getPluginParameter('module', 'dcraw', 'version');
 
 				if ($ret) {
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 
 				/*
@@ -137,13 +137,13 @@ class DcrawToolkit extends GalleryToolkit {
 				 * for older versions.  See http://cybercom.net/~dcoffin/dcraw/dcraw.1.html
 				 */
 				if (version_compare($version, '7.73', '>=')) {
-					$cmd = array($dcraw, '-c', '-a', '-q', '0', $sourceFilename, '>', $tmpFilename);
+					$cmd = array( $dcraw, '-c', '-a', '-q', '0', $sourceFilename, '>', $tmpFilename );
 				} else {
-					$cmd = array($dcraw, '-c', '-a', '-q', $sourceFilename, '>', $tmpFilename);
+					$cmd = array( $dcraw, '-c', '-a', '-q', $sourceFilename, '>', $tmpFilename );
 				}
 
 				$gallery->guaranteeTimeLimit(90);
-				list($success, $output) = $platform->exec(array($cmd));
+				list($success, $output) = $platform->exec(array( $cmd ));
 
 				if (!$success) {
 					@$platform->unlink($tmpFilename);
@@ -173,10 +173,10 @@ class DcrawToolkit extends GalleryToolkit {
 				}
 				$platform->chmod($destFilename);
 
-				return array(null, 'image/x-portable-pixmap', $context);
+				return array( null, 'image/x-portable-pixmap', $context );
 
 			default:
-				return array(GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null, null);
+				return array( GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null, null );
 		}
 	}
 }

@@ -162,7 +162,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function &_getTestPlatform($fragment, $requestUrl, $redirectUrl) {
 		$platform = new UnitTestPlatform();
-		$platform->setReply('fsockopen', array('www.snapgalaxy.com', 80, '', '', 5), 'testFd');
+		$platform->setReply('fsockopen', array( 'www.snapgalaxy.com', 80, '', '', 5 ), 'testFd');
 		$platform->setReply(
 			'fwrite',
 			array(
@@ -172,19 +172,19 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			100
 		);
-		$platform->setReply('fflush', array('testFd'), true);
-		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
-		$platform->setReply('feof', array('testFd'), false);
-		$platform->setReply('fgets', array('testFd', 4096), '');
-		$platform->setReply('feof', array('testFd'), false);
+		$platform->setReply('fflush', array( 'testFd' ), true);
+		$platform->setReply('fgets', array( 'testFd', 4096 ), 'HTTP/1.1 200 OK');
+		$platform->setReply('feof', array( 'testFd' ), false);
+		$platform->setReply('fgets', array( 'testFd', 4096 ), '');
+		$platform->setReply('feof', array( 'testFd' ), false);
 		$platform->setReply(
 			'fread',
-			array('testFd', 4096),
+			array( 'testFd', 4096 ),
 			'requesturl="' .
 			$requestUrl . '" redirecturl="' . $redirectUrl . '"'
 		);
-		$platform->setReply('feof', array('testFd'), true);
-		$platform->setReply('fclose', array('testFd'), true);
+		$platform->setReply('feof', array( 'testFd' ), true);
+		$platform->setReply('fclose', array( 'testFd' ), true);
 
 		return $platform;
 	}
@@ -336,7 +336,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals(
-			array($itemId, $this->_thumbId),
+			array( $itemId, $this->_thumbId ),
 			$snapgalaxySession->get('core.isPrintService'),
 			'SnapGalaxy session missing item id'
 		);

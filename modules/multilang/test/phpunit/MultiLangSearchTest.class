@@ -193,7 +193,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled'     => 1,
+						'enabled' => 1,
 					),
 					'summary' => array(
 						'description' => $this->_module->translate(
@@ -202,7 +202,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled'     => 1,
+						'enabled' => 1,
 					),
 					'description' => array(
 						'description' => $this->_module->translate(
@@ -211,7 +211,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled'     => 1,
+						'enabled' => 1,
 					),
 				),
 			),
@@ -248,15 +248,15 @@ class MultiLangSearchTest extends GalleryTestCase {
 						'itemId' => $this->_item->getId(),
 						'fields' => array(
 							array(
-								'key'   => $title,
+								'key' => $title,
 								'value' => 't' . $this->_randomKey,
 							),
 							array(
-								'key'   => $summary,
+								'key' => $summary,
 								'value' => 's' . $this->_randomKey,
 							),
 							array(
-								'key'   => $description,
+								'key' => $description,
 								'value' => 'd' . $this->_randomKey,
 							),
 						),
@@ -265,15 +265,15 @@ class MultiLangSearchTest extends GalleryTestCase {
 						'itemId' => $this->_album->getId(),
 						'fields' => array(
 							array(
-								'key'   => $title,
+								'key' => $title,
 								'value' => 't' . $this->_randomKey,
 							),
 							array(
-								'key'   => $summary,
+								'key' => $summary,
 								'value' => 's' . $this->_randomKey,
 							),
 							array(
-								'key'   => $description,
+								'key' => $description,
 								'value' => 'd' . $this->_randomKey,
 							),
 						),
@@ -315,15 +315,15 @@ class MultiLangSearchTest extends GalleryTestCase {
 						'itemId' => $this->_album->getId(),
 						'fields' => array(
 							array(
-								'key'   => $title,
+								'key' => $title,
 								'value' => 't' . $this->_randomKey,
 							),
 							array(
-								'key'   => $summary,
+								'key' => $summary,
 								'value' => 's' . $this->_randomKey,
 							),
 							array(
-								'key'   => $description,
+								'key' => $description,
 								'value' => 'd' . $this->_randomKey,
 							),
 						),
@@ -344,7 +344,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 		 */
 		list($ret, $results) = $this->_search->search(
 			array(
-				'summary'     => 1,
+				'summary' => 1,
 				'description' => 1,
 			),
 			't' . $this->_randomKey

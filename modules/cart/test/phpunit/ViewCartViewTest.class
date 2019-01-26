@@ -150,7 +150,7 @@ class ViewCartViewTest extends GalleryViewTestCase {
 
 		$this->assertEquals('cart.ModifyCart', $templateData['controller'], 'controller');
 		$this->assertEquals(
-			array($this->_photoItem->getId(), $this->_movieItem->getId()),
+			array( $this->_photoItem->getId(), $this->_movieItem->getId() ),
 			array_keys($templateData['items']),
 			'item ids'
 		);
@@ -158,11 +158,11 @@ class ViewCartViewTest extends GalleryViewTestCase {
 			array(
 				'ViewCartTestCartPlugin1_0' => array(
 					'actionDisplayName' => 'cart plugin 1.0',
-					'isAvailable'       => 1,
+					'isAvailable' => 1,
 				),
 				'ViewCartTestCartPlugin' => array(
 					'actionDisplayName' => 'cart plugin',
-					'isAvailable'       => 1,
+					'isAvailable' => 1,
 				),
 			),
 			$this->_filterRelevantPluginData($templateData['plugins']),
@@ -218,7 +218,7 @@ class ViewCartViewTest extends GalleryViewTestCase {
 		$templateData = $this->_template->getVariable('ViewCart');
 
 		$this->assertEquals(
-			array($this->_photoItem->getId(), $this->_movieItem->getId()),
+			array( $this->_photoItem->getId(), $this->_movieItem->getId() ),
 			array_keys($templateData['items']),
 			'item ids'
 		);
@@ -226,11 +226,11 @@ class ViewCartViewTest extends GalleryViewTestCase {
 			array(
 				'ViewCartTestCartPlugin1_0' => array(
 					'actionDisplayName' => 'cart plugin 1.0',
-					'isAvailable'       => 1,
+					'isAvailable' => 1,
 				),
 				'ViewCartTestCartPlugin' => array(
 					'actionDisplayName' => 'cart plugin',
-					'isAvailable'       => 1,
+					'isAvailable' => 1,
 				),
 				'ViewCartTestCartPlugin1_1' => array(
 					'actionDisplayName' => 'cart plugin 1.1',
@@ -287,7 +287,7 @@ class ViewCartViewTest extends GalleryViewTestCase {
 		$templateData = $this->_template->getVariable('ViewCart');
 
 		$this->assertEquals(
-			array($this->_photoItem->getId()),
+			array( $this->_photoItem->getId() ),
 			array_keys($templateData['items']),
 			'item ids'
 		);
@@ -298,11 +298,11 @@ class ViewCartViewTest extends GalleryViewTestCase {
 				),
 				'ViewCartTestCartPlugin' => array(
 					'actionDisplayName' => 'cart plugin',
-					'isAvailable'       => 1,
+					'isAvailable' => 1,
 				),
 				'ViewCartTestCartPlugin1_1' => array(
 					'actionDisplayName' => 'cart plugin 1.1',
-					'isAvailable'       => 1,
+					'isAvailable' => 1,
 				),
 			),
 			$this->_filterRelevantPluginData($templateData['plugins']),
@@ -312,7 +312,7 @@ class ViewCartViewTest extends GalleryViewTestCase {
 
 	public function _filterRelevantPluginData($plugins) {
 		foreach ($plugins as $id => $data) {
-			foreach (array('supported', 'requiredPermissions', 'supportedItemTypes') as $key) {
+			foreach (array( 'supported', 'requiredPermissions', 'supportedItemTypes' ) as $key) {
 				if (isset($data[$key])) {
 					unset($plugins[$id][$key]);
 				}
@@ -326,47 +326,47 @@ class ViewCartViewTest extends GalleryViewTestCase {
 GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_1.class');
 class ViewCartTestCartPlugin extends CartPluginInterface_1_1 {
 	public function getSupportedItemTypes() {
-		return array('*');
+		return array( '*' );
 	}
 
 	public function getActionDisplayName() {
-		return array(null, 'cart plugin', null);
+		return array( null, 'cart plugin', null );
 	}
 
 	public function fulfillCart($cartItemIds) {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 }
 
 GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 class ViewCartTestCartPlugin1_0 extends CartPluginInterface_1_0 {
 	public function getSupportedItemTypes() {
-		return array('GalleryMovieItem');
+		return array( 'GalleryMovieItem' );
 	}
 
 	public function getActionDisplayName() {
-		return array(null, 'cart plugin 1.0', null);
+		return array( null, 'cart plugin 1.0', null );
 	}
 
 	public function fulfillCart($cartItemIds) {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 }
 
 class ViewCartTestCartPlugin1_1 extends CartPluginInterface_1_1 {
 	public function getSupportedItemTypes() {
-		return array('GalleryPhotoItem');
+		return array( 'GalleryPhotoItem' );
 	}
 
 	public function getRequiredPermissions() {
-		return array('core.edit', 'core.delete');
+		return array( 'core.edit', 'core.delete' );
 	}
 
 	public function getActionDisplayName() {
-		return array(null, 'cart plugin 1.1', null);
+		return array( null, 'cart plugin 1.1', null );
 	}
 
 	public function fulfillCart($cartItemIds) {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 }

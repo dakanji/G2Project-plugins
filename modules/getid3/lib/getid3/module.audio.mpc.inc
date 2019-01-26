@@ -193,7 +193,7 @@ class getid3_mpc extends getid3_handler {
 
 					$info['audio']['encoder']               = 'MPC v' . $thisPacket['version'] . ' (' . (($thisPacket['version_minor'] % 2) ? 'unstable' : 'stable') . ')';
 					$thisfile_mpc_header['encoder_version'] = $info['audio']['encoder'];
-					//$thisfile_mpc_header['quality']         = (float) ($thisPacket['quality'] / 1.5875); // values can range from 0.000 to 15.875, mapped to qualities of 0.0 to 10.0
+					//$thisfile_mpc_header['quality'] = (float) ($thisPacket['quality'] / 1.5875); // values can range from 0.000 to 15.875, mapped to qualities of 0.0 to 10.0
 					$thisfile_mpc_header['quality'] = (float)($thisPacket['quality'] - 5); // values can range from 0.000 to 15.875, of which 0..4 are "reserved/experimental", and 5..15 are mapped to qualities of 0.0 to 10.0
 					break;
 
@@ -374,12 +374,12 @@ class getid3_mpc extends getid3_handler {
 		// DDDD DDDD  CCCC CCCC  BBBB BBBB  AAAA AAAA
 		// aaaa aaaa  abcd dddd  dddd deee  eeff ffff
 		//
-		// a = bitrate       = anything
-		// b = IS            = anything
-		// c = MS            = anything
+		// a = bitrate = anything
+		// b = IS = anything
+		// c = MS = anything
 		// d = streamversion = 0000000004 or 0000000005 or 0000000006
-		// e = maxband       = anything
-		// f = blocksize     = 000001 for SV5+, anything(?) for SV4
+		// e = maxband = anything
+		// f = blocksize = 000001 for SV5+, anything(?) for SV4
 
 		$thisfile_mpc_header['target_bitrate']       = (($HeaderDWORD[0] & 0xFF800000) >> 23);
 		$thisfile_mpc_header['intensity_stereo']     = (bool)(($HeaderDWORD[0] & 0x00400000) >> 22);

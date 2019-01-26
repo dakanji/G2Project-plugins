@@ -164,14 +164,14 @@ class PrintPhotosView extends GalleryView {
 			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
-						'view'   => 'core.DownloadItem',
+						'view' => 'core.DownloadItem',
 						'itemId' => $source->getId(),
 					),
 					$sessionParam
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl'   => true,
+					'forceFullUrl' => true,
 				)
 			);
 			$entry['imageWidth']  = $source->getWidth();
@@ -186,12 +186,12 @@ class PrintPhotosView extends GalleryView {
 
 			$entry['thumbUrl']    = $urlGenerator->generateUrl(
 				array(
-					'view'   => 'core.DownloadItem',
+					'view' => 'core.DownloadItem',
 					'itemId' => $thumbSource->getId(),
 				),
 				array(
 					'forceSessionId' => $needSession,
-					'forceFullUrl'   => true,
+					'forceFullUrl' => true,
 				)
 			);
 			$entry['thumbWidth']  = $thumbSource->getWidth();

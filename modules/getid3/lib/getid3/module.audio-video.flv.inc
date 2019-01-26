@@ -285,9 +285,9 @@ class getid3_flv extends getid3_handler {
 						unset($reader);
 
 						$copykeys = array(
-							'framerate'     => 'frame_rate',
-							'width'         => 'resolution_x',
-							'height'        => 'resolution_y',
+							'framerate' => 'frame_rate',
+							'width' => 'resolution_x',
+							'height' => 'resolution_y',
 							'audiodatarate' => 'bitrate',
 							'videodatarate' => 'bitrate',
 						);
@@ -414,12 +414,12 @@ class getid3_flv extends getid3_handler {
 
 	public static function videoCodecLookup($id) {
 		static $lookup = array(
-			GETID3_FLV_VIDEO_H263         => 'Sorenson H.263',
-			GETID3_FLV_VIDEO_SCREEN       => 'Screen video',
-			GETID3_FLV_VIDEO_VP6FLV       => 'On2 VP6',
+			GETID3_FLV_VIDEO_H263 => 'Sorenson H.263',
+			GETID3_FLV_VIDEO_SCREEN => 'Screen video',
+			GETID3_FLV_VIDEO_VP6FLV => 'On2 VP6',
 			GETID3_FLV_VIDEO_VP6FLV_ALPHA => 'On2 VP6 with alpha channel',
-			GETID3_FLV_VIDEO_SCREENV2     => 'Screen video v2',
-			GETID3_FLV_VIDEO_H264         => 'Sorenson H.264',
+			GETID3_FLV_VIDEO_SCREENV2 => 'Screen video v2',
+			GETID3_FLV_VIDEO_H264 => 'Sorenson H.264',
 		);
 
 		return isset($lookup[$id]) ? $lookup[$id] : false;

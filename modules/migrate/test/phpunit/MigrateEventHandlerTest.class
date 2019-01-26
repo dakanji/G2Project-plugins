@@ -89,9 +89,9 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		$ret = GalleryCoreApi::addMapEntry(
 			'G1MigrateMap',
 			array(
-				'itemId'  => $g1MapHandlerAlbum->getId(),
+				'itemId' => $g1MapHandlerAlbum->getId(),
 				'g1album' => $g1MapHandlerAlbum->getPathComponent(),
-				'g1item'  => null,
+				'g1item' => null,
 			)
 		);
 
@@ -110,9 +110,9 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		$ret = GalleryCoreApi::addMapEntry(
 			'G1MigrateMap',
 			array(
-				'itemId'  => $g1MapHandlerItem->getId(),
+				'itemId' => $g1MapHandlerItem->getId(),
 				'g1album' => $g1MapHandlerAlbum->getPathComponent(),
-				'g1item'  => $g1MapHandlerItem->getPathComponent(),
+				'g1item' => $g1MapHandlerItem->getPathComponent(),
 			)
 		);
 

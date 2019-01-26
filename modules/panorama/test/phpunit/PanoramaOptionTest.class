@@ -109,7 +109,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		$form['PanoramaOption']['isPanorama'] = 1;
 
 		$result = $this->_handleRequestAfterEdit($form, $this->_item);
-		$this->assertEquals(array(array(), array()), $result);
+		$this->assertEquals(array( array(), array() ), $result);
 
 		list($ret, $item) = $this->_item->refresh();
 
@@ -127,7 +127,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterEdit(array(), $this->_item);
-		$this->assertEquals(array(array(), array()), $result, 'controller results');
+		$this->assertEquals(array( array(), array() ), $result, 'controller results');
 
 		list($ret, $item) = $this->_item->refresh();
 
@@ -135,11 +135,11 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 		// For Oracle, null is replaced with '' when loading data from the database
-		$this->assert(in_array($item->getRenderer(), array(null, '')), 'renderer not empty');
+		$this->assert(in_array($item->getRenderer(), array( null, '' )), 'renderer not empty');
 	}
 
 	public function testHelper() {
-		list($ret, $images) = PanoramaHelper::fetchViewableImages(array($this->_item));
+		list($ret, $images) = PanoramaHelper::fetchViewableImages(array( $this->_item ));
 
 		if ($ret) {
 			return $ret;

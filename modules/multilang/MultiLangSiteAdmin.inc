@@ -33,7 +33,7 @@ class MultiLangSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = array();
@@ -48,7 +48,7 @@ class MultiLangSiteAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			// TODO: if removed some language then optionally delete all data for that language?
 			$status['saved'] = 1;
@@ -60,7 +60,7 @@ class MultiLangSiteAdminController extends GalleryController {
 		$results['status']              = $status;
 		$results['error']               = array();
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -77,7 +77,7 @@ class MultiLangSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'MultiLangSiteAdmin') {
@@ -85,7 +85,7 @@ class MultiLangSiteAdminView extends GalleryView {
 			list($ret, $languages) = GalleryCoreApi::getPluginParameter('module', 'multilang', 'languages');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$form['languages'] = empty($languages) ? array() : explode('|', $languages);
 		}
@@ -113,7 +113,7 @@ class MultiLangSiteAdminView extends GalleryView {
 			'MultiLangSiteAdmin',
 			array(
 				'availableList' => $languageList,
-				'selectedList'  => $selectedList,
+				'selectedList' => $selectedList,
 			)
 		);
 		$template->setVariable('controller', 'multilang.MultiLangSiteAdmin');

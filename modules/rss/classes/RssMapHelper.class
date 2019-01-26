@@ -43,14 +43,14 @@ class RssMapHelper {
 		if (isset($itemId)) {
 			list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 				'RssMap',
-				array('feedName', 'itemId', 'ownerId', 'params'),
+				array( 'feedName', 'itemId', 'ownerId', 'params' ),
 				array(
 					'itemId' => $itemId,
 				)
 			);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		} else {
 			$query = '
@@ -63,7 +63,7 @@ class RssMapHelper {
 			list($ret, $searchResults) = $gallery->search($query);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
@@ -74,10 +74,10 @@ class RssMapHelper {
 
 			if ($params != false) {
 				$feed      = array(
-					'name'    => $result[0],
-					'itemId'  => $result[1],
+					'name' => $result[0],
+					'itemId' => $result[1],
 					'ownerId' => $result[2],
-					'params'  => $params,
+					'params' => $params,
 				);
 				$feeds[]   = $feed;
 				$itemIds[] = $result[1];
@@ -94,7 +94,7 @@ class RssMapHelper {
 			list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach ($feeds as $id => $feed) {
@@ -104,7 +104,7 @@ class RssMapHelper {
 			}
 		}
 
-		return array(null, $feeds);
+		return array( null, $feeds );
 	}
 
 	/**
@@ -130,7 +130,7 @@ class RssMapHelper {
 		list($ret, $searchResults) = $gallery->search($query, null, $params);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$names = array();
@@ -139,7 +139,7 @@ class RssMapHelper {
 			$names[] = $result[0];
 		}
 
-		return array(null, $names);
+		return array( null, $names );
 	}
 
 	/**
@@ -151,14 +151,14 @@ class RssMapHelper {
 	public static function fetchFeed($feedName) {
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'RssMap',
-			array('params'),
+			array( 'params' ),
 			array(
 				'feedName' => $feedName,
 			)
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$params = array();
@@ -171,16 +171,16 @@ class RssMapHelper {
 					list($ret, $canView) = GalleryCoreApi::hasItemPermission($params['itemId'], 'core.view');
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 
 					if (!$canView) {
 						// Avoid information disclosure, act as if the item didn't exist.
-						return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+						return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 					}
 				}
 
-				return array(null, $params);
+				return array( null, $params );
 			}
 			// unserialization error
 			return array(
@@ -189,7 +189,7 @@ class RssMapHelper {
 			);
 		}
 
-		return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+		return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 	}
 
 	/**
@@ -218,9 +218,9 @@ class RssMapHelper {
 			'RssMap',
 			array(
 				'feedName' => $feedName,
-				'itemId'   => $params['itemId'],
-				'ownerId'  => $gallery->getActiveUserId(),
-				'params'   => serialize($params),
+				'itemId' => $params['itemId'],
+				'ownerId' => $gallery->getActiveUserId(),
+				'params' => serialize($params),
 			)
 		);
 
@@ -246,8 +246,8 @@ class RssMapHelper {
 			),
 			array(
 				'feedName' => $feedName,
-				'itemId'   => $params['itemId'],
-				'params'   => serialize($params),
+				'itemId' => $params['itemId'],
+				'params' => serialize($params),
 			)
 		);
 
@@ -296,7 +296,7 @@ class RssMapHelper {
 			list($ret, $isAdmin[$userId]) = GalleryCoreApi::isUserInSiteAdminGroup($userId);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		}
 
@@ -316,13 +316,13 @@ class RssMapHelper {
 			|| (GalleryUtilities::isA($item, 'GalleryDataItem')
 			&& $params['allowCommentsPhoto'] == 1))
 		) {
-			return array(null, true);
+			return array( null, true );
 		}
 
 		if ($assert) {
-			return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null);
+			return array( GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null );
 		}
 
-		return array(null, false);
+		return array( null, false );
 	}
 }

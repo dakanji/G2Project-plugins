@@ -59,7 +59,7 @@ class UploadItemsController extends GalleryController {
 
 		if (isset($form['action']['uploadItem'])) {
 			if (!isset($form['albumId'])) {
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 			}
 			$form['albumId'] = (int)$form['albumId'];
 
@@ -67,14 +67,14 @@ class UploadItemsController extends GalleryController {
 
 			if ($ret) {
 				// Avoid information disclosure, act as if the item didn't exist.
-				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+				return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 			}
 
 			// Check the user has permissions in this album
 			$ret = GalleryCoreApi::assertHasItemPermission($form['albumId'], 'core.addDataItem');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			// Get the file passed in this submission
@@ -82,13 +82,13 @@ class UploadItemsController extends GalleryController {
 			list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLock($form['albumId']);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (empty($file['name'])) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 			}
 
 			// The Windows Web Publishing Wizard does not send the file name in UTF-8
@@ -103,7 +103,7 @@ class UploadItemsController extends GalleryController {
 			list($ret, $mimeType) = GalleryCoreApi::getMimeType($file['name'], $file['type']);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			$title       = basename($file['name']);
@@ -130,12 +130,12 @@ class UploadItemsController extends GalleryController {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$ret = GalleryCoreApi::releaseLocks($lockIds);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (isset($this->_optionInstances)) {
@@ -145,7 +145,7 @@ class UploadItemsController extends GalleryController {
 				list($ret, $optionInstances) = ItemAddOption::getAllAddOptions();
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 
@@ -159,10 +159,10 @@ class UploadItemsController extends GalleryController {
 			}
 
 			foreach ($optionInstances as $option) {
-				list($ret, $optionErrors, $optionWarnings) = $option->handleRequestAfterAdd($extraOptionsForm, array($newItem));
+				list($ret, $optionErrors, $optionWarnings) = $option->handleRequestAfterAdd($extraOptionsForm, array( $newItem ));
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				/*
@@ -184,7 +184,7 @@ class UploadItemsController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	/**
@@ -333,7 +333,7 @@ class UploadItemsView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'publishxp');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$template->title($module->translate('Windows Publishing Wizard'));

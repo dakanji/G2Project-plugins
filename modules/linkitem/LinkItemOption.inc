@@ -44,7 +44,7 @@ class LinkItemOption extends ItemEditOption {
 			$form['LinkItemOption']['link'] = $item->getLink();
 		}
 
-		return array(null, 'modules/linkitem/templates/LinkItemOption.tpl', 'modules_linkitem');
+		return array( null, 'modules/linkitem/templates/LinkItemOption.tpl', 'modules_linkitem' );
 	}
 
 	/**
@@ -56,10 +56,10 @@ class LinkItemOption extends ItemEditOption {
 		if (empty($form['LinkItemOption']['link'])) {
 			$error[] = 'form[LinkItemOption][error][link][missing]';
 		} else {
-			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($item->getId()));
+			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array( $item->getId() ));
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			list($ret, $item) = $item->refresh();
@@ -67,7 +67,7 @@ class LinkItemOption extends ItemEditOption {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$item->setLink($form['LinkItemOption']['link']);
@@ -76,16 +76,16 @@ class LinkItemOption extends ItemEditOption {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$ret = GalleryCoreApi::releaseLocks($lockId);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, $error, $warning);
+		return array( null, $error, $warning );
 	}
 }

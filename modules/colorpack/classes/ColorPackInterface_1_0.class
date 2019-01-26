@@ -34,7 +34,7 @@ class ColorPackInterface_1_0 {
 	 *               array of colorpack_id => localized_colorpack_name
 	 */
 	public function getColorPacks() {
-		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
+		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
 	}
 
 	/**

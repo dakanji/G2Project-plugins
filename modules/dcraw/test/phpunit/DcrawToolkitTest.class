@@ -91,20 +91,20 @@ class DcrawToolkitTest extends GalleryTestCase {
 
 		$this->_platform->setReply(
 			'tempnam',
-			array($gallery->getConfig('data.gallery.tmp'), 'dcraw_'),
+			array( $gallery->getConfig('data.gallery.tmp'), 'dcraw_' ),
 			'TEMPFILE'
 		);
 		$this->_platform->setReply(
 			'exec',
 			array(
 				array(
-					array('/usr/bin/dcraw', '-c', '-a', '-q', 'INPUTFILE', '>', 'TEMPFILE'),
+					array( '/usr/bin/dcraw', '-c', '-a', '-q', 'INPUTFILE', '>', 'TEMPFILE' ),
 				),
 			),
-			array(1, '')
+			array( 1, '' )
 		);
-		$this->_platform->setReply('rename', array('TEMPFILE', 'OUTPUTFILE'), 1);
-		$this->_platform->setReply('chmod', array('OUTPUTFILE', null), 1);
+		$this->_platform->setReply('rename', array( 'TEMPFILE', 'OUTPUTFILE' ), 1);
+		$this->_platform->setReply('chmod', array( 'OUTPUTFILE', null ), 1);
 
 		list($ret, $outputMimeType, $context) = $this->_toolkit->performOperation(
 			'image/x-dcraw',
@@ -125,20 +125,20 @@ class DcrawToolkitTest extends GalleryTestCase {
 
 		$this->_platform->setReply(
 			'tempnam',
-			array($gallery->getConfig('data.gallery.tmp'), 'dcraw_'),
+			array( $gallery->getConfig('data.gallery.tmp'), 'dcraw_' ),
 			'TEMPFILE'
 		);
 		$this->_platform->setReply(
 			'exec',
 			array(
 				array(
-					array('/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE'),
+					array( '/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE' ),
 				),
 			),
-			array(1, '')
+			array( 1, '' )
 		);
-		$this->_platform->setReply('rename', array('TEMPFILE', 'OUTPUTFILE'), 1);
-		$this->_platform->setReply('chmod', array('OUTPUTFILE', null), 1);
+		$this->_platform->setReply('rename', array( 'TEMPFILE', 'OUTPUTFILE' ), 1);
+		$this->_platform->setReply('chmod', array( 'OUTPUTFILE', null ), 1);
 
 		list($ret, $outputMimeType, $context) = $this->_toolkit->performOperation(
 			'image/x-dcraw',
@@ -159,20 +159,20 @@ class DcrawToolkitTest extends GalleryTestCase {
 
 		$this->_platform->setReply(
 			'tempnam',
-			array($gallery->getConfig('data.gallery.tmp'), 'dcraw_'),
+			array( $gallery->getConfig('data.gallery.tmp'), 'dcraw_' ),
 			'TEMPFILE'
 		);
 		$this->_platform->setReply(
 			'exec',
 			array(
 				array(
-					array('/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE'),
+					array( '/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE' ),
 				),
 			),
-			array(1, '')
+			array( 1, '' )
 		);
-		$this->_platform->setReply('rename', array('TEMPFILE', 'OUTPUTFILE'), 1);
-		$this->_platform->setReply('chmod', array('OUTPUTFILE', null), 1);
+		$this->_platform->setReply('rename', array( 'TEMPFILE', 'OUTPUTFILE' ), 1);
+		$this->_platform->setReply('chmod', array( 'OUTPUTFILE', null ), 1);
 
 		list($ret, $outputMimeType, $context) = $this->_toolkit->performOperation(
 			'image/x-adobe-dng',
@@ -193,19 +193,19 @@ class DcrawToolkitTest extends GalleryTestCase {
 
 		$this->_platform->setReply(
 			'tempnam',
-			array($gallery->getConfig('data.gallery.tmp'), 'dcraw_'),
+			array( $gallery->getConfig('data.gallery.tmp'), 'dcraw_' ),
 			'TEMPFILE'
 		);
 		$this->_platform->setReply(
 			'exec',
 			array(
 				array(
-					array('/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE'),
+					array( '/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE' ),
 				),
 			),
-			array(0, '', 'INPUTFILE: unsupported file format.')
+			array( 0, '', 'INPUTFILE: unsupported file format.' )
 		);
-		$this->_platform->setReply('unlink', array('TEMPFILE'), 1);
+		$this->_platform->setReply('unlink', array( 'TEMPFILE' ), 1);
 
 		list($ret, $outputMimeType, $context) = $this->_toolkit->performOperation(
 			'image/x-dcraw',
@@ -234,7 +234,7 @@ class DcrawToolkitTest extends GalleryTestCase {
 		global $gallery;
 		$this->_platform->setReply(
 			'tempnam',
-			array($gallery->getConfig('data.gallery.tmp'), 'dcraw_'),
+			array( $gallery->getConfig('data.gallery.tmp'), 'dcraw_' ),
 			null
 		);
 
@@ -254,19 +254,19 @@ class DcrawToolkitTest extends GalleryTestCase {
 
 		$this->_platform->setReply(
 			'tempnam',
-			array($gallery->getConfig('data.gallery.tmp'), 'dcraw_'),
+			array( $gallery->getConfig('data.gallery.tmp'), 'dcraw_' ),
 			'TEMPFILE'
 		);
 		$this->_platform->setReply(
 			'exec',
 			array(
 				array(
-					array('/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE'),
+					array( '/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE' ),
 				),
 			),
-			array(0, '')
+			array( 0, '' )
 		);
-		$this->_platform->setReply('unlink', array('TEMPFILE'), 1);
+		$this->_platform->setReply('unlink', array( 'TEMPFILE' ), 1);
 
 		list($ret, $outputMimeType, $context) = $this->_toolkit->performOperation(
 			'image/x-dcraw',
@@ -284,20 +284,20 @@ class DcrawToolkitTest extends GalleryTestCase {
 
 		$this->_platform->setReply(
 			'tempnam',
-			array($gallery->getConfig('data.gallery.tmp'), 'dcraw_'),
+			array( $gallery->getConfig('data.gallery.tmp'), 'dcraw_' ),
 			'TEMPFILE'
 		);
 		$this->_platform->setReply(
 			'exec',
 			array(
 				array(
-					array('/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE'),
+					array( '/usr/bin/dcraw', '-c', '-a', '-q', '0', 'INPUTFILE', '>', 'TEMPFILE' ),
 				),
 			),
-			array(1, '')
+			array( 1, '' )
 		);
-		$this->_platform->setReply('rename', array('TEMPFILE', 'OUTPUTFILE'), 0);
-		$this->_platform->setReply('unlink', array('TEMPFILE'), 1);
+		$this->_platform->setReply('rename', array( 'TEMPFILE', 'OUTPUTFILE' ), 0);
+		$this->_platform->setReply('unlink', array( 'TEMPFILE' ), 1);
 
 		list($ret, $outputMimeType, $context) = $this->_toolkit->performOperation(
 			'image/x-dcraw',

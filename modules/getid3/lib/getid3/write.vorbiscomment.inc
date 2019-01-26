@@ -96,7 +96,7 @@ class getid3_write_vorbiscomment {
 	}
 
 	public function DeleteVorbisComment() {
-		$this->tag_data = array(array());
+		$this->tag_data = array( array() );
 
 		return $this->WriteVorbisComment();
 	}

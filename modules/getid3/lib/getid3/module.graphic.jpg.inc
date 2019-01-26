@@ -50,7 +50,7 @@ class getid3_jpg extends getid3_handler {
 						if (isset($info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName])) {
 							$info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName][] = $value;
 						} else {
-							$info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName] = array($value);
+							$info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName] = array( $value );
 						}
 					}
 				}
@@ -86,7 +86,7 @@ class getid3_jpg extends getid3_handler {
 		}
 
 
-		$cast_as_appropriate_keys = array('EXIF', 'IFD0', 'THUMBNAIL');
+		$cast_as_appropriate_keys = array( 'EXIF', 'IFD0', 'THUMBNAIL' );
 
 		foreach ($cast_as_appropriate_keys as $exif_key) {
 			if (isset($info['jpg']['exif'][$exif_key])) {

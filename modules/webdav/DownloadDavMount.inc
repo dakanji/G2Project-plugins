@@ -57,7 +57,7 @@ class DownloadDavMountView extends GalleryView {
 				'controller' => 'webdav.WebDav',
 			),
 			array(
-				'forceFullUrl'   => true,
+				'forceFullUrl' => true,
 				'forceSessionId' => false,
 			)
 		) . "</dm:url>\n";

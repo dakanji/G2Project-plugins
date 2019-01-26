@@ -33,19 +33,19 @@ class ItemAddFromWeb extends ItemAddPlugin {
 		list($ret, $param) = GalleryCoreApi::getPluginParameter('module', 'itemadd', 'fromweb');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($param == 'admin') {
 			list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$param = $isAdmin ? 'on' : 'off';
 		}
 
-		return array(null, $param == 'on');
+		return array( null, $param == 'on' );
 	}
 
 	/**
@@ -61,11 +61,11 @@ class ItemAddFromWeb extends ItemAddPlugin {
 		list($ret, $hasPermission) = $this->isAppropriate();
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if (!$hasPermission) {
-			return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null, null);
+			return array( GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null, null );
 		}
 
 		if (isset($form['action']['findFilesFromWebPage'])) {
@@ -84,7 +84,7 @@ class ItemAddFromWeb extends ItemAddPlugin {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'itemadd');
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$totalUrls = count($form['webPageUrls']);
@@ -110,7 +110,7 @@ class ItemAddFromWeb extends ItemAddPlugin {
 					list($ret, $mimeType, $fileName) = $this->_getMimeType($url, $headers, true);
 
 					if ($ret) {
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 
 					list($base) = GalleryUtilities::getFileNameComponents($fileName);
@@ -132,14 +132,14 @@ class ItemAddFromWeb extends ItemAddPlugin {
 					);
 
 					if ($ret) {
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 
 					$sanitizedUrl = $url;
 					GalleryUtilities::sanitizeInputValues($url);
 					$status['addedFiles'][] = array(
 						'fileName' => $url,
-						'id'       => $newItem->getId(),
+						'id' => $newItem->getId(),
 						'warnings' => array(),
 					);
 				}
@@ -150,7 +150,7 @@ class ItemAddFromWeb extends ItemAddPlugin {
 					list($ret, $optionErrors) = $addController->postprocessItems($form, $status);
 
 					if ($ret) {
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 					$error = array_merge($error, $optionErrors);
 
@@ -169,12 +169,12 @@ class ItemAddFromWeb extends ItemAddPlugin {
 				$ret = $storage->checkPoint();
 
 				if ($ret) {
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 			}
 		}
 
-		return array(null, $error, $status);
+		return array( null, $error, $status );
 	}
 
 	/**
@@ -245,12 +245,12 @@ class ItemAddFromWeb extends ItemAddPlugin {
 					list($ret, $typeName) = $this->_getTypeName($form['webPage'], null, $headers);
 
 					if ($ret) {
-						return array($ret, null, null);
+						return array( $ret, null, null );
 					}
 
 					if (!empty($typeName)) {
 						$form['webPageUrls'][] = array(
-							'url'      => $form['webPage'],
+							'url' => $form['webPage'],
 							'itemType' => $typeName,
 						);
 					}
@@ -304,7 +304,7 @@ class ItemAddFromWeb extends ItemAddPlugin {
 						$url = !empty($matches[2][$i]) ? $matches[2][$i] : (!empty($matches[3][$i]) ? $matches[3][$i] : $matches[4][$i]);
 
 						// Avoid XSS by eliminating any HTML from the url
-						$url = str_replace(array('<', '>'), array('&lt;', '&gt;'), $url);
+						$url = str_replace(array( '<', '>' ), array( '&lt;', '&gt;' ), $url);
 
 						if (empty($url) || isset($seenBefore[$url])) {
 							continue;
@@ -362,12 +362,12 @@ class ItemAddFromWeb extends ItemAddPlugin {
 						list($ret, $typeName) = $this->_getTypeName($url, $matches[1][$i]);
 
 						if ($ret) {
-							return array($ret, null, null);
+							return array( $ret, null, null );
 						}
 
 						if (!empty($typeName)) {
 							$form['webPageUrls'][] = array(
-								'url'      => $url,
+								'url' => $url,
 								'itemType' => $typeName,
 							);
 						}
@@ -446,11 +446,11 @@ class ItemAddFromWeb extends ItemAddPlugin {
 			list($ret, $mimeType) = GalleryCoreApi::getMimeType($urlComponents['path']);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!empty($mimeType) && $mimeType != 'application/unknown') {
-				return array(null, $mimeType, $fileName);
+				return array( null, $mimeType, $fileName );
 			}
 		}
 
@@ -462,11 +462,11 @@ class ItemAddFromWeb extends ItemAddPlugin {
 			list($ret, $mimeType) = GalleryCoreApi::getMimeType($urlComponents['query']);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!empty($mimeType) && $mimeType != 'application/unknown') {
-				return array(null, $mimeType, $fileName);
+				return array( null, $mimeType, $fileName );
 			}
 		}
 
@@ -476,11 +476,11 @@ class ItemAddFromWeb extends ItemAddPlugin {
 			list($ret, $mimeType) = GalleryCoreApi::getMimeType($match[1]);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!empty($mimeType) && $mimeType != 'application/unknown') {
-				return array(null, $mimeType, $fileName);
+				return array( null, $mimeType, $fileName );
 			}
 		}
 
@@ -488,13 +488,13 @@ class ItemAddFromWeb extends ItemAddPlugin {
 			list($ret, $mimeType) = GalleryCoreApi::getMimeType('ignored', $headers['Content-Type']);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
-			return array(null, $mimeType, $fileName);
+			return array( null, $mimeType, $fileName );
 		}
 
-		return array(null, 'application/unknown', $fileName);
+		return array( null, 'application/unknown', $fileName );
 	}
 
 	/**
@@ -513,19 +513,19 @@ class ItemAddFromWeb extends ItemAddPlugin {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'itemadd');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
-			return array(null, $module->translate('Photo'));
+			return array( null, $module->translate('Photo') );
 		}
 		list($ret, $mimeType) = $this->_getMimeType($url, $headers);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (empty($mimeType) || $mimeType == 'application/unknown') {
-			return array(null, null);
+			return array( null, null );
 		}
 
 		static $mimeTypeNameMap = array();
@@ -534,13 +534,13 @@ class ItemAddFromWeb extends ItemAddPlugin {
 			list($ret, $mimeTypeItem) = GalleryCoreApi::newItemByMimeType($mimeType);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$mimeTypeItem->setMimeType($mimeType);
 			$mimeTypeNameMap[$mimeType] = $mimeTypeItem->itemTypeName();
 		}
 
-		return array(null, $mimeTypeNameMap[$mimeType][0]);
+		return array( null, $mimeTypeNameMap[$mimeType][0] );
 	}
 
 	/**
@@ -550,9 +550,9 @@ class ItemAddFromWeb extends ItemAddPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'itemadd');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $module->translate('From Web Page'));
+		return array( null, $module->translate('From Web Page') );
 	}
 }

@@ -85,9 +85,9 @@ class getid3_gif extends getid3_handler {
 		//          $GIFcolorTable = $this->fread(3 * $info['gif']['header']['global_color_size']);
 		//          $offset = 0;
 		//          for ($i = 0; $i < $info['gif']['header']['global_color_size']; $i++) {
-		//              $red   = getid3_lib::LittleEndian2Int(substr($GIFcolorTable, $offset++, 1));
+		//              $red = getid3_lib::LittleEndian2Int(substr($GIFcolorTable, $offset++, 1));
 		//              $green = getid3_lib::LittleEndian2Int(substr($GIFcolorTable, $offset++, 1));
-		//              $blue  = getid3_lib::LittleEndian2Int(substr($GIFcolorTable, $offset++, 1));
+		//              $blue = getid3_lib::LittleEndian2Int(substr($GIFcolorTable, $offset++, 1));
 		//              $info['gif']['global_color_table'][$i] = (($red << 16) | ($green << 8) | ($blue));
 		//          }
 		//      }
@@ -101,13 +101,13 @@ class getid3_gif extends getid3_handler {
 		//
 		//                  $ImageDescriptorData = $NextBlockTest.$this->fread(9);
 		//                  $ImageDescriptor = array();
-		//                  $ImageDescriptor['image_left']   = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 1, 2));
-		//                  $ImageDescriptor['image_top']    = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 3, 2));
-		//                  $ImageDescriptor['image_width']  = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 5, 2));
+		//                  $ImageDescriptor['image_left'] = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 1, 2));
+		//                  $ImageDescriptor['image_top'] = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 3, 2));
+		//                  $ImageDescriptor['image_width'] = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 5, 2));
 		//                  $ImageDescriptor['image_height'] = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 7, 2));
-		//                  $ImageDescriptor['flags_raw']    = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 9, 1));
+		//                  $ImageDescriptor['flags_raw'] = getid3_lib::LittleEndian2Int(substr($ImageDescriptorData, 9, 1));
 		//                  $ImageDescriptor['flags']['use_local_color_map'] = (bool) ($ImageDescriptor['flags_raw'] & 0x80);
-		//                  $ImageDescriptor['flags']['image_interlaced']    = (bool) ($ImageDescriptor['flags_raw'] & 0x40);
+		//                  $ImageDescriptor['flags']['image_interlaced'] = (bool) ($ImageDescriptor['flags_raw'] & 0x40);
 		//                  $info['gif']['image_descriptor'][] = $ImageDescriptor;
 		//
 		//                  if ($ImageDescriptor['flags']['use_local_color_map']) {
@@ -118,7 +118,7 @@ class getid3_gif extends getid3_handler {
 		//                  }
 		//echo 'Start of raster data: '.$this->ftell().'<BR>';
 		//                  $RasterData = array();
-		//                  $RasterData['code_size']        = getid3_lib::LittleEndian2Int($this->fread(1));
+		//                  $RasterData['code_size'] = getid3_lib::LittleEndian2Int($this->fread(1));
 		//                  $RasterData['block_byte_count'] = getid3_lib::LittleEndian2Int($this->fread(1));
 		//                  $info['gif']['raster_data'][count($info['gif']['image_descriptor']) - 1] = $RasterData;
 		//
@@ -149,9 +149,9 @@ class getid3_gif extends getid3_handler {
 		//                  // GIF Extension Block
 		//                  $ExtensionBlockData = $NextBlockTest.$this->fread(2);
 		//                  $ExtensionBlock = array();
-		//                  $ExtensionBlock['function_code']  = getid3_lib::LittleEndian2Int(substr($ExtensionBlockData, 1, 1));
-		//                  $ExtensionBlock['byte_length']    = getid3_lib::LittleEndian2Int(substr($ExtensionBlockData, 2, 1));
-		//                  $ExtensionBlock['data']           = $this->fread($ExtensionBlock['byte_length']);
+		//                  $ExtensionBlock['function_code'] = getid3_lib::LittleEndian2Int(substr($ExtensionBlockData, 1, 1));
+		//                  $ExtensionBlock['byte_length'] = getid3_lib::LittleEndian2Int(substr($ExtensionBlockData, 2, 1));
+		//                  $ExtensionBlock['data'] = $this->fread($ExtensionBlock['byte_length']);
 		//                  $info['gif']['extension_blocks'][] = $ExtensionBlock;
 		//                  break;
 		//

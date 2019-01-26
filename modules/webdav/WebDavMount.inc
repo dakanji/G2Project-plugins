@@ -33,17 +33,17 @@ class WebDavMountView extends GalleryView {
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $canView) = GalleryCoreApi::hasItemPermission($item->getId(), 'core.view');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (!$canView) {
 			// Avoid information disclosure, act as if the item didn't exist.
-			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
 		}
 
 		$template->setVariable('item', (array)$item);
@@ -64,9 +64,9 @@ class WebDavMountView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'webdav');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $module->translate('Mount with WebDAV'));
+		return array( null, $module->translate('Mount with WebDAV') );
 	}
 }

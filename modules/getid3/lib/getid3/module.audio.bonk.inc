@@ -169,7 +169,7 @@ class getid3_bonk extends getid3_handler {
 
 				if (!$this->BonkIsValidTagName(substr($NextInfoDataPair, 1, 4))) {
 					while (!feof($this->getid3->fp)) {
-						//$CurrentSeekInfo['offset']  = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 0, 4));
+						//$CurrentSeekInfo['offset'] = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 0, 4));
 						//$CurrentSeekInfo['nextbit'] = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 4, 1));
 						//$thisfile_bonk_INFO[] = $CurrentSeekInfo;
 
@@ -230,7 +230,7 @@ class getid3_bonk extends getid3_handler {
 	}
 
 	public static function BonkIsValidTagName($PossibleBonkTag, $ignorecase = false) {
-		static $BonkIsValidTagName = array('BONK', 'INFO', ' ID3', 'META');
+		static $BonkIsValidTagName = array( 'BONK', 'INFO', ' ID3', 'META' );
 
 		foreach ($BonkIsValidTagName as $validtagname) {
 			if ($validtagname == $PossibleBonkTag) {

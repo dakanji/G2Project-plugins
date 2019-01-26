@@ -37,7 +37,7 @@ class DirectoryListingController extends GalleryController {
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
 
 		if (strstr($httpUserAgent, 'Nokia') === false) {
-			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null);
+			return array( GalleryCoreApi::error(ERROR_REQUEST_FORGED), null );
 		}
 
 		$results['delegate'] = array(
@@ -46,7 +46,7 @@ class DirectoryListingController extends GalleryController {
 		$results['status']   = ImageUploadHelper::getDirectoryListing();
 		$results['error']    = array();
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class DirectoryListingView extends GalleryView {
 			$status['success'] = NOKIAUPLOAD_ERR_UNKNOWN;
 		}
 
-		$reply = array($status['success'] . "\r\n");
+		$reply = array( $status['success'] . "\r\n" );
 
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR) {
 			$dirNum  = count($status['albums']);

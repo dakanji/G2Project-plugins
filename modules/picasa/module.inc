@@ -34,8 +34,8 @@ class PicasaModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('import', $this->translate('Import'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 45));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 45 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**

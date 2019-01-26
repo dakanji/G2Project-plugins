@@ -75,7 +75,7 @@ class SitemapViewTest extends GalleryTestCase {
 				$this->_root->getId(),
 				'application/unknown',
 				array(
-					'serialNumber'      => $serials[$i] - 1, // it will get incremented internally
+					'serialNumber' => $serials[$i] - 1, // it will get incremented internally
 					'creationTimestamp' => $this->_start_of_2005,
 				)
 			);
@@ -103,7 +103,7 @@ class SitemapViewTest extends GalleryTestCase {
 		$results = ob_get_contents();
 		ob_end_clean();
 
-		$ids = array($this->_root->getId());
+		$ids = array( $this->_root->getId() );
 
 		foreach ($this->_item as $item) {
 			$ids[] = $item->getId();
@@ -208,7 +208,7 @@ class SitemapViewTestStorage {
 		}
 		echo $query;
 
-		return array(null, new SitemapViewTestSearchResults());
+		return array( null, new SitemapViewTestSearchResults() );
 	}
 
 	public function getMapEntry($map, $select, $match) {

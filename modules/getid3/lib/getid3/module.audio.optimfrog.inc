@@ -199,7 +199,7 @@ class getid3_optimfrog extends getid3_handler {
 					$COMPdata['channel_configuration']        = $this->OptimFROGchannelConfigurationLookup($COMPdata['raw']['channel_configuration']);
 					$offset                         += 1;
 					$COMPdata['raw']['algorithm_id'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 2));
-					//$COMPdata['algorithm']                    = OptimFROGalgorithmNameLookup($COMPdata['raw']['algorithm_id']);
+					//$COMPdata['algorithm'] = OptimFROGalgorithmNameLookup($COMPdata['raw']['algorithm_id']);
 					$offset += 2;
 
 					if ($info['ofr']['OFR ']['size'] > 12) {
@@ -374,7 +374,7 @@ class getid3_optimfrog extends getid3_handler {
 
 	public static function OptimFROGencoderNameLookup($EncoderID) {
 		// version = (encoderID >> 4) + 4500
-		// system  =  encoderID & 0xF
+		// system =  encoderID & 0xF
 
 		$EncoderVersion  = number_format(((($EncoderID & 0xF0) >> 4) + 4500) / 1000, 3);
 		$EncoderSystemID = ($EncoderID & 0x0F);
@@ -389,7 +389,7 @@ class getid3_optimfrog extends getid3_handler {
 	}
 
 	public static function OptimFROGcompressionLookup($CompressionID) {
-		// mode    = compression >> 3
+		// mode = compression >> 3
 		// speedup = compression & 0x07
 
 		$CompressionModeID = ($CompressionID & 0xF8) >> 3;
@@ -412,10 +412,10 @@ class getid3_optimfrog extends getid3_handler {
 	}
 
 	public static function OptimFROGspeedupLookup($CompressionID) {
-		// mode    = compression >> 3
+		// mode = compression >> 3
 		// speedup = compression & 0x07
 
-		//$CompressionModeID    = ($CompressionID & 0xF8) >> 3;
+		//$CompressionModeID = ($CompressionID & 0xF8) >> 3;
 		$CompressionSpeedupID = ($CompressionID & 0x07);
 
 		static $OptimFROGencoderSpeedupLookup = array(

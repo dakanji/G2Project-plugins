@@ -92,8 +92,8 @@ class _parse_propfind {
 		// set tag & data handlers
 		xml_set_element_handler(
 			$parser,
-			array(&$this, '_startElement'),
-			array(&$this, '_endElement')
+			array( &$this, '_startElement' ),
+			array( &$this, '_endElement' )
 		);
 
 		// we want a case sensitive parser

@@ -151,7 +151,7 @@ class getid3_flac extends getid3_handler {
 					}
 					$comments_picture_data = array();
 
-					foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
+					foreach (array( 'data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength' ) as $picture_key) {
 						if (isset($entry[$picture_key])) {
 							$comments_picture_data[$picture_key] = $entry[$picture_key];
 						}

@@ -377,7 +377,7 @@ class WatermarkImage extends GalleryEntity {
 	 *               string path
 	 */
 	public function fetchPath() {
-		return array(null, $this->getWatermarkDir() . $this->getFileName());
+		return array( null, $this->getWatermarkDir() . $this->getFileName() );
 	}
 
 	/**
@@ -406,8 +406,8 @@ class WatermarkImage extends GalleryEntity {
 				$urlGenerator =& $gallery->getUrlGenerator();
 				$src          = $urlGenerator->generateUrl(
 					array(
-						'view'         => 'core.DownloadItem',
-						'itemId'       => $this->getId(),
+						'view' => 'core.DownloadItem',
+						'itemId' => $this->getId(),
 						'serialNumber' => $this->getSerialNumber(),
 					),
 					array(
@@ -415,7 +415,7 @@ class WatermarkImage extends GalleryEntity {
 					)
 				);
 
-				list($width, $height) = array($this->getWidth(), $this->getHeight());
+				list($width, $height) = array( $this->getWidth(), $this->getHeight() );
 
 				// Shrink our dimensions if necessary
 				if (isset($params['maxSize'])) {

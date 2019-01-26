@@ -32,7 +32,7 @@ class PopularAlbumView extends UpdatesAlbumView {
 		global $gallery;
 		$this->_view            = 'dynamicalbum.PopularAlbum';
 		$this->_title           = $gallery->i18n('Most Viewed Items');
-		$this->_itemType        = array($gallery->i18n('Most Viewed'), $gallery->i18n('most viewed'));
+		$this->_itemType        = array( $gallery->i18n('Most Viewed'), $gallery->i18n('most viewed') );
 		$this->_viewDescription = $gallery->i18n('most viewed');
 		$this->_param           = 'views';
 	}

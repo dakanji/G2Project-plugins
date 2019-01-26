@@ -279,7 +279,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$ret = $mockAdapter->runCallbacks();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (is_array($expectedProgressBarDump)) {
@@ -300,7 +300,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$session =& $gallery->getSession();
 		$status  = $session->getStatus();
 
-		return array(null, $status);
+		return array( null, $status );
 	}
 
 	public function testImportUserSuccessful() {
@@ -332,13 +332,13 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'userImportSuccess'  => array(
+				'userImportSuccess' => array(
 					'phpunit_foobar' => 1,
 				),
-				'userImportFailure'  => array(),
+				'userImportFailure' => array(),
 				'albumImportFailure' => array(),
 				'albumImportSuccess' => array(),
-				'urlRedirect'        => false,
+				'urlRedirect' => false,
 			),
 			$status
 		);
@@ -380,13 +380,13 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'userImportSuccess'  => array(
+				'userImportSuccess' => array(
 					'phpunitfoo002' => 1,
 				),
-				'userImportFailure'  => array(),
+				'userImportFailure' => array(),
 				'albumImportFailure' => array(),
 				'albumImportSuccess' => array(),
-				'urlRedirect'        => false,
+				'urlRedirect' => false,
 			),
 			$status
 		);
@@ -430,13 +430,13 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'userImportFailure'  => array(
+				'userImportFailure' => array(
 					'admin' => 1,
 				),
-				'userImportSuccess'  => array(),
+				'userImportSuccess' => array(),
 				'albumImportFailure' => array(),
 				'albumImportSuccess' => array(),
-				'urlRedirect'        => false,
+				'urlRedirect' => false,
 			),
 			$status
 		);
@@ -450,7 +450,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'migrate.SelectGallery',
 				),
 				'status' => array(),
@@ -506,7 +506,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$results = $this->handleRequest();
 		$this->assertEquals(
-			array('album03', 'album02'),
+			array( 'album03', 'album02' ),
 			array_keys($status['albumImportSuccess'])
 		);
 		$this->assertEquals(array(), $status['userImportFailure']);
@@ -590,11 +590,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		 * (
 		 *   +[title] => Test Album One
 		 *   +[description] => No description
-		 *   +[summary] =>
-		 *   -[bgcolor] =>
-		 *   -[textcolor] =>
-		 *   -[linkcolor] =>
-		 *   -[font] => verdana
+		 *   +[summary] => 		 *   -[bgcolor] => 		 *   -[textcolor] => 		 *   -[linkcolor] => 		 *   -[font] => verdana
 		 *   -[border] => 1
 		 *   -[bordercolor] => black
 		 *   -[returnto] => yes
@@ -638,14 +634,14 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 				23,                                    // count of clicks
 				array(
 					array(                           // thumb and resized...
-						'order'                => 0,              // ...sizing preferences
-						'derivativeType'       => 1,
+						'order' => 0,              // ...sizing preferences
+						'derivativeType' => 1,
 						'derivativeOperations' => 'thumbnail|150',
 					),
 
 					array(
-						'order'                => 1,
-						'derivativeType'       => 2,
+						'order' => 1,
+						'derivativeType' => 2,
 						'derivativeOperations' => 'scale|400',
 					),
 				),
@@ -676,24 +672,14 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		 *           +[type] => jpg
 		 *           -[width] => 225
 		 *           -[height] => 165
-		 *           -[resizedName] =>
-		 *           +[thumb_x] =>
-		 *           +[thumb_y] =>
-		 *           +[thumb_width] =>
-		 *           +[thumb_height] =>
-		 *           -[raw_width] => 225
+		 *           -[resizedName] => 		 *           +[thumb_x] => 		 *           +[thumb_y] => 		 *           +[thumb_width] => 		 *           +[thumb_height] => 		 *           -[raw_width] => 225
 		 *           -[raw_height] => 165
 		 *           -[version] => 10
 		 *        )
 		 *
 		 *   +[caption] => canon_ae_1
-		 *    [hidden] =>
-		 *   +[highlight] => 1
-		 *   +[isAlbumName] =>
-		 *   +[clicks] =>
-		 *   +[keywords] =>
-		 *    [comments] =>
-		 *   +[uploadDate] => 1056014783
+		 *    [hidden] => 		 *   +[highlight] => 1
+		 *   +[isAlbumName] => 		 *   +[clicks] => 		 *   +[keywords] => 		 *    [comments] => 		 *   +[uploadDate] => 1056014783
 		 *   +[itemCaptureDate] => Array
 		 *        (
 		 *           +[0] => 1056014783
@@ -769,7 +755,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			GalleryCoreApi::requireOnce(
 				'modules/customfield/classes/CustomFieldHelper.class'
 			);
-			list($ret, $fields) = CustomFieldHelper::fetchFieldValues(array($testItem), 'detail');
+			list($ret, $fields) = CustomFieldHelper::fetchFieldValues(array( $testItem ), 'detail');
 
 			if ($ret) {
 				return $ret;
@@ -785,7 +771,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			);
 		}
 
-		list($ret, $chipperThumb) = GalleryCoreApi::fetchThumbnailsByItemIds(array($testItem->getId()));
+		list($ret, $chipperThumb) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $testItem->getId() ));
 
 		if ($ret) {
 			return $ret;
@@ -969,11 +955,11 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		}
 		$expectedPermissions   = $this->testComments ? array(
 			array(
-				'groupId'    => $this->_everybodyGroupId,
+				'groupId' => $this->_everybodyGroupId,
 				'permission' => 'comment.add',
 			),
 			array(
-				'groupId'    => $this->_everybodyGroupId,
+				'groupId' => $this->_everybodyGroupId,
 				'permission' => 'comment.view',
 			),
 		) : array();
@@ -996,13 +982,13 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		if ($this->testHidden) {
 			$expectedPermissions[] = array(
-				'entityId'   => $ids[3],
+				'entityId' => $ids[3],
 				'permission' => 'core.view',
 			);
 		}
 
-		usort($expectedPermissions, array($this, '_sortByPermission'));
-		usort($permissions, array($this, '_sortByPermission'));
+		usort($expectedPermissions, array( $this, '_sortByPermission' ));
+		usort($permissions, array( $this, '_sortByPermission' ));
 		$this->assertEquals($expectedPermissions, $permissions, 'permissions on hidden item');
 
 		$testAlbumId           = $status['albumImportSuccess']['album02'];
@@ -1060,7 +1046,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals(
-			array('album04'),
+			array( 'album04' ),
 			array_keys($status['albumImportSuccess'])
 		);
 		$this->assertEquals(array(), $status['userImportFailure']);
@@ -1114,11 +1100,11 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		 */
 		$expectedPermissions   = $this->testComments ? array(
 			array(
-				'groupId'    => $this->_everybodyGroupId,
+				'groupId' => $this->_everybodyGroupId,
 				'permission' => 'comment.add',
 			),
 			array(
-				'groupId'    => $this->_everybodyGroupId,
+				'groupId' => $this->_everybodyGroupId,
 				'permission' => 'comment.view',
 			),
 		) : array();
@@ -1141,7 +1127,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		if ($this->testHidden) {
 			$expectedPermissions[] = array(
-				'entityId'   => $testAlbumId,
+				'entityId' => $testAlbumId,
 				'permission' => 'core.view',
 			);
 		}
@@ -1151,8 +1137,8 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		usort($expectedPermissions, array($this, '_sortByPermission'));
-		usort($permissions, array($this, '_sortByPermission'));
+		usort($expectedPermissions, array( $this, '_sortByPermission' ));
+		usort($permissions, array( $this, '_sortByPermission' ));
 		$this->assertEquals($expectedPermissions, $permissions, 'permissions on hidden album');
 
 		list($ret, $permissions) = GalleryCoreApi::fetchAllPermissionsForItem($ids[0], true);
@@ -1160,8 +1146,8 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		usort($expectedPermissions, array($this, '_sortByPermission'));
-		usort($permissions, array($this, '_sortByPermission'));
+		usort($expectedPermissions, array( $this, '_sortByPermission' ));
+		usort($permissions, array( $this, '_sortByPermission' ));
 		$this->assertEquals(
 			$expectedPermissions,
 			$permissions,
@@ -1210,7 +1196,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals(
-			array('album03'),
+			array( 'album03' ),
 			array_keys($status['albumImportSuccess'])
 		);
 		$this->assertEquals(true, $status['urlRedirect']);
@@ -1375,7 +1361,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals(
-			array('album05'),
+			array( 'album05' ),
 			array_keys($status['albumImportSuccess'])
 		);
 		$this->assertEquals(array(), $status['userImportFailure']);
@@ -1585,7 +1571,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array('album01'), array_keys($status['albumImportSuccess']));
+		$this->assertEquals(array( 'album01' ), array_keys($status['albumImportSuccess']));
 		$this->assertEquals(array(), $status['userImportFailure']);
 		$this->assertEquals(array(), $status['userImportSuccess']);
 		$this->assertEquals(array(), $status['albumImportFailure']);
@@ -1683,7 +1669,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array('no_NO'), array_keys($status['albumImportSuccess']));
+		$this->assertEquals(array( 'no_NO' ), array_keys($status['albumImportSuccess']));
 		$this->assertEquals(array(), $status['userImportFailure']);
 		$this->assertEquals(array(), $status['userImportSuccess']);
 		$this->assertEquals(array(), $status['albumImportFailure']);
@@ -1837,7 +1823,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array('fr_FR'), array_keys($status['albumImportSuccess']));
+		$this->assertEquals(array( 'fr_FR' ), array_keys($status['albumImportSuccess']));
 		$this->assertEquals(array(), $status['userImportFailure']);
 		$this->assertEquals(array(), $status['userImportSuccess']);
 		$this->assertEquals(array(), $status['albumImportFailure']);
@@ -1996,7 +1982,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array('KOI-8'), array_keys($status['albumImportSuccess']));
+		$this->assertEquals(array( 'KOI-8' ), array_keys($status['albumImportSuccess']));
 		$this->assertEquals(array(), $status['userImportFailure']);
 		$this->assertEquals(array(), $status['userImportSuccess']);
 		$this->assertEquals(array(), $status['albumImportFailure']);
@@ -2134,7 +2120,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			GalleryCoreApi::requireOnce(
 				'modules/customfield/classes/CustomFieldHelper.class'
 			);
-			list($ret, $fields) = CustomFieldHelper::fetchFieldValues(array($testItem), 'detail');
+			list($ret, $fields) = CustomFieldHelper::fetchFieldValues(array( $testItem ), 'detail');
 
 			if ($ret) {
 				return $ret;
@@ -2463,7 +2449,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals(
-			array('album03'),
+			array( 'album03' ),
 			array_keys($status['albumImportSuccess'])
 		);
 		$this->assertEquals(array(), $status['userImportFailure']);

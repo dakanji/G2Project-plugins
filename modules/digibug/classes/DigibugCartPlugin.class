@@ -63,7 +63,7 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 		$session->put('digibug.cart', $cartItemIds);
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$returnUrl    = $urlGenerator->generateUrl(
+		$returnUrl = $urlGenerator->generateUrl(
 			array(
 				'view' => 'cart.ViewCart', ),
 				array(

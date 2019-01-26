@@ -95,25 +95,25 @@ class CustomFieldSearchTest extends GalleryTestCase {
 			array(
 				'common' => array(
 					array(
-						'field'   => 'Catalog Id',
+						'field' => 'Catalog Id',
 						'summary' => false,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 				),
 				'album' => array(),
 				'photo' => array(
 					array(
-						'field'   => 'Location',
+						'field' => 'Location',
 						'summary' => true,
-						'detail'  => true,
+						'detail' => true,
 						'choices' => array(),
 					),
 					array(
-						'field'   => 'Category',
+						'field' => 'Category',
 						'summary' => false,
-						'detail'  => false,
-						'choices' => array('A', 'B'),
+						'detail' => false,
+						'choices' => array( 'A', 'B' ),
 					),
 				),
 			),
@@ -128,11 +128,11 @@ class CustomFieldSearchTest extends GalleryTestCase {
 		$values = array(
 			array(
 				'Catalog Id' => $this->_randomKey,
-				'Category'   => 'A',
+				'Category' => 'A',
 			),
 			array(
 				'Catalog Id' => 'abc',
-				'Location'   => 'at ' . $this->_randomKey,
+				'Location' => 'at ' . $this->_randomKey,
 			),
 			array(
 				'Category' => 'Special:' . $this->_randomKey . ':',
@@ -173,7 +173,7 @@ class CustomFieldSearchTest extends GalleryTestCase {
 				'options' => array(
 					'customfield' => array(
 						'description' => $this->_module->translate('Search custom fields'),
-						'enabled'     => 1,
+						'enabled' => 1,
 					),
 				),
 			),
@@ -203,7 +203,7 @@ class CustomFieldSearchTest extends GalleryTestCase {
 						'itemId' => $this->_items[2]->getId(),
 						'fields' => array(
 							array(
-								'key'   => 'Category',
+								'key' => 'Category',
 								'value' => 'Special:' . $this->_randomKey . ':',
 							),
 						),
@@ -212,7 +212,7 @@ class CustomFieldSearchTest extends GalleryTestCase {
 						'itemId' => $this->_items[1]->getId(),
 						'fields' => array(
 							array(
-								'key'   => 'Location',
+								'key' => 'Location',
 								'value' => 'at ' . $this->_randomKey,
 							),
 						),
@@ -221,7 +221,7 @@ class CustomFieldSearchTest extends GalleryTestCase {
 						'itemId' => $this->_items[0]->getId(),
 						'fields' => array(
 							array(
-								'key'   => 'Catalog Id',
+								'key' => 'Catalog Id',
 								'value' => $this->_randomKey,
 							),
 						),
@@ -256,7 +256,7 @@ class CustomFieldSearchTest extends GalleryTestCase {
 						'itemId' => $this->_items[1]->getId(),
 						'fields' => array(
 							array(
-								'key'   => 'Location',
+								'key' => 'Location',
 								'value' => 'at ' . $this->_randomKey,
 							),
 						),
@@ -265,7 +265,7 @@ class CustomFieldSearchTest extends GalleryTestCase {
 						'itemId' => $this->_items[0]->getId(),
 						'fields' => array(
 							array(
-								'key'   => 'Catalog Id',
+								'key' => 'Catalog Id',
 								'value' => $this->_randomKey,
 							),
 						),

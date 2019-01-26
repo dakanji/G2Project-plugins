@@ -30,7 +30,7 @@ class RandomHighlightOption extends ItemEditOption {
 	 * @see ItemEditOption::isAppropriate
 	 */
 	public function isAppropriate($item, $thumbnail) {
-		return array(null, isset($thumbnail));
+		return array( null, isset($thumbnail) );
 	}
 
 	/**
@@ -50,10 +50,10 @@ class RandomHighlightOption extends ItemEditOption {
 	 * @see ItemEditOption::handleRequestAfterEdit
 	 */
 	public static function handleRequestAfterEdit($form, &$item, &$preferred) {
-		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($item->getId()));
+		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $item->getId() ));
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$thumbnail         = array_shift($thumbnail);
 		$isRandomHighlight = isset($form['RandomHighlightOption']['isRandomHighlight'])
@@ -65,14 +65,14 @@ class RandomHighlightOption extends ItemEditOption {
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($thumbnail->getId());
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			list($ret, $thumbnail) = $thumbnail->refresh();
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if ($isRandomHighlight) {
@@ -85,15 +85,15 @@ class RandomHighlightOption extends ItemEditOption {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ret = GalleryCoreApi::releaseLocks($lockId);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, array(), array());
+		return array( null, array(), array() );
 	}
 }

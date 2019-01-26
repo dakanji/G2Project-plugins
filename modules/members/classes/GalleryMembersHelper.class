@@ -43,11 +43,11 @@ class GalleryMembersHelper {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (empty($aclIds)) {
-			return array(null, 0);
+			return array( null, 0 );
 		}
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
@@ -67,18 +67,18 @@ class GalleryMembersHelper {
 			$aclMarkers
 		);
 
-		$data = array_merge(array((int)$userId), $aclIds);
+		$data = array_merge(array( (int)$userId ), $aclIds);
 
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$result   = $searchResults->nextResult();
 		$numItems = (int)$result[0];
 
-		return array(null, $numItems);
+		return array( null, $numItems );
 	}
 
 	/**
@@ -106,17 +106,17 @@ class GalleryMembersHelper {
 				break;
 
 			default:
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 		}
 
 		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $gallery->getActiveUserId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (empty($aclIds)) {
-			return array(null, array());
+			return array( null, array() );
 		}
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
@@ -153,7 +153,7 @@ class GalleryMembersHelper {
 		list($ret, $searchResults) = $gallery->search($query, $data, $options);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Get all of our item ids
@@ -168,13 +168,13 @@ class GalleryMembersHelper {
 			list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryItem');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 		} else {
 			$items = array();
 		}
 
-		return array(null, $items);
+		return array( null, $items );
 	}
 
 	/**
@@ -192,16 +192,16 @@ class GalleryMembersHelper {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $result) = GalleryCoreApi::isUserInGroup($userId, $viewSelectedGroupId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $result);
+		return array( null, $result );
 	}
 
 	/**
@@ -221,7 +221,7 @@ class GalleryMembersHelper {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $groupId) = GalleryCoreApi::getPluginParameter(
@@ -231,14 +231,14 @@ class GalleryMembersHelper {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Is the current user an admin?
 		list($ret, $resultTwo) = GalleryCoreApi::isUserInGroup($userId, $groupId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		/*
@@ -249,7 +249,7 @@ class GalleryMembersHelper {
 			$result = true;
 		}
 
-		return array(null, $result);
+		return array( null, $result );
 	}
 
 	/**
@@ -263,7 +263,7 @@ class GalleryMembersHelper {
 		list($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		/*
@@ -274,7 +274,7 @@ class GalleryMembersHelper {
 		$creationStamp = strtotime(date('F j, Y', $user->getCreationTimestamp()));
 		$age           = (int)round(($todayStamp - $creationStamp) / (24 * 60 * 60));
 
-		return array(null, $age);
+		return array( null, $age );
 	}
 
 	/**
@@ -291,14 +291,14 @@ class GalleryMembersHelper {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $totalUserCount) = GalleryCoreApi::fetchUserCount(null, $groupId);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, (int)$totalUserCount);
+		return array( null, (int)$totalUserCount );
 	}
 }

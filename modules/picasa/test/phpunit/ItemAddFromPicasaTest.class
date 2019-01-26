@@ -55,7 +55,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ItemAddFromPicasaTestToolkit',
-			array('application/zip'),
+			array( 'application/zip' ),
 			'extract',
 			array(),
 			'',
@@ -179,7 +179,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			),
 			'/tmp'
 		);
-		$this->_platform->setReply('mkdir', array('/tmp.dir', 755), true);
+		$this->_platform->setReply('mkdir', array( '/tmp.dir', 755 ), true);
 		$this->_platform->setReply(
 			'exec',
 			array(
@@ -190,28 +190,28 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 					),
 				),
 			),
-			array(true)
+			array( true )
 		);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-		$this->_platform->setReply('file_exists', array('/tmp.dir/index.xml'), true);
-		$this->_platform->setReply('is_readable', array('/tmp.dir/index.xml'), true);
+		$this->_platform->setReply('file_exists', array( '/tmp.dir/index.xml' ), true);
+		$this->_platform->setReply('is_readable', array( '/tmp.dir/index.xml' ), true);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-		$this->_platform->setReply('file_exists', array('/tmp.dir/index.xml'), true);
-		$this->_platform->setReply('is_readable', array('/tmp.dir/index.xml'), true);
-		$this->_platform->setReply('file', array('/tmp.dir/index.xml', ''), $testXmlData);
+		$this->_platform->setReply('file_exists', array( '/tmp.dir/index.xml' ), true);
+		$this->_platform->setReply('is_readable', array( '/tmp.dir/index.xml' ), true);
+		$this->_platform->setReply('file', array( '/tmp.dir/index.xml', '' ), $testXmlData);
 		$this->_platform->setReply(
 			'legalizePathComponent',
-			array('GalleryTest 2<script>evil', false),
+			array( 'GalleryTest 2<script>evil', false ),
 			'GalleryTest 2_script_evil'
 		);
 		$this->_platform->setReply(
 			'isLegalPathComponent',
-			array('GalleryTest 2_script_evil', false),
+			array( 'GalleryTest 2_script_evil', false ),
 			true
 		);
 		$this->_platform->setReply(
 			'legalizePathComponent',
-			array('GalleryTest 2_script_evil', true),
+			array( 'GalleryTest 2_script_evil', true ),
 			'GalleryTest 2_script_evil'
 		);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
@@ -232,17 +232,17 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		);
 
 		// Image creation
-		$testImages = array('ajipankachile5.jpg0', 'californiadriedchile5.jpg0', 'a<script>b.jpg0');
+		$testImages = array( 'ajipankachile5.jpg0', 'californiadriedchile5.jpg0', 'a<script>b.jpg0' );
 
 		foreach ($testImages as $testImage) {
 			$this->_platform->setReply(
 				'is_uploaded_file',
-				array('/tmp.dir/images/' . $testImage . ''),
+				array( '/tmp.dir/images/' . $testImage . '' ),
 				true
 			);
 			$this->_platform->setReply(
 				'legalizePathComponent',
-				array($testImage, false),
+				array( $testImage, false ),
 				$testImage
 			);
 			$this->_platform->setReply('getDirectorySeparator', array(), '/');
@@ -263,8 +263,8 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			);
 		}
 		// Deletion of the temporary directory
-		$this->_platform->setReply('recursiveRmdir', array('/tmp.dir'), true);
-		$this->_platform->setReply('unlink', array('/tmp'), true);
+		$this->_platform->setReply('recursiveRmdir', array( '/tmp.dir' ), true);
+		$this->_platform->setReply('unlink', array( '/tmp' ), true);
 
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest($this->_temporaryAlbum);
@@ -344,7 +344,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		foreach ($testImages as $testImage) {
 			$this->_platform->setReply(
 				'legalizePathComponent',
-				array($testImage, false),
+				array( $testImage, false ),
 				$testImage
 			);
 		}
@@ -391,7 +391,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		$i                    = 0;
 
 		$this->assertEquals(array(), $status, 'count of imported items');
-		$this->assertEquals(array('form[error][picasaZipPath][notsupported]'), $error);
+		$this->assertEquals(array( 'form[error][picasaZipPath][notsupported]' ), $error);
 	}
 
 	/**
@@ -418,7 +418,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		$i = 0;
 
 		$this->assertEquals(array(), $status, 'count of imported items');
-		$this->assertEquals(array('form[error][picasaZipPath][missing]'), $error);
+		$this->assertEquals(array( 'form[error][picasaZipPath][missing]' ), $error);
 	}
 }
 
@@ -444,6 +444,6 @@ class ItemAddFromPicasaTestToolkit {
 			)
 		);
 
-		return array(null, $mimeType, $context);
+		return array( null, $mimeType, $context );
 	}
 }

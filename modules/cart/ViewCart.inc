@@ -40,12 +40,12 @@ class ViewCartView extends GalleryView {
 		list($ret, $itemList) = CartHelper::loadCartItems();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $cartItemIds) = CartHelper::fetchCartItemCounts();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'ViewCart') {
@@ -61,7 +61,7 @@ class ViewCartView extends GalleryView {
 		list($ret, $plugins) = $this->_loadAllCartPlugins();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Apply the plugin filter criteria (item types, required permissions)
@@ -91,7 +91,7 @@ class ViewCartView extends GalleryView {
 			list($ret, $permissionMap) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach ($plugins as $pluginId => $pluginData) {
@@ -120,7 +120,7 @@ class ViewCartView extends GalleryView {
 			list($ret, $thumbnailList) = GalleryCoreApi::fetchThumbnailsByItemIds(array_keys($cartItemIds));
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach ($thumbnailList as $thumbnail) {
@@ -138,7 +138,7 @@ class ViewCartView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'cart');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$template->title($module->translate('View Your Cart'));
@@ -163,13 +163,13 @@ class ViewCartView extends GalleryView {
 		list($ret, $basicInterfaceIds) = GalleryCoreApi::getAllFactoryImplementationIds('CartPluginInterface_1_0');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_1.class');
 		list($ret, $advancedInterfaceIds) = GalleryCoreApi::getAllFactoryImplementationIds('CartPluginInterface_1_1');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$plugins = $instances = array();
 
@@ -177,7 +177,7 @@ class ViewCartView extends GalleryView {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance('CartPluginInterface_1_0', $className);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$plugins[$id]['requiredPermissions'] = array();
 		}
@@ -186,7 +186,7 @@ class ViewCartView extends GalleryView {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance('CartPluginInterface_1_1', $className);
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$plugins[$id]['requiredPermissions'] = $instances[$id]->getRequiredPermissions();
 		}
@@ -195,7 +195,7 @@ class ViewCartView extends GalleryView {
 			list($ret, $plugins[$id]['actionDisplayName']) = $instance->getActionDisplayName();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			/*
 			 * Figure out what types each plugin can handle so that we can cue the UI
@@ -204,7 +204,7 @@ class ViewCartView extends GalleryView {
 			$plugins[$id]['supportedItemTypes'] = $instances[$id]->getSupportedItemTypes();
 		}
 
-		return array(null, $plugins);
+		return array( null, $plugins );
 	}
 
 	/**
@@ -214,9 +214,9 @@ class ViewCartView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'cart');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $module->translate('view cart'));
+		return array( null, $module->translate('view cart') );
 	}
 }

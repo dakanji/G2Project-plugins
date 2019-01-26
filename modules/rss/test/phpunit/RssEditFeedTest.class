@@ -91,15 +91,15 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				'status' => array(),
 				'error' => array(),
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId'  => $this->_getRootId(),
-					'mode'    => 'list',
-					'form'    => array(
+					'itemId' => $this->_getRootId(),
+					'mode' => 'list',
+					'form' => array(
 						'action' => array(
 							'cancel' => '1',
 						),
-						'mode'   => 'edit',
+						'mode' => 'edit',
 						'itemId' => (string)$this->_getRootId(),
 					),
 				),
@@ -155,17 +155,17 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				),
 				'error' => array(),
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId'  => $this->_getRootId(),
-					'mode'    => 'edit',
-					'form'    => array_merge(
+					'itemId' => $this->_getRootId(),
+					'mode' => 'edit',
+					'form' => array_merge(
 						array(
 							'action' => array(
-								'save'   => '1',
+								'save' => '1',
 								'create' => '1',
 							),
-							'mode'   => 'new',
+							'mode' => 'new',
 						),
 						$values
 					),
@@ -246,17 +246,17 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				),
 				'error' => array(),
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId'  => $this->_getRootId(),
-					'mode'    => 'edit',
-					'form'    => array_merge(
+					'itemId' => $this->_getRootId(),
+					'mode' => 'edit',
+					'form' => array_merge(
 						array(
 							'action' => array(
-								'save'   => '1',
+								'save' => '1',
 								'update' => '1',
 							),
-							'mode'   => 'edit',
+							'mode' => 'edit',
 						),
 						$values
 					),
@@ -321,17 +321,17 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				),
 				'error' => array(),
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId'  => $this->_getRootId(),
-					'mode'    => 'edit',
-					'form'    => array_merge(
+					'itemId' => $this->_getRootId(),
+					'mode' => 'edit',
+					'form' => array_merge(
 						array(
 							'action' => array(
-								'save'   => '1',
+								'save' => '1',
 								'update' => '1',
 							),
-							'mode'   => 'edit',
+							'mode' => 'edit',
 						),
 						$values
 					),
@@ -369,11 +369,11 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				),
 				'error' => array(),
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId'  => $this->_getRootId(),
-					'mode'    => 'list',
-					'form'    => array(
+					'itemId' => $this->_getRootId(),
+					'mode' => 'list',
+					'form' => array(
 						'action' => array(
 							'delete' => $name,
 						),

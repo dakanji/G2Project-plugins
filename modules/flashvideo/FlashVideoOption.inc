@@ -30,7 +30,7 @@ class FlashVideoOption extends ItemAddOption {
 	 * @see ItemAddOption::isAppropriate
 	 */
 	public function isAppropriate() {
-		return array(null, true);
+		return array( null, true );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class FlashVideoOption extends ItemAddOption {
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($itemIds);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			foreach ($currentItems as $item) {
@@ -69,7 +69,7 @@ class FlashVideoOption extends ItemAddOption {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
 
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 
 				$item->setRenderer('FlashVideoRenderer');
@@ -78,22 +78,22 @@ class FlashVideoOption extends ItemAddOption {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
 
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 			}
 
 			$ret = GalleryCoreApi::releaseLocks($lockId);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ret = $storage->checkPoint();
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
-		return array(null, $errors, array());
+		return array( null, $errors, array() );
 	}
 }

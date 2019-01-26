@@ -36,7 +36,7 @@ class AdminDigibugController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Provide compatibility with 2.1 and 2.2
@@ -65,24 +65,24 @@ class AdminDigibugController extends GalleryController {
 				list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'digibug');
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				list($ret, $isActive) = $module->isActive();
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				if ($form['digibugIdChoice'] == 'gallery') {
 					foreach (array(
-						'digibugIdChoice'    => 'gallery',
-						'digibugCustomerId'  => '3153',
+						'digibugIdChoice' => 'gallery',
+						'digibugCustomerId' => '3153',
 						'digibugPricelistId' => '8491',
 					) as $key => $value) {
 						$ret = $module->setParameter($key, $value);
 
 						if ($ret) {
-							return array($ret, null);
+							return array( $ret, null );
 						}
 					}
 				} else {
@@ -94,7 +94,7 @@ class AdminDigibugController extends GalleryController {
 						$ret = $module->setParameter($key, trim($form[$key]));
 
 						if ($ret) {
-							return array($ret, null);
+							return array( $ret, null );
 						}
 					}
 				}
@@ -131,7 +131,7 @@ class AdminDigibugController extends GalleryController {
 			$results['delegate']['subView'] = 'digibug.AdminDigibug';
 		}
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -146,26 +146,26 @@ class AdminDigibugView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'digibug');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $isActive) = $module->isActive();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'AdminDigibug') {
-			foreach (array('digibugIdChoice', 'digibugCustomerId', 'digibugPricelistId') as $key) {
+			foreach (array( 'digibugIdChoice', 'digibugCustomerId', 'digibugPricelistId' ) as $key) {
 				list($ret, $form[$key]) = $module->getParameter($key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			$form['formName'] = 'AdminDigibug';

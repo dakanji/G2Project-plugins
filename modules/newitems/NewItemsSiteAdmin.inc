@@ -33,7 +33,7 @@ class NewItemsSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
@@ -48,7 +48,7 @@ class NewItemsSiteAdminController extends GalleryController {
 			}
 
 			if (empty($error)) {
-				foreach (array('days.new', 'days.updated') as $key) {
+				foreach (array( 'days.new', 'days.updated' ) as $key) {
 					$keys = explode('.', $key);
 					$ret  = GalleryCoreApi::setPluginParameter(
 						'module',
@@ -58,7 +58,7 @@ class NewItemsSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 				$status['saved'] = 1;
@@ -67,7 +67,7 @@ class NewItemsSiteAdminController extends GalleryController {
 			list($ret, $default) = GalleryCoreApi::getPluginParameter('module', 'core', 'default.orderBy');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			if (strpos($default, 'NewItems') !== false) {
@@ -79,14 +79,14 @@ class NewItemsSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			GalleryCoreApi::requireOnce('modules/newitems/classes/NewItemsHelper.class');
 			$ret = NewItemsHelper::resetNewItemSorts();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$status['reset'] = 1;
 		} // else $form['action']['reset']
@@ -98,7 +98,7 @@ class NewItemsSiteAdminController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -115,17 +115,17 @@ class NewItemsSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'NewItemsSiteAdmin') {
 			$form['formName'] = 'NewItemsSiteAdmin';
 
-			foreach (array('days.new', 'days.updated') as $key) {
+			foreach (array( 'days.new', 'days.updated' ) as $key) {
 				list($ret, $value) = GalleryCoreApi::getPluginParameter('module', 'newitems', $key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$key                    = explode('.', $key);
 				$form[$key[0]][$key[1]] = $value;
@@ -134,12 +134,12 @@ class NewItemsSiteAdminView extends GalleryView {
 		list($ret, $form['count']) = NewItemsHelper::fetchAlbumCount();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $default) = GalleryCoreApi::getPluginParameter('module', 'core', 'default.orderBy');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$form['isDefault'] = strpos($default, 'NewItems') !== false;
 

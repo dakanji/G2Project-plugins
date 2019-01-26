@@ -35,7 +35,7 @@ class HttpAuthSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$error = $status = array();
@@ -62,11 +62,11 @@ class HttpAuthSiteAdminController extends GalleryController {
 					null,
 					array(
 						'delegate' => array(
-							'view'    => 'core.SiteAdmin',
+							'view' => 'core.SiteAdmin',
 							'subView' => 'httpauth.HttpAuthSiteAdmin',
 						),
-						'error'    => $error,
-						'status'   => $status,
+						'error' => $error,
+						'status' => $status,
 					),
 				);
 			}
@@ -74,7 +74,7 @@ class HttpAuthSiteAdminController extends GalleryController {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'httpauth');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			foreach (array(
@@ -91,13 +91,13 @@ class HttpAuthSiteAdminController extends GalleryController {
 					$ret = $module->setParameter($key, $form[$key]);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				} else {
 					$ret = $module->removeParameter($key);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 			}
@@ -105,13 +105,13 @@ class HttpAuthSiteAdminController extends GalleryController {
 			$ret = GalleryCoreApi::unregisterFactoryImplementationsByModuleId('httpauth');
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			$ret = $module->performFactoryRegistrations();
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 
 			$status['saved'] = true;
@@ -121,7 +121,7 @@ class HttpAuthSiteAdminController extends GalleryController {
 			null,
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'httpauth.HttpAuthSiteAdmin',
 				),
 				'error' => $error,
@@ -142,13 +142,13 @@ class HttpAuthSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'httpauth');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$HttpAuthSiteAdmin = array();
@@ -156,7 +156,7 @@ class HttpAuthSiteAdminView extends GalleryView {
 		list($ret, $HttpAuthSiteAdmin['code']) = HttpAuthHelper::checkConfiguration();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Load our default values if we didn't just come from this form

@@ -64,7 +64,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'slideshowapplet.SlideshowAppletSiteAdmin',
 				),
 				'status' => array(),
@@ -92,7 +92,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'slideshowapplet.SlideshowAppletSiteAdmin',
 				),
 				'status' => array(),
@@ -134,7 +134,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'slideshowapplet.SlideshowAppletSiteAdmin',
 				),
 				'status' => array(),
@@ -176,7 +176,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'slideshowapplet.SlideshowAppletSiteAdmin',
 				),
 				'status' => array(),
@@ -208,7 +208,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.SiteAdmin',
+					'view' => 'core.SiteAdmin',
 					'subView' => 'slideshowapplet.SlideshowAppletSiteAdmin',
 				),
 				'status' => array(),

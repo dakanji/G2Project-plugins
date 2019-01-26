@@ -39,8 +39,8 @@ class WatermarkModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews');
-		$this->setRequiredCoreApi(array(7, 45));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 45 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -77,7 +77,7 @@ class WatermarkModule extends GalleryModule {
 				$storage =& $gallery->getStorage();
 				$ret     = $storage->configureStore(
 					$this->getId(),
-					array('WatermarkImage:1.0')
+					array( 'WatermarkImage:1.0' )
 				);
 
 				if ($ret) {
@@ -258,10 +258,10 @@ class WatermarkModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'allowUserWatermarks'   => 1,
+			'allowUserWatermarks' => 1,
 			'forceDefaultWatermark' => 0,
-			'hotlinkWatermarkId'    => '',
-			'defaultWatermarkId'    => '',
+			'hotlinkWatermarkId' => '',
+			'defaultWatermarkId' => '',
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
@@ -356,7 +356,7 @@ class WatermarkModule extends GalleryModule {
 			'WatermarkModule',
 			'modules/watermark/module.inc',
 			'watermark',
-			array('GalleryEntity::delete')
+			array( 'GalleryEntity::delete' )
 		);
 
 		if ($ret) {
@@ -390,12 +390,12 @@ class WatermarkModule extends GalleryModule {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser($user->getId());
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $isOn) = $this->getParameter('allowUserWatermarks');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$user = $gallery->getActiveUser();
@@ -409,7 +409,7 @@ class WatermarkModule extends GalleryModule {
 			);
 		}
 
-		return array(null, $views);
+		return array( null, $views );
 	}
 
 	/**
@@ -431,20 +431,20 @@ class WatermarkModule extends GalleryModule {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 
 				foreach ($watermarkIds as $id) {
 					list($ret) = WatermarkHelper::deleteWatermarkImageById($id, true);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 			}
 		}
 
-		return array(null, null);
+		return array( null, null );
 	}
 
 	/**
@@ -479,7 +479,7 @@ class WatermarkModule extends GalleryModule {
 				'view' => 'watermark.DownloadItem',
 				'itemId' => '%1',
 			),
-			'flags'    => array('L'),
+			'flags'    => array( 'L' ),
 			'exemptReferer' => 1,
 			'help'     => $this->translate(
 				'Apply watermark to images downloaded from outside your Gallery. Select '

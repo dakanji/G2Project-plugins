@@ -37,14 +37,14 @@ class MultiLangHelper {
 	public static function getItemData($itemId) {
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'MultiLangItemMap',
-			array('language', 'title', 'summary', 'description'),
+			array( 'language', 'title', 'summary', 'description' ),
 			array(
 				'itemId' => (int)$itemId,
 			)
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$data = array();
@@ -57,7 +57,7 @@ class MultiLangHelper {
 			);
 		}
 
-		return array(null, $data);
+		return array( null, $data );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class MultiLangHelper {
 				$ret = GalleryCoreApi::removeMapEntry(
 					'MultiLangItemMap',
 					array(
-						'itemId'   => $itemId,
+						'itemId' => $itemId,
 						'language' => $language,
 					)
 				);
@@ -121,12 +121,12 @@ class MultiLangHelper {
 				$ret = GalleryCoreApi::updateMapEntry(
 					'MultiLangItemMap',
 					array(
-						'itemId'   => $itemId,
+						'itemId' => $itemId,
 						'language' => $language,
 					),
 					array(
-						'title'       => $title,
-						'summary'     => $summary,
+						'title' => $title,
+						'summary' => $summary,
 						'description' => $description,
 					)
 				);
@@ -138,10 +138,10 @@ class MultiLangHelper {
 				$ret = GalleryCoreApi::addMapEntry(
 					'MultiLangItemMap',
 					array(
-						'itemId'      => $itemId,
-						'language'    => $language,
-						'title'       => $title,
-						'summary'     => $summary,
+						'itemId' => $itemId,
+						'language' => $language,
+						'title' => $title,
+						'summary' => $summary,
 						'description' => $description,
 					)
 				);

@@ -36,7 +36,7 @@ class getid3_svg extends getid3_handler {
 		}
 
 		if (isset($info['svg']['svg']['raw'])) {
-			$sections_to_fix = array('xml', 'doctype', 'svg');
+			$sections_to_fix = array( 'xml', 'doctype', 'svg' );
 
 			foreach ($sections_to_fix as $section_to_fix) {
 				if (!isset($info['svg'][$section_to_fix])) {
@@ -70,7 +70,7 @@ class getid3_svg extends getid3_handler {
 			$info['fileformat']          = 'svg';
 			$info['video']['dataformat'] = 'svg';
 			$info['video']['lossless']   = true;
-			//$info['video']['bits_per_sample']    = 24;
+			//$info['video']['bits_per_sample'] = 24;
 			$info['video']['pixel_aspect_ratio'] = (float)1;
 
 			if (!empty($info['svg']['svg']['sections']['width'])) {

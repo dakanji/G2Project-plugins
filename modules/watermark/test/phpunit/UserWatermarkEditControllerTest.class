@@ -68,13 +68,13 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$ret       = $watermark->create(__FILE__, 'test/file', 'phpunit_' . mt_rand() . '.gif');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$ret = $watermark->save();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$ret = GalleryCoreApi::addUserPermission(
@@ -84,10 +84,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		);
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $watermark);
+		return array( null, $watermark );
 	}
 
 	public function tearDown() {
@@ -119,7 +119,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(
@@ -157,7 +157,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(
@@ -191,7 +191,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarkEdit',
 				),
 				'status' => array(),
@@ -231,11 +231,11 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarkEdit',
 				),
 				'status' => array(),
-				'error' => array('form[error][watermarkName][duplicate]'),
+				'error' => array( 'form[error][watermarkName][duplicate]' ),
 			),
 			$results
 		);
@@ -263,7 +263,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(
@@ -297,7 +297,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(),
@@ -328,7 +328,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.UserAdmin',
+					'view' => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
 				'status' => array(
@@ -429,7 +429,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 				'subView' => 'watermark.UserWatermarkEdit',
 			),
 			'status'   => array(),
-			'error'    => array('form[error][mimeType][mismatch]'),
+			'error'    => array( 'form[error][mimeType][mismatch]' ),
 		);
 		$this->assertEquals($expected, $results);
 
@@ -450,7 +450,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$expected = ($postMimeType == 'test/file') ? array('50', '50', $platform->filesize($sourceFile), false) : array('100', '100', $platform->filesize(__FILE__), true);
+		$expected = ($postMimeType == 'test/file') ? array( '50', '50', $platform->filesize($sourceFile), false ) : array( '100', '100', $platform->filesize(__FILE__), true );
 		$this->assertEquals($expected[0], $this->_watermark->getXPercentage(), 'x');
 		$this->assertEquals($expected[1], $this->_watermark->getYPercentage(), 'y');
 		$this->assertEquals($expected[2], $this->_watermark->getSize(), 'size');

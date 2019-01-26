@@ -72,7 +72,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'SquareThumbTestToolkit',
-			array('test/dim', 'test/crop', 'test/composite', 'test/thumbnail', 'test/image'),
+			array( 'test/dim', 'test/crop', 'test/composite', 'test/thumbnail', 'test/image' ),
 			'dimensions',
 			'int,int',
 			'desc'
@@ -83,23 +83,23 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		}
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'SquareThumbTestToolkit',
-			array('test/crop', 'test/image'),
+			array( 'test/crop', 'test/image' ),
 			'crop',
 			array(
 				array(
-					'type'        => 'float',
+					'type' => 'float',
 					'description' => 'left edge %',
 				),
 				array(
-					'type'        => 'float',
+					'type' => 'float',
 					'description' => 'top edge %',
 				),
 				array(
-					'type'        => 'float',
+					'type' => 'float',
 					'description' => 'width %',
 				),
 				array(
-					'type'        => 'float',
+					'type' => 'float',
 					'description' => 'height %',
 				),
 			),
@@ -111,35 +111,35 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		}
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'SquareThumbTestToolkit',
-			array('test/composite', 'test/image'),
+			array( 'test/composite', 'test/image' ),
 			'composite',
 			array(
 				array(
-					'type'        => 'string',
+					'type' => 'string',
 					'description' => 'path',
 				),
 				array(
-					'type'        => 'string',
+					'type' => 'string',
 					'description' => 'mime',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'width',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'height',
 				),
 				array(
-					'type'        => 'string',
+					'type' => 'string',
 					'description' => 'align',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'x%',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'y%',
 				),
 			),
@@ -151,15 +151,15 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		}
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'SquareThumbTestToolkit',
-			array('test/thumbnail', 'test/image'),
+			array( 'test/thumbnail', 'test/image' ),
 			'thumbnail',
 			array(
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'width',
 				),
 				array(
-					'type'        => 'int',
+					'type' => 'int',
 					'description' => 'height',
 				),
 			),
@@ -195,7 +195,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'noDimSrc',
 			'noDimDest',
-			array(150)
+			array( 150 )
 		);
 		$this->assertEquals(
 			GALLERY_ERROR | ERROR_UNSUPPORTED_OPERATION,
@@ -210,7 +210,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'noCCSrc',
 			'noCCDest',
-			array(150)
+			array( 150 )
 		);
 		$this->assertEquals(
 			GALLERY_ERROR | ERROR_UNSUPPORTED_OPERATION,
@@ -229,7 +229,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'noCCSrc',
 			'noCCDest',
-			array(150)
+			array( 150 )
 		);
 		$this->assertEquals(
 			GALLERY_ERROR | ERROR_UNSUPPORTED_OPERATION,
@@ -244,7 +244,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'noThumbnailSrc',
 			'noThumbnailDest',
-			array(150)
+			array( 150 )
 		);
 		$this->assertEquals(
 			GALLERY_ERROR | ERROR_UNSUPPORTED_OPERATION,
@@ -263,7 +263,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'noThumbnailSrc',
 			'noThumbnailDest',
-			array(150)
+			array( 150 )
 		);
 		$this->assertEquals(
 			GALLERY_ERROR | ERROR_UNSUPPORTED_OPERATION,
@@ -279,7 +279,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'squareSrc',
 			'squareDest',
-			array(150)
+			array( 150 )
 		);
 
 		if ($ret) {
@@ -298,14 +298,14 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'cropSrc',
 			'cropDest',
-			array(150)
+			array( 150 )
 		);
 
 		if ($ret) {
 			return $ret;
 		}
 		$this->assertEquals('test/image', $mimeType, 'Output mime type');
-		$this->assertEquals(array('queue:crop', 'thumbnail'), $gallery->_squareQueue, 'operations');
+		$this->assertEquals(array( 'queue:crop', 'thumbnail' ), $gallery->_squareQueue, 'operations');
 
 		// Already small
 		$gallery->_squareQueue = array();
@@ -314,14 +314,14 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'smallCropSrc',
 			'smallCropDest',
-			array(700)
+			array( 700 )
 		);
 
 		if ($ret) {
 			return $ret;
 		}
 		$this->assertEquals('test/crop', $mimeType, 'Output mime type 2');
-		$this->assertEquals(array('crop'), $gallery->_squareQueue, 'operations 2');
+		$this->assertEquals(array( 'crop' ), $gallery->_squareQueue, 'operations 2');
 
 		unset($gallery->_squareQueue);
 	}
@@ -345,7 +345,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'compositeSrc',
 			$destFile,
-			array(300)
+			array( 300 )
 		);
 		@$platform->unlink($destFile);
 
@@ -353,7 +353,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			return $ret;
 		}
 		$this->assertEquals('image/jpeg', $mimeType, 'Output mime type');
-		$this->assertEquals(array('thumbnail', 'composite'), $gallery->_squareQueue, 'operations');
+		$this->assertEquals(array( 'thumbnail', 'composite' ), $gallery->_squareQueue, 'operations');
 
 		// Already small
 		$gallery->_squareQueue = array();
@@ -362,7 +362,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'smallCompositeSrc',
 			$destFile,
-			array(100)
+			array( 100 )
 		);
 		@$platform->unlink($destFile);
 
@@ -370,7 +370,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			return $ret;
 		}
 		$this->assertEquals('image/jpeg', $mimeType, 'Output mime type 2');
-		$this->assertEquals(array('composite'), $gallery->_squareQueue, 'operations 2');
+		$this->assertEquals(array( 'composite' ), $gallery->_squareQueue, 'operations 2');
 
 		unset($gallery->_squareQueue);
 	}
@@ -388,7 +388,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'smallCompositeSrc',
 			$destFile,
-			array(100)
+			array( 100 )
 		);
 		@$platform->unlink($destFile);
 
@@ -396,7 +396,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			return $ret;
 		}
 		$this->assertEquals('image/jpeg', $mimeType, 'Output mime type');
-		$this->assertEquals(array('composite'), $gallery->_squareQueue, 'operations');
+		$this->assertEquals(array( 'composite' ), $gallery->_squareQueue, 'operations');
 
 		unset($gallery->_squareQueue);
 	}
@@ -417,14 +417,14 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 			'thumbnail',
 			'smallCropSrc',
 			'smallCropDest',
-			array(700)
+			array( 700 )
 		);
 
 		if ($ret) {
 			return $ret;
 		}
 		$this->assertEquals('test/crop', $mimeType, 'Output mime type');
-		$this->assertEquals(array('crop'), $gallery->_squareQueue, 'operations');
+		$this->assertEquals(array( 'crop' ), $gallery->_squareQueue, 'operations');
 
 		unset($gallery->_squareQueue);
 	}
@@ -525,19 +525,19 @@ class SquareThumbTestToolkit extends GalleryToolkit {
 			case 'noThumbnailSrc':
 			case 'cropSrc':
 			case 'compositeSrc':
-				return array(null, array(800, 600));
+				return array( null, array( 800, 600 ) );
 
 			case 'squareSrc':
-				return array(null, array(700, 700));
+				return array( null, array( 700, 700 ) );
 
 			case 'smallCropSrc':
-				return array(null, array(500, 1000));
+				return array( null, array( 500, 1000 ) );
 
 			case 'smallCompositeSrc':
-				return array(null, array(40, 60));
+				return array( null, array( 40, 60 ) );
 
 			default:
-				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
 		}
 	}
 
@@ -565,7 +565,7 @@ class SquareThumbTestToolkit extends GalleryToolkit {
 					case 'smallCropSrc':
 						$context['width'] = $context['height'] = min($context['width'], $context['height']);
 
-						return array(null, $mimeType, $context);
+						return array( null, $mimeType, $context );
 				}
 
 				break;
@@ -574,14 +574,14 @@ class SquareThumbTestToolkit extends GalleryToolkit {
 				if ($sourceFilename == 'squareSrc' || $sourceFilename == 'cropDest'
 					|| $sourceFilename == 'compositeSrc'
 				) {
-					return array(null, $mimeType, $context);
+					return array( null, $mimeType, $context );
 				}
 
 				break;
 
 			case 'composite':
 				if (basename($sourceFilename) == 'squareThumbTestFit') {
-					return array(null, $mimeType, $context);
+					return array( null, $mimeType, $context );
 				}
 
 				break;

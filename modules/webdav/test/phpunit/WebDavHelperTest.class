@@ -69,7 +69,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$this->_parserType  =& WebDavHelperTestRewriteApi::_getParserType();
 		$this->_parserType  = 'preGallery';
 		$this->_activeRules =& WebDavHelperTestRewriteApi::_fetchActiveRulesForModule('webdav');
-		$this->_activeRules = array('connect', 'davmount', 'options');
+		$this->_activeRules = array( 'connect', 'davmount', 'options' );
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'RewriteApi',
@@ -98,7 +98,7 @@ class WebDavHelperTest extends GalleryTestCase {
 					),
 					array(
 						'forceServerRelativeUrl' => true,
-						'htmlEntities'           => false,
+						'htmlEntities' => false,
 					)
 				) . ' HTTP/1.0',
 				'Host: ' . $this->_urlGenerator->getHostName(),
@@ -115,7 +115,7 @@ class WebDavHelperTest extends GalleryTestCase {
 					),
 					array(
 						'forceServerRelativeUrl' => true,
-						'htmlEntities'           => false,
+						'htmlEntities' => false,
 					)
 				) . ' HTTP/1.0',
 				'Host: ' . $this->_urlGenerator->getHostName(),
@@ -316,7 +316,7 @@ class WebDavHelperTest extends GalleryTestCase {
 	}
 
 	public function testCheckConfigurationConnectRuleDisabled() {
-		$this->_activeRules = array('davmount', 'options');
+		$this->_activeRules = array( 'davmount', 'options' );
 
 		list($ret, $code) = WebDavHelper::checkConfiguration();
 
@@ -355,7 +355,7 @@ class WebDavHelperTest extends GalleryTestCase {
 
 	public function testCheckConfigurationOptionsRuleDisabled() {
 		$this->_platform->_messages[$this->_optionsRequest] = $this->_missingDavHeadersResponse;
-		$this->_activeRules = array('connect', 'davmount');
+		$this->_activeRules = array( 'connect', 'davmount' );
 
 		list($ret, $code) = WebDavHelper::checkConfiguration();
 
@@ -381,7 +381,7 @@ class WebDavHelperTest extends GalleryTestCase {
 	public function testCheckConfigurationIncludesDavHeadersIgnoresCauses() {
 		$this->_platform->_messages[$this->_alternativeUrlRequest] = $this->_missingDavHeadersResponse;
 		$this->_parserType  = 'bogus';
-		$this->_activeRules = array('connect', 'davmount');
+		$this->_activeRules = array( 'connect', 'davmount' );
 
 		list($ret, $code) = WebDavHelper::checkConfiguration();
 
@@ -452,7 +452,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				array(
-					'path'  => $path,
+					'path' => $path,
 					'props' => $expectedProps,
 				),
 			),
@@ -476,7 +476,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				array(
-					'path'  => $path,
+					'path' => $path,
 					'props' => $expectedProps,
 				),
 			),
@@ -500,7 +500,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				array(
-					'path'  => $path,
+					'path' => $path,
 					'props' => $expectedProps,
 				),
 			),
@@ -513,13 +513,13 @@ class WebDavHelperTest extends GalleryTestCase {
 		list($ret, $item) = $this->_createRandomDataItem($this->_rootAlbumId);
 
 		if ($ret) {
-			return array($ret, null, null, null);
+			return array( $ret, null, null, null );
 		}
 		$this->_markForCleanup($item);
 		list($ret, $path) = $item->fetchLogicalPath();
 
 		if ($ret) {
-			return array($ret, null, null, null);
+			return array( $ret, null, null, null );
 		}
 		$item->setCreationTimestamp(10000000);
 		$item->setModificationTimestamp(20000000);
@@ -527,7 +527,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$item->setTitle($itemTitle);
 
 		if ($addObjectAndArrayData) {
-			$item->summary     = array(1, 2, 3);
+			$item->summary     = array( 1, 2, 3 );
 			$item->description = new stdClass();
 		}
 
@@ -535,7 +535,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		list($ret, $memberInfo) = GalleryCoreApi::getExternalAccessMemberList('GalleryUnknownItem');
 
 		if ($ret) {
-			return array($ret, null, null, null);
+			return array( $ret, null, null, null );
 		}
 
 		$expectedProps   = array();
@@ -556,7 +556,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			array(
 				array(
 					'scope' => 'exclusive',
-					'type'  => 'write',
+					'type' => 'write',
 				),
 			)
 		);
@@ -586,7 +586,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		);
 
 		foreach ($memberInfo as $memberName => $accessInfo) {
-			if ($addObjectAndArrayData && in_array($memberName, array('summary', 'description'))) {
+			if ($addObjectAndArrayData && in_array($memberName, array( 'summary', 'description' ))) {
 				continue;
 			}
 
@@ -600,7 +600,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			}
 		}
 
-		return array(null, $item, $path, $expectedProps);
+		return array( null, $item, $path, $expectedProps );
 	}
 
 	public function testPropfindFilesRejectsItemObjectWithoutProperMethods() {
@@ -756,12 +756,12 @@ class WebDavHelperTest extends GalleryTestCase {
 		$expected['href']  = $this->_urlGenerator->generateUrl(
 			array(
 				'controller' => 'webdav.WebDav',
-				'itemId'     => $itemId,
+				'itemId' => $itemId,
 			),
 			array(
-				'protocol'       => 'webdav',
+				'protocol' => 'webdav',
 				'forceSessionId' => false,
-				'useAuthToken'   => false,
+				'useAuthToken' => false,
 			)
 		);
 
@@ -903,11 +903,11 @@ class WebDavHelperTestRewriteApi {
 	}
 
 	public function isCompatibleWithApi($version) {
-		return array(null, true);
+		return array( null, true );
 	}
 
 	public function fetchActiveRulesForModule($moduleId) {
-		return array(null, WebDavHelperTestRewriteApi::_fetchActiveRulesForModule($moduleId));
+		return array( null, WebDavHelperTestRewriteApi::_fetchActiveRulesForModule($moduleId) );
 	}
 
 	public function getParserType() {
@@ -976,7 +976,7 @@ class WebDavHelperTestHttpAuthInterface {
 			$pluginsEnabled = $initPluginsEnabled;
 		}
 
-		return array(null, $pluginsEnabled, $pluginsEnabled, false);
+		return array( null, $pluginsEnabled, $pluginsEnabled, false );
 	}
 
 	public function getConfiguration() {

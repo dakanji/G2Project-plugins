@@ -80,13 +80,11 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 		foreach (array('from' => 'nobody@nobody.org',
 			   'subject' => 'An eCard has been sent to you',
 			   'bcc' => 'nobody2@nobody.org',
-			   'header' =>
-				"Hi %toName% (%to%)!\r\n%fromName% (%from%) has sent you an eCard.",
+			   'header' => 				"Hi %toName% (%to%)!\r\n%fromName% (%from%) has sent you an eCard.",
 			   'footer' => 'Sent via G2 Ecard tester',
 			   'format' => 'html', )
 		 as $key => $expectedValue) {
-			list($ret, $value) =
-		GalleryCoreApi::getPluginParameter('module', 'ecard', $key);
+			list($ret, $value) = 		GalleryCoreApi::getPluginParameter('module', 'ecard', $key);
 
 			if ($ret) {
 				return $ret;

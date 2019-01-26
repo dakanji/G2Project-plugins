@@ -33,7 +33,7 @@ class ExternalCSSController extends GalleryController {
 		list($ret, $imageframe) = GalleryCoreApi::newFactoryInstance('ImageFrameInterface_1_1');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if (isset($imageframe)) {
@@ -42,11 +42,11 @@ class ExternalCSSController extends GalleryController {
 			if (empty($frames)) {
 				$frames = array();
 
-				foreach (array('albumFrame', 'itemFrame') as $key) {
+				foreach (array( 'albumFrame', 'itemFrame' ) as $key) {
 					list($ret, $frame) = GalleryCoreApi::getPluginParameter('module', 'imageblock', $key);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 
 					if (!empty($frame)) {

@@ -41,8 +41,8 @@ class NokiaUploadModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('');
-		$this->setRequiredCoreApi(array(7, 53));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 53 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -52,10 +52,10 @@ class NokiaUploadModule extends GalleryModule {
 		list($ret, $needsConfiguration) = $this->needsConfiguration();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, !$needsConfiguration);
+		return array( null, !$needsConfiguration );
 	}
 
 	/**
@@ -65,16 +65,16 @@ class NokiaUploadModule extends GalleryModule {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'nokiaupload');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		foreach (array('id.mobileGroup', 'id.uploadAlbum') as $key) {
+		foreach (array( 'id.mobileGroup', 'id.uploadAlbum' ) as $key) {
 			if (empty($params[$key])) {
-				return array(null, true);
+				return array( null, true );
 			}
 		}
 
-		return array(null, false);
+		return array( null, false );
 	}
 
 	/**

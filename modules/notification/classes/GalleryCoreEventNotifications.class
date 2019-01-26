@@ -189,7 +189,7 @@ class ErrorNotification extends NotificationEvent_1_0 {
 	public function getNotificationMessage() {
 		$error = $this->getError();
 
-		return array(null, $error->getAsText());
+		return array( null, $error->getAsText() );
 	}
 
 	/**
@@ -232,7 +232,7 @@ class ItemOrderNotification extends NotificationEvent_1_0 {
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($this->getItemId(), 'GalleryItem');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$title = GalleryUtilities::markup($item->getTitle(), 'strip');
@@ -788,9 +788,9 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 				'itemId' => $itemId,
 			),
 			array(
-				'forceFullUrl'   => true,
+				'forceFullUrl' => true,
 				'forceSessionId' => false,
-				'htmlEntities'   => false,
+				'htmlEntities' => false,
 			)
 		);
 

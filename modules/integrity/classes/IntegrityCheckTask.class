@@ -57,7 +57,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'integrity');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$title  = $module->translate('Integrity Check');
 		$output = array();
@@ -77,7 +77,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$result = $results->nextResult();
 		$total  = (int)$result[0];
@@ -107,13 +107,13 @@ class IntegrityCheckTask extends MaintenanceTask {
 				array(
 					'limit' => array(
 						'offset' => $i + $start_id,
-						'count'  => $batch_size,
+						'count' => $batch_size,
 					),
 				)
 			);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ids = array();
 
@@ -163,7 +163,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $allEntityData) = GalleryCoreApi::describeEntity('GalleryEntity', true);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		unset($allEntityData['GalleryEntity']);
 		$tables = array_keys($allEntityData);
@@ -192,7 +192,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			list($ret, $results) = $gallery->search($query);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ids = array();
 
@@ -235,7 +235,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$ids = array();
 
@@ -262,12 +262,12 @@ class IntegrityCheckTask extends MaintenanceTask {
 		//TODO or accesssubscriber for itemId not in item table
 		$message = $module->translate('Checking for orphaned item data');
 		$tables  = array(
-			array('ItemAttributesMap', 'itemId', 'GalleryItem', 'id'),
+			array( 'ItemAttributesMap', 'itemId', 'GalleryItem', 'id' ),
 			//Most AccessSubscriberMap::itemId should map to Item::id, but ThumbnailImage/WatermarkImage use
 			//permissions too.. ThumbnailImage is a ChildEntity, WatermarkImage is just an Entity.
 			//			array('AccessSubscriberMap', 'itemId', 'GalleryItem', 'id'),
-			array('AccessMap', 'accessListId', 'AccessSubscriberMap', 'accessListId'),
-			array('DerivativePreferencesMap', 'itemId', 'GalleryAlbumItem', 'id'),
+			array( 'AccessMap', 'accessListId', 'AccessSubscriberMap', 'accessListId' ),
+			array( 'DerivativePreferencesMap', 'itemId', 'GalleryAlbumItem', 'id' ),
 		);
 		$i     = 0;
 		$total = count($tables) + 1;
@@ -295,7 +295,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			list($ret, $results) = $gallery->search($query);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 			$ids = array();
 
@@ -335,7 +335,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$ids = array();
 
@@ -370,7 +370,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		while ($result = $results->nextResult()) {
@@ -408,7 +408,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$ids = array();
 
@@ -443,7 +443,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$result = $results->nextResult();
 		$total  = (int)$result[0];
@@ -465,7 +465,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 		$ids = array();
 
@@ -475,10 +475,10 @@ class IntegrityCheckTask extends MaintenanceTask {
 		list($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
-		if ($ids != array($rootId)) {
+		if ($ids != array( $rootId )) {
 			$output[] = $module->translate(
 				array(
 					'text' => 'Expected single root id of %s, found: %s',
@@ -488,7 +488,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			);
 		}
 		// Traverse album directories
-		$examine = array(array($rootId, $gallery->getConfig('data.gallery.albums')));
+		$examine = array( array( $rootId, $gallery->getConfig('data.gallery.albums') ) );
 		$i       = 0;
 
 		while (!empty($examine)) {
@@ -497,7 +497,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			list($ret, $dbComponents, $fsComponents, $dirs) = $this->_checkDir($dir, $id);
 
 			if ($ret) {
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			foreach ($dbComponents as $id => $component) {
@@ -511,7 +511,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 						)
 					);
 				} elseif (isset($dirs[$component])) {
-					$examine[] = array($id, $dir . $component . $slash);
+					$examine[] = array( $id, $dir . $component . $slash );
 				}
 			}
 
@@ -533,7 +533,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 
 
-		return array(null, true, $output);
+		return array( null, true, $output );
 	}
 
 	/**
@@ -600,10 +600,10 @@ class IntegrityCheckTask extends MaintenanceTask {
 				[GalleryEntity::entityType] <> ?
 		';
 
-		list($ret, $results) = $gallery->search($query, array((int)$id, 'GalleryLinkItem'));
+		list($ret, $results) = $gallery->search($query, array( (int)$id, 'GalleryLinkItem' ));
 
 		if ($ret) {
-			return array($ret, null, null, null);
+			return array( $ret, null, null, null );
 		}
 		$dbComponents = array();
 
@@ -611,6 +611,6 @@ class IntegrityCheckTask extends MaintenanceTask {
 			$dbComponents[(int)$result[0]] = $result[1];
 		}
 
-		return array(null, $dbComponents, $fsComponents, $dirs);
+		return array( null, $dbComponents, $fsComponents, $dirs );
 	}
 }

@@ -36,7 +36,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
 
 		if ($requestMethod != 'put') {
-			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null, null);
+			return array( GalleryCoreApi::error(ERROR_REQUEST_FORGED), null, null );
 		}
 
 		$path = GalleryUtilities::getRequestVariables('path');
@@ -45,21 +45,21 @@ class ItemAddWebDav extends ItemAddPlugin {
 		$ret = WebDavHelper::checkLocks($path);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Prepare data-structure from PUT request
 		list($ret, $webDavOptions, $stream, $mimeType) = WebDavHelper::putRequestHelper();
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Get the mime type.
 		list($ret, $mimeType) = GalleryCoreApi::getMimeType(basename($path), $mimeType);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		list($ret, $itemId) = GalleryCoreApi::fetchItemIdByPath($path);
@@ -76,19 +76,19 @@ class ItemAddWebDav extends ItemAddPlugin {
 				);
 
 				if ($ret) {
-					return array($ret, null, null);
+					return array( $ret, null, null );
 				}
 
-				return array(null, $error, $status);
+				return array( null, $error, $status );
 			}
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.edit');
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		list($ret, $error, $status) = $this->_replaceItem(
@@ -101,10 +101,10 @@ class ItemAddWebDav extends ItemAddPlugin {
 		);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
-		return array(null, $error, $status);
+		return array( null, $error, $status );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		$handle = $platform->fopen($tmpFile, 'wb');
 
 		if (!$handle) {
-			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
+			return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
 		}
 
 		while (!$platform->feof($stream)) {
@@ -155,7 +155,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		@$platform->unlink($tmpFile);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		WebDavServer::doStatic()->setResponseStatus('201 Created');
@@ -167,7 +167,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 				'addedFiles' => array(
 					array(
 						'fileName' => basename($path),
-						'id'       => $newItem->getId(),
+						'id' => $newItem->getId(),
 					),
 				),
 			),
@@ -196,7 +196,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLockParents($parentItem->getId());
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Write lock the item we're replacing
@@ -205,7 +205,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryDataItem');
@@ -213,7 +213,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		list($ret, $hasLink) = $this->_hasLinkedEntity($item);
@@ -221,7 +221,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret || $hasLink) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret ? $ret : GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null, null);
+			return array( $ret ? $ret : GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null, null );
 		}
 
 		// Replace the file content
@@ -230,13 +230,13 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if (($handle = $platform->fopen($filePath, 'wb')) === false) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
+			return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
 		}
 
 		// Format PUT response
@@ -245,7 +245,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Get a new item by mime type
@@ -254,7 +254,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		if (!isset($newItem)) {
@@ -277,7 +277,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Make the new item as close a copy of the original item as possible
@@ -286,7 +286,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		// Fall back on an unknown item if the new class doesn't support the file content
@@ -296,7 +296,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			if (!($ret->getErrorCode() & ERROR_BAD_DATA_TYPE)) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$gallery->debug(
@@ -312,7 +312,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			if (!isset($newItem)) {
@@ -335,7 +335,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			// Make the new item as close a copy of the original item as possible
@@ -344,7 +344,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 
 			$ret = $newItem->rescan();
@@ -352,7 +352,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
 
-				return array($ret, null, null);
+				return array( $ret, null, null );
 			}
 		}
 
@@ -364,7 +364,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if (!$platform->copy($filePath, $tmpFile)) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
+			return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
 		}
 
 		$ret = $item->delete();
@@ -373,7 +373,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			@$platform->unlink($tmpFile);
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		/*
@@ -384,7 +384,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			@$platform->unlink($tmpFile);
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
+			return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
 		}
 		@$platform->unlink($tmpFile);
 
@@ -394,7 +394,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		$ret = GalleryCoreApi::addExistingItemToAlbum($newItem, $parentItem->getId(), true);
@@ -402,13 +402,13 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
 
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		$ret = GalleryCoreApi::releaseLocks($lockIds);
 
 		if ($ret) {
-			return array($ret, null, null);
+			return array( $ret, null, null );
 		}
 
 		return array(
@@ -418,7 +418,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 				'addedFiles' => array(
 					array(
 						'fileName' => basename($path),
-						'id'       => $newItem->getId(),
+						'id' => $newItem->getId(),
 					),
 				),
 			),
@@ -429,7 +429,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 	 * @see ItemAddPlugin::loadTemplate
 	 */
 	public function loadTemplate(&$template, &$form, $item) {
-		return array(null, 'modules/webdav/templates/ItemAddWebDav.tpl', 'modules_webdav');
+		return array( null, 'modules/webdav/templates/ItemAddWebDav.tpl', 'modules_webdav' );
 	}
 
 	/**
@@ -439,10 +439,10 @@ class ItemAddWebDav extends ItemAddPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'webdav');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, $module->translate('WebDAV'));
+		return array( null, $module->translate('WebDAV') );
 	}
 
 	/**
@@ -459,11 +459,11 @@ class ItemAddWebDav extends ItemAddPlugin {
 			list($ret, $linkedIds) = GalleryCoreApi::fetchEntitiesLinkedTo($item->getId());
 
 			if ($ret) {
-				return array($ret, null);
+				return array( $ret, null );
 			}
 			$hasLink = !empty($linkedIds);
 		}
 
-		return array(null, $hasLink);
+		return array( null, $hasLink );
 	}
 }

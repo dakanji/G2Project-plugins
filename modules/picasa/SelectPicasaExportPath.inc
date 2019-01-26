@@ -39,7 +39,7 @@ class SelectPicasaExportPathController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$error = $status = array();
@@ -93,7 +93,7 @@ class SelectPicasaExportPathController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -110,7 +110,7 @@ class SelectPicasaExportPathView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'SelectPicasaExportPath') {
@@ -130,7 +130,7 @@ class SelectPicasaExportPathView extends GalleryView {
 		list($ret, $operations) = GalleryCoreApi::getToolkitOperations('image/jpeg');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$hasToolkit = false;
@@ -146,14 +146,14 @@ class SelectPicasaExportPathView extends GalleryView {
 		list($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addAlbumItem');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		// Load all the album entities
 		list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds, 'GalleryAlbumItem');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$albumTree = GalleryUtilities::createAlbumTree($albums);
 

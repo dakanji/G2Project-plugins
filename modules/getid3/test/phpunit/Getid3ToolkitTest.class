@@ -54,7 +54,7 @@ class Getid3ToolkitTest extends GalleryTestCase {
 			return $ret;
 		}
 		$this->assertEquals(
-			array(mktime(15, 06, 18, 1, 15, 2006)),
+			array( mktime(15, 06, 18, 1, 15, 2006) ),
 			$results,
 			'originationTimestamp for test_small.avi'
 		);
@@ -80,7 +80,7 @@ class Getid3ToolkitTest extends GalleryTestCase {
 			$date['year']
 		);
 		$this->assertEquals(
-			array($stamp),
+			array( $stamp ),
 			$results,
 			'originationTimestamp for newday.mov'
 		);

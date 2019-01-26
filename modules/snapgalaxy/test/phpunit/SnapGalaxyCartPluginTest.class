@@ -207,7 +207,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		}
 
 		$platform = new UnitTestPlatform();
-		$platform->setReply('fsockopen', array('www.snapgalaxy.com', 80, '', '', 5), 'testFd');
+		$platform->setReply('fsockopen', array( 'www.snapgalaxy.com', 80, '', '', 5 ), 'testFd');
 		$platform->setReply(
 			'fwrite',
 			array(
@@ -217,18 +217,18 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			),
 			100
 		);
-		$platform->setReply('fflush', array('testFd'), true);
-		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
-		$platform->setReply('feof', array('testFd'), false);
-		$platform->setReply('fgets', array('testFd', 4096), '');
-		$platform->setReply('feof', array('testFd'), false);
+		$platform->setReply('fflush', array( 'testFd' ), true);
+		$platform->setReply('fgets', array( 'testFd', 4096 ), 'HTTP/1.1 200 OK');
+		$platform->setReply('feof', array( 'testFd' ), false);
+		$platform->setReply('fgets', array( 'testFd', 4096 ), '');
+		$platform->setReply('feof', array( 'testFd' ), false);
 		$platform->setReply(
 			'fread',
-			array('testFd', 4096),
+			array( 'testFd', 4096 ),
 			'requesturl="/REQUEST_URL" redirecturl="/REDIRECT_URL"'
 		);
-		$platform->setReply('feof', array('testFd'), true);
-		$platform->setReply('fclose', array('testFd'), true);
+		$platform->setReply('feof', array( 'testFd' ), true);
+		$platform->setReply('fclose', array( 'testFd' ), true);
 		$gallery->setPlatform($platform);
 
 		$cartPlugin            = new SnapGalaxyCartPlugin();

@@ -35,12 +35,12 @@ class ItemAddSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'itemadd');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
@@ -87,7 +87,7 @@ class ItemAddSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 					$status['addedDir'] = 1;
 				}
@@ -104,7 +104,7 @@ class ItemAddSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 				$ret = GalleryCoreApi::removePluginParameter(
@@ -114,7 +114,7 @@ class ItemAddSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$status['removedDir'] = 1;
 			} else {
@@ -123,11 +123,11 @@ class ItemAddSiteAdminController extends GalleryController {
 		}
 
 		if (isset($form['action']['save']) || isset($status['addedDir'])) {
-			foreach (array('fromweb', 'fromserver') as $key) {
+			foreach (array( 'fromweb', 'fromserver' ) as $key) {
 				$ret = GalleryCoreApi::setPluginParameter('module', 'itemadd', $key, $form[$key]);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 			$status['saved'] = 1;
@@ -143,7 +143,7 @@ class ItemAddSiteAdminController extends GalleryController {
 			'error'  => $error,
 		);
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -158,23 +158,23 @@ class ItemAddSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'itemadd');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		if ($form['formName'] != 'ItemAddSiteAdmin') {
 			$form['formName']                    = 'ItemAddSiteAdmin';
 			$form['uploadLocalServer']['newDir'] = '';
 
-			foreach (array('fromweb', 'fromserver') as $key) {
+			foreach (array( 'fromweb', 'fromserver' ) as $key) {
 				list($ret, $form[$key]) = $module->getParameter($key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		}
@@ -182,7 +182,7 @@ class ItemAddSiteAdminView extends GalleryView {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'itemadd');
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 		$localServerDirList = array();
 
@@ -191,7 +191,7 @@ class ItemAddSiteAdminView extends GalleryView {
 		}
 
 		$ItemAddSiteAdmin = array(
-			'optionList'         => array(
+			'optionList' => array(
 				'on'    => $module->translate('Available to all users with permission to add items'),
 				'admin' => $module->translate('Site Admins only'),
 				'off'   => $module->translate('Disabled'),

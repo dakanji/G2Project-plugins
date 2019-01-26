@@ -304,7 +304,7 @@ class getid3_apetag extends getid3_handler {
 								break;
 							}
 						} elseif (is_string($this->inline_attachments)) {
-							$this->inline_attachments = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $this->inline_attachments), DIRECTORY_SEPARATOR);
+							$this->inline_attachments = rtrim(str_replace(array( '/', '\\' ), DIRECTORY_SEPARATOR, $this->inline_attachments), DIRECTORY_SEPARATOR);
 
 							if (!is_dir($this->inline_attachments) || !is_writable($this->inline_attachments)) {
 								// cannot write, skip
@@ -331,7 +331,7 @@ class getid3_apetag extends getid3_handler {
 							}
 							$comments_picture_data = array();
 
-							foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
+							foreach (array( 'data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength' ) as $picture_key) {
 								if (isset($thisfile_ape_items_current[$picture_key])) {
 									$comments_picture_data[$picture_key] = $thisfile_ape_items_current[$picture_key];
 								}

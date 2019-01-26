@@ -82,7 +82,7 @@ class RestrictMimeOptionTest extends ItemAddOptionTestCase {
 	public function tearDown() {
 		$ret = GalleryCoreApi::removeMimeType(
 			array(
-				'mimeType' => array('test/file', 'test/bad'),
+				'mimeType' => array( 'test/file', 'test/bad' ),
 			)
 		);
 
@@ -137,13 +137,13 @@ class RestrictMimeOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'no errors');
-		$this->assertEquals(array(array()), $warnings, 'no warnings');
+		$this->assertEquals(array( array() ), $warnings, 'no warnings');
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($badItem));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $badItem ));
 		$this->assertEquals(array(), $errors, 'errors');
-		$this->assertEquals(array(array($this->_rejectMessage)), $warnings, 'warnings');
+		$this->assertEquals(array( array( $this->_rejectMessage ) ), $warnings, 'warnings');
 
 		$gallery->performShutdownActions();
 
@@ -179,13 +179,13 @@ class RestrictMimeOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'no errors');
-		$this->assertEquals(array(array()), $warnings, 'no warnings');
+		$this->assertEquals(array( array() ), $warnings, 'no warnings');
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($badItem));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $badItem ));
 		$this->assertEquals(array(), $errors, 'errors');
-		$this->assertEquals(array(array($this->_rejectMessage)), $warnings, 'warnings');
+		$this->assertEquals(array( array( $this->_rejectMessage ) ), $warnings, 'warnings');
 
 		$gallery->performShutdownActions();
 
@@ -237,13 +237,13 @@ class RestrictMimeOptionTest extends ItemAddOptionTestCase {
 			'precondition: bad path component'
 		);
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'no errors');
-		$this->assertEquals(array(array()), $warnings, 'no warnings');
+		$this->assertEquals(array( array() ), $warnings, 'no warnings');
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($badItem));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $badItem ));
 		$this->assertEquals(array(), $errors, 'errors');
-		$this->assertEquals(array(array($this->_rejectMessage)), $warnings, 'warnings');
+		$this->assertEquals(array( array( $this->_rejectMessage ) ), $warnings, 'warnings');
 
 		$gallery->performShutdownActions();
 
@@ -295,13 +295,13 @@ class RestrictMimeOptionTest extends ItemAddOptionTestCase {
 			'precondition: bad path component'
 		);
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $item ));
 		$this->assertEquals(array(), $errors, 'no errors');
-		$this->assertEquals(array(array()), $warnings, 'no warnings');
+		$this->assertEquals(array( array() ), $warnings, 'no warnings');
 
-		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($badItem));
+		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array( $badItem ));
 		$this->assertEquals(array(), $errors, 'errors');
-		$this->assertEquals(array(array($this->_rejectMessage)), $warnings, 'warnings');
+		$this->assertEquals(array( array( $this->_rejectMessage ) ), $warnings, 'warnings');
 
 		$gallery->performShutdownActions();
 

@@ -143,7 +143,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(
-			array($itemId),
+			array( $itemId ),
 			$digibugSession->get('core.isPrintService'),
 			'Digibug session missing item id'
 		);
@@ -173,7 +173,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 
 		// Give the active user view permissions through session-basd permissions
 		$sessionPermissionEntityId = $itemId;
-		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($sessionPermissionEntityId));
+		$session->put(GALLERY_PERMISSION_SESSION_KEY, array( $sessionPermissionEntityId ));
 
 		$ret = GalleryCoreApi::addEntityPermission(
 			$itemId,
@@ -229,7 +229,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 			}
 
 			$this->assertEquals(
-				array($itemId),
+				array( $itemId ),
 				$digibugSession->get('core.isPrintService'),
 				'Digibug session missing item id'
 			);

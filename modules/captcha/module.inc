@@ -41,8 +41,8 @@ class CaptchaModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array(7, 20));
-		$this->setRequiredModuleApi(array(3, 6));
+		$this->setRequiredCoreApi(array( 7, 20 ));
+		$this->setRequiredModuleApi(array( 3, 6 ));
 	}
 
 	/**
@@ -142,10 +142,10 @@ class CaptchaModule extends GalleryModule {
 		list($ret, $needsConfiguration) = $this->needsConfiguration();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		return array(null, !$needsConfiguration);
+		return array( null, !$needsConfiguration );
 	}
 
 	/**
@@ -155,7 +155,7 @@ class CaptchaModule extends GalleryModule {
 		GalleryCoreApi::requireOnce('modules/captcha/classes/CaptchaHelper.class');
 		$gdReport = CaptchaHelper::testRequiredGdFunctions();
 
-		return array(null, count($gdReport['fail']) > 0);
+		return array( null, count($gdReport['fail']) > 0 );
 	}
 
 	/**

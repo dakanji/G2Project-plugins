@@ -59,7 +59,7 @@ class getid3_riff extends getid3_handler {
 
 		switch ($RIFFtype) {
 			case 'FORM':  // AIFF, AIFC
-				//$info['fileformat']   = 'aiff';
+				//$info['fileformat'] = 'aiff';
 				$this->container              = 'aiff';
 				$thisfile_riff['header_size'] = $this->EitherEndian2Int($RIFFsize);
 				$thisfile_riff[$RIFFsubtype]  = $this->ParseRIFF($offset, ($offset + $thisfile_riff['header_size'] - 4));
@@ -69,7 +69,7 @@ class getid3_riff extends getid3_handler {
 			case 'RIFF':  // AVI, WAV, etc
 			case 'SDSS':  // SDSS is identical to RIFF, just renamed. Used by SmartSound QuickTracks (www.smartsound.com)
 			case 'RMP3':  // RMP3 is identical to RIFF, just renamed. Used by [unknown program] when creating RIFF-MP3s
-				//$info['fileformat']   = 'riff';
+				//$info['fileformat'] = 'riff';
 				$this->container              = 'riff';
 				$thisfile_riff['header_size'] = $this->EitherEndian2Int($RIFFsize);
 
@@ -434,8 +434,8 @@ class getid3_riff extends getid3_handler {
 
 					$tagmapping = array(
 						'tracktitle' => 'title',
-						'category'   => 'genre',
-						'cdtitle'    => 'album',
+						'category' => 'genre',
+						'cdtitle' => 'album',
 						'tracktitle' => 'title',
 					);
 
@@ -562,12 +562,12 @@ class getid3_riff extends getid3_handler {
 							$flags           = array(
 								'compression_method' => 1,
 								'compression_flags' => 1,
-								'm_dwScale'     => 4,
+								'm_dwScale' => 4,
 								'm_dwBlockSize' => 4,
-								'm_wQuality'    => 2,
+								'm_wQuality' => 2,
 								'm_wMarkDistance' => 2,
-								'm_wReserved'   => 2,
-								'm_dwOrgSize'   => 4,
+								'm_wReserved' => 2,
+								'm_dwOrgSize' => 4,
 								'm_bFactExists' => 2,
 								'm_dwRiffChunkSize' => 4,
 							);
@@ -694,7 +694,7 @@ class getid3_riff extends getid3_handler {
 						$thisfile_riff_raw['indx'][$streamnumber]['dwChunkId']      = substr($ahsisd, 8, 4);
 						$thisfile_riff_raw['indx'][$streamnumber]['dwReserved']     = $this->EitherEndian2Int(substr($ahsisd, 12, 4));
 
-						//$thisfile_riff_raw['indx'][$streamnumber]['bIndexType_name']    =    $bIndexType[$thisfile_riff_raw['indx'][$streamnumber]['bIndexType']];
+						//$thisfile_riff_raw['indx'][$streamnumber]['bIndexType_name'] =    $bIndexType[$thisfile_riff_raw['indx'][$streamnumber]['bIndexType']];
 						//$thisfile_riff_raw['indx'][$streamnumber]['bIndexSubType_name'] = $bIndexSubtype[$thisfile_riff_raw['indx'][$streamnumber]['bIndexType']][$thisfile_riff_raw['indx'][$streamnumber]['bIndexSubType']];
 
 						unset($ahsisd);
@@ -738,12 +738,12 @@ class getid3_riff extends getid3_handler {
 					}
 
 					$flags = array(
-						'hasindex'     => 0x00000010,
+						'hasindex' => 0x00000010,
 						'mustuseindex' => 0x00000020,
-						'interleaved'  => 0x00000100,
-						'trustcktype'  => 0x00000800,
+						'interleaved' => 0x00000100,
+						'trustcktype' => 0x00000800,
 						'capturedfile' => 0x00010000,
-						'copyrighted'  => 0x00020010,
+						'copyrighted' => 0x00020010,
 					);
 
 					foreach ($flags as $flag => $value) {
@@ -1131,10 +1131,10 @@ class getid3_riff extends getid3_handler {
 				}
 
 				$CommentsChunkNames = array(
-					'NAME'   => 'title',
+					'NAME' => 'title',
 					'author' => 'artist',
-					'(c) '   => 'copyright',
-					'ANNO'   => 'comment',
+					'(c) ' => 'copyright',
+					'ANNO' => 'comment',
 				);
 
 				foreach ($CommentsChunkNames as $key => $value) {
@@ -1235,10 +1235,10 @@ class getid3_riff extends getid3_handler {
 				}
 
 				$CommentsChunkNames = array(
-					'NAME'   => 'title',
+					'NAME' => 'title',
 					'author' => 'artist',
-					'(c) '   => 'copyright',
-					'ANNO'   => 'comment',
+					'(c) ' => 'copyright',
+					'ANNO' => 'comment',
 				);
 
 				foreach ($CommentsChunkNames as $key => $value) {
@@ -1297,7 +1297,7 @@ class getid3_riff extends getid3_handler {
 			case 'AIFF':
 			case 'AIFC':
 				$ID3v2_key_good = 'id3 ';
-				$ID3v2_keys_bad = array('ID3 ', 'tag ');
+				$ID3v2_keys_bad = array( 'ID3 ', 'tag ' );
 
 				foreach ($ID3v2_keys_bad as $ID3v2_key_bad) {
 					if (isset($thisfile_riff[$RIFFsubtype][$ID3v2_key_bad]) && !array_key_exists($ID3v2_key_good, $thisfile_riff[$RIFFsubtype])) {
@@ -1619,7 +1619,7 @@ class getid3_riff extends getid3_handler {
 												$info['audio']['channels']     = $info['mpeg']['audio']['channels'];
 												$info['audio']['bitrate']      = $info['mpeg']['audio']['bitrate'];
 												$info['audio']['bitrate_mode'] = strtolower($info['mpeg']['audio']['bitrate_mode']);
-												//$info['bitrate']               = $info['audio']['bitrate'];
+												//$info['bitrate'] = $info['audio']['bitrate'];
 											}
 											unset($getid3_temp, $getid3_mp3);
 										}
@@ -1943,7 +1943,7 @@ class getid3_riff extends getid3_handler {
 						if (isset($CommentsTargetArray[$value])) {
 							$CommentsTargetArray[$value][] = trim($commentdata['data']);
 						} else {
-							$CommentsTargetArray[$value] = array(trim($commentdata['data']));
+							$CommentsTargetArray[$value] = array( trim($commentdata['data']) );
 						}
 					}
 				}
@@ -2114,7 +2114,7 @@ class getid3_riff extends getid3_handler {
 		$parsed['genre_id']  = intval(trim(substr($DIVXTAG, 112, 3)));
 		$parsed['rating_id'] = ord(substr($DIVXTAG, 115, 1));
 		//$parsed['padding'] =             substr($DIVXTAG, 116,  5);  // 5-byte null
-		//$parsed['magic']   =             substr($DIVXTAG, 121,  7);  // "DIVXTAG"
+		//$parsed['magic'] =             substr($DIVXTAG, 121,  7);  // "DIVXTAG"
 
 		$parsed['genre']  = (isset($DIVXTAGgenre[$parsed['genre_id']]) ? $DIVXTAGgenre[$parsed['genre_id']] : $parsed['genre_id']);
 		$parsed['rating'] = (isset($DIVXTAGrating[$parsed['rating_id']]) ? $DIVXTAGrating[$parsed['rating_id']] : $parsed['rating_id']);
@@ -2130,7 +2130,7 @@ class getid3_riff extends getid3_handler {
 		}
 
 		foreach ($parsed as $tag => $value) {
-			$parsed[$tag] = array($value);
+			$parsed[$tag] = array( $value );
 		}
 
 		return $parsed;

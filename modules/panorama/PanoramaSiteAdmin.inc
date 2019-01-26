@@ -33,7 +33,7 @@ class PanoramaSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
 		$status = $error = array();
@@ -42,7 +42,7 @@ class PanoramaSiteAdminController extends GalleryController {
 			if (!isset($form['width']) || ((int)$form['width']) < 100) {
 				$error[] = 'form[error][width]';
 			} else {
-				foreach (array('itemType', 'itemLink') as $key) {
+				foreach (array( 'itemType', 'itemLink' ) as $key) {
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
 						'panorama',
@@ -51,7 +51,7 @@ class PanoramaSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret, null);
+						return array( $ret, null );
 					}
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
@@ -62,7 +62,7 @@ class PanoramaSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 				$status['saved'] = 1;
 			}
@@ -75,7 +75,7 @@ class PanoramaSiteAdminController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array(null, $results);
+		return array( null, $results );
 	}
 }
 
@@ -92,10 +92,10 @@ class PanoramaSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret, null);
+			return array( $ret, null );
 		}
 
-		foreach (array('itemType', 'itemLink') as $key) {
+		foreach (array( 'itemType', 'itemLink' ) as $key) {
 			if (!isset($form[$key])) {
 				$form[$key] = false;
 			}
@@ -104,11 +104,11 @@ class PanoramaSiteAdminView extends GalleryView {
 		if ($form['formName'] != 'PanoramaSiteAdmin') {
 			$form['formName'] = 'PanoramaSiteAdmin';
 
-			foreach (array('itemType', 'itemLink', 'width') as $key) {
+			foreach (array( 'itemType', 'itemLink', 'width' ) as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'panorama', $key);
 
 				if ($ret) {
-					return array($ret, null);
+					return array( $ret, null );
 				}
 			}
 		}

@@ -77,9 +77,9 @@ class ItemCreateReplicaSingleControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'replica.ItemCreateReplicaSingle',
-					'itemId'  => $this->_item->getId(),
+					'itemId' => $this->_item->getId(),
 				),
 				'status' => array(
 					'linked' => 1,
@@ -138,11 +138,11 @@ class ItemCreateReplicaSingleControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view'    => 'core.ItemAdmin',
+					'view' => 'core.ItemAdmin',
 					'subView' => 'replica.ItemCreateReplicaSingle',
 				),
 				'status' => array(),
-				'error' => array('form[error][destination][empty]'),
+				'error' => array( 'form[error][destination][empty]' ),
 			),
 			$results
 		);
