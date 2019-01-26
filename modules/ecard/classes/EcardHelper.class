@@ -38,15 +38,15 @@ class EcardHelper {
 		list($ret, $permissions) = GalleryCoreApi::getPermissions($itemId);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($permissions['core.viewResizes'])) {
 			// Try to get the smallest derivative
-			list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array( $itemId ));
+			list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (!empty($resizes)) {
@@ -58,7 +58,7 @@ class EcardHelper {
 						list($ret, $resize) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($resize->getId());
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 					}
 					$dimensions = $resize->getWidth() + $resize->getHeight();
@@ -69,7 +69,7 @@ class EcardHelper {
 					}
 				}
 
-				return array( null, $item );
+				return array(null, $item);
 			}
 		}
 
@@ -77,30 +77,30 @@ class EcardHelper {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
-			list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array( $itemId ));
+			list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($itemId));
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
-			return array( null, empty($preferred) ? $item : $preferred[$itemId] );
+			return array(null, empty($preferred) ? $item : $preferred[$itemId]);
 		}
 
 		if (isset($permissions['core.view'])) {
-			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $itemId ));
+			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($thumbnail[$itemId])) {
-				return array( null, $thumbnail[$itemId] );
+				return array(null, $thumbnail[$itemId]);
 			}
 		}
 
-		return array( GalleryCoreApi::error(ERROR_MISSING_VALUE, __FILE__, __LINE__), null );
+		return array(GalleryCoreApi::error(ERROR_MISSING_VALUE, __FILE__, __LINE__), null);
 	}
 
 	/**
@@ -142,9 +142,9 @@ class EcardHelper {
 		list($ret, $level) = GalleryCoreApi::getPluginParameter('module', 'ecard', 'validation.level');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $level != 'OFF' );
+		return array(null, $level != 'OFF');
 	}
 }

@@ -108,61 +108,61 @@ class nusoap_base {
 	 */
 	public $typemap = array(
 		'http://www.w3.org/2001/XMLSchema' => array(
-			'string'    => 'string',
-			'boolean'   => 'boolean',
-			'float'     => 'double',
-			'double'    => 'double',
-			'decimal'   => 'double',
-			'duration'  => '',
-			'dateTime'  => 'string',
-			'time'      => 'string',
-			'date'      => 'string',
-			'gYearMonth' => '',
-			'gYear'     => '',
-			'gMonthDay' => '',
-			'gDay'      => '',
-			'gMonth'    => '',
-			'hexBinary' => 'string',
+			'string'       => 'string',
+			'boolean'      => 'boolean',
+			'float'        => 'double',
+			'double'       => 'double',
+			'decimal'      => 'double',
+			'duration'     => '',
+			'dateTime'     => 'string',
+			'time'         => 'string',
+			'date'         => 'string',
+			'gYearMonth'   => '',
+			'gYear'        => '',
+			'gMonthDay'    => '',
+			'gDay'         => '',
+			'gMonth'       => '',
+			'hexBinary'    => 'string',
 			'base64Binary' => 'string',
 			// derived datatypes
-			'normalizedString' => 'string',
-			'token'     => 'string',
-			'language'  => '',
-			'NMTOKEN'   => '',
-			'NMTOKENS'  => '',
-			'Name'      => '',
-			'NCName'    => '',
-			'ID'        => '',
-			'IDREF'     => '',
-			'IDREFS'    => '',
-			'ENTITY'    => '',
-			'ENTITIES'  => '',
-			'integer'   => 'integer',
+			'normalizedString'   => 'string',
+			'token'              => 'string',
+			'language'           => '',
+			'NMTOKEN'            => '',
+			'NMTOKENS'           => '',
+			'Name'               => '',
+			'NCName'             => '',
+			'ID'                 => '',
+			'IDREF'              => '',
+			'IDREFS'             => '',
+			'ENTITY'             => '',
+			'ENTITIES'           => '',
+			'integer'            => 'integer',
 			'nonPositiveInteger' => 'integer',
-			'negativeInteger' => 'integer',
-			'long'      => 'integer',
-			'int'       => 'integer',
-			'short'     => 'integer',
-			'byte'      => 'integer',
+			'negativeInteger'    => 'integer',
+			'long'               => 'integer',
+			'int'                => 'integer',
+			'short'              => 'integer',
+			'byte'               => 'integer',
 			'nonNegativeInteger' => 'integer',
-			'unsignedLong' => '',
-			'unsignedInt' => '',
-			'unsignedShort' => '',
-			'unsignedByte' => '',
-			'positiveInteger' => '',
+			'unsignedLong'       => '',
+			'unsignedInt'        => '',
+			'unsignedShort'      => '',
+			'unsignedByte'       => '',
+			'positiveInteger'    => '',
 		),
 		'http://www.w3.org/1999/XMLSchema' => array(
-			'i4'       => '',
-			'int'      => 'integer',
-			'boolean'  => 'boolean',
-			'string'   => 'string',
-			'double'   => 'double',
-			'float'    => 'double',
-			'dateTime' => 'string',
-			'timeInstant' => 'string',
+			'i4'           => '',
+			'int'          => 'integer',
+			'boolean'      => 'boolean',
+			'string'       => 'string',
+			'double'       => 'double',
+			'float'        => 'double',
+			'dateTime'     => 'string',
+			'timeInstant'  => 'string',
 			'base64Binary' => 'string',
-			'base64'   => 'string',
-			'ur-type'  => 'array',
+			'base64'       => 'string',
+			'ur-type'      => 'array',
 		),
 		'http://soapinterop.org/xsd' => array(
 			'SOAPStruct' => 'struct',
@@ -172,7 +172,7 @@ class nusoap_base {
 			'array'  => 'array',
 			'Array'  => 'array',
 		),
-		'http://xml.apache.org/xml-soap' => array( 'Map' ),
+		'http://xml.apache.org/xml-soap' => array('Map'),
 	);
 
 	/**
@@ -774,9 +774,9 @@ class XMLSchema extends nusoap_base {
 				//$this->xdebug("parsing attribute $attrs[name] $attrs[ref] of value: ".$attrs['http://schemas.xmlsoap.org/wsdl/:arrayType']);
 				if (isset($attrs['name'])) {
 					$this->attributes[$attrs['name']] = $attrs;
-					$aname = $attrs['name'];
+					$aname                            = $attrs['name'];
 				} elseif ($attrs['ref']) {
-					$aname = $attrs['ref'];
+					$aname                           = $attrs['ref'];
 					$this->attributes[$attrs['ref']] = $attrs;
 				}
 
@@ -809,8 +809,8 @@ class XMLSchema extends nusoap_base {
 
 			case 'complexType':
 				if (isset($attrs['name'])) {
-					$this->currentElement     = false;
-					$this->currentComplexType = $attrs['name'];
+					$this->currentElement                                       = false;
+					$this->currentComplexType                                   = $attrs['name'];
 					$this->complexTypes[$this->currentComplexType]              = $attrs;
 					$this->complexTypes[$this->currentComplexType]['typeClass'] = 'complexType';
 
@@ -827,17 +827,17 @@ class XMLSchema extends nusoap_base {
 			case 'element':
 				if (isset($attrs['type'])) {
 					$this->xdebug('processing element ' . $attrs['name']);
-					$this->currentElement             = $attrs['name'];
-					$this->elements[ $attrs['name'] ] = $attrs;
+					$this->currentElement                          = $attrs['name'];
+					$this->elements[ $attrs['name'] ]              = $attrs;
 					$this->elements[ $attrs['name'] ]['typeClass'] = 'element';
-					$ename = $attrs['name'];
+					$ename                                         = $attrs['name'];
 				} elseif (isset($attrs['ref'])) {
 					$ename = $attrs['ref'];
 				} else {
 					$this->xdebug('adding complexType ' . $attrs['name']);
-					$this->currentComplexType                        = $attrs['name'];
-					$this->complexTypes[ $attrs['name'] ]            = $attrs;
-					$this->complexTypes[ $attrs['name'] ]['element'] = 1;
+					$this->currentComplexType                                 = $attrs['name'];
+					$this->complexTypes[ $attrs['name'] ]                     = $attrs;
+					$this->complexTypes[ $attrs['name'] ]['element']          = 1;
 					$this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
 				}
 
@@ -869,8 +869,8 @@ class XMLSchema extends nusoap_base {
 				break;
 
 			case 'simpleType':
-				$this->currentElement             = $attrs['name'];
-				$this->elements[ $attrs['name'] ] = $attrs;
+				$this->currentElement                          = $attrs['name'];
+				$this->elements[ $attrs['name'] ]              = $attrs;
 				$this->elements[ $attrs['name'] ]['typeClass'] = 'element';
 
 				break;
@@ -1263,14 +1263,14 @@ class XMLSchema extends nusoap_base {
 	 */
 	public function addComplexType($name, $typeClass = 'complexType', $phpType = 'array', $compositor = '', $restrictionBase = '', $elements = array(), $attrs = array(), $arrayType = '') {
 		$this->complexTypes[$name] = array(
-			'name'      => $name,
-			'typeClass' => $typeClass,
-			'phpType'   => $phpType,
-			'compositor' => $compositor,
+			'name'            => $name,
+			'typeClass'       => $typeClass,
+			'phpType'         => $phpType,
+			'compositor'      => $compositor,
 			'restrictionBase' => $restrictionBase,
-			'elements'  => $elements,
-			'attrs'     => $attrs,
-			'arrayType' => $arrayType,
+			'elements'        => $elements,
+			'attrs'           => $attrs,
+			'arrayType'       => $arrayType,
 		);
 	}
 }
@@ -2046,7 +2046,7 @@ class soap_server extends nusoap_base {
 						if (sizeof($this->opData['output']['parts']) > 1) {
 							$opParams = $method_response;
 						} else {
-							$opParams = array( $method_response );
+							$opParams = array($method_response);
 						}
 						$return_val = $this->wsdl->serializeRPCParameters($this->methodname, 'output', $opParams);
 					} else {
@@ -2147,12 +2147,12 @@ class soap_server extends nusoap_base {
 		}
 
 		$this->operations[$name] = array(
-			'name'      => $name,
-			'in'        => $in,
-			'out'       => $out,
-			'namespace' => $namespace,
+			'name'       => $name,
+			'in'         => $in,
+			'out'        => $out,
+			'namespace'  => $namespace,
 			'soapaction' => $soapaction,
-			'style'     => $style,
+			'style'      => $style,
 		);
 
 		if ($this->wsdl) {
@@ -2315,12 +2315,12 @@ class soap_server extends nusoap_base {
 			$endpoint = "http://$SERVER_NAME$SCRIPT_NAME";
 		}
 
-		$this->wsdl                     = new wsdl();
-		$this->wsdl->serviceName        = $serviceName;
-		$this->wsdl->endpoint           = $endpoint;
-		$this->wsdl->namespaces['tns']  = $namespace;
-		$this->wsdl->namespaces['soap'] = 'http://schemas.xmlsoap.org/wsdl/soap/';
-		$this->wsdl->namespaces['wsdl'] = 'http://schemas.xmlsoap.org/wsdl/';
+		$this->wsdl                                     = new wsdl();
+		$this->wsdl->serviceName                        = $serviceName;
+		$this->wsdl->endpoint                           = $endpoint;
+		$this->wsdl->namespaces['tns']                  = $namespace;
+		$this->wsdl->namespaces['soap']                 = 'http://schemas.xmlsoap.org/wsdl/soap/';
+		$this->wsdl->namespaces['wsdl']                 = 'http://schemas.xmlsoap.org/wsdl/';
 		$this->wsdl->bindings[$serviceName . 'Binding'] = array(
 			'name'      => $serviceName . 'Binding',
 			'style'     => $style,
@@ -2328,8 +2328,8 @@ class soap_server extends nusoap_base {
 			'portType'  => $serviceName . 'PortType',
 		);
 		$this->wsdl->ports[$serviceName . 'Port']       = array(
-			'binding'  => $serviceName . 'Binding',
-			'location' => $endpoint,
+			'binding'     => $serviceName . 'Binding',
+			'location'    => $endpoint,
 			'bindingType' => 'http://schemas.xmlsoap.org/wsdl/soap/',
 		);
 	}
@@ -2655,7 +2655,7 @@ class wsdl extends XMLSchema {
 							break;
 						// merge input/output data
 						default:
-							$m = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
+							$m                                                                                      = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
 							$this->portTypes[$this->currentPortType][$this->currentPortOperation][$name]['message'] = $m;
 
 							break;
@@ -2730,8 +2730,8 @@ class wsdl extends XMLSchema {
 							break;
 
 						case 'address':
-							$this->ports[$this->currentPort]['location']    = $attrs['location'];
-							$this->ports[$this->currentPort]['bindingType'] = $namespace;
+							$this->ports[$this->currentPort]['location']                                  = $attrs['location'];
+							$this->ports[$this->currentPort]['bindingType']                               = $namespace;
 							$this->bindings[ $this->ports[$this->currentPort]['binding'] ]['bindingType'] = $namespace;
 							$this->bindings[ $this->ports[$this->currentPort]['binding'] ]['endpoint']    = $attrs['location'];
 
@@ -2776,7 +2776,7 @@ class wsdl extends XMLSchema {
 						} else {
 							$this->currentBinding = $attrs['name'];
 						}
-						$this->status = 'binding';
+						$this->status                                      = 'binding';
 						$this->bindings[$this->currentBinding]['portType'] = $this->getLocalPart($attrs['type']);
 						$this->debug("current binding: $this->currentBinding of portType: " . $attrs['type']);
 					}
@@ -2822,7 +2822,7 @@ class wsdl extends XMLSchema {
 		// end documentation
 		if ($this->documentation) {
 			$this->portTypes[$this->currentPortType][$this->currentPortOperation]['documentation'] = $this->documentation;
-			$this->documentation = false;
+			$this->documentation                                                                   = false;
 		}
 	}
 
@@ -3189,27 +3189,27 @@ class wsdl extends XMLSchema {
 		}
 		// get binding
 		$this->bindings[ $this->serviceName . 'Binding' ]['operations'][$name] = array(
-			'name'      => $name,
-			'binding'   => $this->serviceName . 'Binding',
-			'endpoint'  => $this->endpoint,
+			'name'       => $name,
+			'binding'    => $this->serviceName . 'Binding',
+			'endpoint'   => $this->endpoint,
 			'soapAction' => $soapaction,
-			'style'     => $style,
-			'input'     => array(
-				'use'   => $use,
-				'namespace' => $namespace,
+			'style'      => $style,
+			'input'      => array(
+				'use'           => $use,
+				'namespace'     => $namespace,
 				'encodingStyle' => $encodingStyle,
-				'message' => $name . 'Request',
-				'parts' => $in,
+				'message'       => $name . 'Request',
+				'parts'         => $in,
 			),
 			'output'    => array(
-				'use'   => $use,
-				'namespace' => $namespace,
+				'use'           => $use,
+				'namespace'     => $namespace,
 				'encodingStyle' => $encodingStyle,
-				'message' => $name . 'Response',
-				'parts' => $out,
+				'message'       => $name . 'Response',
+				'parts'         => $out,
 			),
-			'namespace' => $namespace,
-			'transport' => 'http://schemas.xmlsoap.org/soap/http',
+			'namespace'     => $namespace,
+			'transport'     => 'http://schemas.xmlsoap.org/soap/http',
 			'documentation' => $documentation,
 		);
 		// add portTypes
@@ -3636,7 +3636,7 @@ class soap_parser extends nusoap_base {
 				// apache Map type: java hashtable
 			} elseif ($this->message[$pos]['type'] == 'Map' && $this->message[$pos]['type_namespace'] == 'http://xml.apache.org/xml-soap') {
 				foreach ($children as $child_pos) {
-					$kv = explode('|', $this->message[$child_pos]['children']);
+					$kv                                       = explode('|', $this->message[$child_pos]['children']);
 					$params[$this->message[$kv[1]]['result']] = $this->message[$kv[2]]['result'];
 				}
 				// generic compound type

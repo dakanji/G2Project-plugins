@@ -36,7 +36,7 @@ class ImageFrameInterface_1_1 {
 	 *               array(frame_id=>localized_frame_name)
 	 */
 	public function getImageFrameList() {
-		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 	}
 
 	/**
@@ -62,6 +62,6 @@ class ImageFrameInterface_1_1 {
 	 *               string view url
 	 */
 	public function getSampleUrl($itemId = null) {
-		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 	}
 }

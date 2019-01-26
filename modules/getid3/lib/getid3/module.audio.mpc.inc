@@ -131,7 +131,7 @@ class getid3_mpc extends getid3_handler {
 
 					$info['audio']['channels']    = $thisPacket['channels'];
 					$info['audio']['sample_rate'] = $thisPacket['sample_frequency'];
-					$info['playtime_seconds']     = $thisPacket['sample_count'] / $thisPacket['sample_frequency'];
+					$info['playtime_seconds']     = $thisPacket['sample_count']                        / $thisPacket['sample_frequency'];
 					$info['audio']['bitrate']     = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
 
 					break;

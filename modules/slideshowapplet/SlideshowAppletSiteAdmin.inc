@@ -33,7 +33,7 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = $error = array();
@@ -47,7 +47,7 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 				list($ret, $variables) = $this->getVariables($type);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				// modify it
@@ -57,24 +57,24 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 				$ret = $this->setVariables($type, $variables);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 		} elseif (isset($form['action']['delete'])) {
 			$type = $form['variable']['type'];
 
 			if (empty($form['delete']['variable'])) {
-				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 
 			list($ret, $variables) = $this->getVariables($type);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (!isset($variables[$form['delete']['variable']])) {
-				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 
 			// delete it
@@ -84,7 +84,7 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 			$ret = $this->setVariables($type, $variables);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -95,7 +95,7 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 
 	public function implode_with_key($assoc, $inglue = '=', $outglue = '&') {
@@ -119,7 +119,7 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// unserialize the plugin parameter
@@ -131,10 +131,10 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 				$variables2[$key]  = $value;
 			}
 
-			return array( null, $variables2 );
+			return array(null, $variables2);
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 
 	public function setVariables($type, $variables) {
@@ -160,20 +160,20 @@ class SlideshowAppletSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'slideshowapplet');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		foreach ($params as $key => $value) {
 			$form[$key] = $value;
 		}
 
-		foreach (array( 'slideshowdefaultVariables', 'slideshowoverrideVariables' ) as $key) {
+		foreach (array('slideshowdefaultVariables', 'slideshowoverrideVariables') as $key) {
 			if (!empty($form[$key])) {
 				$variablesArray = explode('|', $form[$key]);
 				$variables      = array();

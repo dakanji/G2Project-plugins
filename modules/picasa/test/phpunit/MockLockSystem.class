@@ -36,7 +36,7 @@ class MockLockSystem extends GalleryLockSystem {
 	 * @see GalleryLockSystem::acquireReadLock
 	 */
 	public function acquireReadLock($ids, $timeout = 10) {
-		return array( null, 1 );
+		return array(null, 1);
 	}
 
 	/**
@@ -50,7 +50,7 @@ class MockLockSystem extends GalleryLockSystem {
 	 * @see GalleryLockSystem::acquireWriteLock
 	 */
 	public function acquireWriteLock($ids, $timeout = 10) {
-		return array( null, 1 );
+		return array(null, 1);
 	}
 
 	/**

@@ -52,11 +52,11 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -72,7 +72,7 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
 				'status' => array(
@@ -98,8 +98,8 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'digibugCustomerId' => '1234',
-				'digibugIdChoice' => 'owner',
+				'digibugCustomerId'  => '1234',
+				'digibugIdChoice'    => 'owner',
 				'digibugPricelistId' => '4321',
 			),
 			$params,
@@ -115,7 +115,7 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
 				'status' => array(
@@ -141,8 +141,8 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'digibugCustomerId' => '3153',
-				'digibugIdChoice' => 'gallery',
+				'digibugCustomerId'  => '3153',
+				'digibugIdChoice'    => 'gallery',
 				'digibugPricelistId' => '8491',
 			),
 			$params,
@@ -158,11 +158,11 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
 				'status' => array(),
-				'error' => array(
+				'error'  => array(
 					'form[error][digibugCustomerId][invalid]',
 					'form[error][digibugPricelistId][invalid]',
 				),
@@ -187,11 +187,11 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
 				'status' => array(),
-				'error' => array(
+				'error'  => array(
 					'form[error][digibugCustomerId][invalid]',
 					'form[error][digibugPricelistId][invalid]',
 				),

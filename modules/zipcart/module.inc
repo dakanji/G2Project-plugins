@@ -36,8 +36,8 @@ class ZipCartModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 30 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 30));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ZipCartModule extends GalleryModule {
 	 */
 	public function performFactoryRegistrations() {
 		// Register our cart plugin
-		foreach (array( '1_0', '1_1' ) as $version) {
+		foreach (array('1_0', '1_1') as $version) {
 			$ret = GalleryCoreApi::registerFactoryImplementation(
 				'CartPluginInterface_' . $version,
 				'ZipCartPlugin',
@@ -69,16 +69,16 @@ class ZipCartModule extends GalleryModule {
 	public function needsConfiguration() {
 		// This module requires exec()
 		if (in_array('exec', preg_split('/,\s*/', ini_get('disable_functions')))) {
-			return array( null, true );
+			return array(null, true);
 		}
 
 		list($ret, $value) = $this->getParameter('path');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, empty($value) );
+		return array(null, empty($value));
 	}
 
 	/**
@@ -89,17 +89,17 @@ class ZipCartModule extends GalleryModule {
 
 		// This module requires exec()
 		if (in_array('exec', preg_split('/,\s*/', ini_get('disable_functions')))) {
-			return array( null, false );
+			return array(null, false);
 		}
 
 		list($ret, $needsConfiguration) = $this->needsConfiguration();
 
 		if ($ret) {
-			return array( $ret, false );
+			return array($ret, false);
 		}
 
 		if (!$needsConfiguration) {
-			return array( null, true );
+			return array(null, true);
 		}
 
 		// Try a bunch of likely seeming paths to see if any of them work.
@@ -149,7 +149,7 @@ class ZipCartModule extends GalleryModule {
 			$paths[] = '/bin/zip';
 			$paths[] = '/sw/bin/zip';
 		} else {
-			return array( null, false );
+			return array(null, false);
 		}
 
 		// Now try each path in turn to see which ones work
@@ -159,14 +159,14 @@ class ZipCartModule extends GalleryModule {
 				$ret = $this->setParameter('path', $path);
 
 				if ($ret) {
-					return array( $ret, false );
+					return array($ret, false);
 				}
 
-				return array( null, true );
+				return array(null, true);
 			}
 		}
 
-		return array( null, false );
+		return array(null, false);
 	}
 
 	/**

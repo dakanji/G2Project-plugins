@@ -41,24 +41,24 @@ class GalleryPendingUserHelper {
 		SELECT [GalleryPendingUser::id] FROM [GalleryPendingUser]
 		WHERE [GalleryPendingUser::userName] = ?
 		';
-		list($ret, $searchResults) = $gallery->search($query, array( $userName ));
+		list($ret, $searchResults) = $gallery->search($query, array($userName));
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($searchResults->resultCount() == 0) {
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 		$result           = $searchResults->nextResult();
 		$id               = (int)$result[0];
 		list($ret, $user) = GalleryCoreApi::loadEntitiesById($id, 'GalleryPendingUser');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $user );
+		return array(null, $user);
 	}
 
 	/**
@@ -83,12 +83,12 @@ class GalleryPendingUserHelper {
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$result = $searchResults->nextResult();
 
-		return array( null, (int)$result[0] );
+		return array(null, (int)$result[0]);
 	}
 
 	/**
@@ -126,28 +126,28 @@ class GalleryPendingUserHelper {
 			$data,
 			array(
 				'limit' => array(
-					'count' => (int)$count,
+					'count'  => (int)$count,
 					'offset' => (int)$offset,
 				),
 			)
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$data = array();
 
 		while ($result = $searchResults->nextResult()) {
 			$data[$result[0]] = array(
-				'userName' => $result[1],
-				'fullName' => $result[2],
-				'email' => $result[3],
+				'userName'          => $result[1],
+				'fullName'          => $result[2],
+				'email'             => $result[3],
 				'creationTimestamp' => (int)$result[4],
 			);
 		}
 
-		return array( null, $data );
+		return array(null, $data);
 	}
 
 	/**
@@ -189,20 +189,20 @@ class GalleryPendingUserHelper {
 				'controller' => 'register.ConfirmRegistration',
 				// Incoming url params will get sanitized, so decode here
 				'username' => $decodedUserName,
-				'key' => $pendingUser->getRegistrationKey(),
+				'key'      => $pendingUser->getRegistrationKey(),
 			),
 			array(
-				'forceFullUrl' => true,
+				'forceFullUrl'   => true,
 				'forceSessionId' => false,
-				'htmlEntities' => false,
+				'htmlEntities'   => false,
 			)
 		);
 		$baseUrl         = $generator->generateUrl(
 			array(),
 			array(
-				'forceFullUrl' => true,
+				'forceFullUrl'   => true,
 				'forceSessionId' => false,
-				'htmlEntities' => false,
+				'htmlEntities'   => false,
 			)
 		);
 
@@ -229,10 +229,10 @@ class GalleryPendingUserHelper {
 			array(
 				'name' => $pendingUser->getFullName(),
 				// We send plain text email so decode entities in username
-				'username' => $decodedUserName,
+				'username'        => $decodedUserName,
 				'confirmationUrl' => $confirmationUrl,
-				'baseUrl' => $baseUrl,
-				'l10Domain' => 'modules_register',
+				'baseUrl'         => $baseUrl,
+				'l10Domain'       => 'modules_register',
 			),
 			$params['from'],
 			$pendingUser->getEmail(),
@@ -338,8 +338,8 @@ class GalleryPendingUserHelper {
 					array(
 						'name' => $pendingUser->getFullName(),
 						// We send plain text email so decode entities in username
-						'username' => $decodedUserName,
-						'email' => $pendingUser->getEmail(),
+						'username'  => $decodedUserName,
+						'email'     => $pendingUser->getEmail(),
 						'l10Domain' => 'modules_register',
 					),
 					$params['from'],
@@ -438,7 +438,7 @@ class GalleryPendingUserHelper {
 		}
 
 		if ($delete) {
-			list($ret, $lock) = GalleryCoreApi::acquireWriteLock(array( $pendingUser->getId() ));
+			list($ret, $lock) = GalleryCoreApi::acquireWriteLock(array($pendingUser->getId()));
 
 			if ($ret) {
 				return $ret;

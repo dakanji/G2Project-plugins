@@ -89,7 +89,7 @@ class getid3_flv extends getid3_handler {
 		$info['fileformat']                 = 'flv';
 		$info['flv']['header']['signature'] = substr($FLVheader, 0, 3);
 		$info['flv']['header']['version']   = getid3_lib::BigEndian2Int(substr($FLVheader, 3, 1));
-		$TypeFlags = getid3_lib::BigEndian2Int(substr($FLVheader, 4, 1));
+		$TypeFlags                          = getid3_lib::BigEndian2Int(substr($FLVheader, 4, 1));
 
 		if ($info['flv']['header']['signature'] != self::magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes(self::magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['flv']['header']['signature']) . '"';
@@ -141,11 +141,11 @@ class getid3_flv extends getid3_handler {
 					$flv_framecount['audio']++;
 
 					if (!$found_audio) {
-						$found_audio                         = true;
-						$info['flv']['audio']['audioFormat'] = ($LastHeaderByte >> 4) & 0x0F;
-						$info['flv']['audio']['audioRate']   = ($LastHeaderByte >> 2) & 0x03;
+						$found_audio                             = true;
+						$info['flv']['audio']['audioFormat']     = ($LastHeaderByte >> 4) & 0x0F;
+						$info['flv']['audio']['audioRate']       = ($LastHeaderByte >> 2) & 0x03;
 						$info['flv']['audio']['audioSampleSize'] = ($LastHeaderByte >> 1) & 0x01;
-						$info['flv']['audio']['audioType']       = $LastHeaderByte & 0x01;
+						$info['flv']['audio']['audioType']       = $LastHeaderByte        & 0x01;
 					}
 
 					break;
@@ -277,17 +277,17 @@ class getid3_flv extends getid3_handler {
 					if (!$found_meta) {
 						$found_meta = true;
 						$this->fseek(-1, SEEK_CUR);
-						$datachunk = $this->fread($DataLength);
-						$AMFstream = new AMFStream($datachunk);
-						$reader    = new AMFReader($AMFstream);
-						$eventName = $reader->readData();
+						$datachunk                       = $this->fread($DataLength);
+						$AMFstream                       = new AMFStream($datachunk);
+						$reader                          = new AMFReader($AMFstream);
+						$eventName                       = $reader->readData();
 						$info['flv']['meta'][$eventName] = $reader->readData();
 						unset($reader);
 
 						$copykeys = array(
-							'framerate' => 'frame_rate',
-							'width' => 'resolution_x',
-							'height' => 'resolution_y',
+							'framerate'     => 'frame_rate',
+							'width'         => 'resolution_x',
+							'height'        => 'resolution_y',
 							'audiodatarate' => 'bitrate',
 							'videodatarate' => 'bitrate',
 						);
@@ -414,12 +414,12 @@ class getid3_flv extends getid3_handler {
 
 	public static function videoCodecLookup($id) {
 		static $lookup = array(
-			GETID3_FLV_VIDEO_H263 => 'Sorenson H.263',
-			GETID3_FLV_VIDEO_SCREEN => 'Screen video',
-			GETID3_FLV_VIDEO_VP6FLV => 'On2 VP6',
+			GETID3_FLV_VIDEO_H263         => 'Sorenson H.263',
+			GETID3_FLV_VIDEO_SCREEN       => 'Screen video',
+			GETID3_FLV_VIDEO_VP6FLV       => 'On2 VP6',
 			GETID3_FLV_VIDEO_VP6FLV_ALPHA => 'On2 VP6 with alpha channel',
-			GETID3_FLV_VIDEO_SCREENV2 => 'Screen video v2',
-			GETID3_FLV_VIDEO_H264 => 'Sorenson H.264',
+			GETID3_FLV_VIDEO_SCREENV2     => 'Screen video v2',
+			GETID3_FLV_VIDEO_H264         => 'Sorenson H.264',
 		);
 
 		return isset($lookup[$id]) ? $lookup[$id] : false;
@@ -751,7 +751,7 @@ class AVCSequenceParameterSetReader {
 			$this->skipBits(1);                                     // vui_parameters_present_flag
 			// etc
 
-			$this->width  = (($pic_width_in_mbs_minus1 + 1) * 16) - ($frame_crop_left_offset * 2) - ($frame_crop_right_offset * 2);
+			$this->width  = (($pic_width_in_mbs_minus1 + 1) * 16)                                     - ($frame_crop_left_offset * 2)                                     - ($frame_crop_right_offset * 2);
 			$this->height = ((2 - $frame_mbs_only_flag) * ($pic_height_in_map_units_minus1 + 1) * 16) - ($frame_crop_top_offset * 2) - ($frame_crop_bottom_offset * 2);
 		}
 	}

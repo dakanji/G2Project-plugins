@@ -33,7 +33,7 @@ class MimeAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = array();
@@ -47,13 +47,13 @@ class MimeAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$mimeList = ($form['allowMime'] == 'all') ? '' : implode(' | ', array_keys($form['upload']));
 			$ret      = GalleryCoreApi::setPluginParameter('module', 'mime', 'mimeList', $mimeList);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$status['saved'] = true;
 		} elseif (isset($form['action']['delete'])) {
@@ -65,21 +65,21 @@ class MimeAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$status['deleted'] = $mimeType;
 		} // else $form['action']['reset']
 
 		$results = array(
 			'redirect' => array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'mime.MimeAdmin',
 			),
 			'status'   => $status,
 			'error'    => array(),
 		);
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -94,7 +94,7 @@ class MimeAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'MimeAdmin') {
@@ -103,7 +103,7 @@ class MimeAdminView extends GalleryView {
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'mime');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$form['allowMime'] = $params['allowMime'];
 			$form['upload']    = array();
@@ -116,14 +116,14 @@ class MimeAdminView extends GalleryView {
 		list($ret, $typeMap) = MimeHelper::getMimeTypeMap();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$MimeAdmin = array();
 
 		foreach (array_keys($typeMap['ext']) as $mimeType) {
-			$ext                         = implode(', ', $typeMap['ext'][$mimeType]);
-			$MimeAdmin[$mimeType]['ext'] = $ext;
+			$ext                              = implode(', ', $typeMap['ext'][$mimeType]);
+			$MimeAdmin[$mimeType]['ext']      = $ext;
 			$MimeAdmin[$mimeType]['viewable'] = $typeMap['viewable'][$mimeType];
 		}
 

@@ -106,7 +106,7 @@ class CaptchaHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				'success' => array(),
-				'fail' => array(
+				'fail'    => array(
 					'ImageCreateFromJPEG',
 					'ImageColorAllocate',
 					'ImageString',

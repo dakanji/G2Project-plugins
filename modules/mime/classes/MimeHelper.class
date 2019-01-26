@@ -37,7 +37,7 @@ class MimeHelper {
 	public static function getMimeTypeMap() {
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'GalleryMimeTypeMap',
-			array( 'mimeType', 'extension', 'viewable' ),
+			array('mimeType', 'extension', 'viewable'),
 			array(),
 			array(
 				'orderBy' => array(
@@ -47,7 +47,7 @@ class MimeHelper {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		while ($result = $searchResults->nextResult()) {
@@ -55,6 +55,6 @@ class MimeHelper {
 			$MimeTypeMap['viewable'][$result[0]] = $result[2];
 		}
 
-		return array( null, $MimeTypeMap );
+		return array(null, $MimeTypeMap);
 	}
 }

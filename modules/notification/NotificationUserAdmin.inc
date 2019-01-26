@@ -39,14 +39,14 @@ class NotificationUserAdminController extends GalleryController {
 		list($ret, $userId) = NotificationHelper::getUserIdCheck();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Is the user an administrator
 		list($ret, $isAdminGroup) = GalleryCoreApi::isUserInSiteAdminGroup();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$returnOption = 'redirect';
@@ -60,7 +60,7 @@ class NotificationUserAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$permission = $instance->getPermission();
@@ -77,7 +77,7 @@ class NotificationUserAdminController extends GalleryController {
 						);
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						if (empty($formItem['subscribed'])) {
@@ -98,24 +98,24 @@ class NotificationUserAdminController extends GalleryController {
 								list($ret, $authorized) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
 
 								if ($ret) {
-									return array( $ret, null );
+									return array($ret, null);
 								}
 								// Avoid information disclosure, act as if the item didn't exist.
 								if (!$authorized) {
-									return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+									return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 								}
 
 								if ($permission != 'core.view') {
 									list($ret, $authorized) = GalleryCoreApi::hasItemPermission($itemId, $permission);
 
 									if ($ret) {
-										return array( $ret, null );
+										return array($ret, null);
 									}
 								}
 								list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
 								if ($ret) {
-									return array( $ret, null );
+									return array($ret, null);
 								}
 							}
 
@@ -135,7 +135,7 @@ class NotificationUserAdminController extends GalleryController {
 					}
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 			}
@@ -155,7 +155,7 @@ class NotificationUserAdminController extends GalleryController {
 		$results['status']      = $status;
 		$results['error']       = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -171,21 +171,21 @@ class NotificationUserAdminView extends GalleryView {
 		list($ret, $userId) = NotificationHelper::getUserIdCheck();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Is the user an administrator
 		list($ret, $isAdminGroup) = GalleryCoreApi::isUserInSiteAdminGroup();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'NotificationUserAdmin') {
 			$ret = $this->_initializeForm($form, $isAdminGroup, $userId);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -273,23 +273,23 @@ class NotificationUserAdminView extends GalleryView {
 					}
 
 					$form['notifications'][++$i] = array(
-						'name' => $notificationName,
-						'description' => $description,
-						'handler' => $handlerName,
+						'name'               => $notificationName,
+						'description'        => $description,
+						'handler'            => $handlerName,
 						'handlerDescription' => $handlerDescription,
-						'items' => array(
+						'items'              => array(
 							'1' => array(
-								'itemId' => 0,
-								'title' => '',
+								'itemId'     => 0,
+								'title'      => '',
 								'subscribed' => false,
 							),
 						),
 					);
 				} else {
 					$form['notifications'][++$i] = array(
-						'name' => $notificationName,
-						'description' => $description,
-						'handler' => $handlerName,
+						'name'               => $notificationName,
+						'description'        => $description,
+						'handler'            => $handlerName,
 						'handlerDescription' => $handlerDescription,
 					);
 					$itemIds                     = array();
@@ -297,10 +297,10 @@ class NotificationUserAdminView extends GalleryView {
 					foreach ($subscriptions[$notificationName] as $itemId) {
 						if (empty($itemId)) {
 							$form['notifications'][$i]['items'][1] = array(
-								'itemId' => 0,
+								'itemId'     => 0,
 								'subscribed' => true,
-								'title' => '',
-								'url' => '',
+								'title'      => '',
+								'url'        => '',
 							);
 						} else {
 							$itemIds[] = $itemId;
@@ -338,15 +338,15 @@ class NotificationUserAdminView extends GalleryView {
 							foreach ($items as $item) {
 								$itemUrl = $urlGenerator->generateUrl(
 									array(
-										'view' => 'core.ShowItem',
+										'view'   => 'core.ShowItem',
 										'itemId' => $item->getId(),
 									)
 								);
 								$form['notifications'][$i]['items'][++$j] = array(
-									'itemId' => $item->getId(),
+									'itemId'     => $item->getId(),
 									'subscribed' => true,
-									'url' => $itemUrl,
-									'title' => $item->getTitle(),
+									'url'        => $itemUrl,
+									'title'      => $item->getTitle(),
 								);
 							}
 						}

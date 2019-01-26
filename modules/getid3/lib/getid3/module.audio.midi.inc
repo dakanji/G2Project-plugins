@@ -121,7 +121,7 @@ class getid3_midi extends getid3_handler {
 					$CumulativeDeltaTime += $deltatime;
 					$TicksAtCurrentBPM   += $deltatime;
 					$MIDIevents[$tracknumber][$eventid]['deltatime'] = $deltatime;
-					$MIDI_event_channel = ord(substr($trackdata, $eventsoffset++, 1));
+					$MIDI_event_channel                              = ord(substr($trackdata, $eventsoffset++, 1));
 
 					if ($MIDI_event_channel & 0x80) {
 						// OK, normal event - MIDI command has MSB set
@@ -189,7 +189,7 @@ class getid3_midi extends getid3_handler {
 								break;
 
 							case 0x03: // Text: track name
-								$text_trackname = substr($METAeventData, 0, $METAeventLength);
+								$text_trackname                                   = substr($METAeventData, 0, $METAeventLength);
 								$thisfile_midi_raw['track'][$tracknumber]['name'] = $text_trackname;
 
 								break;
@@ -232,9 +232,9 @@ class getid3_midi extends getid3_handler {
 									return false;
 								}
 								$thisfile_midi_raw['events'][$tracknumber][$CumulativeDeltaTime]['us_qnote'] = $CurrentMicroSecondsPerBeat;
-								$CurrentBeatsPerMinute = (1000000 / $CurrentMicroSecondsPerBeat) * 60;
-								$MicroSecondsPerQuarterNoteAfter[$CumulativeDeltaTime] = $CurrentMicroSecondsPerBeat;
-								$TicksAtCurrentBPM = 0;
+								$CurrentBeatsPerMinute                                                       = (1000000 / $CurrentMicroSecondsPerBeat) * 60;
+								$MicroSecondsPerQuarterNoteAfter[$CumulativeDeltaTime]                       = $CurrentMicroSecondsPerBeat;
+								$TicksAtCurrentBPM                                                           = 0;
 
 								break;
 
@@ -267,14 +267,14 @@ class getid3_midi extends getid3_handler {
 									-3 => 'Eb',
 									-2 => 'Bb',
 									-1 => 'F',
-									0 => 'C',
-									1 => 'G',
-									2 => 'D',
-									3 => 'A',
-									4 => 'E',
-									5 => 'B',
-									6 => 'F#',
-									7 => 'C#',
+									0  => 'C',
+									1  => 'G',
+									2  => 'D',
+									3  => 'A',
+									4  => 'E',
+									5  => 'B',
+									6  => 'F#',
+									7  => 'C#',
 								);
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_sharps'] = (($keysig_sharpsflats > 0) ? abs($keysig_sharpsflats) : 0);
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_flats'] = (($keysig_sharpsflats < 0) ? abs($keysig_sharpsflats) : 0);

@@ -143,10 +143,10 @@ class Image_XMP {
 
 				// Store the segment information in the output array
 				$headerdata[] = array(
-					'SegType' => ord($data[1]),
-					'SegName' => $GLOBALS['JPEG_Segment_Names'][ord($data[1])],
+					'SegType'      => ord($data[1]),
+					'SegName'      => $GLOBALS['JPEG_Segment_Names'][ord($data[1])],
 					'SegDataStart' => $segdatastart,
-					'SegData' => $segdata,
+					'SegData'      => $segdata,
 				);
 			}
 

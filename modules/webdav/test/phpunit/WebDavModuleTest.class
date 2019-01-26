@@ -113,7 +113,7 @@ class WebDavModuleTest extends GalleryTestCase {
 					),
 					array(
 						'forceServerRelativeUrl' => true,
-						'htmlEntities' => false,
+						'htmlEntities'           => false,
 					)
 				) . ' HTTP/1.0',
 				'Host: ' . $urlGenerator->getHostName(),
@@ -155,7 +155,7 @@ class WebDavModuleTest extends GalleryTestCase {
 		);
 
 		// Use WebDavModuleTestPlatform
-		$this->_platform = new WebDavModuleTestPlatform();
+		$this->_platform                                    = new WebDavModuleTestPlatform();
 		$this->_platform->_messages[$this->_optionsRequest] = $this->_includesDavHeadersResponse;
 		$gallery->setPlatform($this->_platform);
 
@@ -174,9 +174,9 @@ class WebDavModuleTest extends GalleryTestCase {
 	public function testGetItemLinks() {
 		global $gallery;
 
-		$items                   = array( $this->_item, $this->_subAlbum );
+		$items                   = array($this->_item, $this->_subAlbum);
 		$wantsDetailedLinks      = array(
-			$this->_item->getId() => true,
+			$this->_item->getId()     => true,
 			$this->_subAlbum->getId() => true,
 		);
 		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems(
@@ -204,7 +204,7 @@ class WebDavModuleTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$expected = array();
+		$expected                                         = array();
 		$expected[$this->_subAlbum->getId()][0]['text']   = $this->_module->translate(
 			array(
 				'text' => 'Mount with WebDAV',
@@ -218,7 +218,7 @@ class WebDavModuleTest extends GalleryTestCase {
 
 		// Verify that item links are only for detailed mode
 		$wantsDetailedLinks[$this->_subAlbum->getId()] = false;
-		list($ret, $links) = $this->_module->getItemLinks(
+		list($ret, $links)                             = $this->_module->getItemLinks(
 			$items,
 			$wantsDetailedLinks,
 			$permissions,
@@ -234,21 +234,21 @@ class WebDavModuleTest extends GalleryTestCase {
 
 	public function testGetRewriteRules() {
 		$rules = $this->_module->getRewriteRules();
-		$this->assertEquals(array( 'connect', 'davmount' ), array_keys($rules));
+		$this->assertEquals(array('connect', 'davmount'), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesOptionsRuleActive() {
-		$this->_activeRules = array( 'options' );
+		$this->_activeRules = array('options');
 
 		$rules = $this->_module->getRewriteRules();
-		$this->assertEquals(array( 'connect', 'davmount', 'options' ), array_keys($rules));
+		$this->assertEquals(array('connect', 'davmount', 'options'), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesMissingDavHeaders() {
 		$this->_platform->_messages[$this->_optionsRequest] = $this->_missingDavHeadersResponse;
 
 		$rules = $this->_module->getRewriteRules();
-		$this->assertEquals(array( 'connect', 'davmount', 'options' ), array_keys($rules));
+		$this->assertEquals(array('connect', 'davmount', 'options'), array_keys($rules));
 	}
 
 	public function testHandleEventActivatePlugin() {
@@ -256,7 +256,7 @@ class WebDavModuleTest extends GalleryTestCase {
 		$event->setData(
 			array(
 				'pluginType' => 'module',
-				'pluginId' => 'rewrite',
+				'pluginId'   => 'rewrite',
 			)
 		);
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
@@ -265,7 +265,7 @@ class WebDavModuleTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assertEquals(array( array( 'webdav' ) ), $this->_activateCalls);
+		$this->assertEquals(array(array('webdav')), $this->_activateCalls);
 	}
 
 	public function testHandleEventError() {
@@ -353,16 +353,16 @@ class WebDavModuleTestRewriteApi {
 	}
 
 	public function isCompatibleWithApi($version) {
-		return array( null, true );
+		return array(null, true);
 	}
 
 	public function fetchActiveRulesForModule($moduleId) {
-		return array( null, WebDavModuleTestRewriteApi::_fetchActiveRulesForModule($moduleId) );
+		return array(null, WebDavModuleTestRewriteApi::_fetchActiveRulesForModule($moduleId));
 	}
 
 	public function activateRewriteRulesForModule($moduleId) {
 		$activateCalls   =& WebDavModuleTestRewriteApi::_getActivateCalls();
-		$activateCalls[] = array( $moduleId );
+		$activateCalls[] = array($moduleId);
 	}
 }
 

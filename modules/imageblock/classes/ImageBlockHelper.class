@@ -126,8 +126,8 @@ class ImageBlockHelper {
 						case 'randomImage':
 							$title = $module->translate(
 								array(
-									'one' => 'Random Image',
-									'many' => 'Random Images',
+									'one'   => 'Random Image',
+									'many'  => 'Random Images',
 									'count' => $plural,
 								)
 							);
@@ -137,8 +137,8 @@ class ImageBlockHelper {
 						case 'recentImage':
 							$title = $module->translate(
 								array(
-									'one' => 'Newest Image',
-									'many' => 'Newest Images',
+									'one'   => 'Newest Image',
+									'many'  => 'Newest Images',
 									'count' => $plural,
 								)
 							);
@@ -148,8 +148,8 @@ class ImageBlockHelper {
 						case 'viewedImage':
 							$title = $module->translate(
 								array(
-									'one' => 'Most Viewed Image',
-									'many' => 'Most Viewed Images',
+									'one'   => 'Most Viewed Image',
+									'many'  => 'Most Viewed Images',
 									'count' => $plural,
 								)
 							);
@@ -159,8 +159,8 @@ class ImageBlockHelper {
 						case 'randomAlbum':
 							$title = $module->translate(
 								array(
-									'one' => 'Random Album',
-									'many' => 'Random Albums',
+									'one'   => 'Random Album',
+									'many'  => 'Random Albums',
 									'count' => $plural,
 								)
 							);
@@ -170,8 +170,8 @@ class ImageBlockHelper {
 						case 'recentAlbum':
 							$title = $module->translate(
 								array(
-									'one' => 'Newest Album',
-									'many' => 'Newest Albums',
+									'one'   => 'Newest Album',
+									'many'  => 'Newest Albums',
 									'count' => $plural,
 								)
 							);
@@ -181,8 +181,8 @@ class ImageBlockHelper {
 						case 'viewedAlbum':
 							$title = $module->translate(
 								array(
-									'one' => 'Most Viewed Album',
-									'many' => 'Most Viewed Albums',
+									'one'   => 'Most Viewed Album',
+									'many'  => 'Most Viewed Albums',
 									'count' => $plural,
 								)
 							);
@@ -256,7 +256,7 @@ class ImageBlockHelper {
 			if (isset($imageframe)) {
 				$frameIds = array();
 
-				foreach (array( 'albumFrame', 'itemFrame' ) as $key) {
+				foreach (array('albumFrame', 'itemFrame') as $key) {
 					if (!empty($params[$key])) {
 						$frameIds[] = $ImageBlockData[$key] = $params[$key];
 					}
@@ -297,7 +297,7 @@ class ImageBlockHelper {
 		switch ($order) {
 			case 'specific':
 				if (!isset($parentId)) {
-					return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+					return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 				}
 
 				list($ret, $ok) = GalleryCoreApi::hasItemPermission(
@@ -307,18 +307,18 @@ class ImageBlockHelper {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!$ok) {
 					// Ignore permission error.. just don't add a block
-					return array( null, array() );
+					return array(null, array());
 				}
 
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($parentId, 'GalleryItem');
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				break;
@@ -348,7 +348,7 @@ class ImageBlockHelper {
 				list($ret, $tmp) = GalleryCoreApi::getPluginParameter('module', 'imageblock', $key);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!empty($tmp)) {
@@ -368,7 +368,7 @@ class ImageBlockHelper {
 						list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						break;
@@ -380,7 +380,7 @@ class ImageBlockHelper {
 				list($ret, $userId) = GalleryCoreApi::getAnonymousUserId();
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				// Fall through to pick new item
 
@@ -395,7 +395,7 @@ class ImageBlockHelper {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 		}
 
@@ -407,9 +407,9 @@ class ImageBlockHelper {
 			list($ret, $data['viewCount']) = GalleryCoreApi::fetchItemViewCount($item->getId());
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
-			$data = array( $data );
+			$data = array($data);
 		} elseif (isset($key) && !empty($data)) {
 			// Record the id and time for selected item
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -420,7 +420,7 @@ class ImageBlockHelper {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -429,7 +429,7 @@ class ImageBlockHelper {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($id, 'GalleryItem');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			list($ret, $owner) = GalleryCoreApi::loadEntitiesById(
 				$item->getOwnerId(),
@@ -437,12 +437,12 @@ class ImageBlockHelper {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
-			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $id ));
+			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($id));
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$thumbnail          = isset($thumbnail[$id]) ? $thumbnail[$id] : null;
 			$image              = $source = null;
@@ -460,11 +460,11 @@ class ImageBlockHelper {
 					&& $source->getDerivativeType() != DERIVATIVE_TYPE_IMAGE_PREFERRED) {
 					list($ret, $source) = GalleryCoreApi::loadEntitiesById(
 						$source->getDerivativeSourceId(),
-						array( 'GalleryFileSystemEntity', 'GalleryDerivative' )
+						array('GalleryFileSystemEntity', 'GalleryDerivative')
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
@@ -477,7 +477,7 @@ class ImageBlockHelper {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!$ok) {
@@ -499,7 +499,7 @@ class ImageBlockHelper {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!$ok) {
@@ -511,10 +511,10 @@ class ImageBlockHelper {
 					// Use full size source of album thumbnail, located above
 					$image = $source;
 				} else {
-					list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array( $id ));
+					list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($id));
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 					$image = isset($preferred[$id]) ? $preferred[$id] : $item;
 				}
@@ -544,7 +544,7 @@ class ImageBlockHelper {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if ($ok) {
@@ -552,10 +552,10 @@ class ImageBlockHelper {
 						// Use full size source of album thumbnail, located above
 						$image = $source;
 					} else {
-						list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array( $id ));
+						list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($id));
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 						$image = isset($preferred[$id]) ? $preferred[$id] : $item;
 					}
@@ -580,14 +580,14 @@ class ImageBlockHelper {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if ($ok) {
-					list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array( $derivativeParentId ));
+					list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array($derivativeParentId));
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 					$resizes = isset($resizes[$derivativeParentId]) ? $resizes[$derivativeParentId] : array();
 				}
@@ -634,7 +634,7 @@ class ImageBlockHelper {
 			}
 		}
 
-		return array( null, $blocks );
+		return array(null, $blocks);
 	}
 
 	/**
@@ -662,26 +662,26 @@ class ImageBlockHelper {
 
 		// Someone probably typoed a blocks parameter
 		if (empty($typeMap[$itemType])) {
-			return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+			return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 		}
 
 		list($ret, $orderBy) = ImageBlockHelper::_buildOrderBy($order);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $isCached) = ImageBlockHelper::_isCached($userId);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$isCached) {
 			$ret = ImageBlockHelper::cacheViewableTree($userId);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -704,7 +704,7 @@ class ImageBlockHelper {
 		list($ret, $rootAlbumId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		// Only use LIKE statement if necessary
 		$parentSequence = null;
@@ -715,7 +715,7 @@ class ImageBlockHelper {
 			list($ret, $sequence) = GalleryCoreApi::fetchParentSequence($parentId);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (!empty($sequence)) {
@@ -738,7 +738,7 @@ class ImageBlockHelper {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			// We want that the returned integer is smaller than any number in the range
 			$data[] = ImageBlockHelper::getRandomKey($minMax[0], $minMax[1]) - 1;
@@ -750,16 +750,16 @@ class ImageBlockHelper {
 			' WHERE ' . implode(' AND ', $where) .
 			' ORDER BY ' . $orderBy;
 
-		list($ret, $query) = $storage->getFunctionSql('LIMIT', array( $count, $query ));
+		list($ret, $query) = $storage->getFunctionSql('LIMIT', array($count, $query));
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $results) = ImageBlockHelper::_runQuery($query, $data);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Requery if necessary to fill requested count
@@ -772,16 +772,16 @@ class ImageBlockHelper {
 				' WHERE ' . implode(' AND ', $whereRequery) .
 				' ORDER BY ' . $orderBy;
 
-			list($ret, $query) = $storage->getFunctionSql('LIMIT', array( $remainder, $query ));
+			list($ret, $query) = $storage->getFunctionSql('LIMIT', array($remainder, $query));
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			list($ret, $resultsRequery) = ImageBlockHelper::_runQuery($query, $data);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			// Combine results from both queries
@@ -793,12 +793,12 @@ class ImageBlockHelper {
 				list($ret, $results[$i]['viewCount']) = GalleryCoreApi::fetchItemViewCount($result['id']);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 		}
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 
 	/**
@@ -829,10 +829,10 @@ class ImageBlockHelper {
 				break;
 
 			default:
-				return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 		}
 
-		return array( null, $orderBy );
+		return array(null, $orderBy);
 	}
 
 	/**
@@ -843,7 +843,7 @@ class ImageBlockHelper {
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$results = array();
 
@@ -858,7 +858,7 @@ class ImageBlockHelper {
 			$results[] = $result;
 		}
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 
 	/**
@@ -868,15 +868,15 @@ class ImageBlockHelper {
 		global $gallery;
 		list($ret, $searchResults) = $gallery->search(
 			'SELECT COUNT(*) FROM [ImageBlockCacheMap] WHERE [ImageBlockCacheMap::userId] = ?',
-			array( (int)$userId )
+			array((int)$userId)
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$isCached = ($rec = $searchResults->nextResult()) && ($rec[0] > 0);
 
-		return array( null, $isCached );
+		return array(null, $isCached);
 	}
 
 	/**
@@ -928,7 +928,7 @@ class ImageBlockHelper {
 			[GalleryDerivative::derivativeType] = ?
 			';
 
-		$data   = array( (int)$userId, 1 );
+		$data   = array((int)$userId, 1);
 		$data   = array_merge($data, $aclIds);
 		$data[] = DERIVATIVE_TYPE_IMAGE_THUMBNAIL;
 
@@ -972,13 +972,13 @@ class ImageBlockHelper {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				} else {
 					$ret = GalleryCoreApi::removeAllMapEntries('ImageBlockCacheMap');
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
@@ -998,7 +998,7 @@ class ImageBlockHelper {
 				list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($entity->getId());
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!empty($disabledFlag)) {
@@ -1010,7 +1010,7 @@ class ImageBlockHelper {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
@@ -1042,13 +1042,13 @@ class ImageBlockHelper {
 				list($ret, $parentDisabledFlag) = ImageBlockHelper::getDisabledFlag($parentId);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($entity->getId());
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (GalleryUtilities::isA($entity, 'GalleryDataItem')) {
@@ -1065,7 +1065,7 @@ class ImageBlockHelper {
 						);
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 					} elseif (empty($parentDisabledFlag) && !empty($disabledFlag)) {
 						// New parent doesn't have disabled flag, remove it from the item
@@ -1077,7 +1077,7 @@ class ImageBlockHelper {
 						);
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 					}
 				} elseif (GalleryUtilities::isA($entity, 'GalleryAlbumItem')
@@ -1096,14 +1096,14 @@ class ImageBlockHelper {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
 				break;
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 
 	/**
@@ -1159,7 +1159,7 @@ class ImageBlockHelper {
 				AND
 				[ImageBlockDisabledMap::itemId] IS ' . ($disabled ? '' : 'NOT ') . 'NULL
 				';
-			$data  = array( $sequence . $parentAlbumId . '/%', (int)$parentAlbum->getId() );
+			$data  = array($sequence . $parentAlbumId . '/%', (int)$parentAlbum->getId());
 
 			list($ret, $searchResult) = $gallery->search($query, $data);
 
@@ -1227,14 +1227,14 @@ class ImageBlockHelper {
 	public static function getDisabledFlag($itemId) {
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'ImageBlockDisabledMap',
-			array( 'itemId' ),
+			array('itemId'),
 			array(
 				'itemId' => (int)$itemId,
 			)
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$result = false;
@@ -1243,7 +1243,7 @@ class ImageBlockHelper {
 			$result = (bool)$rec[0];
 		}
 
-		return array( null, $result );
+		return array(null, $result);
 	}
 
 	/**
@@ -1284,7 +1284,7 @@ class ImageBlockHelper {
 		$where[] = '[ImageBlockCacheMap::itemType] = ?';
 		$where[] = '[ImageBlockCacheMap::random] IS NOT NULL';
 		$where[] = '[ImageBlockDisabledMap::itemId] IS NULL';
-		$data    = array( $userId, $itemType );
+		$data    = array($userId, $itemType);
 
 		if (!empty($parentSequence)) {
 			$from[]  = '[GalleryItemAttributesMap]';
@@ -1301,7 +1301,7 @@ class ImageBlockHelper {
 		list($ret, $results) = $storage->search($query, $data);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($row = $results->nextResult()) {
@@ -1309,6 +1309,6 @@ class ImageBlockHelper {
 			$max = $row[1];
 		}
 
-		return array( null, array( $min, $max ) );
+		return array(null, array($min, $max));
 	}
 }

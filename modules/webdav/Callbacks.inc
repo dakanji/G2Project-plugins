@@ -44,9 +44,9 @@ class WebDavCallbacks {
 					$link = WebDavHelper::getMountLink($params['itemId']);
 				}
 
-				$block =& $smarty->_tpl_vars['block'];
+				$block                            =& $smarty->_tpl_vars['block'];
 				$block['webdav']['LoadMountLink'] = array(
-					'link' => $link,
+					'link'          => $link,
 					'hasPermission' => $hasPermission,
 				);
 

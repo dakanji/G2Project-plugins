@@ -39,8 +39,8 @@ class FotokastenModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $this->translate('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
-		$this->setRequiredCoreApi(array( 7, 30 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 30));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -106,7 +106,7 @@ class FotokastenModule extends GalleryModule {
 	 * @see GalleryModule::performFactoryRegistrations
 	 */
 	public function performFactoryRegistrations() {
-		foreach (array( '1_0', '1_1' ) as $version) {
+		foreach (array('1_0', '1_1') as $version) {
 			$ret = GalleryCoreApi::registerFactoryImplementation(
 				'CartPluginInterface_' . $version,
 				'FotokastenCartPlugin',
@@ -156,17 +156,17 @@ class FotokastenModule extends GalleryModule {
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				$links[$itemId][] = array(
-					'text' => $this->translate('Print on Fotokasten.de'),
+					'text'   => $this->translate('Print on Fotokasten.de'),
 					'params' => array(
 						'controller' => 'fotokasten.PrintPhotos',
-						'itemId' => $itemId,
-						'authToken' => $session->getAuthToken(),
-						'return' => 1,
+						'itemId'     => $itemId,
+						'authToken'  => $session->getAuthToken(),
+						'return'     => 1,
 					),
 				);
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 }

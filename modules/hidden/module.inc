@@ -47,8 +47,8 @@ class HiddenModule extends GalleryModule {
 		$this->setVersion('1.0.9');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $this->translate('Display'));
-		$this->setRequiredCoreApi(array( 7, 53 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 53));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -101,7 +101,7 @@ class HiddenModule extends GalleryModule {
 			'HiddenModule',
 			'modules/hidden/module.inc',
 			'hidden',
-			array( 'Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete' )
+			array('Gallery::ViewableTreeChange', 'GalleryEntity::save', 'GalleryEntity::delete')
 		);
 
 		if ($ret) {
@@ -127,7 +127,7 @@ class HiddenModule extends GalleryModule {
 			'HiddenItemOption',
 			'modules/hidden/HiddenItemOption.inc',
 			'hidden',
-			array( 'ItemEditItem' )
+			array('ItemEditItem')
 		);
 
 		if ($ret) {
@@ -154,7 +154,7 @@ class HiddenModule extends GalleryModule {
 	 * @see GalleryModule::getOnLoadHandlerIds
 	 */
 	public function getOnLoadHandlerIds() {
-		return array( 'Hidden' );
+		return array('Hidden');
 	}
 
 	/**
@@ -164,7 +164,7 @@ class HiddenModule extends GalleryModule {
 	public function uninstall() {
 		GalleryCoreApi::requireOnce('modules/hidden/classes/HiddenHelper.class');
 
-		list($ret, $searchResults) = GalleryCoreApi::getMapEntry('ItemHiddenMap', array( 'itemId' ));
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry('ItemHiddenMap', array('itemId'));
 
 		if ($ret) {
 			return $ret;
@@ -245,7 +245,7 @@ class HiddenModule extends GalleryModule {
 					$ret = HiddenHelper::handleMoveItem($item);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
@@ -263,7 +263,7 @@ class HiddenModule extends GalleryModule {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
@@ -280,17 +280,17 @@ class HiddenModule extends GalleryModule {
 				$data = $event->getData();
 
 				if (!empty($data['permission'])
-					&& in_array($data['permission'], array( 'core.view', 'core.viewAll', 'core.all' ))
+					&& in_array($data['permission'], array('core.view', 'core.viewAll', 'core.all'))
 					&& $data['changeType'] == 'add'
 				) {
 					$itemId = $data['itemId'];
-					$ids    = array( $itemId );
+					$ids    = array($itemId);
 
 					if ($data['applyToChildren']) {
 						list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 						list($ret, $childIds) = GalleryCoreApi::fetchDescendentItemIds(
 							$item,
@@ -300,7 +300,7 @@ class HiddenModule extends GalleryModule {
 						);
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						$ids = array_merge($ids, $childIds);
@@ -311,7 +311,7 @@ class HiddenModule extends GalleryModule {
 					list($ret, $searchResults) = $gallery->search($query, $ids);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if ($searchResults->resultCount() > 0) {
@@ -319,12 +319,12 @@ class HiddenModule extends GalleryModule {
 						list($ret, $anonymousUserId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 						list($ret, $everybodyGroup) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						while ($result = $searchResults->nextResult()) {
@@ -337,7 +337,7 @@ class HiddenModule extends GalleryModule {
 							);
 
 							if ($ret) {
-								return array( $ret, null );
+								return array($ret, null);
 							}
 							$ret = GalleryCoreApi::removeGroupPermission(
 								$id,
@@ -346,7 +346,7 @@ class HiddenModule extends GalleryModule {
 							);
 
 							if ($ret) {
-								return array( $ret, null );
+								return array($ret, null);
 							}
 						}
 					}
@@ -355,6 +355,6 @@ class HiddenModule extends GalleryModule {
 				break;
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 }

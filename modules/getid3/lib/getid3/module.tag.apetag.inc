@@ -271,13 +271,13 @@ class getid3_apetag extends getid3_handler {
 						$thisfile_ape_items_current['data'] = implode("\x00", $thisfile_ape_items_current['data']);
 					}
 					list($thisfile_ape_items_current['filename'], $thisfile_ape_items_current['data']) = explode("\x00", $thisfile_ape_items_current['data'], 2);
-					$thisfile_ape_items_current['data_offset'] = $thisfile_ape_items_current['offset'] + strlen($thisfile_ape_items_current['filename'] . "\x00");
-					$thisfile_ape_items_current['data_length'] = strlen($thisfile_ape_items_current['data']);
+					$thisfile_ape_items_current['data_offset']                                         = $thisfile_ape_items_current['offset'] + strlen($thisfile_ape_items_current['filename'] . "\x00");
+					$thisfile_ape_items_current['data_length']                                         = strlen($thisfile_ape_items_current['data']);
 
 					do {
 						$thisfile_ape_items_current['image_mime'] = '';
-						$imageinfo       = array();
-						$imagechunkcheck = getid3_lib::GetDataImageSize($thisfile_ape_items_current['data'], $imageinfo);
+						$imageinfo                                = array();
+						$imagechunkcheck                          = getid3_lib::GetDataImageSize($thisfile_ape_items_current['data'], $imageinfo);
 
 						if (($imagechunkcheck === false) || !isset($imagechunkcheck[2])) {
 							$info['warning'][] = 'APEtag "' . $item_key . '" contains invalid image data';
@@ -304,7 +304,7 @@ class getid3_apetag extends getid3_handler {
 								break;
 							}
 						} elseif (is_string($this->inline_attachments)) {
-							$this->inline_attachments = rtrim(str_replace(array( '/', '\\' ), DIRECTORY_SEPARATOR, $this->inline_attachments), DIRECTORY_SEPARATOR);
+							$this->inline_attachments = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $this->inline_attachments), DIRECTORY_SEPARATOR);
 
 							if (!is_dir($this->inline_attachments) || !is_writable($this->inline_attachments)) {
 								// cannot write, skip
@@ -331,7 +331,7 @@ class getid3_apetag extends getid3_handler {
 							}
 							$comments_picture_data = array();
 
-							foreach (array( 'data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength' ) as $picture_key) {
+							foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
 								if (isset($thisfile_ape_items_current[$picture_key])) {
 									$comments_picture_data[$picture_key] = $thisfile_ape_items_current[$picture_key];
 								}

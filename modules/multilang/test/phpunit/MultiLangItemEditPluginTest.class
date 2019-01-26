@@ -46,9 +46,9 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 		list($ret, $this->_album) = $this->_createRandomAlbum(
 			$this->_getRootId(),
 			array(
-				'title' => 'title',
-				'summary' => 'summary',
-				'description' => 'description',
+				'title'          => 'title',
+				'summary'        => 'summary',
+				'description'    => 'description',
 				'onLoadHandlers' => '|MultiLang|',
 			)
 		);
@@ -101,7 +101,7 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 	public function testReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
 		$results = $this->handleRequest($this->album, $this->_album);
-		$this->assertEquals(array( array(), null ), $results);
+		$this->assertEquals(array(array(), null), $results);
 	}
 
 	public function testSaveAndDelete() {
@@ -116,9 +116,9 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 		list($ret, $this->_subAlbum) = $this->_createRandomAlbum(
 			$this->_album->getId(),
 			array(
-				'title' => 'title',
-				'summary' => 'summary',
-				'description' => 'description',
+				'title'          => 'title',
+				'summary'        => 'summary',
+				'description'    => 'description',
 				'onLoadHandlers' => '|MultiLang|',
 			)
 		);
@@ -129,7 +129,7 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_subAlbum, $this->_subAlbum);
 		$this->assertEquals(
-			array( array(), $this->_translate('Changes saved successfully') ),
+			array(array(), $this->_translate('Changes saved successfully')),
 			$results
 		);
 
@@ -183,7 +183,7 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][save]', 1);
 		$results = $this->handleRequest($this->_album, $this->_album);
 		$this->assertEquals(
-			array( array( 'form[error][title][missingRootTitle]' ), null ),
+			array(array('form[error][title][missingRootTitle]'), null),
 			$results
 		);
 		$ret = GalleryCoreApi::setPluginParameter(
@@ -214,7 +214,7 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_album, $this->_album);
 		$this->assertEquals(
-			array( array(), $this->_translate('Changes saved successfully') ),
+			array(array(), $this->_translate('Changes saved successfully')),
 			$results
 		);
 

@@ -54,9 +54,9 @@ class getid3_gif extends getid3_handler {
 		$info['gif']['header']['raw']['aspect_ratio'] = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 1));
 		$offset += 1;
 
-		$info['video']['resolution_x'] = $info['gif']['header']['raw']['width'];
-		$info['video']['resolution_y'] = $info['gif']['header']['raw']['height'];
-		$info['gif']['version']        = $info['gif']['header']['raw']['version'];
+		$info['video']['resolution_x']                        = $info['gif']['header']['raw']['width'];
+		$info['video']['resolution_y']                        = $info['gif']['header']['raw']['height'];
+		$info['gif']['version']                               = $info['gif']['header']['raw']['version'];
 		$info['gif']['header']['flags']['global_color_table'] = (bool)($info['gif']['header']['raw']['flags'] & 0x80);
 
 		if ($info['gif']['header']['raw']['flags'] & 0x80) {

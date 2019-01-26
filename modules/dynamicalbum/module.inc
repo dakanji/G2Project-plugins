@@ -37,8 +37,8 @@ class DynamicAlbumModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
-		$this->setRequiredCoreApi(array( 7, 27 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 27));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -133,13 +133,13 @@ class DynamicAlbumModule extends GalleryModule {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'dynamicalbum');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$params['itemlink.date'] && !$params['itemlink.views']
 			&& !$params['itemlink.random']
 		) {
-			return array( null, $links );
+			return array(null, $links);
 		}
 
 		foreach ($items as $item) {
@@ -148,9 +148,9 @@ class DynamicAlbumModule extends GalleryModule {
 			if ($item->getCanContainChildren() && isset($wantsDetailedLinks[$itemId])) {
 				if ($params['itemlink.date']) {
 					$links[$itemId][] = array(
-						'text' => $this->translate('View Latest Updates'),
+						'text'   => $this->translate('View Latest Updates'),
 						'params' => array(
-							'view' => 'dynamicalbum.UpdatesAlbum',
+							'view'    => 'dynamicalbum.UpdatesAlbum',
 							'albumId' => $itemId,
 						),
 					);
@@ -158,9 +158,9 @@ class DynamicAlbumModule extends GalleryModule {
 
 				if ($params['itemlink.views']) {
 					$links[$itemId][] = array(
-						'text' => $this->translate('View Popular Items'),
+						'text'   => $this->translate('View Popular Items'),
 						'params' => array(
-							'view' => 'dynamicalbum.PopularAlbum',
+							'view'    => 'dynamicalbum.PopularAlbum',
 							'albumId' => $itemId,
 						),
 					);
@@ -168,9 +168,9 @@ class DynamicAlbumModule extends GalleryModule {
 
 				if ($params['itemlink.random']) {
 					$links[$itemId][] = array(
-						'text' => $this->translate('View Random Items'),
+						'text'   => $this->translate('View Random Items'),
 						'params' => array(
-							'view' => 'dynamicalbum.RandomAlbum',
+							'view'    => 'dynamicalbum.RandomAlbum',
 							'albumId' => $itemId,
 						),
 					);
@@ -178,7 +178,7 @@ class DynamicAlbumModule extends GalleryModule {
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 
 	/**
@@ -188,27 +188,27 @@ class DynamicAlbumModule extends GalleryModule {
 		return array(
 			array(
 				'comment' => $this->translate('Updates Album'),
-				'match' => array(
+				'match'   => array(
 					'view' => 'dynamicalbum.UpdatesAlbum',
 				),
 				'pattern' => 'updates',
-				'help'  => $this->translate('Short URL for album of recent items'),
+				'help'    => $this->translate('Short URL for album of recent items'),
 			),
 			array(
 				'comment' => $this->translate('Popular Album'),
-				'match' => array(
+				'match'   => array(
 					'view' => 'dynamicalbum.PopularAlbum',
 				),
 				'pattern' => 'popular',
-				'help'  => $this->translate('Short URL for album of most viewed items'),
+				'help'    => $this->translate('Short URL for album of most viewed items'),
 			),
 			array(
 				'comment' => $this->translate('Random Album'),
-				'match' => array(
+				'match'   => array(
 					'view' => 'dynamicalbum.RandomAlbum',
 				),
 				'pattern' => 'random',
-				'help'  => $this->translate('Short URL for album of random items'),
+				'help'    => $this->translate('Short URL for album of random items'),
 			),
 		);
 	}

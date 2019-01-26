@@ -38,8 +38,8 @@ class CustomFieldModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks('getSiteAdminViews|getItemSummaries');
-		$this->setRequiredCoreApi(array( 7, 34 ));
-		$this->setRequiredModuleApi(array( 3, 9 ));
+		$this->setRequiredCoreApi(array(7, 34));
+		$this->setRequiredModuleApi(array(3, 9));
 	}
 
 	/**
@@ -50,7 +50,7 @@ class CustomFieldModule extends GalleryModule {
 
 		if (!empty($currentVersion) && version_compare($currentVersion, '1.0.1', '<')) {
 			$storage =& $gallery->getStorage();
-			$ret     = $storage->configureStore($this->getId(), array( 'CustomFieldMap:1.0' ));
+			$ret     = $storage->configureStore($this->getId(), array('CustomFieldMap:1.0'));
 
 			if ($ret) {
 				return $ret;
@@ -86,7 +86,7 @@ class CustomFieldModule extends GalleryModule {
 		list($ret, $data) = CustomFieldHelper::fetchFieldValues($items, 'summary');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		foreach ($data as $itemId => $fields) {
@@ -101,7 +101,7 @@ class CustomFieldModule extends GalleryModule {
 			}
 		}
 
-		return array( null, $summaries );
+		return array(null, $summaries);
 	}
 
 	/**
@@ -157,7 +157,7 @@ class CustomFieldModule extends GalleryModule {
 			'CustomFieldHelper',
 			'modules/customfield/classes/CustomFieldHelper.class',
 			'customfield',
-			array( 'GalleryEntity::delete' )
+			array('GalleryEntity::delete')
 		);
 
 		if ($ret) {

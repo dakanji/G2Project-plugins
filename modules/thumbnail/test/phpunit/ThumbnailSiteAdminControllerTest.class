@@ -41,7 +41,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -62,7 +62,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -102,7 +102,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -129,7 +129,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -157,7 +157,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -194,7 +194,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -217,7 +217,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -238,7 +238,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(
@@ -274,7 +274,7 @@ class ThumbnailSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'thumbnail.ThumbnailSiteAdmin',
 				),
 				'status' => array(

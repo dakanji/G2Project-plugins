@@ -35,7 +35,7 @@ class WatermarkSiteAdminEditController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $results) = WatermarkHelper::handleEditRequest(
@@ -46,10 +46,10 @@ class WatermarkSiteAdminEditController extends GalleryController {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -64,7 +64,7 @@ class WatermarkSiteAdminEditView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$ret = WatermarkHelper::loadEditTemplate(
@@ -75,7 +75,7 @@ class WatermarkSiteAdminEditView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		return array(

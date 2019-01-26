@@ -80,7 +80,7 @@ class CaptchaImageView extends GalleryView {
 		}
 
 		// With characters 16 pixels apart, figure out the edge padding to center the whole lot
-		$textX = ($width - 16 * strlen($code)) / 2;
+		$textX = ($width - 16 * strlen($code))  / 2;
 		$textY = ($height - 12 * strlen($code)) / 2 - 3;
 
 		// Draw the code into the image, diagonally with some random displacement

@@ -33,7 +33,7 @@ class ConfigureMultirootController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = $error = array();
@@ -54,11 +54,11 @@ class ConfigureMultirootController extends GalleryController {
 			null,
 			array(
 				$method => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'multiroot.ConfigureMultiroot',
 				),
 				'status' => $status,
-				'error' => $error,
+				'error'  => $error,
 			),
 		);
 	}
@@ -78,7 +78,7 @@ class ConfigureMultirootView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'ConfigureMultiroot') {
@@ -91,7 +91,7 @@ class ConfigureMultirootView extends GalleryView {
 			array(),
 			array(
 				'forceServerRelativeUrl' => true,
-				'forceSessionId' => false,
+				'forceSessionId'         => false,
 			)
 		);
 
@@ -99,12 +99,12 @@ class ConfigureMultirootView extends GalleryView {
 		list($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.view');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds, 'GalleryAlbumItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$multiroot['albumTree'] = GalleryUtilities::createAlbumTree($albums);
 
@@ -135,7 +135,7 @@ class ConfigureMultirootView extends GalleryView {
 							$match[0],
 							array(
 								$multiroot['baseUriDir'] => $multiroot['viewBase'],
-								$baseFile => $viewFile,
+								$baseFile                => $viewFile,
 								str_replace('.', '\\.', $baseFile) => str_replace('.', '\\.', $viewFile),
 							)
 						)
@@ -153,11 +153,11 @@ class ConfigureMultirootView extends GalleryView {
 					list($ret, $multiroot['viewUserId']) = $this->_newGuestUser($form['guestUser'], $form['viewRootId']);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 					$multiroot['createdUser'] = true;
 				} else {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 
@@ -183,41 +183,41 @@ class ConfigureMultirootView extends GalleryView {
 		list($ret, $user) = GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryUser');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!isset($user)) {
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 		$ret = $user->create($userName);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$user->setHashedPassword('nopasswd');
 		$ret = $user->save();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $allUserGroupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$ret = GalleryCoreApi::removeUserFromGroup($user->getId(), $allUserGroupId);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$ret = GalleryCoreApi::addUserPermission($albumId, $user->getId(), 'core.viewAll', true);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $user->getId() );
+		return array(null, $user->getId());
 	}
 }

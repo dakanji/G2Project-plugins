@@ -189,7 +189,7 @@ class ErrorNotification extends NotificationEvent_1_0 {
 	public function getNotificationMessage() {
 		$error = $this->getError();
 
-		return array( null, $error->getAsText() );
+		return array(null, $error->getAsText());
 	}
 
 	/**
@@ -232,7 +232,7 @@ class ItemOrderNotification extends NotificationEvent_1_0 {
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($this->getItemId(), 'GalleryItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$title = GalleryUtilities::markup($item->getTitle(), 'strip');
@@ -283,7 +283,7 @@ class LoginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getEventSpecs() {
 		return array(
-			'eventName' => 'Gallery::Login',
+			'eventName'  => 'Gallery::Login',
 			'entityType' => 'GalleryUser',
 		);
 	}
@@ -396,7 +396,7 @@ class LogoutNotification extends NotificationEvent_1_0 {
 	 */
 	public function getEventSpecs() {
 		return array(
-			'eventName' => 'Gallery::Logout',
+			'eventName'  => 'Gallery::Logout',
 			'entityType' => 'GalleryUser',
 		);
 	}
@@ -619,7 +619,7 @@ class SaveNotification extends NotificationEvent_1_0 {
 	 */
 	public function getEventSpecs() {
 		return array(
-			'eventName' => 'GalleryEntity::save',
+			'eventName'  => 'GalleryEntity::save',
 			'entityType' => 'GalleryItem',
 		);
 	}
@@ -680,7 +680,7 @@ class DeleteNotification extends NotificationEvent_1_0 {
 	 */
 	public function getEventSpecs() {
 		return array(
-			'eventName' => 'GalleryEntity::delete',
+			'eventName'  => 'GalleryEntity::delete',
 			'entityType' => 'GalleryItem',
 		);
 	}
@@ -784,13 +784,13 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$parentUrl    = $urlGenerator->generateUrl(
 			array(
-				'view' => 'core.ShowItem',
+				'view'   => 'core.ShowItem',
 				'itemId' => $itemId,
 			),
 			array(
-				'forceFullUrl' => true,
+				'forceFullUrl'   => true,
 				'forceSessionId' => false,
-				'htmlEntities' => false,
+				'htmlEntities'   => false,
 			)
 		);
 

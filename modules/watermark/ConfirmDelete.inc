@@ -33,18 +33,18 @@ class ConfirmDeleteController extends GalleryController {
 		list($ret, $canView) = GalleryCoreApi::hasItemPermission($form['watermarkId'], 'core.view');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$canView) {
 			// Avoid information disclosure, act as if the item didn't exist.
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 		// Make sure we have permission to edit this item
 		$ret = GalleryCoreApi::assertHasItemPermission($form['watermarkId'], 'core.edit');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = array();
@@ -55,7 +55,7 @@ class ConfirmDeleteController extends GalleryController {
 			list($ret) = WatermarkHelper::deleteWatermarkImageById($form['watermarkId'], true);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			$status['delete'] = 1;
@@ -71,7 +71,7 @@ class ConfirmDeleteController extends GalleryController {
 		$results['status']   = $status;
 		$results['error']    = array();
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -86,37 +86,37 @@ class ConfirmDeleteView extends GalleryView {
 		GalleryCoreApi::requireOnce('modules/watermark/classes/WatermarkHelper.class');
 
 		if ($form['formName'] != 'ConfirmDelete') {
-			$form['formName'] = 'ConfirmDelete';
+			$form['formName']                              = 'ConfirmDelete';
 			list($form['watermarkId'], $form['fromAdmin']) = GalleryUtilities::getRequestVariables('watermarkId', 'fromAdmin');
 		}
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($form['watermarkId'], 'WatermarkImage');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		list($ret, $canView) = GalleryCoreApi::hasItemPermission($form['watermarkId'], 'core.view');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$canView) {
 			// Avoid information disclosure, act as if the item didn't exist.
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		// Make sure we have permission to edit this item
 		$ret = GalleryCoreApi::assertHasItemPermission($form['watermarkId'], 'core.edit');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $itemIds) = WatermarkHelper::fetchWatermarkedItemIds($item);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->setVariable(

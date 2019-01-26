@@ -35,7 +35,7 @@ class CaptchaSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$error = $status = array();
@@ -45,13 +45,13 @@ class CaptchaSiteAdminController extends GalleryController {
 				|| !is_numeric($form['failedAttemptThreshold'])
 			) {
 				// We don't allow free-form input in the HTML, so this should never happen.
-				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 
 			// Make sure that we're between 0 and 5, then store the value
 			$form['failedAttemptThreshold'] = min($form['failedAttemptThreshold'], 5);
 			$form['failedAttemptThreshold'] = max($form['failedAttemptThreshold'], 0);
-			$ret = GalleryCoreApi::setPluginParameter(
+			$ret                            = GalleryCoreApi::setPluginParameter(
 				'module',
 				'captcha',
 				'failedAttemptThreshold',
@@ -59,7 +59,7 @@ class CaptchaSiteAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			// Save configuration for other modules
@@ -67,21 +67,21 @@ class CaptchaSiteAdminController extends GalleryController {
 				list($ret, $optionInstances) = CaptchaAdminOption::getAllOptions();
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				foreach ($form['level'] as $optionId => $level) {
 					if (!isset($optionInstances[$optionId])) {
-						return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+						return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 					}
 					list($ret, $title, $paramData, $choices) = $optionInstances[$optionId]->getOptionData();
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if (!in_array($level, $choices)) {
-						return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+						return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 					}
 					$ret = GalleryCoreApi::setPluginParameter(
 						$paramData[0],
@@ -91,7 +91,7 @@ class CaptchaSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 			}
@@ -113,7 +113,7 @@ class CaptchaSiteAdminController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -128,7 +128,7 @@ class CaptchaSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Load our default values if we didn't just come from this form.
@@ -138,7 +138,7 @@ class CaptchaSiteAdminView extends GalleryView {
 			list($ret, $form['failedAttemptThreshold']) = GalleryCoreApi::getPluginParameter('module', 'captcha', 'failedAttemptThreshold');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -146,7 +146,7 @@ class CaptchaSiteAdminView extends GalleryView {
 		list($ret, $optionInstances) = CaptchaAdminOption::getAllOptions();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$optionData = array();
 
@@ -154,16 +154,16 @@ class CaptchaSiteAdminView extends GalleryView {
 			list($ret, $title, $paramData, $choices) = $option->getOptionData();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			list($ret, $param) = GalleryCoreApi::getPluginParameter($paramData[0], $paramData[1], $paramData[2]);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$optionData[$optionId] = array(
-				'title' => $title,
-				'value' => $param,
+				'title'   => $title,
+				'value'   => $param,
 				'choices' => $choices,
 			);
 		}
@@ -172,7 +172,7 @@ class CaptchaSiteAdminView extends GalleryView {
 			'CaptchaSiteAdmin',
 			array(
 				'failedAttemptThresholdList' => range(0, 5),
-				'options' => $optionData,
+				'options'                    => $optionData,
 			)
 		);
 		$template->setVariable('controller', 'captcha.CaptchaSiteAdmin');
@@ -204,13 +204,13 @@ class CaptchaAdminOption {
 		$testOptions = CaptchaAdminOption::testOptions();
 
 		if (isset($testOptions)) {
-			return array( null, $testOptions );
+			return array(null, $testOptions);
 		}
 
 		list($ret, $optionIds) = GalleryCoreApi::getAllFactoryImplementationIds('CaptchaAdminOption');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$optionInstances = array();
@@ -219,11 +219,11 @@ class CaptchaAdminOption {
 			list($ret, $optionInstances[$optionId]) = GalleryCoreApi::newFactoryInstanceById('CaptchaAdminOption', $optionId);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
-		return array( null, $optionInstances );
+		return array(null, $optionInstances);
 	}
 
 	/**

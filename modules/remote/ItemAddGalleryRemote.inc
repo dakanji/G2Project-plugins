@@ -36,7 +36,7 @@ class ItemAddGalleryRemote extends ItemAddPlugin {
 
 		$template->setVariable('ItemAddGalleryRemote', array());
 
-		return array( null, 'modules/remote/templates/ItemAddGalleryRemote.tpl', 'modules_remote' );
+		return array(null, 'modules/remote/templates/ItemAddGalleryRemote.tpl', 'modules_remote');
 	}
 
 	/**
@@ -46,10 +46,10 @@ class ItemAddGalleryRemote extends ItemAddPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'remote');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $module->translate('Gallery Remote') );
+		return array(null, $module->translate('Gallery Remote'));
 	}
 
 	/**
@@ -59,9 +59,9 @@ class ItemAddGalleryRemote extends ItemAddPlugin {
 		list($ret, $showItemAdd) = GalleryCoreApi::getPluginParameter('module', 'remote', 'showItemAdd');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $showItemAdd );
+		return array(null, $showItemAdd);
 	}
 }

@@ -46,13 +46,13 @@ class CustomFieldCallbacks {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
 
-				list($ret, $fields) = CustomFieldHelper::fetchFieldValues(array( $item ), 'detail');
+				list($ret, $fields) = CustomFieldHelper::fetchFieldValues(array($item), 'detail');
 
 				if ($ret) {
 					return $ret;
 				}
 
-				$block =& $smarty->_tpl_vars['block'];
+				$block                                              =& $smarty->_tpl_vars['block'];
 				$block['customfield']['LoadCustomFields']['fields'] = isset($fields[$item->getId()]) ? $fields[$item->getId()] : array();
 
 				return null;

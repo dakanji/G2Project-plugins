@@ -35,7 +35,7 @@ class WebDavSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$WebDavSiteAdmin = array();
@@ -43,7 +43,7 @@ class WebDavSiteAdminView extends GalleryView {
 		list($ret, $WebDavSiteAdmin['code']) = WebDavHelper::checkConfiguration();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Render HTML body

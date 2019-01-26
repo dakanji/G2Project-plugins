@@ -82,7 +82,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
-		$this->assertEquals(array( array(), array() ), $result);
+		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $item) = $this->_items[0]->refresh();
 
@@ -123,7 +123,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
-		$this->assertEquals(array( array(), array() ), $result);
+		$this->assertEquals(array(array(), array()), $result);
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
 			list($ret, $item) = $this->_items[$j]->refresh();
@@ -143,7 +143,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
-		$this->assertEquals(array( array(), array() ), $result);
+		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $item) = $this->_items[0]->refresh();
 
@@ -179,7 +179,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
-		$this->assertEquals(array( array(), array() ), $result);
+		$this->assertEquals(array(array(), array()), $result);
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
 			list($ret, $item) = $this->_items[$j]->refresh();

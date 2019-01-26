@@ -85,7 +85,7 @@ class Picasa2DataParser {
 			);
 		}
 
-		return array( null, $rawXml );
+		return array(null, $rawXml);
 	}
 
 	/**
@@ -222,7 +222,7 @@ class Picasa2DataParser {
 			);
 		}
 
-		return array( null, $xmlArray );
+		return array(null, $xmlArray);
 	}
 
 	/**
@@ -272,7 +272,7 @@ class Picasa2DataParser {
 			$albumArray['images'][$i]['thumbheight'] = $imageArray[$i]['itemThumbnailHeight'];
 		}
 
-		return array( null, $albumArray );
+		return array(null, $albumArray);
 	}
 
 	/**
@@ -285,21 +285,21 @@ class Picasa2DataParser {
 		list($ret, $rawXml) = Picasa2DataParser::getRawXmlFromPicasaPath($picasaXmlPath);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $picasaXmlArray) = Picasa2DataParser::getXmlArray($rawXml);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $albumArray) = Picasa2DataParser::getAlbumFromArray($picasaXmlArray);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $albumArray );
+		return array(null, $albumArray);
 	}
 }

@@ -30,7 +30,7 @@ class CustomThumbnailOption extends ItemEditOption {
 	 * @see ItemEditOption::isAppropriate
 	 */
 	public static function isAppropriate($item, $thumbnail) {
-		return array( null, GalleryUtilities::isA($item, 'GalleryItem') );
+		return array(null, GalleryUtilities::isA($item, 'GalleryItem'));
 	}
 
 	/**
@@ -43,7 +43,7 @@ class CustomThumbnailOption extends ItemEditOption {
 		list($ret, $thumbnailImage) = ThumbnailHelper::fetchThumbnail($item->getId());
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		if (isset($thumbnailImage)) {
@@ -65,7 +65,7 @@ class CustomThumbnailOption extends ItemEditOption {
 		list($ret, $mimeList) = GalleryCoreApi::getToolkitOperationMimeTypes('thumbnail');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		$template->setVariable(
@@ -92,10 +92,10 @@ class CustomThumbnailOption extends ItemEditOption {
 		$error = $warning = array();
 
 		if (!empty($form['tmp_name'][1])) {
-			list($ret, $lockId) = GalleryCoreApi::acquireReadLock(array( $item->getId() ));
+			list($ret, $lockId) = GalleryCoreApi::acquireReadLock(array($item->getId()));
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			list($ret, $thumbnailId) = ThumbnailHelper::addItem(
@@ -111,7 +111,7 @@ class CustomThumbnailOption extends ItemEditOption {
 			} elseif ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
 
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			if (empty($error)) {
@@ -120,20 +120,20 @@ class CustomThumbnailOption extends ItemEditOption {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
 
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 			}
 
 			$ret = GalleryCoreApi::releaseLocks($lockId);
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 		} elseif (isset($form['CustomThumbnailOption']['delete'])) {
 			list($ret, $thumbnailImage) = ThumbnailHelper::fetchThumbnail($item->getId());
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			if (!isset($thumbnailImage)) {
@@ -146,10 +146,10 @@ class CustomThumbnailOption extends ItemEditOption {
 			$ret = GalleryCoreApi::deleteEntityById($thumbnailImage->getId(), 'ThumbnailImage');
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 		}
 
-		return array( null, $error, $warning );
+		return array(null, $error, $warning);
 	}
 }

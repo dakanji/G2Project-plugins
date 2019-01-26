@@ -84,7 +84,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
@@ -122,7 +122,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
@@ -156,11 +156,11 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdminEdit',
 				),
 				'status' => array(),
-				'error' => array(
+				'error'  => array(
 					'form[error][watermarkName][missing]',
 					'form[error][whichDerivative][missing]',
 				),
@@ -186,11 +186,11 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -217,7 +217,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
 				'status' => array(
@@ -305,7 +305,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$results  = $this->handleRequest();
 		$expected = ($postMimeType == 'test/file') ? array(
 			'redirect' => array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'watermark.WatermarkSiteAdmin',
 			),
 			'status'   => array(
@@ -314,11 +314,11 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 			'error'    => array(),
 		) : array(
 			'delegate' => array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'watermark.WatermarkSiteAdminEdit',
 			),
 			'status'   => array(),
-			'error'    => array( 'form[error][mimeType][mismatch]' ),
+			'error'    => array('form[error][mimeType][mismatch]'),
 		);
 		$this->assertEquals($expected, $results);
 
@@ -339,7 +339,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$expected = ($postMimeType == 'test/file') ? array( '50', '80', $platform->filesize($sourceFile), false ) : array( '100', '100', $platform->filesize(__FILE__), true );
+		$expected = ($postMimeType == 'test/file') ? array('50', '80', $platform->filesize($sourceFile), false) : array('100', '100', $platform->filesize(__FILE__), true);
 		$this->assertEquals($expected[0], $this->_watermark->getXPercentage(), 'x');
 		$this->assertEquals($expected[1], $this->_watermark->getYPercentage(), 'y');
 		$this->assertEquals($expected[2], $this->_watermark->getSize(), 'size');

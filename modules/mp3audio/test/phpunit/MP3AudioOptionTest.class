@@ -70,7 +70,7 @@ class MP3AudioOptionTest extends ItemAddOptionTestCase {
 
 	public function testAddItems() {
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
-		$this->assertEquals(array( $this->_noErrors, $this->_noWarnings ), $result);
+		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
 
 		list($ret, $item) = $this->_items[0]->refresh();
 
@@ -78,7 +78,7 @@ class MP3AudioOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 		// For Oracle, null is replaced with '' when loading data from the database
-		$this->assert(in_array($item->getRenderer(), array( null, '' )), 'wav renderer');
+		$this->assert(in_array($item->getRenderer(), array(null, '')), 'wav renderer');
 
 		list($ret, $item) = $this->_items[1]->refresh();
 

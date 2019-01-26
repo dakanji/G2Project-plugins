@@ -52,11 +52,11 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -71,7 +71,7 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
 				'status' => array(
@@ -100,7 +100,7 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
 				'status' => array(
@@ -137,11 +137,11 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array(
+				'error'  => array(
 					'form[error][affiliateId]',
 					'form[error][affiliateIdPass]',
 				),
@@ -159,11 +159,11 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array(
+				'error'  => array(
 					'form[error][affiliateId]',
 					'form[error][affiliateIdPass]',
 				),

@@ -3,25 +3,25 @@
 $entityInfo['ThumbnailImage'] = array(
 	'members' => array(
 		'mimeType' => array(
-			'type' => STORAGE_TYPE_STRING,
-			'size' => STORAGE_SIZE_MEDIUM,
+			'type'            => STORAGE_TYPE_STRING,
+			'size'            => STORAGE_SIZE_MEDIUM,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 		'size' => array(
-			'type' => STORAGE_TYPE_INTEGER,
+			'type'            => STORAGE_TYPE_INTEGER,
 			'external-access' => EXTERNAL_ACCESS_FULL,
 		),
 		'width' => array(
-			'type' => STORAGE_TYPE_INTEGER,
+			'type'            => STORAGE_TYPE_INTEGER,
 			'external-access' => EXTERNAL_ACCESS_FULL,
 		),
 		'height' => array(
-			'type' => STORAGE_TYPE_INTEGER,
+			'type'            => STORAGE_TYPE_INTEGER,
 			'external-access' => EXTERNAL_ACCESS_FULL,
 		),
 		'itemMimeTypes' => array(
-			'type' => STORAGE_TYPE_STRING,
-			'size' => STORAGE_SIZE_MEDIUM,
+			'type'            => STORAGE_TYPE_STRING,
+			'size'            => STORAGE_SIZE_MEDIUM,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 	),

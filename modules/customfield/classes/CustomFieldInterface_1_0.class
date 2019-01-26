@@ -37,7 +37,7 @@ class CustomFieldInterface_1_0 {
 	 *               array(string duplicate field names)
 	 */
 	public function createCustomFields($fieldNames, $containerId = 0) {
-		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 	}
 
 	/**

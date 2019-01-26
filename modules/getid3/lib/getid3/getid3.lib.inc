@@ -137,7 +137,7 @@ class getid3_lib {
 
 		return array(
 			'normalized' => $binarypointnumber,
-			'exponent' => (int)$exponent,
+			'exponent'   => (int)$exponent,
 		);
 	}
 
@@ -647,7 +647,7 @@ class getid3_lib {
 					break;
 				}
 
-				$RequiredFiles = array( 'cygwin1.dll', 'head.exe', 'tail.exe', $windows_call );
+				$RequiredFiles = array('cygwin1.dll', 'head.exe', 'tail.exe', $windows_call);
 
 				foreach ($RequiredFiles as $required_file) {
 					if (!is_readable(GETID3_HELPERAPPSDIR . $required_file)) {
@@ -1301,7 +1301,7 @@ class getid3_lib {
 
 	public static function ImageExtFromMime($mime_type) {
 		// temporary way, works OK for now, but should be reworked in the future
-		return str_replace(array( 'image/', 'x-', 'jpeg' ), array( '', '', 'jpg' ), $mime_type);
+		return str_replace(array('image/', 'x-', 'jpeg'), array('', '', 'jpg'), $mime_type);
 	}
 
 	public static function ImageTypesLookup($imagetypeid) {

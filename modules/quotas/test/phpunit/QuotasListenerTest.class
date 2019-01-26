@@ -63,7 +63,7 @@ class QuotasListenerTest extends GalleryTestCase {
 		// Save/clear quotas for All Users,Everybody groups so they won't interfere with tests
 		$this->_saveQuota = array();
 
-		foreach (array( 'allUsersGroup', 'everybodyGroup' ) as $groupName) {
+		foreach (array('allUsersGroup', 'everybodyGroup') as $groupName) {
 			list($ret, $groupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.' . $groupName);
 
 			if ($ret) {
@@ -111,7 +111,7 @@ class QuotasListenerTest extends GalleryTestCase {
 				'QuotasMap',
 				array(
 					'userOrGroupId' => $groupId,
-					'quotaSize' => $quota['quota'],
+					'quotaSize'     => $quota['quota'],
 				)
 			);
 
@@ -145,7 +145,7 @@ class QuotasListenerTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize' => 86,
+				'quotaSize'     => 86,
 			)
 		);
 
@@ -188,7 +188,7 @@ class QuotasListenerTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize' => 47,
+				'quotaSize'     => 47,
 			)
 		);
 

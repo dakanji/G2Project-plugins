@@ -202,13 +202,13 @@ class getid3_nsv extends getid3_handler {
 
 			foreach ($CommentPairArray as $CommentPair) {
 				if (strstr($CommentPair, '=' . "\x01")) {
-					list($key, $value) = explode('=' . "\x01", $CommentPair, 2);
+					list($key, $value)                           = explode('=' . "\x01", $CommentPair, 2);
 					$info['nsv']['comments'][strtolower($key)][] = trim(str_replace("\x01", '', $value));
 				}
 			}
 		}
 
-		$info['playtime_seconds'] = $info['nsv']['NSVf']['playtime_ms'] / 1000;
+		$info['playtime_seconds'] = $info['nsv']['NSVf']['playtime_ms']     / 1000;
 		$info['bitrate']          = ($info['nsv']['NSVf']['file_size'] * 8) / $info['playtime_seconds'];
 
 		return true;

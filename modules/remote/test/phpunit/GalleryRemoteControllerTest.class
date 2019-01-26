@@ -403,7 +403,7 @@ class GalleryRemoteControllerTest extends GalleryControllerTestCase {
 		}
 
 		// give albums 1 and 3 only view permissions
-		foreach (array( 1, 3 ) as $i) {
+		foreach (array(1, 3) as $i) {
 			$ret = GalleryCoreApi::removeItemPermissions($album[$i]->getId());
 
 			if ($ret) {
@@ -492,7 +492,7 @@ class GalleryRemoteControllerTest extends GalleryControllerTestCase {
 			}
 		}
 
-		foreach (array( 0, 1, 2, 4 ) as $i) {
+		foreach (array(0, 1, 2, 4) as $i) {
 			$this->assert($seen[$i], 'seen ' . $i);
 		}
 		$this->assert(empty($seen[3]), 'seen 3');
@@ -519,7 +519,7 @@ class GalleryRemoteControllerTest extends GalleryControllerTestCase {
 		}
 
 		// give albums 1 and 3 only view permissions
-		foreach (array( 1, 3 ) as $i) {
+		foreach (array(1, 3) as $i) {
 			$ret = GalleryCoreApi::removeItemPermissions($album[$i]->getId());
 
 			if ($ret) {
@@ -582,7 +582,7 @@ class GalleryRemoteControllerTest extends GalleryControllerTestCase {
 			}
 		}
 
-		foreach (array( 0, 1, 2, 4 ) as $i) {
+		foreach (array(0, 1, 2, 4) as $i) {
 			$this->assert($seen[$i]);
 		}
 		$this->assert(empty($seen[3]));
@@ -1161,7 +1161,7 @@ class GalleryRemoteControllerTestAddOption {
 	public function handleRequestAfterAdd($form, $items) {
 		GalleryUtilities::putRequestVariable('calledWith', $items[0]->getId());
 
-		return array( null, array(), array() );
+		return array(null, array(), array());
 	}
 
 	public function getCalledWithId() {

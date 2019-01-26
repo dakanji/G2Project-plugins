@@ -38,8 +38,8 @@ class HttpAuthModule extends GalleryModule {
 		$this->setDescription($gallery->i18n('Login using HTTP authentication.'));
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 34 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 34));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -51,28 +51,28 @@ class HttpAuthModule extends GalleryModule {
 		list($ret, $modules) = GalleryCoreApi::fetchPluginList('module');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($modules['rewrite'])) {
 			list($ret, $rewrite) = GalleryCoreApi::loadPlugin('module', 'rewrite', true);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (version_compare($rewrite->getVersion(), '1.1.8', '<')) {
-				return array( GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null );
+				return array(GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null);
 			}
 		}
 
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $redirect );
+		return array(null, $redirect);
 	}
 
 	/**
@@ -134,7 +134,7 @@ class HttpAuthModule extends GalleryModule {
 			'HttpAuthModule',
 			'modules/httpauth/module.inc',
 			'httpauth',
-			array( 'Gallery::ActivatePlugin', 'Gallery::Error', 'Gallery::Logout' )
+			array('Gallery::ActivatePlugin', 'Gallery::Error', 'Gallery::Logout')
 		);
 
 		if ($ret) {
@@ -313,7 +313,7 @@ class HttpAuthModule extends GalleryModule {
 			return $rules;
 		}
 
-		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array( 1, 1 ));
+		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array(1, 1));
 
 		if ($ret) {
 			if ($gallery->getDebug()) {
@@ -365,11 +365,11 @@ class HttpAuthModule extends GalleryModule {
 			),
 			'conditions' => array(
 				array(
-					'test' => 'HTTP:Authorization',
+					'test'    => 'HTTP:Authorization',
 					'pattern' => '%authorization%',
 				),
 				array(
-					'test' => 'QUERY_STRING',
+					'test'    => 'QUERY_STRING',
 					'pattern' => '!' . GalleryUtilities::prefixFormVariable(
 						'authorization'
 					) . '=',
@@ -378,11 +378,11 @@ class HttpAuthModule extends GalleryModule {
 			'options'  => array(
 				'baseUrl' => '%{REQUEST_URI}',
 			),
-			'flags'    => array( 'QSA' ),
+			'flags'    => array('QSA'),
 			'keywords' => array(
 				'authorization' => array(
 					'pattern' => '(.+)',
-					'help' => $this->translate('Authorization header.'),
+					'help'    => $this->translate('Authorization header.'),
 				),
 			),
 		);
@@ -399,29 +399,29 @@ class HttpAuthModule extends GalleryModule {
 				$data = $event->getData();
 
 				if ($data['pluginType'] != 'module' || $data['pluginId'] != 'rewrite') {
-					return array( null, null );
+					return array(null, null);
 				}
 
 				$ret = $this->_activateRewriteRules();
 
 				if ($ret && !($ret->getErrorCode() & ERROR_CONFIGURATION_REQUIRED)) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
-				return array( null, null );
+				return array(null, null);
 
 			case 'Gallery::Error':
 				$data = $event->getData();
 
 				if (!($data['error']->getErrorCode() & ERROR_PERMISSION_DENIED)) {
-					return array( null, null );
+					return array(null, null);
 				}
 
 				GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
 				$ret = HttpAuthHelper::requestAuthentication(false);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				return array(
@@ -438,7 +438,7 @@ class HttpAuthModule extends GalleryModule {
 				 */
 				GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
 				list($authtype, $username, $password) = HttpAuthHelper::getHttpAuth();
-				$remoteUser = GalleryUtilities::getServerVar('REMOTE_USER');
+				$remoteUser                           = GalleryUtilities::getServerVar('REMOTE_USER');
 
 				if (!empty($username) || !empty($remoteUser)) {
 					return array(
@@ -452,7 +452,7 @@ class HttpAuthModule extends GalleryModule {
 				}
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 
 	/**
@@ -470,7 +470,7 @@ class HttpAuthModule extends GalleryModule {
 			return GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED);
 		}
 
-		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array( 1, 1 ));
+		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array(1, 1));
 
 		if ($ret) {
 			return $ret;

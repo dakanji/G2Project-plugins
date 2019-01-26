@@ -67,12 +67,12 @@ class RssHelper {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$albumUrl     = $urlGenerator->generateUrl(
 			array(
-				'view' => 'core.ShowItem',
+				'view'   => 'core.ShowItem',
 				'itemId' => $memberData['id'],
 			),
 			array(
 				'forceSessionId' => false,
-				'forceFullUrl' => true,
+				'forceFullUrl'   => true,
 			)
 		);
 
@@ -82,7 +82,7 @@ class RssHelper {
 
 		if ($param['useImage']) {
 			// retrieve gallery thumbnail
-			list($ret, $thumbArrayl) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $id ));
+			list($ret, $thumbArrayl) = GalleryCoreApi::fetchThumbnailsByItemIds(array($id));
 
 			if ($ret) {
 				return $ret;
@@ -93,12 +93,12 @@ class RssHelper {
 				$thumb    = $thumbArrayl[$id];
 				$imageUrl = $urlGenerator->generateUrl(
 					array(
-						'view' => 'core.DownloadItem',
+						'view'   => 'core.DownloadItem',
 						'itemId' => $thumb->getId(),
 					),
 					array(
 						'forceSessionId' => false,
-						'forceFullUrl' => true,
+						'forceFullUrl'   => true,
 					)
 				);
 
@@ -106,8 +106,8 @@ class RssHelper {
 					'image',
 					array(
 						'title' => $memberData['title'],
-						'url' => $imageUrl,
-						'link' => $albumUrl,
+						'url'   => $imageUrl,
+						'link'  => $albumUrl,
 					)
 				);
 			}
@@ -116,11 +116,11 @@ class RssHelper {
 		// check if the cloud tag should be used
 		if ($param['useCloud']) {
 			$cloud = array(
-				'domain' => $param['cloudDomain'],
-				'port' => $param['cloudPort'],
-				'path' => $param['cloudPath'],
+				'domain'            => $param['cloudDomain'],
+				'port'              => $param['cloudPort'],
+				'path'              => $param['cloudPath'],
 				'registerProcedure' => $param['cloudRegisterProcedure'],
-				'protocol' => $param['cloudProtocol'],
+				'protocol'          => $param['cloudProtocol'],
 			);
 			$generator->addProperty('cloud', $cloud);
 		}
@@ -313,12 +313,12 @@ class RssHelper {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$url          = $urlGenerator->generateUrl(
 			array(
-				'view' => 'core.ShowItem',
+				'view'   => 'core.ShowItem',
 				'itemId' => $item->getId(),
 			),
 			array(
 				'forceSessionId' => false,
-				'forceFullUrl' => true,
+				'forceFullUrl'   => true,
 			)
 		);
 
@@ -335,12 +335,12 @@ class RssHelper {
 			$thumbnail = $param['thumbnails'][$item->getId()];
 			$imageUrl  = $urlGenerator->generateUrl(
 				array(
-					'view' => 'core.DownloadItem',
+					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbnail->getId(),
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 				)
 			);
 
@@ -366,12 +366,12 @@ class RssHelper {
 
 			$url1 = $urlGenerator->generateUrl(
 				array(
-					'view' => 'core.ShowItem',
+					'view'   => 'core.ShowItem',
 					'itemId' => $item->getParentId(),
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 				)
 			);
 
@@ -413,28 +413,28 @@ class RssHelper {
 		) {
 			$imageUrl = $urlGenerator->generateUrl(
 				array(
-					'view' => 'core.DownloadItem',
+					'view'   => 'core.DownloadItem',
 					'itemId' => $item->getId(),
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 				)
 			);
 
 			if (isset($param['useEnclosure']) && $param['useEnclosure'] == '1') {
 				$itemSettings['enclosure'] = array(
-					'url' => $imageUrl,
+					'url'    => $imageUrl,
 					'length' => $item->getSize(),
-					'type' => $item->getMimeType(),
+					'type'   => $item->getMimeType(),
 				);
 			}
 
 			if (isset($param['useMedia']) && $param['useMedia'] == '1') {
 				$itemSettings['media'] = array(
-					'url' => $imageUrl,
-					'type' => $item->getMimeType(),
-					'width' => $item->getWidth(),
+					'url'    => $imageUrl,
+					'type'   => $item->getMimeType(),
+					'width'  => $item->getWidth(),
 					'height' => $item->getHeight(),
 				);
 			}
@@ -460,18 +460,18 @@ class RssHelper {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$url          = $urlGenerator->generateUrl(
 			array(
-				'view' => 'comment.ShowAllComments',
+				'view'   => 'comment.ShowAllComments',
 				'itemId' => $item->getParentId(),
 			),
 			array(
 				'forceSessionId' => false,
-				'forceFullUrl' => true,
+				'forceFullUrl'   => true,
 			)
 		);
 
 		$itemSettings = array(
-			'title' => $item->getSubject(),
-			'link'  => $url,
+			'title'       => $item->getSubject(),
+			'link'        => $url,
 			'description' => $item->getComment(),
 		);
 
@@ -504,7 +504,7 @@ class RssHelper {
 		list($ret, $subIds) = GalleryCoreApi::fetchChildItemIds($entity);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$itemsAcc  = array();
@@ -516,7 +516,7 @@ class RssHelper {
 			list($ret, $subItems) = GalleryCoreApi::loadEntitiesById($subIds, 'GalleryItem');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			foreach ($subItems as $key => $subItem) {
@@ -531,7 +531,7 @@ class RssHelper {
 
 		krsort($itemsAcc);
 
-		return array( null, $itemsAcc );
+		return array(null, $itemsAcc);
 	}
 
 	/**
@@ -562,14 +562,14 @@ class RssHelper {
 		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $userId);
 
 		if (empty($aclIds)) {
-			return array( null, array() );
+			return array(null, array());
 		}
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
 		list($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($itemId == $rootId) {
@@ -578,13 +578,13 @@ class RssHelper {
 			list($ret, $parentSequence) = GalleryCoreApi::fetchParentSequence($itemId);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.view');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$parentSequence[] = $itemId;
 			$parentSequence   = implode('/', $parentSequence);
@@ -605,7 +605,7 @@ class RssHelper {
 			list($ret, $orderBy) = $storage->getFunctionSql('RAND', array());
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		} else {
 			$orderBy = "[GalleryEntity::$timestamp] DESC";
@@ -664,7 +664,7 @@ class RssHelper {
 		list($ret, $searchResults) = $gallery->search($query, $data, $params);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$list     = array();
@@ -695,7 +695,7 @@ class RssHelper {
 			}
 		}
 
-		return array( null, $list );
+		return array(null, $list);
 	}
 
 	/**
@@ -708,19 +708,19 @@ class RssHelper {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'rss');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		return array(
 			null,
 			array(
-				'photos' => $module->translate('Items in an album'),
-				'album' => $module->translate('Sub-albums of an album'),
-				'photosRecursive' => $module->translate('Items in an album and its sub-albums'),
-				'commentsAlbum' => $module->translate('Comments for an album'),
-				'commentsPhoto' => $module->translate('Comments for an item'),
-				'commentsRecursive' => $module->translate('Comments for an album and its subalbums'),
-				'photosRandom' => $module->translate('Random items in an album'),
+				'photos'                => $module->translate('Items in an album'),
+				'album'                 => $module->translate('Sub-albums of an album'),
+				'photosRecursive'       => $module->translate('Items in an album and its sub-albums'),
+				'commentsAlbum'         => $module->translate('Comments for an album'),
+				'commentsPhoto'         => $module->translate('Comments for an item'),
+				'commentsRecursive'     => $module->translate('Comments for an album and its subalbums'),
+				'photosRandom'          => $module->translate('Random items in an album'),
 				'photosRandomRecursive' => $module->translate('Random items in an album and its subalbums'),
 			),
 		);

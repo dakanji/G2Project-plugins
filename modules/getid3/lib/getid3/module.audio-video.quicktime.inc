@@ -99,7 +99,7 @@ class getid3_quicktime extends getid3_handler {
 
 					if ($time_scale = $this->quicktime_bookmark_time_scale($info)) {
 						$bookmark['duration_seconds'] = $bookmark['duration_sample'] / $time_scale;
-						$bookmark['start_seconds']    = $bookmark['start_sample'] / $time_scale;
+						$bookmark['start_seconds']    = $bookmark['start_sample']    / $time_scale;
 					}
 				}
 				$info['quicktime']['bookmarks'][] = $bookmark;
@@ -1650,8 +1650,8 @@ class getid3_quicktime extends getid3_handler {
 					$atom_structure['image_mime']               = 'image/jpeg';
 					$atom_structure['description']              = (($atomname == 'NCTH') ? 'Nikon Camera Thumbnail Image' : (($atomname == 'NCVW') ? 'Nikon Camera Preview Image' : 'Nikon preview image'));
 					$info['quicktime']['comments']['picture'][] = array(
-						'image_mime' => $atom_structure['image_mime'],
-						'data' => $atom_data,
+						'image_mime'  => $atom_structure['image_mime'],
+						'data'        => $atom_data,
 						'description' => $atom_structure['description'],
 					);
 				}
@@ -2451,19 +2451,19 @@ class getid3_quicktime extends getid3_handler {
 					);
 					$data                 = array(
 						'PictureControlVersion' => substr($data, 0, 4),
-						'PictureControlName' => rtrim(substr($data, 4, 20), "\x00"),
-						'PictureControlBase' => rtrim(substr($data, 24, 20), "\x00"),
+						'PictureControlName'    => rtrim(substr($data, 4, 20), "\x00"),
+						'PictureControlBase'    => rtrim(substr($data, 24, 20), "\x00"),
 						//'?' =>                           substr($data, 44,  4),
-						'PictureControlAdjust' => $PictureControlAdjust[ord(substr($data, 48, 1))],
+						'PictureControlAdjust'      => $PictureControlAdjust[ord(substr($data, 48, 1))],
 						'PictureControlQuickAdjust' => ord(substr($data, 49, 1)),
-						'Sharpness' => ord(substr($data, 50, 1)),
-						'Contrast' => ord(substr($data, 51, 1)),
-						'Brightness' => ord(substr($data, 52, 1)),
-						'Saturation' => ord(substr($data, 53, 1)),
-						'HueAdjustment' => ord(substr($data, 54, 1)),
-						'FilterEffect' => $FilterEffect[ord(substr($data, 55, 1))],
-						'ToningEffect' => $ToningEffect[ord(substr($data, 56, 1))],
-						'ToningSaturation' => ord(substr($data, 57, 1)),
+						'Sharpness'                 => ord(substr($data, 50, 1)),
+						'Contrast'                  => ord(substr($data, 51, 1)),
+						'Brightness'                => ord(substr($data, 52, 1)),
+						'Saturation'                => ord(substr($data, 53, 1)),
+						'HueAdjustment'             => ord(substr($data, 54, 1)),
+						'FilterEffect'              => $FilterEffect[ord(substr($data, 55, 1))],
+						'ToningEffect'              => $ToningEffect[ord(substr($data, 56, 1))],
+						'ToningSaturation'          => ord(substr($data, 57, 1)),
 					);
 
 					break;
@@ -2500,8 +2500,8 @@ class getid3_quicktime extends getid3_handler {
 
 					$data = array(
 						'timezone' => floatval($timezone),
-						'dst' => $dst,
-						'display' => $datedisplayformat,
+						'dst'      => $dst,
+						'display'  => $datedisplayformat,
 					);
 
 					break;
@@ -2510,8 +2510,8 @@ class getid3_quicktime extends getid3_handler {
 					$data = array(
 						//'_' => $data,
 						'mf' => (bool)($data & 0x01),
-						'd' => (bool)($data & 0x02),
-						'g' => (bool)($data & 0x04),
+						'd'  => (bool)($data & 0x02),
+						'g'  => (bool)($data & 0x04),
 						'vr' => (bool)($data & 0x08),
 					);
 
@@ -2649,12 +2649,12 @@ class getid3_quicktime extends getid3_handler {
 						$image_mime = 'image/bmp';
 					}
 					$data = array(
-						'data' => $data,
+						'data'       => $data,
 						'image_mime' => $image_mime,
 					);
 				}
 			}
-			$gooddata = array( $data );
+			$gooddata = array($data);
 
 			if ($comment_key == 'genre') {
 				// some other taggers separate multiple genres with semicolon, e.g. "Heavy Metal;Thrash Metal;Metal"
@@ -2692,7 +2692,7 @@ class getid3_quicktime extends getid3_handler {
 			$key_history = $history . '/' . $key;
 
 			if ($key === $tag) {
-				$result[] = array( $key_history, $info );
+				$result[] = array($key_history, $info);
 			} else {
 				if (is_array($value)) {
 					$this->search_tag_by_key($value, $tag, $key_history, $result);
@@ -2706,7 +2706,7 @@ class getid3_quicktime extends getid3_handler {
 			$key_history = $history . '/' . $key;
 
 			if (($key === $k) && ($value === $v)) {
-				$result[] = array( $key_history, $info );
+				$result[] = array($key_history, $info);
 			} else {
 				if (is_array($value)) {
 					$this->search_tag_by_pair($value, $k, $v, $key_history, $result);

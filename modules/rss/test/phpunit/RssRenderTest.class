@@ -141,13 +141,13 @@ class RssRenderTest extends GalleryControllerTestCase {
 		$feedUrl = urlencode(
 			$urlGenerator->generateUrl(
 				array(
-					'view' => 'rss.SimpleRender',
+					'view'   => 'rss.SimpleRender',
 					'itemId' => $this->_root->getId(),
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
-					'htmlEntities' => false,
+					'forceFullUrl'   => true,
+					'htmlEntities'   => false,
 				)
 			)
 		);
@@ -177,19 +177,19 @@ class RssRenderTest extends GalleryControllerTestCase {
 		// create a test feed
 		$name   = 'test' . mt_rand();
 		$params = array(
-			'itemId'    => $this->_root->getId(),
-			'feedType'  => 'photosRecursive',
-			'feedDate'  => 'new',
-			'version'   => '2.0',
-			'count'     => '10',
-			'ttl'       => '120',
-			'category'  => 'photos',
-			'language'  => 'en-us',
-			'copyright' => 'me',
-			'description' => 'my description',
-			'useImage'  => true,
-			'useEnclosure' => false,
-			'useCloud'  => false,
+			'itemId'               => $this->_root->getId(),
+			'feedType'             => 'photosRecursive',
+			'feedDate'             => 'new',
+			'version'              => '2.0',
+			'count'                => '10',
+			'ttl'                  => '120',
+			'category'             => 'photos',
+			'language'             => 'en-us',
+			'copyright'            => 'me',
+			'description'          => 'my description',
+			'useImage'             => true,
+			'useEnclosure'         => false,
+			'useCloud'             => false,
 			'photosRecursiveLimit' => '5',
 		);
 		$ret    = RssMapHelper::createFeed($name, $params);
@@ -209,8 +209,8 @@ class RssRenderTest extends GalleryControllerTestCase {
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
-					'htmlEntities' => false,
+					'forceFullUrl'   => true,
+					'htmlEntities'   => false,
 				)
 			)
 		);

@@ -166,7 +166,7 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 
 	public function &_getTestPlatform($fragment, $requestUrl, $redirectUrl) {
 		$platform = new UnitTestPlatform();
-		$platform->setReply('fsockopen', array( 'www.photoworks.com', 80, '', '', 5 ), 'testFd');
+		$platform->setReply('fsockopen', array('www.photoworks.com', 80, '', '', 5), 'testFd');
 		$platform->setReply(
 			'fwrite',
 			array(
@@ -176,19 +176,19 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 			),
 			100
 		);
-		$platform->setReply('fflush', array( 'testFd' ), true);
-		$platform->setReply('fgets', array( 'testFd', 4096 ), 'HTTP/1.1 200 OK');
-		$platform->setReply('feof', array( 'testFd' ), false);
-		$platform->setReply('fgets', array( 'testFd', 4096 ), '');
-		$platform->setReply('feof', array( 'testFd' ), false);
+		$platform->setReply('fflush', array('testFd'), true);
+		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
+		$platform->setReply('feof', array('testFd'), false);
+		$platform->setReply('fgets', array('testFd', 4096), '');
+		$platform->setReply('feof', array('testFd'), false);
 		$platform->setReply(
 			'fread',
-			array( 'testFd', 4096 ),
+			array('testFd', 4096),
 			'<add-cart-response request-url="' .
 			$requestUrl . '" redirect-url="' . $redirectUrl . '"/>'
 		);
-		$platform->setReply('feof', array( 'testFd' ), true);
-		$platform->setReply('fclose', array( 'testFd' ), true);
+		$platform->setReply('feof', array('testFd'), true);
+		$platform->setReply('fclose', array('testFd'), true);
 
 		return $platform;
 	}
@@ -211,7 +211,7 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 					'href' => $expectedHref,
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -245,7 +245,7 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 					'href' => $expectedHref,
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -311,7 +311,7 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 					'href' => $expectedHref,
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -335,14 +335,14 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $photoaccessSessionId;
 		$photoaccessSession            = new GallerySession();
-		$ret = $photoaccessSession->init();
+		$ret                           = $photoaccessSession->init();
 
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->assertEquals(
-			array( $itemId, $this->_thumbId ),
+			array($itemId, $this->_thumbId),
 			$photoaccessSession->get('core.isPrintService'),
 			'Photoaccess session missing item id'
 		);

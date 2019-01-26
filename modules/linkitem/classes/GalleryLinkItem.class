@@ -123,11 +123,11 @@ class GalleryLinkItem extends GalleryItem {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'linkitem');
 
 			if (!$ret) {
-				return array( $module->translate('Link'), $module->translate('link') );
+				return array($module->translate('Link'), $module->translate('link'));
 			}
 		}
 
-		return array( 'Link', 'link' );
+		return array('Link', 'link');
 	}
 
 	/**
@@ -158,7 +158,7 @@ class GalleryLinkItem extends GalleryItem {
 				$urlGenerator =& $gallery->getUrlGenerator();
 				$link         = $urlGenerator->generateUrl(
 					array(
-						'view' => 'core.ShowItem',
+						'view'   => 'core.ShowItem',
 						'itemId' => $link,
 					),
 					array(
@@ -177,7 +177,7 @@ class GalleryLinkItem extends GalleryItem {
 
 	// Add functions to make this entity thumbnail-able
 	public function fetchPath() {
-		return array( null, $this->getLink() );
+		return array(null, $this->getLink());
 	}
 
 	public function getMimeType() {

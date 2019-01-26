@@ -50,7 +50,7 @@ class getid3_writetags {
 	// public
 	public $filename;                            // absolute filename of file to write tags to
 	public $tagformats        = array();        // array of tag formats to write ('id3v1', 'id3v2.2', 'id2v2.3', 'id3v2.4', 'ape', 'vorbiscomment', 'metaflac', 'real')
-	public $tag_data          = array( array() ); // 2-dimensional array of tag data (ex: $data['ARTIST'][0] = 'Elvis')
+	public $tag_data          = array(array()); // 2-dimensional array of tag data (ex: $data['ARTIST'][0] = 'Elvis')
 	public $tag_encoding      = 'ISO-8859-1';   // text encoding used for tag data ('ISO-8859-1', 'UTF-8', 'UTF-16', 'UTF-16LE', 'UTF-16BE', )
 	public $overwrite_tags    = true;          // if true will erase existing tag data and write only passed data; if false will merge passed data with existing tag data
 	public $remove_other_tags = false;          // if true will erase remove all existing tags and only write those passed in $tagformats; if false will ignore any tags not mentioned in $tagformats
@@ -95,7 +95,7 @@ class getid3_writetags {
 			$this->ThisFileInfo = array(
 				'fileformat' => '',
 			);
-			$AllowedTagFormats  = array( 'id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3' );
+			$AllowedTagFormats  = array('id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3');
 		} else {
 			$getID3             = new getID3();
 			$getID3->encoding   = $this->tag_encoding;
@@ -107,22 +107,22 @@ class getid3_writetags {
 				case 'mp2':
 				case 'mp1':
 				case 'riff': // maybe not officially, but people do it anyway
-					$AllowedTagFormats = array( 'id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3' );
+					$AllowedTagFormats = array('id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3');
 
 					break;
 
 				case 'mpc':
-					$AllowedTagFormats = array( 'ape' );
+					$AllowedTagFormats = array('ape');
 
 					break;
 
 				case 'flac':
-					$AllowedTagFormats = array( 'metaflac' );
+					$AllowedTagFormats = array('metaflac');
 
 					break;
 
 				case 'real':
-					$AllowedTagFormats = array( 'real' );
+					$AllowedTagFormats = array('real');
 
 					break;
 
@@ -137,7 +137,7 @@ class getid3_writetags {
 							break;
 
 						case 'vorbis':
-							$AllowedTagFormats = array( 'vorbiscomment' );
+							$AllowedTagFormats = array('vorbiscomment');
 
 							break;
 
@@ -551,17 +551,17 @@ class getid3_writetags {
 
 		$ID3v2_text_encoding_lookup[2] = array(
 			'ISO-8859-1' => 0,
-			'UTF-16' => 1,
+			'UTF-16'     => 1,
 		);
 		$ID3v2_text_encoding_lookup[3] = array(
 			'ISO-8859-1' => 0,
-			'UTF-16' => 1,
+			'UTF-16'     => 1,
 		);
 		$ID3v2_text_encoding_lookup[4] = array(
 			'ISO-8859-1' => 0,
-			'UTF-16'   => 1,
-			'UTF-16BE' => 2,
-			'UTF-8'    => 3,
+			'UTF-16'     => 1,
+			'UTF-16BE'   => 2,
+			'UTF-8'      => 3,
 		);
 
 		foreach ($this->tag_data as $tag_key => $valuearray) {
@@ -609,7 +609,7 @@ class getid3_writetags {
 									// great, leave data as-is for minimum compatability problems
 									$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 0;
 									$tag_data_id3v2[$ID3v2_framename][$key]['data']       = $value;
-									$ID3v2_tag_data_converted = true;
+									$ID3v2_tag_data_converted                             = true;
 								}
 
 								if (!$ID3v2_tag_data_converted && ($this->tag_encoding == 'UTF-8')) {
@@ -622,7 +622,7 @@ class getid3_writetags {
 										}
 										$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 0;
 										$tag_data_id3v2[$ID3v2_framename][$key]['data']       = $value;
-										$ID3v2_tag_data_converted = true;
+										$ID3v2_tag_data_converted                             = true;
 									} while (false);
 								}
 

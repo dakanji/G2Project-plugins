@@ -56,11 +56,11 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -79,7 +79,7 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(
@@ -118,11 +118,11 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminDeleteGroupQuota',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -133,7 +133,7 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $userOrGroupId,
-				'quotaSize' => $quota,
+				'quotaSize'     => $quota,
 			)
 		);
 

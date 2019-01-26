@@ -40,8 +40,8 @@ class MigrateModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 53 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 53));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -62,7 +62,7 @@ class MigrateModule extends GalleryModule {
 		switch ($currentVersion) {
 			case '1.0.4':
 				// Added index
-				$ret = $storage->configureStore($this->getId(), array( 'G1MigrateMap:1.0' ));
+				$ret = $storage->configureStore($this->getId(), array('G1MigrateMap:1.0'));
 
 				if ($ret) {
 					return $ret;
@@ -101,7 +101,7 @@ class MigrateModule extends GalleryModule {
 			'MigrateModule',
 			'modules/migrate/module.inc',
 			'migrate',
-			array( 'GalleryEntity::delete' )
+			array('GalleryEntity::delete')
 		);
 
 		if ($ret) {
@@ -124,11 +124,11 @@ class MigrateModule extends GalleryModule {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 
 	/**
@@ -156,27 +156,27 @@ class MigrateModule extends GalleryModule {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$url          = $urlGenerator->generateUrl(
 			array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'migrate.SelectGallery',
 			)
 		);
 
 		return array(
 			array(
-				'comment' => $this->translate('G1-&gt;G2 Mapping'),
-				'pattern' => '%path%',
-				'parser' => 'preGallery',
+				'comment'  => $this->translate('G1-&gt;G2 Mapping'),
+				'pattern'  => '%path%',
+				'parser'   => 'preGallery',
 				'keywords' => array(
 					'path' => array(
 						'pattern' => '([^?]+)',
-						'help' => $this->translate('G1 path'),
+						'help'    => $this->translate('G1 path'),
 					),
 				),
 				'queryString' => array(
 					'controller' => 'migrate.Redirect',
 				),
 				'locked' => 1,
-				'help' => $this->translate(
+				'help'   => $this->translate(
 					array(
 						'text' => 'G1 URL redirect. Use only if G2 is installed where G1 used '
 						. 'to be and you have run a G1 import with the URL redirect option '

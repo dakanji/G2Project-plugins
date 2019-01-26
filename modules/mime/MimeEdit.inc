@@ -33,7 +33,7 @@ class MimeEditController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$status = $error = array();
 
@@ -51,14 +51,14 @@ class MimeEditController extends GalleryController {
 					$ext           = strtolower($ext);
 					$mimeTypeMap[] = array(
 						'extension' => $ext,
-						'mimeType' => $form['mimeType'],
-						'viewable' => (int)isset($form['viewable']),
+						'mimeType'  => $form['mimeType'],
+						'viewable'  => (int)isset($form['viewable']),
 					);
 
 					list($ret, $existingMimeType) = GalleryCoreApi::convertExtensionToMime($ext);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if ($existingMimeType != $form['mimeType']
@@ -81,7 +81,7 @@ class MimeEditController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				foreach ($mimeTypeMap as $mimeType) {
@@ -92,7 +92,7 @@ class MimeEditController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 				$status['mimeSaved'] = true;
@@ -102,26 +102,26 @@ class MimeEditController extends GalleryController {
 		if (empty($error)) {
 			if (isset($form['action']['apply'])) {
 				$results['redirect'] = array(
-					'view' => 'core.SiteAdmin',
-					'subView' => 'mime.MimeEdit',
+					'view'     => 'core.SiteAdmin',
+					'subView'  => 'mime.MimeEdit',
 					'mimeType' => $form['mimeType'],
 				);
 			} else {
 				$results['redirect'] = array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				);
 			}
 		} else {
 			$results['delegate'] = array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'mime.MimeEdit',
 			);
 		}
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -136,7 +136,7 @@ class MimeEditView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$mimeType = GalleryUtilities::getRequestVariables('mimeType');
@@ -149,13 +149,13 @@ class MimeEditView extends GalleryView {
 				list($ret, $form['extensions']) = GalleryCoreApi::convertMimeToExtensions($mimeType);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				list($ret, $form['viewable']) = GalleryCoreApi::isViewableMimeType($mimeType);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			} else {
 				$form['viewable']   = false;

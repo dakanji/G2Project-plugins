@@ -101,7 +101,7 @@ class DynamicAlbumTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		foreach (array( 'date', 'views', 'random' ) as $key) {
+		foreach (array('date', 'views', 'random') as $key) {
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'dynamicalbum',
@@ -193,7 +193,7 @@ class DynamicAlbumTest extends GalleryTestCase {
 				$key . ': parent description'
 			);
 			$this->assertEquals(
-				array( get_class($view), 'getChildIds' ),
+				array(get_class($view), 'getChildIds'),
 				$item->parent->getChildrenFunction,
 				$key . ': get children function'
 			);
@@ -268,9 +268,9 @@ class DynamicAlbumTest extends GalleryTestCase {
 
 			$this->assertEquals(
 				array(
-					'view' => 'dynamicalbum.' . $this->_class[$key],
+					'view'    => 'dynamicalbum.' . $this->_class[$key],
 					'albumId' => $this->_album->getId(),
-					'show' => $type[$key],
+					'show'    => $type[$key],
 				),
 				$theme['pageUrl'],
 				$key . ': page url'
@@ -386,7 +386,7 @@ class DynamicAlbumTest extends GalleryTestCase {
 	}
 
 	public function testItemLinks() {
-		foreach (array( 'date', 'views', 'random' ) as $key) {
+		foreach (array('date', 'views', 'random') as $key) {
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'dynamicalbum',
@@ -398,12 +398,12 @@ class DynamicAlbumTest extends GalleryTestCase {
 				return $ret;
 			}
 		}
-		$items = array( $this->_album, $this->_items[2] );
+		$items = array($this->_album, $this->_items[2]);
 
 		list($ret, $links) = $this->_module->getItemLinks(
 			$items,
 			array(
-				$this->_album->getId() => true,
+				$this->_album->getId()    => true,
 				$this->_items[2]->getId() => true,
 			),
 			array()
@@ -416,23 +416,23 @@ class DynamicAlbumTest extends GalleryTestCase {
 			array(
 				$this->_album->getId() => array(
 					array(
-						'text' => $this->_module->translate('View Latest Updates'),
+						'text'   => $this->_module->translate('View Latest Updates'),
 						'params' => array(
-							'view' => 'dynamicalbum.UpdatesAlbum',
+							'view'    => 'dynamicalbum.UpdatesAlbum',
 							'albumId' => $this->_album->getId(),
 						),
 					),
 					array(
-						'text' => $this->_module->translate('View Popular Items'),
+						'text'   => $this->_module->translate('View Popular Items'),
 						'params' => array(
-							'view' => 'dynamicalbum.PopularAlbum',
+							'view'    => 'dynamicalbum.PopularAlbum',
 							'albumId' => $this->_album->getId(),
 						),
 					),
 					array(
-						'text' => $this->_module->translate('View Random Items'),
+						'text'   => $this->_module->translate('View Random Items'),
 						'params' => array(
-							'view' => 'dynamicalbum.RandomAlbum',
+							'view'    => 'dynamicalbum.RandomAlbum',
 							'albumId' => $this->_album->getId(),
 						),
 					),
@@ -451,7 +451,7 @@ class DynamicAlbumTest extends GalleryTestCase {
 		list($ret, $links) = $this->_module->getItemLinks(
 			$items,
 			array(
-				$this->_album->getId() => true,
+				$this->_album->getId()    => true,
 				$this->_items[2]->getId() => true,
 			),
 			array()
@@ -464,16 +464,16 @@ class DynamicAlbumTest extends GalleryTestCase {
 			array(
 				$this->_album->getId() => array(
 					array(
-						'text' => $this->_module->translate('View Latest Updates'),
+						'text'   => $this->_module->translate('View Latest Updates'),
 						'params' => array(
-							'view' => 'dynamicalbum.UpdatesAlbum',
+							'view'    => 'dynamicalbum.UpdatesAlbum',
 							'albumId' => $this->_album->getId(),
 						),
 					),
 					array(
-						'text' => $this->_module->translate('View Random Items'),
+						'text'   => $this->_module->translate('View Random Items'),
 						'params' => array(
-							'view' => 'dynamicalbum.RandomAlbum',
+							'view'    => 'dynamicalbum.RandomAlbum',
 							'albumId' => $this->_album->getId(),
 						),
 					),

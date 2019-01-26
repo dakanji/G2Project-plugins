@@ -62,10 +62,10 @@ class getid3_iso extends getid3_handler {
 		// ie 12345 == 0x3039  is stored as $39 $30 $30 $39 in a 4-byte field
 
 		// shortcuts
-		$info = &$this->getid3->info;
+		$info                                            = &$this->getid3->info;
 		$info['iso']['primary_volume_descriptor']['raw'] = array();
-		$thisfile_iso_primaryVD     = &$info['iso']['primary_volume_descriptor'];
-		$thisfile_iso_primaryVD_raw = &$thisfile_iso_primaryVD['raw'];
+		$thisfile_iso_primaryVD                          = &$info['iso']['primary_volume_descriptor'];
+		$thisfile_iso_primaryVD_raw                      = &$thisfile_iso_primaryVD['raw'];
 
 		$thisfile_iso_primaryVD_raw['volume_descriptor_type'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 0, 1));
 		$thisfile_iso_primaryVD_raw['standard_identifier']    = substr($ISOheader, 1, 5);
@@ -137,10 +137,10 @@ class getid3_iso extends getid3_handler {
 		// ie 12345 == 0x3039  is stored as $39 $30 $30 $39 in a 4-byte field
 
 		// shortcuts
-		$info = &$this->getid3->info;
+		$info                                                  = &$this->getid3->info;
 		$info['iso']['supplementary_volume_descriptor']['raw'] = array();
-		$thisfile_iso_supplementaryVD     = &$info['iso']['supplementary_volume_descriptor'];
-		$thisfile_iso_supplementaryVD_raw = &$thisfile_iso_supplementaryVD['raw'];
+		$thisfile_iso_supplementaryVD                          = &$info['iso']['supplementary_volume_descriptor'];
+		$thisfile_iso_supplementaryVD_raw                      = &$thisfile_iso_supplementaryVD['raw'];
 
 		$thisfile_iso_supplementaryVD_raw['volume_descriptor_type'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 0, 1));
 		$thisfile_iso_supplementaryVD_raw['standard_identifier']    = substr($ISOheader, 1, 5);

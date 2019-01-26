@@ -174,7 +174,7 @@ class DownloadItemView extends GalleryView {
 		$ret = $this->_sendFile(
 			array(
 				'derivativePath' => $path,
-				'mimeType' => $mimeType,
+				'mimeType'       => $mimeType,
 				'pseudoFileName' => $pseudoFileName,
 			)
 		);

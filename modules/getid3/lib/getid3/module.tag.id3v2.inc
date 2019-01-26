@@ -417,7 +417,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 
 			if ($thisfile_id3v2['majorversion_footer'] <= 4) {
-				$id3_flags = ord(substr($footer[5]));
+				$id3_flags                               = ord(substr($footer[5]));
 				$thisfile_id3v2_flags['unsynch_footer']  = (bool)($id3_flags & 0x80);
 				$thisfile_id3v2_flags['extfoot_footer']  = (bool)($id3_flags & 0x40);
 				$thisfile_id3v2_flags['experim_footer']  = (bool)($id3_flags & 0x20);
@@ -448,7 +448,7 @@ class getid3_id3v2 extends getid3_handler {
 		}
 
 		if (!isset($thisfile_id3v2['comments']['year']) && !empty($thisfile_id3v2['comments']['recording_time'][0]) && preg_match('#^([0-9]{4})#', trim($thisfile_id3v2['comments']['recording_time'][0]), $matches)) {
-			$thisfile_id3v2['comments']['year'] = array( $matches[1] );
+			$thisfile_id3v2['comments']['year'] = array($matches[1]);
 		}
 
 
@@ -650,7 +650,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -754,7 +754,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -857,7 +857,7 @@ class getid3_id3v2 extends getid3_handler {
 						foreach ($IPLS_parts_sorted as $person) {
 							$IPLS_parts[] = array(
 								'position' => $position,
-								'person' => $person,
+								'person'   => $person,
 							);
 						}
 					}
@@ -872,7 +872,7 @@ class getid3_id3v2 extends getid3_handler {
 							$person       = $value;
 							$IPLS_parts[] = array(
 								'position' => $position,
-								'person' => $person,
+								'person'   => $person,
 							);
 							$position     = '';
 							$person       = '';
@@ -880,7 +880,7 @@ class getid3_id3v2 extends getid3_handler {
 					}
 				} else {
 					foreach ($IPLS_parts_unsorted as $key => $value) {
-						$IPLS_parts[] = array( $value );
+						$IPLS_parts[] = array($value);
 					}
 				}
 			} else {
@@ -940,7 +940,7 @@ class getid3_id3v2 extends getid3_handler {
 			// Deviation in bytes         %xxx....
 			// Deviation in milliseconds  %xxx....
 
-			$frame_offset = 0;
+			$frame_offset                           = 0;
 			$parsedFrame['framesbetweenreferences'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], 0, 2));
 			$parsedFrame['bytesbetweenreferences']  = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], 2, 3));
 			$parsedFrame['msbetweenreferences']     = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], 5, 3));
@@ -956,7 +956,7 @@ class getid3_id3v2 extends getid3_handler {
 			while (strlen($deviationbitstream) > 0) {
 				$parsedFrame[$reference_counter]['bytedeviation'] = bindec(substr($deviationbitstream, 0, $parsedFrame['bitsforbytesdeviation']));
 				$parsedFrame[$reference_counter]['msdeviation']   = bindec(substr($deviationbitstream, $parsedFrame['bitsforbytesdeviation'], $parsedFrame['bitsformsdeviation']));
-				$deviationbitstream = substr($deviationbitstream, $parsedFrame['bitsforbytesdeviation'] + $parsedFrame['bitsformsdeviation']);
+				$deviationbitstream                               = substr($deviationbitstream, $parsedFrame['bitsforbytesdeviation'] + $parsedFrame['bitsformsdeviation']);
 				$reference_counter++;
 			}
 			unset($parsedFrame['data']);
@@ -1014,7 +1014,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -1088,7 +1088,7 @@ class getid3_id3v2 extends getid3_handler {
 						// timestamp probably omitted for first data item
 					} else {
 						$parsedFrame['lyrics'][$timestampindex]['timestamp'] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, 0, 4));
-						$frame_remainingdata = substr($frame_remainingdata, 4);
+						$frame_remainingdata                                 = substr($frame_remainingdata, 4);
 					}
 					$timestampindex++;
 				}
@@ -1125,7 +1125,7 @@ class getid3_id3v2 extends getid3_handler {
 				}
 				$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-				if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+				if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 					// if description only contains a BOM or terminator then make it blank
 					$frame_description = '';
 				}
@@ -1173,8 +1173,8 @@ class getid3_id3v2 extends getid3_handler {
 			$RVA2channelcounter         = 0;
 
 			while (strlen($frame_remainingdata) >= 5) {
-				$frame_offset        = 0;
-				$frame_channeltypeid = ord(substr($frame_remainingdata, $frame_offset++, 1));
+				$frame_offset                                      = 0;
+				$frame_channeltypeid                               = ord(substr($frame_remainingdata, $frame_offset++, 1));
 				$parsedFrame[$RVA2channelcounter]['channeltypeid'] = $frame_channeltypeid;
 				$parsedFrame[$RVA2channelcounter]['channeltype']   = $this->RVA2ChannelTypeLookup($frame_channeltypeid);
 				$parsedFrame[$RVA2channelcounter]['volumeadjust']  = getid3_lib::BigEndian2Int(substr($frame_remainingdata, $frame_offset, 2), false, true); // 16-bit signed
@@ -1186,9 +1186,9 @@ class getid3_id3v2 extends getid3_handler {
 
 					break;
 				}
-				$frame_bytespeakvolume = ceil($parsedFrame[$RVA2channelcounter]['bitspeakvolume'] / 8);
+				$frame_bytespeakvolume                          = ceil($parsedFrame[$RVA2channelcounter]['bitspeakvolume'] / 8);
 				$parsedFrame[$RVA2channelcounter]['peakvolume'] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, $frame_offset, $frame_bytespeakvolume));
-				$frame_remainingdata = substr($frame_remainingdata, $frame_offset + $frame_bytespeakvolume);
+				$frame_remainingdata                            = substr($frame_remainingdata, $frame_offset + $frame_bytespeakvolume);
 				$RVA2channelcounter++;
 			}
 			unset($parsedFrame['data']);
@@ -1340,9 +1340,9 @@ class getid3_id3v2 extends getid3_handler {
 			$frame_remainingdata = (string)substr($parsedFrame['data'], $frame_offset);
 
 			while (strlen($frame_remainingdata) > 0) {
-				$frame_frequencystr = getid3_lib::BigEndian2Bin(substr($frame_remainingdata, 0, 2));
-				$frame_incdec       = (bool)substr($frame_frequencystr, 0, 1);
-				$frame_frequency    = bindec(substr($frame_frequencystr, 1, 15));
+				$frame_frequencystr                          = getid3_lib::BigEndian2Bin(substr($frame_remainingdata, 0, 2));
+				$frame_incdec                                = (bool)substr($frame_frequencystr, 0, 1);
+				$frame_frequency                             = bindec(substr($frame_frequencystr, 1, 15));
 				$parsedFrame[$frame_frequency]['incdec']     = $frame_incdec;
 				$parsedFrame[$frame_frequency]['adjustment'] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, 2, $frame_adjustmentbytes));
 
@@ -1450,7 +1450,7 @@ class getid3_id3v2 extends getid3_handler {
 				}
 				$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-				if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+				if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 					// if description only contains a BOM or terminator then make it blank
 					$frame_description = '';
 				}
@@ -1505,7 +1505,7 @@ class getid3_id3v2 extends getid3_handler {
 						}
 						*/
 					} elseif (is_string($this->getid3->option_save_attachments)) {
-						$dir = rtrim(str_replace(array( '/', '\\' ), DIRECTORY_SEPARATOR, $this->getid3->option_save_attachments), DIRECTORY_SEPARATOR);
+						$dir = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $this->getid3->option_save_attachments), DIRECTORY_SEPARATOR);
 
 						if (!is_dir($dir) || !is_writable($dir)) {
 							// cannot write, skip
@@ -1533,7 +1533,7 @@ class getid3_id3v2 extends getid3_handler {
 							}
 							$comments_picture_data = array();
 
-							foreach (array( 'data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength' ) as $picture_key) {
+							foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
 								if (isset($parsedFrame[$picture_key])) {
 									$comments_picture_data[$picture_key] = $parsedFrame[$picture_key];
 								}
@@ -1591,7 +1591,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -1671,7 +1671,7 @@ class getid3_id3v2 extends getid3_handler {
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_description   = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -1843,7 +1843,7 @@ class getid3_id3v2 extends getid3_handler {
 			$frame_rawpricearray = explode('/', $frame_pricestring);
 
 			foreach ($frame_rawpricearray as $key => $val) {
-				$frame_currencyid = substr($val, 0, 3);
+				$frame_currencyid                                    = substr($val, 0, 3);
 				$parsedFrame['price'][$frame_currencyid]['currency'] = $this->LookupCurrencyUnits($frame_currencyid);
 				$parsedFrame['price'][$frame_currencyid]['value']    = substr($val, 3);
 			}
@@ -1876,7 +1876,7 @@ class getid3_id3v2 extends getid3_handler {
 			}
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
-			if (in_array($frame_description, array( "\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF" ))) {
+			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
@@ -2021,7 +2021,7 @@ class getid3_id3v2 extends getid3_handler {
 			$frame_offset                       += 2;
 			$rg_album_adjustment                 = getid3_lib::Dec2Bin(substr($parsedFrame['data'], $frame_offset, 2));
 			$frame_offset                       += 2;
-			$parsedFrame['raw']['track']['name'] = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 0, 3));
+			$parsedFrame['raw']['track']['name']       = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 0, 3));
 			$parsedFrame['raw']['track']['originator'] = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 3, 3));
 			$parsedFrame['raw']['track']['signbit']    = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 6, 1));
 			$parsedFrame['raw']['track']['adjustment'] = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 7, 9));
@@ -2137,7 +2137,7 @@ class getid3_id3v2 extends getid3_handler {
 
 			$id3v2_chapter_entry = array();
 
-			foreach (array( 'id', 'time_begin', 'time_end', 'offset_begin', 'offset_end', 'chapter_name', 'chapter_description' ) as $id3v2_chapter_key) {
+			foreach (array('id', 'time_begin', 'time_end', 'offset_begin', 'offset_end', 'chapter_name', 'chapter_description') as $id3v2_chapter_key) {
 				if (isset($parsedFrame[$id3v2_chapter_key])) {
 					$id3v2_chapter_entry[$id3v2_chapter_key] = $parsedFrame[$id3v2_chapter_key];
 				}

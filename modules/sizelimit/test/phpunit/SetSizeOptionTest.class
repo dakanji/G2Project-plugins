@@ -67,7 +67,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 			'compress',
 			array(
 				array(
-					'type' => 'int',
+					'type'        => 'int',
 					'description' => 'size',
 				),
 			),
@@ -85,11 +85,11 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 			'scale',
 			array(
 				array(
-					'type' => 'int',
+					'type'        => 'int',
 					'description' => 'width',
 				),
 				array(
-					'type' => 'int',
+					'type'        => 'int',
 					'description' => 'height',
 				),
 			),
@@ -126,7 +126,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 			$this->_album->getId(),
 			'image/known',
 			array(
-				'summary' => 'original summary 0',
+				'summary'     => 'original summary 0',
 				'description' => 'original description 0',
 			)
 		);
@@ -141,7 +141,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 			$this->_album->getId(),
 			'image/unknown',
 			array(
-				'summary' => 'plagiarized summary',
+				'summary'     => 'plagiarized summary',
 				'description' => 'plagiarized description',
 			)
 		);
@@ -158,7 +158,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$this->_noWarnings = array(array());
-		$this->_noErrors = array();
+		$this->_noErrors   = array();
 
 		$this->_expectWarnings = array(
 			array(
@@ -172,7 +172,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				)),
 			),
 		);
-		$this->_expectResize = array('scale');
+		$this->_expectResize   = array('scale');
 		$this->_expectCompress = array('compress');
 	}
 
@@ -260,7 +260,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				$this->_album->getId(),
 				'image/known',
 				array(
-					'summary' => "original summary $j",
+					'summary'     => "original summary $j",
 					'description' => "original description $j",
 				)
 			);
@@ -269,7 +269,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j - 1];
+			$this->_noWarnings[]   = $this->_noWarnings[$j - 1];
 			$this->_expectResize[] = $this->_expectResize[$j - 1];
 		}
 
@@ -372,7 +372,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				$this->_album->getId(),
 				'image/known',
 				array(
-					'summary' => "original summary $j",
+					'summary'     => "original summary $j",
 					'description' => "original description $j",
 				)
 			);
@@ -381,7 +381,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j - 1];
+			$this->_noWarnings[]   = $this->_noWarnings[$j - 1];
 			$this->_expectResize[] = $this->_expectResize[$j - 1];
 		}
 
@@ -486,7 +486,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				$this->_album->getId(),
 				'image/known',
 				array(
-					'summary' => "original summary $j",
+					'summary'     => "original summary $j",
 					'description' => "original description $j",
 				)
 			);
@@ -495,7 +495,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j - 1];
+			$this->_noWarnings[]     = $this->_noWarnings[$j - 1];
 			$this->_expectCompress[] = $this->_expectCompress[$j - 1];
 		}
 
@@ -595,7 +595,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				$this->_album->getId(),
 				'image/known',
 				array(
-					'summary' => "original summary $j",
+					'summary'     => "original summary $j",
 					'description' => "original description $j",
 				)
 			);
@@ -604,7 +604,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j - 1];
+			$this->_noWarnings[]     = $this->_noWarnings[$j - 1];
 			$this->_expectCompress[] = $this->_expectCompress[$j - 1];
 		}
 
@@ -643,9 +643,9 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
 		foreach (array(
-			'width' => 768,
-			'height' => 1024,
-			'size' => 1000,
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
 			'keepOriginal' => 1,
 		)
  as $key => $value) {
@@ -697,9 +697,9 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
 		foreach (array(
-			'width' => 768,
-			'height' => 1024,
-			'size' => 1000,
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
 			'keepOriginal' => 1,
 		)
  as $key => $value) {
@@ -723,7 +723,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				$this->_album->getId(),
 				'image/known',
 				array(
-					'summary' => "original summary $j",
+					'summary'     => "original summary $j",
 					'description' => "original description $j",
 				)
 			);
@@ -732,7 +732,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j - 1];
+			$this->_noWarnings[]           = $this->_noWarnings[$j - 1];
 			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 2];
 			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 1];
 		}
@@ -777,9 +777,9 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
 		foreach (array(
-			'width' => 768,
-			'height' => 1024,
-			'size' => 1000,
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
 			'keepOriginal' => 0,
 		)
  as $key => $value) {
@@ -825,9 +825,9 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->_expectResizeCompress = array_merge($this->_expectResize, $this->_expectCompress);
 
 		foreach (array(
-			'width' => 768,
-			'height' => 1024,
-			'size' => 1000,
+			'width'        => 768,
+			'height'       => 1024,
+			'size'         => 1000,
 			'keepOriginal' => 0,
 		)
  as $key => $value) {
@@ -851,7 +851,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				$this->_album->getId(),
 				'image/known',
 				array(
-					'summary' => "original summary $j",
+					'summary'     => "original summary $j",
 					'description' => "original description $j",
 				)
 			);
@@ -860,7 +860,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				return $ret;
 			}
 
-			$this->_noWarnings[] = $this->_noWarnings[$j - 1];
+			$this->_noWarnings[]           = $this->_noWarnings[$j - 1];
 			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 2];
 			$this->_expectResizeCompress[] = $this->_expectResizeCompress[($j * 2) - 1];
 		}
@@ -946,7 +946,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 				$this->_album->getId(),
 				'image/unknown',
 				array(
-					'summary' => "plagiarized summary $j",
+					'summary'     => "plagiarized summary $j",
 					'description' => "plagiarized description $j",
 				)
 			);
@@ -1005,7 +1005,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 	public function testChangeDimDropResizes() {
 		global $gallery;
 		$platform =& $gallery->getPlatform();
-		$id = $this->_items[0]->getId();
+		$id       = $this->_items[0]->getId();
 		$item     =& $this->_items[0];
 
 		// Add resizes and a thumbnail, that is usually done before sizelimit does its job
@@ -1147,7 +1147,7 @@ class SetSizeOptionTestPlatform extends GalleryPlatform {
 
 	public function file_exists($filename) {
 		$compressPerformed = GalleryUtilities::getRequestVariables('compressPerformed');
-		$resizePerformed = GalleryUtilities::getRequestVariables('resizePerformed');
+		$resizePerformed   = GalleryUtilities::getRequestVariables('resizePerformed');
 
 		// if we created a derivative make-believe that the file exists
 		if ($resizePerformed || $compressPerformed) {
@@ -1203,7 +1203,7 @@ class SetSizeOptionTestToolkit extends GalleryToolkit {
 				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null, null);
 		}
 
-		$operations = array();
+		$operations       = array();
 		$operationRequest = GalleryUtilities::getRequestVariables('operation');
 
 		if (!empty($operationRequest)) {
@@ -1225,8 +1225,8 @@ class SetSizeOptionTestToolkit extends GalleryToolkit {
 		switch ($propertyName) {
 			case 'dimensions':
 				$platform =& $gallery->getPlatform();
-				$results = $platform->getimagesize($file);
-				$results = array((int)$results[0], (int)$results[1]);
+				$results  = $platform->getimagesize($file);
+				$results  = array((int)$results[0], (int)$results[1]);
 
 				break;
 

@@ -88,18 +88,18 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'status' => array(),
-				'error' => array(),
+				'status'   => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.ItemAdmin',
+					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId' => $this->_getRootId(),
-					'mode' => 'list',
-					'form' => array(
+					'itemId'  => $this->_getRootId(),
+					'mode'    => 'list',
+					'form'    => array(
 						'action' => array(
 							'cancel' => '1',
 						),
-						'mode' => 'edit',
+						'mode'   => 'edit',
 						'itemId' => (string)$this->_getRootId(),
 					),
 				),
@@ -115,31 +115,31 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'new');
 
 		$values = array(
-			'itemId'    => (string)$this->_getRootId(),
-			'mode'      => 'edit',
-			'feedType'  => 'photosRecursive',
-			'photosRecursiveLimit' => '0',
-			'feedName'  => $name,
-			'version'   => '2.0',
-			'count'     => '10',
-			'copyright' => 'me',
-			'description' => 'description',
-			'useImage'  => '1',
-			'usePubDate' => '1',
-			'useEnclosure' => '1',
-			'useCategory' => '1',
-			'useCloud'  => '1',
-			'cloudDomain' => 'Gallery',
-			'cloudPort' => '202',
-			'cloudPath' => 'rss',
+			'itemId'                 => (string)$this->_getRootId(),
+			'mode'                   => 'edit',
+			'feedType'               => 'photosRecursive',
+			'photosRecursiveLimit'   => '0',
+			'feedName'               => $name,
+			'version'                => '2.0',
+			'count'                  => '10',
+			'copyright'              => 'me',
+			'description'            => 'description',
+			'useImage'               => '1',
+			'usePubDate'             => '1',
+			'useEnclosure'           => '1',
+			'useCategory'            => '1',
+			'useCloud'               => '1',
+			'cloudDomain'            => 'Gallery',
+			'cloudPort'              => '202',
+			'cloudPath'              => 'rss',
 			'cloudRegisterProcedure' => 'register',
-			'cloudProtocol' => 'tcp',
-			'useTtl'    => '1',
-			'ttl'       => '60',
-			'category'  => 'photo',
-			'useItemCategory' => '1',
-			'language'  => 'en-us',
-			'feedDate'  => 'updated',
+			'cloudProtocol'          => 'tcp',
+			'useTtl'                 => '1',
+			'ttl'                    => '60',
+			'category'               => 'photo',
+			'useItemCategory'        => '1',
+			'language'               => 'en-us',
+			'feedDate'               => 'updated',
 		);
 
 		foreach ($values as $key => $value) {
@@ -153,16 +153,16 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				'status' => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.ItemAdmin',
+					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId' => $this->_getRootId(),
-					'mode' => 'edit',
-					'form' => array_merge(
+					'itemId'  => $this->_getRootId(),
+					'mode'    => 'edit',
+					'form'    => array_merge(
 						array(
 							'action' => array(
-								'save' => '1',
+								'save'   => '1',
 								'create' => '1',
 							),
 							'mode' => 'new',
@@ -206,31 +206,31 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'edit');
 
 		$values = array(
-			'itemId'    => (string)$this->_getRootId(),
-			'mode'      => 'edit',
-			'feedType'  => 'photosRecursive',
-			'photosRecursiveLimit' => '0',
-			'feedName'  => $name,
-			'version'   => '2.0',
-			'count'     => '10',
-			'copyright' => 'me',
-			'description' => 'description',
-			'useImage'  => '1',
-			'usePubDate' => '1',
-			'useEnclosure' => '1',
-			'useCategory' => '1',
-			'useCloud'  => '1',
-			'cloudDomain' => 'Gallery',
-			'cloudPort' => '202',
-			'cloudPath' => 'rss',
+			'itemId'                 => (string)$this->_getRootId(),
+			'mode'                   => 'edit',
+			'feedType'               => 'photosRecursive',
+			'photosRecursiveLimit'   => '0',
+			'feedName'               => $name,
+			'version'                => '2.0',
+			'count'                  => '10',
+			'copyright'              => 'me',
+			'description'            => 'description',
+			'useImage'               => '1',
+			'usePubDate'             => '1',
+			'useEnclosure'           => '1',
+			'useCategory'            => '1',
+			'useCloud'               => '1',
+			'cloudDomain'            => 'Gallery',
+			'cloudPort'              => '202',
+			'cloudPath'              => 'rss',
 			'cloudRegisterProcedure' => 'register',
-			'cloudProtocol' => 'tcp',
-			'useTtl'    => '1',
-			'ttl'       => '60',
-			'category'  => 'photo',
-			'useItemCategory' => '1',
-			'language'  => 'en-us',
-			'feedDate'  => 'updated',
+			'cloudProtocol'          => 'tcp',
+			'useTtl'                 => '1',
+			'ttl'                    => '60',
+			'category'               => 'photo',
+			'useItemCategory'        => '1',
+			'language'               => 'en-us',
+			'feedDate'               => 'updated',
 		);
 
 		foreach ($values as $key => $value) {
@@ -244,16 +244,16 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				'status' => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.ItemAdmin',
+					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId' => $this->_getRootId(),
-					'mode' => 'edit',
-					'form' => array_merge(
+					'itemId'  => $this->_getRootId(),
+					'mode'    => 'edit',
+					'form'    => array_merge(
 						array(
 							'action' => array(
-								'save' => '1',
+								'save'   => '1',
 								'update' => '1',
 							),
 							'mode' => 'edit',
@@ -281,31 +281,31 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'edit');
 
 		$values = array(
-			'itemId'    => (string)$this->_getRootId(),
-			'mode'      => 'edit',
-			'feedType'  => 'photosRecursive',
-			'photosRecursiveLimit' => '0',
-			'feedName'  => $name,
-			'version'   => '2.0',
-			'count'     => '10',
-			'copyright' => 'me',
-			'description' => 'description',
-			'useImage'  => '1',
-			'usePubDate' => '1',
-			'useEnclosure' => '1',
-			'useCategory' => '1',
-			'useCloud'  => '1',
-			'cloudDomain' => 'Gallery',
-			'cloudPort' => '202',
-			'cloudPath' => 'rss',
+			'itemId'                 => (string)$this->_getRootId(),
+			'mode'                   => 'edit',
+			'feedType'               => 'photosRecursive',
+			'photosRecursiveLimit'   => '0',
+			'feedName'               => $name,
+			'version'                => '2.0',
+			'count'                  => '10',
+			'copyright'              => 'me',
+			'description'            => 'description',
+			'useImage'               => '1',
+			'usePubDate'             => '1',
+			'useEnclosure'           => '1',
+			'useCategory'            => '1',
+			'useCloud'               => '1',
+			'cloudDomain'            => 'Gallery',
+			'cloudPort'              => '202',
+			'cloudPath'              => 'rss',
 			'cloudRegisterProcedure' => 'register',
-			'cloudProtocol' => 'tcp',
-			'useTtl'    => '1',
-			'ttl'       => '60',
-			'category'  => 'photo',
-			'useItemCategory' => '1',
-			'language'  => 'en-us',
-			'feedDate'  => 'updated',
+			'cloudProtocol'          => 'tcp',
+			'useTtl'                 => '1',
+			'ttl'                    => '60',
+			'category'               => 'photo',
+			'useItemCategory'        => '1',
+			'language'               => 'en-us',
+			'feedDate'               => 'updated',
 		);
 
 		foreach ($values as $key => $value) {
@@ -319,16 +319,16 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				'status' => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.ItemAdmin',
+					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId' => $this->_getRootId(),
-					'mode' => 'edit',
-					'form' => array_merge(
+					'itemId'  => $this->_getRootId(),
+					'mode'    => 'edit',
+					'form'    => array_merge(
 						array(
 							'action' => array(
-								'save' => '1',
+								'save'   => '1',
 								'update' => '1',
 							),
 							'mode' => 'edit',
@@ -367,13 +367,13 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 				'status' => array(
 					'deleted' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.ItemAdmin',
+					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
-					'itemId' => $this->_getRootId(),
-					'mode' => 'list',
-					'form' => array(
+					'itemId'  => $this->_getRootId(),
+					'mode'    => 'list',
+					'form'    => array(
 						'action' => array(
 							'delete' => $name,
 						),

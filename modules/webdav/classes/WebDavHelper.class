@@ -52,7 +52,7 @@ class WebDavHelper {
 	 */
 	public static function checkConfiguration() {
 		global $gallery;
-		$phpVm = $gallery->getPhpVm();
+		$phpVm        = $gallery->getPhpVm();
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$code = 0x00000000;
@@ -212,7 +212,7 @@ class WebDavHelper {
 		list($status, $headers, $body) = GalleryCoreApi::requestWebPage($urlGenerator->generateUrl(
 			array('view' => 'webdav.WebDavWorks'),
 			array('forceFullUrl' => true,
-			'htmlEntities' => false, )
+			'htmlEntities'       => false, )
 		), $requestMethod, array('Content-length' => 0));
 
 		if (!preg_match('/^HTTP\/[0-9]\.[0-9] 200/', $status)) {
@@ -268,11 +268,11 @@ class WebDavHelper {
 		$userAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
 
 		$url = $urlGenerator->generateUrl(
-			array('controller' => 'webdav.WebDav',
-			'itemId' => $itemId, ),
+			array('controller'   => 'webdav.WebDav',
+			'itemId'             => $itemId, ),
 			array('forceFullUrl' => true,
-			'forceSessionId' => false,
-			'useAuthToken' => false, )
+			'forceSessionId'     => false,
+			'useAuthToken'       => false, )
 		);
 		$link['attrs'] = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
 
@@ -282,23 +282,23 @@ class WebDavHelper {
 			 * resources.
 			 */
 			$url = $urlGenerator->generateUrl(
-				array('controller' => 'webdav.WebDav',
-				'itemId' => $itemId, ),
+				array('controller'   => 'webdav.WebDav',
+				'itemId'             => $itemId, ),
 				array('forceFullUrl' => true,
-				'htmlEntities' => false,
-				'forceSessionId' => false,
-				'useAuthToken' => false, )
+				'htmlEntities'       => false,
+				'forceSessionId'     => false,
+				'useAuthToken'       => false, )
 			);
 			$link['script'] = 			"this.style.behavior = 'url(#default#httpFolder)'; this.navigate('$url')";
 		}
 
 		if (strpos($userAgent, 'Konqueror') !== false) {
 			// Konqueror supports webdav:// URLs
-			$urlParams = array('controller' => 'webdav.WebDav', 'itemId' => $itemId);
+			$urlParams  = array('controller' => 'webdav.WebDav', 'itemId' => $itemId);
 			$urlOptions = array('protocol' => 'webdav', 'forceSessionId' => false,
-			'useAuthToken' => false, );
+			'useAuthToken'                 => false, );
 		} else {
-			$urlParams = array('view' => 'webdav.DownloadDavMount', 'itemId' => $itemId);
+			$urlParams  = array('view' => 'webdav.DownloadDavMount', 'itemId' => $itemId);
 			$urlOptions = array();
 		}
 
@@ -345,7 +345,7 @@ class WebDavHelper {
 	 *               GalleryEntity the mirror entity
 	 */
 	public static function mirrorEntity($sourceEntity, $mirrorEntity) {
-		$className = $mirrorClassName = $mirrorEntity->getClassName();
+		$className              = $mirrorClassName              = $mirrorEntity->getClassName();
 		list($ret, $entityInfo) = GalleryCoreApi::describeEntity($className);
 
 		if ($ret) {
@@ -408,13 +408,13 @@ class WebDavHelper {
 			$path = GalleryUtilities::getRequestVariables('path');
 			$path = trim($path, '/');
 
-			$webDavServer->path = $path;
+			$webDavServer->path    = $path;
 			$webDavServer->baseUrl = parse_url($urlGenerator->generateUrl(
 				array('controller' => 'webdav.WebDav'),
 				array('forceFullUrl' => true,
-				'htmlEntities' => false,
-				'forceSessionId' => false,
-				'useAuthToken' => false, )
+				'htmlEntities'       => false,
+				'forceSessionId'     => false,
+				'useAuthToken'       => false, )
 			));
 		}
 
@@ -444,7 +444,7 @@ class WebDavHelper {
 			return array($ret, null);
 		}
 
-		$data = array();
+		$data  = array();
 		$query = '
 		SELECT
 		[WebDavLockMap::depth],
@@ -471,7 +471,7 @@ class WebDavHelper {
 		}
 
 		$pathComponents = explode('/', $path);
-		$count = 0;
+		$count          = 0;
 
 		// Get ancestors' locks
 		while (array_pop($pathComponents) !== null) {
@@ -496,12 +496,12 @@ class WebDavHelper {
 
 		while (($result = $results->nextResult()) !== false) {
 			$locks[] = array('scope' => 'exclusive',
-			'type' => 'write',
-			'depth' => $result[0],
-			'owner' => $result[1],
-			'expires' => (int)$result[2],
-			'token' => $result[3],
-			'path' => $result[4], );
+			'type'                   => 'write',
+			'depth'                  => $result[0],
+			'owner'                  => $result[1],
+			'expires'                => (int)$result[2],
+			'token'                  => $result[3],
+			'path'                   => $result[4], );
 		}
 
 		return array(null, $locks);
@@ -586,7 +586,7 @@ class WebDavHelper {
 	 * @see HTTP_WebDAV_Server::propfind_response_helper
 	 */
 	public static function propfindResponseHelper($webDavOptions, $files, $namespaces) {
-		$webDavServer =& WebDavHelper::getWebDavServer();
+		$webDavServer                =& WebDavHelper::getWebDavServer();
 		$webDavOptions['namespaces'] = $namespaces;
 		$webDavServer->propfind_response_helper($webDavOptions, $files);
 	}
@@ -634,7 +634,7 @@ class WebDavHelper {
 		}
 
 		$files = array();
-		$ret = WebDavHelper::_propfindFiles($item, $path, $depth, $files);
+		$ret   = WebDavHelper::_propfindFiles($item, $path, $depth, $files);
 
 		if ($ret) {
 			return $ret;
@@ -711,7 +711,7 @@ class WebDavHelper {
 			array(
 				array(
 					'scope' => 'exclusive',
-					'type' => 'write',
+					'type'  => 'write',
 				),
 			)
 		);
@@ -885,9 +885,9 @@ class WebDavHelper {
 	 * @see HTTP_WebDAV_Server::proppatch_response_helper
 	 */
 	public static function proppatchResponseHelper($webDavOptions, $path, $props, $namespaces) {
-		$webDavServer =& WebDavHelper::getWebDavServer();
-		$webDavOptions['path'] = $path;
-		$webDavOptions['props'] = $props;
+		$webDavServer                =& WebDavHelper::getWebDavServer();
+		$webDavOptions['path']       = $path;
+		$webDavOptions['props']      = $props;
 		$webDavOptions['namespaces'] = $namespaces;
 		$webDavServer->proppatch_response_helper($webDavOptions);
 	}
@@ -1195,8 +1195,8 @@ class WebDavHelper {
 		}
 
 		$originalPath = GalleryUtilities::getRequestVariables('originalPath');
-		$title = empty($originalPath) ? $pathComponent : basename($originalPath);
-		$ret = WebDavHelper::mkcolHelper($parentId, $pathComponent, $title, '', '', '');
+		$title        = empty($originalPath) ? $pathComponent : basename($originalPath);
+		$ret          = WebDavHelper::mkcolHelper($parentId, $pathComponent, $title, '', '', '');
 
 		if ($ret) {
 			if ($ret->getErrorCode() & ERROR_ILLEGAL_CHILD) {
@@ -1400,7 +1400,7 @@ class WebDavHelper {
 	 * @see HTTP_WebDAV_Server::put_response_helper
 	 */
 	public static function putResponseHelper($webDavOptions, $stream) {
-		$webDavServer =& WebDavHelper::getWebDavServer();
+		$webDavServer         =& WebDavHelper::getWebDavServer();
 		$webDavOptions['new'] = false;
 		$webDavServer->put_response_helper($webDavOptions, $stream);
 	}
@@ -1420,7 +1420,7 @@ class WebDavHelper {
 	 */
 	public static function copyMoveRequestHelper() {
 		global $gallery;
-		$platform =& $gallery->getPlatform();
+		$platform     =& $gallery->getPlatform();
 		$webDavServer =& WebDavHelper::getWebDavServer();
 
 		// Body parsing not yet supported
@@ -1503,7 +1503,7 @@ class WebDavHelper {
 				return array($ret, null);
 			}
 
-			$canAddItem = isset($permissions['core.addDataItem']);
+			$canAddItem  = isset($permissions['core.addDataItem']);
 			$canAddAlbum = isset($permissions['core.addAlbumItem']);
 
 			if (!$canAddAlbum && !$canAddItem) {
@@ -1662,9 +1662,9 @@ class WebDavHelper {
 			return $ret;
 		}
 
-		$pathComponent = basename($path);
+		$pathComponent    = basename($path);
 		$newPathComponent = basename($newPath);
-		$oldParentId = $item->getParentId();
+		$oldParentId      = $item->getParentId();
 
 		if ($oldParentId != $newParentId) {
 			list($ret, $error) = WebDavHelper::moveValidateHelper($item, $newParent);
@@ -1940,14 +1940,14 @@ class WebDavHelper {
 		$expires,
 		$token
 	) {
-		$webDavServer =& WebDavHelper::getWebDavServer();
-		$webDavOptions['locks'] = $locks;
-		$webDavOptions['scope'] = $scope;
-		$webDavOptions['type'] = $type;
-		$webDavOptions['depth'] = $depth;
-		$webDavOptions['owner'] = $owner;
+		$webDavServer             =& WebDavHelper::getWebDavServer();
+		$webDavOptions['locks']   = $locks;
+		$webDavOptions['scope']   = $scope;
+		$webDavOptions['type']    = $type;
+		$webDavOptions['depth']   = $depth;
+		$webDavOptions['owner']   = $owner;
 		$webDavOptions['expires'] = $expires;
-		$webDavOptions['token'] = $token;
+		$webDavOptions['token']   = $token;
 		$webDavServer->lock_response_helper($webDavOptions, $status);
 	}
 
@@ -2038,10 +2038,10 @@ class WebDavHelper {
 			}
 
 			// Load WebDAV lock information
-			$scope = 'exclusive';
-			$type = 'write';
-			$depth = $result[0];
-			$owner = $result[1];
+			$scope  = 'exclusive';
+			$type   = 'write';
+			$depth  = $result[0];
+			$owner  = $result[1];
 			$lockId = $result[2];
 
 			// Check that the Gallery lock didn't disappear before the WebDAV lock
@@ -2127,7 +2127,7 @@ class WebDavHelper {
 		if (!empty($update)) {
 			$ret = GalleryCoreApi::updateMapEntry(
 				'WebDavLockMap',
-				array('token' => $update, 'path' => $path),
+				array('token'   => $update, 'path' => $path),
 				array('expires' => $expires, 'galleryLockId' => $lockId)
 			);
 
@@ -2136,11 +2136,11 @@ class WebDavHelper {
 			}
 		} else {
 			$ret = GalleryCoreApi::addMapEntry('WebDavLockMap', array('depth' => $depth,
-			'owner' => $owner,
-			'expires' => $expires,
-			'token' => $token,
-			'path' => $path,
-			'galleryLockId' => $lockId, ));
+			'owner'                                                           => $owner,
+			'expires'                                                         => $expires,
+			'token'                                                           => $token,
+			'path'                                                            => $path,
+			'galleryLockId'                                                   => $lockId, ));
 
 			if ($ret) {
 				return $ret;
@@ -2290,12 +2290,12 @@ class WebDavServer extends HTTP_WebDAV_Server {
 		return $urlGenerator->generateUrl(
 			array(
 				'controller' => 'webdav.WebDav',
-				'path' => $path,
+				'path'       => $path,
 			),
 			array(
 				'forceServerRelativeUrl' => true,
-				'forceSessionId' => false,
-				'useAuthToken' => false,
+				'forceSessionId'         => false,
+				'useAuthToken'           => false,
 			)
 		);
 	}

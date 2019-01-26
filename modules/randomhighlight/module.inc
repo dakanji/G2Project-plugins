@@ -34,8 +34,8 @@ class RandomHighlightModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 27 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 27));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -85,7 +85,7 @@ class RandomHighlightModule extends GalleryModule {
 					}
 					list($ret, $handlers) = $storage->getFunctionSql(
 						'CONCAT',
-						array( '[GalleryEntity::onLoadHandlers]', "'RandomHighlight|'" )
+						array('[GalleryEntity::onLoadHandlers]', "'RandomHighlight|'")
 					);
 
 					if ($ret) {
@@ -175,7 +175,7 @@ class RandomHighlightModule extends GalleryModule {
 			'RandomHighlightOption',
 			'modules/randomhighlight/RandomHighlightOption.inc',
 			'randomhighlight',
-			array( 'ItemEditAlbum' )
+			array('ItemEditAlbum')
 		);
 
 		if ($ret) {
@@ -189,7 +189,7 @@ class RandomHighlightModule extends GalleryModule {
 	 * @see GalleryModule::getOnLoadHandlerIds
 	 */
 	public function getOnLoadHandlerIds() {
-		return array( 'RandomHighlight', 'RandomHighlightPrivate' );
+		return array('RandomHighlight', 'RandomHighlightPrivate');
 	}
 
 	/**
@@ -232,7 +232,7 @@ class RandomHighlightModule extends GalleryModule {
 			// Highlight is currently a non-public item.. can current user view that item?
 			list($ret, $highlight) = GalleryCoreApi::loadEntitiesById(
 				$thumbnail->getDerivativeSourceId(),
-				array( 'GalleryFileSystemEntity', 'GalleryDerivative' )
+				array('GalleryFileSystemEntity', 'GalleryDerivative')
 			);
 
 			if ($ret) {
@@ -321,7 +321,7 @@ class RandomHighlightModule extends GalleryModule {
 
 			for ($n = 5; !empty($itemIds); $n += 10) {
 				// Hopefully most items have a thumbnail; pick n ids at a time until we find one
-				$data = array( DERIVATIVE_TYPE_IMAGE_THUMBNAIL, $thumbnail->getDerivativeSourceId() );
+				$data = array(DERIVATIVE_TYPE_IMAGE_THUMBNAIL, $thumbnail->getDerivativeSourceId());
 
 				for ($i = 0; !empty($itemIds) && $i < $n; $i++) {
 					$oneItemIdAsArray = array_splice($itemIds, mt_rand(0, count($itemIds) - 1), 1);
@@ -391,7 +391,7 @@ class RandomHighlightModule extends GalleryModule {
 
 				return $ret;
 			}
-			$ret = GalleryCoreApi::expireDerivativeTreeBySourceIds(array( $thumbnail->getId() ));
+			$ret = GalleryCoreApi::expireDerivativeTreeBySourceIds(array($thumbnail->getId()));
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);

@@ -39,8 +39,8 @@ class SnapGalaxyModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
-		$this->setRequiredCoreApi(array( 7, 43 ));
-		$this->setRequiredModuleApi(array( 3, 9 ));
+		$this->setRequiredCoreApi(array(7, 43));
+		$this->setRequiredModuleApi(array(3, 9));
 	}
 
 	/**
@@ -118,7 +118,7 @@ class SnapGalaxyModule extends GalleryModule {
 	 * @see GalleryModule::performFactoryRegistrations
 	 */
 	public function performFactoryRegistrations() {
-		foreach (array( '1_0', '1_1' ) as $version) {
+		foreach (array('1_0', '1_1') as $version) {
 			$ret = GalleryCoreApi::registerFactoryImplementation(
 				'CartPluginInterface_' . $version,
 				'SnapGalaxyCartPlugin',
@@ -150,17 +150,17 @@ class SnapGalaxyModule extends GalleryModule {
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				$links[$itemId][] = array(
-					'text' => $this->translate('Print on SnapGalaxy.com'),
+					'text'   => $this->translate('Print on SnapGalaxy.com'),
 					'params' => array(
 						'controller' => 'snapgalaxy.SnapGalaxyPrintPhotos',
-						'itemId' => $itemId,
-						'returnUrl' => '%CURRENT_URL%',
+						'itemId'     => $itemId,
+						'returnUrl'  => '%CURRENT_URL%',
 					),
 				);
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 
 	/**

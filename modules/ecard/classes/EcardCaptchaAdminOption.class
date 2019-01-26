@@ -32,14 +32,14 @@ class EcardCaptchaAdminOption extends CaptchaAdminOption {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'ecard');
 
 		if ($ret) {
-			return array( $ret, null, null, null );
+			return array($ret, null, null, null);
 		}
 		// Note: we use validation.level for all plugins, but config is via captcha module
 		return array(
 			null,
 			$module->translate('Send eCard'),
-			array( 'module', 'ecard', 'validation.level' ),
-			array( 'HIGH', 'OFF' ),
+			array('module', 'ecard', 'validation.level'),
+			array('HIGH', 'OFF'),
 		);
 	}
 }

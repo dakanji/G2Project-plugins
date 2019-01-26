@@ -46,8 +46,8 @@ class getid3_exe extends getid3_handler {
 		$info['exe']['mz']['raw']['relocation_table_offset'] = getid3_lib::LittleEndian2Int(substr($EXEheader, 24, 2));
 		$info['exe']['mz']['raw']['overlay_number']          = getid3_lib::LittleEndian2Int(substr($EXEheader, 26, 2));
 
-		$info['exe']['mz']['byte_size']          = (($info['exe']['mz']['raw']['page_count'] - 1)) * 512 + $info['exe']['mz']['raw']['last_page_size'];
-		$info['exe']['mz']['header_size']        = $info['exe']['mz']['raw']['header_paragraphs'] * 16;
+		$info['exe']['mz']['byte_size']          = (($info['exe']['mz']['raw']['page_count'] - 1))    * 512 + $info['exe']['mz']['raw']['last_page_size'];
+		$info['exe']['mz']['header_size']        = $info['exe']['mz']['raw']['header_paragraphs']     * 16;
 		$info['exe']['mz']['memory_minimum']     = $info['exe']['mz']['raw']['min_memory_paragraphs'] * 16;
 		$info['exe']['mz']['memory_recommended'] = $info['exe']['mz']['raw']['max_memory_paragraphs'] * 16;
 

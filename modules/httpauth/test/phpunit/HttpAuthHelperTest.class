@@ -53,7 +53,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		$this->_parserType  =& HttpAuthHelperTestRewriteApi::_getParserType();
 		$this->_parserType  = 'preGallery';
 		$this->_activeRules =& HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule('httpauth');
-		$this->_activeRules = array( 'authorization' );
+		$this->_activeRules = array('authorization');
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'RewriteApi',
@@ -70,7 +70,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			),
 			array(
 				'forceServerRelativeUrl' => true,
-				'htmlEntities' => false,
+				'htmlEntities'           => false,
 			)
 		) . " HTTP/1.0\r\n"
 		. 'Host: ' . $urlGenerator->getHostName() . "\r\n"
@@ -108,7 +108,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		. "\n\n\n\n";
 
 		// Use HttpAuthHelperTestPlatform
-		$this->_platform = new HttpAuthHelperTestPlatform();
+		$this->_platform                                          = new HttpAuthHelperTestPlatform();
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_accessAuthorizationResponse;
 		$gallery->setPlatform($this->_platform);
 
@@ -217,7 +217,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckConfigurationRewriteModuleDisabled() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
-		$moduleStatus = array();
+		$moduleStatus                                             = array();
 		GalleryDataCache::put('GalleryPluginHelper::fetchPluginList(module)', $moduleStatus);
 
 		list($ret, $code) = HttpAuthHelper::checkConfiguration();
@@ -231,7 +231,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckConfigurationBadRewriteParser() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
-		$this->_parserType = 'bogus';
+		$this->_parserType                                        = 'bogus';
 
 		list($ret, $code) = HttpAuthHelper::checkConfiguration();
 
@@ -244,7 +244,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckConfigurationAuthorizationRuleDisabled() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
-		$this->_activeRules = array();
+		$this->_activeRules                                       = array();
 
 		list($ret, $code) = HttpAuthHelper::checkConfiguration();
 
@@ -306,7 +306,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckHttpAuthPluginDisabled() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
-		$ret = GalleryCoreApi::removePluginParameter('module', 'httpauth', 'httpAuthPlugin');
+		$ret                                                      = GalleryCoreApi::removePluginParameter('module', 'httpauth', 'httpAuthPlugin');
 
 		if ($ret) {
 			return $ret;
@@ -553,8 +553,8 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(
-			array( true, false, true ),
-			array( $authPluginEnabled, $serverPluginEnabled, $usedGlobally )
+			array(true, false, true),
+			array($authPluginEnabled, $serverPluginEnabled, $usedGlobally)
 		);
 	}
 
@@ -618,7 +618,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status' => 'HTTP/1.0 401 Unauthorized',
+				'status'           => 'HTTP/1.0 401 Unauthorized',
 				'www-authenticate' => "WWW-Authenticate: Basic realm='TEST_AUTH_NAME'",
 			),
 			$this->_headers
@@ -673,7 +673,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'status' => 'HTTP/1.0 401 Unauthorized',
+				'status'           => 'HTTP/1.0 401 Unauthorized',
 				'www-authenticate' => "WWW-Authenticate: Basic realm='TEST_AUTH_NAME'",
 			),
 			$this->_headers
@@ -749,11 +749,11 @@ class HttpAuthHelperTestRewriteApi {
 	}
 
 	public function isCompatibleWithApi($version) {
-		return array( null, true );
+		return array(null, true);
 	}
 
 	public function fetchActiveRulesForModule($moduleId) {
-		return array( null, HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule($moduleId) );
+		return array(null, HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule($moduleId));
 	}
 
 	public function getParserType() {

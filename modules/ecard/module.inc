@@ -37,8 +37,8 @@ class EcardModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 27 ));
-		$this->setRequiredModuleApi(array( 3, 9 ));
+		$this->setRequiredCoreApi(array(7, 27));
+		$this->setRequiredModuleApi(array(3, 9));
 	}
 
 	/**
@@ -166,13 +166,13 @@ class EcardModule extends GalleryModule {
 				$params['itemId'] = $itemId;
 				$params['return'] = 1;
 				$links[$itemId][] = array(
-					'text' => $this->translate('Send as eCard'),
+					'text'   => $this->translate('Send as eCard'),
 					'params' => $params,
 				);
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 
 	/**

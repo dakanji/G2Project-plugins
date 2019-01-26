@@ -35,7 +35,7 @@ class ModifyCartController extends GalleryController {
 		list($ret, $cartItemIds) = CartHelper::fetchCartItemCounts();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$error   = array();
@@ -67,7 +67,7 @@ class ModifyCartController extends GalleryController {
 					$ret = CartHelper::setCartItemCounts($cartItemIds);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 					$status['cartModified'] = 1;
 
@@ -78,7 +78,7 @@ class ModifyCartController extends GalleryController {
 					$ret = CartHelper::setCartItemCounts(array());
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 					$status['cartModified'] = 1;
 
@@ -97,7 +97,7 @@ class ModifyCartController extends GalleryController {
 						);
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						if (isset($cartPlugin)) {
@@ -113,7 +113,7 @@ class ModifyCartController extends GalleryController {
 					list($ret, $itemList) = GalleryCoreApi::loadEntitiesById(array_keys($cartItemIds), 'GalleryItem');
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					$fulfillmentCart = array();
@@ -132,7 +132,7 @@ class ModifyCartController extends GalleryController {
 					list($ret, $redirect) = $cartPlugin->fulfillCart($fulfillmentCart);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					// Remove the fulfilled items
@@ -144,7 +144,7 @@ class ModifyCartController extends GalleryController {
 					$ret = CartHelper::setCartItemCounts($cartItemIds);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if (!isset($redirect['href'])) {
@@ -172,6 +172,6 @@ class ModifyCartController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }

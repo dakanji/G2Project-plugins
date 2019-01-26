@@ -169,7 +169,7 @@ class DownloadRegistryFileView extends GalleryView {
 			case 'zh': // Chinese
 				$country = trim(GalleryUtilities::strToLower((string)$country));
 
-				if (in_array($country, array( 'hans', 'cn' ))) {
+				if (in_array($country, array('hans', 'cn'))) {
 					$codePage = 936; // Chinese (Simplified)
 				} else {
 					$codePage = 950; // Chinese (Traditional)

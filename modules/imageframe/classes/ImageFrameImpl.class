@@ -43,7 +43,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe', true);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$frames = array(
@@ -89,11 +89,11 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		if (!$template->hasVariable('ImageFrameData')) {
 			$simpleFrames    = array(
 				'none' => array(
-					'type' => 'style',
+					'type'  => 'style',
 					'style' => 'border-style: none',
 				),
 				'solid' => array(
-					'type' => 'style',
+					'type'  => 'style',
 					'style' => 'border: 1px solid black !important',
 				),
 			);
@@ -102,7 +102,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 				'ImageFrameData',
 				array(
 					'idList' => '',
-					'data' => array(),
+					'data'   => array(),
 				)
 			);
 		}
@@ -122,7 +122,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		);
 
 		if (!is_array($frameIds)) {
-			$frameIds = array( $frameIds );
+			$frameIds = array($frameIds);
 		}
 
 		foreach ($frameIds as $frameId) {
@@ -176,8 +176,8 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		$smarty->_smarty_include(
 			array(
 				'smarty_include_tpl_file' => 'gallery:modules/imageframe/templates/ImageFrame.tpl',
-				'smarty_include_vars' => array(
-					'frame' => $params['frame'],
+				'smarty_include_vars'     => array(
+					'frame'   => $params['frame'],
 					'content' => trim($content),
 				),
 			)
@@ -198,6 +198,6 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 			$params['itemId'] = $itemId;
 		}
 
-		return array( null, $urlGenerator->generateUrl($params) );
+		return array(null, $urlGenerator->generateUrl($params));
 	}
 }

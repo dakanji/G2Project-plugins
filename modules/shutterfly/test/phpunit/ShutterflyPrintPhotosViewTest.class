@@ -136,14 +136,14 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $shutterflySessionId;
 		$shutterflySession             = new GallerySession();
-		$ret = $shutterflySession->init();
+		$ret                           = $shutterflySession->init();
 
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->assertEquals(
-			array( $itemId ),
+			array($itemId),
 			$shutterflySession->get('core.isPrintService'),
 			'Shutterfly session missing item id'
 		);
@@ -160,7 +160,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		$session->put(
 			'shutterfly.cart',
 			array(
-				$itemId => 1,
+				$itemId       => 1,
 				$publicItemId => 1,
 			)
 		);
@@ -173,7 +173,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 		// Give the active user view permissions through session-basd permissions
 		$sessionPermissionEntityId = $itemId;
-		$session->put(GALLERY_PERMISSION_SESSION_KEY, array( $sessionPermissionEntityId ));
+		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($sessionPermissionEntityId));
 
 		$ret = GalleryCoreApi::addEntityPermission(
 			$itemId,
@@ -222,14 +222,14 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 			$_COOKIE[SESSION_ID_PARAMETER] = $shutterflySessionId;
 			$shutterflySession             = new GallerySession();
-			$ret = $shutterflySession->init();
+			$ret                           = $shutterflySession->init();
 
 			if ($ret) {
 				return $ret;
 			}
 
 			$this->assertEquals(
-				array( $itemId ),
+				array($itemId),
 				$shutterflySession->get('core.isPrintService'),
 				'Shutterfly session missing item id'
 			);

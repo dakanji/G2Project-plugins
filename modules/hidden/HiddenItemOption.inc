@@ -34,10 +34,10 @@ class HiddenItemOption extends ItemEditOption {
 		list($ret, $canHide) = GalleryCoreApi::hasItemPermission($item->getId(), 'core.changePermissions');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $canHide );
+		return array(null, $canHide);
 	}
 
 	/**
@@ -50,7 +50,7 @@ class HiddenItemOption extends ItemEditOption {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'hidden');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		if (false) {
@@ -67,7 +67,7 @@ class HiddenItemOption extends ItemEditOption {
 			$itemTypeNames[2]
 		);
 
-		return array( null, 'modules/hidden/templates/HiddenItemOption.tpl', 'modules_hidden' );
+		return array(null, 'modules/hidden/templates/HiddenItemOption.tpl', 'modules_hidden');
 	}
 
 	/**
@@ -81,24 +81,24 @@ class HiddenItemOption extends ItemEditOption {
 		$ret = GalleryCoreApi::assertHasItemPermission($item->getId(), 'core.changePermissions');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		if (!empty($form['HiddenItemOption']['setHidden'])) {
 			$ret = HiddenHelper::hideItem($item, $useProgressBar);
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 		} else {
 			$ret = HiddenHelper::unHideItem($item, $useProgressBar);
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 		}
 
-		return array( null, $error, $warning );
+		return array(null, $error, $warning);
 	}
 
 	/**

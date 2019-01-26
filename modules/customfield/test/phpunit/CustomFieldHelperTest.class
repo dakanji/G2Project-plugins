@@ -33,7 +33,7 @@ class CustomFieldHelperTest extends GalleryTestCase {
 	}
 
 	public function testHandleAdminAction() {
-		$form = GalleryUtilities::getFormVariables('form');
+		$form                            = GalleryUtilities::getFormVariables('form');
 		$form['action']['add']['common'] = 'Add';
 		$form['common']['newField']      = '';
 		// This only test empty field name (Bug 1165012)
@@ -88,7 +88,7 @@ class CustomFieldHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				$this->_album->getId() => array(),
-				$this->_item->getId() => array(),
+				$this->_item->getId()  => array(),
 				$this->_item2->getId() => array(),
 			),
 			$data,
@@ -105,31 +105,31 @@ class CustomFieldHelperTest extends GalleryTestCase {
 			array(
 				'common' => array(
 					array(
-						'field' => 'Category',
+						'field'   => 'Category',
 						'summary' => true,
-						'detail' => false,
-						'choices' => array( 'A', 'B', 'C' ),
+						'detail'  => false,
+						'choices' => array('A', 'B', 'C'),
 					),
 				),
 				'album' => array(
 					array(
-						'field' => 'Catalog Id',
+						'field'   => 'Catalog Id',
 						'summary' => false,
-						'detail' => true,
+						'detail'  => true,
 						'choices' => array(),
 					),
 					array(
-						'field' => 'Year',
+						'field'   => 'Year',
 						'summary' => false,
-						'detail' => true,
+						'detail'  => true,
 						'choices' => array(),
 					),
 				),
 				'photo' => array(
 					array(
-						'field' => 'Photographer',
+						'field'   => 'Photographer',
 						'summary' => true,
-						'detail' => true,
+						'detail'  => true,
 						'choices' => array(),
 					),
 				),
@@ -142,8 +142,8 @@ class CustomFieldHelperTest extends GalleryTestCase {
 		}
 
 		$itemFields = array(
-			'Catalog Id' => '123',
-			'Year' => 2010,
+			'Catalog Id'   => '123',
+			'Year'         => 2010,
 			'Photographer' => 'Jack Frost',
 		);
 		$ret        = CustomFieldHelper::saveFieldValues($this->_item, $itemFields);
@@ -174,7 +174,7 @@ class CustomFieldHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				$this->_album->getId() => $itemFields,
-				$this->_item->getId() => $itemFields,
+				$this->_item->getId()  => $itemFields,
 				$this->_item2->getId() => array(),
 			),
 			$data,

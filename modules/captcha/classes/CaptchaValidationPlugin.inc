@@ -45,7 +45,7 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 		list($ret, $useCaptcha, $failedAttempts) = $this->_shouldValidate($options);
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		$error   = array();
@@ -80,7 +80,7 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 				);
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 			} else {
 				$session->put('captcha.failedAttempts', $failedAttempts + 1);
@@ -95,11 +95,11 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 			);
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 		}
 
-		return array( null, $error, $success );
+		return array(null, $error, $success);
 	}
 
 	/**
@@ -109,7 +109,7 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 		list($ret, $useCaptcha) = $this->_shouldValidate($options);
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		if ($useCaptcha) {
@@ -123,7 +123,7 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 			);
 		}
 
-		return array( null, null, null );
+		return array(null, null, null);
 	}
 
 	/**
@@ -161,7 +161,7 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 				);
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 
 				if ($securityLevel == 'LOW') {
@@ -176,7 +176,7 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 				}
 
@@ -195,6 +195,6 @@ class CaptchaValidationPlugin extends GalleryValidationPlugin {
 				);
 		}
 
-		return array( null, $useCaptcha, (int)$failedAttempts );
+		return array(null, $useCaptcha, (int)$failedAttempts);
 	}
 }

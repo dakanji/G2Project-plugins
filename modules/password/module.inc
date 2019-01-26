@@ -43,8 +43,8 @@ class PasswordModule extends GalleryModule {
 		$this->setVersion('1.0.9');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $this->translate('Display'));
-		$this->setRequiredCoreApi(array( 7, 53 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 53));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -82,7 +82,7 @@ class PasswordModule extends GalleryModule {
 			'PasswordModule',
 			'modules/password/module.inc',
 			'password',
-			array( 'GalleryEntity::save' )
+			array('GalleryEntity::save')
 		);
 
 		if ($ret) {
@@ -108,7 +108,7 @@ class PasswordModule extends GalleryModule {
 			'PasswordOption',
 			'modules/password/PasswordOption.inc',
 			'password',
-			array( 'ItemEditItem' )
+			array('ItemEditItem')
 		);
 
 		if ($ret) {
@@ -148,7 +148,7 @@ class PasswordModule extends GalleryModule {
 	 * @see GalleryModule::getOnLoadHandlerIds
 	 */
 	public function getOnLoadHandlerIds() {
-		return array( 'Password' );
+		return array('Password');
 	}
 
 	/**
@@ -255,7 +255,7 @@ class PasswordModule extends GalleryModule {
 					$phpVm->header(
 						'Location: ' . $urlGenerator->generateUrl(
 							array(
-								'view' => 'password.PasswordEntry',
+								'view'   => 'password.PasswordEntry',
 								'itemId' => $itemId,
 							),
 							array(
@@ -287,7 +287,7 @@ class PasswordModule extends GalleryModule {
 			$ret = PasswordHelper::handleMoveItem($item);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		} elseif (GalleryUtilities::isA($item, 'GalleryItem')
 			&& $item->testPersistentFlag(STORAGE_FLAG_NEWLY_CREATED)
@@ -296,10 +296,10 @@ class PasswordModule extends GalleryModule {
 			$ret = PasswordHelper::handleNewItem($item);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 }

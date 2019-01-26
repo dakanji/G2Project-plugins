@@ -136,14 +136,14 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $digibugSessionId;
 		$digibugSession                = new GallerySession();
-		$ret = $digibugSession->init();
+		$ret                           = $digibugSession->init();
 
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->assertEquals(
-			array( $itemId ),
+			array($itemId),
 			$digibugSession->get('core.isPrintService'),
 			'Digibug session missing item id'
 		);
@@ -160,7 +160,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		$session->put(
 			'digibug.cart',
 			array(
-				$itemId => 1,
+				$itemId       => 1,
 				$publicItemId => 1,
 			)
 		);
@@ -173,7 +173,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 
 		// Give the active user view permissions through session-basd permissions
 		$sessionPermissionEntityId = $itemId;
-		$session->put(GALLERY_PERMISSION_SESSION_KEY, array( $sessionPermissionEntityId ));
+		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($sessionPermissionEntityId));
 
 		$ret = GalleryCoreApi::addEntityPermission(
 			$itemId,
@@ -222,14 +222,14 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 
 			$_COOKIE[SESSION_ID_PARAMETER] = $digibugSessionId;
 			$digibugSession                = new GallerySession();
-			$ret = $digibugSession->init();
+			$ret                           = $digibugSession->init();
 
 			if ($ret) {
 				return $ret;
 			}
 
 			$this->assertEquals(
-				array( $itemId ),
+				array($itemId),
 				$digibugSession->get('core.isPrintService'),
 				'Digibug session missing item id'
 			);

@@ -69,7 +69,7 @@ class getid3_shorten extends getid3_handler {
 			//   long Offset1[4];
 			// }TSeekEntry;
 
-			$SeekTableData = $this->fread($info['shn']['seektable']['length'] - 16);
+			$SeekTableData                           = $this->fread($info['shn']['seektable']['length'] - 16);
 			$info['shn']['seektable']['entry_count'] = floor(strlen($SeekTableData) / 80);
 			//$info['shn']['seektable']['entries'] = array();
 				//$SeekTableOffset = 0;
@@ -118,7 +118,7 @@ class getid3_shorten extends getid3_handler {
 		}
 
 		if (GETID3_OS_ISWINDOWS) {
-			$RequiredFiles = array( 'shorten.exe', 'cygwin1.dll', 'head.exe' );
+			$RequiredFiles = array('shorten.exe', 'cygwin1.dll', 'head.exe');
 
 			foreach ($RequiredFiles as $required_file) {
 				if (!is_readable(GETID3_HELPERAPPSDIR . $required_file)) {

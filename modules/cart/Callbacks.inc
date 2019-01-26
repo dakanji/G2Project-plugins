@@ -44,7 +44,7 @@ class CartCallbacks {
 					$total += $count;
 				}
 
-				$block =& $smarty->_tpl_vars['block'];
+				$block                               =& $smarty->_tpl_vars['block'];
 				$block['cart']['ShowCart']['unique'] = $unique;
 				$block['cart']['ShowCart']['total']  = $total;
 

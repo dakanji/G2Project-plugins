@@ -74,7 +74,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 					'view' => 'imageframe.CSS',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -92,7 +92,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 					'view' => 'imageframe.CSS',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -110,14 +110,14 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 					'view' => 'imageblock.ExternalCSS',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
 	}
 
 	public function testExternalCSSWithoutDefaultImageFrames() {
-		foreach (array( 'albumFrame', 'itemFrame' ) as $key) {
+		foreach (array('albumFrame', 'itemFrame') as $key) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'imageblock', $key, '');
 
 			if ($ret) {
@@ -133,7 +133,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 					'view' => 'imageblock.ExternalCSS',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);

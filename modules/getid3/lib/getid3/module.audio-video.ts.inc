@@ -42,7 +42,7 @@ class getid3_ts extends getid3_handler {
 		$info['ts']['packet']['flags']['transport_error_indicator']    = (bool)($pid_flags_raw & 0x8000);      // Set by demodulator if can't correct errors in the stream, to tell the demultiplexer that the packet has an uncorrectable error
 		$info['ts']['packet']['flags']['payload_unit_start_indicator'] = (bool)($pid_flags_raw & 0x4000);      // 1 means start of PES data or PSI otherwise zero only.
 		$info['ts']['packet']['flags']['transport_high_priority']      = (bool)($pid_flags_raw & 0x2000);      // 1 means higher priority than other packets with the same PID.
-		$info['ts']['packet']['packet_id'] = ($pid_flags_raw & 0x1FFF) >> 0;
+		$info['ts']['packet']['packet_id']                             = ($pid_flags_raw & 0x1FFF) >> 0;
 
 		$info['ts']['packet']['raw']['scrambling_control']      = ($SAC_raw & 0xC0) >> 6;
 		$info['ts']['packet']['flags']['adaption_field_exists'] = (bool)($SAC_raw & 0x20);

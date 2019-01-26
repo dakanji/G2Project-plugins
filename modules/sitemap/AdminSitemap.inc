@@ -33,13 +33,13 @@ class AdminSitemapView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $moduleStatus) = GalleryCoreApi::fetchPluginStatus('module');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$template->setVariable(
 			'AdminSitemap',

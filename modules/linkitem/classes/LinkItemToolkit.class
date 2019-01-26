@@ -57,7 +57,7 @@ class LinkItemToolkit extends GalleryToolkit {
 		list($ret, $urlSnapshot) = GalleryCoreApi::getPluginParameter('module', 'linkitem', 'urlSnapshot');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		if (!$urlSnapshot) {
@@ -66,12 +66,12 @@ class LinkItemToolkit extends GalleryToolkit {
 				$destFilename
 			)
 			) {
-				return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
+				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 			}
 			$context['width']  = 270;
 			$context['height'] = 224;
 
-			return array( null, 'image/jpeg', $context );
+			return array(null, 'image/jpeg', $context);
 		}
 
 		// Source URL is passed in as "source filename"
@@ -88,11 +88,11 @@ class LinkItemToolkit extends GalleryToolkit {
 		list($ret, $snapshotExec) = GalleryCoreApi::getPluginParameter('module', 'linkitem', 'snapshotExec');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		if (empty($snapshotExec)) {
-			return array( GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null, null );
+			return array(GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null, null);
 		}
 		$tmpBase = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'lnk_');
 		$tmpFile = $tmpBase . '.jpg';
@@ -110,23 +110,23 @@ class LinkItemToolkit extends GalleryToolkit {
 			}
 		}
 		array_unshift($exec, $snapshotExec);
-		list($success, $output, $error) = $platform->exec(array( $exec ));
+		list($success, $output, $error) = $platform->exec(array($exec));
 		@$platform->unlink($tmpBase);
 
 		if (!$success) {
-			return array( GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE), null, null );
+			return array(GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE), null, null);
 		}
 		$success = $platform->copy($tmpFile, $destFilename);
 		@$platform->unlink($tmpFile);
 
 		if (!$success) {
-			return array( GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null );
+			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 		}
 
 		$context['width']  = $map['%WIDTH%'];
 		$context['height'] = $map['%HEIGHT%'];
 
-		return array( null, 'image/jpeg', $context );
+		return array(null, 'image/jpeg', $context);
 	}
 
 	/**

@@ -41,7 +41,7 @@ class getid3_ogg extends getid3_handler {
 
 		$this->fseek($info['avdataoffset']);
 
-		$oggpageinfo = $this->ParseOggPageHeader();
+		$oggpageinfo                                           = $this->ParseOggPageHeader();
 		$info['ogg']['pageheader'][$oggpageinfo['page_seqno']] = $oggpageinfo;
 
 		if ($this->ftell() >= $this->getid3->fread_buffer_size()) {
@@ -197,20 +197,20 @@ class getid3_ogg extends getid3_handler {
 
 			$info['ogg']['skeleton']['fishead']['version']          = $info['ogg']['skeleton']['fishead']['raw']['version_major'] . '.' . $info['ogg']['skeleton']['fishead']['raw']['version_minor'];
 			$info['ogg']['skeleton']['fishead']['presentationtime'] = $info['ogg']['skeleton']['fishead']['raw']['presentationtime_numerator'] / $info['ogg']['skeleton']['fishead']['raw']['presentationtime_denominator'];
-			$info['ogg']['skeleton']['fishead']['basetime']         = $info['ogg']['skeleton']['fishead']['raw']['basetime_numerator'] / $info['ogg']['skeleton']['fishead']['raw']['basetime_denominator'];
+			$info['ogg']['skeleton']['fishead']['basetime']         = $info['ogg']['skeleton']['fishead']['raw']['basetime_numerator']         / $info['ogg']['skeleton']['fishead']['raw']['basetime_denominator'];
 			$info['ogg']['skeleton']['fishead']['utc']              = $info['ogg']['skeleton']['fishead']['raw']['utc'];
 
 
 			$counter = 0;
 
 			do {
-				$oggpageinfo = $this->ParseOggPageHeader();
+				$oggpageinfo                                                              = $this->ParseOggPageHeader();
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno'] . '.' . $counter++] = $oggpageinfo;
-				$filedata = $this->fread($oggpageinfo['page_length']);
+				$filedata                                                                 = $this->fread($oggpageinfo['page_length']);
 				$this->fseek($oggpageinfo['page_end_offset']);
 
 				if (substr($filedata, 0, 8) == "fisbone\x00") {
-					$filedataoffset = 8;
+					$filedataoffset                                                     = 8;
 					$info['ogg']['skeleton']['fisbone']['raw']['message_header_offset'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
 					$filedataoffset += 4;
 					$info['ogg']['skeleton']['fisbone']['raw']['serial_number'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
@@ -255,12 +255,12 @@ class getid3_ogg extends getid3_handler {
 		}
 
 		// Page 2 - Comment Header
-		$oggpageinfo = $this->ParseOggPageHeader();
+		$oggpageinfo                                           = $this->ParseOggPageHeader();
 		$info['ogg']['pageheader'][$oggpageinfo['page_seqno']] = $oggpageinfo;
 
 		switch ($info['audio']['dataformat']) {
 			case 'vorbis':
-				$filedata = $this->fread($info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['page_length']);
+				$filedata                                                             = $this->fread($info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['page_length']);
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['packet_type'] = getid3_lib::LittleEndian2Int(substr($filedata, 0, 1));
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['stream_type'] = substr($filedata, 1, 6); // hard-coded to 'vorbis'
 
@@ -287,7 +287,7 @@ class getid3_ogg extends getid3_handler {
 				break;
 
 			case 'opus':
-				$filedata = $this->fread($info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['page_length']);
+				$filedata                                                             = $this->fread($info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['page_length']);
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['stream_type'] = substr($filedata, 0, 8); // hard-coded to 'OpusTags'
 				if (substr($filedata, 0, 8) != 'OpusTags') {
 					$info['error'][] = 'Expected "OpusTags" as header but got "' . substr($filedata, 0, 8) . '"';
@@ -575,7 +575,7 @@ class getid3_ogg extends getid3_handler {
 		$commentdataoffset   += 4;
 		$info['avdataoffset'] = $CommentStartOffset + $commentdataoffset;
 
-		$basicfields                   = array( 'TITLE', 'ARTIST', 'ALBUM', 'TRACKNUMBER', 'GENRE', 'DATE', 'DESCRIPTION', 'COMMENT' );
+		$basicfields                   = array('TITLE', 'ARTIST', 'ALBUM', 'TRACKNUMBER', 'GENRE', 'DATE', 'DESCRIPTION', 'COMMENT');
 		$ThisFileInfo_ogg_comments_raw = &$info['ogg']['comments_raw'];
 
 		for ($i = 0; $i < $CommentsCount; $i++) {
@@ -627,7 +627,7 @@ class getid3_ogg extends getid3_handler {
 
 				$VorbisCommentPage++;
 
-				$oggpageinfo = $this->ParseOggPageHeader();
+				$oggpageinfo                                           = $this->ParseOggPageHeader();
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno']] = $oggpageinfo;
 
 				// First, save what we haven't read yet
@@ -661,14 +661,14 @@ class getid3_ogg extends getid3_handler {
 				//$filebaseoffset += $oggpageinfo['header_end_offset'] - $oggpageinfo['page_start_offset'];
 			}
 			$ThisFileInfo_ogg_comments_raw[$i]['offset'] = $commentdataoffset;
-			$commentstring      = substr($commentdata, $commentdataoffset, $ThisFileInfo_ogg_comments_raw[$i]['size']);
+			$commentstring                               = substr($commentdata, $commentdataoffset, $ThisFileInfo_ogg_comments_raw[$i]['size']);
 			$commentdataoffset += $ThisFileInfo_ogg_comments_raw[$i]['size'];
 
 			if (!$commentstring) {
 				// no comment?
 				$info['warning'][] = 'Blank Ogg comment [' . $i . ']';
 			} elseif (strstr($commentstring, '=')) {
-				$commentexploded = explode('=', $commentstring, 2);
+				$commentexploded                            = explode('=', $commentstring, 2);
 				$ThisFileInfo_ogg_comments_raw[$i]['key']   = strtoupper($commentexploded[0]);
 				$ThisFileInfo_ogg_comments_raw[$i]['value'] = (isset($commentexploded[1]) ? $commentexploded[1] : '');
 
@@ -696,12 +696,12 @@ class getid3_ogg extends getid3_handler {
 					$ogg = new self($this->getid3);
 					$ogg->setStringMode($data);
 					$info['ogg']['comments']['picture'][] = array(
-						'image_mime' => $imageinfo['mime'],
-						'datalength' => strlen($data),
-						'picturetype' => 'cover art',
+						'image_mime'   => $imageinfo['mime'],
+						'datalength'   => strlen($data),
+						'picturetype'  => 'cover art',
 						'image_height' => $imageinfo['height'],
-						'image_width' => $imageinfo['width'],
-						'data' => $ogg->saveAttachment('coverart', 0, strlen($data), $imageinfo['mime']),
+						'image_width'  => $imageinfo['width'],
+						'data'         => $ogg->saveAttachment('coverart', 0, strlen($data), $imageinfo['mime']),
 					);
 					unset($ogg);
 				} else {

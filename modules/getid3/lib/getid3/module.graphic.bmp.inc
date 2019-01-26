@@ -322,9 +322,9 @@ class getid3_bmp extends getid3_handler {
 
 		if ($this->ExtractData) {
 			$this->fseek($thisfile_bmp_header_raw['data_offset']);
-			$RowByteLength   = ceil(($thisfile_bmp_header_raw['width'] * ($thisfile_bmp_header_raw['bits_per_pixel'] / 8)) / 4) * 4; // round up to nearest DWORD boundry
-			$BMPpixelData    = $this->fread($thisfile_bmp_header_raw['height'] * $RowByteLength);
-			$pixeldataoffset = 0;
+			$RowByteLength                          = ceil(($thisfile_bmp_header_raw['width'] * ($thisfile_bmp_header_raw['bits_per_pixel'] / 8)) / 4) * 4; // round up to nearest DWORD boundry
+			$BMPpixelData                           = $this->fread($thisfile_bmp_header_raw['height'] * $RowByteLength);
+			$pixeldataoffset                        = 0;
 			$thisfile_bmp_header_raw['compression'] = (isset($thisfile_bmp_header_raw['compression']) ? $thisfile_bmp_header_raw['compression'] : '');
 
 			switch ($thisfile_bmp_header_raw['compression']) {
@@ -470,9 +470,9 @@ class getid3_bmp extends getid3_handler {
 											// number of bytes that follow, each of which contains the color index
 											// of a single pixel. Each run must be aligned on a word boundary.
 											for ($i = 0; $i < $secondbyte; $i++) {
-												$paletteindex = getid3_lib::LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
-												$col          = $pixelcounter % $thisfile_bmp_header_raw['width'];
-												$row          = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
+												$paletteindex                     = getid3_lib::LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
+												$col                              = $pixelcounter % $thisfile_bmp_header_raw['width'];
+												$row                              = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 												$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
 												$pixelcounter++;
 											}
@@ -488,8 +488,8 @@ class getid3_bmp extends getid3_handler {
 									// encoded mode - the first byte specifies the number of consecutive pixels
 									// to be drawn using the color index contained in the second byte.
 									for ($i = 0; $i < $firstbyte; $i++) {
-										$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
-										$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
+										$col                              = $pixelcounter % $thisfile_bmp_header_raw['width'];
+										$row                              = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 										$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$secondbyte];
 										$pixelcounter++;
 									}
@@ -563,8 +563,8 @@ class getid3_bmp extends getid3_handler {
 											}
 
 											foreach ($paletteindexes as $paletteindex) {
-												$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
-												$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
+												$col                              = $pixelcounter % $thisfile_bmp_header_raw['width'];
+												$row                              = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 												$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
 												$pixelcounter++;
 											}
@@ -583,8 +583,8 @@ class getid3_bmp extends getid3_handler {
 									$paletteindexes[1] = ($secondbyte & 0x0F);
 
 									for ($i = 0; $i < $firstbyte; $i++) {
-										$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
-										$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
+										$col                              = $pixelcounter % $thisfile_bmp_header_raw['width'];
+										$row                              = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 										$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindexes[($i % 2)]];
 										$pixelcounter++;
 									}
@@ -627,9 +627,9 @@ class getid3_bmp extends getid3_handler {
 									$pixelvalue       = getid3_lib::LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset, $thisfile_bmp_header_raw['bits_per_pixel'] / 8));
 									$pixeldataoffset += $thisfile_bmp_header_raw['bits_per_pixel'] / 8;
 
-									$red   = intval(round(((($pixelvalue & $thisfile_bmp_header_raw['red_mask']) >> $redshift) / ($thisfile_bmp_header_raw['red_mask'] >> $redshift)) * 255));
-									$green = intval(round(((($pixelvalue & $thisfile_bmp_header_raw['green_mask']) >> $greenshift) / ($thisfile_bmp_header_raw['green_mask'] >> $greenshift)) * 255));
-									$blue  = intval(round(((($pixelvalue & $thisfile_bmp_header_raw['blue_mask']) >> $blueshift) / ($thisfile_bmp_header_raw['blue_mask'] >> $blueshift)) * 255));
+									$red                              = intval(round(((($pixelvalue & $thisfile_bmp_header_raw['red_mask']) >> $redshift) / ($thisfile_bmp_header_raw['red_mask'] >> $redshift)) * 255));
+									$green                            = intval(round(((($pixelvalue & $thisfile_bmp_header_raw['green_mask']) >> $greenshift) / ($thisfile_bmp_header_raw['green_mask'] >> $greenshift)) * 255));
+									$blue                             = intval(round(((($pixelvalue & $thisfile_bmp_header_raw['blue_mask']) >> $blueshift) / ($thisfile_bmp_header_raw['blue_mask'] >> $blueshift)) * 255));
 									$thisfile_bmp['data'][$row][$col] = (($red << 16) | ($green << 8) | ($blue));
 								}
 

@@ -59,7 +59,7 @@ class ConfirmRegistrationController extends GalleryController {
 					$results['error'][] = 'form[error][unknownUser]';
 				}
 			} else {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		} else {
 			// verify registration key:
@@ -69,19 +69,19 @@ class ConfirmRegistrationController extends GalleryController {
 				$ret = GalleryPendingUserHelper::createGalleryUser($user);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 		}
 
 		if (empty($results['redirect'])) {
 			$results['delegate'] = array(
-				'view' => 'core.UserAdmin',
+				'view'    => 'core.UserAdmin',
 				'subView' => 'register.ConfirmRegistration',
 			);
 		}
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 

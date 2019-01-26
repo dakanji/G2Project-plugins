@@ -38,8 +38,8 @@ class Getid3Module extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 27 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 27));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -147,14 +147,14 @@ class Getid3Module extends GalleryModule {
 		global $gallery;
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'Getid3',
-			array( 'video/x-msvideo' ),
+			array('video/x-msvideo'),
 			'originationTimestamp',
 			'int',
 			$gallery->i18n('Get the origination timestamp')
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		/*
@@ -169,7 +169,7 @@ class Getid3Module extends GalleryModule {
 			return array(
 				null,
 				array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.CantActivate',
 				),
 			);
@@ -178,10 +178,10 @@ class Getid3Module extends GalleryModule {
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $redirect );
+		return array(null, $redirect);
 	}
 
 	/**

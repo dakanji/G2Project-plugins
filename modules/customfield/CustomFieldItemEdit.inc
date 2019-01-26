@@ -37,14 +37,14 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'customfield');
 
 		if ($ret) {
-			return array( $ret, null, null, null );
+			return array($ret, null, null, null);
 		}
 
 		if (isset($form['cfAdmin'])) {
 			list($ret, $adminStatus) = CustomFieldHelper::handleAdminAction($form, $item->getId());
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 
 			foreach ($adminStatus as $key => $tmp) {
@@ -88,7 +88,7 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 			list($ret, $markup) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 
 			if ($markup == 'html') {
@@ -101,17 +101,17 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 			$ret = CustomFieldHelper::saveFieldValues($item, $form['fields']);
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'customfield');
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 			$status = $module->translate('Changes saved successfully');
 		}
 
-		return array( null, $error, $status, false );
+		return array(null, $error, $status, false);
 	}
 
 	/**
@@ -133,18 +133,18 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 				$ret = CustomFieldHelper::loadAdminForm($form, $item->getId());
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 				$tpl = 'modules/customfield/templates/CustomFieldItemAdmin.tpl';
 
 				break;
 
 			default:
-				$set = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'album' : (GalleryUtilities::isA($item, 'GalleryPhotoItem') ? 'photo' : 'common');
-				list($ret, $tmp, $param, $isContainerSettings) = CustomFieldHelper::fetchFieldValues(array( $item ), null, $set);
+				$set                                           = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'album' : (GalleryUtilities::isA($item, 'GalleryPhotoItem') ? 'photo' : 'common');
+				list($ret, $tmp, $param, $isContainerSettings) = CustomFieldHelper::fetchFieldValues(array($item), null, $set);
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 				$form['fields'] = $tmp[$item->getId()];
 
@@ -166,7 +166,7 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 		}
 		$template->setVariable('controller', 'customfield.CustomFieldItemEdit');
 
-		return array( null, $tpl, 'modules_customfield' );
+		return array(null, $tpl, 'modules_customfield');
 	}
 
 	/**
@@ -198,9 +198,9 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'customfield');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $module->translate('Custom Fields') );
+		return array(null, $module->translate('Custom Fields'));
 	}
 }

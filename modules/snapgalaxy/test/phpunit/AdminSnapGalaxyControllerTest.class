@@ -52,11 +52,11 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -70,7 +70,7 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
 				'status' => array(
@@ -110,11 +110,11 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][snapgalaxyPartnerId][invalid]' ),
+				'error'  => array('form[error][snapgalaxyPartnerId][invalid]'),
 			),
 			$results
 		);
@@ -128,11 +128,11 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][snapgalaxyPartnerId][invalid]' ),
+				'error'  => array('form[error][snapgalaxyPartnerId][invalid]'),
 			),
 			$results
 		);

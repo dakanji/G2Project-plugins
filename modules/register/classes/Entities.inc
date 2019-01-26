@@ -3,14 +3,14 @@
 $entityInfo['GalleryPendingUser'] = array(
 	'members' => array(
 		'userName' => array(
-			'type'    => STORAGE_TYPE_STRING,
-			'size'    => STORAGE_SIZE_SMALL,
-			'notNull' => 1,
+			'type'            => STORAGE_TYPE_STRING,
+			'size'            => STORAGE_SIZE_SMALL,
+			'notNull'         => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 		'fullName' => array(
-			'type' => STORAGE_TYPE_STRING,
-			'size' => STORAGE_SIZE_MEDIUM,
+			'type'            => STORAGE_TYPE_STRING,
+			'size'            => STORAGE_SIZE_MEDIUM,
 			'external-access' => EXTERNAL_ACCESS_FULL,
 		),
 		'hashedPassword' => array(

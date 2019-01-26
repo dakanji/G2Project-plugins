@@ -41,7 +41,7 @@ class G1MigrateHelper {
 		list($ret, $searchResults) = $gallery->search($query, array(), array());
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$count = 0;
@@ -50,7 +50,7 @@ class G1MigrateHelper {
 			$count = (int)$result[0];
 		}
 
-		return array( null, $count );
+		return array(null, $count);
 	}
 
 	/**
@@ -66,7 +66,7 @@ class G1MigrateHelper {
 
 		$query = 'SELECT [G1MigrateMap::itemId] FROM [G1MigrateMap]
 		  WHERE [G1MigrateMap::g1album]=? AND [G1MigrateMap::g1item]';
-		$data  = array( $g1album );
+		$data  = array($g1album);
 
 		if (isset($g1item)) {
 			$query .= '=?';
@@ -78,7 +78,7 @@ class G1MigrateHelper {
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$id = null;
@@ -87,6 +87,6 @@ class G1MigrateHelper {
 			$id = (int)$result[0];
 		}
 
-		return array( null, $id );
+		return array(null, $id);
 	}
 }

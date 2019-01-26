@@ -280,7 +280,7 @@ class getid3_zip extends getid3_handler {
 		$this->fseek($LocalFileHeader['compressed_size'], SEEK_CUR); // this should (but may not) match value in $LocalFileHeader['raw']['compressed_size'] -- $LocalFileHeader['compressed_size'] could have been overwritten above with value from Central Directory
 
 		if ($LocalFileHeader['flags']['data_descriptor_used']) {
-			$DataDescriptor = $this->fread(16);
+			$DataDescriptor                                  = $this->fread(16);
 			$LocalFileHeader['data_descriptor']['signature'] = getid3_lib::LittleEndian2Int(substr($DataDescriptor, 0, 4));
 
 			if ($LocalFileHeader['data_descriptor']['signature'] != 0x08074B50) { // "PK\x07\x08"

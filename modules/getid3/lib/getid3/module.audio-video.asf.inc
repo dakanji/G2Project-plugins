@@ -281,8 +281,8 @@ class getid3_asf extends getid3_handler {
 					}
 					$thisfile_asf_headerextensionobject['extension_data_size'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 4));
 					$offset += 4;
-					$thisfile_asf_headerextensionobject['extension_data'] = substr($ASFHeaderData, $offset, $thisfile_asf_headerextensionobject['extension_data_size']);
-					$unhandled_sections = 0;
+					$thisfile_asf_headerextensionobject['extension_data']        = substr($ASFHeaderData, $offset, $thisfile_asf_headerextensionobject['extension_data_size']);
+					$unhandled_sections                                          = 0;
 					$thisfile_asf_headerextensionobject['extension_data_parsed'] = $this->HeaderExtensionObjectDataParse($thisfile_asf_headerextensionobject['extension_data'], $unhandled_sections);
 
 					if ($unhandled_sections === 0) {
@@ -357,7 +357,7 @@ class getid3_asf extends getid3_handler {
 								$info['warning'][] = '[asf][codec_list_object][codec_entries][' . $CodecEntryCounter . '][description] expected to contain comma-seperated list of parameters: "' . $thisfile_asf_codeclistobject_codecentries_current['description'] . '"';
 							} else {
 								list($AudioCodecBitrate, $AudioCodecFrequency, $AudioCodecChannels) = explode(',', $this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['description']));
-								$thisfile_audio['codec'] = $this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['name']);
+								$thisfile_audio['codec']                                            = $this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['name']);
 
 								if (!isset($thisfile_audio['bitrate']) && strstr($AudioCodecBitrate, 'kbps')) {
 									$thisfile_audio['bitrate'] = (int)(trim(str_replace('kbps', '', $AudioCodecBitrate)) * 1000);
@@ -722,11 +722,11 @@ class getid3_asf extends getid3_handler {
 					$offset += $thisfile_asf_contentdescriptionobject['rating_length'];
 
 					$ASFcommentKeysToCopy = array(
-						'title' => 'title',
-						'author' => 'artist',
-						'copyright' => 'copyright',
+						'title'       => 'title',
+						'author'      => 'artist',
+						'copyright'   => 'copyright',
 						'description' => 'comment',
-						'rating' => 'rating',
+						'rating'      => 'rating',
 					);
 
 					foreach ($ASFcommentKeysToCopy as $keytocopyfrom => $keytocopyto) {
@@ -770,7 +770,7 @@ class getid3_asf extends getid3_handler {
 					for ($ExtendedContentDescriptorsCounter = 0; $ExtendedContentDescriptorsCounter < $thisfile_asf_extendedcontentdescriptionobject['content_descriptors_count']; $ExtendedContentDescriptorsCounter++) {
 						// shortcut
 						$thisfile_asf_extendedcontentdescriptionobject['content_descriptors'][$ExtendedContentDescriptorsCounter] = array();
-						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current = &$thisfile_asf_extendedcontentdescriptionobject['content_descriptors'][$ExtendedContentDescriptorsCounter];
+						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current                                  = &$thisfile_asf_extendedcontentdescriptionobject['content_descriptors'][$ExtendedContentDescriptorsCounter];
 
 						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['base_offset'] = $offset + 30;
 						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['name_length'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
@@ -814,31 +814,31 @@ class getid3_asf extends getid3_handler {
 							case 'wm/albumartist':
 							case 'artist':
 								// Note: not 'artist', that comes from 'author' tag
-								$thisfile_asf_comments['albumartist'] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+								$thisfile_asf_comments['albumartist'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 
 								break;
 
 							case 'wm/albumtitle':
 							case 'album':
-								$thisfile_asf_comments['album'] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+								$thisfile_asf_comments['album'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 
 								break;
 
 							case 'wm/genre':
 							case 'genre':
-								$thisfile_asf_comments['genre'] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+								$thisfile_asf_comments['genre'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 
 								break;
 
 							case 'wm/partofset':
-								$thisfile_asf_comments['partofset'] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+								$thisfile_asf_comments['partofset'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 
 								break;
 
 							case 'wm/tracknumber':
 							case 'tracknumber':
 								// be careful casting to int: casting unicode strings to int gives unexpected results (stops parsing at first non-numeric character)
-								$thisfile_asf_comments['track'] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+								$thisfile_asf_comments['track'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 
 								foreach ($thisfile_asf_comments['track'] as $key => $value) {
 									if (preg_match('/^[0-9\x00]+$/', $value)) {
@@ -850,7 +850,7 @@ class getid3_asf extends getid3_handler {
 
 							case 'wm/track':
 								if (empty($thisfile_asf_comments['track'])) {
-									$thisfile_asf_comments['track'] = array( 1 + $this->TrimConvert($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+									$thisfile_asf_comments['track'] = array(1 + $this->TrimConvert($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 								}
 
 								break;
@@ -858,13 +858,13 @@ class getid3_asf extends getid3_handler {
 							case 'wm/year':
 							case 'year':
 							case 'date':
-								$thisfile_asf_comments['year'] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+								$thisfile_asf_comments['year'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 
 								break;
 
 							case 'wm/lyrics':
 							case 'lyrics':
-								$thisfile_asf_comments['lyrics'] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+								$thisfile_asf_comments['lyrics'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 
 								break;
 
@@ -891,7 +891,7 @@ class getid3_asf extends getid3_handler {
 
 							case 'wm/encodingtime':
 								$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['encoding_time_unix'] = $this->FILETIMEtoUNIXtime($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']);
-								$thisfile_asf_comments['encoding_time_unix'] = array( $thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['encoding_time_unix'] );
+								$thisfile_asf_comments['encoding_time_unix']                                                   = array($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['encoding_time_unix']);
 
 								break;
 
@@ -946,7 +946,7 @@ class getid3_asf extends getid3_handler {
 								switch ($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value_type']) {
 									case 0: // Unicode string
 										if (substr($this->TrimConvert($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['name']), 0, 3) == 'WM/') {
-											$thisfile_asf_comments[str_replace('wm/', '', strtolower($this->TrimConvert($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['name'])))] = array( $this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']) );
+											$thisfile_asf_comments[str_replace('wm/', '', strtolower($this->TrimConvert($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['name'])))] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 										}
 
 										break;
@@ -1158,7 +1158,7 @@ class getid3_asf extends getid3_handler {
 						$thisfile_asf['video_media'][$streamnumber] = array();
 						$thisfile_asf_videomedia_currentstream      = &$thisfile_asf['video_media'][$streamnumber];
 
-						$videomediaoffset = 0;
+						$videomediaoffset                                     = 0;
 						$thisfile_asf_videomedia_currentstream['image_width'] = getid3_lib::LittleEndian2Int(substr($streamdata['type_specific_data'], $videomediaoffset, 4));
 						$videomediaoffset += 4;
 						$thisfile_asf_videomedia_currentstream['image_height'] = getid3_lib::LittleEndian2Int(substr($streamdata['type_specific_data'], $videomediaoffset, 4));
@@ -1545,114 +1545,114 @@ class getid3_asf extends getid3_handler {
 
 	public static function KnownGUIDs() {
 		static $GUIDarray = array(
-			'GETID3_ASF_Extended_Stream_Properties_Object' => '14E6A5CB-C672-4332-8399-A96952065B5A',
-			'GETID3_ASF_Padding_Object' => '1806D474-CADF-4509-A4BA-9AABCB96AAE8',
+			'GETID3_ASF_Extended_Stream_Properties_Object'   => '14E6A5CB-C672-4332-8399-A96952065B5A',
+			'GETID3_ASF_Padding_Object'                      => '1806D474-CADF-4509-A4BA-9AABCB96AAE8',
 			'GETID3_ASF_Payload_Ext_Syst_Pixel_Aspect_Ratio' => '1B1EE554-F9EA-4BC8-821A-376B74E4C4B8',
-			'GETID3_ASF_Script_Command_Object' => '1EFB1A30-0B62-11D0-A39B-00A0C90348F6',
-			'GETID3_ASF_No_Error_Correction' => '20FB5700-5B55-11CF-A8FD-00805F5C442B',
-			'GETID3_ASF_Content_Branding_Object' => '2211B3FA-BD23-11D2-B4B7-00A0C955FC6E',
-			'GETID3_ASF_Content_Encryption_Object' => '2211B3FB-BD23-11D2-B4B7-00A0C955FC6E',
-			'GETID3_ASF_Digital_Signature_Object' => '2211B3FC-BD23-11D2-B4B7-00A0C955FC6E',
-			'GETID3_ASF_Extended_Content_Encryption_Object' => '298AE614-2622-4C17-B935-DAE07EE9289C',
-			'GETID3_ASF_Simple_Index_Object' => '33000890-E5B1-11CF-89F4-00A0C90349CB',
-			'GETID3_ASF_Degradable_JPEG_Media' => '35907DE0-E415-11CF-A917-00805F5C442B',
-			'GETID3_ASF_Payload_Extension_System_Timecode' => '399595EC-8667-4E2D-8FDB-98814CE76C1E',
-			'GETID3_ASF_Binary_Media' => '3AFB65E2-47EF-40F2-AC2C-70A90D71D343',
-			'GETID3_ASF_Timecode_Index_Object' => '3CB73FD0-0C4A-4803-953D-EDF7B6228F0C',
-			'GETID3_ASF_Metadata_Library_Object' => '44231C94-9498-49D1-A141-1D134E457054',
-			'GETID3_ASF_Reserved_3' => '4B1ACBE3-100B-11D0-A39B-00A0C90348F6',
-			'GETID3_ASF_Reserved_4' => '4CFEDB20-75F6-11CF-9C0F-00A0C90349CB',
-			'GETID3_ASF_Command_Media' => '59DACFC0-59E6-11D0-A3AC-00A0C90348F6',
-			'GETID3_ASF_Header_Extension_Object' => '5FBF03B5-A92E-11CF-8EE3-00C00C205365',
-			'GETID3_ASF_Media_Object_Index_Parameters_Obj' => '6B203BAD-3F11-4E84-ACA8-D7613DE2CFA7',
-			'GETID3_ASF_Header_Object' => '75B22630-668E-11CF-A6D9-00AA0062CE6C',
-			'GETID3_ASF_Content_Description_Object' => '75B22633-668E-11CF-A6D9-00AA0062CE6C',
-			'GETID3_ASF_Error_Correction_Object' => '75B22635-668E-11CF-A6D9-00AA0062CE6C',
-			'GETID3_ASF_Data_Object' => '75B22636-668E-11CF-A6D9-00AA0062CE6C',
-			'GETID3_ASF_Web_Stream_Media_Subtype' => '776257D4-C627-41CB-8F81-7AC7FF1C40CC',
-			'GETID3_ASF_Stream_Bitrate_Properties_Object' => '7BF875CE-468D-11D1-8D82-006097C9A2B2',
-			'GETID3_ASF_Language_List_Object' => '7C4346A9-EFE0-4BFC-B229-393EDE415C85',
-			'GETID3_ASF_Codec_List_Object' => '86D15240-311D-11D0-A3A4-00A0C90348F6',
-			'GETID3_ASF_Reserved_2' => '86D15241-311D-11D0-A3A4-00A0C90348F6',
-			'GETID3_ASF_File_Properties_Object' => '8CABDCA1-A947-11CF-8EE4-00C00C205365',
-			'GETID3_ASF_File_Transfer_Media' => '91BD222C-F21C-497A-8B6D-5AA86BFC0185',
-			'GETID3_ASF_Old_RTP_Extension_Data' => '96800C63-4C94-11D1-837B-0080C7A37F95',
-			'GETID3_ASF_Advanced_Mutual_Exclusion_Object' => 'A08649CF-4775-4670-8A16-6E35357566CD',
-			'GETID3_ASF_Bandwidth_Sharing_Object' => 'A69609E6-517B-11D2-B6AF-00C04FD908E9',
-			'GETID3_ASF_Reserved_1' => 'ABD3D211-A9BA-11cf-8EE6-00C00C205365',
-			'GETID3_ASF_Bandwidth_Sharing_Exclusive' => 'AF6060AA-5197-11D2-B6AF-00C04FD908E9',
-			'GETID3_ASF_Bandwidth_Sharing_Partial' => 'AF6060AB-5197-11D2-B6AF-00C04FD908E9',
-			'GETID3_ASF_JFIF_Media' => 'B61BE100-5B4E-11CF-A8FD-00805F5C442B',
-			'GETID3_ASF_Stream_Properties_Object' => 'B7DC0791-A9B7-11CF-8EE6-00C00C205365',
-			'GETID3_ASF_Video_Media' => 'BC19EFC0-5B4D-11CF-A8FD-00805F5C442B',
-			'GETID3_ASF_Audio_Spread' => 'BFC3CD50-618F-11CF-8BB2-00AA00B4E220',
-			'GETID3_ASF_Metadata_Object' => 'C5F8CBEA-5BAF-4877-8467-AA8C44FA4CCA',
-			'GETID3_ASF_Payload_Ext_Syst_Sample_Duration' => 'C6BD9450-867F-4907-83A3-C77921B733AD',
-			'GETID3_ASF_Group_Mutual_Exclusion_Object' => 'D1465A40-5A79-4338-B71B-E36B8FD6C249',
+			'GETID3_ASF_Script_Command_Object'               => '1EFB1A30-0B62-11D0-A39B-00A0C90348F6',
+			'GETID3_ASF_No_Error_Correction'                 => '20FB5700-5B55-11CF-A8FD-00805F5C442B',
+			'GETID3_ASF_Content_Branding_Object'             => '2211B3FA-BD23-11D2-B4B7-00A0C955FC6E',
+			'GETID3_ASF_Content_Encryption_Object'           => '2211B3FB-BD23-11D2-B4B7-00A0C955FC6E',
+			'GETID3_ASF_Digital_Signature_Object'            => '2211B3FC-BD23-11D2-B4B7-00A0C955FC6E',
+			'GETID3_ASF_Extended_Content_Encryption_Object'  => '298AE614-2622-4C17-B935-DAE07EE9289C',
+			'GETID3_ASF_Simple_Index_Object'                 => '33000890-E5B1-11CF-89F4-00A0C90349CB',
+			'GETID3_ASF_Degradable_JPEG_Media'               => '35907DE0-E415-11CF-A917-00805F5C442B',
+			'GETID3_ASF_Payload_Extension_System_Timecode'   => '399595EC-8667-4E2D-8FDB-98814CE76C1E',
+			'GETID3_ASF_Binary_Media'                        => '3AFB65E2-47EF-40F2-AC2C-70A90D71D343',
+			'GETID3_ASF_Timecode_Index_Object'               => '3CB73FD0-0C4A-4803-953D-EDF7B6228F0C',
+			'GETID3_ASF_Metadata_Library_Object'             => '44231C94-9498-49D1-A141-1D134E457054',
+			'GETID3_ASF_Reserved_3'                          => '4B1ACBE3-100B-11D0-A39B-00A0C90348F6',
+			'GETID3_ASF_Reserved_4'                          => '4CFEDB20-75F6-11CF-9C0F-00A0C90349CB',
+			'GETID3_ASF_Command_Media'                       => '59DACFC0-59E6-11D0-A3AC-00A0C90348F6',
+			'GETID3_ASF_Header_Extension_Object'             => '5FBF03B5-A92E-11CF-8EE3-00C00C205365',
+			'GETID3_ASF_Media_Object_Index_Parameters_Obj'   => '6B203BAD-3F11-4E84-ACA8-D7613DE2CFA7',
+			'GETID3_ASF_Header_Object'                       => '75B22630-668E-11CF-A6D9-00AA0062CE6C',
+			'GETID3_ASF_Content_Description_Object'          => '75B22633-668E-11CF-A6D9-00AA0062CE6C',
+			'GETID3_ASF_Error_Correction_Object'             => '75B22635-668E-11CF-A6D9-00AA0062CE6C',
+			'GETID3_ASF_Data_Object'                         => '75B22636-668E-11CF-A6D9-00AA0062CE6C',
+			'GETID3_ASF_Web_Stream_Media_Subtype'            => '776257D4-C627-41CB-8F81-7AC7FF1C40CC',
+			'GETID3_ASF_Stream_Bitrate_Properties_Object'    => '7BF875CE-468D-11D1-8D82-006097C9A2B2',
+			'GETID3_ASF_Language_List_Object'                => '7C4346A9-EFE0-4BFC-B229-393EDE415C85',
+			'GETID3_ASF_Codec_List_Object'                   => '86D15240-311D-11D0-A3A4-00A0C90348F6',
+			'GETID3_ASF_Reserved_2'                          => '86D15241-311D-11D0-A3A4-00A0C90348F6',
+			'GETID3_ASF_File_Properties_Object'              => '8CABDCA1-A947-11CF-8EE4-00C00C205365',
+			'GETID3_ASF_File_Transfer_Media'                 => '91BD222C-F21C-497A-8B6D-5AA86BFC0185',
+			'GETID3_ASF_Old_RTP_Extension_Data'              => '96800C63-4C94-11D1-837B-0080C7A37F95',
+			'GETID3_ASF_Advanced_Mutual_Exclusion_Object'    => 'A08649CF-4775-4670-8A16-6E35357566CD',
+			'GETID3_ASF_Bandwidth_Sharing_Object'            => 'A69609E6-517B-11D2-B6AF-00C04FD908E9',
+			'GETID3_ASF_Reserved_1'                          => 'ABD3D211-A9BA-11cf-8EE6-00C00C205365',
+			'GETID3_ASF_Bandwidth_Sharing_Exclusive'         => 'AF6060AA-5197-11D2-B6AF-00C04FD908E9',
+			'GETID3_ASF_Bandwidth_Sharing_Partial'           => 'AF6060AB-5197-11D2-B6AF-00C04FD908E9',
+			'GETID3_ASF_JFIF_Media'                          => 'B61BE100-5B4E-11CF-A8FD-00805F5C442B',
+			'GETID3_ASF_Stream_Properties_Object'            => 'B7DC0791-A9B7-11CF-8EE6-00C00C205365',
+			'GETID3_ASF_Video_Media'                         => 'BC19EFC0-5B4D-11CF-A8FD-00805F5C442B',
+			'GETID3_ASF_Audio_Spread'                        => 'BFC3CD50-618F-11CF-8BB2-00AA00B4E220',
+			'GETID3_ASF_Metadata_Object'                     => 'C5F8CBEA-5BAF-4877-8467-AA8C44FA4CCA',
+			'GETID3_ASF_Payload_Ext_Syst_Sample_Duration'    => 'C6BD9450-867F-4907-83A3-C77921B733AD',
+			'GETID3_ASF_Group_Mutual_Exclusion_Object'       => 'D1465A40-5A79-4338-B71B-E36B8FD6C249',
 			'GETID3_ASF_Extended_Content_Description_Object' => 'D2D0A440-E307-11D2-97F0-00A0C95EA850',
-			'GETID3_ASF_Stream_Prioritization_Object' => 'D4FED15B-88D3-454F-81F0-ED5C45999E24',
-			'GETID3_ASF_Payload_Ext_System_Content_Type' => 'D590DC20-07BC-436C-9CF7-F3BBFBF1A4DC',
-			'GETID3_ASF_Old_File_Properties_Object' => 'D6E229D0-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_ASF_Header_Object' => 'D6E229D1-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_ASF_Data_Object' => 'D6E229D2-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Index_Object' => 'D6E229D3-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Stream_Properties_Object' => 'D6E229D4-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Content_Description_Object' => 'D6E229D5-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Script_Command_Object' => 'D6E229D6-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Marker_Object' => 'D6E229D7-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Component_Download_Object' => 'D6E229D8-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Stream_Group_Object' => 'D6E229D9-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Scalable_Object' => 'D6E229DA-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Prioritization_Object' => 'D6E229DB-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Bitrate_Mutual_Exclusion_Object' => 'D6E229DC-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Inter_Media_Dependency_Object' => 'D6E229DD-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Rating_Object' => 'D6E229DE-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Index_Parameters_Object' => 'D6E229DF-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Color_Table_Object' => 'D6E229E0-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Language_List_Object' => 'D6E229E1-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Audio_Media' => 'D6E229E2-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Video_Media' => 'D6E229E3-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Image_Media' => 'D6E229E4-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Timecode_Media' => 'D6E229E5-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Text_Media' => 'D6E229E6-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_MIDI_Media' => 'D6E229E7-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Command_Media' => 'D6E229E8-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_No_Error_Concealment' => 'D6E229EA-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Scrambled_Audio' => 'D6E229EB-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_No_Color_Table' => 'D6E229EC-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_SMPTE_Time' => 'D6E229ED-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_ASCII_Text' => 'D6E229EE-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Unicode_Text' => 'D6E229EF-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_HTML_Text' => 'D6E229F0-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_URL_Command' => 'D6E229F1-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Filename_Command' => 'D6E229F2-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_ACM_Codec' => 'D6E229F3-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_VCM_Codec' => 'D6E229F4-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_QuickTime_Codec' => 'D6E229F5-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_DirectShow_Transform_Filter' => 'D6E229F6-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_DirectShow_Rendering_Filter' => 'D6E229F7-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_No_Enhancement' => 'D6E229F8-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Unknown_Enhancement_Type' => 'D6E229F9-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Temporal_Enhancement' => 'D6E229FA-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Spatial_Enhancement' => 'D6E229FB-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Quality_Enhancement' => 'D6E229FC-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Number_of_Channels_Enhancement' => 'D6E229FD-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Frequency_Response_Enhancement' => 'D6E229FE-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Media_Object' => 'D6E229FF-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Mutex_Language' => 'D6E22A00-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Mutex_Bitrate' => 'D6E22A01-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Mutex_Unknown' => 'D6E22A02-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_ASF_Placeholder_Object' => 'D6E22A0E-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Old_Data_Unit_Extension_Object' => 'D6E22A0F-35DA-11D1-9034-00A0C90349BE',
-			'GETID3_ASF_Web_Stream_Format' => 'DA1E6B13-8359-4050-B398-388E965BF00C',
-			'GETID3_ASF_Payload_Ext_System_File_Name' => 'E165EC0E-19ED-45D7-B4A7-25CBD1E28E9B',
-			'GETID3_ASF_Marker_Object' => 'F487CD01-A951-11CF-8EE6-00C00C205365',
-			'GETID3_ASF_Timecode_Index_Parameters_Object' => 'F55E496D-9797-4B5D-8C8B-604DFE9BFB24',
-			'GETID3_ASF_Audio_Media' => 'F8699E40-5B4D-11CF-A8FD-00805F5C442B',
-			'GETID3_ASF_Media_Object_Index_Object' => 'FEB103F8-12AD-4C64-840F-2A1D2F7AD48C',
+			'GETID3_ASF_Stream_Prioritization_Object'        => 'D4FED15B-88D3-454F-81F0-ED5C45999E24',
+			'GETID3_ASF_Payload_Ext_System_Content_Type'     => 'D590DC20-07BC-436C-9CF7-F3BBFBF1A4DC',
+			'GETID3_ASF_Old_File_Properties_Object'          => 'D6E229D0-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_ASF_Header_Object'               => 'D6E229D1-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_ASF_Data_Object'                 => 'D6E229D2-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Index_Object'                        => 'D6E229D3-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Stream_Properties_Object'        => 'D6E229D4-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Content_Description_Object'      => 'D6E229D5-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Script_Command_Object'           => 'D6E229D6-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Marker_Object'                   => 'D6E229D7-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Component_Download_Object'       => 'D6E229D8-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Stream_Group_Object'             => 'D6E229D9-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Scalable_Object'                 => 'D6E229DA-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Prioritization_Object'           => 'D6E229DB-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Bitrate_Mutual_Exclusion_Object'     => 'D6E229DC-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Inter_Media_Dependency_Object'   => 'D6E229DD-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Rating_Object'                   => 'D6E229DE-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Index_Parameters_Object'             => 'D6E229DF-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Color_Table_Object'              => 'D6E229E0-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Language_List_Object'            => 'D6E229E1-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Audio_Media'                     => 'D6E229E2-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Video_Media'                     => 'D6E229E3-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Image_Media'                     => 'D6E229E4-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Timecode_Media'                  => 'D6E229E5-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Text_Media'                      => 'D6E229E6-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_MIDI_Media'                      => 'D6E229E7-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Command_Media'                   => 'D6E229E8-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_No_Error_Concealment'            => 'D6E229EA-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Scrambled_Audio'                 => 'D6E229EB-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_No_Color_Table'                  => 'D6E229EC-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_SMPTE_Time'                      => 'D6E229ED-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_ASCII_Text'                      => 'D6E229EE-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Unicode_Text'                    => 'D6E229EF-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_HTML_Text'                       => 'D6E229F0-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_URL_Command'                     => 'D6E229F1-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Filename_Command'                => 'D6E229F2-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_ACM_Codec'                       => 'D6E229F3-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_VCM_Codec'                       => 'D6E229F4-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_QuickTime_Codec'                 => 'D6E229F5-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_DirectShow_Transform_Filter'     => 'D6E229F6-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_DirectShow_Rendering_Filter'     => 'D6E229F7-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_No_Enhancement'                  => 'D6E229F8-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Unknown_Enhancement_Type'        => 'D6E229F9-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Temporal_Enhancement'            => 'D6E229FA-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Spatial_Enhancement'             => 'D6E229FB-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Quality_Enhancement'             => 'D6E229FC-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Number_of_Channels_Enhancement'  => 'D6E229FD-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Frequency_Response_Enhancement'  => 'D6E229FE-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Media_Object'                    => 'D6E229FF-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Mutex_Language'                      => 'D6E22A00-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Mutex_Bitrate'                       => 'D6E22A01-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Mutex_Unknown'                       => 'D6E22A02-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_ASF_Placeholder_Object'          => 'D6E22A0E-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Old_Data_Unit_Extension_Object'      => 'D6E22A0F-35DA-11D1-9034-00A0C90349BE',
+			'GETID3_ASF_Web_Stream_Format'                   => 'DA1E6B13-8359-4050-B398-388E965BF00C',
+			'GETID3_ASF_Payload_Ext_System_File_Name'        => 'E165EC0E-19ED-45D7-B4A7-25CBD1E28E9B',
+			'GETID3_ASF_Marker_Object'                       => 'F487CD01-A951-11CF-8EE6-00C00C205365',
+			'GETID3_ASF_Timecode_Index_Parameters_Object'    => 'F55E496D-9797-4B5D-8C8B-604DFE9BFB24',
+			'GETID3_ASF_Audio_Media'                         => 'F8699E40-5B4D-11CF-A8FD-00805F5C442B',
+			'GETID3_ASF_Media_Object_Index_Object'           => 'FEB103F8-12AD-4C64-840F-2A1D2F7AD48C',
 			'GETID3_ASF_Alt_Extended_Content_Encryption_Obj' => 'FF889EF1-ADEE-40DA-9E71-98704BB928CE',
-			'GETID3_ASF_Index_Placeholder_Object' => 'D9AADE20-7C17-4F9C-BC28-8555DD98E2A2', // http://cpan.uwinnipeg.ca/htdocs/Audio-WMA/Audio/WMA.pm.html
-			'GETID3_ASF_Compatibility_Object' => '26F18B5D-4584-47EC-9F5F-0E651F0452C9', // http://cpan.uwinnipeg.ca/htdocs/Audio-WMA/Audio/WMA.pm.html
+			'GETID3_ASF_Index_Placeholder_Object'            => 'D9AADE20-7C17-4F9C-BC28-8555DD98E2A2', // http://cpan.uwinnipeg.ca/htdocs/Audio-WMA/Audio/WMA.pm.html
+			'GETID3_ASF_Compatibility_Object'                => '26F18B5D-4584-47EC-9F5F-0E651F0452C9', // http://cpan.uwinnipeg.ca/htdocs/Audio-WMA/Audio/WMA.pm.html
 		);
 
 		return $GUIDarray;
@@ -1843,8 +1843,8 @@ class getid3_asf extends getid3_handler {
 
 					$thisObject['flags_raw']         = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 4));
 					$offset                         += 4;
-					$thisObject['flags']['reliable'] = (bool)$thisObject['flags_raw'] & 0x00000001;
-					$thisObject['flags']['seekable'] = (bool)$thisObject['flags_raw'] & 0x00000002;
+					$thisObject['flags']['reliable']                = (bool)$thisObject['flags_raw'] & 0x00000001;
+					$thisObject['flags']['seekable']                = (bool)$thisObject['flags_raw'] & 0x00000002;
 					$thisObject['flags']['no_cleanpoints']          = (bool)$thisObject['flags_raw'] & 0x00000004;
 					$thisObject['flags']['resend_live_cleanpoints'] = (bool)$thisObject['flags_raw'] & 0x00000008;
 
@@ -2111,7 +2111,7 @@ class getid3_asf extends getid3_handler {
 			$this->getid3->info['asf']['comments']['picture'] = array();
 		}
 		$this->getid3->info['asf']['comments']['picture'][] = array(
-			'data' => $WMpicture['data'],
+			'data'       => $WMpicture['data'],
 			'image_mime' => $WMpicture['image_mime'],
 		);
 

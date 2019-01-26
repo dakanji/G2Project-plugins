@@ -112,10 +112,10 @@ class ItemAddLinkItemTest extends ItemAddPluginTestCase {
 
 		$results = $this->handleRequest($this->_album);
 		$this->assertEquals(array(), $results[0], 'no error');
-		$this->assertEquals(array( 'addedFiles' ), array_keys($results[1]), 'addedFiles');
+		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
 		$this->assertEquals(
-			array( 'fileName', 'id', 'warnings' ),
+			array('fileName', 'id', 'warnings'),
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
@@ -140,18 +140,18 @@ class ItemAddLinkItemTest extends ItemAddPluginTestCase {
 		$this->assert(GalleryUtilities::isExactlyA($item, 'GalleryLinkItem'), 'type');
 		$this->assertEquals((string)$this->_album->getId(), $item->getLink(), 'link');
 
-		list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $childIds[0] ));
+		list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array($childIds[0]));
 
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array( $childIds[0] ), array_keys($thumbnailTable), 'thumbnail table');
+		$this->assertEquals(array($childIds[0]), array_keys($thumbnailTable), 'thumbnail table');
 		$thumbnail = $thumbnailTable[$childIds[0]];
 		$this->assertEquals($highlight->getId(), $thumbnail->getDerivativeSourceId(), 'src');
 		$this->assertEquals('thumbnail|123', $thumbnail->getDerivativeOperations(), 'op');
 		// For Oracle, null is replaced with '' when loading data from the database
 		$this->assert(
-			in_array($thumbnail->getPostFilterOperations(), array( null, '' )),
+			in_array($thumbnail->getPostFilterOperations(), array(null, '')),
 			'postfilter'
 		);
 	}
@@ -173,12 +173,12 @@ class ItemAddLinkItemTest extends ItemAddPluginTestCase {
 		}
 		$this->assertEquals(1, count($childIds), 'child count');
 
-		list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $childIds[0] ));
+		list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array($childIds[0]));
 
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array( $childIds[0] ), array_keys($thumbnailTable), 'thumbnail table');
+		$this->assertEquals(array($childIds[0]), array_keys($thumbnailTable), 'thumbnail table');
 
 		if (!empty($thumbnailTable[$childIds[0]])) {
 			$thumbnail = $thumbnailTable[$childIds[0]];
@@ -199,7 +199,7 @@ class ItemAddLinkItemTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[linkedAlbumId]', -123);
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array( 'form[error][linkedAlbumId][invalid]' ), $results[0], 'error');
+		$this->assertEquals(array('form[error][linkedAlbumId][invalid]'), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
 
@@ -216,10 +216,10 @@ class ItemAddLinkItemTest extends ItemAddPluginTestCase {
 
 		$results = $this->handleRequest($this->_album);
 		$this->assertEquals(array(), $results[0], 'no error');
-		$this->assertEquals(array( 'addedFiles' ), array_keys($results[1]), 'addedFiles');
+		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
 		$this->assertEquals(
-			array( 'fileName', 'id', 'warnings' ),
+			array('fileName', 'id', 'warnings'),
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
@@ -240,12 +240,12 @@ class ItemAddLinkItemTest extends ItemAddPluginTestCase {
 		$this->assert(GalleryUtilities::isExactlyA($item, 'GalleryLinkItem'), 'type');
 		$this->assertEquals('http://test.com/test.html', $item->getLink(), 'link');
 
-		list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $childIds[0] ));
+		list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array($childIds[0]));
 
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array( $childIds[0] ), array_keys($thumbnailTable), 'thumbnail table');
+		$this->assertEquals(array($childIds[0]), array_keys($thumbnailTable), 'thumbnail table');
 
 		if (!empty($thumbnailTable[$childIds[0]])) {
 			$thumbnail = $thumbnailTable[$childIds[0]];
@@ -272,7 +272,7 @@ class ItemAddLinkItemTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[linkUrl]', '');
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array( 'form[error][linkUrl][missing]' ), $results[0], 'error');
+		$this->assertEquals(array('form[error][linkUrl][missing]'), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
 }

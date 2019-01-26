@@ -81,14 +81,14 @@ class ImageFrameTest extends GalleryTestCase {
 
 	public function testImageFrameInit() {
 		$template = new ImageFrameDummyGalleryTemplate();
-		$ret      = $this->_imageframe->init($template, array( 'none', 'dots', 'wood' ));
+		$ret      = $this->_imageframe->init($template, array('none', 'dots', 'wood'));
 
 		if ($ret) {
 			return $ret;
 		}
 		$this->assert(isset($template->data['ImageFrameData']), 'template data');
 		$data = $template->data['ImageFrameData'];
-		$this->assertEquals(array( 'idList', 'data' ), array_keys($data), 'Data keys');
+		$this->assertEquals(array('idList', 'data'), array_keys($data), 'Data keys');
 		$this->assertEquals('none|dots|wood', $data['idList'], 'Id list');
 		$this->assertEquals(
 			array(
@@ -110,13 +110,13 @@ class ImageFrameTest extends GalleryTestCase {
 		$this->assert(strpos($data['data']['wood']['imageTL'], 'frames/wood'), 'Wood image');
 		$this->assert(isset($template->data['head']), 'head data');
 		$this->assertEquals(
-			array( 'modules/imageframe/templates/ImageFrameHead.tpl' ),
+			array('modules/imageframe/templates/ImageFrameHead.tpl'),
 			$template->data['head'],
 			'head tpl'
 		);
 
 		// Another init should add data, not overwrite
-		$ret = $this->_imageframe->init($template, array( 'solid' ));
+		$ret = $this->_imageframe->init($template, array('solid'));
 
 		if ($ret) {
 			return $ret;
@@ -162,10 +162,10 @@ class ImageFrameTest extends GalleryTestCase {
 		// Verify {counter} works across smarty instances
 		$result    = $template1->fetch('gallery:data/counter.tpl');
 		$result[1] = trim($result[1]);
-		$this->assertEquals(array( null, '1' ), $result);
+		$this->assertEquals(array(null, '1'), $result);
 		$result    = $template2->fetch('gallery:data/counter.tpl');
 		$result[1] = trim($result[1]);
-		$this->assertEquals(array( null, '2' ), $result);
+		$this->assertEquals(array(null, '2'), $result);
 	}
 }
 

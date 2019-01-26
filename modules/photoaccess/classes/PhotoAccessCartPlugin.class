@@ -62,7 +62,7 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 	public function fulfillCart($cartItemIds) {
 		global $gallery;
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$returnUrl = $urlGenerator->generateUrl(
+		$returnUrl    = $urlGenerator->generateUrl(
 		array('view' => 'cart.ViewCart'),
 		array('forceFullUrl' => true)
 	);

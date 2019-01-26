@@ -40,21 +40,21 @@ class NewAlbumController extends GalleryController {
 
 		if (isset($form['action']['newAlbum'])) {
 			if (empty($form['parentId'])) {
-				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 			list($ret, $permissions) = GalleryCoreApi::getPermissions((int)$form['parentId']);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (empty($permissions['core.view'])) {
 				// Avoid information disclosure, act as if the item didn't exist.
-				return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
 
 			if (empty($permissions['core.addAlbumItem'])) {
-				return array( GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null );
+				return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null);
 			}
 
 			// Now check the value of name and title
@@ -79,7 +79,7 @@ class NewAlbumController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (empty($error)) {
@@ -97,7 +97,7 @@ class NewAlbumController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -119,7 +119,7 @@ class NewAlbumView extends GalleryView {
 			$parentId         = GalleryUtilities::getRequestVariables('parentId');
 
 			if (empty($parentId)) {
-				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 
 			$form['parentId']      = $parentId;
@@ -134,31 +134,31 @@ class NewAlbumView extends GalleryView {
 		list($ret, $canView) = GalleryCoreApi::hasItemPermission($form['parentId'], 'core.view');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$canView) {
 			// Avoid information disclosure, act as if the item didn't exist.
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		$ret = GalleryCoreApi::assertHasItemPermission($form['parentId'], 'core.addAlbumItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $parent) = GalleryCoreApi::loadEntitiesById($form['parentId'], 'GalleryAlbumItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Load the item's parents
 		list($ret, $parents) = GalleryCoreApi::fetchParents($parent, 'core.view', true);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		for ($i = 0; $i < sizeof($parents); $i ++) {
@@ -172,7 +172,7 @@ class NewAlbumView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'publishxp');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Windows Publishing Wizard'));
@@ -183,7 +183,7 @@ class NewAlbumView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body' => 'modules/publishxp/templates/NewAlbum.tpl',
+				'body'          => 'modules/publishxp/templates/NewAlbum.tpl',
 				'useFullScreen' => true,
 			),
 		);

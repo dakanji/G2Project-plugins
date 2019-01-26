@@ -32,7 +32,7 @@ class SizeLimitOption extends ItemEditOption {
 	 * @see ItemEditOption::isAppropriate
 	 */
 	public function isAppropriate($item, $thumbnail) {
-		return array( null, true );
+		return array(null, true);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class SizeLimitOption extends ItemEditOption {
 		);
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 		// if there aren't any - assume 'no limits'
 		if (!isset($params['height']) || $params['height'] == 0) {
@@ -98,11 +98,11 @@ class SizeLimitOption extends ItemEditOption {
 			list($ret, $subAlbumIds) = GalleryCoreApi::fetchDescendentAlbumItemIds($item);
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 			array_unshift($subAlbumIds, $item->getId());
 		} else {
-			$subAlbumIds = array( $item->getId() );
+			$subAlbumIds = array($item->getId());
 		}
 
 		foreach ($subAlbumIds as $id) {
@@ -117,7 +117,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					$ret = GalleryCoreApi::removePluginParameter(
 						'module',
@@ -127,7 +127,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					$ret = GalleryCoreApi::removePluginParameter(
 						'module',
@@ -137,7 +137,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 
 					break;
@@ -169,7 +169,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
@@ -180,7 +180,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					$setOriginal = true;
 
@@ -198,7 +198,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					$ret = GalleryCoreApi::removePluginParameter(
 						'module',
@@ -208,7 +208,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 
 					break;
@@ -233,7 +233,7 @@ class SizeLimitOption extends ItemEditOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					$setOriginal = true;
 
@@ -250,7 +250,7 @@ class SizeLimitOption extends ItemEditOption {
 				);
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 			}
 		}
@@ -259,20 +259,20 @@ class SizeLimitOption extends ItemEditOption {
 			list($ret, $error, $warning) = $this->_applyToDescendents($form, $item);
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'sizelimit');
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			$templateAdapter =& $gallery->getTemplateAdapter();
 			$templateAdapter->updateProgressBar($module->translate('Resize complete'), '', 1);
 		}
 
-		return array( null, $error, $warning );
+		return array(null, $error, $warning);
 	}
 
 	/**
@@ -297,13 +297,13 @@ class SizeLimitOption extends ItemEditOption {
 		}
 
 		if ($setFilesize = ($form['SizeLimitOption']['sizeChoice'] == 'explicit')) {
-			$filesize = array( $form['SizeLimitOption']['filesize'] );
+			$filesize = array($form['SizeLimitOption']['filesize']);
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'sizelimit');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		$preserveOriginal = isset($form['SizeLimitOption']['keepOriginal']) &&
@@ -316,7 +316,7 @@ class SizeLimitOption extends ItemEditOption {
 		list($ret, $descendentIds) = GalleryCoreApi::fetchDescendentItemIds($album, null, null, 'core.edit');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		$templateAdapter->updateProgressBar($module->translate('Resize Status'), '', 0);
@@ -336,7 +336,7 @@ class SizeLimitOption extends ItemEditOption {
 			list($ret, $descendents) = GalleryCoreApi::loadEntitiesById($chunk, 'GalleryItem');
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			foreach ($descendents as $item) {
@@ -373,7 +373,7 @@ class SizeLimitOption extends ItemEditOption {
 								)
 							);
 						} else {
-							return array( $ret, null, null );
+							return array($ret, null, null);
 						}
 					}
 				}
@@ -398,14 +398,14 @@ class SizeLimitOption extends ItemEditOption {
 								)
 							);
 						} else {
-							return array( $ret, null, null );
+							return array($ret, null, null);
 						}
 					}
 				}
 			}
 		}
 
-		return array( null, $errors, $warnings );
+		return array(null, $errors, $warnings);
 	}
 
 	/**

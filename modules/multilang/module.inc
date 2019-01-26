@@ -38,8 +38,8 @@ class MultiLangModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 43 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 43));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -106,7 +106,7 @@ class MultiLangModule extends GalleryModule {
 			'MultiLangModule',
 			'modules/multilang/module.inc',
 			'multilang',
-			array( 'GalleryEntity::delete' )
+			array('GalleryEntity::delete')
 		);
 
 		if ($ret) {
@@ -120,7 +120,7 @@ class MultiLangModule extends GalleryModule {
 	 * @see GalleryModule::getOnLoadHandlerIds
 	 */
 	public function getOnLoadHandlerIds() {
-		return array( 'MultiLang' );
+		return array('MultiLang');
 	}
 
 	/**
@@ -131,10 +131,10 @@ class MultiLangModule extends GalleryModule {
 		list($ret, $needsConfiguration) = $this->needsConfiguration();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, !$needsConfiguration );
+		return array(null, !$needsConfiguration);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class MultiLangModule extends GalleryModule {
 		global $gallery;
 		$translator =& $gallery->getTranslator();
 
-		return array( null, !$translator->canTranslate() );
+		return array(null, !$translator->canTranslate());
 	}
 
 	/**
@@ -211,10 +211,10 @@ class MultiLangModule extends GalleryModule {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 }

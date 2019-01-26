@@ -35,7 +35,7 @@ class ZipCartAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$error = $status = array();
@@ -67,7 +67,7 @@ class ZipCartAdminController extends GalleryController {
 				$gallery->startRecordingDebugSnippet();
 
 				if ($success = $platform->copy(__FILE__, $zipBase)) {
-					list($success) = $platform->exec(array( array( $form['path'], $zipFile, $zipBase ) ));
+					list($success) = $platform->exec(array(array($form['path'], $zipFile, $zipBase)));
 				}
 				$debugSnippet = $gallery->stopRecordingDebugSnippet();
 
@@ -84,18 +84,18 @@ class ZipCartAdminController extends GalleryController {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'zipcart', 'path', $form['path']);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'zipcart');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
@@ -124,7 +124,7 @@ class ZipCartAdminController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -139,7 +139,7 @@ class ZipCartAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'ZipCartAdmin') {
@@ -147,7 +147,7 @@ class ZipCartAdminView extends GalleryView {
 			list($ret, $form['path']) = GalleryCoreApi::getPluginParameter('module', 'zipcart', 'path');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -158,17 +158,17 @@ class ZipCartAdminView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'zipcart');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		list($ret, $isActive) = $module->isActive();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$ZipCartAdmin = array(
 			'isConfigure' => !$isActive,
-			'canExec' => !in_array(
+			'canExec'     => !in_array(
 				'exec',
 				preg_split('/,\s*/', ini_get('disable_functions'))
 			),

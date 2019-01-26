@@ -151,7 +151,7 @@ class getid3_flac extends getid3_handler {
 					}
 					$comments_picture_data = array();
 
-					foreach (array( 'data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength' ) as $picture_key) {
+					foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
 						if (isset($entry[$picture_key])) {
 							$comments_picture_data[$picture_key] = $entry[$picture_key];
 						}
@@ -252,7 +252,7 @@ class getid3_flac extends getid3_handler {
 	private function parseAPPLICATION($BlockData) {
 		$info = &$this->getid3->info;
 
-		$ApplicationID = getid3_lib::BigEndian2Int(substr($BlockData, 0, 4));
+		$ApplicationID                                       = getid3_lib::BigEndian2Int(substr($BlockData, 0, 4));
 		$info['flac']['APPLICATION'][$ApplicationID]['name'] = self::applicationIDLookup($ApplicationID);
 		$info['flac']['APPLICATION'][$ApplicationID]['data'] = substr($BlockData, 4);
 
@@ -275,7 +275,7 @@ class getid3_flac extends getid3_handler {
 				getid3_lib::safe_inc($info['flac']['SEEKTABLE']['placeholders'], 1);
 				$offset += 10;
 			} else {
-				$SampleNumber = getid3_lib::BigEndian2Int($SampleNumberString);
+				$SampleNumber                                       = getid3_lib::BigEndian2Int($SampleNumberString);
 				$info['flac']['SEEKTABLE'][$SampleNumber]['offset'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
 				$offset += 8;
 				$info['flac']['SEEKTABLE'][$SampleNumber]['samples'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 2));
@@ -308,8 +308,8 @@ class getid3_flac extends getid3_handler {
 	}
 
 	private function parseCUESHEET($BlockData) {
-		$info   = &$this->getid3->info;
-		$offset = 0;
+		$info                                             = &$this->getid3->info;
+		$offset                                           = 0;
 		$info['flac']['CUESHEET']['media_catalog_number'] = trim(substr($BlockData, $offset, 128), "\0");
 		$offset += 128;
 		$info['flac']['CUESHEET']['lead_in_samples'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));

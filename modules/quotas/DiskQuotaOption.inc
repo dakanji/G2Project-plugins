@@ -30,7 +30,7 @@ class DiskQuotaOption extends ItemAddOption {
 	 * @see ItemAddOption::isAppropriate
 	 */
 	public function isAppropriate() {
-		return array( null, true );
+		return array(null, true);
 	}
 
 	/**
@@ -46,7 +46,7 @@ class DiskQuotaOption extends ItemAddOption {
 		list($ret, $quotaExists, $userDiskQuota) = GalleryQuotasHelper::getUserDiskQuota($gallery->getActiveUserId());
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		// if user has a quota
@@ -59,7 +59,7 @@ class DiskQuotaOption extends ItemAddOption {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'quotas');
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			foreach ($items as $i => $item) {
@@ -78,14 +78,14 @@ class DiskQuotaOption extends ItemAddOption {
 				);
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 
 				if ($userDiskUsage > $userDiskQuota) {
 					list($ret, $userDiskQuotaHumanReadable, $userDiskQuotaHumanReadableUnit) = GalleryQuotasHelper::humanReadableFromKilobytes($userDiskQuota);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					$warnings[$i][] = $module->translate(
 						array(
@@ -97,19 +97,19 @@ class DiskQuotaOption extends ItemAddOption {
 					);
 
 					$gallery->addShutdownAction(
-						array( 'GalleryCoreApi', 'deleteEntityById' ),
-						array( $item->getId() )
+						array('GalleryCoreApi', 'deleteEntityById'),
+						array($item->getId())
 					);
 				} else {
 					list($ret, $userDiskQuotaHumanReadable, $userDiskQuotaHumanReadableUnit) = GalleryQuotasHelper::humanReadableFromKilobytes($userDiskQuota);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 					list($ret, $userDiskUsageHumanReadable, $userDiskUsageHumanReadableUnit) = GalleryQuotasHelper::humanReadableFromKilobytes($userDiskUsage);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 
 					$warnings[$i][] = $module->translate(
@@ -125,6 +125,6 @@ class DiskQuotaOption extends ItemAddOption {
 			}
 		}
 
-		return array( null, $errors, $warnings );
+		return array(null, $errors, $warnings);
 	}
 }

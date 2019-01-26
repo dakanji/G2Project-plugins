@@ -39,20 +39,20 @@ class NotificationItemAdminController extends GalleryController {
 		list($ret, $userId) = NotificationHelper::getUserIdCheck();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Is the user an administrator
 		list($ret, $isAdminGroup) = GalleryCoreApi::isUserInSiteAdminGroup();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$itemId = $item->getId();
 
@@ -67,7 +67,7 @@ class NotificationItemAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if (empty($notification['subscribed'])) {
@@ -89,7 +89,7 @@ class NotificationItemAdminController extends GalleryController {
 							);
 
 							if ($ret) {
-								return array( $ret, null );
+								return array($ret, null);
 							}
 
 							$permission = $instance->getPermission();
@@ -98,7 +98,7 @@ class NotificationItemAdminController extends GalleryController {
 								list($ret, $authorized) = GalleryCoreApi::hasItemPermission($itemId, $permission);
 
 								if ($ret) {
-									return array( $ret, null );
+									return array($ret, null);
 								}
 							}
 						}
@@ -119,7 +119,7 @@ class NotificationItemAdminController extends GalleryController {
 					}
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 			}
@@ -141,7 +141,7 @@ class NotificationItemAdminController extends GalleryController {
 		$results['status']      = $status;
 		$results['error']       = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -157,7 +157,7 @@ class NotificationItemAdminView extends GalleryView {
 			$ret = $this->_initializeForm($form);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -274,11 +274,11 @@ class NotificationItemAdminView extends GalleryView {
 					return $ret;
 				}
 				$form['notifications'][++$i] = array(
-					'name' => $notificationName,
-					'description' => $description,
-					'handler' => $handlerName,
+					'name'               => $notificationName,
+					'description'        => $description,
+					'handler'            => $handlerName,
 					'handlerDescription' => $handlerDescription,
-					'subscribed' => !empty($subscriptions[$notificationName]),
+					'subscribed'         => !empty($subscriptions[$notificationName]),
 				);
 			}
 		}

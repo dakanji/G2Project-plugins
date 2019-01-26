@@ -43,50 +43,50 @@ class SnapGalaxyHelper {
 		list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryPhotoItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		foreach ($itemIds as $id) {
 			if (empty($permissions[$id]['core.view'])) {
 				// Avoid information disclosure, act as if the item didn't exist.
-				return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
 		}
 
 		list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds($itemIds);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds($itemIds);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds($itemIds);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// We want to know which are viewable to guests
 		list($ret, $anonymousUserId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds, $anonymousUserId, false);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$cartUrlFragment = $session->get('snapgalaxy.cartUrlFragment');
@@ -124,7 +124,7 @@ class SnapGalaxyHelper {
 				$ret       = $pwSession->initEmpty(true, $gallery->getActiveUserId());
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 
@@ -141,14 +141,14 @@ class SnapGalaxyHelper {
 			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
-						'view' => 'core.DownloadItem',
+						'view'   => 'core.DownloadItem',
 						'itemId' => $source->getId(),
 					),
 					$sessionParam
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 				)
 			);
 			$entry['imageWidth']  = $source->getWidth();
@@ -168,14 +168,14 @@ class SnapGalaxyHelper {
 			$entry['thumbUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
-						'view' => 'core.DownloadItem',
+						'view'   => 'core.DownloadItem',
 						'itemId' => $thumbSource->getId(),
 					),
 					$sessionParam
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 				)
 			);
 			$entry['thumbWidth']  = $thumbSource->getWidth();
@@ -197,14 +197,14 @@ class SnapGalaxyHelper {
 			$ret = $pwSession->save();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'snapgalaxy');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$postData               = array();
 		$postData['version']    = 100;
@@ -216,8 +216,8 @@ class SnapGalaxyHelper {
 		$postData['imagecount'] = count($entries);
 
 		for ($i = 0; $i < sizeof($entries); $i++) {
-			$j                       = $i + 1;
-			$postData['image_' . $j] = $entries[$i]['imageUrl'];
+			$j                             = $i + 1;
+			$postData['image_' . $j]       = $entries[$i]['imageUrl'];
 			$postData['imagewidth_' . $j]  = $entries[$i]['imageWidth'];
 			$postData['imageheight_' . $j] = $entries[$i]['imageHeight'];
 			$postData['thumb_' . $j]       = $entries[$i]['thumbUrl'];
@@ -271,6 +271,6 @@ class SnapGalaxyHelper {
 			);
 		}
 
-		return array( null, $redirectUrl );
+		return array(null, $redirectUrl);
 	}
 }

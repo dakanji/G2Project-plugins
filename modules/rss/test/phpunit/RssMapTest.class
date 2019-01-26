@@ -137,10 +137,10 @@ class RssMapTest extends GalleryTestCase {
 			$feeds,
 			array(
 				array(
-					'name' => $this->_name,
-					'itemId' => $this->_root->getId(),
+					'name'    => $this->_name,
+					'itemId'  => $this->_root->getId(),
 					'ownerId' => $gallery->getActiveUserId(),
-					'params' => array(
+					'params'  => array(
 						'itemId' => $this->_root->getId(),
 					),
 				),

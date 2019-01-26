@@ -32,7 +32,7 @@ class SetSizeOption extends ItemAddOption {
 	 * @see ItemAddOption::isAppropriate
 	 */
 	public function isAppropriate() {
-		return array( null, true );
+		return array(null, true);
 	}
 
 	/**
@@ -44,7 +44,7 @@ class SetSizeOption extends ItemAddOption {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'sizelimit');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		foreach ($items as $i => $item) {
@@ -61,14 +61,14 @@ class SetSizeOption extends ItemAddOption {
 			);
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 			$param = array_merge(
 				array(
 					'keepOriginal' => 0,
-					'width' => 0,
-					'height' => 0,
-					'size' => 0,
+					'width'        => 0,
+					'height'       => 0,
+					'size'         => 0,
 				),
 				$param
 			);
@@ -78,7 +78,7 @@ class SetSizeOption extends ItemAddOption {
 				&& ($item->getWidth() > $param['width']
 				|| $item->getHeight() > $param['height'])
 			) {
-				$args = array( $param['width'], $param['height'] );
+				$args = array($param['width'], $param['height']);
 
 				if ($param['keepOriginal']) {
 					$ret = SizeLimitHelper::buildDerivativeWithLimits($item, 'scale', $args);
@@ -95,7 +95,7 @@ class SetSizeOption extends ItemAddOption {
 							)
 						);
 					} else {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 				}
 			}
@@ -103,7 +103,7 @@ class SetSizeOption extends ItemAddOption {
 			if (isset($param['size']) && $param['size'] > 0
 				&& ($item->getSize() >> 10) > $param['size']
 			) {
-				$args = array( $param['size'] );
+				$args = array($param['size']);
 
 				if ($param['keepOriginal']) {
 					$ret = SizeLimitHelper::buildDerivativeWithLimits(
@@ -124,12 +124,12 @@ class SetSizeOption extends ItemAddOption {
 							)
 						);
 					} else {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 				}
 			}
 		}
 
-		return array( null, $errors, $warnings );
+		return array(null, $errors, $warnings);
 	}
 }

@@ -93,7 +93,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -126,7 +126,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -157,11 +157,11 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][summary][missing]' ),
+				'error'  => array('form[error][summary][missing]'),
 			),
 			$results
 		);
@@ -176,7 +176,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -209,11 +209,11 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][summary][missing]' ),
+				'error'  => array('form[error][summary][missing]'),
 			),
 			$results
 		);
@@ -228,7 +228,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -261,11 +261,11 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][summary][missing]' ),
+				'error'  => array('form[error][summary][missing]'),
 			),
 			$results
 		);
@@ -284,7 +284,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -319,7 +319,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -352,7 +352,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -383,11 +383,11 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][detailed][missing]' ),
+				'error'  => array('form[error][detailed][missing]'),
 			),
 			$results
 		);
@@ -403,7 +403,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -435,11 +435,11 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][detailed][missing]' ),
+				'error'  => array('form[error][detailed][missing]'),
 			),
 			$results
 		);
@@ -455,7 +455,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(
@@ -487,11 +487,11 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][detailed][missing]' ),
+				'error'  => array('form[error][detailed][missing]'),
 			),
 			$results
 		);
@@ -510,7 +510,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
 				'status' => array(

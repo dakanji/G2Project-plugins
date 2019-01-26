@@ -54,7 +54,7 @@ class ThumbOffsetItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'ThumbOffsetTestToolkit',
-			array( 'test/movie' ),
+			array('test/movie'),
 			'dimensions-and-duration',
 			'int,int,float',
 			'desc'
@@ -94,7 +94,7 @@ class ThumbOffsetItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$preferred = null;
 		$results   = $this->handleRequest($this->_item, $preferred);
-		$this->assertEquals(array( array(), null ), $results);
+		$this->assertEquals(array(array(), null), $results);
 	}
 
 	public function testSave() {
@@ -104,7 +104,7 @@ class ThumbOffsetItemEditPluginTest extends ItemEditPluginTestCase {
 		$preferred = null;
 		$results   = $this->handleRequest($this->_item, $preferred);
 		$this->assertEquals(
-			array( array(), $this->_translate('Changes saved successfully') ),
+			array(array(), $this->_translate('Changes saved successfully')),
 			$results,
 			'result'
 		);
@@ -125,7 +125,7 @@ class ThumbOffsetItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$results = $this->handleRequest($this->_item, $preferred);
 		$this->assertEquals(
-			array( array(), $this->_translate('Changes saved successfully') ),
+			array(array(), $this->_translate('Changes saved successfully')),
 			$results,
 			'no offset result'
 		);
@@ -148,7 +148,7 @@ class ThumbOffsetItemEditPluginTest extends ItemEditPluginTestCase {
 
 		$preferred = null;
 		$results   = $this->handleRequest($this->_item, $preferred);
-		$this->assertEquals(array( array( 'form[error][offset][invalid]' ), null ), $results);
+		$this->assertEquals(array(array('form[error][offset][invalid]'), null), $results);
 	}
 }
 
@@ -173,6 +173,6 @@ class ThumbOffsetTestToolkit extends GalleryToolkit {
 			);
 		}
 
-		return array( null, array( 320, 240, 32 ) );
+		return array(null, array(320, 240, 32));
 	}
 }

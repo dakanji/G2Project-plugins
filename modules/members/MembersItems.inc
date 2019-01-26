@@ -36,7 +36,7 @@ class MembersItemsView extends GalleryView {
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$result) {
@@ -57,7 +57,7 @@ class MembersItemsView extends GalleryView {
 		$userId = GalleryUtilities::getRequestVariables('userId');
 
 		if (empty($userId)) {
-			return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
 
 		if ($form['formName'] != 'MembersItems') {
@@ -70,13 +70,13 @@ class MembersItemsView extends GalleryView {
 		list($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $form['list']['count']) = GalleryMembersHelper::fetchUserItemCount($user->getId());
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['list']['count'] == 0) {
@@ -112,7 +112,7 @@ class MembersItemsView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$MembersItems['user'] = (array)$user;
@@ -128,7 +128,7 @@ class MembersItemsView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'members');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Member Items'));

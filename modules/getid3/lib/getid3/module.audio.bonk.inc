@@ -86,8 +86,8 @@ class getid3_bonk extends getid3_handler {
 					default:
 						break 2;
 				}
-				$BonkTagName                         = substr($TagHeaderTest, 1, 4);
-				$thisfile_bonk[$BonkTagName]['size'] = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
+				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
+				$thisfile_bonk[$BonkTagName]['size']   = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
 				$thisfile_bonk[$BonkTagName]['offset'] = $thisfile_bonk['dataoffset'];
 				$this->HandleBonkTags($BonkTagName);
 			} while (true);
@@ -101,8 +101,8 @@ class getid3_bonk extends getid3_handler {
 			if ($TagHeaderTest == "\x00" . 'INFO') {
 				$info['audio']['encoder'] = 'Extended BONK v0.6 - v0.8';
 
-				$BonkTagName                         = substr($TagHeaderTest, 1, 4);
-				$thisfile_bonk[$BonkTagName]['size'] = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
+				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
+				$thisfile_bonk[$BonkTagName]['size']   = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
 				$thisfile_bonk[$BonkTagName]['offset'] = $thisfile_bonk['dataoffset'];
 				$this->HandleBonkTags($BonkTagName);
 			}
@@ -127,8 +127,8 @@ class getid3_bonk extends getid3_handler {
 				// shortcut
 				$thisfile_bonk_BONK = &$info['bonk']['BONK'];
 
-				$BonkData                      = "\x00" . 'BONK' . $this->fread(17);
-				$thisfile_bonk_BONK['version'] = getid3_lib::LittleEndian2Int(substr($BonkData, 5, 1));
+				$BonkData                             = "\x00" . 'BONK' . $this->fread(17);
+				$thisfile_bonk_BONK['version']        = getid3_lib::LittleEndian2Int(substr($BonkData, 5, 1));
 				$thisfile_bonk_BONK['number_samples'] = getid3_lib::LittleEndian2Int(substr($BonkData, 6, 4));
 				$thisfile_bonk_BONK['sample_rate']    = getid3_lib::LittleEndian2Int(substr($BonkData, 10, 4));
 
@@ -230,7 +230,7 @@ class getid3_bonk extends getid3_handler {
 	}
 
 	public static function BonkIsValidTagName($PossibleBonkTag, $ignorecase = false) {
-		static $BonkIsValidTagName = array( 'BONK', 'INFO', ' ID3', 'META' );
+		static $BonkIsValidTagName = array('BONK', 'INFO', ' ID3', 'META');
 
 		foreach ($BonkIsValidTagName as $validtagname) {
 			if ($validtagname == $PossibleBonkTag) {

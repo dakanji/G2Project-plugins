@@ -38,8 +38,8 @@ class AlbumSelectModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('blocks', $gallery->i18n('Blocks'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 34 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 34));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -52,7 +52,7 @@ class AlbumSelectModule extends GalleryModule {
 			'AlbumSelectModule',
 			'modules/albumselect/module.inc',
 			'albumselect',
-			array( 'Gallery::ViewableTreeChange', 'Gallery::ItemOrder', 'GalleryEntity::save' )
+			array('Gallery::ViewableTreeChange', 'Gallery::ItemOrder', 'GalleryEntity::save')
 		);
 
 		if ($ret) {
@@ -71,7 +71,7 @@ class AlbumSelectModule extends GalleryModule {
 		}
 
 		// We removed the 'show' parameter in 0.9.8 and 'type' in 0.9.11
-		foreach (array( 'show', 'type' ) as $param) {
+		foreach (array('show', 'type') as $param) {
 			if (isset($params[$param])) {
 				$ret = $this->removeParameter($param);
 
@@ -110,7 +110,7 @@ class AlbumSelectModule extends GalleryModule {
 		if (!empty($currentVersion) && version_compare($currentVersion, '0.9.13', '<')) {
 			GalleryDataCache::removeFromDisk(
 				array(
-					'type' => 'module-data',
+					'type'   => 'module-data',
 					'module' => 'albumselect',
 				)
 			);
@@ -147,7 +147,7 @@ class AlbumSelectModule extends GalleryModule {
 			list($ret, $sort) = $this->getParameter('sort');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if ($sort == 'manual') {
@@ -161,7 +161,7 @@ class AlbumSelectModule extends GalleryModule {
 					list($ret, $sort) = $this->getParameter('sort');
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if ($sort == 'album') {
@@ -176,12 +176,12 @@ class AlbumSelectModule extends GalleryModule {
 		if ($invalidateCache) {
 			GalleryDataCache::removeFromDisk(
 				array(
-					'type' => 'module-data',
+					'type'   => 'module-data',
 					'module' => 'albumselect',
 				)
 			);
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 }

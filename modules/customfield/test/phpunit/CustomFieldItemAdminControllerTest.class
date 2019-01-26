@@ -69,25 +69,25 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'common' => array(
 					array(
-						'field' => 'Catalog Id',
+						'field'   => 'Catalog Id',
 						'summary' => false,
-						'detail' => true,
+						'detail'  => true,
 						'choices' => array(),
 					),
 				),
 				'album' => array(),
 				'photo' => array(
 					array(
-						'field' => 'Location',
+						'field'   => 'Location',
 						'summary' => true,
-						'detail' => true,
+						'detail'  => true,
 						'choices' => array(),
 					),
 					array(
-						'field' => 'Category',
+						'field'   => 'Category',
 						'summary' => false,
-						'detail' => false,
-						'choices' => array( 'A', 'B' ),
+						'detail'  => false,
+						'choices' => array('A', 'B'),
 					),
 				),
 			)
@@ -101,7 +101,7 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			$this->_item,
 			array(
 				'Catalog Id' => 'A2',
-				'Category' => 'A',
+				'Category'   => 'A',
 			)
 		);
 
@@ -123,14 +123,14 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'return' => 1,
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Activate album-specific'
 		);
 
 		// Check values are retained..
-		list($ret, $data, $tmp, $isContainer) = CustomFieldHelper::fetchFieldValues(array( $this->_item ));
+		list($ret, $data, $tmp, $isContainer) = CustomFieldHelper::fetchFieldValues(array($this->_item));
 
 		if ($ret) {
 			return $ret;
@@ -138,7 +138,7 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'Catalog Id' => 'A2',
-				'Category' => 'A',
+				'Category'   => 'A',
 			),
 			$data[$this->_item->getId()],
 			'Field values'
@@ -158,7 +158,7 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'return' => 1,
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Switch to edit-values'
@@ -174,7 +174,7 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'return' => 1,
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Switch to edit-settings'
@@ -187,8 +187,8 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			$this->_item,
 			array(
 				'Catalog Id' => 'A3',
-				'Category' => 'B',
-				'Dummy' => 'X',
+				'Category'   => 'B',
+				'Dummy'      => 'X',
 			)
 		);
 
@@ -205,14 +205,14 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 			array(
 				'return' => 1,
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Revert to global-settings'
 		);
 
 		// Check values..
-		list($ret, $data, $tmp, $isContainer) = CustomFieldHelper::fetchFieldValues(array( $this->_item ));
+		list($ret, $data, $tmp, $isContainer) = CustomFieldHelper::fetchFieldValues(array($this->_item));
 
 		if ($ret) {
 			return $ret;
@@ -220,7 +220,7 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'Catalog Id' => 'A3',
-				'Category' => 'B',
+				'Category'   => 'B',
 			),
 			$data[$this->_item->getId()],
 			'Field values'

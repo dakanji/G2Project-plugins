@@ -33,7 +33,7 @@ class AdminCreateGroupQuotaController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$results = $status = $error = array();
@@ -42,7 +42,7 @@ class AdminCreateGroupQuotaController extends GalleryController {
 		list($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId, 'GalleryGroup');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($form['action']['cancel'])) {
@@ -75,12 +75,12 @@ class AdminCreateGroupQuotaController extends GalleryController {
 
 					if ($quotaSize <= 2147483647) {
 						if (!isset($group)) {
-							return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+							return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 						}
 						list($ret, $quotaExists, $groupQuota) = GalleryQuotasHelper::fetchGroupQuota($group->getId());
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						if (!$quotaExists) {
@@ -88,12 +88,12 @@ class AdminCreateGroupQuotaController extends GalleryController {
 								'QuotasMap',
 								array(
 									'userOrGroupId' => $group->getId(),
-									'quotaSize' => $quotaSize,
+									'quotaSize'     => $quotaSize,
 								)
 							);
 
 							if ($ret) {
-								return array( $ret, null );
+								return array($ret, null);
 							}
 
 							// Request a redirect to the confirmation screen
@@ -129,7 +129,7 @@ class AdminCreateGroupQuotaController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -144,14 +144,14 @@ class AdminCreateGroupQuotaView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$groupId           = GalleryUtilities::getRequestVariables('groupId');
 		list($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId, 'GalleryGroup');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'AdminCreateGroupQuota') {
@@ -169,7 +169,7 @@ class AdminCreateGroupQuotaView extends GalleryView {
 		list($ret, $module)               = GalleryCoreApi::loadPlugin('module', 'quotas');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$AdminCreateGroupQuota['quotaUnitChoices'] = array(
 			'KB' => $module->translate('KB'),

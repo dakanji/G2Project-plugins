@@ -35,7 +35,7 @@ class PermalinksSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$results = $status = $error = array();
@@ -43,7 +43,7 @@ class PermalinksSiteAdminController extends GalleryController {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'permalinks');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($form['PermalinksSiteAdmin']['delete'])) {
@@ -51,7 +51,7 @@ class PermalinksSiteAdminController extends GalleryController {
 				$ret = PermalinksMapHelper::deleteAlias($id);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 			$status['PermalinksSiteAdmin']['success'] = $module->translate('Permalink(s) deleted successfully');
@@ -60,7 +60,7 @@ class PermalinksSiteAdminController extends GalleryController {
 		list($ret, $autoPermalink) = GalleryCoreApi::getPluginParameter('module', 'permalinks', 'autoPermalink');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$autoPermalink    = isset($autoPermalink) ? $autoPermalink : 0;
@@ -75,7 +75,7 @@ class PermalinksSiteAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -86,7 +86,7 @@ class PermalinksSiteAdminController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -101,20 +101,20 @@ class PermalinksSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$PermalinksSiteAdmin                        = array();
 		list($ret, $PermalinksSiteAdmin['aliases']) = PermalinksMapHelper::fetchAliasesForItem();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $PermalinksSiteAdmin['autoPermalink']) = GalleryCoreApi::getPluginParameter('module', 'permalinks', 'autoPermalink');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->setVariable('PermalinksSiteAdmin', $PermalinksSiteAdmin);

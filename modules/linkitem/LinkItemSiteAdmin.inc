@@ -33,13 +33,13 @@ class LinkItemSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = $error = array();
 
 		if (isset($form['action']['save'])) {
-			foreach (array( 'arrowWatermark', 'urlSnapshot' ) as $key) {
+			foreach (array('arrowWatermark', 'urlSnapshot') as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'linkitem',
@@ -48,7 +48,7 @@ class LinkItemSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -59,7 +59,7 @@ class LinkItemSiteAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$status['saved'] = 1;
 		}
@@ -71,7 +71,7 @@ class LinkItemSiteAdminController extends GalleryController {
 		$results['status']           = $status;
 		$results['error']            = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -89,17 +89,17 @@ class LinkItemSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'LinkItemSiteAdmin') {
 			$form['formName'] = 'LinkItemSiteAdmin';
 
-			foreach (array( 'arrowWatermark', 'urlSnapshot', 'snapshotExec' ) as $key) {
+			foreach (array('arrowWatermark', 'urlSnapshot', 'snapshotExec') as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'linkitem', $key);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 		}
@@ -109,7 +109,7 @@ class LinkItemSiteAdminView extends GalleryView {
 			'LinkItemSiteAdmin',
 			array(
 				'snapshotParams' => LinkItemToolkit::getSnapshotParams(),
-				'paramsPath' => __DIR__
+				'paramsPath'     => __DIR__
 						. $platform->getDirectorySeparator() . 'params.txt',
 			)
 		);

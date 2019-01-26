@@ -43,8 +43,8 @@ class PermalinksModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 34 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 34));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -79,7 +79,7 @@ class PermalinksModule extends GalleryModule {
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Automatically activate the rewrite rules, if the rewrite module is active
@@ -87,14 +87,14 @@ class PermalinksModule extends GalleryModule {
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($rewriteApi)) {
 			list($ret, $success) = $rewriteApi->activateRewriteRulesForModule('permalinks');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -102,13 +102,13 @@ class PermalinksModule extends GalleryModule {
 			return array(
 				null,
 				array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'permalinks.ActivationWarning',
 				),
 			);
 		}
 
-		return array( null, array() );
+		return array(null, array());
 	}
 
 	/**
@@ -121,7 +121,7 @@ class PermalinksModule extends GalleryModule {
 			'PermalinksOption',
 			'modules/permalinks/PermalinksOption.inc',
 			'permalinks',
-			array( 'ItemEditItem' )
+			array('ItemEditItem')
 		);
 
 		if ($ret) {
@@ -134,7 +134,7 @@ class PermalinksModule extends GalleryModule {
 			'PermalinksModule',
 			'modules/permalinks/module.inc',
 			'permalinks',
-			array( 'Gallery::DeactivatePlugin', 'GalleryEntity::delete', 'GalleryEntity::save' )
+			array('Gallery::DeactivatePlugin', 'GalleryEntity::delete', 'GalleryEntity::save')
 		);
 
 		if ($ret) {
@@ -177,14 +177,14 @@ class PermalinksModule extends GalleryModule {
 				list($ret, $results) = PermalinksMapHelper::fetchAliasesForItem($entity->getId());
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				foreach ($results as $name) {
 					$ret = PermalinksMapHelper::deleteAlias($name);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 			}
@@ -194,7 +194,7 @@ class PermalinksModule extends GalleryModule {
 			list($ret, $isActive) = $this->isActive();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if ($isActive) {
@@ -202,7 +202,7 @@ class PermalinksModule extends GalleryModule {
 				list($ret, $redirect) = $this->deactivate();
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 		} elseif ($event->getEventName() == 'GalleryEntity::save') {
@@ -213,7 +213,7 @@ class PermalinksModule extends GalleryModule {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if ($autoPermalink) {
@@ -233,7 +233,7 @@ class PermalinksModule extends GalleryModule {
 
 					if ($ret) {
 						if (!($ret->getErrorCode() & ERROR_COLLISION)) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						// We have a collision... not really a problem, just eat it
@@ -242,7 +242,7 @@ class PermalinksModule extends GalleryModule {
 			}
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 
 	/**
@@ -252,14 +252,14 @@ class PermalinksModule extends GalleryModule {
 		return array(
 			array(
 				'comment' => $this->translate('Permalinks'),
-				'match' => array(
+				'match'   => array(
 					'controller' => 'permalinks.Redirect',
 				),
-				'pattern' => 'f/%filename%',
+				'pattern'  => 'f/%filename%',
 				'keywords' => array(
 					'filename' => array(
 						'pattern' => '([^?]+)',
-						'help' => $this->translate(
+						'help'    => $this->translate(
 							'Name you have defined as an alias to your item'
 						),
 					),

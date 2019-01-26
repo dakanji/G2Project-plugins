@@ -43,7 +43,7 @@ class getid3_real extends getid3_handler {
 					$info['audio']['channels']        = $info['real']['old_ra_header']['channels'];
 
 					$info['playtime_seconds'] = 60 * ($info['real']['old_ra_header']['audio_bytes'] / $info['real']['old_ra_header']['bytes_per_minute']);
-					$info['audio']['bitrate'] = 8 * ($info['real']['old_ra_header']['audio_bytes'] / $info['playtime_seconds']);
+					$info['audio']['bitrate'] = 8  * ($info['real']['old_ra_header']['audio_bytes'] / $info['playtime_seconds']);
 					$info['audio']['codec']   = $this->RealAudioCodecFourCClookup($info['real']['old_ra_header']['fourcc'], $info['audio']['bitrate']);
 
 					foreach ($info['real']['old_ra_header']['comments'] as $key => $valuearray) {
@@ -330,10 +330,10 @@ class getid3_real extends getid3_handler {
 
 
 						$commentkeystocopy = array(
-							'title' => 'title',
-							'artist' => 'artist',
+							'title'     => 'title',
+							'artist'    => 'artist',
 							'copyright' => 'copyright',
-							'comment' => 'comment',
+							'comment'   => 'comment',
 						);
 
 						foreach ($commentkeystocopy as $key => $val) {
@@ -429,7 +429,7 @@ class getid3_real extends getid3_handler {
 			$ParsedArray['comments']['artist'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
 			$commentoffset                      += $commentlength;
 
-			$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
+			$commentlength                          = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 			$ParsedArray['comments']['copyright'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
 			$commentoffset                         += $commentlength;
 
@@ -475,7 +475,7 @@ class getid3_real extends getid3_handler {
 					$ParsedArray['comments']['artist'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
 					$commentoffset                      += $commentlength;
 
-					$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
+					$commentlength                          = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 					$ParsedArray['comments']['copyright'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
 					$commentoffset                         += $commentlength;
 

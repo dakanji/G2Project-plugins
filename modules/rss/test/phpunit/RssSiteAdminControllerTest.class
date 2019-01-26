@@ -74,12 +74,12 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'status' => array(),
-				'error' => array(),
+				'status'   => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'rss.RssSiteAdmin',
-					'mode' => 'settings',
+					'mode'    => 'settings',
 				),
 			),
 			$results
@@ -93,12 +93,12 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'status' => array(),
-				'error' => array(),
+				'status'   => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'rss.RssSiteAdmin',
-					'mode' => 'simplefeedsettings',
+					'mode'    => 'simplefeedsettings',
 				),
 			),
 			$results
@@ -110,18 +110,18 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'settings');
 
 		$values = array(
-			'defaultVersion' => '2.0',
-			'defaultCount' => '30',
-			'maxCount' => '100',
-			'maxAge'   => '35',
-			'defaultTtl' => '120',
-			'defaultCopyright' => 'Test copyright',
-			'allowSimpleFeed' => '1',
+			'defaultVersion'        => '2.0',
+			'defaultCount'          => '30',
+			'maxCount'              => '100',
+			'maxAge'                => '35',
+			'defaultTtl'            => '120',
+			'defaultCopyright'      => 'Test copyright',
+			'allowSimpleFeed'       => '1',
 			'allowConfigurableFeed' => '1',
-			'allowAlbums' => '1',
-			'allowPhotos' => '1',
-			'allowCommentsPhoto' => '1',
-			'allowCommentsAlbum' => '1',
+			'allowAlbums'           => '1',
+			'allowPhotos'           => '1',
+			'allowCommentsPhoto'    => '1',
+			'allowCommentsAlbum'    => '1',
 		);
 
 		foreach ($values as $key => $value) {
@@ -135,11 +135,11 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 				'status' => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'rss.RssSiteAdmin',
-					'mode' => 'settings',
+					'mode'    => 'settings',
 				),
 			),
 			$results
@@ -160,9 +160,9 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'simplefeedsettings');
 
 		$values = array(
-			'sfAlbumType' => 'photos',
+			'sfAlbumType'            => 'photos',
 			'sfPhotosRecursiveLimit' => '10',
-			'sfDate' => 'new',
+			'sfDate'                 => 'new',
 		);
 
 		foreach ($values as $key => $value) {
@@ -176,11 +176,11 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 				'status' => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'rss.RssSiteAdmin',
-					'mode' => 'simplefeedsettings',
+					'mode'    => 'simplefeedsettings',
 				),
 			),
 			$results
@@ -215,12 +215,12 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status' => array(),
-				'error' => array(),
+				'status'   => array(),
+				'error'    => array(),
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'rss.RssSiteAdmin',
-					'mode' => 'list',
+					'mode'    => 'list',
 				),
 			),
 			$results

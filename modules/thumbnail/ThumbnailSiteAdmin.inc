@@ -35,29 +35,29 @@ class ThumbnailSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = '';
 
 		if (isset($form['action']['add'])) {
 			if (empty($form['mimeType'])) {
-				return array( null, $this->_exitStatus('mime_error') );
+				return array(null, $this->_exitStatus('mime_error'));
 			}
 			list($ret, $mimeMap) = ThumbnailHelper::fetchToolkitSupport();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($mimeMap[$form['mimeType']])) {
-				return array( null, $this->_exitStatus('mime_duplicate') );
+				return array(null, $this->_exitStatus('mime_duplicate'));
 			}
 		}
 
 		if (isset($form['action']['add']) && $form['image'] == 'new') {
 			if (empty($form['tmp_name'][1])) {
-				return array( null, $this->_exitStatus('file_error') );
+				return array(null, $this->_exitStatus('file_error'));
 			}
 			list($ret) = ThumbnailHelper::addItem(
 				$form['mimeType'],
@@ -70,7 +70,7 @@ class ThumbnailSiteAdminController extends GalleryController {
 			if ($ret && ($ret->getErrorCode() & ERROR_UNSUPPORTED_FILE_TYPE)) {
 				$status = 'imagemime_error';
 			} elseif ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			} else {
 				$status = 'add';
 			}
@@ -78,7 +78,7 @@ class ThumbnailSiteAdminController extends GalleryController {
 			$ret = ThumbnailHelper::updateItem($form['oldimage'], $form['mimeType'], true);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$status = 'addMime';
 		} elseif (isset($form['action']['delete']) && isset($form['delete']['itemId'])) {
@@ -90,20 +90,20 @@ class ThumbnailSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$status = 'deleteMime';
 			} else {
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($form['delete']['itemId'], 'ThumbnailImage');
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$itemMimeTypesList = $item->getItemMimeTypesList();
 				$ret               = GalleryCoreApi::deleteEntityById($form['delete']['itemId'], 'ThumbnailImage');
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::unregisterToolkitOperation(
 					'Thumbnail',
@@ -112,13 +112,13 @@ class ThumbnailSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$status = 'delete';
 			}
 		}
 
-		return array( null, $this->_exitStatus($status) );
+		return array(null, $this->_exitStatus($status));
 	}
 
 	public function _exitStatus($status) {
@@ -146,7 +146,7 @@ class ThumbnailSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'ThumbnailSiteAdmin') {
@@ -156,13 +156,13 @@ class ThumbnailSiteAdminView extends GalleryView {
 		list($ret, $form['mimeMap']) = ThumbnailHelper::getMimeTypeMap();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $list) = ThumbnailHelper::fetchThumbnails();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$form['list'] = array();
 
@@ -170,7 +170,7 @@ class ThumbnailSiteAdminView extends GalleryView {
 			list($ret, $thumbs) = GalleryCoreApi::loadEntitiesById(array_keys($list), 'ThumbnailImage');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			foreach ($thumbs as $thumb) {
@@ -184,7 +184,7 @@ class ThumbnailSiteAdminView extends GalleryView {
 		list($ret, $toolkitMime, $form['badMime']) = ThumbnailHelper::fetchToolkitSupport(false);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		unset($toolkitMime['Thumbnail']);
 		$form['operationSupport'] = $toolkitMime;

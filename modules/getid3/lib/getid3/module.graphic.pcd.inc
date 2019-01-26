@@ -44,9 +44,9 @@ class getid3_pcd extends getid3_handler {
 		if ($this->ExtractData > 3) {
 			$info['error'][] = 'Cannot extract PSD image data for detail levels above BASE (level-3) because encrypted with Kodak-proprietary compression/encryption.';
 		} elseif ($this->ExtractData > 0) {
-			$PCD_levels[1] = array( 192, 128, 0x02000 ); // BASE/16
-			$PCD_levels[2] = array( 384, 256, 0x0B800 ); // BASE/4
-			$PCD_levels[3] = array( 768, 512, 0x30000 ); // BASE
+			$PCD_levels[1] = array(192, 128, 0x02000); // BASE/16
+			$PCD_levels[2] = array(384, 256, 0x0B800); // BASE/4
+			$PCD_levels[3] = array(768, 512, 0x30000); // BASE
 			//$PCD_levels[4] = array(1536, 1024,    ??); // BASE*4  - encrypted with Kodak-proprietary compression/encryption
 			//$PCD_levels[5] = array(3072, 2048,    ??); // BASE*16 - encrypted with Kodak-proprietary compression/encryption
 			//$PCD_levels[6] = array(6144, 4096,    ??); // BASE*64 - encrypted with Kodak-proprietary compression/encryption; PhotoCD-Pro only
@@ -97,15 +97,15 @@ class getid3_pcd extends getid3_handler {
 		static $YCbCr_constants = array();
 
 		if (empty($YCbCr_constants)) {
-			$YCbCr_constants['red']['Y']    = 0.0054980 * 256;
-			$YCbCr_constants['red']['Cb']   = 0.0000000 * 256;
-			$YCbCr_constants['red']['Cr']   = 0.0051681 * 256;
-			$YCbCr_constants['green']['Y']  = 0.0054980 * 256;
+			$YCbCr_constants['red']['Y']    = 0.0054980  * 256;
+			$YCbCr_constants['red']['Cb']   = 0.0000000  * 256;
+			$YCbCr_constants['red']['Cr']   = 0.0051681  * 256;
+			$YCbCr_constants['green']['Y']  = 0.0054980  * 256;
 			$YCbCr_constants['green']['Cb'] = -0.0015446 * 256;
 			$YCbCr_constants['green']['Cr'] = -0.0026325 * 256;
-			$YCbCr_constants['blue']['Y']   = 0.0054980 * 256;
-			$YCbCr_constants['blue']['Cb']  = 0.0079533 * 256;
-			$YCbCr_constants['blue']['Cr']  = 0.0000000 * 256;
+			$YCbCr_constants['blue']['Y']   = 0.0054980  * 256;
+			$YCbCr_constants['blue']['Cb']  = 0.0079533  * 256;
+			$YCbCr_constants['blue']['Cr']  = 0.0000000  * 256;
 		}
 
 		$RGBcolor = array(

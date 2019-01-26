@@ -166,7 +166,7 @@ class UserAlbumHelper {
 			}
 		}
 
-		$viewPermissions = $module['fullSize'] ? array( 'core.viewAll' ) : array( 'core.view', 'core.viewResizes' );
+		$viewPermissions = $module['fullSize'] ? array('core.viewAll') : array('core.view', 'core.viewResizes');
 
 		switch ($module['view']) {
 			case 'everybody':

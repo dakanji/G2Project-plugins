@@ -37,7 +37,7 @@ class getid3_vqf extends getid3_handler {
 
 		$offset                         = 0;
 		$thisfile_vqf_raw['header_tag'] = substr($VQFheaderData, $offset, 4);
-		$magic = 'TWIN';
+		$magic                          = 'TWIN';
 
 		if ($thisfile_vqf_raw['header_tag'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($thisfile_vqf_raw['header_tag']) . '"';

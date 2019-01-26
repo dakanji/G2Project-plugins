@@ -33,7 +33,7 @@ class AlbumSelectSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = $error = array();
@@ -55,7 +55,7 @@ class AlbumSelectSiteAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 			$status['saved'] = 1;
@@ -63,7 +63,7 @@ class AlbumSelectSiteAdminController extends GalleryController {
 			// Flush our cache
 			GalleryDataCache::removeFromDisk(
 				array(
-					'type' => 'module-data',
+					'type'   => 'module-data',
 					'module' => 'albumselect',
 				)
 			);
@@ -71,14 +71,14 @@ class AlbumSelectSiteAdminController extends GalleryController {
 
 		$results = array(
 			'redirect' => array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'albumselect.AlbumSelectSiteAdmin',
 			),
 			'status'   => $status,
 			'error'    => $error,
 		);
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -93,7 +93,7 @@ class AlbumSelectSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		foreach (array(
@@ -114,7 +114,7 @@ class AlbumSelectSiteAdminView extends GalleryView {
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'albumselect');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			foreach ($params as $key => $value) {

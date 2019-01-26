@@ -38,8 +38,8 @@ class PanoramaModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
-		$this->setRequiredCoreApi(array( 7, 20 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 20));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -96,7 +96,7 @@ class PanoramaModule extends GalleryModule {
 			'PanoramaOption',
 			'modules/panorama/PanoramaOption.inc',
 			'panorama',
-			array( 'ItemEditPhoto' )
+			array('ItemEditPhoto')
 		);
 
 		if ($ret) {
@@ -130,7 +130,7 @@ class PanoramaModule extends GalleryModule {
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'panorama');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($param['itemLink']) {
@@ -144,7 +144,7 @@ class PanoramaModule extends GalleryModule {
 			list($ret, $images) = PanoramaHelper::fetchViewableImages($items);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			foreach ($items as $item) {
@@ -164,9 +164,9 @@ class PanoramaModule extends GalleryModule {
 					&& ($image->getHeight() / $width < 0.6)
 				) {
 					$links[$itemId][] = array(
-						'text' => $this->translate('View Panorama'),
+						'text'   => $this->translate('View Panorama'),
 						'params' => array(
-							'view' => 'panorama.Panorama',
+							'view'   => 'panorama.Panorama',
 							'itemId' => $itemId,
 						),
 					);
@@ -174,7 +174,7 @@ class PanoramaModule extends GalleryModule {
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 
 	/**

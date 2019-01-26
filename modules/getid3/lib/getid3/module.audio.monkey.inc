@@ -35,7 +35,7 @@ class getid3_monkey extends getid3_handler {
 		$MACheaderData = $this->fread(74);
 
 		$thisfile_monkeysaudio_raw['magic'] = substr($MACheaderData, 0, 4);
-		$magic = 'MAC ';
+		$magic                              = 'MAC ';
 
 		if ($thisfile_monkeysaudio_raw['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($thisfile_monkeysaudio_raw['magic']) . '"';
@@ -56,7 +56,7 @@ class getid3_monkey extends getid3_handler {
 			$thisfile_monkeysaudio_raw['nFinalFrameSamples']   = getid3_lib::LittleEndian2Int(substr($MACheaderData, 28, 4));
 			$thisfile_monkeysaudio_raw['nPeakLevel']           = getid3_lib::LittleEndian2Int(substr($MACheaderData, 32, 4));
 			$thisfile_monkeysaudio_raw['nSeekElements']        = getid3_lib::LittleEndian2Int(substr($MACheaderData, 38, 2));
-			$offset = 8;
+			$offset                                            = 8;
 		} else {
 			$offset = 8;
 			// APE_DESCRIPTOR

@@ -43,7 +43,7 @@ class UploadedItemView extends GalleryView {
 					'view' => 'core.ShowItem',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 		);
 	}

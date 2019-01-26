@@ -38,8 +38,8 @@ class WebDavModule extends GalleryModule {
 		$this->setDescription($gallery->i18n('Mount Gallery on your desktop.'));
 		$this->setGroup('interfaces', $gallery->i18n('Remote Interfaces'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 53 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 53));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -65,7 +65,7 @@ class WebDavModule extends GalleryModule {
 			'WebDavModule',
 			'modules/webdav/module.inc',
 			'webdav',
-			array( 'Gallery::ActivatePlugin' )
+			array('Gallery::ActivatePlugin')
 		);
 
 		if ($ret) {
@@ -206,28 +206,28 @@ class WebDavModule extends GalleryModule {
 		list($ret, $modules) = GalleryCoreApi::fetchPluginList('module');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($modules['rewrite'])) {
 			list($ret, $rewrite) = GalleryCoreApi::loadPlugin('module', 'rewrite', true);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (version_compare($rewrite->getVersion(), '1.1.8', '<')) {
-				return array( GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null );
+				return array(GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED), null);
 			}
 		}
 
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $redirect );
+		return array(null, $redirect);
 	}
 
 	/**
@@ -241,15 +241,15 @@ class WebDavModule extends GalleryModule {
 				continue;
 			}
 			$links[$item->getId()][] = array(
-				'text' => $this->translate('Mount with WebDAV'),
+				'text'   => $this->translate('Mount with WebDAV'),
 				'params' => array(
-					'view' => 'webdav.WebDavMount',
+					'view'   => 'webdav.WebDavMount',
 					'itemId' => $item->getId(),
 				),
 			);
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 
 	/**
@@ -290,9 +290,9 @@ class WebDavModule extends GalleryModule {
 			'pattern'  => 'w%path%',
 			'keywords' => array(
 				'path' => array(
-					'pattern' => '(/[^?]*)?',
-					'function' => array( 'webdav', 'WebDavRewriteHelper', 'parsePath' ),
-					'help' => $this->translate('Path to an item (eg. /album/image.jpg.html)'),
+					'pattern'  => '(/[^?]*)?',
+					'function' => array('webdav', 'WebDavRewriteHelper', 'parsePath'),
+					'help'     => $this->translate('Path to an item (eg. /album/image.jpg.html)'),
 				),
 			),
 		);
@@ -311,12 +311,12 @@ class WebDavModule extends GalleryModule {
 			'pattern'  => 'v/%path%.davmount',
 			'keywords' => array(
 				'path' => array(
-					'pattern' => '([^?]+)',
-					'function' => array( 'rewrite', 'RewriteSimpleHelper', 'parsePath' ),
-					'help' => $this->translate('Path to an item (eg. /album/image.jpg.html)'),
+					'pattern'  => '([^?]+)',
+					'function' => array('rewrite', 'RewriteSimpleHelper', 'parsePath'),
+					'help'     => $this->translate('Path to an item (eg. /album/image.jpg.html)'),
 				),
 			),
-			'onLoad'   => array( 'rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath' ),
+			'onLoad'   => array('rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath'),
 		);
 
 		/*
@@ -337,7 +337,7 @@ class WebDavModule extends GalleryModule {
 			return $rules;
 		}
 
-		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array( 1, 1 ));
+		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array(1, 1));
 
 		if ($ret) {
 			if ($gallery->getDebug()) {
@@ -394,7 +394,7 @@ class WebDavModule extends GalleryModule {
 			),
 			'conditions' => array(
 				array(
-					'test' => 'REQUEST_METHOD',
+					'test'    => 'REQUEST_METHOD',
 					'pattern' => 'OPTIONS',
 				),
 			),
@@ -412,16 +412,16 @@ class WebDavModule extends GalleryModule {
 				$data = $event->getData();
 
 				if ($data['pluginType'] != 'module' || $data['pluginId'] != 'rewrite') {
-					return array( null, null );
+					return array(null, null);
 				}
 
 				$ret = $this->_activateRewriteRules();
 
 				if ($ret && !($ret->getErrorCode() & ERROR_CONFIGURATION_REQUIRED)) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
-				return array( null, null );
+				return array(null, null);
 
 			case 'Gallery::Error':
 				$data = $event->getData();
@@ -431,14 +431,14 @@ class WebDavModule extends GalleryModule {
 					list($ret, $httpAuthInterface) = GalleryCoreApi::newFactoryInstance('HttpAuthInterface_1_0');
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if (isset($httpAuthInterface)) {
 						$ret = $httpAuthInterface->requestAuthentication();
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 					}
 				}
@@ -453,7 +453,7 @@ class WebDavModule extends GalleryModule {
 				);
 		}
 
-		return array( null, null );
+		return array(null, null);
 	}
 
 	/**
@@ -471,7 +471,7 @@ class WebDavModule extends GalleryModule {
 			return GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED);
 		}
 
-		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array( 1, 1 ));
+		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array(1, 1));
 
 		if ($ret) {
 			return $ret;

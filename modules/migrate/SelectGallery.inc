@@ -39,7 +39,7 @@ class SelectGalleryController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$error = $status = array();
@@ -86,7 +86,7 @@ class SelectGalleryController extends GalleryController {
 			$ret = GalleryCoreApi::removeAllMapEntries('G1MigrateMap');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			$redirect['view']     = 'core.SiteAdmin';
@@ -103,7 +103,7 @@ class SelectGalleryController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -120,7 +120,7 @@ class SelectGalleryView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'SelectGallery') {
@@ -139,7 +139,7 @@ class SelectGalleryView extends GalleryView {
 		list($ret, $operations) = GalleryCoreApi::getToolkitOperations('image/jpeg');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$hasToolkit = false;
@@ -155,7 +155,7 @@ class SelectGalleryView extends GalleryView {
 		list($ret, $mapCount) = G1MigrateHelper::fetchMapCount();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$SelectGallery                = array();

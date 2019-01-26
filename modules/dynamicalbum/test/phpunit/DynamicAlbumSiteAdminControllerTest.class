@@ -77,11 +77,11 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'dynamicalbum.DynamicAlbumSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -107,11 +107,11 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'dynamicalbum.DynamicAlbumSiteAdmin',
 				),
 				'status' => array(),
-				'error' => array(
+				'error'  => array(
 					'form[error][size_date]',
 					'form[error][size_views]',
 					'form[error][size_random]',
@@ -159,12 +159,12 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'dynamicalbum.DynamicAlbumSiteAdmin',
 				),
 				'status' => array(
 					'statusMessage' => $core->translate('Successfully saved theme settings'),
-					'saved' => 1,
+					'saved'         => 1,
 				),
 				'error' => array(),
 			),
@@ -186,20 +186,20 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 		ksort($params);
 		$this->assertEquals(
 			array(
-				'description.date' => '',
+				'description.date'   => '',
 				'description.random' => 'random stuff',
-				'description.views' => 'most viewed stuff',
-				'itemlink.date' => '0',
-				'itemlink.random' => '0',
-				'itemlink.views' => '0',
-				'size.date' => '20',
-				'size.random' => '0',
-				'size.views' => '30',
-				'type.date' => 'all',
-				'type.random' => 'album',
-				'type.views' => 'data',
-				'themeId' => $this->_defaultThemeId,
-				'themeSettingsId' => $this->_entity->getId(),
+				'description.views'  => 'most viewed stuff',
+				'itemlink.date'      => '0',
+				'itemlink.random'    => '0',
+				'itemlink.views'     => '0',
+				'size.date'          => '20',
+				'size.random'        => '0',
+				'size.views'         => '30',
+				'type.date'          => 'all',
+				'type.random'        => 'album',
+				'type.views'         => 'data',
+				'themeId'            => $this->_defaultThemeId,
+				'themeSettingsId'    => $this->_entity->getId(),
 			),
 			$params,
 			'Verify DB Data'

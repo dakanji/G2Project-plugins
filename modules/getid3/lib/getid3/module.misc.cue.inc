@@ -190,10 +190,10 @@ class getid3_cue extends getid3_handler {
 					case 'flags':
 						// first entry in this line
 						$this->cuesheet['tracks'][$track_on]['flags'] = array(
-							'4ch' => false,
+							'4ch'  => false,
 							'data' => false,
-							'dcp' => false,
-							'pre' => false,
+							'dcp'  => false,
+							'pre'  => false,
 							'scms' => false,
 						);
 
@@ -258,7 +258,7 @@ class getid3_cue extends getid3_handler {
 				$this->cuesheet['tracks'][$track_on][$type][$number] = array(
 					'minutes' => intval($minutes),
 					'seconds' => intval($seconds),
-					'frames' => intval($frames),
+					'frames'  => intval($frames),
 				);
 
 				break;
@@ -268,7 +268,7 @@ class getid3_cue extends getid3_handler {
 				$this->cuesheet['tracks'][$track_on][$type] = array(
 					'minutes' => intval($minutes),
 					'seconds' => intval($seconds),
-					'frames' => intval($frames),
+					'frames'  => intval($frames),
 				);
 
 				break;
@@ -317,7 +317,7 @@ class getid3_cue extends getid3_handler {
 
 		$this->cuesheet['tracks'][$track_on] = array(
 			'track_number' => $track,
-			'datatype' => $datatype,
+			'datatype'     => $datatype,
 		);
 	}
 }

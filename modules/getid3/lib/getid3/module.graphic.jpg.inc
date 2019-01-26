@@ -50,7 +50,7 @@ class getid3_jpg extends getid3_handler {
 						if (isset($info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName])) {
 							$info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName][] = $value;
 						} else {
-							$info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName] = array( $value );
+							$info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName] = array($value);
 						}
 					}
 				}
@@ -86,7 +86,7 @@ class getid3_jpg extends getid3_handler {
 		}
 
 
-		$cast_as_appropriate_keys = array( 'EXIF', 'IFD0', 'THUMBNAIL' );
+		$cast_as_appropriate_keys = array('EXIF', 'IFD0', 'THUMBNAIL');
 
 		foreach ($cast_as_appropriate_keys as $exif_key) {
 			if (isset($info['jpg']['exif'][$exif_key])) {
@@ -151,7 +151,7 @@ class getid3_jpg extends getid3_handler {
 			}
 
 			if (isset($info['jpg']['exif']['GPS']['GPSAltitude'])) {
-				$direction_multiplier = (!empty($info['jpg']['exif']['GPS']['GPSAltitudeRef']) ? -1 : 1);           // 0 = above sea level; 1 = below sea level
+				$direction_multiplier                               = (!empty($info['jpg']['exif']['GPS']['GPSAltitudeRef']) ? -1 : 1);           // 0 = above sea level; 1 = below sea level
 				$info['jpg']['exif']['GPS']['computed']['altitude'] = $direction_multiplier * getid3_lib::DecimalizeFraction($info['jpg']['exif']['GPS']['GPSAltitude']);
 			}
 		}

@@ -349,8 +349,8 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 	 */
 	public function _restoreItemThumbnails() {
 		list($ret, $derivativesTable) = GalleryCoreApi::fetchDerivativesBySourceIds(
-			array( $this->getId() ),
-			array( DERIVATIVE_TYPE_IMAGE_THUMBNAIL )
+			array($this->getId()),
+			array(DERIVATIVE_TYPE_IMAGE_THUMBNAIL)
 		);
 
 		if ($ret) {
@@ -466,7 +466,7 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 		list($ret, $logicalPath) = $this->fetchLogicalPath();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		/*
@@ -479,14 +479,14 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 			$logicalPath = str_replace('/', $platform->getDirectorySeparator(), $logicalPath);
 		}
 
-		return array( null, $this->getThumbnailDir() . $logicalPath );
+		return array(null, $this->getThumbnailDir() . $logicalPath);
 	}
 
 	public function fetchLogicalPath() {
 		list($ret, $thumbnailContainerId) = GalleryCoreApi::getPluginParameter('module', 'thumbnail', 'id.container');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($this->getParentId() != $thumbnailContainerId) {
@@ -498,7 +498,7 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 			$path = $this->getPathComponent();
 		}
 
-		return array( null, $path );
+		return array(null, $path);
 	}
 
 	/**
@@ -533,8 +533,8 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 				$urlGenerator =& $gallery->getUrlGenerator();
 				$src          = $urlGenerator->generateUrl(
 					array(
-						'view' => 'core.DownloadItem',
-						'itemId' => $this->getId(),
+						'view'         => 'core.DownloadItem',
+						'itemId'       => $this->getId(),
 						'serialNumber' => $this->getSerialNumber(),
 					),
 					array(
@@ -542,7 +542,7 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 					)
 				);
 
-				list($width, $height) = array( $this->getWidth(), $this->getHeight() );
+				list($width, $height) = array($this->getWidth(), $this->getHeight());
 
 				// Shrink our dimensions if necessary
 				if (isset($params['maxSize'])) {

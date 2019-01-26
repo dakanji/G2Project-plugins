@@ -64,11 +64,11 @@ class SizeLimitHelperTest extends GalleryTestCase {
 		// applying size limits uses 'compress'
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'SizeLimitHelperTestToolkit',
-			array( 'image/known' ),
+			array('image/known'),
 			'test',
 			array(
 				array(
-					'type' => 'int',
+					'type'        => 'int',
 					'description' => 'size',
 				),
 			),
@@ -82,7 +82,7 @@ class SizeLimitHelperTest extends GalleryTestCase {
 		// we will return dimensions to whoever asks
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'SizeLimitHelperTestToolkit',
-			array( 'image/known' ),
+			array('image/known'),
 			'dimensions',
 			'int,int',
 			'desc'
@@ -104,7 +104,7 @@ class SizeLimitHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			'image/known',
 			array(
-				'summary' => 'original summary',
+				'summary'     => 'original summary',
 				'description' => 'original description',
 			)
 		);
@@ -118,7 +118,7 @@ class SizeLimitHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			'image/unknown',
 			array(
-				'summary' => 'plagiarized summary',
+				'summary'     => 'plagiarized summary',
 				'description' => 'plagiarized description',
 			)
 		);
@@ -146,7 +146,7 @@ class SizeLimitHelperTest extends GalleryTestCase {
 				return $ret;
 			}
 		}
-		$ret = SizeLimitHelper::buildDerivativeWithLimits($this->_item, 'test', array( 26 ));
+		$ret = SizeLimitHelper::buildDerivativeWithLimits($this->_item, 'test', array(26));
 
 		if ($ret) {
 			return $ret;
@@ -178,7 +178,7 @@ class SizeLimitHelperTest extends GalleryTestCase {
 		$ret = SizeLimitHelper::buildDerivativeWithLimits(
 			$this->_item,
 			'unsupported',
-			array( 'anything' )
+			array('anything')
 		);
 		$this->assert($ret->getErrorCode() & ERROR_UNSUPPORTED_FILE_TYPE);
 	}
@@ -196,7 +196,7 @@ class SizeLimitHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$ret = SizeLimitHelper::applyLimits($this->_item, 'test', array( 26 ));
+		$ret = SizeLimitHelper::applyLimits($this->_item, 'test', array(26));
 		$this->assert(!$ret, 'applyLimits');
 
 		list($ret, $this->_item) = $this->_item->refresh();
@@ -234,7 +234,7 @@ class SizeLimitHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$ret = SizeLimitHelper::applyLimits($this->_itemUnknown, 'test', array( 26 ));
+		$ret = SizeLimitHelper::applyLimits($this->_itemUnknown, 'test', array(26));
 		$this->assertEquals(
 			GALLERY_ERROR | ERROR_UNSUPPORTED_FILE_TYPE,
 			$ret->getErrorCode(),
@@ -265,7 +265,7 @@ class SizeLimitHelperTestPlatform extends GalleryPlatform {
 	public function getimagesize($file) {
 		$resizePerformed = GalleryUtilities::getRequestVariables('resizePerformed');
 
-		return $resizePerformed ? array( 768, 1024 ) : array( 1728, 2304 );
+		return $resizePerformed ? array(768, 1024) : array(1728, 2304);
 	}
 
 	public function file_exists($filename) {
@@ -322,7 +322,7 @@ class SizeLimitHelperTestToolkit extends GalleryToolkit {
 		}
 		GalleryUtilities::putRequestVariable('operation', $operationName);
 
-		return array( null, $mimeType, $context );
+		return array(null, $mimeType, $context);
 	}
 
 	/**
@@ -340,9 +340,9 @@ class SizeLimitHelperTestToolkit extends GalleryToolkit {
 				break;
 
 			default:
-				return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 		}
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }

@@ -31,7 +31,7 @@ class NotificationItemsAddedOption extends ItemAddOption {
 	 * @see ItemAddOption::isAppropriate
 	 */
 	public function isAppropriate() {
-		return array( null, true );
+		return array(null, true);
 	}
 
 	/**
@@ -44,9 +44,9 @@ class NotificationItemsAddedOption extends ItemAddOption {
 		list($ret) = GalleryCoreApi::postEvent($itemAddEvent);
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
-		return array( null, array(), array() );
+		return array(null, array(), array());
 	}
 }

@@ -47,7 +47,7 @@ class CartPluginInterface_1_0 {
 	 *               string the action display name
 	 */
 	public function getActionDisplayName() {
-		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 	}
 
 	/**
@@ -57,6 +57,6 @@ class CartPluginInterface_1_0 {
 	 *               array url components that can be passed to the UrlGenerator
 	 */
 	public function fulfillCart($cartItemIds) {
-		return array( GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null );
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 	}
 }

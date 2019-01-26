@@ -33,10 +33,10 @@ class RestrictMimeOption extends ItemAddOption {
 		list($ret, $allowMime) = GalleryCoreApi::getPluginParameter('module', 'mime', 'allowMime');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $allowMime != 'all' );
+		return array(null, $allowMime != 'all');
 	}
 
 	/**
@@ -48,17 +48,17 @@ class RestrictMimeOption extends ItemAddOption {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'mime');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 		list($ret, $allowMime) = $module->getParameter('allowMime');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 		list($ret, $mimeList) = $module->getParameter('mimeList');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 		$mimeList = array_flip(explode(' | ', $mimeList));
 
@@ -75,7 +75,7 @@ class RestrictMimeOption extends ItemAddOption {
 				list($ret, $derivedMimeType) = GalleryCoreApi::convertExtensionToMime($extension);
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 			} else {
 				$derivedMimeType = $mimeType;
@@ -90,12 +90,12 @@ class RestrictMimeOption extends ItemAddOption {
 					'This type of file not allowed; item will not be added.'
 				);
 				$gallery->addShutdownAction(
-					array( 'GalleryCoreApi', 'deleteEntityById' ),
-					array( $items[$i]->getId() )
+					array('GalleryCoreApi', 'deleteEntityById'),
+					array($items[$i]->getId())
 				);
 			}
 		}
 
-		return array( null, $errors, $warnings );
+		return array(null, $errors, $warnings);
 	}
 }

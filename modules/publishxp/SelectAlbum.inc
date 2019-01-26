@@ -67,7 +67,7 @@ class SelectAlbumController extends GalleryController {
 			$results['delegate']['view'] = 'publishxp.SelectAlbum';
 		}
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -101,14 +101,14 @@ class SelectAlbumView extends GalleryView {
 		list($ret, $albumIds['addDataItem']) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addDataItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Get ids of all all albums where we can add new album items
 		list($ret, $albumIds['addAlbumItem']) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addAlbumItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Merge them together to get the master list of ids
@@ -119,7 +119,7 @@ class SelectAlbumView extends GalleryView {
 			list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($albumIds['allIds']);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$filteredIds = array();
 
@@ -138,7 +138,7 @@ class SelectAlbumView extends GalleryView {
 			list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds['allIds'], 'GalleryAlbumItem');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -148,7 +148,7 @@ class SelectAlbumView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'publishxp');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Windows Publishing Wizard'));
@@ -159,7 +159,7 @@ class SelectAlbumView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body' => 'modules/publishxp/templates/SelectAlbum.tpl',
+				'body'          => 'modules/publishxp/templates/SelectAlbum.tpl',
 				'useFullScreen' => true,
 			),
 		);

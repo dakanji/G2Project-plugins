@@ -53,7 +53,7 @@ class FotokastenCartPluginTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				'controller' => 'fotokasten.PrintPhotos',
-				'return' => 1,
+				'return'     => 1,
 			),
 			$urlParams
 		);

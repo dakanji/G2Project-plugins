@@ -63,13 +63,13 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'publishxp.UploadItems',
+					'view'            => 'publishxp.UploadItems',
 					'stripExtensions' => true,
-					'setCaptions' => true,
-					'albumId' => 3,
+					'setCaptions'     => true,
+					'albumId'         => 3,
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -87,7 +87,7 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 					'view' => 'publishxp.Options',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -102,13 +102,13 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'publishxp.UploadItems',
+					'view'            => 'publishxp.UploadItems',
 					'stripExtensions' => false,
-					'setCaptions' => false,
-					'albumId' => 2,
+					'setCaptions'     => false,
+					'albumId'         => 2,
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -119,7 +119,7 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 					'action' => array(
 						'setOptions' => '1',
 					),
-					'albumId' => '2',
+					'albumId'    => '2',
 					'SomeOption' => array(
 						'someValue' => '3',
 					),

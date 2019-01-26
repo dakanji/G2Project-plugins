@@ -35,7 +35,7 @@ class MembersListView extends GalleryView {
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$result) {
@@ -64,14 +64,14 @@ class MembersListView extends GalleryView {
 		list($ret, $groupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Fetch the user count every time we reload
 		list($ret, $totalUserCount) = GalleryCoreApi::fetchUserCount(null, $groupId);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$form['list']['count']    = $totalUserCount;
@@ -96,13 +96,13 @@ class MembersListView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $users) = GalleryCoreApi::loadEntitiesById(array_keys($userNames), 'GalleryUser');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$MembersList['users'] = array();
@@ -118,7 +118,7 @@ class MembersListView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'members');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Members List'));

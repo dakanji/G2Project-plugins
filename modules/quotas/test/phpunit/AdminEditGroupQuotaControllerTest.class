@@ -46,11 +46,11 @@ class AdminEditGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -71,12 +71,12 @@ class AdminEditGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditGroupQuota',
 					'groupId' => $group->getId(),
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -103,7 +103,7 @@ class AdminEditGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(
@@ -150,11 +150,11 @@ class AdminEditGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditGroupQuota',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][quotaUnit][missing]' ),
+				'error'  => array('form[error][quotaUnit][missing]'),
 			),
 			$results
 		);
@@ -167,11 +167,11 @@ class AdminEditGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditGroupQuota',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][quotaSize][missing]' ),
+				'error'  => array('form[error][quotaSize][missing]'),
 			),
 			$results
 		);
@@ -202,11 +202,11 @@ class AdminEditGroupQuotaControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditGroupQuota',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -224,7 +224,7 @@ class AdminEditGroupQuotaControllerTest extends GalleryControllerTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $groupId,
-				'quotaSize' => $quota,
+				'quotaSize'     => $quota,
 			)
 		);
 

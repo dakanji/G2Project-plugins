@@ -65,11 +65,11 @@ class RegisterModuleTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				'Register' => array(
-					'text' => $label,
+					'text'   => $label,
 					'params' => array(
-						'view' => 'core.UserAdmin',
+						'view'    => 'core.UserAdmin',
 						'subView' => 'register.UserSelfRegistration',
-						'return' => 1,
+						'return'  => 1,
 					),
 				),
 			),
@@ -87,11 +87,11 @@ class RegisterModuleTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				'Register' => array(
-					'text' => $label,
+					'text'   => $label,
 					'params' => array(
-						'view' => 'core.UserAdmin',
+						'view'    => 'core.UserAdmin',
 						'subView' => 'register.UserSelfRegistration',
-						'return' => 1,
+						'return'  => 1,
 					),
 				),
 			),

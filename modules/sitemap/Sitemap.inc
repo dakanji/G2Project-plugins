@@ -112,7 +112,7 @@ class SitemapView extends GalleryView {
 		 [GalleryItemAttributesMap::parentSequence] LIKE ?)
 		AND
 		';
-				$data      = array( $rootId, implode('/', $parents) . '/' . $rootId . '/%' );
+				$data      = array($rootId, implode('/', $parents) . '/' . $rootId . '/%');
 			}
 
 			$query = sprintf(
@@ -147,10 +147,10 @@ class SitemapView extends GalleryView {
 			}
 
 			$frequencyTable = array(
-				3600 => 'hourly',
-				24 * 3600 => 'daily',
-				7 * 24 * 3600 => 'weekly',
-				30 * 24 * 3600 => 'monthly',
+				3600            => 'hourly',
+				24 * 3600       => 'daily',
+				7 * 24 * 3600   => 'weekly',
+				30 * 24 * 3600  => 'monthly',
 				365 * 24 * 3600 => 'yearly',
 			);
 			$i              = 0;
@@ -161,12 +161,12 @@ class SitemapView extends GalleryView {
 				}
 				$loc        = $urlGenerator->generateUrl(
 					array(
-						'view' => 'core.ShowItem',
+						'view'   => 'core.ShowItem',
 						'itemId' => $result[0],
 					),
 					array(
 						'forceSessionId' => false,
-						'forceFullUrl' => true,
+						'forceFullUrl'   => true,
 					)
 				);
 				$lastmod    = gmstrftime('%Y-%m-%dT%H:%M:%S+00:00', $result[1]);

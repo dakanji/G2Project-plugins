@@ -33,7 +33,7 @@ class ImageBlockSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$status = array();
@@ -41,7 +41,7 @@ class ImageBlockSiteAdminController extends GalleryController {
 		if (isset($form['action']['save'])) {
 			$param = array();
 
-			foreach (array( 'heading', 'title', 'date', 'views', 'owner' ) as $key) {
+			foreach (array('heading', 'title', 'date', 'views', 'owner') as $key) {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}
@@ -54,10 +54,10 @@ class ImageBlockSiteAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
-			foreach (array( 'albumFrame', 'itemFrame' ) as $key) {
+			foreach (array('albumFrame', 'itemFrame') as $key) {
 				if (isset($form[$key])) {
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
@@ -67,7 +67,7 @@ class ImageBlockSiteAdminController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 			}
@@ -80,7 +80,7 @@ class ImageBlockSiteAdminController extends GalleryController {
 		$results['status']              = $status;
 		$results['error']               = array();
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -95,19 +95,19 @@ class ImageBlockSiteAdminView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'ImageBlockSiteAdmin') {
 			$form['formName'] = 'ImageBlockSiteAdmin';
 
-			foreach (array( 'heading', 'title', 'date', 'views', 'owner' ) as $tmp) {
+			foreach (array('heading', 'title', 'date', 'views', 'owner') as $tmp) {
 				$form[$tmp] = 0;
 			}
 			list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'imageblock');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			foreach (explode('|', $param['show']) as $tmp) {
@@ -124,19 +124,19 @@ class ImageBlockSiteAdminView extends GalleryView {
 		list($ret, $imageframe) = GalleryCoreApi::newFactoryInstance('ImageFrameInterface_1_1');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($imageframe)) {
 			list($ret, $ImageBlockSiteAdmin['list']) = $imageframe->getImageFrameList();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			list($ret, $ImageBlockSiteAdmin['sampleUrl']) = $imageframe->getSampleUrl();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 

@@ -33,7 +33,7 @@ class CantActivateController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Figure out where to redirect upon success
@@ -42,7 +42,7 @@ class CantActivateController extends GalleryController {
 		$results['status']              = array();
 		$results['error']               = array();
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -57,7 +57,7 @@ class CantActivateView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'CantActivate') {

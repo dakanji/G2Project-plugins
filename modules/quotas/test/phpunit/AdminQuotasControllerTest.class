@@ -46,12 +46,12 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminCreateGroupQuota',
 					'groupId' => $group->getId(),
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -73,12 +73,12 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminCreateUserQuota',
-					'userId' => $user->getId(),
+					'userId'  => $user->getId(),
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -102,12 +102,12 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditGroupQuota',
 					'groupId' => $group->getId(),
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -121,11 +121,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noGroupSpecified]' ),
+				'error'  => array('form[error][text][noGroupSpecified]'),
 			),
 			$results
 		);
@@ -141,11 +141,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noSuchGroup]' ),
+				'error'  => array('form[error][text][noSuchGroup]'),
 			),
 			$results
 		);
@@ -169,12 +169,12 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditUserQuota',
-					'userId' => $user->getId(),
+					'userId'  => $user->getId(),
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -188,11 +188,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noUserSpecified]' ),
+				'error'  => array('form[error][text][noUserSpecified]'),
 			),
 			$results
 		);
@@ -208,11 +208,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noSuchUser]' ),
+				'error'  => array('form[error][text][noSuchUser]'),
 			),
 			$results
 		);
@@ -236,12 +236,12 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminDeleteGroupQuota',
 					'groupId' => $group->getId(),
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -255,11 +255,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noGroupSpecified]' ),
+				'error'  => array('form[error][text][noGroupSpecified]'),
 			),
 			$results
 		);
@@ -275,11 +275,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noSuchGroup]' ),
+				'error'  => array('form[error][text][noSuchGroup]'),
 			),
 			$results
 		);
@@ -303,12 +303,12 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminDeleteUserQuota',
-					'userId' => $user->getId(),
+					'userId'  => $user->getId(),
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -322,11 +322,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noUserSpecified]' ),
+				'error'  => array('form[error][text][noUserSpecified]'),
 			),
 			$results
 		);
@@ -342,11 +342,11 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'delegate' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
 				'status' => array(),
-				'error' => array( 'form[error][text][noSuchUser]' ),
+				'error'  => array('form[error][text][noSuchUser]'),
 			),
 			$results
 		);
@@ -357,7 +357,7 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 			'QuotasMap',
 			array(
 				'userOrGroupId' => $userOrGroupId,
-				'quotaSize' => $quota,
+				'quotaSize'     => $quota,
 			)
 		);
 

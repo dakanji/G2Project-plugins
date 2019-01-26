@@ -177,7 +177,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 			return $ret;
 		}
 		$results = $this->handleRequest($this->_album, ERROR_PERMISSION_DENIED);
-		$this->assertEquals(array( null, null ), $results);
+		$this->assertEquals(array(null, null), $results);
 	}
 
 	/*
@@ -302,7 +302,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 			);
 			rsort($files);
 
-			$escapedBasenames = array( 'test1', 'test1', 'test2', 'test[3]', 'apo\'strophe', "t\xebst" );
+			$escapedBasenames = array('test1', 'test1', 'test2', 'test[3]', 'apo\'strophe', "t\xebst");
 			rsort($escapedBasenames);
 
 			foreach ($files as $fileName) {
@@ -322,13 +322,13 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 		}
 
 		if ($addDirectories) {
-			$files = array( 'test1.gif', 'test1.jpg', 'test2.gif', 'test[3].gif', 'test4.gif' );
+			$files = array('test1.gif', 'test1.jpg', 'test2.gif', 'test[3].gif', 'test4.gif');
 			rsort($files);
 
-			$escapedBasenames = array( 'test1', 'test1', 'test2', 'test[3]', 'test4' );
+			$escapedBasenames = array('test1', 'test1', 'test2', 'test[3]', 'test4');
 			rsort($escapedBasenames);
 
-			$dirs = array( 'localUploadDir', "subD\xeer", '..' );
+			$dirs = array('localUploadDir', "subD\xeer", '..');
 
 			foreach ($dirs as $dirName) {
 				$dirName = urlencode($dirName);
@@ -573,7 +573,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 		);
 
 		$results = $this->handleRequest($this->_rootAlbum);
-		$this->assertEquals(array( array(), array() ), $results);
+		$this->assertEquals(array(array(), array()), $results);
 	}
 
 	public function testAddFromServerMalformedInput() {
@@ -590,7 +590,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[set][title]', 1);
 
 		$results = $this->handleRequest($this->_rootAlbum);
-		$this->assertEquals(array( array(), array() ), $results);
+		$this->assertEquals(array(array(), array()), $results);
 	}
 
 	public function testAddFromServerEntityDir() {
@@ -618,7 +618,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 						'addedFiles' => array(
 							array(
 								'fileName' => 'foo',
-								'id' => $id,
+								'id'       => $id,
 								'warnings' => array(),
 							),
 						),
@@ -640,8 +640,8 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 			$baseDir . 'good<script>evil.jpg',
 			false,
 			array(
-				'title' => 1,
-				'summary' => 1,
+				'title'       => 1,
+				'summary'     => 1,
 				'description' => 1,
 			),
 			$status,
@@ -677,15 +677,15 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 
 		// Force some private variables that the plugin normally has at this point
 		$this->_plugin->_platform           = $platform;
-		$this->_plugin->_localServerDirList = array( $baseDir );
+		$this->_plugin->_localServerDirList = array($baseDir);
 
 		list($ret, $id) = $this->_plugin->addDirectory(
 			$this->_rootAlbum->getId(),
 			$baseDir . 'good<script>evil_dir',
 			false,
 			array(
-				'title' => 1,
-				'summary' => 1,
+				'title'       => 1,
+				'summary'     => 1,
 				'description' => 1,
 			),
 			$status,
@@ -818,7 +818,7 @@ class ItemAddFromServerTestPlatform extends GalleryPlatform {
 	public function opendir($path) {
 		if (in_array(
 			$path,
-			array( $this->_baseDir . "subD\xeer", $this->_baseDir . 'Black&White' )
+			array($this->_baseDir . "subD\xeer", $this->_baseDir . 'Black&White')
 		)
 		) {
 			return 'testHandle';
@@ -845,7 +845,7 @@ class ItemAddFromServerTestPlatform extends GalleryPlatform {
 
 	public function exec($cmd) {
 		// In case add of jpeg tries to get 'colorspace' property
-		return array( true, array( '' ), array() );
+		return array(true, array(''), array());
 	}
 }
 

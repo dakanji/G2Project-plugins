@@ -132,7 +132,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 				'key'   => 'captcha.UnitTest',
 			)
 		);
-		$this->assertEquals(array( null, null, null ), $result);
+		$this->assertEquals(array(null, null, null), $result);
 
 		$ret = GalleryCoreApi::setPluginParameter(
 			'module',
@@ -171,7 +171,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 				'level' => 'LOW',
 			)
 		);
-		$this->assertEquals(array( null, null, null ), $result);
+		$this->assertEquals(array(null, null, null), $result);
 
 		$session =& $gallery->getSession();
 		$session->put('captcha.failedAttempts', 3);
@@ -199,7 +199,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				null,
-				array( 'form[error][CaptchaValidationPlugin][missing]' ),
+				array('form[error][CaptchaValidationPlugin][missing]'),
 				false,
 			),
 			$result
@@ -209,16 +209,16 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 	public function testValidateHigh() {
 		// Test with HIGH level
 		$this->_form['CaptchaValidationPlugin']['word'] = '1234';
-		$result = $this->_plugin->performValidation(
+		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
 			array(
 				'level' => 'HIGH',
 			)
 		);
-		$this->assertEquals(array( null, array(), true ), $result, 'pass');
+		$this->assertEquals(array(null, array(), true), $result, 'pass');
 
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
-		$result = $this->_plugin->performValidation(
+		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
 			array(
 				'level' => 'HIGH',
@@ -227,7 +227,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				null,
-				array( 'form[error][CaptchaValidationPlugin][invalid]' ),
+				array('form[error][CaptchaValidationPlugin][invalid]'),
 				false,
 			),
 			$result,
@@ -241,7 +241,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 		// First call doesn't check given code, just increments fail count
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
-		$result = $this->_plugin->performValidation(
+		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
 			array(
 				'level' => 'MEDIUM',
@@ -249,7 +249,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 				'pass'  => false,
 			)
 		);
-		$this->assertEquals(array( null, array(), true ), $result, 1);
+		$this->assertEquals(array(null, array(), true), $result, 1);
 
 		list($ret, $count) = GalleryCoreApi::getPluginParameter('module', 'captcha', 'failCount-captcha.UnitTest');
 
@@ -270,7 +270,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				null,
-				array( 'form[error][CaptchaValidationPlugin][invalid]' ),
+				array('form[error][CaptchaValidationPlugin][invalid]'),
 				false,
 			),
 			$result,
@@ -288,7 +288,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		// Successful validation but invalid entry
 		$session->put('captcha.key', '1234');
 		$this->_form['CaptchaValidationPlugin']['word'] = '1234';
-		$result = $this->_plugin->performValidation(
+		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
 			array(
 				'level' => 'MEDIUM',
@@ -296,7 +296,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 				'pass'  => false,
 			)
 		);
-		$this->assertEquals(array( null, array(), true ), $result, 3);
+		$this->assertEquals(array(null, array(), true), $result, 3);
 
 		list($ret, $count) = GalleryCoreApi::getPluginParameter('module', 'captcha', 'failCount-captcha.UnitTest');
 
@@ -314,7 +314,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 				'pass'  => true,
 			)
 		);
-		$this->assertEquals(array( null, array(), true ), $result, 4);
+		$this->assertEquals(array(null, array(), true), $result, 4);
 
 		list($ret, $count) = GalleryCoreApi::getPluginParameter('module', 'captcha', 'failCount-captcha.UnitTest');
 
@@ -330,14 +330,14 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 		// First call doesn't check given code, just increments fail count
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
-		$result = $this->_plugin->performValidation(
+		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
 			array(
 				'level' => 'LOW',
 				'pass'  => false,
 			)
 		);
-		$this->assertEquals(array( null, array(), true ), $result);
+		$this->assertEquals(array(null, array(), true), $result);
 
 		$this->assertEquals(1, (int)$session->get('captcha.failedAttempts'), 'failure count');
 
@@ -352,7 +352,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				null,
-				array( 'form[error][CaptchaValidationPlugin][invalid]' ),
+				array('form[error][CaptchaValidationPlugin][invalid]'),
 				false,
 			),
 			$result
@@ -365,7 +365,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$session =& $gallery->getSession();
 
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
-		$result = $this->_plugin->performValidation(
+		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
 			array(
 				'level' => 'HIGH',
@@ -374,7 +374,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				null,
-				array( 'form[error][CaptchaValidationPlugin][invalid]' ),
+				array('form[error][CaptchaValidationPlugin][invalid]'),
 				false,
 			),
 			$result,
@@ -385,7 +385,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 		// Retry now fails, even with previously correct key
 		$this->_form['CaptchaValidationPlugin']['word'] = '1234';
-		$result = $this->_plugin->performValidation(
+		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
 			array(
 				'level' => 'HIGH',
@@ -394,7 +394,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				null,
-				array( 'form[error][CaptchaValidationPlugin][invalid]' ),
+				array('form[error][CaptchaValidationPlugin][invalid]'),
 				false,
 			),
 			$result,

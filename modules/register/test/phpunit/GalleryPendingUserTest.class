@@ -107,11 +107,11 @@ class GalleryPendingUserTest extends GalleryTestCase {
 		list($ret, $user) = GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryPendingUser');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!isset($user)) {
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		$username = 'testuser_' . mt_rand(1000, 1000000);
@@ -119,21 +119,21 @@ class GalleryPendingUserTest extends GalleryTestCase {
 		$ret = $user->create($username);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$ret = $user->save();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $user) = GalleryPendingUserHelper::fetchPendingUserByUserName($username);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $user );
+		return array(null, $user);
 	}
 }

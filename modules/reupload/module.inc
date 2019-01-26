@@ -35,8 +35,8 @@ class ReuploadModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks('');
-		$this->setRequiredCoreApi(array( 7, 20 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 20));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -49,7 +49,7 @@ class ReuploadModule extends GalleryModule {
 			'ReuploadPhotoOption',
 			'modules/reupload/ReuploadPhotoOption.inc',
 			'reupload',
-			array( 'ItemEditRotateAndScalePhoto' )
+			array('ItemEditRotateAndScalePhoto')
 		);
 
 		if ($ret) {

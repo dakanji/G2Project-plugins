@@ -63,12 +63,12 @@ class ShutterflyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 		$session->put('shutterfly.cart', $cartItemIds);
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$returnUrl = $urlGenerator->generateUrl(
+		$returnUrl    = $urlGenerator->generateUrl(
 		array('view' => 'cart.ViewCart'),
 		array('forceFullUrl' => true)
 	);
 
 		return array(null, array('view' => 'shutterfly.PrintPhotos', 'returnUrl' => $returnUrl,
-				 'authToken' => $session->getAuthToken(), ));
+				 'authToken'                  => $session->getAuthToken(), ));
 	}
 }

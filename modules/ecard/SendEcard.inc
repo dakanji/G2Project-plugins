@@ -48,14 +48,14 @@ class SendEcardController extends GalleryController {
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$itemId = $item->getId();
 
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'ecard.send');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (isset($form['action']['send']) || isset($form['action']['preview'])) {
@@ -79,7 +79,7 @@ class SendEcardController extends GalleryController {
 			list($ret, $useValidationPlugins) = EcardHelper::useValidationPlugins();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['action']['send']) && $useValidationPlugins) {
@@ -89,7 +89,7 @@ class SendEcardController extends GalleryController {
 					list($ret, $pluginInstances) = GalleryCoreApi::getAllFactoryImplementationIds('GalleryValidationPlugin');
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					foreach (array_keys($pluginInstances) as $pluginId) {
@@ -99,7 +99,7 @@ class SendEcardController extends GalleryController {
 						);
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 					}
 				}
@@ -109,7 +109,7 @@ class SendEcardController extends GalleryController {
 					list($ret, $pluginErrors, $continue) = $plugin->performValidation($form);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 					$error = array_merge($error, $pluginErrors);
 
@@ -126,45 +126,45 @@ class SendEcardController extends GalleryController {
 			list($ret, $config) = GalleryCoreApi::fetchAllPluginParameters('module', 'ecard');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			list($ret, $resize) = EcardHelper::getSmallestSize($itemId);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			list($ret, $path) = $resize->fetchPath();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			list($ret, $anonymousUserId) = GalleryCoreApi::getAnonymousUserId();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			list($ret, $canLink) = GalleryCoreApi::hasItemPermission($itemId, 'core.view', $anonymousUserId);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			// Get pseudo filename and attach image
 			list($ret, $filename) = GalleryUtilities::getPseudoFileName($resize);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$urlGenerator =& $gallery->getUrlGenerator();
 			$link         = $canLink ? $urlGenerator->generateUrl(
 				array(
-					'view' => 'core.ShowItem',
+					'view'   => 'core.ShowItem',
 					'itemId' => $itemId,
 				),
 				array(
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 					'forceSessionId' => false,
 				)
 			) : '';
@@ -184,8 +184,8 @@ class SendEcardController extends GalleryController {
 			$data['text']   = nl2br($data['text']);
 
 			$headers = array(
-				'from' => $config['from'] ? $config['from'] : $form['fromName'] . ' <' . $form['from'] . '>',
-				'to'   => $form['to'],
+				'from'    => $config['from'] ? $config['from'] : $form['fromName'] . ' <' . $form['from'] . '>',
+				'to'      => $form['to'],
 				'subject' => EcardHelper::replaceKeywords($config['subject'], $form),
 			);
 
@@ -222,10 +222,10 @@ class SendEcardController extends GalleryController {
 
 			$body = $mime->get(
 				array(
-					'html_charset' => 'UTF-8',
-					'text_charset' => 'UTF-8',
+					'html_charset'  => 'UTF-8',
+					'text_charset'  => 'UTF-8',
 					'text_encoding' => '8bit',
-					'head_charset' => 'UTF-8',
+					'head_charset'  => 'UTF-8',
 				)
 			);
 
@@ -291,7 +291,7 @@ class SendEcardController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 
 	/**
@@ -321,13 +321,13 @@ class SendEcardView extends GalleryView {
 		list($ret, $item) = $this->getItem();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $config) = GalleryCoreApi::fetchAllPluginParameters('module', 'ecard');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'SendEcard') {
@@ -340,7 +340,7 @@ class SendEcardView extends GalleryView {
 				list($ret, $isGuest) = GalleryCoreApi::isAnonymousUser();
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!$isGuest) {
@@ -350,7 +350,7 @@ class SendEcardView extends GalleryView {
 				}
 			}
 		} else {
-			foreach (array( 'to', 'toName', 'from', 'fromName', 'text' ) as $key) {
+			foreach (array('to', 'toName', 'from', 'fromName', 'text') as $key) {
 				if (empty($form[$key])) {
 					$form[$key] = '';
 				}
@@ -365,7 +365,7 @@ class SendEcardView extends GalleryView {
 		list($ret, $resize) = EcardHelper::getSmallestSize($item->getId());
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$SendEcard['resize']  = (array)$resize;
@@ -378,18 +378,18 @@ class SendEcardView extends GalleryView {
 		$SendEcard['footer'] = EcardHelper::replaceKeywords($config['footer'], $form);
 
 		// Check if we should use validation plugins
-		$plugins = array();
+		$plugins                          = array();
 		list($ret, $useValidationPlugins) = EcardHelper::useValidationPlugins();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($useValidationPlugins) {
 			list($ret, $allPluginIds) = GalleryCoreApi::getAllFactoryImplementationIds('GalleryValidationPlugin');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			// Let each plugin load its template data
@@ -397,12 +397,12 @@ class SendEcardView extends GalleryView {
 				list($ret, $plugin) = GalleryCoreApi::newFactoryInstanceById('GalleryValidationPlugin', $pluginId);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				list($ret, $data['file'], $data['l10Domain']) = $plugin->loadTemplate($form);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (isset($data['file'])) {
@@ -419,7 +419,7 @@ class SendEcardView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'ecard');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Send eCard'));
@@ -439,9 +439,9 @@ class SendEcardView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'ecard');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $module->translate('Send eCard') );
+		return array(null, $module->translate('Send eCard'));
 	}
 }

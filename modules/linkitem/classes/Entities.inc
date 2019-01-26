@@ -3,9 +3,9 @@
 $entityInfo['GalleryLinkItem'] = array(
 	'members' => array(
 		'link' => array(
-			'type'    => STORAGE_TYPE_TEXT,
-			'size'    => STORAGE_SIZE_SMALL,
-			'notNull' => 1,
+			'type'            => STORAGE_TYPE_TEXT,
+			'size'            => STORAGE_SIZE_SMALL,
+			'notNull'         => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 	),

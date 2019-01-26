@@ -140,10 +140,10 @@ class getid3_lyrics3 extends getid3_handler {
 
 		if (substr($rawdata, 0, 11) != 'LYRICSBEGIN') {
 			if (strpos($rawdata, 'LYRICSBEGIN') !== false) {
-				$info['warning'][] = '"LYRICSBEGIN" expected at ' . $endoffset . ' but actually found at ' . ($endoffset + strpos($rawdata, 'LYRICSBEGIN')) . ' - this is invalid for Lyrics3 v' . $version;
-				$info['avdataend'] = $endoffset + strpos($rawdata, 'LYRICSBEGIN');
-				$rawdata           = substr($rawdata, strpos($rawdata, 'LYRICSBEGIN'));
-				$length            = strlen($rawdata);
+				$info['warning'][]                      = '"LYRICSBEGIN" expected at ' . $endoffset . ' but actually found at ' . ($endoffset + strpos($rawdata, 'LYRICSBEGIN')) . ' - this is invalid for Lyrics3 v' . $version;
+				$info['avdataend']                      = $endoffset + strpos($rawdata, 'LYRICSBEGIN');
+				$rawdata                                = substr($rawdata, strpos($rawdata, 'LYRICSBEGIN'));
+				$length                                 = strlen($rawdata);
 				$ParsedLyrics3['tag_offset_start']      = $info['avdataend'];
 				$ParsedLyrics3['raw']['lyrics3tagsize'] = $length;
 			} else {
@@ -169,18 +169,18 @@ class getid3_lyrics3 extends getid3_handler {
 			case 2:
 				if (substr($rawdata, strlen($rawdata) - 9, 9) == 'LYRICS200') {
 					$ParsedLyrics3['raw']['unparsed'] = substr($rawdata, 11, strlen($rawdata) - 11 - 9 - 6); // LYRICSBEGIN + LYRICS200 + LSZ
-					$rawdata = $ParsedLyrics3['raw']['unparsed'];
+					$rawdata                          = $ParsedLyrics3['raw']['unparsed'];
 
 					while (strlen($rawdata) > 0) {
 						$fieldname                        = substr($rawdata, 0, 3);
 						$fieldsize                        = (int)substr($rawdata, 3, 5);
 						$ParsedLyrics3['raw'][$fieldname] = substr($rawdata, 8, $fieldsize);
-						$rawdata = substr($rawdata, 3 + 5 + $fieldsize);
+						$rawdata                          = substr($rawdata, 3 + 5 + $fieldsize);
 					}
 
 					if (isset($ParsedLyrics3['raw']['IND'])) {
 						$i         = 0;
-						$flagnames = array( 'lyrics', 'timestamps', 'inhibitrandom' );
+						$flagnames = array('lyrics', 'timestamps', 'inhibitrandom');
 
 						foreach ($flagnames as $flagname) {
 							if (strlen($ParsedLyrics3['raw']['IND']) > $i++) {
@@ -208,7 +208,7 @@ class getid3_lyrics3 extends getid3_handler {
 
 						foreach ($imagestrings as $key => $imagestring) {
 							if (strpos($imagestring, '||') !== false) {
-								$imagearray = explode('||', $imagestring);
+								$imagearray                                   = explode('||', $imagestring);
 								$ParsedLyrics3['images'][$key]['filename']    = (isset($imagearray[0]) ? $imagearray[0] : '');
 								$ParsedLyrics3['images'][$key]['description'] = (isset($imagearray[1]) ? $imagearray[1] : '');
 								$ParsedLyrics3['images'][$key]['timestamp']   = $this->Lyrics3Timestamp2Seconds(isset($imagearray[2]) ? $imagearray[2] : '');

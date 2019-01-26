@@ -196,7 +196,7 @@ class WatermarkTest extends GalleryTestCase {
 			array(
 				DERIVATIVE_TYPE_IMAGE_PREFERRED => true,
 				DERIVATIVE_TYPE_IMAGE_THUMBNAIL => true,
-				DERIVATIVE_TYPE_IMAGE_RESIZE => true,
+				DERIVATIVE_TYPE_IMAGE_RESIZE    => true,
 			)
 		);
 
@@ -210,7 +210,7 @@ class WatermarkTest extends GalleryTestCase {
 			$this->_watermark->getFileName()
 		);
 
-		foreach (array( $preferred, $resize, $thumbnail ) as $derivative) {
+		foreach (array($preferred, $resize, $thumbnail) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {
@@ -254,7 +254,7 @@ class WatermarkTest extends GalleryTestCase {
 			array(
 				DERIVATIVE_TYPE_IMAGE_PREFERRED => false,
 				DERIVATIVE_TYPE_IMAGE_THUMBNAIL => true,
-				DERIVATIVE_TYPE_IMAGE_RESIZE => false,
+				DERIVATIVE_TYPE_IMAGE_RESIZE    => false,
 			)
 		);
 
@@ -315,7 +315,7 @@ class WatermarkTest extends GalleryTestCase {
 			array(
 				DERIVATIVE_TYPE_IMAGE_PREFERRED => true,
 				DERIVATIVE_TYPE_IMAGE_THUMBNAIL => true,
-				DERIVATIVE_TYPE_IMAGE_RESIZE => true,
+				DERIVATIVE_TYPE_IMAGE_RESIZE    => true,
 			)
 		);
 
@@ -328,7 +328,7 @@ class WatermarkTest extends GalleryTestCase {
 			'composite|plugins_data/modules/watermark/%s,test/file,0,0,manual,1.100,2.200',
 			$this->_watermark->getFileName()
 		);
-		list($ret, $table) = GalleryCoreApi::fetchPreferredsByItemIds(array( $item->getId() ));
+		list($ret, $table) = GalleryCoreApi::fetchPreferredsByItemIds(array($item->getId()));
 
 		if ($ret) {
 			return $ret;
@@ -339,7 +339,7 @@ class WatermarkTest extends GalleryTestCase {
 			$this->assertEquals($filter, $preferred->getPostFilterOperations());
 
 			// Verify that the thumb/resizes are remapped to the preferred
-			foreach (array( $resize, $thumbnail ) as $derivative) {
+			foreach (array($resize, $thumbnail) as $derivative) {
 				list($ret, $derivative) = $derivative->refresh();
 
 				if ($ret) {
@@ -402,7 +402,7 @@ class WatermarkTest extends GalleryTestCase {
 			array(
 				DERIVATIVE_TYPE_IMAGE_PREFERRED => false,
 				DERIVATIVE_TYPE_IMAGE_THUMBNAIL => true,
-				DERIVATIVE_TYPE_IMAGE_RESIZE => true,
+				DERIVATIVE_TYPE_IMAGE_RESIZE    => true,
 			)
 		);
 
@@ -415,7 +415,7 @@ class WatermarkTest extends GalleryTestCase {
 			'composite|plugins_data/modules/watermark/%s,test/file,0,0,manual,1.100,2.200',
 			$this->_watermark->getFileName()
 		);
-		list($ret, $table) = GalleryCoreApi::fetchPreferredsByItemIds(array( $item->getId() ));
+		list($ret, $table) = GalleryCoreApi::fetchPreferredsByItemIds(array($item->getId()));
 
 		if ($ret) {
 			return $ret;
@@ -424,7 +424,7 @@ class WatermarkTest extends GalleryTestCase {
 		$this->assert(empty($table[$item->getId()]), 'preferred is not gone!');
 
 		// Verify that the thumb/resizes are remapped to the source id
-		foreach (array( $resize, $thumbnail ) as $derivative) {
+		foreach (array($resize, $thumbnail) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 
 			if ($ret) {

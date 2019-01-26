@@ -33,22 +33,22 @@ class SampleView extends GalleryView {
 		list($ret, $imageframe) = GalleryCoreApi::newFactoryInstance('ImageFrameInterface_1_1');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!isset($imageframe)) {
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		list($ret, $list) = $imageframe->getImageFrameList();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$ret = $imageframe->init($template, array_keys($list));
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$ImageFrameSample = array(
@@ -60,17 +60,17 @@ class SampleView extends GalleryView {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
-			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $itemId ));
+			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			list($ret, $canSee) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if ($canSee && isset($thumbnail[$itemId])) {
@@ -82,7 +82,7 @@ class SampleView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->setVariable('ImageFrameSample', $ImageFrameSample);
@@ -91,7 +91,7 @@ class SampleView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body' => 'modules/imageframe/templates/SampleBody.tpl',
+				'body'          => 'modules/imageframe/templates/SampleBody.tpl',
 				'useFullScreen' => true,
 			),
 		);
@@ -105,18 +105,18 @@ class SampleView extends GalleryView {
 
 		if ($ret) {
 			if (!($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 			// Fallback to default theme if given invalid itemId
 			GalleryUtilities::removeRequestVariable('itemId');
 			list($ret, $theme, $params, $item) = parent::loadThemeAndParameters();
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 		}
 
-		return array( null, $theme, $params, $item );
+		return array(null, $theme, $params, $item);
 	}
 
 	/**
@@ -126,9 +126,9 @@ class SampleView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $module->translate('Image Frame Samples') );
+		return array(null, $module->translate('Image Frame Samples'));
 	}
 }

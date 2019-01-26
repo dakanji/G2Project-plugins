@@ -36,8 +36,8 @@ class CartModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks');
-		$this->setRequiredCoreApi(array( 7, 27 ));
-		$this->setRequiredModuleApi(array( 3, 9 ));
+		$this->setRequiredCoreApi(array(7, 27));
+		$this->setRequiredModuleApi(array(3, 9));
 	}
 
 	/**
@@ -195,13 +195,13 @@ class CartModule extends GalleryModule {
 					),
 					'params' => array(
 						'controller' => 'cart.AddToCart',
-						'itemId' => $item->getId(),
-						'return' => true,
+						'itemId'     => $item->getId(),
+						'return'     => true,
 					),
 				);
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 }

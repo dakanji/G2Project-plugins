@@ -33,7 +33,7 @@ class WatermarkOption extends ItemAddOption {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'watermark');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		$WatermarkOption = array();
@@ -43,7 +43,7 @@ class WatermarkOption extends ItemAddOption {
 			list($ret, $watermarks) = WatermarkHelper::fetchWatermarks();
 
 			if ($ret) {
-				return array( $ret, null, null );
+				return array($ret, null, null);
 			}
 
 			$currentId = null;
@@ -78,10 +78,10 @@ class WatermarkOption extends ItemAddOption {
 		list($ret, $watermarks) = WatermarkHelper::fetchWatermarks();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, !empty($watermarks) );
+		return array(null, !empty($watermarks));
 	}
 
 	/**
@@ -91,7 +91,7 @@ class WatermarkOption extends ItemAddOption {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'watermark');
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 
 		if ($params['forceDefaultWatermark'] && !empty($params['defaultWatermarkId'])) {
@@ -106,7 +106,7 @@ class WatermarkOption extends ItemAddOption {
 
 			if ($ret) {
 				if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 				$ret = GalleryCoreApi::addEventLogEntry(
 					'WATERMARK ERROR',
@@ -115,27 +115,27 @@ class WatermarkOption extends ItemAddOption {
 				);
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 
 				list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'watermark');
 
 				if ($ret) {
-					return array( $ret, null, null );
+					return array($ret, null, null);
 				}
 				$message = $module->translate(
 					'Error: Missing watermark. Please see the Event Logs '
 					. 'page in the Site Admin.'
 				);
 
-				return array( null, array( $message ), array() );
+				return array(null, array($message), array());
 			}
 
 			foreach ($items as $i => $item) {
 				if (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 					$watermarkArray = array(
 						DERIVATIVE_TYPE_IMAGE_THUMBNAIL => $watermark->getApplyToThumbnail(),
-						DERIVATIVE_TYPE_IMAGE_RESIZE => $watermark->getApplyToResizes(),
+						DERIVATIVE_TYPE_IMAGE_RESIZE    => $watermark->getApplyToResizes(),
 						DERIVATIVE_TYPE_IMAGE_PREFERRED => $watermark->getApplyToPreferred(),
 					);
 					$ret            = WatermarkHelper::watermarkItem(
@@ -147,12 +147,12 @@ class WatermarkOption extends ItemAddOption {
 					);
 
 					if ($ret) {
-						return array( $ret, null, null );
+						return array($ret, null, null);
 					}
 				}
 			}
 		}
 
-		return array( null, array(), array() );
+		return array(null, array(), array());
 	}
 }

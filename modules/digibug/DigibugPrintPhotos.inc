@@ -164,14 +164,14 @@ class DigibugPrintPhotosView extends GalleryView {
 			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
-						'view' => 'core.DownloadItem',
+						'view'   => 'core.DownloadItem',
 						'itemId' => $source->getId(),
 					),
 					$sessionParam
 				),
 				array(
 					'forceSessionId' => false,
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 				)
 			);
 			$entry['imageWidth']  = $source->getWidth();
@@ -186,12 +186,12 @@ class DigibugPrintPhotosView extends GalleryView {
 
 			$entry['thumbUrl']    = $urlGenerator->generateUrl(
 				array(
-					'view' => 'core.DownloadItem',
+					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbSource->getId(),
 				),
 				array(
 					'forceSessionId' => $needSession,
-					'forceFullUrl' => true,
+					'forceFullUrl'   => true,
 				)
 			);
 			$entry['thumbWidth']  = $thumbSource->getWidth();
@@ -247,9 +247,9 @@ class DigibugPrintPhotosView extends GalleryView {
 			'DigibugPrintPhotos',
 			array(
 				'returnUrl' => $returnUrl,
-				'count' => count($entries),
-				'entries' => $entries,
-				'params' => $params,
+				'count'     => count($entries),
+				'entries'   => $entries,
+				'params'    => $params,
 			)
 		);
 		$template->display('gallery:modules/digibug/templates/DigibugPrintPhotos.tpl');

@@ -44,7 +44,7 @@ class ItemAddPublishXp extends ItemAddPlugin {
 			)
 		);
 
-		return array( null, 'modules/publishxp/templates/ItemAddPublishXp.tpl', 'modules_publishxp' );
+		return array(null, 'modules/publishxp/templates/ItemAddPublishXp.tpl', 'modules_publishxp');
 	}
 
 	/**
@@ -54,9 +54,9 @@ class ItemAddPublishXp extends ItemAddPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'publishxp');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $module->translate('Windows Publishing Wizard') );
+		return array(null, $module->translate('Windows Publishing Wizard'));
 	}
 }

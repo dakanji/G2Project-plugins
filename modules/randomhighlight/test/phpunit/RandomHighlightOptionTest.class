@@ -66,7 +66,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 			$this->_album->getId(),
 			'image/test',
 			array(
-				'width' => 400,
+				'width'  => 400,
 				'height' => 300,
 			),
 			__FILE__,
@@ -84,7 +84,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 			'thumbnail|100',
 			'image/test',
 			array(
-				'width' => 100,
+				'width'  => 100,
 				'height' => 75,
 			)
 		);
@@ -134,15 +134,15 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'RandomHighlightTestToolkit',
-			array( 'image/test' ),
+			array('image/test'),
 			'thumbnail',
 			array(
 				array(
-					'type' => 'int',
+					'type'        => 'int',
 					'description' => 'test',
 				),
 				array(
-					'type' => 'int',
+					'type'        => 'int',
 					'description' => 'test',
 				),
 			),
@@ -164,7 +164,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 			$this->_album->getId(),
 			'image/test',
 			array(
-				'width' => 600,
+				'width'  => 600,
 				'height' => 800,
 			),
 			__FILE__,
@@ -172,7 +172,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $newThumb) = $this->_createDerivative(
@@ -182,16 +182,16 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 			'thumbnail|150',
 			'image/test',
 			array(
-				'width' => 150,
+				'width'  => 150,
 				'height' => 200,
 			)
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $newThumb );
+		return array(null, $newThumb);
 	}
 
 	public function testRandomHighlight() {
@@ -204,8 +204,8 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(0, $this->_highlight->getWidth(), 'no width yet');
 
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result = $this->_handleRequestAfterEdit($form, $this->_album);
-		$this->assertEquals(array( array(), array() ), $result, 'turn on');
+		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
 
@@ -224,7 +224,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(150, $highlight->getHeight(), 'new highlight height');
 
 		$result = $this->_handleRequestAfterEdit(array(), $this->_album);
-		$this->assertEquals(array( array(), array() ), $result, 'turn off');
+		$this->assertEquals(array(array(), array()), $result, 'turn off');
 
 		GalleryDataCache::reset();
 		list($ret, $highlight) = $highlight->refresh();
@@ -233,7 +233,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 		// For Oracle, null is replaced with '' when loading data from the database
-		$this->assert(in_array($highlight->getOnLoadHandlers(), array( null, '' )), 'off');
+		$this->assert(in_array($highlight->getOnLoadHandlers(), array(null, '')), 'off');
 	}
 
 	public function testRandomHighlighNew() {
@@ -244,8 +244,8 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		// Make the album use randomhighlight
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result = $this->_handleRequestAfterEdit($form, $this->_album);
-		$this->assertEquals(array( array(), array() ), $result, 'turn on');
+		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
 
@@ -312,8 +312,8 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result = $this->_handleRequestAfterEdit($form, $this->_album);
-		$this->assertEquals(array( array(), array() ), $result, 'turn on');
+		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		GalleryDataCache::reset();
 		list($ret, $highlight) = $this->_highlight->refresh();
@@ -360,8 +360,8 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		// Make the album use randomhighlight
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result = $this->_handleRequestAfterEdit($form, $this->_album);
-		$this->assertEquals(array( array(), array() ), $result, 'turn on');
+		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
 
@@ -402,8 +402,8 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		// Make the album use randomhighlight
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result = $this->_handleRequestAfterEdit($form, $this->_album);
-		$this->assertEquals(array( array(), array() ), $result, 'turn on');
+		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
 
@@ -464,8 +464,8 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result = $this->_handleRequestAfterEdit($form, $this->_album);
-		$this->assertEquals(array( array(), array() ), $result, 'turn on');
+		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
 

@@ -68,7 +68,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		// Save/clear quotas for All Users,Everybody groups so they won't interfere with tests
 		$this->_saveQuota = array();
 
-		foreach (array( 'allUserGroup', 'everybodyGroup' ) as $groupName) {
+		foreach (array('allUserGroup', 'everybodyGroup') as $groupName) {
 			list($ret, $groupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.' . $groupName);
 
 			if ($ret) {
@@ -111,7 +111,7 @@ class QuotasHelperTest extends GalleryTestCase {
 				'QuotasMap',
 				array(
 					'userOrGroupId' => $groupId,
-					'quotaSize' => $quota['quota'],
+					'quotaSize'     => $quota['quota'],
 				)
 			);
 
@@ -146,7 +146,7 @@ class QuotasHelperTest extends GalleryTestCase {
 				'application/unknown',
 				array(
 					'ownerId' => $this->_user->getId(),
-					'size' => 102400 + ($j * 1024),
+					'size'    => 102400 + ($j * 1024),
 				)
 			);
 
@@ -199,7 +199,7 @@ class QuotasHelperTest extends GalleryTestCase {
 				'application/unknown',
 				array(
 					'ownerId' => $this->_user->getId(),
-					'size' => 1073741824,
+					'size'    => 1073741824,
 				)
 			);
 
@@ -247,7 +247,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize' => 1024,
+				'quotaSize'     => 1024,
 			)
 		);
 
@@ -282,7 +282,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize' => 2048,
+				'quotaSize'     => 2048,
 			)
 		);
 
@@ -351,7 +351,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize' => 4,
+				'quotaSize'     => 4,
 			)
 		);
 
@@ -374,13 +374,13 @@ class QuotasHelperTest extends GalleryTestCase {
 
 	public function testHumanReadableFromKilobytes() {
 		$conversion = array(
-			'1024'  => array( 1.00, $this->_MB ),
-			'2048'  => array( 2.00, $this->_MB ),
-			'2.00'  => array( 2.00, $this->_KB ),
-			'2097152.00' => array( 2.00, $this->_GB ),
-			'2147483648' => array( 2048.00, $this->_GB ),
-			'46464' => array( 45.38, $this->_MB ),
-			'46463' => array( 45.37, $this->_MB ),
+			'1024'       => array(1.00, $this->_MB),
+			'2048'       => array(2.00, $this->_MB),
+			'2.00'       => array(2.00, $this->_KB),
+			'2097152.00' => array(2.00, $this->_GB),
+			'2147483648' => array(2048.00, $this->_GB),
+			'46464'      => array(45.38, $this->_MB),
+			'46463'      => array(45.37, $this->_MB),
 		);
 
 		foreach ($conversion as $key => $value) {
@@ -412,7 +412,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize' => 105,
+				'quotaSize'     => 105,
 			)
 		);
 		// now we use that as the count (+1 for good measure)
@@ -447,7 +447,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize' => 99,
+				'quotaSize'     => 99,
 			)
 		);
 		list($ret, $postGroupCount) = GalleryQuotasHelper::fetchQuotaGroupCount();
@@ -481,7 +481,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize' => 467,
+				'quotaSize'     => 467,
 			)
 		);
 		// now we use that as the count (+1 for good measure)
@@ -516,7 +516,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize' => 86,
+				'quotaSize'     => 86,
 			)
 		);
 		list($ret, $postUserCount) = GalleryQuotasHelper::fetchQuotaUserCount();
@@ -545,7 +545,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize' => 47,
+				'quotaSize'     => 47,
 			)
 		);
 
@@ -584,7 +584,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize' => 86,
+				'quotaSize'     => 86,
 			)
 		);
 
@@ -651,7 +651,7 @@ class QuotasHelperTest extends GalleryTestCase {
 				'application/unknown',
 				array(
 					'ownerId' => $this->_user->getId(),
-					'size' => 102400 + ($j * 1024),
+					'size'    => 102400 + ($j * 1024),
 				)
 			);
 
@@ -702,7 +702,7 @@ class QuotasHelperTest extends GalleryTestCase {
 				'application/unknown',
 				array(
 					'ownerId' => $this->_user->getId(),
-					'size' => 102400 + ($j * 1024),
+					'size'    => 102400 + ($j * 1024),
 				)
 			);
 
@@ -724,7 +724,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_group->getId(),
-				'quotaSize' => 501,
+				'quotaSize'     => 501,
 			)
 		);
 
@@ -770,7 +770,7 @@ class QuotasHelperTest extends GalleryTestCase {
 				'application/unknown',
 				array(
 					'ownerId' => $this->_user->getId(),
-					'size' => 102400 + ($j * 1024),
+					'size'    => 102400 + ($j * 1024),
 				)
 			);
 
@@ -783,7 +783,7 @@ class QuotasHelperTest extends GalleryTestCase {
 		$this->_addMapEntry(
 			array(
 				'userOrGroupId' => $this->_user->getId(),
-				'quotaSize' => 401,
+				'quotaSize'     => 401,
 			)
 		);
 

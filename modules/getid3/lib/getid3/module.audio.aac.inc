@@ -243,8 +243,8 @@ class getid3_aac extends getid3_handler {
 
 				$info['aac']['header']['profile']                         = self::AACprofileLookup($info['aac']['program_configs'][$i]['object_type'], $info['aac']['header']['mpeg_version']);
 				$info['aac']['program_configs'][$i]['sampling_frequency'] = self::AACsampleRateLookup($info['aac']['program_configs'][$i]['sampling_frequency_index']);
-				$info['audio']['sample_rate'] = $info['aac']['program_configs'][$i]['sampling_frequency'];
-				$info['audio']['channels']    = self::AACchannelCountCalculate($info['aac']['program_configs'][$i]);
+				$info['audio']['sample_rate']                             = $info['aac']['program_configs'][$i]['sampling_frequency'];
+				$info['audio']['channels']                                = self::AACchannelCountCalculate($info['aac']['program_configs'][$i]);
 
 				if ($info['aac']['program_configs'][$i]['comment_field']) {
 					$info['aac']['comments'][] = $info['aac']['program_configs'][$i]['comment_field'];

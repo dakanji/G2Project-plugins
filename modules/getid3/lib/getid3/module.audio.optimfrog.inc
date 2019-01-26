@@ -54,7 +54,7 @@ class getid3_optimfrog extends getid3_handler {
 		$OptimFROGencoderVersion_major = floor($OptimFROGencoderVersion_raw / 10);
 		$OptimFROGencoderVersion_minor = $OptimFROGencoderVersion_raw - ($OptimFROGencoderVersion_major * 10);
 		$RIFFdata                      = substr($OptimFROGheaderData, 1, 44);
-		$OrignalRIFFheaderSize         = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4)) + 8;
+		$OrignalRIFFheaderSize         = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4))  + 8;
 		$OrignalRIFFdataSize           = getid3_lib::LittleEndian2Int(substr($RIFFdata, 40, 4)) + 44;
 
 		if ($OrignalRIFFheaderSize > $OrignalRIFFdataSize) {
@@ -80,7 +80,7 @@ class getid3_optimfrog extends getid3_handler {
 		$info['audio']['channels']        = $info['riff']['audio'][0]['channels'];
 		$info['audio']['sample_rate']     = $info['riff']['audio'][0]['sample_rate'];
 		$info['audio']['bits_per_sample'] = $info['riff']['audio'][0]['bits_per_sample'];
-		$info['playtime_seconds']         = $OrignalRIFFdataSize / ($info['audio']['channels'] * $info['audio']['sample_rate'] * ($info['audio']['bits_per_sample'] / 8));
+		$info['playtime_seconds']         = $OrignalRIFFdataSize                               / ($info['audio']['channels'] * $info['audio']['sample_rate'] * ($info['audio']['bits_per_sample'] / 8));
 		$info['audio']['bitrate']         = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
 
 		unset($getid3_riff, $getid3_temp, $RIFFdata);
@@ -292,7 +292,7 @@ class getid3_optimfrog extends getid3_handler {
 			$info['avdataend'] = $info['ofr']['TAIL']['offset'];
 		}
 
-		$info['playtime_seconds'] = (float)$info['ofr']['OFR ']['total_samples'] / ($info['audio']['channels'] * $info['audio']['sample_rate']);
+		$info['playtime_seconds'] = (float)$info['ofr']['OFR ']['total_samples']       / ($info['audio']['channels'] * $info['audio']['sample_rate']);
 		$info['audio']['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
 
 		// move the data chunk after all other chunks (if any)

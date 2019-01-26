@@ -36,7 +36,7 @@ class ConfigureController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$error  = array();
@@ -59,7 +59,7 @@ class ConfigureController extends GalleryController {
 					if ($ret->getErrorCode() & ERROR_COLLISION) {
 						$error[] = 'form[error][group][duplicate]';
 					} else {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
@@ -67,12 +67,12 @@ class ConfigureController extends GalleryController {
 					list($ret, $albumId) = ImageUploadHelper::createUploadAlbum($form['album'], $form['parent']);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 					$ret = ImageUploadHelper::setAlbumPermissions($albumId, $groupId);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					$status['configured'] = 'nokiaupload';
@@ -82,19 +82,19 @@ class ConfigureController extends GalleryController {
 
 		if (empty($error)) {
 			$results['redirect'] = array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'core.AdminPlugins',
 			);
 		} else {
 			$results['delegate'] = array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'nokiaupload.Configure',
 			);
 		}
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -111,13 +111,13 @@ class ConfigureView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'nokiaupload');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Load our default values if we didn't just come from this form.
@@ -131,12 +131,12 @@ class ConfigureView extends GalleryView {
 		list($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addAlbumItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds, 'GalleryAlbumItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$albumTree = GalleryUtilities::createAlbumTree($albums);
 

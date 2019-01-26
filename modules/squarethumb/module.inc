@@ -147,11 +147,11 @@ class SquareThumbModule extends GalleryModule {
 				'thumbnail',
 				array(
 					array(
-						'type' => 'int',
+						'type'        => 'int',
 						'description' => $gallery->i18n('target size'),
 					),
 					array(
-						'type' => 'int',
+						'type'        => 'int',
 						'description' => $gallery->i18n('(optional)'),
 					),
 				),
@@ -168,7 +168,7 @@ class SquareThumbModule extends GalleryModule {
 			return array(
 				null,
 				array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'squarethumb.CantActivate',
 				),
 			);

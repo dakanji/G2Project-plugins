@@ -40,12 +40,12 @@ class PermalinksMapHelper {
 		) : array();
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'PermalinksMap',
-			array( 'aliasName' ),
+			array('aliasName'),
 			$match
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$aliases = array();
@@ -54,7 +54,7 @@ class PermalinksMapHelper {
 			$aliases[] = $result[0];
 		}
 
-		return array( null, $aliases );
+		return array(null, $aliases);
 	}
 
 	/**
@@ -67,14 +67,14 @@ class PermalinksMapHelper {
 	public static function fetchItemIdForAlias($aliasName) {
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'PermalinksMap',
-			array( 'destId' ),
+			array('destId'),
 			array(
 				'aliasName' => $aliasName,
 			)
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($result = $searchResults->nextResult()) {
@@ -83,7 +83,7 @@ class PermalinksMapHelper {
 			$destId = null;
 		}
 
-		return array( null, $destId );
+		return array(null, $destId);
 	}
 
 	/**
@@ -111,7 +111,7 @@ class PermalinksMapHelper {
 			'PermalinksMap',
 			array(
 				'aliasName' => $aliasName,
-				'destId' => $itemId,
+				'destId'    => $itemId,
 			)
 		);
 

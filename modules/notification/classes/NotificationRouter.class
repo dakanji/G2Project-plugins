@@ -81,7 +81,7 @@ class NotificationRouter // extends GalleryEventListener
 				return array($ret, null);
 			}
 
-			$specs = $notification->getEventSpecs();
+			$specs  = $notification->getEventSpecs();
 			$entity = $event->getEntity();
 
 			if (!empty($entity) && !empty($specs['entityType'])) {

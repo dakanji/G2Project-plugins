@@ -40,8 +40,8 @@ class DcrawModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('toolkits', $gallery->i18n('Graphics Toolkits'));
 		$this->setCallbacks('getSiteAdminViews');
-		$this->setRequiredCoreApi(array( 7, 20 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 20));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -75,38 +75,38 @@ class DcrawModule extends GalleryModule {
 		list($ret, $path) = $this->getParameter('path');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Detect the version of the binary (it may have changed since last activation)
 		list($ret, $testResults, $version) = DcrawToolkitHelper::testBinary($path);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$ret = $this->setParameter('version', $version);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $priority) = GalleryCoreApi::getToolkitPriorityById('Dcraw');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$priority) {
 			list($ret, $priority) = GalleryCoreApi::getMaximumManagedToolkitPriority();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$priority = min($priority + 1, 40);
 		}
 
-		$mimeTypes = array( 'image/x-dcraw' );
+		$mimeTypes = array('image/x-dcraw');
 
 		if (version_compare($version, '7', '>=')) {
 			// dcraw supports Adobe Digital Negative starting in v7.0
@@ -124,7 +124,7 @@ class DcrawModule extends GalleryModule {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$ret = GalleryCoreApi::registerToolkitProperty(
@@ -136,7 +136,7 @@ class DcrawModule extends GalleryModule {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Assign all extensions we handle to our image mime type
@@ -167,7 +167,7 @@ class DcrawModule extends GalleryModule {
 
 			if ($ret) {
 				if (!($ret->getErrorCode() & ERROR_COLLISION)) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 		}
@@ -175,10 +175,10 @@ class DcrawModule extends GalleryModule {
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $redirect );
+		return array(null, $redirect);
 	}
 
 	/**
@@ -187,21 +187,21 @@ class DcrawModule extends GalleryModule {
 	public function needsConfiguration() {
 		// This module requires exec()
 		if (in_array('exec', preg_split('/,\s*/', ini_get('disable_functions')))) {
-			return array( null, true );
+			return array(null, true);
 		}
 
 		list($ret, $path) = $this->getParameter('path');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		list($ret, $version) = $this->getParameter('version');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, empty($path) || empty($version) );
+		return array(null, empty($path) || empty($version));
 	}
 
 	/**
@@ -212,17 +212,17 @@ class DcrawModule extends GalleryModule {
 
 		// This module requires exec()
 		if (in_array('exec', preg_split('/,\s*/', ini_get('disable_functions')))) {
-			return array( null, false );
+			return array(null, false);
 		}
 
 		list($ret, $needsConfiguration) = $this->needsConfiguration();
 
 		if ($ret) {
-			return array( $ret, false );
+			return array($ret, false);
 		}
 
 		if (!$needsConfiguration) {
-			return array( null, true );
+			return array(null, true);
 		}
 
 		// Try a bunch of likely seeming paths to see if any of them work.
@@ -275,7 +275,7 @@ class DcrawModule extends GalleryModule {
 			$paths[] = '/bin/dcraw';
 			$paths[] = '/sw/bin/dcraw';
 		} else {
-			return array( null, false );
+			return array(null, false);
 		}
 
 		// Load any classes we require
@@ -304,14 +304,14 @@ class DcrawModule extends GalleryModule {
 				$ret = GalleryCoreApi::setPluginParameter('module', 'dcraw', 'path', $path);
 
 				if ($ret) {
-					return array( $ret, false );
+					return array($ret, false);
 				}
 
-				return array( null, true );
+				return array(null, true);
 			}
 		}
 
-		return array( null, false );
+		return array(null, false);
 	}
 
 	/**

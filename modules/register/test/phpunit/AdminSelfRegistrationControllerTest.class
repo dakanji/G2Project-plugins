@@ -98,7 +98,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(
@@ -113,12 +113,12 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 
 		$valueMap = array(
 			'confirmation' => 'email',
-			'from'    => 'tester@nobody.org',
-			'subject' => 'Testmail',
+			'from'         => 'tester@nobody.org',
+			'subject'      => 'Testmail',
 			'adminsubject' => 'Testmail',
-			'usersubject' => 'Testmail',
-			'emailadmins' => '0',
-			'emailusers' => '1',
+			'usersubject'  => 'Testmail',
+			'emailadmins'  => '0',
+			'emailusers'   => '1',
 		);
 
 		foreach ($valueMap as $key => $expectedValue) {
@@ -139,7 +139,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(
@@ -174,11 +174,11 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -192,7 +192,7 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(
@@ -219,11 +219,11 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 			array(
 				'redirect' => array(
-					'view' => 'core.SiteAdmin',
+					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$results
 		);

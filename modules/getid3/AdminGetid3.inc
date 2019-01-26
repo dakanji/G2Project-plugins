@@ -35,7 +35,7 @@ class AdminGetid3Controller extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$error = $status = array();
@@ -44,7 +44,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['available'])) {
@@ -60,7 +60,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_SUMMARY, $properties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['added']['summary'] = $count;
@@ -73,7 +73,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['available'])) {
@@ -89,7 +89,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_DETAILED, $properties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['added']['detailed'] = $count;
@@ -102,7 +102,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['summary'])) {
@@ -120,7 +120,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_SUMMARY, $newProperties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['removed']['summary'] = $count;
@@ -133,7 +133,7 @@ class AdminGetid3Controller extends GalleryController {
 			$ret = Getid3Helper::setDefaultProperties(GETID3_SUMMARY);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$status['restored']['summary'] = 1;
 			$redirect['view']              = 'core.SiteAdmin';
@@ -142,7 +142,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['detailed'])) {
@@ -160,7 +160,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_DETAILED, $newProperties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['removed']['detailed'] = $count;
@@ -173,7 +173,7 @@ class AdminGetid3Controller extends GalleryController {
 			$ret = Getid3Helper::setDefaultProperties(GETID3_DETAILED);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$status['restored']['detailed'] = 1;
 			$redirect['view']               = 'core.SiteAdmin';
@@ -182,7 +182,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['summary'])) {
@@ -206,7 +206,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_SUMMARY, $properties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['movedUp']['summary'] = $count;
@@ -219,7 +219,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['summary'])) {
@@ -243,7 +243,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_SUMMARY, $properties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['movedDown']['summary'] = $count;
@@ -256,7 +256,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['detailed'])) {
@@ -280,7 +280,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_DETAILED, $properties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['movedUp']['detailed'] = $count;
@@ -293,7 +293,7 @@ class AdminGetid3Controller extends GalleryController {
 			list($ret, $properties) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (isset($form['detailed'])) {
@@ -317,7 +317,7 @@ class AdminGetid3Controller extends GalleryController {
 				$ret = Getid3Helper::setProperties(GETID3_DETAILED, $properties);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				$status['movedDown']['detailed'] = $count;
@@ -336,7 +336,7 @@ class AdminGetid3Controller extends GalleryController {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$status['saved']     = 1;
 			$redirect['view']    = 'core.SiteAdmin';
@@ -352,7 +352,7 @@ class AdminGetid3Controller extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -367,7 +367,7 @@ class AdminGetid3View extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$mode = GalleryUtilities::getRequestVariables('mode');
@@ -375,15 +375,15 @@ class AdminGetid3View extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'getid3');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['formName'] != 'AdminGetid3') {
-			foreach (array( 'path' ) as $key) {
+			foreach (array('path') as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'getid3', $key);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 			$form['formName'] = 'AdminGetid3';
@@ -391,7 +391,7 @@ class AdminGetid3View extends GalleryView {
 			list($ret, $addOption) = $module->getParameter('addOption');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$form['item'] = array(
 				'mp3title' => $addOption & GETID3_MP3_TITLE,
@@ -406,7 +406,7 @@ class AdminGetid3View extends GalleryView {
 		list($ret, $tmp) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		foreach ($tmp as $property) {
@@ -418,7 +418,7 @@ class AdminGetid3View extends GalleryView {
 		list($ret, $tmp) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		foreach ($tmp as $property) {

@@ -37,8 +37,8 @@ class UserAlbumModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews|getSystemLinks');
-		$this->setRequiredCoreApi(array( 7, 53 ));
-		$this->setRequiredModuleApi(array( 3, 6 ));
+		$this->setRequiredCoreApi(array(7, 53));
+		$this->setRequiredModuleApi(array(3, 6));
 	}
 
 	/**
@@ -51,7 +51,7 @@ class UserAlbumModule extends GalleryModule {
 			'UserAlbumModule',
 			'modules/useralbum/module.inc',
 			'useralbum',
-			array( 'GalleryEntity::delete', 'GalleryEntity::save', 'Gallery::Login' )
+			array('GalleryEntity::delete', 'GalleryEntity::save', 'Gallery::Login')
 		);
 
 		if ($ret) {
@@ -131,7 +131,7 @@ class UserAlbumModule extends GalleryModule {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Check if link is enabled
@@ -139,7 +139,7 @@ class UserAlbumModule extends GalleryModule {
 			list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (!$isAnonymous) {
@@ -151,16 +151,16 @@ class UserAlbumModule extends GalleryModule {
 				);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!empty($albumId) || $params['create'] == 'access') {
 					$links['YourAlbum'] = array(
-						'text' => $this->translate('Your Album'),
+						'text'   => $this->translate('Your Album'),
 						'params' => empty($albumId) ? array(
 							'controller' => 'useralbum.UserAlbum',
 						) : array(
-							'view' => 'core.ShowItem',
+							'view'   => 'core.ShowItem',
 							'itemId' => $albumId,
 						),
 					);
@@ -168,7 +168,7 @@ class UserAlbumModule extends GalleryModule {
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 
 	/**
@@ -193,7 +193,7 @@ class UserAlbumModule extends GalleryModule {
 					list($ret, $createMode) = $this->getParameter('create');
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					if ($createMode == 'immediate') {
@@ -204,7 +204,7 @@ class UserAlbumModule extends GalleryModule {
 						$ret = UserAlbumHelper::createUserAlbum($user);
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 					}
 				}
@@ -222,7 +222,7 @@ class UserAlbumModule extends GalleryModule {
 				list($ret, $targetId) = $this->getParameter('targetLocation');
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if ($entity->getId() == $targetId) {
@@ -233,13 +233,13 @@ class UserAlbumModule extends GalleryModule {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					$ret = $this->setParameter('targetLocation', $rootId);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				} else {
 					/*
@@ -255,7 +255,7 @@ class UserAlbumModule extends GalleryModule {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 
@@ -266,7 +266,7 @@ class UserAlbumModule extends GalleryModule {
 				list($ret, $loginRedirect) = $this->getParameter('loginRedirect');
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (!empty($loginRedirect)) {
@@ -279,6 +279,6 @@ class UserAlbumModule extends GalleryModule {
 				break;
 		}
 
-		return array( null, $result );
+		return array(null, $result);
 	}
 }

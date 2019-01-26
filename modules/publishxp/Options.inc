@@ -57,7 +57,7 @@ class OptionsController extends GalleryController {
 		$results['status'] = array();
 		$results['error']  = array();
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -85,7 +85,7 @@ class OptionsView extends GalleryView {
 			}
 
 			if (empty($form['albumId'])) {
-				return array( GalleryCoreApi::error(ERROR_BAD_PARAMETER), null );
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 		}
 		$form['albumId'] = (int)$form['albumId'];
@@ -99,31 +99,31 @@ class OptionsView extends GalleryView {
 			list($ret, $optionInstances) = ItemAddOption::getAllAddOptions();
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
 		list($ret, $permissions) = GalleryCoreApi::getPermissions($form['albumId']);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (empty($permissions['core.view'])) {
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		if (empty($permissions['core.addDataItem'])
 			&& empty($permissions['core.addAlbumItem'])
 		) {
-			return array( GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null );
+			return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null);
 		}
 
 		// Now let all options load their template data
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($form['albumId'], 'GalleryAlbumItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$Options['options'] = array();
@@ -132,7 +132,7 @@ class OptionsView extends GalleryView {
 			list($ret, $entry['file'], $entry['l10Domain']) = $option->loadTemplate($template, $form, $item);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 
 			if (!empty($entry['file'])) {
@@ -143,7 +143,7 @@ class OptionsView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'publishxp');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Windows Publishing Wizard'));
@@ -153,7 +153,7 @@ class OptionsView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body' => 'modules/publishxp/templates/Options.tpl',
+				'body'          => 'modules/publishxp/templates/Options.tpl',
 				'useFullScreen' => true,
 			),
 		);

@@ -33,7 +33,7 @@ class AdminSelfRegistrationController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$error = $status = array();
@@ -60,7 +60,7 @@ class AdminSelfRegistrationController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 				}
 			}
@@ -74,14 +74,14 @@ class AdminSelfRegistrationController extends GalleryController {
 
 			if ($ret) {
 				if (!($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			} else {
 				$userName = $pendingUser->getUserName();
 				$ret      = GalleryPendingUserHelper::createGalleryUser($pendingUser);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$status['activated'] = $userName;
 			}
@@ -90,24 +90,24 @@ class AdminSelfRegistrationController extends GalleryController {
 
 			if ($ret) {
 				if (!($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			} else {
 				$userName         = $pendingUser->getUserName();
-				list($ret, $lock) = GalleryCoreApi::acquireWriteLock(array( $pendingUser->getId() ));
+				list($ret, $lock) = GalleryCoreApi::acquireWriteLock(array($pendingUser->getId()));
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$ret = $pendingUser->delete();
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::releaseLocks($lock);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 				$status['deleted'] = $userName;
 			}
@@ -115,7 +115,7 @@ class AdminSelfRegistrationController extends GalleryController {
 
 		if (empty($error)) {
 			$results['redirect'] = array(
-				'view' => 'core.SiteAdmin',
+				'view'    => 'core.SiteAdmin',
 				'subView' => 'register.AdminSelfRegistration',
 			);
 		} else {
@@ -125,7 +125,7 @@ class AdminSelfRegistrationController extends GalleryController {
 		$results['status'] = $status;
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -142,13 +142,13 @@ class AdminSelfRegistrationView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'register');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		// Load our default values if we didn't just come from this form.
@@ -165,7 +165,7 @@ class AdminSelfRegistrationView extends GalleryView {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'register', $key);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 			$form['formName'] = 'AdminSelfRegistration';
@@ -178,7 +178,7 @@ class AdminSelfRegistrationView extends GalleryView {
 		list($ret, $form['list']['count']) = GalleryPendingUserHelper::fetchUserCount();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if ($form['list']['count'] > 0) {
@@ -197,11 +197,11 @@ class AdminSelfRegistrationView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
-		$selfregistration = array();
+		$selfregistration                          = array();
 		$selfregistration['emailConfirmationList'] = array(
 			'admin' => $module->translate('Activation by administrator'),
 			'email' => $module->translate('Use confirmation emails'),

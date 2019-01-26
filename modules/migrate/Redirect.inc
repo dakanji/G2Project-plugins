@@ -83,35 +83,35 @@ class RedirectController extends GalleryController {
 			list($ret, $id) = G1MigrateHelper::fetchMapping($path[0], $path[1]);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$itemId = $id;
 
 			if (isset($id) && isset($derivative)) {
 				switch ($derivative) {
 					case DERIVATIVE_TYPE_IMAGE_PREFERRED:
-						list($ret, $data) = GalleryCoreApi::fetchPreferredsByItemIds(array( $id ));
+						list($ret, $data) = GalleryCoreApi::fetchPreferredsByItemIds(array($id));
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						break;
 
 					case DERIVATIVE_TYPE_IMAGE_RESIZE:
-						list($ret, $data) = GalleryCoreApi::fetchResizesByItemIds(array( $id ));
+						list($ret, $data) = GalleryCoreApi::fetchResizesByItemIds(array($id));
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						break;
 
 					case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
-						list($ret, $data) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $id ));
+						list($ret, $data) = GalleryCoreApi::fetchThumbnailsByItemIds(array($id));
 
 						if ($ret) {
-							return array( $ret, null );
+							return array($ret, null);
 						}
 
 						break;
@@ -130,7 +130,7 @@ class RedirectController extends GalleryController {
 			list($ret, $id) = G1MigrateHelper::fetchMapping($path[0]);
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 			$itemId = $id;
 		}
@@ -139,7 +139,7 @@ class RedirectController extends GalleryController {
 			list($ret, $hasPermission) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
 
 			if ($ret) {
-				return array( $ret, null );
+				return array($ret, null);
 			}
 		}
 
@@ -152,7 +152,7 @@ class RedirectController extends GalleryController {
 		$phpVm->header('HTTP/1.0 301 Moved Permanently');
 		$results = array(
 			'redirect' => array(
-				'view' => $view,
+				'view'   => $view,
 				'itemId' => $id,
 			),
 			'status'   => array(),
@@ -186,7 +186,7 @@ class RedirectController extends GalleryController {
 			$results['redirect']['page'] = $page;
 		}
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 

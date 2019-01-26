@@ -148,7 +148,7 @@ class UserAlbumTest extends GalleryTestCase {
 				   'permission' => 'core.viewResizes', )) {
 				$seenViewResizes = true;
 			} elseif ($perm == array('groupId' => $this->_allUserGroupId,
-					  'permission' => 'core.viewSource', )) {
+					  'permission'                   => 'core.viewSource', )) {
 				$seenViewSource = true;
 			}
 		}
@@ -219,7 +219,7 @@ class UserAlbumTest extends GalleryTestCase {
 		}
 		$this->assertEquals(
 		array('YourAlbum' => array('text' => $module->translate('Your Album'),
-				  'params' => array('view' => 'core.ShowItem', 'itemId' => $albumId), )),
+				  'params'                      => array('view' => 'core.ShowItem', 'itemId' => $albumId), )),
 				$links,
 		'system link'
 	);
@@ -326,7 +326,7 @@ class UserAlbumTest extends GalleryTestCase {
 
 	public function testUserAlbumCollision() {
 		$userString = 'useralbum-' . mt_rand();
-		$userName = 'testuser-' . $userString;
+		$userName   = 'testuser-' . $userString;
 
 		// Create album that will collide..
 		list($ret, $album) = $this->_createRandomAlbum($this->_parentAlbum->getId());

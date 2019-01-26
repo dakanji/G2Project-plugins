@@ -66,7 +66,7 @@ class ImageUploadHelperTest extends GalleryTestCase {
 		$this->assertEquals(
 			array(
 				'success' => '0',
-				'rsurl' => ('[view=nokiaupload.RemoteStorageCapabilities|' .
+				'rsurl'   => ('[view=nokiaupload.RemoteStorageCapabilities|' .
 						  'forceFullUrl=1|htmlEntities=|forceSessionId=]&'),
 				'capabilities' => array(
 					('CreateDirURL=[controller=nokiaupload.NewDirectory|forceFullUrl=1' .

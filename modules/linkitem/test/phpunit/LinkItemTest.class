@@ -49,7 +49,7 @@ class LinkItemTest extends GalleryTestCase {
 		}
 
 		list($ret, $this->_lockId) = GalleryCoreApi::acquireReadLock(
-			array( $this->_album->getId(), $this->_targetAlbum->getId() )
+			array($this->_album->getId(), $this->_targetAlbum->getId())
 		);
 
 		if ($ret) {
@@ -67,24 +67,24 @@ class LinkItemTest extends GalleryTestCase {
 		list($ret, $link) = GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryLinkItem');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (empty($link)) {
-			return array( GalleryCoreApi::error(ERROR_MISSING_OBJECT), null );
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 		$ret = $link->create($parentId, $target);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		$ret = $link->save();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $link );
+		return array(null, $link);
 	}
 
 	public function tearDown() {
@@ -120,7 +120,7 @@ class LinkItemTest extends GalleryTestCase {
 
 		$this->assertEquals($this->_targetAlbum->getId(), $this->_link->getParentId(), 'parent');
 		$this->assertEquals(
-			array( $this->_getRootId(), $this->_targetAlbum->getId() ),
+			array($this->_getRootId(), $this->_targetAlbum->getId()),
 			$parentSequence,
 			'parent sequence'
 		);
@@ -221,8 +221,8 @@ class LinkItemTest extends GalleryTestCase {
 
 		$this->_link->setLink($this->_targetAlbum->getId());
 		$this->_markForCleanup($this->_targetAlbum);
-		$this->_lockId               = array( $this->_lockId );
-		list($ret, $this->_lockId[]) = GalleryCoreApi::acquireWriteLock(array( $this->_link->getId() ));
+		$this->_lockId               = array($this->_lockId);
+		list($ret, $this->_lockId[]) = GalleryCoreApi::acquireWriteLock(array($this->_link->getId()));
 
 		if ($ret) {
 			return $ret;
@@ -320,7 +320,7 @@ class LinkItemTest extends GalleryTestCase {
 		$this->assertEquals('image/jpeg', $mimeType);
 		$this->assertEquals(
 			array(
-				'width' => 270,
+				'width'  => 270,
 				'height' => 224,
 			),
 			$context
@@ -366,16 +366,16 @@ class LinkItemTest extends GalleryTestCase {
 				'fuzzy' => '{params.txt$}',
 				false,
 			),
-			array( '%URL% %WIDTH% %HEIGHT% --out %OUTFILE%' . "\n" )
+			array('%URL% %WIDTH% %HEIGHT% --out %OUTFILE%' . "\n")
 		);
 		$platform->setReply(
 			'exec',
-			array( array( array( 'getSnapshot', 'theURL', 1024, 768, '--out', 'tmpfile.jpg' ) ) ),
-			array( true, '', '' )
+			array(array(array('getSnapshot', 'theURL', 1024, 768, '--out', 'tmpfile.jpg'))),
+			array(true, '', '')
 		);
-		$platform->setReply('unlink', array( 'tmpfile' ), true);
-		$platform->setReply('copy', array( 'tmpfile.jpg', 'outputFile' ), true);
-		$platform->setReply('unlink', array( 'tmpfile.jpg' ), true);
+		$platform->setReply('unlink', array('tmpfile'), true);
+		$platform->setReply('copy', array('tmpfile.jpg', 'outputFile'), true);
+		$platform->setReply('unlink', array('tmpfile.jpg'), true);
 		$gallery->setPlatform($platform);
 
 		list($ret, $mimeType, $context) = $toolkit->performOperation(
@@ -394,7 +394,7 @@ class LinkItemTest extends GalleryTestCase {
 		$this->assertEquals('image/jpeg', $mimeType);
 		$this->assertEquals(
 			array(
-				'width' => 1024,
+				'width'  => 1024,
 				'height' => 768,
 			),
 			$context

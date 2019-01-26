@@ -149,7 +149,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 					'href' => 'TEST_redirect',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$result
 		);
@@ -157,7 +157,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
-		$this->assertEquals(array( 'item1' ), array_keys($basket), 'item keys');
+		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
 		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
 		$this->assert(
 			!strpos($basket['item1']['photo_url'], $this->_sessionKey),
@@ -209,7 +209,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 					'href' => 'TEST_redirect',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$result
 		);
@@ -217,7 +217,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
-		$this->assertEquals(array( 'item1' ), array_keys($basket), 'item keys');
+		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
 		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
 		$this->assert(
 			strpos($basket['item1']['photo_url'], $this->_sessionKey),
@@ -236,14 +236,14 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $fotokastenSessionId;
 		$fotokastenSession             = new GallerySession();
-		$ret = $fotokastenSession->init();
+		$ret                           = $fotokastenSession->init();
 
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->assertEquals(
-			array( $itemId ),
+			array($itemId),
 			$fotokastenSession->get('core.isPrintService'),
 			'Fotokasten session missing item id'
 		);
@@ -268,7 +268,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 					'href' => 'TEST_redirect',
 				),
 				'status' => array(),
-				'error' => array(),
+				'error'  => array(),
 			),
 			$result
 		);
@@ -279,7 +279,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
-		$this->assertEquals(array( 'item1', 'item2' ), array_keys($basket), 'item keys');
+		$this->assertEquals(array('item1', 'item2'), array_keys($basket), 'item keys');
 		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
 		preg_match(
 			'/' . $this->_sessionKey . '=([A-Za-z0-9]+)/',
@@ -322,18 +322,18 @@ class FotokastenTestSoapClient {
 		switch ($method) {
 			case 'registerSession':
 				return array(
-					'endpoint' => 'TEST_endpoint',
+					'endpoint'   => 'TEST_endpoint',
 					'error_code' => 0,
 				);
 
 			case 'transferBasket':
-				$test =& $this->getTest();
+				$test                          =& $this->getTest();
 				$test['test']->_basketEndpoint = $this->endpoint;
 				$test['test']->_basketParams   = $params;
 
 				return array(
 					'browserlink' => 'TEST_redirect',
-					'error_code' => 0,
+					'error_code'  => 0,
 				);
 
 			default:

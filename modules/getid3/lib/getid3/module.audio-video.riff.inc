@@ -197,7 +197,7 @@ class getid3_riff extends getid3_handler {
 
 				if (isset($thisfile_riff_WAVE['data'][0]['offset'])) {
 					$info['avdataoffset'] = $thisfile_riff_WAVE['data'][0]['offset'] + 8;
-					$info['avdataend']    = $info['avdataoffset'] + $thisfile_riff_WAVE['data'][0]['size'];
+					$info['avdataend']    = $info['avdataoffset']                    + $thisfile_riff_WAVE['data'][0]['size'];
 				}
 
 				if (isset($thisfile_riff_WAVE['fmt '][0]['data'])) {
@@ -324,7 +324,7 @@ class getid3_riff extends getid3_handler {
 						if (preg_match('#^([0-9]{2}).([0-9]{2}).([0-9]{2})$#', $thisfile_riff_WAVE_bext_0['origin_time'], $matches_bext_time)) {
 							list($dummy, $bext_timestamp['year'], $bext_timestamp['month'], $bext_timestamp['day'])     = $matches_bext_date;
 							list($dummy, $bext_timestamp['hour'], $bext_timestamp['minute'], $bext_timestamp['second']) = $matches_bext_time;
-							$thisfile_riff_WAVE_bext_0['origin_date_unix'] = gmmktime($bext_timestamp['hour'], $bext_timestamp['minute'], $bext_timestamp['second'], $bext_timestamp['month'], $bext_timestamp['day'], $bext_timestamp['year']);
+							$thisfile_riff_WAVE_bext_0['origin_date_unix']                                              = gmmktime($bext_timestamp['hour'], $bext_timestamp['minute'], $bext_timestamp['second'], $bext_timestamp['month'], $bext_timestamp['day'], $bext_timestamp['year']);
 						} else {
 							$info['warning'][] = 'RIFF.WAVE.BEXT.origin_time is invalid';
 						}
@@ -434,8 +434,8 @@ class getid3_riff extends getid3_handler {
 
 					$tagmapping = array(
 						'tracktitle' => 'title',
-						'category' => 'genre',
-						'cdtitle' => 'album',
+						'category'   => 'genre',
+						'cdtitle'    => 'album',
 						'tracktitle' => 'title',
 					);
 
@@ -462,12 +462,12 @@ class getid3_riff extends getid3_handler {
 						}
 
 						if (isset($parsedXML['SPEED']['TIMESTAMP_SAMPLES_SINCE_MIDNIGHT_LO']) && !empty($parsedXML['SPEED']['TIMESTAMP_SAMPLE_RATE']) && !empty($thisfile_riff_WAVE['iXML'][0]['timecode_rate'])) {
-							$samples_since_midnight = floatval(ltrim($parsedXML['SPEED']['TIMESTAMP_SAMPLES_SINCE_MIDNIGHT_HI'] . $parsedXML['SPEED']['TIMESTAMP_SAMPLES_SINCE_MIDNIGHT_LO'], '0'));
-							$thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] = $samples_since_midnight / $parsedXML['SPEED']['TIMESTAMP_SAMPLE_RATE'];
-							$h = floor($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] / 3600);
-							$m = floor(($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] - ($h * 3600)) / 60);
-							$s = floor($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] - ($h * 3600) - ($m * 60));
-							$f = ($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] - ($h * 3600) - ($m * 60) - $s) * $thisfile_riff_WAVE['iXML'][0]['timecode_rate'];
+							$samples_since_midnight                                 = floatval(ltrim($parsedXML['SPEED']['TIMESTAMP_SAMPLES_SINCE_MIDNIGHT_HI'] . $parsedXML['SPEED']['TIMESTAMP_SAMPLES_SINCE_MIDNIGHT_LO'], '0'));
+							$thisfile_riff_WAVE['iXML'][0]['timecode_seconds']      = $samples_since_midnight / $parsedXML['SPEED']['TIMESTAMP_SAMPLE_RATE'];
+							$h                                                      = floor($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] / 3600);
+							$m                                                      = floor(($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] - ($h * 3600)) / 60);
+							$s                                                      = floor($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] - ($h * 3600) - ($m * 60));
+							$f                                                      = ($thisfile_riff_WAVE['iXML'][0]['timecode_seconds'] - ($h * 3600) - ($m * 60) - $s) * $thisfile_riff_WAVE['iXML'][0]['timecode_rate'];
 							$thisfile_riff_WAVE['iXML'][0]['timecode_string']       = sprintf('%02d:%02d:%02d:%05.2f', $h, $m, $s, $f);
 							$thisfile_riff_WAVE['iXML'][0]['timecode_string_round'] = sprintf('%02d:%02d:%02d:%02d', $h, $m, $s, round($f));
 						}
@@ -493,7 +493,7 @@ class getid3_riff extends getid3_handler {
 
 					$this->fseek($info['avdataoffset'] - 44);
 					$RIFFdata              = $this->fread(44);
-					$OrignalRIFFheaderSize = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4)) + 8;
+					$OrignalRIFFheaderSize = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4))  + 8;
 					$OrignalRIFFdataSize   = getid3_lib::LittleEndian2Int(substr($RIFFdata, 40, 4)) + 44;
 
 					if ($OrignalRIFFheaderSize > $OrignalRIFFdataSize) {
@@ -561,15 +561,15 @@ class getid3_riff extends getid3_handler {
 
 							$flags           = array(
 								'compression_method' => 1,
-								'compression_flags' => 1,
-								'm_dwScale' => 4,
-								'm_dwBlockSize' => 4,
-								'm_wQuality' => 2,
-								'm_wMarkDistance' => 2,
-								'm_wReserved' => 2,
-								'm_dwOrgSize' => 4,
-								'm_bFactExists' => 2,
-								'm_dwRiffChunkSize' => 4,
+								'compression_flags'  => 1,
+								'm_dwScale'          => 4,
+								'm_dwBlockSize'      => 4,
+								'm_wQuality'         => 2,
+								'm_wMarkDistance'    => 2,
+								'm_wReserved'        => 2,
+								'm_dwOrgSize'        => 4,
+								'm_bFactExists'      => 2,
+								'm_dwRiffChunkSize'  => 4,
 							);
 							$litewave_offset = 18;
 
@@ -738,12 +738,12 @@ class getid3_riff extends getid3_handler {
 					}
 
 					$flags = array(
-						'hasindex' => 0x00000010,
+						'hasindex'     => 0x00000010,
 						'mustuseindex' => 0x00000020,
-						'interleaved' => 0x00000100,
-						'trustcktype' => 0x00000800,
+						'interleaved'  => 0x00000100,
+						'trustcktype'  => 0x00000800,
 						'capturedfile' => 0x00010000,
-						'copyrighted' => 0x00020010,
+						'copyrighted'  => 0x00020010,
 					);
 
 					foreach ($flags as $flag => $value) {
@@ -1005,7 +1005,7 @@ class getid3_riff extends getid3_handler {
 					$thisfile_riff_CDDA_fmt_0['unknown7']           = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 20, 4));
 
 					$thisfile_riff_CDDA_fmt_0['start_offset_seconds'] = (float)$thisfile_riff_CDDA_fmt_0['start_offset_frame'] / 75;
-					$thisfile_riff_CDDA_fmt_0['playtime_seconds']     = (float)$thisfile_riff_CDDA_fmt_0['playtime_frames'] / 75;
+					$thisfile_riff_CDDA_fmt_0['playtime_seconds']     = (float)$thisfile_riff_CDDA_fmt_0['playtime_frames']    / 75;
 					$info['comments']['track']                        = $thisfile_riff_CDDA_fmt_0['track_num'];
 					$info['playtime_seconds']                         = $thisfile_riff_CDDA_fmt_0['playtime_seconds'];
 
@@ -1032,7 +1032,7 @@ class getid3_riff extends getid3_handler {
 
 				if (isset($thisfile_riff[$RIFFsubtype]['SSND'][0]['offset'])) {
 					$info['avdataoffset'] = $thisfile_riff[$RIFFsubtype]['SSND'][0]['offset'] + 8;
-					$info['avdataend']    = $info['avdataoffset'] + $thisfile_riff[$RIFFsubtype]['SSND'][0]['size'];
+					$info['avdataend']    = $info['avdataoffset']                             + $thisfile_riff[$RIFFsubtype]['SSND'][0]['size'];
 
 					if ($info['avdataend'] > $info['filesize']) {
 						if (($info['avdataend'] == ($info['filesize'] + 1)) && (($info['filesize'] % 2) == 1)) {
@@ -1131,10 +1131,10 @@ class getid3_riff extends getid3_handler {
 				}
 
 				$CommentsChunkNames = array(
-					'NAME' => 'title',
+					'NAME'   => 'title',
 					'author' => 'artist',
-					'(c) ' => 'copyright',
-					'ANNO' => 'comment',
+					'(c) '   => 'copyright',
+					'ANNO'   => 'comment',
 				);
 
 				foreach ($CommentsChunkNames as $key => $value) {
@@ -1169,7 +1169,7 @@ class getid3_riff extends getid3_handler {
 
 				if (isset($thisfile_riff[$RIFFsubtype]['BODY'][0]['offset'])) {
 					$info['avdataoffset'] = $thisfile_riff[$RIFFsubtype]['BODY'][0]['offset'] + 8;
-					$info['avdataend']    = $info['avdataoffset'] + $thisfile_riff[$RIFFsubtype]['BODY'][0]['size'];
+					$info['avdataend']    = $info['avdataoffset']                             + $thisfile_riff[$RIFFsubtype]['BODY'][0]['size'];
 
 					if ($info['avdataend'] > $info['filesize']) {
 						$info['warning'][] = 'Probable truncated AIFF file: expecting ' . $thisfile_riff[$RIFFsubtype]['BODY'][0]['size'] . ' bytes of audio data, only ' . ($info['filesize'] - $info['avdataoffset']) . ' bytes found';
@@ -1235,10 +1235,10 @@ class getid3_riff extends getid3_handler {
 				}
 
 				$CommentsChunkNames = array(
-					'NAME' => 'title',
+					'NAME'   => 'title',
 					'author' => 'artist',
-					'(c) ' => 'copyright',
-					'ANNO' => 'comment',
+					'(c) '   => 'copyright',
+					'ANNO'   => 'comment',
 				);
 
 				foreach ($CommentsChunkNames as $key => $value) {
@@ -1297,12 +1297,12 @@ class getid3_riff extends getid3_handler {
 			case 'AIFF':
 			case 'AIFC':
 				$ID3v2_key_good = 'id3 ';
-				$ID3v2_keys_bad = array( 'ID3 ', 'tag ' );
+				$ID3v2_keys_bad = array('ID3 ', 'tag ');
 
 				foreach ($ID3v2_keys_bad as $ID3v2_key_bad) {
 					if (isset($thisfile_riff[$RIFFsubtype][$ID3v2_key_bad]) && !array_key_exists($ID3v2_key_good, $thisfile_riff[$RIFFsubtype])) {
 						$thisfile_riff[$RIFFsubtype][$ID3v2_key_good] = $thisfile_riff[$RIFFsubtype][$ID3v2_key_bad];
-						$info['warning'][] = 'mapping "' . $ID3v2_key_bad . '" chunk to "' . $ID3v2_key_good . '"';
+						$info['warning'][]                            = 'mapping "' . $ID3v2_key_bad . '" chunk to "' . $ID3v2_key_good . '"';
 					}
 				}
 
@@ -1477,11 +1477,11 @@ class getid3_riff extends getid3_handler {
 			if (substr($AMVheader, 8, 4) != "\x38\x00\x00\x00") { // "amvh" chunk size, hardcoded to 0x38 = 56 bytes
 				throw new Exception('expecting "0x38000000" at offset ' . ($startoffset + 8) . ', found "' . getid3_lib::PrintHexBytes(substr($AMVheader, 8, 4)) . '"');
 			}
-			$RIFFchunk                         = array();
-			$RIFFchunk['amvh']['us_per_frame'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 12, 4));
-			$RIFFchunk['amvh']['reserved28']   = substr($AMVheader, 16, 28);  // null? reserved?
-			$RIFFchunk['amvh']['resolution_x'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 44, 4));
-			$RIFFchunk['amvh']['resolution_y'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 48, 4));
+			$RIFFchunk                           = array();
+			$RIFFchunk['amvh']['us_per_frame']   = getid3_lib::LittleEndian2Int(substr($AMVheader, 12, 4));
+			$RIFFchunk['amvh']['reserved28']     = substr($AMVheader, 16, 28);  // null? reserved?
+			$RIFFchunk['amvh']['resolution_x']   = getid3_lib::LittleEndian2Int(substr($AMVheader, 44, 4));
+			$RIFFchunk['amvh']['resolution_y']   = getid3_lib::LittleEndian2Int(substr($AMVheader, 48, 4));
 			$RIFFchunk['amvh']['frame_rate_int'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 52, 4));
 			$RIFFchunk['amvh']['reserved0']      = getid3_lib::LittleEndian2Int(substr($AMVheader, 56, 4)); // 1? reserved?
 			$RIFFchunk['amvh']['reserved1']      = getid3_lib::LittleEndian2Int(substr($AMVheader, 60, 4)); // 0? reserved?
@@ -1943,7 +1943,7 @@ class getid3_riff extends getid3_handler {
 						if (isset($CommentsTargetArray[$value])) {
 							$CommentsTargetArray[$value][] = trim($commentdata['data']);
 						} else {
-							$CommentsTargetArray[$value] = array( trim($commentdata['data']) );
+							$CommentsTargetArray[$value] = array(trim($commentdata['data']));
 						}
 					}
 				}
@@ -2130,7 +2130,7 @@ class getid3_riff extends getid3_handler {
 		}
 
 		foreach ($parsed as $tag => $value) {
-			$parsed[$tag] = array( $value );
+			$parsed[$tag] = array($value);
 		}
 
 		return $parsed;

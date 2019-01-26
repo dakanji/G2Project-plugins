@@ -46,7 +46,7 @@ class getid3_write_apetag {
 		}
 
 		if ($this->always_preserve_replaygain) {
-			$ReplayGainTagsToPreserve = array( 'mp3gain_minmax', 'mp3gain_album_minmax', 'mp3gain_undo', 'replaygain_track_peak', 'replaygain_track_gain', 'replaygain_album_peak', 'replaygain_album_gain' );
+			$ReplayGainTagsToPreserve = array('mp3gain_minmax', 'mp3gain_album_minmax', 'mp3gain_undo', 'replaygain_track_peak', 'replaygain_track_gain', 'replaygain_album_peak', 'replaygain_album_gain');
 
 			foreach ($ReplayGainTagsToPreserve as $rg_key) {
 				if (isset($ThisFileInfo['ape']['items'][strtolower($rg_key)]['data'][0]) && !isset($this->tag_data[strtoupper($rg_key)][0])) {

@@ -36,8 +36,8 @@ class ShutterflyModule extends GalleryModule {
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks');
-		$this->setRequiredCoreApi(array( 7, 43 ));
-		$this->setRequiredModuleApi(array( 3, 9 ));
+		$this->setRequiredCoreApi(array(7, 43));
+		$this->setRequiredModuleApi(array(3, 9));
 	}
 
 	/**
@@ -144,7 +144,7 @@ class ShutterflyModule extends GalleryModule {
 	 * @see GalleryModule::performFactoryRegistrations
 	 */
 	public function performFactoryRegistrations() {
-		foreach (array( '1_0', '1_1' ) as $version) {
+		foreach (array('1_0', '1_1') as $version) {
 			$ret = GalleryCoreApi::registerFactoryImplementation(
 				'CartPluginInterface_' . $version,
 				'ShutterflyCartPlugin',
@@ -179,10 +179,10 @@ class ShutterflyModule extends GalleryModule {
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				$links[$itemId][] = array(
-					'text' => $this->translate('Print on Shutterfly.com'),
+					'text'   => $this->translate('Print on Shutterfly.com'),
 					'params' => array(
-						'view' => 'shutterfly.PrintPhotos',
-						'itemId' => $itemId,
+						'view'      => 'shutterfly.PrintPhotos',
+						'itemId'    => $itemId,
 						'returnUrl' => '%CURRENT_URL%',
 						'authToken' => $session->getAuthToken(),
 					),
@@ -190,6 +190,6 @@ class ShutterflyModule extends GalleryModule {
 			}
 		}
 
-		return array( null, $links );
+		return array(null, $links);
 	}
 }

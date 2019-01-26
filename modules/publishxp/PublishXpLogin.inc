@@ -49,7 +49,7 @@ class PublishXpLoginController extends GalleryController {
 				list($ret, $isDisabled) = GalleryCoreApi::isDisabledUsername($form['userName']);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if ($isDisabled) {
@@ -61,7 +61,7 @@ class PublishXpLoginController extends GalleryController {
 				list($ret, $user) = GalleryCoreApi::fetchUserByUsername($form['userName']);
 
 				if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 
 				if (isset($user) && $user->isCorrectPassword($form['password'])) {
@@ -72,7 +72,7 @@ class PublishXpLoginController extends GalleryController {
 					list($ret, $ignoreTheRedirect) = GalleryCoreApi::postEvent($event);
 
 					if ($ret) {
-						return array( $ret, null );
+						return array($ret, null);
 					}
 
 					$results['redirect']['view'] = 'publishxp.SelectAlbum';
@@ -89,7 +89,7 @@ class PublishXpLoginController extends GalleryController {
 				list($ret, $ignored) = GalleryCoreApi::postEvent($event);
 
 				if ($ret) {
-					return array( $ret, null );
+					return array($ret, null);
 				}
 			}
 		}
@@ -100,7 +100,7 @@ class PublishXpLoginController extends GalleryController {
 		$results['status'] = array();
 		$results['error']  = $error;
 
-		return array( null, $results );
+		return array(null, $results);
 	}
 }
 
@@ -124,7 +124,7 @@ class PublishXpLoginView extends GalleryView {
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!$isAnonymous) {
@@ -142,7 +142,7 @@ class PublishXpLoginView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'publishxp');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Windows Publishing Wizard'));
@@ -152,7 +152,7 @@ class PublishXpLoginView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body' => 'modules/publishxp/templates/PublishXpLogin.tpl',
+				'body'          => 'modules/publishxp/templates/PublishXpLogin.tpl',
 				'useFullScreen' => true,
 			),
 		);

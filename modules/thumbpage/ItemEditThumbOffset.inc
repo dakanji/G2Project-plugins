@@ -35,14 +35,14 @@ class ItemEditThumbOffset extends ItemEditPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'thumbpage');
 
 		if ($ret) {
-			return array( $ret, null, null, null );
+			return array($ret, null, null, null);
 		}
 
 		if (isset($form['action']['save'])) {
 			list($ret, $duration) = $this->_getDuration($item);
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 
 			if ($form['offset'] > $duration || $form['offset'] < 0) {
@@ -51,10 +51,10 @@ class ItemEditThumbOffset extends ItemEditPlugin {
 		}
 
 		if (isset($form['action']['save']) && empty($error)) {
-			list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds(array( $item->getId() ));
+			list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds(array($item->getId()));
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 			$thumb      = array_shift($thumbnails);
 			$operations = $thumb->getDerivativeOperations();
@@ -71,24 +71,24 @@ class ItemEditThumbOffset extends ItemEditPlugin {
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($thumb->getId());
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 			$thumb->setDerivativeOperations($operations);
 			$ret = $thumb->save();
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 			$ret = GalleryCoreApi::releaseLocks($lockId);
 
 			if ($ret) {
-				return array( $ret, null, null, null );
+				return array($ret, null, null, null);
 			}
 
 			$status = $module->translate('Changes saved successfully');
 		} // else $form['action']['reset'])
 
-		return array( null, $error, $status, false );
+		return array(null, $error, $status, false);
 	}
 
 	/**
@@ -111,7 +111,7 @@ class ItemEditThumbOffset extends ItemEditPlugin {
 		list($ret, $duration) = $this->_getDuration($item);
 
 		if ($ret) {
-			return array( $ret, null, null );
+			return array($ret, null, null);
 		}
 		$form['duration'] = sprintf('%.3f', $duration);
 		$template->setVariable('controller', 'thumbpage.ItemEditThumbOffset');
@@ -147,10 +147,10 @@ class ItemEditThumbOffset extends ItemEditPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'thumbpage');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $module->translate('Thumbnail') );
+		return array(null, $module->translate('Thumbnail'));
 	}
 
 	/**
@@ -164,16 +164,16 @@ class ItemEditThumbOffset extends ItemEditPlugin {
 		list($ret, $path) = $item->fetchPath();
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 		list($ret, $toolkit) = GalleryCoreApi::getToolkitByProperty($item->getMimeType(), 'dimensions-and-duration');
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
 		if (!isset($toolkit)) {
-			return array( GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE), null );
+			return array(GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE), null);
 		}
 		list($ret, $result) = $toolkit->getProperty(
 			$item->getMimeType(),
@@ -182,9 +182,9 @@ class ItemEditThumbOffset extends ItemEditPlugin {
 		);
 
 		if ($ret) {
-			return array( $ret, null );
+			return array($ret, null);
 		}
 
-		return array( null, $result[2] );
+		return array(null, $result[2]);
 	}
 }

@@ -45,9 +45,9 @@ class LinkItemModule extends GalleryModule {
 	public function upgrade($currentVersion, $x1 = null) {
 		global $gallery;
 		$platform =& $gallery->getPlatform();
-		$slash = $platform->getDirectorySeparator();
+		$slash    = $platform->getDirectorySeparator();
 
-		$imageDir = $gallery->getConfig('data.gallery.plugins_data') . "modules${slash}linkitem";
+		$imageDir      = $gallery->getConfig('data.gallery.plugins_data') . "modules${slash}linkitem";
 		list($success) = GalleryUtilities::guaranteeDirExists($imageDir);
 
 		if (!$success) {
@@ -73,7 +73,7 @@ class LinkItemModule extends GalleryModule {
 
 		if (!empty($currentVersion) && version_compare($currentVersion, '1.0.4', '<=')) {
 			$storage =& $gallery->getStorage();
-			$ret = $storage->configureStore($this->getId(), array('GalleryLinkItem:1.0'));
+			$ret     = $storage->configureStore($this->getId(), array('GalleryLinkItem:1.0'));
 
 			if ($ret) {
 				return $ret;
@@ -213,7 +213,7 @@ class LinkItemModule extends GalleryModule {
 	public function getSiteAdminViews() {
 		return array(null,
 		array(array('name' => $this->translate('Link Items'),
-		'view' => 'linkitem.LinkItemSiteAdmin', )), );
+		'view'             => 'linkitem.LinkItemSiteAdmin', )), );
 	}
 
 	/**
