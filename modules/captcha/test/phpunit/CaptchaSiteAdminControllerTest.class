@@ -63,10 +63,10 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -102,10 +102,10 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -130,10 +130,10 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -158,8 +158,8 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -194,10 +194,10 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'captcha.CaptchaSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -222,9 +222,11 @@ class CaptchaSiteAdminControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function testBogusOptionLevel() {
-		CaptchaAdminOption::testOptions(array(
-			'testOptionId' => new CaptchaSiteAdminTestOption(),
-		));
+		CaptchaAdminOption::testOptions(
+			array(
+				'testOptionId' => new CaptchaSiteAdminTestOption(),
+			)
+		);
 
 		GalleryUtilities::putRequestVariable('form[action][save]', 1);
 		GalleryUtilities::putRequestVariable('form[failedAttemptThreshold]', 3);

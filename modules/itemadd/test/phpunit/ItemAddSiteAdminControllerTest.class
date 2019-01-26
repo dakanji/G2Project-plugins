@@ -77,8 +77,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -97,10 +97,10 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -122,12 +122,14 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[uploadLocalServer][newDir]', __DIR__);
 		GalleryUtilities::putRequestVariable('form[action][addUploadLocalServerDir]', 1);
 
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => 'b',
-			3 => null,
-			4 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => 'b',
+				3 => null,
+				4 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -141,11 +143,11 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'addedDir' => 1,
 					'saved'    => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -180,8 +182,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][uploadLocalServer][newDir][missing]'),
+				'status' => array(),
+				'error'  => array('form[error][uploadLocalServer][newDir][missing]'),
 			),
 			$results
 		);
@@ -199,8 +201,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][uploadLocalServer][newDir][notADirectory]'),
+				'status' => array(),
+				'error'  => array('form[error][uploadLocalServer][newDir][notADirectory]'),
 			),
 			$results
 		);
@@ -224,8 +226,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][uploadLocalServer][newDir][notReadable]'),
+				'status' => array(),
+				'error'  => array('form[error][uploadLocalServer][newDir][notReadable]'),
 			),
 			$results
 		);
@@ -241,8 +243,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][uploadLocalServer][newDir][restrictedByOpenBaseDir]',
 				),
 			),
@@ -270,8 +272,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][uploadLocalServer][newDir][notReadable]'),
+				'status' => array(),
+				'error'  => array('form[error][uploadLocalServer][newDir][notReadable]'),
 			),
 			$results
 		);
@@ -295,8 +297,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][uploadLocalServer][newDir][restrictedByOpenBaseDir]',
 				),
 			),
@@ -328,11 +330,11 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'addedDir' => 1,
 					'saved'    => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -344,10 +346,12 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 		$platform =& $gallery->getPlatform();
 		$saveDir  = $platform->getcwd();
 
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -367,11 +371,11 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'addedDir' => 1,
 					'saved'    => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -413,11 +417,11 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'addedDir' => 1,
 					'saved'    => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -454,11 +458,11 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'addedDir' => 1,
 					'saved'    => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -467,10 +471,12 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testAddUploadLocalServerDirWithSymlink() {
 		// If symlink in the path check open_basedir with realpath but store given path
 		global $gallery;
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -497,11 +503,11 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'addedDir' => 1,
 					'saved'    => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -519,13 +525,15 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[uploadLocalServer][selectedDir]', '2');
 		GalleryUtilities::putRequestVariable('form[action][removeUploadLocalServerDir]', 1);
 
-		$ret = $this->_setUploadDirs(array(
-			1 => 'a',
-			2 => 'x',
-			3 => 'b',
-			4 => 'c',
-			5 => null,
-		));
+		$ret = $this->_setUploadDirs(
+			array(
+				1 => 'a',
+				2 => 'x',
+				3 => 'b',
+				4 => 'c',
+				5 => null,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -539,10 +547,10 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'removedDir' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -571,8 +579,8 @@ class ItemAddSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'itemadd.ItemAddSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][uploadLocalServer][selectedDir][missing]'),
+				'status' => array(),
+				'error'  => array('form[error][uploadLocalServer][selectedDir][missing]'),
 			),
 			$results
 		);

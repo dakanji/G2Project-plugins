@@ -125,16 +125,16 @@ class UserAlbumSiteAdminView extends GalleryView {
 		$g2AlbumTree = GalleryUtilities::createAlbumTree($albums);
 
 		$UserAlbumSiteAdmin = array(
-			'createList'     => array(
+			'createList' => array(
 				'immediate' => $module->translate('When user is created'),
 				'access'    => $module->translate('When first accessed'),
 			),
-			'viewList'       => array(
+			'viewList' => array(
 				'everybody' => $module->translate('Everybody'),
 				'allusers'  => $module->translate('Registered Users'),
 				'user'      => $module->translate('User Only'),
 			),
-			'sizeList'       => array(
+			'sizeList' => array(
 				'1' => $module->translate('Yes'),
 				'0' => $module->translate('No'),
 			),

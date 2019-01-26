@@ -299,8 +299,10 @@ class ItemAddWebDav extends ItemAddPlugin {
 				return array($ret, null, null);
 			}
 
-			$gallery->debug('Error in ItemEditWebDav::handleRequest: ' . $newItem->getClassName()
-			. ' doesn\'t support the file content.  Falling back on an unknown item.');
+			$gallery->debug(
+				'Error in ItemEditWebDav::handleRequest: ' . $newItem->getClassName()
+				. ' doesn\'t support the file content.  Falling back on an unknown item.'
+			);
 
 			list($ret, $newItem) = GalleryCoreApi::newFactoryInstanceById(
 				'GalleryEntity',

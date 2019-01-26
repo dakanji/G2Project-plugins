@@ -78,27 +78,33 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		. "\r\n";
 
 		// Define success and failure responses
-		$this->_accessAuthorizationResponse  = implode("\r\n", array(
-			'HTTP/1.1 200 OK',
-			'Date: Mon, 24 Nov 2003 05:40:03 GMT',
-			'Server: Apache/1.3.28 (Unix)',
-			'Content-Length: 26',
-			'Connection: close',
-			'Content-Type: text/html',
-			'',
-			'',
-		))
+		$this->_accessAuthorizationResponse  = implode(
+			"\r\n",
+			array(
+				'HTTP/1.1 200 OK',
+				'Date: Mon, 24 Nov 2003 05:40:03 GMT',
+				'Server: Apache/1.3.28 (Unix)',
+				'Content-Length: 26',
+				'Connection: close',
+				'Content-Type: text/html',
+				'',
+				'',
+			)
+		)
 		. "Basic\nUSERNAME\nPASSWORD";
-		$this->_missingAuthorizationResponse = implode("\r\n", array(
-			'HTTP/1.1 200 OK',
-			'Date: Mon, 24 Nov 2003 05:40:03 GMT',
-			'Server: Apache/1.3.28 (Unix)',
-			'Content-Length: 26',
-			'Connection: close',
-			'Content-Type: text/html',
-			'',
-			'',
-		))
+		$this->_missingAuthorizationResponse = implode(
+			"\r\n",
+			array(
+				'HTTP/1.1 200 OK',
+				'Date: Mon, 24 Nov 2003 05:40:03 GMT',
+				'Server: Apache/1.3.28 (Unix)',
+				'Content-Length: 26',
+				'Connection: close',
+				'Content-Type: text/html',
+				'',
+				'',
+			)
+		)
 		. "\n\n\n\n";
 
 		// Use HttpAuthHelperTestPlatform
@@ -114,14 +120,14 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 		// Configure plugin
 		foreach (array(
-			'httpAuthPlugin'   => true,
-			'regexAuthPlugin'  => true,
-			'authtypePattern'  => '//',
-			'usernameReplace'  => '$2',
-			'usernamePattern'  => '/^(.+\\\\)?([^\\\\@]+)(@.+)?$/',
+			'httpAuthPlugin' => true,
+			'regexAuthPlugin' => true,
+			'authtypePattern' => '//',
+			'usernameReplace' => '$2',
+			'usernamePattern' => '/^(.+\\\\)?([^\\\\@]+)(@.+)?$/',
 			'serverAuthPlugin' => false,
-			'useGlobally'      => true,
-			'authName'         => 'TEST_AUTH_NAME',
+			'useGlobally' => true,
+			'authName' => 'TEST_AUTH_NAME',
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'httpauth', $key, $value);
 
@@ -300,7 +306,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckHttpAuthPluginDisabled() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
-		$ret = GalleryCoreApi::removePluginParameter('module', 'httpauth', 'httpAuthPlugin');
+		$ret                                                      = GalleryCoreApi::removePluginParameter('module', 'httpauth', 'httpAuthPlugin');
 
 		if ($ret) {
 			return $ret;
@@ -637,7 +643,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testRequestAuthenticationIgnoredIfHttpAuthNotEnabled() {
 		foreach (array(
-			'httpAuthPlugin'   => false,
+			'httpAuthPlugin' => false,
 			'serverAuthPlugin' => true,
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'httpauth', $key, $value);

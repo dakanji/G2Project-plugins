@@ -169,7 +169,7 @@ class getid3_bonk extends getid3_handler {
 
 				if (!$this->BonkIsValidTagName(substr($NextInfoDataPair, 1, 4))) {
 					while (!feof($this->getid3->fp)) {
-						//$CurrentSeekInfo['offset']  = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 0, 4));
+						//$CurrentSeekInfo['offset'] = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 0, 4));
 						//$CurrentSeekInfo['nextbit'] = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 4, 1));
 						//$thisfile_bonk_INFO[] = $CurrentSeekInfo;
 
@@ -194,10 +194,10 @@ class getid3_bonk extends getid3_handler {
 				$offset         = 6;
 
 				for ($i = 0; $i < $MetaTagEntries; $i++) {
-					$MetaEntryTagName                                = substr($BonkData, $offset, 4);
-					$offset                                         += 4;
-					$MetaEntryTagOffset                              = getid3_lib::LittleEndian2Int(substr($BonkData, $offset, 4));
-					$offset                                         += 4;
+					$MetaEntryTagName   = substr($BonkData, $offset, 4);
+					$offset            += 4;
+					$MetaEntryTagOffset = getid3_lib::LittleEndian2Int(substr($BonkData, $offset, 4));
+					$offset            += 4;
 					$info['bonk']['META']['tags'][$MetaEntryTagName] = $MetaEntryTagOffset;
 				}
 

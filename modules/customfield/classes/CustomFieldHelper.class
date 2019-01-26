@@ -334,9 +334,12 @@ class CustomFieldHelper extends CustomFieldInterface_1_0 {
 			return $ret;
 		}
 		$isContainer = !empty($param);
-		$ret         = GalleryCoreApi::removeMapEntry('CustomFieldMap', array(
-			'itemId' => $item->getId(),
-		));
+		$ret         = GalleryCoreApi::removeMapEntry(
+			'CustomFieldMap',
+			array(
+				'itemId' => $item->getId(),
+			)
+		);
 
 		if ($ret) {
 			return $ret;

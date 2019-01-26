@@ -170,8 +170,11 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			'item: slider full url: ' . htmlentities($html)
 		);
 		$this->assert(
-			preg_match('{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
-				 . SESSION_ID_PARAMETER . '}', $html),
+			preg_match(
+				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
+				. SESSION_ID_PARAMETER . '}',
+				$html
+			),
 			'item: image full url: ' . htmlentities($html)
 		);
 
@@ -185,8 +188,11 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			'deriv: slider full url: ' . htmlentities($html)
 		);
 		$this->assert(
-			preg_match('{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
-				 . SESSION_ID_PARAMETER . '}', $html),
+			preg_match(
+				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
+				. SESSION_ID_PARAMETER . '}',
+				$html
+			),
 			'deriv: image full url: ' . htmlentities($html)
 		);
 

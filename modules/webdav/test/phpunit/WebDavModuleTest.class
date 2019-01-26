@@ -253,10 +253,12 @@ class WebDavModuleTest extends GalleryTestCase {
 
 	public function testHandleEventActivatePlugin() {
 		$event = GalleryCoreApi::newEvent('Gallery::ActivatePlugin');
-		$event->setData(array(
-			'pluginType' => 'module',
-			'pluginId'   => 'rewrite',
-		));
+		$event->setData(
+			array(
+				'pluginType' => 'module',
+				'pluginId'   => 'rewrite',
+			)
+		);
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -273,9 +275,11 @@ class WebDavModuleTest extends GalleryTestCase {
 
 		$error = GalleryCoreApi::error(GALLERY_ERROR);
 		$event = GalleryCoreApi::newEvent('Gallery::Error');
-		$event->setData(array(
-			'error' => $error,
-		));
+		$event->setData(
+			array(
+				'error' => $error,
+			)
+		);
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -305,9 +309,11 @@ class WebDavModuleTest extends GalleryTestCase {
 
 		$error = GalleryCoreApi::error(ERROR_PERMISSION_DENIED);
 		$event = GalleryCoreApi::newEvent('Gallery::Error');
-		$event->setData(array(
-			'error' => $error,
-		));
+		$event->setData(
+			array(
+				'error' => $error,
+			)
+		);
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {

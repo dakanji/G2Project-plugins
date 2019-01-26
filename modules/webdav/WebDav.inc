@@ -164,8 +164,8 @@ class WebDavController extends GalleryController {
 						'delegate' => array(
 							'view' => 'core.ShowItem',
 						),
-						'status'   => array(),
-						'error'    => array(),
+						'status' => array(),
+						'error'  => array(),
 					),
 				);
 			}
@@ -176,8 +176,8 @@ class WebDavController extends GalleryController {
 					'delegate' => array(
 						'view' => 'core.DownloadItem',
 					),
-					'status'   => array(),
-					'error'    => array(),
+					'status' => array(),
+					'error'  => array(),
 				),
 			);
 		}
@@ -222,8 +222,8 @@ class WebDavController extends GalleryController {
 				'delegate' => array(
 					'view' => 'webdav.WebDav',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 		);
 	}
@@ -284,16 +284,19 @@ class WebDavView extends GalleryView {
 			GalleryUtilities::getServerVar('REQUEST_METHOD')
 		);
 
-		if (!in_array($requestMethod, array(
-			'options',
-			'propfind',
-			'proppatch',
-			'mkcol',
-			'delete',
-			'move',
-			'lock',
-			'unlock',
-		))
+		if (!in_array(
+			$requestMethod,
+			array(
+				'options',
+				'propfind',
+				'proppatch',
+				'mkcol',
+				'delete',
+				'move',
+				'lock',
+				'unlock',
+			)
+		)
 		) {
 			// If we just completed a PUT request and got delegated here, just silently return
 			if ($requestMethod == 'put') {

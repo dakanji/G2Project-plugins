@@ -251,8 +251,8 @@ class PermalinksModule extends GalleryModule {
 	public function getRewriteRules() {
 		return array(
 			array(
-				'comment'  => $this->translate('Permalinks'),
-				'match'    => array(
+				'comment' => $this->translate('Permalinks'),
+				'match'   => array(
 					'controller' => 'permalinks.Redirect',
 				),
 				'pattern'  => 'f/%filename%',
@@ -264,8 +264,10 @@ class PermalinksModule extends GalleryModule {
 						),
 					),
 				),
-				'help'     => $this->translate('Enable this rule to allow Permalinks you define to '
-				. 'work. Disabling this rule will break your Permalinks.'),
+				'help'  => $this->translate(
+					'Enable this rule to allow Permalinks you define to '
+					. 'work. Disabling this rule will break your Permalinks.'
+				),
 			),
 		);
 	}

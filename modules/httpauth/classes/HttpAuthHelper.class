@@ -329,9 +329,9 @@ class HttpAuthHelper {
 		}
 
 		foreach (array(
-			'httpAuthPlugin'   => $enableHttpAuth,
+			'httpAuthPlugin' => $enableHttpAuth,
 			'serverAuthPlugin' => $enableServerAuth,
-			'useGlobally'      => $useGlobally,
+			'useGlobally' => $useGlobally,
 		) as $key => $value) {
 			$ret = $module->setParameter($key, $value);
 

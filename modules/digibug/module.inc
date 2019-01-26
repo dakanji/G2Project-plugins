@@ -215,8 +215,8 @@ class DigibugModule extends GalleryModule {
 
 		if (empty($params['digibugCustomerId']) || empty($params['digibugPricelistId'])) {
 			foreach (array(
-				'digibugIdChoice'    => 'gallery',
-				'digibugCustomerId'  => '3153',
+				'digibugIdChoice' => 'gallery',
+				'digibugCustomerId' => '3153',
 				'digibugPricelistId' => '8491',
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);

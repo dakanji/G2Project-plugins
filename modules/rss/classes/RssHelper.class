@@ -23,8 +23,10 @@
  * retrieve comments from the database for comments rss feeds.
  * @todo Don't access GalleryCommentHelper directly
  */
-if (GalleryPlatform::file_exists(__DIR__
-		. '/../../comment/classes/GalleryCommentHelper.class')
+if (GalleryPlatform::file_exists(
+	__DIR__
+	. '/../../comment/classes/GalleryCommentHelper.class'
+)
 ) {
 	GalleryCoreApi::requireOnce('modules/comment/classes/GalleryCommentHelper.class');
 }
@@ -100,11 +102,14 @@ class RssHelper {
 					)
 				);
 
-				$generator->addProperty('image', array(
-					'title' => $memberData['title'],
-					'url'   => $imageUrl,
-					'link'  => $albumUrl,
-				));
+				$generator->addProperty(
+					'image',
+					array(
+						'title' => $memberData['title'],
+						'url'   => $imageUrl,
+						'link'  => $albumUrl,
+					)
+				);
 			}
 		}
 
@@ -243,7 +248,7 @@ class RssHelper {
 		}
 
 		// if necessary, fetch the thumbnails
-		if (! strstr($param['feedType'], 'comments')) {
+		if (!strstr($param['feedType'], 'comments')) {
 			$itemIds = array();
 
 			foreach ($items as $item) {
@@ -620,7 +625,7 @@ class RssHelper {
 	      [GalleryAccessSubscriberMap], [GalleryEntity]
 	    WHERE ";
 
-		if (! $random) {
+		if (!$random) {
 			$query .= "
 	      [GalleryEntity::$timestamp] >= $timeCutOff
 	      AND ";

@@ -294,10 +294,14 @@ class LinkItemTest extends GalleryTestCase {
 
 		$savePlatform =& $gallery->getPlatform();
 		$platform     = new UnitTestPlatform();
-		$platform->setReply('copy', array(
-			'fuzzy' => '{/images/link.jpg$}',
-			'outputFile',
-		), true);
+		$platform->setReply(
+			'copy',
+			array(
+				'fuzzy' => '{/images/link.jpg$}',
+				'outputFile',
+			),
+			true
+		);
 		$gallery->setPlatform($platform);
 
 		list($ret, $mimeType, $context) = $toolkit->performOperation(
@@ -314,10 +318,13 @@ class LinkItemTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals('image/jpeg', $mimeType);
-		$this->assertEquals(array(
-			'width'  => 270,
-			'height' => 224,
-		), $context);
+		$this->assertEquals(
+			array(
+				'width'  => 270,
+				'height' => 224,
+			),
+			$context
+		);
 		$this->assert($platform->isComplete(), $platform->getRemaining());
 
 		$ret = GalleryCoreApi::setPluginParameter('module', 'linkitem', 'urlSnapshot', '1');
@@ -337,14 +344,22 @@ class LinkItemTest extends GalleryTestCase {
 		}
 
 		$platform = new UnitTestPlatform();
-		$platform->setReply('tempnam', array(
-			'fuzzy' => '{.}',
-			'lnk_',
-		), 'tmpfile');
+		$platform->setReply(
+			'tempnam',
+			array(
+				'fuzzy' => '{.}',
+				'lnk_',
+			),
+			'tmpfile'
+		);
 		$platform->setReply('getDirectorySeparator', array(), '/');
-		$platform->setReply('file_exists', array(
-			'fuzzy' => '{params.txt$}',
-		), true);
+		$platform->setReply(
+			'file_exists',
+			array(
+				'fuzzy' => '{params.txt$}',
+			),
+			true
+		);
 		$platform->setReply(
 			'file',
 			array(
@@ -377,10 +392,13 @@ class LinkItemTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals('image/jpeg', $mimeType);
-		$this->assertEquals(array(
-			'width'  => 1024,
-			'height' => 768,
-		), $context);
+		$this->assertEquals(
+			array(
+				'width'  => 1024,
+				'height' => 768,
+			),
+			$context
+		);
 		$this->assert($platform->isComplete(), $platform->getRemaining());
 		$gallery->setPlatform($savePlatform);
 	}

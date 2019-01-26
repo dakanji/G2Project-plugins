@@ -194,17 +194,17 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		$template = null;
 
 		foreach (array(
-			''            => array(
+			''     => array(
 				'imageUrl' => array(
 					'missing' => 1,
 				),
 			),
-			'test'        => array(
+			'test' => array(
 				'imageUrl' => array(
 					'invalid' => 1,
 				),
 			),
-			'test://foo'  => array(
+			'test://foo' => array(
 				'imageUrl' => array(
 					'invalid' => 1,
 				),
@@ -213,7 +213,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			'file://hoho' => array(),
 		) as $url => $error) {
 			$form                        = array(
-				'action'   => array(
+				'action' => array(
 					'checkUrl' => 1,
 				),
 				'formName' => 'ItemAddWebCam',
@@ -270,7 +270,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			'http://blah' => array(),
 		) as $url => $error) {
 			$form                        = array(
-				'action'   => array(
+				'action' => array(
 					'checkUrl' => 1,
 				),
 				'formName' => 'ItemAddWebCam',

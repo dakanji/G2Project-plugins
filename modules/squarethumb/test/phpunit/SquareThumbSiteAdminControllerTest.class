@@ -55,8 +55,8 @@ class SquareThumbSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'squarethumb.SquareThumbSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -74,10 +74,10 @@ class SquareThumbSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'squarethumb.SquareThumbSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -94,8 +94,8 @@ class SquareThumbSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'squarethumb.SquareThumbSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][color][missing]'),
+				'status' => array(),
+				'error'  => array('form[error][color][missing]'),
 			),
 			$results
 		);
@@ -113,10 +113,10 @@ class SquareThumbSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'squarethumb.SquareThumbSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -134,8 +134,8 @@ class SquareThumbSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'squarethumb.SquareThumbSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][color][invalid]'),
+				'status' => array(),
+				'error'  => array('form[error][color][invalid]'),
 			),
 			$results
 		);
@@ -149,8 +149,8 @@ class SquareThumbSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'squarethumb.SquareThumbSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][color][invalid]'),
+				'status' => array(),
+				'error'  => array('form[error][color][invalid]'),
 			),
 			$results
 		);

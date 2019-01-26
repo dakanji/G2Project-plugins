@@ -98,12 +98,10 @@ var allowUpload = ' {g->text text="Allow Upload" forJavascript=true} ',
     blockUpload = ' {g->text text="Block Upload" forJavascript=true} ',
     allowMime = '{$form.allowMime}';
 {literal}
-document.getElementById('columnHeading').innerHTML =
-  (allowMime == 'block') ? blockUpload : allowUpload;
+document.getElementById('columnHeading').innerHTML =   (allowMime == 'block') ? blockUpload : allowUpload;
 
 function setAllowMime(key) {
-  document.getElementById('columnHeading').innerHTML =
-    (key == 'block') ? blockUpload : allowUpload;
+  document.getElementById('columnHeading').innerHTML =     (key == 'block') ? blockUpload : allowUpload;
   var cbs = document.getElementById('mimeTable').getElementsByTagName('INPUT');
   for (var i = 0; i < cbs.length; i++) {
     if (key == 'all') {

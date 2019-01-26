@@ -81,9 +81,11 @@ class PublishXpLoginController extends GalleryController {
 
 			if (!empty($error) && !empty($form['userName'])) {
 				$event = GalleryCoreApi::newEvent('Gallery::FailedLogin');
-				$event->setData(array(
-					'userName' => $form['userName'],
-				));
+				$event->setData(
+					array(
+						'userName' => $form['userName'],
+					)
+				);
 				list($ret, $ignored) = GalleryCoreApi::postEvent($event);
 
 				if ($ret) {

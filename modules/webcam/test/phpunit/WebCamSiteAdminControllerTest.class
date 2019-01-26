@@ -61,8 +61,8 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'webcam.WebCamSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -80,10 +80,10 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'webcam.WebCamSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -108,8 +108,8 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'webcam.WebCamSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][duration]'),
+				'status' => array(),
+				'error'  => array('form[error][duration]'),
 			),
 			$results
 		);
@@ -134,8 +134,8 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'webcam.WebCamSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][duration]'),
+				'status' => array(),
+				'error'  => array('form[error][duration]'),
 			),
 			$results
 		);
@@ -161,10 +161,10 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'webcam.WebCamSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);

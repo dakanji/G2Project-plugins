@@ -1,10 +1,10 @@
-/* ^PHPCS_CSS_T_OPEN_TAG^ $colorpackName = $gallery->i18n('Black'); ^PHPCS_CSS_T_CLOSE_TAG^
+/* <?php $colorpackName = $gallery->i18n('Black'); ?>
  * $Revision: 15978 $
  */
 
 #gallery {
-  color: #ffffff !important;
-  background-color: #000000 !important;
+	color: #ffffff !important;
+	background-color: #000000 !important;
 }
 body.gallery { background-color: #000000 !important; }
 
@@ -32,7 +32,7 @@ table.gbDataTable th { background-color: #303030 !important; }
 #gallery input { background-color: #a0a0a0 !important; }
 #gallery textarea { background-color: #a0a0a0 !important; }
 #gallery div.gbTabBar a {
-  color: #00a0ff !important;
+	color: #00a0ff !important;
 }
 
 .autoCompleteContainer li {

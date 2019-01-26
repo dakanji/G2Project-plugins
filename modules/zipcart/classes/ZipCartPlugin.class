@@ -61,11 +61,11 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 	 */
 	public function fulfillCart($cartItemIds) {
 		global $gallery;
-		$platform =& $gallery->getPlatform();
-		$slash = $platform->getDirectorySeparator();
-		$zipBase = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'zip_');
-		$zipDir = $zipBase . '.dir';
-		$zipFile = $zipBase . '.zip';
+		$platform      =& $gallery->getPlatform();
+		$slash         = $platform->getDirectorySeparator();
+		$zipBase       = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'zip_');
+		$zipDir        = $zipBase . '.dir';
+		$zipFile       = $zipBase . '.zip';
 		list($success) = GalleryUtilities::guaranteeDirExists($zipDir);
 
 		if (!$success) {
@@ -77,7 +77,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			return array($ret, null);
 		}
 
-		$itemIds = array_keys($cartItemIds);
+		$itemIds           = array_keys($cartItemIds);
 		list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryDataItem');
 
 		if ($ret) {
@@ -104,11 +104,11 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			return array($ret, null);
 		}
 
-		$tmpDirs = array();
+		$tmpDirs  = array();
 		$tmpFiles = array();
-		$cmd = array($zip, $zipFile);
+		$cmd      = array($zip, $zipFile);
 		$albumDir = $gallery->getConfig('data.gallery.albums');
-		$i = 0;
+		$i        = 0;
 
 		foreach ($items as $item) {
 			if ($i++ % 50) {
@@ -122,7 +122,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			$relativePath = (strpos($path, $albumDir) === 0) ?
 				substr($path, strlen($albumDir)) : basename($path);
 
-			$itemId = $item->getId();
+			$itemId       = $item->getId();
 			$itemMimeType = $item->getMimeType();
 
 			if (isset($permissions[$itemId]['core.viewSource'])) {
@@ -137,7 +137,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 					$size = $resize->getDerivativeSize();
 
 					if (!isset($maxSize) || $size > $maxSize) {
-						$item = $resize;
+						$item    = $resize;
 						$maxSize = $size;
 					}
 				}
@@ -153,8 +153,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			}
 
 			if (GalleryUtilities::isA($item, 'GalleryDerivative')) {
-				list($ret, $item) =
-			GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($item->getId());
+				list($ret, $item) = 			GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($item->getId());
 
 				if ($ret) {
 					return array($ret, null);
@@ -163,15 +162,14 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 				$derivativeMimeType = $item->getMimeType();
 
 				if ($derivativeMimeType != $itemMimeType) {
-					list($ret, $mimeExtensions) =
-			GalleryCoreApi::convertMimeToExtensions($derivativeMimeType);
+					list($ret, $mimeExtensions) = 			GalleryCoreApi::convertMimeToExtensions($derivativeMimeType);
 
 					if ($ret) {
 						return array($ret, null);
 					}
 
 					if (!empty($mimeExtensions)) {
-						$base = GalleryUtilities::getFileBase($relativePath);
+						$base         = GalleryUtilities::getFileBase($relativePath);
 						$relativePath = $base . '.' . $mimeExtensions[0];
 					}
 				}
@@ -184,7 +182,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			}
 
 			// Copy file into temp dir with right subdir/filename
-			$target = $zipDir . $slash . $relativePath;
+			$target                  = $zipDir . $slash . $relativePath;
 			list($success, $created) = GalleryUtilities::guaranteeDirExists(dirname($target));
 
 			if (!$success) {
@@ -198,7 +196,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 				 null, );
 			}
 			$tmpFiles[] = $target;
-			$cmd[] = $relativePath;
+			$cmd[]      = $relativePath;
 		}
 
 		$cwd = $platform->getcwd();

@@ -131,7 +131,7 @@ class getid3_mpc extends getid3_handler {
 
 					$info['audio']['channels']    = $thisPacket['channels'];
 					$info['audio']['sample_rate'] = $thisPacket['sample_frequency'];
-					$info['playtime_seconds']     = $thisPacket['sample_count'] / $thisPacket['sample_frequency'];
+					$info['playtime_seconds']     = $thisPacket['sample_count']                        / $thisPacket['sample_frequency'];
 					$info['audio']['bitrate']     = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
 
 					break;
@@ -193,7 +193,7 @@ class getid3_mpc extends getid3_handler {
 
 					$info['audio']['encoder']               = 'MPC v' . $thisPacket['version'] . ' (' . (($thisPacket['version_minor'] % 2) ? 'unstable' : 'stable') . ')';
 					$thisfile_mpc_header['encoder_version'] = $info['audio']['encoder'];
-					//$thisfile_mpc_header['quality']         = (float) ($thisPacket['quality'] / 1.5875); // values can range from 0.000 to 15.875, mapped to qualities of 0.0 to 10.0
+					//$thisfile_mpc_header['quality'] = (float) ($thisPacket['quality'] / 1.5875); // values can range from 0.000 to 15.875, mapped to qualities of 0.0 to 10.0
 					$thisfile_mpc_header['quality'] = (float)($thisPacket['quality'] - 5); // values can range from 0.000 to 15.875, of which 0..4 are "reserved/experimental", and 5..15 are mapped to qualities of 0.0 to 10.0
 					break;
 
@@ -243,12 +243,12 @@ class getid3_mpc extends getid3_handler {
 		$MPCheaderData              .= $this->fread($thisfile_mpc_header['size'] - strlen($info['mpc']['header']['preamble']));
 		$offset                      = strlen('MP+');
 
-		$StreamVersionByte                           = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 1));
-		$offset                                     += 1;
+		$StreamVersionByte = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 1));
+		$offset           += 1;
 		$thisfile_mpc_header['stream_version_major'] = ($StreamVersionByte & 0x0F) >> 0;
 		$thisfile_mpc_header['stream_version_minor'] = ($StreamVersionByte & 0xF0) >> 4; // should always be 0, subversions no longer exist in SV8
 		$thisfile_mpc_header['frame_count']          = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
-		$offset                                     += 4;
+		$offset += 4;
 
 		if ($thisfile_mpc_header['stream_version_major'] != 7) {
 			$info['error'][] = 'Only Musepack SV7 supported (this file claims to be v' . $thisfile_mpc_header['stream_version_major'] . ')';
@@ -256,8 +256,8 @@ class getid3_mpc extends getid3_handler {
 			return false;
 		}
 
-		$FlagsDWORD1                               = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
-		$offset                                   += 4;
+		$FlagsDWORD1 = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
+		$offset     += 4;
 		$thisfile_mpc_header['intensity_stereo']   = (bool)(($FlagsDWORD1 & 0x80000000) >> 31);
 		$thisfile_mpc_header['mid_side_stereo']    = (bool)(($FlagsDWORD1 & 0x40000000) >> 30);
 		$thisfile_mpc_header['max_subband']        = ($FlagsDWORD1 & 0x3F000000) >> 24;
@@ -268,25 +268,25 @@ class getid3_mpc extends getid3_handler {
 		$thisfile_mpc_header['max_level']          = ($FlagsDWORD1 & 0x0000FFFF);
 
 		$thisfile_mpc_header['raw']['title_peak'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2));
-		$offset                                  += 2;
+		$offset += 2;
 		$thisfile_mpc_header['raw']['title_gain'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2), true);
-		$offset                                  += 2;
+		$offset += 2;
 
 		$thisfile_mpc_header['raw']['album_peak'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2));
-		$offset                                  += 2;
+		$offset += 2;
 		$thisfile_mpc_header['raw']['album_gain'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2), true);
-		$offset                                  += 2;
+		$offset += 2;
 
-		$FlagsDWORD2                              = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
-		$offset                                  += 4;
+		$FlagsDWORD2 = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
+		$offset     += 4;
 		$thisfile_mpc_header['true_gapless']      = (bool)(($FlagsDWORD2 & 0x80000000) >> 31);
 		$thisfile_mpc_header['last_frame_length'] = ($FlagsDWORD2 & 0x7FF00000) >> 20;
 
 
-		$thisfile_mpc_header['raw']['not_sure_what']   = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 3));
-		$offset                                       += 3;
+		$thisfile_mpc_header['raw']['not_sure_what'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 3));
+		$offset += 3;
 		$thisfile_mpc_header['raw']['encoder_version'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 1));
-		$offset                                       += 1;
+		$offset += 1;
 
 		$thisfile_mpc_header['profile']     = $this->MPCprofileNameLookup($thisfile_mpc_header['raw']['profile']);
 		$thisfile_mpc_header['sample_rate'] = $this->MPCfrequencyLookup($thisfile_mpc_header['raw']['sample_rate']);
@@ -374,12 +374,12 @@ class getid3_mpc extends getid3_handler {
 		// DDDD DDDD  CCCC CCCC  BBBB BBBB  AAAA AAAA
 		// aaaa aaaa  abcd dddd  dddd deee  eeff ffff
 		//
-		// a = bitrate       = anything
-		// b = IS            = anything
-		// c = MS            = anything
+		// a = bitrate = anything
+		// b = IS = anything
+		// c = MS = anything
 		// d = streamversion = 0000000004 or 0000000005 or 0000000006
-		// e = maxband       = anything
-		// f = blocksize     = 000001 for SV5+, anything(?) for SV4
+		// e = maxband = anything
+		// f = blocksize = 000001 for SV5+, anything(?) for SV4
 
 		$thisfile_mpc_header['target_bitrate']       = (($HeaderDWORD[0] & 0xFF800000) >> 23);
 		$thisfile_mpc_header['intensity_stereo']     = (bool)(($HeaderDWORD[0] & 0x00400000) >> 22);

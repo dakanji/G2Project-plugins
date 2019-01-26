@@ -40,9 +40,12 @@ class FeedListView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$template->setVariable('FeedList', array(
-			'feeds' => $feeds,
-		));
+		$template->setVariable(
+			'FeedList',
+			array(
+				'feeds' => $feeds,
+			)
+		);
 		$template->setVariable('view', 'rss.FeedList');
 
 		return array(

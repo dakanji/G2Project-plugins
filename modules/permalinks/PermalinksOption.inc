@@ -83,9 +83,12 @@ class PermalinksOption extends ItemEditOption {
 			return array($ret, null, null);
 		}
 
-		$template->setVariable('PermalinksOption', array(
-			'aliases' => $aliases,
-		));
+		$template->setVariable(
+			'PermalinksOption',
+			array(
+				'aliases' => $aliases,
+			)
+		);
 
 		return array(
 			null,

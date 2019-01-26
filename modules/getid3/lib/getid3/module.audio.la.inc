@@ -209,7 +209,7 @@ class getid3_la extends getid3_handler {
 				}
 
 				$info['audio']['bitrate'] = ($info['avdataend'] - $info['avdataoffset']) * 8 / $info['playtime_seconds'];
-				//$info['audio']['codec']              = $info['la']['codec'];
+				//$info['audio']['codec'] = $info['la']['codec'];
 				$info['audio']['bits_per_sample'] = $info['la']['bits_per_sample'];
 
 				break;

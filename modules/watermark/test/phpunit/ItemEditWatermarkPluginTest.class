@@ -411,10 +411,13 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			return $ret;
 		}
 		$progress = $this->_templateAdapter->getProgressBarDump();
-		$this->assert(preg_match(
-			'/0.*core.ItemEdit.*' . $this->_album->getId() . '/',
-			implode(' ', $progress)
-		), 'Progress bar output');
+		$this->assert(
+			preg_match(
+				'/0.*core.ItemEdit.*' . $this->_album->getId() . '/',
+				implode(' ', $progress)
+			),
+			'Progress bar output'
+		);
 
 		// Verify the postfilters were applied successfully
 		foreach ($this->_items as $i => $item) {

@@ -66,7 +66,7 @@ class FotokastenSiteAdminController extends GalleryController {
 			}
 		} elseif (isset($form['action']['useGalleryId'])) {
 			foreach (array(
-				'affiliateId'     => FOTOKASTEN_GALLERY_AFFILIATE_ID,
+				'affiliateId' => FOTOKASTEN_GALLERY_AFFILIATE_ID,
 				'affiliateIdPass' => FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD,
 			) as $key => $value) {
 				$ret = GalleryCoreApi::setPluginParameter(

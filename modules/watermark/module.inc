@@ -258,10 +258,10 @@ class WatermarkModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'allowUserWatermarks'   => 1,
+			'allowUserWatermarks' => 1,
 			'forceDefaultWatermark' => 0,
-			'hotlinkWatermarkId'    => '',
-			'defaultWatermarkId'    => '',
+			'hotlinkWatermarkId' => '',
+			'defaultWatermarkId' => '',
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
@@ -470,12 +470,12 @@ class WatermarkModule extends GalleryModule {
 
 		$rules = array();
 		$rule  = array(
-			'comment'       => $this->translate('Watermark hotlinked images'),
-			'restrict'      => array(
-				GalleryUtilities::prefixFormVariable('view') => 'core.DownloadItem',
+			'comment'  => $this->translate('Watermark hotlinked images'),
+			'restrict' => array(
+				GalleryUtilities::prefixFormVariable('view')   => 'core.DownloadItem',
 				GalleryUtilities::prefixFormVariable('itemId') => '([0-9]+)',
 			),
-			'queryString'   => array(
+			'queryString' => array(
 				'view'   => 'watermark.DownloadItem',
 				'itemId' => '%1',
 			),

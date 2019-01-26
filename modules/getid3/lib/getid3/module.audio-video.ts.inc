@@ -51,9 +51,9 @@ class getid3_ts extends getid3_handler {
 		$info['ts']['packet']['scrambling_control']             = $this->TSscramblingControlLookup($info['ts']['packet']['raw']['scrambling_control']);
 
 		if ($info['ts']['packet']['flags']['adaption_field_exists']) {
-			$AdaptionField_raw                                = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 2));
-			$offset                                          += 2;
-			$info['ts']['packet']['adaption']['field_length'] = ($AdaptionField_raw & 0xFF00) >> 8;  // Number of bytes in the adaptation field immediately following this byte
+			$AdaptionField_raw = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 2));
+			$offset           += 2;
+			$info['ts']['packet']['adaption']['field_length']           = ($AdaptionField_raw & 0xFF00) >> 8;  // Number of bytes in the adaptation field immediately following this byte
 			$info['ts']['packet']['adaption']['flags']['discontinuity'] = (bool)($AdaptionField_raw & 0x0080);       // Set to 1 if current TS packet is in a discontinuity state with respect to either the continuity counter or the program clock reference
 			$info['ts']['packet']['adaption']['flags']['random_access'] = (bool)($AdaptionField_raw & 0x0040);       // Set to 1 if the PES packet in this TS packet starts a video/audio sequence
 			$info['ts']['packet']['adaption']['flags']['high_priority'] = (bool)($AdaptionField_raw & 0x0020);       // 1 = higher priority
@@ -64,12 +64,12 @@ class getid3_ts extends getid3_handler {
 			$info['ts']['packet']['adaption']['flags']['extension']     = (bool)($AdaptionField_raw & 0x0001);       // 1 means presence of adaptation field extension
 			if ($info['ts']['packet']['adaption']['flags']['pcr']) {
 				$info['ts']['packet']['adaption']['raw']['pcr'] = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 6));
-				$offset                                        += 6;
+				$offset += 6;
 			}
 
 			if ($info['ts']['packet']['adaption']['flags']['opcr']) {
 				$info['ts']['packet']['adaption']['raw']['opcr'] = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 6));
-				$offset                                         += 6;
+				$offset += 6;
 			}
 		}
 

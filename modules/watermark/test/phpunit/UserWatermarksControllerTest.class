@@ -108,8 +108,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -135,8 +135,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][missingFile]'),
+				'status' => array(),
+				'error'  => array('form[error][missingFile]'),
 			),
 			$results
 		);
@@ -167,10 +167,10 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status'   => array(
+				'status' => array(
 					'delete' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -232,8 +232,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.ConfirmDelete',
 					'watermarkId' => $watermark->getId(),
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Confirm Delete'
@@ -286,8 +286,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -342,8 +342,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Add first watermark'
@@ -370,8 +370,8 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.UserWatermarkEdit',
 					'watermarkId' => $expectedId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Add second watermark'
@@ -408,9 +408,11 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 
 		$results = $this->handleRequest(ERROR_PERMISSION_DENIED);
 
-		list($ret, $this->_user2) = $this->_createUser(array(
-			'locked' => 1,
-		));
+		list($ret, $this->_user2) = $this->_createUser(
+			array(
+				'locked' => 1,
+			)
+		);
 
 		if ($ret) {
 			return $ret;

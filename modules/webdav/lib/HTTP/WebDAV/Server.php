@@ -154,8 +154,10 @@ class HTTP_WebDAV_Server {
 			// RFC2518 says we must use Digest instead of Basic but Microsoft
 			// clients do not support Digest and we don't support NTLM or
 			// Kerberos so we are stuck with Basic here
-			$this->setResponseHeader('WWW-Authenticate: Basic realm="'
-				. $this->http_auth_realm . '"');
+			$this->setResponseHeader(
+				'WWW-Authenticate: Basic realm="'
+				. $this->http_auth_realm . '"'
+			);
 
 			// Windows seems to require this being the last header sent
 			// (changed according to PECL bug #3138)
@@ -872,8 +874,10 @@ class HTTP_WebDAV_Server {
 		$this->setResponseHeader("Content-Type: $options[mimetype]");
 
 		if (!empty($options['mtime'])) {
-			$this->setResponseHeader('Last-Modified:'
-				. gmdate('D, d M Y H:i:s', $options['mtime']) . 'GMT');
+			$this->setResponseHeader(
+				'Last-Modified:'
+				. gmdate('D, d M Y H:i:s', $options['mtime']) . 'GMT'
+			);
 		}
 
 		if ($options['stream']) {
@@ -916,8 +920,10 @@ class HTTP_WebDAV_Server {
 							$this->setResponseStatus('206 Partial');
 
 							if (!empty($options['size'])) {
-								$this->setResponseHeader('Content-Length: '
-									. ($options['size'] - $range['start']));
+								$this->setResponseHeader(
+									'Content-Length: '
+									. ($options['size'] - $range['start'])
+								);
 								$this->setResponseHeader(
 									"Content-Range: $range[start]-$range[end]/"
 									. (!empty($options['size']) ? $options['size'] : '*')
@@ -974,8 +980,10 @@ class HTTP_WebDAV_Server {
 			if (is_array($options['data'])) {
 				// reply to partial request
 			} else {
-				$this->setResponseHeader('Content-Length: '
-					. strlen($options['data']));
+				$this->setResponseHeader(
+					'Content-Length: '
+					. strlen($options['data'])
+				);
 				echo $options['data'];
 			}
 		}
@@ -1082,8 +1090,10 @@ class HTTP_WebDAV_Server {
 		$this->setResponseHeader("Content-Type: $options[mimetype]");
 
 		if (!empty($options['mtime'])) {
-			$this->setResponseHeader('Last-Modified:'
-				. gmdate('D, d M Y H:i:s', $options['mtime']) . 'GMT');
+			$this->setResponseHeader(
+				'Last-Modified:'
+				. gmdate('D, d M Y H:i:s', $options['mtime']) . 'GMT'
+			);
 		}
 
 		if (!empty($options['stream'])) {
@@ -1120,8 +1130,10 @@ class HTTP_WebDAV_Server {
 							$this->setResponseStatus('206 Partial');
 
 							if (!empty($options['size'])) {
-								$this->setResponseHeader('Content-Length: '
-									. ($options['size'] - $range['start']));
+								$this->setResponseHeader(
+									'Content-Length: '
+									. ($options['size'] - $range['start'])
+								);
 								$this->setResponseHeader(
 									"Content-Range: $start-$end/"
 									. (!empty($options['size']) ? $options['size'] : '*')
@@ -1168,8 +1180,10 @@ class HTTP_WebDAV_Server {
 			if (is_array($options['data'])) {
 				// reply to partial request
 			} else {
-				$this->setResponseHeader('Content-Length: '
-					. strlen($options['data']));
+				$this->setResponseHeader(
+					'Content-Length: '
+					. strlen($options['data'])
+				);
 			}
 		}
 	}
@@ -2555,12 +2569,15 @@ class HTTP_WebDAV_Server {
 	 * @return string encoded URL
 	 */
 	public function _urlencode($url) {
-		return strtr($url, array(
-			' ' => '%20',
-			'&' => '%26',
-			'<' => '%3C',
-			'>' => '%3E',
-		));
+		return strtr(
+			$url,
+			array(
+				' ' => '%20',
+				'&' => '%26',
+				'<' => '%3C',
+				'>' => '%3E',
+			)
+		);
 	}
 
 	/**

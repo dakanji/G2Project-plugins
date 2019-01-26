@@ -193,7 +193,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled'     => 1,
+						'enabled' => 1,
 					),
 					'summary' => array(
 						'description' => $this->_module->translate(
@@ -202,7 +202,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled'     => 1,
+						'enabled' => 1,
 					),
 					'description' => array(
 						'description' => $this->_module->translate(
@@ -211,7 +211,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled'     => 1,
+						'enabled' => 1,
 					),
 				),
 			),
@@ -223,9 +223,12 @@ class MultiLangSearchTest extends GalleryTestCase {
 		global $gallery;
 		$gallery->setActiveLanguageCode('zq_RX');
 
-		list($ret, $results) = $this->_search->search(array(
-			'title' => 1,
-		), 't' . $this->_randomKey);
+		list($ret, $results) = $this->_search->search(
+			array(
+				'title' => 1,
+			),
+			't' . $this->_randomKey
+		);
 
 		if ($ret) {
 			return $ret;
@@ -285,9 +288,14 @@ class MultiLangSearchTest extends GalleryTestCase {
 		global $gallery;
 		$gallery->setActiveLanguageCode('zq_RX');
 
-		list($ret, $results) = $this->_search->search(array(
-			'title' => 1,
-		), $this->_randomKey, 1, 2);
+		list($ret, $results) = $this->_search->search(
+			array(
+				'title' => 1,
+			),
+			$this->_randomKey,
+			1,
+			2
+		);
 
 		if ($ret) {
 			return $ret;

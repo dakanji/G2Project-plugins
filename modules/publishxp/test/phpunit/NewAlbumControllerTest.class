@@ -119,8 +119,8 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 					'view'    => 'publishxp.SelectAlbum',
 					'albumId' => $albumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -160,8 +160,8 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 					'view'    => 'publishxp.SelectAlbum',
 					'albumId' => $albumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -194,8 +194,8 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'publishxp.NewAlbum',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][pathComponent][invalid]'),
+				'status' => array(),
+				'error'  => array('form[error][pathComponent][invalid]'),
 			),
 			$results
 		);
@@ -213,8 +213,8 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'publishxp.NewAlbum',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][pathComponent][missing]',
 					'form[error][title][missing]',
 				),

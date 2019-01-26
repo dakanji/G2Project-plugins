@@ -377,9 +377,9 @@ class getID3 {
 
 			// Handle tags
 			foreach (array(
-				'id3v2'   => 'id3v2',
-				'id3v1'   => 'id3v1',
-				'apetag'  => 'ape',
+				'id3v2' => 'id3v2',
+				'id3v1' => 'id3v1',
+				'apetag' => 'ape',
 				'lyrics3' => 'lyrics3',
 			) as $tag_name => $tag_key) {
 				$option_tag = 'option_tag_' . $tag_name;
@@ -402,8 +402,8 @@ class getID3 {
 			}
 
 			foreach (array(
-				'id3v1'   => 'id3v1',
-				'apetag'  => 'ape',
+				'id3v1' => 'id3v1',
+				'apetag' => 'ape',
 				'lyrics3' => 'lyrics3',
 			) as $tag_name => $tag_key) {
 				if (isset($this->info[$tag_key]['tag_offset_start'])) {
@@ -639,10 +639,10 @@ class getID3 {
 
 				/*
 					// AA   - audio       - Audible Audiobook
-					'aa'   => array(
-								'pattern'   => '^.{4}\x57\x90\x75\x36',
-								'group'     => 'audio',
-								'module'    => 'aa',
+					'aa' => array(
+								'pattern' => '^.{4}\x57\x90\x75\x36',
+								'group' => 'audio',
+								'module' => 'aa',
 								'mime_type' => 'audio/audible',
 							),
 				*/
@@ -754,38 +754,38 @@ class getID3 {
 
 				// has been known to produce false matches in random files (e.g. JPEGs), leave out until more precise matching available
 				//              // MOD  - audio       - MODule (assorted sub-formats)
-				//              'mod'  => array(
-				//                          'pattern'   => '^.{1080}(M\\.K\\.|M!K!|FLT4|FLT8|[5-9]CHN|[1-3][0-9]CH)',
-				//                          'group'     => 'audio',
-				//                          'module'    => 'mod',
-				//                          'option'    => 'mod',
+				//              'mod' => array(
+				//                          'pattern' => '^.{1080}(M\\.K\\.|M!K!|FLT4|FLT8|[5-9]CHN|[1-3][0-9]CH)',
+				//                          'group' => 'audio',
+				//                          'module' => 'mod',
+				//                          'option' => 'mod',
 				//                          'mime_type' => 'audio/mod',
 				//                      ),
 
 					// MOD  - audio       - MODule (Impulse Tracker)
 					'it' => array(
-						'pattern'   => '^IMPM',
-						'group'     => 'audio',
-						'module'    => 'mod',
-						//'option'    => 'it',
+						'pattern' => '^IMPM',
+						'group'   => 'audio',
+						'module'  => 'mod',
+						//'option' => 'it',
 						'mime_type' => 'audio/it',
 					),
 
 				// MOD  - audio       - MODule (eXtended Module, various sub-formats)
 				'xm' => array(
-					'pattern'   => '^Extended Module',
-					'group'     => 'audio',
-					'module'    => 'mod',
-					//'option'    => 'xm',
+					'pattern' => '^Extended Module',
+					'group'   => 'audio',
+					'module'  => 'mod',
+					//'option' => 'xm',
 					'mime_type' => 'audio/xm',
 				),
 
 				// MOD  - audio       - MODule (ScreamTracker)
 				's3m' => array(
-					'pattern'   => '^.{44}SCRM',
-					'group'     => 'audio',
-					'module'    => 'mod',
-					//'option'    => 's3m',
+					'pattern' => '^.{44}SCRM',
+					'group'   => 'audio',
+					'module'  => 'mod',
+					//'option' => 's3m',
 					'mime_type' => 'audio/s3m',
 				),
 
@@ -1631,7 +1631,7 @@ class getID3 {
 	public function CalculateReplayGain() {
 		if (isset($this->info['replay_gain'])) {
 			if (!isset($this->info['replay_gain']['reference_volume'])) {
-				$this->info['replay_gain']['reference_volume'] = (double)89.0;
+				$this->info['replay_gain']['reference_volume'] = (float)89.0;
 			}
 
 			if (isset($this->info['replay_gain']['track']['adjustment'])) {

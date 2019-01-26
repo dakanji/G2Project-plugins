@@ -443,11 +443,14 @@ class ThumbnailHelper {
 			}
 			// Make sure operations contains only thumbnail and composite
 			$derivative->setDerivativeOperations(
-				rtrim(preg_replace(
-					'/(^|;)((?!thumbnail\||composite\|).*?(;|$))+/',
-					'$1',
-					$derivative->getDerivativeOperations()
-				), ';')
+				rtrim(
+					preg_replace(
+						'/(^|;)((?!thumbnail\||composite\|).*?(;|$))+/',
+						'$1',
+						$derivative->getDerivativeOperations()
+					),
+					';'
+				)
 			);
 		} else {
 			list($ret, $derivative) = GalleryCoreApi::newFactoryInstanceByHint(
@@ -499,11 +502,14 @@ class ThumbnailHelper {
 			 * Omit thumbnail operation to just use custom thumbnail in its original size.
 			 */
 			$derivative->setDerivativeOperations(
-				rtrim(preg_replace(
-					'/(^|;)thumbnail\|.*?(;|$)/',
-					'$1',
-					$derivative->getDerivativeOperations()
-				), ';')
+				rtrim(
+					preg_replace(
+						'/(^|;)thumbnail\|.*?(;|$)/',
+						'$1',
+						$derivative->getDerivativeOperations()
+					),
+					';'
+				)
 			);
 		}
 

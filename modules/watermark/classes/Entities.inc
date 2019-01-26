@@ -6,50 +6,50 @@ $entityInfo['WatermarkImage'] = array(
 			'type'            => STORAGE_TYPE_BOOLEAN,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'applyToResizes'   => array(
+		'applyToResizes' => array(
 			'type'            => STORAGE_TYPE_BOOLEAN,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 		'applyToThumbnail' => array(
 			'type' => STORAGE_TYPE_BOOLEAN,
 		),
-		'name'             => array(
+		'name' => array(
 			'type'            => STORAGE_TYPE_STRING,
 			'size'            => STORAGE_SIZE_MEDIUM,
 			'notNull'         => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'fileName'         => array(
+		'fileName' => array(
 			'type'            => STORAGE_TYPE_STRING,
 			'size'            => STORAGE_SIZE_MEDIUM,
 			'notNull'         => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'mimeType'         => array(
+		'mimeType' => array(
 			'type'            => STORAGE_TYPE_STRING,
 			'size'            => STORAGE_SIZE_MEDIUM,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'size'             => array(
+		'size' => array(
 			'type' => STORAGE_TYPE_INTEGER,
 		),
-		'width'            => array(
+		'width' => array(
 			'type'            => STORAGE_TYPE_INTEGER,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'height'           => array(
+		'height' => array(
 			'type'            => STORAGE_TYPE_INTEGER,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'ownerId'          => array(
+		'ownerId' => array(
 			'type' => STORAGE_TYPE_INTEGER,
 		),
-		'xPercentage'      => array(
+		'xPercentage' => array(
 			'type'            => STORAGE_TYPE_STRING,
 			'size'            => STORAGE_SIZE_SMALL,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
-		'yPercentage'      => array(
+		'yPercentage' => array(
 			'type'            => STORAGE_TYPE_STRING,
 			'size'            => STORAGE_SIZE_SMALL,
 			'external-access' => EXTERNAL_ACCESS_READ,

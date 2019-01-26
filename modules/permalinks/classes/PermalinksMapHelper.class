@@ -130,9 +130,12 @@ class PermalinksMapHelper {
 	 */
 	public static function deleteAlias($aliasName) {
 		// Remove this alias from our groups table.
-		$ret = GalleryCoreApi::removeMapEntry('PermalinksMap', array(
-			'aliasName' => $aliasName,
-		));
+		$ret = GalleryCoreApi::removeMapEntry(
+			'PermalinksMap',
+			array(
+				'aliasName' => $aliasName,
+			)
+		);
 
 		if ($ret) {
 			return $ret;

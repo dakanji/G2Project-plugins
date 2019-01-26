@@ -48,7 +48,7 @@ class NewItemsModule extends GalleryModule {
 	public function upgrade($currentVersion, $x1 = null) {
 		if (!isset($currentVersion)) {
 			foreach (array(
-				'days.new'     => '7',
+				'days.new' => '7',
 				'days.updated' => '7',
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);
@@ -107,7 +107,7 @@ class NewItemsModule extends GalleryModule {
 			return array($ret, null);
 		}
 		$time        = time();
-		$newTime     = $time - $param['days.new'] * 86400;
+		$newTime     = $time - $param['days.new']     * 86400;
 		$updatedTime = $time - $param['days.updated'] * 86400;
 
 		$newString     = $this->translate('New');

@@ -48,9 +48,12 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 			return $ret;
 		}
 
-		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId(), array(
-			'orderBy' => 'orderWeight',
-		));
+		list($ret, $this->_album) = $this->_createRandomAlbum(
+			$this->_getRootId(),
+			array(
+				'orderBy' => 'orderWeight',
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -357,8 +360,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'formName'    => 'ItemAddFromWeb',
-				'action'      => array(
+				'formName' => 'ItemAddFromWeb',
+				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
 				'webPage'     => 'http://www.test.com/t/index.php?foo=bar',
@@ -400,7 +403,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 						'itemType' => $this->_photo,
 					),
 				),
-				'set'         => array(
+				'set' => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -456,8 +459,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'formName'    => 'ItemAddFromWeb',
-				'action'      => array(
+				'formName' => 'ItemAddFromWeb',
+				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
 				'webPage'     => 'http://www.test.com/page.php',
@@ -467,7 +470,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 						'noUrlsFound' => 1,
 					),
 				),
-				'set'         => array(
+				'set'   => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -506,8 +509,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'formName'    => 'ItemAddFromWeb',
-				'action'      => array(
+				'formName' => 'ItemAddFromWeb',
+				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
 				'webPage'     => 'http://www.test.com/img.jpg',
@@ -517,7 +520,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 						'itemType' => $this->_photo,
 					),
 				),
-				'set'         => array(
+				'set' => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -555,8 +558,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'formName'    => 'ItemAddFromWeb',
-				'action'      => array(
+				'formName' => 'ItemAddFromWeb',
+				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
 				'webPage'     => 'http://www.test.com/img2.jpg',
@@ -566,7 +569,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 						'itemType' => $this->_photo,
 					),
 				),
-				'set'         => array(
+				'set' => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -612,7 +615,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'http://blah.com/other.html' => 1,
+				'http://blah.com/other.html'                  => 1,
 				'http://www.test.com/image.php?id=3&amp;sn=1' => 1,
 			),
 			$this->_session->get('itemadd.view.ItemAddFromWeb.recentUrls'),
@@ -620,8 +623,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'formName'    => 'ItemAddFromWeb',
-				'action'      => array(
+				'formName' => 'ItemAddFromWeb',
+				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
 				'webPage'     => 'http://www.test.com/image.php?id=3&amp;sn=1',
@@ -631,7 +634,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 						'itemType' => $this->_photo,
 					),
 				),
-				'set'         => array(
+				'set' => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -662,12 +665,12 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
-				'error'    => array(
+				'error' => array(
 					'webPage' => array(
 						'missing' => 1,
 					),
 				),
-				'set'      => array(
+				'set'   => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -698,13 +701,13 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
-				'webPage'  => 'bogus:url.html',
-				'error'    => array(
+				'webPage' => 'bogus:url.html',
+				'error'   => array(
 					'webPage' => array(
 						'invalid' => 1,
 					),
 				),
-				'set'      => array(
+				'set'   => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -735,13 +738,13 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
-				'webPage'  => 'http://www.test.com/404.jpg',
-				'error'    => array(
+				'webPage' => 'http://www.test.com/404.jpg',
+				'error'   => array(
 					'webPage' => array(
 						'unavailable' => 1,
 					),
 				),
-				'set'      => array(
+				'set'   => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,
@@ -785,8 +788,8 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'formName'    => 'ItemAddFromWeb',
-				'action'      => array(
+				'formName' => 'ItemAddFromWeb',
+				'action'   => array(
 					'findFilesFromWebPage' => true,
 				),
 				'webPage'     => 'http://www.test.com/t/index.php?base=abs',
@@ -808,7 +811,7 @@ class ItemAddFromWebTest extends ItemAddPluginTestCase {
 						'itemType' => $this->_movie,
 					),
 				),
-				'set'         => array(
+				'set' => array(
 					'title'       => 1,
 					'summary'     => 0,
 					'description' => 0,

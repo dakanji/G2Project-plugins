@@ -74,7 +74,7 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 		return array(
 			null,
 			array(
-				'view' => 'digibug.DigibugPrintPhotos',
+				'view'      => 'digibug.DigibugPrintPhotos',
 				'authToken' => $session->getAuthToken(),
 				'returnUrl' => $returnUrl,
 			),

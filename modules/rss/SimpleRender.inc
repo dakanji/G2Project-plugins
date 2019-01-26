@@ -71,11 +71,11 @@ class SimpleRenderView extends RenderView {
 
 		// apply defaults
 		foreach (array(
-			'copyright'            => 'defaultCopyright',
-			'version'              => 'defaultVersion',
-			'count'                => 'defaultCount',
+			'copyright' => 'defaultCopyright',
+			'version'   => 'defaultVersion',
+			'count'     => 'defaultCount',
 			'photosRecursiveLimit' => 'sfPhotosRecursiveLimit',
-			'ttl'                  => 'defaultTtl',
+			'ttl'       => 'defaultTtl',
 		) as $name => $defaultName) {
 			$params[$name] = $params[$defaultName];
 		}

@@ -288,9 +288,13 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 	public function testImageBlockDisabledNoItemsReturned() {
 		$smarty    = new GallerySmarty();
 		$callbacks = new ImageBlockCallbacks();
-		$ret       = $callbacks->callback(array(
-			'useDefaults' => true,
-		), $smarty, 'LoadImageBlock');
+		$ret       = $callbacks->callback(
+			array(
+				'useDefaults' => true,
+			),
+			$smarty,
+			'LoadImageBlock'
+		);
 
 		if ($ret) {
 			return $ret;
@@ -309,9 +313,13 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 
 		$smarty    = new GallerySmarty();
 		$callbacks = new ImageBlockCallbacks();
-		$ret       = $callbacks->callback(array(
-			'useDefaults' => true,
-		), $smarty, 'LoadImageBlock');
+		$ret       = $callbacks->callback(
+			array(
+				'useDefaults' => true,
+			),
+			$smarty,
+			'LoadImageBlock'
+		);
 
 		if ($ret) {
 			return $ret;

@@ -41,15 +41,15 @@ class getid3_midi extends getid3_handler {
 
 			return false;
 		}
-		$offset                            += 4;
-		$thisfile_midi_raw['headersize']    = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 4));
-		$offset                            += 4;
-		$thisfile_midi_raw['fileformat']    = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset                            += 2;
-		$thisfile_midi_raw['tracks']        = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset                            += 2;
+		$offset                         += 4;
+		$thisfile_midi_raw['headersize'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 4));
+		$offset                         += 4;
+		$thisfile_midi_raw['fileformat'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
+		$offset                         += 2;
+		$thisfile_midi_raw['tracks']     = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
+		$offset                         += 2;
 		$thisfile_midi_raw['ticksperqnote'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset                            += 2;
+		$offset += 2;
 
 		for ($i = 0; $i < $thisfile_midi_raw['tracks']; $i++) {
 			while ((strlen($MIDIdata) - $offset) < 8) {
@@ -118,8 +118,8 @@ class getid3_midi extends getid3_handler {
 							break;
 						}
 					}
-					$CumulativeDeltaTime                            += $deltatime;
-					$TicksAtCurrentBPM                              += $deltatime;
+					$CumulativeDeltaTime += $deltatime;
+					$TicksAtCurrentBPM   += $deltatime;
 					$MIDIevents[$tracknumber][$eventid]['deltatime'] = $deltatime;
 					$MIDI_event_channel                              = ord(substr($trackdata, $eventsoffset++, 1));
 
@@ -232,9 +232,9 @@ class getid3_midi extends getid3_handler {
 									return false;
 								}
 								$thisfile_midi_raw['events'][$tracknumber][$CumulativeDeltaTime]['us_qnote'] = $CurrentMicroSecondsPerBeat;
-								$CurrentBeatsPerMinute                                 = (1000000 / $CurrentMicroSecondsPerBeat) * 60;
-								$MicroSecondsPerQuarterNoteAfter[$CumulativeDeltaTime] = $CurrentMicroSecondsPerBeat;
-								$TicksAtCurrentBPM                                     = 0;
+								$CurrentBeatsPerMinute                                                       = (1000000 / $CurrentMicroSecondsPerBeat) * 60;
+								$MicroSecondsPerQuarterNoteAfter[$CumulativeDeltaTime]                       = $CurrentMicroSecondsPerBeat;
+								$TicksAtCurrentBPM                                                           = 0;
 
 								break;
 
@@ -242,10 +242,10 @@ class getid3_midi extends getid3_handler {
 								$timesig_numerator   = getid3_lib::BigEndian2Int($METAeventData[0]);
 								$timesig_denominator = 2 ** getid3_lib::BigEndian2Int($METAeventData[1]); // $02 -> x/4, $03 -> x/8, etc
 								$timesig_32inqnote   = getid3_lib::BigEndian2Int($METAeventData[2]);         // number of 32nd notes to the quarter note
-								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_32inqnote']   = $timesig_32inqnote;
-								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_numerator']   = $timesig_numerator;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_32inqnote'] = $timesig_32inqnote;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_numerator'] = $timesig_numerator;
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_denominator'] = $timesig_denominator;
-								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_text']        = $timesig_numerator.'/'.$timesig_denominator;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['timesig_text'] = $timesig_numerator.'/'.$timesig_denominator;
 								$thisfile_midi['timesignature'][] = $timesig_numerator . '/' . $timesig_denominator;
 
 								break;
@@ -277,9 +277,9 @@ class getid3_midi extends getid3_handler {
 									7  => 'C#',
 								);
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_sharps'] = (($keysig_sharpsflats > 0) ? abs($keysig_sharpsflats) : 0);
-								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_flats']  = (($keysig_sharpsflats < 0) ? abs($keysig_sharpsflats) : 0);
-								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor']  = (bool) $keysig_majorminor;
-								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_text']   = $keysigs[$keysig_sharpsflats].' '.($thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor'] ? 'minor' : 'major');
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_flats'] = (($keysig_sharpsflats < 0) ? abs($keysig_sharpsflats) : 0);
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor'] = (bool) $keysig_majorminor;
+								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_text'] = $keysigs[$keysig_sharpsflats].' '.($thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor'] ? 'minor' : 'major');
 
 								// $keysigs[$keysig_sharpsflats] gets an int key (correct) - $keysigs["$keysig_sharpsflats"] gets a string key (incorrect)
 								$thisfile_midi['keysignature'][] = $keysigs[$keysig_sharpsflats] . ' ' . ((bool)$keysig_majorminor ? 'minor' : 'major');

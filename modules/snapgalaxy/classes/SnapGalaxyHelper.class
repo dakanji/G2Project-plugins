@@ -264,9 +264,11 @@ class SnapGalaxyHelper {
 			$session->put('snapgalaxy.cartUrlFragment', $cartUrlFragment);
 			$redirectUrl = 'http://' . $snapgalaxyServer . $matches[2];
 		} else {
-			$redirectUrl = $urlGenerator->generateUrl(array(
-				'view' => 'snapgalaxy.FulfillmentError',
-			));
+			$redirectUrl = $urlGenerator->generateUrl(
+				array(
+					'view' => 'snapgalaxy.FulfillmentError',
+				)
+			);
 		}
 
 		return array(null, $redirectUrl);

@@ -74,7 +74,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 		array('redirect' => array('view' => 'core.SiteAdmin',
-						   'subView' => 'core.AdminPlugins', ),
+						   'subView'                 => 'core.AdminPlugins', ),
 				  'status' => array(), 'error' => array(), ),
 				$results
 	);
@@ -87,15 +87,14 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 		array(
 		'delegate' => array('view' => 'core.SiteAdmin', 'subView' => 'nokiaupload.Configure'),
-		'status' => array(),
-		'error' => array('form[error][group][missing]', 'form[error][album][missing]'), ),
+		'status'   => array(),
+		'error'    => array('form[error][group][missing]', 'form[error][album][missing]'), ),
 		$results
 	);
 	}
 
 	public function testGroupCollision() {
-		list($ret, $groupId) =
-		GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
+		list($ret, $groupId) = 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
 
 		if ($ret) {
 			return $ret;
@@ -114,8 +113,8 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 		array(
 		'delegate' => array('view' => 'core.SiteAdmin', 'subView' => 'nokiaupload.Configure'),
-		'status' => array(),
-		'error' => array('form[error][group][duplicate]'), ),
+		'status'   => array(),
+		'error'    => array('form[error][group][duplicate]'), ),
 		$results
 	);
 	}
@@ -129,7 +128,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals(
 		array(
 		'redirect' => array('view' => 'core.SiteAdmin', 'subView' => 'core.AdminPlugins'),
-		'status' => array('configured' => 'nokiaupload'), 'error' => array(), ),
+		'status'   => array('configured' => 'nokiaupload'), 'error' => array(), ),
 		$results
 	);
 
@@ -154,8 +153,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		$this->assert(!empty($params['id.uploadAlbum']), 'album param');
 		$this->_groupId = $params['id.mobileGroup'];
 
-		list($ret, $perms) =
-		GalleryCoreApi::fetchAllPermissionsForItem($params['id.uploadAlbum'], true);
+		list($ret, $perms) = 		GalleryCoreApi::fetchAllPermissionsForItem($params['id.uploadAlbum'], true);
 
 		if ($ret) {
 			return $ret;

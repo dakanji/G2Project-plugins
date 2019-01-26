@@ -43,11 +43,14 @@ class ActivatePluginNotification extends NotificationEvent_1_0 {
 	public function getNotificationMessage() {
 		global $gallery;
 
-		return $this->_translateText('notification', array(
-			'arg1' => $this->getPluginType(),
-			'arg2' => $this->getPlugin(),
-			'text' => $gallery->i18n('The %s %s was activated'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $this->getPluginType(),
+				'arg2' => $this->getPlugin(),
+				'text' => $gallery->i18n('The %s %s was activated'),
+			)
+		);
 	}
 
 	/**
@@ -121,11 +124,14 @@ class DeactivatePluginNotification extends NotificationEvent_1_0 {
 	public function getNotificationMessage() {
 		global $gallery;
 
-		return $this->_translateText('notification', array(
-			'arg1' => $this->getPluginType(),
-			'arg2' => $this->getPlugin(),
-			'text' => $gallery->i18n('The %s %s was deactivated'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $this->getPluginType(),
+				'arg2' => $this->getPlugin(),
+				'text' => $gallery->i18n('The %s %s was deactivated'),
+			)
+		);
 	}
 
 	/**
@@ -231,10 +237,13 @@ class ItemOrderNotification extends NotificationEvent_1_0 {
 
 		$title = GalleryUtilities::markup($item->getTitle(), 'strip');
 
-		return $this->_translateText('notification', array(
-			'arg1' => $title,
-			'text' => $gallery->i18n('The child items for %s have been reordered.'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $title,
+				'text' => $gallery->i18n('The child items for %s have been reordered.'),
+			)
+		);
 	}
 
 	/**
@@ -294,10 +303,13 @@ class LoginNotification extends NotificationEvent_1_0 {
 
 		$user = $this->getUser();
 
-		return $this->_translateText('notification', array(
-			'arg1' => $user->getUserName(),
-			'text' => $gallery->i18n('User %s has logged in.'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $user->getUserName(),
+				'text' => $gallery->i18n('User %s has logged in.'),
+			)
+		);
 	}
 
 	/**
@@ -341,10 +353,13 @@ class FailedLoginNotification extends NotificationEvent_1_0 {
 	public function getNotificationMessage() {
 		global $gallery;
 
-		return $this->_translateText('notification', array(
-			'arg1' => $this->getUserName(),
-			'text' => $gallery->i18n('User %s login failed.'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $this->getUserName(),
+				'text' => $gallery->i18n('User %s login failed.'),
+			)
+		);
 	}
 
 	/**
@@ -394,10 +409,13 @@ class LogoutNotification extends NotificationEvent_1_0 {
 
 		$user = $this->getUser();
 
-		return $this->_translateText('notification', array(
-			'arg1' => $user->getUserName(),
-			'text' => $gallery->i18n('User %s has logged out.'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $user->getUserName(),
+				'text' => $gallery->i18n('User %s has logged out.'),
+			)
+		);
 	}
 
 	/**
@@ -495,11 +513,14 @@ class UninstallPluginNotification extends NotificationEvent_1_0 {
 	public function getNotificationMessage() {
 		global $gallery;
 
-		return $this->_translateText('notification', array(
-			'arg1' => $this->getPluginType(),
-			'arg2' => $this->getPlugin(),
-			'text' => $gallery->i18n('The %s %s was uninstalled'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $this->getPluginType(),
+				'arg2' => $this->getPlugin(),
+				'text' => $gallery->i18n('The %s %s was uninstalled'),
+			)
+		);
 	}
 
 	/**
@@ -611,10 +632,13 @@ class SaveNotification extends NotificationEvent_1_0 {
 
 		$entity = $this->_event->getEntity();
 
-		return $this->_translateText('notification', array(
-			'arg1' => $entity->getTitle(),
-			'text' => $gallery->i18n('%s was saved'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $entity->getTitle(),
+				'text' => $gallery->i18n('%s was saved'),
+			)
+		);
 	}
 
 	/**
@@ -669,10 +693,13 @@ class DeleteNotification extends NotificationEvent_1_0 {
 
 		$entity = $this->_event->getEntity();
 
-		return $this->_translateText('notification', array(
-			'arg1' => $entity->getTitle(),
-			'text' => $gallery->i18n('%s was deleted'),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $entity->getTitle(),
+				'text' => $gallery->i18n('%s was deleted'),
+			)
+		);
 	}
 
 	/**
@@ -767,11 +794,14 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 			)
 		);
 
-		return $this->_translateText('notification', array(
-			'arg1' => $itemTypeName,
-			'arg2' => $parentUrl,
-			'text' => $gallery->i18n("A new %s has been added. To view it, click here: \n%s"),
-		));
+		return $this->_translateText(
+			'notification',
+			array(
+				'arg1' => $itemTypeName,
+				'arg2' => $parentUrl,
+				'text' => $gallery->i18n("A new %s has been added. To view it, click here: \n%s"),
+			)
+		);
 	}
 
 	/**

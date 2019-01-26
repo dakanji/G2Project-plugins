@@ -181,9 +181,11 @@ class ZipCartPluginTest extends GalleryTestCase {
 	}
 
 	public function tearDown() {
-		$ret = GalleryCoreApi::removeMimeType(array(
-			'mimeType' => array('test/out'),
-		));
+		$ret = GalleryCoreApi::removeMimeType(
+			array(
+				'mimeType' => array('test/out'),
+			)
+		);
 
 		if ($ret) {
 			$this->failWithStatus($ret);

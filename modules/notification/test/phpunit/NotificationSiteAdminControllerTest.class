@@ -242,10 +242,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -310,8 +310,8 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'subView'           => 'notification.NotificationSiteAdmin',
 					'form[displayRows]' => 1,
 				),
-				'status'   => array(),
-				'error'    => array('form[error][notificationMap][0][noEventHandler]'),
+				'status' => array(),
+				'error'  => array('form[error][notificationMap][0][noEventHandler]'),
 			),
 			$results,
 			'Unexpected results array'
@@ -383,10 +383,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -472,10 +472,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -537,8 +537,8 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'subView'           => 'notification.NotificationSiteAdmin',
 					'form[displayRows]' => 1,
 				),
-				'status'   => array(),
-				'error'    => array('form[error][notificationMap][0][noEventHandler]'),
+				'status' => array(),
+				'error'  => array('form[error][notificationMap][0][noEventHandler]'),
 			),
 			$results,
 			'Unexpected results array'
@@ -619,10 +619,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -709,10 +709,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -727,9 +727,9 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testUpdateVisibilitySetOff() {
 		global $gallery;
 
-		$cacheKey = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
-		$parms    = GalleryDataCache::get($cacheKey);
-		$enabled  = unserialize($parms['_enabledMap']);
+		$cacheKey                                                 = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$parms                                                    = GalleryDataCache::get($cacheKey);
+		$enabled                                                  = unserialize($parms['_enabledMap']);
 		$enabled['Test:TestEvent']['Test:EventHandler']['public'] = true;
 		$parms['_enabledMap']                                     = serialize($enabled);
 		GalleryDataCache::put($cacheKey, $parms);
@@ -805,10 +805,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -823,9 +823,9 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testUpdateEnabledSetOn() {
 		global $gallery;
 
-		$cacheKey = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
-		$parms    = GalleryDataCache::get($cacheKey);
-		$enabled  = unserialize($parms['_enabledMap']);
+		$cacheKey                                                  = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$parms                                                     = GalleryDataCache::get($cacheKey);
+		$enabled                                                   = unserialize($parms['_enabledMap']);
 		$enabled['Test:TestEvent']['Test:EventHandler']['public']  = true;
 		$enabled['Test:TestEvent']['Test:EventHandler']['enabled'] = true;
 		$parms['_enabledMap']                                      = serialize($enabled);
@@ -904,10 +904,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -922,9 +922,9 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testUpdateEnabledSetOff() {
 		global $gallery;
 
-		$cacheKey = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
-		$parms    = GalleryDataCache::get($cacheKey);
-		$enabled  = unserialize($parms['_enabledMap']);
+		$cacheKey                                                  = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$parms                                                     = GalleryDataCache::get($cacheKey);
+		$enabled                                                   = unserialize($parms['_enabledMap']);
 		$enabled['Test:TestEvent']['Test:EventHandler']['public']  = true;
 		$enabled['Test:TestEvent']['Test:EventHandler']['enabled'] = true;
 		$parms['_enabledMap']                                      = serialize($enabled);
@@ -1001,10 +1001,10 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'notification.NotificationSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'

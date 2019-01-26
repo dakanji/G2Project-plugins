@@ -55,8 +55,8 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -75,10 +75,10 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -118,10 +118,10 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -161,8 +161,8 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][digibugCustomerId][invalid]',
 					'form[error][digibugPricelistId][invalid]',
 				),
@@ -190,8 +190,8 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'digibug.AdminDigibug',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][digibugCustomerId][invalid]',
 					'form[error][digibugPricelistId][invalid]',
 				),

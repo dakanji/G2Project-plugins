@@ -97,15 +97,15 @@ class getid3_pcd extends getid3_handler {
 		static $YCbCr_constants = array();
 
 		if (empty($YCbCr_constants)) {
-			$YCbCr_constants['red']['Y']    = 0.0054980 * 256;
-			$YCbCr_constants['red']['Cb']   = 0.0000000 * 256;
-			$YCbCr_constants['red']['Cr']   = 0.0051681 * 256;
-			$YCbCr_constants['green']['Y']  = 0.0054980 * 256;
+			$YCbCr_constants['red']['Y']    = 0.0054980  * 256;
+			$YCbCr_constants['red']['Cb']   = 0.0000000  * 256;
+			$YCbCr_constants['red']['Cr']   = 0.0051681  * 256;
+			$YCbCr_constants['green']['Y']  = 0.0054980  * 256;
 			$YCbCr_constants['green']['Cb'] = -0.0015446 * 256;
 			$YCbCr_constants['green']['Cr'] = -0.0026325 * 256;
-			$YCbCr_constants['blue']['Y']   = 0.0054980 * 256;
-			$YCbCr_constants['blue']['Cb']  = 0.0079533 * 256;
-			$YCbCr_constants['blue']['Cr']  = 0.0000000 * 256;
+			$YCbCr_constants['blue']['Y']   = 0.0054980  * 256;
+			$YCbCr_constants['blue']['Cb']  = 0.0079533  * 256;
+			$YCbCr_constants['blue']['Cr']  = 0.0000000  * 256;
 		}
 
 		$RGBcolor = array(

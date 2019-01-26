@@ -72,9 +72,12 @@ class ShowTreeView extends GalleryView {
 			}
 
 			// Get all of this entity's children
-			list($ret, $results) = $gallery->search('
+			list($ret, $results) = $gallery->search(
+				'
 		SELECT [::id] FROM [GalleryChildEntity] WHERE [::parentId] = ?
-	    ', array($entityId));
+	    ',
+				array($entityId)
+			);
 
 			if ($ret) {
 				return array($ret, null);

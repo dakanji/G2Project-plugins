@@ -57,9 +57,11 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		global $gallery;
-		$ret = GalleryCoreApi::removeMimeType(array(
-			'extension' => 'phpunit_ext',
-		));
+		$ret = GalleryCoreApi::removeMimeType(
+			array(
+				'extension' => 'phpunit_ext',
+			)
+		);
 
 		if ($ret) {
 			$this->failWithStatus($ret);
@@ -87,8 +89,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'publishxp.UploadedItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -123,8 +125,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'publishxp.UploadedItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -178,8 +180,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'publishxp.UploadedItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -214,8 +216,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'publishxp.UploadedItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -240,9 +242,11 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		$session =& $gallery->getSession();
 		$session->put(
 			'publishxp.extraOptionsForm',
-			serialize(array(
-				'optionValue' => 'myOptionValue',
-			))
+			serialize(
+				array(
+					'optionValue' => 'myOptionValue',
+				)
+			)
 		);
 
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
@@ -263,8 +267,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'publishxp.UploadedItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);

@@ -252,16 +252,18 @@ class PasswordModule extends GalleryModule {
 					$session->doNotUseTempId();
 					$urlGenerator =& $gallery->getUrlGenerator();
 					$phpVm        = $gallery->getPhpVm();
-					$phpVm->header('Location: ' . $urlGenerator->generateUrl(
-						array(
-							'view'   => 'password.PasswordEntry',
-							'itemId' => $itemId,
-						),
-						array(
-							'forceFullUrl' => true,
-							'htmlEntities' => false,
+					$phpVm->header(
+						'Location: ' . $urlGenerator->generateUrl(
+							array(
+								'view'   => 'password.PasswordEntry',
+								'itemId' => $itemId,
+							),
+							array(
+								'forceFullUrl' => true,
+								'htmlEntities' => false,
+							)
 						)
-					));
+					);
 					$phpVm->exit_();
 				}
 			}

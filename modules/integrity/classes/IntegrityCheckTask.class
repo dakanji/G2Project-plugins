@@ -146,13 +146,15 @@ class IntegrityCheckTask extends MaintenanceTask {
 				)
 			);
 		} else {
-			$output[] = $module->translate(array(
-				'text' => 'Failed to load entity ids: %s',
-				'arg1' => implode(
-					', ',
-					$failIds
-				),
-			));
+			$output[] = $module->translate(
+				array(
+					'text' => 'Failed to load entity ids: %s',
+					'arg1' => implode(
+						', ',
+						$failIds
+					),
+				)
+			);
 		}
 
 		//
@@ -199,12 +201,14 @@ class IntegrityCheckTask extends MaintenanceTask {
 			}
 
 			if (!empty($ids)) {
-				$output[] = $module->translate(array(
-					'text' => 'Orphaned data in table %s with no row in %s table; ids: %s',
-					'arg1' => $table,
-					'arg2' => 'Entity',
-					'arg3' => implode(', ', $ids),
-				));
+				$output[] = $module->translate(
+					array(
+						'text' => 'Orphaned data in table %s with no row in %s table; ids: %s',
+						'arg1' => $table,
+						'arg2' => 'Entity',
+						'arg3' => implode(', ', $ids),
+					)
+				);
 			}
 		}
 
@@ -240,11 +244,13 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		if (!empty($ids)) {
-			$output[] = $module->translate(array(
-				'text' => 'Orphaned data in table %s with missing parent entity; ids: %s',
-				'arg1' => 'GalleryChildEntity',
-				'arg2' => implode(', ', $ids),
-			));
+			$output[] = $module->translate(
+				array(
+					'text' => 'Orphaned data in table %s with missing parent entity; ids: %s',
+					'arg1' => 'GalleryChildEntity',
+					'arg2' => implode(', ', $ids),
+				)
+			);
 		}
 		$templateAdapter->updateProgressBar($message, '', 1);
 
@@ -298,12 +304,14 @@ class IntegrityCheckTask extends MaintenanceTask {
 			}
 
 			if (!empty($ids)) {
-				$output[] = $module->translate(array(
-					'text' => 'Orphaned data in table %s with no row in %s table; ids: %s',
-					'arg1' => $table,
-					'arg2' => $joinTable,
-					'arg3' => implode(', ', $ids),
-				));
+				$output[] = $module->translate(
+					array(
+						'text' => 'Orphaned data in table %s with no row in %s table; ids: %s',
+						'arg1' => $table,
+						'arg2' => $joinTable,
+						'arg3' => implode(', ', $ids),
+					)
+				);
 			}
 		}
 		// Check GalleryDerivative
@@ -336,11 +344,13 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		if (!empty($ids)) {
-			$output[] = $module->translate(array(
-				'text' => 'Orphaned data in table %s with missing derivative source; ids: %s',
-				'arg1' => $table,
-				'arg2' => implode(', ', $ids),
-			));
+			$output[] = $module->translate(
+				array(
+					'text' => 'Orphaned data in table %s with missing derivative source; ids: %s',
+					'arg1' => $table,
+					'arg2' => implode(', ', $ids),
+				)
+			);
 		}
 		$templateAdapter->updateProgressBar($message, '', 1);
 
@@ -367,11 +377,13 @@ class IntegrityCheckTask extends MaintenanceTask {
 			$file = $baseDir . '/' . $result[0] . 's/' . $result[1] . '/' . $result[0] . '.inc';
 
 			if (!$platform->file_exists($file)) {
-				$output[] = $module->translate(array(
-					'text' => 'Unknown plugin: %s %s',
-					'arg1' => $result[0],
-					'arg2' => $result[1],
-				));
+				$output[] = $module->translate(
+					array(
+						'text' => 'Unknown plugin: %s %s',
+						'arg1' => $result[0],
+						'arg2' => $result[1],
+					)
+				);
 			}
 		}
 		$templateAdapter->updateProgressBar($message, $table, 0.5);
@@ -405,12 +417,14 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		if (!empty($ids)) {
-			$output[] = $module->translate(array(
-				'text' => 'Orphaned data in table %s with no row in %s table; ids: %s',
-				'arg1' => 'PluginParameterMap',
-				'arg2' => 'PluginMap',
-				'arg3' => implode(', ', $ids),
-			));
+			$output[] = $module->translate(
+				array(
+					'text' => 'Orphaned data in table %s with no row in %s table; ids: %s',
+					'arg1' => 'PluginParameterMap',
+					'arg2' => 'PluginMap',
+					'arg3' => implode(', ', $ids),
+				)
+			);
 		}
 		$templateAdapter->updateProgressBar($message, $table, 1);
 
@@ -465,11 +479,13 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		if ($ids != array($rootId)) {
-			$output[] = $module->translate(array(
-				'text' => 'Expected single root id of %s, found: %s',
-				'arg1' => $rootId,
-				'arg2' => implode(', ', $ids),
-			));
+			$output[] = $module->translate(
+				array(
+					'text' => 'Expected single root id of %s, found: %s',
+					'arg1' => $rootId,
+					'arg2' => implode(', ', $ids),
+				)
+			);
 		}
 		// Traverse album directories
 		$examine = array(array($rootId, $gallery->getConfig('data.gallery.albums')));
@@ -486,23 +502,27 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 			foreach ($dbComponents as $id => $component) {
 				if (!isset($fsComponents[$component])) {
-					$output[] = $module->translate(array(
-						'text' => 'Path component %s%s missing for id %s',
-						'arg1' => $dir,
-						'arg2' => $component,
-						'arg3' => $id,
-					));
+					$output[] = $module->translate(
+						array(
+							'text' => 'Path component %s%s missing for id %s',
+							'arg1' => $dir,
+							'arg2' => $component,
+							'arg3' => $id,
+						)
+					);
 				} elseif (isset($dirs[$component])) {
 					$examine[] = array($id, $dir . $component . $slash);
 				}
 			}
 
 			foreach (array_diff(array_keys($fsComponents), $dbComponents) as $extra) {
-				$output[] = $module->translate(array(
-					'text' => 'Path component %s%s not connected to any item',
-					'arg1' => $dir,
-					'arg2' => $extra,
-				));
+				$output[] = $module->translate(
+					array(
+						'text' => 'Path component %s%s not connected to any item',
+						'arg1' => $dir,
+						'arg2' => $extra,
+					)
+				);
 			}
 
 			if (!(++ $i % 20)) {

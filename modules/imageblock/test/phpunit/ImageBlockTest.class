@@ -92,8 +92,8 @@ class ImageBlockTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$imagePath = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.gif');
-		$resizeImagePath = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test4.gif');
+		$imagePath                                      = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.gif');
+		$resizeImagePath                                = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test4.gif');
 		list($ret, $this->_photo3, $this->_photo3Thumb) = $this->_addItem(
 		$this->_album->getId(),
 		$resizeImagePath,
@@ -155,8 +155,7 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		// Add permission so album/item can appear in dailyImage, monthlyAlbum, etc.
-		list($ret, $this->_everybodyGroupId) =
-		GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
+		list($ret, $this->_everybodyGroupId) = 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
 
 		if ($ret) {
 			return $ret;
@@ -247,8 +246,7 @@ class ImageBlockTest extends GalleryTestCase {
 	}
 
 	public function _addDerivative(&$item, &$src, $derivativeType, $size, $forceSize=false) {
-		list($ret, $derivative) =
-		GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $src->getEntityType());
+		list($ret, $derivative) = 		GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $src->getEntityType());
 
 		if ($ret) {
 			return array($ret, null);
@@ -340,10 +338,10 @@ class ImageBlockTest extends GalleryTestCase {
 	}
 
 	public function testRepeatBlock() {
-		$smarty = new GallerySmarty();
+		$smarty    = new GallerySmarty();
 		$callbacks = new ImageBlockCallbacks();
-		$params = array('blocks' => 'recentImage', 'repeatBlock' => '3',
-			'useDefaults' => '0', 'showHeading' => '1', 'showTitle' => '1', );
+		$params    = array('blocks' => 'recentImage', 'repeatBlock' => '3',
+			'useDefaults'              => '0', 'showHeading' => '1', 'showTitle' => '1', );
 		$ret = $callbacks->callback($params, $smarty, 'LoadImageBlock', null);
 
 		if ($ret) {
@@ -686,7 +684,7 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		// Precondition: Check for the case where the album's thumb has a chain of source items
-		$albumId = $this->_album->getId();
+		$albumId            = $this->_album->getId();
 		list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($albumId));
 
 		if ($ret) {
@@ -1195,7 +1193,7 @@ class ImageBlockTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$imagePath = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test4.gif');
+		$imagePath                    = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test4.gif');
 		list($ret, $subPhoto, $thumb) = $this->_addItem(
 		$subAlbum->getId(),
 		$imagePath,
@@ -1306,9 +1304,9 @@ class ImageBlockTest extends GalleryTestCase {
 	}
 
 	public function _doImageBlockCallback($blocks=null, $userId=null, $itemId=null) {
-		$smarty = new GallerySmarty();
-		$callbacks = new ImageBlockCallbacks();
-		$params = isset($blocks) ? array('blocks' => $blocks) : array();
+		$smarty                = new GallerySmarty();
+		$callbacks             = new ImageBlockCallbacks();
+		$params                = isset($blocks) ? array('blocks' => $blocks) : array();
 		$params['useDefaults'] = true;
 
 		if (isset($userId)) {

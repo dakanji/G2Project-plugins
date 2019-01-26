@@ -140,9 +140,12 @@ class ConfigureView extends GalleryView {
 		}
 		$albumTree = GalleryUtilities::createAlbumTree($albums);
 
-		$template->setVariable('NokiaUploadConfigure', array(
-			'albumTree' => $albumTree,
-		));
+		$template->setVariable(
+			'NokiaUploadConfigure',
+			array(
+				'albumTree' => $albumTree,
+			)
+		);
 		$template->setVariable('controller', 'nokiaupload.Configure');
 
 		return array(

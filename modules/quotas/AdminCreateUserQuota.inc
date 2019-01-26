@@ -85,7 +85,7 @@ class AdminCreateUserQuotaController extends GalleryController {
 								'QuotasMap',
 								array(
 									'userOrGroupId' => $user->getId(),
-									'quotaSize' => $quotaSize,
+									'quotaSize'     => $quotaSize,
 								)
 							);
 

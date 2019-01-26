@@ -88,7 +88,7 @@ class AdminCreateGroupQuotaController extends GalleryController {
 								'QuotasMap',
 								array(
 									'userOrGroupId' => $group->getId(),
-									'quotaSize' => $quotaSize,
+									'quotaSize'     => $quotaSize,
 								)
 							);
 

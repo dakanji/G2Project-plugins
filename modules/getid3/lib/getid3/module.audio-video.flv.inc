@@ -145,7 +145,7 @@ class getid3_flv extends getid3_handler {
 						$info['flv']['audio']['audioFormat']     = ($LastHeaderByte >> 4) & 0x0F;
 						$info['flv']['audio']['audioRate']       = ($LastHeaderByte >> 2) & 0x03;
 						$info['flv']['audio']['audioSampleSize'] = ($LastHeaderByte >> 1) & 0x01;
-						$info['flv']['audio']['audioType']       = $LastHeaderByte & 0x01;
+						$info['flv']['audio']['audioType']       = $LastHeaderByte        & 0x01;
 					}
 
 					break;
@@ -751,7 +751,7 @@ class AVCSequenceParameterSetReader {
 			$this->skipBits(1);                                     // vui_parameters_present_flag
 			// etc
 
-			$this->width  = (($pic_width_in_mbs_minus1 + 1) * 16) - ($frame_crop_left_offset * 2) - ($frame_crop_right_offset * 2);
+			$this->width  = (($pic_width_in_mbs_minus1 + 1) * 16)                                     - ($frame_crop_left_offset * 2)                                     - ($frame_crop_right_offset * 2);
 			$this->height = ((2 - $frame_mbs_only_flag) * ($pic_height_in_map_units_minus1 + 1) * 16) - ($frame_crop_top_offset * 2) - ($frame_crop_bottom_offset * 2);
 		}
 	}

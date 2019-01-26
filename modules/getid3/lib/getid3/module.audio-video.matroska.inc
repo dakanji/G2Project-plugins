@@ -301,29 +301,29 @@ class getid3_matroska extends getid3_handler {
 							case 'V_MS/VFW/FOURCC':
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 
-								$parsed              = getid3_riff::ParseBITMAPINFOHEADER($trackarray['CodecPrivate']);
-								$track_info['codec'] = getid3_riff::fourccLookup($parsed['fourcc']);
+								$parsed                                                             = getid3_riff::ParseBITMAPINFOHEADER($trackarray['CodecPrivate']);
+								$track_info['codec']                                                = getid3_riff::fourccLookup($parsed['fourcc']);
 								$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $parsed;
 
 								break;
 
 							/*case 'V_MPEG4/ISO/AVC':
-								$h264['profile']    = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 1, 1));
-								$h264['level']      = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 3, 1));
-								$rn                 = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 4, 1));
+								$h264['profile'] = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 1, 1));
+								$h264['level'] = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 3, 1));
+								$rn = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 4, 1));
 								$h264['NALUlength'] = ($rn & 3) + 1;
-								$rn                 = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 5, 1));
-								$nsps               = ($rn & 31);
-								$offset             = 6;
+								$rn = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], 5, 1));
+								$nsps = ($rn & 31);
+								$offset = 6;
 								for ($i = 0; $i < $nsps; $i ++) {
-									$length        = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], $offset, 2));
+									$length = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], $offset, 2));
 									$h264['SPS'][] = substr($trackarray['CodecPrivate'], $offset + 2, $length);
 									$offset       += 2 + $length;
 								}
-								$npps               = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], $offset, 1));
+								$npps = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], $offset, 1));
 								$offset            += 1;
 								for ($i = 0; $i < $npps; $i ++) {
-									$length        = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], $offset, 2));
+									$length = getid3_lib::BigEndian2Int(substr($trackarray['CodecPrivate'], $offset, 2));
 									$h264['PPS'][] = substr($trackarray['CodecPrivate'], $offset + 2, $length);
 									$offset       += 2 + $length;
 								}
@@ -1552,7 +1552,7 @@ class getid3_matroska extends getid3_handler {
 						$block_data['lace_frames_size'][$i] = 0;
 
 						do {
-							$size                                = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
+							$size = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
 							$block_data['lace_frames_size'][$i] += $size;
 						} while ($size == 255);
 					}
@@ -1570,7 +1570,7 @@ class getid3_matroska extends getid3_handler {
 			//$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['total_length'] = 0;
 		}
 		//$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['total_length'] += $info['matroska']['track_data_offsets'][$block_data['tracknumber']]['length'];
-		//$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['duration']      = $block_data['timecode'] * ((isset($info['matroska']['info'][0]['TimecodeScale']) ? $info['matroska']['info'][0]['TimecodeScale'] : 1000000) / 1000000000);
+		//$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['duration'] = $block_data['timecode'] * ((isset($info['matroska']['info'][0]['TimecodeScale']) ? $info['matroska']['info'][0]['TimecodeScale'] : 1000000) / 1000000000);
 
 		// set offset manually
 		$this->current_offset = $element['end'];

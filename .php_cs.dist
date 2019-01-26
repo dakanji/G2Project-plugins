@@ -2,8 +2,8 @@
 // __construct
 $finder = PhpCsFixer\Finder::create()
 	->name('/.+\.(php|inc|class|css|js|xaml|xml|html)$/')
-	->exclude(array('*/Iconv/Resources/charset/*','*/wpcs/*'))
-    ->in(__DIR__)
+	->exclude(array('lib/composer','dev_vendor','MANIFEST'))
+    ->in(__DIR__ . '/modules')
 ;
 
 return PhpCsFixer\Config::create()
@@ -12,6 +12,9 @@ return PhpCsFixer\Config::create()
 		'@PSR2' => true,
 		'align_multiline_comment' => array('comment_type' => 'phpdocs_like'),
 		'array_syntax' => array('syntax' => 'long'),
+		'binary_operator_spaces' => array(
+			'default' => 'align',
+		),
 		'blank_line_before_statement' => array(
 			'statements' => array(
 				'break',

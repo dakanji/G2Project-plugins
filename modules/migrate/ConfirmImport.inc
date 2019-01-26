@@ -137,8 +137,7 @@ class ConfirmImportController extends GalleryController {
 		 *
 		 * canRead => core.view,core.viewResizes
 		 * canViewFullImages => core.viewSource
-		 * canViewComments =>
-		 * comment.view
+		 * canViewComments => 		 * comment.view
 		 * canAddComments => comment.add
 		 * canChangeText => core.edit
 		 * canAddTo => core.addDataItem
@@ -149,7 +148,7 @@ class ConfirmImportController extends GalleryController {
 		 */
 
 		$permissionTranslation = array(
-			'canRead'           => array(
+			'canRead'  => array(
 				'core.view',
 				'core.viewResizes',
 			),
@@ -540,11 +539,13 @@ class ConfirmImportController extends GalleryController {
 				}
 
 				if (isset($album['summary'])) {
-					$newAlbumInstance->setDescription($this->convertHtml(
-						$markupType,
-						$album['summary'],
-						$sourceEncoding
-					));
+					$newAlbumInstance->setDescription(
+						$this->convertHtml(
+							$markupType,
+							$album['summary'],
+							$sourceEncoding
+						)
+					);
 				}
 				$newAlbumInstance->setKeywords('');
 
@@ -1151,10 +1152,12 @@ class ConfirmImportController extends GalleryController {
 						return $ret;
 					}
 
-					$newItem->setKeywords(GalleryCoreApi::convertToUtf8(
-						$importAlbumItem->keywords,
-						$sourceEncoding
-					));
+					$newItem->setKeywords(
+						GalleryCoreApi::convertToUtf8(
+							$importAlbumItem->keywords,
+							$sourceEncoding
+						)
+					);
 
 					if (isset($importAlbumItem->uploadDate)) {
 						$newItem->setCreationTimestamp($importAlbumItem->uploadDate);
@@ -1738,11 +1741,13 @@ class ConfirmImportController extends GalleryController {
 					$thumbsCreated++;
 					$templateAdapter->updateProgressBar(
 						$createThumbsMessage,
-						$module->translate(array(
-							'text' => 'Thumbnail %d of %d',
-							'arg1' => $thumbsCreated,
-							'arg2' => $itemsCreatedCount,
-						)),
+						$module->translate(
+							array(
+								'text' => 'Thumbnail %d of %d',
+								'arg1' => $thumbsCreated,
+								'arg2' => $itemsCreatedCount,
+							)
+						),
 						$thumbsCreated / $itemsCreatedCount
 					);
 				}
@@ -1815,13 +1820,13 @@ class ConfirmImportController extends GalleryController {
 
 		if (!isset($patterns)) {
 			$patterns = array(
-				'#<br\s*(/?)>#i'      => "\n",
-				'#<(/?)(b|strong)>#i' => '[$1b]',
-				'#<(/?)(i|em)>#i'     => '[$1i]',
-				'#<(/?)ul>#i'         => '[$1list]',
-				'#<li>#i'             => '[*]',
-				'#</li>#i'            => '',
-				'#<img[^>]*\s+src\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>#is' => '[img]$1[/img]',
+				'#<br\s*(/?)>#i'                                                                 => "\n",
+				'#<(/?)(b|strong)>#i'                                                            => '[$1b]',
+				'#<(/?)(i|em)>#i'                                                                => '[$1i]',
+				'#<(/?)ul>#i'                                                                    => '[$1list]',
+				'#<li>#i'                                                                        => '[*]',
+				'#</li>#i'                                                                       => '',
+				'#<img[^>]*\s+src\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>#is'               => '[img]$1[/img]',
 				'#<a[^>]*\s+href\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>\s*(.*?)\s*</a>#is' => '[url=$1]$2[/url]',
 			);
 			$match    = array_keys($patterns);

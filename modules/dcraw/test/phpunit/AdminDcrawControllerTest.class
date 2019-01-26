@@ -89,8 +89,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array(),
-				'status'   => array(
+				'error'  => array(),
+				'status' => array(
 					'saved' => 1,
 				),
 			),
@@ -120,8 +120,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array(),
-				'status'   => array(
+				'error'  => array(),
+				'status' => array(
 					'saved' => 1,
 				),
 			),
@@ -151,8 +151,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array(),
-				'status'   => array(
+				'error'  => array(),
+				'status' => array(
 					'saved' => 1,
 				),
 			),
@@ -182,8 +182,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array(),
-				'status'   => array(
+				'error'  => array(),
+				'status' => array(
 					'saved' => 1,
 				),
 			),
@@ -204,8 +204,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array('form[error][path][missing]'),
-				'status'   => array(),
+				'error'  => array('form[error][path][missing]'),
+				'status' => array(),
 			),
 			$results
 		);
@@ -225,8 +225,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array('form[error][path][badPath]'),
-				'status'   => array(),
+				'error'  => array('form[error][path][badPath]'),
+				'status' => array(),
 			),
 			$results
 		);
@@ -260,8 +260,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array('form[error][path][testError]'),
-				'status'   => array(),
+				'error'  => array('form[error][path][testError]'),
+				'status' => array(),
 			),
 			$results
 		);
@@ -277,8 +277,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dcraw.AdminDcraw',
 				),
-				'error'    => array(),
-				'status'   => array(),
+				'error'  => array(),
+				'status' => array(),
 			),
 			$results
 		);
@@ -294,8 +294,8 @@ class AdminDcrawControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'core.AdminPlugins',
 				),
-				'error'    => array(),
-				'status'   => array(),
+				'error'  => array(),
+				'status' => array(),
 			),
 			$results
 		);

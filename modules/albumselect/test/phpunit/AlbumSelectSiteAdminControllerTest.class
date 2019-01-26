@@ -55,8 +55,8 @@ class AlbumSelectSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'albumselect.AlbumSelectSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -75,19 +75,19 @@ class AlbumSelectSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'albumselect.AlbumSelectSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
 
 		foreach (array(
-			'sort'               => 'manual',
-			'treeLines'          => '0',
-			'treeIcons'          => '1',
-			'treeCookies'        => '0',
+			'sort'      => 'manual',
+			'treeLines' => '0',
+			'treeIcons' => '1',
+			'treeCookies' => '0',
 			'treeExpandCollapse' => '0',
 			'treeCloseSameLevel' => '1',
 		) as $key => $expectedValue) {

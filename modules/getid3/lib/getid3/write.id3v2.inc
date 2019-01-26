@@ -1743,9 +1743,11 @@ class getid3_write_id3v2 {
 			$tagheader  = 'ID3';
 			$tagheader .= chr($this->majorversion);
 			$tagheader .= chr($this->minorversion);
-			$tagheader .= $this->GenerateID3v2TagFlags(array(
-				'unsynchronisation' => $TagUnsynchronisation,
-			));
+			$tagheader .= $this->GenerateID3v2TagFlags(
+				array(
+					'unsynchronisation' => $TagUnsynchronisation,
+				)
+			);
 			$tagheader .= getid3_lib::BigEndian2String(strlen($tagstring), 4, true);
 
 			return $tagheader . $tagstring;

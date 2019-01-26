@@ -94,9 +94,11 @@ class ImageUploadHelper {
 
 		if ($status['success'] == NOKIAUPLOAD_ERR_AUTH) {
 			$event = GalleryCoreApi::newEvent('Gallery::FailedLogin');
-			$event->setData(array(
-				'userName' => $username,
-			));
+			$event->setData(
+				array(
+					'userName' => $username,
+				)
+			);
 			list($ret, $ignored) = GalleryCoreApi::postEvent($event);
 			// ignore errors, we're erroring out anyway
 			return $status;
@@ -253,8 +255,10 @@ class ImageUploadHelper {
 			list($ret, $parentId) = GalleryCoreApi::getPluginParameter('module', 'nokiaupload', 'id.uploadAlbum');
 
 			if ($ret) {
-				$gallery->debug("ERROR: Couldn't get id.uploadAlbum parameter.\n" .
-				$ret->getAsText());
+				$gallery->debug(
+					"ERROR: Couldn't get id.uploadAlbum parameter.\n" .
+					$ret->getAsText()
+				);
 
 				return $status;
 			}
@@ -314,8 +318,10 @@ class ImageUploadHelper {
 		list($ret, $instance) = GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryAlbumItem');
 
 		if ($ret || !isset($instance)) {
-			$gallery->debug("ERROR: GalleryCoreApi::newFactoryInstance failed.\n"
-				. $ret->getAsText());
+			$gallery->debug(
+				"ERROR: GalleryCoreApi::newFactoryInstance failed.\n"
+				. $ret->getAsText()
+			);
 
 			return $status;
 		}
@@ -483,8 +489,10 @@ class ImageUploadHelper {
 
 		// If there was an error at some point write that to log
 		if ($ret) {
-			$gallery->debug("ERROR: Something went wrong while trying to add new item.\n"
-					. $ret->getAsText());
+			$gallery->debug(
+				"ERROR: Something went wrong while trying to add new item.\n"
+				. $ret->getAsText()
+			);
 		}
 
 		return $status;
@@ -512,8 +520,10 @@ class ImageUploadHelper {
 		);
 
 		if ($ret || count($albumIds) < 1) {
-			$gallery->debug("ERROR: No albums with addDataItem permission.\n"
-				. ($ret ? $ret->getAsText() : ''));
+			$gallery->debug(
+				"ERROR: No albums with addDataItem permission.\n"
+				. ($ret ? $ret->getAsText() : '')
+			);
 
 			return $status;
 		}

@@ -105,8 +105,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $this->_userAlbumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -143,8 +143,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $albumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -176,8 +176,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $albumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -193,8 +193,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $this->_userAlbumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -388,11 +388,13 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$ret = $this->_setParameters(array(
-			'create'   => 'access',
-			'view'     => 'everybody',
-			'fullSize' => true,
-		));
+		$ret = $this->_setParameters(
+			array(
+				'create'   => 'access',
+				'view'     => 'everybody',
+				'fullSize' => true,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -447,10 +449,14 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals($secArray, array_intersect_assoc(
+		$this->assertEquals(
 			$secArray,
-			$permissions[$albumId]
-		), 'Everybody Permissions');
+			array_intersect_assoc(
+				$secArray,
+				$permissions[$albumId]
+			),
+			'Everybody Permissions'
+		);
 
 		// registered users' permissions are superceded by Everybody
 		// undocumented feature allows you to pass groupId as well as userId
@@ -489,10 +495,14 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals($secArray, array_intersect_assoc(
+		$this->assertEquals(
 			$secArray,
-			$permissions[$albumId]
-		), 'Parent user');
+			array_intersect_assoc(
+				$secArray,
+				$permissions[$albumId]
+			),
+			'Parent user'
+		);
 	}
 
 	public function testPermissionsRegistered() {
@@ -504,11 +514,13 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$ret = $this->_setParameters(array(
-			'create'   => 'access',
-			'view'     => 'allusers',
-			'fullSize' => false,
-		));
+		$ret = $this->_setParameters(
+			array(
+				'create'   => 'access',
+				'view'     => 'allusers',
+				'fullSize' => false,
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -563,10 +575,14 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(), array_intersect_assoc(
-			$secArray,
-			$permissions[$albumId]
-		), 'Everybody Permissions');
+		$this->assertEquals(
+			array(),
+			array_intersect_assoc(
+				$secArray,
+				$permissions[$albumId]
+			),
+			'Everybody Permissions'
+		);
 
 		// make sure applicable core.view* permissions are there for registered users
 		// undocumented feature allows you to pass groupId as well as userId
@@ -637,10 +653,12 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		// Albums viewable by User only
-		$ret = $this->_setParameters(array(
-			'create' => 'access',
-			'view'   => 'user',
-		));
+		$ret = $this->_setParameters(
+			array(
+				'create' => 'access',
+				'view'   => 'user',
+			)
+		);
 
 		if ($ret) {
 			return $ret;
@@ -707,10 +725,14 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(), array_intersect_assoc(
-			$secArray,
-			$permissions[$albumId]
-		), 'Everybody Permissions');
+		$this->assertEquals(
+			array(),
+			array_intersect_assoc(
+				$secArray,
+				$permissions[$albumId]
+			),
+			'Everybody Permissions'
+		);
 
 		// make sure that no core.view* permissions are there for registered users
 		// undocumented feature allows you to pass groupId as well as userId
@@ -722,10 +744,14 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(), array_intersect_assoc(
-			$secArray,
-			$permissions[$albumId]
-		), 'Registered Permissions');
+		$this->assertEquals(
+			array(),
+			array_intersect_assoc(
+				$secArray,
+				$permissions[$albumId]
+			),
+			'Registered Permissions'
+		);
 
 		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems(
 			array($albumId),
@@ -735,10 +761,14 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array(), array_intersect_assoc(
-			$secArray,
-			$permissions[$albumId]
-		), 'Specific user Permissions');
+		$this->assertEquals(
+			array(),
+			array_intersect_assoc(
+				$secArray,
+				$permissions[$albumId]
+			),
+			'Specific user Permissions'
+		);
 	}
 
 	public function _setParameters($params) {

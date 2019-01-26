@@ -56,7 +56,7 @@ class FotokastenModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'affiliateId'     => FOTOKASTEN_GALLERY_AFFILIATE_ID,
+			'affiliateId' => FOTOKASTEN_GALLERY_AFFILIATE_ID,
 			'affiliateIdPass' => FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD,
 		) as $key => $value) {
 			if (!isset($params[$key])) {

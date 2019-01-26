@@ -148,8 +148,8 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => 'TEST_redirect',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$result
 		);
@@ -208,8 +208,8 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => 'TEST_redirect',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$result
 		);
@@ -252,11 +252,14 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 	public function testPrintCart() {
 		global $gallery;
 		$session =& $gallery->getSession();
-		$session->put('fotokasten.cart', array(
-			$this->_items[0]->getId() => 1,
-			$this->_items[1]->getId() => 1,
-			$this->_items[2]->getId() => 2,
-		));
+		$session->put(
+			'fotokasten.cart',
+			array(
+				$this->_items[0]->getId() => 1,
+				$this->_items[1]->getId() => 1,
+				$this->_items[2]->getId() => 2,
+			)
+		);
 
 		$result = $this->handleRequest();
 		$this->assertEquals(
@@ -264,8 +267,8 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => 'TEST_redirect',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$result
 		);

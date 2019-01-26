@@ -461,10 +461,12 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		$lockIds = array();
 
 		// Acquire the locks
-		list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLock(array(
-			$newParent->getId(),
-			$oldParent->getId(),
-		));
+		list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLock(
+			array(
+				$newParent->getId(),
+				$oldParent->getId(),
+			)
+		);
 
 		if ($ret) {
 			return $ret;

@@ -55,8 +55,8 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'panorama.PanoramaSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -74,10 +74,10 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'panorama.PanoramaSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -94,8 +94,8 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'panorama.PanoramaSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][width]'),
+				'status' => array(),
+				'error'  => array('form[error][width]'),
 			),
 			$results
 		);
@@ -112,8 +112,8 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'panorama.PanoramaSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][width]'),
+				'status' => array(),
+				'error'  => array('form[error][width]'),
 			),
 			$results
 		);

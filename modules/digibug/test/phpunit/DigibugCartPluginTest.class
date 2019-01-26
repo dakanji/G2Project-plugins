@@ -184,10 +184,14 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			'(no print permission), qty 3 of item 2'
 		);
 		$this->assert(
-			preg_match('{"image_1" value="http://[^"]*'
-			. $this->_items[0]->getId() . '[^"]*'
-			. GalleryUtilities::prefixFormVariable($session->getKey())
-			. '=([A-Za-z0-9]+)}', $form, $matches),
+			preg_match(
+				'{"image_1" value="http://[^"]*'
+				. $this->_items[0]->getId() . '[^"]*'
+				. GalleryUtilities::prefixFormVariable($session->getKey())
+				. '=([A-Za-z0-9]+)}',
+				$form,
+				$matches
+			),
 			'URL for first image should include a session id'
 		);
 		$this->assert(
@@ -195,10 +199,14 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			'session id in URL for first image should be a new id, not my session'
 		);
 		$this->assert(
-			preg_match('{"thumb_1" value="http://[^"]*'
-			. $this->_items[0]->getId() . '[^"]*'
-			. GalleryUtilities::prefixFormVariable($session->getKey())
-			. '=([A-Za-z0-9]+)}', $form, $matches),
+			preg_match(
+				'{"thumb_1" value="http://[^"]*'
+				. $this->_items[0]->getId() . '[^"]*'
+				. GalleryUtilities::prefixFormVariable($session->getKey())
+				. '=([A-Za-z0-9]+)}',
+				$form,
+				$matches
+			),
 			'URL for first thumbnail should include a session id'
 			. ' and use itemId not thumbId due to watermark'
 		);
@@ -208,15 +216,23 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			'session id in URL for first thumbnail should be my session'
 		);
 		$this->assert(
-			preg_match('{"image_4" value="http://[^"]*'
-			. $this->_items[2]->getId() . '(?![^"]*'
-			. $session->getKey() . '=)}', $form, $matches),
+			preg_match(
+				'{"image_4" value="http://[^"]*'
+				. $this->_items[2]->getId() . '(?![^"]*'
+				. $session->getKey() . '=)}',
+				$form,
+				$matches
+			),
 			'URL for second image should not include a session id'
 		);
 		$this->assert(
-			preg_match('{"thumb_4" value="http://[^"]*'
-			. $this->_thumbs[2]->getId() . '(?![^"]*'
-			. $session->getKey() . '=)}', $form, $matches),
+			preg_match(
+				'{"thumb_4" value="http://[^"]*'
+				. $this->_thumbs[2]->getId() . '(?![^"]*'
+				. $session->getKey() . '=)}',
+				$form,
+				$matches
+			),
 			'URL for second thumbnail should not include a session id'
 		);
 

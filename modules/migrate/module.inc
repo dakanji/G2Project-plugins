@@ -154,17 +154,19 @@ class MigrateModule extends GalleryModule {
 	public function getRewriteRules() {
 		global $gallery;
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$url          = $urlGenerator->generateUrl(array(
-			'view'    => 'core.SiteAdmin',
-			'subView' => 'migrate.SelectGallery',
-		));
+		$url          = $urlGenerator->generateUrl(
+			array(
+				'view'    => 'core.SiteAdmin',
+				'subView' => 'migrate.SelectGallery',
+			)
+		);
 
 		return array(
 			array(
-				'comment'     => $this->translate('G1-&gt;G2 Mapping'),
-				'pattern'     => '%path%',
-				'parser'      => 'preGallery',
-				'keywords'    => array(
+				'comment'  => $this->translate('G1-&gt;G2 Mapping'),
+				'pattern'  => '%path%',
+				'parser'   => 'preGallery',
+				'keywords' => array(
 					'path' => array(
 						'pattern' => '([^?]+)',
 						'help'    => $this->translate('G1 path'),
@@ -173,8 +175,8 @@ class MigrateModule extends GalleryModule {
 				'queryString' => array(
 					'controller' => 'migrate.Redirect',
 				),
-				'locked'      => 1,
-				'help'        => $this->translate(
+				'locked' => 1,
+				'help'   => $this->translate(
 					array(
 						'text' => 'G1 URL redirect. Use only if G2 is installed where G1 used '
 						. 'to be and you have run a G1 import with the URL redirect option '

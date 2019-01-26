@@ -53,7 +53,7 @@ class ConfigureMultirootController extends GalleryController {
 		return array(
 			null,
 			array(
-				$method  => array(
+				$method => array(
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'multiroot.ConfigureMultiroot',
 				),
@@ -130,11 +130,16 @@ class ConfigureMultirootView extends GalleryView {
 				$multiroot['htaccess'] = preg_replace(
 					'#^( |$)#m',
 					'&nbsp;',
-					htmlspecialchars(strtr($match[0], array(
-						$multiroot['baseUriDir'] => $multiroot['viewBase'],
-						$baseFile                => $viewFile,
-						str_replace('.', '\\.', $baseFile) => str_replace('.', '\\.', $viewFile),
-					)))
+					htmlspecialchars(
+						strtr(
+							$match[0],
+							array(
+								$multiroot['baseUriDir'] => $multiroot['viewBase'],
+								$baseFile                => $viewFile,
+								str_replace('.', '\\.', $baseFile) => str_replace('.', '\\.', $viewFile),
+							)
+						)
+					)
 				);
 			}
 

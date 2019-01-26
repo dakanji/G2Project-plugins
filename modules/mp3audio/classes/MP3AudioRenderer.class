@@ -132,21 +132,21 @@ class MP3AudioRenderer extends GalleryRenderer {
 		}
 
 		foreach (array(
-			'langArtist'   => $module->translate('Artist'),
-			'langAlbum'    => $module->translate('Album'),
-			'langSong'     => $module->translate('Song'),
-			'langTrack'    => $module->translate('Track'),
-			'langGenre'    => $module->translate('Genre'),
-			'langYear'     => $module->translate('Year'),
+			'langArtist' => $module->translate('Artist'),
+			'langAlbum' => $module->translate('Album'),
+			'langSong'  => $module->translate('Song'),
+			'langTrack' => $module->translate('Track'),
+			'langGenre' => $module->translate('Genre'),
+			'langYear'  => $module->translate('Year'),
 			'langDownload' => $module->translate('Download'),
-			'langInfo'     => $module->translate('Info'),
-			'langPlay'     => $module->translate('Play'),
-			'langPause'    => $module->translate('Pause'),
-			'langForward'  => $module->translate('Forward'),
-			'langRewind'   => $module->translate('Rewind'),
-			'langMute'     => $module->translate('Mute'),
-			'langUnmute'   => $module->translate('Unmute'),
-			'langShare'    => $module->translate('Share'),
+			'langInfo'  => $module->translate('Info'),
+			'langPlay'  => $module->translate('Play'),
+			'langPause' => $module->translate('Pause'),
+			'langForward' => $module->translate('Forward'),
+			'langRewind' => $module->translate('Rewind'),
+			'langMute'  => $module->translate('Mute'),
+			'langUnmute' => $module->translate('Unmute'),
+			'langShare' => $module->translate('Share'),
 		) as $key => $value) {
 			$flashVars .= '&' . $key . '=' . urlencode($value);
 		}

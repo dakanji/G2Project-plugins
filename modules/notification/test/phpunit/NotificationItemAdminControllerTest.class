@@ -235,10 +235,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 					'subView' => 'notification.NotificationItemAdmin',
 					'itemId'  => $itemId,
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -360,10 +360,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 					'subView' => 'notification.NotificationItemAdmin',
 					'itemId'  => $itemId,
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -423,21 +423,27 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		);
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
-		$storage->setReply('addMapEntry', array(
-			'SubscriptionMap',
+		$storage->setReply(
+			'addMapEntry',
 			array(
-				'userId'           => $gallery->getActiveUserId(),
-				'itemId'           => $itemId,
-				'notificationName' => 'Test::Event',
-				'handlerName'      => 'Test::EventHandler',
+				'SubscriptionMap',
+				array(
+					'userId'           => $gallery->getActiveUserId(),
+					'itemId'           => $itemId,
+					'notificationName' => 'Test::Event',
+					'handlerName'      => 'Test::EventHandler',
+				),
+				array(),
 			),
-			array(),
-		), null);
+			null
+		);
 		$results = array(
 			null,
-			new UnitTestStorageSearchResults(array(
-				array($this->_childAlbum->getId(), 8),
-			)),
+			new UnitTestStorageSearchResults(
+				array(
+					array($this->_childAlbum->getId(), 8),
+				)
+			),
 		);
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
@@ -462,16 +468,20 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			)
 		);
 
-		$storage->setReply('addMapEntry', array(
-			'SubscriptionMap',
+		$storage->setReply(
+			'addMapEntry',
 			array(
-				'userId'           => $gallery->getActiveUserId(),
-				'itemId'           => $this->_childAlbum->getId(),
-				'notificationName' => 'Test::Event',
-				'handlerName'      => 'Test::EventHandler',
+				'SubscriptionMap',
+				array(
+					'userId'           => $gallery->getActiveUserId(),
+					'itemId'           => $this->_childAlbum->getId(),
+					'notificationName' => 'Test::Event',
+					'handlerName'      => 'Test::EventHandler',
+				),
+				array(),
 			),
-			array(),
-		), null);
+			null
+		);
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
@@ -505,10 +515,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 					'subView' => 'notification.NotificationItemAdmin',
 					'itemId'  => $itemId,
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'

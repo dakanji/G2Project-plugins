@@ -108,22 +108,22 @@ class nusoap_base {
 	 */
 	public $typemap = array(
 		'http://www.w3.org/2001/XMLSchema' => array(
-			'string'             => 'string',
-			'boolean'            => 'boolean',
-			'float'              => 'double',
-			'double'             => 'double',
-			'decimal'            => 'double',
-			'duration'           => '',
-			'dateTime'           => 'string',
-			'time'               => 'string',
-			'date'               => 'string',
-			'gYearMonth'         => '',
-			'gYear'              => '',
-			'gMonthDay'          => '',
-			'gDay'               => '',
-			'gMonth'             => '',
-			'hexBinary'          => 'string',
-			'base64Binary'       => 'string',
+			'string'       => 'string',
+			'boolean'      => 'boolean',
+			'float'        => 'double',
+			'double'       => 'double',
+			'decimal'      => 'double',
+			'duration'     => '',
+			'dateTime'     => 'string',
+			'time'         => 'string',
+			'date'         => 'string',
+			'gYearMonth'   => '',
+			'gYear'        => '',
+			'gMonthDay'    => '',
+			'gDay'         => '',
+			'gMonth'       => '',
+			'hexBinary'    => 'string',
+			'base64Binary' => 'string',
 			// derived datatypes
 			'normalizedString'   => 'string',
 			'token'              => 'string',
@@ -164,7 +164,7 @@ class nusoap_base {
 			'base64'       => 'string',
 			'ur-type'      => 'array',
 		),
-		'http://soapinterop.org/xsd'       => array(
+		'http://soapinterop.org/xsd' => array(
 			'SOAPStruct' => 'struct',
 		),
 		'http://schemas.xmlsoap.org/soap/encoding/' => array(
@@ -172,7 +172,7 @@ class nusoap_base {
 			'array'  => 'array',
 			'Array'  => 'array',
 		),
-		'http://xml.apache.org/xml-soap'   => array('Map'),
+		'http://xml.apache.org/xml-soap' => array('Map'),
 	);
 
 	/**
@@ -910,7 +910,7 @@ class XMLSchema extends nusoap_base {
 	 * @access   private
 	 */
 	public function schemaCharacterData($parser, $data) {
-		$pos                           = $this->depth_array[$this->depth];
+		$pos = $this->depth_array[$this->depth];
 		$this->message[$pos]['cdata'] .= $data;
 	}
 
@@ -2001,7 +2001,7 @@ class soap_server extends nusoap_base {
 			if ($request_data) {
 				$this->debug("calling '$this->methodname' with params");
 
-				if (! function_exists('call_user_func_array')) {
+				if (!function_exists('call_user_func_array')) {
 					$this->debug('calling method using $gallery->runEval()');
 					$funcCall = $this->methodname . '(';
 
@@ -2412,8 +2412,7 @@ class wsdl extends XMLSchema {
 		$this->debug('getting ' . $wsdl);
 		/**
 		 * old
-		 * if ($fp =
-		 *
+		 * if ($fp =         *
 		 * @fopen ($wsdl,'r')) {
 		 * $wsdl_string = '';
 		 * while($data = fread($fp, 32768)) {
@@ -2656,7 +2655,7 @@ class wsdl extends XMLSchema {
 							break;
 						// merge input/output data
 						default:
-							$m = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
+							$m                                                                                      = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
 							$this->portTypes[$this->currentPortType][$this->currentPortOperation][$name]['message'] = $m;
 
 							break;
@@ -2823,7 +2822,7 @@ class wsdl extends XMLSchema {
 		// end documentation
 		if ($this->documentation) {
 			$this->portTypes[$this->currentPortType][$this->currentPortOperation]['documentation'] = $this->documentation;
-			$this->documentation = false;
+			$this->documentation                                                                   = false;
 		}
 	}
 
@@ -3190,19 +3189,19 @@ class wsdl extends XMLSchema {
 		}
 		// get binding
 		$this->bindings[ $this->serviceName . 'Binding' ]['operations'][$name] = array(
-			'name'          => $name,
-			'binding'       => $this->serviceName . 'Binding',
-			'endpoint'      => $this->endpoint,
-			'soapAction'    => $soapaction,
-			'style'         => $style,
-			'input'         => array(
+			'name'       => $name,
+			'binding'    => $this->serviceName . 'Binding',
+			'endpoint'   => $this->endpoint,
+			'soapAction' => $soapaction,
+			'style'      => $style,
+			'input'      => array(
 				'use'           => $use,
 				'namespace'     => $namespace,
 				'encodingStyle' => $encodingStyle,
 				'message'       => $name . 'Request',
 				'parts'         => $in,
 			),
-			'output'        => array(
+			'output'    => array(
 				'use'           => $use,
 				'namespace'     => $namespace,
 				'encodingStyle' => $encodingStyle,
@@ -3555,7 +3554,7 @@ class soap_parser extends nusoap_base {
 	 * @access   private
 	 */
 	public function character_data($parser, $data) {
-		$pos                           = $this->depth_array[$this->depth];
+		$pos = $this->depth_array[$this->depth];
 		$this->message[$pos]['cdata'] .= $data;
 		// for doclit
 		if ($this->status == 'header') {

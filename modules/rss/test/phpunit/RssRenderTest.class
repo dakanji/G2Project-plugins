@@ -53,20 +53,20 @@ class RssRenderTest extends GalleryControllerTestCase {
 
 		// set the expected default parameters
 		foreach (array(
-			'defaultVersion'         => '2.0',
-			'defaultCount'           => 10,
-			'maxCount'               => 50,
-			'allowSimpleFeed'        => 1,
-			'allowConfigurableFeed'  => 1,
-			'allowAlbums'            => 1,
-			'allowPhotos'            => 1,
-			'allowPhotosRecursive'   => 1,
-			'allowCommentsAlbum'     => 1,
-			'allowCommentsPhoto'     => 1,
-			'defaultCopyright'       => '',
-			'defaultTtl'             => 120,
-			'sfAlbumType'            => 'photos',
-			'sfDate'                 => 'new',
+			'defaultVersion' => '2.0',
+			'defaultCount' => 10,
+			'maxCount' => 50,
+			'allowSimpleFeed' => 1,
+			'allowConfigurableFeed' => 1,
+			'allowAlbums' => 1,
+			'allowPhotos' => 1,
+			'allowPhotosRecursive' => 1,
+			'allowCommentsAlbum' => 1,
+			'allowCommentsPhoto' => 1,
+			'defaultCopyright' => '',
+			'defaultTtl' => 120,
+			'sfAlbumType' => 'photos',
+			'sfDate'   => 'new',
 			'sfPhotosRecursiveLimit' => '10',
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'rss', $key, $value);
@@ -138,23 +138,30 @@ class RssRenderTest extends GalleryControllerTestCase {
 		global $gallery;
 		$urlGenerator =& $gallery->getUrlGenerator();
 
-		$feedUrl = urlencode($urlGenerator->generateUrl(
-			array(
-				'view'   => 'rss.SimpleRender',
-				'itemId' => $this->_root->getId(),
-			),
-			array(
-				'forceSessionId' => false,
-				'forceFullUrl'   => true,
-				'htmlEntities'   => false,
+		$feedUrl = urlencode(
+			$urlGenerator->generateUrl(
+				array(
+					'view'   => 'rss.SimpleRender',
+					'itemId' => $this->_root->getId(),
+				),
+				array(
+					'forceSessionId' => false,
+					'forceFullUrl'   => true,
+					'htmlEntities'   => false,
+				)
 			)
-		));
+		);
 
-		$validate = GalleryCoreApi::fetchWebPage('http://www.feedvalidator.org/check.cgi?url='
-		. $feedUrl);
+		$validate = GalleryCoreApi::fetchWebPage(
+			'http://www.feedvalidator.org/check.cgi?url='
+			. $feedUrl
+		);
 
-		$this->assert($validate[0], 'http://www.feedvalidator.com couldn\'t be reached. ' .
-		'This is not a real validation failure.');
+		$this->assert(
+			$validate[0],
+			'http://www.feedvalidator.com couldn\'t be reached. ' .
+			'This is not a real validation failure.'
+		);
 
 		if (!$validate) {
 			$this->assert(
@@ -194,23 +201,30 @@ class RssRenderTest extends GalleryControllerTestCase {
 		$this->_feedsToDelete[] = $name;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$feedUrl      = urlencode($urlGenerator->generateUrl(
-			array(
-				'view' => 'rss.Render',
-				'name' => $name,
-			),
-			array(
-				'forceSessionId' => false,
-				'forceFullUrl'   => true,
-				'htmlEntities'   => false,
+		$feedUrl      = urlencode(
+			$urlGenerator->generateUrl(
+				array(
+					'view' => 'rss.Render',
+					'name' => $name,
+				),
+				array(
+					'forceSessionId' => false,
+					'forceFullUrl'   => true,
+					'htmlEntities'   => false,
+				)
 			)
-		));
+		);
 
-		$validate = GalleryCoreApi::fetchWebPage('http://www.feedvalidator.org/check.cgi?url='
-		. $feedUrl);
+		$validate = GalleryCoreApi::fetchWebPage(
+			'http://www.feedvalidator.org/check.cgi?url='
+			. $feedUrl
+		);
 
-		$this->assert($validate[0], 'http://www.feedvalidator.com couldn\'t be reached. ' .
-		'This is not a real validation failure.');
+		$this->assert(
+			$validate[0],
+			'http://www.feedvalidator.com couldn\'t be reached. ' .
+			'This is not a real validation failure.'
+		);
 
 		if (!$validate) {
 			$this->assert(

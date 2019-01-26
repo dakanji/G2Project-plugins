@@ -150,7 +150,7 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
 				'error'    => array(),
@@ -159,13 +159,16 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 					'subView' => 'rss.EditFeed',
 					'itemId'  => $this->_getRootId(),
 					'mode'    => 'edit',
-					'form'    => array_merge(array(
-						'action' => array(
-							'save'   => '1',
-							'create' => '1',
+					'form'    => array_merge(
+						array(
+							'action' => array(
+								'save'   => '1',
+								'create' => '1',
+							),
+							'mode' => 'new',
 						),
-						'mode'   => 'new',
-					), $values),
+						$values
+					),
 				),
 			),
 			$results
@@ -238,7 +241,7 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
 				'error'    => array(),
@@ -247,13 +250,16 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 					'subView' => 'rss.EditFeed',
 					'itemId'  => $this->_getRootId(),
 					'mode'    => 'edit',
-					'form'    => array_merge(array(
-						'action' => array(
-							'save'   => '1',
-							'update' => '1',
+					'form'    => array_merge(
+						array(
+							'action' => array(
+								'save'   => '1',
+								'update' => '1',
+							),
+							'mode' => 'edit',
 						),
-						'mode'   => 'edit',
-					), $values),
+						$values
+					),
 				),
 			),
 			$results
@@ -310,7 +316,7 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
 				'error'    => array(),
@@ -319,13 +325,16 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 					'subView' => 'rss.EditFeed',
 					'itemId'  => $this->_getRootId(),
 					'mode'    => 'edit',
-					'form'    => array_merge(array(
-						'action' => array(
-							'save'   => '1',
-							'update' => '1',
+					'form'    => array_merge(
+						array(
+							'action' => array(
+								'save'   => '1',
+								'update' => '1',
+							),
+							'mode' => 'edit',
 						),
-						'mode'   => 'edit',
-					), $values),
+						$values
+					),
 				),
 			),
 			$results
@@ -355,7 +364,7 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'deleted' => 1,
 				),
 				'error'    => array(),

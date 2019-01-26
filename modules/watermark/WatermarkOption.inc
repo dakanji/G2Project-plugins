@@ -123,8 +123,10 @@ class WatermarkOption extends ItemAddOption {
 				if ($ret) {
 					return array($ret, null, null);
 				}
-				$message = $module->translate('Error: Missing watermark. Please see the Event Logs '
-					   . 'page in the Site Admin.');
+				$message = $module->translate(
+					'Error: Missing watermark. Please see the Event Logs '
+					. 'page in the Site Admin.'
+				);
 
 				return array(null, array($message), array());
 			}
@@ -132,8 +134,8 @@ class WatermarkOption extends ItemAddOption {
 			foreach ($items as $i => $item) {
 				if (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 					$watermarkArray = array(
-						DERIVATIVE_TYPE_IMAGE_THUMBNAIL                  => $watermark->getApplyToThumbnail(),
-						DERIVATIVE_TYPE_IMAGE_RESIZE => $watermark->getApplyToResizes(),
+						DERIVATIVE_TYPE_IMAGE_THUMBNAIL => $watermark->getApplyToThumbnail(),
+						DERIVATIVE_TYPE_IMAGE_RESIZE    => $watermark->getApplyToResizes(),
 						DERIVATIVE_TYPE_IMAGE_PREFERRED => $watermark->getApplyToPreferred(),
 					);
 					$ret            = WatermarkHelper::watermarkItem(

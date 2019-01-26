@@ -405,19 +405,23 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		foreach (array('totalUploadSize', 'maxFileSize') as $key) {
 			if ($$key >= 1024 * 1024) {
-				$$key = $module->translate(array(
-					'one'   => '%d megabyte',
-					'many'  => '%d megabytes',
-					'count' => (int)($$key / (1024 * 1024)),
-					'arg1'  => (int)($$key / (1024 * 1024)),
-				));
+				$$key = $module->translate(
+					array(
+						'one'   => '%d megabyte',
+						'many'  => '%d megabytes',
+						'count' => (int)($$key / (1024 * 1024)),
+						'arg1'  => (int)($$key / (1024 * 1024)),
+					)
+				);
 			} elseif ($$key >= 1024) {
-				$$key = $module->translate(array(
-					'one'   => '%d kilobytes',
-					'many'  => '%d kilobytes',
-					'count' => (int)($$key / (1024)),
-					'arg1'  => (int)($$key / (1024)),
-				));
+				$$key = $module->translate(
+					array(
+						'one'   => '%d kilobytes',
+						'many'  => '%d kilobytes',
+						'count' => (int)($$key / (1024)),
+						'arg1'  => (int)($$key / (1024)),
+					)
+				);
 			}
 		}
 

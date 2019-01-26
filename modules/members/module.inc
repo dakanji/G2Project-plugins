@@ -52,7 +52,7 @@ class MembersModule extends GalleryModule {
 
 			foreach (array(
 				'canViewMembersModule' => $viewSelectedGroupId,
-				'canViewEmailAddress'  => 0,
+				'canViewEmailAddress' => 0,
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);
 

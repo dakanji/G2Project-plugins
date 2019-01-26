@@ -191,7 +191,7 @@ class ItemAddSiteAdminView extends GalleryView {
 		}
 
 		$ItemAddSiteAdmin = array(
-			'optionList'         => array(
+			'optionList' => array(
 				'on'    => $module->translate('Available to all users with permission to add items'),
 				'admin' => $module->translate('Site Admins only'),
 				'off'   => $module->translate('Disabled'),

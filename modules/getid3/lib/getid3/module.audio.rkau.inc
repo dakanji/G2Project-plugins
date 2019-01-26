@@ -71,7 +71,7 @@ class getid3_rkau extends getid3_handler {
 		$info['audio']['bits_per_sample'] = $info['rkau']['bits_per_sample'];
 		$info['audio']['sample_rate']     = $info['rkau']['sample_rate'];
 
-		$info['playtime_seconds'] = $info['rkau']['source_bytes'] / ($info['rkau']['sample_rate'] * $info['rkau']['channels'] * ($info['rkau']['bits_per_sample'] / 8));
+		$info['playtime_seconds'] = $info['rkau']['source_bytes']           / ($info['rkau']['sample_rate'] * $info['rkau']['channels'] * ($info['rkau']['bits_per_sample'] / 8));
 		$info['audio']['bitrate'] = ($info['rkau']['compressed_bytes'] * 8) / $info['playtime_seconds'];
 
 		return true;

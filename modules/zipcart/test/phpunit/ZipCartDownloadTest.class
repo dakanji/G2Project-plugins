@@ -118,10 +118,14 @@ class ZipCartDownloadTest extends GalleryTestCase {
 			$this->_header,
 			'header'
 		);
-		$this->assertEquals("--G2ZipCart\nContent-Type: application/zip\nContent-Disposition: " .
-		"inline; filename=\"G2cart.zip\"\nContent-Length: 123\n\nzipdata\n--G2ZipCart\n" .
-		"Content-Type: text/html\nPragma: No-cache\n\n<html><body onload=\"location" .
-		".reload()\"></body></html>\n\n--G2ZipCart--\n", $output, 'output');
+		$this->assertEquals(
+			"--G2ZipCart\nContent-Type: application/zip\nContent-Disposition: " .
+			"inline; filename=\"G2cart.zip\"\nContent-Length: 123\n\nzipdata\n--G2ZipCart\n" .
+			"Content-Type: text/html\nPragma: No-cache\n\n<html><body onload=\"location" .
+			".reload()\"></body></html>\n\n--G2ZipCart--\n",
+			$output,
+			'output'
+		);
 	}
 
 	public function testCartRedirect() {

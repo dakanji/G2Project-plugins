@@ -49,9 +49,11 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function tearDown() {
-		$ret = GalleryCoreApi::removeMimeType(array(
-			'mimeType' => 'test/test',
-		));
+		$ret = GalleryCoreApi::removeMimeType(
+			array(
+				'mimeType' => 'test/test',
+			)
+		);
 
 		if ($ret) {
 			$this->failWithStatus($ret);
@@ -76,10 +78,10 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => true,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -106,10 +108,10 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => true,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -132,10 +134,10 @@ class MimeAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'deleted' => 'test/test',
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Delete'

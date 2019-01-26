@@ -122,10 +122,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -160,10 +160,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -194,8 +194,8 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarkEdit',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][watermarkName][missing]',
 					'form[error][whichDerivative][missing]',
 				),
@@ -234,8 +234,8 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarkEdit',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][watermarkName][duplicate]'),
+				'status' => array(),
+				'error'  => array('form[error][watermarkName][duplicate]'),
 			),
 			$results
 		);
@@ -266,10 +266,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -300,8 +300,8 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -331,10 +331,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -433,9 +433,11 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		);
 		$this->assertEquals($expected, $results);
 
-		$ret = GalleryCoreApi::removeMimeType(array(
-			'extension' => 'yyy',
-		));
+		$ret = GalleryCoreApi::removeMimeType(
+			array(
+				'extension' => 'yyy',
+			)
+		);
 
 		if ($ret) {
 			return $ret;

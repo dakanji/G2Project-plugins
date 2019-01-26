@@ -218,8 +218,11 @@ class PhotoAccessHelper {
 		 * </add-cart-request>
 		 */
 		$lines   = array();
-		$lines[] = sprintf('<add-cart-request cobrand="CB_GP" pricelist="1" ' .
-			   'entry-page="/sbo/anonCart.jsp" return-url="%s">', $returnUrl);
+		$lines[] = sprintf(
+			'<add-cart-request cobrand="CB_GP" pricelist="1" ' .
+			'entry-page="/sbo/anonCart.jsp" return-url="%s">',
+			$returnUrl
+		);
 
 		for ($i = 0; $i < sizeof($entries); $i++) {
 			$lines[] = sprintf(
@@ -277,9 +280,11 @@ class PhotoAccessHelper {
 			$session->put('photoaccess.cartUrlFragment', $cartUrlFragment);
 			$redirectUrl = 'http://' . $photoAccessServer . str_replace('&#38;', '&', $matches[2]);
 		} else {
-			$redirectUrl = $urlGenerator->generateUrl(array(
-				'view' => 'photoaccess.FulfillmentError',
-			));
+			$redirectUrl = $urlGenerator->generateUrl(
+				array(
+					'view' => 'photoaccess.FulfillmentError',
+				)
+			);
 		}
 
 		return array(null, $redirectUrl);

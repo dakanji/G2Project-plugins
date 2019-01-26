@@ -109,14 +109,16 @@ class DownloadView extends GalleryView {
 		} else {
 			// On reload return to View Cart
 			$urlGenerator =& $gallery->getUrlGenerator();
-			$phpVm->header('Location: ' . $urlGenerator->generateUrl(
-				array(
-					'view' => 'cart.ViewCart',
-				),
-				array(
-					'htmlEntities' => false,
+			$phpVm->header(
+				'Location: ' . $urlGenerator->generateUrl(
+					array(
+						'view' => 'cart.ViewCart',
+					),
+					array(
+						'htmlEntities' => false,
+					)
 				)
-			));
+			);
 		}
 
 		return null;

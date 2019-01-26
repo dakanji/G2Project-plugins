@@ -108,16 +108,19 @@ class RenderView extends GalleryView {
 		// check render type
 		$feedType = $params['feedType'];
 
-		if (!in_array($feedType, array(
-			'album',
-			'photos',
-			'photosRecursive',
-			'commentsAlbum',
-			'commentsPhoto',
-			'commentsRecursive',
-			'photosRandom',
-			'photosRandomRecursive',
-		))
+		if (!in_array(
+			$feedType,
+			array(
+				'album',
+				'photos',
+				'photosRecursive',
+				'commentsAlbum',
+				'commentsPhoto',
+				'commentsRecursive',
+				'photosRandom',
+				'photosRandomRecursive',
+			)
+		)
 		) {
 			$this->handleError($gallery->i18n('Incorrect feed type!'));
 
@@ -134,9 +137,11 @@ class RenderView extends GalleryView {
 			}
 
 			if ($modulestatus['comment']['active'] != '1') {
-				$this->handleError($gallery->i18n(
-					'Comments module is not active or comment feeds are not allowed!'
-				));
+				$this->handleError(
+					$gallery->i18n(
+						'Comments module is not active or comment feeds are not allowed!'
+					)
+				);
 
 				return null;
 			}

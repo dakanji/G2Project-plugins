@@ -95,7 +95,7 @@ class AdminEditGroupQuotaController extends GalleryController {
 								$match,
 								array(
 									'userOrGroupId' => $group->getId(),
-									'quotaSize' => $quotaSize,
+									'quotaSize'     => $quotaSize,
 								)
 							);
 

@@ -144,11 +144,11 @@ class EditFeedController extends GalleryController {
 					$parameters = array_merge(
 						$parameters,
 						array(
-							'cloudDomain'   => $form['cloudDomain'],
-							'cloudPort'     => $form['cloudPort'],
-							'cloudPath'     => $form['cloudPath'],
+							'cloudDomain'            => $form['cloudDomain'],
+							'cloudPort'              => $form['cloudPort'],
+							'cloudPath'              => $form['cloudPath'],
 							'cloudRegisterProcedure' => $form['cloudRegisterProcedure'],
-							'cloudProtocol' => $form['cloudProtocol'],
+							'cloudProtocol'          => $form['cloudProtocol'],
 						)
 					);
 				}
@@ -291,24 +291,24 @@ class EditFeedView extends GalleryView {
 				 * All these settings can be overwritten by user.
 				 */
 				foreach (array(
-					'version'                => $param['defaultVersion'],
-					'count'                  => $param['defaultCount'],
-					'useImage'               => true,
-					'useEnclosure'           => false,
-					'useCloud'               => false,
-					'useMedia'               => true,
-					'cloudDomain'            => '',
-					'cloudPort'              => '',
-					'cloudPath'              => '',
+					'version' => $param['defaultVersion'],
+					'count' => $param['defaultCount'],
+					'useImage' => true,
+					'useEnclosure' => false,
+					'useCloud' => false,
+					'useMedia' => true,
+					'cloudDomain' => '',
+					'cloudPort' => '',
+					'cloudPath' => '',
 					'cloudRegisterProcedure' => '',
-					'cloudProtocol'          => '',
-					'photosRecursiveLimit'   => '0',
-					'ttl'                    => $param['defaultTtl'],
-					'category'               => '',
-					'description'            => '',
-					'language'               => 'en-us',
-					'copyright'              => $param['defaultCopyright'],
-					'feedDate'               => 'updated',
+					'cloudProtocol' => '',
+					'photosRecursiveLimit' => '0',
+					'ttl' => $param['defaultTtl'],
+					'category' => '',
+					'description' => '',
+					'language' => 'en-us',
+					'copyright' => $param['defaultCopyright'],
+					'feedDate' => 'updated',
 				) as $key => $value) {
 					$EditFeed[$key] = $value;
 				}

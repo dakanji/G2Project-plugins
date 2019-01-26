@@ -336,7 +336,7 @@ class NotificationUserAdminView extends GalleryView {
 							$j = 0;
 
 							foreach ($items as $item) {
-								$itemUrl                                  = $urlGenerator->generateUrl(
+								$itemUrl = $urlGenerator->generateUrl(
 									array(
 										'view'   => 'core.ShowItem',
 										'itemId' => $item->getId(),

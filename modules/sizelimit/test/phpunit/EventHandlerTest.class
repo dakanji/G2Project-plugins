@@ -84,6 +84,6 @@ class EventHandlerTest extends GalleryTestCase {
 			return $ret;
 		}
 		$this->assertEquals(array('width' => 768, 'height' => 1024, 'size' => 1000,
-		'keepOriginal' => 1, ), $params, 'Copied Album');
+		'keepOriginal'                    => 1, ), $params, 'Copied Album');
 	}
 }

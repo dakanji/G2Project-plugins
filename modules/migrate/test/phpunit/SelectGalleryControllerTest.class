@@ -44,8 +44,8 @@ class SelectGalleryControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'migrate.SelectGallery',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][albumsPath][invalid]'),
+				'status' => array(),
+				'error'  => array('form[error][albumsPath][invalid]'),
 			),
 			$results
 		);
@@ -71,8 +71,8 @@ class SelectGalleryControllerTest extends GalleryControllerTestCase {
 					'subView'    => 'migrate.ChooseObjects',
 					'albumsPath' => $albumsPath . $slash,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -92,8 +92,8 @@ class SelectGalleryControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'migrate.SelectGallery',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][albumsPath][missing]'),
+				'status' => array(),
+				'error'  => array('form[error][albumsPath][missing]'),
 			),
 			$results
 		);

@@ -41,12 +41,12 @@ class getid3_dsf extends getid3_handler {
 
 			return false;
 		}
-		$info['dsf']['dsd']['dsd_chunk_size']    = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8)); // should be 28
-		$headeroffset                           += 8;
-		$info['dsf']['dsd']['dsf_file_size']     = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));
-		$headeroffset                           += 8;
+		$info['dsf']['dsd']['dsd_chunk_size'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8)); // should be 28
+		$headeroffset                        += 8;
+		$info['dsf']['dsd']['dsf_file_size']  = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));
+		$headeroffset                        += 8;
 		$info['dsf']['dsd']['meta_chunk_offset'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));
-		$headeroffset                           += 8;
+		$headeroffset += 8;
 
 
 		$info['dsf']['fmt']['magic'] = substr($dsfheader, $headeroffset, 4);
@@ -60,30 +60,30 @@ class getid3_dsf extends getid3_handler {
 		}
 		$info['dsf']['fmt']['fmt_chunk_size'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));  // usually 52 bytes
 		$headeroffset                        += 8;
-		$dsfheader                           .= $this->fread($info['dsf']['fmt']['fmt_chunk_size'] - 12 + 12);  // we have already read the entire DSD chunk, plus 12 bytes of FMT. We now want to read the size of FMT, plus 12 bytes into the next chunk to get magic and size.
+		$dsfheader .= $this->fread($info['dsf']['fmt']['fmt_chunk_size'] - 12 + 12);  // we have already read the entire DSD chunk, plus 12 bytes of FMT. We now want to read the size of FMT, plus 12 bytes into the next chunk to get magic and size.
 		if (strlen($dsfheader) != ($info['dsf']['dsd']['dsd_chunk_size'] + $info['dsf']['fmt']['fmt_chunk_size'] + 12)) {
 			$info['error'][] = 'Expecting ' . ($info['dsf']['dsd']['dsd_chunk_size'] + $info['dsf']['fmt']['fmt_chunk_size']) . ' bytes header, found ' . strlen($dsfheader) . ' bytes';
 
 			return false;
 		}
-		$info['dsf']['fmt']['format_version']     = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));  // usually "1"
-		$headeroffset                            += 4;
-		$info['dsf']['fmt']['format_id']          = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));  // usually "0" = "DSD Raw"
-		$headeroffset                            += 4;
-		$info['dsf']['fmt']['channel_type_id']    = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
-		$headeroffset                            += 4;
-		$info['dsf']['fmt']['channels']           = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
-		$headeroffset                            += 4;
-		$info['dsf']['fmt']['sample_rate']        = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
-		$headeroffset                            += 4;
-		$info['dsf']['fmt']['bits_per_sample']    = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
-		$headeroffset                            += 4;
-		$info['dsf']['fmt']['sample_count']       = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));
-		$headeroffset                            += 8;
+		$info['dsf']['fmt']['format_version']  = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));  // usually "1"
+		$headeroffset                         += 4;
+		$info['dsf']['fmt']['format_id']       = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));  // usually "0" = "DSD Raw"
+		$headeroffset                         += 4;
+		$info['dsf']['fmt']['channel_type_id'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
+		$headeroffset                         += 4;
+		$info['dsf']['fmt']['channels']        = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
+		$headeroffset                         += 4;
+		$info['dsf']['fmt']['sample_rate']     = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
+		$headeroffset                         += 4;
+		$info['dsf']['fmt']['bits_per_sample'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
+		$headeroffset                         += 4;
+		$info['dsf']['fmt']['sample_count']    = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));
+		$headeroffset                         += 8;
 		$info['dsf']['fmt']['channel_block_size'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4));
-		$headeroffset                            += 4;
-		$info['dsf']['fmt']['reserved']           = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4)); // zero-filled
-		$headeroffset                            += 4;
+		$headeroffset                  += 4;
+		$info['dsf']['fmt']['reserved'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4)); // zero-filled
+		$headeroffset                  += 4;
 
 
 		$info['dsf']['data']['magic'] = substr($dsfheader, $headeroffset, 4);
@@ -96,9 +96,9 @@ class getid3_dsf extends getid3_handler {
 			return false;
 		}
 		$info['dsf']['data']['data_chunk_size'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));
-		$headeroffset                          += 8;
-		$info['avdataoffset']                   = $headeroffset;
-		$info['avdataend']                      = $info['avdataoffset'] + $info['dsf']['data']['data_chunk_size'];
+		$headeroffset        += 8;
+		$info['avdataoffset'] = $headeroffset;
+		$info['avdataend']    = $info['avdataoffset'] + $info['dsf']['data']['data_chunk_size'];
 
 
 		if ($info['dsf']['dsd']['meta_chunk_offset'] > 0) {

@@ -117,8 +117,8 @@ class CustomFieldItemAdminController extends GalleryController {
 
 				foreach (array(
 					'common' => 0,
-					'album'  => 1,
-					'photo'  => 2,
+					'album' => 1,
+					'photo' => 2,
 				) as $set => $setType) {
 					$fieldList = array();
 

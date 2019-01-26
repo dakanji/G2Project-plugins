@@ -36,7 +36,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 		global $gallery;
 
 		$eventName = $event->getEventName();
-		$entity = $event->getEntity();
+		$entity    = $event->getEntity();
 
 		if (empty($entity)) {
 			return array(GalleryCoreApi::error(
@@ -53,7 +53,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 				return array(null, null);
 			}
 
-			$parentId = $entity->getParentId();
+			$parentId             = $entity->getParentId();
 			list($ret, $eventMap) = NotificationHelper::getSubscriberByEntityId($parentId);
 
 			if ($ret) {
@@ -67,7 +67,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			}
 		} elseif ($eventName == 'GalleryEntity::delete') {
 			$deleteByColumn = GalleryUtilities::isA($entity, 'GalleryUser') ? 'userId' : 'itemId';
-			$ret = GalleryCoreApi::removeMapEntry(
+			$ret            = GalleryCoreApi::removeMapEntry(
 			'SubscriptionMap',
 						  array($deleteByColumn => $entity->getId())
 		);
@@ -118,8 +118,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			$requiredPermission = $notification->getPermission();
 
 			foreach ($subscribers as $data) {
-				list($ret, $permissions) =
-			GalleryCoreApi::getPermissions($entity->getId(), $data[0]);
+				list($ret, $permissions) = 			GalleryCoreApi::getPermissions($entity->getId(), $data[0]);
 
 				if ($ret) {
 					return $ret;

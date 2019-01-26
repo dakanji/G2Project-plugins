@@ -72,7 +72,7 @@ class AdminDcrawController extends GalleryController {
 
 			if (empty($error)) {
 				foreach (array(
-					'path'    => $form['path'],
+					'path' => $form['path'],
 					'version' => $version,
 				) as $key => $value) {
 					$ret = GalleryCoreApi::setPluginParameter('module', 'dcraw', $key, $value);

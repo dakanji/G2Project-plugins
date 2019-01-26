@@ -133,9 +133,9 @@ class getid3_apetag extends getid3_handler {
 
 			$thisfile_ape_items_current['offset'] = $thisfile_ape['tag_offset_start'] + $offset;
 
-			$offset                            += ($ItemKeyLength + 1); // skip 0x00 terminator
+			$offset += ($ItemKeyLength + 1); // skip 0x00 terminator
 			$thisfile_ape_items_current['data'] = substr($APEtagData, $offset, $value_size);
-			$offset                            += $value_size;
+			$offset += $value_size;
 
 			$thisfile_ape_items_current['flags'] = $this->parseAPEtagFlags($item_flags);
 

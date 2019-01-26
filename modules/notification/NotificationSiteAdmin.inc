@@ -275,7 +275,7 @@ class NotificationSiteAdminView extends GalleryView {
 		}
 
 		$form['totalRows']   = count($form['notificationMap']) + 20;
-		$form['displayRows'] = count($notifications) + 1;
+		$form['displayRows'] = count($notifications)           + 1;
 
 		return null;
 	}

@@ -365,15 +365,17 @@ class WebDavModule extends GalleryModule {
 			// Check that OPTIONS responses include the DAV headers
 			GalleryCoreApi::requireOnce('modules/webdav/classes/WebDavHelper.class');
 
-			if (WebDavHelper::checkDavHeaders($urlGenerator->generateUrl(
-				array(
-					'controller' => 'webdav.WebDav',
-				),
-				array(
-					'forceFullUrl' => true,
-					'htmlEntities' => false,
+			if (WebDavHelper::checkDavHeaders(
+				$urlGenerator->generateUrl(
+					array(
+						'controller' => 'webdav.WebDav',
+					),
+					array(
+						'forceFullUrl' => true,
+						'htmlEntities' => false,
+					)
 				)
-			))
+			)
 			) {
 				return $rules;
 			}
@@ -381,13 +383,13 @@ class WebDavModule extends GalleryModule {
 
 		// Redirect OPTIONS requests so we can set DAV headers
 		$rules['options'] = array(
-			'comment'    => $this->translate('OPTIONS Requests'),
-			'help'       => $this->translate(
+			'comment' => $this->translate('OPTIONS Requests'),
+			'help'    => $this->translate(
 				'Redirect OPTIONS requests so we can set DAV headers.'
 			),
 
 			// Use trailing '/' to avoid 301 Moved Permanently
-			'match'      => array(
+			'match'   => array(
 				'href' => 'modules/webdav/data/options/',
 			),
 			'conditions' => array(

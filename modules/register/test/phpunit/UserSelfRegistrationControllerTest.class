@@ -48,10 +48,10 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 		}
 
 		foreach (array(
-			'emailadmins'      => 0,
-			'emailusers'       => 1,
-			'subject'          => 'ConfEmail',
-			'usersubject'      => 'WelcomeEmail',
+			'emailadmins' => 0,
+			'emailusers' => 1,
+			'subject' => 'ConfEmail',
+			'usersubject' => 'WelcomeEmail',
 			'validation.level' => 'HIGH',
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'register', $key, $value);
@@ -73,8 +73,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'core.UserAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -107,8 +107,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Failed to register user with automatic activation'
@@ -159,8 +159,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'pending'               => true,
 					'sentConfirmationEmail' => true,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Failed to register user with email activation'
@@ -214,8 +214,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'pending'               => true,
 					'sentConfirmationEmail' => true,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Failed to register user with email activation'
@@ -258,8 +258,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][userName][missing]',
 					'form[error][email][missing]',
 					'form[error][password1][missing]',
@@ -286,8 +286,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][email][invalid]'),
+				'status' => array(),
+				'error'  => array('form[error][email][invalid]'),
 			),
 			$results
 		);
@@ -313,8 +313,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][password2][mismatch]'),
+				'status' => array(),
+				'error'  => array('form[error][password2][mismatch]'),
 			),
 			$results
 		);
@@ -346,8 +346,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'subView' => 'register.SelfRegistrationSuccess',
 					'pending' => true,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Failed to create first pending user'
@@ -362,8 +362,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][userName][exists]'),
+				'status' => array(),
+				'error'  => array('form[error][userName][exists]'),
 			),
 			$results,
 			'Create duplicate'
@@ -407,8 +407,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results,
 			'Failed to create first user'
@@ -425,8 +425,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][userName][exists]'),
+				'status' => array(),
+				'error'  => array('form[error][userName][exists]'),
 			),
 			$results,
 			'Create duplicate'
@@ -475,8 +475,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][UserSelfRegistrationControllerTestPlugin1][anError]'),
+				'status' => array(),
+				'error'  => array('form[error][UserSelfRegistrationControllerTestPlugin1][anError]'),
 			),
 			$results
 		);
@@ -515,8 +515,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error'  => array(
 					'form[error][UserSelfRegistrationControllerTestPlugin1][anError]',
 					'form[error][UserSelfRegistrationControllerTestPlugin2][anError]',
 				),
@@ -562,8 +562,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);
@@ -619,8 +619,8 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.SelfRegistrationSuccess',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error'  => array(),
 			),
 			$results
 		);

@@ -221,17 +221,21 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
 		$this->assertEquals(array(), $errors, 'errors');
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				sprintf(
-					$this->_usingMessage,
-					$filesize,
-					$this->_KB,
-					1.95,
-					$this->_MB
+				array(
+					sprintf(
+						$this->_usingMessage,
+						$filesize,
+						$this->_KB,
+						1.95,
+						$this->_MB
+					),
 				),
 			),
-		), $warnings, 'warnings');
+			$warnings,
+			'warnings'
+		);
 	}
 
 	public function testUserKBQuotaAddOneFail() {
@@ -359,17 +363,21 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
 		$this->assertEquals(array(), $errors, 'errors');
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				sprintf(
-					$this->_usingMessage,
-					$filesize,
-					$this->_KB,
-					1.91,
-					$this->_GB
+				array(
+					sprintf(
+						$this->_usingMessage,
+						$filesize,
+						$this->_KB,
+						1.91,
+						$this->_GB
+					),
 				),
 			),
-		), $warnings, 'warnings');
+			$warnings,
+			'warnings'
+		);
 	}
 
 	public function testGroupTBQuota() {
@@ -482,17 +490,21 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		$filesize                = (int)($this->_platform->filesize(__FILE__) / 1024);
 		list($errors, $warnings) = $this->_handleRequestAfterAdd(array(), array($item));
 		$this->assertEquals(array(), $errors, 'errors');
-		$this->assertEquals(array(
+		$this->assertEquals(
 			array(
-				sprintf(
-					$this->_usingMessage,
-					$filesize,
-					$this->_KB,
-					500,
-					$this->_KB
+				array(
+					sprintf(
+						$this->_usingMessage,
+						$filesize,
+						$this->_KB,
+						500,
+						$this->_KB
+					),
 				),
 			),
-		), $warnings, 'warnings');
+			$warnings,
+			'warnings'
+		);
 	}
 
 	public function testUserAndGroupQuota() {

@@ -316,11 +316,11 @@ class UploadItemsView extends GalleryView {
 
 		list($UploadItems['albumId'],
 		  $UploadItems['stripExtensions'],
-		  $UploadItems['setCaptions']) = GalleryUtilities::getRequestVariables(
-			  'albumId',
-			  'stripExtensions',
-			  'setCaptions'
-		  );
+		$UploadItems['setCaptions']) = GalleryUtilities::getRequestVariables(
+			'albumId',
+			'stripExtensions',
+			'setCaptions'
+		);
 
 		if (empty($UploadItems['stripExtensions'])) {
 			$UploadItems['stripExtensions'] = 0;
