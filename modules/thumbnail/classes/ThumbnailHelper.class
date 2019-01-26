@@ -545,7 +545,7 @@ class ThumbnailHelper {
 	public static function getMimeTypeMap() {
 		global $gallery;
 
-		$query                     = '
+		$query = '
 		SELECT [GalleryMimeTypeMap::mimeType], [GalleryMimeTypeMap::extension]
 		FROM [GalleryMimeTypeMap]
 		ORDER BY [GalleryMimeTypeMap::mimeType]

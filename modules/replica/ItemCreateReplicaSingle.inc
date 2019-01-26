@@ -206,8 +206,8 @@ class ItemCreateReplicaSingleView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$ItemCreateReplicaSingle                  = array();
-		$ItemCreateReplicaSingle['albumTree']     = GalleryUtilities::createAlbumTree($albums);
+		$ItemCreateReplicaSingle              = array();
+		$ItemCreateReplicaSingle['albumTree'] = GalleryUtilities::createAlbumTree($albums);
 		$ItemCreateReplicaSingle['itemTypeNames'] = $item->itemTypeName();
 
 		$template->setVariable('ItemCreateReplicaSingle', $ItemCreateReplicaSingle);

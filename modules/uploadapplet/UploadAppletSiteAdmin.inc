@@ -90,7 +90,7 @@ class UploadAppletSiteAdminController extends GalleryController {
 
 
 		// Figure out where to redirect upon success
-		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$method = empty($error) ? 'redirect' : 'delegate';
 		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'uploadapplet.UploadAppletSiteAdmin';
 		$results['status']           = $status;

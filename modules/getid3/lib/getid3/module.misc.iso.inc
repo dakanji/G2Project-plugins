@@ -62,10 +62,10 @@ class getid3_iso extends getid3_handler {
 		// ie 12345 == 0x3039  is stored as $39 $30 $30 $39 in a 4-byte field
 
 		// shortcuts
-		$info                                            = &$this->getid3->info;
+		$info = &$this->getid3->info;
 		$info['iso']['primary_volume_descriptor']['raw'] = array();
-		$thisfile_iso_primaryVD                          = &$info['iso']['primary_volume_descriptor'];
-		$thisfile_iso_primaryVD_raw                      = &$thisfile_iso_primaryVD['raw'];
+		$thisfile_iso_primaryVD     = &$info['iso']['primary_volume_descriptor'];
+		$thisfile_iso_primaryVD_raw = &$thisfile_iso_primaryVD['raw'];
 
 		$thisfile_iso_primaryVD_raw['volume_descriptor_type'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 0, 1));
 		$thisfile_iso_primaryVD_raw['standard_identifier']    = substr($ISOheader, 1, 5);
@@ -137,10 +137,10 @@ class getid3_iso extends getid3_handler {
 		// ie 12345 == 0x3039  is stored as $39 $30 $30 $39 in a 4-byte field
 
 		// shortcuts
-		$info                                                  = &$this->getid3->info;
+		$info = &$this->getid3->info;
 		$info['iso']['supplementary_volume_descriptor']['raw'] = array();
-		$thisfile_iso_supplementaryVD                          = &$info['iso']['supplementary_volume_descriptor'];
-		$thisfile_iso_supplementaryVD_raw                      = &$thisfile_iso_supplementaryVD['raw'];
+		$thisfile_iso_supplementaryVD     = &$info['iso']['supplementary_volume_descriptor'];
+		$thisfile_iso_supplementaryVD_raw = &$thisfile_iso_supplementaryVD['raw'];
 
 		$thisfile_iso_supplementaryVD_raw['volume_descriptor_type'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 0, 1));
 		$thisfile_iso_supplementaryVD_raw['standard_identifier']    = substr($ISOheader, 1, 5);
@@ -249,15 +249,15 @@ class getid3_iso extends getid3_handler {
 			$thisfile_iso_pathtable_directories_current             = &$info['iso']['path_table']['directories'][$pathcounter];
 
 			$thisfile_iso_pathtable_directories_current['length'] = getid3_lib::LittleEndian2Int(substr($info['iso']['path_table']['raw'], $offset, 1));
-			$offset                                              += 1;
+			$offset += 1;
 			$thisfile_iso_pathtable_directories_current['extended_length'] = getid3_lib::LittleEndian2Int(substr($info['iso']['path_table']['raw'], $offset, 1));
 			$offset += 1;
 			$thisfile_iso_pathtable_directories_current['location_logical'] = getid3_lib::LittleEndian2Int(substr($info['iso']['path_table']['raw'], $offset, 4));
 			$offset += 4;
 			$thisfile_iso_pathtable_directories_current['parent_directory'] = getid3_lib::LittleEndian2Int(substr($info['iso']['path_table']['raw'], $offset, 2));
-			$offset                                            += 2;
+			$offset += 2;
 			$thisfile_iso_pathtable_directories_current['name'] = substr($info['iso']['path_table']['raw'], $offset, $thisfile_iso_pathtable_directories_current['length']);
-			$offset                                            += $thisfile_iso_pathtable_directories_current['length'] + ($thisfile_iso_pathtable_directories_current['length'] % 2);
+			$offset += $thisfile_iso_pathtable_directories_current['length'] + ($thisfile_iso_pathtable_directories_current['length'] % 2);
 
 			$thisfile_iso_pathtable_directories_current['name_ascii'] = getid3_lib::iconv_fallback($TextEncoding, $info['encoding'], $thisfile_iso_pathtable_directories_current['name']);
 
@@ -291,23 +291,23 @@ class getid3_iso extends getid3_handler {
 		while (ord($DirectoryRecordData[0]) > 33) {
 			$DirectoryRecordData .= $this->fread(ord($DirectoryRecordData[0]) - 1);
 
-			$ThisDirectoryRecord['raw']['length']                    = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 0, 1));
+			$ThisDirectoryRecord['raw']['length'] = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 0, 1));
 			$ThisDirectoryRecord['raw']['extended_attribute_length'] = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 1, 1));
 			$ThisDirectoryRecord['raw']['offset_logical']            = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 2, 4));
-			$ThisDirectoryRecord['raw']['filesize']                  = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 10, 4));
-			$ThisDirectoryRecord['raw']['recording_date_time']       = substr($DirectoryRecordData, 18, 7);
-			$ThisDirectoryRecord['raw']['file_flags']                = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 25, 1));
-			$ThisDirectoryRecord['raw']['file_unit_size']            = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 26, 1));
-			$ThisDirectoryRecord['raw']['interleave_gap_size']       = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 27, 1));
-			$ThisDirectoryRecord['raw']['volume_sequence_number']    = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 28, 2));
-			$ThisDirectoryRecord['raw']['file_identifier_length']    = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 32, 1));
-			$ThisDirectoryRecord['raw']['file_identifier']           = substr($DirectoryRecordData, 33, $ThisDirectoryRecord['raw']['file_identifier_length']);
+			$ThisDirectoryRecord['raw']['filesize']               = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 10, 4));
+			$ThisDirectoryRecord['raw']['recording_date_time']    = substr($DirectoryRecordData, 18, 7);
+			$ThisDirectoryRecord['raw']['file_flags']             = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 25, 1));
+			$ThisDirectoryRecord['raw']['file_unit_size']         = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 26, 1));
+			$ThisDirectoryRecord['raw']['interleave_gap_size']    = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 27, 1));
+			$ThisDirectoryRecord['raw']['volume_sequence_number'] = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 28, 2));
+			$ThisDirectoryRecord['raw']['file_identifier_length'] = getid3_lib::LittleEndian2Int(substr($DirectoryRecordData, 32, 1));
+			$ThisDirectoryRecord['raw']['file_identifier']        = substr($DirectoryRecordData, 33, $ThisDirectoryRecord['raw']['file_identifier_length']);
 
 			$ThisDirectoryRecord['file_identifier_ascii'] = getid3_lib::iconv_fallback($TextEncoding, $info['encoding'], $ThisDirectoryRecord['raw']['file_identifier']);
 
-			$ThisDirectoryRecord['filesize']                  = $ThisDirectoryRecord['raw']['filesize'];
-			$ThisDirectoryRecord['offset_bytes']              = $ThisDirectoryRecord['raw']['offset_logical'] * 2048;
-			$ThisDirectoryRecord['file_flags']['hidden']      = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x01);
+			$ThisDirectoryRecord['filesize']             = $ThisDirectoryRecord['raw']['filesize'];
+			$ThisDirectoryRecord['offset_bytes']         = $ThisDirectoryRecord['raw']['offset_logical'] * 2048;
+			$ThisDirectoryRecord['file_flags']['hidden'] = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x01);
 			$ThisDirectoryRecord['file_flags']['directory']   = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x02);
 			$ThisDirectoryRecord['file_flags']['associated']  = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x04);
 			$ThisDirectoryRecord['file_flags']['extended']    = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x08);

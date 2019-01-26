@@ -75,7 +75,7 @@ class getid3_apetag extends getid3_handler {
 		if (isset($thisfile_ape['footer']['flags']['header']) && $thisfile_ape['footer']['flags']['header']) {
 			$this->fseek($thisfile_ape['tag_offset_end'] - $thisfile_ape['footer']['raw']['tagsize'] - $apetagheadersize);
 			$thisfile_ape['tag_offset_start'] = $this->ftell();
-			$APEtagData                       = $this->fread($thisfile_ape['footer']['raw']['tagsize'] + $apetagheadersize);
+			$APEtagData = $this->fread($thisfile_ape['footer']['raw']['tagsize'] + $apetagheadersize);
 		} else {
 			$thisfile_ape['tag_offset_start'] = $thisfile_ape['tag_offset_end'] - $thisfile_ape['footer']['raw']['tagsize'];
 			$this->fseek($thisfile_ape['tag_offset_start']);
@@ -133,9 +133,9 @@ class getid3_apetag extends getid3_handler {
 
 			$thisfile_ape_items_current['offset'] = $thisfile_ape['tag_offset_start'] + $offset;
 
-			$offset                            += ($ItemKeyLength + 1); // skip 0x00 terminator
+			$offset += ($ItemKeyLength + 1); // skip 0x00 terminator
 			$thisfile_ape_items_current['data'] = substr($APEtagData, $offset, $value_size);
-			$offset                            += $value_size;
+			$offset += $value_size;
 
 			$thisfile_ape_items_current['flags'] = $this->parseAPEtagFlags($item_flags);
 
@@ -204,9 +204,9 @@ class getid3_apetag extends getid3_handler {
 				case 'mp3gain_undo':
 					if (preg_match('#^[\\-\\+][0-9]{3},[\\-\\+][0-9]{3},[NW]$#', $thisfile_ape_items_current['data'][0])) {
 						list($mp3gain_undo_left, $mp3gain_undo_right, $mp3gain_undo_wrap) = explode(',', $thisfile_ape_items_current['data'][0]);
-						$thisfile_replaygain['mp3gain']['undo_left']                      = intval($mp3gain_undo_left);
-						$thisfile_replaygain['mp3gain']['undo_right']                     = intval($mp3gain_undo_right);
-						$thisfile_replaygain['mp3gain']['undo_wrap']                      = (($mp3gain_undo_wrap == 'Y') ? true : false);
+						$thisfile_replaygain['mp3gain']['undo_left']  = intval($mp3gain_undo_left);
+						$thisfile_replaygain['mp3gain']['undo_right'] = intval($mp3gain_undo_right);
+						$thisfile_replaygain['mp3gain']['undo_wrap']  = (($mp3gain_undo_wrap == 'Y') ? true : false);
 					} else {
 						$info['warning'][] = 'MP3gainUndo value in APEtag appears invalid: "' . $thisfile_ape_items_current['data'][0] . '"';
 					}
@@ -267,17 +267,17 @@ class getid3_apetag extends getid3_handler {
 				case 'cover art (studio)':
 					// list of possible cover arts from http://taglib-sharp.sourcearchive.com/documentation/2.0.3.0-2/Ape_2Tag_8cs-source.html
 					if (is_array($thisfile_ape_items_current['data'])) {
-						$info['warning'][]                  = 'APEtag "' . $item_key . '" should be flagged as Binary data, but was incorrectly flagged as UTF-8';
+						$info['warning'][] = 'APEtag "' . $item_key . '" should be flagged as Binary data, but was incorrectly flagged as UTF-8';
 						$thisfile_ape_items_current['data'] = implode("\x00", $thisfile_ape_items_current['data']);
 					}
 					list($thisfile_ape_items_current['filename'], $thisfile_ape_items_current['data']) = explode("\x00", $thisfile_ape_items_current['data'], 2);
-					$thisfile_ape_items_current['data_offset']                                         = $thisfile_ape_items_current['offset'] + strlen($thisfile_ape_items_current['filename'] . "\x00");
-					$thisfile_ape_items_current['data_length']                                         = strlen($thisfile_ape_items_current['data']);
+					$thisfile_ape_items_current['data_offset'] = $thisfile_ape_items_current['offset'] + strlen($thisfile_ape_items_current['filename'] . "\x00");
+					$thisfile_ape_items_current['data_length'] = strlen($thisfile_ape_items_current['data']);
 
 					do {
 						$thisfile_ape_items_current['image_mime'] = '';
-						$imageinfo                                = array();
-						$imagechunkcheck                          = getid3_lib::GetDataImageSize($thisfile_ape_items_current['data'], $imageinfo);
+						$imageinfo       = array();
+						$imagechunkcheck = getid3_lib::GetDataImageSize($thisfile_ape_items_current['data'], $imageinfo);
 
 						if (($imagechunkcheck === false) || !isset($imagechunkcheck[2])) {
 							$info['warning'][] = 'APEtag "' . $item_key . '" contains invalid image data';

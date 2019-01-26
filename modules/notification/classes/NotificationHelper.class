@@ -513,7 +513,7 @@ class NotificationHelper {
 			return $ret;
 		}
 
-		$sql                 = 'SELECT COUNT(*) FROM [SubscriptionMap]
+		$sql = 'SELECT COUNT(*) FROM [SubscriptionMap]
 		WHERE [SubscriptionMap::notificationName] = ?';
 		list($ret, $results) = $storage->search($sql, array($event));
 

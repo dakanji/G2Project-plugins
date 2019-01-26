@@ -248,7 +248,7 @@ class RssHelper {
 		}
 
 		// if necessary, fetch the thumbnails
-		if (! strstr($param['feedType'], 'comments')) {
+		if (!strstr($param['feedType'], 'comments')) {
 			$itemIds = array();
 
 			foreach ($items as $item) {
@@ -625,7 +625,7 @@ class RssHelper {
 	      [GalleryAccessSubscriberMap], [GalleryEntity]
 	    WHERE ";
 
-		if (! $random) {
+		if (!$random) {
 			$query .= "
 	      [GalleryEntity::$timestamp] >= $timeCutOff
 	      AND ";

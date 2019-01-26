@@ -219,8 +219,8 @@ class DynamicAlbumTest extends GalleryTestCase {
 				return $ret;
 			}
 
-			$template              = new GalleryTemplate(dirname(dirname(dirname(dirname(__DIR__)))));
-			$theme                 =& $template->getVariableByReference('theme');
+			$template = new GalleryTemplate(dirname(dirname(dirname(dirname(__DIR__)))));
+			$theme    =& $template->getVariableByReference('theme');
 			$theme['actingUserId'] = $gallery->getActiveUserId();
 
 			list($ret, $result) = $view->loadTemplate($template, $form = array());
@@ -256,8 +256,8 @@ class DynamicAlbumTest extends GalleryTestCase {
 		) as $key => $view) {
 			GalleryUtilities::putRequestVariable('show', $type[$key]);
 
-			$template              = new GalleryTemplate(dirname(dirname(dirname(dirname(__DIR__)))));
-			$theme                 =& $template->getVariableByReference('theme');
+			$template = new GalleryTemplate(dirname(dirname(dirname(dirname(__DIR__)))));
+			$theme    =& $template->getVariableByReference('theme');
 			$theme['actingUserId'] = $gallery->getActiveUserId();
 
 			list($ret, $result) = $view->loadTemplate($template, $form = array());
@@ -340,7 +340,7 @@ class DynamicAlbumTest extends GalleryTestCase {
 
 	public function testLoadTemplateForAlbumNoPermission() {
 		global $gallery;
-		$theme                 =& $this->_template->getVariableByReference('theme');
+		$theme =& $this->_template->getVariableByReference('theme');
 		$theme['actingUserId'] = $gallery->getActiveUserId();
 
 		$ret = GalleryCoreApi::setPluginParameter('module', 'dynamicalbum', 'size.views', '0');

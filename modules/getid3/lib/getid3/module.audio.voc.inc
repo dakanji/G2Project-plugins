@@ -36,11 +36,11 @@ class getid3_voc extends getid3_handler {
 		$info['voc']    = array();
 		$thisfile_voc   = &$info['voc'];
 
-		$info['fileformat']                = 'voc';
-		$thisfile_audio['dataformat']      = 'voc';
-		$thisfile_audio['bitrate_mode']    = 'cbr';
-		$thisfile_audio['lossless']        = true;
-		$thisfile_audio['channels']        = 1; // might be overriden below
+		$info['fileformat']             = 'voc';
+		$thisfile_audio['dataformat']   = 'voc';
+		$thisfile_audio['bitrate_mode'] = 'cbr';
+		$thisfile_audio['lossless']     = true;
+		$thisfile_audio['channels']     = 1; // might be overriden below
 		$thisfile_audio['bits_per_sample'] = 8; // might be overriden below
 
 		// byte #     Description

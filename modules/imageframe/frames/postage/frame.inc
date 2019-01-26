@@ -3,66 +3,66 @@
   // Contributed by: demonhood
 $frameData = array(
 
-	'name'      => $gallery->i18n('Postage'),
+	'name'    => $gallery->i18n('Postage'),
 
 	// Top Left
-	'imageTL'   => 'TL5.gif',
-	'widthTL'   => 10,
-	'heightTL'  => 10,
+	'imageTL' => 'TL5.gif',
+	'widthTL' => 10,
+	'heightTL' => 10,
 
 	// Top
-	'imageTTL'  => '',
-	'widthTTL'  => 0,
+	'imageTTL' => '',
+	'widthTTL' => 0,
 
-	'imageTT'   => 'TT5.gif',
-	'heightTT'  => 10,
+	'imageTT' => 'TT5.gif',
+	'heightTT' => 10,
 
-	'imageTTR'  => '',
-	'widthTTR'  => 0,
+	'imageTTR' => '',
+	'widthTTR' => 0,
 
 	// Top Right
-	'imageTR'   => 'TR5.gif',
-	'widthTR'   => 10,
-	'heightTR'  => 10,
+	'imageTR' => 'TR5.gif',
+	'widthTR' => 10,
+	'heightTR' => 10,
 
 	// Left
-	'imageLLT'  => '',
+	'imageLLT' => '',
 	'heightLLT' => 0,
 
-	'imageLL'   => 'LL5.gif',
-	'widthLL'   => 10,
+	'imageLL' => 'LL5.gif',
+	'widthLL' => 10,
 
-	'imageLLB'  => '',
+	'imageLLB' => '',
 	'heightLLB' => 0,
 
 	// Right
-	'imageRRT'  => '',
+	'imageRRT' => '',
 	'heightRRT' => 0,
 
-	'imageRR'   => 'RR5.gif',
-	'widthRR'   => 10,
+	'imageRR' => 'RR5.gif',
+	'widthRR' => 10,
 
-	'imageRRB'  => '',
+	'imageRRB' => '',
 	'heightRRB' => 0,
 
 	// Bottom Left
-	'imageBL'   => 'BL5.gif',
-	'heightBL'  => 10,
-	'widthBL'   => 10,
+	'imageBL' => 'BL5.gif',
+	'heightBL' => 10,
+	'widthBL' => 10,
 
 	// Bottom
-	'imageBBL'  => '',
-	'widthBBL'  => 0,
+	'imageBBL' => '',
+	'widthBBL' => 0,
 
-	'imageBB'   => 'BB5.gif',
-	'heightBB'  => 10,
+	'imageBB' => 'BB5.gif',
+	'heightBB' => 10,
 
-	'imageBBR'  => '',
-	'widthBBR'  => 0,
+	'imageBBR' => '',
+	'widthBBR' => 0,
 
 	// Bottom Right
-	'imageBR'   => 'BR5.gif',
-	'widthBR'   => 10,
-	'heightBR'  => 10,
+	'imageBR' => 'BR5.gif',
+	'widthBR' => 10,
+	'heightBR' => 10,
 
 );

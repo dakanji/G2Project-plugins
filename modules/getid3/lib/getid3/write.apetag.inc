@@ -21,8 +21,8 @@ class getid3_write_apetag {
 	public $filename;
 	public $tag_data;
 	public $always_preserve_replaygain = true;    // ReplayGain / MP3gain tags will be copied from old tag even if not passed in data
-	public $warnings                   = array(); // any non-critical errors will be stored here
-	public $errors                     = array(); // any critical errors will be stored here
+	public $warnings = array(); // any non-critical errors will be stored here
+	public $errors   = array(); // any critical errors will be stored here
 
 	public function __construct() {
 		return true;

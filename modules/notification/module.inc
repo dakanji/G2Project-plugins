@@ -390,14 +390,14 @@ class NotificationModule extends GalleryModule {
 					}
 
 					while ($row = $results->nextResult()) {
-						$newRow                     = array(
+						$newRow           = array(
 							'userId'      => $row[1],
 							'handlerName' => 'NotificationMethodEmail',
 						);
-						$notificationName           = $row[0] == 'NotificationEventItemAdd' ? 'ItemAddedNotification' : 'CommentAddNotification';
+						$notificationName = $row[0] == 'NotificationEventItemAdd' ? 'ItemAddedNotification' : 'CommentAddNotification';
 						$newRow['notificationName'] = $notificationName;
 						$newRow['itemId']           = (int)substr($row[3], 2);
-						$ret                        = GalleryCoreApi::addMapEntry('SubscriptionMap', $newRow);
+						$ret = GalleryCoreApi::addMapEntry('SubscriptionMap', $newRow);
 
 						if ($ret) {
 							return $ret;

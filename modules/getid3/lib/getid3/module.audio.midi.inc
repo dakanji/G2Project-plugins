@@ -41,15 +41,15 @@ class getid3_midi extends getid3_handler {
 
 			return false;
 		}
-		$offset                            += 4;
-		$thisfile_midi_raw['headersize']    = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 4));
-		$offset                            += 4;
-		$thisfile_midi_raw['fileformat']    = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset                            += 2;
-		$thisfile_midi_raw['tracks']        = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset                            += 2;
+		$offset += 4;
+		$thisfile_midi_raw['headersize'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 4));
+		$offset += 4;
+		$thisfile_midi_raw['fileformat'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
+		$offset += 2;
+		$thisfile_midi_raw['tracks'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
+		$offset += 2;
 		$thisfile_midi_raw['ticksperqnote'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset                            += 2;
+		$offset += 2;
 
 		for ($i = 0; $i < $thisfile_midi_raw['tracks']; $i++) {
 			while ((strlen($MIDIdata) - $offset) < 8) {
@@ -118,10 +118,10 @@ class getid3_midi extends getid3_handler {
 							break;
 						}
 					}
-					$CumulativeDeltaTime                            += $deltatime;
-					$TicksAtCurrentBPM                              += $deltatime;
+					$CumulativeDeltaTime += $deltatime;
+					$TicksAtCurrentBPM   += $deltatime;
 					$MIDIevents[$tracknumber][$eventid]['deltatime'] = $deltatime;
-					$MIDI_event_channel                              = ord(substr($trackdata, $eventsoffset++, 1));
+					$MIDI_event_channel = ord(substr($trackdata, $eventsoffset++, 1));
 
 					if ($MIDI_event_channel & 0x80) {
 						// OK, normal event - MIDI command has MSB set
@@ -189,7 +189,7 @@ class getid3_midi extends getid3_handler {
 								break;
 
 							case 0x03: // Text: track name
-								$text_trackname                                   = substr($METAeventData, 0, $METAeventLength);
+								$text_trackname = substr($METAeventData, 0, $METAeventLength);
 								$thisfile_midi_raw['track'][$tracknumber]['name'] = $text_trackname;
 
 								break;
@@ -232,9 +232,9 @@ class getid3_midi extends getid3_handler {
 									return false;
 								}
 								$thisfile_midi_raw['events'][$tracknumber][$CumulativeDeltaTime]['us_qnote'] = $CurrentMicroSecondsPerBeat;
-								$CurrentBeatsPerMinute                                 = (1000000 / $CurrentMicroSecondsPerBeat) * 60;
+								$CurrentBeatsPerMinute = (1000000 / $CurrentMicroSecondsPerBeat) * 60;
 								$MicroSecondsPerQuarterNoteAfter[$CumulativeDeltaTime] = $CurrentMicroSecondsPerBeat;
-								$TicksAtCurrentBPM                                     = 0;
+								$TicksAtCurrentBPM = 0;
 
 								break;
 

@@ -98,7 +98,7 @@ class KeywordAlbumView extends GalleryView {
 			);
 			$item->getChildrenFunction = array('KeywordAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
-			$item                      = $viewItem;
+			$item = $viewItem;
 		}
 
 		if (empty($moduleParams['themeId'])) {

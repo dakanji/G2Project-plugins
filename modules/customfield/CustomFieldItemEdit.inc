@@ -140,7 +140,7 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 				break;
 
 			default:
-				$set                                           = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'album' : (GalleryUtilities::isA($item, 'GalleryPhotoItem') ? 'photo' : 'common');
+				$set = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'album' : (GalleryUtilities::isA($item, 'GalleryPhotoItem') ? 'photo' : 'common');
 				list($ret, $tmp, $param, $isContainerSettings) = CustomFieldHelper::fetchFieldValues(array($item), null, $set);
 
 				if ($ret) {

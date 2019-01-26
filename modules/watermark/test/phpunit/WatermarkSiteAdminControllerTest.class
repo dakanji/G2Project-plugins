@@ -51,8 +51,8 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$rand                = mt_rand();
-		$this->_randomName   = 'phpunit_' . $rand . '.jpg';
+		$rand              = mt_rand();
+		$this->_randomName = 'phpunit_' . $rand . '.jpg';
 		$this->_expectedName = 'phpunit_' . $rand . '_jpg';
 
 		// Get the list of watermarks before, then after delete any that we created

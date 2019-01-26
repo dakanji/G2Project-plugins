@@ -3,8 +3,8 @@
  */
 
 #gallery {
-  color: black !important;
-  background-color: gold !important;
+	color: black !important;
+	background-color: gold !important;
 }
 body.gallery { background-color: gold !important; }
 

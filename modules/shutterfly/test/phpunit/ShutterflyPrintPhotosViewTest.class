@@ -136,7 +136,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $shutterflySessionId;
 		$shutterflySession             = new GallerySession();
-		$ret                           = $shutterflySession->init();
+		$ret = $shutterflySession->init();
 
 		if ($ret) {
 			return $ret;
@@ -222,7 +222,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 			$_COOKIE[SESSION_ID_PARAMETER] = $shutterflySessionId;
 			$shutterflySession             = new GallerySession();
-			$ret                           = $shutterflySession->init();
+			$ret = $shutterflySession->init();
 
 			if ($ret) {
 				return $ret;

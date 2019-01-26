@@ -105,8 +105,8 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$cacheKey                   = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
-		$enabledMap                 = array(
+		$cacheKey   = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$enabledMap = array(
 			'Test:TestEvent' => array(
 				'Test:EventHandler' => array(),
 			),
@@ -731,7 +731,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		$parms    = GalleryDataCache::get($cacheKey);
 		$enabled  = unserialize($parms['_enabledMap']);
 		$enabled['Test:TestEvent']['Test:EventHandler']['public'] = true;
-		$parms['_enabledMap']                                     = serialize($enabled);
+		$parms['_enabledMap'] = serialize($enabled);
 		GalleryDataCache::put($cacheKey, $parms);
 
 		$storage =& $gallery->getStorage();
@@ -828,7 +828,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		$enabled  = unserialize($parms['_enabledMap']);
 		$enabled['Test:TestEvent']['Test:EventHandler']['public']  = true;
 		$enabled['Test:TestEvent']['Test:EventHandler']['enabled'] = true;
-		$parms['_enabledMap']                                      = serialize($enabled);
+		$parms['_enabledMap'] = serialize($enabled);
 		GalleryDataCache::put($cacheKey, $parms);
 
 		$storage =& $gallery->getStorage();
@@ -927,7 +927,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		$enabled  = unserialize($parms['_enabledMap']);
 		$enabled['Test:TestEvent']['Test:EventHandler']['public']  = true;
 		$enabled['Test:TestEvent']['Test:EventHandler']['enabled'] = true;
-		$parms['_enabledMap']                                      = serialize($enabled);
+		$parms['_enabledMap'] = serialize($enabled);
 		GalleryDataCache::put($cacheKey, $parms);
 
 		$storage =& $gallery->getStorage();

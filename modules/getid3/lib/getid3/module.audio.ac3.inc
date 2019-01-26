@@ -58,7 +58,7 @@ class getid3_ac3 extends getid3_handler {
 
 		if (strpos($this->AC3header['syncinfo'], self::syncword) === 0) {
 			$thisfile_ac3_raw['synchinfo']['synchword'] = self::syncword;
-			$offset                                     = 2;
+			$offset = 2;
 		} else {
 			if (!$this->isDependencyFor('matroska')) {
 				unset($info['fileformat'], $info['ac3']);
@@ -247,7 +247,7 @@ class getid3_ac3 extends getid3_handler {
 			$this->AC3header['bsi'] .= getid3_lib::BigEndian2Bin($this->fread($thisfile_ac3_raw_bsi['addbsi_length']));
 
 			$thisfile_ac3_raw_bsi['addbsi_data'] = substr($this->AC3header['bsi'], $this->BSIoffset, $thisfile_ac3_raw_bsi['addbsi_length'] * 8);
-			$this->BSIoffset                    += $thisfile_ac3_raw_bsi['addbsi_length'] * 8;
+			$this->BSIoffset += $thisfile_ac3_raw_bsi['addbsi_length'] * 8;
 		}
 
 		return true;
@@ -519,16 +519,16 @@ class getid3_ac3 extends getid3_handler {
 		$framesizeid = floor($frmsizecod / 2);
 
 		static $bitrateLookup = array(
-			0  => 32000,
-			1  => 40000,
-			2  => 48000,
-			3  => 56000,
-			4  => 64000,
-			5  => 80000,
-			6  => 96000,
-			7  => 112000,
-			8  => 128000,
-			9  => 160000,
+			0 => 32000,
+			1 => 40000,
+			2 => 48000,
+			3 => 56000,
+			4 => 64000,
+			5 => 80000,
+			6 => 96000,
+			7 => 112000,
+			8 => 128000,
+			9 => 160000,
 			10 => 192000,
 			11 => 224000,
 			12 => 256000,

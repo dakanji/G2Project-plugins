@@ -314,7 +314,7 @@ class ConfirmImportController extends GalleryController {
 
 				// Set a positive note for later.  Hooray!
 				$status['userImportSuccess'][$userName] = 1;
-				$user                                   = null;
+				$user = null;
 			}
 			$uid = null;
 			$numberOfUsersImported++;
@@ -431,7 +431,7 @@ class ConfirmImportController extends GalleryController {
 				$isHiddenAlbum = isset($hiddenAlbums[$album['name']]);
 			} else {
 				$albumfields[$album['name']] = $album;
-				$album                       = null;
+				$album = null;
 			}
 
 			if (!$targetAlbumID || !$album) {
@@ -997,7 +997,7 @@ class ConfirmImportController extends GalleryController {
 			}
 
 			$albumHighlight[$newAlbumInstanceId] = false;
-			list($ret, $item)                    = GalleryCoreApi::loadEntitiesById($newAlbumInstanceId, 'GalleryAlbumItem');
+			list($ret, $item) = GalleryCoreApi::loadEntitiesById($newAlbumInstanceId, 'GalleryAlbumItem');
 
 			if ($ret) {
 				return $ret;
@@ -1240,21 +1240,21 @@ class ConfirmImportController extends GalleryController {
 								return $ret;
 							}
 
-							$width                  = $importAlbumItem->image->raw_width;
-							$height                 = $importAlbumItem->image->raw_height;
-							$xPerc                  = GalleryUtilities::roundToString(
+							$width      = $importAlbumItem->image->raw_width;
+							$height     = $importAlbumItem->image->raw_height;
+							$xPerc      = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_x * 100 / $width,
 								3
 							);
-							$yPerc                  = GalleryUtilities::roundToString(
+							$yPerc      = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_y * 100 / $height,
 								3
 							);
-							$widthPerc              = GalleryUtilities::roundToString(
+							$widthPerc  = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_width * 100 / $width,
 								3
 							);
-							$heightPerc             = GalleryUtilities::roundToString(
+							$heightPerc = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_height * 100 / $height,
 								3
 							);
@@ -1725,7 +1725,7 @@ class ConfirmImportController extends GalleryController {
 			$thumbsCreated       = 0;
 
 			while (!empty($itemsCreated)) {
-				$chunk                  = array_splice($itemsCreated, 0, 20);
+				$chunk = array_splice($itemsCreated, 0, 20);
 				list($ret, $thumbTable) = GalleryCoreApi::fetchThumbnailsByItemIds($chunk);
 
 				if ($ret) {
@@ -2062,10 +2062,10 @@ class ConfirmImportView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$ConfirmImport                       = array();
-		$ConfirmImport['uids']               = $uids;
-		$ConfirmImport['albums']             = $albums;
-		$ConfirmImport['albumsPath']         = $albumsPath;
+		$ConfirmImport               = array();
+		$ConfirmImport['uids']       = $uids;
+		$ConfirmImport['albums']     = $albums;
+		$ConfirmImport['albumsPath'] = $albumsPath;
 		$ConfirmImport['existingAlbums']     = $existingAlbums;
 		$ConfirmImport['illegalAlbumNames']  = $illegalAlbumNames;
 		$ConfirmImport['destinationAlbumID'] = $destinationAlbumID;

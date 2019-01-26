@@ -167,7 +167,7 @@ class AdminDcrawView extends GalleryView {
 
 				if ($ret) {
 					if ($ret->getErrorCode() & ERROR_BAD_PATH) {
-						$testResults                  = array();
+						$testResults = array();
 						$form['error']['path']['bad'] = 1;
 					} else {
 						return array($ret, null);
@@ -202,8 +202,8 @@ class AdminDcrawView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$AdminDcraw                 = array();
-		$AdminDcraw['tests']        = $tests;
+		$AdminDcraw          = array();
+		$AdminDcraw['tests'] = $tests;
 		$AdminDcraw['debugSnippet'] = $debugSnippet;
 		$AdminDcraw['failCount']    = $failCount;
 		$AdminDcraw['isConfigure']  = !$isActive;

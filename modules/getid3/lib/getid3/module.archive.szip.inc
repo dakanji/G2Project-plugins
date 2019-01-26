@@ -80,7 +80,7 @@ class getid3_szip extends getid3_handler {
 						$BHheaderoffset              += 4;
 
 						$BHdataArray['modification_time'] = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 4));
-						$BHheaderoffset                  += 4;
+						$BHheaderoffset += 4;
 
 						$BHdataArray['access_time'] = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 4));
 						$BHheaderoffset            += 4;

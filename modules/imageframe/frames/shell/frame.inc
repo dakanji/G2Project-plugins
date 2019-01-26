@@ -3,66 +3,66 @@
   // Contributed by: floridave
 $frameData = array(
 
-	'name'      => $gallery->i18n('Shells'),
+	'name'    => $gallery->i18n('Shells'),
 
 	// Top Left
-	'imageTL'   => 'TL.jpg',
-	'widthTL'   => 58,
-	'heightTL'  => 58,
+	'imageTL' => 'TL.jpg',
+	'widthTL' => 58,
+	'heightTL' => 58,
 
 	// Top
-	'imageTTL'  => '',
-	'widthTTL'  => 0,
+	'imageTTL' => '',
+	'widthTTL' => 0,
 
-	'imageTT'   => 'TT.jpg',
-	'heightTT'  => 58,
+	'imageTT' => 'TT.jpg',
+	'heightTT' => 58,
 
-	'imageTTR'  => '',
-	'widthTTR'  => 0,
+	'imageTTR' => '',
+	'widthTTR' => 0,
 
 	// Top Right
-	'imageTR'   => 'TR.jpg',
-	'widthTR'   => 58,
-	'heightTR'  => 58,
+	'imageTR' => 'TR.jpg',
+	'widthTR' => 58,
+	'heightTR' => 58,
 
 	// Left
-	'imageLLT'  => '',
+	'imageLLT' => '',
 	'heightLLT' => 0,
 
-	'imageLL'   => 'LL.jpg',
-	'widthLL'   => 58,
+	'imageLL' => 'LL.jpg',
+	'widthLL' => 58,
 
-	'imageLLB'  => '',
+	'imageLLB' => '',
 	'heightLLB' => 0,
 
 	// Right
-	'imageRRT'  => '',
+	'imageRRT' => '',
 	'heightRRT' => 0,
 
-	'imageRR'   => 'RR.jpg',
-	'widthRR'   => 58,
+	'imageRR' => 'RR.jpg',
+	'widthRR' => 58,
 
-	'imageRRB'  => '',
+	'imageRRB' => '',
 	'heightRRB' => 0,
 
 	// Bottom Left
-	'imageBL'   => 'BL.jpg',
-	'widthBL'   => 58,
-	'heightBL'  => 58,
+	'imageBL' => 'BL.jpg',
+	'widthBL' => 58,
+	'heightBL' => 58,
 
 	// Bottom
-	'imageBBL'  => '',
-	'widthBBL'  => 0,
+	'imageBBL' => '',
+	'widthBBL' => 0,
 
-	'imageBB'   => 'BB.jpg',
-	'heightBB'  => 58,
+	'imageBB' => 'BB.jpg',
+	'heightBB' => 58,
 
-	'imageBBR'  => '',
-	'widthBBR'  => 0,
+	'imageBBR' => '',
+	'widthBBR' => 0,
 
 	// Bottom Right
-	'imageBR'   => 'BR.jpg',
-	'widthBR'   => 58,
-	'heightBR'  => 58,
+	'imageBR' => 'BR.jpg',
+	'widthBR' => 58,
+	'heightBR' => 58,
 
 );

@@ -204,7 +204,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(0, $this->_highlight->getWidth(), 'no width yet');
 
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$result = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
@@ -244,7 +244,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		// Make the album use randomhighlight
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$result = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
@@ -312,7 +312,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$result = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		GalleryDataCache::reset();
@@ -360,7 +360,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		// Make the album use randomhighlight
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$result = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
@@ -402,7 +402,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		// Make the album use randomhighlight
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$result = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();
@@ -464,7 +464,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$form['RandomHighlightOption']['isRandomHighlight'] = 1;
-		$result                                             = $this->_handleRequestAfterEdit($form, $this->_album);
+		$result = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(array(), array()), $result, 'turn on');
 
 		list($ret, $highlight) = $this->_highlight->refresh();

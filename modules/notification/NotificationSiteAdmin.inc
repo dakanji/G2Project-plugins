@@ -257,7 +257,7 @@ class NotificationSiteAdminView extends GalleryView {
 		}
 
 		$form['notificationMap'] = array();
-		$i                       = 1;
+		$i = 1;
 
 		foreach ($notifications as $notificationName => $handlers) {
 			foreach ($handlers as $handler => $enabledEvent) {

@@ -56,7 +56,7 @@ class ExternalView extends GalleryView {
 		global $gallery;
 
 		// Force UrlGenerator to not add session id into urls..
-		$session                  =& $gallery->getSession();
+		$session =& $gallery->getSession();
 		$session->_isUsingCookies = true;
 
 		$frameIds = array();
@@ -122,7 +122,7 @@ class ExternalView extends GalleryView {
 		$phpVm = $gallery->getPhpVm();
 
 		if ($template->hasVariable('ImageBlockData')) {
-			$ImageBlockData                 =& $template->getVariableByReference('ImageBlockData');
+			$ImageBlockData =& $template->getVariableByReference('ImageBlockData');
 			$ImageBlockData['forceFullUrl'] = 1;
 
 			// Check for rawImage - if requested, send binary image (only one image)

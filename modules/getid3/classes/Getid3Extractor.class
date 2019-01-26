@@ -71,7 +71,7 @@ class Getid3Extractor extends Getid3Interface_1_0 {
 					$value = Getid3Helper::_getValue($rawGetid3Data, explode('.', $keyData[$i]));
 
 					if (isset($value)) {
-						$value                    = Getid3Helper::postProcessValue($property, $value);
+						$value = Getid3Helper::postProcessValue($property, $value);
 						$data[$itemId][$property] = array(
 							'title' => $keyData[0],
 							'value' => $value,

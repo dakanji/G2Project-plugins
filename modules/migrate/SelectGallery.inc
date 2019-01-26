@@ -158,7 +158,7 @@ class SelectGalleryView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$SelectGallery                = array();
+		$SelectGallery = array();
 		$SelectGallery['recentPaths'] = $recentPaths;
 		$SelectGallery['hasToolkit']  = $hasToolkit;
 		$SelectGallery['mapCount']    = $mapCount;

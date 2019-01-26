@@ -82,11 +82,11 @@ class getid3_png extends getid3_handler {
 
 			switch ($chunk['type_text']) {
 				case 'IHDR': // Image Header
-					$thisfile_png_chunk_type_text['header']                    = $chunk;
-					$thisfile_png_chunk_type_text['width']                     = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4));
-					$thisfile_png_chunk_type_text['height']                    = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4));
-					$thisfile_png_chunk_type_text['raw']['bit_depth']          = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 1));
-					$thisfile_png_chunk_type_text['raw']['color_type']         = getid3_lib::BigEndian2Int(substr($chunk['data'], 9, 1));
+					$thisfile_png_chunk_type_text['header']            = $chunk;
+					$thisfile_png_chunk_type_text['width']             = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4));
+					$thisfile_png_chunk_type_text['height']            = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4));
+					$thisfile_png_chunk_type_text['raw']['bit_depth']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 1));
+					$thisfile_png_chunk_type_text['raw']['color_type'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 9, 1));
 					$thisfile_png_chunk_type_text['raw']['compression_method'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 10, 1));
 					$thisfile_png_chunk_type_text['raw']['filter_method']      = getid3_lib::BigEndian2Int(substr($chunk['data'], 11, 1));
 					$thisfile_png_chunk_type_text['raw']['interlace_method']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 12, 1));
@@ -106,15 +106,15 @@ class getid3_png extends getid3_handler {
 
 				case 'PLTE': // Palette
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-					$paletteoffset                          = 0;
+					$paletteoffset = 0;
 
 					for ($i = 0; $i <= 255; $i++) {
 						//$thisfile_png_chunk_type_text['red'][$i]   = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						//$thisfile_png_chunk_type_text['green'][$i] = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						//$thisfile_png_chunk_type_text['blue'][$i]  = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
-						$red                              = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
-						$green                            = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
-						$blue                             = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
+						$red   = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
+						$green = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
+						$blue  = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						$thisfile_png_chunk_type_text[$i] = (($red << 16) | ($green << 8) | ($blue));
 					}
 
@@ -180,17 +180,17 @@ class getid3_png extends getid3_handler {
 
 
 				case 'sRGB': // Standard RGB Color Space
-					$thisfile_png_chunk_type_text['header']                 = $chunk;
-					$thisfile_png_chunk_type_text['reindering_intent']      = getid3_lib::BigEndian2Int($chunk['data']);
+					$thisfile_png_chunk_type_text['header']            = $chunk;
+					$thisfile_png_chunk_type_text['reindering_intent'] = getid3_lib::BigEndian2Int($chunk['data']);
 					$thisfile_png_chunk_type_text['reindering_intent_text'] = $this->PNGsRGBintentLookup($thisfile_png_chunk_type_text['reindering_intent']);
 
 					break;
 
 
 				case 'iCCP': // Embedded ICC Profile
-					$thisfile_png_chunk_type_text['header']              = $chunk;
-					list($profilename, $compressiondata)                 = explode("\x00", $chunk['data'], 2);
-					$thisfile_png_chunk_type_text['profile_name']        = $profilename;
+					$thisfile_png_chunk_type_text['header']       = $chunk;
+					list($profilename, $compressiondata)          = explode("\x00", $chunk['data'], 2);
+					$thisfile_png_chunk_type_text['profile_name'] = $profilename;
 					$thisfile_png_chunk_type_text['compression_method']  = getid3_lib::BigEndian2Int(substr($compressiondata, 0, 1));
 					$thisfile_png_chunk_type_text['compression_profile'] = substr($compressiondata, 1);
 
@@ -200,8 +200,8 @@ class getid3_png extends getid3_handler {
 
 
 				case 'tEXt': // Textual Data
-					$thisfile_png_chunk_type_text['header']  = $chunk;
-					list($keyword, $text)                    = explode("\x00", $chunk['data'], 2);
+					$thisfile_png_chunk_type_text['header'] = $chunk;
+					list($keyword, $text) = explode("\x00", $chunk['data'], 2);
 					$thisfile_png_chunk_type_text['keyword'] = $keyword;
 					$thisfile_png_chunk_type_text['text']    = $text;
 
@@ -211,9 +211,9 @@ class getid3_png extends getid3_handler {
 
 
 				case 'zTXt': // Compressed Textual Data
-					$thisfile_png_chunk_type_text['header']                  = $chunk;
-					list($keyword, $otherdata)                               = explode("\x00", $chunk['data'], 2);
-					$thisfile_png_chunk_type_text['keyword']                 = $keyword;
+					$thisfile_png_chunk_type_text['header']  = $chunk;
+					list($keyword, $otherdata)               = explode("\x00", $chunk['data'], 2);
+					$thisfile_png_chunk_type_text['keyword'] = $keyword;
 					$thisfile_png_chunk_type_text['compression_method']      = getid3_lib::BigEndian2Int(substr($otherdata, 0, 1));
 					$thisfile_png_chunk_type_text['compressed_text']         = substr($otherdata, 1);
 					$thisfile_png_chunk_type_text['compression_method_text'] = $this->PNGcompressionMethodLookup($thisfile_png_chunk_type_text['compression_method']);
@@ -237,9 +237,9 @@ class getid3_png extends getid3_handler {
 
 
 				case 'iTXt': // International Textual Data
-					$thisfile_png_chunk_type_text['header']                  = $chunk;
-					list($keyword, $otherdata)                               = explode("\x00", $chunk['data'], 2);
-					$thisfile_png_chunk_type_text['keyword']                 = $keyword;
+					$thisfile_png_chunk_type_text['header']  = $chunk;
+					list($keyword, $otherdata)               = explode("\x00", $chunk['data'], 2);
+					$thisfile_png_chunk_type_text['keyword'] = $keyword;
 					$thisfile_png_chunk_type_text['compression']             = (bool)getid3_lib::BigEndian2Int(substr($otherdata, 0, 1));
 					$thisfile_png_chunk_type_text['compression_method']      = getid3_lib::BigEndian2Int(substr($otherdata, 1, 1));
 					$thisfile_png_chunk_type_text['compression_method_text'] = $this->PNGcompressionMethodLookup($thisfile_png_chunk_type_text['compression_method']);
@@ -348,26 +348,26 @@ class getid3_png extends getid3_handler {
 
 
 				case 'sPLT': // Suggested Palette
-					$thisfile_png_chunk_type_text['header']             = $chunk;
-					list($palettename, $otherdata)                      = explode("\x00", $chunk['data'], 2);
-					$thisfile_png_chunk_type_text['palette_name']       = $palettename;
-					$sPLToffset                                         = 0;
-					$thisfile_png_chunk_type_text['sample_depth_bits']  = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, 1));
-					$sPLToffset                                        += 1;
+					$thisfile_png_chunk_type_text['header'] = $chunk;
+					list($palettename, $otherdata)          = explode("\x00", $chunk['data'], 2);
+					$thisfile_png_chunk_type_text['palette_name'] = $palettename;
+					$sPLToffset = 0;
+					$thisfile_png_chunk_type_text['sample_depth_bits'] = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, 1));
+					$sPLToffset += 1;
 					$thisfile_png_chunk_type_text['sample_depth_bytes'] = $thisfile_png_chunk_type_text['sample_depth_bits'] / 8;
-					$paletteCounter                                     = 0;
+					$paletteCounter = 0;
 
 					while ($sPLToffset < strlen($otherdata)) {
-						$thisfile_png_chunk_type_text['red'][$paletteCounter]       = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
-						$sPLToffset                                                += $thisfile_png_chunk_type_text['sample_depth_bytes'];
-						$thisfile_png_chunk_type_text['green'][$paletteCounter]     = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
-						$sPLToffset                                                += $thisfile_png_chunk_type_text['sample_depth_bytes'];
-						$thisfile_png_chunk_type_text['blue'][$paletteCounter]      = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
-						$sPLToffset                                                += $thisfile_png_chunk_type_text['sample_depth_bytes'];
-						$thisfile_png_chunk_type_text['alpha'][$paletteCounter]     = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
-						$sPLToffset                                                += $thisfile_png_chunk_type_text['sample_depth_bytes'];
+						$thisfile_png_chunk_type_text['red'][$paletteCounter] = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
+						$sPLToffset += $thisfile_png_chunk_type_text['sample_depth_bytes'];
+						$thisfile_png_chunk_type_text['green'][$paletteCounter] = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
+						$sPLToffset += $thisfile_png_chunk_type_text['sample_depth_bytes'];
+						$thisfile_png_chunk_type_text['blue'][$paletteCounter] = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
+						$sPLToffset += $thisfile_png_chunk_type_text['sample_depth_bytes'];
+						$thisfile_png_chunk_type_text['alpha'][$paletteCounter] = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
+						$sPLToffset += $thisfile_png_chunk_type_text['sample_depth_bytes'];
 						$thisfile_png_chunk_type_text['frequency'][$paletteCounter] = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, 2));
-						$sPLToffset                                                += 2;
+						$sPLToffset += 2;
 						$paletteCounter++;
 					}
 
@@ -376,11 +376,11 @@ class getid3_png extends getid3_handler {
 
 				case 'hIST': // Palette Histogram
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-					$hISTcounter                            = 0;
+					$hISTcounter = 0;
 
 					while ($hISTcounter < strlen($chunk['data'])) {
 						$thisfile_png_chunk_type_text[$hISTcounter] = getid3_lib::BigEndian2Int(substr($chunk['data'], $hISTcounter / 2, 2));
-						$hISTcounter                               += 2;
+						$hISTcounter += 2;
 					}
 
 					break;
@@ -410,20 +410,20 @@ class getid3_png extends getid3_handler {
 
 
 				case 'pCAL': // Calibration Of Pixel Values
-					$thisfile_png_chunk_type_text['header']             = $chunk;
-					list($calibrationname, $otherdata)                  = explode("\x00", $chunk['data'], 2);
-					$thisfile_png_chunk_type_text['calibration_name']   = $calibrationname;
-					$pCALoffset                                         = 0;
-					$thisfile_png_chunk_type_text['original_zero']      = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 4), false, true);
-					$pCALoffset                                        += 4;
-					$thisfile_png_chunk_type_text['original_max']       = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 4), false, true);
-					$pCALoffset                                        += 4;
-					$thisfile_png_chunk_type_text['equation_type']      = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 1));
-					$pCALoffset                                        += 1;
+					$thisfile_png_chunk_type_text['header'] = $chunk;
+					list($calibrationname, $otherdata)      = explode("\x00", $chunk['data'], 2);
+					$thisfile_png_chunk_type_text['calibration_name'] = $calibrationname;
+					$pCALoffset = 0;
+					$thisfile_png_chunk_type_text['original_zero'] = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 4), false, true);
+					$pCALoffset += 4;
+					$thisfile_png_chunk_type_text['original_max'] = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 4), false, true);
+					$pCALoffset += 4;
+					$thisfile_png_chunk_type_text['equation_type'] = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 1));
+					$pCALoffset += 1;
 					$thisfile_png_chunk_type_text['equation_type_text'] = $this->PNGpCALequationTypeLookup($thisfile_png_chunk_type_text['equation_type']);
 					$thisfile_png_chunk_type_text['parameter_count']    = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 1));
-					$pCALoffset                                        += 1;
-					$thisfile_png_chunk_type_text['parameters']         = explode("\x00", substr($chunk['data'], $pCALoffset));
+					$pCALoffset += 1;
+					$thisfile_png_chunk_type_text['parameters'] = explode("\x00", substr($chunk['data'], $pCALoffset));
 
 					break;
 
@@ -432,9 +432,9 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text['header']         = $chunk;
 					$thisfile_png_chunk_type_text['unit_specifier'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 1));
 					$thisfile_png_chunk_type_text['unit']           = $this->PNGsCALUnitLookup($thisfile_png_chunk_type_text['unit_specifier']);
-					list($pixelwidth, $pixelheight)                 = explode("\x00", substr($chunk['data'], 1));
-					$thisfile_png_chunk_type_text['pixel_width']    = $pixelwidth;
-					$thisfile_png_chunk_type_text['pixel_height']   = $pixelheight;
+					list($pixelwidth, $pixelheight)               = explode("\x00", substr($chunk['data'], 1));
+					$thisfile_png_chunk_type_text['pixel_width']  = $pixelwidth;
+					$thisfile_png_chunk_type_text['pixel_height'] = $pixelheight;
 
 					break;
 
@@ -459,7 +459,7 @@ class getid3_png extends getid3_handler {
 					if (isset($thisfile_png_chunk_type_text) && is_array($thisfile_png_chunk_type_text)) {
 						$gIFxCounter = count($thisfile_png_chunk_type_text);
 					}
-					$thisfile_png_chunk_type_text[$gIFxCounter]['header']                 = $chunk;
+					$thisfile_png_chunk_type_text[$gIFxCounter]['header'] = $chunk;
 					$thisfile_png_chunk_type_text[$gIFxCounter]['application_identifier'] = substr($chunk['data'], 0, 8);
 					$thisfile_png_chunk_type_text[$gIFxCounter]['authentication_code']    = substr($chunk['data'], 8, 3);
 					$thisfile_png_chunk_type_text[$gIFxCounter]['application_data']       = substr($chunk['data'], 11);
@@ -488,7 +488,7 @@ class getid3_png extends getid3_handler {
 				default:
 					//unset($chunk['data']);
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-					$info['warning'][]                      = 'Unhandled chunk type: ' . $chunk['type_text'];
+					$info['warning'][] = 'Unhandled chunk type: ' . $chunk['type_text'];
 
 					break;
 			}

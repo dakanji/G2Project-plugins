@@ -438,8 +438,8 @@ class Gallery1DataParser {
 		if ($ret) {
 			return array($ret, null);
 		}
-		$usernames          = array_flip($uids);
-		$uid                = $usernames[$username];
+		$usernames = array_flip($uids);
+		$uid       = $usernames[$username];
 		list($ret, $fields) = Gallery1DataParser::getUserFieldsByUid($path, $uid);
 
 		if ($ret) {

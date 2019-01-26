@@ -37,7 +37,7 @@ class GalleryPendingUserHelper {
 	public static function fetchPendingUserByUserName($userName) {
 		global $gallery;
 
-		$query                     = '
+		$query = '
 		SELECT [GalleryPendingUser::id] FROM [GalleryPendingUser]
 		WHERE [GalleryPendingUser::userName] = ?
 		';

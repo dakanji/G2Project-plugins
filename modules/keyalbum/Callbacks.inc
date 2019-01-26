@@ -27,11 +27,11 @@ class KeyAlbumCallbacks {
 	public function callback($params, &$smarty, $callback, $userId) {
 		switch ($callback) {
 			case 'LoadKeywords':
-				$onlyPublic              = (bool)$params['onlyPublic'];
-				$sizeLimit               = (int)$params['sizeLimit'];
-				$param                   = 'allKeywords' . ($onlyPublic ? '.public' : '')
+				$onlyPublic       = (bool)$params['onlyPublic'];
+				$sizeLimit        = (int)$params['sizeLimit'];
+				$param            = 'allKeywords' . ($onlyPublic ? '.public' : '')
 				. ($sizeLimit ? '.' . $sizeLimit : '');
-				$includeFrequency        = (bool)$params['includeFrequency'];
+				$includeFrequency = (bool)$params['includeFrequency'];
 				list($ret, $lastUpdated) = GalleryCoreApi::getPluginParameter('module', 'keyalbum', $param . '.time');
 
 				if ($ret) {
@@ -57,7 +57,7 @@ class KeyAlbumCallbacks {
 					return $ret;
 				}
 
-				$block                         =& $smarty->_tpl_vars['block'];
+				$block =& $smarty->_tpl_vars['block'];
 				$block['keyalbum']['keywords'] = !empty($keywords) ? unserialize($keywords) : array();
 
 				return null;
@@ -74,7 +74,7 @@ class KeyAlbumCallbacks {
 					return $ret;
 				}
 
-				$block                         =& $smarty->_tpl_vars['block'];
+				$block =& $smarty->_tpl_vars['block'];
 				$block['keyalbum']['keywords'] = $module->splitKeywords($params['keywords'], $split);
 
 				return null;
@@ -184,7 +184,7 @@ class KeyAlbumCallbacks {
 			//$entry                  = each($keywords);
 			// Used https://stackoverflow.com/a/46493221 as basis here. Not 100% sure
 			for ($newKeywords = array(), $keywords, $i = 0; $i < $sizeLimit; $i++) {
-				$entry                  = array(key($keywords), current($keywords));
+				$entry = array(key($keywords), current($keywords));
 				$newKeywords[$entry[0]] = $entry[1];
 			}
 			$keywords = $newKeywords;

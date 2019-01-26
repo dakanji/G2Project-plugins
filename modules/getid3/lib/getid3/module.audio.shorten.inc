@@ -69,7 +69,7 @@ class getid3_shorten extends getid3_handler {
 			//   long Offset1[4];
 			// }TSeekEntry;
 
-			$SeekTableData                           = $this->fread($info['shn']['seektable']['length'] - 16);
+			$SeekTableData = $this->fread($info['shn']['seektable']['length'] - 16);
 			$info['shn']['seektable']['entry_count'] = floor(strlen($SeekTableData) / 80);
 			//$info['shn']['seektable']['entries'] = array();
 				//$SeekTableOffset = 0;
@@ -149,8 +149,8 @@ class getid3_shorten extends getid3_handler {
 		if (!empty($output) && (substr($output, 12, 4) == 'fmt ')) {
 			getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 
-			$fmt_size                         = getid3_lib::LittleEndian2Int(substr($output, 16, 4));
-			$DecodedWAVFORMATEX               = getid3_riff::parseWAVEFORMATex(substr($output, 20, $fmt_size));
+			$fmt_size           = getid3_lib::LittleEndian2Int(substr($output, 16, 4));
+			$DecodedWAVFORMATEX = getid3_riff::parseWAVEFORMATex(substr($output, 20, $fmt_size));
 			$info['audio']['channels']        = $DecodedWAVFORMATEX['channels'];
 			$info['audio']['bits_per_sample'] = $DecodedWAVFORMATEX['bits_per_sample'];
 			$info['audio']['sample_rate']     = $DecodedWAVFORMATEX['sample_rate'];

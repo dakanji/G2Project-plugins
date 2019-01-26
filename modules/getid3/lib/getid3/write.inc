@@ -609,7 +609,7 @@ class getid3_writetags {
 									// great, leave data as-is for minimum compatability problems
 									$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 0;
 									$tag_data_id3v2[$ID3v2_framename][$key]['data']       = $value;
-									$ID3v2_tag_data_converted                             = true;
+									$ID3v2_tag_data_converted = true;
 								}
 
 								if (!$ID3v2_tag_data_converted && ($this->tag_encoding == 'UTF-8')) {
@@ -622,7 +622,7 @@ class getid3_writetags {
 										}
 										$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 0;
 										$tag_data_id3v2[$ID3v2_framename][$key]['data']       = $value;
-										$ID3v2_tag_data_converted                             = true;
+										$ID3v2_tag_data_converted = true;
 									} while (false);
 								}
 
@@ -630,7 +630,7 @@ class getid3_writetags {
 									$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 1;
 									//$tag_data_id3v2[$ID3v2_framename][$key]['data']       = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-16', $value); // output is UTF-16LE+BOM or UTF-16BE+BOM depending on system architecture
 									$tag_data_id3v2[$ID3v2_framename][$key]['data'] = "\xFF\xFE" . getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-16LE', $value); // force LittleEndian order version of UTF-16
-									$ID3v2_tag_data_converted                       = true;
+									$ID3v2_tag_data_converted = true;
 								}
 							} else {
 								// convert data from other encoding to UTF-8

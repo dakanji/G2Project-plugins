@@ -99,7 +99,7 @@ class UpdatesAlbumView extends GalleryView {
 			);
 			$item->getChildrenFunction = array(get_class($this), 'getChildIds');
 			$viewItem->parent          = $item;
-			$item                      = $viewItem;
+			$item = $viewItem;
 		}
 
 		if (empty($moduleParams['themeId'])) {
@@ -132,8 +132,8 @@ class UpdatesAlbumView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		list($itemId, $show, $albumId) = GalleryUtilities::getRequestVariables('itemId', 'show', 'albumId');
-		$theme                         =& $template->getVariableByReference('theme');
-		$theme['pageUrl']              = array(
+		$theme            =& $template->getVariableByReference('theme');
+		$theme['pageUrl'] = array(
 			'view' => $this->_view,
 		);
 

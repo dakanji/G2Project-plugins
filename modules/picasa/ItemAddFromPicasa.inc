@@ -305,7 +305,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 			$finishedAlbums[$picasaAlbum['albumName']]               = $newAlbumInstanceId;
 			$status['albumImportSuccess'][$picasaAlbum['albumName']] = $newAlbumInstanceId;
-			$status['albumId']                                       = $newAlbumInstanceId;
+			$status['albumId'] = $newAlbumInstanceId;
 		}
 
 		/*
@@ -326,7 +326,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			return array($ret, null);
 		}
 
-		$photos                = $picasaAlbum['images'];
+		$photos = $picasaAlbum['images'];
 		$numberOfItemsImported = 1;
 
 		foreach ($photos as $j => $importAlbumItem) {

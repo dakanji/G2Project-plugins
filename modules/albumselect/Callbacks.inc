@@ -68,7 +68,7 @@ class AlbumSelectCallbacks {
 					return $ret;
 				}
 				$sessionPermissions = implode('-', array_diff($aclIdsWithSessionPermissions, $aclIds));
-				
+
 				$cachePathInfo = array(
 					'type'   => 'module-data',
 					'module' => 'albumselect',
@@ -87,7 +87,7 @@ class AlbumSelectCallbacks {
 						5
 					),
 				);
-				
+
 				list($treeList, $titles, $titlesForJs, $links) = GalleryDataCache::getFromDisk($cachePathInfo);
 
 				if (!isset($titles) || !isset($treeList) || !isset($titlesForJs) || !isset($links)) {
@@ -273,8 +273,8 @@ class AlbumSelectCallbacks {
 					}
 				}
 
-				$block                                        =& $smarty->_tpl_vars['block'];
-				$type                                         = isset($callbackParams['albumTree']) ? 'albumTree' : 'albumSelect';
+				$block =& $smarty->_tpl_vars['block'];
+				$type  = isset($callbackParams['albumTree']) ? 'albumTree' : 'albumSelect';
 				$block['albumselect']['LoadAlbumData'][$type] = array(
 					'tree'        => $treeList,
 					'titles'      => $titles,
@@ -401,7 +401,7 @@ class AlbumSelectCallbacks {
 					$title = str_repeat('--', $depth) . $title;
 				}
 				$titles[$subAlbum->getId()] = $title;
-				$ret                        = $this->_buildTree(
+				$ret = $this->_buildTree(
 					$subAlbum,
 					$treeList,
 					$titles,

@@ -33,7 +33,7 @@ class CustomFieldHelperTest extends GalleryTestCase {
 	}
 
 	public function testHandleAdminAction() {
-		$form                            = GalleryUtilities::getFormVariables('form');
+		$form = GalleryUtilities::getFormVariables('form');
 		$form['action']['add']['common'] = 'Add';
 		$form['common']['newField']      = '';
 		// This only test empty field name (Bug 1165012)

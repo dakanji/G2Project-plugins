@@ -225,7 +225,7 @@ class NotificationUserAdminView extends GalleryView {
 		}
 
 		$form['notifications'] = array();
-		$i                     = 0;
+		$i = 0;
 
 		foreach ($notifications as $notificationName => $notification) {
 			list($ret, $instance) = GalleryCoreApi::newFactoryInstanceById('NotificationEvent_1_0', $notificationName);
@@ -292,7 +292,7 @@ class NotificationUserAdminView extends GalleryView {
 						'handler'            => $handlerName,
 						'handlerDescription' => $handlerDescription,
 					);
-					$itemIds                     = array();
+					$itemIds = array();
 					// Do the global subscriptions first
 					foreach ($subscriptions[$notificationName] as $itemId) {
 						if (empty($itemId)) {
@@ -309,7 +309,7 @@ class NotificationUserAdminView extends GalleryView {
 
 					if (count($itemIds) > 0) {
 						// Filter out items that we (no longer) have access to
-						$permission                  = $instance->getPermission();
+						$permission = $instance->getPermission();
 						list($ret, $itemPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 						if ($ret) {
@@ -336,7 +336,7 @@ class NotificationUserAdminView extends GalleryView {
 							$j = 0;
 
 							foreach ($items as $item) {
-								$itemUrl                                  = $urlGenerator->generateUrl(
+								$itemUrl = $urlGenerator->generateUrl(
 									array(
 										'view'   => 'core.ShowItem',
 										'itemId' => $item->getId(),

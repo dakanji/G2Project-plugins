@@ -84,7 +84,7 @@ class FotokastenSiteAdminController extends GalleryController {
 		}
 
 
-		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$method = empty($error) ? 'redirect' : 'delegate';
 		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'fotokasten.FotokastenSiteAdmin';
 		$results['status']           = $status;
@@ -120,7 +120,7 @@ class FotokastenSiteAdminView extends GalleryView {
 			}
 		}
 
-		$FotokastenSiteAdmin                                   = array();
+		$FotokastenSiteAdmin = array();
 		$FotokastenSiteAdmin['usingDefaultGalleryAffiliateId'] = ($form['affiliateId'] == FOTOKASTEN_GALLERY_AFFILIATE_ID);
 
 		$template->setVariable('FotokastenSiteAdmin', $FotokastenSiteAdmin);

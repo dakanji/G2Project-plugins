@@ -49,14 +49,14 @@ class getid3_lpac extends getid3_handler {
 			$info['warning'][] = '24-bit and 16-bit flags cannot both be set';
 		}
 
-		$info['lpac']['flags']['fast_compress']             = (bool)($flags['parameters'] & 0x40000000);
-		$info['lpac']['flags']['random_access']             = (bool)($flags['parameters'] & 0x08000000);
-		$info['lpac']['block_length']                       = 2 ** (($flags['parameters'] & 0x07000000) >> 24) * 256;
+		$info['lpac']['flags']['fast_compress'] = (bool)($flags['parameters'] & 0x40000000);
+		$info['lpac']['flags']['random_access'] = (bool)($flags['parameters'] & 0x08000000);
+		$info['lpac']['block_length']           = 2 ** (($flags['parameters'] & 0x07000000) >> 24) * 256;
 		$info['lpac']['flags']['adaptive_prediction_order'] = (bool)($flags['parameters'] & 0x00800000);
 		$info['lpac']['flags']['adaptive_quantization']     = (bool)($flags['parameters'] & 0x00400000);
 		$info['lpac']['flags']['joint_stereo']              = (bool)($flags['parameters'] & 0x00040000);
-		$info['lpac']['quantization']                       = ($flags['parameters'] & 0x00001F00) >> 8;
-		$info['lpac']['max_prediction_order']               = ($flags['parameters'] & 0x0000003F);
+		$info['lpac']['quantization']         = ($flags['parameters'] & 0x00001F00) >> 8;
+		$info['lpac']['max_prediction_order'] = ($flags['parameters'] & 0x0000003F);
 
 		if ($info['lpac']['flags']['fast_compress'] && ($info['lpac']['max_prediction_order'] != 3)) {
 			$info['warning'][] = 'max_prediction_order expected to be "3" if fast_compress is true, actual value is "' . $info['lpac']['max_prediction_order'] . '"';
@@ -84,10 +84,10 @@ class getid3_lpac extends getid3_handler {
 		$getid3_temp->info = $info;
 		$getid3_riff       = new getid3_riff($getid3_temp);
 		$getid3_riff->Analyze();
-		$info['avdataoffset']                = $getid3_temp->info['avdataoffset'];
-		$info['riff']                        = $getid3_temp->info['riff'];
-		$info['error']                       = $getid3_temp->info['error'];
-		$info['warning']                     = $getid3_temp->info['warning'];
+		$info['avdataoffset'] = $getid3_temp->info['avdataoffset'];
+		$info['riff']         = $getid3_temp->info['riff'];
+		$info['error']        = $getid3_temp->info['error'];
+		$info['warning']      = $getid3_temp->info['warning'];
 		$info['lpac']['comments']['comment'] = $getid3_temp->info['comments'];
 		$info['audio']['sample_rate']        = $getid3_temp->info['audio']['sample_rate'];
 		unset($getid3_temp, $getid3_riff);

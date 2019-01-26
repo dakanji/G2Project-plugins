@@ -20,10 +20,10 @@ class getid3_jpg extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		$info['fileformat']                  = 'jpg';
-		$info['video']['dataformat']         = 'jpg';
-		$info['video']['lossless']           = false;
-		$info['video']['bits_per_sample']    = 24;
+		$info['fileformat']               = 'jpg';
+		$info['video']['dataformat']      = 'jpg';
+		$info['video']['lossless']        = false;
+		$info['video']['bits_per_sample'] = 24;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
 
 		$this->fseek($info['avdataoffset']);
@@ -41,7 +41,7 @@ class getid3_jpg extends getid3_handler {
 			if (is_array($iptc_parsed)) {
 				foreach ($iptc_parsed as $iptc_key_raw => $iptc_values) {
 					list($iptc_record, $iptc_tagkey) = explode('#', $iptc_key_raw);
-					$iptc_tagkey                     = intval(ltrim($iptc_tagkey, '0'));
+					$iptc_tagkey = intval(ltrim($iptc_tagkey, '0'));
 
 					foreach ($iptc_values as $key => $value) {
 						$IPTCrecordName    = $this->IPTCrecordName($iptc_record);
@@ -151,7 +151,7 @@ class getid3_jpg extends getid3_handler {
 			}
 
 			if (isset($info['jpg']['exif']['GPS']['GPSAltitude'])) {
-				$direction_multiplier                               = (!empty($info['jpg']['exif']['GPS']['GPSAltitudeRef']) ? -1 : 1);           // 0 = above sea level; 1 = below sea level
+				$direction_multiplier = (!empty($info['jpg']['exif']['GPS']['GPSAltitudeRef']) ? -1 : 1);           // 0 = above sea level; 1 = below sea level
 				$info['jpg']['exif']['GPS']['computed']['altitude'] = $direction_multiplier * getid3_lib::DecimalizeFraction($info['jpg']['exif']['GPS']['GPSAltitude']);
 			}
 		}

@@ -220,12 +220,12 @@ class ChooseObjectsView extends GalleryView {
 			$form['destinationAlbumID'] = '';
 			$form['urlRedirect']        = 1;
 			$form['generateThumbnails'] = 1;
-			$form['set']                = array(
+			$form['set']          = array(
 				'title'       => 'caption',
 				'summary'     => 'blank',
 				'description' => 'blank',
 			);
-			$form['customFields']       = $form['skipCustomItemFields'] = 1;
+			$form['customFields'] = $form['skipCustomItemFields'] = 1;
 		}
 		list($ret, $g1AlbumTree) = $this->_createG1AlbumTree($albumsPath);
 

@@ -260,7 +260,7 @@ class ConfirmPicasaImportController extends GalleryController {
 
 			$finishedAlbums[$sanitizedAlbumName]               = $newAlbumInstanceId;
 			$status['albumImportSuccess'][$sanitizedAlbumName] = $newAlbumInstanceId;
-			$status['albumId']                                 = $newAlbumInstanceId;
+			$status['albumId'] = $newAlbumInstanceId;
 		}
 		/*
 		 * we can let the parent album (and anything else that we might
@@ -281,7 +281,7 @@ class ConfirmPicasaImportController extends GalleryController {
 			return $ret;
 		}
 
-		$photos                = $picasaAlbum['images'];
+		$photos = $picasaAlbum['images'];
 		$numberOfItemsImported = 1;
 
 		foreach ($photos as $j => $importAlbumItem) {
@@ -380,7 +380,7 @@ class ConfirmPicasaImportView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$albumName                   = $album['albumName'];
+		$albumName = $album['albumName'];
 		list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent(
 			$destinationAlbumId,
 			$platform->legalizePathComponent($albumName)
@@ -398,8 +398,8 @@ class ConfirmPicasaImportView extends GalleryView {
 			$illegalAlbumNames[$albumName] = $platform->legalizePathComponent($albumName);
 		}
 
-		$ConfirmPicasaImport                       = array();
-		$ConfirmPicasaImport['album']              = $album;
+		$ConfirmPicasaImport          = array();
+		$ConfirmPicasaImport['album'] = $album;
 		$ConfirmPicasaImport['picasaXmlPath']      = $picasaXmlPath;
 		$ConfirmPicasaImport['existingAlbums']     = $existingAlbums;
 		$ConfirmPicasaImport['illegalAlbumNames']  = $illegalAlbumNames;

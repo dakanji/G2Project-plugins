@@ -92,7 +92,7 @@ class NewItemsSiteAdminController extends GalleryController {
 		} // else $form['action']['reset']
 
 		// Figure out where to redirect upon success
-		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$method = empty($error) ? 'redirect' : 'delegate';
 		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'newitems.NewItemsSiteAdmin';
 		$results['status']           = $status;
@@ -127,7 +127,7 @@ class NewItemsSiteAdminView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
-				$key                    = explode('.', $key);
+				$key = explode('.', $key);
 				$form[$key[0]][$key[1]] = $value;
 			}
 		}

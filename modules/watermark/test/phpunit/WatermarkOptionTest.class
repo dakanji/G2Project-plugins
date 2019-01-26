@@ -48,13 +48,13 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 		$this->_markForCleanup($this->_album);
-		$this->_images                = array();
+		$this->_images = array();
 		list($ret, $this->_images[0]) = $this->_createRandomDataItem($this->_album->getId(), 'image/test');
 
 		if ($ret) {
 			return $ret;
 		}
-		$this->_thumbnails                = array();
+		$this->_thumbnails = array();
 		list($ret, $this->_thumbnails[0]) = $this->_createDerivative(
 			$this->_images[0],
 			$this->_images[0]->getId(),
@@ -65,7 +65,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->_resizes                = array();
+		$this->_resizes = array();
 		list($ret, $this->_resizes[0]) = $this->_createDerivative(
 			$this->_images[0],
 			$this->_images[0]->getId(),
@@ -76,7 +76,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->_items                = array();
+		$this->_items = array();
 		list($ret, $this->_items[0]) = $this->_createRandomDataItem(
 			$this->_album->getId(),
 			'test/file'
@@ -85,7 +85,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->_itemThumbnails                = array();
+		$this->_itemThumbnails = array();
 		list($ret, $this->_itemThumbnails[0]) = $this->_createDerivative(
 			$this->_items[0],
 			$this->_items[0]->getId(),
@@ -143,7 +143,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 	public function testWatermarkItem() {
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
-		$result                                 = $this->_handleRequestAfterAdd($form, $this->_images);
+		$result = $this->_handleRequestAfterAdd($form, $this->_images);
 		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
 
 		$expected = sprintf(
@@ -213,7 +213,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
-		$result                                 = $this->_handleRequestAfterAdd($form, $this->_images);
+		$result = $this->_handleRequestAfterAdd($form, $this->_images);
 		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
 
 		$expected = sprintf(
@@ -236,7 +236,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 	public function testWatermarkItemWithNoWatermark() {
 		$form['WatermarkOption']['watermarkId'] = '';
-		$result                                 = $this->_handleRequestAfterAdd($form, $this->_images);
+		$result = $this->_handleRequestAfterAdd($form, $this->_images);
 		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
 
 		foreach (array($this->_thumbnails[0], $this->_resizes[0]) as $derivative) {
@@ -287,7 +287,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$form['WatermarkOption']['watermarkId'] = '';
-		$result                                 = $this->_handleRequestAfterAdd($form, $this->_images);
+		$result = $this->_handleRequestAfterAdd($form, $this->_images);
 		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
@@ -309,7 +309,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 
 	public function testWatermarkNonImage() {
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
-		$result                                 = $this->_handleRequestAfterAdd($form, $this->_items);
+		$result = $this->_handleRequestAfterAdd($form, $this->_items);
 		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
 
 		list($ret, $derivative) = $this->_itemThumbnails[0]->refresh();
@@ -350,7 +350,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 			}
 		}
 		$form['WatermarkOption']['watermarkId'] = $this->_watermark->getId();
-		$result                                 = $this->_handleRequestAfterAdd($form, $this->_items);
+		$result = $this->_handleRequestAfterAdd($form, $this->_items);
 		$this->assertEquals(array($this->_noErrors, $this->_noWarnings), $result);
 
 		for ($j = 0; $j < $totalTestItems; $j++) {
@@ -418,7 +418,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$form['WatermarkOption']['watermarkId'] = -1;
-		$result                                 = $this->_handleRequestAfterAdd($form, $this->_items);
+		$result = $this->_handleRequestAfterAdd($form, $this->_items);
 
 		$message = $module->translate(
 			'Error: Missing watermark. Please see the Event Logs page in '

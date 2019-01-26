@@ -40,8 +40,8 @@ class getid3_au extends getid3_handler {
 		$thisfile_au['encoding']       = 'ISO-8859-1';
 
 		$thisfile_au['header_length'] = getid3_lib::BigEndian2Int(substr($AUheader, 4, 4));
-		$AUheader                    .= $this->fread($thisfile_au['header_length'] - 8);
-		$info['avdataoffset']        += $thisfile_au['header_length'];
+		$AUheader             .= $this->fread($thisfile_au['header_length'] - 8);
+		$info['avdataoffset'] += $thisfile_au['header_length'];
 
 		$thisfile_au['data_size']             = getid3_lib::BigEndian2Int(substr($AUheader, 8, 4));
 		$thisfile_au['data_format_id']        = getid3_lib::BigEndian2Int(substr($AUheader, 12, 4));
@@ -73,16 +73,16 @@ class getid3_au extends getid3_handler {
 
 	public function AUdataFormatNameLookup($id) {
 		static $AUdataFormatNameLookup = array(
-			0  => 'unspecified format',
-			1  => '8-bit mu-law',
-			2  => '8-bit linear',
-			3  => '16-bit linear',
-			4  => '24-bit linear',
-			5  => '32-bit linear',
-			6  => 'floating-point',
-			7  => 'double-precision float',
-			8  => 'fragmented sampled data',
-			9  => 'SUN_FORMAT_NESTED',
+			0 => 'unspecified format',
+			1 => '8-bit mu-law',
+			2 => '8-bit linear',
+			3 => '16-bit linear',
+			4 => '24-bit linear',
+			5 => '32-bit linear',
+			6 => 'floating-point',
+			7 => 'double-precision float',
+			8 => 'fragmented sampled data',
+			9 => 'SUN_FORMAT_NESTED',
 			10 => 'DSP program',
 			11 => '8-bit fixed-point',
 			12 => '16-bit fixed-point',
@@ -108,13 +108,13 @@ class getid3_au extends getid3_handler {
 
 	public function AUdataFormatBitsPerSampleLookup($id) {
 		static $AUdataFormatBitsPerSampleLookup = array(
-			1  => 8,
-			2  => 8,
-			3  => 16,
-			4  => 24,
-			5  => 32,
-			6  => 32,
-			7  => 64,
+			1 => 8,
+			2 => 8,
+			3 => 16,
+			4 => 24,
+			5 => 32,
+			6 => 32,
+			7 => 64,
 
 			11 => 8,
 			12 => 16,
@@ -137,13 +137,13 @@ class getid3_au extends getid3_handler {
 
 	public function AUdataFormatUsedBitsPerSampleLookup($id) {
 		static $AUdataFormatUsedBitsPerSampleLookup = array(
-			1  => 8,
-			2  => 8,
-			3  => 16,
-			4  => 24,
-			5  => 32,
-			6  => 32,
-			7  => 64,
+			1 => 8,
+			2 => 8,
+			3 => 16,
+			4 => 24,
+			5 => 32,
+			6 => 32,
+			7 => 64,
 
 			11 => 8,
 			12 => 16,

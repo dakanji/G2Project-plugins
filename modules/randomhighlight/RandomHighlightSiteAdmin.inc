@@ -62,7 +62,7 @@ class RandomHighlightSiteAdminController extends GalleryController {
 		}
 
 		// Figure out where to redirect upon success
-		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$method = empty($error) ? 'redirect' : 'delegate';
 		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'randomhighlight.RandomHighlightSiteAdmin';
 		$results['status']           = $status;

@@ -86,7 +86,7 @@ class ConfirmDeleteView extends GalleryView {
 		GalleryCoreApi::requireOnce('modules/watermark/classes/WatermarkHelper.class');
 
 		if ($form['formName'] != 'ConfirmDelete') {
-			$form['formName']                              = 'ConfirmDelete';
+			$form['formName'] = 'ConfirmDelete';
 			list($form['watermarkId'], $form['fromAdmin']) = GalleryUtilities::getRequestVariables('watermarkId', 'fromAdmin');
 		}
 

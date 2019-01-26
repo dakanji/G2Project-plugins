@@ -284,7 +284,7 @@ class WebCamModule extends GalleryModule {
 				$tmpFile            = $urlComponents['path'];
 				$successfullyCopied = $platform->file_exists($tmpFile);
 			} else {
-				$tmpFile                                       = $platform->tempnam($tmpDir, 'webcam');
+				$tmpFile = $platform->tempnam($tmpDir, 'webcam');
 				list($successfullyCopied, $response, $headers) = GalleryCoreApi::fetchWebFile($url, $tmpFile);
 			}
 

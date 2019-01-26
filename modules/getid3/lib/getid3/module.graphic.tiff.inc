@@ -45,7 +45,7 @@ class getid3_tiff extends getid3_handler {
 		$info['video']['dataformat'] = 'tiff';
 		$info['video']['lossless']   = true;
 		$info['tiff']['ifd']         = array();
-		$CurrentIFD                  = array();
+		$CurrentIFD = array();
 
 		$FieldTypeByteLength = array(
 			1 => 1,

@@ -158,7 +158,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		}
 
 		// Empty out the plugin session id
-		$session                    =& $gallery->getSession();
+		$session =& $gallery->getSession();
 		$this->_saveCartUrlFragment = $session->get('snapgalaxy.cartUrlFragment');
 		$session->remove('snapgalaxy.cartUrlFragment');
 

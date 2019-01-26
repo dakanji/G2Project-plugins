@@ -407,9 +407,9 @@ class KeywordAlbumCallbacksTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$aclCacheKey                                   = "GalleryPermissionHelper::fetchAccessListIds(core.view,$guestId,1)";
+		$aclCacheKey = "GalleryPermissionHelper::fetchAccessListIds(core.view,$guestId,1)";
 		$this->_smarty->_tpl_vars['block']['keyalbum'] = array();
-		$block                                         =& $this->_smarty->_tpl_vars['block']['keyalbum'];
+		$block =& $this->_smarty->_tpl_vars['block']['keyalbum'];
 
 		$queries           = array(
 			array(
@@ -622,7 +622,7 @@ class KeywordAlbumCallbacksTest extends GalleryTestCase {
 
 	public function testSplitKeywords() {
 		$this->_smarty->_tpl_vars['block']['keyalbum'] = array();
-		$block                                         =& $this->_smarty->_tpl_vars['block']['keyalbum'];
+		$block =& $this->_smarty->_tpl_vars['block']['keyalbum'];
 
 		foreach (array(
 			''                    => array(),

@@ -199,9 +199,9 @@ class EditFeedController extends GalleryController {
 		}
 
 		// figure out the method we will use
-		$method                      = empty($error) ? 'redirect' : 'delegate';
-		$results['status']           = $status;
-		$results['error']            = $error;
+		$method            = empty($error) ? 'redirect' : 'delegate';
+		$results['status'] = $status;
+		$results['error']  = $error;
 		$results[$method]['view']    = 'core.ItemAdmin';
 		$results[$method]['subView'] = 'rss.EditFeed';
 		$results[$method]['itemId']  = $itemId;

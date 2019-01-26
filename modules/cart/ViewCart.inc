@@ -76,7 +76,7 @@ class ViewCartView extends GalleryView {
 					foreach ($pluginData['supportedItemTypes'] as $type) {
 						if ($type == '*' || GalleryUtilities::isA($item, $type)) {
 							$plugins[$pluginId]['supported'][$item->getId()] = 1;
-							$supportedItemIds[$item->getId()]                = 1;
+							$supportedItemIds[$item->getId()] = 1;
 
 							break;
 						}
@@ -87,7 +87,7 @@ class ViewCartView extends GalleryView {
 			}
 
 			// Filter out unsupported actions
-			$itemIds                   = array_keys($supportedItemIds);
+			$itemIds = array_keys($supportedItemIds);
 			list($ret, $permissionMap) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 			if ($ret) {

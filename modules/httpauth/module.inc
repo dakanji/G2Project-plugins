@@ -438,7 +438,7 @@ class HttpAuthModule extends GalleryModule {
 				 */
 				GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
 				list($authtype, $username, $password) = HttpAuthHelper::getHttpAuth();
-				$remoteUser                           = GalleryUtilities::getServerVar('REMOTE_USER');
+				$remoteUser = GalleryUtilities::getServerVar('REMOTE_USER');
 
 				if (!empty($username) || !empty($remoteUser)) {
 					return array(

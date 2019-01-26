@@ -1,7 +1,7 @@
 <?php
 $blocks['ImageBlock'] = array(
 	'description' => $gallery->i18n('Image Block'),
-	'vars'        => array(
+	'vars' => array(
 		'blocks' => array(
 			'description' => $gallery->i18n('Image type'),
 			'type'        => 'choice',

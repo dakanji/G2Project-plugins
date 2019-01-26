@@ -82,7 +82,7 @@ class QuotasHelperTest extends GalleryTestCase {
 
 			if ($hasQuota) {
 				$this->_saveQuota[$groupId] = $quota;
-				$ret                        = GalleryCoreApi::removeMapEntry(
+				$ret = GalleryCoreApi::removeMapEntry(
 					'QuotasMap',
 					array(
 						'userOrGroupId' => $groupId,

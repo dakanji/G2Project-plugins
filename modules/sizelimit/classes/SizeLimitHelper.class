@@ -226,7 +226,7 @@ class SizeLimitHelper {
 				$args[0],
 				$args[1]
 			);
-			$ret                  = SizeLimitHelper::_updateResizes($item->getId(), $width, $height);
+			$ret = SizeLimitHelper::_updateResizes($item->getId(), $width, $height);
 
 			if ($ret) {
 				return $ret;

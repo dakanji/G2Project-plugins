@@ -29,7 +29,7 @@ class getid3_mpc extends getid3_handler {
 		$info['audio']['lossless']     = false;
 
 		$this->fseek($info['avdataoffset']);
-		$MPCheaderData                     = $this->fread(4);
+		$MPCheaderData = $this->fread(4);
 		$info['mpc']['header']['preamble'] = substr($MPCheaderData, 0, 4); // should be 'MPCK' (SV8) or 'MP+' (SV7), otherwise possible stream data (SV4-SV6)
 		if (preg_match('#^MPCK#', $info['mpc']['header']['preamble'])) {
 			// this is SV8
@@ -60,7 +60,7 @@ class getid3_mpc extends getid3_handler {
 		// this is SV8
 		// http://trac.musepack.net/trac/wiki/SV8Specification
 
-		$info                = &$this->getid3->info;
+		$info = &$this->getid3->info;
 		$thisfile_mpc_header = &$info['mpc']['header'];
 
 		$keyNameSize            = 2;
@@ -111,12 +111,12 @@ class getid3_mpc extends getid3_handler {
 					$thisPacket['sample_count'] = $this->SV8variableLengthInteger(substr($MPCheaderData, $packet_offset, $maxHandledPacketLength), $packetLength);
 					$packet_offset             += $packetLength;
 
-					$packetLength                    = 0;
+					$packetLength = 0;
 					$thisPacket['beginning_silence'] = $this->SV8variableLengthInteger(substr($MPCheaderData, $packet_offset, $maxHandledPacketLength), $packetLength);
-					$packet_offset                  += $packetLength;
+					$packet_offset += $packetLength;
 
-					$otherUsefulData                    = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset                     += 2;
+					$otherUsefulData = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
+					$packet_offset  += 2;
 					$thisPacket['sample_frequency_raw'] = (($otherUsefulData & 0xE000) >> 13);
 					$thisPacket['max_bands_used']       = (($otherUsefulData & 0x1F00) >> 8);
 					$thisPacket['channels']             = (($otherUsefulData & 0x00F0) >> 4) + 1;
@@ -142,16 +142,16 @@ class getid3_mpc extends getid3_handler {
 					if ($moreBytesToRead > 0) {
 						$MPCheaderData .= $this->fread($moreBytesToRead);
 					}
-					$thisPacket['replaygain_version']    = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
-					$packet_offset                      += 1;
+					$thisPacket['replaygain_version'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
+					$packet_offset += 1;
 					$thisPacket['replaygain_title_gain'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset                      += 2;
+					$packet_offset += 2;
 					$thisPacket['replaygain_title_peak'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset                      += 2;
+					$packet_offset += 2;
 					$thisPacket['replaygain_album_gain'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset                      += 2;
+					$packet_offset += 2;
 					$thisPacket['replaygain_album_peak'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset                      += 2;
+					$packet_offset += 2;
 
 					if ($thisPacket['replaygain_title_gain']) {
 						$info['replay_gain']['title']['gain'] = $thisPacket['replaygain_title_gain'];
@@ -177,12 +177,12 @@ class getid3_mpc extends getid3_handler {
 					if ($moreBytesToRead > 0) {
 						$MPCheaderData .= $this->fread($moreBytesToRead);
 					}
-					$profile_pns                 = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
-					$packet_offset              += 1;
-					$quality_int                 = (($profile_pns & 0xF0) >> 4);
-					$quality_dec                 = (($profile_pns & 0x0E) >> 3);
-					$thisPacket['quality']       = (float)$quality_int + ($quality_dec / 8);
-					$thisPacket['pns_tool']      = (bool)(($profile_pns & 0x01) >> 0);
+					$profile_pns            = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
+					$packet_offset         += 1;
+					$quality_int            = (($profile_pns & 0xF0) >> 4);
+					$quality_dec            = (($profile_pns & 0x0E) >> 3);
+					$thisPacket['quality']  = (float)$quality_int + ($quality_dec / 8);
+					$thisPacket['pns_tool'] = (bool)(($profile_pns & 0x01) >> 0);
 					$thisPacket['version_major'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
 					$packet_offset              += 1;
 					$thisPacket['version_minor'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
@@ -198,9 +198,9 @@ class getid3_mpc extends getid3_handler {
 					break;
 
 				case 'SO': // Seek Table Offset
-					$packetLength                    = 0;
+					$packetLength = 0;
 					$thisPacket['seek_table_offset'] = $thisPacket['offset'] + $this->SV8variableLengthInteger(substr($MPCheaderData, $packet_offset, $maxHandledPacketLength), $packetLength);
-					$packet_offset                  += $packetLength;
+					$packet_offset += $packetLength;
 
 					break;
 
@@ -234,21 +234,21 @@ class getid3_mpc extends getid3_handler {
 		// this is SV7
 		// http://www.uni-jena.de/~pfk/mpp/sv8/header.html
 
-		$info                = &$this->getid3->info;
+		$info = &$this->getid3->info;
 		$thisfile_mpc_header = &$info['mpc']['header'];
 		$offset              = 0;
 
 		$thisfile_mpc_header['size'] = 28;
 		$MPCheaderData               = $info['mpc']['header']['preamble'];
 		$MPCheaderData              .= $this->fread($thisfile_mpc_header['size'] - strlen($info['mpc']['header']['preamble']));
-		$offset                      = strlen('MP+');
+		$offset = strlen('MP+');
 
-		$StreamVersionByte                           = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 1));
-		$offset                                     += 1;
+		$StreamVersionByte = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 1));
+		$offset           += 1;
 		$thisfile_mpc_header['stream_version_major'] = ($StreamVersionByte & 0x0F) >> 0;
 		$thisfile_mpc_header['stream_version_minor'] = ($StreamVersionByte & 0xF0) >> 4; // should always be 0, subversions no longer exist in SV8
 		$thisfile_mpc_header['frame_count']          = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
-		$offset                                     += 4;
+		$offset += 4;
 
 		if ($thisfile_mpc_header['stream_version_major'] != 7) {
 			$info['error'][] = 'Only Musepack SV7 supported (this file claims to be v' . $thisfile_mpc_header['stream_version_major'] . ')';
@@ -256,8 +256,8 @@ class getid3_mpc extends getid3_handler {
 			return false;
 		}
 
-		$FlagsDWORD1                               = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
-		$offset                                   += 4;
+		$FlagsDWORD1 = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
+		$offset     += 4;
 		$thisfile_mpc_header['intensity_stereo']   = (bool)(($FlagsDWORD1 & 0x80000000) >> 31);
 		$thisfile_mpc_header['mid_side_stereo']    = (bool)(($FlagsDWORD1 & 0x40000000) >> 30);
 		$thisfile_mpc_header['max_subband']        = ($FlagsDWORD1 & 0x3F000000) >> 24;
@@ -268,25 +268,25 @@ class getid3_mpc extends getid3_handler {
 		$thisfile_mpc_header['max_level']          = ($FlagsDWORD1 & 0x0000FFFF);
 
 		$thisfile_mpc_header['raw']['title_peak'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2));
-		$offset                                  += 2;
+		$offset += 2;
 		$thisfile_mpc_header['raw']['title_gain'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2), true);
-		$offset                                  += 2;
+		$offset += 2;
 
 		$thisfile_mpc_header['raw']['album_peak'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2));
-		$offset                                  += 2;
+		$offset += 2;
 		$thisfile_mpc_header['raw']['album_gain'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 2), true);
-		$offset                                  += 2;
+		$offset += 2;
 
-		$FlagsDWORD2                              = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
-		$offset                                  += 4;
+		$FlagsDWORD2 = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 4));
+		$offset     += 4;
 		$thisfile_mpc_header['true_gapless']      = (bool)(($FlagsDWORD2 & 0x80000000) >> 31);
 		$thisfile_mpc_header['last_frame_length'] = ($FlagsDWORD2 & 0x7FF00000) >> 20;
 
 
-		$thisfile_mpc_header['raw']['not_sure_what']   = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 3));
-		$offset                                       += 3;
+		$thisfile_mpc_header['raw']['not_sure_what'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 3));
+		$offset += 3;
 		$thisfile_mpc_header['raw']['encoder_version'] = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 1));
-		$offset                                       += 1;
+		$offset += 1;
 
 		$thisfile_mpc_header['profile']     = $this->MPCprofileNameLookup($thisfile_mpc_header['raw']['profile']);
 		$thisfile_mpc_header['sample_rate'] = $this->MPCfrequencyLookup($thisfile_mpc_header['raw']['sample_rate']);
@@ -355,7 +355,7 @@ class getid3_mpc extends getid3_handler {
 	public function ParseMPCsv6() {
 		// this is SV4 - SV6
 
-		$info                = &$this->getid3->info;
+		$info = &$this->getid3->info;
 		$thisfile_mpc_header = &$info['mpc']['header'];
 		$offset              = 0;
 
@@ -433,16 +433,16 @@ class getid3_mpc extends getid3_handler {
 
 	public function MPCprofileNameLookup($profileid) {
 		static $MPCprofileNameLookup = array(
-			0  => 'no profile',
-			1  => 'Experimental',
-			2  => 'unused',
-			3  => 'unused',
-			4  => 'unused',
-			5  => 'below Telephone (q = 0.0)',
-			6  => 'below Telephone (q = 1.0)',
-			7  => 'Telephone (q = 2.0)',
-			8  => 'Thumb (q = 3.0)',
-			9  => 'Radio (q = 4.0)',
+			0 => 'no profile',
+			1 => 'Experimental',
+			2 => 'unused',
+			3 => 'unused',
+			4 => 'unused',
+			5 => 'below Telephone (q = 0.0)',
+			6 => 'below Telephone (q = 1.0)',
+			7 => 'Telephone (q = 2.0)',
+			8 => 'Thumb (q = 3.0)',
+			9 => 'Radio (q = 4.0)',
 			10 => 'Standard (q = 5.0)',
 			11 => 'Extreme (q = 6.0)',
 			12 => 'Insane (q = 7.0)',

@@ -237,12 +237,12 @@ class getid3_zip extends getid3_handler {
 		$LocalFileHeader['raw']['filename_length']    = getid3_lib::LittleEndian2Int(substr($ZIPlocalFileHeader, 26, 2));
 		$LocalFileHeader['raw']['extra_field_length'] = getid3_lib::LittleEndian2Int(substr($ZIPlocalFileHeader, 28, 2));
 
-		$LocalFileHeader['extract_version']         = sprintf('%1.1f', $LocalFileHeader['raw']['extract_version'] / 10);
-		$LocalFileHeader['host_os']                 = $this->ZIPversionOSLookup(($LocalFileHeader['raw']['extract_version'] & 0xFF00) >> 8);
-		$LocalFileHeader['compression_method']      = $this->ZIPcompressionMethodLookup($LocalFileHeader['raw']['compression_method']);
-		$LocalFileHeader['compressed_size']         = $LocalFileHeader['raw']['compressed_size'];
-		$LocalFileHeader['uncompressed_size']       = $LocalFileHeader['raw']['uncompressed_size'];
-		$LocalFileHeader['flags']                   = $this->ZIPparseGeneralPurposeFlags($LocalFileHeader['raw']['general_flags'], $LocalFileHeader['raw']['compression_method']);
+		$LocalFileHeader['extract_version']    = sprintf('%1.1f', $LocalFileHeader['raw']['extract_version'] / 10);
+		$LocalFileHeader['host_os']            = $this->ZIPversionOSLookup(($LocalFileHeader['raw']['extract_version'] & 0xFF00) >> 8);
+		$LocalFileHeader['compression_method'] = $this->ZIPcompressionMethodLookup($LocalFileHeader['raw']['compression_method']);
+		$LocalFileHeader['compressed_size']    = $LocalFileHeader['raw']['compressed_size'];
+		$LocalFileHeader['uncompressed_size']  = $LocalFileHeader['raw']['uncompressed_size'];
+		$LocalFileHeader['flags']              = $this->ZIPparseGeneralPurposeFlags($LocalFileHeader['raw']['general_flags'], $LocalFileHeader['raw']['compression_method']);
 		$LocalFileHeader['last_modified_timestamp'] = $this->DOStime2UNIXtime($LocalFileHeader['raw']['last_mod_file_date'], $LocalFileHeader['raw']['last_mod_file_time']);
 
 		$FilenameExtrafieldLength = $LocalFileHeader['raw']['filename_length'] + $LocalFileHeader['raw']['extra_field_length'];
@@ -280,7 +280,7 @@ class getid3_zip extends getid3_handler {
 		$this->fseek($LocalFileHeader['compressed_size'], SEEK_CUR); // this should (but may not) match value in $LocalFileHeader['raw']['compressed_size'] -- $LocalFileHeader['compressed_size'] could have been overwritten above with value from Central Directory
 
 		if ($LocalFileHeader['flags']['data_descriptor_used']) {
-			$DataDescriptor                                  = $this->fread(16);
+			$DataDescriptor = $this->fread(16);
 			$LocalFileHeader['data_descriptor']['signature'] = getid3_lib::LittleEndian2Int(substr($DataDescriptor, 0, 4));
 
 			if ($LocalFileHeader['data_descriptor']['signature'] != 0x08074B50) { // "PK\x07\x08"
@@ -345,14 +345,14 @@ class getid3_zip extends getid3_handler {
 		$CentralDirectory['raw']['external_file_attrib'] = getid3_lib::LittleEndian2Int(substr($ZIPcentralDirectory, 38, 4));
 		$CentralDirectory['raw']['local_header_offset']  = getid3_lib::LittleEndian2Int(substr($ZIPcentralDirectory, 42, 4));
 
-		$CentralDirectory['entry_offset']            = $CentralDirectory['raw']['local_header_offset'];
-		$CentralDirectory['create_version']          = sprintf('%1.1f', $CentralDirectory['raw']['create_version'] / 10);
-		$CentralDirectory['extract_version']         = sprintf('%1.1f', $CentralDirectory['raw']['extract_version'] / 10);
-		$CentralDirectory['host_os']                 = $this->ZIPversionOSLookup(($CentralDirectory['raw']['extract_version'] & 0xFF00) >> 8);
-		$CentralDirectory['compression_method']      = $this->ZIPcompressionMethodLookup($CentralDirectory['raw']['compression_method']);
-		$CentralDirectory['compressed_size']         = $CentralDirectory['raw']['compressed_size'];
-		$CentralDirectory['uncompressed_size']       = $CentralDirectory['raw']['uncompressed_size'];
-		$CentralDirectory['flags']                   = $this->ZIPparseGeneralPurposeFlags($CentralDirectory['raw']['general_flags'], $CentralDirectory['raw']['compression_method']);
+		$CentralDirectory['entry_offset']       = $CentralDirectory['raw']['local_header_offset'];
+		$CentralDirectory['create_version']     = sprintf('%1.1f', $CentralDirectory['raw']['create_version'] / 10);
+		$CentralDirectory['extract_version']    = sprintf('%1.1f', $CentralDirectory['raw']['extract_version'] / 10);
+		$CentralDirectory['host_os']            = $this->ZIPversionOSLookup(($CentralDirectory['raw']['extract_version'] & 0xFF00) >> 8);
+		$CentralDirectory['compression_method'] = $this->ZIPcompressionMethodLookup($CentralDirectory['raw']['compression_method']);
+		$CentralDirectory['compressed_size']    = $CentralDirectory['raw']['compressed_size'];
+		$CentralDirectory['uncompressed_size']  = $CentralDirectory['raw']['uncompressed_size'];
+		$CentralDirectory['flags']              = $this->ZIPparseGeneralPurposeFlags($CentralDirectory['raw']['general_flags'], $CentralDirectory['raw']['compression_method']);
 		$CentralDirectory['last_modified_timestamp'] = $this->DOStime2UNIXtime($CentralDirectory['raw']['last_mod_file_date'], $CentralDirectory['raw']['last_mod_file_time']);
 
 		$FilenameExtrafieldCommentLength = $CentralDirectory['raw']['filename_length'] + $CentralDirectory['raw']['extra_field_length'] + $CentralDirectory['raw']['file_comment_length'];
@@ -461,16 +461,16 @@ class getid3_zip extends getid3_handler {
 
 	public static function ZIPversionOSLookup($index) {
 		static $ZIPversionOSLookup = array(
-			0  => 'MS-DOS and OS/2 (FAT / VFAT / FAT32 file systems)',
-			1  => 'Amiga',
-			2  => 'OpenVMS',
-			3  => 'Unix',
-			4  => 'VM/CMS',
-			5  => 'Atari ST',
-			6  => 'OS/2 H.P.F.S.',
-			7  => 'Macintosh',
-			8  => 'Z-System',
-			9  => 'CP/M',
+			0 => 'MS-DOS and OS/2 (FAT / VFAT / FAT32 file systems)',
+			1 => 'Amiga',
+			2 => 'OpenVMS',
+			3 => 'Unix',
+			4 => 'VM/CMS',
+			5 => 'Atari ST',
+			6 => 'OS/2 H.P.F.S.',
+			7 => 'Macintosh',
+			8 => 'Z-System',
+			9 => 'CP/M',
 			10 => 'Windows NTFS',
 			11 => 'MVS',
 			12 => 'VSE',
@@ -489,16 +489,16 @@ class getid3_zip extends getid3_handler {
 	public static function ZIPcompressionMethodLookup($index) {
 		// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/ZIP.html
 		static $ZIPcompressionMethodLookup = array(
-			0  => 'store',
-			1  => 'shrink',
-			2  => 'reduce-1',
-			3  => 'reduce-2',
-			4  => 'reduce-3',
-			5  => 'reduce-4',
-			6  => 'implode',
-			7  => 'tokenize',
-			8  => 'deflate',
-			9  => 'deflate64',
+			0 => 'store',
+			1 => 'shrink',
+			2 => 'reduce-1',
+			3 => 'reduce-2',
+			4 => 'reduce-3',
+			5 => 'reduce-4',
+			6 => 'implode',
+			7 => 'tokenize',
+			8 => 'deflate',
+			9 => 'deflate64',
 			10 => 'Imploded (old IBM TERSE)',
 			11 => 'RESERVED[11]',
 			12 => 'BZIP2',

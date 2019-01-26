@@ -47,8 +47,8 @@ class getid3_bink extends getid3_handler {
 	}
 
 	public function ParseBink() {
-		$info                        = &$this->getid3->info;
-		$info['fileformat']          = 'bink';
+		$info               = &$this->getid3->info;
+		$info['fileformat'] = 'bink';
 		$info['video']['dataformat'] = 'bink';
 
 		$fileData = 'BIK' . $this->fread(13);
@@ -64,8 +64,8 @@ class getid3_bink extends getid3_handler {
 	}
 
 	public function ParseSmacker() {
-		$info                        = &$this->getid3->info;
-		$info['fileformat']          = 'smacker';
+		$info               = &$this->getid3->info;
+		$info['fileformat'] = 'smacker';
 		$info['video']['dataformat'] = 'smacker';
 
 		return true;

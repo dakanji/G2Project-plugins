@@ -52,7 +52,7 @@ class CustomFieldCallbacks {
 					return $ret;
 				}
 
-				$block                                              =& $smarty->_tpl_vars['block'];
+				$block =& $smarty->_tpl_vars['block'];
 				$block['customfield']['LoadCustomFields']['fields'] = isset($fields[$item->getId()]) ? $fields[$item->getId()] : array();
 
 				return null;

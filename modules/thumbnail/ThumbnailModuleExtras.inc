@@ -186,7 +186,7 @@ class ThumbnailModuleExtras {
 				$ids = $fileNames = array();
 
 				while ($result = $results->nextResult()) {
-					$ids[]                      = (int)$result[0];
+					$ids[] = (int)$result[0];
 					$fileNames[(int)$result[0]] = $result[1];
 				}
 
@@ -266,7 +266,7 @@ class ThumbnailModuleExtras {
 				$ids = $fileNames = array();
 
 				while ($result = $results->nextResult()) {
-					$ids[]                      = (int)$result[0];
+					$ids[] = (int)$result[0];
 					$fileNames[(int)$result[0]] = $result[1];
 				}
 

@@ -671,9 +671,9 @@ class NotificationHelperTest extends GalleryTestCase {
 		$registry['hints']['GalleryEventListener'][GalleryUtilities::strToLower('Test::Event')] = array(
 			'NotificationRouter' => 'TestSubscriptionClass',
 		);
-		$registry['ids']['GalleryEventListener']['NotificationRouter']                          = 'TestSubscriptionClass';
-		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']                 = 'notification';
-		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass']           = 'path';
+		$registry['ids']['GalleryEventListener']['NotificationRouter']          = 'TestSubscriptionClass';
+		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass'] = 'notification';
+		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
 
 		$storage =& $gallery->getStorage();
 
@@ -785,9 +785,9 @@ class NotificationHelperTest extends GalleryTestCase {
 		$registry['hints']['GalleryEventListener'][GalleryUtilities::strToLower('Test::Event')] = array(
 			'NotificationRouter' => 'TestSubscriptionClass',
 		);
-		$registry['ids']['GalleryEventListener']['NotificationRouter']                          = 'TestSubscriptionClass';
-		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']                 = 'notification';
-		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass']           = 'path';
+		$registry['ids']['GalleryEventListener']['NotificationRouter']          = 'TestSubscriptionClass';
+		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass'] = 'notification';
+		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
 
 		$storage =& $gallery->getStorage();
 
@@ -937,7 +937,7 @@ class NotificationHelperTest extends GalleryTestCase {
 		$itemTypeName = $this->_item1->itemTypeName();
 		$itemTypeName = $itemTypeName[1];
 
-		$msg                 = $module->translate(
+		$msg = $module->translate(
 			array(
 				'arg1' => $itemTypeName,
 				'arg2' => $url,

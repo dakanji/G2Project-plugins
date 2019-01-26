@@ -1397,9 +1397,9 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testOwner = $this->_adminUser;
 
 		$this->assertEquals($testOwner->getId(), $testAlbum->getownerId(), 'album owner');
-		$testPerms                  = array();
-		$testPermsResult            = array();
-		$testPerms['admin']         = array(
+		$testPerms          = array();
+		$testPermsResult    = array();
+		$testPerms['admin'] = array(
 			'core.all'    => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
@@ -1605,9 +1605,9 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testOwner = $this->_adminUser;
 
 		$this->assertEquals($testOwner->getId(), $testAlbum->getownerId(), 'album owner');
-		$testPerms                  = array();
-		$testPermsResult            = array();
-		$testPerms['admin']         = array(
+		$testPerms          = array();
+		$testPermsResult    = array();
+		$testPerms['admin'] = array(
 			'core.all'    => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
@@ -1724,9 +1724,9 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testOwner = $this->_adminUser;
 
 		$this->assertEquals($testOwner->getId(), $testAlbum->getownerId(), 'album owner');
-		$testPerms                  = array();
-		$testPermsResult            = array();
-		$testPerms['admin']         = array(
+		$testPerms          = array();
+		$testPermsResult    = array();
+		$testPerms['admin'] = array(
 			'core.all'    => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
@@ -1877,9 +1877,9 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testOwner = $this->_adminUser;
 
 		$this->assertEquals($testOwner->getId(), $testAlbum->getownerId(), 'album owner');
-		$testPerms                  = array();
-		$testPermsResult            = array();
-		$testPerms['admin']         = array(
+		$testPerms          = array();
+		$testPermsResult    = array();
+		$testPerms['admin'] = array(
 			'core.all'    => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
@@ -2037,9 +2037,9 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testOwner = $this->_adminUser;
 
 		$this->assertEquals($testOwner->getId(), $testAlbum->getownerId(), 'album owner');
-		$testPerms                  = array();
-		$testPermsResult            = array();
-		$testPerms['admin']         = array(
+		$testPerms          = array();
+		$testPermsResult    = array();
+		$testPerms['admin'] = array(
 			'core.all'    => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);

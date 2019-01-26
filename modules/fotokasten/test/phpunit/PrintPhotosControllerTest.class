@@ -236,7 +236,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $fotokastenSessionId;
 		$fotokastenSession             = new GallerySession();
-		$ret                           = $fotokastenSession->init();
+		$ret = $fotokastenSession->init();
 
 		if ($ret) {
 			return $ret;
@@ -327,7 +327,7 @@ class FotokastenTestSoapClient {
 				);
 
 			case 'transferBasket':
-				$test                          =& $this->getTest();
+				$test =& $this->getTest();
 				$test['test']->_basketEndpoint = $this->endpoint;
 				$test['test']->_basketParams   = $params;
 

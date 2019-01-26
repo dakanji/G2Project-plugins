@@ -77,7 +77,7 @@ class WebCamSiteAdminController extends GalleryController {
 			}
 		}
 
-		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$method = empty($error) ? 'redirect' : 'delegate';
 		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'webcam.WebCamSiteAdmin';
 		$results['status']           = $status;

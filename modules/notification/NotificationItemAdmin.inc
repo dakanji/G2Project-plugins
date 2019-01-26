@@ -215,7 +215,7 @@ class NotificationItemAdminView extends GalleryView {
 
 		// Events
 		$form['notifications'] = array();
-		$i                     = 0;
+		$i = 0;
 
 		foreach ($notifications as $notificationName => $notification) {
 			list($ret, $instance) = GalleryCoreApi::newFactoryInstanceById(
@@ -236,7 +236,7 @@ class NotificationItemAdminView extends GalleryView {
 			}
 
 			if (!$isAdminGroup) {
-				$permission                  = $instance->getPermission();
+				$permission = $instance->getPermission();
 				list($ret, $itemPermissions) = GalleryCoreApi::getPermissions($itemId);
 
 				if ($ret) {

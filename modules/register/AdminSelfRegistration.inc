@@ -201,7 +201,7 @@ class AdminSelfRegistrationView extends GalleryView {
 			}
 		}
 
-		$selfregistration                          = array();
+		$selfregistration = array();
 		$selfregistration['emailConfirmationList'] = array(
 			'admin' => $module->translate('Activation by administrator'),
 			'email' => $module->translate('Use confirmation emails'),

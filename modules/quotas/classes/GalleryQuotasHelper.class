@@ -89,7 +89,7 @@ class GalleryQuotasHelper {
 	 */
 	public static function getUserDiskQuota($userId) {
 		global $gallery;
-		$userDiskQuota                               = null;
+		$userDiskQuota = null;
 		list($ret, $userQuotaExists, $userQuotaInfo) = GalleryQuotasHelper::fetchUserQuota($userId);
 
 		if ($ret) {

@@ -45,12 +45,12 @@ class getid3_svg extends getid3_handler {
 				$section_data = array();
 
 				while (preg_match('/ "([^"]+)"/', $info['svg'][$section_to_fix]['raw'][1], $matches)) {
-					$section_data[]                         = $matches[1];
+					$section_data[] = $matches[1];
 					$info['svg'][$section_to_fix]['raw'][1] = str_replace($matches[0], '', $info['svg'][$section_to_fix]['raw'][1]);
 				}
 
 				while (preg_match('/([^\s]+)="([^"]+)"/', $info['svg'][$section_to_fix]['raw'][1], $matches)) {
-					$section_data[]                         = $matches[0];
+					$section_data[] = $matches[0];
 					$info['svg'][$section_to_fix]['raw'][1] = str_replace($matches[0], '', $info['svg'][$section_to_fix]['raw'][1]);
 				}
 				$section_data = array_merge($section_data, preg_split('/[\s,]+/', $info['svg'][$section_to_fix]['raw'][1]));
@@ -59,9 +59,9 @@ class getid3_svg extends getid3_handler {
 					$keyvaluepair = trim($keyvaluepair);
 
 					if ($keyvaluepair) {
-						$keyvalueexploded                               = explode('=', $keyvaluepair);
-						$key                                            = (isset($keyvalueexploded[0]) ? $keyvalueexploded[0] : '');
-						$value                                          = (isset($keyvalueexploded[1]) ? $keyvalueexploded[1] : '');
+						$keyvalueexploded = explode('=', $keyvaluepair);
+						$key              = (isset($keyvalueexploded[0]) ? $keyvalueexploded[0] : '');
+						$value            = (isset($keyvalueexploded[1]) ? $keyvalueexploded[1] : '');
 						$info['svg'][$section_to_fix]['sections'][$key] = trim($value, '"');
 					}
 				}

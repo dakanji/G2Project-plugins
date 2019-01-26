@@ -269,8 +269,8 @@ class getID3 {
 			}
 
 			// init result array and set parameters
-			$this->filename                 = $filename;
-			$this->info                     = array();
+			$this->filename = $filename;
+			$this->info     = array();
 			$this->info['GETID3_VERSION']   = $this->version();
 			$this->info['php_memory_limit'] = (($this->memory_limit > 0) ? $this->memory_limit : false);
 
@@ -311,9 +311,9 @@ class getID3 {
 			$this->info['filesize'] = (!is_null($filesize) ? $filesize : filesize($filename));
 			// set redundant parameters - might be needed in some include file
 			// filenames / filepaths in getID3 are always expressed with forward slashes (unix-style) for both Windows and other to try and minimize confusion
-			$filename                   = str_replace('\\', '/', $filename);
-			$this->info['filepath']     = str_replace('\\', '/', realpath(dirname($filename)));
-			$this->info['filename']     = getid3_lib::mb_basename($filename);
+			$filename               = str_replace('\\', '/', $filename);
+			$this->info['filepath'] = str_replace('\\', '/', realpath(dirname($filename)));
+			$this->info['filename'] = getid3_lib::mb_basename($filename);
 			$this->info['filenamepath'] = $this->info['filepath'] . '/' . $this->info['filename'];
 
 
@@ -354,11 +354,11 @@ class getID3 {
 			$this->info['fileformat']          = '';                // filled in later
 			$this->info['audio']['dataformat'] = '';                // filled in later, unset if not used
 			$this->info['video']['dataformat'] = '';                // filled in later, unset if not used
-			$this->info['tags']                = array();           // filled in later, unset if not used
-			$this->info['error']               = array();           // filled in later, unset if not used
-			$this->info['warning']             = array();           // filled in later, unset if not used
-			$this->info['comments']            = array();           // filled in later, unset if not used
-			$this->info['encoding']            = $this->encoding;   // required by id3v2 and iso modules - can be unset at the end if desired
+			$this->info['tags']     = array();           // filled in later, unset if not used
+			$this->info['error']    = array();           // filled in later, unset if not used
+			$this->info['warning']  = array();           // filled in later, unset if not used
+			$this->info['comments'] = array();           // filled in later, unset if not used
+			$this->info['encoding'] = $this->encoding;   // required by id3v2 and iso modules - can be unset at the end if desired
 
 			return true;
 		} catch (Exception $e) {

@@ -378,7 +378,7 @@ class SendEcardView extends GalleryView {
 		$SendEcard['footer'] = EcardHelper::replaceKeywords($config['footer'], $form);
 
 		// Check if we should use validation plugins
-		$plugins                          = array();
+		$plugins = array();
 		list($ret, $useValidationPlugins) = EcardHelper::useValidationPlugins();
 
 		if ($ret) {

@@ -717,8 +717,8 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
  */
 class ItemAddFromServerTestPlatform extends GalleryPlatform {
 	public function __construct($delegate, $symlinkSupported) {
-		$this->_delegate         = $delegate;
-		$dirSep                  = $this->_dirSep = $delegate->getDirectorySeparator();
+		$this->_delegate = $delegate;
+		$dirSep          = $this->_dirSep = $delegate->getDirectorySeparator();
 		$this->_symlinkSupported = $symlinkSupported;
 		$this->_baseDir          = dirname(__DIR__) . "{$dirSep}data{$dirSep}";
 		$this->_baseDirRecursive = dirname(__DIR__) .

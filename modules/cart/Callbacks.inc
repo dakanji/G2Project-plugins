@@ -44,7 +44,7 @@ class CartCallbacks {
 					$total += $count;
 				}
 
-				$block                               =& $smarty->_tpl_vars['block'];
+				$block =& $smarty->_tpl_vars['block'];
 				$block['cart']['ShowCart']['unique'] = $unique;
 				$block['cart']['ShowCart']['total']  = $total;
 
@@ -57,7 +57,7 @@ class CartCallbacks {
 					$urlParams['itemId'] = $itemId;
 				}
 
-				$urlGenerator                     =& $gallery->getUrlGenerator();
+				$urlGenerator =& $gallery->getUrlGenerator();
 				$block['cart']['ShowCart']['url'] = $urlGenerator->generateUrl($urlParams, array());
 
 				return null;

@@ -564,7 +564,7 @@ class CustomFieldHelper extends CustomFieldInterface_1_0 {
 
 				if ($idx >= 0) {
 					$param[$set][$idx]['choices'] = $choices;
-					$ret                          = CustomFieldHelper::saveParameters(
+					$ret = CustomFieldHelper::saveParameters(
 						array(
 							$set => $param[$set],
 						),

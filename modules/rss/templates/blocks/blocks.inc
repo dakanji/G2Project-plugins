@@ -1,8 +1,8 @@
 <?php
 $blocks['RssBlock'] = array(
 	'description' => $gallery->i18n('List of RSS Feeds'),
-	'default'     => 'true',
-	'vars'        => array(
+	'default' => 'true',
+	'vars'    => array(
 		'number' => array(
 			'description' => $gallery->i18n('Number of feeds to display'),
 			'type'        => 'choice',

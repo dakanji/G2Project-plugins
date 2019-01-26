@@ -51,7 +51,7 @@ class CaptchaSiteAdminController extends GalleryController {
 			// Make sure that we're between 0 and 5, then store the value
 			$form['failedAttemptThreshold'] = min($form['failedAttemptThreshold'], 5);
 			$form['failedAttemptThreshold'] = max($form['failedAttemptThreshold'], 0);
-			$ret                            = GalleryCoreApi::setPluginParameter(
+			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'captcha',
 				'failedAttemptThreshold',

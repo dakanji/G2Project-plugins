@@ -66,7 +66,7 @@ class getid3_flac extends getid3_handler {
 			}
 
 			$info['flac'][$BlockTypeText]['raw'] = array();
-			$BlockTypeText_raw                   = &$info['flac'][$BlockTypeText]['raw'];
+			$BlockTypeText_raw = &$info['flac'][$BlockTypeText]['raw'];
 
 			$BlockTypeText_raw['offset']          = $BlockOffset;
 			$BlockTypeText_raw['last_meta_block'] = $LastBlockFlag;
@@ -183,7 +183,7 @@ class getid3_flac extends getid3_handler {
 				$this->warning('FLAC STREAMINFO.audio_signature is null (known issue with libOggFLAC)');
 			} else {
 				$info['md5_data_source'] = '';
-				$md5                     = $info['flac']['STREAMINFO']['audio_signature'];
+				$md5 = $info['flac']['STREAMINFO']['audio_signature'];
 
 				for ($i = 0; $i < strlen($md5); $i++) {
 					$info['md5_data_source'] .= str_pad(dechex(ord($md5[$i])), 2, '00', STR_PAD_LEFT);
@@ -213,14 +213,14 @@ class getid3_flac extends getid3_handler {
 		$info = &$this->getid3->info;
 
 		$info['flac']['STREAMINFO'] = array();
-		$streaminfo                 = &$info['flac']['STREAMINFO'];
+		$streaminfo = &$info['flac']['STREAMINFO'];
 
 		$streaminfo['min_block_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 0, 2));
 		$streaminfo['max_block_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 2, 2));
 		$streaminfo['min_frame_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 4, 3));
 		$streaminfo['max_frame_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 7, 3));
 
-		$SRCSBSS                       = getid3_lib::BigEndian2Bin(substr($BlockData, 10, 8));
+		$SRCSBSS = getid3_lib::BigEndian2Bin(substr($BlockData, 10, 8));
 		$streaminfo['sample_rate']     = getid3_lib::Bin2Dec(substr($SRCSBSS, 0, 20));
 		$streaminfo['channels']        = getid3_lib::Bin2Dec(substr($SRCSBSS, 20, 3)) + 1;
 		$streaminfo['bits_per_sample'] = getid3_lib::Bin2Dec(substr($SRCSBSS, 23, 5)) + 1;
@@ -252,7 +252,7 @@ class getid3_flac extends getid3_handler {
 	private function parseAPPLICATION($BlockData) {
 		$info = &$this->getid3->info;
 
-		$ApplicationID                                       = getid3_lib::BigEndian2Int(substr($BlockData, 0, 4));
+		$ApplicationID = getid3_lib::BigEndian2Int(substr($BlockData, 0, 4));
 		$info['flac']['APPLICATION'][$ApplicationID]['name'] = self::applicationIDLookup($ApplicationID);
 		$info['flac']['APPLICATION'][$ApplicationID]['data'] = substr($BlockData, 4);
 
@@ -275,11 +275,11 @@ class getid3_flac extends getid3_handler {
 				getid3_lib::safe_inc($info['flac']['SEEKTABLE']['placeholders'], 1);
 				$offset += 10;
 			} else {
-				$SampleNumber                                        = getid3_lib::BigEndian2Int($SampleNumberString);
-				$info['flac']['SEEKTABLE'][$SampleNumber]['offset']  = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
-				$offset                                             += 8;
+				$SampleNumber = getid3_lib::BigEndian2Int($SampleNumberString);
+				$info['flac']['SEEKTABLE'][$SampleNumber]['offset'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
+				$offset += 8;
 				$info['flac']['SEEKTABLE'][$SampleNumber]['samples'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 2));
-				$offset                                             += 2;
+				$offset += 2;
 			}
 		}
 
@@ -308,19 +308,19 @@ class getid3_flac extends getid3_handler {
 	}
 
 	private function parseCUESHEET($BlockData) {
-		$info                                             = &$this->getid3->info;
-		$offset                                           = 0;
+		$info   = &$this->getid3->info;
+		$offset = 0;
 		$info['flac']['CUESHEET']['media_catalog_number'] = trim(substr($BlockData, $offset, 128), "\0");
-		$offset                                          += 128;
-		$info['flac']['CUESHEET']['lead_in_samples']      = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
-		$offset                                          += 8;
-		$info['flac']['CUESHEET']['flags']['is_cd']       = (bool)(getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1)) & 0x80);
-		$offset                                          += 1;
+		$offset += 128;
+		$info['flac']['CUESHEET']['lead_in_samples'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
+		$offset += 8;
+		$info['flac']['CUESHEET']['flags']['is_cd'] = (bool)(getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1)) & 0x80);
+		$offset += 1;
 
 		$offset += 258; // reserved
 
 		$info['flac']['CUESHEET']['number_tracks'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1));
-		$offset                                   += 1;
+		$offset += 1;
 
 		for ($track = 0; $track < $info['flac']['CUESHEET']['number_tracks']; $track++) {
 			$TrackSampleOffset = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
@@ -331,7 +331,7 @@ class getid3_flac extends getid3_handler {
 			$info['flac']['CUESHEET']['tracks'][$TrackNumber]['sample_offset'] = $TrackSampleOffset;
 
 			$info['flac']['CUESHEET']['tracks'][$TrackNumber]['isrc'] = substr($BlockData, $offset, 12);
-			$offset                                                  += 12;
+			$offset += 12;
 
 			$TrackFlagsRaw = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1));
 			$offset       += 1;
@@ -442,16 +442,16 @@ class getid3_flac extends getid3_handler {
 
 	public static function pictureTypeLookup($type_id) {
 		static $lookup = array(
-			0  => 'Other',
-			1  => '32x32 pixels \'file icon\' (PNG only)',
-			2  => 'Other file icon',
-			3  => 'Cover (front)',
-			4  => 'Cover (back)',
-			5  => 'Leaflet page',
-			6  => 'Media (e.g. label side of CD)',
-			7  => 'Lead artist/lead performer/soloist',
-			8  => 'Artist/performer',
-			9  => 'Conductor',
+			0 => 'Other',
+			1 => '32x32 pixels \'file icon\' (PNG only)',
+			2 => 'Other file icon',
+			3 => 'Cover (front)',
+			4 => 'Cover (back)',
+			5 => 'Leaflet page',
+			6 => 'Media (e.g. label side of CD)',
+			7 => 'Lead artist/lead performer/soloist',
+			8 => 'Artist/performer',
+			9 => 'Conductor',
 			10 => 'Band/Orchestra',
 			11 => 'Composer',
 			12 => 'Lyricist/text writer',

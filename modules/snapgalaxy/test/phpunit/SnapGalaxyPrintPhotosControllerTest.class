@@ -126,7 +126,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		}
 
 		// Empty out the plugin session id
-		$session                    =& $gallery->getSession();
+		$session =& $gallery->getSession();
 		$this->_saveCartUrlFragment = $session->get('snapgalaxy.cartUrlFragment');
 		$session->remove('snapgalaxy.cartUrlFragment');
 
@@ -329,7 +329,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $snapgalaxySessionId;
 		$snapgalaxySession             = new GallerySession();
-		$ret                           = $snapgalaxySession->init();
+		$ret = $snapgalaxySession->init();
 
 		if ($ret) {
 			return $ret;

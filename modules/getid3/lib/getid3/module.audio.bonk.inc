@@ -86,7 +86,7 @@ class getid3_bonk extends getid3_handler {
 					default:
 						break 2;
 				}
-				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
+				$BonkTagName = substr($TagHeaderTest, 1, 4);
 				$thisfile_bonk[$BonkTagName]['size']   = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
 				$thisfile_bonk[$BonkTagName]['offset'] = $thisfile_bonk['dataoffset'];
 				$this->HandleBonkTags($BonkTagName);
@@ -101,7 +101,7 @@ class getid3_bonk extends getid3_handler {
 			if ($TagHeaderTest == "\x00" . 'INFO') {
 				$info['audio']['encoder'] = 'Extended BONK v0.6 - v0.8';
 
-				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
+				$BonkTagName = substr($TagHeaderTest, 1, 4);
 				$thisfile_bonk[$BonkTagName]['size']   = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
 				$thisfile_bonk[$BonkTagName]['offset'] = $thisfile_bonk['dataoffset'];
 				$this->HandleBonkTags($BonkTagName);
@@ -127,7 +127,7 @@ class getid3_bonk extends getid3_handler {
 				// shortcut
 				$thisfile_bonk_BONK = &$info['bonk']['BONK'];
 
-				$BonkData                             = "\x00" . 'BONK' . $this->fread(17);
+				$BonkData = "\x00" . 'BONK' . $this->fread(17);
 				$thisfile_bonk_BONK['version']        = getid3_lib::LittleEndian2Int(substr($BonkData, 5, 1));
 				$thisfile_bonk_BONK['number_samples'] = getid3_lib::LittleEndian2Int(substr($BonkData, 6, 4));
 				$thisfile_bonk_BONK['sample_rate']    = getid3_lib::LittleEndian2Int(substr($BonkData, 10, 4));
@@ -165,7 +165,7 @@ class getid3_bonk extends getid3_handler {
 
 				$thisfile_bonk_INFO['version']       = getid3_lib::LittleEndian2Int($this->fread(1));
 				$thisfile_bonk_INFO['entries_count'] = 0;
-				$NextInfoDataPair                    = $this->fread(5);
+				$NextInfoDataPair = $this->fread(5);
 
 				if (!$this->BonkIsValidTagName(substr($NextInfoDataPair, 1, 4))) {
 					while (!feof($this->getid3->fp)) {
@@ -187,17 +187,17 @@ class getid3_bonk extends getid3_handler {
 				break;
 
 			case 'META':
-				$BonkData                        = "\x00" . 'META' . $this->fread($info['bonk']['META']['size'] - 5);
+				$BonkData = "\x00" . 'META' . $this->fread($info['bonk']['META']['size'] - 5);
 				$info['bonk']['META']['version'] = getid3_lib::LittleEndian2Int(substr($BonkData, 5, 1));
 
 				$MetaTagEntries = floor(((strlen($BonkData) - 8) - 6) / 8); // BonkData - xxxxmeta - ØMETA
 				$offset         = 6;
 
 				for ($i = 0; $i < $MetaTagEntries; $i++) {
-					$MetaEntryTagName                                = substr($BonkData, $offset, 4);
-					$offset                                         += 4;
-					$MetaEntryTagOffset                              = getid3_lib::LittleEndian2Int(substr($BonkData, $offset, 4));
-					$offset                                         += 4;
+					$MetaEntryTagName   = substr($BonkData, $offset, 4);
+					$offset            += 4;
+					$MetaEntryTagOffset = getid3_lib::LittleEndian2Int(substr($BonkData, $offset, 4));
+					$offset            += 4;
 					$info['bonk']['META']['tags'][$MetaEntryTagName] = $MetaEntryTagOffset;
 				}
 
@@ -210,7 +210,7 @@ class getid3_bonk extends getid3_handler {
 				if (class_exists('getid3_id3v2')) {
 					$getid3_temp = new getID3();
 					$getid3_temp->openfile($this->getid3->filename);
-					$getid3_id3v2                  = new getid3_id3v2($getid3_temp);
+					$getid3_id3v2 = new getid3_id3v2($getid3_temp);
 					$getid3_id3v2->StartingOffset  = $info['bonk'][' ID3']['offset'] + 2;
 					$info['bonk'][' ID3']['valid'] = $getid3_id3v2->Analyze();
 

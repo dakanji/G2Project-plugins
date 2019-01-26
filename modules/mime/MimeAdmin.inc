@@ -122,7 +122,7 @@ class MimeAdminView extends GalleryView {
 		$MimeAdmin = array();
 
 		foreach (array_keys($typeMap['ext']) as $mimeType) {
-			$ext                              = implode(', ', $typeMap['ext'][$mimeType]);
+			$ext = implode(', ', $typeMap['ext'][$mimeType]);
 			$MimeAdmin[$mimeType]['ext']      = $ext;
 			$MimeAdmin[$mimeType]['viewable'] = $typeMap['viewable'][$mimeType];
 		}

@@ -313,7 +313,7 @@ class Image_XMP {
 
 						if ($current_property != '') {
 							$xmp_array[$current_property][$container_index] = (isset($xml_elem['value']) ? $xml_elem['value'] : '');
-							$container_index                               += 1;
+							$container_index += 1;
 						}
 						//else unidentified attribute!!
 					}

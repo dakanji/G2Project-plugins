@@ -111,7 +111,7 @@ class ItemCreateReplicaController extends GalleryController {
 				 * Lock everything up and start linkin'.  We need to read lock
 				 * the source ids, source hierarchy and destination hierarchy.
 				 */
-				$ids                 = array_merge($selectedIds, array($itemId, $destinationId));
+				$ids = array_merge($selectedIds, array($itemId, $destinationId));
 				list($ret, $locks[]) = GalleryCoreApi::acquireReadLock($ids);
 
 				if ($ret) {
@@ -190,7 +190,7 @@ class ItemCreateReplicaController extends GalleryController {
 				$redirect['itemId']  = $itemId;
 			}
 		} elseif (isset($form['action']['next'])) {
-			$page                = GalleryUtilities::getRequestVariables('page');
+			$page = GalleryUtilities::getRequestVariables('page');
 			list($ret, $peerIds) = GalleryCoreApi::fetchLinkableChildItemIdsWithPermission($itemId, 'core.view');
 
 			if ($ret) {
@@ -202,7 +202,7 @@ class ItemCreateReplicaController extends GalleryController {
 			$results['delegate']['itemId'] = $itemId;
 			$results['delegate']['page']   = min($page + 1, $numPages);
 		} elseif (isset($form['action']['previous'])) {
-			$page                          = GalleryUtilities::getRequestVariables('page');
+			$page = GalleryUtilities::getRequestVariables('page');
 			$results['delegate']['itemId'] = $itemId;
 			$results['delegate']['page']   = max($page - 1, 1);
 		} elseif (isset($form['action']['cancel'])) {
@@ -316,8 +316,8 @@ class ItemCreateReplicaView extends GalleryView {
 
 				// While we're at it, attach the thumbnails
 				if (isset($thumbnails[$peerItem->getId()])) {
-					$thumbnail                              = $thumbnails[$peerItem->getId()];
-					list($ret, $thumbnail)                  = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($thumbnail->getId());
+					$thumbnail             = $thumbnails[$peerItem->getId()];
+					list($ret, $thumbnail) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($thumbnail->getId());
 					$peers[$peerItem->getId()]['thumbnail'] = (array)$thumbnail;
 				}
 			}
@@ -339,13 +339,13 @@ class ItemCreateReplicaView extends GalleryView {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 
-		$ItemCreateReplica                = array();
-		$ItemCreateReplica['canCancel']   = (bool)GalleryUtilities::getRequestVariables('return');
-		$ItemCreateReplica['peers']       = $peers;
-		$ItemCreateReplica['albumTree']   = GalleryUtilities::createAlbumTree($albums);
-		$ItemCreateReplica['page']        = $page;
-		$ItemCreateReplica['numPages']    = $numPages;
-		$ItemCreateReplica['numPerPage']  = $form['numPerPage'];
+		$ItemCreateReplica               = array();
+		$ItemCreateReplica['canCancel']  = (bool)GalleryUtilities::getRequestVariables('return');
+		$ItemCreateReplica['peers']      = $peers;
+		$ItemCreateReplica['albumTree']  = GalleryUtilities::createAlbumTree($albums);
+		$ItemCreateReplica['page']       = $page;
+		$ItemCreateReplica['numPages']   = $numPages;
+		$ItemCreateReplica['numPerPage'] = $form['numPerPage'];
 		$ItemCreateReplica['selectedIds'] = array_keys($selectedIds);
 
 		$template->setVariable('ItemCreateReplica', $ItemCreateReplica);

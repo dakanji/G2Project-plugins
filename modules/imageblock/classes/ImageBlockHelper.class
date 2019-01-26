@@ -400,8 +400,8 @@ class ImageBlockHelper {
 		}
 
 		if (isset($item)) {
-			$id                            = $item->getId();
-			$data                          = array(
+			$id   = $item->getId();
+			$data = array(
 				'id' => $id,
 			);
 			list($ret, $data['viewCount']) = GalleryCoreApi::fetchItemViewCount($item->getId());

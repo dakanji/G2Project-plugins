@@ -283,7 +283,7 @@ class WatermarkModule extends GalleryModule {
 		GalleryCoreApi::requireOnce('modules/watermark/classes/WatermarkHelper.class');
 
 		// Delete all watermarks and remove uses of them
-		$query                     = 'SELECT [WatermarkImage::id] FROM [WatermarkImage]';
+		$query = 'SELECT [WatermarkImage::id] FROM [WatermarkImage]';
 		list($ret, $searchResults) = $gallery->search($query);
 
 		if ($ret) {

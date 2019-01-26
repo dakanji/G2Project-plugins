@@ -715,7 +715,7 @@ class WatermarkHelper {
 						return array($ret, null);
 					}
 					// Expire derivatives using this watermark
-					$query                     = '
+					$query = '
 				SELECT [GalleryDerivative::id]
 				FROM [GalleryDerivative]
 				WHERE [GalleryDerivative::postFilterOperations] LIKE ?
@@ -758,8 +758,8 @@ class WatermarkHelper {
 					return array($ret, null);
 				}
 
-				$status['saved']                = 1;
-				$results['redirect']['view']    = $view;
+				$status['saved']             = 1;
+				$results['redirect']['view'] = $view;
 				$results['redirect']['subView'] = $subViewSuccess;
 			} else {
 				$results['delegate']['view']    = $view;
@@ -813,9 +813,9 @@ class WatermarkHelper {
 		if ($form['formName'] != $formName) {
 			$form['formName'] = $formName;
 
-			$form['watermarkName']                = $watermark->getName();
-			$form['xPercentage']                  = $watermark->getXPercentage();
-			$form['yPercentage']                  = $watermark->getYPercentage();
+			$form['watermarkName'] = $watermark->getName();
+			$form['xPercentage']   = $watermark->getXPercentage();
+			$form['yPercentage']   = $watermark->getYPercentage();
 			$form['whichDerivative']['preferred'] = $watermark->getApplyToPreferred() ? 1 : null;
 			$form['whichDerivative']['thumbnail'] = $watermark->getApplyToThumbnail() ? 1 : null;
 			$form['whichDerivative']['resizes']   = $watermark->getApplyToResizes() ? 1 : null;

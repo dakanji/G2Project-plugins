@@ -47,8 +47,8 @@ class FlashVideoRenderer extends GalleryRenderer {
 			return null;
 		}
 
-		$urlGenerator                 =& $gallery->getUrlGenerator();
-		$src                          = $urlGenerator->generateUrl(
+		$urlGenerator =& $gallery->getUrlGenerator();
+		$src          = $urlGenerator->generateUrl(
 			array(
 				'view'         => 'core.DownloadItem',
 				'itemId'       => $entity->getId(),
@@ -112,7 +112,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		// To allow for sharing we must also pass the playerUrl
 		//$flashVars .= '&swfUrl=' . urlencode($playerUrl);
 
-		$itemId                = $item->getId();
+		$itemId = $item->getId();
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if (!$ret && !empty($thumbnail)) {

@@ -37,7 +37,7 @@ class Picasa2DataParserTest extends GalleryControllerTestCase {
 	 */
 	public function testGetBadXmlArray_noversion() {
 		// No XML version
-		$testRawXml                 = '<?xml encoding="utf-8" ?>';
+		$testRawXml = '<?xml encoding="utf-8" ?>';
 		list($ret, $picasaXmlArray) = Picasa2DataParser::getXmlArray($testRawXml);
 		/*if ($ret) {
 			return $ret;
@@ -49,7 +49,7 @@ class Picasa2DataParserTest extends GalleryControllerTestCase {
 	 * Test an XML without a closing tag
 	 */
 	public function testGetBadXmlArray_notag() {
-		$testRawXml                 = '<?xml version="1.0" encoding="utf-8" ?>' .
+		$testRawXml = '<?xml version="1.0" encoding="utf-8" ?>' .
 		'<album><albumName>GalleryTest' .
 		'<albumItemCount>2</albumItemCount></album></albumName>';
 		list($ret, $picasaXmlArray) = Picasa2DataParser::getXmlArray($testRawXml);
@@ -74,7 +74,7 @@ class Picasa2DataParserTest extends GalleryControllerTestCase {
 	 * Test whether the XML-File is parsed correctly
 	 */
 	public function testGetGoodXmlArray() {
-		$testRawXml                 = '<?xml version="1.0" encoding="utf-8" ?>' .
+		$testRawXml = '<?xml version="1.0" encoding="utf-8" ?>' .
 		'<album><albumName>GalleryTest</albumName>' .
 		'<albumItemCount>2</albumItemCount>' .
 		'<albumCaption>This is a test</albumCaption>' .

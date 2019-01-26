@@ -157,7 +157,7 @@ class SelectPicasaExportPathView extends GalleryView {
 		}
 		$albumTree = GalleryUtilities::createAlbumTree($albums);
 
-		$SelectPicasaExportPath                = array();
+		$SelectPicasaExportPath = array();
 		$SelectPicasaExportPath['recentPaths'] = $recentPaths;
 		$SelectPicasaExportPath['hasToolkit']  = $hasToolkit;
 		$SelectPicasaExportPath['g2AlbumTree'] = $albumTree;

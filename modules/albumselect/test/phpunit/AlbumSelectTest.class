@@ -389,7 +389,7 @@ class AlbumSelectTest extends GalleryTestCase {
 		}
 
 		// Preparation
-		$userId                   = $gallery->getActiveUserId();
+		$userId = $gallery->getActiveUserId();
 		list($ret, $languageCode) = $gallery->getActiveLanguageCode();
 
 		if ($ret) {
@@ -537,8 +537,8 @@ class AlbumSelectTest extends GalleryTestCase {
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Force the URL generator to believe that relative URLs are fine
-		$baseUrl                = $urlGenerator->getCurrentUrlDir();
-		$serverUrl              = $urlGenerator->makeUrl('/');
+		$baseUrl   = $urlGenerator->getCurrentUrlDir();
+		$serverUrl = $urlGenerator->makeUrl('/');
 		$_SERVER['REQUEST_URI'] = substr($baseUrl, strlen($serverUrl) - 1) . GALLERY_MAIN_PHP;
 
 		$smarty    = new GallerySmarty();
