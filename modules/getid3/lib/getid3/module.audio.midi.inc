@@ -41,13 +41,13 @@ class getid3_midi extends getid3_handler {
 
 			return false;
 		}
-		$offset += 4;
+		$offset                         += 4;
 		$thisfile_midi_raw['headersize'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 4));
-		$offset += 4;
+		$offset                         += 4;
 		$thisfile_midi_raw['fileformat'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset += 2;
-		$thisfile_midi_raw['tracks'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
-		$offset += 2;
+		$offset                         += 2;
+		$thisfile_midi_raw['tracks']     = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
+		$offset                         += 2;
 		$thisfile_midi_raw['ticksperqnote'] = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 2));
 		$offset += 2;
 

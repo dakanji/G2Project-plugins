@@ -14,14 +14,14 @@ $entityInfo['WatermarkImage'] = array(
 			'type' => STORAGE_TYPE_BOOLEAN,
 		),
 		'name' => array(
-			'type' => STORAGE_TYPE_STRING,
-			'size' => STORAGE_SIZE_MEDIUM,
+			'type'    => STORAGE_TYPE_STRING,
+			'size'    => STORAGE_SIZE_MEDIUM,
 			'notNull' => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),
 		'fileName' => array(
-			'type' => STORAGE_TYPE_STRING,
-			'size' => STORAGE_SIZE_MEDIUM,
+			'type'    => STORAGE_TYPE_STRING,
+			'size'    => STORAGE_SIZE_MEDIUM,
 			'notNull' => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),

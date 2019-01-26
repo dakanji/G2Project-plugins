@@ -59,8 +59,8 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -82,10 +82,10 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status'   => array(
+				'status' => array(
 					'deletedGroup' => $this->_group->getGroupName(),
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Failed to delete group quota'
@@ -121,8 +121,8 @@ class AdminDeleteGroupQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminDeleteGroupQuota',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);

@@ -87,10 +87,10 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -125,10 +125,10 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -159,8 +159,8 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdminEdit',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error' => array(
 					'form[error][watermarkName][missing]',
 					'form[error][whichDerivative][missing]',
 				),
@@ -189,8 +189,8 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -220,10 +220,10 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -305,7 +305,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		$results  = $this->handleRequest();
 		$expected = ($postMimeType == 'test/file') ? array(
 			'redirect' => array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'watermark.WatermarkSiteAdmin',
 			),
 			'status'   => array(
@@ -314,7 +314,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 			'error'    => array(),
 		) : array(
 			'delegate' => array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'watermark.WatermarkSiteAdminEdit',
 			),
 			'status'   => array(),

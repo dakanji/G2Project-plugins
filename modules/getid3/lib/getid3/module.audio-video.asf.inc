@@ -1092,7 +1092,7 @@ class getid3_asf extends getid3_handler {
 						$audiomediaoffset = 0;
 
 						$thisfile_asf_audiomedia_currentstream = getid3_riff::parseWAVEFORMATex(substr($streamdata['type_specific_data'], $audiomediaoffset, 16));
-						$audiomediaoffset += 16;
+						$audiomediaoffset                     += 16;
 
 						$thisfile_audio['lossless'] = false;
 
@@ -1108,7 +1108,7 @@ class getid3_asf extends getid3_handler {
 							foreach ($thisfile_asf['stream_bitrate_properties_object']['bitrate_records'] as $dummy => $dataarray) {
 								if (isset($dataarray['flags']['stream_number']) && ($dataarray['flags']['stream_number'] == $streamnumber)) {
 									$thisfile_asf_audiomedia_currentstream['bitrate'] = $dataarray['bitrate'];
-									$thisfile_audio['bitrate'] += $dataarray['bitrate'];
+									$thisfile_audio['bitrate']                       += $dataarray['bitrate'];
 
 									break;
 								}
@@ -1790,8 +1790,8 @@ class getid3_asf extends getid3_handler {
 	public function HeaderExtensionObjectDataParse(&$asf_header_extension_object_data, &$unhandled_sections) {
 		// http://msdn.microsoft.com/en-us/library/bb643323.aspx
 
-		$offset       = 0;
-		$objectOffset = 0;
+		$offset                      = 0;
+		$objectOffset                = 0;
 		$HeaderExtensionObjectParsed = array();
 
 		while ($objectOffset < strlen($asf_header_extension_object_data)) {
@@ -1812,12 +1812,12 @@ class getid3_asf extends getid3_handler {
 
 			switch ($thisObject['guid']) {
 				case GETID3_ASF_Extended_Stream_Properties_Object:
-					$thisObject['start_time'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 8));
-					$offset                  += 8;
+					$thisObject['start_time']      = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 8));
+					$offset                       += 8;
 					$thisObject['start_time_unix'] = $this->FILETIMEtoUNIXtime($thisObject['start_time']);
 
-					$thisObject['end_time'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 8));
-					$offset                += 8;
+					$thisObject['end_time']      = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 8));
+					$offset                     += 8;
 					$thisObject['end_time_unix'] = $this->FILETIMEtoUNIXtime($thisObject['end_time']);
 
 					$thisObject['data_bitrate'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 4));
@@ -1841,15 +1841,15 @@ class getid3_asf extends getid3_handler {
 					$thisObject['maximum_object_size'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 4));
 					$offset += 4;
 
-					$thisObject['flags_raw'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 4));
-					$offset                 += 4;
-					$thisObject['flags']['reliable']                = (bool)$thisObject['flags_raw'] & 0x00000001;
-					$thisObject['flags']['seekable']                = (bool)$thisObject['flags_raw'] & 0x00000002;
+					$thisObject['flags_raw']         = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 4));
+					$offset                         += 4;
+					$thisObject['flags']['reliable'] = (bool)$thisObject['flags_raw'] & 0x00000001;
+					$thisObject['flags']['seekable'] = (bool)$thisObject['flags_raw'] & 0x00000002;
 					$thisObject['flags']['no_cleanpoints']          = (bool)$thisObject['flags_raw'] & 0x00000004;
 					$thisObject['flags']['resend_live_cleanpoints'] = (bool)$thisObject['flags_raw'] & 0x00000008;
 
 					$thisObject['stream_number'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
-					$offset += 2;
+					$offset                     += 2;
 
 					$thisObject['stream_language_id_index'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
 					$offset += 2;
@@ -1858,7 +1858,7 @@ class getid3_asf extends getid3_handler {
 					$offset += 4;
 
 					$thisObject['stream_name_count'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
-					$offset += 2;
+					$offset                         += 2;
 
 					$thisObject['payload_extension_system_count'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
 					$offset += 2;
@@ -1867,7 +1867,7 @@ class getid3_asf extends getid3_handler {
 						$streamName = array();
 
 						$streamName['language_id_index'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
-						$offset += 2;
+						$offset                         += 2;
 
 						$streamName['stream_name_length'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
 						$offset += 2;
@@ -1915,7 +1915,7 @@ class getid3_asf extends getid3_handler {
 						$descriptionRecord = array();
 
 						$descriptionRecord['reserved_1'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2)); // must be zero
-						$offset += 2;
+						$offset                         += 2;
 
 						$descriptionRecord['stream_number'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
 						$offset += 2;
@@ -1924,7 +1924,7 @@ class getid3_asf extends getid3_handler {
 						$offset += 2;
 
 						$descriptionRecord['data_type'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
-						$offset += 2;
+						$offset                        += 2;
 						$descriptionRecord['data_type_text'] = self::metadataLibraryObjectDataTypeLookup($descriptionRecord['data_type']);
 
 						$descriptionRecord['data_length'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 4));
@@ -1978,7 +1978,7 @@ class getid3_asf extends getid3_handler {
 						$offset += 1;
 
 						$languageIDrecord['language_id'] = substr($asf_header_extension_object_data, $offset, $languageIDrecord['language_id_length']);
-						$offset += $languageIDrecord['language_id_length'];
+						$offset                         += $languageIDrecord['language_id_length'];
 
 						$thisObject['language_id_record'][$i] = $languageIDrecord;
 					}
@@ -2002,7 +2002,7 @@ class getid3_asf extends getid3_handler {
 						$offset += 2;
 
 						$descriptionRecord['data_type'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 2));
-						$offset += 2;
+						$offset                        += 2;
 						$descriptionRecord['data_type_text'] = self::metadataLibraryObjectDataTypeLookup($descriptionRecord['data_type']);
 
 						$descriptionRecord['data_length'] = getid3_lib::LittleEndian2Int(substr($asf_header_extension_object_data, $offset, 4));
@@ -2072,7 +2072,7 @@ class getid3_asf extends getid3_handler {
 
 		$WMpicture = array();
 
-		$offset = 0;
+		$offset                     = 0;
 		$WMpicture['image_type_id'] = getid3_lib::LittleEndian2Int(substr($data, $offset, 1));
 		$offset                    += 1;
 		$WMpicture['image_type']    = self::WMpictureTypeLookup($WMpicture['image_type_id']);
@@ -2090,8 +2090,8 @@ class getid3_asf extends getid3_handler {
 		$WMpicture['image_description'] = '';
 
 		do {
-			$next_byte_pair = substr($data, $offset, 2);
-			$offset        += 2;
+			$next_byte_pair                  = substr($data, $offset, 2);
+			$offset                         += 2;
 			$WMpicture['image_description'] .= $next_byte_pair;
 		} while ($next_byte_pair !== "\x00\x00");
 

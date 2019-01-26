@@ -98,8 +98,8 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'core.ProgressBar',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -142,8 +142,8 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'picasa.SelectPicasaExportPath',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -236,7 +236,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 		$this->_platform->setReply(
 			'mkdir',
 			array(
-				'fuzzy'  => '{.*GalleryTest 2}',
+				'fuzzy' => '{.*GalleryTest 2}',
 				'fuzzy2' => '{\d+}',
 			),
 			true

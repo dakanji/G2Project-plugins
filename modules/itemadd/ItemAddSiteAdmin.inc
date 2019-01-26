@@ -136,7 +136,7 @@ class ItemAddSiteAdminController extends GalleryController {
 		$method  = empty($error) ? 'redirect' : 'delegate';
 		$results = array(
 			$method  => array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'itemadd.ItemAddSiteAdmin',
 			),
 			'status' => $status,

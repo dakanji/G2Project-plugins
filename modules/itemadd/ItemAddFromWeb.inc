@@ -218,8 +218,8 @@ class ItemAddFromWeb extends ItemAddPlugin {
 				}
 
 				// Add path to the recent path list
-				$session    =& $gallery->getSession();
-				$recentUrls = $session->get('itemadd.view.ItemAddFromWeb.recentUrls');
+				$session                      =& $gallery->getSession();
+				$recentUrls                   = $session->get('itemadd.view.ItemAddFromWeb.recentUrls');
 				$recentUrls[$form['webPage']] = 1;
 				$session->put('itemadd.view.ItemAddFromWeb.recentUrls', $recentUrls);
 
@@ -383,8 +383,8 @@ class ItemAddFromWeb extends ItemAddPlugin {
 
 		if (!isset($form['set'])) {
 			$form['set'] = array(
-				'title'       => 1,
-				'summary'     => 0,
+				'title' => 1,
+				'summary' => 0,
 				'description' => 0,
 			);
 		}

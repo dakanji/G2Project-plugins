@@ -35,7 +35,7 @@ class getid3_vqf extends getid3_handler {
 		$this->fseek($info['avdataoffset']);
 		$VQFheaderData = $this->fread(16);
 
-		$offset = 0;
+		$offset                         = 0;
 		$thisfile_vqf_raw['header_tag'] = substr($VQFheaderData, $offset, 4);
 		$magic = 'TWIN';
 
@@ -46,11 +46,11 @@ class getid3_vqf extends getid3_handler {
 
 			return false;
 		}
-		$offset += 4;
+		$offset                     += 4;
 		$thisfile_vqf_raw['version'] = substr($VQFheaderData, $offset, 8);
-		$offset                  += 8;
-		$thisfile_vqf_raw['size'] = getid3_lib::BigEndian2Int(substr($VQFheaderData, $offset, 4));
-		$offset                  += 4;
+		$offset                     += 8;
+		$thisfile_vqf_raw['size']    = getid3_lib::BigEndian2Int(substr($VQFheaderData, $offset, 4));
+		$offset                     += 4;
 
 		while ($this->ftell() < $info['avdataend']) {
 			$ChunkBaseOffset = $this->ftell();
@@ -83,14 +83,14 @@ class getid3_vqf extends getid3_handler {
 					$thisfile_vqf['COMM'] = array();
 					$thisfile_vqf_COMM    = &$thisfile_vqf['COMM'];
 
-					$thisfile_vqf_COMM['channel_mode'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
-					$chunkoffset                 += 4;
-					$thisfile_vqf_COMM['bitrate'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
-					$chunkoffset                 += 4;
-					$thisfile_vqf_COMM['sample_rate'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
-					$chunkoffset += 4;
+					$thisfile_vqf_COMM['channel_mode']   = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
+					$chunkoffset                        += 4;
+					$thisfile_vqf_COMM['bitrate']        = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
+					$chunkoffset                        += 4;
+					$thisfile_vqf_COMM['sample_rate']    = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
+					$chunkoffset                        += 4;
 					$thisfile_vqf_COMM['security_level'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
-					$chunkoffset += 4;
+					$chunkoffset                        += 4;
 
 					$info['audio']['channels']        = $thisfile_vqf_COMM['channel_mode'] + 1;
 					$info['audio']['sample_rate']     = $this->VQFchannelFrequencyLookup($thisfile_vqf_COMM['sample_rate']);

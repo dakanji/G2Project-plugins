@@ -67,7 +67,7 @@ class RssHelper {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$albumUrl     = $urlGenerator->generateUrl(
 			array(
-				'view'   => 'core.ShowItem',
+				'view' => 'core.ShowItem',
 				'itemId' => $memberData['id'],
 			),
 			array(
@@ -116,11 +116,11 @@ class RssHelper {
 		// check if the cloud tag should be used
 		if ($param['useCloud']) {
 			$cloud = array(
-				'domain'            => $param['cloudDomain'],
-				'port'              => $param['cloudPort'],
-				'path'              => $param['cloudPath'],
+				'domain' => $param['cloudDomain'],
+				'port' => $param['cloudPort'],
+				'path' => $param['cloudPath'],
 				'registerProcedure' => $param['cloudRegisterProcedure'],
-				'protocol'          => $param['cloudProtocol'],
+				'protocol' => $param['cloudProtocol'],
 			);
 			$generator->addProperty('cloud', $cloud);
 		}
@@ -313,7 +313,7 @@ class RssHelper {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$url          = $urlGenerator->generateUrl(
 			array(
-				'view'   => 'core.ShowItem',
+				'view' => 'core.ShowItem',
 				'itemId' => $item->getId(),
 			),
 			array(
@@ -460,7 +460,7 @@ class RssHelper {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$url          = $urlGenerator->generateUrl(
 			array(
-				'view'   => 'comment.ShowAllComments',
+				'view' => 'comment.ShowAllComments',
 				'itemId' => $item->getParentId(),
 			),
 			array(
@@ -471,7 +471,7 @@ class RssHelper {
 
 		$itemSettings = array(
 			'title' => $item->getSubject(),
-			'link' => $url,
+			'link'  => $url,
 			'description' => $item->getComment(),
 		);
 
@@ -714,13 +714,13 @@ class RssHelper {
 		return array(
 			null,
 			array(
-				'photos'                => $module->translate('Items in an album'),
-				'album'                 => $module->translate('Sub-albums of an album'),
-				'photosRecursive'       => $module->translate('Items in an album and its sub-albums'),
-				'commentsAlbum'         => $module->translate('Comments for an album'),
-				'commentsPhoto'         => $module->translate('Comments for an item'),
-				'commentsRecursive'     => $module->translate('Comments for an album and its subalbums'),
-				'photosRandom'          => $module->translate('Random items in an album'),
+				'photos' => $module->translate('Items in an album'),
+				'album' => $module->translate('Sub-albums of an album'),
+				'photosRecursive' => $module->translate('Items in an album and its sub-albums'),
+				'commentsAlbum' => $module->translate('Comments for an album'),
+				'commentsPhoto' => $module->translate('Comments for an item'),
+				'commentsRecursive' => $module->translate('Comments for an album and its subalbums'),
+				'photosRandom' => $module->translate('Random items in an album'),
 				'photosRandomRecursive' => $module->translate('Random items in an album and its subalbums'),
 			),
 		);

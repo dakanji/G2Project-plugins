@@ -67,7 +67,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 	public function testNone() {
 		$form['SizeLimitOption']['dimensionChoice'] = 'unlimited';
 		$form['SizeLimitOption']['sizeChoice']      = 'unlimited';
-		list($error, $warning) = $this->_handleRequestAfterEdit($form, $this->_album);
+		list($error, $warning)                      = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(), $error);
 		$this->assertEquals(array(), $warning);
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters(
@@ -101,8 +101,8 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		}
 		$this->assertEquals(
 			array(
-				'height'       => 1024,
-				'width'        => 1024,
+				'height' => 1024,
+				'width' => 1024,
 				'keepOriginal' => 0,
 			),
 			$params
@@ -129,8 +129,8 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		}
 		$this->assertEquals(
 			array(
-				'height'       => 768,
-				'width'        => 768,
+				'height' => 768,
+				'width' => 768,
 				'keepOriginal' => 1,
 			),
 			$params
@@ -157,8 +157,8 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(
 			array(
 				'keepOriginal' => '0',
-				'width'        => '1024',
-				'height'       => '768',
+				'width' => '1024',
+				'height' => '768',
 			),
 			$params
 		);
@@ -168,7 +168,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$form['SizeLimitOption']['dimensionChoice'] = 'unlimited';
 		$form['SizeLimitOption']['sizeChoice']      = 'explicit';
 		$form['SizeLimitOption']['filesize']        = 2000;
-		list($error, $warning) = $this->_handleRequestAfterEdit($form, $this->_album);
+		list($error, $warning)                      = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array(), $error);
 		$this->assertEquals(array(), $warning);
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters(
@@ -183,7 +183,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(
 			array(
 				'keepOriginal' => 0,
-				'size'         => 2000,
+				'size' => 2000,
 			),
 			$params
 		);
@@ -193,7 +193,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$form['SizeLimitOption']['dimensionChoice'] = 'unlimited';
 		$form['SizeLimitOption']['sizeChoice']      = 'explicit';
 		$form['SizeLimitOption']['filesize']        = 'bad';
-		list($error, $warning) = $this->_handleRequestAfterEdit($form, $this->_album);
+		list($error, $warning)                      = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(array('form[error][SizeLimitOption][filesize][invalid]'), $error);
 		$this->assertEquals(array(), $warning);
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters(
@@ -212,7 +212,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$form['SizeLimitOption']['dimensionChoice'] = 'unlimited';
 		$form['SizeLimitOption']['sizeChoice']      = 'explicit';
 		$form['SizeLimitOption']['filesize']        = '0';
-		list($error, $warning) = $this->_handleRequestAfterEdit($form, $this->_album);
+		list($error, $warning)                      = $this->_handleRequestAfterEdit($form, $this->_album);
 		$this->assertEquals(
 			array('form[error][SizeLimitOption][filesize][invalid]'),
 			$error,
@@ -260,7 +260,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(
 			array(
 				'keepOriginal' => 0,
-				'size'         => 2000,
+				'size' => 2000,
 			),
 			$params
 		);
@@ -302,7 +302,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(
 			array(
 				'keepOriginal' => 0,
-				'size'         => 2000,
+				'size' => 2000,
 			),
 			$params
 		);
@@ -319,7 +319,7 @@ class SizeLimitOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(
 			array(
 				'keepOriginal' => 0,
-				'size'         => 2000,
+				'size' => 2000,
 			),
 			$params
 		);

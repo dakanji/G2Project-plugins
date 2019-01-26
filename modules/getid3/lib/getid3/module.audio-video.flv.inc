@@ -141,9 +141,9 @@ class getid3_flv extends getid3_handler {
 					$flv_framecount['audio']++;
 
 					if (!$found_audio) {
-						$found_audio = true;
-						$info['flv']['audio']['audioFormat']     = ($LastHeaderByte >> 4) & 0x0F;
-						$info['flv']['audio']['audioRate']       = ($LastHeaderByte >> 2) & 0x03;
+						$found_audio                         = true;
+						$info['flv']['audio']['audioFormat'] = ($LastHeaderByte >> 4) & 0x0F;
+						$info['flv']['audio']['audioRate']   = ($LastHeaderByte >> 2) & 0x03;
 						$info['flv']['audio']['audioSampleSize'] = ($LastHeaderByte >> 1) & 0x01;
 						$info['flv']['audio']['audioType']       = $LastHeaderByte & 0x01;
 					}
@@ -154,7 +154,7 @@ class getid3_flv extends getid3_handler {
 					$flv_framecount['video']++;
 
 					if (!$found_video) {
-						$found_video = true;
+						$found_video                        = true;
 						$info['flv']['video']['videoCodec'] = $LastHeaderByte & 0x07;
 
 						$FLVvideoHeader = $this->fread(11);
@@ -190,8 +190,8 @@ class getid3_flv extends getid3_handler {
 							}
 							// end: moysevichØgmail*com
 						} elseif ($info['flv']['video']['videoCodec'] == GETID3_FLV_VIDEO_H263) {
-							$PictureSizeType = (getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 3, 2))) >> 7;
-							$PictureSizeType = $PictureSizeType & 0x0007;
+							$PictureSizeType                        = (getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 3, 2))) >> 7;
+							$PictureSizeType                        = $PictureSizeType & 0x0007;
 							$info['flv']['header']['videoSizeType'] = $PictureSizeType;
 
 							switch ($PictureSizeType) {

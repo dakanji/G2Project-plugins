@@ -247,9 +247,9 @@ class DigibugPrintPhotosView extends GalleryView {
 			'DigibugPrintPhotos',
 			array(
 				'returnUrl' => $returnUrl,
-				'count'     => count($entries),
-				'entries'   => $entries,
-				'params'    => $params,
+				'count' => count($entries),
+				'entries' => $entries,
+				'params' => $params,
 			)
 		);
 		$template->display('gallery:modules/digibug/templates/DigibugPrintPhotos.tpl');

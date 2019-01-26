@@ -91,7 +91,7 @@ class UserAlbumController extends GalleryController {
 
 		$results = array(
 			'delegate' => array(
-				'view'   => 'core.ShowItem',
+				'view' => 'core.ShowItem',
 				'itemId' => $albumId,
 			),
 			'status'   => array(),

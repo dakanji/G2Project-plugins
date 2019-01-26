@@ -117,7 +117,7 @@ class DcrawToolkitHelper {
 
 		if (empty($testArray)) {
 			$testArray[] = array(
-				'name'    => 'dcraw',
+				'name' => 'dcraw',
 				'success' => false,
 				'message' => array_merge(
 					array($module->translate('Binary output:')),

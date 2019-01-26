@@ -120,14 +120,14 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 		// Configure plugin
 		foreach (array(
-			'httpAuthPlugin'   => true,
-			'regexAuthPlugin'  => true,
-			'authtypePattern'  => '//',
-			'usernameReplace'  => '$2',
-			'usernamePattern'  => '/^(.+\\\\)?([^\\\\@]+)(@.+)?$/',
+			'httpAuthPlugin' => true,
+			'regexAuthPlugin' => true,
+			'authtypePattern' => '//',
+			'usernameReplace' => '$2',
+			'usernamePattern' => '/^(.+\\\\)?([^\\\\@]+)(@.+)?$/',
 			'serverAuthPlugin' => false,
-			'useGlobally'      => true,
-			'authName'         => 'TEST_AUTH_NAME',
+			'useGlobally' => true,
+			'authName' => 'TEST_AUTH_NAME',
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'httpauth', $key, $value);
 

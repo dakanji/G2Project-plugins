@@ -723,7 +723,7 @@ class NotificationRouterTest1 extends NotificationEvent_1_0 {
 
 	public function getEventSpecs() {
 		return array(
-			'eventName'  => 'Test::Event',
+			'eventName' => 'Test::Event',
 			'entityType' => 'GalleryEntity',
 		);
 	}

@@ -148,7 +148,7 @@ class getid3_dts extends getid3_handler {
 	}
 
 	private function readBinData($bin, $length) {
-		$data = substr($bin, $this->readBinDataOffset, $length);
+		$data                     = substr($bin, $this->readBinDataOffset, $length);
 		$this->readBinDataOffset += $length;
 
 		return bindec($data);

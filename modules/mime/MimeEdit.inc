@@ -114,7 +114,7 @@ class MimeEditController extends GalleryController {
 			}
 		} else {
 			$results['delegate'] = array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'mime.MimeEdit',
 			);
 		}

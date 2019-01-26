@@ -53,12 +53,12 @@ class ConfigureMultirootController extends GalleryController {
 		return array(
 			null,
 			array(
-				$method  => array(
+				$method => array(
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'multiroot.ConfigureMultiroot',
 				),
 				'status' => $status,
-				'error'  => $error,
+				'error' => $error,
 			),
 		);
 	}

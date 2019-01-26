@@ -110,7 +110,7 @@ class DynamicAlbumSiteAdminController extends GalleryController {
 		$method  = empty($error) ? 'redirect' : 'delegate';
 		$results = array(
 			$method  => array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'dynamicalbum.DynamicAlbumSiteAdmin',
 			),
 			'status' => $status,
@@ -168,8 +168,8 @@ class DynamicAlbumSiteAdminView extends GalleryView {
 			return array($ret, null);
 		}
 		$defaultList = array(
-			'data' => $module->translate('Show data items only'),
-			'all'  => $module->translate('Show all items'),
+			'data'  => $module->translate('Show data items only'),
+			'all'   => $module->translate('Show all items'),
 			'album' => $module->translate('Show albums only'),
 		);
 

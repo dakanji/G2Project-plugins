@@ -162,8 +162,8 @@ class CaptchaSiteAdminView extends GalleryView {
 				return array($ret, null);
 			}
 			$optionData[$optionId] = array(
-				'title'   => $title,
-				'value'   => $param,
+				'title' => $title,
+				'value' => $param,
 				'choices' => $choices,
 			);
 		}

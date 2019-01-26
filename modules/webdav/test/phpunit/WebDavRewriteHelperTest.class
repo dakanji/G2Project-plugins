@@ -151,7 +151,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 		$url    = 'w%path%';
 		$params = array(
 			'controller' => 'webdav.WebDav',
-			'itemId'     => $item->getId(),
+			'itemId' => $item->getId(),
 		);
 		$entity = null;
 

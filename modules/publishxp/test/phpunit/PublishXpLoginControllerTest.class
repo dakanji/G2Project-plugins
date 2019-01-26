@@ -60,8 +60,8 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 		$result = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 				'redirect' => array(
 					'view' => 'publishxp.SelectAlbum',
 				),
@@ -93,8 +93,8 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 		$result = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'status'   => array(),
-				'error'    => array('form[error][userName][disabled]'),
+				'status' => array(),
+				'error' => array('form[error][userName][disabled]'),
 				'delegate' => array(
 					'view' => 'publishxp.PublishXpLogin',
 				),

@@ -80,8 +80,8 @@ class PermalinksSiteAdminController extends GalleryController {
 		}
 
 		// Figure out where to redirect upon success
-		$method                   = empty($error) ? 'redirect' : 'delegate';
-		$results[$method]['view'] = 'core.SiteAdmin';
+		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'permalinks.PermalinksSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;
@@ -104,7 +104,7 @@ class PermalinksSiteAdminView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$PermalinksSiteAdmin = array();
+		$PermalinksSiteAdmin                        = array();
 		list($ret, $PermalinksSiteAdmin['aliases']) = PermalinksMapHelper::fetchAliasesForItem();
 
 		if ($ret) {

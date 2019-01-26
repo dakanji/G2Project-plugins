@@ -208,7 +208,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1]',
 			array(
-				'name'    => 'Test::Event',
+				'name' => 'Test::Event',
 				'handler' => 'Test::EventHandler',
 			)
 		);
@@ -228,10 +228,10 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'notification.NotificationUserAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -338,7 +338,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1]',
 			array(
-				'name'    => 'Test::Event',
+				'name' => 'Test::Event',
 				'handler' => 'Test::EventHandler',
 			)
 		);
@@ -357,10 +357,10 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'notification.NotificationUserAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -444,7 +444,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1]',
 			array(
-				'name'    => 'Test::Event',
+				'name' => 'Test::Event',
 				'handler' => 'Test::EventHandler',
 			)
 		);
@@ -465,10 +465,10 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'notification.NotificationUserAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -546,7 +546,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1]',
 			array(
-				'name'    => 'Test::Event',
+				'name' => 'Test::Event',
 				'handler' => 'Test::EventHandler',
 			)
 		);
@@ -567,10 +567,10 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'notification.NotificationUserAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -676,7 +676,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1]',
 			array(
-				'name'    => 'Test::Event',
+				'name' => 'Test::Event',
 				'handler' => 'Test::EventHandler',
 			)
 		);
@@ -695,10 +695,10 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'notification.NotificationUserAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Unexpected results array'

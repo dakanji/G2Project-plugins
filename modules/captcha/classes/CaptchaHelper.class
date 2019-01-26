@@ -44,7 +44,7 @@ class CaptchaHelper {
 
 		$gdReport = array(
 			'success' => array(),
-			'fail' => array(),
+			'fail'    => array(),
 		);
 
 		foreach ($gdFunctions as $gdFunction) {

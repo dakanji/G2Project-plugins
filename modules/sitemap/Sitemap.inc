@@ -147,10 +147,10 @@ class SitemapView extends GalleryView {
 			}
 
 			$frequencyTable = array(
-				3600            => 'hourly',
-				24 * 3600       => 'daily',
-				7 * 24 * 3600   => 'weekly',
-				30 * 24 * 3600  => 'monthly',
+				3600 => 'hourly',
+				24 * 3600 => 'daily',
+				7 * 24 * 3600 => 'weekly',
+				30 * 24 * 3600 => 'monthly',
 				365 * 24 * 3600 => 'yearly',
 			);
 			$i              = 0;

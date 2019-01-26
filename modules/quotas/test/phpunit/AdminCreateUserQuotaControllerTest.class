@@ -57,8 +57,8 @@ class AdminCreateUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -78,10 +78,10 @@ class AdminCreateUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status'   => array(
+				'status' => array(
 					'createdUser' => $this->_user->getUserName(),
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -100,8 +100,8 @@ class AdminCreateUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminCreateUserQuota',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error' => array(
 					'form[error][quotaSize][missing]',
 					'form[error][quotaUnit][missing]',
 				),
@@ -119,8 +119,8 @@ class AdminCreateUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminCreateUserQuota',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][quotaUnit][missing]'),
+				'status' => array(),
+				'error' => array('form[error][quotaUnit][missing]'),
 			),
 			$results
 		);
@@ -136,8 +136,8 @@ class AdminCreateUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminCreateUserQuota',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][quotaSize][missing]'),
+				'status' => array(),
+				'error' => array('form[error][quotaSize][missing]'),
 			),
 			$results
 		);
@@ -162,10 +162,10 @@ class AdminCreateUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status'   => array(
+				'status' => array(
 					'createdUser' => $this->_user->getUserName(),
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -178,8 +178,8 @@ class AdminCreateUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminCreateUserQuota',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);

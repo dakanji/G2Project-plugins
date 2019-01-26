@@ -184,8 +184,8 @@ class SendEcardController extends GalleryController {
 			$data['text']   = nl2br($data['text']);
 
 			$headers = array(
-				'from'    => $config['from'] ? $config['from'] : $form['fromName'] . ' <' . $form['from'] . '>',
-				'to'      => $form['to'],
+				'from' => $config['from'] ? $config['from'] : $form['fromName'] . ' <' . $form['from'] . '>',
+				'to'   => $form['to'],
 				'subject' => EcardHelper::replaceKeywords($config['subject'], $form),
 			);
 

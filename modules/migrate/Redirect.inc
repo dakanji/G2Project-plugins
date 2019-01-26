@@ -152,7 +152,7 @@ class RedirectController extends GalleryController {
 		$phpVm->header('HTTP/1.0 301 Moved Permanently');
 		$results = array(
 			'redirect' => array(
-				'view'   => $view,
+				'view' => $view,
 				'itemId' => $id,
 			),
 			'status'   => array(),

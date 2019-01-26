@@ -35,8 +35,8 @@ class IntegrityCheckTask extends MaintenanceTask {
 		global $gallery;
 
 		return array(
-			'l10Domain'   => 'modules_integrity',
-			'title'       => $gallery->i18n('Integrity Check'),
+			'l10Domain' => 'modules_integrity',
+			'title'     => $gallery->i18n('Integrity Check'),
 			'description' => $gallery->i18n(
 				'Check data integrity and report any inconsistencies.'
 			),

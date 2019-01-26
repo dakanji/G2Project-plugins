@@ -108,9 +108,9 @@ class getid3_nsv extends getid3_handler {
 		switch ($info['nsv']['NSVs']['audio_codec']) {
 			case 'PCM ':
 				$info['nsv']['NSVs']['bits_channel'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
-				$offset += 1;
+				$offset                         += 1;
 				$info['nsv']['NSVs']['channels'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
-				$offset += 1;
+				$offset                         += 1;
 				$info['nsv']['NSVs']['sample_rate'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
 				$offset += 2;
 
@@ -179,10 +179,10 @@ class getid3_nsv extends getid3_handler {
 			return false;
 		}
 
-		$NSVfheader      .= $this->fread($info['nsv']['NSVf']['meta_size'] + (4 * $info['nsv']['NSVf']['TOC_entries_1']) + (4 * $info['nsv']['NSVf']['TOC_entries_2']));
-		$NSVfheaderlength = strlen($NSVfheader);
+		$NSVfheader                     .= $this->fread($info['nsv']['NSVf']['meta_size'] + (4 * $info['nsv']['NSVf']['TOC_entries_1']) + (4 * $info['nsv']['NSVf']['TOC_entries_2']));
+		$NSVfheaderlength                = strlen($NSVfheader);
 		$info['nsv']['NSVf']['metadata'] = substr($NSVfheader, $offset, $info['nsv']['NSVf']['meta_size']);
-		$offset += $info['nsv']['NSVf']['meta_size'];
+		$offset                         += $info['nsv']['NSVf']['meta_size'];
 
 		if ($getTOCoffsets) {
 			$TOCcounter = 0;

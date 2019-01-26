@@ -88,7 +88,7 @@ class ImageBlockModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'show' => 'heading|title|date|views',
+			'show'      => 'heading|title|date|views',
 			'albumFrame' => '',
 			'itemFrame' => '',
 		) as $key => $value) {

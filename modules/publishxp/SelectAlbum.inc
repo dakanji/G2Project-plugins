@@ -159,7 +159,7 @@ class SelectAlbumView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body'          => 'modules/publishxp/templates/SelectAlbum.tpl',
+				'body' => 'modules/publishxp/templates/SelectAlbum.tpl',
 				'useFullScreen' => true,
 			),
 		);

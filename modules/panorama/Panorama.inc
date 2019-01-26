@@ -61,7 +61,7 @@ class PanoramaView extends GalleryView {
 		$template->setVariable(
 			'Panorama',
 			array(
-				'item'       => (array)$item,
+				'item' => (array)$item,
 				'appletHtml' => $renderer->render('HTML', $image, $item, array()),
 			)
 		);

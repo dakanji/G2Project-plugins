@@ -251,12 +251,12 @@ class getid3_riff extends getid3_handler {
 
 				if (isset($thisfile_riff_WAVE['rgad'][0]['data'])) {
 					// shortcuts
-					$rgadData                  = &$thisfile_riff_WAVE['rgad'][0]['data'];
-					$thisfile_riff_raw['rgad'] = array(
+					$rgadData                     = &$thisfile_riff_WAVE['rgad'][0]['data'];
+					$thisfile_riff_raw['rgad']    = array(
 						'track' => array(),
 						'album' => array(),
 					);
-					$thisfile_riff_raw_rgad    = &$thisfile_riff_raw['rgad'];
+					$thisfile_riff_raw_rgad       = &$thisfile_riff_raw['rgad'];
 					$thisfile_riff_raw_rgad_track = &$thisfile_riff_raw_rgad['track'];
 					$thisfile_riff_raw_rgad_album = &$thisfile_riff_raw_rgad['album'];
 
@@ -1006,8 +1006,8 @@ class getid3_riff extends getid3_handler {
 
 					$thisfile_riff_CDDA_fmt_0['start_offset_seconds'] = (float)$thisfile_riff_CDDA_fmt_0['start_offset_frame'] / 75;
 					$thisfile_riff_CDDA_fmt_0['playtime_seconds']     = (float)$thisfile_riff_CDDA_fmt_0['playtime_frames'] / 75;
-					$info['comments']['track'] = $thisfile_riff_CDDA_fmt_0['track_num'];
-					$info['playtime_seconds']  = $thisfile_riff_CDDA_fmt_0['playtime_seconds'];
+					$info['comments']['track']                        = $thisfile_riff_CDDA_fmt_0['track_num'];
+					$info['playtime_seconds']                         = $thisfile_riff_CDDA_fmt_0['playtime_seconds'];
 
 					// hardcoded data for CD-audio
 					$thisfile_audio['lossless']        = true;
@@ -1056,8 +1056,8 @@ class getid3_riff extends getid3_handler {
 
 					if ($thisfile_riff[$RIFFsubtype]['COMM'][0]['size'] > 18) {
 						$thisfile_riff_audio['codec_fourcc'] = substr($thisfile_riff_RIFFsubtype_COMM_0_data, 18, 4);
-						$CodecNameSize = getid3_lib::BigEndian2Int(substr($thisfile_riff_RIFFsubtype_COMM_0_data, 22, 1), false);
-						$thisfile_riff_audio['codec_name'] = substr($thisfile_riff_RIFFsubtype_COMM_0_data, 23, $CodecNameSize);
+						$CodecNameSize                       = getid3_lib::BigEndian2Int(substr($thisfile_riff_RIFFsubtype_COMM_0_data, 22, 1), false);
+						$thisfile_riff_audio['codec_name']   = substr($thisfile_riff_RIFFsubtype_COMM_0_data, 23, $CodecNameSize);
 
 						switch ($thisfile_riff_audio['codec_name']) {
 							case 'NONE':
@@ -1408,7 +1408,7 @@ class getid3_riff extends getid3_handler {
 					}
 				}
 			}
-			$getid3_mp3 = new getid3_mp3($this->getid3);
+			$getid3_mp3                        = new getid3_mp3($this->getid3);
 			$thisfile_audio['encoder_options'] = $getid3_mp3->GuessEncoderOptions();
 			unset($getid3_mp3);
 		}
@@ -1477,11 +1477,11 @@ class getid3_riff extends getid3_handler {
 			if (substr($AMVheader, 8, 4) != "\x38\x00\x00\x00") { // "amvh" chunk size, hardcoded to 0x38 = 56 bytes
 				throw new Exception('expecting "0x38000000" at offset ' . ($startoffset + 8) . ', found "' . getid3_lib::PrintHexBytes(substr($AMVheader, 8, 4)) . '"');
 			}
-			$RIFFchunk = array();
-			$RIFFchunk['amvh']['us_per_frame']   = getid3_lib::LittleEndian2Int(substr($AMVheader, 12, 4));
-			$RIFFchunk['amvh']['reserved28']     = substr($AMVheader, 16, 28);  // null? reserved?
-			$RIFFchunk['amvh']['resolution_x']   = getid3_lib::LittleEndian2Int(substr($AMVheader, 44, 4));
-			$RIFFchunk['amvh']['resolution_y']   = getid3_lib::LittleEndian2Int(substr($AMVheader, 48, 4));
+			$RIFFchunk                         = array();
+			$RIFFchunk['amvh']['us_per_frame'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 12, 4));
+			$RIFFchunk['amvh']['reserved28']   = substr($AMVheader, 16, 28);  // null? reserved?
+			$RIFFchunk['amvh']['resolution_x'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 44, 4));
+			$RIFFchunk['amvh']['resolution_y'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 48, 4));
 			$RIFFchunk['amvh']['frame_rate_int'] = getid3_lib::LittleEndian2Int(substr($AMVheader, 52, 4));
 			$RIFFchunk['amvh']['reserved0']      = getid3_lib::LittleEndian2Int(substr($AMVheader, 56, 4)); // 1? reserved?
 			$RIFFchunk['amvh']['reserved1']      = getid3_lib::LittleEndian2Int(substr($AMVheader, 60, 4)); // 0? reserved?
@@ -1608,7 +1608,7 @@ class getid3_riff extends getid3_handler {
 											$getid3_temp->openfile($this->getid3->filename);
 											$getid3_temp->info['avdataoffset'] = $this->ftell() - 4;
 											$getid3_temp->info['avdataend']    = $this->ftell() + $AudioChunkSize;
-											$getid3_mp3 = new getid3_mp3($getid3_temp, __CLASS__);
+											$getid3_mp3                        = new getid3_mp3($getid3_temp, __CLASS__);
 											$getid3_mp3->getOnlyMPEGaudioInfo($getid3_temp->info['avdataoffset'], false);
 
 											if (isset($getid3_temp->info['mpeg']['audio'])) {
@@ -1629,7 +1629,7 @@ class getid3_riff extends getid3_handler {
 										$getid3_temp->openfile($this->getid3->filename);
 										$getid3_temp->info['avdataoffset'] = $this->ftell() - 4;
 										$getid3_temp->info['avdataend']    = $this->ftell() + $AudioChunkSize;
-										$getid3_ac3 = new getid3_ac3($getid3_temp);
+										$getid3_ac3                        = new getid3_ac3($getid3_temp);
 										$getid3_ac3->Analyze();
 
 										if (empty($getid3_temp->info['error'])) {
@@ -1695,7 +1695,7 @@ class getid3_riff extends getid3_handler {
 										$getid3_temp->openfile($this->getid3->filename);
 										$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 										$getid3_temp->info['avdataend']    = $info['avdataend'];
-										$getid3_mp3 = new getid3_mp3($getid3_temp, __CLASS__);
+										$getid3_mp3                        = new getid3_mp3($getid3_temp, __CLASS__);
 										$getid3_mp3->getOnlyMPEGaudioInfo($info['avdataoffset'], false);
 
 										if (empty($getid3_temp->info['error'])) {
@@ -1746,7 +1746,7 @@ class getid3_riff extends getid3_handler {
 									$getid3_temp = new getID3();
 									$getid3_temp->openfile($this->getid3->filename);
 									$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
-									$getid3_dts = new getid3_dts($getid3_temp);
+									$getid3_dts                        = new getid3_dts($getid3_temp);
 									$getid3_dts->Analyze();
 
 									if (empty($getid3_temp->info['error'])) {
@@ -1877,7 +1877,7 @@ class getid3_riff extends getid3_handler {
 			$getid3_temp->info['comments']     = $info['comments'];
 			$getid3_temp->info['audio']        = (isset($info['audio']) ? $info['audio'] : array());
 			$getid3_temp->info['video']        = (isset($info['video']) ? $info['video'] : array());
-			$getid3_riff = new getid3_riff($getid3_temp);
+			$getid3_riff                       = new getid3_riff($getid3_temp);
 			$getid3_riff->Analyze();
 
 			$info['riff']     = $getid3_temp->info['riff'];

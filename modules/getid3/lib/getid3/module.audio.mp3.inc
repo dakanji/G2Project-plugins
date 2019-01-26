@@ -494,7 +494,7 @@ class getid3_mp3 extends getid3_handler {
 
 		if ($thisfile_mpeg_audio['raw']['bitrate'] == 15) {
 			// http://www.hydrogenaudio.org/?act=ST&f=16&t=9682&st=0
-			$info['warning'][] = 'Invalid bitrate index (15), this is a known bug in free-format MP3s encoded by LAME v3.90 - 3.93.1';
+			$info['warning'][]                     = 'Invalid bitrate index (15), this is a known bug in free-format MP3s encoded by LAME v3.90 - 3.93.1';
 			$thisfile_mpeg_audio['raw']['bitrate'] = 0;
 		}
 		$thisfile_mpeg_audio['padding'] = (bool)$thisfile_mpeg_audio['raw']['padding'];
@@ -816,7 +816,7 @@ class getid3_mp3 extends getid3_handler {
 						$thisfile_mpeg_audio_lame['encoding_flags']['nssafejoint'] = (bool)($EncodingFlagsATHtype & 0x20);
 						$thisfile_mpeg_audio_lame['encoding_flags']['nogap_next']  = (bool)($EncodingFlagsATHtype & 0x40);
 						$thisfile_mpeg_audio_lame['encoding_flags']['nogap_prev']  = (bool)($EncodingFlagsATHtype & 0x80);
-						$thisfile_mpeg_audio_lame['ath_type'] = $EncodingFlagsATHtype & 0x0F;
+						$thisfile_mpeg_audio_lame['ath_type']                      = $EncodingFlagsATHtype & 0x0F;
 
 						// byte $B0  if ABR {specified bitrate} else {minimal bitrate}
 						$thisfile_mpeg_audio_lame['raw']['abrbitrate_minbitrate'] = getid3_lib::BigEndian2Int(substr($headerstring, $LAMEtagOffsetContant + 0xB0, 1));
@@ -897,7 +897,7 @@ class getid3_mp3 extends getid3_handler {
 					$thisfile_mpeg_audio['bitrate_mode'] = 'vbr';
 
 					if ($this->RecursiveFrameScanning($offset, $nextframetestoffset, true)) {
-						$recursivesearch = false;
+						$recursivesearch                     = false;
 						$thisfile_mpeg_audio['bitrate_mode'] = 'cbr';
 					}
 
@@ -1095,9 +1095,9 @@ class getid3_mp3 extends getid3_handler {
 	public function RecursiveFrameScanning(&$offset, &$nextframetestoffset, $ScanAsCBR) {
 		$info                = &$this->getid3->info;
 		$firstframetestarray = array(
-			'error'        => '',
-			'warning'      => '',
-			'avdataend'    => $info['avdataend'],
+			'error'     => '',
+			'warning'   => '',
+			'avdataend' => $info['avdataend'],
 			'avdataoffset' => $info['avdataoffset'],
 		);
 		$this->decodeMPEGaudioHeader($offset, $firstframetestarray, false);
@@ -1110,9 +1110,9 @@ class getid3_mp3 extends getid3_handler {
 			}
 
 			$nextframetestarray = array(
-				'error'        => '',
-				'warning'      => '',
-				'avdataend'    => $info['avdataend'],
+				'error' => '',
+				'warning' => '',
+				'avdataend' => $info['avdataend'],
 				'avdataoffset' => $info['avdataoffset'],
 			);
 
@@ -1507,11 +1507,11 @@ class getid3_mp3 extends getid3_handler {
 						if (!(abs($info['audio']['bitrate'] - $FirstFrameThisfileInfo['audio']['bitrate']) <= 1)) {
 							// If there is garbage data between a valid VBR header frame and a sequence
 							// of valid MPEG-audio frames the VBR data is no longer discarded.
-							$info                 = $FirstFrameThisfileInfo;
-							$info['avdataoffset'] = $FirstFrameAVDataOffset;
-							$info['fileformat']   = 'mp3';
+							$info                        = $FirstFrameThisfileInfo;
+							$info['avdataoffset']        = $FirstFrameAVDataOffset;
+							$info['fileformat']          = 'mp3';
 							$info['audio']['dataformat'] = 'mp3';
-							$dummy = $info;
+							$dummy                       = $info;
 							unset($dummy['mpeg']['audio']);
 							$GarbageOffsetStart = $FirstFrameAVDataOffset + $FirstFrameThisfileInfo['mpeg']['audio']['framelength'];
 							$GarbageOffsetEnd   = $avdataoffset + $SynchSeekOffset;

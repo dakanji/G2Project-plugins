@@ -323,10 +323,10 @@ class AlbumSelectCallbacks {
 
 		foreach ($tree as $id => $list) {
 			$treeList[] = array(
-				'id'         => $id,
-				'nodeId'     => ++$nodeId,
+				'id'    => $id,
+				'nodeId' => ++$nodeId,
 				'parentNode' => $parentNode,
-				'depth'      => $depth,
+				'depth' => $depth,
 			);
 
 			if (isset($callbackParams['createTextTree'])) {
@@ -401,7 +401,7 @@ class AlbumSelectCallbacks {
 					$title = str_repeat('--', $depth) . $title;
 				}
 				$titles[$subAlbum->getId()] = $title;
-				$ret = $this->_buildTree(
+				$ret                        = $this->_buildTree(
 					$subAlbum,
 					$treeList,
 					$titles,

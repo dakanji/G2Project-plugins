@@ -599,11 +599,11 @@ class GalleryRemoteControllerTest extends GalleryControllerTestCase {
 		$this->_controller->setOptionInstances(array());
 
 		$_FILES[GalleryUtilities::prefixFormVariable('userfile')] = array(
-			'name' => 'testfile.txt',
-			'type' => 'text/plain',
+			'name'     => 'testfile.txt',
+			'type'     => 'text/plain',
 			'tmp_name' => __FILE__,
-			'error' => 0,
-			'size' => $platform->filesize(__FILE__),
+			'error'    => 0,
+			'size'     => $platform->filesize(__FILE__),
 		);
 
 		$results = $this->handleRequest();
@@ -648,11 +648,11 @@ class GalleryRemoteControllerTest extends GalleryControllerTestCase {
 		$this->_controller->setOptionInstances(array());
 
 		$_FILES[GalleryUtilities::prefixFormVariable('userfile')] = array(
-			'name' => 'test<script>file.txt',
-			'type' => 'text/plain',
+			'name'     => 'test<script>file.txt',
+			'type'     => 'text/plain',
 			'tmp_name' => __FILE__,
-			'error' => 0,
-			'size' => $platform->filesize(__FILE__),
+			'error'    => 0,
+			'size'     => $platform->filesize(__FILE__),
 		);
 
 		$results = $this->handleRequest();
@@ -699,11 +699,11 @@ class GalleryRemoteControllerTest extends GalleryControllerTestCase {
 		);
 
 		$_FILES[GalleryUtilities::prefixFormVariable('userfile')] = array(
-			'name' => 'testfile.txt',
-			'type' => 'text/plain',
+			'name'     => 'testfile.txt',
+			'type'     => 'text/plain',
 			'tmp_name' => __FILE__,
-			'error' => 0,
-			'size' => $platform->filesize(__FILE__),
+			'error'    => 0,
+			'size'     => $platform->filesize(__FILE__),
 		);
 
 		$results = $this->handleRequest();

@@ -59,10 +59,10 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'subView'  => 'mime.MimeEdit',
 					'mimeType' => 'test/test',
 				),
-				'status'   => array(
+				'status' => array(
 					'mimeSaved' => 'test/test',
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Add new'
@@ -90,10 +90,10 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'subView'  => 'mime.MimeEdit',
 					'mimeType' => 'test/test',
 				),
-				'status'   => array(
+				'status' => array(
 					'mimeSaved' => 'test/test',
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Add new'
@@ -119,10 +119,10 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'mimeSaved' => 'test/test',
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Add new'
@@ -152,8 +152,8 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeEdit',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][mimeType][missing]'),
+				'status' => array(),
+				'error' => array('form[error][mimeType][missing]'),
 			),
 			$results,
 			'Add new'
@@ -171,8 +171,8 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeEdit',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][extensions][missing]'),
+				'status' => array(),
+				'error' => array('form[error][extensions][missing]'),
 			),
 			$results,
 			'Add new'
@@ -190,8 +190,8 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeEdit',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error' => array(
 					'form[error][mimeType][missing]',
 					'form[error][extensions][missing]',
 				),
@@ -219,8 +219,8 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeEdit',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error' => array(
 					'form[error][extensions][inuse][' . $extension . ']',
 				),
 			),
@@ -240,10 +240,10 @@ class MimeEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'mime.MimeAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'mimeSaved' => 'test/test',
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Add new'

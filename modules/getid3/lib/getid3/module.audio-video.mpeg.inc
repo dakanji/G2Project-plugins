@@ -277,11 +277,11 @@ class getid3_mpeg extends getid3_handler {
 
 						$GOPheader = array();
 
-						$GOPheader['byte_offset']       = $MPEGstreamBaseOffset + $StartCodeOffset;
-						$GOPheader['drop_frame_flag']   = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: drop_frame_flag
-						$GOPheader['time_code_hours']   = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for time_code_hours
-						$GOPheader['time_code_minutes'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 6); //  6 bits for time_code_minutes
-						$marker_bit = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
+						$GOPheader['byte_offset']        = $MPEGstreamBaseOffset + $StartCodeOffset;
+						$GOPheader['drop_frame_flag']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: drop_frame_flag
+						$GOPheader['time_code_hours']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for time_code_hours
+						$GOPheader['time_code_minutes']  = self::readBitsFromStream($bitstream, $bitstreamoffset, 6); //  6 bits for time_code_minutes
+						$marker_bit                      = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
 						$GOPheader['time_code_seconds']  = self::readBitsFromStream($bitstream, $bitstreamoffset, 6); //  6 bits for time_code_seconds
 						$GOPheader['time_code_pictures'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 6); //  6 bits for time_code_pictures
 						$GOPheader['closed_gop']         = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: closed_gop

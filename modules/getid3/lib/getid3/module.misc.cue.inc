@@ -173,7 +173,7 @@ class getid3_cue extends getid3_handler {
 
 		return array(
 			'filename' => $line,
-			'type' => $type,
+			'type'     => $type,
 		);
 	}
 
@@ -317,7 +317,7 @@ class getid3_cue extends getid3_handler {
 
 		$this->cuesheet['tracks'][$track_on] = array(
 			'track_number' => $track,
-			'datatype'     => $datatype,
+			'datatype' => $datatype,
 		);
 	}
 }

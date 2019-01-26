@@ -3,8 +3,8 @@
 $entityInfo['GalleryPendingUser'] = array(
 	'members' => array(
 		'userName' => array(
-			'type' => STORAGE_TYPE_STRING,
-			'size' => STORAGE_SIZE_SMALL,
+			'type'    => STORAGE_TYPE_STRING,
+			'size'    => STORAGE_SIZE_SMALL,
 			'notNull' => 1,
 			'external-access' => EXTERNAL_ACCESS_READ,
 		),

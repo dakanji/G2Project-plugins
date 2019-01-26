@@ -72,7 +72,7 @@ class MimeAdminController extends GalleryController {
 
 		$results = array(
 			'redirect' => array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'mime.MimeAdmin',
 			),
 			'status'   => $status,
@@ -122,8 +122,8 @@ class MimeAdminView extends GalleryView {
 		$MimeAdmin = array();
 
 		foreach (array_keys($typeMap['ext']) as $mimeType) {
-			$ext = implode(', ', $typeMap['ext'][$mimeType]);
-			$MimeAdmin[$mimeType]['ext']      = $ext;
+			$ext                         = implode(', ', $typeMap['ext'][$mimeType]);
+			$MimeAdmin[$mimeType]['ext'] = $ext;
 			$MimeAdmin[$mimeType]['viewable'] = $typeMap['viewable'][$mimeType];
 		}
 

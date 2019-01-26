@@ -895,7 +895,7 @@ class NotificationHelperTest extends GalleryTestCase {
 
 		$url   = $urlGenerator->generateUrl(
 			array(
-				'view'   => 'core.ShowItem',
+				'view' => 'core.ShowItem',
 				'itemId' => $this->_album->getId(),
 			),
 			array(

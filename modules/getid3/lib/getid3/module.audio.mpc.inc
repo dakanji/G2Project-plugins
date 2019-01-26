@@ -29,7 +29,7 @@ class getid3_mpc extends getid3_handler {
 		$info['audio']['lossless']     = false;
 
 		$this->fseek($info['avdataoffset']);
-		$MPCheaderData = $this->fread(4);
+		$MPCheaderData                     = $this->fread(4);
 		$info['mpc']['header']['preamble'] = substr($MPCheaderData, 0, 4); // should be 'MPCK' (SV8) or 'MP+' (SV7), otherwise possible stream data (SV4-SV6)
 		if (preg_match('#^MPCK#', $info['mpc']['header']['preamble'])) {
 			// this is SV8
@@ -115,8 +115,8 @@ class getid3_mpc extends getid3_handler {
 					$thisPacket['beginning_silence'] = $this->SV8variableLengthInteger(substr($MPCheaderData, $packet_offset, $maxHandledPacketLength), $packetLength);
 					$packet_offset                  += $packetLength;
 
-					$otherUsefulData = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset  += 2;
+					$otherUsefulData                    = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
+					$packet_offset                     += 2;
 					$thisPacket['sample_frequency_raw'] = (($otherUsefulData & 0xE000) >> 13);
 					$thisPacket['max_bands_used']       = (($otherUsefulData & 0x1F00) >> 8);
 					$thisPacket['channels']             = (($otherUsefulData & 0x00F0) >> 4) + 1;
@@ -142,16 +142,16 @@ class getid3_mpc extends getid3_handler {
 					if ($moreBytesToRead > 0) {
 						$MPCheaderData .= $this->fread($moreBytesToRead);
 					}
-					$thisPacket['replaygain_version'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
-					$packet_offset                   += 1;
+					$thisPacket['replaygain_version']    = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 1));
+					$packet_offset                      += 1;
 					$thisPacket['replaygain_title_gain'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset += 2;
+					$packet_offset                      += 2;
 					$thisPacket['replaygain_title_peak'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset += 2;
+					$packet_offset                      += 2;
 					$thisPacket['replaygain_album_gain'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset += 2;
+					$packet_offset                      += 2;
 					$thisPacket['replaygain_album_peak'] = getid3_lib::BigEndian2Int(substr($MPCheaderData, $packet_offset, 2));
-					$packet_offset += 2;
+					$packet_offset                      += 2;
 
 					if ($thisPacket['replaygain_title_gain']) {
 						$info['replay_gain']['title']['gain'] = $thisPacket['replaygain_title_gain'];
@@ -241,7 +241,7 @@ class getid3_mpc extends getid3_handler {
 		$thisfile_mpc_header['size'] = 28;
 		$MPCheaderData               = $info['mpc']['header']['preamble'];
 		$MPCheaderData              .= $this->fread($thisfile_mpc_header['size'] - strlen($info['mpc']['header']['preamble']));
-		$offset = strlen('MP+');
+		$offset                      = strlen('MP+');
 
 		$StreamVersionByte = getid3_lib::LittleEndian2Int(substr($MPCheaderData, $offset, 1));
 		$offset           += 1;

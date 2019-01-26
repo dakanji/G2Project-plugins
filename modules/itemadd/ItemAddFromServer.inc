@@ -76,8 +76,8 @@ class ItemAddFromServer extends ItemAddPlugin {
 		) {
 			// Add the selected items
 			$textFields = array(
-				'title'       => (isset($form['set']['title'])) ? 1 : 0,
-				'summary'     => (isset($form['set']['summary'])) ? 1 : 0,
+				'title' => (isset($form['set']['title'])) ? 1 : 0,
+				'summary' => (isset($form['set']['summary'])) ? 1 : 0,
 				'description' => (isset($form['set']['description'])) ? 1 : 0,
 			);
 
@@ -398,7 +398,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 		GalleryUtilities::sanitizeInputValues($safeFilename);
 		$status['addedFiles'][] = array(
 			'fileName' => $safeFilename,
-			'id' => $newItem->getId(),
+			'id'       => $newItem->getId(),
 			'warnings' => array(),
 		);
 
@@ -881,7 +881,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 			$accumulator = '';
 
 			foreach ($platform->splitPath($form['localServerPath']) as $element) {
-				$accumulator .= $element;
+				$accumulator                        .= $element;
 				$ItemAddFromServer['pathElements'][] = array(
 					'name'  => $element,
 					'path'  => $accumulator,
@@ -919,8 +919,8 @@ class ItemAddFromServer extends ItemAddPlugin {
 
 		if (!isset($form['set'])) {
 			$form['set'] = array(
-				'title'       => 1,
-				'summary'     => 0,
+				'title' => 1,
+				'summary' => 0,
 				'description' => 0,
 			);
 		}

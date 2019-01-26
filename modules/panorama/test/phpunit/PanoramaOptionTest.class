@@ -45,7 +45,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			$this->_getRootId(),
 			'image/test',
 			array(
-				'width'  => 10000,
+				'width' => 10000,
 				'height' => 100,
 			),
 			__FILE__,
@@ -64,7 +64,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			'test-operation|80',
 			'image/test',
 			array(
-				'width'  => 8000,
+				'width' => 8000,
 				'height' => 80,
 			)
 		);

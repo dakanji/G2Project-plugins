@@ -206,8 +206,8 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => $expectedHref,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -240,8 +240,8 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => $expectedHref,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -306,8 +306,8 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => $expectedHref,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);

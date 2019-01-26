@@ -169,8 +169,8 @@ class PrintPhotosController extends GalleryController {
 						'htmlEntities'   => false,
 					)
 				),
-				'height'    => $source->getHeight(),
-				'width'     => $source->getWidth(),
+				'height' => $source->getHeight(),
+				'width' => $source->getWidth(),
 			);
 
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
@@ -232,7 +232,7 @@ class PrintPhotosController extends GalleryController {
 			'endpoint' => 'http://' . $this->affiliate_id . $this->nserver .
 						 $this->ftk_soap_path,
 			'methodNamespace' => 'http://soap.fotokasten.de',
-			'name' => $this->affiliate_id . $this->nserver,
+			'name'     => $this->affiliate_id . $this->nserver,
 		);
 
 		// get fotokasten session
@@ -264,8 +264,8 @@ class PrintPhotosController extends GalleryController {
 				'redirect' => array(
 					'href' => $referer,
 				), // redirect to shopping basket
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 		);
 	}
@@ -291,7 +291,7 @@ class PrintPhotosController extends GalleryController {
 		// register session for customer
 		$method_params['query'] = array(
 			'affiliate_id_pass' => $this->affiliate_id_pass,
-			'checkout'          => 'selectProduct',
+			'checkout' => 'selectProduct',
 		);
 
 		if ($return = $soap->call(
@@ -353,7 +353,7 @@ class PrintPhotosController extends GalleryController {
 		// transfer basket
 		$method_params['request'] = array(
 			'affiliate_id_pass' => $this->affiliate_id_pass,
-			'basket'            => $basket,
+			'basket' => $basket,
 		);
 
 		if ($return = $soap->call(

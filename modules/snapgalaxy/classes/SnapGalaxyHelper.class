@@ -216,8 +216,8 @@ class SnapGalaxyHelper {
 		$postData['imagecount'] = count($entries);
 
 		for ($i = 0; $i < sizeof($entries); $i++) {
-			$j = $i + 1;
-			$postData['image_' . $j]       = $entries[$i]['imageUrl'];
+			$j                       = $i + 1;
+			$postData['image_' . $j] = $entries[$i]['imageUrl'];
 			$postData['imagewidth_' . $j]  = $entries[$i]['imageWidth'];
 			$postData['imageheight_' . $j] = $entries[$i]['imageHeight'];
 			$postData['thumb_' . $j]       = $entries[$i]['thumbUrl'];

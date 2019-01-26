@@ -51,8 +51,8 @@ class MultiLangHelper {
 
 		while ($result = $searchResults->nextResult()) {
 			$data[$result[0]] = array(
-				'title'       => $result[1],
-				'summary'     => $result[2],
+				'title' => $result[1],
+				'summary' => $result[2],
 				'description' => $result[3],
 			);
 		}

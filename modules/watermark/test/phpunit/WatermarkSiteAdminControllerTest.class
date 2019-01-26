@@ -106,10 +106,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'addError' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'No file'
@@ -136,10 +136,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.WatermarkSiteAdminEdit',
 					'watermarkId' => $expectedId,
 				),
-				'status'   => array(
+				'status' => array(
 					'add' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Add'
@@ -218,10 +218,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.WatermarkSiteAdminEdit',
 					'watermarkId' => $expectedId,
 				),
-				'status'   => array(
+				'status' => array(
 					'add' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Add same name, bad mime'
@@ -272,10 +272,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'delete' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Delete'
@@ -352,10 +352,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'delete' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Delete'
@@ -431,8 +431,8 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'watermarkId' => $idToDelete,
 					'fromAdmin'   => 1,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results,
 			'Confirm Delete'
@@ -481,10 +481,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'subView'     => 'watermark.WatermarkSiteAdminEdit',
 					'watermarkId' => $expectedId,
 				),
-				'status'   => array(
+				'status' => array(
 					'add' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'Add'
@@ -545,10 +545,10 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'savedSettings' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -566,11 +566,11 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'missingDefault' => 1,
 					'savedSettings'  => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -579,11 +579,11 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function _createTestWatermark() {
 		$name = 'phpunit_' . mt_rand() . '.jpg';
 		$form = array(
-			'action' => array('add', '1'),
-			'name' => array(
+			'action'   => array('add', '1'),
+			'name'     => array(
 				'1' => $name,
 			),
-			'type' => array(
+			'type'     => array(
 				'1' => 'image/jpeg',
 			),
 			'tmp_name' => array(

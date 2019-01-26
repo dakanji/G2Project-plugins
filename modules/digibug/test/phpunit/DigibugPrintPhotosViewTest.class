@@ -160,7 +160,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		$session->put(
 			'digibug.cart',
 			array(
-				$itemId       => 1,
+				$itemId => 1,
 				$publicItemId => 1,
 			)
 		);

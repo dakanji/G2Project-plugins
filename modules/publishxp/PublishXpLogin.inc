@@ -152,7 +152,7 @@ class PublishXpLoginView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body'          => 'modules/publishxp/templates/PublishXpLogin.tpl',
+				'body' => 'modules/publishxp/templates/PublishXpLogin.tpl',
 				'useFullScreen' => true,
 			),
 		);

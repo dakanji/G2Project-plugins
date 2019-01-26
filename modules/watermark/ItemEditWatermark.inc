@@ -137,9 +137,9 @@ class ItemEditWatermark extends ItemEditPlugin {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$redirect     = $urlGenerator->generateUrl(
 			array(
-				'view'    => 'core.ItemAdmin',
+				'view' => 'core.ItemAdmin',
 				'subView' => 'core.ItemEdit',
-				'itemId'  => $item->getId(),
+				'itemId' => $item->getId(),
 			)
 		);
 
@@ -398,8 +398,8 @@ class ItemEditWatermark extends ItemEditPlugin {
 
 		$ItemEditWatermark = array(
 			'watermarks' => $watermarks,
-			'item' => (array)$item,
-			'image' => isset($displayImage) ? (array)$displayImage : null,
+			'item'    => (array)$item,
+			'image'   => isset($displayImage) ? (array)$displayImage : null,
 			'isAlbum' => GalleryUtilities::isA($item, 'GalleryAlbumItem'),
 		);
 

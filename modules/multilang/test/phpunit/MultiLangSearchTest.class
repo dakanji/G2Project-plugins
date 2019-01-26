@@ -158,9 +158,9 @@ class MultiLangSearchTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'name'        => $this->_module->translate('MultiLanguage'),
+				'name' => $this->_module->translate('MultiLanguage'),
 				'description' => $this->_module->translate('MultiLanguage Captions'),
-				'options'     => array(),
+				'options' => array(),
 			),
 			$info
 		);
@@ -183,9 +183,9 @@ class MultiLangSearchTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'name'        => $this->_module->translate('MultiLanguage'),
+				'name' => $this->_module->translate('MultiLanguage'),
 				'description' => $this->_module->translate('MultiLanguage Captions'),
-				'options'     => array(
+				'options' => array(
 					'title' => array(
 						'description' => $this->_module->translate(
 							array(
@@ -240,9 +240,9 @@ class MultiLangSearchTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'start'   => 1,
-				'end'     => 2,
-				'count'   => 2,
+				'start' => 1,
+				'end'   => 2,
+				'count' => 2,
 				'results' => array(
 					array(
 						'itemId' => $this->_item->getId(),
@@ -307,9 +307,9 @@ class MultiLangSearchTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'start'   => 2,
-				'end'     => 2,
-				'count'   => 2,
+				'start' => 2,
+				'end'   => 2,
+				'count' => 2,
 				'results' => array(
 					array(
 						'itemId' => $this->_album->getId(),
@@ -356,9 +356,9 @@ class MultiLangSearchTest extends GalleryTestCase {
 
 		$this->assertEquals(
 			array(
-				'start'   => 0,
-				'end'     => 0,
-				'count'   => 0,
+				'start' => 0,
+				'end'   => 0,
+				'count' => 0,
 				'results' => array(),
 			),
 			$results

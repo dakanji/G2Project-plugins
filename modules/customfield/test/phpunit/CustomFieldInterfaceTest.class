@@ -118,9 +118,9 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 		ksort($params);
 		$this->assertEquals(
 			array(
-				'album'  => '',
+				'album' => '',
 				'common' => 'One`0`1|Two`0`1',
-				'photo'  => 'Test`0`1',
+				'photo' => 'Test`0`1',
 			),
 			$params,
 			'Check Data 1'
@@ -148,9 +148,9 @@ class CustomFieldInterfaceTest extends GalleryTestCase {
 		ksort($params);
 		$this->assertEquals(
 			array(
-				'album'  => '',
+				'album' => '',
 				'common' => 'One`0`1|Two`0`1|Three`0`1',
-				'photo'  => 'Test`0`1',
+				'photo' => 'Test`0`1',
 			),
 			$params,
 			'Check Data 2'

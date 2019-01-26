@@ -88,8 +88,8 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 				'redirect' => array(
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
@@ -115,31 +115,31 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'new');
 
 		$values = array(
-			'itemId' => (string)$this->_getRootId(),
-			'mode' => 'edit',
-			'feedType' => 'photosRecursive',
+			'itemId'    => (string)$this->_getRootId(),
+			'mode'      => 'edit',
+			'feedType'  => 'photosRecursive',
 			'photosRecursiveLimit' => '0',
-			'feedName' => $name,
-			'version' => '2.0',
-			'count' => '10',
+			'feedName'  => $name,
+			'version'   => '2.0',
+			'count'     => '10',
 			'copyright' => 'me',
 			'description' => 'description',
-			'useImage' => '1',
+			'useImage'  => '1',
 			'usePubDate' => '1',
 			'useEnclosure' => '1',
 			'useCategory' => '1',
-			'useCloud' => '1',
+			'useCloud'  => '1',
 			'cloudDomain' => 'Gallery',
 			'cloudPort' => '202',
 			'cloudPath' => 'rss',
 			'cloudRegisterProcedure' => 'register',
 			'cloudProtocol' => 'tcp',
-			'useTtl' => '1',
-			'ttl'  => '60',
-			'category' => 'photo',
+			'useTtl'    => '1',
+			'ttl'       => '60',
+			'category'  => 'photo',
 			'useItemCategory' => '1',
-			'language' => 'en-us',
-			'feedDate' => 'updated',
+			'language'  => 'en-us',
+			'feedDate'  => 'updated',
 		);
 
 		foreach ($values as $key => $value) {
@@ -150,10 +150,10 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 				'redirect' => array(
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
@@ -206,31 +206,31 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'edit');
 
 		$values = array(
-			'itemId' => (string)$this->_getRootId(),
-			'mode' => 'edit',
-			'feedType' => 'photosRecursive',
+			'itemId'    => (string)$this->_getRootId(),
+			'mode'      => 'edit',
+			'feedType'  => 'photosRecursive',
 			'photosRecursiveLimit' => '0',
-			'feedName' => $name,
-			'version' => '2.0',
-			'count' => '10',
+			'feedName'  => $name,
+			'version'   => '2.0',
+			'count'     => '10',
 			'copyright' => 'me',
 			'description' => 'description',
-			'useImage' => '1',
+			'useImage'  => '1',
 			'usePubDate' => '1',
 			'useEnclosure' => '1',
 			'useCategory' => '1',
-			'useCloud' => '1',
+			'useCloud'  => '1',
 			'cloudDomain' => 'Gallery',
 			'cloudPort' => '202',
 			'cloudPath' => 'rss',
 			'cloudRegisterProcedure' => 'register',
 			'cloudProtocol' => 'tcp',
-			'useTtl' => '1',
-			'ttl'  => '60',
-			'category' => 'photo',
+			'useTtl'    => '1',
+			'ttl'       => '60',
+			'category'  => 'photo',
 			'useItemCategory' => '1',
-			'language' => 'en-us',
-			'feedDate' => 'updated',
+			'language'  => 'en-us',
+			'feedDate'  => 'updated',
 		);
 
 		foreach ($values as $key => $value) {
@@ -241,10 +241,10 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 				'redirect' => array(
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
@@ -281,31 +281,31 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[mode]', 'edit');
 
 		$values = array(
-			'itemId' => (string)$this->_getRootId(),
-			'mode' => 'edit',
-			'feedType' => 'photosRecursive',
+			'itemId'    => (string)$this->_getRootId(),
+			'mode'      => 'edit',
+			'feedType'  => 'photosRecursive',
 			'photosRecursiveLimit' => '0',
-			'feedName' => $name,
-			'version' => '2.0',
-			'count' => '10',
+			'feedName'  => $name,
+			'version'   => '2.0',
+			'count'     => '10',
 			'copyright' => 'me',
 			'description' => 'description',
-			'useImage' => '1',
+			'useImage'  => '1',
 			'usePubDate' => '1',
 			'useEnclosure' => '1',
 			'useCategory' => '1',
-			'useCloud' => '1',
+			'useCloud'  => '1',
 			'cloudDomain' => 'Gallery',
 			'cloudPort' => '202',
 			'cloudPath' => 'rss',
 			'cloudRegisterProcedure' => 'register',
 			'cloudProtocol' => 'tcp',
-			'useTtl' => '1',
-			'ttl'  => '60',
-			'category' => 'photo',
+			'useTtl'    => '1',
+			'ttl'       => '60',
+			'category'  => 'photo',
 			'useItemCategory' => '1',
-			'language' => 'en-us',
-			'feedDate' => 'updated',
+			'language'  => 'en-us',
+			'feedDate'  => 'updated',
 		);
 
 		foreach ($values as $key => $value) {
@@ -316,10 +316,10 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 				'redirect' => array(
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',
@@ -364,10 +364,10 @@ class RssEditFeedTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status'   => array(
+				'status' => array(
 					'deleted' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 				'redirect' => array(
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'rss.EditFeed',

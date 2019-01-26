@@ -56,7 +56,7 @@ class RemoteSiteAdminController extends GalleryController {
 
 		$results = array(
 			'redirect' => array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'remote.RemoteSiteAdmin',
 			),
 			'status'   => $status,

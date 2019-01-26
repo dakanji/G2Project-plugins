@@ -183,7 +183,7 @@ class getid3_flac extends getid3_handler {
 				$this->warning('FLAC STREAMINFO.audio_signature is null (known issue with libOggFLAC)');
 			} else {
 				$info['md5_data_source'] = '';
-				$md5 = $info['flac']['STREAMINFO']['audio_signature'];
+				$md5                     = $info['flac']['STREAMINFO']['audio_signature'];
 
 				for ($i = 0; $i < strlen($md5); $i++) {
 					$info['md5_data_source'] .= str_pad(dechex(ord($md5[$i])), 2, '00', STR_PAD_LEFT);
@@ -220,9 +220,9 @@ class getid3_flac extends getid3_handler {
 		$streaminfo['min_frame_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 4, 3));
 		$streaminfo['max_frame_size'] = getid3_lib::BigEndian2Int(substr($BlockData, 7, 3));
 
-		$SRCSBSS                   = getid3_lib::BigEndian2Bin(substr($BlockData, 10, 8));
-		$streaminfo['sample_rate'] = getid3_lib::Bin2Dec(substr($SRCSBSS, 0, 20));
-		$streaminfo['channels']    = getid3_lib::Bin2Dec(substr($SRCSBSS, 20, 3)) + 1;
+		$SRCSBSS                       = getid3_lib::BigEndian2Bin(substr($BlockData, 10, 8));
+		$streaminfo['sample_rate']     = getid3_lib::Bin2Dec(substr($SRCSBSS, 0, 20));
+		$streaminfo['channels']        = getid3_lib::Bin2Dec(substr($SRCSBSS, 20, 3)) + 1;
 		$streaminfo['bits_per_sample'] = getid3_lib::Bin2Dec(substr($SRCSBSS, 23, 5)) + 1;
 		$streaminfo['samples_stream']  = getid3_lib::Bin2Dec(substr($SRCSBSS, 28, 36));
 

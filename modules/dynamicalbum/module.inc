@@ -52,19 +52,19 @@ class DynamicAlbumModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'themeId'            => '',
-			'size.date'          => 24,
-			'size.views'         => 24,
-			'size.random'        => 24,
-			'type.date'          => 'data',
-			'type.views'         => 'data',
-			'type.random'        => 'data',
-			'description.date'   => '',
-			'description.views'  => '',
+			'themeId'   => '',
+			'size.date' => 24,
+			'size.views' => 24,
+			'size.random' => 24,
+			'type.date' => 'data',
+			'type.views' => 'data',
+			'type.random' => 'data',
+			'description.date' => '',
+			'description.views' => '',
 			'description.random' => '',
-			'itemlink.date'      => 0,
-			'itemlink.views'     => 0,
-			'itemlink.random'    => 0,
+			'itemlink.date' => 0,
+			'itemlink.views' => 0,
+			'itemlink.random' => 0,
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
@@ -188,27 +188,27 @@ class DynamicAlbumModule extends GalleryModule {
 		return array(
 			array(
 				'comment' => $this->translate('Updates Album'),
-				'match'   => array(
+				'match' => array(
 					'view' => 'dynamicalbum.UpdatesAlbum',
 				),
 				'pattern' => 'updates',
-				'help'    => $this->translate('Short URL for album of recent items'),
+				'help'  => $this->translate('Short URL for album of recent items'),
 			),
 			array(
 				'comment' => $this->translate('Popular Album'),
-				'match'   => array(
+				'match' => array(
 					'view' => 'dynamicalbum.PopularAlbum',
 				),
 				'pattern' => 'popular',
-				'help'    => $this->translate('Short URL for album of most viewed items'),
+				'help'  => $this->translate('Short URL for album of most viewed items'),
 			),
 			array(
 				'comment' => $this->translate('Random Album'),
-				'match'   => array(
+				'match' => array(
 					'view' => 'dynamicalbum.RandomAlbum',
 				),
 				'pattern' => 'random',
-				'help'    => $this->translate('Short URL for album of random items'),
+				'help'  => $this->translate('Short URL for album of random items'),
 			),
 		);
 	}

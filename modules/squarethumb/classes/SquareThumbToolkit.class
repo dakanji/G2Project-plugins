@@ -105,7 +105,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 		// Try to crop/fit according to param, but fallback to other based on toolkit support
 		if ($width != $height) {
 			for ($i = 0; $i < 2; $i++) {
-				$operation = ($square['mode'] == 'fit') ? 'composite' : 'crop';
+				$operation                      = ($square['mode'] == 'fit') ? 'composite' : 'crop';
 				list($ret, $toolkit, $nextMime) = GalleryCoreApi::getToolkitByOperation($mimeType, $operation);
 
 				if ($ret) {
@@ -283,8 +283,8 @@ class SquareThumbToolkit extends GalleryToolkit {
 					null,
 				);
 			}
-			$newContext = array(
-				'width'  => $size,
+			$newContext                        = array(
+				'width' => $size,
 				'height' => $size,
 			);
 			list($ret, $mimeType, $subContext) = $toolkit->performOperation(

@@ -31,8 +31,8 @@ class getid3_quicktime extends getid3_handler {
 
 		$this->fseek($info['avdataoffset']);
 
-		$offset      = 0;
-		$atomcounter = 0;
+		$offset                     = 0;
+		$atomcounter                = 0;
 		$atom_data_read_buffer_size = ($info['php_memory_limit'] ? round($info['php_memory_limit'] / 2) : $this->getid3->option_fread_buffer_size * 1024); // allow [default: 32MB] if PHP configured with no memory_limit
 		while ($offset < $info['avdataend']) {
 			if (!getid3_lib::intValueSupported($offset)) {
@@ -503,9 +503,9 @@ class getid3_quicktime extends getid3_handler {
 												case 'disk':
 												case 'trkn':
 													// binary
-													$num                    = getid3_lib::BigEndian2Int(substr($boxdata, 10, 2));
-													$num_total              = getid3_lib::BigEndian2Int(substr($boxdata, 12, 2));
-													$atom_structure['data'] = empty($num) ? '' : $num;
+													$num                     = getid3_lib::BigEndian2Int(substr($boxdata, 10, 2));
+													$num_total               = getid3_lib::BigEndian2Int(substr($boxdata, 12, 2));
+													$atom_structure['data']  = empty($num) ? '' : $num;
 													$atom_structure['data'] .= empty($num_total) ? '' : '/' . $num_total;
 
 													break;
@@ -1064,7 +1064,7 @@ class getid3_quicktime extends getid3_handler {
 
 					for ($i = 0; $i < $atom_structure['number_entries']; $i++) {
 						$atom_structure['time_to_sample_table'][$i] = getid3_lib::BigEndian2Int(substr($atom_data, $stssEntriesDataOffset, 4));
-						$stssEntriesDataOffset += 4;
+						$stssEntriesDataOffset                     += 4;
 					}
 				}
 
@@ -1421,14 +1421,14 @@ class getid3_quicktime extends getid3_handler {
 			case 'iods': // Initial Object DeScriptor atom
 				// http://www.koders.com/c/fid1FAB3E762903DC482D8A246D4A4BF9F28E049594.aspx?s=windows.h
 				// http://libquicktime.sourcearchive.com/documentation/1.0.2plus-pdebian/iods_8c-source.html
-				$offset                    = 0;
-				$atom_structure['version'] = getid3_lib::BigEndian2Int(substr($atom_data, $offset, 1));
-				$offset                   += 1;
-				$atom_structure['flags_raw'] = getid3_lib::BigEndian2Int(substr($atom_data, $offset, 3));
-				$offset += 3;
+				$offset                        = 0;
+				$atom_structure['version']     = getid3_lib::BigEndian2Int(substr($atom_data, $offset, 1));
+				$offset                       += 1;
+				$atom_structure['flags_raw']   = getid3_lib::BigEndian2Int(substr($atom_data, $offset, 3));
+				$offset                       += 3;
 				$atom_structure['mp4_iod_tag'] = getid3_lib::BigEndian2Int(substr($atom_data, $offset, 1));
-				$offset                  += 1;
-				$atom_structure['length'] = $this->quicktime_read_mp4_descr_length($atom_data, $offset);
+				$offset                       += 1;
+				$atom_structure['length']      = $this->quicktime_read_mp4_descr_length($atom_data, $offset);
 				//$offset already adjusted by quicktime_read_mp4_descr_length()
 				$atom_structure['object_descriptor_id'] = getid3_lib::BigEndian2Int(substr($atom_data, $offset, 2));
 				$offset += 2;
@@ -1509,7 +1509,7 @@ class getid3_quicktime extends getid3_handler {
 					$getid3_temp->openfile($this->getid3->filename);
 					$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 					$getid3_temp->info['avdataend']    = $info['avdataend'];
-					$getid3_mp3 = new getid3_mp3($getid3_temp);
+					$getid3_mp3                        = new getid3_mp3($getid3_temp);
 
 					if ($getid3_mp3->MPEGaudioHeaderValid($getid3_mp3->MPEGaudioHeaderDecode($this->fread(4)))) {
 						$getid3_mp3->getOnlyMPEGaudioInfo($getid3_temp->info['avdataoffset'], false);
@@ -1646,9 +1646,9 @@ class getid3_quicktime extends getid3_handler {
 			case 'NCVW': // Nikon Camera preVieW image
 				// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html
 				if (preg_match('/^\xFF\xD8\xFF/', $atom_data)) {
-					$atom_structure['data']        = $atom_data;
-					$atom_structure['image_mime']  = 'image/jpeg';
-					$atom_structure['description'] = (($atomname == 'NCTH') ? 'Nikon Camera Thumbnail Image' : (($atomname == 'NCVW') ? 'Nikon Camera Preview Image' : 'Nikon preview image'));
+					$atom_structure['data']                     = $atom_data;
+					$atom_structure['image_mime']               = 'image/jpeg';
+					$atom_structure['description']              = (($atomname == 'NCTH') ? 'Nikon Camera Thumbnail Image' : (($atomname == 'NCVW') ? 'Nikon Camera Preview Image' : 'Nikon preview image'));
 					$info['quicktime']['comments']['picture'][] = array(
 						'image_mime'  => $atom_structure['image_mime'],
 						'data'        => $atom_data,
@@ -1915,10 +1915,10 @@ class getid3_quicktime extends getid3_handler {
 			and add the three 16-bit values. This will result in a single 16-bit value with the three codes correctly packed into the 15 least
 			significant bits and the most significant bit set to zero.
 			*/
-			$iso_language_id  = '';
-			$iso_language_id .= chr((($languageid & 0x7C00) >> 10) + 0x60);
-			$iso_language_id .= chr((($languageid & 0x03E0) >> 5) + 0x60);
-			$iso_language_id .= chr((($languageid & 0x001F) >> 0) + 0x60);
+			$iso_language_id                      = '';
+			$iso_language_id                     .= chr((($languageid & 0x7C00) >> 10) + 0x60);
+			$iso_language_id                     .= chr((($languageid & 0x03E0) >> 5) + 0x60);
+			$iso_language_id                     .= chr((($languageid & 0x001F) >> 0) + 0x60);
 			$QuicktimeLanguageLookup[$languageid] = getid3_id3v2::LanguageLookup($iso_language_id);
 		}
 

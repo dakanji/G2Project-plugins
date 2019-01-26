@@ -59,7 +59,7 @@ class AdminMembersController extends GalleryController {
 
 		if (empty($error)) {
 			$results['redirect'] = array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'members.AdminMembers',
 			);
 		} else {

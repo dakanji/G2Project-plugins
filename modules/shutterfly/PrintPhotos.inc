@@ -241,8 +241,8 @@ class PrintPhotosView extends GalleryView {
 			'PrintPhotos',
 			array(
 				'returnUrl' => $returnUrl,
-				'count'     => count($entries),
-				'entries'   => $entries,
+				'count' => count($entries),
+				'entries' => $entries,
 			)
 		);
 		$template->display('gallery:modules/shutterfly/templates/PrintPhotos.tpl');

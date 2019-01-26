@@ -65,7 +65,7 @@ class getid3_avr extends getid3_handler {
 		$AVRheader = $this->fread(128);
 
 		$info['avr']['raw']['magic'] = substr($AVRheader, 0, 4);
-		$magic = '2BIT';
+		$magic                       = '2BIT';
 
 		if ($info['avr']['raw']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['avr']['raw']['magic']) . '"';

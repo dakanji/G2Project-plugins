@@ -130,16 +130,16 @@ class ChooseObjectsView extends GalleryView {
 			'zh_CN &#31616;&#20307;&#20013;&#25991; (Simplified Chinese ' .
 			'GB/GB2312)' => 'GB2312',
 			'zh_TW &#32321;&#39636;&#20013;&#25991; (Traditional Chinese ' .
-			'Big5)' => 'BIG5',
+			'Big5)'   => 'BIG5',
 			'zh_TW &#32321;&#39636;&#20013;&#25991; (Traditional Chinese ' .
-			'UTF-8)' => 'UTF-8',
-			'BIG5' => 'BIG5',
-			'CP1250' => 'CP1250',
-			'CP1251' => 'CP1251',
-			'CP1257' => 'CP1257',
-			'EUC-JP' => 'EUC-JP',
-			'EUC-KR' => 'EUC-KR',
-			'GB2312' => 'GB2312',
+			'UTF-8)'  => 'UTF-8',
+			'BIG5'    => 'BIG5',
+			'CP1250'  => 'CP1250',
+			'CP1251'  => 'CP1251',
+			'CP1257'  => 'CP1257',
+			'EUC-JP'  => 'EUC-JP',
+			'EUC-KR'  => 'EUC-KR',
+			'GB2312'  => 'GB2312',
 			'ISO-8859-1' => 'ISO-8859-1',
 			'ISO-8859-10' => 'ISO-8859-10',
 			'ISO-8859-11' => 'ISO-8859-11',
@@ -155,9 +155,9 @@ class ChooseObjectsView extends GalleryView {
 			'ISO-8859-7' => 'ISO-8859-7',
 			'ISO-8859-8' => 'ISO-8859-8',
 			'ISO-8859-9' => 'ISO-8859-9',
-			'KOI8-R' => 'KOI8-R',
-			'KOI8-U' => 'KOI8-U',
-			'UTF-8' => 'UTF-8',
+			'KOI8-R'  => 'KOI8-R',
+			'KOI8-U'  => 'KOI8-U',
+			'UTF-8'   => 'UTF-8',
 			'windows-1251' => 'CP1251',
 			'windows-1257' => 'CP1257',
 			'Latin-1' => 'ISO-8859-1',
@@ -221,8 +221,8 @@ class ChooseObjectsView extends GalleryView {
 			$form['urlRedirect']        = 1;
 			$form['generateThumbnails'] = 1;
 			$form['set']                = array(
-				'title'       => 'caption',
-				'summary'     => 'blank',
+				'title' => 'caption',
+				'summary' => 'blank',
 				'description' => 'blank',
 			);
 			$form['customFields']       = $form['skipCustomItemFields'] = 1;
@@ -315,7 +315,7 @@ class ChooseObjectsView extends GalleryView {
 		$data   = array();
 		$data[] = array(
 			'depth' => $depth,
-			'data' => $albumList[$albumName],
+			'data'  => $albumList[$albumName],
 		);
 
 		foreach ($hierarchy as $childAlbumName => $subHierarchy) {

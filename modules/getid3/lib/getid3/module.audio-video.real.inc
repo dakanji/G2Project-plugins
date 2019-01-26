@@ -240,7 +240,7 @@ class getid3_real extends getid3_handler {
 								$thisfile_real_chunks_currentchunk['logical_fileinfo'] = array();
 								$thisfile_real_chunks_currentchunk_logicalfileinfo     = &$thisfile_real_chunks_currentchunk['logical_fileinfo'];
 
-								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset = 0;
+								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset                     = 0;
 								$thisfile_real_chunks_currentchunk_logicalfileinfo['logical_fileinfo_length'] = getid3_lib::BigEndian2Int(substr($thisfile_real_chunks_currentchunk_typespecificdata, $thisfile_real_chunks_currentchunk_logicalfileinfo_offset, 4));
 								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset                    += 4;
 
@@ -420,18 +420,18 @@ class getid3_real extends getid3_handler {
 			$ParsedArray['audio_bytes']      = getid3_lib::BigEndian2Int(substr($OldRAheaderData, 18, 4));
 			$ParsedArray['comments_raw']     = substr($OldRAheaderData, 22, $ParsedArray['header_size'] - 22 + 1); // not including null terminator
 
-			$commentoffset = 0;
-			$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
+			$commentoffset                      = 0;
+			$commentlength                      = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 			$ParsedArray['comments']['title'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
-			$commentoffset += $commentlength;
+			$commentoffset                     += $commentlength;
 
-			$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
+			$commentlength                       = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 			$ParsedArray['comments']['artist'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
-			$commentoffset += $commentlength;
+			$commentoffset                      += $commentlength;
 
 			$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 			$ParsedArray['comments']['copyright'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
-			$commentoffset += $commentlength;
+			$commentoffset                         += $commentlength;
 
 			$commentoffset++; // final null terminator (?)
 			$commentoffset++; // fourcc length (?) should be 4
@@ -466,18 +466,18 @@ class getid3_real extends getid3_handler {
 					//$ParsedArray['unknown10']        = getid3_lib::BigEndian2Int(substr($OldRAheaderData, 67, 2));
 					$ParsedArray['comments_raw'] = substr($OldRAheaderData, 69, $ParsedArray['header_size'] - 69 + 16);
 
-					$commentoffset = 0;
-					$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
+					$commentoffset                      = 0;
+					$commentlength                      = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 					$ParsedArray['comments']['title'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
-					$commentoffset += $commentlength;
+					$commentoffset                     += $commentlength;
 
-					$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
+					$commentlength                       = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 					$ParsedArray['comments']['artist'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
-					$commentoffset += $commentlength;
+					$commentoffset                      += $commentlength;
 
 					$commentlength = getid3_lib::BigEndian2Int(substr($ParsedArray['comments_raw'], $commentoffset++, 1));
 					$ParsedArray['comments']['copyright'][] = substr($ParsedArray['comments_raw'], $commentoffset, $commentlength);
-					$commentoffset += $commentlength;
+					$commentoffset                         += $commentlength;
 
 					break;
 

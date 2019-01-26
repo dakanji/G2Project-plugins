@@ -172,8 +172,8 @@ class getid3_lyrics3 extends getid3_handler {
 					$rawdata = $ParsedLyrics3['raw']['unparsed'];
 
 					while (strlen($rawdata) > 0) {
-						$fieldname = substr($rawdata, 0, 3);
-						$fieldsize = (int)substr($rawdata, 3, 5);
+						$fieldname                        = substr($rawdata, 0, 3);
+						$fieldsize                        = (int)substr($rawdata, 3, 5);
 						$ParsedLyrics3['raw'][$fieldname] = substr($rawdata, 8, $fieldsize);
 						$rawdata = substr($rawdata, 3 + 5 + $fieldsize);
 					}

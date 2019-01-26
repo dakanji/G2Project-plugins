@@ -91,7 +91,7 @@ class SampleView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body'          => 'modules/imageframe/templates/SampleBody.tpl',
+				'body' => 'modules/imageframe/templates/SampleBody.tpl',
 				'useFullScreen' => true,
 			),
 		);

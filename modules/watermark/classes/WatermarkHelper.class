@@ -715,7 +715,7 @@ class WatermarkHelper {
 						return array($ret, null);
 					}
 					// Expire derivatives using this watermark
-					$query = '
+					$query                     = '
 				SELECT [GalleryDerivative::id]
 				FROM [GalleryDerivative]
 				WHERE [GalleryDerivative::postFilterOperations] LIKE ?

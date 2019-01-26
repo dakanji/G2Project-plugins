@@ -44,8 +44,8 @@ class ChooseObjectsControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'migrate.ChooseObjects',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][nothingSelected]'),
+				'status' => array(),
+				'error' => array('form[error][nothingSelected]'),
 			),
 			$results
 		);
@@ -66,8 +66,8 @@ class ChooseObjectsControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'migrate.ConfirmImport',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -89,8 +89,8 @@ class ChooseObjectsControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'migrate.ConfirmImport',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -111,8 +111,8 @@ class ChooseObjectsControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'migrate.ChooseObjects',
 				),
-				'status'   => array(),
-				'error'    => array(
+				'status' => array(),
+				'error' => array(
 					'form[error][emptyCustomField][title]',
 					'form[error][emptyCustomField][summary]',
 					'form[error][emptyCustomField][description]',

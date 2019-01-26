@@ -149,15 +149,15 @@ class ConfirmImportController extends GalleryController {
 		 */
 
 		$permissionTranslation = array(
-			'canRead'           => array(
+			'canRead'  => array(
 				'core.view',
 				'core.viewResizes',
 			),
 			'canViewFullImages' => array('core.viewSource'),
-			'canChangeText'     => array('core.edit'),
-			'canAddTo'          => array('core.addDataItem'),
-			'canWrite'          => array('core.edit'),
-			'canDeleteFrom'     => array('core.delete'),
+			'canChangeText' => array('core.edit'),
+			'canAddTo' => array('core.addDataItem'),
+			'canWrite' => array('core.edit'),
+			'canDeleteFrom' => array('core.delete'),
 			'canCreateSubAlbum' => array('core.addAlbumItem'),
 		);
 
@@ -431,7 +431,7 @@ class ConfirmImportController extends GalleryController {
 				$isHiddenAlbum = isset($hiddenAlbums[$album['name']]);
 			} else {
 				$albumfields[$album['name']] = $album;
-				$album = null;
+				$album                       = null;
 			}
 
 			if (!$targetAlbumID || !$album) {
@@ -2062,11 +2062,11 @@ class ConfirmImportView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$ConfirmImport                   = array();
-		$ConfirmImport['uids']           = $uids;
-		$ConfirmImport['albums']         = $albums;
-		$ConfirmImport['albumsPath']     = $albumsPath;
-		$ConfirmImport['existingAlbums'] = $existingAlbums;
+		$ConfirmImport                       = array();
+		$ConfirmImport['uids']               = $uids;
+		$ConfirmImport['albums']             = $albums;
+		$ConfirmImport['albumsPath']         = $albumsPath;
+		$ConfirmImport['existingAlbums']     = $existingAlbums;
 		$ConfirmImport['illegalAlbumNames']  = $illegalAlbumNames;
 		$ConfirmImport['destinationAlbumID'] = $destinationAlbumID;
 		$ConfirmImport['albumValidOwner']    = $albumValidOwner;

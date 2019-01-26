@@ -41,7 +41,7 @@ class getid3_jpg extends getid3_handler {
 			if (is_array($iptc_parsed)) {
 				foreach ($iptc_parsed as $iptc_key_raw => $iptc_values) {
 					list($iptc_record, $iptc_tagkey) = explode('#', $iptc_key_raw);
-					$iptc_tagkey = intval(ltrim($iptc_tagkey, '0'));
+					$iptc_tagkey                     = intval(ltrim($iptc_tagkey, '0'));
 
 					foreach ($iptc_values as $key => $value) {
 						$IPTCrecordName    = $this->IPTCrecordName($iptc_record);

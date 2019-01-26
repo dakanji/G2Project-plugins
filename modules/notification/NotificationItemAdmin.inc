@@ -134,9 +134,9 @@ class NotificationItemAdminController extends GalleryController {
 		}
 
 		$results[$returnOption] = array(
-			'view' => 'core.ItemAdmin',
+			'view'    => 'core.ItemAdmin',
 			'subView' => 'notification.NotificationItemAdmin',
-			'itemId' => $itemId,
+			'itemId'  => $itemId,
 		);
 		$results['status']      = $status;
 		$results['error']       = $error;
@@ -215,7 +215,7 @@ class NotificationItemAdminView extends GalleryView {
 
 		// Events
 		$form['notifications'] = array();
-		$i = 0;
+		$i                     = 0;
 
 		foreach ($notifications as $notificationName => $notification) {
 			list($ret, $instance) = GalleryCoreApi::newFactoryInstanceById(

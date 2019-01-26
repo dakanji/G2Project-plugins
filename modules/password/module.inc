@@ -159,7 +159,7 @@ class PasswordModule extends GalleryModule {
 		global $gallery;
 		GalleryCoreApi::requireOnce('modules/password/classes/PasswordHelper.class');
 
-		$query = '
+		$query                     = '
 		SELECT [GalleryEntity::id]
 		FROM [GalleryEntity]
 		WHERE [GalleryEntity::onLoadHandlers] LIKE \'%|Password|%\'

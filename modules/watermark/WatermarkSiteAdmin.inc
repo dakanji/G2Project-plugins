@@ -48,8 +48,8 @@ class WatermarkSiteAdminController extends GalleryController {
 
 			$status['add']       = 1;
 			$results['redirect'] = array(
-				'view'        => 'core.SiteAdmin',
-				'subView'     => 'watermark.WatermarkSiteAdminEdit',
+				'view' => 'core.SiteAdmin',
+				'subView' => 'watermark.WatermarkSiteAdminEdit',
 				'watermarkId' => $item->getId(),
 			);
 		} elseif (isset($form['action']['add'])) {
@@ -109,7 +109,7 @@ class WatermarkSiteAdminController extends GalleryController {
 
 		if (!isset($results['redirect'])) {
 			$results['redirect'] = array(
-				'view'    => 'core.SiteAdmin',
+				'view' => 'core.SiteAdmin',
 				'subView' => 'watermark.WatermarkSiteAdmin',
 			);
 		}

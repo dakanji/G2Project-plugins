@@ -68,8 +68,8 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 					'setCaptions'     => true,
 					'albumId'         => 3,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -86,8 +86,8 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'publishxp.Options',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -107,8 +107,8 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 					'setCaptions'     => false,
 					'albumId'         => 2,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);

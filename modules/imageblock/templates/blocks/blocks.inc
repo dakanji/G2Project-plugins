@@ -4,7 +4,7 @@ $blocks['ImageBlock'] = array(
 	'vars'        => array(
 		'blocks' => array(
 			'description' => $gallery->i18n('Image type'),
-			'type' => 'choice',
+			'type'    => 'choice',
 			'default' => 'randomImage',
 			'choices' => array(
 				'randomImage'  => $gallery->i18n('Random image'),
@@ -23,13 +23,13 @@ $blocks['ImageBlock'] = array(
 		),
 		'repeatBlock' => array(
 			'description' => $gallery->i18n('Number of items'),
-			'type' => 'text',
+			'type'    => 'text',
 			'default' => '1',
 		),
 		'useDefaults' => array(
 			'description' => $gallery->i18n('Use default settings'),
-			'type' => 'boolean',
-			'default' => 'true',
+			'type'      => 'boolean',
+			'default'   => 'true',
 			'overrides' => array(
 				'showHeading',
 				'showTitle',
@@ -40,27 +40,27 @@ $blocks['ImageBlock'] = array(
 		),
 		'showHeading' => array(
 			'description' => $gallery->i18n('Show heading'),
-			'type' => 'boolean',
+			'type'    => 'boolean',
 			'default' => 'true',
 		),
 		'showTitle' => array(
 			'description' => $gallery->i18n('Show title'),
-			'type' => 'boolean',
+			'type'    => 'boolean',
 			'default' => 'true',
 		),
 		'showDate' => array(
 			'description' => $gallery->i18n('Show date'),
-			'type' => 'boolean',
+			'type'    => 'boolean',
 			'default' => 'true',
 		),
 		'showViews' => array(
 			'description' => $gallery->i18n('Show view count'),
-			'type' => 'boolean',
+			'type'    => 'boolean',
 			'default' => 'false',
 		),
 		'showOwner' => array(
 			'description' => $gallery->i18n('Show owner'),
-			'type' => 'boolean',
+			'type'    => 'boolean',
 			'default' => 'false',
 		),
 	),

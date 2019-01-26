@@ -640,8 +640,8 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 			$baseDir . 'good<script>evil.jpg',
 			false,
 			array(
-				'title'       => 1,
-				'summary'     => 1,
+				'title' => 1,
+				'summary' => 1,
 				'description' => 1,
 			),
 			$status,
@@ -684,8 +684,8 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 			$baseDir . 'good<script>evil_dir',
 			false,
 			array(
-				'title'       => 1,
-				'summary'     => 1,
+				'title' => 1,
+				'summary' => 1,
 				'description' => 1,
 			),
 			$status,

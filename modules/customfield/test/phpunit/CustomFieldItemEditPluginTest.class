@@ -96,8 +96,8 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 						'choices' => array(),
 					),
 				),
-				'album'  => array(),
-				'photo'  => array(
+				'album' => array(),
+				'photo' => array(
 					array(
 						'field'   => 'Location',
 						'summary' => true,
@@ -254,7 +254,7 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		$this->assertEquals(
 			array(
 				'Catalog Id' => '456',
-				'Year'       => '2004',
+				'Year' => '2004',
 			),
 			$data[$this->_albumS->getId()],
 			'Detail data 2'
@@ -267,9 +267,9 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		}
 		$this->assertEquals(
 			array(
-				'Category'   => 'C',
+				'Category' => 'C',
 				'Catalog Id' => '456',
-				'Year'       => '2004',
+				'Year' => '2004',
 			),
 			$data[$this->_albumS->getId()],
 			'All data 2'
@@ -351,9 +351,9 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		ksort($params);
 		$this->assertEquals(
 			array(
-				'album'  => 'Catalog Id`0`1|Year`0`1',
+				'album' => 'Catalog Id`0`1|Year`0`1',
 				'common' => 'Category`1`0`A`B`C',
-				'photo'  => 'Photographer`1`1|Photo Fun`0`1`Here`Test`One',
+				'photo' => 'Photographer`1`1|Photo Fun`0`1`Here`Test`One',
 			),
 			$params,
 			'Check Data 1'
@@ -396,9 +396,9 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		ksort($params);
 		$this->assertEquals(
 			array(
-				'album'  => 'Year`0`1|Catalog Id`0`0',
+				'album' => 'Year`0`1|Catalog Id`0`0',
 				'common' => 'Category`1`1`A`B`C',
-				'photo'  => 'Photographer`1`1|Photo Fun`0`0`Here`Test`One',
+				'photo' => 'Photographer`1`1|Photo Fun`0`0`Here`Test`One',
 			),
 			$params,
 			'Check Data 2'
@@ -479,9 +479,9 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		ksort($params);
 		$this->assertEquals(
 			array(
-				'album'  => 'Category`1`1`A`B`C',
+				'album' => 'Category`1`1`A`B`C',
 				'common' => 'Photo Fun`0`0`Here`Test`One',
-				'photo'  => 'Photographer`1`1|Year`0`1',
+				'photo' => 'Photographer`1`1|Year`0`1',
 			),
 			$params,
 			'Check Data 3'
@@ -513,9 +513,9 @@ class CustomFieldItemEditPluginTest extends ItemEditPluginTestCase {
 		ksort($params);
 		$this->assertEquals(
 			array(
-				'album'  => 'Category`1`1`A`B`C',
+				'album' => 'Category`1`1`A`B`C',
 				'common' => 'Photo Fun`0`0',
-				'photo'  => 'Photographer`1`1|Year`0`1',
+				'photo' => 'Photographer`1`1|Year`0`1',
 			),
 			$params,
 			'Check Data 4'

@@ -152,9 +152,9 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		$finishedAlbums = $albumPosition = array();
 
 		$status = array(
-			'albumId'              => false,
-			'albumImportFailure'   => array(),
-			'albumImportSuccess'   => array(),
+			'albumId' => false,
+			'albumImportFailure' => array(),
+			'albumImportSuccess' => array(),
 			'pictureImportSuccess' => array(),
 			'pictureImportFailure' => array(),
 		);
@@ -428,8 +428,8 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		if ($form['formName'] != 'ItemAddFromPicasa') {
 			// First time around, load the form with item data
 			$form['set']      = array(
-				'title'       => 'filename',
-				'summary'     => 1,
+				'title' => 'filename',
+				'summary' => 1,
 				'description' => 1,
 			);
 			$form['formName'] = 'ItemAddFromPicasa';
@@ -437,8 +437,8 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		$titleList = array(
 			'filename' => $module->translate('Base filename'),
-			'caption' => $module->translate('Picasa Caption'),
-			'' => $module->translate('Blank'),
+			'caption'  => $module->translate('Picasa Caption'),
+			''         => $module->translate('Blank'),
 		);
 
 		$template->setVariable(

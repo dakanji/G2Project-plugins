@@ -59,10 +59,10 @@ class EcardModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'from' => $this->translate('Gallery &lt;gallery&gt;'),
+			'from'    => $this->translate('Gallery &lt;gallery&gt;'),
 			'subject' => $this->translate('You have been sent an eCard'),
-			'bcc'  => '',
-			'header' => $this->translate(
+			'bcc'     => '',
+			'header'  => $this->translate(
 				array(
 					'text' => 'Hi %s!%s%s (%s) has sent you an eCard:',
 					'arg1' => '%toName%',
@@ -71,10 +71,10 @@ class EcardModule extends GalleryModule {
 					'arg4' => '%from%',
 				)
 			),
-			'footer' => $this->translate(
+			'footer'  => $this->translate(
 				'This eCard was sent with Gallery 2 - Your photos on your website'
 			),
-			'format' => 'html',
+			'format'  => 'html',
 			'validation.level' => 'HIGH',
 		) as $key => $value) {
 			if (!isset($params[$key])) {

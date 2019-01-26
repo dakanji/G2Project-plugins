@@ -51,7 +51,7 @@ class PanoramaModule extends GalleryModule {
 			foreach (array(
 				'itemType' => 1,
 				'itemLink' => 1,
-				'width'    => 800,
+				'width' => 800,
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);
 

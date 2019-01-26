@@ -166,9 +166,9 @@ class SlideshowAppletModule extends GalleryModule {
 		$rule['pattern']  = 'v/%path%/slideshowapplet.html';
 		$rule['keywords'] = array(
 			'path' => array(
-				'pattern'  => '([^?]+)',
+				'pattern' => '([^?]+)',
 				'function' => array('rewrite', 'RewriteSimpleHelper', 'parsePath'),
-				'help'     => $this->translate('Path to an item (eg, /album/image.jpg.html)'),
+				'help' => $this->translate('Path to an item (eg, /album/image.jpg.html)'),
 			),
 		);
 		$rules[]          = $rule;

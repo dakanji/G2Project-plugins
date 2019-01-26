@@ -137,7 +137,7 @@ class getid3_lib {
 
 		return array(
 			'normalized' => $binarypointnumber,
-			'exponent'   => (int)$exponent,
+			'exponent' => (int)$exponent,
 		);
 	}
 
@@ -1434,9 +1434,9 @@ class getid3_lib {
 
 			// METHOD B: cache all keys in this lookup - more memory but faster on next lookup of not-previously-looked-up key
 			//$cache[$file][$name][substr($line, 0, $keylength)] = trim(substr($line, $keylength + 1));
-			$explodedLine = explode("\t", $line, 2);
-			$ThisKey      = (isset($explodedLine[0]) ? $explodedLine[0] : '');
-			$ThisValue    = (isset($explodedLine[1]) ? $explodedLine[1] : '');
+			$explodedLine                  = explode("\t", $line, 2);
+			$ThisKey                       = (isset($explodedLine[0]) ? $explodedLine[0] : '');
+			$ThisValue                     = (isset($explodedLine[1]) ? $explodedLine[1] : '');
 			$cache[$file][$name][$ThisKey] = trim($ThisValue);
 		}
 

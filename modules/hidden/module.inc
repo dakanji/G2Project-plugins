@@ -305,7 +305,7 @@ class HiddenModule extends GalleryModule {
 
 						$ids = array_merge($ids, $childIds);
 					}
-					$query = 'SELECT [::itemId] FROM [ItemHiddenMap]
+					$query                     = 'SELECT [::itemId] FROM [ItemHiddenMap]
 			   WHERE [ItemHiddenMap::itemId] IN ('
 					 . GalleryUtilities::makeMarkers(count($ids)) . ')';
 					list($ret, $searchResults) = $gallery->search($query, $ids);

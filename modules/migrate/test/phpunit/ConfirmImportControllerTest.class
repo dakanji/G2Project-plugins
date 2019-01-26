@@ -268,8 +268,8 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'core.ProgressBar',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results,
 			'Progress bar results'
@@ -453,8 +453,8 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'migrate.SelectGallery',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -978,19 +978,19 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			),
 		) : array();
 		$expectedPermissions[] = array(
-			'groupId'    => $this->_everybodyGroupId,
+			'groupId' => $this->_everybodyGroupId,
 			'permission' => 'core.viewResizes',
 		);
 		$expectedPermissions[] = array(
-			'groupId'    => $this->_everybodyGroupId,
+			'groupId' => $this->_everybodyGroupId,
 			'permission' => 'core.viewSource',
 		);
 		$expectedPermissions[] = array(
-			'groupId'    => $this->_adminGroupId,
+			'groupId' => $this->_adminGroupId,
 			'permission' => 'core.all',
 		);
 		$expectedPermissions[] = array(
-			'userId'     => $this->_adminUser->getId(),
+			'userId' => $this->_adminUser->getId(),
 			'permission' => 'core.all',
 		);
 
@@ -1123,19 +1123,19 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			),
 		) : array();
 		$expectedPermissions[] = array(
-			'groupId'    => $this->_everybodyGroupId,
+			'groupId' => $this->_everybodyGroupId,
 			'permission' => 'core.viewResizes',
 		);
 		$expectedPermissions[] = array(
-			'groupId'    => $this->_everybodyGroupId,
+			'groupId' => $this->_everybodyGroupId,
 			'permission' => 'core.viewSource',
 		);
 		$expectedPermissions[] = array(
-			'groupId'    => $this->_adminGroupId,
+			'groupId' => $this->_adminGroupId,
 			'permission' => 'core.all',
 		);
 		$expectedPermissions[] = array(
-			'userId'     => $this->_adminUser->getId(),
+			'userId' => $this->_adminUser->getId(),
 			'permission' => 'core.all',
 		);
 
@@ -1400,19 +1400,19 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testPerms                  = array();
 		$testPermsResult            = array();
 		$testPerms['admin']         = array(
-			'core.all'    => true,
+			'core.all' => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
 		$testPerms['phpunitfoo001'] = array(
-			'core.view'         => true,
-			'core.viewResizes'  => true,
-			'core.viewSource'   => true,
-			'comment.view'      => true && $this->testComments,
-			'comment.add'       => true && $this->testComments,
-			'core.edit'         => true,
-			'core.addDataItem'  => true,
-			'core.edit'         => true,
-			'core.delete'       => true,
+			'core.view' => true,
+			'core.viewResizes' => true,
+			'core.viewSource' => true,
+			'comment.view' => true && $this->testComments,
+			'comment.add' => true && $this->testComments,
+			'core.edit' => true,
+			'core.addDataItem' => true,
+			'core.edit' => true,
+			'core.delete' => true,
 			'core.addAlbumItem' => true,
 		);
 
@@ -1608,19 +1608,19 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testPerms                  = array();
 		$testPermsResult            = array();
 		$testPerms['admin']         = array(
-			'core.all'    => true,
+			'core.all' => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
 		$testPerms['phpunitfoo001'] = array(
-			'core.view'         => true,
-			'core.viewResizes'  => true,
-			'core.viewSource'   => false,
-			'comment.view'      => false && $this->testComments,
-			'comment.add'       => false && $this->testComments,
-			'core.edit'         => false,
-			'core.addDataItem'  => false,
-			'core.edit'         => false,
-			'core.delete'       => true,
+			'core.view' => true,
+			'core.viewResizes' => true,
+			'core.viewSource' => false,
+			'comment.view' => false && $this->testComments,
+			'comment.add' => false && $this->testComments,
+			'core.edit' => false,
+			'core.addDataItem' => false,
+			'core.edit' => false,
+			'core.delete' => true,
 			'core.addAlbumItem' => false,
 		);
 
@@ -1727,19 +1727,19 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testPerms                  = array();
 		$testPermsResult            = array();
 		$testPerms['admin']         = array(
-			'core.all'    => true,
+			'core.all' => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
 		$testPerms['phpunitfoo001'] = array(
-			'core.view'         => false,
-			'core.viewResizes'  => false,
-			'core.viewSource'   => false,
-			'comment.view'      => false && $this->testComments,
-			'comment.add'       => false && $this->testComments,
-			'core.edit'         => false,
-			'core.addDataItem'  => false,
-			'core.edit'         => false,
-			'core.delete'       => false,
+			'core.view' => false,
+			'core.viewResizes' => false,
+			'core.viewSource' => false,
+			'comment.view' => false && $this->testComments,
+			'comment.add' => false && $this->testComments,
+			'core.edit' => false,
+			'core.addDataItem' => false,
+			'core.edit' => false,
+			'core.delete' => false,
 			'core.addAlbumItem' => false,
 		);
 
@@ -1880,19 +1880,19 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testPerms                  = array();
 		$testPermsResult            = array();
 		$testPerms['admin']         = array(
-			'core.all'    => true,
+			'core.all' => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
 		$testPerms['phpunitfoo001'] = array(
-			'core.view'         => false,
-			'core.viewResizes'  => false,
-			'core.viewSource'   => false,
-			'comment.view'      => false && $this->testComments,
-			'comment.add'       => false && $this->testComments,
-			'core.edit'         => false,
-			'core.addDataItem'  => false,
-			'core.edit'         => false,
-			'core.delete'       => false,
+			'core.view' => false,
+			'core.viewResizes' => false,
+			'core.viewSource' => false,
+			'comment.view' => false && $this->testComments,
+			'comment.add' => false && $this->testComments,
+			'core.edit' => false,
+			'core.addDataItem' => false,
+			'core.edit' => false,
+			'core.delete' => false,
 			'core.addAlbumItem' => false,
 		);
 
@@ -2040,19 +2040,19 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$testPerms                  = array();
 		$testPermsResult            = array();
 		$testPerms['admin']         = array(
-			'core.all'    => true,
+			'core.all' => true,
 			'comment.all' => true && $this->commentPermissionsExist,
 		);
 		$testPerms['phpunitfoo001'] = array(
-			'core.view'         => false,
-			'core.viewResizes'  => false,
-			'core.viewSource'   => false,
-			'comment.view'      => false && $this->testComments,
-			'comment.add'       => false && $this->testComments,
-			'core.edit'         => false,
-			'core.addDataItem'  => false,
-			'core.edit'         => false,
-			'core.delete'       => false,
+			'core.view' => false,
+			'core.viewResizes' => false,
+			'core.viewSource' => false,
+			'comment.view' => false && $this->testComments,
+			'comment.add' => false && $this->testComments,
+			'core.edit' => false,
+			'core.addDataItem' => false,
+			'core.edit' => false,
+			'core.delete' => false,
 			'core.addAlbumItem' => false,
 		);
 

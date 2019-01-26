@@ -46,9 +46,9 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 		list($ret, $this->_album) = $this->_createRandomAlbum(
 			$this->_getRootId(),
 			array(
-				'title'          => 'title',
-				'summary'        => 'summary',
-				'description'    => 'description',
+				'title' => 'title',
+				'summary' => 'summary',
+				'description' => 'description',
 				'onLoadHandlers' => '|MultiLang|',
 			)
 		);
@@ -116,9 +116,9 @@ class MultiLangItemEditPluginTest extends ItemEditPluginTestCase {
 		list($ret, $this->_subAlbum) = $this->_createRandomAlbum(
 			$this->_album->getId(),
 			array(
-				'title'          => 'title',
-				'summary'        => 'summary',
-				'description'    => 'description',
+				'title' => 'title',
+				'summary' => 'summary',
+				'description' => 'description',
 				'onLoadHandlers' => '|MultiLang|',
 			)
 		);

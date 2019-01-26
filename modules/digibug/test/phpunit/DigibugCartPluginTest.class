@@ -149,7 +149,7 @@ class DigibugCartPluginTest extends GalleryTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'view'      => 'digibug.DigibugPrintPhotos',
+				'view' => 'digibug.DigibugPrintPhotos',
 				'authToken' => $session->getAuthToken(),
 				'returnUrl' => $returnUrl,
 			),

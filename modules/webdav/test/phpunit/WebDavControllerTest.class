@@ -77,8 +77,8 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'webdav.WebDav',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -95,8 +95,8 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'webdav.WebDav',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -116,8 +116,8 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'webdav.WebDav',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);

@@ -168,7 +168,7 @@ class ZipCartAdminView extends GalleryView {
 
 		$ZipCartAdmin = array(
 			'isConfigure' => !$isActive,
-			'canExec'     => !in_array(
+			'canExec' => !in_array(
 				'exec',
 				preg_split('/,\s*/', ini_get('disable_functions'))
 			),

@@ -87,7 +87,7 @@ class PasswordEntryController extends GalleryController {
 			&& GalleryUtilities::isCorrectPassword($form['password'], $hashedPassword);
 
 			// Prepare for validation
-			$options = array(
+			$options                      = array(
 				'pass' => $isCorrect,
 			);
 			list($ret, $options['level']) = GalleryCoreApi::getPluginParameter('module', 'password', 'validation.level');

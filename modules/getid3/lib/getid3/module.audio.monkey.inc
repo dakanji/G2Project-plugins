@@ -167,7 +167,7 @@ class getid3_monkey extends getid3_handler {
 				//$info['warning'][] = 'cFileMD5 is null';
 			} else {
 				$info['md5_data_source'] = '';
-				$md5 = $thisfile_monkeysaudio_raw['cFileMD5'];
+				$md5                     = $thisfile_monkeysaudio_raw['cFileMD5'];
 
 				for ($i = 0; $i < strlen($md5); $i++) {
 					$info['md5_data_source'] .= str_pad(dechex(ord($md5[$i])), 2, '00', STR_PAD_LEFT);

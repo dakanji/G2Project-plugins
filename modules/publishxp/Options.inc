@@ -153,7 +153,7 @@ class OptionsView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body'          => 'modules/publishxp/templates/Options.tpl',
+				'body' => 'modules/publishxp/templates/Options.tpl',
 				'useFullScreen' => true,
 			),
 		);

@@ -151,7 +151,7 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 		);
 		$this->assertEquals(
 			array(
-				'view'      => 'shutterfly.PrintPhotos',
+				'view' => 'shutterfly.PrintPhotos',
 				'returnUrl' => $returnUrl,
 				'authToken' => $session->getAuthToken(),
 			),

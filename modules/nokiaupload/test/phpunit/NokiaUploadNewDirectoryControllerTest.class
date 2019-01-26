@@ -129,10 +129,10 @@ class NokiaUploadNewDirectoryControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.NewDirectory',
 				),
-				'status'   => array(
+				'status' => array(
 					'success' => NOKIAUPLOAD_ERR_DIRCREATE,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'bad parent'
@@ -147,10 +147,10 @@ class NokiaUploadNewDirectoryControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.NewDirectory',
 				),
-				'status'   => array(
+				'status' => array(
 					'success' => NOKIAUPLOAD_ERR_DIRCREATE,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results,
 			'no permission parent'

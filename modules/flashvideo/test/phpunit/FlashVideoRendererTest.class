@@ -48,7 +48,7 @@ class FlashVideoRendererTest extends GalleryTestCase {
 			$this->_getRootId(),
 			'video/x-flv',
 			array(
-				'width'  => 320,
+				'width' => 320,
 				'height' => 240,
 			)
 		);

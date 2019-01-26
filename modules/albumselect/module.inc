@@ -82,7 +82,7 @@ class AlbumSelectModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'sort' => 'manual',
+			'sort'      => 'manual',
 			'treeLines' => 1,
 			'treeIcons' => 0,
 			'treeCookies' => 0,

@@ -149,7 +149,7 @@ class NotificationUserAdminController extends GalleryController {
 		}
 
 		$results[$returnOption] = array(
-			'view' => 'core.UserAdmin',
+			'view'    => 'core.UserAdmin',
 			'subView' => 'notification.NotificationUserAdmin',
 		);
 		$results['status']      = $status;
@@ -225,7 +225,7 @@ class NotificationUserAdminView extends GalleryView {
 		}
 
 		$form['notifications'] = array();
-		$i = 0;
+		$i                     = 0;
 
 		foreach ($notifications as $notificationName => $notification) {
 			list($ret, $instance) = GalleryCoreApi::newFactoryInstanceById('NotificationEvent_1_0', $notificationName);
@@ -292,7 +292,7 @@ class NotificationUserAdminView extends GalleryView {
 						'handler'            => $handlerName,
 						'handlerDescription' => $handlerDescription,
 					);
-					$itemIds = array();
+					$itemIds                     = array();
 					// Do the global subscriptions first
 					foreach ($subscriptions[$notificationName] as $itemId) {
 						if (empty($itemId)) {

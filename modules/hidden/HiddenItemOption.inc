@@ -58,7 +58,7 @@ class HiddenItemOption extends ItemEditOption {
 			_('Hide Photo');
 			_('Hide Movie');
 		}
-		$itemTypeNames = array_merge($item->itemTypeName(), $item->itemTypeName(false));
+		$itemTypeNames                       = array_merge($item->itemTypeName(), $item->itemTypeName(false));
 		$form['HiddenItemOption']['heading'] = $module->_translate(
 			array(
 				'text' => 'Hide %s',

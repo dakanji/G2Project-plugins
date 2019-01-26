@@ -637,39 +637,39 @@ class WebDavHelperTest extends GalleryTestCase {
 
 		$props = array(
 			0 => array(
-				'ns'     => WEBDAV_GALLERY_NAMESPACE,
-				'name'   => 'summary',
-				'value'  => 'new summary',
+				'ns'    => WEBDAV_GALLERY_NAMESPACE,
+				'name'  => 'summary',
+				'value' => 'new summary',
 				'status' => null,
 			),
 			1 => array(
-				'ns'     => WEBDAV_GALLERY_NAMESPACE,
-				'name'   => 'entityType',
-				'value'  => 'GalleryItem',
+				'ns'    => WEBDAV_GALLERY_NAMESPACE,
+				'name'  => 'entityType',
+				'value' => 'GalleryItem',
 				'status' => null,
 			),
 			2 => array(
-				'ns'     => WEBDAV_GALLERY_NAMESPACE,
-				'name'   => 'creationTimestamp',
-				'value'  => 20000000,
+				'ns'    => WEBDAV_GALLERY_NAMESPACE,
+				'name'  => 'creationTimestamp',
+				'value' => 20000000,
 				'status' => null,
 			),
 			3 => array(
-				'ns'     => 'DAV:',
-				'name'   => 'displayname',
-				'value'  => 'new title',
+				'ns'    => 'DAV:',
+				'name'  => 'displayname',
+				'value' => 'new title',
 				'status' => null,
 			),
 			4 => array(
-				'ns'     => 'DAV:',
-				'name'   => 'foo',
-				'value'  => 'new foo value',
+				'ns'    => 'DAV:',
+				'name'  => 'foo',
+				'value' => 'new foo value',
 				'status' => null,
 			),
 			5 => array(
-				'ns'     => 'bar:',
-				'name'   => 'summary',
-				'value'  => 'from invalid namespace',
+				'ns'    => 'bar:',
+				'name'  => 'summary',
+				'value' => 'from invalid namespace',
 				'status' => null,
 			),
 		);
@@ -714,7 +714,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$expected['attrs'] = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
 		$expected['href']  = $this->_urlGenerator->generateUrl(
 			array(
-				'view'   => 'webdav.DownloadDavMount',
+				'view' => 'webdav.DownloadDavMount',
 				'itemId' => $itemId,
 			)
 		);
@@ -724,8 +724,8 @@ class WebDavHelperTest extends GalleryTestCase {
 
 	public function testGetMountLinkForInternetExplorer() {
 		$_SERVER['HTTP_USER_AGENT'] = 'MSIE 6';
-		$itemId = $this->_getRootId();
-		$link   = WebDavHelper::getMountLink($itemId);
+		$itemId                     = $this->_getRootId();
+		$link                       = WebDavHelper::getMountLink($itemId);
 
 		$url               = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
 		. $itemId;
@@ -737,7 +737,7 @@ class WebDavHelperTest extends GalleryTestCase {
 
 		$expected['href'] = $this->_urlGenerator->generateUrl(
 			array(
-				'view'   => 'webdav.DownloadDavMount',
+				'view' => 'webdav.DownloadDavMount',
 				'itemId' => $itemId,
 			)
 		);
@@ -747,8 +747,8 @@ class WebDavHelperTest extends GalleryTestCase {
 
 	public function testGetMountLinkForKonqueror() {
 		$_SERVER['HTTP_USER_AGENT'] = 'Konqueror';
-		$itemId = $this->_getRootId();
-		$link   = WebDavHelper::getMountLink($itemId);
+		$itemId                     = $this->_getRootId();
+		$link                       = WebDavHelper::getMountLink($itemId);
 
 		$url               = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
 		. $itemId;

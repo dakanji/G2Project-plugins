@@ -105,8 +105,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $this->_userAlbumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -143,8 +143,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $albumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -176,8 +176,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $albumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -193,8 +193,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 					'view'   => 'core.ShowItem',
 					'itemId' => $this->_userAlbumId,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -258,9 +258,9 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 
 		$gallery->setActiveUser($this->_userWithAlbum);
 		$albumLink['YourAlbum'] = array(
-			'text' => $module->translate('Your Album'),
+			'text'   => $module->translate('Your Album'),
 			'params' => array(
-				'view'   => 'core.ShowItem',
+				'view' => 'core.ShowItem',
 				'itemId' => $this->_userAlbumId,
 			),
 		);
@@ -274,7 +274,7 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 
 		$gallery->setActiveUser($this->_userWithoutAlbum);
 		$createLink['YourAlbum'] = array(
-			'text' => $module->translate('Your Album'),
+			'text'   => $module->translate('Your Album'),
 			'params' => array(
 				'controller' => 'useralbum.UserAlbum',
 			),
@@ -390,8 +390,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 
 		$ret = $this->_setParameters(
 			array(
-				'create'   => 'access',
-				'view'     => 'everybody',
+				'create' => 'access',
+				'view' => 'everybody',
 				'fullSize' => true,
 			)
 		);
@@ -433,10 +433,10 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		}
 		$this->assert(isset($albumId), 'Album was not created');
 		$secArray = array(
-			'core.view'        => 1,
-			'core.viewAll'     => 1,
+			'core.view' => 1,
+			'core.viewAll' => 1,
 			'core.viewResizes' => 1,
-			'core.viewSource'  => 1,
+			'core.viewSource' => 1,
 		);
 
 		// make sure applicable core.view* permissions left for Everybody group
@@ -516,8 +516,8 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 
 		$ret = $this->_setParameters(
 			array(
-				'create'   => 'access',
-				'view'     => 'allusers',
+				'create' => 'access',
+				'view' => 'allusers',
 				'fullSize' => false,
 			)
 		);
@@ -560,10 +560,10 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		}
 		$this->assert(isset($albumId), 'Album was not created');
 		$secArray = array(
-			'core.view'        => 1,
-			'core.viewAll'     => 1,
+			'core.view' => 1,
+			'core.viewAll' => 1,
 			'core.viewResizes' => 1,
-			'core.viewSource'  => 1,
+			'core.viewSource' => 1,
 		);
 		// make sure that no core.view* permissions left for Everybody group
 		// undocumented feature allows you to pass groupId as well as userId
@@ -656,7 +656,7 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		$ret = $this->_setParameters(
 			array(
 				'create' => 'access',
-				'view'   => 'user',
+				'view' => 'user',
 			)
 		);
 
@@ -709,10 +709,10 @@ class UserAlbumControllerTest extends GalleryControllerTestCase {
 		}
 		$this->assert(isset($albumId), 'Album was not created');
 		$secArray = array(
-			'core.view'        => 1,
-			'core.viewAll'     => 1,
+			'core.view' => 1,
+			'core.viewAll' => 1,
 			'core.viewResizes' => 1,
-			'core.viewSource'  => 1,
+			'core.viewSource' => 1,
 		);
 
 		// make sure that no core.view* permissions left for Everybody group

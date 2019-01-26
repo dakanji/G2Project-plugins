@@ -386,15 +386,15 @@ class getid3_ac3 extends getid3_handler {
 
 	public static function channelsEnabledLookup($acmod, $lfeon) {
 		$lookup = array(
-			'ch1'  => (bool)($acmod == 0),
-			'ch2'  => (bool)($acmod == 0),
-			'left' => (bool)($acmod > 1),
-			'right' => (bool)($acmod > 1),
+			'ch1'    => (bool)($acmod == 0),
+			'ch2'    => (bool)($acmod == 0),
+			'left'   => (bool)($acmod > 1),
+			'right'  => (bool)($acmod > 1),
 			'center' => (bool)($acmod & 0x01),
 			'surround_mono' => false,
 			'surround_left' => false,
 			'surround_right' => false,
-			'lfe'  => $lfeon,
+			'lfe'    => $lfeon,
 		);
 
 		switch ($acmod) {

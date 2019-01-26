@@ -65,8 +65,8 @@ class UserAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'useralbum.UserAlbumSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -88,10 +88,10 @@ class UserAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'useralbum.UserAlbumSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -106,12 +106,12 @@ class UserAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 		}
 		$this->assertEquals(
 			array(
-				'create'         => 'immediate',
-				'view'           => 'allusers',
-				'fullSize'       => '0',
+				'create' => 'immediate',
+				'view' => 'allusers',
+				'fullSize' => '0',
 				'targetLocation' => $this->_getRootId(),
-				'loginRedirect'  => '0',
-				'homeLink'       => '1',
+				'loginRedirect' => '0',
+				'homeLink' => '1',
 			),
 			$verifyParams,
 			'Verify DB Data'

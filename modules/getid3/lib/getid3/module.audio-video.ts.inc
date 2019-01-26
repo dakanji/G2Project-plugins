@@ -32,13 +32,13 @@ class getid3_ts extends getid3_handler {
 
 		// http://en.wikipedia.org/wiki/.ts
 
-		$offset = 0;
+		$offset                       = 0;
 		$info['ts']['packet']['sync'] = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 1));
-		$offset       += 1;
-		$pid_flags_raw = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 2));
-		$offset       += 2;
-		$SAC_raw       = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 1));
-		$offset       += 1;
+		$offset                      += 1;
+		$pid_flags_raw                = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 2));
+		$offset                      += 2;
+		$SAC_raw                      = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 1));
+		$offset                      += 1;
 		$info['ts']['packet']['flags']['transport_error_indicator']    = (bool)($pid_flags_raw & 0x8000);      // Set by demodulator if can't correct errors in the stream, to tell the demultiplexer that the packet has an uncorrectable error
 		$info['ts']['packet']['flags']['payload_unit_start_indicator'] = (bool)($pid_flags_raw & 0x4000);      // 1 means start of PES data or PSI otherwise zero only.
 		$info['ts']['packet']['flags']['transport_high_priority']      = (bool)($pid_flags_raw & 0x2000);      // 1 means higher priority than other packets with the same PID.

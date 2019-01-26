@@ -75,8 +75,8 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'picasa.SelectPicasaExportPath',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][picasaXmlPath][invalid]'),
+				'status' => array(),
+				'error' => array('form[error][picasaXmlPath][invalid]'),
 			),
 			$results
 		);
@@ -108,8 +108,8 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 					'picasaXmlPath'      => $picasaXmlPath,
 					'destinationAlbumId' => '0',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -129,8 +129,8 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'picasa.SelectPicasaExportPath',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][picasaXmlPath][missing]'),
+				'status' => array(),
+				'error' => array('form[error][picasaXmlPath][missing]'),
 			),
 			$results
 		);

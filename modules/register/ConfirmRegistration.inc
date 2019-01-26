@@ -76,7 +76,7 @@ class ConfirmRegistrationController extends GalleryController {
 
 		if (empty($results['redirect'])) {
 			$results['delegate'] = array(
-				'view'    => 'core.UserAdmin',
+				'view' => 'core.UserAdmin',
 				'subView' => 'register.ConfirmRegistration',
 			);
 		}

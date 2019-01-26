@@ -222,8 +222,8 @@ class WebDavController extends GalleryController {
 				'delegate' => array(
 					'view' => 'webdav.WebDav',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 		);
 	}

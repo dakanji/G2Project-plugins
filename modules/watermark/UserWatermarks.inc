@@ -63,7 +63,7 @@ class UserWatermarksController extends GalleryController {
 			$results['redirect']['subView']     = 'watermark.UserWatermarkEdit';
 			$results['redirect']['watermarkId'] = $item->getId();
 		} elseif (isset($form['action']['add'])) {
-			$error[] = 'form[error][missingFile]';
+			$error[]                        = 'form[error][missingFile]';
 			$results['delegate']['view']    = 'core.UserAdmin';
 			$results['delegate']['subView'] = 'watermark.UserWatermarks';
 		} elseif (isset($form['action']['delete']) && isset($form['delete']['watermarkId'])) {

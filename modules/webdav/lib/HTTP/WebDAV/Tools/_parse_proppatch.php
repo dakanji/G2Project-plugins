@@ -167,8 +167,8 @@ class _parse_proppatch {
 				'name' => $name,
 			);
 			$this->current = array(
-				'name'   => $name,
-				'ns'     => $ns,
+				'name' => $name,
+				'ns'   => $ns,
 				'status' => '200 OK',
 			);
 

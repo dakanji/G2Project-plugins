@@ -37,7 +37,7 @@ class GalleryPendingUserHelper {
 	public static function fetchPendingUserByUserName($userName) {
 		global $gallery;
 
-		$query = '
+		$query                     = '
 		SELECT [GalleryPendingUser::id] FROM [GalleryPendingUser]
 		WHERE [GalleryPendingUser::userName] = ?
 		';
@@ -140,9 +140,9 @@ class GalleryPendingUserHelper {
 
 		while ($result = $searchResults->nextResult()) {
 			$data[$result[0]] = array(
-				'userName'          => $result[1],
-				'fullName'          => $result[2],
-				'email'             => $result[3],
+				'userName' => $result[1],
+				'fullName' => $result[2],
+				'email' => $result[3],
 				'creationTimestamp' => (int)$result[4],
 			);
 		}
@@ -188,8 +188,8 @@ class GalleryPendingUserHelper {
 			array(
 				'controller' => 'register.ConfirmRegistration',
 				// Incoming url params will get sanitized, so decode here
-				'username'   => $decodedUserName,
-				'key'        => $pendingUser->getRegistrationKey(),
+				'username' => $decodedUserName,
+				'key' => $pendingUser->getRegistrationKey(),
 			),
 			array(
 				'forceFullUrl'   => true,
@@ -227,12 +227,12 @@ class GalleryPendingUserHelper {
 		$ret = GalleryCoreApi::sendTemplatedEmail(
 			'modules/register/templates/' . $tplFile,
 			array(
-				'name'            => $pendingUser->getFullName(),
+				'name' => $pendingUser->getFullName(),
 				// We send plain text email so decode entities in username
-				'username'        => $decodedUserName,
+				'username' => $decodedUserName,
 				'confirmationUrl' => $confirmationUrl,
-				'baseUrl'         => $baseUrl,
-				'l10Domain'       => 'modules_register',
+				'baseUrl' => $baseUrl,
+				'l10Domain' => 'modules_register',
 			),
 			$params['from'],
 			$pendingUser->getEmail(),

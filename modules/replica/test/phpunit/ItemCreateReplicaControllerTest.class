@@ -84,12 +84,12 @@ class ItemCreateReplicaControllerTest extends GalleryControllerTestCase {
 					'subView' => 'replica.ItemCreateReplica',
 					'itemId'  => $childAlbum->getId(),
 				),
-				'status'   => array(
+				'status' => array(
 					'linked' => array(
 						'count' => 1,
 					),
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -188,8 +188,8 @@ class ItemCreateReplicaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'replica.ItemCreateReplica',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][destination][empty]'),
+				'status' => array(),
+				'error' => array('form[error][destination][empty]'),
 			),
 			$results
 		);
@@ -278,8 +278,8 @@ class ItemCreateReplicaControllerTest extends GalleryControllerTestCase {
 					'itemId'  => $this->_album->getId(),
 					'page'    => 2,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -320,8 +320,8 @@ class ItemCreateReplicaControllerTest extends GalleryControllerTestCase {
 					'itemId'  => $this->_album->getId(),
 					'page'    => 1,
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -359,7 +359,7 @@ class ItemCreateReplicaControllerTest extends GalleryControllerTestCase {
 			array(
 				'return' => 1,
 				'status' => array(),
-				'error'  => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -384,8 +384,8 @@ class ItemCreateReplicaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'replica.ItemCreateReplica',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][sources][empty]'),
+				'status' => array(),
+				'error' => array('form[error][sources][empty]'),
 			),
 			$results
 		);

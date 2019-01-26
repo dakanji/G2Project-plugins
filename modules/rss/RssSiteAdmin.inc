@@ -156,10 +156,10 @@ class RssSiteAdminController extends GalleryController {
 		}
 
 		// figure out the method we will use
-		$method                   = empty($error) ? 'redirect' : 'delegate';
-		$results['status']        = $status;
-		$results['error']         = $error;
-		$results[$method]['view'] = 'core.SiteAdmin';
+		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$results['status']           = $status;
+		$results['error']            = $error;
+		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'rss.RssSiteAdmin';
 		$results[$method]['mode']    = $mode;
 

@@ -57,7 +57,7 @@ class RegisterModule extends GalleryModule {
 			'subject' => $this->translate('Account activation'),
 			'adminsubject' => $this->translate('New user registration'),
 			'usersubject' => $this->translate('Welcome to Gallery'),
-			'from' => 'webmaster@' . GalleryUtilities::getServerVar('SERVER_NAME'),
+			'from'    => 'webmaster@' . GalleryUtilities::getServerVar('SERVER_NAME'),
 			'validation.level' => 'HIGH',
 		) as $key => $value) {
 			if (!isset($params[$key])) {
@@ -126,7 +126,7 @@ class RegisterModule extends GalleryModule {
 
 		if ($isAnonymous) {
 			$links['Register'] = array(
-				'text'   => $this->translate('Register'),
+				'text' => $this->translate('Register'),
 				'params' => array(
 					'view'    => 'core.UserAdmin',
 					'subView' => 'register.UserSelfRegistration',

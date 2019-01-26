@@ -269,9 +269,9 @@ class getID3 {
 			}
 
 			// init result array and set parameters
-			$this->filename               = $filename;
-			$this->info                   = array();
-			$this->info['GETID3_VERSION'] = $this->version();
+			$this->filename                 = $filename;
+			$this->info                     = array();
+			$this->info['GETID3_VERSION']   = $this->version();
 			$this->info['php_memory_limit'] = (($this->memory_limit > 0) ? $this->memory_limit : false);
 
 			// remote files not supported
@@ -377,9 +377,9 @@ class getID3 {
 
 			// Handle tags
 			foreach (array(
-				'id3v2'   => 'id3v2',
-				'id3v1'   => 'id3v1',
-				'apetag'  => 'ape',
+				'id3v2' => 'id3v2',
+				'id3v1' => 'id3v1',
+				'apetag' => 'ape',
 				'lyrics3' => 'lyrics3',
 			) as $tag_name => $tag_key) {
 				$option_tag = 'option_tag_' . $tag_name;
@@ -402,8 +402,8 @@ class getID3 {
 			}
 
 			foreach (array(
-				'id3v1'   => 'id3v1',
-				'apetag'  => 'ape',
+				'id3v1' => 'id3v1',
+				'apetag' => 'ape',
 				'lyrics3' => 'lyrics3',
 			) as $tag_name => $tag_key) {
 				if (isset($this->info[$tag_key]['tag_offset_start'])) {
@@ -1235,26 +1235,26 @@ class getID3 {
 
 		if (empty($tags)) {
 			$tags = array(
-				'asf'       => array('asf', 'UTF-16LE'),
-				'midi'      => array('midi', 'ISO-8859-1'),
-				'nsv'       => array('nsv', 'ISO-8859-1'),
-				'ogg'       => array('vorbiscomment', 'UTF-8'),
-				'png'       => array('png', 'UTF-8'),
-				'tiff'      => array('tiff', 'ISO-8859-1'),
+				'asf'   => array('asf', 'UTF-16LE'),
+				'midi'  => array('midi', 'ISO-8859-1'),
+				'nsv'   => array('nsv', 'ISO-8859-1'),
+				'ogg'   => array('vorbiscomment', 'UTF-8'),
+				'png'   => array('png', 'UTF-8'),
+				'tiff'  => array('tiff', 'ISO-8859-1'),
 				'quicktime' => array('quicktime', 'UTF-8'),
-				'real'      => array('real', 'ISO-8859-1'),
-				'vqf'       => array('vqf', 'ISO-8859-1'),
-				'zip'       => array('zip', 'ISO-8859-1'),
-				'riff'      => array('riff', 'ISO-8859-1'),
-				'lyrics3'   => array('lyrics3', 'ISO-8859-1'),
-				'id3v1'     => array('id3v1', $this->encoding_id3v1),
-				'id3v2'     => array('id3v2', 'UTF-8'), // not according to the specs (every frame can have a different encoding), but getID3() force-converts all encodings to UTF-8
-				'ape'       => array('ape', 'UTF-8'),
-				'cue'       => array('cue', 'ISO-8859-1'),
-				'matroska'  => array('matroska', 'UTF-8'),
-				'flac'      => array('vorbiscomment', 'UTF-8'),
-				'divxtag'   => array('divx', 'ISO-8859-1'),
-				'iptc'      => array('iptc', 'ISO-8859-1'),
+				'real'  => array('real', 'ISO-8859-1'),
+				'vqf'   => array('vqf', 'ISO-8859-1'),
+				'zip'   => array('zip', 'ISO-8859-1'),
+				'riff'  => array('riff', 'ISO-8859-1'),
+				'lyrics3' => array('lyrics3', 'ISO-8859-1'),
+				'id3v1' => array('id3v1', $this->encoding_id3v1),
+				'id3v2' => array('id3v2', 'UTF-8'), // not according to the specs (every frame can have a different encoding), but getID3() force-converts all encodings to UTF-8
+				'ape'   => array('ape', 'UTF-8'),
+				'cue'   => array('cue', 'ISO-8859-1'),
+				'matroska' => array('matroska', 'UTF-8'),
+				'flac'  => array('vorbiscomment', 'UTF-8'),
+				'divxtag' => array('divx', 'ISO-8859-1'),
+				'iptc'  => array('iptc', 'ISO-8859-1'),
 			);
 		}
 

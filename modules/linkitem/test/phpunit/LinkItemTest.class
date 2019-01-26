@@ -320,7 +320,7 @@ class LinkItemTest extends GalleryTestCase {
 		$this->assertEquals('image/jpeg', $mimeType);
 		$this->assertEquals(
 			array(
-				'width'  => 270,
+				'width' => 270,
 				'height' => 224,
 			),
 			$context
@@ -394,7 +394,7 @@ class LinkItemTest extends GalleryTestCase {
 		$this->assertEquals('image/jpeg', $mimeType);
 		$this->assertEquals(
 			array(
-				'width'  => 1024,
+				'width' => 1024,
 				'height' => 768,
 			),
 			$context

@@ -85,9 +85,9 @@ class ConfirmPicasaImportController extends GalleryController {
 		$finishedAlbums = $albumPosition = array();
 
 		$status = array(
-			'albumId'              => false,
-			'albumImportFailure'   => array(),
-			'albumImportSuccess'   => array(),
+			'albumId' => false,
+			'albumImportFailure' => array(),
+			'albumImportSuccess' => array(),
 			'pictureImportSuccess' => array(),
 			'pictureImportFailure' => array(),
 		);
@@ -398,10 +398,10 @@ class ConfirmPicasaImportView extends GalleryView {
 			$illegalAlbumNames[$albumName] = $platform->legalizePathComponent($albumName);
 		}
 
-		$ConfirmPicasaImport                   = array();
-		$ConfirmPicasaImport['album']          = $album;
-		$ConfirmPicasaImport['picasaXmlPath']  = $picasaXmlPath;
-		$ConfirmPicasaImport['existingAlbums'] = $existingAlbums;
+		$ConfirmPicasaImport                       = array();
+		$ConfirmPicasaImport['album']              = $album;
+		$ConfirmPicasaImport['picasaXmlPath']      = $picasaXmlPath;
+		$ConfirmPicasaImport['existingAlbums']     = $existingAlbums;
 		$ConfirmPicasaImport['illegalAlbumNames']  = $illegalAlbumNames;
 		$ConfirmPicasaImport['destinationAlbumId'] = $destinationAlbumId;
 		$ConfirmPicasaImport['targetAlbum']        = (array)$targetAlbum;

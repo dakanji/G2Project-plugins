@@ -53,9 +53,9 @@ class getid3_optimfrog extends getid3_handler {
 		$OptimFROGencoderVersion_raw   = getid3_lib::LittleEndian2Int(substr($OptimFROGheaderData, 0, 1));
 		$OptimFROGencoderVersion_major = floor($OptimFROGencoderVersion_raw / 10);
 		$OptimFROGencoderVersion_minor = $OptimFROGencoderVersion_raw - ($OptimFROGencoderVersion_major * 10);
-		$RIFFdata              = substr($OptimFROGheaderData, 1, 44);
-		$OrignalRIFFheaderSize = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4)) + 8;
-		$OrignalRIFFdataSize   = getid3_lib::LittleEndian2Int(substr($RIFFdata, 40, 4)) + 44;
+		$RIFFdata                      = substr($OptimFROGheaderData, 1, 44);
+		$OrignalRIFFheaderSize         = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4)) + 8;
+		$OrignalRIFFdataSize           = getid3_lib::LittleEndian2Int(substr($RIFFdata, 40, 4)) + 44;
 
 		if ($OrignalRIFFheaderSize > $OrignalRIFFdataSize) {
 			$info['avdataend'] -= ($OrignalRIFFheaderSize - $OrignalRIFFdataSize);
@@ -72,7 +72,7 @@ class getid3_optimfrog extends getid3_handler {
 		$getid3_temp->openfile($this->getid3->filename);
 		$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 		$getid3_temp->info['avdataend']    = $info['avdataend'];
-		$getid3_riff = new getid3_riff($getid3_temp);
+		$getid3_riff                       = new getid3_riff($getid3_temp);
 		$getid3_riff->ParseRIFFdata($RIFFdata);
 		$info['riff'] = $getid3_temp->info['riff'];
 
@@ -188,16 +188,16 @@ class getid3_optimfrog extends getid3_handler {
 					$BlockData .= $this->fread(14);
 					$this->fseek($BlockSize - 14, SEEK_CUR);
 
-					$COMPdata['crc_32']       = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 4));
-					$offset                  += 4;
-					$COMPdata['sample_count'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 4));
-					$offset                  += 4;
+					$COMPdata['crc_32']             = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 4));
+					$offset                        += 4;
+					$COMPdata['sample_count']       = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 4));
+					$offset                        += 4;
 					$COMPdata['raw']['sample_type'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 1));
 					$COMPdata['sample_type']        = $this->OptimFROGsampleTypeLookup($COMPdata['raw']['sample_type']);
-					$offset += 1;
+					$offset                        += 1;
 					$COMPdata['raw']['channel_configuration'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 1));
 					$COMPdata['channel_configuration']        = $this->OptimFROGchannelConfigurationLookup($COMPdata['raw']['channel_configuration']);
-					$offset += 1;
+					$offset                         += 1;
 					$COMPdata['raw']['algorithm_id'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 2));
 					//$COMPdata['algorithm']                    = OptimFROGalgorithmNameLookup($COMPdata['raw']['algorithm_id']);
 					$offset += 2;
@@ -206,7 +206,7 @@ class getid3_optimfrog extends getid3_handler {
 						// OFR 4.504b or higher
 						$COMPdata['raw']['encoder_id'] = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 2));
 						$COMPdata['encoder']           = $this->OptimFROGencoderNameLookup($COMPdata['raw']['encoder_id']);
-						$offset += 2;
+						$offset                       += 2;
 					}
 
 					if ($COMPdata['crc_32'] == 0x454E4F4E) {
@@ -304,7 +304,7 @@ class getid3_optimfrog extends getid3_handler {
 		$getid3_temp->openfile($this->getid3->filename);
 		$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 		$getid3_temp->info['avdataend']    = $info['avdataend'];
-		$getid3_riff = new getid3_riff($getid3_temp);
+		$getid3_riff                       = new getid3_riff($getid3_temp);
 		$getid3_riff->ParseRIFFdata($RIFFdata);
 		$info['riff'] = $getid3_temp->info['riff'];
 

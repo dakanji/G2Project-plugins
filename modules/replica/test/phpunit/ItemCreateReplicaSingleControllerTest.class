@@ -81,10 +81,10 @@ class ItemCreateReplicaSingleControllerTest extends GalleryControllerTestCase {
 					'subView' => 'replica.ItemCreateReplicaSingle',
 					'itemId'  => $this->_item->getId(),
 				),
-				'status'   => array(
+				'status' => array(
 					'linked' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -141,8 +141,8 @@ class ItemCreateReplicaSingleControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.ItemAdmin',
 					'subView' => 'replica.ItemCreateReplicaSingle',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][destination][empty]'),
+				'status' => array(),
+				'error' => array('form[error][destination][empty]'),
 			),
 			$results
 		);

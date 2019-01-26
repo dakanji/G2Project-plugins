@@ -35,10 +35,10 @@ class getid3_la extends getid3_handler {
 				$info['la']['version_major'] = (int)substr($rawdata, $offset + 2, 1);
 				$info['la']['version_minor'] = (int)substr($rawdata, $offset + 3, 1);
 				$info['la']['version']       = (float)$info['la']['version_major'] + ($info['la']['version_minor'] / 10);
-				$offset += 4;
+				$offset                     += 4;
 
 				$info['la']['uncompressed_size'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
-				$offset += 4;
+				$offset                         += 4;
 
 				if ($info['la']['uncompressed_size'] == 0) {
 					$info['error'][] = 'Corrupt LA file: uncompressed_size == zero';
@@ -78,7 +78,7 @@ class getid3_la extends getid3_handler {
 				$offset  += 4;
 
 				$info['la']['raw']['format'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 2));
-				$offset += 2;
+				$offset                     += 2;
 
 				$info['la']['channels'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 2));
 				$offset                += 2;
@@ -99,17 +99,17 @@ class getid3_la extends getid3_handler {
 				}
 
 				$info['la']['bytes_per_second'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
-				$offset += 4;
+				$offset                        += 4;
 				$info['la']['bytes_per_sample'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 2));
-				$offset += 2;
-				$info['la']['bits_per_sample'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 2));
-				$offset += 2;
+				$offset                        += 2;
+				$info['la']['bits_per_sample']  = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 2));
+				$offset                        += 2;
 
 				$info['la']['samples'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
 				$offset               += 4;
 
-				$info['la']['raw']['flags'] = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 1));
-				$offset                    += 1;
+				$info['la']['raw']['flags']      = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 1));
+				$offset                         += 1;
 				$info['la']['flags']['seekable'] = (bool)($info['la']['raw']['flags'] & 0x01);
 
 				if ($info['la']['version'] >= 0.4) {

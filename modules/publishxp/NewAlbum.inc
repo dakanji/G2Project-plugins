@@ -183,7 +183,7 @@ class NewAlbumView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body'          => 'modules/publishxp/templates/NewAlbum.tpl',
+				'body' => 'modules/publishxp/templates/NewAlbum.tpl',
 				'useFullScreen' => true,
 			),
 		);

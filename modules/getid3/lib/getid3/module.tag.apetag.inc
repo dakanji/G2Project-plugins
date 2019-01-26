@@ -75,7 +75,7 @@ class getid3_apetag extends getid3_handler {
 		if (isset($thisfile_ape['footer']['flags']['header']) && $thisfile_ape['footer']['flags']['header']) {
 			$this->fseek($thisfile_ape['tag_offset_end'] - $thisfile_ape['footer']['raw']['tagsize'] - $apetagheadersize);
 			$thisfile_ape['tag_offset_start'] = $this->ftell();
-			$APEtagData = $this->fread($thisfile_ape['footer']['raw']['tagsize'] + $apetagheadersize);
+			$APEtagData                       = $this->fread($thisfile_ape['footer']['raw']['tagsize'] + $apetagheadersize);
 		} else {
 			$thisfile_ape['tag_offset_start'] = $thisfile_ape['tag_offset_end'] - $thisfile_ape['footer']['raw']['tagsize'];
 			$this->fseek($thisfile_ape['tag_offset_start']);
@@ -204,9 +204,9 @@ class getid3_apetag extends getid3_handler {
 				case 'mp3gain_undo':
 					if (preg_match('#^[\\-\\+][0-9]{3},[\\-\\+][0-9]{3},[NW]$#', $thisfile_ape_items_current['data'][0])) {
 						list($mp3gain_undo_left, $mp3gain_undo_right, $mp3gain_undo_wrap) = explode(',', $thisfile_ape_items_current['data'][0]);
-						$thisfile_replaygain['mp3gain']['undo_left']  = intval($mp3gain_undo_left);
-						$thisfile_replaygain['mp3gain']['undo_right'] = intval($mp3gain_undo_right);
-						$thisfile_replaygain['mp3gain']['undo_wrap']  = (($mp3gain_undo_wrap == 'Y') ? true : false);
+						$thisfile_replaygain['mp3gain']['undo_left']                      = intval($mp3gain_undo_left);
+						$thisfile_replaygain['mp3gain']['undo_right']                     = intval($mp3gain_undo_right);
+						$thisfile_replaygain['mp3gain']['undo_wrap']                      = (($mp3gain_undo_wrap == 'Y') ? true : false);
 					} else {
 						$info['warning'][] = 'MP3gainUndo value in APEtag appears invalid: "' . $thisfile_ape_items_current['data'][0] . '"';
 					}

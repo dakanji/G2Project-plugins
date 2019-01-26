@@ -225,7 +225,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		$this->_platform->setReply(
 			'mkdir',
 			array(
-				'fuzzy'  => '{.*GalleryTest 2}',
+				'fuzzy' => '{.*GalleryTest 2}',
 				'fuzzy2' => '{\d+}',
 			),
 			true

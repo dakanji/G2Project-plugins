@@ -550,9 +550,9 @@ class ImageUploadHelper {
 			}
 			GalleryUtilities::unsanitizeInputValues($name, false);
 			$albumData[] = array(
-				'id'       => $id,
+				'id'   => $id,
 				'parentid' => $parentId,
-				'name'     => $name,
+				'name' => $name,
 			);
 		}
 

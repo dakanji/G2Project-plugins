@@ -211,9 +211,9 @@ class SizeLimitHelperTest extends GalleryTestCase {
 	// try to change size and dimensions for unsupported file format
 	public function testUnknownFormat() {
 		foreach (array(
-			'width' => 768,
+			'width'  => 768,
 			'height' => 1024,
-			'size' => 1000,
+			'size'   => 1000,
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',

@@ -55,8 +55,8 @@ class RandomHighlightSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'randomhighlight.RandomHighlightSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -73,10 +73,10 @@ class RandomHighlightSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'randomhighlight.RandomHighlightSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -99,8 +99,8 @@ class RandomHighlightSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'randomhighlight.RandomHighlightSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][duration]'),
+				'status' => array(),
+				'error' => array('form[error][duration]'),
 			),
 			$results
 		);
@@ -117,8 +117,8 @@ class RandomHighlightSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'randomhighlight.RandomHighlightSiteAdmin',
 				),
-				'status'   => array(),
-				'error'    => array('form[error][duration]'),
+				'status' => array(),
+				'error' => array('form[error][duration]'),
 			),
 			$results
 		);
@@ -136,10 +136,10 @@ class RandomHighlightSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'randomhighlight.RandomHighlightSiteAdmin',
 				),
-				'status'   => array(
+				'status' => array(
 					'saved' => 1,
 				),
-				'error'    => array(),
+				'error' => array(),
 			),
 			$results
 		);

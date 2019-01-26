@@ -187,9 +187,9 @@ class Picasa2DataParserTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 		$expected = array(
-			'albumName'    => 'GalleryTest',
+			'albumName' => 'GalleryTest',
 			'albumCaption' => 'This is a test',
-			'images'       => array(
+			'images'    => array(
 				0 => array(
 					'path'        => 'images/ajipankachile5.jpg',
 					'name'        => 'ajipankachile5.jpg',

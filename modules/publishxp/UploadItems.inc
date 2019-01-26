@@ -343,7 +343,7 @@ class UploadItemsView extends GalleryView {
 		return array(
 			null,
 			array(
-				'body'          => 'modules/publishxp/templates/UploadItems.tpl',
+				'body' => 'modules/publishxp/templates/UploadItems.tpl',
 				'useFullScreen' => true,
 			),
 		);

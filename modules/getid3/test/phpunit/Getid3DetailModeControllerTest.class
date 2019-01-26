@@ -38,12 +38,12 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'return'   => 1,
+				'return' => 1,
 				'redirect' => array(
 					'view' => 'core.ShowItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -65,12 +65,12 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'return'   => 1,
+				'return' => 1,
 				'redirect' => array(
 					'view' => 'core.ShowItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);
@@ -92,12 +92,12 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
-				'return'   => 1,
+				'return' => 1,
 				'redirect' => array(
 					'view' => 'core.ShowItem',
 				),
-				'status'   => array(),
-				'error'    => array(),
+				'status' => array(),
+				'error' => array(),
 			),
 			$results
 		);

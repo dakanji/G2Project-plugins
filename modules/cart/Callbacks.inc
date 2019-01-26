@@ -57,7 +57,7 @@ class CartCallbacks {
 					$urlParams['itemId'] = $itemId;
 				}
 
-				$urlGenerator =& $gallery->getUrlGenerator();
+				$urlGenerator                     =& $gallery->getUrlGenerator();
 				$block['cart']['ShowCart']['url'] = $urlGenerator->generateUrl($urlParams, array());
 
 				return null;

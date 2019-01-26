@@ -89,8 +89,8 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 		}
 
 		// Figure out where to redirect upon success
-		$method                   = empty($error) ? 'redirect' : 'delegate';
-		$results[$method]['view'] = 'core.SiteAdmin';
+		$method                      = empty($error) ? 'redirect' : 'delegate';
+		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'slideshowapplet.SlideshowAppletSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;

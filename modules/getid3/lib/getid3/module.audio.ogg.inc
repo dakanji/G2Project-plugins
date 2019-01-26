@@ -368,7 +368,7 @@ class getid3_ogg extends getid3_handler {
 	}
 
 	public function ParseVorbisPageHeader(&$filedata, &$filedataoffset, &$oggpageinfo) {
-		$info = &$this->getid3->info;
+		$info                        = &$this->getid3->info;
 		$info['audio']['dataformat'] = 'vorbis';
 		$info['audio']['lossless']   = false;
 
@@ -422,7 +422,7 @@ class getid3_ogg extends getid3_handler {
 
 	// http://tools.ietf.org/html/draft-ietf-codec-oggopus-03
 	public function ParseOpusPageHeader(&$filedata, &$filedataoffset, &$oggpageinfo) {
-		$info = &$this->getid3->info;
+		$info                        = &$this->getid3->info;
 		$info['audio']['dataformat'] = 'opus';
 		$info['mime_type']           = 'audio/ogg; codecs=opus';
 

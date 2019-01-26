@@ -82,11 +82,11 @@ class getid3_png extends getid3_handler {
 
 			switch ($chunk['type_text']) {
 				case 'IHDR': // Image Header
-					$thisfile_png_chunk_type_text['header']            = $chunk;
-					$thisfile_png_chunk_type_text['width']             = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4));
-					$thisfile_png_chunk_type_text['height']            = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4));
-					$thisfile_png_chunk_type_text['raw']['bit_depth']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 1));
-					$thisfile_png_chunk_type_text['raw']['color_type'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 9, 1));
+					$thisfile_png_chunk_type_text['header']                    = $chunk;
+					$thisfile_png_chunk_type_text['width']                     = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4));
+					$thisfile_png_chunk_type_text['height']                    = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4));
+					$thisfile_png_chunk_type_text['raw']['bit_depth']          = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 1));
+					$thisfile_png_chunk_type_text['raw']['color_type']         = getid3_lib::BigEndian2Int(substr($chunk['data'], 9, 1));
 					$thisfile_png_chunk_type_text['raw']['compression_method'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 10, 1));
 					$thisfile_png_chunk_type_text['raw']['filter_method']      = getid3_lib::BigEndian2Int(substr($chunk['data'], 11, 1));
 					$thisfile_png_chunk_type_text['raw']['interlace_method']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 12, 1));
@@ -488,7 +488,7 @@ class getid3_png extends getid3_handler {
 				default:
 					//unset($chunk['data']);
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-					$info['warning'][] = 'Unhandled chunk type: ' . $chunk['type_text'];
+					$info['warning'][]                      = 'Unhandled chunk type: ' . $chunk['type_text'];
 
 					break;
 			}
