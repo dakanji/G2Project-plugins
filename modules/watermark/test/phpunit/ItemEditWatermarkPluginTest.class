@@ -411,7 +411,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			return $ret;
 		}
 		$progress = $this->_templateAdapter->getProgressBarDump();
-		$this->assert(
+		$this->assertTrue(
 			preg_match(
 				'/0.*core.ItemEdit.*' . $this->_album->getId() . '/',
 				implode(' ', $progress)
