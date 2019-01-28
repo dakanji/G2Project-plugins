@@ -442,7 +442,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		$derivative->setDerivativeOperations('thumbnail|50');
 
 		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $item);
+		$toolkit::doStatic()->estimateDimensions($derivative, $item);
 
 		$this->assertEquals(50, $derivative->getWidth());
 		$this->assertEquals(50, $derivative->getHeight());
@@ -461,7 +461,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		$derivative->setDerivativeOperations('thumbnail|200');
 
 		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $item);
+		$toolkit::doStatic()->estimateDimensions($derivative, $item);
 
 		$this->assertEquals(100, $derivative->getWidth());
 		$this->assertEquals(100, $derivative->getHeight());
@@ -480,7 +480,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		$derivative->setDerivativeOperations('thumbnail|400');
 
 		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $item);
+		$toolkit::doStatic()->estimateDimensions($derivative, $item);
 
 		$this->assertEquals(100, $derivative->getWidth());
 		$this->assertEquals(100, $derivative->getHeight());
@@ -499,7 +499,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		$derivative->setDerivativeOperations('thumbnail|400');
 
 		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $source);
+		$toolkit::doStatic()->estimateDimensions($derivative, $source);
 
 		$this->assertEquals(400, $derivative->getWidth());
 		$this->assertEquals(400, $derivative->getHeight());
