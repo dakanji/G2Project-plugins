@@ -416,6 +416,7 @@ class WatermarkHelper {
 					return $ret;
 				}
 				$newPostFilters = null;
+
 				if (in_array($derivative->getId(), $add)) {
 					$filter = sprintf(
 						'composite|plugins_data/modules/watermark/%s,%s,%d,%d,manual,%s,%s',

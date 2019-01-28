@@ -41,7 +41,7 @@
 		<properties>
 			<property name="maxColumn" value="80" />
 			<property name="exact" value="false" />
-			<property name="alignMultilineItems" value="<50" />
+			<property name="alignMultilineItems" value="!=100" />
 		</properties>
 	</rule>
 	<rule ref="WordPress.Arrays.ArrayDeclarationSpacing">
@@ -74,7 +74,7 @@
 	</rule>
 	<rule ref="Generic.Formatting.MultipleStatementAlignment">
 		<properties>
-			<property name="maxPadding" value="25" />
+			<property name="maxPadding" value="80" />
 		</properties>
 	</rule>
 	<rule ref="Generic.WhiteSpace.ScopeIndent">

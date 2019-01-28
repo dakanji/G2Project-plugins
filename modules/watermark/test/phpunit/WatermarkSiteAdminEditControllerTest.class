@@ -32,7 +32,7 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'watermark.WatermarkSiteAdminEdit');
 	}
 
-	public function setUp($x1=NULL) {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -87,10 +87,10 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -125,10 +125,10 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -159,8 +159,8 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdminEdit',
 				),
-				'status' => array(),
-				'error'  => array(
+				'status'   => array(),
+				'error'    => array(
 					'form[error][watermarkName][missing]',
 					'form[error][whichDerivative][missing]',
 				),
@@ -189,8 +189,8 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -220,10 +220,10 @@ class WatermarkSiteAdminEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);

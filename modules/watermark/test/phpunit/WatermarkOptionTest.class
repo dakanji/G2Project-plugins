@@ -34,7 +34,7 @@ class WatermarkOptionTest extends ItemAddOptionTestCase {
 		parent::__construct($methodName, 'watermark', 'WatermarkOption');
 	}
 
-	public function setUp($x1=NULL) {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

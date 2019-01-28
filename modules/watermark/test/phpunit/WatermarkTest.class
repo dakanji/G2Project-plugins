@@ -33,7 +33,7 @@ class WatermarkTest extends GalleryTestCase {
 		parent::__construct($methodName);
 	}
 
-	public function setUp($x1=NULL) {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

@@ -319,7 +319,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 		}
 
 		// Grab the smallest derivative that's greater than 400px on a side
-		$itemId = $item->getId();
+		$itemId      = $item->getId();
 		$derivatives = array();
 
 		if (GalleryUtilities::isA($item, 'GalleryDataItem')) {

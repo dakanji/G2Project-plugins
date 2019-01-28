@@ -32,7 +32,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		parent::__construct($methodName, 'watermark', 'ItemEditWatermark');
 	}
 
-	public function setUp($x1=NULL) {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 
