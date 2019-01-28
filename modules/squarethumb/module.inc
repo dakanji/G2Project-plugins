@@ -273,7 +273,7 @@ class SquareThumbModule extends GalleryModule {
 
 			if ($isActive) {
 				// Reactivate may fail if toolkit support no longer found.
-				list($ret, ) = $this->reactivate();
+				list($ret, $redirect) = $this->reactivate();
 
 				if ($ret) {
 					return array($ret, null);
