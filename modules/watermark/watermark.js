@@ -35,6 +35,10 @@ function initWatermarkFloater(
 	xPercentage,
 	yPercentage
 ) {
+	var floater_el;
+	var floater_width;
+	var floater_height;
+
 	floater_el        = document.getElementById(floater_id);
 	background_el     = document.getElementById(background_id);
 	background_width  = background_el.width || pxToNumber(background_el.style.width);
@@ -93,6 +97,8 @@ function calculatePercentages(floater_id) {
 	var floater_el = document.getElementById(floater_id);
 	var floater_x  = YAHOO.util.Dom.getX(floater_id);
 	var floater_y  = YAHOO.util.Dom.getY(floater_id);
+	var x_el;
+	var y_el;
 
 	/* We name these elements inconsistently */
 	x_el = document.getElementById("xPercentage") || document.getElementById("xPercent");

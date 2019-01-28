@@ -34,7 +34,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'watermark.UserWatermarks');
 	}
 
-	public function setUp() {
+	public function setUp($x1=NULL) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -122,7 +122,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(isset($map[$expectedName]), 'Watermark not added');
+		$this->assertTrue(isset($map[$expectedName]), 'Watermark not added');
 	}
 
 	public function testAddWatermarkMissing() {
@@ -301,7 +301,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		}
 
 		if (!isset($map[$expectedName])) {
-			return $this->assert(isset($map[$expectedName]), 'Watermark not added');
+			return $this->assertTrue(isset($map[$expectedName]), 'Watermark not added');
 		}
 
 		list($ret, $path) = $map[$expectedName]->fetchPath();
@@ -355,7 +355,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assert(isset($map[$expectedName]), 'First watermark not added');
+		$this->assertTrue(isset($map[$expectedName]), 'First watermark not added');
 
 		// Now change active user and add watermark with same filename..
 		$gallery->setActiveUser($this->_user);
@@ -383,7 +383,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assert(isset($map[$expectedName]), 'Second watermark not added');
+		$this->assertTrue(isset($map[$expectedName]), 'Second watermark not added');
 	}
 
 	public function testPermission() {
