@@ -32,7 +32,7 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'watermark.ConfirmDelete');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -120,8 +120,8 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -142,8 +142,8 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -160,10 +160,10 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status' => array(
+				'status'   => array(
 					'delete' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -197,10 +197,10 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'watermark.WatermarkSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'delete' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);

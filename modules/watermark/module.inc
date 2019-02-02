@@ -35,7 +35,7 @@ class WatermarkModule extends GalleryModule {
 		$this->setName($gallery->i18n('Watermark'));
 		$this->setDescription($gallery->i18n('Watermark your images'));
 		// Update "upgrade()" too!
-		$this->setVersion('1.1.8');
+		$this->setVersion('1.2.0');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews');
@@ -125,14 +125,15 @@ class WatermarkModule extends GalleryModule {
 
 				// Update all derivatives that use watermarks
 				$query = "
-			SELECT
-			[GalleryDerivative::id]
-			FROM
-			[GalleryDerivative]
-			WHERE
-			[GalleryDerivative::postFilterOperations]
-			LIKE '%composite|watermark%'
-			";
+				SELECT
+					[GalleryDerivative::id]
+				FROM
+					[GalleryDerivative]
+				WHERE
+					[GalleryDerivative::postFilterOperations]
+				LIKE 
+					'%composite|watermark%'
+				";
 
 				// Do them 50 at a time to improve locking efficiency
 				while (true) {
@@ -159,6 +160,7 @@ class WatermarkModule extends GalleryModule {
 						$ids[] = (int)$result[0];
 					}
 
+					$ids              = array();
 					list($ret, $lock) = GalleryCoreApi::acquireWriteLock($ids);
 
 					if ($ret) {
@@ -232,6 +234,7 @@ class WatermarkModule extends GalleryModule {
 			case '1.1.5':
 			case '1.1.6':
 			case '1.1.7':
+			case '1.1.8':
 			case 'end of upgrade path':
 				/*
 				 * Leave this bogus case at the end of legit case statements so that we
@@ -258,10 +261,10 @@ class WatermarkModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'allowUserWatermarks' => 1,
+			'allowUserWatermarks'   => 1,
 			'forceDefaultWatermark' => 0,
-			'hotlinkWatermarkId' => '',
-			'defaultWatermarkId' => '',
+			'hotlinkWatermarkId'    => '',
+			'defaultWatermarkId'    => '',
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
@@ -453,6 +456,8 @@ class WatermarkModule extends GalleryModule {
 	 *       version.
 	 */
 	public function getRewriteRules() {
+		global $gallery;
+
 		// Ensure the rewrite module is compatible, 'pattern' is optional since v1.1.8 of rewrite
 		list($ret, $rewrite) = GalleryCoreApi::loadPlugin('module', 'rewrite', true);
 
@@ -470,12 +475,12 @@ class WatermarkModule extends GalleryModule {
 
 		$rules = array();
 		$rule  = array(
-			'comment'  => $this->translate('Watermark hotlinked images'),
-			'restrict' => array(
+			'comment'       => $this->translate('Watermark hotlinked images'),
+			'restrict'      => array(
 				GalleryUtilities::prefixFormVariable('view')   => 'core.DownloadItem',
 				GalleryUtilities::prefixFormVariable('itemId') => '([0-9]+)',
 			),
-			'queryString' => array(
+			'queryString'   => array(
 				'view'   => 'watermark.DownloadItem',
 				'itemId' => '%1',
 			),

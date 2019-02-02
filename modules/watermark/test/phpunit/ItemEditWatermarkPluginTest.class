@@ -32,7 +32,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		parent::__construct($methodName, 'watermark', 'ItemEditWatermark');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -287,7 +287,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		$preferred = $preferredTable[$this->_item->getId()];
 
 		if (!isset($preferred)) {
-			$this->assert(false, 'Missing preferred');
+			$this->assertTrue(false, 'Missing preferred');
 		} else {
 			$this->assertEquals(
 				sprintf(
@@ -357,7 +357,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			return $ret;
 		}
 
-		$this->assert(empty($preferredTable), 'Preferred should be gone, but isn\'t');
+		$this->assertTrue(empty($preferredTable), 'Preferred should be gone, but isn\'t');
 
 		// Verify that the thumbnail and resize point to the item now
 		foreach (array($this->_resize, $this->_thumbnail) as $derivative) {
@@ -411,7 +411,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			return $ret;
 		}
 		$progress = $this->_templateAdapter->getProgressBarDump();
-		$this->assert(
+		$this->assertTrue(
 			preg_match(
 				'/0.*core.ItemEdit.*' . $this->_album->getId() . '/',
 				implode(' ', $progress)
@@ -434,7 +434,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 				if (isset($preferred[$item->getId()])) {
 					$this->_preferreds[$i] = $preferred[$item->getId()];
 				} elseif ($isApply && $getsWatermark) {
-					$this->assert(false, 'Missing newly created preferred ' . $i);
+					$this->assertTrue(false, 'Missing newly created preferred ' . $i);
 				}
 			}
 
@@ -477,14 +477,14 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 
 	public function testIsSupportedItem() {
 		$this->_registerTestToolkit('test/file');
-		$this->assert(
+		$this->assertTrue(
 			$this->_plugin->isSupported($this->_item, $this->_thumbnail),
 			'test/file should be supported because we registered a toolkit for it'
 		);
 	}
 
 	public function testIsNotSupportedItem() {
-		$this->assert(
+		$this->assertTrue(
 			!$this->_plugin->isSupported($this->_item, $this->_thumbnail),
 			'test/file should not be a supported mime type'
 		);
@@ -492,7 +492,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 
 	public function testIsNotSupportedItemButSupportedPreferred() {
 		$this->_registerTestToolkit('test/file2');
-		$this->assert(
+		$this->assertTrue(
 			$this->_plugin->isSupported($this->_item, $this->_thumbnail),
 			'test/file2 should be a supported mime type'
 		);
@@ -535,7 +535,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 		}
 
 		$this->_registerTestToolkit('test/file');
-		$this->assert($this->_plugin->isSupported($this->_item, $this->_thumbnail), 'admin');
+		$this->assertTrue($this->_plugin->isSupported($this->_item, $this->_thumbnail), 'admin');
 
 		$this->_becomeGuestUser();
 		$ret = GalleryCoreApi::addUserPermission(
@@ -548,7 +548,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$this->_plugin->isSupported($this->_item, $this->_thumbnail), 'non admin');
+		$this->assertTrue(!$this->_plugin->isSupported($this->_item, $this->_thumbnail), 'non admin');
 
 		GalleryUtilities::putRequestVariable('form[action][remove]', 1);
 		$results = $this->handleRequest($this->_item, $this->_preferred, ERROR_PERMISSION_DENIED);

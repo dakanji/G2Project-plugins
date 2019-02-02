@@ -33,7 +33,7 @@ class WatermarkTest extends GalleryTestCase {
 		parent::__construct($methodName);
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -84,7 +84,7 @@ class WatermarkTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(
+		$this->assertTrue(
 			!isset($watermarks[$this->_watermark->getId()]),
 			'Watermark appears when it shouldn\'t'
 		);
@@ -109,7 +109,7 @@ class WatermarkTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(
+		$this->assertTrue(
 			isset($watermarks[$this->_watermark->getId()]),
 			'Watermark doesn\'t appear when it should'
 		);
@@ -125,7 +125,7 @@ class WatermarkTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(
+		$this->assertTrue(
 			in_array($this->_watermark->getId(), $watermarkIds),
 			'Watermark doesn\'t appear when it should'
 		);
@@ -139,7 +139,7 @@ class WatermarkTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(
+		$this->assertTrue(
 			!in_array($this->_watermark->getId(), $watermarkIds),
 			'Watermark appears when it shouldn\'t'
 		);
@@ -348,7 +348,7 @@ class WatermarkTest extends GalleryTestCase {
 				$this->assertEquals($preferred->getId(), $derivative->getDerivativeSourceId());
 			}
 		} else {
-			$this->assert(false, 'missing preferred');
+			$this->assertTrue(false, 'missing preferred');
 		}
 	}
 
@@ -421,7 +421,7 @@ class WatermarkTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(empty($table[$item->getId()]), 'preferred is not gone!');
+		$this->assertTrue(empty($table[$item->getId()]), 'preferred is not gone!');
 
 		// Verify that the thumb/resizes are remapped to the source id
 		foreach (array($resize, $thumbnail) as $derivative) {

@@ -35,7 +35,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		parent::__construct($methodName);
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 
 		$ret = parent::setUp();
@@ -441,8 +441,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		// Operation is smaller than the smallest side
 		$derivative->setDerivativeOperations('thumbnail|50');
 
-		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $item);
+		$toolkit::doStatic()->estimateDimensions($derivative, $item);
 
 		$this->assertEquals(50, $derivative->getWidth());
 		$this->assertEquals(50, $derivative->getHeight());
@@ -460,8 +459,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		// Operation is bigger than the smallest side
 		$derivative->setDerivativeOperations('thumbnail|200');
 
-		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $item);
+		$toolkit::doStatic()->estimateDimensions($derivative, $item);
 
 		$this->assertEquals(100, $derivative->getWidth());
 		$this->assertEquals(100, $derivative->getHeight());
@@ -479,8 +477,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		// Operation is bigger than the biggest side
 		$derivative->setDerivativeOperations('thumbnail|400');
 
-		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $item);
+		$toolkit::doStatic()->estimateDimensions($derivative, $item);
 
 		$this->assertEquals(100, $derivative->getWidth());
 		$this->assertEquals(100, $derivative->getHeight());
@@ -498,8 +495,7 @@ class SquareThumbToolkitTest extends GalleryTestCase {
 		// Operation is bigger than the biggest side, but source is a derivative
 		$derivative->setDerivativeOperations('thumbnail|400');
 
-		$toolkit = new SquareThumbToolkit();
-		$toolkit->estimateDimensions($derivative, $source);
+		$toolkit::doStatic()->estimateDimensions($derivative, $source);
 
 		$this->assertEquals(400, $derivative->getWidth());
 		$this->assertEquals(400, $derivative->getHeight());

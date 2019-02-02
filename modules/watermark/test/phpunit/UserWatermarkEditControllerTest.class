@@ -32,7 +32,7 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'watermark.UserWatermarkEdit');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 
@@ -122,10 +122,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -140,9 +140,9 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('foo bar', $this->_watermark->getName());
 		$this->assertEquals('25.51', $this->_watermark->getXPercentage());
 		$this->assertEquals('50.12', $this->_watermark->getYPercentage());
-		$this->assert($this->_watermark->getApplyToPreferred(), 'missing preferred');
-		$this->assert($this->_watermark->getApplyToResizes(), 'missing resizes');
-		$this->assert($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
+		$this->assertTrue($this->_watermark->getApplyToPreferred(), 'missing preferred');
+		$this->assertTrue($this->_watermark->getApplyToResizes(), 'missing resizes');
+		$this->assertTrue($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
 	}
 
 	public function testEditWatermarkThumbnailOnly() {
@@ -160,10 +160,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -178,9 +178,9 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('foo bar', $this->_watermark->getName());
 		$this->assertEquals('25.51', $this->_watermark->getXPercentage());
 		$this->assertEquals('50.12', $this->_watermark->getYPercentage());
-		$this->assert(!$this->_watermark->getApplyToPreferred(), 'shouldn\'t have preferred');
-		$this->assert(!$this->_watermark->getApplyToResizes(), 'shouldn\'t have resizes');
-		$this->assert($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
+		$this->assertTrue(!$this->_watermark->getApplyToPreferred(), 'shouldn\'t have preferred');
+		$this->assertTrue(!$this->_watermark->getApplyToResizes(), 'shouldn\'t have resizes');
+		$this->assertTrue($this->_watermark->getApplyToThumbnail(), 'missing thumbnail');
 	}
 
 	public function testEditMissingEverything() {
@@ -194,8 +194,8 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarkEdit',
 				),
-				'status' => array(),
-				'error'  => array(
+				'status'   => array(),
+				'error'    => array(
 					'form[error][watermarkName][missing]',
 					'form[error][whichDerivative][missing]',
 				),
@@ -234,8 +234,8 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarkEdit',
 				),
-				'status' => array(),
-				'error'  => array('form[error][watermarkName][duplicate]'),
+				'status'   => array(),
+				'error'    => array('form[error][watermarkName][duplicate]'),
 			),
 			$results
 		);
@@ -266,10 +266,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -284,9 +284,9 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals($watermark->getName(), $this->_watermark->getName());
 		$this->assertEquals('25.51', $this->_watermark->getXPercentage());
 		$this->assertEquals('50.12', $this->_watermark->getYPercentage());
-		$this->assert(!$this->_watermark->getApplyToPreferred(), 'shouldn\'t have preferred');
-		$this->assert($this->_watermark->getApplyToResizes(), 'missing resizes');
-		$this->assert(!$this->_watermark->getApplyToThumbnail(), 'shouldn\'t have thumbnail');
+		$this->assertTrue(!$this->_watermark->getApplyToPreferred(), 'shouldn\'t have preferred');
+		$this->assertTrue($this->_watermark->getApplyToResizes(), 'missing resizes');
+		$this->assertTrue(!$this->_watermark->getApplyToThumbnail(), 'shouldn\'t have thumbnail');
 	}
 
 	public function testCancel() {
@@ -300,8 +300,8 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -331,10 +331,10 @@ class UserWatermarkEditControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.UserAdmin',
 					'subView' => 'watermark.UserWatermarks',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
