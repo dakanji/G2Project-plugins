@@ -31,6 +31,10 @@ login.txt
 build
 attic
 
+# Misc stuff #
+##############
+composer.phar
+
 # Non G2 Modules #
 ##################
 /index.php
