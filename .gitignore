@@ -30,6 +30,7 @@ login.txt
 .idea
 build
 attic
+composer.phar
 
 # Non G2 Modules #
 ##################
