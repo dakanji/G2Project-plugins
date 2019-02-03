@@ -1,6 +1,5 @@
 <?php
 /*
- * $RCSfile: module.inc,v $
  *
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2005 Bharat Mediratta
@@ -24,7 +23,7 @@
  *
  * @package LinksInTheHead
  * @author andrabr <n0tablog.wordpress.com>
- * @version $Revision: 1354 $ $Date: 2007/08/09 07:00:00 $
+ * @author Orestes Sanchez <miceno.atreides@gmail.com>
  */
 
 /**
@@ -37,8 +36,9 @@ class LinksInTheHeadModule extends GalleryModule
 	public function __construct()
 	{
 		global $gallery;
+
 		$this->setId('linksinthehead');
-		$this->setName('Links In The Head');
+		$this->setName($gallery->i18n('Links In The Head'));
 		$this->setDescription($gallery->i18n('Add links to the header menu.'));
 		$this->setVersion('0.1.2');
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
@@ -57,7 +57,7 @@ class LinksInTheHeadModule extends GalleryModule
 			array(
 				array(
 					'name' => $this->translate('Links In The Head'),
-					'view' => 'linksinthehead.Admin',
+					'view' => 'linksinthehead.LinksInTheHeadSiteAdmin',
 				),
 			),
 		);
@@ -73,7 +73,7 @@ class LinksInTheHeadModule extends GalleryModule
 
 		list ($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		foreach ($links_in_the_head as $linkname => $redirectURL) {
@@ -93,6 +93,6 @@ class LinksInTheHeadModule extends GalleryModule
 	 */
 	function getConfigurationView()
 	{
-		return 'linksinthehead.Admin';
+		return 'linksinthehead.LinksInTheHeadSiteAdmin';
 	}
 }

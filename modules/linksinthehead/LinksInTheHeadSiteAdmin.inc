@@ -1,6 +1,5 @@
 <?php
 /*
- * $RCSfile: Admin.inc,v $
  *
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2005 Bharat Mediratta
@@ -23,23 +22,25 @@
  *
  * @package linksinthehead
  * @author andrabr <n0tablog.wordpress.com>
+ * @author Orestes Sanchez <miceno.atreides@gmail.com>
  */
 
 /**
  * @package linksinthehead
  * @subpackage UserInterface
  */
-class AdminController extends GalleryController
+class LinksInTheHeadSiteAdminController extends GalleryController
 {
-
-	//
-	//     @see GalleryController::handleRequest
-	//
+	/**
+	 * @param array $form
+	 * @see GalleryController::handleRequest
+	 * @return array
+	 */
 	function handleRequest($form)
 	{
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$error  = array();
@@ -51,13 +52,13 @@ class AdminController extends GalleryController
 
 			list ($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			foreach ($links_in_the_head as $linkname => $redirectURL) {
 				if (!(strpos($linkname, '_') === 0)) {
 					$ret = GalleryCoreApi::removePluginParameter('module', 'linksinthehead', $linkname);
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 				}
 			}
@@ -71,7 +72,7 @@ class AdminController extends GalleryController
 					// Strip malicious content if html markup allowed
 					list ($ret, $markup) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					if ($markup == 'html') {
 						$form['linkname'][$i] = GalleryUtilities::htmlSafe($form['linkname'][$i], true);
@@ -80,7 +81,7 @@ class AdminController extends GalleryController
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module', 'linksinthehead', $form['linkname'][$i], $form['url'][$i]);
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 
@@ -88,20 +89,19 @@ class AdminController extends GalleryController
 
 			}
 
-
 			list ($ret, $module) = GalleryCoreApi::loadPlugin('module', 'linksinthehead');
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			list ($ret, $isActive) = $module->isActive();
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
 			if ($isActive) {
-				$redirect['subView'] = 'linksinthehead.Admin';
+				$redirect['subView'] = 'linksinthehead.LinksInTheHeadSiteAdmin';
 				$status['saved']     = 1;
 			} else {
 				$redirect['subView']  = 'core.AdminModules';
@@ -110,14 +110,14 @@ class AdminController extends GalleryController
 
 		} elseif (isset($form['action']['cancel'])) {
 			$redirect['view']    = 'core.SiteAdmin';
-			$redirect['subView'] = 'linksinthehead.Admin';
+			$redirect['subView'] = 'linksinthehead.LinksInTheHeadSiteAdmin';
 		}
 
 		if (!empty($redirect)) {
 			$results['redirect'] = $redirect;
 		} else {
 			$results['delegate']['view']    = 'core.SiteAdmin';
-			$results['delegate']['subView'] = 'linksinthehead.Admin';
+			$results['delegate']['subView'] = 'linksinthehead.LinksInTheHeadSiteAdmin';
 		}
 		$results['status'] = $status;
 		$results['error']  = $error;
@@ -130,28 +130,31 @@ class AdminController extends GalleryController
  * @package linksinthehead
  * @subpackage UserInterface
  */
-class AdminView extends GalleryView
+class LinksInTheHeadSiteAdminView extends GalleryView
 {
 
 	/**
 	 * @see GalleryView::loadTemplate
+	 *
+	 * @param null $template
+	 * @param null $form
+	 *
+	 * @return array
 	 */
-	public function loadTemplate(&$template, &$form)
+	public function loadTemplate(&$template = null, &$form = null)
 	{
-		global $gallery;
-
-		if ($form['formName'] != 'Adminlinksinthehead') {
+		if ($form['formName'] != 'LinksInTheHeadSiteAdmin') {
 			/* Get module options */
 
 
-			$form['formName'] = 'Adminlinksinthehead';
+			$form['formName'] = 'LinksInTheHeadSiteAdmin';
 
 
 			list ($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
 
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			/* Create the relevant number of link entry areas.
@@ -173,7 +176,7 @@ class AdminView extends GalleryView
 		}
 
 
-		$template->setVariable('controller', 'linksinthehead.Admin');
+		$template->setVariable('controller', 'linksinthehead.LinksInTheHeadSiteAdmin');
 
 		return array(
 			null,

@@ -1,5 +1,4 @@
 {*
- * $Revision: 1359 $
  * If you want to customize this file, do not edit it directly since future upgrades
  * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
  * version.  Gallery will look for that file first and use it if it exists.
@@ -15,7 +14,7 @@
     {if isset($status.saved)}
     <div class="giStatus">
 <br>
-      {g->text text="&nbsp;Settings saved successfully"}
+      {g->text text="Settings saved successfully"}
 <br>
     </div>
     {/if}
@@ -25,34 +24,29 @@
   <div class="gbAdmin">
     <div class="giDescription">
 <br>
-      {g->text text="&nbsp;Enter the links you would like displayed in the header. Any URL left empty will not be used."}
+      {g->text text="Enter the links you would like displayed in the header. Any URL left empty will not be used."}
     </div>
 <br>
     <div class="gbDataEntry">
 
 
       <h3 class="giTitle">
-	{g->text text="&nbsp;Links"}
+	{g->text text="Links"}
       </h3>
-      	<table cellspacing="5">
-      		{section name=x loop=$form.url}
-      			<tr>
-	      			<td>{g->text text="Link Name:"}</td>
-	      			<td>
-
-					<input type="text" name="{g->formVar var="form[linkname][`$smarty.section.x.index`]"}" size="12" value="{if isset($form.linkname[x])}{$form.linkname[x]}{/if}"/>
-
-					</td>
-
-	      			<td>{g->text text="URL:"}</td>
-	      			<td><input type="text" name="{g->formVar var="form[url][`$smarty.section.x.index`]"}" size="40" value="{$form.url[x]}"/></td>
-      			</tr>
-
-      			<tr>
-	      			<td><br><br><br></td>
-      			</tr>
-      		{/section}
-      	</table>
+        <div class="row" cellspacing="5">
+	    {section name=x loop=$form.url}
+	        <div class="form-group">
+		    <label for="idLink_{$smarty.section.x.index}">{g->text text="Link Name:"}</label>
+		    <input id="idLink_{$smarty.section.x.index}" class="form-control" type="text"
+		           name="{g->formVar var="form[linkname][`$smarty.section.x.index`]"}" size="12"
+		           value="{if isset($form.linkname[x])}{$form.linkname[x]}{/if}"/>
+		    <label for="idUrl_{$smarty.section.x.index}">{g->text text="URL:"}</label>
+		    <input id="idUrl_{$smarty.section.x.index}" class="form-control" type="text"
+		           name="{g->formVar var="form[url][`$smarty.section.x.index`]"}" size="40"
+		           value="{$form.url[x]}"/>
+	        </div>
+	    {/section}
+        </div>
     </div>
   </div>
 
