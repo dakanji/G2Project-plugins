@@ -73,6 +73,7 @@ composer.phar
 /modules/newitems
 /modules/rating
 /modules/rearrange
+/modules/register
 /modules/rewrite
 /modules/search
 /modules/slideshow
