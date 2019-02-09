@@ -174,8 +174,7 @@ class ShutterflyModule extends GalleryModule {
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 
-			if (isset($wantsDetailedLinks[$itemId])
-				&& isset($permissions[$itemId]['shutterfly.print'])
+			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['shutterfly.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				$links[$itemId][] = array(

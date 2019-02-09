@@ -91,7 +91,7 @@ class ChooseObjectsView extends GalleryView {
 		$defaultLanguage = GalleryTranslator::doStatic()->getLanguageCodeFromRequest();
 
 		$availableEncodings    = array(
-			'af_ZA Afrikaans (ISO-8859-1)' => 'ISO-8859-1',
+			'af_ZA Afrikaans (ISO-8859-1)'                      => 'ISO-8859-1',
 			'bg_BG &#x0411;&#x044a;&#x043b;&#x0433;&#x0430;&#x0440;' .
 			'&#x0441;&#x043a;&#x0438; (CP1251)'                 => 'CP1251',
 			'ca_ES Catal&#xe0; (ISO-8859-1)'                    => 'ISO-8859-1',
@@ -118,49 +118,49 @@ class ChooseObjectsView extends GalleryView {
 			'pt_BR Portugu&#234;s Brasileiro (ISO-8859-1)'      => 'ISO-8859-1',
 			'pt_PT Portugu&#234;s (ISO-8859-1)'                 => 'ISO-8859-1',
 			'ru_RU &#x0420;&#x0443;&#x0441;&#x0441;&#x043a;&#x0438;' .
-			'&#x0439; (CP1251/Windows)' => 'CP1251',
+			'&#x0439; (CP1251/Windows)'                         => 'CP1251',
 			'ru_RU &#x0420;&#x0443;&#x0441;&#x0441;&#x043a;&#x0438;' .
-			'&#x0439; (KOI8-R)'                            => 'KOI8-R',
-			'sl_SI Sloven&#x0161;&#x010d;ina (ISO-8859-2)' => 'ISO-8859-2',
-			'sv_SE Svenska (ISO-8859-1)'                   => 'ISO-8859-1',
-			'tr_TR T&#252;rk&#231;e (ISO-8859-9)'          => 'ISO-8859-9',
+			'&#x0439; (KOI8-R)'                                 => 'KOI8-R',
+			'sl_SI Sloven&#x0161;&#x010d;ina (ISO-8859-2)'      => 'ISO-8859-2',
+			'sv_SE Svenska (ISO-8859-1)'                        => 'ISO-8859-1',
+			'tr_TR T&#252;rk&#231;e (ISO-8859-9)'               => 'ISO-8859-9',
 			'uk_UA &#x0423;&#x043a;&#x0440;&#x0430;&#x0457;&#x043d;' .
-			'&#x0441;&#x044c;&#x043a;&#x0430; (KOI8-U)' => 'KOI8-U',
-			'vi_VN Ti&#7871;ng Vi&#7879;t Nam (UTF-8)'  => 'UTF-8',
+			'&#x0441;&#x044c;&#x043a;&#x0430; (KOI8-U)'         => 'KOI8-U',
+			'vi_VN Ti&#7871;ng Vi&#7879;t Nam (UTF-8)'          => 'UTF-8',
 			'zh_CN &#31616;&#20307;&#20013;&#25991; (Simplified Chinese ' .
-			'GB/GB2312)' => 'GB2312',
+			'GB/GB2312)'                                        => 'GB2312',
 			'zh_TW &#32321;&#39636;&#20013;&#25991; (Traditional Chinese ' .
-			'Big5)'   => 'BIG5',
+			'Big5)'                                             => 'BIG5',
 			'zh_TW &#32321;&#39636;&#20013;&#25991; (Traditional Chinese ' .
-			'UTF-8)'       => 'UTF-8',
-			'BIG5'         => 'BIG5',
-			'CP1250'       => 'CP1250',
-			'CP1251'       => 'CP1251',
-			'CP1257'       => 'CP1257',
-			'EUC-JP'       => 'EUC-JP',
-			'EUC-KR'       => 'EUC-KR',
-			'GB2312'       => 'GB2312',
-			'ISO-8859-1'   => 'ISO-8859-1',
-			'ISO-8859-10'  => 'ISO-8859-10',
-			'ISO-8859-11'  => 'ISO-8859-11',
-			'ISO-8859-13'  => 'ISO-8859-13',
-			'ISO-8859-14'  => 'ISO-8859-14',
-			'ISO-8859-15'  => 'ISO-8859-15',
-			'ISO-8859-16'  => 'ISO-8859-16',
-			'ISO-8859-2'   => 'ISO-8859-2',
-			'ISO-8859-3'   => 'ISO-8859-3',
-			'ISO-8859-4'   => 'ISO-8859-4',
-			'ISO-8859-5'   => 'ISO-8859-5',
-			'ISO-8859-6'   => 'ISO-8859-6',
-			'ISO-8859-7'   => 'ISO-8859-7',
-			'ISO-8859-8'   => 'ISO-8859-8',
-			'ISO-8859-9'   => 'ISO-8859-9',
-			'KOI8-R'       => 'KOI8-R',
-			'KOI8-U'       => 'KOI8-U',
-			'UTF-8'        => 'UTF-8',
-			'windows-1251' => 'CP1251',
-			'windows-1257' => 'CP1257',
-			'Latin-1'      => 'ISO-8859-1',
+			'UTF-8)'                                            => 'UTF-8',
+			'BIG5'                                              => 'BIG5',
+			'CP1250'                                            => 'CP1250',
+			'CP1251'                                            => 'CP1251',
+			'CP1257'                                            => 'CP1257',
+			'EUC-JP'                                            => 'EUC-JP',
+			'EUC-KR'                                            => 'EUC-KR',
+			'GB2312'                                            => 'GB2312',
+			'ISO-8859-1'                                        => 'ISO-8859-1',
+			'ISO-8859-10'                                       => 'ISO-8859-10',
+			'ISO-8859-11'                                       => 'ISO-8859-11',
+			'ISO-8859-13'                                       => 'ISO-8859-13',
+			'ISO-8859-14'                                       => 'ISO-8859-14',
+			'ISO-8859-15'                                       => 'ISO-8859-15',
+			'ISO-8859-16'                                       => 'ISO-8859-16',
+			'ISO-8859-2'                                        => 'ISO-8859-2',
+			'ISO-8859-3'                                        => 'ISO-8859-3',
+			'ISO-8859-4'                                        => 'ISO-8859-4',
+			'ISO-8859-5'                                        => 'ISO-8859-5',
+			'ISO-8859-6'                                        => 'ISO-8859-6',
+			'ISO-8859-7'                                        => 'ISO-8859-7',
+			'ISO-8859-8'                                        => 'ISO-8859-8',
+			'ISO-8859-9'                                        => 'ISO-8859-9',
+			'KOI8-R'                                            => 'KOI8-R',
+			'KOI8-U'                                            => 'KOI8-U',
+			'UTF-8'                                             => 'UTF-8',
+			'windows-1251'                                      => 'CP1251',
+			'windows-1257'                                      => 'CP1257',
+			'Latin-1'                                           => 'ISO-8859-1',
 		);
 		$possibleEncodingMatch = '';
 
@@ -178,7 +178,7 @@ class ChooseObjectsView extends GalleryView {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
 
-		$existingUsers        = $newUsers = array();
+		$existingUsers        = $newUsers        = array();
 		list($ret, $allUsers) = Gallery1DataParser::getUserUids($albumsPath);
 
 		if ($ret) {

@@ -92,18 +92,13 @@ class CartModule extends GalleryModule {
 			case '0.8.7':
 			case '0.8.8':
 				$storage =& $gallery->getStorage();
-				$query   = '
-	      DROP TABLE [CartMap]
-	    ';
+				$query   = 'DROP TABLE [CartMap]';
 				$ret     = $storage->execute($query);
 
 				if ($ret) {
 					return $ret;
 				}
-				$query = '
-	      DELETE FROM [Schema]
-	      WHERE [Schema::name] = \'CartMap\'
-	    ';
+				$query = "DELETE FROM [Schema] WHERE [Schema::name] = \'CartMap\'";
 				$ret   = $storage->execute($query);
 
 				if ($ret) {

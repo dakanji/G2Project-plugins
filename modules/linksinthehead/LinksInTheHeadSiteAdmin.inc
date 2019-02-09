@@ -29,16 +29,15 @@
  * @package linksinthehead
  * @subpackage UserInterface
  */
-class LinksInTheHeadSiteAdminController extends GalleryController
-{
+class LinksInTheHeadSiteAdminController extends GalleryController {
 	/**
 	 * @param array $form
 	 * @see GalleryController::handleRequest
 	 * @return array
 	 */
-	function handleRequest($form)
-	{
+	public function handleRequest($form) {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
+
 		if ($ret) {
 			return array($ret, null);
 		}
@@ -47,16 +46,18 @@ class LinksInTheHeadSiteAdminController extends GalleryController
 		$status = array();
 
 		if (isset($form['action']['save'])) {
-
 			//	Explicitly erase whatever was previously set
 
-			list ($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
+			list($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
+
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			foreach ($links_in_the_head as $linkname => $redirectURL) {
 				if (!(strpos($linkname, '_') === 0)) {
 					$ret = GalleryCoreApi::removePluginParameter('module', 'linksinthehead', $linkname);
+
 					if ($ret) {
 						return array($ret, null);
 					}
@@ -65,41 +66,46 @@ class LinksInTheHeadSiteAdminController extends GalleryController
 
 
 			for ($i = 0; $i < count($form['url']); $i++) {
-
 				// Only write real links to the module parameters
 				if ((!empty($form['linkname'][$i])) && (!empty($form['url'][$i]))) {
-
 					// Strip malicious content if html markup allowed
-					list ($ret, $markup) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
+					list($ret, $markup) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
+
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					if ($markup == 'html') {
 						$form['linkname'][$i] = GalleryUtilities::htmlSafe($form['linkname'][$i], true);
 					}
 
 					$ret = GalleryCoreApi::setPluginParameter(
-						'module', 'linksinthehead', $form['linkname'][$i], $form['url'][$i]);
+						'module',
+						'linksinthehead',
+						$form['linkname'][$i],
+						$form['url'][$i]
+					);
+
 					if ($ret) {
 						return array($ret, null);
 					}
-
-
 				}
-
 			}
 
-			list ($ret, $module) = GalleryCoreApi::loadPlugin('module', 'linksinthehead');
+			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'linksinthehead');
+
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			list ($ret, $isActive) = $module->isActive();
+			list($ret, $isActive) = $module->isActive();
+
 			if ($ret) {
 				return array($ret, null);
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
+
 			if ($isActive) {
 				$redirect['subView'] = 'linksinthehead.LinksInTheHeadSiteAdmin';
 				$status['saved']     = 1;
@@ -107,7 +113,6 @@ class LinksInTheHeadSiteAdminController extends GalleryController
 				$redirect['subView']  = 'core.AdminModules';
 				$status['configured'] = 'linksinthehead';
 			}
-
 		} elseif (isset($form['action']['cancel'])) {
 			$redirect['view']    = 'core.SiteAdmin';
 			$redirect['subView'] = 'linksinthehead.LinksInTheHeadSiteAdmin';
@@ -130,9 +135,7 @@ class LinksInTheHeadSiteAdminController extends GalleryController
  * @package linksinthehead
  * @subpackage UserInterface
  */
-class LinksInTheHeadSiteAdminView extends GalleryView
-{
-
+class LinksInTheHeadSiteAdminView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 *
@@ -141,16 +144,15 @@ class LinksInTheHeadSiteAdminView extends GalleryView
 	 *
 	 * @return array
 	 */
-	public function loadTemplate(&$template = null, &$form = null)
-	{
+	public function loadTemplate(&$template = null, &$form = null) {
 		if ($form['formName'] != 'LinksInTheHeadSiteAdmin') {
-			/* Get module options */
+			// Get module options
 
 
 			$form['formName'] = 'LinksInTheHeadSiteAdmin';
 
 
-			list ($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
+			list($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
 
 
 			if ($ret) {
@@ -158,11 +160,12 @@ class LinksInTheHeadSiteAdminView extends GalleryView
 			}
 
 			/* Create the relevant number of link entry areas.
-	   * Minimum will be 1 items, or at least 1 more than
-	   * we currently have configured
-	   */
+			 * Minimum will be 1 items, or at least 1 more than
+			 * we currently have configured
+			 */
 
 			$i = 0;
+
 			foreach ($links_in_the_head as $linkname => $redirectURL) {
 				if (!(strpos($linkname, '_') === 0)) {
 					$form['linkname'][$i] = $linkname;
@@ -170,9 +173,8 @@ class LinksInTheHeadSiteAdminView extends GalleryView
 					$i++;
 				}
 			}
-			$form['linkname'][$i] = "";
-			$form['url'][$i]      = "";
-
+			$form['linkname'][$i] = '';
+			$form['url'][$i]      = '';
 		}
 
 
@@ -180,7 +182,9 @@ class LinksInTheHeadSiteAdminView extends GalleryView
 
 		return array(
 			null,
-			array('body' => 'modules/linksinthehead/templates/Admin.tpl'),
+			array(
+				'body' => 'modules/linksinthehead/templates/Admin.tpl',
+			),
 		);
 	}
 }

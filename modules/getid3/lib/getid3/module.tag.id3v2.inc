@@ -982,7 +982,7 @@ class getid3_id3v2 extends getid3_handler {
 					$parsedFrame[$timestamp_counter]['tempo'] += ord(substr($parsedFrame['data'], $frame_offset++, 1));
 				}
 				$parsedFrame[$timestamp_counter]['timestamp'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
-				$frame_offset += 4;
+				$frame_offset                                += 4;
 				$timestamp_counter++;
 			}
 			unset($parsedFrame['data']);
@@ -1173,12 +1173,12 @@ class getid3_id3v2 extends getid3_handler {
 			$RVA2channelcounter         = 0;
 
 			while (strlen($frame_remainingdata) >= 5) {
-				$frame_offset                                      = 0;
-				$frame_channeltypeid                               = ord(substr($frame_remainingdata, $frame_offset++, 1));
-				$parsedFrame[$RVA2channelcounter]['channeltypeid'] = $frame_channeltypeid;
-				$parsedFrame[$RVA2channelcounter]['channeltype']   = $this->RVA2ChannelTypeLookup($frame_channeltypeid);
-				$parsedFrame[$RVA2channelcounter]['volumeadjust']  = getid3_lib::BigEndian2Int(substr($frame_remainingdata, $frame_offset, 2), false, true); // 16-bit signed
-				$frame_offset += 2;
+				$frame_offset                                       = 0;
+				$frame_channeltypeid                                = ord(substr($frame_remainingdata, $frame_offset++, 1));
+				$parsedFrame[$RVA2channelcounter]['channeltypeid']  = $frame_channeltypeid;
+				$parsedFrame[$RVA2channelcounter]['channeltype']    = $this->RVA2ChannelTypeLookup($frame_channeltypeid);
+				$parsedFrame[$RVA2channelcounter]['volumeadjust']   = getid3_lib::BigEndian2Int(substr($frame_remainingdata, $frame_offset, 2), false, true); // 16-bit signed
+				$frame_offset                                      += 2;
 				$parsedFrame[$RVA2channelcounter]['bitspeakvolume'] = ord(substr($frame_remainingdata, $frame_offset++, 1));
 
 				if (($parsedFrame[$RVA2channelcounter]['bitspeakvolume'] < 1) || ($parsedFrame[$RVA2channelcounter]['bitspeakvolume'] > 4)) {
@@ -1250,17 +1250,17 @@ class getid3_id3v2 extends getid3_handler {
 					if ($parsedFrame['incdec']['rightrear'] === false) {
 						$parsedFrame['volumechange']['rightrear'] *= -1;
 					}
-					$frame_offset += $frame_bytesvolume;
+					$frame_offset                           += $frame_bytesvolume;
 					$parsedFrame['volumechange']['leftrear'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 
 					if ($parsedFrame['incdec']['leftrear'] === false) {
 						$parsedFrame['volumechange']['leftrear'] *= -1;
 					}
-					$frame_offset += $frame_bytesvolume;
+					$frame_offset                          += $frame_bytesvolume;
 					$parsedFrame['peakvolume']['rightrear'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
-					$frame_offset                         += $frame_bytesvolume;
-					$parsedFrame['peakvolume']['leftrear'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
-					$frame_offset                         += $frame_bytesvolume;
+					$frame_offset                          += $frame_bytesvolume;
+					$parsedFrame['peakvolume']['leftrear']  = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
+					$frame_offset                          += $frame_bytesvolume;
 				}
 				$parsedFrame['data'] = substr($parsedFrame['data'], $frame_offset);
 
@@ -2014,13 +2014,13 @@ class getid3_id3v2 extends getid3_handler {
 			//   c - sign bit
 			//   d - replay gain adjustment
 
-			$frame_offset                        = 0;
-			$parsedFrame['peakamplitude']        = getid3_lib::BigEndian2Float(substr($parsedFrame['data'], $frame_offset, 4));
-			$frame_offset                       += 4;
-			$rg_track_adjustment                 = getid3_lib::Dec2Bin(substr($parsedFrame['data'], $frame_offset, 2));
-			$frame_offset                       += 2;
-			$rg_album_adjustment                 = getid3_lib::Dec2Bin(substr($parsedFrame['data'], $frame_offset, 2));
-			$frame_offset                       += 2;
+			$frame_offset                              = 0;
+			$parsedFrame['peakamplitude']              = getid3_lib::BigEndian2Float(substr($parsedFrame['data'], $frame_offset, 4));
+			$frame_offset                             += 4;
+			$rg_track_adjustment                       = getid3_lib::Dec2Bin(substr($parsedFrame['data'], $frame_offset, 2));
+			$frame_offset                             += 2;
+			$rg_album_adjustment                       = getid3_lib::Dec2Bin(substr($parsedFrame['data'], $frame_offset, 2));
+			$frame_offset                             += 2;
 			$parsedFrame['raw']['track']['name']       = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 0, 3));
 			$parsedFrame['raw']['track']['originator'] = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 3, 3));
 			$parsedFrame['raw']['track']['signbit']    = getid3_lib::Bin2Dec(substr($rg_track_adjustment, 6, 1));

@@ -30,11 +30,8 @@
  * Add links to the header menu.
  *
  */
-class LinksInTheHeadModule extends GalleryModule
-{
-
-	public function __construct()
-	{
+class LinksInTheHeadModule extends GalleryModule {
+	public function __construct() {
 		global $gallery;
 
 		$this->setId('linksinthehead');
@@ -50,8 +47,7 @@ class LinksInTheHeadModule extends GalleryModule
 	/**
 	 * @see GalleryModule::getSiteAdminViews
 	 */
-	function getSiteAdminViews()
-	{
+	public function getSiteAdminViews() {
 		return array(
 			null,
 			array(
@@ -66,12 +62,11 @@ class LinksInTheHeadModule extends GalleryModule
 	/**
 	 * @see GalleryModule::getSystemLinks
 	 */
-
-	function getSystemLinks()
-	{
+	public function getSystemLinks() {
 		$links = array();
 
-		list ($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
+		list($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
+
 		if ($ret) {
 			return array($ret, null);
 		}
@@ -80,7 +75,9 @@ class LinksInTheHeadModule extends GalleryModule
 			if (!(strpos($linkname, '_') === 0)) {
 				$links[$linkname] = array(
 					'text'   => $this->translate($linkname),
-					'params' => array('href' => $redirectURL),
+					'params' => array(
+						'href' => $redirectURL,
+					),
 				);
 			}
 		}
@@ -91,8 +88,7 @@ class LinksInTheHeadModule extends GalleryModule
 	/**
 	 * @see GalleryModule::getConfigurationView
 	 */
-	function getConfigurationView()
-	{
+	public function getConfigurationView() {
 		return 'linksinthehead.LinksInTheHeadSiteAdmin';
 	}
 }

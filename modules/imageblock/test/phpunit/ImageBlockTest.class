@@ -155,7 +155,7 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		// Add permission so album/item can appear in dailyImage, monthlyAlbum, etc.
-		list($ret, $this->_everybodyGroupId) = 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
+		list($ret, $this->_everybodyGroupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
 
 		if ($ret) {
 			return $ret;
@@ -246,7 +246,7 @@ class ImageBlockTest extends GalleryTestCase {
 	}
 
 	public function _addDerivative(&$item, &$src, $derivativeType, $size, $forceSize=false) {
-		list($ret, $derivative) = 		GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $src->getEntityType());
+		list($ret, $derivative) = GalleryCoreApi::newFactoryInstanceByHint('GalleryDerivative', $src->getEntityType());
 
 		if ($ret) {
 			return array($ret, null);
@@ -340,8 +340,14 @@ class ImageBlockTest extends GalleryTestCase {
 	public function testRepeatBlock() {
 		$smarty    = new GallerySmarty();
 		$callbacks = new ImageBlockCallbacks();
-		$params    = array('blocks' => 'recentImage', 'repeatBlock' => '3',
-			'useDefaults'              => '0', 'showHeading' => '1', 'showTitle' => '1', );
+		$params    = array(
+			'blocks'      => 'recentImage',
+			'repeatBlock' => '3',
+			'useDefaults' => '0',
+			'showHeading' => '1',
+			'showTitle'   => '1',
+		);
+
 		$ret = $callbacks->callback($params, $smarty, 'LoadImageBlock', null);
 
 		if ($ret) {
@@ -1257,10 +1263,10 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		foreach (array('blocks' => 'randomImage|recentAlbum',
-			   'show' => 'heading|owner',
-			   'itemFrame' => 'testItemFrame',
-			   'albumFrame' => 'testAlbumFrame',
-			   'class' => 'foo', ) as $key => $value) {
+			   'show'           => 'heading|owner',
+			   'itemFrame'      => 'testItemFrame',
+			   'albumFrame'     => 'testAlbumFrame',
+			   'class'          => 'foo', ) as $key => $value) {
 			$template->setVariable($key, $value);
 		}
 

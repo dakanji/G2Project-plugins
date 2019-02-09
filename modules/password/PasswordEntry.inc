@@ -40,8 +40,7 @@ class PasswordEntryController extends GalleryController {
 	public function handleRequest($form) {
 		$status = $error = array();
 
-		if (isset($form['action']['password'])
-			&& isset($form['itemId']) && isset($form['password'])
+		if (isset($form['action']['password'], $form['itemId'], $form['password'])
 		) {
 			$itemId             = $form['itemId'];
 			list($ret, $canSee) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
@@ -84,7 +83,7 @@ class PasswordEntryController extends GalleryController {
 			}
 			GalleryUtilities::unsanitizeInputValues($form['password'], false);
 			$isCorrect = $canSee && $hashedPassword
-								                && GalleryUtilities::isCorrectPassword($form['password'], $hashedPassword);
+															         && GalleryUtilities::isCorrectPassword($form['password'], $hashedPassword);
 
 			// Prepare for validation
 			$options                      = array(

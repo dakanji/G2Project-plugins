@@ -58,8 +58,8 @@ class AdminEditUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -77,8 +77,8 @@ class AdminEditUserQuotaControllerTest extends GalleryControllerTestCase {
 					'subView' => 'quotas.AdminEditUserQuota',
 					'userId'  => $this->_user->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -100,10 +100,10 @@ class AdminEditUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(
+				'status'   => array(
 					'modifiedUser' => $this->_user->getUserName(),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -138,8 +138,8 @@ class AdminEditUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditUserQuota',
 				),
-				'status' => array(),
-				'error'  => array('form[error][quotaUnit][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][quotaUnit][missing]'),
 			),
 			$results
 		);
@@ -155,8 +155,8 @@ class AdminEditUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditUserQuota',
 				),
-				'status' => array(),
-				'error'  => array('form[error][quotaSize][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][quotaSize][missing]'),
 			),
 			$results
 		);
@@ -180,8 +180,8 @@ class AdminEditUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminEditUserQuota',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);

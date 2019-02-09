@@ -263,7 +263,7 @@ class ItemCreateReplicaView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$peers    = $peerTypes = $peerDescendentCounts = $selectedIds = $albums = array();
+		$peers    = $peerTypes    = $peerDescendentCounts    = $selectedIds    = $albums    = array();
 		$numPages = 1;
 
 		if (!empty($peerIds)) {

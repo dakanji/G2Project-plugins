@@ -53,7 +53,7 @@ class SlideshowAppletModule extends GalleryModule {
 
 		if (!isset($params['slideshowdefaultVariables'])) {
 			// upgrade or install
-			if (isset($params['slideshowRecursive']) && isset($params['slideshowMaxPictures'])) {
+			if (isset($params['slideshowRecursive'], $params['slideshowMaxPictures'])) {
 				// definitely upgrade
 				$newDefault = 'slideshowRecursive=' . $params['slideshowRecursive']
 				. '|slideshowMaxPictures=' . $params['slideshowMaxPictures'];

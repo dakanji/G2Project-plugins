@@ -111,8 +111,8 @@ class AddToCartControllerTest extends GalleryControllerTestCase {
 					'view'   => 'cart.ViewCart',
 					'itemId' => $item->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -153,8 +153,8 @@ class AddToCartControllerTest extends GalleryControllerTestCase {
 					'view'   => 'cart.ViewCart',
 					'itemId' => $this->_album->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -205,8 +205,8 @@ class AddToCartControllerTest extends GalleryControllerTestCase {
 					'view'   => 'cart.ViewCart',
 					'itemId' => $item->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -257,8 +257,8 @@ class AddToCartControllerTest extends GalleryControllerTestCase {
 					'view'   => 'cart.ViewCart',
 					'itemId' => $this->_album->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -332,8 +332,8 @@ class AddToCartControllerTest extends GalleryControllerTestCase {
 					'view'   => 'cart.ViewCart',
 					'itemId' => $item->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -379,8 +379,8 @@ class AddToCartControllerTest extends GalleryControllerTestCase {
 					'view'   => 'cart.ViewCart',
 					'itemId' => $this->_album->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -427,8 +427,8 @@ class AddToCartControllerTest extends GalleryControllerTestCase {
 					'view'   => 'cart.ViewCart',
 					'itemId' => $this->_album->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);

@@ -75,8 +75,8 @@ class CustomFieldItemAdminControllerTest extends GalleryControllerTestCase {
 						'choices' => array(),
 					),
 				),
-				'album' => array(),
-				'photo' => array(
+				'album'  => array(),
+				'photo'  => array(
 					array(
 						'field'   => 'Location',
 						'summary' => true,

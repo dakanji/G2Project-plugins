@@ -240,18 +240,18 @@ class RssModule extends GalleryModule {
 				// Initial install
 
 				foreach (array(
-					'defaultVersion' => '2.0',
-					'defaultCount' => 10,
-					'maxCount' => 50,
-					'allowSimpleFeed' => 1,
+					'defaultVersion'        => '2.0',
+					'defaultCount'          => 10,
+					'maxCount'              => 50,
+					'allowSimpleFeed'       => 1,
 					'allowConfigurableFeed' => 0,
-					'allowAlbums' => 0,
-					'allowPhotos' => 0,
-					'allowPhotosRecursive' => 0,
-					'allowCommentsAlbum' => 0,
-					'allowCommentsPhoto' => 0,
-					'defaultCopyright' => '',
-					'defaultTtl' => 120,
+					'allowAlbums'           => 0,
+					'allowPhotos'           => 0,
+					'allowPhotosRecursive'  => 0,
+					'allowCommentsAlbum'    => 0,
+					'allowCommentsPhoto'    => 0,
+					'defaultCopyright'      => '',
+					'defaultTtl'            => 120,
 				) as $key => $value) {
 					$ret = $this->setParameter($key, $value);
 
@@ -263,8 +263,8 @@ class RssModule extends GalleryModule {
 				// Fall Through
 			case '1.0.0':
 				foreach (array(
-					'sfAlbumType' => 'photos',
-					'sfDate' => 'new',
+					'sfAlbumType'            => 'photos',
+					'sfDate'                 => 'new',
 					'sfPhotosRecursiveLimit' => 10,
 					'allowCommentsRecursive' => 0,
 				) as $key => $value) {
@@ -278,8 +278,8 @@ class RssModule extends GalleryModule {
 				// Fall Through
 			case '1.1.1':
 				foreach (array(
-					'maxAge' => 21,
-					'allowPhotosRandom' => 0,
+					'maxAge'                     => 21,
+					'allowPhotosRandom'          => 0,
 					'allowPhotosRandomRecursive' => 0,
 				) as $key => $value) {
 					$ret = $this->setParameter($key, $value);

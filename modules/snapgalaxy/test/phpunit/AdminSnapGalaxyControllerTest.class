@@ -55,8 +55,8 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -73,10 +73,10 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -113,8 +113,8 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
-				'status' => array(),
-				'error'  => array('form[error][snapgalaxyPartnerId][invalid]'),
+				'status'   => array(),
+				'error'    => array('form[error][snapgalaxyPartnerId][invalid]'),
 			),
 			$results
 		);
@@ -131,8 +131,8 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'snapgalaxy.AdminSnapGalaxy',
 				),
-				'status' => array(),
-				'error'  => array('form[error][snapgalaxyPartnerId][invalid]'),
+				'status'   => array(),
+				'error'    => array('form[error][snapgalaxyPartnerId][invalid]'),
 			),
 			$results
 		);

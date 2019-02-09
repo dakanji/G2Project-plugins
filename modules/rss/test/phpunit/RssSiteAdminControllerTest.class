@@ -132,7 +132,7 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
 				'error'    => array(),
@@ -173,7 +173,7 @@ class RssSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(
 			array(
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
 				'error'    => array(),

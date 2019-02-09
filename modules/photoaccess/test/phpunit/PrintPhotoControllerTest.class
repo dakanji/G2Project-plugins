@@ -210,8 +210,8 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => $expectedHref,
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -244,8 +244,8 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => $expectedHref,
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -310,8 +310,8 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'href' => $expectedHref,
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);

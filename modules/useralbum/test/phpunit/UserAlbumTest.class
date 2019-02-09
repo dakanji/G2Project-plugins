@@ -95,7 +95,7 @@ class UserAlbumTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $this->_allUserGroupId) = 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
+		list($ret, $this->_allUserGroupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
 
 		if ($ret) {
 			return $ret;
@@ -121,7 +121,7 @@ class UserAlbumTest extends GalleryTestCase {
 		}
 
 		// Verify user's album was created..
-		list($ret, $albumId) = 		GalleryCoreApi::fetchItemIdByPath($parentPath . '/' . $user->getUserName());
+		list($ret, $albumId) = GalleryCoreApi::fetchItemIdByPath($parentPath . '/' . $user->getUserName());
 
 		if ($ret) {
 			return $ret;
@@ -145,10 +145,10 @@ class UserAlbumTest extends GalleryTestCase {
 
 		foreach ($permissions as $perm) {
 			if ($perm == array('groupId' => $this->_allUserGroupId,
-				   'permission' => 'core.viewResizes', )) {
+				   'permission'          => 'core.viewResizes', )) {
 				$seenViewResizes = true;
 			} elseif ($perm == array('groupId' => $this->_allUserGroupId,
-					  'permission'                   => 'core.viewSource', )) {
+					  'permission'             => 'core.viewSource', )) {
 				$seenViewSource = true;
 			}
 		}
@@ -161,7 +161,7 @@ class UserAlbumTest extends GalleryTestCase {
 						$this->_allUserGroupId
 	));
 
-		list($ret, $hasCoreAll) = 		GalleryCoreApi::hasItemPermission($albumId, 'core.all', $user->getId());
+		list($ret, $hasCoreAll) = GalleryCoreApi::hasItemPermission($albumId, 'core.all', $user->getId());
 
 		if ($ret) {
 			return $ret;
@@ -169,7 +169,7 @@ class UserAlbumTest extends GalleryTestCase {
 		$this->assert($hasCoreAll, 'core.all permission not granted to album owner');
 
 		// Create a subalbum..
-		list($ret, $subalbum) = 		$this->_createRandomAlbum($albumId, array('ownerId' => $user->getId()));
+		list($ret, $subalbum) = $this->_createRandomAlbum($albumId, array('ownerId' => $user->getId()));
 
 		if ($ret) {
 			return $ret;
@@ -219,7 +219,7 @@ class UserAlbumTest extends GalleryTestCase {
 		}
 		$this->assertEquals(
 		array('YourAlbum' => array('text' => $module->translate('Your Album'),
-				  'params'                      => array('view' => 'core.ShowItem', 'itemId' => $albumId), )),
+				  'params'                => array('view' => 'core.ShowItem', 'itemId' => $albumId), )),
 				$links,
 		'system link'
 	);
@@ -263,13 +263,13 @@ class UserAlbumTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		list($ret, $targetLocation) = 		GalleryCoreApi::getPluginParameter('module', 'useralbum', 'targetLocation');
+		list($ret, $targetLocation) = GalleryCoreApi::getPluginParameter('module', 'useralbum', 'targetLocation');
 
 		if ($ret) {
 			return $ret;
 		}
 
-		list($ret, $rootAlbum) = 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
+		list($ret, $rootAlbum) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 
 		if ($ret) {
 			return $ret;
@@ -355,7 +355,7 @@ class UserAlbumTest extends GalleryTestCase {
 		$this->_markForCleanup($user);
 
 		// Verify user's album was created with uniquified path..
-		list($ret, $albumId) = 		GalleryCoreApi::fetchItemIdByPath($parentPath . '/' . $user->getUserName() . '_');
+		list($ret, $albumId) = GalleryCoreApi::fetchItemIdByPath($parentPath . '/' . $user->getUserName() . '_');
 
 		if ($ret) {
 			return $ret;

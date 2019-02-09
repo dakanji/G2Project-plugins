@@ -235,10 +235,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 					'subView' => 'notification.NotificationItemAdmin',
 					'itemId'  => $itemId,
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -360,10 +360,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 					'subView' => 'notification.NotificationItemAdmin',
 					'itemId'  => $itemId,
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Unexpected results array'
@@ -515,10 +515,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 					'subView' => 'notification.NotificationItemAdmin',
 					'itemId'  => $itemId,
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Unexpected results array'

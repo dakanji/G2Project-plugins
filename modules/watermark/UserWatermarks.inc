@@ -66,7 +66,7 @@ class UserWatermarksController extends GalleryController {
 			$error[]                        = 'form[error][missingFile]';
 			$results['delegate']['view']    = 'core.UserAdmin';
 			$results['delegate']['subView'] = 'watermark.UserWatermarks';
-		} elseif (isset($form['action']['delete']) && isset($form['delete']['watermarkId'])) {
+		} elseif (isset($form['action']['delete'], $form['delete']['watermarkId'])) {
 			list($ret, $wasDeleted) = WatermarkHelper::deleteWatermarkImageById($form['delete']['watermarkId']);
 
 			if ($ret) {

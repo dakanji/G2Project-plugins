@@ -107,23 +107,23 @@ class nusoap_base {
 	 * @access   public
 	 */
 	public $typemap = array(
-		'http://www.w3.org/2001/XMLSchema' => array(
-			'string'       => 'string',
-			'boolean'      => 'boolean',
-			'float'        => 'double',
-			'double'       => 'double',
-			'decimal'      => 'double',
-			'duration'     => '',
-			'dateTime'     => 'string',
-			'time'         => 'string',
-			'date'         => 'string',
-			'gYearMonth'   => '',
-			'gYear'        => '',
-			'gMonthDay'    => '',
-			'gDay'         => '',
-			'gMonth'       => '',
-			'hexBinary'    => 'string',
-			'base64Binary' => 'string',
+		'http://www.w3.org/2001/XMLSchema'          => array(
+			'string'             => 'string',
+			'boolean'            => 'boolean',
+			'float'              => 'double',
+			'double'             => 'double',
+			'decimal'            => 'double',
+			'duration'           => '',
+			'dateTime'           => 'string',
+			'time'               => 'string',
+			'date'               => 'string',
+			'gYearMonth'         => '',
+			'gYear'              => '',
+			'gMonthDay'          => '',
+			'gDay'               => '',
+			'gMonth'             => '',
+			'hexBinary'          => 'string',
+			'base64Binary'       => 'string',
 			// derived datatypes
 			'normalizedString'   => 'string',
 			'token'              => 'string',
@@ -151,7 +151,7 @@ class nusoap_base {
 			'unsignedByte'       => '',
 			'positiveInteger'    => '',
 		),
-		'http://www.w3.org/1999/XMLSchema' => array(
+		'http://www.w3.org/1999/XMLSchema'          => array(
 			'i4'           => '',
 			'int'          => 'integer',
 			'boolean'      => 'boolean',
@@ -164,7 +164,7 @@ class nusoap_base {
 			'base64'       => 'string',
 			'ur-type'      => 'array',
 		),
-		'http://soapinterop.org/xsd' => array(
+		'http://soapinterop.org/xsd'                => array(
 			'SOAPStruct' => 'struct',
 		),
 		'http://schemas.xmlsoap.org/soap/encoding/' => array(
@@ -172,7 +172,7 @@ class nusoap_base {
 			'array'  => 'array',
 			'Array'  => 'array',
 		),
-		'http://xml.apache.org/xml-soap' => array('Map'),
+		'http://xml.apache.org/xml-soap'            => array('Map'),
 	);
 
 	/**
@@ -350,7 +350,7 @@ class nusoap_base {
 					$xml = "<$name xsi:type=\"SOAP-ENC:Array\" SOAP-ENC:arrayType=\"" . $array_typename . "[$array_type]\"$atts>" . $xml . "</$name>";
 				} else {
 					// got a struct
-					if (isset($type) && isset($type_prefix)) {
+					if (isset($type, $type_prefix)) {
 						$type_str = " xsi:type=\"$type_prefix:$type\"";
 					} else {
 						$type_str = '';
@@ -827,17 +827,17 @@ class XMLSchema extends nusoap_base {
 			case 'element':
 				if (isset($attrs['type'])) {
 					$this->xdebug('processing element ' . $attrs['name']);
-					$this->currentElement                          = $attrs['name'];
-					$this->elements[ $attrs['name'] ]              = $attrs;
-					$this->elements[ $attrs['name'] ]['typeClass'] = 'element';
-					$ename                                         = $attrs['name'];
+					$this->currentElement                        = $attrs['name'];
+					$this->elements[$attrs['name']]              = $attrs;
+					$this->elements[$attrs['name']]['typeClass'] = 'element';
+					$ename                                       = $attrs['name'];
 				} elseif (isset($attrs['ref'])) {
 					$ename = $attrs['ref'];
 				} else {
 					$this->xdebug('adding complexType ' . $attrs['name']);
 					$this->currentComplexType                                 = $attrs['name'];
-					$this->complexTypes[ $attrs['name'] ]                     = $attrs;
-					$this->complexTypes[ $attrs['name'] ]['element']          = 1;
+					$this->complexTypes[$attrs['name']]                       = $attrs;
+					$this->complexTypes[$attrs['name']]['element']            = 1;
 					$this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
 				}
 
@@ -869,9 +869,9 @@ class XMLSchema extends nusoap_base {
 				break;
 
 			case 'simpleType':
-				$this->currentElement                          = $attrs['name'];
-				$this->elements[ $attrs['name'] ]              = $attrs;
-				$this->elements[ $attrs['name'] ]['typeClass'] = 'element';
+				$this->currentElement                        = $attrs['name'];
+				$this->elements[$attrs['name']]              = $attrs;
+				$this->elements[$attrs['name']]['typeClass'] = 'element';
 
 				break;
 		}
@@ -910,7 +910,7 @@ class XMLSchema extends nusoap_base {
 	 * @access   private
 	 */
 	public function schemaCharacterData($parser, $data) {
-		$pos = $this->depth_array[$this->depth];
+		$pos                           = $this->depth_array[$this->depth];
 		$this->message[$pos]['cdata'] .= $data;
 	}
 
@@ -2538,22 +2538,22 @@ class wsdl extends XMLSchema {
 			if (isset($bindingData['operations']) && is_array($bindingData['operations'])) {
 				foreach ($bindingData['operations'] as $operation => $data) {
 					$this->debug('post-parse data gathering for ' . $operation);
-					$this->bindings[$binding]['operations'][$operation]['input']  = isset($this->bindings[$binding]['operations'][$operation]['input']) ? array_merge($this->bindings[$binding]['operations'][$operation]['input'], $this->portTypes[ $bindingData['portType'] ][$operation]['input']) : $this->portTypes[ $bindingData['portType'] ][$operation]['input'];
-					$this->bindings[$binding]['operations'][$operation]['output'] = isset($this->bindings[$binding]['operations'][$operation]['output']) ? array_merge($this->bindings[$binding]['operations'][$operation]['output'], $this->portTypes[ $bindingData['portType'] ][$operation]['output']) : $this->portTypes[ $bindingData['portType'] ][$operation]['output'];
+					$this->bindings[$binding]['operations'][$operation]['input']  = isset($this->bindings[$binding]['operations'][$operation]['input']) ? array_merge($this->bindings[$binding]['operations'][$operation]['input'], $this->portTypes[$bindingData['portType']][$operation]['input']) : $this->portTypes[$bindingData['portType']][$operation]['input'];
+					$this->bindings[$binding]['operations'][$operation]['output'] = isset($this->bindings[$binding]['operations'][$operation]['output']) ? array_merge($this->bindings[$binding]['operations'][$operation]['output'], $this->portTypes[$bindingData['portType']][$operation]['output']) : $this->portTypes[$bindingData['portType']][$operation]['output'];
 
-					if (isset($this->messages[ $this->bindings[$binding]['operations'][$operation]['input']['message'] ])) {
-						$this->bindings[$binding]['operations'][$operation]['input']['parts'] = $this->messages[ $this->bindings[$binding]['operations'][$operation]['input']['message'] ];
+					if (isset($this->messages[$this->bindings[$binding]['operations'][$operation]['input']['message']])) {
+						$this->bindings[$binding]['operations'][$operation]['input']['parts'] = $this->messages[$this->bindings[$binding]['operations'][$operation]['input']['message']];
 					}
 
-					if (isset($this->messages[ $this->bindings[$binding]['operations'][$operation]['output']['message'] ])) {
-						$this->bindings[$binding]['operations'][$operation]['output']['parts'] = $this->messages[ $this->bindings[$binding]['operations'][$operation]['output']['message'] ];
+					if (isset($this->messages[$this->bindings[$binding]['operations'][$operation]['output']['message']])) {
+						$this->bindings[$binding]['operations'][$operation]['output']['parts'] = $this->messages[$this->bindings[$binding]['operations'][$operation]['output']['message']];
 					}
 
 					if (isset($this->bindings[$binding]['operations'][$operation]['style'])) {
 						$this->bindings[$binding]['operations'][$operation]['style'] = $bindingData['style'];
 					}
 					$this->bindings[$binding]['operations'][$operation]['transport']     = isset($bindingData['transport']) ? $bindingData['transport'] : '';
-					$this->bindings[$binding]['operations'][$operation]['documentation'] = isset($this->portTypes[ $bindingData['portType'] ][$operation]['documentation']) ? $this->portTypes[ $bindingData['portType'] ][$operation]['documentation'] : '';
+					$this->bindings[$binding]['operations'][$operation]['documentation'] = isset($this->portTypes[$bindingData['portType']][$operation]['documentation']) ? $this->portTypes[$bindingData['portType']][$operation]['documentation'] : '';
 					$this->bindings[$binding]['operations'][$operation]['endpoint']      = isset($bindingData['endpoint']) ? $bindingData['endpoint'] : '';
 				}
 			}
@@ -2655,7 +2655,7 @@ class wsdl extends XMLSchema {
 							break;
 						// merge input/output data
 						default:
-							$m                                                                                      = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
+							$m = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
 							$this->portTypes[$this->currentPortType][$this->currentPortOperation][$name]['message'] = $m;
 
 							break;
@@ -2730,10 +2730,10 @@ class wsdl extends XMLSchema {
 							break;
 
 						case 'address':
-							$this->ports[$this->currentPort]['location']                                  = $attrs['location'];
-							$this->ports[$this->currentPort]['bindingType']                               = $namespace;
-							$this->bindings[ $this->ports[$this->currentPort]['binding'] ]['bindingType'] = $namespace;
-							$this->bindings[ $this->ports[$this->currentPort]['binding'] ]['endpoint']    = $attrs['location'];
+							$this->ports[$this->currentPort]['location']                                = $attrs['location'];
+							$this->ports[$this->currentPort]['bindingType']                             = $namespace;
+							$this->bindings[$this->ports[$this->currentPort]['binding']]['bindingType'] = $namespace;
+							$this->bindings[$this->ports[$this->currentPort]['binding']]['endpoint']    = $attrs['location'];
 
 							break;
 					}
@@ -2822,7 +2822,7 @@ class wsdl extends XMLSchema {
 		// end documentation
 		if ($this->documentation) {
 			$this->portTypes[$this->currentPortType][$this->currentPortOperation]['documentation'] = $this->documentation;
-			$this->documentation                                                                   = false;
+			$this->documentation = false;
 		}
 	}
 
@@ -2869,7 +2869,7 @@ class wsdl extends XMLSchema {
 			// binding type of port matches parameter
 			if ($portData['bindingType'] == $bindingType) {
 				// get binding
-				return $this->bindings[ $portData['binding'] ]['operations'];
+				return $this->bindings[$portData['binding']]['operations'];
 			}
 		}
 
@@ -2894,9 +2894,9 @@ class wsdl extends XMLSchema {
 			if ($portData['bindingType'] == $bindingType) {
 				// get binding
 				//foreach($this->bindings[ $portData['binding'] ]['operations'] as $bOperation => $opData) {
-				foreach (array_keys($this->bindings[ $portData['binding'] ]['operations']) as $bOperation) {
+				foreach (array_keys($this->bindings[$portData['binding']]['operations']) as $bOperation) {
 					if ($operation == $bOperation) {
-						$opData =& $this->bindings[ $portData['binding'] ]['operations'][$operation];
+						$opData =& $this->bindings[$portData['binding']]['operations'][$operation];
 
 						return $opData;
 					}
@@ -3188,20 +3188,20 @@ class wsdl extends XMLSchema {
 			$encodingStyle = '';
 		}
 		// get binding
-		$this->bindings[ $this->serviceName . 'Binding' ]['operations'][$name] = array(
-			'name'       => $name,
-			'binding'    => $this->serviceName . 'Binding',
-			'endpoint'   => $this->endpoint,
-			'soapAction' => $soapaction,
-			'style'      => $style,
-			'input'      => array(
+		$this->bindings[$this->serviceName . 'Binding']['operations'][$name] = array(
+			'name'          => $name,
+			'binding'       => $this->serviceName . 'Binding',
+			'endpoint'      => $this->endpoint,
+			'soapAction'    => $soapaction,
+			'style'         => $style,
+			'input'         => array(
 				'use'           => $use,
 				'namespace'     => $namespace,
 				'encodingStyle' => $encodingStyle,
 				'message'       => $name . 'Request',
 				'parts'         => $in,
 			),
-			'output'    => array(
+			'output'        => array(
 				'use'           => $use,
 				'namespace'     => $namespace,
 				'encodingStyle' => $encodingStyle,
@@ -3554,7 +3554,7 @@ class soap_parser extends nusoap_base {
 	 * @access   private
 	 */
 	public function character_data($parser, $data) {
-		$pos = $this->depth_array[$this->depth];
+		$pos                           = $this->depth_array[$this->depth];
 		$this->message[$pos]['cdata'] .= $data;
 		// for doclit
 		if ($this->status == 'header') {

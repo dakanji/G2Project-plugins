@@ -77,8 +77,9 @@ class ImageBlockHelper {
 			return $ret;
 		}
 
-		$blocks    = $blockCount = array();
-		$blockList = explode('|', $params['blocks']);
+		$blocks     = array();
+		$blockCount = array();
+		$blockList  = explode('|', $params['blocks']);
 
 		foreach ($blockList as $block) {
 			if (!isset($blockCount[$block])) {
@@ -404,6 +405,7 @@ class ImageBlockHelper {
 			$data = array(
 				'id' => $id,
 			);
+
 			list($ret, $data['viewCount']) = GalleryCoreApi::fetchItemViewCount($item->getId());
 
 			if ($ret) {
@@ -445,7 +447,8 @@ class ImageBlockHelper {
 				return array($ret, null);
 			}
 			$thumbnail          = isset($thumbnail[$id]) ? $thumbnail[$id] : null;
-			$image              = $source = null;
+			$image              = null;
+			$source             = null;
 			$derivativeParentId = $id;
 
 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem') && ($fullSize || $maxSize)) {

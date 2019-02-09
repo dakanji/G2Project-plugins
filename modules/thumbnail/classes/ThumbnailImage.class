@@ -557,8 +557,8 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 				}
 
 				$html = sprintf('<img src="%s"%s', $src, $sizeStr);
-				unset($params['fallback']);
-				unset($params['forceFullUrl']);
+				unset($params['fallback'], $params['forceFullUrl']);
+
 
 				foreach ($params as $attr => $value) {
 					if (isset($value)) {

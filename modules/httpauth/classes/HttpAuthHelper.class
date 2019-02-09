@@ -290,8 +290,8 @@ class HttpAuthHelper {
 	 */
 	public static function stripHttpAuthFromUrl($url) {
 		$components = parse_url($url);
-		unset($components['user']);
-		unset($components['pass']);
+		unset($components['user'], $components['pass']);
+
 
 		return HttpAuthHelper::_buildUrl($components);
 	}
@@ -329,9 +329,9 @@ class HttpAuthHelper {
 		}
 
 		foreach (array(
-			'httpAuthPlugin' => $enableHttpAuth,
+			'httpAuthPlugin'   => $enableHttpAuth,
 			'serverAuthPlugin' => $enableServerAuth,
-			'useGlobally' => $useGlobally,
+			'useGlobally'      => $useGlobally,
 		) as $key => $value) {
 			$ret = $module->setParameter($key, $value);
 

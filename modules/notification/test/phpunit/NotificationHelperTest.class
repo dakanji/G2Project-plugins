@@ -327,8 +327,8 @@ class NotificationHelperTest extends GalleryTestCase {
 		}
 
 		$expected = array(
-			''                => $this->_module->translate('Select Handler'),
-			'Test:NewHandler' => $this->_module->translate(
+			''                   => $this->_module->translate('Select Handler'),
+			'Test:NewHandler'    => $this->_module->translate(
 				'NotificationHelperTestNotificationHandler New Description'
 			),
 			'Test::EventHandler' => $this->_module->translate(
@@ -667,13 +667,13 @@ class NotificationHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$registry                                                                               =& GalleryFactoryHelper_simple::_getSingleton();
+		$registry =& GalleryFactoryHelper_simple::_getSingleton();
 		$registry['hints']['GalleryEventListener'][GalleryUtilities::strToLower('Test::Event')] = array(
 			'NotificationRouter' => 'TestSubscriptionClass',
 		);
-		$registry['ids']['GalleryEventListener']['NotificationRouter']                = 'TestSubscriptionClass';
-		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']       = 'notification';
-		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
+		$registry['ids']['GalleryEventListener']['NotificationRouter']                          = 'TestSubscriptionClass';
+		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']                 = 'notification';
+		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass']           = 'path';
 
 		$storage =& $gallery->getStorage();
 
@@ -781,13 +781,13 @@ class NotificationHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$registry                                                                               =& GalleryFactoryHelper_simple::_getSingleton();
+		$registry =& GalleryFactoryHelper_simple::_getSingleton();
 		$registry['hints']['GalleryEventListener'][GalleryUtilities::strToLower('Test::Event')] = array(
 			'NotificationRouter' => 'TestSubscriptionClass',
 		);
-		$registry['ids']['GalleryEventListener']['NotificationRouter']                = 'TestSubscriptionClass';
-		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']       = 'notification';
-		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
+		$registry['ids']['GalleryEventListener']['NotificationRouter']                          = 'TestSubscriptionClass';
+		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']                 = 'notification';
+		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass']           = 'path';
 
 		$storage =& $gallery->getStorage();
 

@@ -55,7 +55,7 @@ class CaptchaHelperTest extends GalleryTestCase {
 					'ImageDestroy',
 					'imagesx',
 				),
-				'fail' => array(),
+				'fail'    => array(),
 			),
 			$report
 		);

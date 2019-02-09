@@ -142,10 +142,10 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		if (empty($info['fileformat'])) {
-			unset($info['fileformat']);
-			unset($info['audio']['bitrate_mode']);
-			unset($info['avdataoffset']);
-			unset($info['avdataend']);
+			unset($info['fileformat'], $info['audio']['bitrate_mode'], $info['avdataoffset'], $info['avdataend']);
+
+
+
 
 			return false;
 		}
@@ -365,15 +365,15 @@ class getid3_mp3 extends getid3_handler {
 									default:
 										static $ExpectedResampledRate = array(
 											'phon+/lw/mw-eu/sw|16000' => 16000,
-											'mw-us|24000'             => 24000, // 3.95
-											'mw-us|32000'             => 32000, // 3.93
-											'mw-us|16000'             => 16000, // 3.92
-											'phone|16000'             => 16000,
-											'phone|11025'             => 11025, // 3.94a15
-											'radio|32000'             => 32000, // 3.94a15
-											'fm/radio|32000'          => 32000, // 3.92
-											'fm|32000'                => 32000, // 3.90
-											'voice|32000'             => 32000,
+											'mw-us|24000'    => 24000, // 3.95
+											'mw-us|32000'    => 32000, // 3.93
+											'mw-us|16000'    => 16000, // 3.92
+											'phone|16000'    => 16000,
+											'phone|11025'    => 11025, // 3.94a15
+											'radio|32000'    => 32000, // 3.94a15
+											'fm/radio|32000' => 32000, // 3.92
+											'fm|32000'       => 32000, // 3.90
+											'voice|32000'    => 32000,
 										);
 
 										if (!isset($ExpectedResampledRate[$ExplodedOptions[1] . '|' . $thisfile_mpeg_audio['sample_rate']])) {
@@ -588,11 +588,11 @@ class getid3_mp3 extends getid3_handler {
 			$previousbyteoffset = $offset;
 
 			for ($i = 0; $i < $thisfile_mpeg_audio['VBR_seek_offsets']; $i++) {
-				$Fraunhofer_OffsetN   = getid3_lib::BigEndian2Int(substr($headerstring, $FraunhoferVBROffset, $thisfile_mpeg_audio['VBR_entry_bytes']));
-				$FraunhoferVBROffset += $thisfile_mpeg_audio['VBR_entry_bytes'];
+				$Fraunhofer_OffsetN                              = getid3_lib::BigEndian2Int(substr($headerstring, $FraunhoferVBROffset, $thisfile_mpeg_audio['VBR_entry_bytes']));
+				$FraunhoferVBROffset                            += $thisfile_mpeg_audio['VBR_entry_bytes'];
 				$thisfile_mpeg_audio['VBR_offsets_relative'][$i] = ($Fraunhofer_OffsetN * $thisfile_mpeg_audio['VBR_seek_scale']);
 				$thisfile_mpeg_audio['VBR_offsets_absolute'][$i] = ($Fraunhofer_OffsetN * $thisfile_mpeg_audio['VBR_seek_scale']) + $previousbyteoffset;
-				$previousbyteoffset += $Fraunhofer_OffsetN;
+				$previousbyteoffset                             += $Fraunhofer_OffsetN;
 			}
 		} else {
 			// Xing VBR header is hardcoded 'Xing' at a offset 0x0D (13), 0x15 (21) or 0x24 (36)

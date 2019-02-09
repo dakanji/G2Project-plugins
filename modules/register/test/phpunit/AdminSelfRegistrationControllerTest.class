@@ -101,10 +101,10 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -142,10 +142,10 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
-				'status' => array(
+				'status'   => array(
 					'activated' => $this->_pendingUser->getUserName(),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -177,8 +177,8 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -195,10 +195,10 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
-				'status' => array(
+				'status'   => array(
 					'deleted' => $this->_pendingUser->getUserName(),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -222,8 +222,8 @@ class AdminSelfRegistrationControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'register.AdminSelfRegistration',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);

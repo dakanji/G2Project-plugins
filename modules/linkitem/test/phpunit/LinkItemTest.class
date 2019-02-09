@@ -204,8 +204,8 @@ class LinkItemTest extends GalleryTestCase {
 		$backup = $gallery->_session;
 		// Make sure the redirect has no sessionId in it
 		GalleryUtilities::removeRequestVariable(SESSION_ID_PARAMETER);
-		unset($_COOKIE[SESSION_ID_PARAMETER]);
-		unset($_SERVER['HTTP_COOKIE']);
+		unset($_COOKIE[SESSION_ID_PARAMETER], $_SERVER['HTTP_COOKIE']);
+
 		$session = new GallerySession();
 		$ret     = $session->init();
 
@@ -215,7 +215,7 @@ class LinkItemTest extends GalleryTestCase {
 		$this->assertEquals(false, $session->isUsingCookies(), 'isUsingCookies');
 		$this->assertEquals(SESSION_TEMP_ID, $session->getId(), 'temp session id');
 
-		$gallery->_phpVm            = $phpVm = new LinkItemTestMockPhpVm();
+		$gallery->_phpVm            = $phpVm            = new LinkItemTestMockPhpVm();
 		$_REQUEST['phpVmHeaders']   = array();
 		$_REQUEST['phpVmExitCalls'] = 0;
 

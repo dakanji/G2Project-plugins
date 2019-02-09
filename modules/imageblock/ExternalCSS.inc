@@ -66,8 +66,8 @@ class ExternalCSSController extends GalleryController {
 				'delegate' => array(
 					'view' => empty($frames) ? 'imageblock.ExternalCSS' : 'imageframe.CSS',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 		);
 	}

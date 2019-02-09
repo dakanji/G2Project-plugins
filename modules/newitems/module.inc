@@ -48,7 +48,7 @@ class NewItemsModule extends GalleryModule {
 	public function upgrade($currentVersion, $x1 = null) {
 		if (!isset($currentVersion)) {
 			foreach (array(
-				'days.new' => '7',
+				'days.new'     => '7',
 				'days.updated' => '7',
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);

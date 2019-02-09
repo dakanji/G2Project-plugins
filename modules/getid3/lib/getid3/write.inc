@@ -570,10 +570,7 @@ class getid3_writetags {
 			switch ($ID3v2_framename) {
 				case 'APIC':
 					foreach ($valuearray as $key => $apic_data_array) {
-						if (isset($apic_data_array['data'])
-							&& isset($apic_data_array['picturetypeid'])
-							&& isset($apic_data_array['description'])
-							&& isset($apic_data_array['mime'])
+						if (isset($apic_data_array['data'], $apic_data_array['picturetypeid'], $apic_data_array['description'], $apic_data_array['mime'])
 						) {
 							$tag_data_id3v2['APIC'][] = $apic_data_array;
 						} else {

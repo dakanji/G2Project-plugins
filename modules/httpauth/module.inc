@@ -150,12 +150,12 @@ class HttpAuthModule extends GalleryModule {
 			case null:
 				// Initial install
 				foreach (array(
-					'httpAuthPlugin' => true,
-					'authName' => 'Gallery',
+					'httpAuthPlugin'  => true,
+					'authName'        => 'Gallery',
 					'authtypePattern' => '//',
 					'usernamePattern' => '/^(.+\\\\)?([^\\\\@]+)(@.+)?$/',
 					'usernameReplace' => '$2',
-					'useGlobally' => false,
+					'useGlobally'     => false,
 				) as $key => $value) {
 					$ret = $this->setParameter($key, $value);
 
@@ -359,8 +359,8 @@ class HttpAuthModule extends GalleryModule {
 
 		// Pass the Authorization header to Gallery in a request variable
 		$rules['authorization'] = array(
-			'comment'  => $this->translate('Authorization Header'),
-			'help'     => $this->translate(
+			'comment'    => $this->translate('Authorization Header'),
+			'help'       => $this->translate(
 				'Pass the Authorization header to Gallery in a request variable.'
 			),
 			'conditions' => array(
@@ -375,11 +375,11 @@ class HttpAuthModule extends GalleryModule {
 					) . '=',
 				),
 			),
-			'options'  => array(
+			'options'    => array(
 				'baseUrl' => '%{REQUEST_URI}',
 			),
-			'flags'    => array('QSA'),
-			'keywords' => array(
+			'flags'      => array('QSA'),
+			'keywords'   => array(
 				'authorization' => array(
 					'pattern' => '(.+)',
 					'help'    => $this->translate('Authorization header.'),

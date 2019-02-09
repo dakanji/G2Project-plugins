@@ -58,7 +58,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 		$this->_templateAdapter =& $gallery->getTemplateAdapter();
 		$this->_storage         =& $gallery->getStorage();
 
-		$status               = $error = array();
+		$status               = $error               = array();
 		$this->_addController =& $addController;
 
 		list($ret, $hasPermission) = $this->isAppropriate();
@@ -194,7 +194,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 			}
 
 			// Start adding the items
-			$this->_addedItems    = $i = $this->_lastPostProcessed = 0;
+			$this->_addedItems    = $i    = $this->_lastPostProcessed    = 0;
 			$this->_progressBatch = max(1, min(5, $this->_totalItems));
 			$this->_processBatch  = 50;
 

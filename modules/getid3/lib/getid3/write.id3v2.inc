@@ -1635,8 +1635,8 @@ class getid3_write_id3v2 {
 			foreach ($this->tag_data as $frame_name => $frame_rawinputdata) {
 				foreach ($frame_rawinputdata as $irrelevantindex => $source_data_array) {
 					if (getid3_id3v2::IsValidID3v2FrameName($frame_name, $this->majorversion)) {
-						unset($frame_length);
-						unset($frame_flags);
+						unset($frame_length, $frame_flags);
+
 						$frame_data = false;
 
 						if ($this->ID3v2FrameIsAllowed($frame_name, $source_data_array)) {
@@ -1693,13 +1693,10 @@ class getid3_write_id3v2 {
 					} else {
 						// ignore any invalid frame names, including 'title', 'header', etc
 						$this->warnings[] = 'Ignoring invalid ID3v2 frame type: "' . $frame_name . '"';
-						unset($frame_name);
-						unset($frame_length);
-						unset($frame_flags);
-						unset($frame_data);
+						unset($frame_name, $frame_length, $frame_flags, $frame_data);
 					}
 
-					if (isset($frame_name) && isset($frame_length) && isset($frame_flags) && isset($frame_data)) {
+					if (isset($frame_name, $frame_length, $frame_flags, $frame_data)) {
 						$tagstring .= $frame_name . $frame_length . $frame_flags . $frame_data;
 					}
 				}

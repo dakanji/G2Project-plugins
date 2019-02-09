@@ -83,7 +83,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 						'arg1' => $languageName,
 					)
 				),
-				'enabled' => 1,
+				'enabled'     => 1,
 			),
 			'summary' => array(
 				'description' => $module->translate(
@@ -92,7 +92,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 						'arg1' => $languageName,
 					)
 				),
-				'enabled' => 1,
+				'enabled'     => 1,
 			),
 			'description' => array(
 				'description' => $module->translate(
@@ -101,7 +101,7 @@ class MultiLangSearch extends GallerySearchInterface_1_0 {
 						'arg1' => $languageName,
 					)
 				),
-				'enabled' => 1,
+				'enabled'     => 1,
 			),
 		);
 

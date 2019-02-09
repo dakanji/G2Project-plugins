@@ -132,11 +132,11 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.Upload',
 				),
-				'status' => array(
+				'status'   => array(
 					'success'   => NOKIAUPLOAD_ERR_UNKNOWN,
 					'spaceleft' => 10000000,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'missing parameter'
@@ -154,11 +154,11 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.Upload',
 				),
-				'status' => array(
+				'status'   => array(
 					'success'   => NOKIAUPLOAD_ERR_TOOBIG,
 					'spaceleft' => 10000000,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'file size'
@@ -177,11 +177,11 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.Upload',
 				),
-				'status' => array(
+				'status'   => array(
 					'success'   => NOKIAUPLOAD_ERR_UNKNOWN,
 					'spaceleft' => 10000000,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'bad parent'
@@ -200,11 +200,11 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.Upload',
 				),
-				'status' => array(
+				'status'   => array(
 					'success'   => NOKIAUPLOAD_ERR_UNKNOWN,
 					'spaceleft' => 10000000,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'permission'
@@ -223,11 +223,11 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.Upload',
 				),
-				'status' => array(
+				'status'   => array(
 					'success'   => NOKIAUPLOAD_ERR_NOERR,
 					'spaceleft' => 10000000,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'valid request'

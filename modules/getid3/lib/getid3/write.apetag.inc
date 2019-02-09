@@ -34,7 +34,7 @@ class getid3_write_apetag {
 		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
 
-		if (isset($ThisFileInfo['ape']['tag_offset_start']) && isset($ThisFileInfo['lyrics3']['tag_offset_end'])) {
+		if (isset($ThisFileInfo['ape']['tag_offset_start'], $ThisFileInfo['lyrics3']['tag_offset_end'])) {
 			if ($ThisFileInfo['ape']['tag_offset_start'] >= $ThisFileInfo['lyrics3']['tag_offset_end']) {
 				// Current APE tag between Lyrics3 and ID3v1/EOF
 				// This break Lyrics3 functionality
@@ -102,7 +102,7 @@ class getid3_write_apetag {
 		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
 
-		if (isset($ThisFileInfo['ape']['tag_offset_start']) && isset($ThisFileInfo['ape']['tag_offset_end'])) {
+		if (isset($ThisFileInfo['ape']['tag_offset_start'], $ThisFileInfo['ape']['tag_offset_end'])) {
 			if (is_writable($this->filename) && is_file($this->filename) && ($fp = fopen($this->filename, 'a+b'))) {
 				flock($fp, LOCK_EX);
 				$oldignoreuserabort = ignore_user_abort(true);

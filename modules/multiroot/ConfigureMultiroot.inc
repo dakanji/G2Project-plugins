@@ -53,7 +53,7 @@ class ConfigureMultirootController extends GalleryController {
 		return array(
 			null,
 			array(
-				$method => array(
+				$method  => array(
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'multiroot.ConfigureMultiroot',
 				),
@@ -83,7 +83,7 @@ class ConfigureMultirootView extends GalleryView {
 
 		if ($form['formName'] != 'ConfigureMultiroot') {
 			$form['formName'] = 'ConfigureMultiroot';
-			$form['viewUri']  = $form['viewRootId'] = $form['guestUser'] = '';
+			$form['viewUri']  = $form['viewRootId']  = $form['guestUser']  = '';
 		}
 
 		$multiroot            = array();
@@ -134,8 +134,8 @@ class ConfigureMultirootView extends GalleryView {
 						strtr(
 							$match[0],
 							array(
-								$multiroot['baseUriDir'] => $multiroot['viewBase'],
-								$baseFile                => $viewFile,
+								$multiroot['baseUriDir']           => $multiroot['viewBase'],
+								$baseFile                          => $viewFile,
 								str_replace('.', '\\.', $baseFile) => str_replace('.', '\\.', $viewFile),
 							)
 						)

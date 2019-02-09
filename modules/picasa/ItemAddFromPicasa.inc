@@ -34,7 +34,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		GalleryCoreApi::requireOnce('modules/picasa/classes/Picasa2DataParser.class');
 		GalleryCoreApi::requireOnce('modules/picasa/classes/PicasaImportHelper.class');
 		$platform =& $gallery->getPlatform();
-		$status   = $error = array();
+		$status   = $error   = array();
 
 		if (empty($form['name']['picasaZipPath'])) {
 			// No filename was entered

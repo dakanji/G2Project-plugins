@@ -150,7 +150,7 @@ class CustomFieldItemEdit extends ItemEditPlugin {
 
 				foreach (array(
 					'common' => 1,
-					$set => 1,
+					$set     => 1,
 				) as $s => $tmp) {
 					foreach ($param[$item->getId()][$s] as $it) {
 						if (!empty($it['choices'])) {

@@ -29,7 +29,7 @@ class LinksInTheHeadTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'linksinthehead.LinksInTheHeadSiteAdmin');
 	}
 
-	public function setUp($x1 = NULL) {
+	public function setUp($x1 = null) {
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -57,8 +57,8 @@ class LinksInTheHeadTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'linksinthehead.LinksInTheHeadSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -79,21 +79,21 @@ class LinksInTheHeadTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'linksinthehead.LinksInTheHeadSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
 
-		list ($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
+		list($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
 
 		if ($ret) {
 			return array($ret, null);
 		}
 		$this->assertEquals(count($links_in_the_head), 2);
+
 		return array(null, null);
 	}
 }
-

@@ -98,14 +98,14 @@ class getid3_mpeg extends getid3_handler {
 					$bitstream       = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 4, 8));
 					$bitstreamoffset = 0;
 
-					$info['mpeg']['video']['raw']['horizontal_size_value']       = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for horizontal frame size. Note: horizontal_size_extension, if present, will add 2 most-significant bits to this value
-					$info['mpeg']['video']['raw']['vertical_size_value']         = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for vertical frame size.   Note: vertical_size_extension,   if present, will add 2 most-significant bits to this value
-					$info['mpeg']['video']['raw']['aspect_ratio_information']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for aspect_ratio_information
-					$info['mpeg']['video']['raw']['frame_rate_code']             = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for Frame Rate id code
-					$info['mpeg']['video']['raw']['bitrate']                     = self::readBitsFromStream($bitstream, $bitstreamoffset, 18); // 18 bits for bit_rate_value (18 set bits = VBR, otherwise bitrate = this value * 400)
-					$marker_bit                                                  = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
-					$info['mpeg']['video']['raw']['vbv_buffer_size']             = self::readBitsFromStream($bitstream, $bitstreamoffset, 10); // 10 bits vbv_buffer_size_value
-					$info['mpeg']['video']['raw']['constrained_param_flag']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: constrained_param_flag
+					$info['mpeg']['video']['raw']['horizontal_size_value']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for horizontal frame size. Note: horizontal_size_extension, if present, will add 2 most-significant bits to this value
+					$info['mpeg']['video']['raw']['vertical_size_value']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for vertical frame size.   Note: vertical_size_extension,   if present, will add 2 most-significant bits to this value
+					$info['mpeg']['video']['raw']['aspect_ratio_information'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for aspect_ratio_information
+					$info['mpeg']['video']['raw']['frame_rate_code']          = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for Frame Rate id code
+					$info['mpeg']['video']['raw']['bitrate']                  = self::readBitsFromStream($bitstream, $bitstreamoffset, 18); // 18 bits for bit_rate_value (18 set bits = VBR, otherwise bitrate = this value * 400)
+					$marker_bit                                             = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
+					$info['mpeg']['video']['raw']['vbv_buffer_size']        = self::readBitsFromStream($bitstream, $bitstreamoffset, 10); // 10 bits vbv_buffer_size_value
+					$info['mpeg']['video']['raw']['constrained_param_flag'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: constrained_param_flag
 					$info['mpeg']['video']['raw']['load_intra_quantiser_matrix'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: load_intra_quantiser_matrix
 
 					if ($info['mpeg']['video']['raw']['load_intra_quantiser_matrix']) {
@@ -163,11 +163,11 @@ class getid3_mpeg extends getid3_handler {
 							$info['mpeg']['video']['raw']['horizontal_size_extension']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 2); //  2 bits for horizontal_size_extension
 							$info['mpeg']['video']['raw']['vertical_size_extension']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 2); //  2 bits for vertical_size_extension
 							$info['mpeg']['video']['raw']['bit_rate_extension']           = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for bit_rate_extension
-							$marker_bit                                                   = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
-							$info['mpeg']['video']['raw']['vbv_buffer_size_extension']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 8); //  8 bits for vbv_buffer_size_extension
-							$info['mpeg']['video']['raw']['low_delay']                    = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: low_delay
-							$info['mpeg']['video']['raw']['frame_rate_extension_n']       = self::readBitsFromStream($bitstream, $bitstreamoffset, 2); //  2 bits for frame_rate_extension_n
-							$info['mpeg']['video']['raw']['frame_rate_extension_d']       = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for frame_rate_extension_d
+							$marker_bit = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
+							$info['mpeg']['video']['raw']['vbv_buffer_size_extension'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 8); //  8 bits for vbv_buffer_size_extension
+							$info['mpeg']['video']['raw']['low_delay']                 = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: low_delay
+							$info['mpeg']['video']['raw']['frame_rate_extension_n']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 2); //  2 bits for frame_rate_extension_n
+							$info['mpeg']['video']['raw']['frame_rate_extension_d']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for frame_rate_extension_d
 
 							$info['video']['resolution_x']          = ($info['mpeg']['video']['raw']['horizontal_size_extension'] << 12) | $info['mpeg']['video']['raw']['horizontal_size_value'];
 							$info['video']['resolution_y']          = ($info['mpeg']['video']['raw']['vertical_size_extension'] << 12)   | $info['mpeg']['video']['raw']['vertical_size_value'];
@@ -186,8 +186,8 @@ class getid3_mpeg extends getid3_handler {
 								$info['mpeg']['video']['raw']['matrix_coefficients']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 8); //  8 bits for matrix_coefficients
 							}
 							$info['mpeg']['video']['raw']['display_horizontal_size'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for display_horizontal_size
-							$marker_bit                                              = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
-							$info['mpeg']['video']['raw']['display_vertical_size']   = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for display_vertical_size
+							$marker_bit                                            = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
+							$info['mpeg']['video']['raw']['display_vertical_size'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for display_vertical_size
 
 							$info['mpeg']['video']['video_format'] = self::videoFormatTextLookup($info['mpeg']['video']['raw']['video_format']);
 
@@ -201,12 +201,12 @@ class getid3_mpeg extends getid3_handler {
 							$info['mpeg']['video']['raw']['layer_id']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for layer_id
 							if ($info['mpeg']['video']['raw']['scalable_mode'] == 1) { // "spatial scalability"
 								$info['mpeg']['video']['raw']['lower_layer_prediction_horizontal_size'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for lower_layer_prediction_horizontal_size
-								$marker_bit                                                             = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
-								$info['mpeg']['video']['raw']['lower_layer_prediction_vertical_size']   = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for lower_layer_prediction_vertical_size
-								$info['mpeg']['video']['raw']['horizontal_subsampling_factor_m']        = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for horizontal_subsampling_factor_m
-								$info['mpeg']['video']['raw']['horizontal_subsampling_factor_n']        = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for horizontal_subsampling_factor_n
-								$info['mpeg']['video']['raw']['vertical_subsampling_factor_m']          = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for vertical_subsampling_factor_m
-								$info['mpeg']['video']['raw']['vertical_subsampling_factor_n']          = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for vertical_subsampling_factor_n
+								$marker_bit = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
+								$info['mpeg']['video']['raw']['lower_layer_prediction_vertical_size'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for lower_layer_prediction_vertical_size
+								$info['mpeg']['video']['raw']['horizontal_subsampling_factor_m']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for horizontal_subsampling_factor_m
+								$info['mpeg']['video']['raw']['horizontal_subsampling_factor_n']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for horizontal_subsampling_factor_n
+								$info['mpeg']['video']['raw']['vertical_subsampling_factor_m']        = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for vertical_subsampling_factor_m
+								$info['mpeg']['video']['raw']['vertical_subsampling_factor_n']        = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for vertical_subsampling_factor_n
 							} elseif ($info['mpeg']['video']['raw']['scalable_mode'] == 3) { // "temporal scalability"
 								$info['mpeg']['video']['raw']['picture_mux_enable'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: picture_mux_enable
 								if ($info['mpeg']['video']['raw']['picture_mux_enable']) {

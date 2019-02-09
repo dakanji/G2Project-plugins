@@ -102,7 +102,7 @@ class ItemAddModule extends GalleryModule {
 
 		foreach (array(
 			'fromserver' => 'on',
-			'fromweb' => 'admin',
+			'fromweb'    => 'admin',
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);

@@ -55,8 +55,8 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -74,10 +74,10 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -103,10 +103,10 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'usingGalleryId' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -140,8 +140,8 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(
+				'status'   => array(),
+				'error'    => array(
 					'form[error][affiliateId]',
 					'form[error][affiliateIdPass]',
 				),
@@ -162,8 +162,8 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'fotokasten.FotokastenSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(
+				'status'   => array(),
+				'error'    => array(
 					'form[error][affiliateId]',
 					'form[error][affiliateIdPass]',
 				),

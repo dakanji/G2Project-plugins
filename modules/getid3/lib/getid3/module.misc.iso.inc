@@ -72,8 +72,8 @@ class getid3_iso extends getid3_handler {
 
 		if ($thisfile_iso_primaryVD_raw['standard_identifier'] != 'CD001') {
 			$info['error'][] = 'Expected "CD001" at offset (' . ($thisfile_iso_primaryVD['offset'] + 1) . '), found "' . $thisfile_iso_primaryVD_raw['standard_identifier'] . '" instead';
-			unset($info['fileformat']);
-			unset($info['iso']);
+			unset($info['fileformat'], $info['iso']);
+
 
 			return false;
 		}
@@ -137,7 +137,7 @@ class getid3_iso extends getid3_handler {
 		// ie 12345 == 0x3039  is stored as $39 $30 $30 $39 in a 4-byte field
 
 		// shortcuts
-		$info                                                  = &$this->getid3->info;
+		$info = &$this->getid3->info;
 		$info['iso']['supplementary_volume_descriptor']['raw'] = array();
 		$thisfile_iso_supplementaryVD                          = &$info['iso']['supplementary_volume_descriptor'];
 		$thisfile_iso_supplementaryVD_raw                      = &$thisfile_iso_supplementaryVD['raw'];
@@ -147,8 +147,8 @@ class getid3_iso extends getid3_handler {
 
 		if ($thisfile_iso_supplementaryVD_raw['standard_identifier'] != 'CD001') {
 			$info['error'][] = 'Expected "CD001" at offset (' . ($thisfile_iso_supplementaryVD['offset'] + 1) . '), found "' . $thisfile_iso_supplementaryVD_raw['standard_identifier'] . '" instead';
-			unset($info['fileformat']);
-			unset($info['iso']);
+			unset($info['fileformat'], $info['iso']);
+
 
 			return false;
 		}
@@ -255,9 +255,9 @@ class getid3_iso extends getid3_handler {
 			$thisfile_iso_pathtable_directories_current['location_logical'] = getid3_lib::LittleEndian2Int(substr($info['iso']['path_table']['raw'], $offset, 4));
 			$offset += 4;
 			$thisfile_iso_pathtable_directories_current['parent_directory'] = getid3_lib::LittleEndian2Int(substr($info['iso']['path_table']['raw'], $offset, 2));
-			$offset += 2;
+			$offset                                            += 2;
 			$thisfile_iso_pathtable_directories_current['name'] = substr($info['iso']['path_table']['raw'], $offset, $thisfile_iso_pathtable_directories_current['length']);
-			$offset += $thisfile_iso_pathtable_directories_current['length'] + ($thisfile_iso_pathtable_directories_current['length'] % 2);
+			$offset                                            += $thisfile_iso_pathtable_directories_current['length'] + ($thisfile_iso_pathtable_directories_current['length'] % 2);
 
 			$thisfile_iso_pathtable_directories_current['name_ascii'] = getid3_lib::iconv_fallback($TextEncoding, $info['encoding'], $thisfile_iso_pathtable_directories_current['name']);
 

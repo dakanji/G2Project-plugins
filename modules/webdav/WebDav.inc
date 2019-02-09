@@ -164,8 +164,8 @@ class WebDavController extends GalleryController {
 						'delegate' => array(
 							'view' => 'core.ShowItem',
 						),
-						'status' => array(),
-						'error'  => array(),
+						'status'   => array(),
+						'error'    => array(),
 					),
 				);
 			}
@@ -176,8 +176,8 @@ class WebDavController extends GalleryController {
 					'delegate' => array(
 						'view' => 'core.DownloadItem',
 					),
-					'status' => array(),
-					'error'  => array(),
+					'status'   => array(),
+					'error'    => array(),
 				),
 			);
 		}
@@ -222,8 +222,8 @@ class WebDavController extends GalleryController {
 				'delegate' => array(
 					'view' => 'webdav.WebDav',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 		);
 	}

@@ -52,8 +52,7 @@ class ReplicaModule extends GalleryModule {
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 
-			if ($item->getIsLinkable() && isset($wantsDetailedLinks[$itemId])
-				&& isset($permissions[$itemId]['core.viewSource'])
+			if ($item->getIsLinkable() && isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['core.viewSource'])
 			) {
 				if (!isset($count)) {
 					list($ret, $count) = GalleryCoreApi::fetchItemIdCount(

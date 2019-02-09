@@ -75,8 +75,8 @@ class AdminDigibugController extends GalleryController {
 
 				if ($form['digibugIdChoice'] == 'gallery') {
 					foreach (array(
-						'digibugIdChoice' => 'gallery',
-						'digibugCustomerId' => '3153',
+						'digibugIdChoice'    => 'gallery',
+						'digibugCustomerId'  => '3153',
 						'digibugPricelistId' => '8491',
 					) as $key => $value) {
 						$ret = $module->setParameter($key, $value);

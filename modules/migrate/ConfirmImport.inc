@@ -148,7 +148,7 @@ class ConfirmImportController extends GalleryController {
 		 */
 
 		$permissionTranslation = array(
-			'canRead'  => array(
+			'canRead'           => array(
 				'core.view',
 				'core.viewResizes',
 			),
@@ -361,7 +361,7 @@ class ConfirmImportController extends GalleryController {
 		// Go through the list of selected gallery1 albums to import
 
 		$totalItemsToImport = 0;
-		$albumfields        = $albumHighlight = array();
+		$albumfields        = $albumHighlight        = array();
 
 		foreach (array_keys($form['sourceAlbums']) as $sourceAlbumName) {
 			/*
@@ -942,7 +942,7 @@ class ConfirmImportController extends GalleryController {
 							return $ret;
 						}
 					}
-				} elseif (isset($params['rows']) && isset($params['columns'])
+				} elseif (isset($params['rows'], $params['columns'])
 					&& ($params['rows'] != $album['rows']
 					|| $params['columns'] != $album['cols'])
 				) {
@@ -1200,10 +1200,7 @@ class ConfirmImportController extends GalleryController {
 						}
 					}
 
-					if (isset($importAlbumItem->image->thumb_x)
-						&& isset($importAlbumItem->image->thumb_y)
-						&& isset($importAlbumItem->image->thumb_width)
-						&& isset($importAlbumItem->image->thumb_height)
+					if (isset($importAlbumItem->image->thumb_x, $importAlbumItem->image->thumb_y, $importAlbumItem->image->thumb_width, $importAlbumItem->image->thumb_height)
 						&& $importAlbumItem->image->thumb_width > 0
 						&& $importAlbumItem->image->thumb_height > 0
 					) {
@@ -1311,7 +1308,7 @@ class ConfirmImportController extends GalleryController {
 						}
 					}
 
-					$validItemUID      = $itemUID = false;
+					$validItemUID      = $itemUID      = false;
 					$defaultToAlbumUID = true;
 
 					if (isset($importAlbumItem->owner)) {
@@ -1820,13 +1817,13 @@ class ConfirmImportController extends GalleryController {
 
 		if (!isset($patterns)) {
 			$patterns = array(
-				'#<br\s*(/?)>#i'                                                                 => "\n",
-				'#<(/?)(b|strong)>#i'                                                            => '[$1b]',
-				'#<(/?)(i|em)>#i'                                                                => '[$1i]',
-				'#<(/?)ul>#i'                                                                    => '[$1list]',
-				'#<li>#i'                                                                        => '[*]',
-				'#</li>#i'                                                                       => '',
-				'#<img[^>]*\s+src\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>#is'               => '[img]$1[/img]',
+				'#<br\s*(/?)>#i'      => "\n",
+				'#<(/?)(b|strong)>#i' => '[$1b]',
+				'#<(/?)(i|em)>#i'     => '[$1i]',
+				'#<(/?)ul>#i'         => '[$1list]',
+				'#<li>#i'             => '[*]',
+				'#</li>#i'            => '',
+				'#<img[^>]*\s+src\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>#is' => '[img]$1[/img]',
 				'#<a[^>]*\s+href\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>\s*(.*?)\s*</a>#is' => '[url=$1]$2[/url]',
 			);
 			$match    = array_keys($patterns);
@@ -1943,7 +1940,7 @@ class ConfirmImportView extends GalleryView {
 		}
 
 		$illegalAlbumNames = $existingAlbums = $titles = array();
-		$albumValidOwner   = $albumOwnerUserName = $albumOwnerUid = $albumfields = array();
+		$albumValidOwner   = $albumOwnerUserName   = $albumOwnerUid   = $albumfields   = array();
 
 		if (!isset($form['sourceAlbums'])) {
 			$form['sourceAlbums'] = array();

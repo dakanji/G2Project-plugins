@@ -39,7 +39,7 @@ class MP3AudioOption extends ItemAddOption {
 	public function handleRequestAfterAdd($form, $items) {
 		global $gallery;
 		$storage =& $gallery->getStorage();
-		$errors  = $mp3Items = array();
+		$errors  = $mp3Items  = array();
 
 		foreach ($items as $item) {
 			if (GalleryUtilities::isA($item, 'GalleryDataItem')

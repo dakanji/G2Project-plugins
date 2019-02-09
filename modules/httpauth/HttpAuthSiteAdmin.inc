@@ -65,8 +65,8 @@ class HttpAuthSiteAdminController extends GalleryController {
 							'view'    => 'core.SiteAdmin',
 							'subView' => 'httpauth.HttpAuthSiteAdmin',
 						),
-						'error'  => $error,
-						'status' => $status,
+						'error'    => $error,
+						'status'   => $status,
 					),
 				);
 			}
@@ -124,8 +124,8 @@ class HttpAuthSiteAdminController extends GalleryController {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'httpauth.HttpAuthSiteAdmin',
 				),
-				'error'  => $error,
-				'status' => $status,
+				'error'    => $error,
+				'status'   => $status,
 			),
 		);
 	}
