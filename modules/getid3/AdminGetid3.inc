@@ -429,7 +429,7 @@ class AdminGetid3View extends GalleryView {
 		$availableList = array();
 
 		foreach ($getid3Keys as $key => $data) {
-			if (isset($summaryList[$key]) && isset($detailedList[$key])) {
+			if (isset($summaryList[$key], $detailedList[$key])) {
 				continue;
 			}
 

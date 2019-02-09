@@ -96,12 +96,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'added' => array(
 						'summary' => 2,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -129,12 +129,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'removed' => array(
 						'summary' => 2,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -160,8 +160,8 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(),
-				'error'  => array('form[error][summary][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][summary][missing]'),
 			),
 			$results
 		);
@@ -179,12 +179,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'movedUp' => array(
 						'summary' => 2,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -212,8 +212,8 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(),
-				'error'  => array('form[error][summary][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][summary][missing]'),
 			),
 			$results
 		);
@@ -231,12 +231,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'movedDown' => array(
 						'summary' => 2,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -264,8 +264,8 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(),
-				'error'  => array('form[error][summary][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][summary][missing]'),
 			),
 			$results
 		);
@@ -287,12 +287,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'restored' => array(
 						'summary' => 1,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -322,12 +322,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'added' => array(
 						'detailed' => 2,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -355,12 +355,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'removed' => array(
 						'detailed' => 2,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -386,8 +386,8 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(),
-				'error'  => array('form[error][detailed][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][detailed][missing]'),
 			),
 			$results
 		);
@@ -406,12 +406,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'movedUp' => array(
 						'detailed' => 3,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -438,8 +438,8 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(),
-				'error'  => array('form[error][detailed][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][detailed][missing]'),
 			),
 			$results
 		);
@@ -458,12 +458,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'movedDown' => array(
 						'detailed' => 3,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -490,8 +490,8 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(),
-				'error'  => array('form[error][detailed][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][detailed][missing]'),
 			),
 			$results
 		);
@@ -513,12 +513,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'getid3.AdminGetid3',
 				),
-				'status' => array(
+				'status'   => array(
 					'restored' => array(
 						'detailed' => 1,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);

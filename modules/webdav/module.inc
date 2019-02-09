@@ -383,13 +383,13 @@ class WebDavModule extends GalleryModule {
 
 		// Redirect OPTIONS requests so we can set DAV headers
 		$rules['options'] = array(
-			'comment' => $this->translate('OPTIONS Requests'),
-			'help'    => $this->translate(
+			'comment'    => $this->translate('OPTIONS Requests'),
+			'help'       => $this->translate(
 				'Redirect OPTIONS requests so we can set DAV headers.'
 			),
 
 			// Use trailing '/' to avoid 301 Moved Permanently
-			'match'   => array(
+			'match'      => array(
 				'href' => 'modules/webdav/data/options/',
 			),
 			'conditions' => array(

@@ -51,7 +51,7 @@ class DcrawToolkitHelper {
 					'description' => $gallery->i18n(
 						'Get the width and height of the image'
 					),
-					'mimeTypes' => 'image/x-dcraw',
+					'mimeTypes'   => 'image/x-dcraw',
 				),
 			),
 		);

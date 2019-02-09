@@ -90,7 +90,7 @@ class SizeLimitOption extends ItemEditOption {
 	public static function handleRequestAfterEdit($form, &$item, &$preferred) {
 		global $gallery;
 
-		$error       = $warning = array();
+		$error       = $warning       = array();
 		$setOriginal = false;
 
 		if (empty($error) && isset($form['changeInDescendents']['sizelimit'])) {
@@ -287,7 +287,7 @@ class SizeLimitOption extends ItemEditOption {
 	public static function _applyToDescendents($form, $album) {
 		global $gallery;
 		$templateAdapter =& $gallery->getTemplateAdapter();
-		$errors          = $warnings = array();
+		$errors          = $warnings          = array();
 
 		if ($setDimensions = ($form['SizeLimitOption']['dimensionChoice'] == 'explicit')) {
 			$dimensions = array(

@@ -39,7 +39,7 @@ class FlashVideoOption extends ItemAddOption {
 	public function handleRequestAfterAdd($form, $items) {
 		global $gallery;
 		$storage =& $gallery->getStorage();
-		$errors  = $flvItems = array();
+		$errors  = $flvItems  = array();
 
 		foreach ($items as $item) {
 			if (GalleryUtilities::isA($item, 'GalleryMovieItem')

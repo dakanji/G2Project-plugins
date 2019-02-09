@@ -48,20 +48,25 @@ class EventHandlerTest extends GalleryTestCase {
 	public function testCopy() {
 		$event = GalleryCoreApi::newEvent('GalleryEntity::save');
 
-		foreach (array('width' => 768, 'height' => 1024, 'size' => 1000, 'keepOriginal' => 1)
-		as $key => $value) {
+		foreach (array(
+			'width' => 768,
+			'height' => 1024,
+			'size' => 1000,
+			'keepOriginal' => 1,
+		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'sizelimit',
-		$key,
-			$value,
-			$this->_album->getId()
-		);
+				'module',
+				'sizelimit',
+				$key,
+				$value,
+				$this->_album->getId()
+			);
 
 			if ($ret) {
 				return $ret;
 			}
 		}
+
 		list($ret, $this->_childAlbum) = $this->_createRandomAlbum($this->_album->getId());
 
 		if ($ret) {
@@ -74,16 +79,26 @@ class EventHandlerTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters(
-		'module',
-		'sizelimit',
-		$this->_album->getId()
-	);
+			'module',
+			'sizelimit',
+			$this->_album->getId()
+		);
 
 		if ($ret) {
 			return $ret;
 		}
-		$this->assertEquals(array('width' => 768, 'height' => 1024, 'size' => 1000,
-		'keepOriginal'                    => 1, ), $params, 'Copied Album');
+
+		$this->assertEquals(
+			array(
+				'width'        => 768,
+				'height'       => 1024,
+				'size'         => 1000,
+				'keepOriginal' => 1,
+			),
+			$params,
+			'Copied Album'
+		);
 	}
 }

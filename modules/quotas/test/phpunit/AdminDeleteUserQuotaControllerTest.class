@@ -58,8 +58,8 @@ class AdminDeleteUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -81,10 +81,10 @@ class AdminDeleteUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(
+				'status'   => array(
 					'deletedUser' => $this->_user->getUserName(),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Failed to delete user quota'
@@ -120,8 +120,8 @@ class AdminDeleteUserQuotaControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminDeleteUserQuota',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);

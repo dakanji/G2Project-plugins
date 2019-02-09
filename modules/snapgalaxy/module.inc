@@ -145,8 +145,7 @@ class SnapGalaxyModule extends GalleryModule {
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 
-			if (isset($wantsDetailedLinks[$itemId])
-				&& isset($permissions[$itemId]['snapgalaxy.print'])
+			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['snapgalaxy.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				$links[$itemId][] = array(

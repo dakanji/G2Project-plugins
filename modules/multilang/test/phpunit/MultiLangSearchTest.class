@@ -193,7 +193,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled' => 1,
+						'enabled'     => 1,
 					),
 					'summary' => array(
 						'description' => $this->_module->translate(
@@ -202,7 +202,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled' => 1,
+						'enabled'     => 1,
 					),
 					'description' => array(
 						'description' => $this->_module->translate(
@@ -211,7 +211,7 @@ class MultiLangSearchTest extends GalleryTestCase {
 								'arg1' => $defaultLanguage == 'de_DE' ? 'Fran&#231;ais' : 'Deutsch',
 							)
 						),
-						'enabled' => 1,
+						'enabled'     => 1,
 					),
 				),
 			),

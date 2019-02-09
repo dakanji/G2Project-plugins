@@ -120,7 +120,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		foreach (array(
 			'httpAuthPlugin' => true,
-			'useGlobally' => true,
+			'useGlobally'    => true,
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'httpauth', $key, $value);
 
@@ -138,9 +138,9 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		$this->_headers = array();
 
 		// Reset auth related server and request variables
-		unset($_SERVER['PHP_AUTH_USER']);
-		unset($_SERVER['PHP_AUTH_PW']);
-		unset($_SERVER['REMOTE_USER']);
+		unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $_SERVER['REMOTE_USER']);
+
+
 		GalleryUtilities::removeRequestVariable('authorization');
 
 		$this->_registerTestEventListener('Gallery::ActivatePlugin', $this->_module);

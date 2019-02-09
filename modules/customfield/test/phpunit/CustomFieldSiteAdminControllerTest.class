@@ -62,8 +62,8 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -79,10 +79,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'added' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Add Common Field'
@@ -98,10 +98,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'added' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Add Another Common'
@@ -117,10 +117,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'added' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Add Album Field'
@@ -136,10 +136,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'added' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Add Photo Field'
@@ -156,12 +156,12 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'error' => array(
 						'duplicate' => 1,
 					),
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Add Duplicate'
@@ -179,10 +179,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'picklist' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Set Picklist'
@@ -200,10 +200,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'picklist' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Update Picklist'
@@ -250,10 +250,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Update Display'
@@ -294,10 +294,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'moved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Move Field'
@@ -314,10 +314,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'moved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Move Field'
@@ -335,10 +335,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'removed' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Remove Field'
@@ -379,10 +379,10 @@ class CustomFieldSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'customfield.CustomFieldSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'picklist' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'Remove Picklist'

@@ -66,7 +66,7 @@ class PasswordOption extends ItemEditOption {
 	 * @see ItemEditOption::handleRequestAfterEdit
 	 */
 	public static function handleRequestAfterEdit($form, &$item, &$preferred) {
-		$error          = $warning = array();
+		$error          = $warning          = array();
 		$useProgressBar = $item->getCanContainChildren();
 
 		$ret = GalleryCoreApi::assertHasItemPermission($item->getId(), 'core.changePermissions');

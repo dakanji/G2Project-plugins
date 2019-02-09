@@ -69,6 +69,6 @@ class ShutterflyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 	);
 
 		return array(null, array('view' => 'shutterfly.PrintPhotos', 'returnUrl' => $returnUrl,
-				 'authToken'                  => $session->getAuthToken(), ));
+				 'authToken'            => $session->getAuthToken(), ));
 	}
 }

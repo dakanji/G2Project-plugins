@@ -166,7 +166,7 @@ class SquareThumbToolkit extends GalleryToolkit {
 			if ($ret) {
 				return array($ret, null, null);
 			}
-			$subContext['next.toolkit']        = $subContext['next.operation'] = null;
+			$subContext['next.toolkit']        = $subContext['next.operation']        = null;
 			list($ret, $mimeType, $subContext) = $toolkit->performOperation(
 				$mimeType,
 				'thumbnail',

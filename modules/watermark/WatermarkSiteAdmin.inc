@@ -54,7 +54,7 @@ class WatermarkSiteAdminController extends GalleryController {
 			);
 		} elseif (isset($form['action']['add'])) {
 			$status['addError'] = 1;
-		} elseif (isset($form['action']['delete']) && isset($form['delete']['watermarkId'])) {
+		} elseif (isset($form['action']['delete'], $form['delete']['watermarkId'])) {
 			list($ret, $wasDeleted) = WatermarkHelper::deleteWatermarkImageById($form['delete']['watermarkId']);
 
 			if ($ret) {

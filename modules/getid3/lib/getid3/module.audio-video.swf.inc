@@ -45,8 +45,8 @@ class getid3_swf extends getid3_handler {
 
 			default:
 				$info['error'][] = 'Expecting "FWS" or "CWS" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['swf']['header']['signature']) . '"';
-				unset($info['swf']);
-				unset($info['fileformat']);
+				unset($info['swf'], $info['fileformat']);
+
 
 				return false;
 

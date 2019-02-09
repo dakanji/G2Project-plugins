@@ -68,7 +68,7 @@ class getid3_nsv extends getid3_handler {
 		$offset     = 0;
 
 		$info['nsv']['NSVs']['identifier'] = substr($NSVsheader, $offset, 4);
-		$offset += 4;
+		$offset                           += 4;
 
 		if ($info['nsv']['NSVs']['identifier'] != 'NSVs') {
 			$info['error'][] = 'expected "NSVs" at offset (' . $fileoffset . '), found "' . $info['nsv']['NSVs']['identifier'] . '" instead';
@@ -79,17 +79,17 @@ class getid3_nsv extends getid3_handler {
 
 		$info['nsv']['NSVs']['offset'] = $fileoffset;
 
-		$info['nsv']['NSVs']['video_codec'] = substr($NSVsheader, $offset, 4);
-		$offset += 4;
-		$info['nsv']['NSVs']['audio_codec'] = substr($NSVsheader, $offset, 4);
-		$offset += 4;
+		$info['nsv']['NSVs']['video_codec']  = substr($NSVsheader, $offset, 4);
+		$offset                             += 4;
+		$info['nsv']['NSVs']['audio_codec']  = substr($NSVsheader, $offset, 4);
+		$offset                             += 4;
 		$info['nsv']['NSVs']['resolution_x'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
-		$offset += 2;
+		$offset                             += 2;
 		$info['nsv']['NSVs']['resolution_y'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
-		$offset += 2;
+		$offset                             += 2;
 
 		$info['nsv']['NSVs']['framerate_index'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
-		$offset += 1;
+		$offset                                += 1;
 		//$info['nsv']['NSVs']['unknown1b'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
 		//$info['nsv']['NSVs']['unknown1c'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
@@ -108,11 +108,11 @@ class getid3_nsv extends getid3_handler {
 		switch ($info['nsv']['NSVs']['audio_codec']) {
 			case 'PCM ':
 				$info['nsv']['NSVs']['bits_channel'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
-				$offset                         += 1;
-				$info['nsv']['NSVs']['channels'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
-				$offset                         += 1;
-				$info['nsv']['NSVs']['sample_rate'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
-				$offset += 2;
+				$offset                             += 1;
+				$info['nsv']['NSVs']['channels']     = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
+				$offset                             += 1;
+				$info['nsv']['NSVs']['sample_rate']  = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
+				$offset                             += 2;
 
 				$info['audio']['sample_rate'] = $info['nsv']['NSVs']['sample_rate'];
 
@@ -144,7 +144,7 @@ class getid3_nsv extends getid3_handler {
 		$offset     = 0;
 
 		$info['nsv']['NSVf']['identifier'] = substr($NSVfheader, $offset, 4);
-		$offset += 4;
+		$offset                           += 4;
 
 		if ($info['nsv']['NSVf']['identifier'] != 'NSVf') {
 			$info['error'][] = 'expected "NSVf" at offset (' . $fileoffset . '), found "' . $info['nsv']['NSVf']['identifier'] . '" instead';
@@ -156,22 +156,22 @@ class getid3_nsv extends getid3_handler {
 		$info['nsv']['NSVs']['offset'] = $fileoffset;
 
 		$info['nsv']['NSVf']['header_length'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
-		$offset += 4;
-		$info['nsv']['NSVf']['file_size'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
-		$offset += 4;
+		$offset                              += 4;
+		$info['nsv']['NSVf']['file_size']     = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
+		$offset                              += 4;
 
 		if ($info['nsv']['NSVf']['file_size'] > $info['avdataend']) {
 			$info['warning'][] = 'truncated file - NSVf header indicates ' . $info['nsv']['NSVf']['file_size'] . ' bytes, file actually ' . $info['avdataend'] . ' bytes';
 		}
 
-		$info['nsv']['NSVf']['playtime_ms'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
-		$offset += 4;
-		$info['nsv']['NSVf']['meta_size'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
-		$offset += 4;
+		$info['nsv']['NSVf']['playtime_ms']   = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
+		$offset                              += 4;
+		$info['nsv']['NSVf']['meta_size']     = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
+		$offset                              += 4;
 		$info['nsv']['NSVf']['TOC_entries_1'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
-		$offset += 4;
+		$offset                              += 4;
 		$info['nsv']['NSVf']['TOC_entries_2'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
-		$offset += 4;
+		$offset                              += 4;
 
 		if ($info['nsv']['NSVf']['playtime_ms'] == 0) {
 			$info['error'][] = 'Corrupt NSV file: NSVf.playtime_ms == zero';
@@ -190,7 +190,7 @@ class getid3_nsv extends getid3_handler {
 			while ($TOCcounter < $info['nsv']['NSVf']['TOC_entries_1']) {
 				if ($TOCcounter < $info['nsv']['NSVf']['TOC_entries_1']) {
 					$info['nsv']['NSVf']['TOC_1'][$TOCcounter] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
-					$offset += 4;
+					$offset                                   += 4;
 					$TOCcounter++;
 				}
 			}

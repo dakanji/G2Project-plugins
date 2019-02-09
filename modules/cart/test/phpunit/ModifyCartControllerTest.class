@@ -57,8 +57,11 @@ class ModifyCartControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$cartItemCounts = array(1 => 3,
-				2                       => 3, );
+		$cartItemCounts = array(
+			1 => 3,
+			2 => 3,
+		);
+
 		$ret = CartHelper::setCartItemCounts($cartItemCounts);
 
 		if ($ret) {
@@ -93,8 +96,8 @@ class ModifyCartControllerTest extends GalleryControllerTestCase {
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest();
 		$this->assertEquals(
-		array('redirect' => array('view' => 'cart.ViewCart',
-							  'itemId'                  => $this->_album->getId(), ),
+		array('redirect'   => array('view' => 'cart.ViewCart',
+							  'itemId'     => $this->_album->getId(), ),
 				  'status' => array('cartModified' => 1),
 				  'error'  => array(), ),
 				$results
@@ -118,8 +121,8 @@ class ModifyCartControllerTest extends GalleryControllerTestCase {
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest();
 		$this->assertEquals(
-		array('redirect' => array('view' => 'cart.ViewCart',
-							  'itemId'                  => $this->_album->getId(), ),
+		array('redirect'   => array('view' => 'cart.ViewCart',
+							  'itemId'     => $this->_album->getId(), ),
 				  'status' => array('cartModified' => 1),
 				  'error'  => array(), ),
 				$results
@@ -158,8 +161,8 @@ class ModifyCartControllerTest extends GalleryControllerTestCase {
 		$dataItemId = $dataItem->getId();
 
 		$cartItemCounts = array($dataItemId => 2,
-				$photoItemId                      => 1, );
-		$ret = CartHelper::setCartItemCounts($cartItemCounts);
+				$photoItemId                => 1, );
+		$ret            = CartHelper::setCartItemCounts($cartItemCounts);
 
 		if ($ret) {
 			return $ret;
@@ -182,7 +185,7 @@ class ModifyCartControllerTest extends GalleryControllerTestCase {
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest();
 		$this->assertEquals(
-		array('redirect' => array('controller' => 'cart.TestPlugin'),
+		array('redirect'   => array('controller' => 'cart.TestPlugin'),
 				  // Verify that itemId is not set, see bug 2013274
 				  'status' => array('cartModified' => 1),
 				  'error'  => array(), ),

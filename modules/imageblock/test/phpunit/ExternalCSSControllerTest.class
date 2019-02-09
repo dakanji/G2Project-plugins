@@ -46,7 +46,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 		foreach (array(
 			'albumFrame' => 'frameA',
-			'itemFrame' => 'frameB',
+			'itemFrame'  => 'frameB',
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'imageblock', $key, $value);
 
@@ -73,8 +73,8 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'imageframe.CSS',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -91,8 +91,8 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'imageframe.CSS',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -109,8 +109,8 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'imageblock.ExternalCSS',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -132,8 +132,8 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'imageblock.ExternalCSS',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);

@@ -37,7 +37,7 @@ class AdminQuotasController extends GalleryController {
 		}
 
 		$results = $status = $error = array();
-		$group   = $user = null;
+		$group   = $user   = null;
 
 		if (!empty($form['text']['groupName'])) {
 			list($ret, $group) = GalleryCoreApi::fetchGroupByGroupName($form['text']['groupName']);

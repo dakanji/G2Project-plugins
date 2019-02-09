@@ -52,19 +52,19 @@ class DynamicAlbumModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'themeId'   => '',
-			'size.date' => 24,
-			'size.views' => 24,
-			'size.random' => 24,
-			'type.date' => 'data',
-			'type.views' => 'data',
-			'type.random' => 'data',
-			'description.date' => '',
-			'description.views' => '',
+			'themeId'            => '',
+			'size.date'          => 24,
+			'size.views'         => 24,
+			'size.random'        => 24,
+			'type.date'          => 'data',
+			'type.views'         => 'data',
+			'type.random'        => 'data',
+			'description.date'   => '',
+			'description.views'  => '',
 			'description.random' => '',
-			'itemlink.date' => 0,
-			'itemlink.views' => 0,
-			'itemlink.random' => 0,
+			'itemlink.date'      => 0,
+			'itemlink.views'     => 0,
+			'itemlink.random'    => 0,
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);

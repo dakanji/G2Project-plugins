@@ -81,7 +81,7 @@ class ThumbnailSiteAdminController extends GalleryController {
 				return array($ret, null);
 			}
 			$status = 'addMime';
-		} elseif (isset($form['action']['delete']) && isset($form['delete']['itemId'])) {
+		} elseif (isset($form['action']['delete'], $form['delete']['itemId'])) {
 			if (isset($form['delete']['mimeType'])) {
 				$ret = ThumbnailHelper::updateItem(
 					$form['delete']['itemId'],

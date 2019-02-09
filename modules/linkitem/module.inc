@@ -225,7 +225,7 @@ class LinkItemModule extends GalleryModule {
 
 		if (GalleryUtilities::isA($entity, 'GalleryAlbumItem')) {
 			global $gallery;
-			$query = '
+			$query                     = '
 			SELECT
 			[GalleryLinkItem::id]
 			FROM

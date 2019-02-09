@@ -70,7 +70,7 @@ class GalleryRemoteController extends GalleryController {
 
 		$start = array_sum(explode(' ', microtime()));
 
-		$status        = $error = array();
+		$status        = $error        = array();
 		$response      = new GalleryRemoteProperties();
 		$grStatusCodes = GalleryRemoteConstants::getStatusCodes();
 
@@ -1062,7 +1062,7 @@ class GalleryRemoteController extends GalleryController {
 					return $ret;
 				}
 
-				if (isset($extensions) && isset($extensions[0])) {
+				if (isset($extensions, $extensions[0])) {
 					$response->setProperty('image.forceExtension.' . $i, $extensions[0]);
 				}
 
@@ -1341,7 +1341,7 @@ class GalleryRemoteController extends GalleryController {
 				return $ret;
 			}
 
-			if (isset($extensions) && isset($extensions[0])) {
+			if (isset($extensions, $extensions[0])) {
 				$response->setProperty('image.forceExtension', $extensions[0]);
 			}
 

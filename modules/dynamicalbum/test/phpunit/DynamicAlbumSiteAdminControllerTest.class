@@ -52,7 +52,7 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 		$this->_markForCleanup($this->_entity);
 
 		foreach (array(
-			'themeId' => 'dynamicalbumTest',
+			'themeId'         => 'dynamicalbumTest',
 			'themeSettingsId' => $this->_entity->getId(),
 		) as $key => $value) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'dynamicalbum', $key, $value);
@@ -80,8 +80,8 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dynamicalbum.DynamicAlbumSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -110,8 +110,8 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dynamicalbum.DynamicAlbumSiteAdmin',
 				),
-				'status' => array(),
-				'error'  => array(
+				'status'   => array(),
+				'error'    => array(
 					'form[error][size_date]',
 					'form[error][size_views]',
 					'form[error][size_random]',
@@ -162,11 +162,11 @@ class DynamicAlbumSiteAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'dynamicalbum.DynamicAlbumSiteAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'statusMessage' => $core->translate('Successfully saved theme settings'),
 					'saved'         => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);

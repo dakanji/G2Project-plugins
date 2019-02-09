@@ -32,8 +32,7 @@ class getid3_wavpack extends getid3_handler {
 				break;
 			}
 
-			if (isset($info['wavpack']['blockheader']['total_samples'])
-				&& isset($info['wavpack']['blockheader']['block_samples'])
+			if (isset($info['wavpack']['blockheader']['total_samples'], $info['wavpack']['blockheader']['block_samples'])
 				&& ($info['wavpack']['blockheader']['total_samples'] > 0)
 				&& ($info['wavpack']['blockheader']['block_samples'] > 0)
 				&& (!isset($info['wavpack']['riff_trailer_size']) || ($info['wavpack']['riff_trailer_size'] <= 0))
@@ -57,9 +56,9 @@ class getid3_wavpack extends getid3_handler {
 						break;
 
 					default:
-						unset($info['fileformat']);
-						unset($info['audio']);
-						unset($info['wavpack']);
+						unset($info['fileformat'], $info['audio'], $info['wavpack']);
+
+
 
 						break;
 				}
@@ -101,9 +100,9 @@ class getid3_wavpack extends getid3_handler {
 							break;
 
 						default:
-							unset($info['fileformat']);
-							unset($info['audio']);
-							unset($info['wavpack']);
+							unset($info['fileformat'], $info['audio'], $info['wavpack']);
+
+
 
 							break;
 					}
@@ -126,9 +125,9 @@ class getid3_wavpack extends getid3_handler {
 							break;
 
 						default:
-							unset($info['fileformat']);
-							unset($info['audio']);
-							unset($info['wavpack']);
+							unset($info['fileformat'], $info['audio'], $info['wavpack']);
+
+
 
 							break;
 					}

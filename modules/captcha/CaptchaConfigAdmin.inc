@@ -36,7 +36,8 @@ class CaptchaConfigAdminController extends GalleryController {
 			return array($ret, null);
 		}
 
-		$results['status']   = $results['error'] = array();
+		$results['status']   = array();
+		$results['error']    = array();
 		$results['redirect'] = array(
 			'view'    => 'core.SiteAdmin',
 			'subView' => 'core.AdminPlugins',

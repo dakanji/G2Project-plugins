@@ -112,10 +112,10 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.Login',
 				),
-				'status' => array(
+				'status'   => array(
 					'success' => NOKIAUPLOAD_ERR_AUTH,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'user'
@@ -131,10 +131,10 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 				'delegate' => array(
 					'view' => 'nokiaupload.Login',
 				),
-				'status' => array(
+				'status'   => array(
 					'success' => NOKIAUPLOAD_ERR_AUTH,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results,
 			'pass'

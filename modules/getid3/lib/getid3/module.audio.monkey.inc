@@ -60,40 +60,40 @@ class getid3_monkey extends getid3_handler {
 		} else {
 			$offset = 8;
 			// APE_DESCRIPTOR
-			$thisfile_monkeysaudio_raw['nDescriptorBytes'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['nHeaderBytes'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['nSeekTableBytes'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['nHeaderDataBytes'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['nAPEFrameDataBytes'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
+			$thisfile_monkeysaudio_raw['nDescriptorBytes']       = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                             += 4;
+			$thisfile_monkeysaudio_raw['nHeaderBytes']           = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                             += 4;
+			$thisfile_monkeysaudio_raw['nSeekTableBytes']        = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                             += 4;
+			$thisfile_monkeysaudio_raw['nHeaderDataBytes']       = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                             += 4;
+			$thisfile_monkeysaudio_raw['nAPEFrameDataBytes']     = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                             += 4;
 			$thisfile_monkeysaudio_raw['nAPEFrameDataBytesHigh'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['nTerminatingDataBytes'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['cFileMD5'] = substr($MACheaderData, $offset, 16);
-			$offset += 16;
+			$offset                                             += 4;
+			$thisfile_monkeysaudio_raw['nTerminatingDataBytes']  = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                             += 4;
+			$thisfile_monkeysaudio_raw['cFileMD5']               = substr($MACheaderData, $offset, 16);
+			$offset                                             += 16;
 
 			// APE_HEADER
 			$thisfile_monkeysaudio_raw['nCompressionLevel'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 2));
-			$offset += 2;
-			$thisfile_monkeysaudio_raw['nFormatFlags'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 2));
-			$offset += 2;
-			$thisfile_monkeysaudio_raw['nBlocksPerFrame'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
+			$offset                                        += 2;
+			$thisfile_monkeysaudio_raw['nFormatFlags']      = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 2));
+			$offset                                        += 2;
+			$thisfile_monkeysaudio_raw['nBlocksPerFrame']   = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                        += 4;
 			$thisfile_monkeysaudio_raw['nFinalFrameBlocks'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['nTotalFrames'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
-			$thisfile_monkeysaudio_raw['nBitsPerSample'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 2));
-			$offset += 2;
-			$thisfile_monkeysaudio_raw['nChannels'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 2));
-			$offset += 2;
-			$thisfile_monkeysaudio_raw['nSampleRate'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
-			$offset += 4;
+			$offset                                        += 4;
+			$thisfile_monkeysaudio_raw['nTotalFrames']      = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                        += 4;
+			$thisfile_monkeysaudio_raw['nBitsPerSample']    = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 2));
+			$offset                                        += 2;
+			$thisfile_monkeysaudio_raw['nChannels']         = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 2));
+			$offset                                        += 2;
+			$thisfile_monkeysaudio_raw['nSampleRate']       = getid3_lib::LittleEndian2Int(substr($MACheaderData, $offset, 4));
+			$offset                                        += 4;
 		}
 
 		$thisfile_monkeysaudio['flags']['8-bit']         = (bool)($thisfile_monkeysaudio_raw['nFormatFlags'] & 0x0001);

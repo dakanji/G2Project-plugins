@@ -161,8 +161,7 @@ class DigibugModule extends GalleryModule {
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 
-			if (isset($wantsDetailedLinks[$itemId])
-				&& isset($permissions[$itemId]['digibug.print'])
+			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['digibug.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				$links[$itemId][] = array(
@@ -215,8 +214,8 @@ class DigibugModule extends GalleryModule {
 
 		if (empty($params['digibugCustomerId']) || empty($params['digibugPricelistId'])) {
 			foreach (array(
-				'digibugIdChoice' => 'gallery',
-				'digibugCustomerId' => '3153',
+				'digibugIdChoice'    => 'gallery',
+				'digibugCustomerId'  => '3153',
 				'digibugPricelistId' => '8491',
 			) as $key => $value) {
 				$ret = $this->setParameter($key, $value);

@@ -36,7 +36,7 @@ class AdminDeleteUserQuotaController extends GalleryController {
 			return array($ret, null);
 		}
 
-		$results          = $status = $error = array();
+		$results          = $status          = $error          = array();
 		$userId           = GalleryUtilities::getRequestVariables('userId');
 		list($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 
@@ -122,7 +122,7 @@ class AdminDeleteUserQuotaView extends GalleryView {
 			$form['formName'] = 'AdminDeleteUserQuota';
 		}
 
-		$AdminDeleteUserQuota                                                              = array();
+		$AdminDeleteUserQuota = array();
 		list($ret, $AdminDeleteUserQuota['quotaSize'], $AdminDeleteUserQuota['quotaUnit']) = GalleryQuotasHelper::humanReadableFromKilobytes($userQuota['quota']);
 
 		if ($ret) {

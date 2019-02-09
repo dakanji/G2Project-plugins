@@ -58,7 +58,8 @@ class HiddenItemOption extends ItemEditOption {
 			_('Hide Photo');
 			_('Hide Movie');
 		}
-		$itemTypeNames                       = array_merge($item->itemTypeName(), $item->itemTypeName(false));
+		$itemTypeNames = array_merge($item->itemTypeName(), $item->itemTypeName(false));
+
 		$form['HiddenItemOption']['heading'] = $module->_translate(
 			array(
 				'text' => 'Hide %s',
@@ -75,7 +76,8 @@ class HiddenItemOption extends ItemEditOption {
 	 */
 	public static function handleRequestAfterEdit($form, &$item, &$preferred) {
 		GalleryCoreApi::requireOnce('modules/hidden/classes/HiddenHelper.class');
-		$error          = $warning = array();
+		$error          = array();
+		$warning        = array();
 		$useProgressBar = $item->getCanContainChildren();
 
 		$ret = GalleryCoreApi::assertHasItemPermission($item->getId(), 'core.changePermissions');

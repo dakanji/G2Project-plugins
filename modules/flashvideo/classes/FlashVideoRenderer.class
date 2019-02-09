@@ -47,8 +47,8 @@ class FlashVideoRenderer extends GalleryRenderer {
 			return null;
 		}
 
-		$urlGenerator =& $gallery->getUrlGenerator();
-		$src          = $urlGenerator->generateUrl(
+		$urlGenerator                 =& $gallery->getUrlGenerator();
+		$src                          = $urlGenerator->generateUrl(
 			array(
 				'view'         => 'core.DownloadItem',
 				'itemId'       => $entity->getId(),
@@ -137,16 +137,16 @@ class FlashVideoRenderer extends GalleryRenderer {
 		}
 
 		foreach (array(
-			'langDownload' => $module->translate('Download'),
+			'langDownload'   => $module->translate('Download'),
 			'langFullscreen' => $module->translate('Fullscreen'),
-			'langNormal' => $module->translate('Normal'),
-			'langPlay'  => $module->translate('Play'),
-			'langPause' => $module->translate('Pause'),
-			'langForward' => $module->translate('Forward'),
-			'langRewind' => $module->translate('Rewind'),
-			'langMute'  => $module->translate('Mute'),
-			'langUnmute' => $module->translate('Unmute'),
-			'langShare' => $module->translate('Share'),
+			'langNormal'     => $module->translate('Normal'),
+			'langPlay'       => $module->translate('Play'),
+			'langPause'      => $module->translate('Pause'),
+			'langForward'    => $module->translate('Forward'),
+			'langRewind'     => $module->translate('Rewind'),
+			'langMute'       => $module->translate('Mute'),
+			'langUnmute'     => $module->translate('Unmute'),
+			'langShare'      => $module->translate('Share'),
 		) as $key => $value) {
 			$flashVars .= '&' . $key . '=' . urlencode($value);
 		}

@@ -114,7 +114,7 @@ class NotificationHelper {
 	 *           array (event id => event description)
 	 */
 	public static function getDefinedEvents($display = false) {
-		$descriptions       = $events = array();
+		$descriptions       = $events       = array();
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'notification');
 
 		if ($ret) {

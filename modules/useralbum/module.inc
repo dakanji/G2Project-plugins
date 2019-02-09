@@ -84,12 +84,12 @@ class UserAlbumModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'view'     => 'everybody',
-			'fullSize' => '1',
+			'view'           => 'everybody',
+			'fullSize'       => '1',
 			'targetLocation' => $rootId,
-			'loginRedirect' => 0,
-			'homeLink' => 0,
-			'create'   => 'access',
+			'loginRedirect'  => 0,
+			'homeLink'       => 0,
+			'create'         => 'access',
 		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);

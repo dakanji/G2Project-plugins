@@ -56,7 +56,7 @@ class FotokastenModule extends GalleryModule {
 		}
 
 		foreach (array(
-			'affiliateId' => FOTOKASTEN_GALLERY_AFFILIATE_ID,
+			'affiliateId'     => FOTOKASTEN_GALLERY_AFFILIATE_ID,
 			'affiliateIdPass' => FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD,
 		) as $key => $value) {
 			if (!isset($params[$key])) {
@@ -151,8 +151,7 @@ class FotokastenModule extends GalleryModule {
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 
-			if (isset($wantsDetailedLinks[$itemId])
-				&& isset($permissions[$itemId]['fotokasten.print'])
+			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['fotokasten.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				$links[$itemId][] = array(

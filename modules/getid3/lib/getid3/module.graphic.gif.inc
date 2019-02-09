@@ -29,30 +29,30 @@ class getid3_gif extends getid3_handler {
 		$offset    = 0;
 
 		$info['gif']['header']['raw']['identifier'] = substr($GIFheader, $offset, 3);
-		$offset += 3;
+		$offset                                    += 3;
 
 		$magic = 'GIF';
 
 		if ($info['gif']['header']['raw']['identifier'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['gif']['header']['raw']['identifier']) . '"';
-			unset($info['fileformat']);
-			unset($info['gif']);
+			unset($info['fileformat'], $info['gif']);
+
 
 			return false;
 		}
 
-		$info['gif']['header']['raw']['version'] = substr($GIFheader, $offset, 3);
-		$offset += 3;
-		$info['gif']['header']['raw']['width'] = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 2));
-		$offset += 2;
-		$info['gif']['header']['raw']['height'] = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 2));
-		$offset += 2;
-		$info['gif']['header']['raw']['flags'] = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 1));
-		$offset += 1;
+		$info['gif']['header']['raw']['version']        = substr($GIFheader, $offset, 3);
+		$offset                                        += 3;
+		$info['gif']['header']['raw']['width']          = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 2));
+		$offset                                        += 2;
+		$info['gif']['header']['raw']['height']         = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 2));
+		$offset                                        += 2;
+		$info['gif']['header']['raw']['flags']          = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 1));
+		$offset                                        += 1;
 		$info['gif']['header']['raw']['bg_color_index'] = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 1));
-		$offset += 1;
-		$info['gif']['header']['raw']['aspect_ratio'] = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 1));
-		$offset += 1;
+		$offset                                        += 1;
+		$info['gif']['header']['raw']['aspect_ratio']   = getid3_lib::LittleEndian2Int(substr($GIFheader, $offset, 1));
+		$offset                                        += 1;
 
 		$info['video']['resolution_x']                        = $info['gif']['header']['raw']['width'];
 		$info['video']['resolution_y']                        = $info['gif']['header']['raw']['height'];

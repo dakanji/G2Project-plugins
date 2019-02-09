@@ -242,7 +242,7 @@ class RssGenerator {
 		$userMap = array();
 
 		foreach ($this->_items as $item) {
-			if (isset($item['title']) && isset($item['link']) && isset($item['description'])) {
+			if (isset($item['title'], $item['link'], $item['description'])) {
 				$data .= '<item>' . $lf .
 				' <title>' . $this->cdata(GalleryUtilities::markup($item['title'])) .
 				'</title>' . $lf .

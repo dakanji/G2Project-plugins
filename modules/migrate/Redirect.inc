@@ -87,7 +87,7 @@ class RedirectController extends GalleryController {
 			}
 			$itemId = $id;
 
-			if (isset($id) && isset($derivative)) {
+			if (isset($id, $derivative)) {
 				switch ($derivative) {
 					case DERIVATIVE_TYPE_IMAGE_PREFERRED:
 						list($ret, $data) = GalleryCoreApi::fetchPreferredsByItemIds(array($id));

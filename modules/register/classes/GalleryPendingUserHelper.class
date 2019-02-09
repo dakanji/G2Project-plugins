@@ -188,8 +188,8 @@ class GalleryPendingUserHelper {
 			array(
 				'controller' => 'register.ConfirmRegistration',
 				// Incoming url params will get sanitized, so decode here
-				'username' => $decodedUserName,
-				'key'      => $pendingUser->getRegistrationKey(),
+				'username'   => $decodedUserName,
+				'key'        => $pendingUser->getRegistrationKey(),
 			),
 			array(
 				'forceFullUrl'   => true,
@@ -227,7 +227,7 @@ class GalleryPendingUserHelper {
 		$ret = GalleryCoreApi::sendTemplatedEmail(
 			'modules/register/templates/' . $tplFile,
 			array(
-				'name' => $pendingUser->getFullName(),
+				'name'            => $pendingUser->getFullName(),
 				// We send plain text email so decode entities in username
 				'username'        => $decodedUserName,
 				'confirmationUrl' => $confirmationUrl,
@@ -336,7 +336,7 @@ class GalleryPendingUserHelper {
 				$ret = GalleryCoreApi::sendTemplatedEmail(
 					'modules/register/templates/AdminEmail.tpl',
 					array(
-						'name' => $pendingUser->getFullName(),
+						'name'      => $pendingUser->getFullName(),
 						// We send plain text email so decode entities in username
 						'username'  => $decodedUserName,
 						'email'     => $pendingUser->getEmail(),

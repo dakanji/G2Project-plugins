@@ -42,8 +42,8 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'core.ShowItem',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -69,8 +69,8 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'core.ShowItem',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -96,8 +96,8 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 				'redirect' => array(
 					'view' => 'core.ShowItem',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);

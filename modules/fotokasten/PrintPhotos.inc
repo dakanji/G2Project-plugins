@@ -169,8 +169,8 @@ class PrintPhotosController extends GalleryController {
 						'htmlEntities'   => false,
 					)
 				),
-				'height' => $source->getHeight(),
-				'width'  => $source->getWidth(),
+				'height'    => $source->getHeight(),
+				'width'     => $source->getWidth(),
 			);
 
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
@@ -228,8 +228,8 @@ class PrintPhotosController extends GalleryController {
 		$this->affiliate_id      = $params['affiliateId'];
 		$this->affiliate_id_pass = $params['affiliateIdPass'];
 		$this->server            = array(
-			'soapaction' => 'urn::sopainterop',
-			'endpoint'   => 'http://' . $this->affiliate_id . $this->nserver .
+			'soapaction'      => 'urn::sopainterop',
+			'endpoint'        => 'http://' . $this->affiliate_id . $this->nserver .
 						 $this->ftk_soap_path,
 			'methodNamespace' => 'http://soap.fotokasten.de',
 			'name'            => $this->affiliate_id . $this->nserver,
@@ -264,8 +264,8 @@ class PrintPhotosController extends GalleryController {
 				'redirect' => array(
 					'href' => $referer,
 				), // redirect to shopping basket
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 		);
 	}

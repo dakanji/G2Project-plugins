@@ -301,8 +301,8 @@ class getid3_matroska extends getid3_handler {
 							case 'V_MS/VFW/FOURCC':
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 
-								$parsed                                                             = getid3_riff::ParseBITMAPINFOHEADER($trackarray['CodecPrivate']);
-								$track_info['codec']                                                = getid3_riff::fourccLookup($parsed['fourcc']);
+								$parsed              = getid3_riff::ParseBITMAPINFOHEADER($trackarray['CodecPrivate']);
+								$track_info['codec'] = getid3_riff::fourccLookup($parsed['fourcc']);
 								$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $parsed;
 
 								break;
@@ -1552,7 +1552,7 @@ class getid3_matroska extends getid3_handler {
 						$block_data['lace_frames_size'][$i] = 0;
 
 						do {
-							$size = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
+							$size                                = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
 							$block_data['lace_frames_size'][$i] += $size;
 						} while ($size == 255);
 					}

@@ -50,8 +50,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'subView' => 'quotas.AdminCreateGroupQuota',
 					'groupId' => $group->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -77,8 +77,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'subView' => 'quotas.AdminCreateUserQuota',
 					'userId'  => $user->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -106,8 +106,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'subView' => 'quotas.AdminEditGroupQuota',
 					'groupId' => $group->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -124,8 +124,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noGroupSpecified]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noGroupSpecified]'),
 			),
 			$results
 		);
@@ -144,8 +144,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noSuchGroup]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noSuchGroup]'),
 			),
 			$results
 		);
@@ -173,8 +173,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'subView' => 'quotas.AdminEditUserQuota',
 					'userId'  => $user->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -191,8 +191,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noUserSpecified]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noUserSpecified]'),
 			),
 			$results
 		);
@@ -211,8 +211,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noSuchUser]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noSuchUser]'),
 			),
 			$results
 		);
@@ -240,8 +240,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'subView' => 'quotas.AdminDeleteGroupQuota',
 					'groupId' => $group->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -258,8 +258,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noGroupSpecified]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noGroupSpecified]'),
 			),
 			$results
 		);
@@ -278,8 +278,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noSuchGroup]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noSuchGroup]'),
 			),
 			$results
 		);
@@ -307,8 +307,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'subView' => 'quotas.AdminDeleteUserQuota',
 					'userId'  => $user->getId(),
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -325,8 +325,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noUserSpecified]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noUserSpecified]'),
 			),
 			$results
 		);
@@ -345,8 +345,8 @@ class AdminQuotasControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'quotas.AdminQuotas',
 				),
-				'status' => array(),
-				'error'  => array('form[error][text][noSuchUser]'),
+				'status'   => array(),
+				'error'    => array('form[error][text][noSuchUser]'),
 			),
 			$results
 		);

@@ -234,7 +234,7 @@ class GalleryQuotasHelper {
 		[GalleryQuotasMap::userOrGroupId] ASC
 		';
 
-		$data             = $options = array();
+		$data             = $options             = array();
 		$options['limit'] = array(
 			'count'  => (int)$count,
 			'offset' => (int)$offset,
@@ -314,7 +314,7 @@ class GalleryQuotasHelper {
 		[GalleryQuotasMap::userOrGroupId] ASC
 		';
 
-		$data             = $options = array();
+		$data             = $options             = array();
 		$options['limit'] = array(
 			'count'  => (int)$count,
 			'offset' => (int)$offset,

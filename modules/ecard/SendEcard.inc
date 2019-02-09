@@ -332,7 +332,9 @@ class SendEcardView extends GalleryView {
 
 		if ($form['formName'] != 'SendEcard') {
 			$form['formName'] = 'SendEcard';
-			$form['to']       = $form['toName'] = $form['text'] = '';
+			$form['to']       = '';
+			$form['toName']   = '';
+			$form['text']     = '';
 			$form['from']     = $session->get('ecard.from');
 			$form['fromName'] = $session->get('ecard.fromName');
 

@@ -67,8 +67,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -84,8 +84,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'core.AdminPlugins',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -102,8 +102,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array('form[error][path][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][path][missing]'),
 			),
 			$results
 		);
@@ -120,8 +120,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array('form[error][path][missing]'),
+				'status'   => array(),
+				'error'    => array('form[error][path][missing]'),
 			),
 			$results
 		);
@@ -142,8 +142,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array('form[error][path][badPath]'),
+				'status'   => array(),
+				'error'    => array('form[error][path][badPath]'),
 			),
 			$results
 		);
@@ -164,8 +164,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array('form[error][path][badPath]'),
+				'status'   => array(),
+				'error'    => array('form[error][path][badPath]'),
 			),
 			$results
 		);
@@ -214,10 +214,10 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(
+				'status'   => array(
 					'saved' => 1,
 				),
-				'error' => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -271,8 +271,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array(),
+				'status'   => array(),
+				'error'    => array(),
 			),
 			$results
 		);
@@ -294,8 +294,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array('form[error][path][badPath]'),
+				'status'   => array(),
+				'error'    => array('form[error][path][badPath]'),
 			),
 			$results
 		);
@@ -344,8 +344,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array('form[error][path][badZip]'),
+				'status'   => array(),
+				'error'    => array('form[error][path][badZip]'),
 			),
 			$results
 		);
@@ -368,8 +368,8 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 					'view'    => 'core.SiteAdmin',
 					'subView' => 'zipcart.ZipCartAdmin',
 				),
-				'status' => array(),
-				'error'  => array('form[error][path][badPath]'),
+				'status'   => array(),
+				'error'    => array('form[error][path][badPath]'),
 			),
 			$results
 		);

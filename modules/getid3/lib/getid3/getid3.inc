@@ -377,9 +377,9 @@ class getID3 {
 
 			// Handle tags
 			foreach (array(
-				'id3v2' => 'id3v2',
-				'id3v1' => 'id3v1',
-				'apetag' => 'ape',
+				'id3v2'   => 'id3v2',
+				'id3v1'   => 'id3v1',
+				'apetag'  => 'ape',
 				'lyrics3' => 'lyrics3',
 			) as $tag_name => $tag_key) {
 				$option_tag = 'option_tag_' . $tag_name;
@@ -402,8 +402,8 @@ class getID3 {
 			}
 
 			foreach (array(
-				'id3v1' => 'id3v1',
-				'apetag' => 'ape',
+				'id3v1'   => 'id3v1',
+				'apetag'  => 'ape',
 				'lyrics3' => 'lyrics3',
 			) as $tag_name => $tag_key) {
 				if (isset($this->info[$tag_key]['tag_offset_start'])) {
@@ -764,27 +764,27 @@ class getID3 {
 
 					// MOD  - audio       - MODule (Impulse Tracker)
 					'it' => array(
-						'pattern' => '^IMPM',
-						'group'   => 'audio',
-						'module'  => 'mod',
+						'pattern'   => '^IMPM',
+						'group'     => 'audio',
+						'module'    => 'mod',
 						//'option' => 'it',
 						'mime_type' => 'audio/it',
 					),
 
 				// MOD  - audio       - MODule (eXtended Module, various sub-formats)
 				'xm' => array(
-					'pattern' => '^Extended Module',
-					'group'   => 'audio',
-					'module'  => 'mod',
+					'pattern'   => '^Extended Module',
+					'group'     => 'audio',
+					'module'    => 'mod',
 					//'option' => 'xm',
 					'mime_type' => 'audio/xm',
 				),
 
 				// MOD  - audio       - MODule (ScreamTracker)
 				's3m' => array(
-					'pattern' => '^.{44}SCRM',
-					'group'   => 'audio',
-					'module'  => 'mod',
+					'pattern'   => '^.{44}SCRM',
+					'group'     => 'audio',
+					'module'    => 'mod',
 					//'option' => 's3m',
 					'mime_type' => 'audio/s3m',
 				),
@@ -1339,7 +1339,7 @@ class getID3 {
 						foreach ($tagdata as $key => $tagarray) {
 							$this->info['comments']['picture'][] = $tagarray;
 
-							if (isset($tagarray['data']) && isset($tagarray['image_mime'])) {
+							if (isset($tagarray['data'], $tagarray['image_mime'])) {
 								if (isset($this->info['tags'][$tagtype][$tagname][$key])) {
 									unset($this->info['tags'][$tagtype][$tagname][$key]);
 								}
@@ -1523,7 +1523,7 @@ class getID3 {
 				// AND if audio bitrate is set to same as overall bitrate
 				if (isset($this->info['playtime_seconds']) && ($this->info['playtime_seconds'] > 0)) {
 					// AND if playtime is set
-					if (isset($this->info['avdataend']) && isset($this->info['avdataoffset'])) {
+					if (isset($this->info['avdataend'], $this->info['avdataoffset'])) {
 						// AND if AV data offset start/end is known
 						// THEN we can calculate the video bitrate
 						$this->info['bitrate']          = round((($this->info['avdataend'] - $this->info['avdataoffset']) * 8) / $this->info['playtime_seconds']);
@@ -1721,7 +1721,7 @@ abstract class getid3_handler {
 
 		// Reset some info
 		$this->getid3->info['avdataoffset'] = 0;
-		$this->getid3->info['avdataend']    = $this->getid3->info['filesize'] = $this->data_string_length;
+		$this->getid3->info['avdataend']    = $this->getid3->info['filesize']    = $this->data_string_length;
 
 		// Analyze
 		$this->Analyze();

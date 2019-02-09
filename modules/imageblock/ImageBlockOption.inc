@@ -32,7 +32,7 @@ class ImageBlockOption extends ItemEditOption {
 	 * @see ItemEditOption::handleRequestAfterEdit
 	 */
 	public static function handleRequestAfterEdit($form, &$item, &$preferred) {
-		$error        = $warning = array();
+		$error        = $warning       = array();
 		$setDisabled  = isset($form['ImageBlockOption']['setDisabled'])
 		&& $form['ImageBlockOption']['setDisabled'] != 'off';
 		$setRecursive = isset($form['ImageBlockOption']['setRecursive'])

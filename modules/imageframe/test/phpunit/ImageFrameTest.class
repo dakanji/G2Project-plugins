@@ -76,7 +76,7 @@ class ImageFrameTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
-		$this->assert(isset($list['none']) && isset($list['dots']) && isset($list['wood']));
+		$this->assert(isset($list['none'], $list['dots'], $list['wood']));
 	}
 
 	public function testImageFrameInit() {

@@ -83,8 +83,7 @@ class PanoramaHelper {
 				} else {
 					$data[$id] = $item;
 				}
-			} elseif (isset($permissions['core.viewResizes'])
-				&& isset($resizedImages[$id])
+			} elseif (isset($permissions['core.viewResizes'], $resizedImages[$id])
 			) {
 				$max = -1;
 
