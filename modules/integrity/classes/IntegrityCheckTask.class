@@ -175,19 +175,19 @@ class IntegrityCheckTask extends MaintenanceTask {
 			$templateAdapter->updateProgressBar($message, $table, $i ++ / $total);
 			$gallery->guaranteeTimeLimit(120);
 
-			$query = '
+			$query = "
 				SELECT
 					[$table::id]
 				FROM
 					[$table]
-				LEFT JOIN 
-					[GalleryEntity] 
-				ON 
+				LEFT JOIN
+					[GalleryEntity]
+				ON
 					[$table::id] = [GalleryEntity::id]
 				WHERE
 					[GalleryEntity::id] IS NULL
 				ORDER BY [$table::id]
-			';
+			";
 
 			list($ret, $results) = $gallery->search($query);
 
@@ -220,15 +220,15 @@ class IntegrityCheckTask extends MaintenanceTask {
 				[GalleryChildEntity::id]
 			FROM
 				[GalleryChildEntity]
-			LEFT JOIN 
-				[GalleryEntity] 
-			ON 
+			LEFT JOIN
+				[GalleryEntity]
+			ON
 				[GalleryChildEntity::parentId] = [GalleryEntity::id]
 			WHERE
 				[GalleryChildEntity::parentId] > 0
 			AND
 				[GalleryEntity::id] IS NULL
-			ORDER BY 
+			ORDER BY
 				[GalleryChildEntity::id]
 		';
 
@@ -277,20 +277,20 @@ class IntegrityCheckTask extends MaintenanceTask {
 			$templateAdapter->updateProgressBar($message, $table, $i ++ / $total);
 			$gallery->guaranteeTimeLimit(120);
 
-			$query = '
+			$query = "
 				SELECT DISTINCT
 					[$table::$idColumn]
 				FROM
 					[$table]
-				LEFT JOIN 
-					[$joinTable] 
-				ON 
+				LEFT JOIN
+					[$joinTable]
+				ON
 					[$table::$idColumn] = [$joinTable::$joinColumn]
 				WHERE
 					[$joinTable::$joinColumn] IS NULL
-				ORDER BY 
+				ORDER BY
 					[$table::$idColumn]
-			';
+			";
 
 			list($ret, $results) = $gallery->search($query);
 
@@ -322,9 +322,9 @@ class IntegrityCheckTask extends MaintenanceTask {
 				[GalleryDerivative::id]
 			FROM
 				[GalleryDerivative]
-			LEFT JOIN 
+			LEFT JOIN
 				[GalleryEntity]
-			ON 
+			ON
 				[GalleryDerivative::derivativeSourceId] = [GalleryEntity::id]
 			WHERE
 				[GalleryEntity::id] IS NULL
@@ -393,11 +393,11 @@ class IntegrityCheckTask extends MaintenanceTask {
 				[PluginParameterMap::pluginType], [PluginParameterMap::pluginId]
 			FROM
 				[PluginParameterMap]
-			LEFT JOIN 
-				[PluginMap] 
-			ON 
+			LEFT JOIN
+				[PluginMap]
+			ON
 				[PluginParameterMap::pluginType] = [PluginMap::pluginType]
-			AND 
+			AND
 				[PluginParameterMap::pluginId] = [PluginMap::pluginId]
 			WHERE
 				[PluginMap::pluginId] IS NULL
@@ -453,10 +453,10 @@ class IntegrityCheckTask extends MaintenanceTask {
 			SELECT
 				[GalleryChildEntity::id]
 			FROM
-				[GalleryChildEntity] 
-			INNER JOIN 
+				[GalleryChildEntity]
+			INNER JOIN
 				[GalleryFileSystemEntity]
-			ON 
+			ON
 				[GalleryChildEntity::id] = [GalleryFileSystemEntity::id]
 			WHERE
 				[GalleryChildEntity::parentId] = 0
@@ -583,14 +583,14 @@ class IntegrityCheckTask extends MaintenanceTask {
 			SELECT
 				[GalleryFileSystemEntity::id], [GalleryFileSystemEntity::pathComponent]
 			FROM
-				[GalleryFileSystemEntity] 
-			INNER JOIN 
+				[GalleryFileSystemEntity]
+			INNER JOIN
 				[GalleryChildEntity]
-			ON 
+			ON
 				[GalleryFileSystemEntity::id] = [GalleryChildEntity::id]
-			INNER JOIN 
+			INNER JOIN
 				[GalleryEntity]
-			ON 
+			ON
 				[GalleryFileSystemEntity::id] = [GalleryEntity::id]
 			WHERE
 				[GalleryChildEntity::parentId] = ?
