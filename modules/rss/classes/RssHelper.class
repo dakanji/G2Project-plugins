@@ -611,45 +611,37 @@ class RssHelper {
 			$orderBy = "[GalleryEntity::$timestamp] DESC";
 		}
 
-		$query = "
-	    SELECT
-	      [$table::id]";
+		$query = "SELECT [$table::id]";
 
 		if ($perAlbumLimit != 0) {
 			$query .= ', [GalleryItemAttributesMap::parentSequence]';
 		}
 
 		$query .= "
-	    FROM
-	      [$table], [GalleryItemAttributesMap],
-	      [GalleryAccessSubscriberMap], [GalleryEntity]
-	    WHERE ";
+	    	FROM
+				[$table],
+				[GalleryItemAttributesMap],
+				[GalleryAccessSubscriberMap],
+				[GalleryEntity]
+				WHERE ";
 
 		if (!$random) {
-			$query .= "
-	      [GalleryEntity::$timestamp] >= $timeCutOff
-	      AND ";
+			$query .= "[GalleryEntity::$timestamp] >= $timeCutOff AND ";
 		}
 
 		$query .= "
-	      [$table::id] = [GalleryItemAttributesMap::itemId]
-	      AND
-	      [$table::id] = [GalleryEntity::id]";
+		[$table::id] = [GalleryItemAttributesMap::itemId]
+		AND
+		[$table::id] = [GalleryEntity::id]";
 
 		if (!empty($parentSequence)) {
-			$query .= "
-	      AND
-	      [GalleryItemAttributesMap::parentSequence] LIKE '$parentSequence/%'";
+			$query .= "AND [GalleryItemAttributesMap::parentSequence] LIKE '$parentSequence/%'";
 		}
 
 		$query .= "
-	      AND
-	      [$table::id] = [GalleryAccessSubscriberMap::itemId]
-	      AND
-	      [GalleryAccessSubscriberMap::accessListId] IN ($aclMarkers)
-	    ORDER BY
-	      $orderBy
-	    ";
+		AND [$table::id] = [GalleryAccessSubscriberMap::itemId]
+		AND [GalleryAccessSubscriberMap::accessListId] IN ($aclMarkers)
+	    ORDER BY $orderBy";
 
 		$data = $aclIds;
 
@@ -687,7 +679,8 @@ class RssHelper {
 				} else {
 					// first item for this album: accept
 					$perAlbum[$result[1]] = 1;
-					$list[]               = $result[0];
+
+					$list[] = $result[0];
 				}
 			} else {
 				// include all results
@@ -714,14 +707,30 @@ class RssHelper {
 		return array(
 			null,
 			array(
-				'photos'                => $module->translate('Items in an album'),
-				'album'                 => $module->translate('Sub-albums of an album'),
-				'photosRecursive'       => $module->translate('Items in an album and its sub-albums'),
-				'commentsAlbum'         => $module->translate('Comments for an album'),
-				'commentsPhoto'         => $module->translate('Comments for an item'),
-				'commentsRecursive'     => $module->translate('Comments for an album and its subalbums'),
-				'photosRandom'          => $module->translate('Random items in an album'),
-				'photosRandomRecursive' => $module->translate('Random items in an album and its subalbums'),
+				'photos'                => $module->translate(
+					'Items in an album'
+				),
+				'album'                 => $module->translate(
+					'Sub-albums of an album'
+				),
+				'photosRecursive'       => $module->translate(
+					'Items in an album and its sub-albums'
+				),
+				'commentsAlbum'         => $module->translate(
+					'Comments for an album'
+				),
+				'commentsPhoto'         => $module->translate(
+					'Comments for an item'
+				),
+				'commentsRecursive'     => $module->translate(
+					'Comments for an album and its subalbums'
+				),
+				'photosRandom'          => $module->translate(
+					'Random items in an album'
+				),
+				'photosRandomRecursive' => $module->translate(
+					'Random items in an album and its subalbums'
+				),
 			),
 		);
 	}
