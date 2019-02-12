@@ -32,7 +32,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		parent::__construct($methodName, 'webcam', 'ItemAddWebCam');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 
 		$ret = parent::setUp();

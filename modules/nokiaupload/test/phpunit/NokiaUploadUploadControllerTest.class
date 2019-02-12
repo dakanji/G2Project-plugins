@@ -31,7 +31,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'nokiaupload.Upload');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		$ret = parent::setUp();
 
 		if ($ret) {

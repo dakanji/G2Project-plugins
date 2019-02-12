@@ -32,7 +32,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'nokiaupload.Login');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		$ret = parent::setUp();
 
 		if ($ret) {

@@ -36,7 +36,7 @@ class RssRenderTest extends GalleryControllerTestCase {
 		$this->GalleryTestCase($methodName);
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 
 		$ret = parent::setUp();

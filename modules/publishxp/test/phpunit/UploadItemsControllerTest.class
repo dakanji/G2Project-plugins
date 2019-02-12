@@ -30,7 +30,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'publishxp.UploadItems');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

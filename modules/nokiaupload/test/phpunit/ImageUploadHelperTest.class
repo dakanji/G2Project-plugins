@@ -29,7 +29,7 @@ GalleryCoreApi::requireOnce('modules/nokiaupload/classes/ImageUploadHelper.class
  * @version $Revision: 17627 $
  */
 class ImageUploadHelperTest extends GalleryTestCase {
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

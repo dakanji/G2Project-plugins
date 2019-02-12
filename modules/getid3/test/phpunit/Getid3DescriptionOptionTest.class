@@ -32,7 +32,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		parent::__construct($methodName, 'getid3', 'Getid3DescriptionOption');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

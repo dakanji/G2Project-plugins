@@ -30,7 +30,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		parent::__construct($methodName, 'imageblock', 'ImageBlockOption');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

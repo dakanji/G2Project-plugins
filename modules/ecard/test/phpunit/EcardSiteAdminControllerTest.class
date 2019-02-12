@@ -31,7 +31,7 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'ecard.AdminEcard');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		$ret = parent::setUp();
 
 		if ($ret) {

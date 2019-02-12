@@ -30,7 +30,7 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'publishxp.PublishXpLogin');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

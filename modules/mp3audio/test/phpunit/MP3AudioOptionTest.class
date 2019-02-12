@@ -32,7 +32,7 @@ class MP3AudioOptionTest extends ItemAddOptionTestCase {
 		parent::__construct($methodName, 'mp3audio', 'MP3AudioOption');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		$ret = parent::setUp();
 
 		if ($ret) {

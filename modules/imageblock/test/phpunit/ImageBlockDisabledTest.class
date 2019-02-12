@@ -38,7 +38,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 	/**
 	 * Create an album for testing
 	 */
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

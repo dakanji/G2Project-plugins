@@ -31,7 +31,7 @@ class RemoteSiteAdminControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'remote.RemoteSiteAdmin');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		$ret = parent::setUp();
 
 		if ($ret) {

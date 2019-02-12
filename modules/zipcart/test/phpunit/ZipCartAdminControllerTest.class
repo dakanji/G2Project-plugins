@@ -30,7 +30,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'zipcart.ZipCartAdmin');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

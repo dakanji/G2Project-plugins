@@ -31,7 +31,7 @@ class PrintPhotoControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'photoaccess.PrintPhoto');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

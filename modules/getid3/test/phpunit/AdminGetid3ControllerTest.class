@@ -30,7 +30,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		parent::__construct($methodName, 'getid3:AdminGetid3');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 		$ret = parent::setUp();
 

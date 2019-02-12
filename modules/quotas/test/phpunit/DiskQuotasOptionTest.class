@@ -34,7 +34,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		parent::__construct($methodName, 'quotas', 'DiskQuotaOption');
 	}
 
-	public function setUp() {
+	public function setUp($x1 = null) {
 		global $gallery;
 
 		$ret = parent::setUp();
