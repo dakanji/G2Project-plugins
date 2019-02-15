@@ -38,6 +38,19 @@ class UploadAppletModule extends GalleryModule {
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new UploadAppletModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryPlugin::upgrade
 	 */
 	public function upgrade($currentVersion, $x1 = null) {

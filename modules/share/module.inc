@@ -25,17 +25,14 @@
  * @author Karl Newman
  * @version $Revision: 1910 $
  */
-class ShareModule extends GalleryModule
-{
-
-	function __construct()
-	{
+class ShareModule extends GalleryModule {
+	public function __construct() {
 		global $gallery;
 
 		$this->setId('share');
 		$this->setName($gallery->i18n('Share'));
 		$this->setDescription($gallery->i18n('Share link to Gallery pictures on social media sites'));
-		$this->setVersion('1.0.1'); /* Update upgrade() function below too */
+		$this->setVersion('1.0.1'); // Update upgrade() function below too
 		$this->_templateVersion = 1;
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('getSiteAdminViews');
@@ -44,10 +41,22 @@ class ShareModule extends GalleryModule
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new ShareModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::getSiteAdminViews
 	 */
-	function getSiteAdminViews()
-	{
+	public function getSiteAdminViews() {
 		return array(
 			null,
 			array(
@@ -62,30 +71,29 @@ class ShareModule extends GalleryModule
 	/**
 	 * @see GalleryModule::upgrade
 	 */
-	function upgrade($currentVersion, $x1 = NULL)
-	{
+	public function upgrade($currentVersion, $x1 = null) {
 		switch ($currentVersion) {
 			case null:
-				/* Initial install */
+				// Initial install
 
 				foreach (array(
 					'onlyWhenLoggedIn' => false,
 					'addThisAccountId' => 'addThisAccountId',
 				) as $key => $value) {
 					$ret = $this->setParameter($key, $value);
+
 					if ($ret) {
 						return $ret;
 					}
 				}
-			/* keep going */
+				// keep going
 
+				// Fall Through
 			case '1.0.0':
-			case '1.0.1': /* Fixed typo in block template */
+			case '1.0.1': // Fixed typo in block template
 			default:
 		}
 
 		return null;
 	}
 }
-
-?>

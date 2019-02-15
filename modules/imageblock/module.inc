@@ -44,6 +44,19 @@ class ImageBlockModule extends GalleryModule {
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new ImageBlockModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::activate
 	 */
 	public function activate($postActivationEvent = true) {

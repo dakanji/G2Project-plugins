@@ -43,6 +43,19 @@ class Getid3Module extends GalleryModule {
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new Getid3Module();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::upgrade
 	 */
 	public function upgrade($currentVersion, $x1 = null) {

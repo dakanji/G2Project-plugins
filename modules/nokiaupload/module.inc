@@ -46,6 +46,19 @@ class NokiaUploadModule extends GalleryModule {
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new NokiaUploadModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::autoConfigure
 	 */
 	public function autoConfigure() {

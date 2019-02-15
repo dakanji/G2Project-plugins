@@ -44,6 +44,19 @@ class PublishXpModule extends GalleryModule {
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new PublishXpModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * Registers the item add operation with Gallery.
 	 *
 	 * @see GalleryModule::performFactoryRegistrations

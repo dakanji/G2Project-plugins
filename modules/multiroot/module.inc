@@ -42,6 +42,19 @@ class MultirootModule extends GalleryModule {
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new MultirootModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::getConfigurationView
 	 */
 	public function getConfigurationView() {

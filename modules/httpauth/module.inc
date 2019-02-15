@@ -43,6 +43,19 @@ class HttpAuthModule extends GalleryModule {
 	}
 
 	/**
+	 * Load Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new HttpAuthModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::activate
 	 * @todo Explicit rewrite module version check can be removed on next major module API version.
 	 */
