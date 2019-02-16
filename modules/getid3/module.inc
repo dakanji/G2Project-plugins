@@ -43,7 +43,7 @@ class Getid3Module extends GalleryModule {
 	}
 
 	/**
-	 * Load Singleton
+	 * Load as Singleton
 	 */
 	public static function doStatic() {
 		static $singleton;

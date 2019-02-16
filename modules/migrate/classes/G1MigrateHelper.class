@@ -28,7 +28,7 @@
  */
 class G1MigrateHelper {
 	/**
-	 * Load Singleton
+	 * Load as Singleton
 	 */
 	public static function doStatic() {
 		static $singleton;

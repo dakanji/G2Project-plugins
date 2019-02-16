@@ -41,7 +41,7 @@ class DigibugModule extends GalleryModule {
 	}
 
 	/**
-	 * Load Singleton
+	 * Load as Singleton
 	 */
 	public static function doStatic() {
 		static $singleton;

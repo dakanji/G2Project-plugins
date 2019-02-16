@@ -27,7 +27,7 @@
  */
 class ConfirmImportController extends GalleryController {
 	/**
-	 * Load Singleton
+	 * Load as Singleton
 	 */
 	public static function doStatic() {
 		static $singleton;
@@ -1946,7 +1946,7 @@ class ConfirmImportController extends GalleryController {
  */
 class ConfirmImportView extends GalleryView {
 	/**
-	 * Load Singleton
+	 * Load as Singleton
 	 */
 	public static function doStatic() {
 		static $singleton;

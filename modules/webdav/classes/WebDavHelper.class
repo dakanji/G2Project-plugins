@@ -2268,7 +2268,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 	}
 
 	/**
-	 * Load Singleton
+	 * Load as Singleton
 	 */
 	public static function doStatic() {
 		static $singleton;
