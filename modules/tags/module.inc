@@ -42,6 +42,19 @@ class TagsModule extends GalleryModule {
 	}
 
 	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new TagsModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::registerEventListeners
 	 */
 	public function registerEventListeners() {

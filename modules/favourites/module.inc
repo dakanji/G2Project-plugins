@@ -25,7 +25,8 @@
  * @package Favourites
  * @author Alec Myers <alec@alecmyers.com>
  * @version $Revision: 1372 $
- */class FavouritesModule extends GalleryModule {
+ */
+class FavouritesModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
 		$this->setId('favourites');
@@ -36,6 +37,19 @@
 		$this->setCallbacks('registerEventListeners|getItemLinks|getSystemLinks|getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new FavouritesModule();
+		}
+
+		return $singleton;
 	}
 
 	/**
@@ -52,7 +66,7 @@
 			'themeId'       => '',
 			'offerToGuests' => 1,
 		)
-		as $key => $value) {
+ as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
 

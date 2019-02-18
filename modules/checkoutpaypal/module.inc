@@ -21,13 +21,9 @@
  */
 
 /**
- *
  * @package CheckoutPaypal
  * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
- *//**
  * Checkout plugin to process payments by email
- *
- * @package CheckoutPaypal
  */
 class CheckoutPaypalModule extends GalleryModule {
 	public function __construct() {
@@ -40,6 +36,19 @@ class CheckoutPaypalModule extends GalleryModule {
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 4));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutPaypalModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

@@ -18,33 +18,51 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * CheckoutPDFInvoice module
-  *
-  *
-  * @package CheckoutPDFInvoice
-  * @author Alec Myers <alec@alecmyers.com>
-  * @version $Revision: 1700 $
-  */class CheckoutPDFInvoiceModule extends GalleryModule {
- 	public function __construct() {
- 		global $gallery;
+/**
+ * CheckoutPDFInvoice module
+ *
+ *
+ * @package CheckoutPDFInvoice
+ * @author Alec Myers <alec@alecmyers.com>
+ * @version $Revision: 1700 $
+ */
+class CheckoutPDFInvoiceModule extends GalleryModule {
+	public function __construct() {
+		global $gallery;
 
- 		$this->setId('checkoutpdfinvoice');
- 		$this->setName($gallery->i18n('Checkout PDF Invoice'));
- 		$this->setDescription($gallery->i18n('Downloads invoices for Checkout transactions in PDF format'));
- 		$this->setVersion('0.1.0');
- 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
- 		$this->setCallbacks('');
- 		$this->setRequiredCoreApi(array(7, 10));
- 		$this->setRequiredModuleApi(array(3, 2));
- 	}
+		$this->setId('checkoutpdfinvoice');
+		$this->setName($gallery->i18n('Checkout PDF Invoice'));
+		$this->setDescription(
+			$gallery->i18n(
+				'Downloads invoices for Checkout transactions in PDF format'
+			)
+		);
+		$this->setVersion('0.1.0');
+		$this->setGroup('commerce', $gallery->i18n('Commerce'));
+		$this->setCallbacks('');
+		$this->setRequiredCoreApi(array(7, 10));
+		$this->setRequiredModuleApi(array(3, 2));
+	}
 
- 	/**
- 	 * @see GalleryModule::performFactoryRegistrations()
- 	 */
- 	public function performFactoryRegistrations() {
- 		// Register our plugin
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutPDFInvoiceModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
+	 * @see GalleryModule::performFactoryRegistrations()
+	 */
+	public function performFactoryRegistrations() {
+		// Register our plugin
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutStatusPageInterface_1_0',
 			'CheckoutPDFInvoiceStatusPlugin',
 			'CheckoutPDFInvoiceStatus',
@@ -53,10 +71,10 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		return null;
- 	}
- }
+		return null;
+	}
+}

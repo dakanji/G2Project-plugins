@@ -41,6 +41,19 @@ class GetUrlsModule extends GalleryModule {
 	}
 
 	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new GetUrlsModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::upgrade()
 	 */
 	public function upgrade($currentVersion) {

@@ -18,32 +18,46 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * CustomDerivative module
-  * @version $Revision: 1507 $
-  * @package CustomDerivatives
-  * @author Alec Myers <alec@alecmyers.com>
-  */class CustomDerivativesModule extends GalleryModule {
- 	public function __construct() {
- 		global $gallery;
+/**
+ * CustomDerivative module
+ * @version $Revision: 1507 $
+ * @package CustomDerivatives
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class CustomDerivativesModule extends GalleryModule {
+	public function __construct() {
+		global $gallery;
 
- 		$this->setId('customderivatives');
- 		$this->setName($gallery->i18n('Customize Derivatives'));
- 		$this->setDescription($gallery->i18n("Alter Derivatives' Operations"));
- 		$this->setVersion('0.1.0');
- 		$this->setGroup('display', $gallery->i18n('Display'));
- 		$this->setCallbacks('');
- 		$this->setRequiredCoreApi(array(7, 10));
- 		$this->setRequiredModuleApi(array(3, 2));
- 	}
+		$this->setId('customderivatives');
+		$this->setName($gallery->i18n('Customize Derivatives'));
+		$this->setDescription($gallery->i18n("Alter Derivatives' Operations"));
+		$this->setVersion('0.1.0');
+		$this->setGroup('display', $gallery->i18n('Display'));
+		$this->setCallbacks('');
+		$this->setRequiredCoreApi(array(7, 10));
+		$this->setRequiredModuleApi(array(3, 2));
+	}
 
- 	/**
- 	 * @see GalleryModule::performFactoryRegistrations()
- 	 */
- 	public function performFactoryRegistrations() {
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CustomDerivativesModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
+	 * @see GalleryModule::performFactoryRegistrations()
+	 */
+	public function performFactoryRegistrations() {
 
 		// Register our item edit plugin
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'ItemEditPlugin',
 			'DerivativesItemEdit',
 			'DerivativesItemEdit',
@@ -52,10 +66,10 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		return null;
- 	}
- }
+		return null;
+	}
+}

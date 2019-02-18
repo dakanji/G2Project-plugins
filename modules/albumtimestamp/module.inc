@@ -19,7 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * AlbumTimestamp
  *
  * This module provides an option to automatically set an albums timestamp
@@ -29,8 +31,8 @@
  * @author Leo Bergolth <leo@strike.wu.ac.at>
  * @version
  */
-class AlbumTimestampModule extends GalleryModule // and GalleryEventListener
-{
+ // also extends GalleryEventListener
+class AlbumTimestampModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
 
@@ -47,6 +49,19 @@ class AlbumTimestampModule extends GalleryModule // and GalleryEventListener
 		$this->setGroup('gallery', $this->translate('Gallery'));
 		$this->setRequiredCoreApi(array(7, 54));
 		$this->setRequiredModuleApi(array(3, 9));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new AlbumTimestampModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

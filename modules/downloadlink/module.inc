@@ -18,38 +18,52 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * DownloadLink module
-  *
-  * Provides downloading of binary items as files
-  * @version $Revision: 1654 $
-  * @package DownloadLink
-  * @author Alec Myers <alec@alecmyers.com>
-  */class DownloadLinkModule extends GalleryModule {
- 	public function __construct() {
- 		global $gallery;
+/**
+ * DownloadLink module
+ *
+ * Provides downloading of binary items as files
+ * @version $Revision: 1654 $
+ * @package DownloadLink
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class DownloadLinkModule extends GalleryModule {
+	public function __construct() {
+		global $gallery;
 
- 		$this->setId('downloadlink');
- 		$this->setName($gallery->i18n('Download Link'));
- 		$this->setDescription($gallery->i18n('Provides a link to download a picture'));
- 		$this->setVersion('0.1.1');
- 		$this->setGroup('export', $gallery->i18n('Export'));
- 		$this->setCallbacks('getItemLinks');
- 		$this->setRequiredCoreApi(array(7, 53));
- 		$this->setRequiredModuleApi(array(3, 2));
- 	}
+		$this->setId('downloadlink');
+		$this->setName($gallery->i18n('Download Link'));
+		$this->setDescription($gallery->i18n('Provides a link to download a picture'));
+		$this->setVersion('0.1.1');
+		$this->setGroup('export', $gallery->i18n('Export'));
+		$this->setCallbacks('getItemLinks');
+		$this->setRequiredCoreApi(array(7, 53));
+		$this->setRequiredModuleApi(array(3, 2));
+	}
 
- 	/**
- 	 * @see GalleryModule::getItemLinks()
- 	 */
- 	public function upgrade($currentVersion) {
- 		global $gallery;
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new DownloadLinkModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
+	 * @see GalleryModule::getItemLinks()
+	 */
+	public function upgrade($currentVersion) {
+		global $gallery;
 
 
- 		if (!empty($currentVersion)) {
- 			$storage =& $gallery->getStorage();
+		if (!empty($currentVersion)) {
+			$storage =& $gallery->getStorage();
 
- 			switch ($currentVersion) {
+			switch ($currentVersion) {
 				case '0.1.0':
 					break;
 
@@ -61,121 +75,121 @@
 						sprintf('Unknown module version %s', $currentVersion)
 					);
 			}
- 		} else {
- 			// Initial install....
- 			list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
+		} else {
+			// Initial install....
+			list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
- 			if ($ret) {
- 				return $ret;
- 			}
- 			// register permissions
- 			$permissions[] = array('original', $gallery->i18n('[downloadlink] Show Download Original Link'), 0, array());
- 			$permissions[] = array('resizes', $gallery->i18n('[downloadlink] Show Download Resize(s) Links'), 0, array());
- 			$permissions[] = array('thumbnail', $gallery->i18n('[downloadlink] Show Download Thumbnail Link'), 0, array());
+			if ($ret) {
+				return $ret;
+			}
+			// register permissions
+			$permissions[] = array('original', $gallery->i18n('[downloadlink] Show Download Original Link'), 0, array());
+			$permissions[] = array('resizes', $gallery->i18n('[downloadlink] Show Download Resize(s) Links'), 0, array());
+			$permissions[] = array('thumbnail', $gallery->i18n('[downloadlink] Show Download Thumbnail Link'), 0, array());
 
- 			foreach ($permissions as $p) {
- 				$ret = GalleryCoreApi::registerPermission($this->getId(), 'downloadlink.' . $p[0], $p[1], $p[2], $p[3]);
+			foreach ($permissions as $p) {
+				$ret = GalleryCoreApi::registerPermission($this->getId(), 'downloadlink.' . $p[0], $p[1], $p[2], $p[3]);
 
- 				if ($ret) {
- 					return $ret;
- 				}
- 			}
- 			// Give everybody download permissions by default
- 			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'downloadlink.original', true);
+				if ($ret) {
+					return $ret;
+				}
+			}
+			// Give everybody download permissions by default
+			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'downloadlink.original', true);
 
- 			if ($ret) {
- 				return $ret;
- 			}
- 			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'downloadlink.resizes', true);
+			if ($ret) {
+				return $ret;
+			}
+			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'downloadlink.resizes', true);
 
- 			if ($ret) {
- 				return $ret;
- 			}
- 		}
+			if ($ret) {
+				return $ret;
+			}
+		}
 
- 		return null;
- 	}
+		return null;
+	}
 
- 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
- 		$links = array();
+	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
+		$links = array();
 
- 		foreach ($items as $item) {
- 			if (!GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
- 				continue;
- 			}
- 			$masterId        = $item->getId();
- 			$potentialImages = array();
+		foreach ($items as $item) {
+			if (!GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
+				continue;
+			}
+			$masterId        = $item->getId();
+			$potentialImages = array();
 
- 			// try thumbnail
- 			$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.thumbnail');
+			// try thumbnail
+			$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.thumbnail');
 
- 			if (!$ret) {
- 				list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($masterId));
+			if (!$ret) {
+				list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($masterId));
 
- 				if ($ret) {
- 					return array($ret, null);
- 				}
+				if ($ret) {
+					return array($ret, null);
+				}
 
- 				if (!empty($thumbs[$masterId])) {
- 					list($ret, $result) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($thumbs[$masterId]->getId());
+				if (!empty($thumbs[$masterId])) {
+					list($ret, $result) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($thumbs[$masterId]->getId());
 
- 					if ($ret) {
- 						return array($ret, null);
- 					}
- 					$potentialImages[] = $result;
- 				}
- 			}
- 			// resizes
- 			$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.resizes');
+					if ($ret) {
+						return array($ret, null);
+					}
+					$potentialImages[] = $result;
+				}
+			}
+			// resizes
+			$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.resizes');
 
- 			if (!$ret) {
- 				list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array($masterId));
+			if (!$ret) {
+				list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array($masterId));
 
- 				if ($ret) {
- 					return array($ret, null);
- 				}
+				if ($ret) {
+					return array($ret, null);
+				}
 
- 				if (!empty($resizes[$masterId])) {
- 					foreach ($resizes[$masterId] as $resize) {
- 						list($ret, $result) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($resize->getId());
+				if (!empty($resizes[$masterId])) {
+					foreach ($resizes[$masterId] as $resize) {
+						list($ret, $result) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($resize->getId());
 
- 						if ($ret) {
- 							return array($ret, null);
- 						}
- 						$potentialImages[] = $result;
- 					}
- 				}
- 			}
+						if ($ret) {
+							return array($ret, null);
+						}
+						$potentialImages[] = $result;
+					}
+				}
+			}
 
- 			// How about the original?
- 			$includeOriginal = false;
- 			$ret             = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.original');
+			// How about the original?
+			$includeOriginal = false;
+			$ret             = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.original');
 
- 			if (!$ret) {
- 				// fetch preferred
- 				list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds(array($masterId));
+			if (!$ret) {
+				// fetch preferred
+				list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds(array($masterId));
 
- 				if ($ret) {
- 					return array($ret, null);
- 				}
+				if ($ret) {
+					return array($ret, null);
+				}
 
- 				if (isset($preferreds[$masterId])) {
- 					list($ret, $result) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($preferreds[$masterId]->getId());
+				if (isset($preferreds[$masterId])) {
+					list($ret, $result) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($preferreds[$masterId]->getId());
 
- 					if ($ret) {
- 						return array($ret, null);
- 					}
- 					$potentialImages[] = $result;
- 				} else {
- 					$potentialImages[] = $item;
- 				}
- 			}
+					if ($ret) {
+						return array($ret, null);
+					}
+					$potentialImages[] = $result;
+				} else {
+					$potentialImages[] = $item;
+				}
+			}
 
 
- 			$itemTypeNames = $item->itemTypeName();
+			$itemTypeNames = $item->itemTypeName();
 
- 			foreach ($potentialImages as $potentialImage) {
- 				$links[$masterId][] = array(
+			foreach ($potentialImages as $potentialImage) {
+				$links[$masterId][] = array(
 					'text' => $this->translate(
 						array(
 							'text' => 'Download %s (%s x %s)',
@@ -189,9 +203,9 @@
 						'itemId' => $potentialImage->getId(),
 					),
 				);
- 			}
- 		}
+			}
+		}
 
- 		return array(null, $links);
- 	}
- }
+		return array(null, $links);
+	}
+}

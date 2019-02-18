@@ -17,17 +17,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+
 /**
  * @package BulkUpload
  * @version $Revision: 13541 $ $Date: 2006-04-27 09:58:35 -0700 (Thu, 27 Apr 2006) $
  * @author Bharat Mediratta <bharat@menalto.com>
- *//**
- * BulkUpload module
- *
  * This module provides toolkit support to extract items from
  * bulk files such as a zip file
- *
- * @package BulkUpload
  */
 class BulkUploadModule extends GalleryModule {
 	public function __construct() {
@@ -41,6 +38,19 @@ class BulkUploadModule extends GalleryModule {
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new BulkUploadModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

@@ -19,12 +19,8 @@
  */
 
 /**
- *
- * @package CheckoutAuthorizeNet
- * @author Michael Rodr�guez-Torrent <mike@themikecam.com>
- *//**
  * Checkout plugin to process payments through Authorize.Net
- *
+ * @author Michael Rodriguez-Torrent <mike@themikecam.com>
  * @package CheckoutAuthorizeNet
  */
 class CheckoutAuthorizeNetModule extends GalleryModule {
@@ -38,6 +34,19 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutAuthorizeNetModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

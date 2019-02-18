@@ -43,6 +43,19 @@ class AboutPageModule extends GalleryModule {
 	}
 
 	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new AboutPageModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::needsConfiguration
 	 */
 	public function needsConfiguration() {

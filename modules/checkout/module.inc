@@ -19,10 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-
-
 /**
- *
  * @version $Revision: 1916 $
  * @author Daniel Leaberry <leaberry@gmail.com>
  * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
@@ -34,7 +31,9 @@
  * Required classes
  */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
-GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');/**
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+
+/**
  *
  * @package Checkout
  */
@@ -49,6 +48,19 @@ class CheckoutModule extends GalleryModule {
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews|getItemLinks|getSystemLinks');
 		$this->setRequiredCoreApi(array(7, 4));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutModule();
+		}
+
+		return $singleton;
 	}
 
 	/**
@@ -355,7 +367,7 @@ class CheckoutModule extends GalleryModule {
 							'chargePostage' => $downloadable == 'on' ? 'false' : 'true',
 							'showPapers'    => 'false',
 						)
-						as $paramName => $paramValue) {
+ as $paramName => $paramValue) {
 							$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $rootAlbumId);
 
 							if ($ret) {

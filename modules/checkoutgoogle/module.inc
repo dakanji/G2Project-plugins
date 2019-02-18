@@ -25,7 +25,8 @@
  * @subpackage UserInterface
  * @author Alec Myers <alec@alecmyers.com>
  * @version $Revision: 1687 $
- */class CheckoutGoogleModule extends GalleryModule {
+ */
+class CheckoutGoogleModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
 		$this->setId('checkoutgoogle');
@@ -36,6 +37,19 @@
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 		$this->setRequiredCoreApi(array(7, 34));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutGoogleModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

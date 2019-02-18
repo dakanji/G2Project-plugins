@@ -27,10 +27,7 @@
  * @author Jay Hennessy <gallery2-development@elucidos.com>
  * @author Alec Myers <alec@alecmyers.com>
  *
- *//**
  * Checkout plugin to process payments by email
- *
- * @package CheckoutEmail
  */
 class CheckoutEmailModule extends GalleryModule {
 	public function __construct() {
@@ -43,6 +40,19 @@ class CheckoutEmailModule extends GalleryModule {
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 4));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutEmailModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

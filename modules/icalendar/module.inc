@@ -42,6 +42,19 @@ class ICalendarModule extends GalleryModule {
 	}
 
 	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new ICalendarModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::activate
 	 */
 	public function activate($postActivationEvent = true) {

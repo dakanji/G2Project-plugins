@@ -18,67 +18,81 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * Simpleviewer Source module
-  *
-  * A module to interface Gallery2 with the Simpleviewer flash viewer
-  * @package SimpleviewerSource
-  * @version $Revision: 1433 $
-  * @author Alec Myers <alec@alecmyers.com>
-  */class SimpleviewerSourceModule extends GalleryModule {
- 	public function __construct() {
- 		global $gallery;
+/**
+ * Simpleviewer Source module
+ *
+ * A module to interface Gallery2 with the Simpleviewer flash viewer
+ * @package SimpleviewerSource
+ * @version $Revision: 1433 $
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class SimpleviewerSourceModule extends GalleryModule {
+	public function __construct() {
+		global $gallery;
 
- 		$this->setId('simpleviewersource');
- 		$this->setName($gallery->i18n('Simpleviewer Source'));
- 		$this->setDescription($gallery->i18n('Outputs xml for Simpleviewer'));
- 		$this->setVersion('0.2.6');
- 		$this->setGroup('export', $gallery->i18n('Export'));
- 		$this->setCallbacks('registerEventListeners|getItemLinks');
- 		$this->setRequiredCoreApi(array(7, 10));
- 		$this->setRequiredModuleApi(array(3, 2));
- 	}
+		$this->setId('simpleviewersource');
+		$this->setName($gallery->i18n('Simpleviewer Source'));
+		$this->setDescription($gallery->i18n('Outputs xml for Simpleviewer'));
+		$this->setVersion('0.2.6');
+		$this->setGroup('export', $gallery->i18n('Export'));
+		$this->setCallbacks('registerEventListeners|getItemLinks');
+		$this->setRequiredCoreApi(array(7, 10));
+		$this->setRequiredModuleApi(array(3, 2));
+	}
 
- 	/**
- 	 * @see GalleryModule::needsConfiguration
- 	 */
- 	public function needsConfiguration() {
- 		list($ret, $value) = $this->getParameter('configured');
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
 
- 		if ($ret) {
- 			return array($ret, null);
- 		}
+		if (!isset($singleton)) {
+			$singleton = new SimpleviewerSourceModule();
+		}
 
- 		return array(null, empty($value));
- 	}
+		return $singleton;
+	}
 
- 	/**
- 	 * @see GalleryModule::autoConfigure
- 	 */
- 	public function autoConfigure() {
- 		list($ret, $needsConfiguration) = $this->needsConfiguration();
+	/**
+	 * @see GalleryModule::needsConfiguration
+	 */
+	public function needsConfiguration() {
+		list($ret, $value) = $this->getParameter('configured');
 
- 		if ($ret) {
- 			return array($ret, null);
- 		}
+		if ($ret) {
+			return array($ret, null);
+		}
 
- 		return array(null, !$needsConfiguration);
- 	}
+		return array(null, empty($value));
+	}
 
- 	/**
- 	 * @see GalleryModule::getConfigurationView
- 	 */
- 	public function getConfigurationView() {
- 		return 'simpleviewersource.Configure';
- 	}
+	/**
+	 * @see GalleryModule::autoConfigure
+	 */
+	public function autoConfigure() {
+		list($ret, $needsConfiguration) = $this->needsConfiguration();
 
- 	/**
- 	 * @see GalleryModule::performFactoryRegistrations
- 	 */
- 	public function performFactoryRegistrations() {
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, !$needsConfiguration);
+	}
+
+	/**
+	 * @see GalleryModule::getConfigurationView
+	 */
+	public function getConfigurationView() {
+		return 'simpleviewersource.Configure';
+	}
+
+	/**
+	 * @see GalleryModule::performFactoryRegistrations
+	 */
+	public function performFactoryRegistrations() {
 
 		// Register our item edit plugin
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'ItemEditPlugin',
 			'SimpleviewerSourceItemEdit',
 			'SimpleviewerSourceItemEdit',
@@ -87,48 +101,48 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		return null;
- 	}
+		return null;
+	}
 
- 	/**
- 	 * @see GalleryModule::getItemLinks()
- 	 */
- 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
- 		global $gallery;
- 		GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
+	/**
+	 * @see GalleryModule::getItemLinks()
+	 */
+	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
+		global $gallery;
+		GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
 
- 		$links = array();
+		$links = array();
 
- 		foreach ($items as $item) {
- 			$itemId = $item->getId();
+		foreach ($items as $item) {
+			$itemId = $item->getId();
 
- 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
- 				list($ret, $parameters) = SimpleviewerParameterMapHelper::fetchParams($itemId, 'private');
+			if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
+				list($ret, $parameters) = SimpleviewerParameterMapHelper::fetchParams($itemId, 'private');
 
- 				if ($ret) {
- 					return array($ret, null);
- 				}
+				if ($ret) {
+					return array($ret, null);
+				}
 
- 				if ($parameters['offerSlideshow'] == '1') {
- 					list($ret, $showItemIds) = GalleryCoreApi::fetchChildItemIdsWithPermission($itemId, 'core.view');
+				if ($parameters['offerSlideshow'] == '1') {
+					list($ret, $showItemIds) = GalleryCoreApi::fetchChildItemIdsWithPermission($itemId, 'core.view');
 
- 					if ($ret) {
- 						return array($ret, null);
- 					}
- 					// look for photo items before offering a slideshow
- 					foreach ($showItemIds as $showItemId) {
- 						list($ret, $showItem) = GalleryCoreApi::loadEntitiesByID($showItemId);
+					if ($ret) {
+						return array($ret, null);
+					}
+					// look for photo items before offering a slideshow
+					foreach ($showItemIds as $showItemId) {
+						list($ret, $showItem) = GalleryCoreApi::loadEntitiesByID($showItemId);
 
- 						if ($ret) {
- 							return array($ret, null);
- 						}
+						if ($ret) {
+							return array($ret, null);
+						}
 
- 						if (GalleryUtilities::isA($showItem, 'GalleryPhotoItem')) {
- 							$links[$itemId][] = array(
+						if (GalleryUtilities::isA($showItem, 'GalleryPhotoItem')) {
+							$links[$itemId][] = array(
 								'text' => $this->translate(
 									array(
 										'text' => 'Slideshow',
@@ -140,18 +154,18 @@
 								),
 							);
 
- 							break; //one is enough
- 						}
- 					}
- 				}
- 			}
- 		}
+							break; //one is enough
+						}
+					}
+				}
+			}
+		}
 
- 		return array(null, $links);
- 	}
+		return array(null, $links);
+	}
 
- 	public function getRewriteRules() {
- 		return array(
+	public function getRewriteRules() {
+		return array(
 			array(
 				'comment'  => $this->translate('Simpleviewer Slideshow'),
 				'match'    => array(
@@ -167,44 +181,44 @@
 				'help'     => $this->translate('Short URL for Simpleviewer Slideshow'),
 			),
 		);
- 	}
+	}
 
- 	/**
- 	 * @see GalleryModule::registerEventListeners
- 	 */
- 	public function registerEventListeners() {
- 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', new SimpleviewerSourceModule());
- 	}
+	/**
+	 * @see GalleryModule::registerEventListeners
+	 */
+	public function registerEventListeners() {
+		GalleryCoreApi::registerEventListener('GalleryEntity::delete', new SimpleviewerSourceModule());
+	}
 
- 	/**
- 	 * Event Handler: get rid of any parameters for albums that are deleted
- 	 *
- 	 * @see GalleryEventListener::handleEvent
- 	 */
- 	public function handleEvent($event) {
- 		$data = $event->getData();
+	/**
+	 * Event Handler: get rid of any parameters for albums that are deleted
+	 *
+	 * @see GalleryEventListener::handleEvent
+	 */
+	public function handleEvent($event) {
+		$data = $event->getData();
 
- 		if ($event->getEventName() == 'GalleryEntity::delete') {
- 			$entity = $event->getEntity();
+		if ($event->getEventName() == 'GalleryEntity::delete') {
+			$entity = $event->getEntity();
 
- 			if (GalleryUtilities::isA($entity, 'GalleryAlbumItem')) {
- 				GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
- 				list($ret, $paramIds) = SimpleviewerParameterMapHelper::fetchParamIdsForAlbum($entity->getId());
+			if (GalleryUtilities::isA($entity, 'GalleryAlbumItem')) {
+				GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
+				list($ret, $paramIds) = SimpleviewerParameterMapHelper::fetchParamIdsForAlbum($entity->getId());
 
- 				if ($ret) {
- 					return array($ret, null);
- 				}
+				if ($ret) {
+					return array($ret, null);
+				}
 
- 				foreach ($paramIds as $paramId) {
- 					$ret = SimpleviewerParameterMapHelper::deleteParam($paramId);
+				foreach ($paramIds as $paramId) {
+					$ret = SimpleviewerParameterMapHelper::deleteParam($paramId);
 
- 					if ($ret) {
- 						return array($ret, null);
- 					}
- 				}
- 			}
- 		}
+					if ($ret) {
+						return array($ret, null);
+					}
+				}
+			}
+		}
 
- 		return array(null, null);
- 	}
- }
+		return array(null, null);
+	}
+}

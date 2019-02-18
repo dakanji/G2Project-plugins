@@ -16,7 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+
+/**
  * The implementation of the TagTree module
  *
  * @package TagTree
@@ -37,6 +40,19 @@ class TagTreeModule extends GalleryModule {
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 		$this->setRequiredCoreApi(array(7, 5));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new TagTreeModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

@@ -18,32 +18,46 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * @version $Revision: 1664 $
-  * @package CheckoutDownload
-  * @author Alec Myers <alec@alecmyers.com>
-  */class CheckoutDownloadModule extends GalleryModule {
- 	public function __construct() {
- 		global $gallery;
+/**
+ * @version $Revision: 1664 $
+ * @package CheckoutDownload
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class CheckoutDownloadModule extends GalleryModule {
+	public function __construct() {
+		global $gallery;
 
- 		$this->setId('checkoutdownload');
- 		$this->setName($gallery->i18n('Checkout Downloads'));
- 		$this->setDescription(
+		$this->setId('checkoutdownload');
+		$this->setName($gallery->i18n('Checkout Downloads'));
+		$this->setDescription(
 			$gallery->i18n('Allows customers to download files from Checkout transactions')
 		);
- 		$this->setVersion('0.1.3');
- 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
- 		$this->setCallbacks('getSiteAdminViews');
- 		$this->setRequiredCoreApi(array(7, 10));
- 		$this->setRequiredModuleApi(array(3, 2));
- 	}
+		$this->setVersion('0.1.3');
+		$this->setGroup('commerce', $gallery->i18n('Commerce'));
+		$this->setCallbacks('getSiteAdminViews');
+		$this->setRequiredCoreApi(array(7, 10));
+		$this->setRequiredModuleApi(array(3, 2));
+	}
 
- 	/**
- 	 * @see GalleryModule::performFactoryRegistrations()
- 	 */
- 	public function performFactoryRegistrations() {
- 		// Register our plugins
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutDownloadModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
+	 * @see GalleryModule::performFactoryRegistrations()
+	 */
+	public function performFactoryRegistrations() {
+		// Register our plugins
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutStatusPageInterface_1_0',
 			'CheckoutDownloadStatusPlugin',
 			'checkoutDownloadStatus',
@@ -52,10 +66,10 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+		if ($ret) {
+			return $ret;
+		}
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutEmailInterface_1_0',
 			'CheckoutDownloadEmailPlugin',
 			'CheckoutDownloadEmail',
@@ -64,21 +78,21 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		return null;
- 	}
+		return null;
+	}
 
- 	/**
- 	 * @see GalleryModule::upgrade()
- 	 */
- 	public function upgrade($currentVersion) {
- 		global $gallery;
+	/**
+	 * @see GalleryModule::upgrade()
+	 */
+	public function upgrade($currentVersion) {
+		global $gallery;
 
- 		if (!empty($currentVersion)) {
- 			switch ($currentVersion) {
+		if (!empty($currentVersion)) {
+			switch ($currentVersion) {
 				case '0.1.0':
 				case '0.1.1':
 				case '0.1.2':
@@ -88,24 +102,24 @@
 				default:
 					return GalleryCoreApi::error(ERROR_BAD_PLUGIN, sprintf('Unknown module version %s', $currentVersion));
 			}
- 		}
+		}
 
- 		return null;
+		return null;
 
- 		if (!isset($currentVersion)) {
- 			// Initial install.
- 		}
+		if (!isset($currentVersion)) {
+			// Initial install.
+		}
 
- 		return null;
- 	}
+		return null;
+	}
 
- 	/**
- 	 * @see GalleryModule::getSiteAdminViews
- 	 */
- 	public function getSiteAdminViews() {
- 		global $gallery;
+	/**
+	 * @see GalleryModule::getSiteAdminViews
+	 */
+	public function getSiteAdminViews() {
+		global $gallery;
 
- 		return array(
+		return array(
 			null,
 			array(
 				array(
@@ -114,5 +128,5 @@
 				),
 			),
 		);
- 	}
- }
+	}
+}

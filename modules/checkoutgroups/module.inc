@@ -18,34 +18,48 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * CheckoutGroups module
-  *
-  * @version $Revision: 1644 $
-  * @package CheckoutGroups
-  * @author Alec Myers <alec@alecmyers.com>
-  */class CheckoutGroupsModule extends GalleryModule {
- 	public function __construct() {
- 		global $gallery;
+/**
+ * CheckoutGroups module
+ *
+ * @version $Revision: 1644 $
+ * @package CheckoutGroups
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class CheckoutGroupsModule extends GalleryModule {
+	public function __construct() {
+		global $gallery;
 
- 		$this->setId('checkoutgroups');
- 		$this->setName($gallery->i18n('Checkout Groups'));
- 		$this->setDescription($gallery->i18n('Adds purchasers to configured groups'));
- 		$this->setVersion('0.1.1');
- 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
- 		$this->setCallbacks('registerEventListeners');
- 		$this->setRequiredCoreApi(array(7, 10));
- 		$this->setRequiredModuleApi(array(3, 2));
- 	}
+		$this->setId('checkoutgroups');
+		$this->setName($gallery->i18n('Checkout Groups'));
+		$this->setDescription($gallery->i18n('Adds purchasers to configured groups'));
+		$this->setVersion('0.1.1');
+		$this->setGroup('commerce', $gallery->i18n('Commerce'));
+		$this->setCallbacks('registerEventListeners');
+		$this->setRequiredCoreApi(array(7, 10));
+		$this->setRequiredModuleApi(array(3, 2));
+	}
 
- 	/**
- 	 * @see GalleryModule::upgrade()
- 	 */
- 	public function upgrade($currentVersion) {
- 		global $gallery;
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
 
- 		if (!empty($currentVersion)) {
- 			switch ($currentVersion) {
+		if (!isset($singleton)) {
+			$singleton = new CheckoutGroupsModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
+	 * @see GalleryModule::upgrade()
+	 */
+	public function upgrade($currentVersion) {
+		global $gallery;
+
+		if (!empty($currentVersion)) {
+			switch ($currentVersion) {
 				case '0.1.0':
 					break;
 
@@ -57,17 +71,17 @@
 						sprintf('Unknown module version %s', $currentVersion)
 					);
 			}
- 		}
+		}
 
- 		return null;
- 	}
+		return null;
+	}
 
- 	/**
- 	 * @see GalleryModule::performFactoryRegistrations()
- 	 */
- 	public function performFactoryRegistrations() {
- 		// Register our plugin
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+	/**
+	 * @see GalleryModule::performFactoryRegistrations()
+	 */
+	public function performFactoryRegistrations() {
+		// Register our plugin
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutCustomPageInterface_1_0',
 			'CheckoutGroupsPlugin',
 			'CheckoutGroups',
@@ -76,10 +90,10 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+		if ($ret) {
+			return $ret;
+		}
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutStatusPageInterface_1_0',
 			'CheckoutGroupsStatusPlugin',
 			'CheckoutGroupsStatus',
@@ -88,11 +102,11 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutProductListInterface_1_0',
 			'CheckoutGroupsProductPlugin',
 			'CheckoutGroupsProduct',
@@ -101,27 +115,27 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		return null;
- 	}
+		return null;
+	}
 
- 	public function registerEventListeners() {
- 		$myListener = new CheckoutGroupsModule();
- 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
- 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener);
- 	}
+	public function registerEventListeners() {
+		$myListener = new CheckoutGroupsModule();
+		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
+		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener);
+	}
 
- 	public function handleEvent($event) {
- 		$result = null;
+	public function handleEvent($event) {
+		$result = null;
 
- 		if ($event->getEventName() == 'GalleryEntity::delete') {
- 			$entity = $event->getEntity();
+		if ($event->getEventName() == 'GalleryEntity::delete') {
+			$entity = $event->getEntity();
 
- 			if (GalleryUtilities::isA($entity, 'GalleryGroup')) {
- 				$ret = GalleryCoreApi::removeMapEntry(
+			if (GalleryUtilities::isA($entity, 'GalleryGroup')) {
+				$ret = GalleryCoreApi::removeMapEntry(
 					'CheckoutProductMap',
 					array(
 						'paramName'  => 'groupId',
@@ -129,23 +143,23 @@
 					)
 				);
 
- 				if ($ret) {
- 					return array($ret, null);
- 				}
- 			}
+				if ($ret) {
+					return array($ret, null);
+				}
+			}
 
- 			return array(null, null);
- 		}
+			return array(null, null);
+		}
 
- 		if ($event->getEventName() == 'GalleryCheckout::transactionChange') {
- 			GalleryCoreApi::requireOnce('modules/checkoutgroups/classes/CheckoutGroupsEventHelper.class');
- 			$ret = CheckoutGroupsEventHelper::handleTransactionChange($event);
+		if ($event->getEventName() == 'GalleryCheckout::transactionChange') {
+			GalleryCoreApi::requireOnce('modules/checkoutgroups/classes/CheckoutGroupsEventHelper.class');
+			$ret = CheckoutGroupsEventHelper::handleTransactionChange($event);
 
- 			if ($ret) {
- 				return array($ret, null);
- 			}
+			if ($ret) {
+				return array($ret, null);
+			}
 
- 			return array(null, $result);
- 		}
- 	}
- }
+			return array(null, $result);
+		}
+	}
+}

@@ -22,11 +22,17 @@
  * @package User Info
  * @author Charles Knowlton charles2007@users.sourceforge.net
  * @version $Revision$
- *//**
+ */
+
+/**
  * User Info
  *
  * Logs Login, Logout, and Failed Login Attempts
- * Logs the User ID(if registered user), User Name(if registered user), IP Address, Date and time, and Action(Login, Logout, Failed Login)
+ * Logs:
+ *      User ID (if registered user),
+ *      User Name(if registered user),
+ *      IP Address, Date and time, and
+ *      Action (Login, Logout, Failed Login)
  *
  * @package Userinfo
  */
@@ -41,6 +47,19 @@ class UserinfoModule extends GalleryModule {
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setRequiredCoreApi(array(7, 0));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new UserinfoModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

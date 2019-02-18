@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
- * FIXME The implementation of the core-module
- *
+ */
+
+/**
  * @package Calendar
  * @author Jack Bates <ms419@freezone.co.uk>
  * @version $Revision: 847 $
@@ -35,6 +35,19 @@ class CalendarModule extends GalleryModule {
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CalendarModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

@@ -46,6 +46,19 @@ class puzzleModule extends GalleryModule {
 	}
 
 	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new puzzleModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::autoConfigure
 	 */
 	public function autoConfigure() {

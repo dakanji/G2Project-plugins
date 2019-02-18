@@ -25,17 +25,35 @@
  * @package title
  * @author Alec Myers <alec@alecmyers.com>
  * @version $Revision: 1420 $
- */class TitleModule extends GalleryModule {
+ */
+class TitleModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
 		$this->setId('title');
 		$this->setName($gallery->i18n('Title Search'));
-		$this->setDescription($gallery->i18n('Dynamic albums of items whose titles match given search strings'));
+		$this->setDescription(
+			$gallery->i18n(
+				'Dynamic albums of items whose titles match given search strings'
+			)
+		);
 		$this->setVersion('0.1.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new TitleModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

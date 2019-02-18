@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * CmMigrate Module
  *
  * This module provides support for migrating from Coppermine
@@ -32,13 +34,26 @@ class CmMigrateModule extends GalleryModule {
 		$this->setId('cmmigrate');
 		$this->setName($gallery->i18n('Coppermine Migration'));
 		$this->setDescription(
-			$gallery->i18n('Migrate your Coppermine Gallery albums to Gallery 2 albums')
+			$gallery->i18n('Migrate your Coppermine Gallery to Gallery 2')
 		);
 		$this->setVersion('0.5.0');
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 0));
 		$this->setRequiredModuleApi(array(3, 0));
+	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CmMigrateModule();
+		}
+
+		return $singleton;
 	}
 
 	/**

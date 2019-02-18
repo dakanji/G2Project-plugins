@@ -41,9 +41,22 @@ class MRAnalysisModule extends GalleryModule {
 	}
 
 	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new MRAnalysisModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * checks to see if the named module is installed and active - so can use the tables etc.
 	 */
-	public static function isModuleInstalledAndActive($modulename) {
+	public function isModuleInstalledAndActive($modulename) {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', $modulename);
 
 		if (!$ret) {

@@ -40,4 +40,17 @@ class ImagineModule extends GalleryModule {
 		$this->setRequiredCoreApi(array(7, 20));
 		$this->setRequiredModuleApi(array(3, 6));
 	}
+
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new ImagineModule();
+		}
+
+		return $singleton;
+	}
 }

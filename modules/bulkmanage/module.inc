@@ -54,6 +54,19 @@ class BulkManageModule extends GalleryModule {
 	}
 
 	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new BulkManageModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * Get the API version this module provides to plugins
 	 *
 	 */

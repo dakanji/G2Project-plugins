@@ -21,13 +21,8 @@
  */
 
 /**
- *
  * @package addinthehead
  * @author gallery@markridgwell.com
- *//**
- * Contact the owner by filling in a PHP form
- *
- * @package mrextraheadings
  */
 class AddInTheHeadModule extends GalleryModule {
 	public function __construct() {
@@ -42,7 +37,20 @@ class AddInTheHeadModule extends GalleryModule {
 		$this->setRequiredModuleApi(array(3, 0));
 	}
 
-	public static function addExternalLink($path, &$links, $containstext, $title, $url) {
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new AddInTheHeadModule();
+		}
+
+		return $singleton;
+	}
+
+	public function addExternalLink($path, &$links, $containstext, $title, $url) {
 		if (stripos($path, $containstext)) {
 			$links['ExternalLink' . $containstext] = array(
 				'text'   => $title,

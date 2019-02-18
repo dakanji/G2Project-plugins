@@ -18,32 +18,46 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * CheckoutPriceBands module
-  *
-  * @version $Revision: 1505 $
-  * @package CheckoutGroups
-  * @author Alec Myers <alec@alecmyers.com>
-  */class CheckoutPriceBandsModule extends GalleryModule {
- 	public function __construct() {
- 		global $gallery;
+/**
+ * CheckoutPriceBands module
+ *
+ * @version $Revision: 1505 $
+ * @package CheckoutGroups
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class CheckoutPriceBandsModule extends GalleryModule {
+	public function __construct() {
+		global $gallery;
 
- 		$this->setId('checkoutpricebands');
- 		$this->setName($gallery->i18n('Checkout Price Bands'));
- 		$this->setDescription($gallery->i18n('Offer different prices according to quantity'));
- 		$this->setVersion('0.1.0');
- 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
- 		$this->setCallbacks('');
- 		$this->setRequiredCoreApi(array(7, 10));
- 		$this->setRequiredModuleApi(array(3, 2));
- 	}
+		$this->setId('checkoutpricebands');
+		$this->setName($gallery->i18n('Checkout Price Bands'));
+		$this->setDescription($gallery->i18n('Offer different prices according to quantity'));
+		$this->setVersion('0.1.0');
+		$this->setGroup('commerce', $gallery->i18n('Commerce'));
+		$this->setCallbacks('');
+		$this->setRequiredCoreApi(array(7, 10));
+		$this->setRequiredModuleApi(array(3, 2));
+	}
 
- 	/**
- 	 * @see GalleryModule::performFactoryRegistrations()
- 	 */
- 	public function performFactoryRegistrations() {
- 		// Register our plugin
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+	/**
+	 * Load as Singleton
+	 */
+	public static function doStatic() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new CheckoutPriceBandsModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
+	 * @see GalleryModule::performFactoryRegistrations()
+	 */
+	public function performFactoryRegistrations() {
+		// Register our plugin
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutCustomPageInterface_1_0',
 			'CheckoutPriceBandsCustomPlugin',
 			'checkoutpricebandscustom',
@@ -52,11 +66,11 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutProductListInterface_1_0',
 			'CheckoutPriceBandsProductPlugin',
 			'checkoutpricebandsproduct',
@@ -65,11 +79,11 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		$ret = GalleryCoreApi::registerFactoryImplementation(
+		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutTransactionDetailsInterface_1_1',
 			'CheckoutPriceBandsTransactionPlugin',
 			'checkoutpricebandstransaction',
@@ -78,10 +92,10 @@
 			null
 		);
 
- 		if ($ret) {
- 			return $ret;
- 		}
+		if ($ret) {
+			return $ret;
+		}
 
- 		return null;
- 	}
- }
+		return null;
+	}
+}
