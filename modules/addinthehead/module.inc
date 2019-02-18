@@ -30,7 +30,7 @@ class AddInTheHeadModule extends GalleryModule {
 		$this->setId('addinthehead');
 		$this->setName('Add Items in the Heading');
 		$this->setDescription($gallery->i18n('Add in the Head'));
-		$this->setVersion('0.0.1');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSystemLinks');
 		$this->setRequiredCoreApi(array(7, 2));

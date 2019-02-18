@@ -30,7 +30,7 @@ class AddviaemailModule extends GalleryModule {
 		$this->setId('addviaemail');
 		$this->setName($gallery->i18n('Add via Email'));
 		$this->setDescription($gallery->i18n('Add via Email module'));
-		$this->setVersion('0.7.3');
+		$this->setVersion('7.0.0');
 		// $this->setCallbacks('getSiteAdminViews|getItemLinks');
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setGroup('import', $gallery->i18n('Import'));

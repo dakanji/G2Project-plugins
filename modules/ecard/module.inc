@@ -33,7 +33,7 @@ class EcardModule extends GalleryModule {
 		$this->setId('ecard');
 		$this->setName($gallery->i18n('eCard'));
 		$this->setDescription($gallery->i18n('Send photos as eCards'));
-		$this->setVersion('1.0.4'); // Update upgrade() too
+		$this->setVersion('7.0.0'); // Update upgrade() too
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');

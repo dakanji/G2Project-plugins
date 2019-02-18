@@ -31,7 +31,7 @@ class CustomDerivativesModule extends GalleryModule {
 		$this->setId('customderivatives');
 		$this->setName($gallery->i18n('Customize Derivatives'));
 		$this->setDescription($gallery->i18n("Alter Derivatives' Operations"));
-		$this->setVersion('0.1.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('');
 		$this->setRequiredCoreApi(array(7, 10));

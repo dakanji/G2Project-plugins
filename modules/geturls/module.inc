@@ -33,7 +33,7 @@ class GetUrlsModule extends GalleryModule {
 		$this->setId('geturls');
 		$this->setName('Formatted URLs');
 		$this->setDescription($gallery->i18n('Show BBcode/HTML formatted URLs'));
-		$this->setVersion('0.9.5');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews|getItemSummaries');
 		$this->setRequiredCoreApi(array(7, 0));

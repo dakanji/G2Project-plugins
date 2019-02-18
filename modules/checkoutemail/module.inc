@@ -35,7 +35,7 @@ class CheckoutEmailModule extends GalleryModule {
 		$this->setId('checkoutemail');
 		$this->setName($gallery->i18n('Checkout by Email'));
 		$this->setDescription($gallery->i18n('Complete checkout by email'));
-		$this->setVersion('0.4.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 4));

@@ -32,7 +32,7 @@ class CheckoutDownloadModule extends GalleryModule {
 		$this->setDescription(
 			$gallery->i18n('Allows customers to download files from Checkout transactions')
 		);
-		$this->setVersion('0.1.3');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 10));

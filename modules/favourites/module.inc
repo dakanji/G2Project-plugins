@@ -32,7 +32,7 @@ class FavouritesModule extends GalleryModule {
 		$this->setId('favourites');
 		$this->setName($gallery->i18n('Favorites'));
 		$this->setDescription($gallery->i18n('Stores and displays registered users favorite items'));
-		$this->setVersion('0.2.4');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('registerEventListeners|getItemLinks|getSystemLinks|getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));
@@ -66,7 +66,7 @@ class FavouritesModule extends GalleryModule {
 			'themeId'       => '',
 			'offerToGuests' => 1,
 		)
- as $key => $value) {
+		as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
 

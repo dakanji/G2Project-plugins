@@ -34,7 +34,7 @@ class RandomizeOnceModule extends GalleryModule {
 		$this->setId('randomizeonce');
 		$this->setName('Randomize Once');
 		$this->setDescription($gallery->i18n('Randomize Sort Order'));
-		$this->setVersion('0.1.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getItemAdminViews');
 		$this->setRequiredCoreApi(array(7, 10));

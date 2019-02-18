@@ -33,7 +33,7 @@ class WebCamModule extends GalleryModule {
 				'Support periodically updated images like a webcam'
 			)
 		);
-		$this->setVersion('1.1.7'); // Update upgrade() function below too
+		$this->setVersion('7.0.0'); // Update upgrade() function below too
 		$this->_templateVersion = 1;
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');

@@ -33,7 +33,7 @@ class SimpleviewerSourceModule extends GalleryModule {
 		$this->setId('simpleviewersource');
 		$this->setName($gallery->i18n('Simpleviewer Source'));
 		$this->setDescription($gallery->i18n('Outputs xml for Simpleviewer'));
-		$this->setVersion('0.2.6');
+		$this->setVersion('7.0.0');
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('registerEventListeners|getItemLinks');
 		$this->setRequiredCoreApi(array(7, 10));

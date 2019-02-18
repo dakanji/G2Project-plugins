@@ -29,7 +29,7 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 		$this->setId('checkoutauthorizenet');
 		$this->setName('Checkout by Authorize.Net');
 		$this->setDescription($gallery->i18n('Complete checkout by Authorize.Net'));
-		$this->setVersion('0.1.1');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));

@@ -44,7 +44,7 @@ class AlbumTimestampModule extends GalleryModule {
 						 'based on child item times.'
 			)
 		);
-		$this->setVersion('0.2.0');
+		$this->setVersion('7.0.0');
 		$this->_templateVersion = 1;
 		$this->setGroup('gallery', $this->translate('Gallery'));
 		$this->setRequiredCoreApi(array(7, 54));

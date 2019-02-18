@@ -35,7 +35,7 @@ class AboutPageModule extends GalleryModule {
 		$this->setId('aboutpage');
 		$this->setName('About Page');
 		$this->setDescription($gallery->i18n('Display a page of user content'));
-		$this->setVersion('0.0.2');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSystemLinks|getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));

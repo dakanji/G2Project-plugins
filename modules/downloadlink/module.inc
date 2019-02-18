@@ -33,7 +33,7 @@ class DownloadLinkModule extends GalleryModule {
 		$this->setId('downloadlink');
 		$this->setName($gallery->i18n('Download Link'));
 		$this->setDescription($gallery->i18n('Provides a link to download a picture'));
-		$this->setVersion('0.1.1');
+		$this->setVersion('7.0.0');
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('getItemLinks');
 		$this->setRequiredCoreApi(array(7, 53));

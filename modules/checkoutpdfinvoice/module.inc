@@ -37,7 +37,7 @@ class CheckoutPDFInvoiceModule extends GalleryModule {
 				'Downloads invoices for Checkout transactions in PDF format'
 			)
 		);
-		$this->setVersion('0.1.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('');
 		$this->setRequiredCoreApi(array(7, 10));

@@ -34,7 +34,7 @@ class PanoramaModule extends GalleryModule {
 		$this->setId('panorama');
 		$this->setName($gallery->i18n('Panorama'));
 		$this->setDescription($gallery->i18n('View wide jpeg/gif images in a java applet viewer'));
-		$this->setVersion('1.0.10');
+		$this->setVersion('7.0.0');
 		$this->_templateVersion = 1;
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');

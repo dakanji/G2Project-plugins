@@ -36,7 +36,7 @@ class UserinfoModule extends GalleryModule {
 		$this->setId('userinfo');
 		$this->setName($gallery->i18n('User Info'));
 		$this->setDescription($gallery->i18n('Displays User Information'));
-		$this->setVersion('1.0.4');
+		$this->setVersion('7.0.0');
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setRequiredCoreApi(array(7, 0));

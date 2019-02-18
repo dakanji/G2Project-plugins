@@ -43,7 +43,7 @@ class CheckoutModule extends GalleryModule {
 		$this->setId('checkout');
 		$this->setName($gallery->i18n('Checkout'));
 		$this->setDescription($gallery->i18n('Shopping cart module supporting different products and payment'));
-		$this->setVersion('0.4.3');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews|getItemLinks|getSystemLinks');
 		$this->setRequiredCoreApi(array(7, 4));
@@ -367,7 +367,7 @@ class CheckoutModule extends GalleryModule {
 							'chargePostage' => $downloadable == 'on' ? 'false' : 'true',
 							'showPapers'    => 'false',
 						)
- as $paramName => $paramValue) {
+						as $paramName => $paramValue) {
 							$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $rootAlbumId);
 
 							if ($ret) {

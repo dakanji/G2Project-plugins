@@ -36,7 +36,7 @@ class TitleModule extends GalleryModule {
 				'Dynamic albums of items whose titles match given search strings'
 			)
 		);
-		$this->setVersion('0.1.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));

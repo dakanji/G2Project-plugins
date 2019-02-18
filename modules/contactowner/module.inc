@@ -35,7 +35,7 @@ class ContactOwnerModule extends GalleryModule {
 		$this->setId('contactowner');
 		$this->setName('Contact Owner');
 		$this->setDescription($gallery->i18n('Contact gallery owner by email'));
-		$this->setVersion('0.2.4');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSystemLinks|getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));

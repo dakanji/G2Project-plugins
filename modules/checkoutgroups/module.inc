@@ -32,7 +32,7 @@ class CheckoutGroupsModule extends GalleryModule {
 		$this->setId('checkoutgroups');
 		$this->setName($gallery->i18n('Checkout Groups'));
 		$this->setDescription($gallery->i18n('Adds purchasers to configured groups'));
-		$this->setVersion('0.1.1');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners');
 		$this->setRequiredCoreApi(array(7, 10));

@@ -32,7 +32,7 @@ class CheckoutPriceBandsModule extends GalleryModule {
 		$this->setId('checkoutpricebands');
 		$this->setName($gallery->i18n('Checkout Price Bands'));
 		$this->setDescription($gallery->i18n('Offer different prices according to quantity'));
-		$this->setVersion('0.1.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('');
 		$this->setRequiredCoreApi(array(7, 10));

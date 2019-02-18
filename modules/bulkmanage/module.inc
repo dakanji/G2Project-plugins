@@ -44,7 +44,7 @@ class BulkManageModule extends GalleryModule {
 		$this->setId('bulkmanage');
 		$this->setName($gallery->i18n('Bulk Manage'));
 		$this->setDescription($gallery->i18n('Facilitates the bulk editing of items'));
-		$this->setVersion('1.0.0');
+		$this->setVersion('7.0.0');
 		$this->setCallbacks('getItemLinks|getItemAdminViews');
 		$this->setGroup('gallery', $this->translate('Gallery'));
 		$this->setRequiredCoreApi(array(7, 2));

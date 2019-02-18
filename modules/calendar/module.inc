@@ -29,7 +29,7 @@ class CalendarModule extends GalleryModule {
 
 		$this->setId('calendar');
 		$this->setName($gallery->i18n('Calendar'));
-		$this->setVersion('0.0.2');
+		$this->setVersion('7.0.0');
 		$this->setDescription($gallery->i18n('FIXME An Ajax Calendar'));
 		$this->setGroup('misc', $gallery->i18n('Miscellaneous'));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews');

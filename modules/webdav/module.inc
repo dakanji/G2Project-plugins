@@ -33,7 +33,7 @@ class WebDavModule extends GalleryModule {
 
 		$this->setId('webdav');
 		$this->setName($gallery->i18n('WebDAV'));
-		$this->setVersion('1.0.10'); // Update upgrade() too!
+		$this->setVersion('7.0.0'); // Update upgrade() too!
 		$this->_templateVersion = 1;
 		$this->setDescription($gallery->i18n('Mount Gallery on your desktop.'));
 		$this->setGroup('interfaces', $gallery->i18n('Remote Interfaces'));

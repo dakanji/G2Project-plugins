@@ -33,7 +33,7 @@ class ICalendarModule extends GalleryModule {
 
 		$this->setId('icalendar');
 		$this->setName($gallery->i18n('iCalendar'));
-		$this->setVersion('0.0.1');
+		$this->setVersion('7.0.0');
 		$this->setDescription($gallery->i18n('FIXME iCalendar format'));
 		$this->setGroup('misc', $gallery->i18n('Miscellaneous'));
 		$this->setCallbacks('getSiteAdminViews');

@@ -35,7 +35,7 @@ class ImageBlockModule extends GalleryModule {
 				'Random, Most Recent or Most Viewed Photo or Album'
 			)
 		);
-		$this->setVersion('1.1.9');
+		$this->setVersion('7.0.0');
 		$this->_templateVersion = 1;
 		$this->setGroup('blocks', $gallery->i18n('Blocks'));
 		$this->setCallbacks('getSiteAdminViews');

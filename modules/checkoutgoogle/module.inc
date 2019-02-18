@@ -32,7 +32,7 @@ class CheckoutGoogleModule extends GalleryModule {
 		$this->setId('checkoutgoogle');
 		$this->setName('Checkout by Google');
 		$this->setDescription($gallery->i18n('Complete checkout by Google Checkout'));
-		$this->setVersion('0.4.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 		$this->setRequiredCoreApi(array(7, 34));

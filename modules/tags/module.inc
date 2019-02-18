@@ -32,7 +32,7 @@ class TagsModule extends GalleryModule {
 		$this->setId('tags');
 		$this->setName($gallery->i18n('Tags'));
 		$this->setDescription($gallery->i18n('Tag management system'));
-		$this->setVersion('1.4');// Do not forget to add it to the upgrade path
+		$this->setVersion('7.0.0');// Do not forget to add it to the upgrade path
 		$this->setCallbacks(
 			'getSiteAdminViews|registerEventListeners|getItemLinks|getItemSummaries'
 		);

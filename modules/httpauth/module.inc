@@ -33,7 +33,7 @@ class HttpAuthModule extends GalleryModule {
 
 		$this->setId('httpauth');
 		$this->setName($gallery->i18n('HTTP Auth'));
-		$this->setVersion('1.0.4'); // Update upgrade() too!
+		$this->setVersion('7.0.0'); // Update upgrade() too!
 		$this->_templateVersion = 1;
 		$this->setDescription($gallery->i18n('Login using HTTP authentication.'));
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));

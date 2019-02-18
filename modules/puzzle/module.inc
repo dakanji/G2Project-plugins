@@ -38,7 +38,7 @@ class puzzleModule extends GalleryModule {
 		$this->setId('puzzle');
 		$this->setName('Puzzle Module');
 		$this->setDescription($gallery->i18n('CamoTruck.Net: Puzzle Module'));
-		$this->setVersion('2.1.2');
+		$this->setVersion('7.0.0');
 		$this->setGroup('display', $this->translate('Display'));
 		$this->setCallbacks('getItemLinks');
 		$this->setRequiredCoreApi(array(7, 2));

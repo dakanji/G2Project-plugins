@@ -32,7 +32,7 @@ class MRAnalysisModule extends GalleryModule {
 		$this->setId('mranalysis');
 		$this->setName('Analysis');
 		$this->setDescription($gallery->i18n('Analysis and diagnostics'));
-		$this->setVersion('0.0.12');
+		$this->setVersion('7.0.0');
 		$this->setGroup('analysis', $gallery->i18n('Analysis'));
 		$this->setCallbacks('getSiteAdminViews');
 

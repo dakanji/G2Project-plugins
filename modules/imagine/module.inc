@@ -34,7 +34,7 @@ class ImagineModule extends GalleryModule {
 		$this->setId('imagine');
 		$this->setName($gallery->i18n('Imagine'));
 		$this->setDescription($gallery->i18n('Imagine for Android'));
-		$this->setVersion('1.0.0');
+		$this->setVersion('7.0.0');
 		$this->_templateVersion = 1;
 		$this->setGroup('interfaces', $gallery->i18n('Remote Interfaces'));
 		$this->setRequiredCoreApi(array(7, 20));

@@ -35,7 +35,7 @@ class TagTreeModule extends GalleryModule {
 		$this->setDescription(
 			$gallery->i18n('Jump directly to any album using a hierarchical tag view')
 		);
-		$this->setVersion('1.1.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('blocks', $gallery->i18n('Blocks'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 		$this->setRequiredCoreApi(array(7, 5));

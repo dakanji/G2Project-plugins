@@ -36,7 +36,7 @@ class CmMigrateModule extends GalleryModule {
 		$this->setDescription(
 			$gallery->i18n('Migrate your Coppermine Gallery to Gallery 2')
 		);
-		$this->setVersion('0.5.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 0));

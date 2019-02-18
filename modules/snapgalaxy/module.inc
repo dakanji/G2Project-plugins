@@ -35,7 +35,7 @@ class SnapGalaxyModule extends GalleryModule {
 		$this->setName($gallery->i18n('SnapGalaxy'));
 		$this->setDescription($gallery->i18n('SnapGalaxy Photo Printing Module'));
 		// Update "upgrade()" too!
-		$this->setVersion('1.0.0');
+		$this->setVersion('7.0.0');
 		$this->_templateVersion = 1;
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');

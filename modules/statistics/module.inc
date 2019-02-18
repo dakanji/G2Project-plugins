@@ -38,7 +38,7 @@ class StatisticsModule extends GalleryModule {
 		$this->setId('statistics');
 		$this->setName($gallery->i18n('Statistics'));
 		$this->setDescription($gallery->i18n('Provides statistics about this Gallery installation'));
-		$this->setVersion('0.5.0');
+		$this->setVersion('7.0.0');
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setRequiredCoreApi(array(7, 0));

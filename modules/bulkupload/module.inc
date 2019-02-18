@@ -33,7 +33,7 @@ class BulkUploadModule extends GalleryModule {
 		$this->setId('bulkupload');
 		$this->setName($gallery->i18n('Bulk Upload'));
 		$this->setDescription($gallery->i18n('Upload files from structured data files'));
-		$this->setVersion('1.0.1');
+		$this->setVersion('7.0.0');
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 2));

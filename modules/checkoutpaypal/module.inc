@@ -31,7 +31,7 @@ class CheckoutPaypalModule extends GalleryModule {
 		$this->setId('checkoutpaypal');
 		$this->setName('Checkout by Paypal');
 		$this->setDescription($gallery->i18n('Complete checkout by paypal'));
-		$this->setVersion('0.4.0');
+		$this->setVersion('7.0.0');
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 		$this->setRequiredCoreApi(array(7, 4));
