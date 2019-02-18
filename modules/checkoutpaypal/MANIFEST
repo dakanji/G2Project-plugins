@@ -1,0 +1,20 @@
+# $Revision: 1823 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/checkoutpaypal/Admin.inc	2752146786	1756482674	5003	5163
+modules/checkoutpaypal/IPN.inc	2564688002	2514664910	8036	8287
+modules/checkoutpaypal/changelog	4245124559	502510842	2438	2506
+modules/checkoutpaypal/classes/CheckoutPaypalEmailPlugin.class	302367986	4239520347	1931	1997
+modules/checkoutpaypal/classes/CheckoutPaypalHelper.class	2794332368	2585253407	5589	5736
+modules/checkoutpaypal/classes/CheckoutPaypalPaymentPlugin.class	2066274068	2015092993	4144	4274
+modules/checkoutpaypal/classes/Entities.inc	4275550571	1772987296	657	671
+modules/checkoutpaypal/classes/GNUmakefile	1995366819	843025639	51	52
+modules/checkoutpaypal/classes/GalleryCheckoutPaypalIPN.class	949219087	3464557692	4357	4539
+modules/checkoutpaypal/classes/GalleryCheckoutPaypalIPNHelper.class	2119950656	2166008929	4200	4350
+modules/checkoutpaypal/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/checkoutpaypal/classes/GalleryStorage/schema.tpl	1314542311	3264726469	2720	2817
+modules/checkoutpaypal/images/logo_ccMC.gif	2773355514	2773355514	808	808
+modules/checkoutpaypal/images/logo_ccVisa.gif	900831108	900831108	335	335
+modules/checkoutpaypal/module.inc	411667627	4237169964	4625	4789
+modules/checkoutpaypal/templates/Admin.tpl	1318391749	2906852526	4933	5038
+modules/checkoutpaypal/templates/Payment.tpl	2865740762	2009208758	3348	3399
+modules/checkoutpaypal/templates/email/paid.tpl	1582170343	3090848425	482	500

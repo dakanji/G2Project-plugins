@@ -1,0 +1,65 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package CheckoutEmail
+ * @subpackage Classes
+ * @version $Revision: 1583 $
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * Required classes
+ */
+
+/**
+ * This is an implementation of the checkout module's CheckoutEmailInterface_1_0
+ *
+ * @package Checkoutemail
+ * @subpackage Classes
+ */
+class CheckoutEmailEmailPlugin extends CheckoutEmailInterface_1_0 {
+	/**
+	 * @see CheckoutEmailInterface_1_0::getEmailTemplateAndVariables()
+	 */
+	public function getEmailTemplateAndVariables($transactionId, $templateName) {
+
+		// check here to see if a checkoutemail transaction
+		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if ($transaction->getPaymentPlugin() != 'checkoutemail') {
+			return array(null, null, null, null);
+		}
+
+		switch ($templateName) {
+			case 'confirm':
+				return array(null, 'modules/checkoutemail/templates/email/confirm.tpl', 'modules_checkoutemail', null);
+
+			break;
+		}
+
+		return array(null, null, null, null);
+	}
+}

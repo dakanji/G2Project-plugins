@@ -1,0 +1,18 @@
+# $Revision: 848 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/cmmigrate/ChooseCmObjects.inc	3557667391	1419613227	4335	4472
+modules/cmmigrate/ConfirmCmImport.inc	179783492	913228771	25639	26437
+modules/cmmigrate/ImportCmResults.inc	2778372401	4125493425	1816	1873
+modules/cmmigrate/README.txt	1560986596	1147720907	487	500
+modules/cmmigrate/SelectCmAlbum.inc	296121005	1769338697	4112	4250
+modules/cmmigrate/classes/CmDatabaseTools.class	1178116579	3221498174	14228	14732
+modules/cmmigrate/classes/CmMigrateHelper.class	1994432301	3755304328	2203	2277
+modules/cmmigrate/module.inc	53502764	2509407632	1766	1820
+modules/cmmigrate/templates/ChooseCmObjects.tpl	591237350	1377393368	2550	2622
+modules/cmmigrate/templates/ConfirmCmImport.tpl	286361663	1328122457	2484	2555
+modules/cmmigrate/templates/ImportCmResults.tpl	113396122	3699270352	1738	1795
+modules/cmmigrate/templates/SelectCmAlbum.tpl	862601842	2601248568	2669	2747
+modules/cmmigrate/test/data/coppermine/include/config.inc.php	2792426595	1106481602	519	530
+modules/cmmigrate/test/phpunit/ChooseCmObjectsControllerTest.class	2002466343	2925626718	2256	2317
+modules/cmmigrate/test/phpunit/CmDatabaseToolsTest.class	2020251930	3658049678	6229	6433
+modules/cmmigrate/test/phpunit/SelectCmAlbumControllerTest.class	2811108913	487715258	3057	3142

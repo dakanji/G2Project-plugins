@@ -1,0 +1,41 @@
+0.7.3 - Add Minimum time to wait between mail box polls.
+	Added pollemailbox.sh.example	
+
+0.7.2 - Repaired broken sprintPCS handling. Added support for multiple images per email
+
+0.7.1 - misc cleanup/fixes by mindless (supports email from cingular phones now too)
+
+0.7.0 - Added code to support SprintPCS picture mail
+
+0.6.7 - Code cleanup, added check during configuration for required email functions.
+
+0.6.6 - Fixed blank configure not complaining about blank fields.
+	Added SSL support
+	Added ability to enter Port
+	Added switch for user to decide to take email body as caption or not.
+
+0.6.5 - Reworked the dev page for general/crontab use.
+	  General page will show errors if mailbox cant be opened.
+        Minor updates to the configure page.
+	  It will grab the system temp directory.
+	  Changed text on button.
+
+0.6.2 - Made the delete option on the configure form depend on the mode.
+	When editing, now the password field is not sent back to the broser. The
+        user must reenter it everytime they submit a change.
+
+0.6.0 - Created "block". You no longer need to click the link in the left nav to process
+	emails
+	Got rid of silly debug page - not needed anymore
+	put some more debugging into the block
+	block only shows for sysadmins
+	removed mode setting - see README
+
+0.5.0 - This version is MEANT FOR CODE REVIEW - NOT A PRODUCTION ENVIRONMENT.
+        First sorta working version. Not meant for general distibution.
+        TMP Location MUST include trailing slash.
+        Translations aren't done.
+        Needs more robust error checking.
+        Does not process more than one image per email. Not sure if it should yet.
+        To process emails you have to click the link in the left nav.
+

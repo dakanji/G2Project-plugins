@@ -1,0 +1,9 @@
+/**
+ * Change Log
+ *
+ * v0.0.1
+ *   + Plugin to contact the site owner through a PHP form
+ *   + Derived from CheckoutEmail module
+ *   + Works with Gallery v2.1
+ *
+ */

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE table
+  SYSTEM "../../../../../../../lib/tools/dtd/DatabaseTableDefinition2.0.dtd">
+<table>
+   <table-name>CheckoutItem</table-name>
+   <schema>
+      <schema-major>1</schema-major>
+      <schema-minor>3</schema-minor>
+   </schema>
+   <column>
+      <column-name>id</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>MEDIUM</column-size>
+      <not-null/>
+   </column>
+   <column>
+      <column-name>item</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>LARGE</column-size>
+      <not-null empty="disallowed"/>
+   </column>
+   <column>
+      <column-name>transaction</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>LARGE</column-size>
+      <not-null empty="disallowed"/>
+   </column>
+   <column>
+      <column-name>itemName</column-name>
+      <column-type>STRING</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <column>
+      <column-name>itemText</column-name>
+      <column-type>STRING</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <column>
+      <column-name>product</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>LARGE</column-size>
+      <not-null empty="disallowed"/>
+   </column>
+   <column>
+      <column-name>productName</column-name>
+      <column-type>STRING</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <column>
+      <column-name>qty</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>LARGE</column-size>
+      <not-null empty="disallowed"/>
+   </column>
+   <column>
+      <column-name>priceEach</column-name>
+      <column-type>STRING</column-type>
+      <column-size>SMALL</column-size>
+   </column>
+   <column>
+      <column-name>priceTotal</column-name>
+      <column-type>STRING</column-type>
+      <column-size>SMALL</column-size>
+   </column>
+   <column>
+      <column-name>notes</column-name>
+      <column-type>TEXT</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <key primary="true">
+     <column-name>id</column-name>
+   </key>
+   <index>
+     <column-name>item</column-name>
+   </index>
+   <index>
+     <column-name>transaction</column-name>
+   </index>
+</table>

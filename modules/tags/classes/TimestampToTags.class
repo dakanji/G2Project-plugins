@@ -1,0 +1,160 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/core/AdminMaintenance.inc');
+GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
+
+/**
+ * This is a MaintenanceTask that will populate the keywords into the tags
+ *
+ * @package Tags
+ * @subpackage Classes
+ * @author Dariush Molavi <dmolavi@themolavis.com>
+ * @version $Revision: 1269 $
+ */
+class TimestampToTags extends MaintenanceTask {
+	/**
+	 * @see MaintenanceTask::getInfo
+	 */
+	public function getInfo() {
+		global $gallery;
+
+		$info['l10Domain']   = 'modules_tags';
+		$info['title']       = $gallery->i18n('Copy origination date into the tags');
+		$info['description'] = $gallery->i18n(
+			'This task will go throught all the gallery item and copy all of the origination date information' .
+			' into three tags: year, month, and day. If the tag exists, it will not be duplicated.  Existing tags' .
+			' will be kept'
+		);
+
+		return $info;
+	}
+
+	/**
+	 * @see MaintenanceTask::run
+	 */
+	public function run() {
+		global $gallery;
+		$templateAdapter =& $gallery->getTemplateAdapter();
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'tags');
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$query              = 'SELECT [GalleryDataItem::id] FROM [GalleryDataItem]';
+		list($ret, $result) = $gallery->search($query);
+
+		if ($ret) {
+			return $ret;
+		}
+		$ids = array();
+
+		while ($res = $result->nextResult()) {
+			$ids[] = $res[0];
+		}
+		$totalItems       = count($ids);
+		$current          = 1;
+		$migrationMessage = $module->translate('Migrating origination date into tags');
+
+		$ret = $templateAdapter->updateProgressBar(
+			$migrationMessage,
+			$module->translate(
+				array(
+					'text' => 'Item 0 of %d',
+					'arg1' => $totalItems,
+				)
+			),
+			0
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		while (!empty($ids)) {
+			$idSet = array_splice($ids, 0, 100);
+			$gallery->guaranteeTimeLimit(30);
+
+			list($ret, $items) = GalleryCoreApi::loadEntitiesById($idSet);
+
+			if ($ret) {
+				return $ret;
+			}
+
+			foreach ($items as $item) {
+				$itemDate = $item->getOriginationTimestamp();
+
+				if (!empty($itemDate)) {
+					$itemDateTags         = date('F,Y', $itemDate);
+					list($ret, $dateTags) = TagsHelper::splitTags($itemDateTags);
+
+					if ($ret) {
+						return $ret;
+					}
+
+					foreach ($dateTags as $dateTag) {
+						$ret = TagsHelper::addNewTag(trim($dateTag));
+
+						if ($ret) {
+							return $ret;
+						}
+						$ret = TagsHelper::assignTag($item->getId(), trim($dateTag));
+
+						if ($ret) {
+							return $ret;
+						}
+					}
+				}
+
+				$ret = $templateAdapter->updateProgressBar(
+					$migrationMessage,
+					$module->translate(
+						array(
+							'text' => 'Item %d of %d',
+							'arg1' => $current,
+							'arg2' => $totalItems,
+						)
+					),
+					$current / $totalItems
+				);
+
+				if ($ret) {
+					return $ret;
+				}
+				$current++;
+			}
+		}
+
+		return array(
+			null,
+			true,
+			array($module->translate('All date information properly inserted in the tags')),
+		);
+	}
+
+	/**
+	 * @see MaintenanceTask::requiresProgressBar
+	 */
+	public function requiresProgressBar() {
+		return true;
+	}
+}

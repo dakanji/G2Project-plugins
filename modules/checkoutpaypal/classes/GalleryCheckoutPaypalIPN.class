@@ -1,0 +1,172 @@
+<?php
+/*
+ * $RCSfile: GalleryCheckoutPaypalIPN.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ * @package CheckoutPaypal
+ * @version $Revision: 1490 $ $Date: 2006/04/07 20:51:05 $
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ */
+
+/**
+ * Load the parent class
+ */
+GalleryCoreApi::requireOnce('modules/core/classes/GalleryEntity.class');
+
+/**
+ * A GalleryChildEntity for checkoutpaypal transactions.
+ *
+ * @g2 <class-name>GalleryCheckoutPaypalIPN</class-name>
+ * @g2 <parent-class-name>GalleryEntity</parent-class-name>
+ * @g2 <schema>
+ * @g2   <schema-major>1</schema-major>
+ * @g2   <schema-minor>0</schema-minor>
+ * @g2 </schema>
+ * @g2 <requires-id/>
+ *
+ * @package CheckoutPaypal
+ * @subpackage Classes
+ */
+class GalleryCheckoutPaypalIPN extends GalleryEntity {
+	/* AARGH... historical bug - this should extend GalleryChildEntity
+	consequence: none of these entities have parents set, so it's
+	impossible to determine which IPN refers to which transaction!
+	*/
+
+	// Members
+
+	/**
+	 * PayPal transaction ID
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>ppId</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $ppId
+	 * @access public
+	 */
+	public $ppId;
+
+	/**
+	 * PayPal transaction status information
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>ppStatus</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $ppStatus
+	 * @access public
+	 */
+	public $ppStatus;
+
+	/**
+	 * PayPal transaction date
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>ppDate</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $ppDate
+	 * @access public
+	 */
+	public $ppDate;
+
+	/**
+	 * PayPal transaction signature
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>ppSign</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $ppSign
+	 * @access public
+	 */
+	public $ppSign;
+
+	/**
+	 * Transaction notes
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>notes</member-name>
+	 * @g2   <member-type>TEXT</member-type>
+	 * @g2 </member>
+	 *
+	 * @var $notes
+	 * @access public
+	 */
+	public $notes;
+
+	// Methods
+
+	/**
+	 * @see GalleryEntity::getClassName()
+	 */
+	public function getClassName() {
+		return 'GalleryCheckoutPaypalIPN';
+	}
+
+	public function getPpId() {
+		return $this->ppId;
+	}
+
+	public function setPpId($ppId) {
+		$this->ppId = $ppId;
+	}
+
+	public function getPpStatus() {
+		return $this->ppStatus;
+	}
+
+	public function setPpStatus($ppStatus) {
+		$this->ppStatus = $ppStatus;
+	}
+
+	public function getPpDate() {
+		return $this->ppDate;
+	}
+
+	public function setPpDate($ppDate) {
+		$this->ppDate = $ppDate;
+	}
+
+	public function getPpSign() {
+		return $this->ppSign;
+	}
+
+	public function setPpSign($ppSign) {
+		$this->ppSign = $ppSign;
+	}
+
+	public function getNotes() {
+		return $this->notes;
+	}
+
+	public function setNotes($notes) {
+		$this->notes = $notes;
+	}
+}

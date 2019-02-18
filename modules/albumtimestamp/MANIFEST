@@ -1,0 +1,6 @@
+# $Revision: 1898 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/albumtimestamp/AlbumTimestampItemOption.inc	2696077602	1675494242	5881	6051
+modules/albumtimestamp/classes/AlbumTimestampHelper.class	2008401918	3117009572	11228	11611
+modules/albumtimestamp/module.inc	231437577	985182025	6097	6285
+modules/albumtimestamp/templates/AlbumTimestampItemOption.tpl	2666141599	1839893885	1277	1309

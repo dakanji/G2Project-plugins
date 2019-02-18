@@ -1,0 +1,290 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package Checkout
+ * @version $Revision: 1707 $
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ */
+
+ /**
+  * Required classes
+  */
+
+
+/**
+ * A helper class for Checkout Transactions
+ *
+ * Utility functions useful in managing checkout transactions
+ *
+ * @package Checkout
+ * @subpackage Classes
+ */
+class CheckoutTransactionHelper {
+	/**
+	 * Return the specified transactions
+	 *
+	 * @param array (string criteria SQL WHERE clause,
+	 *               int count SQL record count)
+	 * @return array (object GalleryStatus a status code,
+	 *                array (txn id => array (GalleryCheckoutTransaction, ...), ...)
+	 * @access private
+	 * @static
+	 */
+	public function fetchCheckoutTransactions($criteria = null, $count = null) {
+		global $gallery;
+
+		$query = '
+            SELECT
+            [GalleryCheckoutTransaction::id]
+            FROM
+            [GalleryCheckoutTransaction]
+            ';
+
+		if (!is_null($criteria)) {
+			$query .= ' WHERE ' . $criteria;
+		}
+
+		$count ? $queryOptions = array(
+			'limit' => array(
+				'count' => $count,
+			),
+		) : $queryOptions      = array();
+
+		list($ret, $searchResults) = $gallery->search($query, $queryOptions);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		// Get all of our ids
+		$allIds = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$allIds[] = $result[0];
+		}
+
+		// Load all the transactions at once
+		$checkoutTxns = array();
+
+		if (!empty($allIds)) {
+			list($ret, $checkoutTxns) = GalleryCoreApi::loadEntitiesById($allIds);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+		return array(null, $checkoutTxns);
+	}
+
+	/**
+	 * Purge 'dead' transactions from the database
+	 *
+	 * @return array object GalleryStatus a status code
+	 */
+	public function purgeDeadTransactions() {
+		global $gallery;
+		list($ret, $moduleParameters) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkout');
+
+		if ($ret) {
+			return $ret;
+		}
+		$query1 = '
+        SELECT
+          [GalleryCheckoutTransaction::id]
+        FROM
+          [GalleryCheckoutTransaction]
+        WHERE
+          [GalleryCheckoutTransaction::date] < ?
+	    AND
+	  [GalleryCheckoutTransaction::paymentPlugin] IS NULL
+        ';
+
+		$query2 = '
+         SELECT
+          [GalleryCheckoutTransaction::id]
+        FROM
+          [GalleryCheckoutTransaction]
+        WHERE
+          [GalleryCheckoutTransaction::date] < ?
+        ';
+
+		/* Search for all transaction IDs where the transaction date was more than
+		 * required number of days AND not flagged by a paymentplugin
+		 */
+		if ($moduleParameters['deleteOrphanDays']) {
+			list($ret, $searchResults) = $gallery->search($query1, array(time() - 3600 * 24 * $moduleParameters['deleteOrphanDays']));
+
+			if ($ret) {
+				return $ret;
+			}
+			// Delete these transactions
+			while ($result = $searchResults->nextResult()) {
+				$ret = GalleryCoreApi::deleteEntityById($result[0]);
+
+				if ($ret) {
+					return $ret;
+				}
+			}
+		}
+		/* Search for all transaction IDs where the transaction date was more than
+		 * required number of days
+		 */
+		if ($moduleParameters['deleteAllDays']) {
+			list($ret, $searchResults) = $gallery->search($query2, array(time() - 3600 * 24 * $moduleParameters['deleteAllDays']));
+
+			if ($ret) {
+				return $ret;
+			}
+			// Delete these transactions
+			while ($result = $searchResults->nextResult()) {
+				$ret = GalleryCoreApi::deleteEntityById($result[0]);
+
+				if ($ret) {
+					return $ret;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Return the children checkout items of the specified transaction
+	 *
+	 * @param integer transaction ID
+	 * @return array (object GalleryStatus a status code,
+	 *                array (itemId ...))
+	 * @access private
+	 * @static
+	 */
+	public function fetchTransactionItemIds($transactionId) {
+		global $gallery;
+
+		$query = '
+            SELECT
+            [GalleryCheckoutItem::id]
+            FROM
+            [GalleryCheckoutItem]
+	        WHERE
+	        [GalleryCheckoutItem::transaction] = ' . $transactionId;
+
+		list($ret, $searchResults) = $gallery->search($query);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		// Get all of our ids
+		$allIds = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$allIds[] = $result[0];
+		}
+
+		return array(null, $allIds);
+	}
+
+	/**
+	 * Return the children checkout items of the specified transaction
+	 *
+	 * @param integer transaction ID
+	 * @return array (object GalleryStatus a status code,
+	 *                array (array (itemId, productId), array (itemId, productId), ...))
+	 * @access private
+	 * @static
+	 */
+	public function fetchFullTransactionItems($transactionId) {
+		global $gallery;
+
+		$query = '
+            SELECT
+            [GalleryCheckoutItem::item],[GalleryCheckoutItem::itemName], [GalleryCheckoutItem::itemText],
+            [GalleryCheckoutItem::product], [GalleryCheckoutItem::productName], [GalleryCheckoutItem::qty],
+            [GalleryCheckoutItem::priceEach], [GalleryCheckoutItem::priceTotal], [GalleryCheckoutItem::notes]
+            FROM
+            [GalleryCheckoutItem]
+	        WHERE
+	        [GalleryCheckoutItem::transaction] = ' . $transactionId;
+
+		list($ret, $searchResults) = $gallery->search($query);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$allLines = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$allLines[] = array(
+				'itemId'      => $result[0],
+				'itemName'    => $result[1],
+				'itemText'    => $result[2],
+				'product'     => $result[3],
+				'productName' => $result[4],
+				'qty'         => $result[5],
+				'priceEach'   => $result[6],
+				'priceTotal'  => $result[7],
+				'notes'       => $result[8],
+			);
+		}
+
+		return array(null, $allLines);
+	}
+
+	/**
+	 * Return the children checkout items of the specified transaction
+	 *
+	 * @param integer transaction ID
+	 * @return array (object GalleryStatus a status code,
+	 *                array (array (itemId, productId), array (itemId, productId), ...))
+	 * @access private
+	 * @static
+	 */
+	public function fetchTransactionItems($transactionId) {
+		global $gallery;
+
+		$query = '
+            SELECT
+            [GalleryCheckoutItem::item], [GalleryCheckoutItem::product]
+            FROM
+            [GalleryCheckoutItem]
+	        WHERE
+	        [GalleryCheckoutItem::transaction] = ' . $transactionId;
+
+		list($ret, $searchResults) = $gallery->search($query);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		// Get all of our ids
+		$allIds = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$allIds[] = array($result[0], $result[1]);
+		}
+
+		return array(null, $allIds);
+	}
+}

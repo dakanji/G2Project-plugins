@@ -1,0 +1,499 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Utility functions useful in managing Checkout Products
+ * @package Checkout
+ * @version $Revision: 1711 $
+ * @author Alec Myers <alec@alecmyers.com>
+ * @static
+ */
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
+
+
+class CheckoutProductMapHelper {
+	/**
+	 * Return the product parameters owned by a given album or photo
+	 *
+	 * @param int $itemId id of the Item
+	 * @return array (object GalleryStatus a status code,
+	 *                 array( array( 'productId' => product Id, 'paramName' => parameter Name, 'paramValue' => parameter Value), ...)
+	 */
+	public function fetchLocalParams($itemId) {
+		global $gallery;
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'CheckoutProductMap',
+			array('productId', 'paramName', 'paramValue'),
+			array(
+				'ownerId' => $itemId,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$params = array();
+
+		while ($result = $searchResults->nextResult()) {
+			/*
+			 * Note: Item-wide parameters given product Id of zero: ignore when
+			 * collecting Product Parameters etc.
+			 */
+			if ($result[0] == 0) {
+				continue;
+			}
+			$params[] = array(
+				'productId'  => $result[0],
+				'paramName'  => $result[1],
+				'paramValue' => $result[2],
+			);
+		}
+
+		return array(null, $params);
+	}
+
+	/**
+	 * Return the product parameters owned by a given album or photo, indexed by product
+	 *
+	 * @param int $itemId id of the Item
+	 * @return array (object GalleryStatus a status code,
+	 *                 array( 'productId' => array(paramName => parameter Name, paramValue => parameter Value), ...)
+	 */
+	public function fetchLocalParamsByProduct($itemId) {
+		list($ret, $params) = CheckoutProductMapHelper::fetchLocalParams($itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$products = array();
+
+		foreach ($params as $param) {
+			$products[$param['productId']][$param['paramName']] = $param['paramValue'];
+		}
+
+		return array(null, $products);
+	}
+
+	/**
+	 * Return the accessory parameters owned by a given photo, indexed by accessory (product)
+	 *
+	 */
+	public function fetchAccessoryData($itemId) {
+
+		// Get display priority
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'CheckoutProductMap',
+			array('paramValue'),
+			array(
+				'productId' => '0',
+				'paramName' => 'accessoryDisplayPriority',
+				'ownerId'   => $itemId,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$result          = $searchResults->nextResult();
+		$displayPriority = '';
+
+		if ($result) {
+			$displayPriority = $result[0];
+		}
+		list($ret, $params) = CheckoutProductMapHelper::fetchLocalParams($itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$accessories = array();
+
+		foreach ($params as $param) {
+			$accessories[$param['productId']][$param['paramName']] = $param['paramValue'];
+		}
+		// ony accessories
+		foreach ($accessories as $accessoryId => $accessory) {
+			if (!isset($accessory['isAccessory'])) {
+				unset($accessories[$accessoryId]);
+			}
+		}
+		// Add id
+		foreach ($accessories as $accessoryId => $accessory) {
+			$accessories[$accessoryId]['accessoryId'] = $accessoryId;
+		}
+		// and sort:
+		usort($accessories, create_function('$a,$b', 'return $a["position"] > $b["position"];'));
+
+		return array(null, $accessories, $displayPriority);
+	}
+
+	/**
+	 * Return the complete list of accessories
+	 *
+	 */
+	public function fetchAccessories() {
+		global $gallery;
+		// Get the entire product parameter list
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'CheckoutProductMap',
+			array('productId', 'paramName', 'paramValue', 'ownerId'),
+			array()
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$accessories = array();
+		// Sort into products etc
+		while ($result = $searchResults->nextResult()) {
+			if ($result[0] == 0) {
+				$accessories[$result[3]][$result[1]] = $result[2];
+			} else {
+				$accessories[$result[3]]['options'][$result[0]][$result[1]] = $result[2];
+			}
+		}
+		/*
+		 *  Dropping the ones that aren't accessories,
+		 *  set ids as one of the values
+		 */
+		foreach ($accessories as $itemId => $item) {
+			// make each OptionId a parameter of that option
+			// or if it's not an accessory, remove it
+			foreach ($item['options'] as $optionId => $option) {
+				if (!isset($option['isAccessory'])) {
+					unset($accessories[$itemId]['options'][$optionId]);
+
+					continue;
+				}
+				$accessories[$itemId]['options'][$optionId]['id'] = $optionId;
+			}
+			// If the item has no options, remove it
+			if (empty($accessories[$itemId]['options'])) {
+				unset($accessories[$itemId]);
+
+				continue;
+			}
+			// make the ItemId a parameter
+			$accessories[$itemId]['id'] = $itemId;
+			// make sure it has a position to sort by
+			if (!isset($item['position'])) {
+				$accessories[$itemId]['position'] = 0;
+			}
+			// Add full item details for displaying in the template
+			list($ret, $fullItem) = GalleryCoreApi::loadEntitiesById($itemId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$accessories[$itemId]['fullItemDetails'] = (array)$fullItem;
+		}
+		/*
+		 * Sort the items, and also the products within each item
+		 * This reindexes the arrays, which is why we had to insert the ids as
+		 * values above
+		 */
+		usort($accessories, create_function('$a,$b', 'return $a["position"] > $b["position"];'));
+
+		foreach ($accessories as $itemId => $item) {
+			usort($item['options'], create_function('$a,$b', 'return $a["position"] > $b["position"];'));
+			$accessories[$itemId]['options'] = $item['options'];
+		}
+
+		// Done
+		return array(null, $accessories);
+	}
+
+	/**
+	 * Return the hierarchical set of product parameters for an album or photo item
+	 * numerically indexed and sorted by display order
+	 *
+	 * @param int $itemId id of the Item
+	 * @param bool $checkUseLocal true if should check (and use) Custom Prices
+	 * @return array (object GalleryStatus a status code,
+	 *          array (display position => array (paramName => paramValue, ... ) ... ))
+	 */
+	public function fetchProducts($itemId, $checkUseLocal = true, $checkPlugins = true) {
+		global $gallery;
+		$itemIdTree = array();
+
+		// Using custom parameters?
+		$useLocal = false;
+
+		if ($checkUseLocal) {
+			list($ret, $useLocal) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'customPrices');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+		// Get item's parent ids in a list...
+		list($ret, $itemIdTree) = GalleryCoreApi::fetchParentSequence($itemId);
+
+		if ($ret) {
+			// Item deleted?
+			if ($ret->getErrorCode() & ERROR_MISSING_OBJECT) {
+				return array(null, array());
+			}
+
+			return array($ret, null);
+		}
+		// ... and include the item itself:
+		$itemIdTree = array_merge(array_values($itemIdTree), array($itemId));
+
+		// If not using local prices/parameters, truncate to *just* the root album
+		if (!$useLocal) {
+			$itemIdTree = array_slice($itemIdTree, 0, 1);
+		}
+
+		// Work through each album
+		$products = array();
+
+		foreach ($itemIdTree as $myItemId) {
+			list($ret, $productsParams) = CheckoutProductMapHelper::fetchLocalParams($myItemId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			/* Distribute parameters from this album to correct product sub-arrays, overwriting where identical
+			   named parameters are redefined lower down the album tree */
+			foreach ($productsParams as $productParams) {
+				$products[$productParams['productId']][$productParams['paramName']] = $productParams['paramValue'];
+			}
+		}
+		/* Add the existing key (productId) as a value (under the key 'productId') into each sub-array as
+		sorting by display order will re-key the array */
+		foreach ($products as $productId => $product) {
+			$products[$productId]['productId'] = $productId;
+		}
+
+		// remove accessories
+		// TODO: consider doing this more neatly somewhere else?
+		foreach ($products as $productId => $product) {
+			if (isset($product['isAccessory'])) {
+				unset($products[$productId]);
+			}
+		}
+		// and sort:
+		usort($products, create_function('$a,$b', 'return $a["position"] > $b["position"];'));
+
+		// Ask plugins to alter product list if they wish
+		if ($checkPlugins) {
+			$ret = checkoutInterfaceHelper::doProductListPlugins($products, $itemId);
+		}
+		// Done
+		return array(null, $products);
+	}
+
+	/**
+	 * Return array of products to show for a given item, in display order
+	 *
+	 * @param int $itemId id of the Item
+	 * @return array (object GalleryStatus a status code,
+	 *          array (display position => array (paramName => paramValue, ... ) ... ))
+	 */
+	public function fetchVisibleProducts($itemId, $useLocal) {
+		list($ret, $products) = CheckoutProductMapHelper::fetchProducts($itemId, $useLocal);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		/* Now strip out the ones for which visible is not 'true' or
+		   which don't apply according to whether the item is an album or not */
+		foreach ($products as $which => $product) {
+			if ($product['visible'] != 'true') {
+				unset($products[$which]);
+
+				continue;
+			}
+			list($ret, $item) = GalleryCoreAPI::loadEntitiesById($itemId, 'GalleryEntity');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			if ($item->getCanContainChildren()) {
+				if ($product['appliesToAlbum'] != 'true') {
+					unset($products[$which]);
+				}
+			} elseif ($product['appliesToItem'] != 'true') {
+				unset($products[$which]);
+			}
+		}
+
+		return array(null, $products);
+	}
+
+	/**
+	 * Set a parameter
+	 *
+	 * @param int $productId
+	 * @param string $paramName
+	 * @param string $paramValue
+	 * @param int $ownerId
+	 * @return object GalleryStatus a status code
+	 */
+	public function setParam($productId, $paramName, $paramValue, $ownerId) {
+		global $gallery;
+		/* Need to read lock this section?
+		Delete the parameter if it already exists */
+		$ret = GalleryCoreApi::removeMapEntry(
+			'CheckoutProductMap',
+			array(
+				'productId' => $productId,
+				'paramName' => $paramName,
+				'ownerId'   => $ownerId,
+			)
+		);
+		// Don't check return code
+		$ret = GalleryCoreApi::addMapEntry(
+			'CheckoutProductMap',
+			array(
+				'productId'  => $productId,
+				'paramName'  => $paramName,
+				'paramValue' => $paramValue,
+				'ownerId'    => $ownerId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Remove a parameter
+	 *
+	 * @param int $productId
+	 * @param string $paramName
+	 * @param int $ownerId
+	 * @return object GalleryStatus a status code
+	 */
+	public function removeParam($productId, $paramName, $ownerId) {
+		global $gallery;
+		// Need to read lock this section?
+		$ret = GalleryCoreApi::removeMapEntry(
+			'CheckoutProductMap',
+			array(
+				'productId' => $productId,
+				'paramName' => $paramName,
+				'ownerId'   => $ownerId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * delete a parameter
+	 *
+	 * @param int $productId
+	 * @param string $paramName
+	 * @param string $paramValue
+	 * @param int $ownerId
+	 * @return object GalleryStatus a status code
+	 */
+	public function deleteParam($productId, $paramName, $paramValue, $ownerId) {
+		global $gallery;
+		// Need to read lock this section?
+		$ret = GalleryCoreApi::removeMapEntry(
+			'CheckoutProductMap',
+			array(
+				'productId' => $productId,
+				'paramName' => $paramName,
+				'ownerId'   => $ownerId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Delete a product
+	 *
+	 * @param string $id
+	 * @return object GalleryStatus a status code
+	 */
+	public function deleteProduct($id) {
+		$ret = GalleryCoreApi::removeMapEntry(
+			'CheckoutProductMap',
+			array(
+				'productId' => $id,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Remove local parameters
+	 *
+	 * @return object GalleryStatus a status code
+	 */
+	public function removeLocal($productId, $ownerId) {
+		$ret = GalleryCoreApi::removeMapEntry(
+			'CheckoutProductMap',
+			array(
+				'productId' => $productId,
+				'ownerId'   => $ownerId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Delete all parameters owned by a given album or photo
+	 *
+	 * @return object GalleryStatus a status code
+	 */
+	public function deleteItemParameters($id) {
+		$ret = GalleryCoreApi::removeMapEntry(
+			'CheckoutProductMap',
+			array(
+				'ownerId' => $id,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+}

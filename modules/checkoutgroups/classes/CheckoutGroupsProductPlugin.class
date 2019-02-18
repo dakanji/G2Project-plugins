@@ -1,0 +1,59 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package CheckoutGroups
+ * @version $Revision: 1644 $
+ * @subpackage Classes
+ * @author Alec Myers <alec@alecmyers.com>
+ */class CheckoutGroupsProductPlugin extends CheckoutProductListInterface_1_0 {
+	public function adjustProductList(&$products) {
+		global $gallery;
+
+		// do nothing if anonymous user
+		list($ret, $anon) = GalleryCoreApi::isAnonymousUser();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		if ($anon) {
+			return null;
+		}
+		$thisUserId = $gallery->getActiveUserId();
+		// make visible according to group membership
+		foreach ($products as $position => $product) {
+			if (isset($product['groupVisibleId'])) {
+				list($ret, $inGroup) = GalleryCoreApi::isUserInGroup($thisUserId, $product['groupVisibleId']);
+
+				if ($ret) {
+					return $ret;
+				}
+
+				if ($inGroup) {
+					$products[$position]['visible'] = 'true';
+				}
+			}
+		}
+
+		return null;
+	}
+}

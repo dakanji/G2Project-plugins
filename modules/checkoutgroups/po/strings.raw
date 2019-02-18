@@ -1,0 +1,29 @@
+# $Id: strings.raw 1376 2008-05-29 14:43:49Z alecmyers $
+
+/* module.inc */
+gettext("Checkout Groups")
+gettext("Adds purchasers to configured groups")
+gettext("Commerce")
+
+/* templates/GroupProducts.tpl */
+gettext("Purchase Group Access")
+gettext("If a customer purchases a product which has a group assigned to it here, they will be added to that group when the order payment is cleared.")
+gettext("Groups can be used, for instance, to permit access to particular albums on payment, or to authorize discounts for returning customers.")
+gettext("If the customer is not logged in (i.e. the customer is the Anonymous User) they won't be added to any groups. You can choose to hide a product so it won't appear in their cart in this case.")
+gettext("Product Name")
+gettext("Group to which to add purchaser")
+gettext("Hide Product from Anonymous User?")
+gettext("(None)")
+
+/* templates/GroupStatus.tpl */
+gettext("Group Access")
+gettext("This order was placed under the Anonymous User - group assignments will not be carried out when payment is cleared.")
+gettext("This order includes the following group access:")
+gettext("Item")
+gettext("Product")
+gettext("Group")
+gettext("Member")
+gettext("yes")
+gettext("This order includes no special group access.")
+gettext("Online Access")
+gettext("This order includes online access to larger images.")

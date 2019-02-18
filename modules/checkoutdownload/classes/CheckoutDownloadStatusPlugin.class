@@ -1,0 +1,56 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+
+/**
+ * This is an implementation of the checkout module's CheckoutStatusPageInterface_1_0
+ *
+ * @package CheckoutDownload
+ * @subpackage Classes
+ * @version $Revision: 1664 $
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class CheckoutDownloadStatusPlugin extends CheckoutStatusPageInterface_1_0 {
+	/**
+	 * @see CheckoutStatusPageInterface_1_0::loadTemplate(&$template, &$form)
+	 */
+	public function loadTemplate(&$template, &$form) {
+		return array(null, 'modules/checkoutdownload/templates/StatusPageDownload.tpl', 'modules_checkoutdownload');
+	}
+
+	/**
+	 * @see CheckoutStatusPageInterface_1_0::loadTemplate(&$template, &$form)
+	 */
+	public function handleRequest(&$form) {
+		if (isset($form['checkoutdownload']['downloadZip'])) {
+			$results['redirect']['controller']    = 'checkoutdownload.BuildDownload';
+			$results['redirect']['transactionId'] = $form['checkoutdownload']['transactionId'];
+			$results['redirect']['verify1']       = $form['checkoutdownload']['verify1'];
+			$results['redirect']['verify2']       = $form['checkoutdownload']['verify2'];
+			$results['status']                    = '';
+			$results['error']                     = '';
+
+			return array(null, $results);
+		}
+
+		return array(null, null);
+	}
+}

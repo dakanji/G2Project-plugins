@@ -1,0 +1,115 @@
+<?php
+/*
+ * $RCSfile: StatisticsAdminCursory.inc,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Cursory Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Cursory Public License for more details.
+ *
+ * You should have received a copy of the GNU Cursory Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+
+GalleryCoreApi::requireOnce('modules/core/AdminMaintenance.inc');
+
+/**
+ * Recalculate statistics
+ *
+ * @version $Revision: 1036 $
+ * @package Statistics
+ * @author Aidan Lister <aidan@php.net>
+ */
+class RecalculateStatisticsTask extends MaintenanceTask {
+	/**
+	 * @see MaintenanceTask::getInfo
+	 */
+	public function getInfo() {
+		global $gallery;
+
+		return array(
+			'l10Domain'   => 'modules_statistics',
+			'title'       => $gallery->i18n('Recalculate statistics'),
+			'description' => $gallery->i18n(
+				'Update and recache statistics about Gallery installation.'
+			),
+		);
+	}
+
+	/**
+	 * @see MaintenanceTask::run
+	 */
+	public function run() {
+		global $gallery;
+		$templateAdapter =& $gallery->getTemplateAdapter();
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'statistics');
+
+		if ($ret) {
+			return array($ret, null, null);
+		}
+
+		$templateAdapter->updateProgressBar(
+			$module->translate('Recalculate Statistics'),
+			$module->translate('Loading maintenance tasks for plugins'),
+			0
+		);
+		flush();
+
+		// Get all the plugins
+		list($ret, $allPluginIds) = GalleryCoreApi::getAllFactoryImplementationIds('StatisticsSiteAdminPlugin');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$pluginInstances = array();
+
+		foreach (array_keys($allPluginIds) as $pluginId) {
+			list($ret, $plugin) = GalleryCoreApi::newFactoryInstanceById('StatisticsSiteAdminPlugin', $pluginId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			list($ret, $hasRecalculateTask) = $plugin->hasRecalculateTask();
+
+			if ($hasRecalculateTask) {
+				$pluginInstances[$pluginId] = $plugin;
+			}
+		}
+
+		foreach ($pluginInstances as $plugin) {
+			list($ret, $status) = $plugin->recalculateTask($module, $templateAdapter);
+		}
+
+
+		$templateAdapter->updateProgressBar(
+			$module->translate('Recalculate Statistics'),
+			'Finished',
+			1
+		);
+
+
+		$result = array($module->translate('All statistics successfully recalculated'));
+
+		return array(null, true, $result);
+	}
+
+	/**
+	 * @see MaintenanceTask::requiresProgressBar
+	 */
+	public function requiresProgressBar() {
+		return true;
+	}
+}

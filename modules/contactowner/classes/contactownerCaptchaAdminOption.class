@@ -1,0 +1,21 @@
+<?php
+
+class contactownerCaptchaAdminOption extends CaptchaAdminOption {
+	/**
+	 * @see CaptchaAdminOption::getOptionData
+	 */
+	public function getOptionData() {
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'contactowner');
+
+		if ($ret) {
+			return array($ret, null, null, null);
+		}
+
+		return array(
+			null,
+			$module->translate('Contact Owner'),
+			array('module', 'contactowner', 'validation.level'),
+			array('HIGH', 'OFF'),
+		);
+	}
+}

@@ -1,0 +1,10 @@
+# $Revision: 1121 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/statistics/StatisticsSiteAdmin.inc	3531699023	3180740634	5463	5625
+modules/statistics/StatisticsSiteAdminCursory.inc	1455376663	3955094028	3512	3629
+modules/statistics/StatisticsSiteAdminDisk.inc	2956073038	1326332882	8496	8760
+modules/statistics/classes/RecalculateStatistics.class	2210857776	2996358535	3062	3168
+modules/statistics/module.inc	2349564309	3084359398	3292	3399
+modules/statistics/templates/StatisticsSiteAdmin.tpl	3566769169	308956681	906	932
+modules/statistics/templates/StatisticsSiteAdminCursory.tpl	2959759838	3419491103	841	855
+modules/statistics/templates/StatisticsSiteAdminDisk.tpl	1323856190	971309879	1515	1544

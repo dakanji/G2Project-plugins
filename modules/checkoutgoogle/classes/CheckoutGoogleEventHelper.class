@@ -1,0 +1,110 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * Required classes
+ */
+GalleryCoreApi::requireOnce('modules/checkoutgoogle/classes/CheckoutGoogleResponseHelper.class');
+
+/**
+ * @package CheckoutGoogle
+ * @subpackage Classes
+ * @author Alec Myers <alec@alecmyers.com>
+ * @version $Revision: 1581 $
+ */
+class CheckoutGoogleEventHelper {
+	/**
+	 * Event Handler: get rid of map entries for transactions that are deleted
+	 *
+	 * @see GalleryEventListener::handleEvent
+	 */
+	public function handleEvent($event) {
+		global $gallery;
+
+		if ($event->getEventName() == 'GalleryEntity::delete') {
+			$entity = $event->getEntity();
+
+			if (GalleryUtilities::isA($entity, 'GalleryCheckoutTransaction')) {
+				// Note: better to do this with one or maybe two SQL queries, but syntax varies between DB types, maybe
+				// Remove Google Entries that refer to that order
+				// TODO: Atomicise this
+				list($ret, $results) = GalleryCoreApi::getMapEntry(
+					'CheckoutGoogleOrderMap',
+					array('googleOrderNumber'),
+					array(
+						'transactionId' => $entity->getId(),
+					)
+				);
+
+				if ($ret) {
+					return array($ret, null);
+				}
+
+				while ($result = $results->nextResult()) {
+					$ret = GalleryCoreApi::removeMapEntry(
+						'CheckoutGoogleResponseMap',
+						array(
+							'googleOrderNumber' => $result[0],
+						)
+					);
+
+					if ($ret) {
+						return array($ret, null);
+					}
+				}
+				$ret = GalleryCoreApi::removeMapEntry(
+					'CheckoutGoogleOrderMap',
+					array(
+						'transactionId' => $entity->getId(),
+					)
+				);
+
+				if ($ret) {
+					return array($ret, null);
+				}
+			}
+		}
+
+		// for Google Checkout transactions we can post a 'dispatched' notification back to the Google website
+		if ($event->getEventName() == 'GalleryCheckout::transactionChange') {
+			$transaction = $event->getEntity();
+
+			if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
+				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+			}
+
+			if ($transaction->getPaymentPlugin() == 'checkoutgoogle') {
+				$data = $event->getData();
+
+				switch ($data['type']) {
+					case 'complete':
+						list($ret, $success, $body) = CheckoutGoogleResponseHelper::SendDelivered($transaction->getId());
+
+						if ($ret) {
+							return array($ret, null);
+						}
+				}
+			}
+		}
+
+		return array(null, null);
+	}
+}

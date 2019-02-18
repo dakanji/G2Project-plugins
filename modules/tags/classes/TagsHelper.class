@@ -1,0 +1,679 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Helper methods for the tags module
+ *
+ * @package Tags
+ * @subpackage Helpers
+ * @author Eric Daniel <ehdaniel@gmail.com>
+ * @version $Revision: 1727 $
+ */
+class TagsHelper {
+	/**
+	 * Load a Tag Id out of the database for a given tag name.
+	 *
+	 * @param int $tagName the tag name
+	 * @param bool $caseSensitive (optional) whether to search case-sensitively (defaults to false)
+	 * @return array object GalleryStatus a status code
+	 *               string the id
+	 */
+	public function getTagIdFromName($tagName, $caseSensitive = false) {
+		global $gallery;
+
+		if ($caseSensitive) {
+			// Case-sensitive search is index based
+			$whereClause = '[TagMap::tagName] = ?';
+		} else {
+			// Note: do UPPER in SQL for both elements, strToUpper in PHP is not unicode safe
+			$whereClause = 'UPPER([TagMap::tagName]) = UPPER(?)';
+		}
+
+		$query = '
+	SELECT
+	  [TagMap::tagId]
+	FROM
+	  [TagMap]
+	WHERE
+	' . $whereClause;
+
+		list($ret, $searchResults) = $gallery->search($query, array((string)$tagName));
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if ($searchResults->resultCount() != 0) {
+			$result = $searchResults->nextResult();
+			$tagId  = (int)$result[0];
+		} else {
+			$tagId = '';
+		}
+
+		return array(null, $tagId);
+	}
+
+	/**
+	 * Create a new tag and load it in the database
+	 *
+	 * @param int $tagName the tag name
+	 * @return array object GalleryStatus a status code
+	 */
+	public function addNewTag($tagName) {
+		global $gallery;
+		$storage =& $gallery->getStorage();
+
+		list($ret, $tagId) = TagsHelper::getTagIdFromName($tagName);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		/** @todo Lock the tag table before inserting and add checkpoint */
+		if (empty($tagId)) {
+			list($ret, $newTagId) = $storage->getUniqueId();
+
+			if ($ret) {
+				return $ret;
+			}
+			$ret = GalleryCoreApi::addMapEntry(
+				'TagMap',
+				array(
+					'tagId'   => $newTagId,
+					'tagName' => $tagName,
+				)
+			);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Remove a Tag from the database and all its instances.
+	 *
+	 * @param int $tagName the tag name
+	 * @return object GalleryStatus a status code
+	 */
+	public function removeTag($tagName) {
+		list($ret, $tagId) = TagsHelper::getTagIdFromName($tagName);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Remove tag mappings
+		$ret = GalleryCoreApi::removeMapEntry(
+			'TagItemMap',
+			array(
+				'tagId' => $tagId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Remove tag entry
+		$ret = GalleryCoreApi::removeMapEntry(
+			'TagMap',
+			array(
+				'tagId' => $tagId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get a list of tags
+	 *
+	 * @param string $prefix (optional) the string to match (default to null)
+	 * @return array of TagNames
+	 */
+	public function getTagList($prefix = null) {
+		$where = array();
+
+		if ($prefix) {
+			$where = array(
+				'tagName' => new GallerySqlFragment('LIKE ?', $prefix . '%'),
+			);
+		}
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry('TagMap', array('tagName'), $where);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$tagList = array();
+
+		while (($result = $searchResults->nextResult()) !== false) {
+			$tagList[] = $result[0];
+		}
+
+		return array(null, $tagList);
+	}
+
+	/**
+	 * Get a list of tags and number of occurrences
+	 *
+	 * @param boolean $includeNullCount (optional) True to include tags without instances (default false)
+	 * @return array object GalleryStatus a status code
+	 *               array of TagNames or array (string tagname => int instances, ...)
+	 */
+	public function getTagListWithTagCount($includeNullCount = false) {
+		global $gallery;
+		$storage =& $gallery->getStorage();
+
+		list($ret, $as) = $storage->getFunctionSql('AS', array());
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$query = '
+	    SELECT
+	      [TagMap::tagName],
+	      COUNT([TagItemMap::itemId]) ' . $as . ' TagsCount
+	    FROM
+	      [TagMap], [TagItemMap]
+	    WHERE
+	      [TagMap::tagId] = [TagItemMap::tagId]
+	    GROUP BY
+	      [TagMap::TagName]
+	    ORDER BY
+	      TagsCount DESC, [TagMap::tagName] ASC
+	';
+
+		list($ret, $searchResults) = $gallery->search($query);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$tagList = array();
+
+		while (($result = $searchResults->nextResult()) !== false) {
+			$tagList[$result[0]] = $result[1];
+		}
+
+		if ($includeNullCount) {
+			$query = '
+		SELECT
+		    [TagMap::tagName]
+		FROM
+		    [TagMap]
+		ORDER BY
+		    [TagMap::tagName] ASC
+	    ';
+
+			list($ret, $searchResults) = $gallery->search($query);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			while (($result = $searchResults->nextResult()) !== false) {
+				if (!isset($tagList[$result[0]])) {
+					$tagList[$result[0]] = 0;
+				}
+			}
+		}
+
+		return array(null, $tagList);
+	}
+
+	/**
+	 * Get a list of all tags for a specific item
+	 *
+	 * @param int $itemId
+	 * @return array object GalleryStatus a status code
+	 *               array (string unsanitized tag name => string sanitized tag name)
+	 */
+	public function getTagsByItemId($itemId) {
+		global $gallery;
+
+		$query = '
+	    SELECT
+		[TagMap::tagId], [TagMap::tagName]
+	    FROM
+		[TagMap], [TagItemMap]
+	    WHERE
+		[TagItemMap::itemId] = ?
+		AND
+		[TagMap::tagId] = [TagItemMap::tagId]
+	';
+
+		list($ret, $searchResults) = $gallery->search($query, array($itemId));
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$tagList = array();
+
+		while (($result = $searchResults->nextResult()) !== false) {
+			$tagName = $rawTagName = $result[1];
+			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
+			$tagList[$rawTagName] = $tagName;
+		}
+
+		return array(null, $tagList);
+	}
+
+	/**
+	 * Add a new tag to an item
+	 *
+	 * @param $itemId int the ID of the item
+	 *        $tagName string the name of the tag
+	 * @return object GalleryStatus a status code
+	 */
+	public function assignTag($itemId, $tagName) {
+		list($ret, $tagId) = TagsHelper::getTagIdFromName($tagName);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return TagsHelper::assignTagById($itemId, $tagId);
+	}
+
+	/**
+	 * Add a new tag to an item
+	 *
+	 * @param $itemId int the ID of the item
+	 *        $tagId int A tag id
+	 * @return object GalleryStatus a status code
+	 */
+	public function assignTagById($itemId, $tagId) {
+		global $gallery;
+
+		// Don't insert if the entry already exists
+		$query = '
+	    SELECT
+		[TagItemMap::tagId]
+	    FROM
+		[TagItemMap]
+	    WHERE
+		[TagItemMap::itemId] = ?
+		AND
+		[TagItemMap::tagId] = ?
+	';
+
+		list($ret, $searchResults) = $gallery->search($query, array((int)$itemId, (int)$tagId));
+
+		if ($ret) {
+			return $ret;
+		}
+
+		if ($searchResults->resultCount() != 0) {
+			return null;
+		}
+
+		list($ret) = GalleryCoreApi::addMapEntry(
+			'TagItemMap',
+			array(
+				'itemId' => $itemId,
+				'tagId'  => $tagId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Remove all Tags associated with an item
+	 *
+	 * @param int $itemId
+	 * @return object GalleryStatus a status code
+	 */
+	public function removeAllTags($itemId) {
+		list($ret) = GalleryCoreApi::removeMapEntry(
+			'TagItemMap',
+			array(
+				'itemId' => $itemId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Remove a specific Tag associated with an item
+	 *
+	 * @param int $itemId
+	 * @param string $tagName the name of the tag
+	 * @return object GalleryStatus a status code
+	 */
+	public function unassignTag($itemId, $tagName) {
+		list($ret, $tagId) = TagsHelper::getTagIdFromName($tagName);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		list($ret) = GalleryCoreApi::removeMapEntry(
+			'TagItemMap',
+			array(
+				'itemId' => $itemId,
+				'tagId'  => $tagId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Rename a Tag, keeping it's existing mappings
+	 *
+	 * @param string $oldName the tag current name
+	 * @param string $newName the tag new name
+	 * @return object GalleryStatus a status code
+	 */
+	public function renameTag($oldName, $newName) {
+		list($ret) = GalleryCoreApi::updateMapEntry(
+			'TagMap',
+			array(
+				'tagName' => $oldName,
+			),
+			array(
+				'tagName' => $newName,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Event handler for GalleryEntity::delete event
+	 * Remove any tags mapping for the entity being deleted.
+	 *
+	 * @see GalleryEventListener::handleEvent
+	 */
+	public function handleEvent($event) {
+		if ($event->getEventName() == 'GalleryEntity::delete') {
+			$item = $event->getEntity();
+			$ret  = TagsHelper::removeAllTags($item->getId());
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+		return array(null, null);
+	}
+
+	/**
+	 * This function will split a list of tags into an array
+	 *
+	 * @param string $tagSplit the tags separated by commas, etc ..
+	 * @return array object GalleryStatus a status code
+	 *               array (string raw tag name => string tag name)
+	 */
+	public function splitTags($tagSplit) {
+		$tagList = array();
+		GalleryUtilities::unsanitizeInputValues($tagSplit, false);
+		list($ret, $split) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'keyalbum',
+			'split'
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (empty($split)) {
+			$split = ';,';
+		}
+
+		foreach (preg_split('/[' . $split . ']+/u', $tagSplit) as $tag) {
+			$tag = $rawTag = trim($tag);
+
+			if (!empty($tag)) {
+				GalleryUtilities::sanitizeInputValues($tag, false);
+				$tagList[$rawTag] = $tag;
+			}
+		}
+
+		return array(null, $tagList);
+	}
+
+	/**
+	 * This function will put a weight on a list of tags
+	 * It uses a logarithmic way to put the tags in different buckets.
+	 *
+	 * @param array $tagList the keys are the tagName, the value are the Counts
+	 * @return array of string unsanitzed tagName => (int tag css class, string sanitized tagName)
+	 */
+	public function createTagCloudFromList($tagList) {
+		ksort($tagList);
+		list($ret, $steps) = GalleryCoreApi::getPluginParameter('module', 'tags', 'classNumber');
+
+		if ($ret) {
+			return $ret;
+		}
+		$maxCount = max($tagList);
+		$minCount = min($tagList);
+
+		$steps = ($steps < 2) ? 2 : $steps;
+		$delta = ($maxCount - $minCount) / ($steps - 1);
+
+		$tagCloud = array();
+
+		/*
+		 * Logarithmic algorithm taken from "in search of a perfect tag cloud" by Kevin Hoffman
+		 * http://files.blog-city.com/files/J05/88284/b/insearchofperfecttagcloud.pdf
+		 * Simplified to avoid double loop.
+		 */
+
+		foreach ($tagList as $tagName => $tagCount) {
+			$tagWeight  = ceil(($tagCount - $minCount) / $delta) + 1;
+			$rawTagName = $tagName;
+			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
+			$tagCloud[$rawTagName] = array(
+				'count'    => $tagWeight,
+				'name'     => $tagName,
+				'rawCount' => $tagCount,
+			);
+		}
+
+		return $tagCloud;
+	}
+
+	/**
+	 * This function will create a new CSS file from the database info if needed.
+	 *
+	 * @param boolean $forceOverwrite (optional) True to overwrite the file if it exists
+	 *                (default false)
+	 * @return object GalleryStatus a status code
+	 */
+	public function createCssFile($forceOverwrite = false) {
+		global $gallery;
+		$platform =& $gallery->getPlatform();
+
+		// Get if the current file exists
+		$slash         = $platform->getDirectorySeparator();
+		$cssDir        = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+		list($success) = GalleryUtilities::guaranteeDirExists($cssDir);
+
+		if (!$success) {
+			return GalleryCoreApi::error(
+				ERROR_PLATFORM_FAILURE,
+				__FILE__,
+				__LINE__,
+				'Unable to create directory: ' . $cssDir
+			);
+		}
+
+		$cssFile = $cssDir . $slash . 'tags.css';
+
+		if (!$platform->is_file($cssFile) || $forceOverwrite) {
+			// Gather  the database information and generate the content
+			$cssFileContent = '
+		#folksonomy {
+		  background-color: #eee;
+		  border: 1px solid Navy;
+		  padding: 1em;
+		  margin: auto;
+		  margin-top:10px;
+		  width: 60%;
+		  font: 100% Verdana, Geneva, Arial, Helvetica, sans-serif;
+		}
+
+		#folksonomy ul {
+		  list-style: none;
+		  margin: 0;
+		  padding: 0;
+		}
+
+		#folksonomy ul li {
+		  display: inline;
+		  padding: .2em;
+		  margin: 0;
+		}
+
+		#folksonomy ul li a {
+		  text-decoration: none;
+		}
+
+		#folksonomy ul li a:hover {
+		  text-decoration: underline;
+		}
+	    ';
+
+			list($ret, $numberSteps) = GalleryCoreApi::getPluginParameter('module', 'tags', 'classNumber');
+
+			if ($ret) {
+				return $ret;
+			}
+
+			list($ret, $tempTagClass) = GalleryCoreApi::getPluginParameter('module', 'tags', 'tagCssClass');
+
+			if ($ret) {
+				return $ret;
+			}
+
+			$dbCss = explode('&&', $tempTagClass);
+
+			for ($i = 0; $i < $numberSteps; $i++) {
+				if (empty($dbCss[$i])) {
+					// No info in the DB for that tag CSS class
+					$numberSteps = $i;
+					$ret         = GalleryCoreApi::setPluginParameter(
+						'module',
+						'tags',
+						'classNumber',
+						$numberSteps
+					);
+
+					if ($ret) {
+						return $ret;
+					}
+
+					break;
+				}
+				// There are info, process and store
+				$tempCss         = explode('|', $dbCss[$i]);
+				$cssFileContent .= '
+			#folksonomy ul li.tag' . ($i + 1) . ' a {
+			  font-size: ' . $tempCss[0] . 'em !important;
+			  color: ' . $tempCss[1] . ' !important;
+			}';
+			}
+
+			if (!$platform->atomicWrite($cssFile, $cssFileContent)) {
+				return GalleryCoreApi::error(
+					ERROR_PLATFORM_FAILURE,
+					__FILE__,
+					__LINE__,
+					'Unable to write css file to : ' . $cssFile
+				);
+			}
+		}
+
+		return null;
+	}
+}

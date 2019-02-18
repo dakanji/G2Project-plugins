@@ -1,0 +1,19 @@
+# $Revision: 1730 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/simpleviewersource/Configure.inc	399108027	2817216046	3091	3189
+modules/simpleviewersource/DownloadMax.inc	2178894289	877187507	5327	5497
+modules/simpleviewersource/DownloadThumb.inc	1358126697	2012571193	2548	2633
+modules/simpleviewersource/SimpleviewerSourceItemEdit.inc	2903510482	2241448816	5826	5982
+modules/simpleviewersource/Slideshow.inc	2025941810	4021949884	2247	2309
+modules/simpleviewersource/XMLOut.inc	1190209614	3967799097	4340	4481
+modules/simpleviewersource/classes/GNUmakefile	1995366819	843025639	51	52
+modules/simpleviewersource/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/simpleviewersource/classes/GalleryStorage/schema.tpl	30626109	2896593310	4022	4136
+modules/simpleviewersource/classes/GalleryStorage/tmp/dbxml/SimpleviewerParameterMap.xml	1736509820	1467401722	1290	1336
+modules/simpleviewersource/classes/Maps.inc	2980039046	3801866635	533	537
+modules/simpleviewersource/classes/Maps.xml	1112759631	2028501028	985	1023
+modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class	2730516728	1386267226	7915	8169
+modules/simpleviewersource/module.inc	2628923922	3703691019	5637	5818
+modules/simpleviewersource/templates/Configure.tpl	3566452734	3770428125	731	755
+modules/simpleviewersource/templates/SimpleviewerSourceItemEdit.tpl	12659819	2493565376	10068	10245
+modules/simpleviewersource/templates/Slideshow.tpl	893337137	1685901200	947	969

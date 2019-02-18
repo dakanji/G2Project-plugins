@@ -1,0 +1,495 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * @package Addviaemail
+ * @subpackage UserInterface
+ * @author Brian Janice <cobalt027@users.sourceforge.net>
+ * @version $Revision: 898 $
+ */
+class AddviaemailHelper {
+	/**
+	 * Load a text value out of the database for a given item id.
+	 *
+	 * @param int the item id
+	 * @return array object GalleryStatus a status code
+	 *               string the value
+	 */
+	public function getItemValue($itemId) {
+		global $gallery;
+
+		$query = '
+			SELECT
+				[AddviaemailMap::itemValue]
+			FROM
+				[AddviaemailMap]
+			WHERE
+				[AddviaemailMap::itemId] = ?
+		';
+
+		list($ret, $searchResults) = $gallery->search($query, array($itemId));
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if ($searchResults->resultCount() != 0) {
+			$result = $searchResults->nextResult();
+			$data   = $result[0];
+		} else {
+			$data = '';
+		}
+
+		return array(null, $data);
+	}
+
+	public function showDevPage() {
+		//	echo "Dev Page";
+		list($ret, $params, $newItems) = AddviaemailHelper::processEmails();
+
+		return array($ret, $params, $newItems);
+	}
+
+	public function processEmails() {
+		global $gallery;
+		$platform =& $gallery->getPlatform();
+
+
+		$ret = GalleryCoreApi::setPluginParameter(
+			'module',
+			'addviaemail',
+			'timeOfLastCheck',
+			time()
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+
+		// Get my parameters
+		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'addviaemail');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		// Do a quick little sanity check
+		$myParameters = array(
+			'serverAddress',
+			'serverType',
+			'ssl',
+			'port',
+			'userName',
+			'passWord',
+			'subjectToMatch',
+			'bodyAsCaption',
+			'tmpLocation',
+			'owner',
+			'deleteProcessed',
+			'destinationAlbum',
+		);
+
+		foreach ($myParameters as $key) {
+			if (empty($params[$key])) {
+				return array(GalleryCoreApi::error(ERROR_MISSING_VALUE), $params);
+			}
+		}
+		$params['newItems'] = array();
+
+
+		// Set Local copy of params
+		$pathToSaveFile    = $params['tmpLocation'];
+		$emailServerHost   = $params['serverAddress'];
+		$emailServerType   = $params['serverType'];
+		$emailssl          = $params['ssl'];
+		$emailServerPort   = $params['port'];
+		$emailUserName     = $params['userName'];
+		$emailPassWord     = $params['passWord'];
+		$ownerId           = $params['owner'];
+		$targetDestination = $params['destinationAlbum'];
+		$subjectToMatch    = $params['subjectToMatch'];
+		$bodyAsCaption     = $params['bodyAsCaption'];
+		$deleteProcessed   = $params['deleteProcessed'];
+
+		$emailServerOptions = '';
+
+
+		// To connect to a POP3 server on port 110 on the local server, use:
+		// Type {1==pop3, 2==imap }
+		if ($emailServerType == '1') {
+			$emailServerOptions = '/pop3/notls';
+		} elseif ($emailServerType == '2') {
+			$emailServerOptions = '/notls';
+		}
+		// Check if SSL was enabled - if it was, add it to the server options.
+		if ($emailssl == '1') {
+			$emailServerOptions = $emailServerOptions . '/ssl';
+		}
+
+		$serverString = $emailServerHost . ':' . $emailServerPort . $emailServerOptions;
+		/* Seems not to work too well
+		 *
+		 * http://us2.php.net/manual/en/function.imap-timeout.php
+		 *
+		 */
+		imap_timeout(1, 1);
+
+		if (!($mbox = @imap_open('{' . $serverString . '}INBOX', $emailUserName, $emailPassWord))) {
+			return array(
+				GalleryCoreApi::error(
+					ERROR_UNKNOWN,
+					'',
+					'',
+					'Could not open mailbox:' . $serverString . ' - username,host,password'
+				),
+				$params,
+			);
+		}
+
+		$mail_errors = imap_errors();
+
+		if ($mail_errors[0] == 'Mailbox is empty') {
+			$gallery->debug('ADDVIAEMAIL: Empty mailbox');
+			imap_close($mbox);
+
+			return array(null, $params);
+		}
+
+		$gallery->debug('ADDVIAEMAIL: Starting Heavy Lifting');
+		// Process each message - This is the heavy lifting
+
+		$numOfHeaders = imap_num_msg($mbox);
+
+		for ($currentMsg = $counter = 1; $currentMsg <= $numOfHeaders; $currentMsg++) {
+			// We need to pull the header into so we can check the subject
+			$header_info = imap_headerinfo($mbox, $currentMsg);
+
+			if ($header_info->subject == $subjectToMatch
+				&& ($emailServerType == '1'
+				|| ($emailServerType == '2' && $header_info->Unseen == 'U'))
+			) {
+				// The subject matches, FOUND ONE!
+				$struct = imap_fetchstructure($mbox, $currentMsg);
+
+				if ($struct->type != 1 /* Multipart */ || count($struct->parts) < 2) {
+					// we simply do not have enough parts for any type of message
+					continue;
+				}
+
+				$imagesToAdd = array(); // blank it out so we dont add the same images again
+
+				$success = false;
+				// Special processors
+				if (AddviaemailHelper::isSprintMsg($mbox, $currentMsg)) {
+					list($success, $imagesToAdd) = AddviaemailHelper::processSprintMsg($mbox, $currentMsg, $pathToSaveFile);
+				}
+
+				// put additional special processors here
+
+				// This is the normal message processor
+				if (!$success) {
+					list($success, $imagesToAdd) = AddviaemailHelper::processNormalMsg($mbox, $currentMsg, $pathToSaveFile);
+				}
+
+				// add each picture we found
+				$gallery->debug('ADDVIAEMAIL: going to try to add ' . count($imagesToAdd) . ' images');
+
+				foreach ($imagesToAdd as $imageToAdd) {
+					$gallery->debug_r($imageToAdd);
+					$filename = $imageToAdd[0];
+					$summary  = ($bodyAsCaption == '1') ? $imageToAdd[1] : '';
+					$mimeType = $imageToAdd[2];
+
+					list($ret, $lockId) = GalleryCoreApi::acquireReadLock($targetDestination);
+
+					if ($ret) {
+						imap_close($mbox);
+
+						return array($ret, $params);
+					}
+
+					list($ret, $item) = GalleryCoreApi::addItemToAlbum(
+						$pathToSaveFile . $filename,
+						$filename,
+						$filename,
+						$summary,
+						'',
+						$mimeType,
+						$targetDestination
+					);
+
+					if ($ret) {
+						GalleryCoreApi::releaseLocks($lockId);
+						imap_close($mbox);
+
+						return array($ret, $params);
+					}
+
+					$ret = GalleryCoreApi::releaseLocks($lockId);
+
+					if ($ret) {
+						imap_close($mbox);
+
+						return array($ret, $params);
+					}
+
+					$ret = AddviaemailHelper::setOwnerOfItem($item, $ownerId);
+
+					if ($ret) {
+						imap_close($mbox);
+
+						return array($ret, $params);
+					}
+
+					// Keep track of all new items
+					$params['newItems'][] = $item;
+
+					// deleteProcessed{1==yes, 2==no
+					if ($deleteProcessed == '1' || $emailServerType == '1') {
+						imap_delete($mbox, $currentMsg);
+					}
+
+					// If we got this far, it is safe to delete the file on the system
+					if (!$platform->unlink($pathToSaveFile . $filename)) {
+						imap_close($mbox);
+
+						return GalleryCoreApi::error(
+							ERROR_PLATFORM_FAILURE,
+							'',
+							'',
+							'Could not delete file from filesystem: ' . $pathToSaveFile . $filename
+						);
+					}
+				}
+			}
+		}
+
+		// Extra precaution: Only expunge if we were told to delete messages
+		if ($deleteProcessed == '1' || $emailServerType == '1') {
+			imap_expunge($mbox);
+		}
+		imap_close($mbox);
+
+		return array(null, $params);
+	}
+
+	public function setOwnerOfItem(&$item, $ownerId) {
+		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($item->getId());
+
+		if ($ret) {
+			return $ret;
+		}
+		$item->setOwnerId($ownerId);
+		$ret = $item->save();
+
+		if ($ret) {
+			GalleryCoreApi::releaseLocks($lockId);
+
+			return $ret;
+		}
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	public function saveFileFromURL($url, $pathToSaveFile, $filename) {
+		global $gallery;
+		list($successfullyCopied, $response, $headers) = GalleryCoreApi::fetchWebFile($url, $pathToSaveFile . $filename);
+
+		if (!$successfullyCopied) {
+			$gallery->debug('ADDVIAEMAIL: error in AddviaemailHelper::saveFileFromURL');
+
+			return GalleryCoreApi::error(
+				ERROR_PERMISSION_DENIED,
+				'',
+				'',
+				'Could not save file from URL: ' . $pathToSaveFile . $filename
+			);
+		}
+
+		list($ret, $mimeType) = GalleryCoreApi::getMimeType($pathToSaveFile . $filename);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, $mimeType);
+	}
+
+	public function isSprintMsg($mbox, $currentMsg) {
+		global $gallery;
+		$gallery->debug('ADDVIAEMAIL: in isSprintMsg');
+
+		$struct = imap_fetchstructure($mbox, $currentMsg);
+		$body   = imap_fetchbody($mbox, $currentMsg, 1);
+
+		if ($struct->parts[0]->encoding == 3) {
+			$body = base64_decode($body);
+		}
+
+		// $gallery->debug('ADDVIAEMAIL: text=' . $body);
+
+		if (strlen($body) == 0) {
+			return false;
+		}
+
+		$pos = strpos($body, 'sprintpcs.com');
+
+		if ($pos === false) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function processSprintMsg($mbox, $currentMsg, $pathToSaveFile) {
+		global $gallery;
+		// SprintPCS type message
+		$gallery->debug('ADDVIAEMAIL: in processSprintMsg');
+
+		// Get next part, thats where sprint puts the html with the url to the image
+		$struct = imap_fetchstructure($mbox, $currentMsg);
+		$body   = imap_fetchbody($mbox, $currentMsg, 2);
+
+		if ($struct->parts[1]->encoding == 3) {
+			$body = base64_decode($body);
+		}
+		// $gallery->debug('ADDVIAEMAIL: text=' . $body);
+
+		preg_match_all(
+			'#<img src="(http://pictures\.sprintpcs\.com//?mmps/RECIPIENT/[^"]+)"#',
+			$body,
+			$matches
+		);
+
+		$imagesToAdd = array();
+		$counter     = 0;
+
+		foreach ($matches[1] as $match) {
+			$gallery->debug('ADDVIAEMAIL: sprint img url: ' . $match);
+			$sprintImageUrl       = str_replace('limitsize', 'limitsizebreak', $match);
+			$filename             = 'PictureMail' . $counter++ . '.jpg';
+			list($ret, $mimeType) = AddviaemailHelper::saveFileFromURL(
+				$sprintImageUrl,
+				$pathToSaveFile,
+				$filename
+			);
+
+			if ($ret) {
+				imap_close($mbox);
+
+				return $ret;
+			}
+
+			// no title, sprint puts junk
+			$image = array($filename, '', $mimeType);
+
+			$imagesToAdd[] = $image;
+		}
+
+		$gallery->debug(
+			"ADDVIAEMAIL: count of $imagesToAdd after sprint process=" . count($imagesToAdd)
+		);
+		$gallery->debug_r($imagesToAdd);
+
+		return array(true, $imagesToAdd);
+	}
+
+	public function processNormalMsg($mbox, $currentMsg, $pathToSaveFile) {
+		global $gallery;
+		$platform =& $gallery->getPlatform();
+
+		// Normal  type message
+		$gallery->debug('ADDVIAEMAIL: in processNormalMsg');
+
+		$struct = imap_fetchstructure($mbox, $currentMsg);
+		$body   = imap_fetchbody($mbox, $currentMsg, 1);
+
+		if ($struct->parts[0]->encoding == 3) {
+			$body = base64_decode($body);
+		}
+
+		// $gallery->debug('ADDVIAEMAIL: text=' . $body);
+
+
+		if ($struct->type != 1 /* Multipart */ || count($struct->parts) < 2
+			|| $struct->parts[0]->type != 0 // Text body
+			|| $struct->parts[1]->type != 5 // Image attachment
+			|| $struct->parts[1]->encoding != 3 // base64 encoding
+		) {
+			$gallery->debug('ADDVIAEMAIL: Message not in expected structure');
+			$gallery->debug_r($struct);
+
+			return false;
+		}
+
+		$gallery->debug('ADDVIAEMAIL: processNormalMsg: trying to pull parts of message now...');
+		$gallery->debug_r($struct);
+		// Hope to find filename as first parameter of image attachment
+
+		// Beginning of loop that files all images
+
+		$imagesToAdd = array();
+		$counter     = 0;
+		$gallery->debug('ADDVIAEMAIL: processNormalMsg: Number of parts =' . count($struct->parts));
+
+		for ($x = 1; $x < count($struct->parts); $x++) {
+			$mimeType              = 'image/' . GalleryUtilities::strToLower(
+				$struct->parts[$x]->subtype
+			);
+			list($ret, $extension) = GalleryCoreApi::convertMimeToExtensions($mimeType);
+			$extension             = empty($extension) ? '' : '.' . $extension[0];
+
+			$filename = is_array($struct->parts[$x]->parameters) ? $struct->parts[$x]->parameters[0]->value : 'PictureMail' . $counter++ . $extension;
+
+			$data = imap_fetchbody($mbox, $currentMsg, $x + 1); // remember, the body is part #1
+
+			if (!$platform->file_put_contents($pathToSaveFile . $filename, base64_decode($data))) {
+				imap_close($mbox);
+
+				return GalleryCoreApi::error(
+					ERROR_PLATFORM_FAILURE,
+					'',
+					'',
+					'Could not create file from email: ' . $pathToSaveFile . $filename
+				);
+			}
+			$gallery->debug('ADDVIAEMAIL: processNormalMsg: saved file');
+
+			$gallery->debug('ADDVIAEMAIL: path and file=' . $pathToSaveFile . $filename);
+			$gallery->debug('ADDVIAEMAIL: mimeType=' . $mimeType);
+
+			$image = array($filename, $body, $mimeType);
+
+			$imagesToAdd[] = $image;
+		}
+		// end of loop the find all images
+
+		$gallery->debug("ADDVIAEMAIL: count of $imagesToAdd after normal process=" . count($imagesToAdd));
+		$gallery->debug_r($imagesToAdd);
+
+		return array(true, $imagesToAdd);
+	}
+}

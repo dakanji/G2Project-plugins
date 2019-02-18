@@ -1,0 +1,35 @@
+<!DOCTYPE maps SYSTEM "../../../lib/tools/dtd/MapsDefinition2.0.dtd">
+<maps>
+  <map>
+    <map-name>ICalendarResourceMap</map-name>
+    <schema>
+      <schema-major>0</schema-major>
+      <schema-minor>1</schema-minor>
+    </schema>
+    <member>
+      <member-name>resourceId</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+    <member>
+      <member-name>resourceSerialNumber</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+    <member>
+      <member-name>entityId</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+    <member>
+      <member-name>entitySerialNumber</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+    <member>
+      <member-name>startOffset</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+    <member>
+      <member-name>endOffset</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+  </map>
+</maps>
+

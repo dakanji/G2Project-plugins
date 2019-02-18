@@ -1,0 +1,94 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * @version $Revision: 1200 $
+ * @package CheckoutAuthorizeNet
+ * @subpackage Classes
+ * @author Michael Rodríguez-Torrent <mike@themikecam.com>
+ */
+
+/**
+ * Required classes
+ */
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
+
+/**
+ * This is an implementation of the checkout module's CheckoutPluginInterface_1_0
+ *
+ * @package CheckoutAuthorizeNet
+ * @subpackage Classes
+ */
+class CheckoutAuthorizeNetPlugin extends CheckoutPluginInterface_1_0 {
+	/**
+	 * @see CheckoutPluginInterface_1_0::getPaymentText()
+	 */
+	public function getPaymentText() {
+		return array(
+			null,
+			'Checkout with credit card',
+		);
+	}
+
+	/**
+	 * @see CheckoutPluginInterface_1_0::getPaymentTemplate()
+	 */
+	public function getPaymentTemplate() {
+		return array(null, dirname(__FILE__) . '/../templates/PaymentButton.tpl');
+	}
+
+	/**
+	 * @see CheckoutPluginInterface_1_0::getPaymentVariables()
+	 */
+	public function getPaymentVariables() {
+		// Copy info between the session variables
+		global $gallery;
+		$session =& $gallery->getSession();
+
+		list($ret, $items) = CheckoutHelper::fetchCheckoutItems();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		// Get the product and pricing details
+		list($ret, $product, $price) = CheckoutHelper::fetchProducts();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		// Get the paper options
+		list($ret, $paper) = CheckoutHelper::fetchPapers();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		$session->put('checkoutauthorizenet.items', serialize($items));
+		$session->put('checkoutauthorizenet.product', serialize($product));
+		$session->put('checkoutauthorizenet.price', serialize($price));
+		$session->put('checkoutauthorizenet.paper', serialize($paper));
+		$session->put('checkoutauthorizenet.transactionId', $session->get('checkout.transactionId'));
+		$session->put('checkoutauthorizenet.total', $session->get('checkout.total'));
+
+		return array(null, array());
+	}
+}

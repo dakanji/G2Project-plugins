@@ -1,0 +1,9 @@
+# $Revision: 1645 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/checkoutgroups/classes/CheckoutGroupsEventHelper.class	2531762995	3170386042	2959	3050
+modules/checkoutgroups/classes/CheckoutGroupsPlugin.class	2400640084	781703767	2909	2998
+modules/checkoutgroups/classes/CheckoutGroupsProductPlugin.class	361454723	547885669	1757	1815
+modules/checkoutgroups/classes/CheckoutGroupsStatusPlugin.class	3544584111	2097463608	3713	3823
+modules/checkoutgroups/module.inc	2787615598	1047490409	4008	4130
+modules/checkoutgroups/templates/GroupProducts.tpl	799705679	3633800545	2486	2533
+modules/checkoutgroups/templates/GroupStatus.tpl	2233641163	2652615484	1532	1584

@@ -1,0 +1,275 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Utility functions useful in managing Favourites
+ * @package Favourites
+ * @author Alec Myers  <alec@alecmyers.com>
+ * @version $Revision: 1371 $
+ */
+class FavouritesMapHelper {
+	/**
+	 * Return the favourite items of a given user
+	 *
+	 * @param int $userId
+	 * @return array (object GalleryStatus a status code,
+	 *            array (itemId, ...)
+	 */
+	public function fetchFavourites($userId) {
+		global $gallery;
+
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'FavouritesMap',
+			array('itemId'),
+			array(
+				'userId' => $userId,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$faves = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$ret = GalleryCoreApi::assertHasItemPermission($result[0], 'core.view');
+
+			if (!$ret) {
+				$faves[] = $result[0];
+			}
+		}
+		$faves = array_unique($faves);
+
+		return array(null, $faves);
+	}
+
+	public function fetchUserIdByFullName($fullName = null) {
+		global $gallery;
+
+		$query                     = '
+	SELECT
+	  [GalleryUser::id]
+	FROM
+	  [GalleryUser]
+	WHERE
+	  [GalleryUser::fullName] = ?
+	';
+		list($ret, $searchResults) = $gallery->search($query, array($fullName));
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if ($searchResults->resultCount() == 0) {
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+		}
+		$result = $searchResults->nextResult();
+		$id     = $result[0];
+
+		return array(null, $id);
+	}
+
+	/**
+	 * Returns a list of users with favourites, along with how many each has
+	 *
+	 * @param
+	 * @return array (object GalleryStatus a status code,
+	 *            array ( userId=>number_of_favourites))
+	 */
+	public function fetchUsersWithFavourites() {
+		global $gallery;
+		$results                   = array();
+		$query                     = 'SELECT 
+		[GalleryUser::id],
+		COUNT([GalleryUser::id]), 
+		[GalleryUser::fullName],
+		[GalleryUser::userName]
+		
+		FROM [GalleryUser]
+		INNER JOIN [GalleryFavouritesMap]
+		ON [GalleryUser::id] = [GalleryFavouritesMap::userId]
+		GROUP BY [GalleryUser::id],[GalleryUser::fullName],[GalleryUser::userName]
+		ORDER BY [GalleryUser::fullName]
+		';
+		$queryOptions              = array();
+		list($ret, $searchResults) = $gallery->search($query, $queryOptions);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		while ($result = $searchResults->nextResult()) {
+			$results[] = array(
+				'id'       => $result[0],
+				'count'    => $result[1],
+				'name'     => $result[2],
+				'userName' => $result[3],
+			);
+		}
+
+		return array(null, $results);
+	}
+
+	/**
+	 * Returns a list of usernames and Fullnames, with favourites, that begin with $like
+	 */
+	public function fetchUsernamesWithFavouritesLike($like) {
+		global $gallery;
+		$results                   = array();
+		$query                     = 'SELECT DISTINCT
+		[GalleryUser::fullName]
+		FROM [GalleryUser]
+		INNER JOIN [GalleryFavouritesMap]
+		WHERE [GalleryUser::id] = [GalleryFavouritesMap::userId]
+		AND [GalleryUser::fullName] LIKE ?
+		ORDER BY [GalleryUser::fullName]
+		';
+		list($ret, $searchResults) = $gallery->search($query, array("$like%"));
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		while ($result = $searchResults->nextResult()) {
+			$results[] = $result[0];
+		}
+		$query                     = 'SELECT DISTINCT
+		[GalleryUser::userName]
+		FROM [GalleryUser]
+		INNER JOIN [GalleryFavouritesMap]
+		WHERE [GalleryUser::id] = [GalleryFavouritesMap::userId]
+		AND [GalleryUser::userName] LIKE ?
+		ORDER BY [GalleryUser::userName]
+		';
+		list($ret, $searchResults) = $gallery->search($query, array("$like%"));
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		while ($result = $searchResults->nextResult()) {
+			$results[] = $result[0];
+		}
+
+		return array(null, $results);
+	}
+
+	/**
+	 * Return true if a user has marked an item as a favourite
+	 *
+	 * @param int $userId id of the user
+	 * @param int $itemId id of the item
+	 * @return array (object GalleryStatus a status code
+	 *                boolean true if item user's favourite )
+	 */
+	public function isFavourite($userId, $itemId) {
+		list($ret, $faves) = FavouritesMapHelper::fetchFavourites($userId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, in_array($itemId, $faves));
+	}
+
+	/**
+	 * Set a favourite
+	 *
+	 * @param int $userId
+	 * @param int $itemId
+	 * @return object GalleryStatus a status code
+	 */
+	public function setFavourite($userId, $itemId) {
+		list($ret, $isAlready) = FavouritesMapHelper::isFavourite($userId, $itemId);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		if (!$isAlready) {
+			$ret = GalleryCoreApi::addMapEntry(
+				'FavouritesMap',
+				array(
+					'userId' => $userId,
+					'itemId' => $itemId,
+				)
+			);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Delete a single favourite
+	 *
+	 * @param int $userId
+	 * @param int $itemId
+	 * @return object GalleryStatus a status code
+	 */
+	public function removeFavourite($userId, $itemId) {
+		$ret = GalleryCoreApi::removeMapEntry(
+			'FavouritesMap',
+			array(
+				'userId' => $userId,
+				'itemId' => $itemId,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Clear favourites for id
+	 *
+	 * @return object GalleryStatus a status code
+	 */
+	public function clearFavourites($id) {
+		$ret = GalleryCoreApi::removeMapEntry(
+			'FavouritesMap',
+			array(
+				'userId' => $id,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+		$ret = GalleryCoreApi::removeMapEntry(
+			'FavouritesMap',
+			array(
+				'itemId' => $id,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+}

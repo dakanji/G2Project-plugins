@@ -1,0 +1,22 @@
+# $Revision: 905 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/addviaemail/Addviaemail.inc	1641510567	841381677	2825	2918
+modules/addviaemail/Addviaemailpage.inc	3652010899	255456954	2710	2800
+modules/addviaemail/Callbacks.inc	980461840	2068166753	2373	2446
+modules/addviaemail/Configure.inc	543512460	1607186103	7273	7509
+modules/addviaemail/HISTORY	2542796669	2838767612	1716	1757
+modules/addviaemail/README	4044734933	1346730415	1373	1394
+modules/addviaemail/classes/AddviaemailAdminHelper.class	2841788052	2869648924	1976	2036
+modules/addviaemail/classes/AddviaemailHelper.class	2849561174	3900334060	12802	13214
+modules/addviaemail/classes/GNUmakefile	2105416224	3784514995	52	54
+modules/addviaemail/classes/GalleryStorage/GNUmakefile	947975502	710467981	62	64
+modules/addviaemail/classes/GalleryStorage/schema.tpl	3223530201	382183591	3916	4038
+modules/addviaemail/classes/ImageUploadHelper.class	808080493	1550927691	5157	5327
+modules/addviaemail/classes/Maps.inc	2659769715	3148232679	1004	1008
+modules/addviaemail/classes/Maps.xml	1517850461	911299811	1885	1951
+modules/addviaemail/module.inc	2119395847	618860584	3359	3470
+modules/addviaemail/pollemailbox.sh.example	2155659348	4279724402	659	670
+modules/addviaemail/templates/Addviaemail.tpl	4276008373	139778389	2290	2365
+modules/addviaemail/templates/Configure.tpl	4278090907	1683767927	10329	10644
+modules/addviaemail/templates/blocks/AddviaEmail.tpl	3266469203	2015699738	1036	1067
+modules/addviaemail/templates/blocks/blocks.inc	3068701929	2777956712	124	130

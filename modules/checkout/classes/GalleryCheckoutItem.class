@@ -1,0 +1,285 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package Checkout
+ * @version $Revision: 1500 $
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * Load the parent class
+ */
+GalleryCoreApi::requireOnce('modules/core/classes/GalleryChildEntity.class');
+
+/**
+ * A GalleryEntity for checkout transaction lines.
+ *
+ * @g2 <class-name>GalleryCheckoutItem</class-name>
+ * @g2 <parent-class-name>GalleryChildEntity</parent-class-name>
+ * @g2 <schema>
+ * @g2   <schema-major>1</schema-major>
+ * @g2   <schema-minor>3</schema-minor>
+ * @g2 </schema>
+ * @g2 <requires-id/>
+ *
+ * @package Checkout
+ * @subpackage Classes
+ */
+class GalleryCheckoutItem extends GalleryChildEntity {
+	// Members
+
+	/**
+	 * Id of the item
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>item</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <member-size>LARGE</member-size>
+	 * @g2   <indexed/>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $item
+	 * @access public
+	 */
+	public $item;
+
+	/**
+	 * Id of the associated transaction
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>transaction</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <member-size>LARGE</member-size>
+	 * @g2   <indexed/>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $transaction
+	 * @access public
+	 */
+	public $transaction;
+
+	/**
+	 * Name of the item (retained in case of orphans)
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>itemName</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $itemName
+	 * @access public
+	 */
+	public $itemName;
+
+	/**
+	 * Name of the item (retained in case of orphans)
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>itemText</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $itemText
+	 * @access public
+	 */
+	public $itemText;
+
+	/**
+	 * Id of the product
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>product</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <member-size>LARGE</member-size>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $product
+	 * @access public
+	 */
+	public $product;
+
+	/**
+	 * Name of the product (retained in case of orphans)
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>productName</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $productName
+	 * @access public
+	 */
+	public $productName;
+
+	/**
+	 * Quantity ordered
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>qty</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <member-size>LARGE</member-size>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $qty
+	 * @access public
+	 */
+	public $qty;
+
+	/**
+	 * Unit price before tax
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>priceEach</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>SMALL</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $priceEach
+	 * @access public
+	 */
+	public $priceEach;
+
+	/**
+	 * Total price of line before tax
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>priceTotal</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>SMALL</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $priceTotal
+	 * @access public
+	 */
+	public $priceTotal;
+
+	/**
+	 * Notes on the line
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>notes</member-name>
+	 * @g2   <member-type>TEXT</member-type>
+	 * @g2 </member>
+	 *
+	 * @var $notes
+	 * @access public
+	 */
+	public $notes;
+
+	// Methods
+
+	/**
+	 * @see GalleryEntity::getClassName()
+	 */
+	public function getClassName() {
+		return 'GalleryCheckoutItem';
+	}
+
+	public function getItem() {
+		return $this->item;
+	}
+
+	public function setItem($item) {
+		$this->item = $item;
+	}
+
+	public function getItemName() {
+		return $this->itemName;
+	}
+
+	public function setItemName($itemName) {
+		$this->itemName = $itemName;
+	}
+
+	public function getItemText() {
+		return $this->itemDescription;
+	}
+
+	public function setItemText($itemText) {
+		$this->itemText = $itemText;
+	}
+
+	public function getProduct() {
+		return $this->product;
+	}
+
+	public function setProduct($product) {
+		$this->product = $product;
+	}
+
+	public function getProductName() {
+		return $this->productName;
+	}
+
+	public function setProductName($productName) {
+		$this->productName = $productName;
+	}
+
+	public function getQty() {
+		return $this->qty;
+	}
+
+	public function setQty($qty) {
+		$this->qty = $qty;
+	}
+
+	public function getPriceEach() {
+		return $this->priceEach;
+	}
+
+	public function setPriceEach($priceEach) {
+		$this->priceEach = $priceEach;
+	}
+
+	public function getPriceTotal() {
+		return $this->priceTotal;
+	}
+
+	public function setPriceTotal($priceTotal) {
+		$this->priceTotal = $priceTotal;
+	}
+
+	public function getNotes() {
+		return $this->notes;
+	}
+
+	public function setNotes($notes) {
+		$this->notes = $notes;
+	}
+
+	public function getTransaction() {
+		return $this->transaction;
+	}
+
+	public function setTransaction($transactionId) {
+		$this->transaction = $transactionId;
+	}
+}

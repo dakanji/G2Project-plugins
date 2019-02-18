@@ -1,0 +1,78 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2009 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Minimum version of the Tags module that must be present for compatibility.
+ * The major version must be equal, and the minor version must be equal or greater.
+ */
+define('TAGTREE_REQUIRED_TAGS_MAJOR_VERSION', 1);
+define('TAGTREE_REQUIRED_TAGS_MINOR_VERSION', 4);/**
+ * @package TagTree
+ * @author Chad Parry <spam@chad.parry.org>
+ * @version $Revision: 1733 $
+ */
+class TagTreeCompatibilityHelper {
+	public function isCompatibleTagsModuleActive() {
+		global $gallery;
+		$isCompatible = false;
+
+		list($ret, $modules) = GalleryCoreApi::fetchPluginList('module');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (array_key_exists('tags', $modules) && $modules['tags']['active']) {
+			list($ret, $tagsModule) = GalleryCoreApi::loadPlugin('module', 'tags');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			if (!empty($tagsModule)) {
+				list($ret, $isActive) = $tagsModule->isActive();
+
+				if ($ret) {
+					return array($ret, null);
+				}
+
+				if ($isActive) {
+					$providedVersion = explode('.', $tagsModule->getVersion());
+					$providedVersion = array_map(create_function('$version', 'return intval($version);'), $providedVersion);
+					$providedVersion = array_slice($providedVersion, 0, 2);
+					$requiredVersion = array(
+						TAGTREE_REQUIRED_TAGS_MAJOR_VERSION,
+						TAGTREE_REQUIRED_TAGS_MINOR_VERSION,
+					);
+
+					if (GalleryUtilities::isCompatibleWithApi(
+						$requiredVersion,
+						$providedVersion
+					)
+					) {
+						$isCompatible = true;
+					}
+				}
+			}
+		}
+
+		return array(null, $isCompatible);
+	}
+}

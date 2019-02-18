@@ -1,0 +1,152 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
+
+/**
+ * @package CheckoutPaypal
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ *
+ * @package CheckoutPaypal
+ * @subpackage Classes
+ */
+class CheckoutPaypalHelper {
+	/**
+	 * Return the list of items in a form needed for PayPal
+	 *
+	 * PayPal has it's own way of tracking each item. you can't skip numbers so I maintain
+	 * my own counters.
+	 * See https://www.paypal.com/cgi-bin/webscr?cmd=p/pdn/howto_checkout-outside#methodtwo
+	 *
+	 * @return array object GalleryStatus a status code
+	 *         array items
+	 * @static
+	 */
+	public function getPaypalItems() {
+		global $gallery;
+		$session =& $gallery->getSession();
+
+		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$transactionId = $transaction->getId();
+
+		list($ret, $items) = GalleryCheckoutApi::fetchFullTransactionItems($transactionId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$ppItems = 0;
+		$ppItem  = array();
+
+		// paypal doesn't allow discounts or negative price items, so we have to 'cheat'
+		foreach ($items as $item) {
+			// Create a paypal basket line for this item/product
+			$ppItems++;
+			$ppItem[$ppItems]['ppname']                     = 'item_name_' . $ppItems;
+			$ppItem[$ppItems]['name']                       = $item['itemName'];
+			$ppItem[$ppItems]['number']                     = $item['itemId'];
+			$ppItem[$ppItems]['ppnumber']                   = 'item_number_' . $ppItems;
+			$ppItem[$ppItems]['ppquantity']                 = 'quantity_' . $ppItems;
+			$ppItem[$ppItems]['ppamount']                   = 'amount_' . $ppItems;
+			$ppItem[$ppItems]['ppshipping']                 = 'shipping_' . $ppItems;
+			$ppItem[$ppItems]['amount']                     = $item['priceEach'];
+			$ppItem[$ppItems]['quantity']                   = $item['qty'];
+			$ppItem[$ppItems]['options']['on0_' . $ppItems] = 'Product';
+			$ppItem[$ppItems]['options']['os0_' . $ppItems] = $item['productName'];
+			$ppItem[$ppItems]['shipping']                   = 0;
+
+			if (!empty($item['notes'])) {
+				$ppItem[$ppItems]['options']['on1_' . $ppItems] = 'Notes:';
+				$ppItem[$ppItems]['options']['os1_' . $ppItems] = $item['notes'];
+			}
+		}
+		// paypal doesn't allow discounts or negative price items, so we have to 'cheat'
+		// subtract the discount item-wise from the end of the order until it reaches zero
+		$discount = $transaction->getDiscount();
+
+		for ($key = $ppItems; $key > 0; $key--) {
+			if ($discount > 0) {
+				if ($ppItem[$key]['amount'] * $ppItem[$key]['quantity'] <= $discount) {
+					$discount              -= $ppItem[$key]['amount'] * $ppItem[$key]['quantity'];
+					$ppItem[$key]['amount'] = 0;
+				} else {
+					$perItemDiscount = round($discount / $ppItem[$key]['quantity'], 2);
+					// add an extra penny if necessary
+					if (($perItemDiscount * $ppItem[$key]['quantity']) < $discount) {
+						$perItemDiscount += 0.01;
+					}
+					$ppItem[$key]['amount'] -= $perItemDiscount;
+					$discount               -= $ppItem[$key]['quantity'] * $perItemDiscount;
+					$discount                = round($discount, 2);
+					// can be left with pennies
+					if ($discount != 0) {
+						$ppItems++;
+						$ppItem[$ppItems]['ppname']                     = 'item_name_' . $ppItems;
+						$ppItem[$ppItems]['name']                       = 'Adjustment for discount';
+						$ppItem[$ppItems]['ppquantity']                 = 'quantity_' . $ppItems;
+						$ppItem[$ppItems]['quantity']                   = '1';
+						$ppItem[$ppItems]['ppamount']                   = 'amount_' . $ppItems;
+						$ppItem[$ppItems]['amount']                     = -1 * $discount;
+						$ppItem[$ppItems]['options']['on0_' . $ppItems] = '';
+						$ppItem[$ppItems]['options']['os0_' . $ppItems] = '';
+						$ppItem[$ppItems]['ppnumber']                   = 'item_number_' . $ppItems;
+						$ppItem[$ppItems]['number']                     = '';
+						$ppItem[$ppItems]['ppshipping']                 = 'shipping_' . $ppItems;
+						$ppItem[$ppItems]['shipping']                   = 0;
+					}
+				}
+				$ppItem[$key]['options']['on1_' . $key] = 'Discount applied to this item';
+			}
+		}
+
+		// postage item
+		$ppItems++;
+		$ppItem[$ppItems]['ppname']     = 'item_name_' . $ppItems;
+		$ppItem[$ppItems]['name']       = 'Shipping';
+		$ppItem[$ppItems]['ppquantity'] = 'quantity_' . $ppItems;
+		$ppItem[$ppItems]['quantity']   = '1';
+		$ppItem[$ppItems]['ppamount']   = 'amount_' . $ppItems;
+		$ppItem[$ppItems]['amount']     = $transaction->getPostage();
+
+		$ppItem[$ppItems]['options']['on0_' . $ppItems] = 'Category';
+		$ppItem[$ppItems]['options']['os0_' . $ppItems] = $transaction->getPostageType();
+
+		$ppItem[$ppItems]['ppnumber']   = 'item_number_' . $ppItems;
+		$ppItem[$ppItems]['number']     = '';
+		$ppItem[$ppItems]['ppshipping'] = 'shipping_' . $ppItems;
+		$ppItem[$ppItems]['shipping']   = 0;
+
+		$verify[1] = $transaction->getDate();
+		$verify[2] = $transaction->getSecurity();
+
+		return array(null, $ppItem, $verify);
+	}
+}

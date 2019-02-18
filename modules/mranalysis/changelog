@@ -1,0 +1,49 @@
+/**
+ * Change Log
+ *
+ *   + Plugin to display a details on items which have problems
+ *   + Works with Gallery v2.3
+ *
+ * v0.0.12
+ *   + Added Maintenence Task - Keyword Analysis: Add missing Keywords
+ *   + Added Maintenence Task - Keyword Analysis: Correct Common Keyword typos
+ *
+ * v0.0.11
+ *   + Added translations for German language. Translator: Jens_k
+ *
+ * v0.0.10
+ *   + Added Settings for Duplicate Titles to search across albums.
+ *
+ * v0.0.9
+ *   + Added settings page, to toggle zero sized derivatives being broken.
+ *
+ * v0.0.8
+ *   + Added check for albums with missing Google map location. (If Google Maps module installed)
+ *
+ * v0.0.7
+ *   + Added duplicate titles (within album) check.
+ *   + Checked for installation of tags module before offering 'Missing Tags' check.
+ *
+ * v0.0.6
+ *   + Added missing tags view.  Author: Jens_k.
+ *   + Added missing file extensions view.  Author: Jens_k.
+ *   
+ * v0.0.5
+ *   + Improved check for default filenames.
+ *   + Corrected typo in DefaultFileNames.tpl.
+ *   
+ * v0.0.4
+ *   + Added check for extensions in image titles.
+ *   + Improved check for broken images so it shows images with derivatives that have 0 width and height.
+ *
+ * v0.0.3
+ *   + SEO: Check for default\camera generated image filenames
+ *   + SEO: Check for default\camera generated image titles (as part of missing titles).
+ *
+ * v0.0.2
+ *   + Missing photo titles
+ *
+ * v0.0.1 - Initial version
+ *   + Finds: Broken Derivatives
+ *   + Finds: Photos without Keywords.
+ */

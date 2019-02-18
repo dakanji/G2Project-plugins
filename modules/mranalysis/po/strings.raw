@@ -1,0 +1,102 @@
+# $Id: strings.raw 1816 2009-04-14 17:53:24Z mridgwel $
+
+/* module.inc */
+gettext("Analysis")
+gettext("Analysis and diagnostics")
+gettext("Settings")
+gettext("Broken Images")
+gettext("Missing Keywords")
+gettext("Default Filenames")
+gettext("Missing Titles")
+gettext("Duplicate Titles")
+gettext("File Extensions In Titles")
+gettext("No File Extension")
+gettext("Missing Tags")
+gettext("Album Missing Map Location")
+
+/* templates/AlbumMissingMapLocation.tpl */
+gettext("Albums Missing Map Location")
+gettext("The following albums are missing map locations:")
+gettext("There are no items that have missing map locations.")
+gettext("View")
+gettext("Edit")
+
+/* templates/BrokenImages.tpl */
+gettext("Broken Images")
+gettext("The following items have broken derivatives:")
+gettext("There are no items that have broken derivatives.")
+gettext("View")
+gettext("Edit")
+
+/* templates/BrokenImages.tpl */
+gettext("Default Filenames")
+gettext("The following items have default (Camera generated) filenames:")
+gettext("There are no items that have default (Camera generated) entries.")
+gettext("View")
+gettext("Edit")
+
+/* templates/DuplicateTitles.tpl */
+gettext("Duplicate Titles")
+gettext("The following items have duplicate titles:")
+gettext("There are no items that have duplicate titles.")
+gettext("View")
+gettext("Edit")
+
+/* templates/ExtensionsInTitles.tpl */
+gettext("File Extensions in Titles")
+gettext("The following items have file extensions in their titles:")
+gettext("There are no items that have file extensions in their titles.")
+gettext("View")
+gettext("Edit")
+
+/* templates/MissingKeywords.tpl */
+gettext("Missing Keywords")
+gettext("The following items are missing keyword entries:")
+gettext("There are no items that have missing keyword entries.")
+gettext("View")
+gettext("Edit")
+
+/* templates/MissingTags.tpl */
+gettext("Missing Tags")
+gettext("The following items are missing tag entries:")
+gettext("There are no items that have missing tag entries.")
+gettext("View")
+gettext("Edit")
+gettext("Edit-Tags")
+
+/* templates/ExtensionsInTitles.tpl */
+gettext("File Extensions in Titles")
+gettext("The following items have file extensions in their titles:")
+gettext("There are no items that have file extensions in their titles.")
+gettext("View")
+gettext("Edit")
+
+/* templates/DuplicateTitles.tpl */
+gettext("Duplicate Titles")
+gettext("The following items have duplicate titles:")
+gettext("There are no items that have duplicate titles.")
+gettext("View")
+gettext("Edit")
+
+/* templates/MissingTitles.tpl */
+gettext("Missing Titles")
+gettext("The following items are missing titles or have default camera generated titles:")
+gettext("There are no items that have missing titles or have default camera generated titles.")
+gettext("View")
+gettext("Edit")
+
+/* templates/NoExtensionsInFileNames.tpl */
+gettext("No File Extensions in FileNames")
+gettext("The following items have no file extensions in their filenames:")
+gettext("There are no items that have no file extensions in their filenames.")
+gettext("View")
+gettext("Edit")
+
+/* templates/Settings.tpl */
+gettext("Analysis Settings")
+gettext("Settings saved successfully")
+gettext("Broken Images")
+gettext("Treat Zero Sized Derivatives as Broken.")
+gettext("Duplicate Titles")
+gettext("Expand check for duplicate titles across albums.")
+gettext("Save")

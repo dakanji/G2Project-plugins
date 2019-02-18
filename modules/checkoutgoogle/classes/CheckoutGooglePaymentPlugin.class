@@ -1,0 +1,87 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
+
+/**
+ * @package CheckoutGoogle
+ * @author Alec Myers <alec@alecmyers.com>
+ * @version $Revision: 1601 $
+ */
+
+
+/**
+ * This is an implementation of the checkout module's CheckoutPaymentInterface_1_3
+ *
+ */
+class CheckoutGooglePaymentPlugin extends CheckoutPaymentInterface_1_3 {
+	/**
+	 * @see CheckoutPaymentInterface_1_3::getPaymentTemplate()
+	 */
+	public function getPaymentTemplate() {
+		return array(null, 'modules/checkoutgoogle/templates/Payment.tpl');
+	}
+
+	/**
+	 * @see CheckoutPaymentInterface_1_3::getVariables()
+	 */
+	public function getVariables() {
+		// Prepare the variables to return for the PayPal form
+
+		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $active) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'active');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $gcLocation) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcLocation');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantId');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $gcMode) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMode');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$orderTotal = $transaction->getAmount();
+
+		return array(
+			null,
+			array(
+				'active'     => $active,
+				'mode'       => $gcMode,
+				'orderTotal' => $orderTotal,
+				'merchantId' => $gcMerchantId,
+				'loc'        => $gcLocation,
+			),
+		);
+	}
+}

@@ -1,0 +1,171 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * This is the unified API for Checkout  - stuff that plugins do a lot.
+ *
+ * @package Checkout
+ * @subpackage Classes
+ * @author Alec Myers <alec@alecmyers.com>
+ * @version $Revision: 1649 $
+ * @static
+ */class GalleryCheckoutApi {
+	public function getApiVersion() {
+		return array(2, 2);
+	}
+
+	/**
+	 * Return the children checkout items of the specified transaction
+	 *
+	 * @param integer transaction ID
+	 * @return array (object GalleryStatus a status code,
+	 *                array (array (itemId, productId), array (itemId, productId), ...))
+	 */
+	public function fetchFullTransactionItems($transactionId) {
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
+
+		return CheckoutTransactionHelper::fetchFullTransactionItems($transactionId);
+	}
+
+	/**
+	 * Return the transaction that's currently in the Session
+	 *
+	 * @return GalleryStatus a status code
+	 *         object the transaction
+	 */
+	public function getCurrentTransactionForPayment() {
+		global $gallery;
+		$session =& $gallery->getSession();
+
+		$transactionId           = $session->get('checkout.transactionId');
+		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (!isset($transaction)) {
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+		}
+
+		return array(null, $transaction);
+	}
+
+	/**
+	 * Send Admin Notification
+	 * @param mixed
+	 * @return GalleryStatus a status code
+	 */
+	public function sendAdminNotification($transaction, $statusMessage) {
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+		$ret = CheckoutTransactionEventHelper::handleAdminNotification($transaction, $statusMessage);
+
+		if ($ret) {
+			return $ret;
+		}
+		$event = GalleryCoreApi::newEvent('GalleryCheckout::adminNotify');
+		$event->setEntity($transaction);
+		$event->setData($statusMessage);
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		return $ret;
+	}
+
+	/**
+	 * Update customer details for transaction
+	 * @param $transaction the transaction
+	 * @param $custDetails array customer details
+	 * @return GalleryStatus a status code
+	 */
+	public function transactionUpdate($transaction, $custDetails) {
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+		$ret = CheckoutTransactionEventHelper::handleTransactionUpdate($transaction, $custDetails);
+
+		if ($ret) {
+			return $ret;
+		}
+		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionUpdate');
+		$event->setEntity($transaction);
+		$event->setData($custDetails);
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		return $ret;
+	}
+
+	/**
+	 * Update payment plugin for transaction
+	 * @param $transaction the transaction
+	 * @param $pluginName name of the plugin eg 'checkoutpaypal'
+	 * @return GalleryStatus a status code
+	 */
+	public function setPaymentPlugin($transaction, $pluginName) {
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+		$ret = CheckoutTransactionEventHelper::handleSetPaymentPlugin($transaction, $pluginName);
+
+		if ($ret) {
+			return $ret;
+		}
+		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionSetPaymentPlugin');
+		$event->setEntity($transaction);
+		$event->setData($pluginName);
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		return $ret;
+	}
+
+	/**
+	 * Update transaction status
+	 * @param $transaction the transaction
+	 * @param $type eg 'confirm', 'clear' etc
+	 * @param $message mixed message to include
+	 * @return GalleryStatus a status code
+	 */
+	public function changeTransactionStatus($transaction, $type, $message = '') {
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+		$ret = CheckoutTransactionEventHelper::handleChangeTransactionStatus($transaction, $type, $message);
+
+		if ($ret) {
+			return $ret;
+		}
+		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionChange');
+		$event->setEntity($transaction);
+		$event->setData(
+			array(
+				'type'    => $type,
+				'message' => $message,
+			)
+		);
+		list($ret) = GalleryCoreApi::postEvent($event);
+
+		return $ret;
+	}
+
+	/**
+	 * Empty the cart
+	 *
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function emptyCart() {
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
+
+		return CheckoutHelper::emptyCart();
+	}
+}

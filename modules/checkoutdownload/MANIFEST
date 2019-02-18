@@ -1,0 +1,16 @@
+# $Revision: 1704 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/checkoutdownload/Admin.inc	1518546835	4161585802	10014	10317
+modules/checkoutdownload/BuildDownload.inc	2508634219	4201528662	9598	9866
+modules/checkoutdownload/Callbacks.inc	275861459	609548465	2230	2293
+modules/checkoutdownload/FetchDownload.inc	1716048109	1719908170	5455	5621
+modules/checkoutdownload/classes/CheckoutDownloadEmailPlugin.class	1745948095	776736171	1552	1601
+modules/checkoutdownload/classes/CheckoutDownloadHelper.class	1260971199	3570746727	5009	5164
+modules/checkoutdownload/classes/CheckoutDownloadStatusPlugin.class	3944388865	2638831538	2050	2107
+modules/checkoutdownload/lib/pclerror.lib.php	1960756668	3338356949	4836	4968
+modules/checkoutdownload/lib/pcltrace.lib.php	2077251181	830497603	25017	25752
+modules/checkoutdownload/lib/pclzip.lib.php	1227571900	380287636	248528	254400
+modules/checkoutdownload/module.inc	3253435643	1382684578	3058	3157
+modules/checkoutdownload/templates/Admin.tpl	3390785869	2950964436	5372	5485
+modules/checkoutdownload/templates/StatusPageDownload.tpl	979923065	2145314917	2035	2071
+modules/checkoutdownload/templates/email/download.tpl	299664906	1108168706	1247	1272

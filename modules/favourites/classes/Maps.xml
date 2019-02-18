@@ -1,0 +1,25 @@
+<!DOCTYPE maps SYSTEM "../../../lib/tools/dtd/MapsDefinition2.0.dtd">
+<maps>
+  <map>
+    <map-name>FavouritesMap</map-name>
+    <schema>
+      <schema-major>1</schema-major>
+      <schema-minor>0</schema-minor>
+    </schema>
+    <member>
+      <member-name>userId</member-name>
+      <member-type>INTEGER</member-type>
+      <required/>
+    </member>
+    <member>
+      <member-name>itemId</member-name>
+      <member-type>INTEGER</member-type>
+	<indexed/>
+      <required/> 
+    </member>
+    <key primary="true">
+      <member-name>userId</member-name>
+      <member-name>itemId</member-name>
+    </key>
+  </map>
+</maps>

@@ -1,0 +1,320 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Utility functions useful in managing SimpleviewerSource's Map
+ * @package SimpleviewerSource
+ * @version $Revision: 1725 $
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+class SimpleviewerParameterMapHelper {
+	/**
+	 * Return the parameters defined for a given album
+	 *
+	 * @param int $albumId id of the albumItem
+	 * @param string $category  what sort of parameter,
+	 *     ie 'fixed' (fixed name), 'private', or blank for custom
+	 * @return array object GalleryStatus a status code
+	 * @return array (array 'id' => parameter id
+	 *                    'name' => parameter Name
+	 *                   'value' => parameter Value
+	 *                'category' => 'private', 'fixedName' or blank
+	 */
+	public function fetchParamsForAlbum($albumId, $category) {
+		global $gallery;
+
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'SimpleviewerParameterMap',
+			array('id', 'paramName', 'paramValue'),
+			array(
+				'albumId'  => $albumId,
+				'category' => $category,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$params = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$params[] = array(
+				'id'         => $result[0],
+				'paramName'  => $result[1],
+				'paramValue' => $result[2],
+			);
+		}
+
+		return array(null, $params);
+	}
+
+	/**
+	 * Return the ids of all parameters defined for an album
+	 *
+	 * @param int $albumId id of the albumItem
+	 * @return array object GalleryStatus a status code
+	 * @return array (integer $id...
+	 */
+	public function fetchParamIdsForAlbum($albumId) {
+		global $gallery;
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'SimpleviewerParameterMap',
+			array('id'),
+			array(
+				'albumId' => $albumId,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$paramIds = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$paramIds[] = $result[0];
+		}
+
+		return array(null, $paramIds);
+	}
+
+	/**
+	 * Return the parameters defined for a given album
+	 *
+	 * @param int $albumId id of the albumItem
+	 * @param string $category category of parameter
+	 * @return array (object GalleryStatus a status code,
+	 *          (array paramName => paramValue
+	 *
+	 */
+	public function fetchParamsForAlbumByName($albumId, $category) {
+		global $gallery;
+
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'SimpleviewerParameterMap',
+			array('paramName', 'paramValue'),
+			array(
+				'albumId'  => $albumId,
+				'category' => $category,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$params = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$params[$result[0]] = $result[1];
+		}
+
+		return array(null, $params);
+	}
+
+	/**
+	 * Return a list of all parameter names existing
+	 * @param  string $category what sort of parameter,
+	 *    ie 'fixed' (fixed name), 'private', or blank for custom
+	 * @return  array (string parameter names
+	 */
+	public function fetchParamNames($albumId, $category) {
+		global $gallery;
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'SimpleviewerParameterMap',
+			array('paramName'),
+			array(
+				'category' => $category,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$paramNames = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$paramNames[] = $result[0];
+		}
+		$paramNames = array_unique($paramNames);
+		sort($paramNames);
+
+		return array(null, $paramNames);
+	}
+
+	/**
+	 * Return a single named parameter for a given album
+	 *
+	 * @param int $albumId id of the albumItem
+	 * @param int string $paramName name of the parameter
+	 * @param string $category what sort of parameter,
+	 *      ie 'fixed' (fixed name), 'private', or blank for custom
+	 * @return array (object GalleryStatus a status code
+	 *              (array 'id' => parameter id, 'value' => parameter Value))
+	 */
+	public function fetchParam($albumId, $paramName, $category) {
+		// returns only the first match - consider duplicates?
+		global $gallery;
+		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
+			'SimpleviewerParameterMap',
+			array('id', 'paramValue'),
+			array(
+				'paramName' => $paramName,
+				'albumId'   => $albumId,
+				'category'  => $category,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$params = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$params[] = array(
+				'id'         => $result[0],
+				'paramValue' => $result[1],
+			);
+		}
+
+		return array(null, $params ? $params[0] : null);
+	}
+
+	/**
+	 * Return the values of a set of named parameters used for a given album,
+	 * after a hierarchical search
+	 *
+	 * @return array (object GalleryStatus a status code,
+	 *          array ($paramName => $paramValue))
+	 */
+	public function fetchParams($itemId, $category) {
+		global $gallery;
+		// build parent tree
+
+		// get item's parent ids in a list...
+		list($ret, $albumIdTree) = GalleryCoreApi::fetchParentSequence($itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$albumIdTree = array_reverse($albumIdTree);
+		// ... and include the item itself:
+		$albumIdTree = array_merge(array($itemId), array_values($albumIdTree));
+		// work through each album
+		$params      = array();
+		$albumParams = array();
+
+		foreach ($albumIdTree as $myAlbumId) {
+			list($ret, $albumParams) = SimpleviewerParametermapHelper::fetchParamsForAlbumByName(
+				$myAlbumId,
+				$category
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$params = array_merge($albumParams, $params);
+		}
+
+		return array(null, $params);
+	}
+
+	/**
+	 * Create a parameter
+	 *
+	 * @param int $albumId
+	 * @param string $paramName
+	 * @param category $category (optional)
+	 * @param string $paramValue (optional)
+	 * @return object GalleryStatus a status code
+	 */
+	public function createParam($albumId, $paramName, $category = null, $paramValue = null) {
+		global $gallery;
+		$storage        =& $gallery->getStorage();
+		list($ret, $id) = $storage->getUniqueId();
+
+		if ($ret) {
+			return $ret;
+		}
+		// maybe check for collisions etc?
+		$ret = GalleryCoreApi::addMapEntry(
+			'SimpleviewerParameterMap',
+			array(
+				'paramName'  => $paramName,
+				'paramValue' => $paramValue,
+				'category'   => $category,
+				'albumId'    => $albumId,
+				'id'         => $id,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Update a parameter
+	 *
+	 * @param int $id
+	 * @param string $paramName
+	 * @param string $paramValue
+	 * @return object GalleryStatus a status code
+	 */
+	public function updateParam($id, $paramName, $paramValue) {
+		$ret = GalleryCoreApi::updateMapEntry(
+			'SimpleviewerParameterMap',
+			array(
+				'id' => $id,
+			),
+			array(
+				'paramName'  => $paramName,
+				'paramValue' => $paramValue,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Delete a parameter
+	 *
+	 * @param string $id
+	 * @return object GalleryStatus a status code
+	 */
+	public function deleteParam($id) {
+		$ret = GalleryCoreApi::removeMapEntry(
+			'SimpleviewerParameterMap',
+			array(
+				'id' => $id,
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+}

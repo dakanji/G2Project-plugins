@@ -1,0 +1,8 @@
+# $Revision: 1875 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/aboutpage/About.inc	1415717481	2004562503	2256	2329
+modules/aboutpage/Admin.inc	2508563208	2014121808	3736	3866
+modules/aboutpage/changelog	1563535224	1977640413	157	165
+modules/aboutpage/module.inc	3698900086	3514606208	2732	2834
+modules/aboutpage/templates/About.tpl	2661884861	2909666381	650	676
+modules/aboutpage/templates/Admin.tpl	3608649161	457580806	1219	1264

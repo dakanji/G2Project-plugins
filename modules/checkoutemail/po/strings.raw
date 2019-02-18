@@ -1,0 +1,44 @@
+# $Id: strings.raw 1647 2008-10-03 10:29:10Z alecmyers $
+
+/* Details.inc */
+gettext("Customer Details") /* also in: templates/Details.tpl */
+
+/* module.inc */
+gettext("Checkout by Email")
+gettext("Complete checkout by email")
+gettext("Commerce")
+
+/* templates/Admin.tpl */
+gettext("Checkoutemail Settings")
+gettext("Settings saved successfully")
+gettext("Activate")
+gettext("Activate this method of payment?")
+gettext("Yes")
+gettext("No")
+gettext("Description")
+gettext("Description of payment method to appear on checkout page")
+gettext("Button Text")
+gettext("Caption of the button to appear on checkout page")
+gettext("Save Settings")
+gettext("Cancel")
+
+/* templates/Details.tpl */
+gettext("Checkout")
+gettext("Please enter your details below to complete the transaction")
+gettext("You must enter a valid email address")
+gettext("First Name")
+gettext("Last Name")
+gettext("Email Address (required)")
+gettext("Recipient's Name (if different to above)")
+gettext("Postal Address")
+gettext("Postal/Zip Code")
+gettext("Country")
+gettext("Contact Telephone Number")
+gettext("Comments")
+gettext("Submit Order")
+
+/* templates/email/confirm.tpl */
+gettext("The total payable for this order is ")
+gettext("Your payment options are:")
+gettext("As soon as your payment is received your order will be processed - please let us know how you'd like to proceed by replying to this email.")
+gettext("Looking forward to hearing from you soon!")

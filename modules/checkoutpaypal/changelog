@@ -1,0 +1,69 @@
+/**
+ * Change Log
+ *
+ * v0.1.1
+ *   + Hived Paypal payment method from the old v0.1.4 'checkout'
+ *     module into the new payment plugin framework.
+ *   + Changed interaction with PayPal cart so that each
+ *     item/product combi is a separate order line in the cart,
+ *     and quantities are shown properly in the cart also.
+ *
+ * v0.1.2
+ *   + Updated for later APIs
+ *
+ * v0.1.3
+ *   + Added persistent storage for Paypal details that used
+ *     to be in the CheckoutTransaction.
+ *   + Updated to work with Checkout v0.1.7
+ *
+ * v0.1.4
+ *   + Updated for modified storage of transaction amount as string
+ *     by checkout module.
+ *   + Captured buyer's notes from PayPal transaction (if provided)
+ *
+ * v0.1.5
+ *   + Updated for Beta 4 templating
+ *   + Added translation support
+ *   + Improved installation and initial configuration
+ *   + Added 'payment cancelled' page and sent URL to paypal in button
+ *
+ * v0.1.6
+ *   + Changed module to use new event listeners in Checkout v0.1.9 to
+ *     empty cart on order completion, and to notify when IPN receives
+ *     notification of completed payment in correct amount (to allow
+ *     fulfilment to commence)
+ *
+ * v0.1.7
+ *   + Updated to automatically set return, cancel, and IPN URLs.  It is
+ *     no longer necessary to manually configure these in the PayPal
+ *     account, hence multi-site installs will now work properly.
+ *
+ * v0.1.8
+ *   + Updated to support per-item pricing as implemented in Checkout v0.1.11
+ *
+ * v0.1.9
+ *   + Updated for Gallery 2.1 APIs
+ *
+ * v0.1.10
+ *   + Fixed bug with urls in PaymentButton.tpl (failed to come back to 
+ *     Gallery upon cancellation during PayPal session)
+ *   + Added : also pass item ID in item name to PayPal to aid in finding
+ *     items with the same name
+ *   + Country code passed to PayPal, configurable in Admin
+ *   + Changes to conform to new CheckoutPlugin interface
+ *   + Made Plugin text and confirmation pages translatable
+ *   + PayPal button can be localized via translation strings
+ *   + Fix : allow items with zero price to be sent to PayPal
+ *   + Added credit card images
+ *   + Added Continue Shopping buttons to confirmation pages
+ *
+ * v0.1.11
+ *   + Uses new plugin interface (without breaking compatibility)
+ *
+ * v0.1.11.1
+ *   + Added full translations for French and Dutch
+ *   + Fixed compatibilty with other checkout modules
+ *
+ * v0.1.12
+ *   + Fix for IPN price comparison check
+ */

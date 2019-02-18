@@ -1,0 +1,22 @@
+This is a Gallery2 module that will check a specified email address for uplaoded pictures.
+It will then drop them into a specified Album. 
+
+It uses a "block" - someone with Adminstrator privledges must add it to the theme.
+I recommend the "sidebar", at the end.
+
+If logged in as Adminstator the addviaemail block will show a status. If not logged
+in as Adminstrator the block is silent.
+
+Since this module relies on a gallery page hit, once an email is processed it will appear
+on the next page load. If you wish to automate this, AND have the access to do it
+you can add
+
+"wget -q http://your.gallery.com/main.php?g2_controller=addviaemail.Addviaemailpage -O - > /dev/null"
+
+to your crontab for whatever interval you wish. Here is an example that runs every other minute:
+
+*/2 * * * *     root    wget -q http://picsbeta.example.net/main.php?g2_controller=addviaemail.Addviaemailpage -O - > /dev/null
+
+Remember to change the HOST in the url, and add the directory your gallery is in, if any.
+
+I recommend running http://your.gallery.com/main.php?g2_controller=addviaemail.Addviaemailpage manually from a browser to make sure everything is looking good. You should send a couple of test emails to make sure your settings are ok. Also, you should be logged on as an admin while doing this, the page will give you more information that might be useful in debugging a problem.

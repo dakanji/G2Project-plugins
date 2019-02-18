@@ -1,0 +1,159 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/*
+ * @package Userinfo
+ * @subpackage MyEventHandlerClass
+ * @author Charles Knowlton charles2007@users.sourceforge.net
+ * @version $Revision$
+ */
+
+
+
+class MyEventHandlerClass // extends GalleryEventListener
+{
+	/**
+	 * Return a value that we can use to identify the client.  We can't tie it to the IP address
+	 * because that changes too frequently (dialup users, users behind proxies) so we have to be
+	 * creative.  Changing this algorithm will cause all existing sessions to be discarded.
+	 * @return array
+	 * @static
+	 */
+	public function getRemoteIdentifier() {
+		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+
+		return array(
+			GalleryUtilities::getRemoteHostAddress(),
+			isset($httpUserAgent) ? md5($httpUserAgent) : null,
+		);
+	}
+
+	public function handleEvent($event) {
+		global $gallery;
+		$storage =& $gallery->getStorage();
+
+		list($ret, $myUniqueID) = $storage->getUniqueId();
+
+		if ($ret) {
+			return $ret;
+		}
+
+
+		if ($event->getEventName() == 'Gallery::Login') {
+			$user      = $event->getEntity();
+			$userName2 = $user->getUserName();
+			$userId2   = $user->getId();
+
+			$currentRemoteIdentifier = $this->getRemoteIdentifier();
+			$this->_remoteIdentifier = $currentRemoteIdentifier;
+			$remoteHost              = $this->_remoteIdentifier[0];
+
+			$id        = $myUniqueID;
+			$userId    = $userId2;
+			$userName  = $userName2;
+			$ipAddress = $remoteHost;
+			$timeStamp = time();
+			$action    = 'Login';
+
+			$ret = GalleryCoreApi::addMapEntry(
+				'UserinfoMap',
+				array(
+					'id'        => $id,
+					'userId'    => $userId,
+					'userName'  => $userName,
+					'ipAddress' => $ipAddress,
+					'timeStamp' => $timeStamp,
+					'action'    => $action,
+				)
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+
+		if ($event->getEventName() == 'Gallery::Logout') {
+			$user      = $event->getEntity();
+			$userName2 = $user->getUserName();
+			$userId2   = $user->getId();
+
+			$currentRemoteIdentifier = $this->getRemoteIdentifier();
+			$this->_remoteIdentifier = $currentRemoteIdentifier;
+			$remoteHost              = $this->_remoteIdentifier[0];
+
+			$id        = $myUniqueID;
+			$userId    = $userId2;
+			$userName  = $userName2;
+			$ipAddress = $remoteHost;
+			$timeStamp = time();
+			$action    = 'Logout';
+
+			$ret = GalleryCoreApi::addMapEntry(
+				'UserinfoMap',
+				array(
+					'id'        => $id,
+					'userId'    => $userId,
+					'userName'  => $userName,
+					'ipAddress' => $ipAddress,
+					'timeStamp' => $timeStamp,
+					'action'    => $action,
+				)
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+
+		if ($event->getEventName() == 'Gallery::FailedLogin') {
+			$data      = $event->getData();
+			$userName2 = $data['userName'];
+
+			$currentRemoteIdentifier = $this->getRemoteIdentifier();
+			$this->_remoteIdentifier = $currentRemoteIdentifier;
+			$remoteHost              = $this->_remoteIdentifier[0];
+
+			$id        = $myUniqueID;
+			$userId    = '';
+			$userName  = $userName2;
+			$ipAddress = $remoteHost;
+			$timeStamp = time();
+			$action    = 'Failed Login';
+
+			$ret = GalleryCoreApi::addMapEntry(
+				'UserinfoMap',
+				array(
+					'id'        => $id,
+					'userId'    => $userId,
+					'userName'  => $userName,
+					'ipAddress' => $ipAddress,
+					'timeStamp' => $timeStamp,
+					'action'    => $action,
+				)
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+	}
+}

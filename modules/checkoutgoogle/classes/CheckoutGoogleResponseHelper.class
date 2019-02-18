@@ -1,0 +1,307 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package CheckoutGoogle
+ * @subpackage Classes
+ * @author Alec Myers <alec@alecmyers.com>
+ * @version $Revision: 1687 $
+ */
+class CheckoutGoogleResponseHelper {
+	/**
+	 * Check that Gallery can access HTTP usernames and passwords.
+	 * @return array GalleryStatus a status code
+	 *               boolean true if Gallery can access HTTP usernames and passwords
+	 *
+	 * code copied from the httpAuth module.
+	 */
+	public function checkHttpAuth() {
+		global $gallery;
+		$urlGenerator =& $gallery->getUrlGenerator();
+		/*
+		 * Use the Basic auth-type for tests. PHP does not define auth variables for arbitrary
+		 * auth-types.
+		 */
+		list($status, $headers, $body) = GalleryCoreApi::requestWebPage(
+			$urlGenerator->generateUrl(
+				array(
+					'view' => 'checkoutgoogle.HttpAuthWorks',
+				),
+				array(
+					'forceFullUrl' => true,
+					'htmlEntities' => false,
+				)
+			),
+			'GET',
+			array(
+				'Authorization' => 'Basic ' . base64_encode('USERNAME:PASSWORD'),
+			)
+		);
+		//$found = strpos($body, "USERNAME\nPASSWORD");
+		//return array(null, $found !== false);
+		return array(null, $body == "USERNAME\nPASSWRD");
+	}
+
+	/**
+	 * Get the HTTP username, and password using either the PHP server variables or the
+	 * authorization request variable.
+	 *               string HTTP username
+	 *               string HTTP password
+	 */
+	public function getHttpAuth() {
+		$username      = GalleryUtilities::getServerVar('PHP_AUTH_USER');
+		$password      = GalleryUtilities::getServerVar('PHP_AUTH_PW');
+		$authorization = GalleryUtilities::getRequestVariables('authorization');
+
+		if (empty($authorization)) {
+			// IIS ISAPI PHP defines HTTP_AUTHORIZATION
+			$authorization = GalleryUtilities::getServerVar('HTTP_AUTHORIZATION');
+		}
+
+		if (!empty($authorization)) {
+			list($authtype, $authdata) = explode(' ', $authorization);
+			list($username, $password) = explode(':', base64_decode($authdata));
+		}
+
+		return array($username, $password);
+	}
+
+	/**
+	 * Verifies that the authentication sent by Google Checkout matches the
+	 * merchant id and key
+	 *
+	 */
+	public function CheckAuthentication() {
+		list($ret, $gcMode) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMode');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if ($gcMode == 'test') {
+			list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantId');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantKey');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		} else {
+			list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantId');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantKey');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+		list($compareMerchantId, $compareMerchantKey) = CheckoutGoogleResponseHelper::getHttpAuth();
+
+		if ($compareMerchantId != $gcMerchantId || $compareMerchantKey != $gcMerchantKey) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function GetParsedXML($request = null) {
+		$root = '';
+		$data = '';
+
+		if (!is_null($request)) {
+			GalleryCoreApi::requireOnce('modules/checkoutgoogle/lib/gc_xmlparser.php');
+			$xml_parser = new gc_xmlparser($request);
+			$root       = $xml_parser->GetRoot();
+			$data       = $xml_parser->GetData();
+		}
+
+		return array($root, $data);
+	}
+
+	/**
+	 * Return the Google Order Number and the mainURL that order was placed from given a transactionId
+	 *
+	 * @param string $transactionId
+	 */
+	public function FetchGoogleOrderNumber($transactionId) {
+		list($ret, $results) = GalleryCoreApi::getMapEntry(
+			'CheckoutGoogleOrderMap',
+			array('googleOrderNumber'),
+			array(
+				'transactionId' => $transactionId,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$result = $results->nextResult();
+
+		return array(null, $result[0]);
+	}
+
+	/**
+	 * Return the transactionId given a google Order Number
+	 *
+	 * @param string $googleOrderNumber
+	 */
+	public function FetchTransactionId($googleOrderNumber) {
+		list($ret, $results) = GalleryCoreApi::getMapEntry(
+			'CheckoutGoogleOrderMap',
+			array('transactionId', 'mainURL'),
+			array(
+				'googleOrderNumber' => $googleOrderNumber,
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$result = $results->nextResult();
+
+		return array(null, $result[0], $result[1]);
+	}
+
+	/**
+	 * Send raw data to Google
+	 *
+	 */
+	public function SendData($data, $type = 'checkout') {
+		list($ret, $gcMode) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMode');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if ($gcMode == 'test') {
+			list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantId');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantKey');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		} else {
+			list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantId');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantKey');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+		$authorizationKey = base64_encode($gcMerchantId . ':' . $gcMerchantKey);
+
+		switch ($type) {
+			case 'checkout':
+				if ($gcMode == 'test') {
+					$url = 'https://sandbox.google.com/checkout/api/checkout/v2/merchantCheckout/Merchant/' . $gcMerchantId;
+				} else {
+					$url = 'https://checkout.google.com/api/checkout/v2/merchantCheckout/Merchant/' . $gcMerchantId;
+				}
+
+				break;
+
+			case 'order processing':
+				if ($gcMode == 'test') {
+					$url = 'https://sandbox.google.com/checkout/api/checkout/v2/request/Merchant/' . $gcMerchantId;
+				} else {
+					$url = 'https://checkout.google.com/api/checkout/v2/request/Merchant/' . $gcMerchantId;
+				}
+
+				break;
+
+			default:
+				$url = $type;
+		}
+
+		$googleHeaders = array(
+			'Authorization'  => 'Basic ' . $authorizationKey,
+			'Content-Length' => strlen($data),
+		);
+
+		// Handle redirection here
+		$depth   = 0;
+		$headers = array();
+
+		do {
+			if (isset($headers['Location'])) {
+				$url = WebHelper_simple::_parseLocation($responseHeaders['Location'], parse_url($url));
+				$depth++;
+			}
+			list($returnStatus, $headers, $body) = GalleryCoreApi::requestWebPage($url, 'POST', $googleHeaders, $data);
+		} while ($depth < 5 && isset($headers['Location']));
+
+		$success = preg_match('/^HTTP\/\d+\.\d+\s2\d{2}/', $returnStatus);
+
+		return array($success, $body, $url, $returnStatus);
+	}
+
+	/**
+	 * Notify google transaction dispatched
+	 *
+	 */
+	public function SendDelivered($transactionId) {
+		list($ret, $googleOrderNumber) = CheckoutGoogleResponseHelper::FetchGoogleOrderNumber($transactionId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$xml                  = '<?xml version="1.0" encoding="UTF-8"?>
+		<deliver-order xmlns="http://checkout.google.com/schema/2" google-order-number="' . $googleOrderNumber . '">
+    		<send-email>false</send-email>
+		</deliver-order>';
+		list($success, $body) = CheckoutGoogleResponseHelper::SendData($xml, 'order processing');
+
+		return array(null, $success, $body);
+	}
+
+	/**
+	 * Notify google of our transactionId for an order
+	 */
+	public function SendTransactionId($transactionId) {
+		list($ret, $googleOrderNumber) = CheckoutGoogleResponseHelper::FetchGoogleOrderNumber($transactionId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$xml                  = '<?xml version="1.0" encoding="UTF-8"?>
+		<add-merchant-order-number xmlns="http://checkout.google.com/schema/2"
+    		google-order-number="' . $googleOrderNumber . '">
+    		<merchant-order-number>' . $transactionId . '</merchant-order-number>
+		</add-merchant-order-number>';
+		list($success, $body) = CheckoutGoogleResponseHelper::SendData($xml, 'order processing');
+
+		return array(null, $success, $body);
+	}
+}

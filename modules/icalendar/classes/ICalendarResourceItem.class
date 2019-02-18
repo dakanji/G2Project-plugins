@@ -1,0 +1,246 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2006 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/core/classes/GalleryDataItem.class');
+
+// Being developed as part of CalDAV server library for now
+//GalleryCoreApi::requireOnce('modules/caldav/lib/HTTP/CalDAV/Tools/ICalendarParser.php');
+require_once '/home/jablko/public_html/phpicalendar/lib/HTTP/CalDAV/Tools/ICalendarParser.php';
+
+GalleryCoreApi::requireOnce('modules/icalendar/lib/bennu/bennu.inc.php');
+
+/**
+ * FIXME A piece of iCalendar format The implementation of the core-module
+ * A subclass of DataItem for containing iCalendar data
+ *
+ * @g2 <class-name>ICalendarResourceItem</class-name>
+ * @g2 <parent-class-name>GalleryDataItem</parent-class-name>
+ * @g2 <schema>
+ * @g2   <schema-major>0</schema-major>
+ * @g2   <schema-minor>1</schema-minor>
+ * @g2 </schema>
+ * @g2 <requires-id/>
+ *
+ * @package ICalendar
+ * @subpackage Classes
+ * @author Jack Bates <ms419@freezone.co.uk>
+ * @version $Revision: 1.1.1.1 $ $Date: 2006/04/05 18:40:13 $
+ */
+class ICalendarResourceItem extends GalleryDataItem {
+	/**
+	 * @see GalleryDataItem::create
+	 */
+	public function create($parentId, $fspath, $mimeType, $targetName = null, $symlink = false) {
+		global $gallery;
+		$platform =& $gallery->getPlatform();
+
+		// Create our data item
+		$ret = parent::create($parentId, $fspath, $mimeType, $targetName, $symlink);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$ret = $this->rescan();
+
+		if ($ret) {
+			// Cleanup our data item on failure
+			list($ret2, $fspath) = $this->fetchPath();
+
+			if (!$ret2) {
+				@$platform->unlink($fspath);
+			}
+
+			return $ret;
+		}
+	}
+
+	/**
+	 * @see GalleryDataItem::rescan
+	 */
+	public function rescan() {
+		global $gallery;
+		$platform =& $gallery->getPlatform();
+
+		$ret = parent::rescan();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Delete existing entities from this resource
+		$query               = '
+	    SELECT
+	      [ICalendarResourceMap::entityId]
+	    FROM
+	      [ICalendarResourceMap]
+	    WHERE
+	      [ICalendarResourceMap::resourceId] = ?';
+		list($ret, $results) = $gallery->search($query, array($this->getId()));
+
+		if ($ret) {
+			return $ret;
+		}
+
+		while ($result = $results->nextResult()) {
+			$ret = GalleryCoreApi::deleteEntityById($result[0]);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		$ret = GalleryCoreApi::removeMapEntry(
+			'ICalendarResourceMap',
+			array(
+				'resourceId' => $this->getId(),
+			)
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Parse resource data
+		list($ret, $fspath) = $this->fetchPath();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$handle = $platform->fopen($fspath, 'rb');
+
+		if (!$handle) {
+			return GalleryCoreApi::error(GALLERY_ERROR);
+		}
+
+		$parser = new ICalendarParser(
+			$handle,
+			null,
+			array(
+				'VCALENDAR' => array(
+					'comps' => array(
+						'VEVENT' => array(
+							'props' => array(
+								'DTSTART',
+								'DTEND',
+								'SUMMARY',
+							),
+						),
+					),
+				),
+			),
+			null
+		);
+
+		if (!$parser->success) {
+			return GalleryCoreApi::error(GALLERY_ERROR);
+		}
+
+		// Add events from this resource
+		foreach ($parser->comps as $key => $comp) {
+			if ($comp->name != 'VEVENT') {
+				continue;
+			}
+
+			list($ret, $newEntity) = GalleryCoreApi::newFactoryInstanceById(
+				'GalleryEntity',
+				'CalendarEvent'
+			);
+
+			if (!isset($newEntity)) {
+				return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
+			}
+
+			$ret = $newEntity->create($this->getParentId());
+
+			if ($ret) {
+				return $ret;
+			}
+
+			$newEntity->setStart(
+				ICalendarParser::datetime_to_timestamp(
+					$comp->properties['DTSTART'][0]->value
+				)
+			);
+			$newEntity->setEnd(
+				ICalendarParser::datetime_to_timestamp(
+					$comp->properties['DTEND'][0]->value
+				)
+			);
+			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
+
+			$ret = $newEntity->save();
+
+			if ($ret) {
+				return $ret;
+			}
+
+			/*$ret = GalleryCoreApi::addExistingItemToAlbum($newEntity, $resourceItem->getParentId(),
+			true);
+			if ($ret) {
+			return $ret;
+			}*/
+
+			/* save is usually called after rescan, so the resourceSerialNumber will always be
+			   out-of-date */
+			$ret = GalleryCoreApi::addMapEntry(
+				'ICalendarResourceMap',
+				array(
+					'resourceId'           => $this->getId(),
+					'resourceSerialNumber' => $this->getSerialNumber(),
+					'entityId'             => $newEntity->getId(),
+					'entitySerialNumber'   => $newEntity->getSerialNumber(),
+					'startOffset'          => $parser->offsets[$key][0],
+					'endOffset'            => $parser->offsets[$key][1],
+				)
+			);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+	}
+
+	/**
+	 * @see GalleryEntity::itemTypeName
+	 */
+	public function itemTypeName($localized = true) {
+		if ($localized) {
+			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'icalendar');
+
+			if (!$ret) {
+				return array(
+					$module->translate('iCalendar Resource'),
+					$module->translate('iCalendar resource'),
+				);
+			}
+		}
+
+		return array('iCalendar Resource', 'iCalendar resource');
+	}
+
+	/**
+	 * @see GalleryEntity::getClassName
+	 */
+	public function getClassName() {
+		return 'ICalendarResourceItem';
+	}
+}

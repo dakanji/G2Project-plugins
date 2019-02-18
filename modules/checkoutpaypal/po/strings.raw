@@ -1,0 +1,42 @@
+# $Id: strings.raw 1822 2009-04-15 15:19:40Z alecmyers $
+
+/* IPN.inc */
+gettext("WARNING: Transaction business name \"%s\" does not match site business name \"%s\".")
+gettext("WARNING: Paypal amount %d does not match our records %d.")
+gettext("PayPal payment is Completed. The PayPal payment has been accepted.")
+gettext("Unhandled Paypal State:")
+
+/* module.inc */
+gettext("Complete checkout by paypal")
+gettext("Commerce")
+gettext("Checkout by Paypal")
+
+/* templates/Admin.tpl */
+gettext("Checkout Paypal Settings")
+gettext("Settings saved successfully")
+gettext("Activate")
+gettext("Activate this method of payment?")
+gettext("Yes")
+gettext("No")
+gettext("Paypal email address")
+gettext("This is your Paypal account identifier. If you get this wrong, someone else will get the money!")
+gettext("Your logo")
+gettext("Paypal will display a small (150px x 90px max) image at the top of the payment pages, if you enter the full url here. If left blank, by default Paypal will use your email address or business name instead.")
+gettext("Currency code for PayPal payments")
+gettext("Paypal operates in several different currencies. You can choose any of them.")
+gettext("PayPal Operating Mode")
+gettext("Live mode charges actual funds, and credits them to your account. Sandbox mode is for test purposes only.")
+gettext("Sandbox")
+gettext("no real transactions can occur")
+gettext("Live")
+gettext("Text of return to site button")
+gettext("Paypal will display a button for the customer to return to this site. You can choose with what text it is labelled.")
+gettext("Save Settings")
+gettext("Cancel")
+
+/* templates/Payment.tpl */
+gettext("Clicking the PayPal button will redirect you to PayPal where you can pay by credit card. Your information is securely encrypted and cannot be intercepted. You do not need a PayPal account to complete the transaction via PayPal.")
+gettext("Pay with PayPal")
+
+/* templates/email/paid.tpl */
+gettext("Payment received through Paypal - thanks.")

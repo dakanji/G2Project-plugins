@@ -1,0 +1,306 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * @version $Revision: 1200 $
+ * @package CheckoutAuthorizeNet
+ * @author Michael Rodr�guez-Torrent <mike@themikecam.com>
+ */
+
+/**
+ * A class implementing Authorize.Net's Advanced Integration Method (AIM). Requires cURL to be
+ * installed on the command line. Based on class.authorizenet.php by Adam Olsen.
+ *
+ * @package CheckoutAuthorizeNet
+ * @subpackage Classes
+ */
+class AuthorizeNetAim {
+	public $_curlPath;
+	public $_gateway;
+	public $_aimVersion;
+	public $_loginId;
+	public $_tranKey;
+	public $_relayResponse;
+	public $_type;
+
+	/**
+	 * Controls whether or not the gateway response should be delimited.
+	 *
+	 * @var bool $_delimData
+	 */
+	public $_delimData;
+
+	/**
+	 * The character with which to delimit the gateway response.
+	 *
+	 * @var string $_delimChar
+	 */
+	public $_delimChar;
+
+	public $_firstName;
+	public $_lastName;
+	public $_email;
+
+	/**
+	 * Controls whether Authorize.Net will send a confirmation e-mail to the customer.
+	 *
+	 * @var bool $_emailCustomer
+	 */
+	public $_emailCustomer;
+
+	public $_phone;
+	public $_address;
+	public $_city;
+	public $_state;
+	public $_zip;
+	public $_country;
+	public $_method;
+	public $_amount;
+	public $_cardNum;
+	public $_expDate;
+	public $_bankAbaCode;
+	public $_bankAcctNum;
+	public $_bankAcctType;
+	public $_bankAcctName;
+	public $_bankName;
+	public $_eCheckType;
+	public $_error;
+
+	public function __construct($loginId, $tranKey) {
+		$this->_aimVersion = '3.1';
+		$this->setLoginId($loginId);
+		$this->setTranKey($tranKey);
+		// Should always be false, I think
+		$this->_relayResponse = 'FALSE';
+		$this->setType('AUTH_CAPTURE');
+		$this->_delimData  = 'TRUE';
+		$this->_delimChar  = '|';
+		$this->_eCheckType = 'WEB';
+	}
+
+	public function process() {
+		global $gallery;
+		$platform =& $gallery->getPlatform();
+
+		// Get the data to send
+		$data = $this->getUrlData();
+
+		if (!empty($this->_curlPath)) {
+			// Run cURL with the data
+			list($success, $results, $error)
+					= $platform->exec(array(array($this->_curlPath, '-d', $data, $this->_gateway)));
+
+			if (!$success) {
+				return array(
+					GalleryCoreApi::error(ERROR_PLATFORM_FAILURE, __FILE__, __LINE__),
+					$error,
+				);
+			}
+		} else {
+			return array(GalleryCoreApi::error(ERROR_MISSING_VALUE, __FILE__, __LINE__), false);
+		}
+
+		$returnArray = explode($this->_delimChar, $results[0]);
+
+		if ($returnArray[2] == 1) {
+			// If success
+			return array(null, null);
+		}
+
+		if (!empty($returnArray[3])) {
+			$this->_error = $returnArray[3];
+		} else {
+			$this->_error = '';
+
+			foreach ($results as $item) {
+				$this->_error .= $item;
+			}
+		}
+
+		return array(null, $this->_error);
+	}
+
+	public function getUrlData() {
+		$data = 'x_version=' . $this->_aimVersion .
+		// The login ID
+		'&x_login=' . $this->_loginId .
+		'&x_tran_key=' . $this->_tranKey .
+		'&x_relay_response=' . $this->_relayResponse .
+		'&x_type=' . $this->_type .
+		'&x_delim_data=' . $this->_delimData .
+		// The character to delimit with
+		'&x_delim_char=' . $this->_delimChar .
+		'&x_first_name=' . $this->_firstName .
+		'&x_last_name=' . $this->_lastName .
+		'&x_email=' . $this->_email .
+		'&x_email_customer=' . $this->_emailCustomer .
+		'&x_address=' . $this->_address .
+		'&x_city=' . $this->_city .
+		'&x_state=' . $this->_state .
+		'&x_zip=' . $this->_zip .
+		'&x_country=' . $this->_country .
+		'&x_phone=' . $this->_phone .
+		'&x_method=' . $this->_method .
+		'&x_amount=' . $this->_amount;
+
+		// If it is a credit card transaction
+		if ($this->_method == 'CC') {
+			$data .= '&x_card_num=' . $this->_cardNum .
+			'&x_exp_date=' . $this->_expDate;
+		}
+
+		// If it is a check transaction
+		if ($this->_method == 'ECHECK') {
+			$data .= '&x_bank_aba_code=' . $this->_bankAbaCode .
+			'&x_bank_acct_num=' . $this->_bankAcctNum .
+			'&x_bank_acct_type=' . $this->_bankAcctType .
+			'&x_bank_acct_name=' . $this->_bankAcctName .
+			'&x_bank_name=' . $this->_bankName .
+			'&x_echeck_type=' . $this->_echeckType;
+		}
+
+		return $data;
+	}
+
+	public function setCurlPath($curlPath) {
+		$this->_curlPath = $curlPath;
+	}
+
+	public function setMode($mode) {
+		switch ($mode) {
+			case 'LIVE':
+				$this->_gateway = 'https://secure.authorize.net/gateway/transact.dll';
+
+				break;
+
+			case 'TEST':
+				$this->_gateway = 'https://certification.authorize.net/gateway/transact.dll';
+
+				break;
+
+			default:
+				return GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__);
+		}
+
+		return null;
+	}
+
+	/* Each field must be urlencoded to send with a post.  DO NOT set the variables without using
+	 * these functions, as you will most likely run into errors */
+
+	public function setLoginId($loginId) {
+		$this->_loginId = urlencode($loginId);
+	}
+
+	public function setTranKey($tranKey) {
+		$this->_tranKey = urlencode($tranKey);
+	}
+
+	public function setType($type) {
+		$this->_type = $type;
+	}
+
+	public function setFirstName($name) {
+		$this->_firstName = urlencode($name);
+	}
+
+	public function setLastName($name) {
+		$this->_lastName = urlencode($name);
+	}
+
+	public function setEmail($email) {
+		$this->_email = urlencode($email);
+	}
+
+	public function setEmailCustomer($emailCustomer) {
+		$this->_emailCustomer = $emailCustomer;
+	}
+
+	public function setPhone($phone) {
+		$this->_phone = urlencode($phone);
+	}
+
+	public function setAddress($address) {
+		$this->_address = urlencode($address);
+	}
+
+	public function setCity($city) {
+		$this->_city = urlencode($city);
+	}
+
+	public function setState($state) {
+		$this->_state = urlencode($state);
+	}
+
+	public function setZip($zip) {
+		$this->_zip = urlencode($zip);
+	}
+
+	public function setCountry($country) {
+		$this->_country = urlencode($country);
+	}
+
+	public function setMethod($method) {
+		switch ($method) {
+			case 'CC':
+			case 'ECHECK':
+				$this->_method = $method;
+
+				break;
+
+			default:
+				return GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__);
+		}
+
+		return null;
+	}
+
+	public function setAmount($amount) {
+		$this->_amount = urlencode($amount);
+	}
+
+	public function setCardNum($cardNum) {
+		$this->_cardNum = urlencode($cardNum);
+	}
+
+	public function setExpDate($expDate) {
+		$this->_expDate = urlencode($expDate);
+	}
+
+	public function setBankAbaCode($abaCode) {
+		$this->_bankAbaCode = urlencode($abaCode);
+	}
+
+	public function setBankAcctNum($acctNum) {
+		$this->_bankAcctNum = urlencode($acctNum);
+	}
+
+	public function setBankAcctType($acctType) {
+		$this->_bankAcctType = urlencode($acctType);
+	}
+
+	public function setBankAcctName($acctName) {
+		$this->_bankAcctName = urlencode($acctName);
+	}
+
+	public function setBankName($name) {
+		$this->_bankName = urlencode($name);
+	}
+}

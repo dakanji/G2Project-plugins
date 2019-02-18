@@ -1,0 +1,11 @@
+# $Revision: 1224 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/bulkmanage/BulkManage.inc	857005013	1831168422	8522	8784
+modules/bulkmanage/BulkManageProperties.inc	1186110407	205250771	6623	6831
+modules/bulkmanage/BulkManageRescan.inc	1433424501	3898890082	3483	3607
+modules/bulkmanage/bulkmanage.css	1396339933	2998604039	204	220
+modules/bulkmanage/classes/BulkManageHelper.class	3709368024	1312365992	6953	7161
+modules/bulkmanage/module.inc	679609179	2321810135	4825	4981
+modules/bulkmanage/templates/BulkManage.tpl	2735960272	2506603546	1089	1120
+modules/bulkmanage/templates/BulkManageProperties.tpl	802139198	1468402060	4245	4370
+modules/bulkmanage/templates/BulkManageRescan.tpl	3555578555	3048517401	628	643

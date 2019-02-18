@@ -1,0 +1,21 @@
+# $Revision: 1347 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/userinfo/README	2313116432	1700122204	1155	1191
+modules/userinfo/Userinfo.inc	3325061314	1156116267	5254	5403
+modules/userinfo/UserinfoSetup.inc	2806042059	3083718927	7008	7236
+modules/userinfo/classes/GNUmakefile	2105416224	3784514995	52	54
+modules/userinfo/classes/GalleryStorage/GNUmakefile	947975502	710467981	62	64
+modules/userinfo/classes/GalleryStorage/schema.tpl	1805847345	1256893859	5258	5442
+modules/userinfo/classes/Maps.inc	234299383	3264370908	1047	1052
+modules/userinfo/classes/Maps.xml	3656605041	620769173	1969	2040
+modules/userinfo/classes/MyEventHandlerClass.class	675906443	1938146783	3981	4115
+modules/userinfo/classes/UserinfoHelper.class	853518759	1591005165	1878	1948
+modules/userinfo/functions.inc	4038327390	2210968908	2750	2866
+modules/userinfo/images/down.gif	4033469858	4033469858	195	195
+modules/userinfo/images/up.gif	812059525	812059525	192	192
+modules/userinfo/lookupip.php	3861438278	3037453019	1599	1640
+modules/userinfo/module.inc	3516603871	363418013	4745	4906
+modules/userinfo/module_2.3.inc	1340943092	153513779	4718	4879
+modules/userinfo/style.css	324716911	77146038	592	619
+modules/userinfo/templates/Userinfo.tpl	2050542853	2074716218	6340	6510
+modules/userinfo/templates/UserinfoSetup.tpl	2410513628	2520617047	4044	4184

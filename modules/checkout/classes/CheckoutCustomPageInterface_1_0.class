@@ -1,0 +1,71 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @version $Revision: 1389 $
+ * @package checkout
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * This is an interface for payment plugins to the checkout module.  Modules that wish to
+ * be able to take payment for 'checkout' carts must implement this interface.
+ *
+ * @package checkout
+ * @subpackage Classes
+ * @abstract
+ */
+class CheckoutCustomPageInterface_1_0 {
+	/**
+	 * Get the localized text describing this payment process
+	 * to be displayed to the user.
+	 *
+	 * @return array object GalleryStatus a status code
+	 *               string the display text
+	 */
+	public function handleRequest() {
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED, __FILE__, __LINE__), null);
+	}
+
+	/**
+	 * Prepare any variables necessary to display this plugin's section on
+	 * the per-album/photo Checkout settings page.
+	 * This process is called immediately before the page is rendered,
+	 * so the plugins will have access to all the relevant variables.
+	 * @param int itemId id of item whose custom page is being displayed
+	 * @return array object GalleryStatus a status code
+	 *               array variables for the button template
+	 */
+	public function setupCustomPageTemplate() {
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED, __FILE__, __LINE__), null);
+	}
+
+	/**
+	 * Store all the form variables
+	 *
+	 * @return array object GalleryStatus a status code
+	 *      array error result
+	 *      array status result
+	 */
+	public function loadTemplate() {
+		return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED, __FILE__, __LINE__), null);
+	}
+}

@@ -1,0 +1,465 @@
+<?php
+/*
+ * $RCSfile: AlbumTimestampHelper.class,v $
+ * $Revision: 1845 $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Helper functions for albumtimestamp.
+ * @package AlbumTimestamp
+ * @subpackage Classes
+ * @author Leo Bergolth <leo@strike.wu.ac.at>
+ * @version $Revision: 0 $
+ */
+function __reduceTimestampMin($x, $item) {
+	$t = $item->getOriginationTimestamp();
+
+	if (isset($x)) {
+		return isset($t) ? min($x, $t) : $x;
+	}
+
+	return $t;
+}
+
+function __reduceTimestampMax($x, $item) {
+	$t = $item->getOriginationTimestamp();
+
+	if (isset($x)) {
+		return isset($t) ? max($x, $t) : $x;
+	}
+
+	return $t;
+}
+
+class AlbumTimestampHelper {
+	public function getInheritedParam($paramName, $itemId = 0) {
+		if ($itemId != 0) {
+			list($ret, $parentIds) = GalleryCoreApi::fetchParentSequence($itemId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$searchIds = array_merge(array_reverse($parentIds), array(0));
+		} else {
+			$searchIds = array(0);
+		}
+		$param = null;
+
+		foreach ($searchIds as $id) {
+			list($ret, $param) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'albumtimestamp',
+				$paramName,
+				$id
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			if (isset($param)) {
+				break;
+			}
+		}
+
+		return array(null, $param);
+	}
+
+	public function getItemParam($paramName, $itemId = 0, $withInteritance = 0) {
+		$param = null;
+
+		if ($itemId != 0) {
+			global $gallery;
+			list($ret, $param) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'albumtimestamp',
+				$paramName,
+				$itemId
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+		global $gallery;
+		$gallery->debug(
+			'LEO: getItemParam: ' . $itemId . ', ' . $paramName . ' = '
+			. $param
+		);
+
+		if (isset($param)) {
+			return array(null, $param);
+		}
+
+		if ($withInteritance) {
+			list($ret, $param) = AlbumTimestampHelper::getInheritedParam($paramName, $itemId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+		return array(null, $param);
+	}
+
+	public function getItemInheritedParam($paramName, $itemId = 0) {
+		global $gallery;
+		list($ret, $itemParam) = AlbumTimestampHelper::getItemParam($paramName, $itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $interitedParam) = AlbumTimestampHelper::getInheritedParam($paramName, $itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$gallery->debug(
+			'LEO: getItemInheritedParam: ' . $itemId . ', ' . $paramName . ' = '
+			. $itemParam . ', ' . $interitedParam
+		);
+
+		return array(null, $itemParam, $interitedParam);
+	}
+
+	public function setItemParam($name, $value, $itemId = 0) {
+		list($ret, $currentValue) = AlbumTimestampHelper::getItemParam($name, $itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$ret = null;
+		AlbumTimestampHelper::log("LEO: setItemParam: $itemId: $name = $value ($currentValue)");
+
+		if ($currentValue != $value) {
+			if (isset($value)) {
+				$ret = GalleryCoreApi::setPluginParameter(
+					'module',
+					'albumtimestamp',
+					$name,
+					$value,
+					$itemId
+				);
+			} else {
+				$ret = GalleryCoreApi::removePluginParameter(
+					'module',
+					'albumtimestamp',
+					$name,
+					$itemId
+				);
+			}
+		}
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, $currentValue);
+	}
+
+	public function setAlbumTimestampMode($item, $value) {
+		global $gallery;
+		$itemId = $item->getId();
+		$gallery->debug('LEO: setAlbumTimestampMode: ' . $itemId . ', ' . $value);
+		list($ret, $oldValue) = AlbumTimestampHelper::setItemParam(
+			'albumTimestampMode',
+			$value,
+			$itemId
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		if ($oldValue != $value) {
+			if ($value != 'off') {
+				$ret = AlbumTimestampHelper::autoSetAlbumTimestamps($item, $value);
+
+				if ($ret) {
+					return $ret;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	// used when changing the timestamp-mode of an album - recurses into child albums
+	public function autoSetAlbumTimestamps($item, $mode = null, $recurse = 1, $overrideChild = null, $recurseAll = null) {
+		global $gallery;
+		$itemId = $item->getId();
+		$gallery->debug("LEO: autoSetAlbumTimestamps: itemId=$itemId, rec=$recurse, override=" . empty($overrideChild));
+		AlbumTimestampHelper::log(
+			"LEO: autoSetAlbumTimestamps: itemId=$itemId, rec=$recurse, override=" . empty($overrideChild)
+			. ", mode=$mode, recurseAll=$recurseAll"
+		);
+
+		if (!isset($mode)) {
+			list($ret, $mode) = AlbumTimestampHelper::getItemParam(
+				'albumTimestampMode',
+				$itemId,
+				1
+			);
+
+			if ($ret) {
+				return $ret;
+			}
+
+			if (!isset($mode)) {
+				$mode = 'off';
+			}
+		}
+
+		if ($recurse) {
+			if ($recurse == 1) {
+				/* temporarily disable save-eventhandler to avoid unnecessary calculation of
+				   timestamps that are updated later anyway */
+				AlbumTimestampHelper::eventHandlerEnabled(0);
+			}
+
+			/* recurse into childalbums before handling this album itself,
+			   to set timestamps on the leaves first */
+			list($ret, $childIds) = GalleryCoreApi::fetchChildAlbumItemIds($item);
+
+			/* check if the albumTimestampMode parameter is not set
+			   (which means that the preference is inherited), to see if we need to recurse */
+			$recurseIds  = array();
+			$recurseMode = null; // determine the mode for each sub-album
+			if ($recurseAll) {
+				$recurseIds = $childIds;
+			} else {
+				// only recurse to subfolders that inherit this folders setting
+				foreach ($childIds as $childId) {
+					list($ret, $setting) = AlbumTimestampHelper::getItemParam('albumTimestampMode', $childId);
+
+					if ($ret) {
+						return $ret;
+					}
+
+					if (!isset($setting)) {
+						$recurseIds[] = $childId;
+					}
+				}
+				$recurseMode = $mode;
+			}
+
+			if (!empty($recurseIds)) {
+				list($ret, $recurseItems) = GalleryCoreApi::loadEntitiesById($recurseIds, 'GalleryItem');
+
+				if ($ret) {
+					return array($ret, null);
+				}
+
+				foreach ($recurseItems as $citem) {
+					$ret = AlbumTimestampHelper::autoSetAlbumTimestamps(
+						$citem,
+						$recurseMode,
+						$recurse + 1,
+						null,
+						$recurseAll
+					);
+
+					if ($ret) {
+						return $ret;
+					}
+				}
+			}
+
+			if ($recurse == 1) {
+				/* re-enable the save-eventhandler
+				   since a change in the base-albums timestamp should propagate up */
+				AlbumTimestampHelper::eventHandlerEnabled(1);
+			}
+		}
+
+		if ($mode != 'off') {
+			// all subalbums are updated now, let's update the album itself
+			list($ret, $timestamp) = AlbumTimestampHelper::findNewAlbumTimestamp($item, $mode, $overrideChild);
+
+			if ($ret) {
+				return $ret;
+			}
+
+			if (!empty($timestamp)) {
+				$ret = AlbumTimestampHelper::setOriginationTimestamp($item, $timestamp);
+
+				if ($ret) {
+					return $ret;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public function setOriginationTimestamp($item, $timestamp, $inShutdown = false) {
+		global $gallery;
+
+		$itemId = $item->getId();
+		AlbumTimestampHelper::log("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
+		$gallery->debug("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
+
+		$item->setOriginationTimestamp($timestamp);
+
+		if ($item->isModified()) {
+			// $itemId = $item->getId();
+			if (GalleryCoreApi::isReadLocked($itemId) && !$inShutdown) {
+				/* e.g. on creation of new albums, the parent is read locked
+				   while the save handler is executed
+				   -> need to defer timestamp-update */
+				AlbumTimestampHelper::log('LEO: setOriginationTimestamp: isReadLocked');
+				$gallery->addShutdownAction(
+					array('AlbumTimestampHelper', 'setOriginationTimestamp'),
+					array($item, $timestamp, 1)
+				);
+			} else {
+				list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($itemId);
+
+				if ($ret) {
+					return $ret;
+				}
+				$ret = $item->save();
+
+				if ($ret) {
+					GalleryCoreApi::releaseLocks($lockId);
+
+					return $ret;
+				}
+				$ret = GalleryCoreApi::releaseLocks($lockId);
+
+				if ($ret) {
+					return $ret;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public function findNewAlbumTimestamp($album, $mode, $overrideChild = null) {
+		global $gallery;
+		$gallery->debug(
+			'LEO: findNewAlbumTimestamp: itemId=' . $album->getId() . ", mode: $mode, override: "
+			. (empty($overrideChild) ? '-' : $overrideChild->getId())
+		);
+
+		if (!isset($mode) || $mode == 'off') {
+			return array(null, null);
+		}
+		list($ret, $childIds) = GalleryCoreApi::fetchChildItemIdsIgnorePermissions($album);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		// item for which the save event was triggered is not saved yet!
+		// remove $overrideChild
+		if (isset($overrideChild)) {
+			$childIds = array_diff($childIds, array($overrideChild->getId()));
+		}
+
+		if (!empty($childIds)) {
+			list($ret, $childItems) = GalleryCoreApi::loadEntitiesById($childIds, 'GalleryItem');
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+		// re-add overrideChild
+		if (isset($overrideChild)) {
+			$childIds[]   = $overrideChild->getId();
+			$childItems[] = $overrideChild;
+		}
+
+		$newTimestamp = null;
+
+		if (!empty($childItems)) {
+			if ($mode == 'newest') {
+				$func = '__reduceTimestampMax';
+			} elseif ($mode == 'oldest') {
+				$func = '__reduceTimestampMin';
+			}
+			$gallery->debug('LEO: findNewAlbumTimestamp: func: ' . $func);
+
+			if (!isset($func)) {
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+			}
+			$newTimestamp = array_reduce($childItems, $func);
+		}
+
+		AlbumTimestampHelper::log(
+			'LEO: findNewAlbumTimestamp: itemId=' . $album->getId() . ", mode: $mode, override: "
+			. (empty($overrideChild) ? '-' : $overrideChild->getId()) . ", ts= $newTimestamp"
+		);
+
+		return array(null, $newTimestamp);
+	}
+
+	public function &eventHandlerEnabled($value = null) {
+		static $enabled = 1;
+
+		if (is_null($value)) {
+			return $enabled;
+		}
+		$enabled = $value;
+
+		return $enabled;
+	}
+
+	public function log($msg) {
+		global $gallery;
+
+		if ($gallery->_debugLogFile) {
+			if ($fd = fopen($gallery->_debugLogFile, 'a')) {
+				$date    = date('Y-m-d H:i:s');
+				$session =& $gallery->getSession();
+
+				if (!empty($session)) {
+					$id = $session->getId();
+				} else {
+					$id = '<no session id>';
+				}
+				fwrite($fd, "$date [" . $id . "] $msg\n");
+				fclose($fd);
+			}
+		}
+	}
+
+	public function debug_backtrace($provideObject = false) {
+		$bt = array();
+
+		foreach (debug_backtrace($provideObject) as $row) {
+			if ($last != $row['file']) {
+				$bt[] = "File: $file\n'";
+			}
+			$last = $row['file'];
+			$bt[] = " Line: $row[line]: ";
+
+			if ($row['class'] != '') {
+				$bt[] = "$row[class]$row[type]$row[function]";
+			} else {
+				$bt[] = "$row[function]";
+			}
+			$bt[] = '(' . join("', '", $args) . ")\n";
+		}
+
+		return join('', $bt);
+	}
+}

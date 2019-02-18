@@ -1,0 +1,412 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package Checkout
+ * @version $Revision: 1649 $
+ * @author Bharat Mediratta <bharat@menalto.com>
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * Required classes
+ */
+
+/**
+ * A helper class for Checkout Interfaces carts
+ *
+ *
+ * @package Checkout
+ * @subpackage Classes
+ */
+class CheckoutInterfaceHelper {
+	/**
+	 * Gets an array of compatible checkout plugins for a given interface version
+	 *
+	 * @param integer major version number
+	 * @param integer minor version number
+	 * @return object GalleryStatus a status code, array plugins
+	 * @static
+	 */
+	public function getPaymentPlugins($loadPlugins = true) {
+		$pluginInterface = 'CheckoutPaymentInterface_1_3';
+		// Find all our payment plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$plugins = array();
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			list($ret, $plugins[$id]['paymentTemplate']) = $instances[$id]->getPaymentTemplate();
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			if ($loadPlugins) {
+				list($ret, $plugins[$id]['paymentVariables']) = $instances[$id]->getVariables();
+
+				if ($ret) {
+					return array($ret, null);
+				}
+			}
+		}
+
+		return array(null, $plugins);
+	}
+
+	/**
+	 * Gets an array of compatible Custom Page plugins
+	 *
+	 * @param integer itemId id of whose page is being displayed
+	 * @return object GalleryStatus a status code, array plugins
+	 * @static
+	 */
+	public function getCustomPagePlugins(&$template, &$form, $item, $thumbnail) {
+		$pluginInterface = 'CheckoutCustomPageInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$plugins = array();
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			// do the work
+			list($ret, $plugins[$id]['customPageTemplate'], $plugins[$id]['l10Domain']) = $instances[$id]->getCustomPageTemplate();
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$ret = $instances[$id]->loadTemplate($template, $form, $item, $thumbnail);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+		return array(null, $plugins);
+	}
+
+	public function saveCustomPagePlugins($form, &$item, &$preferred) {
+		$pluginInterface = 'CheckoutCustomPageInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return array($ret, null, null);
+		}
+		$pluginStatus = array();
+		$pluginError  = array();
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return array($ret, null, null);
+			}
+			// do the work
+			list($ret, $pluginError['$id'], $pluginStatus['$id']) = $instances[$id]->handleRequest($form, $item, $preferred);
+
+			if ($ret) {
+				return array($ret, null, null);
+			}
+		}
+
+		return array(null, $pluginStatus, $pluginError);
+	}
+
+	/**
+	 * Gets an array of compatible Status Page plugins
+	 *
+	 * @param integer itemId id of whose page is being displayed
+	 * @return object GalleryStatus a status code, array plugins
+	 * @static
+	 */
+	public function getStatusPagePlugins(&$template, &$form) {
+		$pluginInterface = 'CheckoutStatusPageInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$plugins = array();
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			// do the work
+			list($ret, $plugins[$id]['statusPageTemplate'], $plugins[$id]['l10Domain']) = $instances[$id]->loadTemplate($template, $form);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			// if no template declared by this plugin then don't call the plugin
+			if (empty($plugins[$id]['statusPageTemplate'])) {
+				unset($plugins[$id]);
+			}
+		}
+
+		return array(null, $plugins);
+	}
+
+	/**
+	 * Asks each status page plugin if its button was pressed
+	 * and return the first one that handles the form
+	 *
+	 * @param &form info from status page
+	 * @return object GalleryStatus a status code, array ('status'=>... ,'error'=> ... ', 'redirect'=>  etc
+	 * @static
+	 */
+	public function handleStatusPagePlugins(&$form) {
+		$pluginInterface = 'CheckoutStatusPageInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$plugins = array();
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			// do the work
+			list($ret, $results) = $instances[$id]->handleRequest($form);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			//send back the first set of results we get
+			if ($results) {
+				return array(null, $results);
+			}
+		}
+
+		return array(null, null);
+	}
+
+	/**
+	 * allows compatible plugins to add items to the cart to show on the select page
+	 * called once before the select page is displayed
+	 * typically a plugin can add an item if it's not already in the cart
+	 * @param &products array
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function doItemListPlugins(&$items) {
+		$pluginInterface = 'CheckoutProductListInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return $ret;
+			}
+			// do the work
+			$ret = $instances[$id]->adjustItemList($items);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * allows compatible plugins to alter item's product list before it's displayed in the cart
+	 * called once per item when the product list is fetched for that item.
+	 * typically a plugin can adjust the visibility of a product, etc.
+	 * @param &products array
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function doProductListPlugins(&$products, $itemId = null) {
+		$pluginInterface = 'CheckoutProductListInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return $ret;
+			}
+			// do the work
+			$ret = $instances[$id]->adjustProductList($products, $itemId = null);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * allows compatible plugins to alter cart contents
+	 *
+	 * @param &$items array £$form array
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function doProductListPluginsAdjustCart($form, &$items) {
+		$pluginInterface = 'CheckoutProductListInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return $ret;
+			}
+			// do the work
+			$ret = $instances[$id]->adjustCartContents($form, $items);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * allows compatible plugins to alter cart contents and associated things before a transaction is recorded/confirmed
+	 *
+	 * @param &$itemProducts, &$paper, &$posts, &$discounts
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function doTransactionDetailsPlugins(&$items, &$itemProducts, &$paper, &$posts, &$discounts) {
+		$pluginInterface = 'CheckoutTransactionDetailsInterface_1_1';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return $ret;
+			}
+			// do the work
+			$ret = $instances[$id]->adjustTransactionDetails($items, $itemProducts, $paper, $posts, $discounts);
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * allows compatible plugins to include content in customer-going emails
+	 *
+	 * @param $transactionId $templateName
+	 * @return object GalleryStatus a status code, array plugins
+	 * @static
+	 */
+	public function getEmailPlugins($transactionId, $templateName) {
+		$pluginInterface = 'CheckoutEmailInterface_1_0';
+		// Find all our plugins
+		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
+
+		if ($ret) {
+			return $ret;
+		}
+		$plugins = array();
+
+		foreach ($ids as $id => $className) {
+			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			// do the work
+			list($ret, $plugins[$id]['emailTemplate'], $plugins[$id]['l10Domain'], $plugins[$id]['emailVariables'])
+				= $instances[$id]->getEmailTemplateAndVariables($transactionId, $templateName);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			// if no email template, don't bother
+			if (empty($plugins[$id]['emailTemplate'])) {
+				unset($plugins[$id]);
+			}
+		}
+
+		return array(null, $plugins);
+	}
+}

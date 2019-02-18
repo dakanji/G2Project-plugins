@@ -1,0 +1,13 @@
+# $Revision: 847 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/icalendar/ICalendar.inc	1163494251	3773837912	11749	12111
+modules/icalendar/classes/Entities.inc	408486539	1432866177	276	285
+modules/icalendar/classes/GNUmakefile	1995366819	843025639	51	52
+modules/icalendar/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/icalendar/classes/GalleryStorage/schema.tpl	1552466149	2303998344	4164	4313
+modules/icalendar/classes/ICalendarHelper.class	244057356	94198699	7143	7415
+modules/icalendar/classes/ICalendarResourceItem.class	3424546705	3679840140	5651	5852
+modules/icalendar/classes/Maps.inc	160848530	2522590309	627	630
+modules/icalendar/classes/Maps.xml	2193146387	1977570442	938	973
+modules/icalendar/lib/README	3898044509	1755638381	114	115
+modules/icalendar/module.inc	2952305256	558071251	3448	3563

@@ -1,0 +1,112 @@
+<?php
+/*
+ * $RCSfile: Classification.inc,v $
+ * $Revision: 1848 $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ *
+ * @package MRAnalysis
+ * @author Mark Ridgwell <g2development@markridgwell.com>
+ */
+
+
+/**
+ * @package MRAnalysis
+ * @subpackage Classification
+ */
+class Classification {
+	// Default filename prefixes
+	public static function DefaultFileNamePrefixes() {
+		$defaultprefixes = array('PICT', 'DSC', 'IMG', 'HB5S', 'P');
+
+		return $defaultprefixes;
+
+		/*
+				// when a config page is added something like this will need to be used to read the prefixes.
+				list ($ret, $additionalprefix) = GalleryCoreApi::getPluginParameter(
+					  'module', 'mranalysis', 'additionalfilenameprefix');
+				if ($ret) {
+					return $defaultprefixes;
+			}
+
+
+				return array_merge( $defaultprefixes, $additionalprefix );
+		*/
+	}
+
+	// Does the prefix have a suffix?
+	public static function PrefixHasSuffix($ucasefilename, $pos, $prefixlen) {
+		$nextchar = substr($ucasefilename, $pos + $prefixlen, 1);
+
+		return ($nextchar == '_') || ($nextchar == ' ');
+	}
+
+	/**
+	 * returns the full path (+name) of object
+	 */
+	public static function IsDefaultFileName($filename) {
+		$ucasefilename = strtoupper($filename);
+
+		$extpos = strrpos($ucasefilename, '.');
+
+		if ($extpos == false) {
+			// No extension - do not process.
+			return false;
+		}
+
+		$prefixes = Classification::DefaultFileNamePrefixes();
+
+
+		foreach ($prefixes as $prefix) {
+			//print "\n<br>" . $prefix . ' -> ' . $ucasefilename;
+			$pos = strpos($ucasefilename, $prefix);
+
+			if ($pos === false) {
+				//print ' -- not found';
+
+				// prefix not in use - skip
+				continue;
+			}
+
+			$prefixlen = strlen($prefix);
+
+			if (Classification::PrefixHasSuffix($ucasefilename, $pos, $prefixlen)) {
+				$prefixlen = $prefixlen + 1;
+			}
+
+			// Prefix found - check the rest is a number followed by extension
+			$serialcandidate = substr($ucasefilename, $pos + $prefixlen, ($extpos - ($prefixlen + $pos + 1)));
+			//print ' -- Candidate = ' . $serialcandidate;
+			if (is_numeric($serialcandidate)) {
+				// Is it an int?
+				$candidatevalue = (int)$serialcandidate;
+
+				if ($candidatevalue !== false) {
+					//print ' -- found';
+					return true;
+				}
+
+				//print ' -- not found';
+			}
+		}
+
+		return false;
+	}
+}

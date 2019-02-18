@@ -1,0 +1,12 @@
+# $Revision: 1663 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/puzzle/MakePuzzle.inc	2963988588	1847954440	11221	11529
+modules/puzzle/PuzzleOptions.inc	1794239139	514813654	2889	2980
+modules/puzzle/applets/puzzle.class	2781319374	2781319374	13861	13861
+modules/puzzle/applets/src/puzzle.java	2130475548	2677896604	35184	36393
+modules/puzzle/classes/PuzzleHelper.class	2953100146	2802365724	2536	2621
+modules/puzzle/module.inc	3457226535	3874320352	5421	5581
+modules/puzzle/templates/AlbumDisabled.tpl	937544289	2582500251	407	417
+modules/puzzle/templates/MakePuzzle.tpl	3615400735	3378050555	5909	6033
+modules/puzzle/templates/MakePuzzleError.tpl	1215949992	1436692600	489	499
+modules/puzzle/templates/PuzzleOptionsTemplate.tpl	1861593233	916608930	530	546

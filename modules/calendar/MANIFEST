@@ -1,0 +1,24 @@
+# $Revision: 848 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/calendar/CalendarMonth.inc	867840171	1315110694	11704	12064
+modules/calendar/classes/CalendarEvent.class	4115346045	3908696023	3053	3180
+modules/calendar/classes/Entities.inc	1749034697	1129662191	451	463
+modules/calendar/classes/GNUmakefile	1995366819	843025639	51	52
+modules/calendar/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/calendar/classes/GalleryStorage/schema.tpl	1309592129	2184541142	2166	2253
+modules/calendar/css/calendar.css	114071441	54027635	9288	9841
+modules/calendar/images/delete-faded.gif	1385391277	1385391277	79	79
+modules/calendar/images/delete.gif	3862236345	3862236345	79	79
+modules/calendar/images/new-event-faded.png	1498786772	1498786772	801	801
+modules/calendar/images/new-event.png	464991654	464991654	848	848
+modules/calendar/images/refresh.gif	3383889061	3383889061	312	312
+modules/calendar/images/warning.gif	875062642	875062642	78	78
+modules/calendar/javascript/calendar.js	2847687578	1119230230	28414	29584
+modules/calendar/javascript/util.js	1029548024	1545602902	2761	2882
+modules/calendar/lib/DataRequestor.js	2596031593	1267639820	19920	20411
+modules/calendar/lib/domdrag/dom-drag.js	2667355762	3463083649	3862	3982
+modules/calendar/lib/javascript-logging/css/logging.css	2670796644	807837916	748	801
+modules/calendar/lib/javascript-logging/js/class.js	567024396	1427009213	853	889
+modules/calendar/lib/javascript-logging/js/logging.js	2930327845	1009565307	3398	3533
+modules/calendar/module.inc	3918052109	3489921362	2892	2992
+modules/calendar/templates/CalendarMonth.tpl	2132378255	717755715	3084	3156

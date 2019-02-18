@@ -1,0 +1,978 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package Checkout
+ * @version $Revision: 1689 $
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * Load the parent class
+ */
+GalleryCoreApi::requireOnce('modules/core/classes/GalleryEntity.class');
+
+/**
+ * A GalleryEntity for checkout transactions.
+ *
+ * @g2 <class-name>GalleryCheckoutTransaction</class-name>
+ * @g2 <parent-class-name>GalleryEntity</parent-class-name>
+ * @g2 <schema>
+ * @g2   <schema-major>1</schema-major>
+ * @g2   <schema-minor>15</schema-minor>
+ * @g2 </schema>
+ * @g2 <requires-id/>
+ *
+ * @package Checkout
+ * @subpackage Classes
+ */
+class GalleryCheckoutTransaction extends GalleryEntity {
+	// Members
+
+	/**
+	 * Date of the transaction
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>date</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <indexed/>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $date
+	 * @access public
+	 */
+	public $date;
+
+	/**
+	 * Transaction security no
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>security</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>SMALL</member-size>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $security
+	 * @access public
+	 */
+	public $security;
+
+	/**
+	 * Id of the buyer (if a registered Gallery user)
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>buyerId</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <member-size>LARGE</member-size>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $buyerId
+	 * @access public
+	 */
+	public $buyerId;
+
+	/**
+	 * Buyer's host name or address
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>host</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $host
+	 * @access public
+	 */
+	public $host;
+
+	/**
+	 * Buyer's language
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>languageCode</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>SMALL</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $languageCode
+	 * @access public
+	 */
+	public $languageCode;
+
+	/**
+	 * Postage amount
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>postage</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>SMALL</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $postage
+	 * @access public
+	 */
+	public $postage;
+
+	/**
+	 * Postage type
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>postageType</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $postageType
+	 * @access public
+	 */
+	public $postageType;
+
+
+	/**
+	 * Discount amount
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>discount</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>SMALL</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $discount
+	 * @access public
+	 */
+	public $discount;
+
+	/**
+	 * Discount description
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>discountDescription</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $discountDescription
+	 * @access public
+	 */
+	public $discountDescription;
+	/**
+	 * Total purchase amount
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>amount</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>SMALL</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $amount
+	 * @access public
+	 */
+	public $amount;
+
+	/**
+	 * Buyer's first name
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>firstName</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $firstName
+	 * @access public
+	 */
+	public $firstName;
+
+	/**
+	 * Buyer's last name
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>lastName</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $lastName
+	 * @access public
+	 */
+	public $lastName;
+
+	/**
+	 * Buyer's email
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>email</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $email
+	 * @access public
+	 */
+	public $email;
+
+	/**
+	 * Recipient's name
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>recipientName</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $recipientName
+	 * @access public
+	 */
+	public $recipientName;
+
+	/**
+	 * Telephone number
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>telephone</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $telephone
+	 * @access public
+	 */
+	public $telephone;
+
+	/**
+	 * Delivery address line 1
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>address1</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $address1
+	 * @access public
+	 */
+	public $address1;
+
+	/**
+	 * Delivery address line 2
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>address2</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $address2
+	 * @access public
+	 */
+	public $address2;
+
+	/**
+	 * Delivery address line 3
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>address3</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $address3
+	 * @access public
+	 */
+	public $address3;
+
+	/**
+	 * Delivery address line 4
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>address4</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $address4
+	 * @access public
+	 */
+	public $address4;
+
+	/**
+	 * Delivery address line 5
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>address5</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $address5
+	 * @access public
+	 */
+	public $address5;
+
+	/**
+	 * Delivery zip
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>addressZip</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $addressZip
+	 * @access public
+	 */
+	public $addressZip;
+
+	/**
+	 * Delivery country
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>addressCountry</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $addressCountry
+	 * @access public
+	 */
+	public $addressCountry;
+
+	/**
+	 * Buyer's comments
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>custNotes</member-name>
+	 * @g2   <member-type>TEXT</member-type>
+	 * @g2 </member>
+	 *
+	 * @var $custNotes
+	 * @access public
+	 */
+	public $custNotes;
+
+	/**
+	 * Buyer's comments
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>custComments</member-name>
+	 * @g2   <member-type>TEXT</member-type>
+	 * @g2 </member>
+	 *
+	 * @var $custComments
+	 * @access public
+	 */
+	public $custComments;
+
+	/**
+	 * Payment plugin that processed this order
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>paymentPlugin</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2 </member>
+	 *
+	 * @var $paymentPlugin
+	 * @access public
+	 */
+	public $paymentPlugin;
+
+
+	/**
+	 * Time set when order is confirmed
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeConfirmed</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeConfirmed
+	 * @access public
+	 */
+	public $timeConfirmed;
+
+	/**
+	 * Time set when payment plugin completes processing
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timePaid</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timePaid
+	 * @access public
+	 */
+	public $timePaid;
+
+	/**
+	 * Time set when payment has cleared
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeCleared</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeCleared
+	 * @access public
+	 */
+	public $timeCleared;
+
+	/**
+	 * Time set when order can be fulfilled
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeFulfil</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeFulfil
+	 * @access public
+	 */
+	public $timeFulfil;
+
+	/**
+	 * Time set when order has been fulfilled
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeFulfilled</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeFulfilled
+	 * @access public
+	 */
+	public $timeFulfilled;
+
+	/**
+	 * Time set when the order has been completed and can be archived/deleted
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeCompleted</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeCompleted
+	 * @access public
+	 */
+	public $timeCompleted;
+
+	/**
+	 * Time set when the order is to be placed on Hold - no actions are allowed
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeHold</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeHold
+	 * @access public
+	 */
+	public $timeHold;
+
+	/**
+	 * Time set when there is a problem with the order
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeProblem</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeProblem
+	 * @access public
+	 */
+	public $timeProblem;
+
+	/**
+	 * Time set when a download has last been attempted (cannot know success)
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>timeDownloaded</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $timeDownloaded
+	 * @access public
+	 */
+	public $timeDownloaded;
+
+	/**
+	 * Download attempts made by user
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>downloadAttempts</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2   <member-size>MEDIUM</member-size>
+	 * @g2   <required/>
+	 * @g2 </member>
+	 *
+	 * @var $downloadAttempts
+	 * @access public
+	 */
+	public $downloadAttempts;
+
+	// Methods
+
+	/**
+	 * @see GalleryEntity::getClassName()
+	 */
+	public function getClassName() {
+		return 'GalleryCheckoutTransaction';
+	}
+
+	/**
+	 * Create a new GalleryCheckoutTransaction
+	 *
+	 * @return GalleryStatus a status code
+	 */
+	public function create() {
+		$ret = parent::create();
+
+		if ($ret) {
+			return $ret;
+		}
+		$this->setSecurity(uniqid(mt_rand(), true));
+		$this->setdate(time());
+		$this->setDownloadAttempts(0);
+		$this->setTimeConfirmed(0);
+		$this->setTimePaid(0);
+		$this->setTimeCleared(0);
+		$this->setTimeFulfil(0);
+		$this->setTimeFulfilled(0);
+		$this->setTimeCompleted(0);
+		$this->setTimeHold(0);
+		$this->setTimeProblem(0);
+		$this->setTimeDownloaded(0);
+
+		return null;
+	}
+
+	/**
+	 * Delete this GalleryEntity.  Delete all of its children also, if it has any.
+	 * @return GalleryStatus a status code
+	 */
+	public function delete() {
+		global $gallery;
+		$storage =& $gallery->getStorage();
+
+		// Delete any children
+		$query                     = '
+	SELECT
+	  [GalleryChildEntity::id]
+	FROM
+	  [GalleryChildEntity]
+	WHERE
+	  [GalleryChildEntity::parentId] = ?
+	';
+		list($ret, $searchResults) = $gallery->search($query, array($this->getId()));
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$i = 0;
+
+		while ($result = $searchResults->nextResult()) {
+			$ret = GalleryCoreApi::deleteEntityById($result[0], 'GalleryChildEntity');
+			/*
+			 * Deletes can cascade in interesting ways.  For example, deleting a derivative will
+			 * get rid of any other derivatives that are sourced to it, so it's possible that
+			 * deleting children here can lead to a MISSING_OBJECT result unless we re-run the
+			 * parent/child query each time.  Easier to just ignore the MISSING_OBJECT error
+			 * since we only care that it's gone.
+			 */
+			if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
+				return $ret;
+			}
+
+			if (!(++$i % 30)) {
+				$ret = $storage->checkPoint();
+
+				if ($ret) {
+					return $ret;
+				}
+			}
+		}
+
+		// Delete myself
+		$ret = parent::delete();
+
+		if ($ret) {
+			return $ret;
+		}
+	}
+
+	public function getDate() {
+		return $this->date;
+	}
+
+	public function setDate($date) {
+		$this->date = $date;
+	}
+
+	public function getSecurity() {
+		return $this->security;
+	}
+
+	public function setSecurity($security) {
+		$this->security = $security;
+	}
+
+	public function getBuyerId() {
+		return $this->buyerId;
+	}
+
+	public function setBuyerId($buyerId) {
+		$this->buyerId = $buyerId;
+	}
+
+	public function getHost() {
+		return $this->host;
+	}
+
+	public function setHost($host) {
+		$this->host = $host;
+	}
+
+	public function getLanguageCode() {
+		return $this->languageCode;
+	}
+
+	public function setLanguageCode($languageCode) {
+		$this->languageCode = $languageCode;
+	}
+
+	public function getPostage() {
+		return $this->postage;
+	}
+
+	public function setPostage($postage) {
+		$this->postage = $postage;
+	}
+
+	public function getPostageType() {
+		return $this->postageType;
+	}
+
+	public function setPostageType($postageType) {
+		$this->postageType = $postageType;
+	}
+
+	public function getDiscount() {
+		return $this->discount;
+	}
+
+	public function setDiscount($discount) {
+		$this->discount = $discount;
+	}
+
+	public function getDiscountDescription() {
+		return $this->discountDescription;
+	}
+
+	public function setDiscountDescription($discountDescription) {
+		$this->discountDescription = $discountDescription;
+	}
+
+	public function getAmount() {
+		return $this->amount;
+	}
+
+	public function setAmount($amount) {
+		$this->amount = $amount;
+	}
+
+	public function getFirstName() {
+		return $this->firstName;
+	}
+
+	public function setFirstName($firstName) {
+		$this->firstName = $firstName;
+	}
+
+	public function getLastName() {
+		return $this->lastName;
+	}
+
+	public function setLastName($lastName) {
+		$this->lastName = $lastName;
+	}
+
+	public function getEmail() {
+		return $this->email;
+	}
+
+	public function setEmail($email) {
+		$this->email = $email;
+	}
+
+	public function getRecipientName() {
+		return $this->recipientName;
+	}
+
+	public function setRecipientName($recipientName) {
+		$this->recipientName = $recipientName;
+	}
+
+	public function getTelephone() {
+		return $this->telephone;
+	}
+
+	public function setTelephone($telephone) {
+		$this->telephone = $telephone;
+	}
+
+	public function getAddress1() {
+		return $this->address1;
+	}
+
+	public function setAddress1($address1) {
+		$this->address1 = $address1;
+	}
+
+	public function getAddress2() {
+		return $this->address2;
+	}
+
+	public function setAddress2($address2) {
+		$this->address2 = $address2;
+	}
+
+	public function getAddress3() {
+		return $this->address3;
+	}
+
+	public function setAddress3($address3) {
+		$this->address3 = $address3;
+	}
+
+	public function getAddress4() {
+		return $this->address4;
+	}
+
+	public function setAddress4($address4) {
+		$this->address4 = $address4;
+	}
+
+	public function getAddress5() {
+		return $this->address5;
+	}
+
+	public function setAddress5($address5) {
+		$this->address5 = $address5;
+	}
+
+	public function getAddressZip() {
+		return $this->addressZip;
+	}
+
+	public function setAddressZip($addressZip) {
+		$this->addressZip = $addressZip;
+	}
+
+	public function getAddressCountry() {
+		return $this->addressCountry;
+	}
+
+	public function setAddressCountry($addressCountry) {
+		$this->addressCountry = $addressCountry;
+	}
+
+	public function getCustNotes() {
+		return $this->custNotes;
+	}
+
+	public function setCustNotes($custNotes) {
+		$this->custNotes = $custNotes;
+	}
+
+	public function appendCustNotes($custNotes) {
+		$this->custNotes .= ' ' . $custNotes;
+	}
+
+	public function getCustComments() {
+		return $this->custComments;
+	}
+
+	public function setCustComments($custComments) {
+		$this->custComments = $custComments;
+	}
+
+	public function appendCustComments($custComments) {
+		$this->custComments .= ' ' . $custComments;
+	}
+
+	public function getPaymentPlugin() {
+		return $this->paymentPlugin;
+	}
+
+	public function setPaymentPlugin($paymentPlugin) {
+		$this->paymentPlugin = $paymentPlugin;
+	}
+
+	public function getTimeConfirmed() {
+		return $this->timeConfirmed;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagConfirmed() {
+		return $this->timeConfirmed > 0;
+	}
+
+	public function setTimeConfirmed($timeConfirmed) {
+		$this->timeConfirmed = $timeConfirmed;
+	}
+
+	public function getTimePaid() {
+		return $this->timePaid;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagPaid() {
+		return $this->timePaid > 0;
+	}
+
+	public function setTimePaid($timePaid) {
+		$this->timePaid = $timePaid;
+	}
+
+	public function getTimeCleared() {
+		return $this->timeCleared;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagCleared() {
+		return $this->timeCleared > 0;
+	}
+
+	public function setTimeCleared($timeCleared) {
+		$this->timeCleared = $timeCleared;
+	}
+
+	public function getTimeFulfil() {
+		return $this->timeFulfil;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagFulfil() {
+		return $this->timeFulfil > 0;
+	}
+
+	public function setTimeFulfil($timeFulfil) {
+		$this->timeFulfil = $timeFulfil;
+	}
+
+	public function getTimeFulfilled() {
+		return $this->timeFulfilled;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagFulfilled() {
+		return $this->timeFulfilled > 0;
+	}
+
+	public function setTimeFulfilled($timeFulfilled) {
+		$this->timeFulfilled = $timeFulfilled;
+	}
+
+	public function getTimeCompleted() {
+		return $this->timeCompleted;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagCompleted() {
+		return $this->timeCompleted > 0;
+	}
+
+	public function setTimeCompleted($timeCompleted) {
+		$this->timeCompleted = $timeCompleted;
+	}
+
+	public function getTimeHold() {
+		return $this->timeHold;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagHold() {
+		return $this->timeHold > 0;
+	}
+
+	public function setTimeHold($timeHold) {
+		$this->timeHold = $timeHold;
+	}
+
+	public function getTimeProblem() {
+		return $this->timeProblem;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagProblem() {
+		return $this->timeProblem > 0;
+	}
+
+	public function setTimeProblem($timeProblem) {
+		$this->timeProblem = $timeProblem;
+	}
+
+	public function getTimeDownloaded() {
+		return $this->timeDownloaded;
+	}
+
+	// Legacy function for backwards compatibility
+	public function getFlagDownloaded() {
+		return $this->timeDownloaded > 0;
+	}
+
+	public function setTimeDownloaded($timeDownloaded) {
+		$this->timeDownloaded = $timeDownloaded;
+	}
+
+	// Legacy function for backwards compatibility
+	public function setFlagDownloaded($flagDownloaded) {
+		if ($flagDownloaded) {
+			$this->timeDownloaded = 0;
+		} else {
+			$this->timeDownloaded = time();
+		}
+	}
+
+	public function getDownloadAttempts() {
+		return $this->downloadAttempts;
+	}
+
+	public function setDownloadAttempts($numAttempts) {
+		$this->downloadAttempts = $numAttempts;
+	}
+}

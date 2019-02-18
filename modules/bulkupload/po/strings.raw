@@ -1,0 +1,17 @@
+# $Id: strings.raw 847 2006-12-02 00:29:36Z andy_st $
+
+/* ItemAddBulk.inc */
+gettext("Bulk Upload") /* also in: module.inc */
+
+/* module.inc */
+gettext("Upload files from structured data files")
+gettext("Import")
+
+/* templates/ItemAddBulk.tpl */
+gettext("There was a problem processing your request, see below for details.")
+gettext("Add many files at once with pre-prepared title, summary, description and keywords.")
+gettext("[help]")
+gettext("The photos you want to add must already be uploaded to your web server.  Create a data file containing the title, summary, description and keywords along with the path to each photo, and then enter the path to the text file in the box below.  For convenience, you can author the data file in Excel and then save it in the %sText (tab delimited)%s format.  Here is a %ssample data file%s and a %ssample excel spreadsheet%s.")
+gettext("Data File")
+gettext("Invalid path.")
+gettext("Add Items")

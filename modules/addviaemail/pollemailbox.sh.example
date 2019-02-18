@@ -1,0 +1,11 @@
+wget --cookies=on --save-cookies mycookies "http://pics.example.net/main.php?g2_controller=core.UserLogin&g2_form[formName]=UserLogin&g2_form[username]=**SOMEUSER**&g2_form[password]=**SOMEUSERS PASSWORD**&g2_form[action][login]=Login"
+
+wget -O tmp.htm --cookies=on --load-cookies mycookies "http://pics.example.net/main.php?g2_view=core.SiteAdmin&g2_subView=core.AdminMaintenance&g2_navId=x96e9f517"
+
+x=`grep -n -m 1 'g2_authToken' tmp.htm | awk -F = '{print $7}' | cut -d\" -f 1`
+
+wget --cookies=on --load-cookies mycookies "http://pics.example.net/main.php?g2_controller=addviaemail.Addviaemailpage&g2_authToken="$x
+
+rm mycookies
+rm tmp.htm
+rm main.php\?*

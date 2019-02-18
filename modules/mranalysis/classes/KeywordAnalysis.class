@@ -1,0 +1,640 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * @package MRAnalysis
+ * @author Mark Ridgwell <g2development@markridgwell.com>
+ */
+GalleryCoreApi::requireOnce('modules/mranalysis/classes/ItemList.class');
+GalleryCoreApi::requireOnce('modules/mranalysis/module.inc');
+
+/* TODO:
+
+Advanced Keyword\Tag Analysis
+=============================
+
+* For each item with a specific keyword, check for additional keywords.
+* Look for potential cockups with keyword splitting e.g using :l or ' instead of ;
+* Also things like 'Boat House' and Boathouse'
+* Also things like KeywordKeyword e.g. IslandIsland
+* ?? Ordering - by source keyword?? - All?
+* ?? Auto fix missing keywords??
+* ?? Spelling check -> Cathederal - should be Cathedral -> Auto Correct?
+* ?? Duplicate keywords
+
+
+Keyword			Must Have Additional Keywords
+=============== 	=============================
+Harry			Dog;Border Terrier
+Riff			Dog;Jack Russel
+Meg			Dog;Labrador
+Harriet			Dog;Border Terrier
+Bob			Dog;Border Terrier
+Church			<name> Church
+Abbey			Church
+Cathedral		Church
+Bluebell		Flower
+Crow			Bird
+Steam Train		Train
+Tiny			Cat
+Marmite			Cat
+Train Lights		Train
+Windmill		<name> Windmill
+Castle			<name> Castle
+Horse Chestnut		Tree
+Pub			<name> Pub
+Austin 7		Car
+Bald Eagle		Bird
+Bar-Headed Goose	Bird;Geese
+Lighthouse		<name> Lighthouse
+Billy			Dog;Chichuia
+Blue Tit		Bird;Tit
+Bull			Cow
+Buzzard			Bird
+Cactus			Flower
+Calf			Cow
+Chaffinch		Bird
+Chicken			Bird
+Crested Duck		Duck;Bird
+Duckling		Duck;Bird
+Goldfish		Fish
+Great Crested Grebe	Grebe;Bird
+Fishing Trawler		Boat
+Flamingo		Bird
+
+*/
+
+class KeywordAnalysis {
+	public $must_have_keywords;
+	public $commontypos;
+
+	public $split_params;
+	public $keyword_album_module;
+
+	/**
+	 * @Constructor
+	 */
+	public function __construct() {
+		$this->must_have_keywords = KeywordAnalysis::musthavekeywords();
+		$this->commontypos        = KeywordAnalysis::commonkeywordtypos();
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'keyalbum');
+
+		if ($ret) {
+			return;
+		}
+
+		$this->keyword_album_module = $module;
+
+		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'keyalbum');
+
+		if ($ret) {
+			return;
+		}
+
+		$this->split_params = $params['split'];
+	}
+
+	// Returns an associative array of keywords against a list of keywords they must have.
+	public static function musthavekeywords() {
+		// this function should be stored as a config somewhere
+		$musthave = array();
+
+		if (!MRAnalysisModule::isModuleInstalledAndActive('mrextraheadings')) {
+			// All of the the data in this section will only appear on my
+			// development system which has the module above installed.
+			return $musthave;
+		}
+
+		$musthave['Harry']   = array('Dog', 'Border Terrier');
+		$musthave['Harriet'] = array('Dog', 'Border Terrier');
+		$musthave['Bob']     = array('Dog', 'Border Terrier');
+		$musthave['Riff']    = array('Dog', 'Jack Russel');
+		$musthave['Meg']     = array('Dog', 'Labrador');
+
+		$musthave['Tiny']    = array('Cat');
+		$musthave['Marmite'] = array('Cat');
+
+		$musthave['Calf'] = array('Cow');
+		$musthave['Bull'] = array('Cow');
+
+		$musthave['River'] = array('River [name]');
+
+		$musthave['Pub'] = array('[name] Pub');
+
+		$musthave['Windmill'] = array('[name] Windmill');
+
+		$musthave['Castle'] = array('[name] Castle');
+
+		$musthave['Lighthouse'] = array('[name] Lighthouse');
+
+		$musthave['Church']    = array('[name] Church');
+		$musthave['Abbey']     = array('Church');
+		$musthave['Cathedral'] = array('Church');
+
+		$musthave['Great Crested Grebe'] = array('Grebe', 'Bird');
+		$musthave['Grebe']               = array('[name] Grebe', 'Bird');
+		$musthave['Bald Eagle']          = array('Eagle', 'Bird');
+		$musthave['Bar-Headed Geese']    = array('Bird', 'Geese');
+		$musthave['Blue Tit']            = array('Bird', 'Tit');
+		$musthave['Buzzard']             = array('Bird');
+		$musthave['Chaffinch']           = array('Bird');
+		$musthave['Robin']               = array('Bird');
+		$musthave['Chicken']             = array('Bird');
+		$musthave['Turkey']              = array('Bird');
+		$musthave['Flamingo']            = array('Bird');
+		$musthave['Crested Drake']       = array('Duck', 'Bird');
+		$musthave['Duckling']            = array('Duck', 'Bird');
+
+		$musthave['Fishing Trawler'] = array('Boat');
+		$musthave['Narrowboat']      = array('Boat');
+		$musthave['Barge']           = array('Boat');
+
+		$musthave['Goldfish'] = array('Fish');
+
+		$musthave['Bluebell'] = array('Flower');
+		$musthave['Cactus']   = array('Flower');
+		$musthave['Daffodil'] = array('Flower');
+
+		$musthave['Horse Chestnut'] = array('Tree');
+
+		$musthave['Steam Train']  = array('Train');
+		$musthave['Train Lights'] = array('Train');
+
+		$musthave['Austin 7'] = array('Car');
+
+
+		return $musthave;
+	}
+
+	// Common typos against what they should be corrected to.
+	public static function commonkeywordtypos() {
+		// this function should be stored as a config somewhere
+		$typos = array();
+
+		if (!MRAnalysisModule::isModuleInstalledAndActive('mrextraheadings')) {
+			// All of the the data in this section will only appear on my
+			// development system which has the module above installed.
+			return $typos;
+		}
+
+		$typos['Cathederal'] = 'Cathedral';
+
+		$typos['Actors']           = 'Actor';
+		$typos['Bar-Headed Goose'] = 'Bar-Headed Geese';
+
+
+		return $typos;
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static function addkeyword($itemId, $keyword) {
+		global $gallery;
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'keyalbum');
+
+		if ($ret) {
+			return;
+		}
+
+		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'keyalbum');
+
+		if ($ret) {
+			return;
+		}
+
+		$split_params = $params['split'];
+
+
+		if (strlen($split_params) == 0) {
+			$split_params = ';';
+		} else {
+			// use the first character
+			$split_params = substr($split_params, 0, 1);
+		}
+
+
+		list($ret, $itemtochange) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryPhotoItem');
+
+		if ($ret) {
+			return $ret;
+		}
+
+
+		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($itemtochange->getId()));
+
+		if ($ret) {
+			return $ret;
+		}
+
+		list($ret, $itemtochange) = $itemtochange->refresh();
+
+		if ($ret) {
+			return $ret;
+		}
+
+
+		// filter the keywords by the actual keywords rather than partial name match
+		$itemkeywords = $module->splitKeywords($itemtochange->keywords, $split_params);
+
+		$itemkeywords[] = $keyword;
+
+		// Ensure keywords are unique
+		$usedkeywords = array();
+
+		foreach ($itemkeywords as $ksrch) {
+			// Convert the keyword to title case
+			$keyword_to_add = ucwords(strtolower($ksrch));
+
+			if (!in_array($keyword_to_add, $usedkeywords)) {
+				$usedkeywords[] = $keyword_to_add;
+			}
+		}
+
+		// Sort the keywords into ascending order
+		sort($usedkeywords);
+
+
+		// Build list of unique keywords
+		$newkeywords = '';
+
+		foreach ($usedkeywords as $ksrch) {
+			$newkeywords = $newkeywords . $ksrch . $split_params;
+		}
+
+
+		// Trim trailing split param and spaces
+		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
+
+
+		$itemtochange->setKeywords($newkeywords);
+
+		$ret = $itemtochange->save();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	public static function correctkeyword($itemId, $originalkeyword, $replacekeyword) {
+		global $gallery;
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'keyalbum');
+
+		if ($ret) {
+			return;
+		}
+
+		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'keyalbum');
+
+		if ($ret) {
+			return;
+		}
+
+		$split_params = $params['split'];
+
+
+		if (strlen($split_params) == 0) {
+			$split_params = ';';
+		} else {
+			// use the first character
+			$split_params = substr($split_params, 0, 1);
+		}
+
+
+		list($ret, $itemtochange) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryPhotoItem');
+
+		if ($ret) {
+			return $ret;
+		}
+
+
+		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($itemtochange->getId()));
+
+		if ($ret) {
+			return $ret;
+		}
+
+		list($ret, $itemtochange) = $itemtochange->refresh();
+
+		if ($ret) {
+			return $ret;
+		}
+
+
+		// filter the keywords by the actual keywords rather than partial name match
+		$itemkeywords = $module->splitKeywords($itemtochange->keywords, $split_params);
+
+		// Ensure keywords are unique
+		$usedkeywords = array();
+
+		foreach ($itemkeywords as $ksrch) {
+			// Replace the keyword
+			if (0 == strcasecmp($ksrch, $originalkeyword)) {
+				$ksrch = $replacekeyword;
+			}
+
+			// Convert the keyword to title case
+			$keyword_to_add = ucwords(strtolower($ksrch));
+
+			if (!in_array($keyword_to_add, $usedkeywords)) {
+				$usedkeywords[] = $keyword_to_add;
+			}
+		}
+
+		// Sort the keywords into ascending order
+		sort($usedkeywords);
+
+
+		// Build list of unique keywords
+		$newkeywords = '';
+
+		foreach ($usedkeywords as $ksrch) {
+			$newkeywords = $newkeywords . $ksrch . $split_params;
+		}
+
+
+		// Trim trailing split param and spaces
+		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
+
+
+		$itemtochange->setKeywords($newkeywords);
+
+		$ret = $itemtochange->save();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// has it got a normal keyword?
+	public static function has_normal_keyword($keywords, $searchkeyword) {
+		foreach ($keywords as $ksrch) {
+			if (0 == strcasecmp($searchkeyword, $ksrch)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	// has it got a special keyword?
+	public static function has_special_keyword($keywords, $searchkeyword, $specialword, $specialkeywordpos) {
+		$specialwordlen = strlen($specialword);
+
+		if ($specialkeywordpos == 0) {
+			$endswith = substr($searchkeyword, $specialwordlen);
+
+			foreach ($keywords as $ksrch) {
+				$endpos = stripos($ksrch, $endswith);
+
+				if (!($endpos === false)) {
+					return true;
+				}
+			}
+		} elseif ($specialkeywordpos == (strlen($searchkeyword) - $specialwordlen)) {
+			$startswithlen = (strlen($searchkeyword) - $specialwordlen);
+			$startswith    = substr($searchkeyword, 0, $startswithlen);
+
+			foreach ($keywords as $ksrch) {
+				if (0 == strncasecmp($ksrch, $startswith, $startswithlen)) {
+					return true;
+				}
+			}
+		}
+		// Support specialword in middle of keyword e.g.
+		// Foo [name] Bar
+
+
+		return false;
+	}
+
+	public static function special_word() {
+		return '[name]';
+	}
+
+	public static function keyword_contains_special_word($keyword) {
+		$specialkeywordpos = stripos($keyword, KeywordAnalysis::special_word());
+
+		return !($specialkeywordpos === false);
+	}
+
+	// Has the list of keywords got the specific keyword?
+	public static function has_keyword($keywords, $searchkeyword) {
+
+		// [name] is a special prefix in that it should be replaced with something.
+		// ideally this should not just be a prefix, but be allowed to be a suffix too.
+		$specialword = KeywordAnalysis::special_word();
+
+		$specialkeywordpos = stripos($searchkeyword, $specialword);
+
+		if ($specialkeywordpos === false) {
+			return KeywordAnalysis::has_normal_keyword($keywords, $searchkeyword);
+		}
+
+		return KeywordAnalysis::has_special_keyword($keywords, $searchkeyword, $specialword, $specialkeywordpos);
+	}
+
+	// Has associative array got the named element.
+	public static function has_assoc_element($search, $arr) {
+		foreach ($arr as $key => $value) {
+			if (0 == strcasecmp($key, $search)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static function get_assoc_element_value($search, $arr) {
+		foreach ($arr as $key => $value) {
+			if (0 == strcasecmp($key, $search)) {
+				return $value;
+			}
+		}
+
+		return '';
+	}
+
+	// Is the item missing any must-have keywords? If so returns the list of must-have's
+	public function missing_must_have_keywords($itemkeywords) {
+		$missing = array();
+
+		foreach ($itemkeywords as $ksrch) {
+			if (KeywordAnalysis::has_assoc_element($ksrch, $this->must_have_keywords)) {
+				foreach ($this->must_have_keywords[$ksrch] as $mustexistkeyword) {
+					$kwdmissing = array();
+
+					if (!KeywordAnalysis::has_keyword($itemkeywords, $mustexistkeyword)) {
+						$kwdmissing[$mustexistkeyword] = !KeywordAnalysis::keyword_contains_special_word($mustexistkeyword);
+					}
+
+					if (count($kwdmissing) > 0) {
+						$missing[$ksrch] = $kwdmissing;
+					}
+				}
+			}
+		}
+
+		return $missing;
+	}
+
+	// Does the item have typos.  If so returns the list of typos found.
+	public function has_typos($itemkeywords) {
+		$weirdseparators    = ':@\\"#~<>!$%';
+		$weirdseparatorslen = strlen($weirdseparators);
+
+		$typos = array();
+
+		foreach ($itemkeywords as $ksrch) {
+			$keywordtypos = array();
+
+			$keywordlength = strlen($ksrch);
+
+			if (($keywordlength % 2) == 0) {
+				// look for [Keyword][Keyword]
+
+				$midpoint = $keywordlength / 2;
+
+				$left  = substr($ksrch, 0, $midpoint);
+				$right = substr($ksrch, $midpoint);
+
+				if (0 == strcasecmp($left, $right)) {
+					$keywordtypos['doublekeyword'] = $left;
+				}
+			} else {
+				// look for [Keyword]?[Keyword]
+				if ($keywordlength > 3) {
+					$midpoint = ($keywordlength - 1) / 2;
+
+					$left  = substr($ksrch, 0, $midpoint);
+					$right = substr($ksrch, $midpoint + 1);
+
+					if (0 == strcasecmp($left, $right)) {
+						$keywordtypos['doublekeyword'] = $left;
+						//print '<br>Potential duplicated keyword with non split between' . $ksrch;
+					}
+				}
+			}
+
+
+			// look for potential weird separators
+			for ($pos = 0; $pos < $weirdseparatorslen; ++$pos) {
+				$sep = substr($weirdseparators, $pos, 1);
+				//print '<br>Weird Separator : ' . $sep;
+
+				if (!(false === strpos($ksrch, $sep))) {
+					//print '<br>Found Weirdness in ' . $ksrch . ' with separator ' . $sep;
+
+					$keywordtypos['strangeseparator' . $sep] = $ksrch;
+				}
+			}
+
+			// Is Common typo
+			if (KeywordAnalysis::has_assoc_element($ksrch, $this->commontypos)) {
+				$keywordtypos['commontypo'] = KeywordAnalysis::get_assoc_element_value($ksrch, $this->commontypos);
+			}
+
+			// Contains the special word
+			if (KeywordAnalysis::keyword_contains_special_word($ksrch)) {
+				$keywordtypos['specialword'] = $ksrch;
+			}
+
+			if (count($keywordtypos) > 0) {
+				$typos[$ksrch] = $keywordtypos;
+			}
+		}
+
+		return $typos;
+	}
+
+	// Checks all the rules against the items.
+	public function check($item) {
+
+		// filter the keywords by the actual keywords rather than partial name match
+		$itemkeywords = $this->keyword_album_module->splitKeywords($item->keywords, $this->split_params);
+
+		$ret = array();
+
+		// look for missing keywords
+		$ret['missing'] = $this->missing_must_have_keywords($itemkeywords);
+		$ret['typo']    = $this->has_typos($itemkeywords);
+
+		$errors = 0;
+
+		foreach ($ret as $key => $value) {
+			$errors += count($value);
+		}
+
+		if ($errors > 0) {
+			return $ret;
+		}
+
+		return false;
+
+
+		return (count($missing) > 0) || (count($typo) > 0);
+	}
+
+	public static function get_item_list() {
+		global $gallery;
+
+		$gallery->guaranteeTimeLimit(120);
+		$query = "
+                SELECT
+                [GalleryPhotoItem::id]
+                FROM
+                [GalleryPhotoItem]
+                INNER JOIN [GalleryItem] ON [GalleryPhotoItem::id] = [GalleryItem::id]
+                WHERE
+                [GalleryItem::keywords] IS NOT NULL
+                AND
+                [GalleryItem::keywords] <> ''
+                
+                ORDER BY [GalleryPhotoItem::id]
+                ";
+
+
+		$tester = new KeywordAnalysis();
+
+		$items = ItemList::readItemsFromQuery($query, array($tester, 'check'));
+
+		return $items;
+	}
+}

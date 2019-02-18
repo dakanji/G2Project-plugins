@@ -1,0 +1,17 @@
+.gmParamProperty {
+	width: 20%;
+	}
+
+.gmParamActive {
+	width: 10%;
+	}
+
+.gmParamOptions {
+	width: 70%;
+	}
+
+.gmBulkmanageDescription {
+	padding: 1px 0;
+	margin-bottom: 4px;
+	border-bottom: 1px solid #ccc;
+	}

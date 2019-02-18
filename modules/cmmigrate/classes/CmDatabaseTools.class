@@ -1,0 +1,575 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2006 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/cmmigrate/classes/CmMigrateHelper.class');
+GalleryCoreApi::requireOnce('lib/adodb/adodb.inc.php');
+
+/**
+ * A class for frontending access to the Coppermine database for the CmMigrate module.
+ * @package CmMigrate
+ * @subpackage Classes
+ * @author David Angier <david@angier.co.uk>
+ * @version $Revision: 847 $
+ */
+class CmDatabaseTools {
+	/**
+	 * The directory where the Coppermine installation resides
+	 * @var string
+	 */
+	public $_baseDir;
+
+	/**
+	 * The actual database provider, normally a CmDatabase, but can be overriden in special cases
+	 * @var object
+	 */
+	public $_dbImpl;
+
+	/**
+	 * The Coppermine configuration paramater set
+	 * @var array where the key is the parameter name and the value is the paramter value
+	 */
+	public $_coppermineConfig;
+
+	/**
+	 * The initialisation function for CmDatabaseTools
+	 * @param  string $baseDir The path to the Coppermine install directory
+	 */
+	public function __construct($baseDir, $dbImpl = null) {
+		$this->_baseDir = $baseDir;
+		$this->_readParams($baseDir);
+
+		if (isset($dbImpl)) {
+			$this->_dbImpl = $dbImpl;
+		} else {
+			$this->_dbImpl = new CmDatabase();
+		}
+	}
+
+	/**
+	 * Reads the parameters from the Coppermine config file
+	 * @param  string $baseDir The base to the Coppermine install directory
+	 */
+	public function _readParams($baseDir) {
+		$incpath = CmMigrateHelper::configPath($baseDir);
+
+		include $incpath;
+		$this->_coppermineConfig = $CONFIG;
+	}
+
+	/**
+	 * openDatabase opens the underlying database and retains a handle to it
+	 * @return object GalleryStatus a status code
+	 */
+	public function openDatabase() {
+		$ret = $this->_dbImpl->openDatabase($this->_coppermineConfig);
+
+		if ($ret) {
+			return $ret->wrap(__FILE__, __LINE__);
+		}
+
+		list($ret, $extraConfig) = $this->_dbImpl->getConfigSettings();
+
+		if ($ret) {
+			return $ret->wrap(__FILE__, __LINE__);
+		}
+		$this->_coppermineConfig = array_merge($this->_coppermineConfig, $extraConfig);
+
+		return null;
+	}
+
+	/**
+	 * Get the path to the Coppermine album root
+	 * @return string path to album directories
+	 */
+	public function getAlbumPath() {
+		return $this->_baseDir . $this->_coppermineConfig['fullpath'];
+	}
+
+	/**
+	 * getAlbums creates an album entry for the Coppermine root, each
+	 * Coppermine category, each Coppermine user and each Coppermine album
+	 * @return array object GalleryStatus a status code
+	 *               array of object CmEntity
+	 */
+	public function getAlbums() {
+		list($ret, $categories) = $this->_dbImpl->getCategories();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		list($ret, $users) = $this->_dbImpl->getUsers();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		list($ret, $albums) = $this->_dbImpl->getAlbums();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		return array(null, array_merge($categories, $users, $albums));
+	}
+
+	/**
+	 * getPictures returns an array of cmPicture objects for the given album
+	 * @return array object GalleryStatus a status code
+	 *               array object of cmPicture
+	 */
+	public function getPhotos($album) {
+		list($ret, $pics) = $this->_dbImpl->getPhotos($album->albumId - 20000);
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		return array(null, $pics);
+	}
+
+	/**
+	 * getAlbumsSorted returns the albums sorted into a heirarchy
+	 * @return array object GallerStatus a status code
+	 *               array of object CmEntity
+	 */
+	public function getAlbumsSorted() {
+		$parent             = 0;
+		list($ret, $albums) = $this->getAlbums();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+		$stack = $result = array();
+		$depth = 0;
+
+		while (true) {
+			$descended = false;
+
+			foreach ($albums as $i => $a) {
+				if ($a->getParent() == $parent) {
+					$entry    = array(
+						'depth' => $depth++,
+						'data'  => $a,
+					);
+					$result[] = $entry;
+					array_push($stack, $parent);
+					$parent    = $a->getAlbumId($a);
+					$descended = true;
+					unset($albums[$i]);
+
+					break;
+				}
+			}
+
+			if (!$descended) {
+				if (count($stack) == 0) {
+					break;
+				}
+				$parent = array_pop($stack);
+				$depth--;
+			}
+		}
+
+		return array(null, $result);
+	}
+}
+
+/**
+ * Default implementation of Coppermine database access using MySQL
+ */
+class CmDatabase {
+	/**
+	 * Is the Coppermine Db using the same database handle as the G2 database?
+	 * @var bool
+	 */
+	public $_sameDbAsG2;
+
+	/**
+	 * The G2 database name
+	 * @var string
+	 */
+	public $_G2DbName;
+
+	/**
+	 * The connection to the Coppermine database
+	 * @var object ADOConnection
+	 */
+	public $_conn;
+
+	/**
+	 * The Coppermine configuration
+	 * @var array( string paramater name => string parameter value )
+	 */
+	public $config;
+
+	/**
+	 * Opens the underlying database and retains a handle to it
+	 * @param  array $config The configuration parameters for accessing the database
+	 * @return object GalleryStatus a status code
+	 */
+	public function openDatabase($config) {
+		global $gallery;
+
+		$this->config      = $config;
+		$this->_conn       =& ADONewConnection('mysql');
+		$this->_sameDbAsG2 = false;
+
+		if ($this->_conn->NConnect($config['dbserver'], $config['dbuser'], $config['dbpass'])) {
+			/*
+			 * If the connection is the same as G2's then we have to change it back,
+			 * this requires internal poking around
+			 */
+			$store = $gallery->getStorage();
+
+			if ($this->_conn->_connectionID === $store->_impl->_db->_connectionID) {
+				$this->_sameDbAsG2 = true;
+				$g2config          = $gallery->getConfig('storage.config');
+				$this->_G2DbName   = $g2config['database'];
+			}
+
+			if ($this->_conn->SelectDB($config['dbname'])) {
+				$this->RestoreG2Database();
+
+				return null;
+			}
+		}
+
+		return GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__);
+	}
+
+	/**
+	 * In the case where G2 and Cm are sharing the same connection, this switches it to Coppermine
+	 * @return object GalleryStatus a status code
+	 */
+	public function SelectCmDatabase() {
+		if ($this->_sameDbAsG2) {
+			$ret = $this->_conn->SelectDB($this->config['dbname']);
+
+			if ($ret) {
+				return null;
+			}
+
+			return GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__);
+		}
+
+		return null;
+	}
+
+	/**
+	 * In the case where G2 and Cm are sharing the same connection, this switches it to Gallery2
+	 * @return object GalleryStatus a status code
+	 */
+	public function RestoreG2Database() {
+		if ($this->_sameDbAsG2) {
+			$ret = $this->_conn->SelectDB($this->_G2DbName);
+
+			if ($ret) {
+				return null;
+			}
+
+			return GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Return the Coppermine configuration settings from the database
+	 * @return array GalleryStatus a status code
+	 *               array a set of name, value pairs for database stored parameters
+	 */
+	public function getConfigSettings() {
+		$ret = $this->SelectCmDatabase();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+		$result =& $this->_conn->GetAssoc(
+			'SELECT name, value FROM ' .
+			$this->config['TABLE_PREFIX'] . 'config'
+		);
+
+		$ret = $this->RestoreG2Database();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		if (!$result) {
+			return array(GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__), null);
+		}
+
+		return array(null, $result);
+	}
+
+	/**
+	 * Return the Coppermine users from the database
+	 * @return array GalleryStatus a status code
+	 *               array a set of arrays containing user database records
+	 */
+	public function getUsers() {
+		$ret = $this->SelectCmDatabase();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		$result =& $this->_conn->GetAll(
+			'SELECT user_id, user_name FROM ' .
+			$this->config['TABLE_PREFIX'] . 'users'
+		);
+		$ret    = $this->RestoreG2Database();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		if (!$result) {
+			return array(GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__), null);
+		}
+
+		foreach ($result as $row) {
+			$users[] = new CmUser(
+				array(
+					'user_id'   => $row[0],
+					'user_name' => $row[1],
+				)
+			);
+		}
+
+		return array(null, $users);
+	}
+
+	/**
+	 * Return the Coppermine categories from the database
+	 * @return array GalleryStatus a status code
+	 *               array a set of arrays containing category database records
+	 */
+	public function getCategories() {
+		$ret = $this->SelectCmDatabase();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		$result =& $this->_conn->GetAll(
+			'SELECT cid, name, description, parent FROM ' .
+			$this->config['TABLE_PREFIX'] . 'categories'
+		);
+		$ret    = $this->RestoreG2Database();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		if (!$result) {
+			return array(GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__), null);
+		}
+
+		foreach ($result as $row) {
+			$cats[] = new CmCategory(
+				array(
+					'cid'         => $row[0],
+					'name'        => $row[1],
+					'description' => $row[2],
+					'parent'      => $row[3],
+				)
+			);
+		}
+
+		return array(null, $cats);
+	}
+
+	/**
+	 * Return the Coppermine albums from the database
+	 * @return array GalleryStatus a status code
+	 *               array a set of arrays containing album database records
+	 */
+	public function getAlbums() {
+		$ret = $this->SelectCmDatabase();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		$result =& $this->_conn->GetAll(
+			'SELECT aid, title, description, category FROM ' .
+			$this->config['TABLE_PREFIX'] . 'albums'
+		);
+		$ret    = $this->RestoreG2Database();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		if (!$result) {
+			return array(GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__), null);
+		}
+
+		foreach ($result as $row) {
+			$albums[] = new CmAlbum(
+				array(
+					'aid'         => $row[0],
+					'title'       => $row[1],
+					'description' => $row[2],
+					'category'    => $row[3],
+				)
+			);
+		}
+
+		return array(null, $albums);
+	}
+
+	/**
+	 * Return the Coppermine pictures from the database
+	 * @return array GalleryStatus a status code
+	 *               array a set of arrays containing album database records
+	 */
+	public function getPhotos($albumid) {
+		$ret = $this->SelectCmDatabase();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		$result =& $this->_conn->GetAll(
+			'SELECT pid, filepath, filename, title, caption, ' .
+					'keywords, hits FROM ' . $this->config['TABLE_PREFIX'] .
+			'pictures WHERE aid = ' . $albumid
+		);
+		$ret    = $this->RestoreG2Database();
+
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+
+		if ($this->_conn->ErrorNo() != 0) {
+			return array(GalleryCoreApi::error(ERROR_STORAGE_CONNECTION, __FILE__, __LINE__), null);
+		}
+
+		if (!$result) {
+			return array(null, array());
+		}
+
+		foreach ($result as $row) {
+			$albums[] = new CmPicture(
+				array(
+					'pid'      => $row[0],
+					'filepath' => $row[1],
+					'filename' => $row[2],
+					'title'    => $row[3],
+					'caption'  => $row[4],
+					'keywords' => $row[5],
+					'hits'     => $row[6],
+				)
+			);
+		}
+
+		return array(null, $albums);
+	}
+}
+
+/**
+ * CmEntity is an abstract class represting all the Coppermine objects that can be
+ * considered to be folders
+ */
+class CmEntity {
+	public $albumId;
+	public $name;
+	public $description;
+
+	public function getAlbumId() {
+		return $this->albumId;
+	}
+}
+
+/**
+ * User entities from the Coppermine database, used to generate user albums
+ */
+class CmUser extends CmEntity {
+	public $_userId;
+
+	public function __construct($initarray) {
+		$this->_userId     = $initarray['user_id'];
+		$this->name        = $initarray['user_name'];
+		$this->albumId     = $this->_userId + 10000;
+		$this->description = 'User ' . $this->name;
+	}
+
+	public function getParent() {
+		return 1;
+	}
+}
+
+/**
+ * Album entities from the Coppermine database
+ */
+class CmAlbum extends CmEntity {
+	public $category;
+
+	public function __construct($initarray) {
+		$this->albumId     = $initarray['aid'] + 20000;
+		$this->name        = $initarray['title'];
+		$this->description = $initarray['description'];
+		$this->category    = $initarray['category'];
+	}
+
+	public function getParent() {
+		return $this->category;
+	}
+}
+
+/**
+ * Category entities from the Coppermine database, used to generate folder albums
+ */
+class CmCategory extends CmEntity {
+	public $parent;
+
+	public function __construct($initarray) {
+		$this->albumId     = $initarray['cid'];
+		$this->name        = $initarray['name'];
+		$this->description = $initarray['description'];
+		$this->parent      = $initarray['parent'];
+	}
+
+	public function getParent() {
+		return $this->parent;
+	}
+}
+
+/**
+ * Picture entities from the Coppermine database
+ */
+class CmPicture {
+	public function __construct($initarray) {
+		$this->pictureId   = $initarray['pid'];
+		$this->filepath    = $initarray['filepath'];
+		$this->filename    = $initarray['filename'];
+		$this->title       = $initarray['title'];
+		$this->description = $initarray['caption'];
+		$this->keywords    = $initarray['keywords'];
+		$this->views       = $initarray['hits'];
+	}
+
+	public function getParent() {
+		return $this->parent;
+	}
+}

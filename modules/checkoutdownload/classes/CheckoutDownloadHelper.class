@@ -1,0 +1,165 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package CheckoutDownload
+ * @version $Revision: 1703 $
+ * @subpackage Classes
+ * @author Bharat Mediratta <bharat@menalto.com>
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * Required classes
+ */
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
+
+
+/**
+ * A helper class for CheckoutDownload
+ *
+ *
+ * @package CheckoutDownload
+ * @subpackage Classes
+ */
+class CheckoutDownloadHelper {
+	/**
+	 * Returns an array of item ids of the items that are downloadable
+	 * from those passed
+	 *
+	 * @param array (array (itemID, productId), array (itemID, productId), ...)
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function getDownloadableItemIds($items) {
+		$itemIdsAndOperations = array();
+
+		foreach ($items as $item) {
+			// Check the item still exists
+			list($ret, $itemEntity) = GalleryCoreApi::loadEntitiesById($item[0]);
+
+			if ($ret) {
+				if ($ret->getErrorCode() & ERROR_MISSING_OBJECT) {
+					continue;
+				}
+
+				return array($ret, null);
+			}
+			// Fetch products for that item
+			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($item[0], true);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			// $products *not* indexed by productId, so need to check each one
+			foreach ($products as $product) {
+				if ($product['productId'] == $item[1] && isset($product['download']) && $product['download'] == 'true') {
+					if (!isset($product['downloadSize'])) {
+						$product['downloadSize'] = '';
+					}
+
+					if (!isset($product['downloadOperation'])) {
+						$product['downloadOperation'] = '';
+					}
+
+					if ($itemEntity->getCanContainChildren()) {
+						// Expand albums into individual images
+						list($ret, $childItemIds) = GalleryCoreApi::fetchChildDataItemIds($itemEntity);
+
+						if ($ret) {
+							return array($ret, null);
+						}
+
+						foreach ($childItemIds as $childItemId) {
+							$itemIdsAndOperations[] = array(
+								'id'                => $childItemId,
+								'downloadSize'      => $product['downloadSize'],
+								'downloadOperation' => $product['downloadOperation'],
+							);
+						}
+					} else {
+						// Single Item
+						$itemIdsAndOperations[] = array(
+							'id'                => $item[0],
+							'downloadSize'      => $product['downloadSize'],
+							'downloadOperation' => $product['downloadOperation'],
+						);
+					}
+				}
+			}
+		}
+
+		return array(null, $itemIdsAndOperations);
+	}
+
+	/**
+	 * Returns decision on whether to offer download for a transaction
+	 *
+	 * @param integer transactionId
+	 * @return object GalleryStatus a status code, string result code
+	 * @static
+	 */
+	public function checkDownloadOffer($transactionId) {
+		global $gallery;
+
+		list($ret, $itemList) = CheckoutTransactionHelper::fetchTransactionItems($transactionId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $itemIdsAndOperations) = CheckoutDownloadHelper::getDownloadableItemIds($itemList);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (empty($itemIdsAndOperations)) {
+			return array(null, 'empty');
+		}
+		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (!isset($transaction)) {
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+		}
+		list($ret, $checkoutParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkoutdownload');
+
+		if ($checkoutParams['limitNumDLsAllowed'] && $checkoutParams['numDLsAllowed'] <= $transaction->getDownloadAttempts()) {
+			return array(null, 'tooManyDownloads');
+		}
+
+		if ($checkoutParams['limitDaysDLAvailable'] && ($checkoutParams['daysDLAvailable'] <= (time() - $transaction->getDate()) / (60 * 60 * 24))) {
+			return array(null, 'outOfTime');
+		}
+
+		if (!$checkoutParams['allowDownloadsPrePurchase'] && !$transaction->getFlagCleared()) {
+			return array(null, 'notPaid');
+		}
+
+		return array(null, 'permit');
+	}
+}

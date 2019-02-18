@@ -1,0 +1,42 @@
+<!DOCTYPE maps SYSTEM "../../../lib/tools/dtd/MapsDefinition2.0.dtd">
+<maps>
+  <map>
+    <map-name>TagItemMap</map-name>
+    <schema>
+      <schema-major>1</schema-major>
+      <schema-minor>0</schema-minor>
+    </schema>
+    <member>
+      <member-name>itemId</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+    <member>
+      <member-name>tagId</member-name>
+      <member-type>INTEGER</member-type>
+      <indexed/>
+    </member>
+    <key primary="true">
+      <member-name>itemId</member-name>
+      <member-name>tagId</member-name>
+    </key>
+  </map>
+  <map>
+    <map-name>TagMap</map-name>
+    <schema>
+      <schema-major>1</schema-major>
+      <schema-minor>0</schema-minor>
+    </schema>
+    <member>
+      <member-name>tagId</member-name>
+      <member-type>INTEGER</member-type>
+      <primary/>
+    </member>
+    <member>
+      <member-name>tagName</member-name>
+      <member-type>STRING</member-type>
+      <member-size>MEDIUM</member-size>
+      <unique/>
+      <required/>
+    </member>
+  </map>
+</maps>

@@ -1,0 +1,139 @@
+<?php
+/*
+ * $RCSfile: CheckoutPaypalPlugin.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @version $Revision: 1586 $ $Date: 2006/04/07 20:51:05 $
+ * @package CheckoutPaypal
+ * @subpackage Classes
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ */
+
+/**
+ * Required classes
+ */
+GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
+GalleryCoreApi::requireOnce('modules/checkoutpaypal/classes/CheckoutPaypalHelper.class');
+
+/**
+ * This is an implementation of the checkout module's CheckoutPaymentInterface_1_3
+ *
+ * @package CheckoutPaypal
+ * @subpackage Classes
+ */
+class CheckoutPaypalPaymentPlugin extends CheckoutPaymentInterface_1_3 {
+	/**
+	 * @see CheckoutPluginInterface_1_3::getPaymentTemplate()
+	 */
+	public function getPaymentTemplate() {
+		return array(null, 'modules/checkoutpaypal/templates/Payment.tpl');
+	}
+
+	/**
+	 * @see CheckoutPaymentInterface_1_3::getVariables()
+	 */
+	public function getVariables() {
+		// Prepare the variables to return for the PayPal form
+		// get the info from the session variable
+		global $gallery;
+		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$transactionId = $transaction->getId();
+
+		$orderTotal = $transaction->getAmount();
+
+		list($ret, $active) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'active');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $paypalname) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'paypalname');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $ppurl) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'ppurl');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $imageUrl) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'imageUrl');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		list($ret, $pprtnbuttontext) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'pprtnbuttontext');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $ccode) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'ccode');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $countrycode) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'countrycode');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $ppItem, $verify) = CheckoutPaypalHelper::getPaypalItems();
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$translator = $gallery->getTranslator();
+		//$languageCode = $translator->getActiveLanguageCode();
+		$languageCode = $translator->_languageCode;
+		// Paypal wants just the country code
+		list($language, $country) = preg_split('/[-_]/', "${languageCode}_");
+		$langCountry              = GalleryUtilities::strToUpper($country);
+
+
+		return array(
+			null,
+			array(
+				'active'          => $active,
+				'paypalname'      => $paypalname,
+				'ppurl'           => $ppurl,
+				'ccode'           => $ccode,
+				'langCountry'     => $langCountry,
+				'countrycode'     => $countrycode,
+				'imageUrl'        => $imageUrl,
+				'transactionId'   => $transactionId,
+				'ppItems'         => $ppItem,
+				'verify'          => $verify,
+				'pprtnbuttontext' => $pprtnbuttontext,
+				'orderTotal'      => $orderTotal,
+			),
+		);
+	}
+}

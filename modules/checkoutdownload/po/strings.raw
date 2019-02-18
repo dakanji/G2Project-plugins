@@ -1,0 +1,63 @@
+# $Id: strings.raw 1698 2008-11-26 20:24:43Z alecmyers $
+
+/* BuildDownload.inc */
+gettext("Preparing your download...")
+gettext("Preparing...")
+gettext("Preparing item %d of %d")
+gettext("Finishing off...")
+gettext("Hit Continue to download your file.")
+gettext("Done.")
+
+/* module.inc */
+gettext("Checkout Downloads") /* also in: checkoutdownload/module.inc */
+gettext("Allows customers to download files from Checkout transactions") /* also in: checkoutdownload/module.inc */
+gettext("Commerce") /* also in: checkoutdownload/module.inc */
+
+/* checkoutdownload/templates/Admin.tpl */
+gettext("Checkout Downloadable Items Settings") /* also in: templates/Admin.tpl */
+gettext("Settings saved successfully") /* also in: templates/Admin.tpl */
+gettext("Products") /* also in: templates/Admin.tpl */
+gettext("To enable a photo to be downloaded after purchase, tick the box.") /* also in: templates/Admin.tpl */
+gettext("Product Name") /* also in: templates/Admin.tpl */
+gettext("Downloadable") /* also in: templates/Admin.tpl */
+gettext("Download Options") /* also in: templates/Admin.tpl */
+gettext("Optionally users may be permitted to download items in their cart before payment is cleared.") /* also in: templates/Admin.tpl */
+gettext("Allow download before payment cleared?") /* also in: templates/Admin.tpl */
+gettext("You may optionally set your own filename to use for zipped file downloads - don't include the .zip ending - and/or have the date and time appended using the YYYMMDDHHMMSS format to make each filename unique. (Example: photos-20101231235959.zip)") /* also in: templates/Admin.tpl */
+gettext("Base filename") /* also in: templates/Admin.tpl */
+gettext("Append date & time?") /* also in: templates/Admin.tpl */
+gettext("Ordinarily viewing permissions on items are observed in deciding which derivative to offer for download. You may override permissions and ensure that the original item is always downloaded.")
+gettext("Override Permissions?")
+gettext("Download attempts can be limited in time and in number.") /* also in: templates/Admin.tpl */
+gettext("Set time limit on downloads?") /* also in: templates/Admin.tpl */
+gettext("Time Limit in days") /* also in: templates/Admin.tpl */
+gettext("Limit download attempts?") /* also in: templates/Admin.tpl */
+gettext("Maximum attempts") /* also in: templates/Admin.tpl */
+gettext("Download images can be placed in nested sub-folders matching the album names and hierarchy they apear in in the Gallery.") /* also in: templates/Admin.tpl */
+gettext("Download in nested folders?") /* also in: templates/Admin.tpl */
+gettext("Save Settings") /* also in: templates/Admin.tpl */
+gettext("Cancel") /* also in: templates/Admin.tpl */
+
+/* checkoutdownload/templates/StatusPageDownload.tpl */
+gettext("Download Information") /* also in: templates/StatusPageDownload.tpl */
+gettext("Please use the button to download your items.") /* also in: templates/StatusPageDownload.tpl */
+gettext("Download Items in ZIP format") /* also in: templates/StatusPageDownload.tpl */
+gettext("No. of times downloading has been attempted:") /* also in: templates/StatusPageDownload.tpl */
+gettext("This order does not include any downloadable items.") /* also in: templates/StatusPageDownload.tpl */
+gettext("The time period for downloading items in this order has expired.") /* also in: templates/StatusPageDownload.tpl */
+gettext("Items in this order can be downloaded when payment is cleared.") /* also in: templates/StatusPageDownload.tpl */
+gettext("The limit on the number of times this order may be downloaded has already been reached.") /* also in: templates/StatusPageDownload.tpl */
+gettext("Oh wie!") /* also in: templates/StatusPageDownload.tpl */
+
+/* checkoutdownload/templates/email/download.tpl */
+gettext("Your downloads have been authorised. You can get the files here:") /* also in: templates/email/download.tpl */
+gettext("Download as Zip") /* also in: templates/email/download.tpl */
+
+/* templates/Admin.tpl */
+gettext("Downloads will be resized to a maximum dimension that you enter. To download the original size, leave the size box empty.")
+gettext("Advanced users can enter a Gallery-style operation string to further alter the image that's downloaded.")
+gettext("Download Size (pixels)")
+gettext("Extra Operation String")
+
+/* templates/StatusPageDownload.tpl */
+gettext("The last download attempt was at")

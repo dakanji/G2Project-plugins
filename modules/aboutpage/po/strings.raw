@@ -1,0 +1,11 @@
+# $Id: strings.raw 1872 2009-05-12 19:39:57Z bharat $
+
+gettext("Contact")
+gettext("Display")
+gettext("Display a page of user content")
+gettext("About")
+gettext("About Page")
+gettext("About Page Settings")
+gettext("Settings saved successfully")
+gettext("User Message")
+gettext("Save")

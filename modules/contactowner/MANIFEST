@@ -1,0 +1,13 @@
+# $Revision: 1900 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/contactowner/Admin.inc	2522348302	3230319687	4772	4948
+modules/contactowner/Contact.inc	1610984490	221407498	7896	8160
+modules/contactowner/Send.inc	1129888364	3423112677	6813	7002
+modules/contactowner/Sent.inc	4163377441	3050114378	1871	1934
+modules/contactowner/changelog	1702758990	391088493	1143	1179
+modules/contactowner/classes/contactownerCaptchaAdminOption.class	3004290750	1314468786	442	459
+modules/contactowner/module.inc	482760752	2542835834	3224	3337
+modules/contactowner/templates/Admin.tpl	4123898299	759522568	2099	2164
+modules/contactowner/templates/Contact.tpl	394408188	2300712990	3327	3405
+modules/contactowner/templates/Email.tpl	1625098934	832971239	233	240
+modules/contactowner/templates/Sent.tpl	1364423894	679324385	993	1017

@@ -1,0 +1,126 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2006 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Representation of a single event
+ *
+ * FIXME No controller This controller will handle the addition of an item as a children to
+ * another item.
+ *
+ * @g2 <class-name>CalendarEvent</class-name>
+ * @g2 <parent-class-name>GalleryChildEntity</parent-class-name>
+ * @g2 <schema>
+ * @g2   <schema-major>0</schema-major>
+ * @g2   <schema-minor>1</schema-minor>
+ * @g2 </schema>
+ * @g2 <requires-id/>
+ *
+ * @package Calendar
+ * @subpackage Classes
+ * @author Jack Bates <ms419@freezone.co.uk>
+ * @version $Revision: 1.3 $ $Date: 2006/04/06 04:22:12 $
+ */
+class CalendarEvent extends GalleryChildEntity {
+	/**
+	 * When this event starts
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>start</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2 </member>
+	 *
+	 * @var int
+	 * @access public
+	 */
+	public $start;
+
+	/**
+	 * When this event ends
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>end</member-name>
+	 * @g2   <member-type>INTEGER</member-type>
+	 * @g2 </member>
+	 *
+	 * @var int
+	 * @access public
+	 */
+	public $end;
+
+	/**
+	 * Summary of this event
+	 *
+	 * @g2 <member>
+	 * @g2   <member-name>summary</member-name>
+	 * @g2   <member-type>STRING</member-type>
+	 * @g2   <member-size>LARGE</member-size>
+	 * @g2 </member>
+	 *
+	 * @var string
+	 * @access public
+	 */
+	public $summary;
+
+	/**
+	 * @see GalleryEntity::itemTypeName
+	 */
+	public function itemTypeName($localized = true) {
+		if ($localized) {
+			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'calendar');
+
+			if (!$ret) {
+				return array($module->translate('Event'), $module->translate('event'));
+			}
+		}
+
+		return array('Event', 'event');
+	}
+
+	/**
+	 * @see GalleryEntity::getClassName
+	 */
+	public function getClassName() {
+		return 'CalendarEvent';
+	}
+
+	public function getStart() {
+		return $this->start;
+	}
+
+	public function setStart($start) {
+		$this->start = $start;
+	}
+
+	public function getEnd() {
+		return $this->end;
+	}
+
+	public function setEnd($end) {
+		$this->end = $end;
+	}
+
+	public function getSummary() {
+		return $this->summary;
+	}
+
+	public function setSummary($summary) {
+		$this->summary = $summary;
+	}
+}

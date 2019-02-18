@@ -1,0 +1,18 @@
+# $Revision: 1571 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/favourites/AddFavourite.inc	305727675	955260470	3656	3779
+modules/favourites/Callbacks.inc	1679603974	496103542	2208	2270
+modules/favourites/FavouritesAlbum.inc	2506643496	2770000212	6873	7074
+modules/favourites/FavouritesSiteAdmin.inc	2974000141	469272463	7050	7275
+modules/favourites/classes/FavouritesMapHelper.class	98011084	3215919625	6319	6550
+modules/favourites/classes/GNUmakefile	1995366819	843025639	51	52
+modules/favourites/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/favourites/classes/GalleryStorage/schema.tpl	1197639607	1733375703	2509	2597
+modules/favourites/classes/Maps.inc	1680682003	1988754036	317	321
+modules/favourites/classes/Maps.xml	948795396	624841484	623	648
+modules/favourites/getNames.inc	1989007876	1759585556	1917	1993
+modules/favourites/module.inc	1113715871	3893012764	7888	8139
+modules/favourites/templates/FavouritesNotify.tpl	2989572501	3575058689	1722	1780
+modules/favourites/templates/FavouritesSiteAdmin.tpl	2613382423	2573838311	4749	4880
+modules/favourites/templates/blocks/ShowTop10.tpl	1015250258	3029326507	1354	1387
+modules/favourites/templates/blocks/blocks.inc	2826597470	1439675918	1047	1077

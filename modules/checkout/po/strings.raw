@@ -1,0 +1,360 @@
+# $Id: strings.raw 1712 2009-01-12 10:15:12Z alecmyers $
+
+/* AdminOrder.inc */
+gettext("Checkout") /* also in: CheckoutItemEdit.inc Confirm.inc Select.inc module.inc templates/AdminOrder.tpl templates/Confirm.tpl templates/Select.tpl */
+
+/* CheckoutItemEdit.inc */
+gettext("Changes saved successfully")
+
+/* OrderStatus.inc */
+gettext("Order Status") /* also in: templates/OrderStatus.tpl templates/email/confirm.tpl templates/email/paid.tpl */
+
+/* module.inc */
+gettext("Shopping cart module supporting different products and payment")
+gettext("Commerce")
+gettext("[checkout] Purchase item")
+gettext("Standard")
+gettext("[checkout] Purchase album")
+gettext("Checkout Configuration")
+gettext("Checkout Orders")
+gettext("Add %s To Cart")
+gettext("View Cart")
+gettext("Admin Orders")
+
+/* classes/CheckoutTransactionEventHelper.class */
+gettext("Order No. %d Confirmed")
+gettext("Order No. %d Payment Received")
+gettext("Order No. %d Completed")
+gettext("Administrative Notification")
+gettext("Unable to send email to customer: customer's email address not recorded at this time.")
+
+/* templates/Admin.tpl */
+gettext("Checkout eCommerce Settings")
+gettext("Settings saved successfully")
+gettext("Business Information")
+gettext("Some basic details about your business, including its name, and the symbol of the currency in which you wish to price items.")
+gettext("You must also configure a currency formatting string (in sprintf format) such as %.2f for two decimal places or %d for integer. When entering prices use a decimal point - . - not a comma - , . The locale settings applicable when the page is viewed will determine which the user sees.")
+gettext("Business Name")
+gettext("Currency symbol to display in cart")
+gettext("Currency formatting string")
+gettext("Products and Prices")
+gettext("Enter details of the products you wish to sell. For instance '4x6 print - borderless', '8 x 10', 'printed cushion cover (20 inch)'.")
+gettext("Customers will be offered these products for the different images in your gallery.")
+gettext("Delete") /* also in: templates/AdminTransactions.tpl */
+gettext("Product Name")
+gettext("Price") /* also in: templates/CheckoutItemEdit.tpl templates/email/TransactionContents.tpl */
+gettext("Postage Band") /* also in: templates/CheckoutItemEdit.tpl */
+gettext("Display Position")
+gettext("Visible") /* also in: templates/CheckoutItemEdit.tpl */
+gettext("Applies to Album Items")
+gettext("Applies to Other Items")
+gettext("Option Set")
+gettext("Initial Quantity") /* also in: templates/CheckoutItemEdit.tpl */
+gettext("Quantity Limit") /* also in: templates/CheckoutItemEdit.tpl */
+gettext("Show in Dropdown")
+gettext("Description") /* also in: templates/CheckoutItemEdit.tpl */
+gettext("None") /* also in: templates/CheckoutItemEdit.tpl */
+gettext("Per-album / per-photo ('custom') settings")
+gettext("Prices and visibility for the products above can be overridden at a local level for each album or photograph (via the Checkout tab on its 'edit' page) if you enable it here.")
+gettext("Activate Custom Settings?")
+gettext("Option Sets")
+gettext("For products with a range of options (eg. matt paper or gloss paper) create multiple sets of options here - then assign one set to each product in the table above.")
+gettext("Number of Option Sets?")
+gettext("Default")
+gettext("Option %d")
+gettext("Postage options")
+gettext("Delivery prices can be set for different bands of products.")
+gettext("The band used for any order is that of the highest-banded product in the order.")
+gettext("Number of Postage Bands?")
+gettext("Postage rates by service and band. Different services might be for example 'letter post' and 'special delivery'.")
+gettext("Discounts")
+gettext("Enter details of discounts to be offered to customers.")
+gettext("Each discount marked as default (and optionally, a discount for which the customer enters a matching code) are checked against the order for the criteria listed - in priority order. The first such discount that matches is applied against the order.")
+gettext("Applies")
+gettext("Criteria")
+gettext("Discount") /* also in: templates/TransactionContents.tpl templates/email/TransactionContents.tpl */
+gettext("id") /* also in: templates/AdminTransactions.tpl */
+gettext("Priority")
+gettext("Entry Code")
+gettext("Minimum Value")
+gettext("Min. Images")
+gettext("Min. Products")
+gettext("Group")
+gettext("Value")
+gettext("Comp. Postage")
+gettext("Discount (coupon) codes")
+gettext("The customer can be given the opportunity to enter a special discount code, if you wish. If it matches a Code in the discounts table above, that discount will be assessed against the order and may be applied.")
+gettext("Ask for discount code?")
+gettext("Minimum Order Value")
+gettext("You have the option to reject any orders unless they meet a specified minimum order value (excluding postage costs).")
+gettext("If you're happy to accept orders of any value leave this setting blank.")
+gettext("Minimum Order Value?")
+gettext("Cart Display Options")
+gettext("When a user adds an item to their cart you can have them redirected to show the cart contents, or have them stay at the same page.")
+gettext("Send user to cart when adding items?")
+gettext("You may require purchasers to view and accept a page of terms and conditions before they may complete their order.")
+gettext("Insist user accepts Terms and Conditions?")
+gettext("T&amp;C's page link")
+gettext("You can display a paragraph of text with information about your services, products or other details on the cart page by including the text here.")
+gettext("Other Options")
+gettext("Checkout handles albums in either of two ways. Either as an individual items in their own right or alternatively as a collection of photos. If you treat albums as collections of images then adding an album to the cart adds each contained item instead.")
+gettext("Only products marked above as 'apply to Albums' will be offered for album items, and only products marked as 'Apply to Items' will be offered for non-album items such as photos.")
+gettext("Treat Albums as collections of contained images?")
+gettext("You can restrict the display of the Add to Cart option to the main item for the page (album/photo) or have it shown everywhere, for instance under thumbnails too.")
+gettext("Show 'Add to Cart' always?")
+gettext("Database Cleaning Options")
+gettext("Checkout creates a new transaction record every time the 'Continue to Checkout' button is used, even if the transaction is never finalised. These 'orphan' transaction records will be deleted after a period you can select here.")
+gettext("You can also set the time period after which other (completed and uncompleted) orders are purged from the database.")
+gettext("For either case, to keep the records indefinitely leave the box blank.")
+gettext("Remove orphan transactions older than (days):")
+gettext("Remove all other transactions older than (days):")
+gettext("Email Notification Options")
+gettext("List the email addresses to which you want order status notifications to be sent.")
+gettext("Also specify the content for each recipient. Admin messages are notices from payment plugins intended for the site administrator, and may not be suitable for receipt by customers.")
+gettext("If your server setup can translate to different languages, then you can select the language in which emails are sent. The 'customer's language' setting uses the language supplied to their browser at the time the order was confirmed.")
+gettext("Email Address") /* also in: templates/email/CustomerDetails.tpl */
+gettext("Customer information")
+gettext("Order Contents...")
+gettext("... with thumbnails...")
+gettext("... and hotlinks")
+gettext("Admin messages")
+gettext("Language")
+gettext(" Use the Customer's Provided Email Address")
+gettext("Customer's Language")
+gettext("Email address to send order status notifications from")
+gettext("Subject line to prefix to notification emails")
+gettext("Save Settings") /* also in: templates/CheckoutItemEdit.tpl */
+gettext("Cancel") /* also in: templates/CheckoutItemEdit.tpl */
+
+/* templates/AdminOrder.tpl */
+gettext("Order Administration")
+gettext("Order Number") /* also in: templates/OrderStatus.tpl */
+gettext("Date and Time")
+gettext("Order Processing")
+gettext("Order Moved to Cleared Status")
+gettext("Order Moved to Dispatched Status")
+gettext("A duplicate order confirmation email has been sent.")
+gettext("An administrative notification has been sent.")
+gettext("Re-confirm Order")
+gettext("Payment Cleared")
+gettext("Order Completed")
+gettext("Send Admin Notification")
+gettext("Any text entered here will be included with the notification emails.")
+gettext("Customer Details")
+gettext("First Name")
+gettext("Last Name")
+gettext("Recipient Name")
+gettext("Telephone") /* also in: templates/email/CustomerDetails.tpl */
+gettext("Address") /* also in: templates/email/CustomerDetails.tpl */
+gettext("Postal Code")
+gettext("Country") /* also in: templates/email/CustomerDetails.tpl */
+gettext("Email") /* also in: templates/email/CustomerDetails.tpl */
+gettext("Gallery Buyer Id")
+gettext("Payment Plugin")
+gettext("Save Changes") /* also in: templates/AdminSession.tpl templates/Select.tpl */
+gettext("Discard Changes") /* also in: templates/AdminSession.tpl */
+gettext("Delete Order")
+gettext("Changes Saved.")
+gettext("Name") /* also in: templates/email/CustomerDetails.tpl */
+gettext("Order No.")
+gettext("Edit")
+gettext("Customer Notes")
+gettext("Customer Comments")
+gettext("Customer Comments and Notes")
+
+/* templates/AdminSession.tpl */
+gettext("Cart Contents for Session ")
+gettext("user Name")
+gettext("Session Last Modified") /* also in: templates/AdminSessions.tpl */
+gettext("Session Created")
+gettext("IP address") /* also in: templates/AdminSessions.tpl */
+gettext("Last Transaction Id") /* also in: templates/AdminSessions.tpl */
+gettext("Last Return Url")
+gettext("Changes discarded.")
+gettext("Cart saved.")
+gettext("Cart cleared.")
+gettext("This cart is currently empty.")
+gettext("Cart Contents") /* also in: templates/AdminSessions.tpl */
+gettext("Empty Cart") /* also in: templates/Select.tpl */
+gettext("Add My Cart To This Cart")
+gettext("Return to Sessions List")
+
+/* templates/AdminSessions.tpl */
+gettext("There are no carts stored.")
+gettext("Session Id")
+gettext("user")
+gettext("Items")
+
+/* templates/AdminTransactions.tpl */
+gettext("Orders")
+gettext("Order(s) successfully deleted.")
+gettext("There are no orders.")
+gettext("&laquo; first")
+gettext("&laquo; back")
+gettext("Viewing page %d of %d")
+gettext("next &raquo;")
+gettext("last &raquo;")
+gettext("date")
+gettext("buyer")
+gettext("userId")
+gettext("recipient")
+gettext("host")
+gettext("payment method")
+gettext("total")
+gettext("status")
+gettext("problem")
+gettext("hold")
+gettext("completed")
+gettext("fulfilled")
+gettext("payment cleared")
+gettext("paid")
+gettext("unpaid")
+gettext("Delete Selected Orders")
+gettext("Delete Some Orders...")
+gettext("Show Current Sessions")
+
+/* templates/CheckoutItemEdit.tpl */
+gettext("Custom Product Settings")
+gettext("This is the root album, settings here can apply to everything in your Gallery.")
+gettext("Values set here take precedence over global settings and settings in parent albums, and will apply to child albums and photos unless overriden there.")
+gettext("If a product already has any local settings you can modify them, or erase them all by ticking the Erase box.")
+gettext("Root Name")
+gettext("Local Name")
+gettext("Erase All Local Settings")
+gettext("Offer this Item as an Accessory")
+gettext("Setting Accessory Options means this item will appear every time the cart contents are shown, with the customer given the chance to enter a quantity against each option you list here.")
+gettext("For example, if this item was a 30cm by 50cm picture frame, the options you list here might be the colours in which you stock it.")
+gettext("Option")
+gettext("Display Order")
+gettext("The display priority determines in which order the possibly many accessory items in your gallery are offered on the checkout page. Smaller values appear higher up the page.")
+gettext("Display priority for this item:")
+
+/* templates/Confirm.tpl */
+gettext("Step 2 - Confirm your selection")
+gettext("Take a moment to make sure the contents of your order are correct, then please proceed to the payment stage.")
+gettext("Modify Order")
+gettext("Continue Shopping") /* also in: templates/Select.tpl */
+gettext("Payment Options")
+gettext("By continuing you confirm that you have read and agree to the")
+gettext("Terms and Conditions")
+gettext("Order already submitted.")
+gettext("This order has already been recorded. If you want to place another order, please use the 'Continue Shopping' button.")
+
+/* templates/OrderStatus.tpl */
+gettext("Site Admins Only")
+gettext("Order Administration Page")
+gettext("Order Cancelled.")
+gettext("The order process was halted, but your cart has not been emptied.")
+gettext("Your order is confirmed.")
+gettext("Thank you very much for placing this order. You can bookmark this page and return to it to track progress of the order, and we'll also send you an email when the order status changes.")
+gettext("Order Already Placed")
+gettext("This order has already been placed. You can see its status on this page.")
+gettext("Continue shopping") /* also in: templates/Select.tpl */
+
+/* templates/Select.tpl */
+gettext("Step 1 - Adjust products and quantities")
+gettext("Remove items or adjust quantities here, then continue on to confirm your order.")
+gettext("Your cart is currently empty.")
+gettext("Continue to Checkout")
+
+/* templates/SessionContents.tpl */
+gettext("Order Contents") /* also in: templates/TransactionContents.tpl */
+gettext("Remove")
+gettext("Item") /* also in: templates/TransactionContents.tpl */
+gettext("Info") /* also in: templates/TransactionContents.tpl templates/email/TransactionContents.tpl */
+gettext("Product - Price - Quantity") /* also in: templates/TransactionContents.tpl */
+gettext("You must set a quantity for at least one item before continuing")
+gettext("Please confirm your option selections.")
+gettext("Your order doesn't reach the minimum value required.")
+gettext("No thumbnail") /* also in: templates/blocks/ShowCart.tpl templates/email/TransactionContents.tpl */
+gettext("Title") /* also in: templates/email/TransactionContents.tpl */
+gettext("Album")
+gettext("Summary")
+gettext("There are no products available for this item.")
+gettext("(Select A Product)")
+gettext("Accessory Items")
+gettext("No picture available")
+gettext("There are no options available for this item.")
+gettext("Other Information")
+gettext("If you have a discount code, enter it here: ")
+gettext("Your order requires postage.")
+gettext("Please confirm your selection.")
+gettext("Choose a Postage, Packing &amp; Delivery option:")
+gettext("(Choose a Postage and Delivery Option)")
+gettext("from")
+gettext("If you have special instructions enter them here:")
+
+/* templates/StatusInfo.tpl */
+gettext("The status of this order is as follows:")
+gettext("There is a problem with this order. Please contact us for details.") /* also in: templates/email/StatusInfo.tpl */
+gettext("There order has been placed on hold. Please contact us for details.") /* also in: templates/email/StatusInfo.tpl */
+gettext("Completed")
+gettext("Payment cleared")
+gettext("Payment received")
+gettext("Order confirmed")
+gettext("Order recorded")
+
+/* templates/TransactionContents.tpl */
+gettext("Subtotal") /* also in: templates/email/TransactionContents.tpl */
+gettext("No image available")
+gettext("Postage and Packing") /* also in: templates/email/TransactionContents.tpl */
+gettext("Total") /* also in: templates/email/TransactionContents.tpl */
+gettext("Special Instructions")
+
+/* templates/blocks/ItemPrices.tpl */
+gettext("Prices")
+
+/* templates/blocks/ShowCart.tpl */
+gettext("Item(s) added OK")
+ngettext("You have the following item in your shopping cart:", "You have the following %d items in your cart:")
+gettext("View and adjust quantities and complete your order here.")
+gettext("Your shopping cart is empty.")
+
+/* templates/blocks/blocks.inc */
+gettext("Shopping Cart Info")
+gettext("Product Price Info")
+
+/* templates/email/CustomerDetails.tpl */
+gettext("Customer")
+gettext("Recipient")
+gettext("Zip")
+gettext("Comments")
+gettext("Recipient's Name")
+gettext("Postal Address")
+gettext("Postal/Zip Code")
+
+/* templates/email/StatusInfo.tpl */
+gettext("Order Status:")
+gettext("This order has been completed.")
+gettext("Payment for this order has cleared, and it is being processed.")
+gettext("Payment has been received, and we are waiting for it to clear.")
+gettext("We are waiting for payment for this order.")
+
+/* templates/email/TransactionContents.tpl */
+gettext("Qty")
+gettext("of")
+gettext("each")
+gettext("Notes")
+gettext("Photo")
+gettext("Product")
+gettext("Quantity")
+
+/* templates/email/completed.tpl */
+gettext("Order Number:") /* also in: templates/email/confirm.tpl templates/email/paid.tpl */
+gettext("This is an email to let you know your order has been completed.")
+gettext("The prints you ordered will be delivered shortly. Many thanks!")
+gettext("Order information") /* also in: templates/email/confirm.tpl templates/email/paid.tpl */
+
+/* templates/email/confirm.tpl */
+gettext("Thank You!")
+gettext("This is an email to let you know your order has been successfully placed.")
+gettext("You can check the status of this order any time, at this location: ") /* also in: templates/email/paid.tpl */
+gettext("This is an email to let you know your order has been placed successfully.")
+gettext("You can check the status of this order any time here:") /* also in: templates/email/paid.tpl */
+
+/* templates/email/notify.tpl */
+gettext("Administrative Notification:")
+gettext("You can check the status of this order any time at this location:")
+
+/* templates/email/paid.tpl */
+gettext("Payment for this order has been received and it is being processed.")

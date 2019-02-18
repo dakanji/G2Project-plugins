@@ -1,0 +1,280 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2009 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');/**
+ * @package TagTree
+ * @author Chad Parry <spam@chad.parry.org>
+ * @version $Revision: 1733 $
+ */
+class HierarchyTagFilter {
+	public function fetchMatchingHierarchies($parentHierarchy, $tags, $aclIds, $onlyAlbums) {
+		global $gallery;
+
+		$streams = array();
+
+		foreach ($tags as $tagId) {
+			list($ret, $stream) = HierarchyTagFilter::getStreamForTag($parentHierarchy, $tagId, $aclIds);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$streams[] = $stream;
+		}
+
+		list($ret, $streams[]) = HierarchyTagFilter::getStreamForAlbum($parentHierarchy, $aclIds, $onlyAlbums);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$rootHierarchies = array();
+
+		while (count(array_filter($streams, array('HierarchyTagFilter', 'hierarchyStreamIsEmpty'))) == 0) {
+			usort($streams, array('HierarchyTagFilter', 'compareStreams'));
+
+			$isMatch       = true;
+			$lastHierarchy = null;
+
+			foreach ($streams as $stream) {
+				$hierarchy = $stream->getFront();
+
+				if ($lastHierarchy) {
+					$isMatch = $isMatch && HierarchyTagFilter::isAncestor($hierarchy, $lastHierarchy);
+				}
+				$lastHierarchy = $hierarchy;
+			}
+
+			$deepestHierarchyStream = $streams[0];
+
+			if ($isMatch) {
+				$rootHierarchies[] = $deepestHierarchyStream->getFront();
+			}
+			$deepestHierarchyStream->advance();
+		}
+
+		return array(null, $rootHierarchies);
+	}
+
+	public function getStreamForTag($hierarchy, $tagId, $aclIds) {
+		global $gallery;
+
+		$aclMarkers = empty($aclIds) ? 'NULL' : GalleryUtilities::makeMarkers($aclIds);
+
+		$query = sprintf(
+			'
+    SELECT
+      [GalleryItemAttributesMap::parentSequence], [GalleryItemAttributesMap::itemId]
+    FROM
+      [GalleryItemAttributesMap], [GalleryTagItemMap], [GalleryAccessSubscriberMap]
+    WHERE
+      [GalleryTagItemMap::tagId] = ?
+    AND
+      [GalleryTagItemMap::itemId] = [GalleryItemAttributesMap::itemId]
+    AND
+      [GalleryAccessSubscriberMap::itemId] = [GalleryItemAttributesMap::itemId]
+    AND
+      [GalleryItemAttributesMap::parentSequence] LIKE ?
+    AND
+      [GalleryAccessSubscriberMap::accessListId] IN (%s)
+    ORDER BY
+      BINARY [GalleryItemAttributesMap::parentSequence],
+      BINARY [GalleryItemAttributesMap::itemId]
+    ',
+			$aclMarkers
+		);
+
+		$data   = array();
+		$data[] = $tagId;
+		$data[] = TagTreeHelper::getParentSequenceFromHierarchy($hierarchy) . '%';
+		$data   = array_merge($data, $aclIds);
+
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$stream = new ParentSequenceHierarchyStream($searchResults);
+
+		return array(null, $stream);
+	}
+
+	public function getStreamForAlbum($hierarchy, $aclIds, $onlyAlbums) {
+		global $gallery;
+
+		$aclMarkers     = empty($aclIds) ? 'NULL' : GalleryUtilities::makeMarkers($aclIds);
+		$albumTable     = $onlyAlbums ? ', [GalleryAlbumItem]' : '';
+		$albumCondition = $onlyAlbums ? '[GalleryAlbumItem::id] = [GalleryChildEntity::id] AND ' : '';
+
+		$query = sprintf(
+			'
+    SELECT
+      [GalleryChildEntity::id]
+    FROM
+      [GalleryChildEntity], [GalleryAccessSubscriberMap]
+      %s
+    WHERE
+      %s
+      [GalleryChildEntity::parentId] = ?
+    AND
+      [GalleryAccessSubscriberMap::itemId] = [GalleryChildEntity::id]
+    AND
+      [GalleryAccessSubscriberMap::accessListId] IN (%s)
+    ORDER BY
+      BINARY [GalleryChildEntity::id]
+    ',
+			$albumTable,
+			$albumCondition,
+			$aclMarkers
+		);
+
+		$data   = array();
+		$data[] = $hierarchy[count($hierarchy) - 1];
+		$data   = array_merge($data, $aclIds);
+
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$stream = new AlbumChildHierarchyStream($searchResults, $hierarchy);
+
+		return array(null, $stream);
+	}
+
+	public function isAncestor($leftHierarchy, $rightHierarchy) {
+		return count($leftHierarchy) <= count($rightHierarchy) &&
+		$leftHierarchy == array_slice($rightHierarchy, 0, count($leftHierarchy));
+	}
+
+	// Comparison of the hierarchy arrays at the front of each stream.
+	public function compareStreams($leftStream, $rightStream) {
+		$leftHierarchy  = $leftStream->getFront();
+		$rightHierarchy = $rightStream->getFront();
+
+		return HierarchyTagFilter::compareHierarchies($leftHierarchy, $rightHierarchy);
+	}
+
+	// Lexicographical comparison of the hierarchy arrays, with two exceptions:
+	// 1. Each element is compared as a string, because that's how the database originally sorted them.
+	// 2. When one array is a prefix of the other, the longer one is reported to be first.
+	// In other words, siblings are sorted as strings, and descendants come before ancestors.
+	public function compareHierarchies($leftHierarchy, $rightHierarchy) {
+		$minLength = min(count($leftHierarchy), count($rightHierarchy));
+
+		for ($i = 0; $i < $minLength; $i++) {
+			$cmp = strcmp($leftHierarchy[$i], $rightHierarchy[$i]);
+
+			if ($cmp) {
+				return $cmp;
+			}
+		}
+
+		return count($rightHierarchy) - count($leftHierarchy);
+	}
+
+	public function hierarchyStreamIsEmpty($stream) {
+		return $stream->isEmpty();
+	}
+}
+
+class HierarchyStream {
+	public function isEmpty() {
+		exit('Method is abstract');
+	}
+
+	public function getFront() {
+		exit('Method is abstract');
+	}
+
+	public function advance() {
+		exit('Method is abstract');
+	}
+}
+
+class AlbumChildHierarchyStream extends HierarchyStream {
+	public $searchResults;
+	public $parentHierarchy;
+	public $isEmpty = false;
+	public $front;
+
+	public function __construct($searchResults, $parentHierarchy) {
+		$this->searchResults   = $searchResults;
+		$this->parentHierarchy = $parentHierarchy;
+		$this->advance();
+	}
+
+	public function isEmpty() {
+		return $this->isEmpty;
+	}
+
+	public function getFront() {
+		return $this->front;
+	}
+
+	public function advance() {
+		$result = $this->searchResults->nextResult();
+
+		if ($result) {
+			$itemId      = $result[0];
+			$this->front = array_merge($this->parentHierarchy, array($itemId));
+		} else {
+			$this->isEmpty = true;
+		}
+	}
+}
+
+class ParentSequenceHierarchyStream extends HierarchyStream {
+	public $searchResults;
+	public $isEmpty = false;
+	public $front;
+
+	public function __construct($searchResults) {
+		$this->searchResults = $searchResults;
+		$this->advance();
+	}
+
+	public function isEmpty() {
+		return $this->isEmpty;
+	}
+
+	public function getFront() {
+		return $this->front;
+	}
+
+	public function advance() {
+		$popped = $this->front;
+
+		do {
+			$result = $this->searchResults->nextResult();
+
+			if ($result) {
+				$parentSequence = $result[0];
+				$albumId        = $result[1];
+				$this->front    = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
+			} else {
+				$this->isEmpty = true;
+			}
+			// The nature of a hierarchy stream is that once we have seen one ancestor, we don't need
+			// to see any of the descendants.
+		} while (!$this->isEmpty && isset($popped) && HierarchyTagFilter::isAncestor($popped, $this->front));
+	}
+}

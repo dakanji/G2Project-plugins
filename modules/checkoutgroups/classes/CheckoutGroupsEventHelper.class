@@ -1,0 +1,99 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package CheckoutGroups
+ * @version $Revision: 1644 $
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+
+
+/**
+ * A helper class to handle events
+ * events are posted by payment plugins
+ * to update customer details, and to signal order status changes
+ * @package CheckoutGroups
+ * @subpackage Classes
+ */
+class CheckoutGroupsEventHelper {
+	/**
+	 * Take action when order status changes
+	 *
+	 * @param event
+	 * @return object GalleryStatus a status code
+	 */
+	public function handleTransactionChange(&$event) {
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
+		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+		global $gallery;
+		$transaction = $event->getEntity(); // =, or =& ??
+		$data        = $event->getData();
+
+		$transactionId = $transaction->getId();
+		$data          = $event->getData();
+
+		if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+		}
+
+		if ($data['type'] == 'clear') {
+			// payment cleared, add user to groups
+			// get the purchaser's userId
+			$userId           = $transaction->getBuyerId();
+			list($ret, $anon) = GalleryCoreApi::isAnonymousUser($userId);
+
+			if ($ret) {
+				return $ret;
+			}
+
+			if (!$anon) {
+				// load items and products from the transaction
+				list($ret, $items) = CheckoutTransactionHelper::fetchFullTransactionItems($transactionId);
+
+				if ($ret) {
+					return $ret;
+				}
+				// $item.itemId and $item.product are the two things we need
+				foreach ($items as $item) {
+					list($ret, $products) = CheckoutProductMapHelper::fetchProducts($item['itemId'], true, true);
+
+					if ($ret) {
+						return $ret;
+					}
+
+					foreach ($products as $product) {
+						if ($product['productId'] == $item['product'] && isset($product['groupId'])) {
+							// matches one from order
+							$ret = galleryCoreApi::addUserToGroup($userId, $product['groupId']);
+
+							if ($ret) {
+								return $ret;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+}

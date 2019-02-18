@@ -1,0 +1,75 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2006 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('lib/adodb/adodb.inc.php');
+
+/**
+ * A helper class for the CmMigrate module.
+ * @package CmMigrate
+ * @subpackage Classes
+ * @author David Angier <david@angier.co.uk>
+ * @version $Revision: 847 $
+ */
+class CmMigrateHelper {
+	/**
+	 * configPath derives the path to the Coppermine configuration file from the
+	 * Coppermine base installation directory
+	 *
+	 * @param  string $baseDir The path to the Coppermine install directory
+	 * @return string The path to the config file
+	 */
+	public function configPath($baseDir) {
+		global $gallery;
+
+		$platform =& $gallery->getPlatform();
+		$slash    = $platform->getDirectorySeparator();
+		$tmp      = trim($baseDir);
+
+		if ($tmp[strlen($tmp) - 1] != $slash) {
+			$tmp .= $slash;
+		}
+
+		return $baseDir . $slash . 'include' . $slash . 'config.inc.php';
+	}
+
+	/**
+	 * isValidCopperminePath determines whether the proposed path is likely to be
+	 * a Coppermine base installation directory.
+	 *
+	 * @param  string $baseDir The path to be tested
+	 * @return bool
+	 */
+	public function isValidCopperminePath($baseDir) {
+		global $gallery;
+		$platform =& $gallery->getPlatform();
+
+		if (!$platform->is_dir($baseDir)) {
+			return false;
+		}
+
+		$configpath = CmMigrateHelper::configPath($baseDir);
+
+		if (!$platform->is_file($configpath)) {
+			return false;
+		}
+
+		return true;
+	}
+}

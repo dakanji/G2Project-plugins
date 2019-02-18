@@ -1,0 +1,186 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/search/classes/GallerySearchInterface_1_0.class');
+
+/**
+ * This is an implementation of the search module's SearchInterface_1_0
+ * @package Tags
+ * @subpackage Classes
+ * @author Eric Daniel <ehdaniel@gmail.com>
+ * @version $Revision: 1060 $
+ */
+class TagsSearch extends GallerySearchInterface_1_0 {
+	/**
+	 * @see GallerySearchInterface_1_0::getSearchModuleInfo
+	 */
+	public function getSearchModuleInfo() {
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'tags');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$info = array(
+			'name'        => $module->translate('Tags'),
+			'description' => $module->translate('Tags Module'),
+			'options'     => array(
+				'tags' => array(
+					'description' => $module->translate('Search Tags'),
+					'enabled'     => 1,
+				),
+			),
+		);
+
+		return array(null, $info);
+	}
+
+	/**
+	 * @see GallerySearchInterface_1_0::search
+	 */
+	public function search($options, $criteria, $offset = 0, $count = -1) {
+		global $gallery;
+		$storage =& $gallery->getStorage();
+
+		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds(
+			'core.view',
+			$gallery->getActiveUserId()
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (empty($aclIds)) {
+			return array(
+				null,
+				array(
+					'start'   => 0,
+					'end'     => '0',
+					'count'   => 0,
+					'results' => array(),
+				),
+			);
+		}
+
+		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
+		$countQuery = sprintf(
+			'
+	SELECT
+	  COUNT([DataItem::id])
+	FROM
+	  [DataItem], [TagMap], [TagItemMap], [GalleryAccessSubscriberMap]
+	WHERE
+	  [DataItem::id] = [TagItemMap::itemId]
+	  AND
+	  [DataItem::id] = [GalleryAccessSubscriberMap::itemId]
+	  AND
+	  [TagMap::tagId] = [TagItemMap::tagId]
+	  AND
+	  [GalleryAccessSubscriberMap::accessListId] IN (%s)
+	  AND
+	  [TagMap::tagName] LIKE ?
+	',
+			$aclMarkers
+		);
+
+		$query = sprintf(
+			'
+	SELECT
+	  [TagMap::tagName],
+	  [DataItem::id]
+	FROM
+	  [DataItem], [TagMap], [TagItemMap], [GalleryAccessSubscriberMap]
+	WHERE
+	  [DataItem::id] = [TagItemMap::itemId]
+	  AND
+	  [TagMap::tagId] = [TagItemMap::tagId]
+	  AND
+	  [DataItem::id] = [GalleryAccessSubscriberMap::itemId]
+	  AND
+	  [GalleryAccessSubscriberMap::accessListId] IN (%s)
+	  AND
+	  [TagMap::tagName] LIKE ?
+	ORDER BY
+	  [DataItem::id] DESC
+	',
+			$aclMarkers
+		);
+
+		$data   = $aclIds;
+		$data[] = '%' . $criteria . '%';
+
+		// Find the total
+		list($ret, $results) = $gallery->search($countQuery, $data);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$result  = $results->nextResult();
+		$numRows = (int)$result[0];
+
+		list($ret, $results) = $gallery->search(
+			$query,
+			$data,
+			array(
+				'limit' => array(
+					'offset' => $offset,
+					'count'  => $count,
+				),
+			)
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'tags');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$tagNameText = $module->translate('Tag Name');
+
+		$searchResults = array();
+
+		while ($result = $results->nextResult()) {
+			$fields   = array();
+			$fields[] = array(
+				'key'   => $tagNameText,
+				'value' => $result[0],
+			);
+
+			$searchResults[] = array(
+				'itemId' => (int)$result[1],
+				'fields' => $fields,
+			);
+		}
+
+		$data = array(
+			'start'   => $numRows == 0 ? 0 : $offset + 1,
+			'end'     => $numRows == 0 ? 0 : $offset + sizeof($searchResults),
+			'count'   => $numRows,
+			'results' => $searchResults,
+		);
+
+		return array(null, $data);
+	}
+}

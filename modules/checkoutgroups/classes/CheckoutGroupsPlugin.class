@@ -1,0 +1,92 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @version $Revision: 1644 $
+ * @package CheckoutGroups
+ * @subpackage Classes
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * Required classes
+ */
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+
+/**
+ * This is an implementation of the checkout module's CheckoutCustomPageInterface_1_0
+ *
+ * @package CheckoutGroups
+ * @subpackage Classes
+ */
+class CheckoutGroupsPlugin extends CheckoutCustomPageInterface_1_0 {
+	/**
+	 * @see CheckoutCustomPageInterface_1_0::getCustomPageTemplate()
+	 */
+	public function getCustomPageTemplate() {
+		return array(null, 'modules/checkoutgroups/templates/GroupProducts.tpl', 'modules_checkoutgroups');
+	}
+
+	/**
+	 * @see CheckoutCustomPageInterface_1_0::setupCustomPageTemplate(&$template, &$form, $item, $thumbnail)
+	 */
+	public function loadTemplate(&$template, &$form, $item, $thumbnail) {
+		list($ret, $groups) = GalleryCoreApi::fetchGroupNames();
+
+		if ($ret) {
+			return $ret;
+		}
+		$template->setVariable('groups', $groups);
+
+		return null;
+	}
+
+	/**
+	 * @see CheckoutCustomPageInterface_1_0::processCustomPageTemplate($itemId,&$form)
+	 */
+	public function handleRequest($form, &$item, &$preferred) {
+		foreach ($form['checkoutGroups'] as $productId => $productParameters) {
+			$itemId = $item->getId();
+			// annoying that there's no return value from unticked checkbox
+			if (!isset($productParameters['groupHideAnonymous'])) {
+				$productParameters['groupHideAnonymous'] = '';
+			}
+
+			foreach ($productParameters as $paramName => $paramValue) {
+				if ($paramValue != '') {
+					$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $itemId);
+
+					if ($ret) {
+						return array($ret, null, null); // ... error and status
+					}
+				} else {
+					$ret = CheckoutProductMapHelper::deleteParam($productId, $paramName, $paramValue, $itemId);
+
+					if ($ret) {
+						return array($ret, null, null); // ... error and status
+					}
+				}
+			}
+		}
+
+		return array(null, null, null);
+	}
+}

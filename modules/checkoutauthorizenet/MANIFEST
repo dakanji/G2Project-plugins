@@ -1,0 +1,14 @@
+# $Revision: 1201 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/checkoutauthorizenet/Admin.inc	3195718306	1321502555	8793	9020
+modules/checkoutauthorizenet/Confirmation.inc	3820818364	2477926241	6374	6521
+modules/checkoutauthorizenet/Details.inc	3948001723	877733370	11169	11432
+modules/checkoutauthorizenet/classes/AuthorizeNetAim.class	300980110	888522097	8759	9057
+modules/checkoutauthorizenet/classes/CheckoutAuthorizeNetPlugin.class	1155552655	3166587844	3065	3158
+modules/checkoutauthorizenet/classes/GalleryAuthorizeNet.class	1476990269	415778464	4850	5018
+modules/checkoutauthorizenet/module.inc	3851919478	1856260970	3391	3506
+modules/checkoutauthorizenet/templates/Admin.tpl	203843289	1764716920	4667	4807
+modules/checkoutauthorizenet/templates/Confirmation.tpl	1166446877	4070216345	568	582
+modules/checkoutauthorizenet/templates/ConfirmationEmail.tpl	1559255903	2957782033	6775	7007
+modules/checkoutauthorizenet/templates/Details.tpl	310457243	3236315477	11141	11471
+modules/checkoutauthorizenet/templates/PaymentButton.tpl	3456278994	4293971036	275	279

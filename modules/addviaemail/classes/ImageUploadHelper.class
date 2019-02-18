@@ -1,0 +1,203 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Static helper methods for use by AddvieEmail views and controllers.
+ *
+ * @package AddviaEmail
+ * @subpackage Helpers
+ * @author Brian Janice <cobalt027@users.sourceforge.net>
+ * @version $Revision: 898 $
+ */
+class ImageUploadHelper {
+	/**
+	 * Upload a picture to Gallery from an email.
+	 *
+	 * Returns the available space on the server after the upload. Currently this
+	 * value is (a random) 10 000 000 bytes.
+	 * @return array ('success', 'spaceleft')
+	 */
+	public function doUpload() {
+		global $gallery;
+		$gallery->debug('### UploadHelper ###');
+
+		// Default status. Changes only if everything works out.
+		$status = array(
+			'success' => NOKIAUPLOAD_ERR_UNKNOWN,
+		);
+
+		/*
+		 * We must specify how many bytes are still available for the current user.
+		 * Use a big (random) number or define a real limit if you wish.
+		 * (I don't know what the phone does with this value, probably nothing.)
+		 */
+		$status['spaceleft'] = 10000000;
+
+		// Mandatory: ImageData
+		$file = GalleryUtilities::getFile('ImageData', false);
+
+		// Mandatory: Filename, MimeType, DirId   Optional: Caption, Desc, Source, Keyword
+		// TODO consider including Source, Keyword in the description
+		list($itemName, $mimeType, $albumId, $summary, $description) = GalleryUtilities::getRequestVariablesNoPrefix(
+			'Filename',
+			'MimeType',
+			'DirId',
+			'Caption',
+			'Desc'
+		);
+
+		if (empty($file) || empty($itemName) || empty($mimeType)
+			|| empty($albumId) || !is_numeric($albumId)
+		) {
+			$gallery->debug('ERROR: Missing required parameter.');
+
+			return $status;
+		}
+
+		if ($file['size'] == 0 || $file['tmp_name'] == 'none') {
+			$gallery->debug('ERROR: File is too big.');
+			$status['success'] = NOKIAUPLOAD_ERR_TOOBIG;
+
+			return $status;
+		}
+
+		// Do we have permission to add pictures to this album?
+		$ret = GalleryCoreApi::assertHasItemPermission($albumId, 'core.addDataItem');
+
+		if (!$ret) {
+			// Get lock to album.
+			list($ret, $lockId) = GalleryCoreApi::acquireReadLock($albumId);
+
+			if (!$ret) {
+				$title               = GalleryUtilities::getFileBase($itemName);
+				list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
+					$file['tmp_name'],
+					$itemName,
+					$title,
+					$summary,
+					$description,
+					$mimeType,
+					$albumId
+				);
+
+				if (!$ret) {
+					$status['success'] = NOKIAUPLOAD_ERR_NOERR;
+
+					$ret = GalleryCoreApi::addUserPermission(
+						$newItem->getId(),
+						$newItem->getOwnerId(),
+						'core.all',
+						false
+					);
+
+					if ($ret) {
+						$gallery->debug(
+							'ERROR: CoreApi::addUserPermission failed, but item was added.'
+						);
+					}
+
+					GalleryCoreApi::releaseLocks($lockId);
+				}
+			}
+		}
+
+		// If there was an error at some point write that to log.
+		if ($ret) {
+			$gallery->debug(
+				"ERROR: Something went wrong while trying to add new item.\n"
+				. $ret->getAsText()
+			);
+		}
+
+		return $status;
+	}
+
+	/*
+	 * Create new album for uploading images.
+	 *
+	 * @param string title for album
+	 * @param int id of parent album
+	 * @return object GalleryStatus a status code
+	 *         int id of the upload album
+	 */
+	public function createUploadAlbum($title, $parentId, $ownerId) {
+		global $gallery;
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'addviaemail');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+
+		$albumName        = 'photos-from-email';
+		$albumSummary     = 'This is the email album sumary';
+		$albumDescription = 'This is the email album description';
+
+
+		list($ret, $album) = GalleryCoreApi::createAlbum(
+			$parentId,
+			$albumName,
+			$title,
+			$albumSummary,
+			$albumDescription,
+			''
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($album->getId());
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$album->setOwnerId($ownerId);
+		$ret = $album->save();
+
+		if ($ret) {
+			GalleryCoreApi::releaseLocks($lockId);
+
+			return $ret;
+		}
+		GalleryCoreApi::releaseLocks($lockId);
+
+		return array(null, $album->getId());
+	}
+
+	/**
+	 * Write the contents of _POST and _GET to debug log.
+	 *
+	 * @param string optional message
+	 * @static
+	 */
+	public function logRequest($message = '') {
+		global $gallery;
+
+		if ($gallery->getDebug()) {
+			$gallery->debug("##### $message ### " . strftime('%Y-%m-%d %T') . ' #####');
+			$gallery->debug('POST is: ');
+			$gallery->debug_r($_POST);
+			$gallery->debug('GET is: ');
+			$gallery->debug_r($_GET);
+		}
+	}
+}

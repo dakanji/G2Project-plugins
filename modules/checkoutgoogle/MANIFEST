@@ -1,0 +1,25 @@
+# $Revision: 1913 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/checkoutgoogle/Admin.inc	2920475221	2907982260	6997	7198
+modules/checkoutgoogle/HttpAuthWorks.inc	3944176031	176426192	1505	1551
+modules/checkoutgoogle/Response.inc	120677396	1151067259	9567	9798
+modules/checkoutgoogle/SendData.inc	3183018801	511818497	7381	7575
+modules/checkoutgoogle/classes/CheckoutGoogleEmailPlugin.class	1680935398	876261025	1831	1890
+modules/checkoutgoogle/classes/CheckoutGoogleEventHelper.class	520986907	2518728407	3043	3130
+modules/checkoutgoogle/classes/CheckoutGooglePaymentPlugin.class	3329247867	3323536376	2516	2597
+modules/checkoutgoogle/classes/CheckoutGoogleResponseHelper.class	1011599209	923867560	9187	9448
+modules/checkoutgoogle/classes/GNUmakefile	1995366819	843025639	51	52
+modules/checkoutgoogle/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/checkoutgoogle/classes/GalleryStorage/schema.tpl	1818658424	2027689607	6602	6797
+modules/checkoutgoogle/classes/GalleryStorage/tmp/dbxml/CheckoutGoogleOrderMap.xml	4279038725	1590133623	1005	1039
+modules/checkoutgoogle/classes/GalleryStorage/tmp/dbxml/CheckoutGoogleResponseMap.xml	3467467652	995659746	750	775
+modules/checkoutgoogle/classes/Maps.inc	2244032470	3428823041	666	671
+modules/checkoutgoogle/classes/Maps.xml	4206278891	4290142051	1280	1329
+modules/checkoutgoogle/images/Thumbs.db	901819322	901819322	5120	5120
+modules/checkoutgoogle/images/logo_ccMC.gif	2773355514	2773355514	808	808
+modules/checkoutgoogle/images/logo_ccVisa.gif	900831108	900831108	335	335
+modules/checkoutgoogle/lib/gc_xmlparser.php	2308896525	75766893	5882	6084
+modules/checkoutgoogle/module.inc	1214941099	3021827166	9013	9303
+modules/checkoutgoogle/templates/Admin.tpl	2092070376	1988807768	6184	6306
+modules/checkoutgoogle/templates/Payment.tpl	1296862547	3473144133	1461	1486
+modules/checkoutgoogle/templates/email/paid.tpl	4162637911	1160641869	343	358

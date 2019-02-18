@@ -1,0 +1,190 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/core/AdminMaintenance.inc');
+GalleryCoreApi::requireOnce('modules/mranalysis/classes/KeywordAnalysis.class');
+GalleryCoreApi::requireOnce('modules/mranalysis/classes/ItemList.class');
+
+/**
+ * @package MRAnalysis
+ * @author Mark Ridgwell <g2development@markridgwell.com>
+ */
+class AddMissingKeywordsTask extends MaintenanceTask {
+	/**
+	 * @see MaintenanceTask::getInfo
+	 */
+	public function getInfo() {
+		global $gallery;
+
+		return array(
+			'l10Domain'   => 'modules_mranalysis',
+			'title'       => $gallery->i18n('Keyword Analysis: Add missing Keywords'),
+			'description' => $gallery->i18n(
+				'Adds missing keywords to items (where they can be added automatically).'
+			),
+		);
+	}
+
+	/**
+	 * @see MaintenanceTask::run
+	 */
+	public function run() {
+		global $gallery;
+		$templateAdapter =& $gallery->getTemplateAdapter();
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'mranalysis');
+
+		if ($ret) {
+			return array($ret, null, null);
+		}
+
+		$templateAdapter->updateProgressBar(
+			$module->translate('Keyword Analysis: Add missing Keywords'),
+			'',
+			0
+		);
+
+
+
+		$items = KeywordAnalysis::get_item_list();
+
+
+		$result = array();
+
+		$i             = 0;
+		$keywordsadded = 0;
+		$itemschanged  = 0;
+		$total         = count($items);
+		$gallery->guaranteeTimeLimit(120);
+
+		foreach ($items as $dataitem) {
+			$item = $dataitem['item'];
+
+			$typos = $dataitem['typo'];
+
+			$missingkeywords = $dataitem['missing'];
+
+			//print '<br>' . $item->getTitle();
+			$itemid = $item->getId();
+
+			$itemchanged = false;
+
+			$keywordsadded_to_this_item = array();
+
+			foreach ($missingkeywords as $sourcekeyword => $changes) {
+				foreach ($changes as $keyword => $canset) {
+					if ($canset && !in_array($keyword, $keywordsadded_to_this_item)) {
+						//print '<br>-----' . $keyword;
+						//print '<br>-----' . $canset;
+
+						$ret = KeywordAnalysis::addkeyword($itemid, $keyword);
+
+						if (!$ret) {
+							$itemchanged                  = true;
+							$keywordsadded                = $keywordsadded + 1;
+							$keywordsadded_to_this_item[] = $keyword;
+						} else {
+							$result[] = $module->translate(
+								array(
+									'text' => 'Could not add keyword "%s" to item %d (%s): %s',
+									'arg1' => $keyword,
+									'arg2' => $itemid,
+									'arg3' => $item->getTitle(),
+									'arg4' => $ret,
+								)
+							);
+						}
+					}
+				}
+			}
+
+			if ($itemchanged) {
+				$itemschanged = $itemschanged + 1;
+			}
+
+			if (++$i % 5 == 0 || $i == $total) {
+				$ret = $this->_updateProgress($module, $i, $total);
+
+				if ($ret) {
+					return array($ret, null, null);
+				}
+			}
+		}
+
+		$result[] = $module->translate(
+			array(
+				'text' => 'Checked %d items',
+				'arg1' => $total,
+			)
+		);
+		$result[] = $module->translate(
+			array(
+				'text' => '%d items changed',
+				'arg1' => $itemschanged,
+			)
+		);
+		$result[] = $module->translate(
+			array(
+				'text' => '%d keywords added',
+				'arg1' => $keywordsadded,
+			)
+		);
+
+		return array(null, true, $result);
+	}
+
+	public function _updateProgress(&$module, $i, $total) {
+		global $gallery;
+		$storage         =& $gallery->getStorage();
+		$templateAdapter =& $gallery->getTemplateAdapter();
+
+		$message = $module->translate(
+			array(
+				'text' => 'Processing image %d of %d',
+				'arg1' => $i,
+				'arg2' => $total,
+			)
+		);
+		$templateAdapter->updateProgressBar($message, '', $i / $total);
+		// Release locks (avoid too many open files for flock based locking)
+		$ret = $storage->checkPoint();
+
+		if ($ret) {
+			return $ret;
+		}
+		$gallery->guaranteeTimeLimit(120);
+
+		return null;
+	}
+
+	public function _printFailure($message, $count, &$module) {
+		if ($count == 1) {
+			echo '<br/><h3>' . $module->translate('Debug output for failed items:') . '</h3>';
+		}
+		echo '<pre class="gcBackground1 gcBorder2">' . $message . '</pre>';
+	}
+
+	/**
+	 * @see MaintenanceTask::requiresProgressBar
+	 */
+	public function requiresProgressBar() {
+		return true;
+	}
+}

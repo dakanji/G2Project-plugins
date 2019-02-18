@@ -1,0 +1,36 @@
+User Info Module
+For more information and a screen shot of this module visit
+http://gallery.menalto.com/node/77323
+and
+http://codex.gallery2.org/Gallery2:Modules:userinfo
+
+For instructions on how to install on Gallery 2.2.4 visit
+http://codex.gallery2.org/Gallery2:Modules:userinfo
+
+1.0.4 - 05/14/08
+     Fixed sort arrows display when using Mod_Rewrite
+     Fixed IP Lookup Link when using Mod_Rewrite
+
+1.0.3 - 05/13/08
+	Added Sort Options to User Info Tab
+	Added Pagination to User Info Tab
+	Added setup option to set the # Per Page
+	Added setup option to set the Default Sort Column
+	Added setup option to set the Default Sort Order
+	Added setup option to set the Date/Time Display
+	     Can be different than the General Date/Time Display
+
+1.0.2 - 05/03/2008
+     Added Setup Tab for future use.
+     Cleaned up style.css
+     Added UserinfoSetup.tpl and UserinfoSetup.inc files.
+     Updated to version 1.0.2 in both module.inc and module_2.2.4.inc
+     Updated MANIFEST
+
+1.0.1 - 05/02/2008
+     Cleaned up style.css
+     Updated to version 1.0.1 in both module.inc and module_2.2.4.inc
+     Updated MANIFEST
+
+1.0.0 - 05/01/2008
+     Initial Release

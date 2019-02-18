@@ -1,0 +1,108 @@
+<?php
+/*
+ * $RCSfile: DuplicateItemChecker.inc,v $
+ * $Revision: 1849 $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ *
+ * @package MRAnalysis
+ * @author Mark Ridgwell <g2development@markridgwell.com>
+ */
+
+
+// Required files/Classes
+GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsAccess.class');
+GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsConstants.class');
+
+
+/**
+ * @package MRAnalysis
+ * @subpackage DuplicateItemChecker
+ */
+class DuplicateItemChecker {
+	// The last item and was it a duplicate
+	public $lastitem;
+	public $lastitemwasduplicate;
+
+	// Collection of items that after processing have become duplicated
+	public $duplicateitems;
+
+
+	// Setting: Check For Duplicate Titles across albums
+	public $checktitlesacrossalbums;
+
+	/**
+	 * @Constructor
+	 */
+	public function __construct() {
+		$this->duplicateitems          = array();
+		$this->checktitlesacrossalbums = (SettingsAccess::GetValueWithDefault('CheckForDuplicateTitlesAcrossAlbums', SettingsConstants::DefaultCheckForDuplicateTitlesAcrossAlbums()) == '1') ? true : false;
+		$this->lastitemwasduplicate    = false;
+	}
+
+	/**
+	 * @Updates the last item status
+	 */
+	public function setLastItem($item, $duplicate) {
+		$this->lastitem             = $item;
+		$this->lastitemwasduplicate = $duplicate;
+	}
+
+	/**
+	 * @Checks to see if the title the same as another item in the same album.
+	 */
+	public function IsDuplicateTitle($item) {
+		if ($this->lastitem == null) {
+			// No last item - so this item is not duplicate
+			$this->setLastItem($item, false);
+
+			return false;
+		}
+
+		if ($this->checktitlesacrossalbums == false) {
+			if ($this->lastitem->parentId != $item->parentId) {
+				// Item not in same album, and not checking titles across albums
+
+				$this->setLastItem($item, false);
+
+				return false;
+			}
+		}
+
+
+		if (0 == strcasecmp($this->lastitem->title, $item->title)) {
+			if (!$this->lastitemwasduplicate) {
+				// Last item was not marked as a duplicate, but explicitly include it as a duplicate of $item
+				$this->duplicateitems[] = $this->lastitem;
+			}
+
+			// Item was a duplicate
+			$this->setLastItem($item, true);
+
+			return true;
+		}
+
+
+		// Not a duplicate
+		$this->setLastItem($item, false);
+
+		return false;
+	}
+}

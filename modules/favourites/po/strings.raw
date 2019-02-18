@@ -1,0 +1,64 @@
+# $Id: strings.raw 1441 2008-06-08 17:47:01Z alecmyers $
+
+/* AddFavourite.inc */
+gettext("Add to Favorites")
+
+/* FavouritesAlbum.inc */
+gettext("Favorite Items")
+gettext("Favorite")
+gettext("favorite")
+gettext("favorites")
+gettext("Favorites: %s")
+gettext("Favorites Album") /* also in: module.inc */
+gettext("favorites album")
+
+/* FavouritesSiteAdmin.inc */
+gettext("&laquo; default theme &raquo;")
+
+/* module.inc */
+gettext("Favorites") /* also in: templates/FavouritesNotify.tpl */
+gettext("Stores and displays registered users favorite items")
+gettext("Display")
+gettext("Remove %s From Favorites")
+gettext("Add %s To Favorites")
+gettext("Clear Favorites")
+gettext("Shortest URL for album of Favorite Items")
+gettext("Shorter URL for album of Favorite Items")
+gettext("Short URL for album of Favorite Items")
+
+/* templates/FavouritesNotify.tpl */
+gettext("You're not logged in.")
+gettext("To bookmark an item as one of your favorites, and to view them later, you need to be logged in as a registered user!")
+gettext("Use the register link above to create an account (it only takes a second) or login if you're already registered.")
+gettext("You haven't marked any favorites.")
+gettext("Use the add item to favorites link below pictures or albums that you like. The show favorites page will show you everything that you've marked.")
+gettext("%s added to favorites.")
+gettext("%s removed from favorites.")
+gettext("Favorites Cleared.")
+gettext("Back to %s")
+
+/* templates/FavouritesSiteAdmin.tpl */
+gettext("Users with Favorites")
+gettext("None")
+gettext("View")
+gettext("&laquo; first")
+gettext("&laquo; back")
+gettext("Viewing page %d of %d")
+gettext("next &raquo;")
+gettext("last &raquo;")
+gettext("Name")
+gettext("UserName")
+gettext("Items")
+gettext("Settings saved successfully")
+gettext("There was a problem processing your request.")
+gettext("Module Settings")
+gettext("Offer 'Add to Favorites' to guest users (with an appropriate message if they choose it)?")
+gettext("Offer Favorites to Guests")
+gettext("Theme-based Settings for Favorites")
+gettext("Theme")
+gettext("Settings for %s theme in Dynamic Albums")
+gettext("Save")
+gettext("Reset")
+
+/* templates/blocks/blocks.inc */
+gettext("First 10 Favourites")

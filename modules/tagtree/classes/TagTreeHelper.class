@@ -1,0 +1,586 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2009 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeNode.class');
+
+/**
+ * Switch to turn off caching, such as during debugging.
+ */
+define('TAGTREE_CACHE', 1);
+
+/**
+ * Switch to remove from the tree any tags that are the only children of their parents.
+ * Such tags are not useful for organizing because they require the user to
+ * click an extra time but they don't help discriminate among their descendants.
+ */
+define('TAGTREE_ELIDE_ENCOMPASSING_TAGS', 1);/**
+ * @package TagTree
+ * @author Chad Parry <spam@chad.parry.org>
+ * @version $Revision: 1733 $
+ */
+class TagTreeHelper {
+	public function fetchMatchingItems($tags, $albumId, $userId) {
+		global $gallery;
+
+		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $userId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$onlyAlbums                  = false;
+		list($ret, $rootHierarchies) = TagTreeHelper::fetchMatchingRootHierarchies($tags, $albumId, $onlyAlbums, $aclIds);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$items = array();
+
+		foreach ($rootHierarchies as $rootHierarchy) {
+			$itemId  = $rootHierarchy[count($rootHierarchy) - 1];
+			$items[] = $itemId;
+		}
+
+		return array(null, $items);
+	}
+
+	public function fetchTagTree($tags, $albumId, $onlyAlbums, $userId) {
+		global $gallery;
+
+		$tree         = new TagTreeNode();
+		$tree->tags   = $tags;
+		$tree->itemId = $albumId;
+
+		list($ret, $tree->children) = TagTreeHelper::fetchNodeChildren($tree, $onlyAlbums, $userId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, $tree);
+	}
+
+	public function fetchMatchingRootHierarchies($tags, $albumId, $onlyAlbums, $aclIds) {
+		GalleryCoreApi::requireOnce('modules/tagtree/classes/HierarchyTagFilter.class');
+		global $gallery;
+
+		list($ret, $parentHierarchy) = TagTreeHelper::fetchHierarchy($albumId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $assumedTags) = TagTreeHelper::fetchAppliedTags($parentHierarchy);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$requiredTags = array_diff($tags, $assumedTags);
+
+		list($ret, $rootHierarchies) = HierarchyTagFilter::fetchMatchingHierarchies(
+			$parentHierarchy,
+			$requiredTags,
+			$aclIds,
+			$onlyAlbums
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, $rootHierarchies);
+	}
+
+	public function fetchNodeChildren($node, $onlyAlbums, $userId) {
+		global $gallery;
+
+		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $userId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		list($ret, $rootHierarchies) = TagTreeHelper::fetchMatchingRootHierarchies(
+			$node->tags,
+			$node->itemId,
+			$onlyAlbums,
+			$aclIds
+		);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$rootTagMap       = array();
+		$encompassingTags = null;
+		$descendantTags   = array();
+
+		foreach ($rootHierarchies as $rootHierarchy) {
+			list($ret, $rootTags) = TagTreeHelper::fetchAppliedTags($rootHierarchy, $node->tags);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			$childId              = $rootHierarchy[count($rootHierarchy) - 1];
+			$rootTagMap[$childId] = $rootTags;
+
+			if (is_null($encompassingTags)) {
+				$encompassingTags = $rootTags;
+			} else {
+				$encompassingTags = array_intersect($encompassingTags, $rootTags);
+			}
+
+			list($ret, $rootDescendantTags) = TagTreeHelper::fetchDescendantTags($rootHierarchy, $rootTags, $aclIds);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			foreach ($rootTags as $tagId) {
+				$rootTag              = array(
+					'tagId'     => $tagId,
+					'hierarchy' => $rootHierarchy,
+				);
+				$rootDescendantTags[] = $rootTag;
+			}
+			$descendantTags[] = $rootDescendantTags;
+		}
+
+		$seenDescendantTags = array();
+		$promotedTags       = array();
+
+		foreach ($descendantTags as $rootDescendantTags) {
+			// Record the tags seen under this root.
+			$rootSeenDescendantTags = array();
+
+			foreach ($rootDescendantTags as $descendantTag) {
+				$tagId                          = $descendantTag['tagId'];
+				$rootSeenDescendantTags[$tagId] = true;
+			}
+			// Promote tags that are descendants of more than one root.
+			foreach (array_keys($rootSeenDescendantTags) as $tagId) {
+				if (array_key_exists($tagId, $seenDescendantTags)) {
+					$promotedTags[$tagId] = true;
+				}
+				$seenDescendantTags[$tagId] = true;
+			}
+		}
+
+		if (TAGTREE_ELIDE_ENCOMPASSING_TAGS && !is_null($encompassingTags)) {
+			foreach ($rootTagMap as $childId => $rootTags) {
+				$rootTagMap[$childId] = array_diff($rootTags, $encompassingTags);
+			}
+
+			foreach ($encompassingTags as $tagId) {
+				unset($promotedTags[$tagId]);
+			}
+		}
+
+		$childItems = array();
+
+		foreach ($rootTagMap as $childId => $rootTags) {
+			foreach ($rootTags as $tagId) {
+				$promotedTags[$tagId] = true;
+			}
+
+			if (empty($rootTags)) {
+				$childItems[] = $childId;
+			}
+		}
+
+		$dominantTags = TagTreeHelper::getDominantTags($descendantTags, $promotedTags);
+
+		$children = array();
+
+		foreach (array_keys($dominantTags) as $tagId) {
+			list($ret, $childNode) = TagTreeHelper::getChildTagNode($node, $tagId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$children[] = $childNode;
+		}
+
+		foreach ($childItems as $childId) {
+			list($ret, $childNode) = TagTreeHelper::getChildItemNode($node, $childId, $onlyAlbums);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$children[] = $childNode;
+		}
+
+		return array(null, $children);
+	}
+
+	public function fetchDescendantTags($hierarchy, $excludedTags, $aclIds) {
+		global $gallery;
+
+		$excludedCondition = empty($excludedTags) ? '' : sprintf(
+			'[GalleryTagItemMap::tagId] NOT IN (%s) AND ',
+			GalleryUtilities::makeMarkers($excludedTags)
+		);
+		$aclMarkers        = empty($aclIds) ? 'NULL' : GalleryUtilities::makeMarkers($aclIds);
+
+		$query = sprintf(
+			'
+    SELECT
+      [GalleryTagItemMap::tagId], [GalleryTagItemMap::itemId], [GalleryItemAttributesMap::parentSequence]
+    FROM
+      [GalleryTagItemMap], [GalleryItemAttributesMap], [GalleryAccessSubscriberMap]
+    WHERE
+      %s
+      [GalleryTagItemMap::itemId] = [GalleryItemAttributesMap::itemId]
+    AND
+      [GalleryItemAttributesMap::parentSequence] LIKE ?
+    AND
+      [GalleryAccessSubscriberMap::itemId] = [GalleryItemAttributesMap::itemId]
+    AND
+      [GalleryAccessSubscriberMap::accessListId] IN (%s)
+    ORDER BY
+      BINARY [GalleryItemAttributesMap::parentSequence],
+      BINARY [GalleryTagItemMap::itemId]
+    ',
+			$excludedCondition,
+			$aclMarkers
+		);
+
+		$data   = array();
+		$data   = array_merge($data, $excludedTags);
+		$data[] = TagTreeHelper::getParentSequenceFromHierarchy($hierarchy) . '%';
+		$data   = array_merge($data, $aclIds);
+
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$descendantTags = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$tagId            = $result[0];
+			$albumId          = $result[1];
+			$parentSequence   = $result[2];
+			$hierarchy        = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
+			$descendantTag    = array(
+				'tagId'     => $tagId,
+				'hierarchy' => $hierarchy,
+			);
+			$descendantTags[] = $descendantTag;
+		}
+
+		return array(null, $descendantTags);
+	}
+
+	public function getDominantTags($descendantTags, $eligibleTags) {
+		$tagHierarchies = array();
+
+		foreach ($descendantTags as $rootDescendantTags) {
+			foreach ($rootDescendantTags as $descendantTag) {
+				$tagId = $descendantTag['tagId'];
+
+				if (array_key_exists($tagId, $eligibleTags)) {
+					$hierarchy = $descendantTag['hierarchy'];
+
+					if (!array_key_exists($tagId, $tagHierarchies)) {
+						$tagHierarchies[$tagId] = array();
+					}
+
+					if (empty($tagHierarchies[$tagId])
+						|| !HierarchyTagFilter::isAncestor(
+							$tagHierarchies[$tagId][count($tagHierarchies[$tagId]) - 1],
+							$hierarchy
+						)
+					) {
+						$tagHierarchies[$tagId][] = $hierarchy;
+					}
+				}
+			}
+		}
+
+		$dominatingTagsMap = array();
+
+		foreach ($tagHierarchies as $tagId => $hierarchies) {
+			$otherHierarchies = $tagHierarchies;
+			unset($otherHierarchies[$tagId]);
+			$dominatingTags            = TagTreeHelper::getDominatingTags($hierarchies, $otherHierarchies);
+			$dominatingTagsMap[$tagId] = $dominatingTags;
+		}
+
+		$dominantTags = array();
+
+		foreach ($dominatingTagsMap as $tagId => $dominatingTags) {
+			$isDominant = true;
+
+			foreach ($dominatingTags as $dominatingTag) {
+				if (array_search($tagId, $dominatingTagsMap[$dominatingTag]) === false) {
+					$isDominant = false;
+				}
+			}
+
+			if ($isDominant) {
+				$dominantTags[$tagId] = true;
+			}
+		}
+
+		return $dominantTags;
+	}
+
+	public function getDominatingTags($hierarchies, $otherHierarchiesMap) {
+		$otherHierarchies = array_values($otherHierarchiesMap);
+		$otherKeys        = array_keys($otherHierarchiesMap);
+		$otherIndices     = empty($otherHierarchies) ? array() : array_fill(0, count($otherHierarchies), 0);
+		$isDominatedCount = empty($otherHierarchies) ? array() : array_fill(0, count($otherHierarchies), 0);
+
+		foreach ($hierarchies as $hierarchy) {
+			for ($i = 0; $i < count($otherHierarchies); $i++) {
+				$compareHierarchies = $otherHierarchies[$i];
+				// Advance the compared hierarchy until it matches the target hierarchy.
+				while (count($compareHierarchies) > $otherIndices[$i] &&
+				HierarchyTagFilter::compareHierarchies(
+					$compareHierarchies[$otherIndices[$i]],
+					$hierarchy
+				) < 0) {
+					$otherIndices[$i]++;
+				}
+
+				if (count($compareHierarchies) > $otherIndices[$i]) {
+					$compareHierarchy = $compareHierarchies[$otherIndices[$i]];
+
+					if (HierarchyTagFilter::isAncestor(
+						$compareHierarchies[$otherIndices[$i]],
+						$hierarchy
+					)
+					) {
+						$isDominatedCount[$i]++;
+					}
+				}
+			}
+		}
+		$dominatingTags = array();
+
+		for ($i = 0; $i < count($otherHierarchies); $i++) {
+			if ($isDominatedCount[$i] == count($hierarchies)) {
+				$dominatingTags[] = $otherKeys[$i];
+			}
+		}
+
+		return $dominatingTags;
+	}
+
+	public function getParentSequenceFromHierarchy($hierarchy) {
+		return implode(array_map(create_function('$albumId', 'return $albumId . \'/\';'), $hierarchy));
+	}
+
+	public function getHierarchyFromParentSequence($parentSequence, $albumId) {
+		$hierarchy = explode('/', $parentSequence);
+		$discard   = array_pop($hierarchy);
+		assert(empty($discard));
+		$hierarchy[] = $albumId;
+
+		return $hierarchy;
+	}
+
+	public function getChildItemNode($parentNode, $itemId, $onlyAlbums) {
+		global $gallery;
+
+		$childNode = new TagTreeNode();
+
+		if ($onlyAlbums) {
+			$childNode->type = 'album';
+		} else {
+			$query = sprintf(
+				'
+      SELECT EXISTS (
+        SELECT *
+        FROM
+          [GalleryAlbumItem]
+        WHERE
+          [GalleryAlbumItem::id] = ?
+      )
+      '
+			);
+
+			$data                      = array();
+			$data[]                    = $itemId;
+			list($ret, $searchResults) = $gallery->search($query, $data);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			if (!($result = $searchResults->nextResult())) {
+				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+			}
+
+			$isAlbum         = $result[0];
+			$childNode->type = $isAlbum ? 'album' : 'item';
+		}
+		$childNode->itemId = $itemId;
+		$childNode->tags   = $parentNode->tags;
+
+		list($ret, $childNode->title) = TagTreeHelper::getItemTitle($itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, $childNode);
+	}
+
+	public function getChildTagNode($parentNode, $tagId) {
+		$childNode         = new TagTreeNode();
+		$childNode->type   = 'tag';
+		$childNode->itemId = $parentNode->itemId;
+		$childNode->tags   = $parentNode->tags;
+		$childNode->tags[] = $tagId;
+
+		list($ret, $childNode->title) = TagTreeHelper::getTagName($tagId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, $childNode);
+	}
+
+	public function fetchHierarchy($albumId) {
+		global $gallery;
+
+		$query = sprintf(
+			'
+    SELECT
+      [GalleryItemAttributesMap::parentSequence]
+    FROM
+      [GalleryItemAttributesMap]
+    WHERE
+      [GalleryItemAttributesMap::itemId] = ?
+    '
+		);
+
+		$data                      = array();
+		$data[]                    = $albumId;
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (!($result = $searchResults->nextResult())) {
+			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+		}
+
+		$parentSequence = $result[0];
+		$hierarchy      = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
+
+		return array(null, $hierarchy);
+	}
+
+	public function fetchAppliedTags($albums, $excludedTags = array()) {
+		global $gallery;
+
+		$albumMarkers      = GalleryUtilities::makeMarkers($albums);
+		$excludedCondition = empty($excludedTags) ? '' : sprintf(
+			'[GalleryTagItemMap::tagId] NOT IN (%s) AND ',
+			GalleryUtilities::makeMarkers($excludedTags)
+		);
+
+		$query = sprintf(
+			'
+    SELECT
+      [GalleryTagItemMap::tagId]
+    FROM
+      [GalleryTagItemMap]
+    WHERE
+      %s
+      [GalleryTagItemMap::itemId] IN (%s)
+    ',
+			$excludedCondition,
+			$albumMarkers
+		);
+
+		$data                      = array();
+		$data                      = array_merge($data, $excludedTags);
+		$data                      = array_merge($data, $albums);
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$appliedTags = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$tagId         = $result[0];
+			$appliedTags[] = $tagId;
+		}
+
+		return array(null, $appliedTags);
+	}
+
+	public function getItemTitle($itemId) {
+		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$title = $item->getTitle() ? $item->getTitle() : $item->getPathComponent();
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, $title);
+	}
+
+	public function getTagName($tagId) {
+		global $gallery;
+		$query = sprintf(
+			'
+    SELECT
+      [GalleryTagMap::tagName]
+    FROM
+      [GalleryTagMap]
+    WHERE
+      [GalleryTagMap::tagId]  = ?
+    '
+		);
+
+		$data                      = array();
+		$data[]                    = $tagId;
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (!($result = $searchResults->nextResult())) {
+			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+		}
+
+		$tagName = $result[0];
+
+		return array(null, $tagName);
+	}
+}

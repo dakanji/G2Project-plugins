@@ -1,0 +1,4 @@
+/* Overrides for some XLoadTree styles */
+.webfx-tree-container, .webfx-tree-item {
+	font: inherit;
+}

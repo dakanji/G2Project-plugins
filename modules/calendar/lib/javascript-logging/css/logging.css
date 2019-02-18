@@ -1,0 +1,54 @@
+.logging {
+   background: #FFF;
+   color: #000;
+   border: 1px solid #555;
+   position: absolute;
+   z-order: 100000000000;
+   top: 10px;
+   left: 10px;
+}
+
+.logging .title {
+   font-weight: bold;
+   background: #888;
+   color: #FFF;
+   padding: 5px;
+   cursor: pointer;
+}
+
+.logging .title:hover {
+   background: #AAA;
+}
+
+.logging .show-hide {
+   font-family: Monospace;
+}
+
+.logging .show-hide a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+.logging .hidden {
+   display: none;
+}
+
+.logging ul {
+   border-top: 1px solid #555;
+   list-style-type: none;
+   margin: 0px;
+   padding: 5px 10px;
+   clear: both;
+   clear: both;
+}
+
+.logging li pre {
+   padding: 0;
+   margin: 0;
+   font-size: 11px;
+}
+
+.logging li.error {
+	font-weight: bold;
+	color: red;
+}

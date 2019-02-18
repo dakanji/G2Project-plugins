@@ -1,0 +1,440 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @package Checkout
+ * @version $Revision: 1711 $
+ * @author Bharat Mediratta <bharat@menalto.com>
+ * @author Matthew Turnbull <matthew.turnbull@messagescan.net>
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * Required classes
+ */
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
+
+/**
+ * A helper class for Checkout carts
+ *
+ * Utility functions useful in managing Carts
+ * This class is fundamentally the same as the CartHelper class in the
+ * Cart module, from which it originated.  It has been incorporated here
+ * to allow the Checkout module to stand alone without requiring the
+ * separate Cart module.  This gives us greater flexibility in how we
+ * handle items and permissions.
+ *
+ * @package Checkout
+ * @subpackage Classes
+ */
+class CheckoutHelper {
+	/**
+	 * Store the url from which the user arrived in checkout
+	 * @static
+	 */
+	public function storeReturnURL() {
+		global $gallery;
+		$session =& $gallery->getSession();
+
+		$returnURL = GalleryUtilities::getRequestVariables('return');
+		// don't store urls back into checkout
+		$matchstring = '/' . preg_quote('=checkout.') . '/';
+
+		if (!empty($returnURL) && !preg_match($matchstring, $returnURL)) {
+			$session->put('checkout.returnURL', $returnURL);
+		}
+	}
+
+	/**
+	 * return the url from which the user arrived in checkout
+	 * @static
+	 */
+	public function fetchReturnURL() {
+		global $gallery;
+		$session   =& $gallery->getSession();
+		$returnURL = $session->get('checkout.returnURL');
+
+		return $returnURL;
+	}
+
+	/**
+	 * Return the ids and quantities of the items in the cart
+	 *
+	 * @return array object GalleryStatus a status code
+	 *               array (itemId => array(id, item product1 qty, item product2 qty),
+	 *                          itemId => array(id, item product1 qty, item product2 qty), ..)
+	 * @static
+	 */
+	public function loadCheckoutItemsFromSession() {
+		global $gallery;
+		$session       =& $gallery->getSession();
+		$checkoutItems = $session->get('checkout.items');
+
+		if (empty($checkoutItems) || !is_array($checkoutItems)) {
+			$checkoutItems = array();
+		}
+
+		return array(null, $checkoutItems);
+	}
+
+	/**
+	 * Return whether the user has purchase permission on an item
+	 *
+	 * @return array GalleryStatus a status code boolean true if yes
+	 */
+	public function hasPurchasePermission($itemId) {
+		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if ($item->getCanContainChildren()) {
+			$permission = 'checkout.purchaseAlbum';
+		} else {
+			$permission = 'checkout.purchase';
+		}
+
+		return GalleryCoreApi::hasItemPermission($itemId, $permission);
+	}
+
+	/**
+	 * Return the full items in the cart, including quantity/product and paper details and postage
+	 * used for displaying the cart contents
+	 * @return array object GalleryStatus a status code
+	 *               array (itemId => item, itemId => item, ..)
+	 * @static
+	 */
+	public function fetchCheckoutItems($items = null) {
+
+		// either send in the raw items from someone else's session
+		// or load them from this session
+		if (is_null($items)) {
+			list($ret, $items) = CheckoutHelper::loadCheckoutItemsFromSession();
+
+			if ($ret) {
+				return array($ret, null);
+			}
+		}
+
+		$checkoutItems = array();
+
+		foreach ($items as $itemId => $item) {
+			switch ($itemId) {
+				// postage item
+				/* this is a nasty hack because
+				you have to take it out before, for instance
+				counting cart items. So when you think of a better way
+				of carrying the postage around ... you can change it. */
+				case 'postage':
+					$checkoutItems['postage'] = $item;
+
+					break;
+
+				case 'discountCode':
+					$checkoutItems['discountCode'] = $item;
+
+					break;
+
+				case 'instructions':
+					$checkoutItems['instructions'] = $item;
+
+					break;
+
+				case 'accessories':
+					$checkoutItems['accessories'] = $item;
+
+					break;
+				// other line items
+				default:
+					list($ret, $fullItem) = GalleryCoreApi::loadEntitiesById($itemId);
+
+					if ($ret) {
+						if ($ret->getErrorCode() & ERROR_MISSING_OBJECT) {
+							// Item deleted from the gallery; remove if from the cart
+							unset($checkoutItems[$itemId]);
+
+							continue;
+						}
+
+						return array($ret, null);
+					}
+					/* BUILD hierarchy of albums for parentTitle field
+					/* get item's parent ids in a list... */
+					list($ret, $itemIdTree) = GalleryCoreApi::fetchParentSequence($itemId);
+
+					if ($ret) {
+						return array($ret, null);
+					}
+					// drop the root album if there's more than one level
+					if (count($itemIdTree) > 1) {
+						array_shift($itemIdTree);
+					}
+					// work through each level
+					$pathstring = '';
+
+					foreach ($itemIdTree as $myItemId) {
+						list($ret, $parentEntity) = GalleryCoreApi::loadEntitiesById($myItemId);
+
+						if ($ret) {
+							return array($ret, null);
+						}
+						$pathstring .= ' / ' . $parentEntity->getTitle();
+					}
+					$checkoutItems[$itemId]                    = $item;
+					$checkoutItems[$itemId]['fullItemDetails'] = (array)$fullItem;
+					$checkoutItems[$itemId]['parentTitle']     = substr($pathstring, 3);
+			}
+		}
+
+		return array(null, $checkoutItems);
+	}
+
+	/**
+	 * change the cart to whatever the user set in the select form
+	 *
+	 * @param array $form fields
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function updateCart($form) {
+		$items = CheckoutHelper::parseForm($form);
+		// call plugins here
+		$ret = CheckoutInterfaceHelper::doProductListPluginsAdjustCart($form, $items);
+
+		if ($ret) {
+			return $ret;
+		}
+		// Write the updated item records back into the cart
+		$ret = CheckoutHelper::storeItemListInSession($items);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * return a list of items from the Select form
+	 *
+	 * @param array $form fields
+	 */
+	public function parseForm($form) {
+		$items = array();
+
+		if (!isset($form['photos'])) {
+			return null;
+		}
+
+		foreach ($form['photos'] as $itemId => $itemDetails) {
+			if (isset($itemDetails['remove'])) {
+				continue;
+			}
+			$items[$itemId]['id'] = $itemId;
+			//table view
+			//we leave the quantity record set, but blank - for zeros
+			if (isset($itemDetails['quant'])) {
+				foreach ($itemDetails['quant'] as $prodId => $quantity) {
+					if (intval($quantity) != 0) {
+						$items[$itemId][$prodId]['quant'] = $quantity;
+					} else {
+						// Remove this next line if you want zero-quantity products to go back
+						// into the drop-down list, if you have one
+						$items[$itemId][$prodId]['quant'] = '';
+					}
+
+					if (isset($itemDetails['paper'][$prodId])) {
+						$items[$itemId][$prodId]['paper'] = $itemDetails['paper'][$prodId];
+					}
+				}
+			}
+			//dropdown view
+			if (isset($itemDetails['newproduct']) && $itemDetails['newproduct'] != '') {
+				if (intval($itemDetails['newqty']) != 0) {
+					$items[$itemId][$itemDetails['newproduct']]['quant'] = $itemDetails['newqty'];
+				} else {
+					$items[$itemId][$itemDetails['newproduct']]['quant'] = '';
+				}
+			}
+		}
+
+		// Accessories
+		if (isset($form['accessories']) && $form['accessories'] != '') {
+			$items['accessories'] = $form['accessories'];
+		}
+
+		// Postage Option
+		if (isset($form['postage']) && $form['postage'] != '') {
+			$items['postage'] = $form['postage'];
+		}
+		// Discount Option
+		if (isset($form['discountCode']) && $form['discountCode'] != '') {
+			$items['discountCode'] = $form['discountCode'];
+		}
+		// Instructions Option
+		if (isset($form['instructions']) && $form['instructions'] != '') {
+			$items['instructions'] = $form['instructions'];
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Add the item ids to the user's cart
+	 *
+	 * @param array &checkoutItems, items, $IPQ
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function addItemsToItemList(&$checkoutItems, $items, $IPQ = null) {
+		global $gallery;
+		$phpVm                     = $gallery->getPhpVm();
+		list($ret, $checkoutItems) = CheckoutHelper::loadCheckoutItemsFromSession();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		foreach ($items as $item) {
+			$id                      = $item->getId();
+			list($ret, $permissions) = GalleryCoreApi::getPermissions($id);
+
+			if ($ret) {
+				return $ret;
+			}
+
+			if ((isset($permissions['checkout.purchase']) && !$item->getCanContainChildren())
+				|| (isset($permissions['checkout.purchaseAlbum']) && $item->getCanContainChildren())
+			) {
+				// if not already in cart
+				if (!isset($checkoutItems[$id])) {
+					$checkoutItems[$id] = array(
+						'id'        => $id,
+						'timeAdded' => $phpVm->time(),
+					);
+				}
+				// get products
+				list($ret, $products) = CheckoutProductMapHelper::fetchVisibleProducts($id, true);
+
+				if ($ret) {
+					return $ret;
+				}
+				// for each item use either IPQ values or initial quantities
+				foreach ($products as $product) {
+					if (isset($IPQ[$id])) {
+						if (isset($IPQ[$id][$product['productId']])) {
+							if (isset($checkoutItems[$id][$product['productId']]['quant'])) {
+								$checkoutItems[$id][$product['productId']]['quant'] += $IPQ[$id][$product['productId']];
+							} else {
+								$checkoutItems[$id][$product['productId']] = array(
+									'quant' => $IPQ[$id][$product['productId']],
+								);
+							}
+						}
+					} elseif ($product['initialQuantity'] > 0 && !isset($checkoutItems[$id][$product['productId']])) {
+						$checkoutItems[$id][$product['productId']] = array(
+							'quant' => $product['initialQuantity'],
+						);
+					}
+				}
+			} else {
+				unset($checkoutItems[$id]);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Empty the cart
+	 *
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function emptyCart() {
+		return CheckoutHelper::storeItemListInSession(array());
+	}
+
+	/**
+	 * Store cart contents
+	 *
+	 * @param array (itemId => count, itemId => count, ..)
+	 * @return object GalleryStatus a status code
+	 * @static
+	 */
+	public function storeItemListInSession($checkoutItems) {
+		global $gallery;
+		$phpVm   = $gallery->getPhpVm();
+		$session =& $gallery->getSession();
+
+		if (empty($checkoutItems)) {
+			$session->remove('checkout.items');
+		} else {
+			// don't keep full item details in session
+			foreach ($checkoutItems as $key => $item) {
+				if (is_array($item) && isset($item['fullItemDetails'])) {
+					unset($checkoutItems[$key]['fullItemDetails']);
+				}
+			}
+			$session->put('checkout.items', $checkoutItems);
+		}
+		$session->put('checkout.cartLastModified', $phpVm->time());
+
+		return null;
+	}
+
+	/**
+	 * Fetch the paper options for the checkout module
+	 *
+	 * @return array (object GalleryStatus a status code,
+	 *               array of papers)
+	 * @static
+	 */
+	public function fetchPapers() {
+		list($ret, $papers) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'papers');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, unserialize($papers));
+	}
+
+	/**
+	 * Fetch the postage options for the checkout module
+	 *
+	 * @return array (object GalleryStatus a status code,
+	 *               array of postage options)
+	 * @static
+	 */
+	public function fetchPostages() {
+		list($ret, $postages) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'postages');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		return array(null, unserialize($postages));
+	}
+}

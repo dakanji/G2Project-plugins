@@ -1,0 +1,558 @@
+<?php
+/*
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+
+GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
+
+/**
+ * @package Checkout
+ * @version $Revision: 1689 $
+ * @author Jay Hennessy <gallery2-development@elucidos.com>
+ * @author Alec Myers <alec@alecmyers.com>
+ */
+
+/**
+ * A helper class to handle order processing events
+ * to update customer details, and to signal order status changes
+ * @package Checkout
+ * @subpackage Classes
+ */
+class CheckoutTransactionEventHelper {
+	/**
+	 * Take action when order status changes
+	 *
+	 * @param event
+	 * @return object GalleryStatus a status code
+	 */
+	public function handleChangeTransactionStatus($transaction, $type, $message = '') {
+		global $gallery;
+
+		$transactionId = $transaction->getId();
+
+		switch ($type) {
+			case 'confirm':
+				$ret = CheckoutTransactionEventHelper::_setTransactionFlag($transaction, true, array('confirmed'));
+
+				if ($ret) {
+					return $ret;
+				}
+				$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
+					$transaction,
+					'confirm',
+					array(
+						'domain' => 'modules_checkout',
+						'data'   => array(
+							'text' => $gallery->i18n('Order No. %d Confirmed'),
+							'arg1' => $transactionId,
+						),
+					),
+					$message
+				);
+
+				if ($ret) {
+					return $ret;
+				}
+
+				break;
+
+			case 'clear':
+				$ret = CheckoutTransactionEventHelper::_setTransactionFlag($transaction, true, array('paid', 'cleared', 'fulfil'));
+
+				if ($ret) {
+					return $ret;
+				}
+				$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
+					$transaction,
+					'paid',
+					array(
+						'domain' => 'modules_checkout',
+						'data'   => array(
+							'text' => $gallery->i18n('Order No. %d Payment Received'),
+							'arg1' => $transactionId,
+						),
+					),
+					$message
+				);
+
+				if ($ret) {
+					return $ret;
+				}
+
+				break;
+
+			case 'complete':
+				$ret = CheckoutTransactionEventHelper::_setTransactionFlag($transaction, true, array('fulfilled', 'completed'));
+
+				if ($ret) {
+					return $ret;
+				}
+				$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
+					$transaction,
+					'completed',
+					array(
+						'domain' => 'modules_checkout',
+						'data'   => array(
+							'text' => $gallery->i18n('Order No. %d Completed'),
+							'arg1' => $transactionId,
+						),
+					),
+					$message
+				);
+
+				if ($ret) {
+					return $ret;
+				}
+
+				break;
+		}
+
+		return null;
+	}
+
+	/**
+	 * send an email to the site admin(s) about a particular order
+	 *
+	 * @param event
+	 * @return object GalleryStatus a status code
+	 */
+	public function handleAdminNotification($transaction, $message) {
+		global $gallery;
+		$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
+			$transaction,
+			'notify',
+			array(
+				'domain' => 'modules_checkout',
+				'data'   => $gallery->i18n('Administrative Notification'),
+			),
+			$message,
+			true,
+			false
+		);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Update customer details in transaction record
+	 *
+	 * @param $transaction the transaction
+	 * @param $data array customer details
+	 * @return object GalleryStatus a status code
+	 */
+	public function handleTransactionUpdate($transaction, $data) {
+
+		// for payment plugin to insert name and delivery info etc
+		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
+
+		if ($ret) {
+			return $ret;
+		}
+		list($ret, $transaction) = $transaction->refresh();
+
+		if ($ret) {
+			return $ret;
+		}
+		// Set the customer information into the original transaction
+		if (isset($data['custFirstName'])) {
+			$transaction->setFirstName(trim($data['custFirstName']));
+		}
+
+		if (isset($data['custFirstName'])) {
+			$transaction->setLastName(trim($data['custLastName']));
+		}
+
+		if (isset($data['custEmail'])) {
+			$transaction->setEmail(trim($data['custEmail']));
+		}
+
+		if (isset($data['custRecipientName'])) {
+			$transaction->setRecipientName(trim($data['custRecipientName']));
+		}
+
+		if (isset($data['telephone'])) {
+			$transaction->setTelephone(trim($data['telephone']));
+		}
+
+		if (isset($data['custAddress1'])) {
+			$transaction->setAddress1(trim($data['custAddress1']));
+		}
+
+		if (isset($data['custAddress2'])) {
+			$transaction->setAddress2(trim($data['custAddress2']));
+		}
+
+		if (isset($data['custAddress3'])) {
+			$transaction->setAddress3(trim($data['custAddress3']));
+		}
+
+		if (isset($data['custAddress4'])) {
+			$transaction->setAddress4(trim($data['custAddress4']));
+		}
+
+		if (isset($data['custAddress5'])) {
+			$transaction->setAddress5(trim($data['custAddress5']));
+		}
+
+		if (isset($data['custZip'])) {
+			$transaction->setAddressZip(trim($data['custZip']));
+		}
+
+		if (isset($data['custCountry'])) {
+			$transaction->setAddressCountry(trim($data['custCountry']));
+		}
+
+		if (isset($data['custComments'])) {
+			$transaction->appendCustComments(trim($data['custComments']));
+		}
+
+		if (isset($data['custNotes'])) {
+			$transaction->appendCustNotes(trim($data['custNotes']));
+		}
+		// Save the modified transaction
+		$ret = $transaction->save();
+
+		if ($ret) {
+			return $ret;
+		}
+		// Release our lock
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+
+		if ($ret) {
+			return $ret;
+		}
+		// job done
+		return null;
+	}
+
+	/**
+	 * Update payment plugin
+	 *
+	 * @param $transaction the transaction
+	 * @param $pluginName string identifier for plugin
+	 * @return object GalleryStatus a status code
+	 */
+	public function handleSetPaymentPlugin($transaction, $pluginName) {
+
+		// for payment plugin to insert its name
+
+		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
+
+		if ($ret) {
+			return $ret;
+		}
+		list($ret, $transaction) = $transaction->refresh();
+
+		if ($ret) {
+			return $ret;
+		}
+		$transaction->setPaymentPlugin($pluginName);
+		// Save the modified transaction
+		$ret = $transaction->save();
+
+		if ($ret) {
+			return $ret;
+		}
+		// Release our lock
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+		// job done
+	}
+
+	/**
+	 * Send an email
+	 *
+	 * @param GalleryCheckoutTransaction &$transaction
+	 * @param string $templateName
+	 * @param mixed $subject (optional) string subject or array('domain' => l10domain, 'data' => mixed data)
+	 * @param mixed $text (optional) string text or array( string or array('domain' => l10domain, 'data' => mixed data) ...)
+	 * @param boolean $adminOnly (optional)
+	 * @return object GalleryStatus a status code
+	 */
+	public function _sendTransactionEmail(&$transaction, $templateName, $subject = '', $text = '', $adminOnly = false, $includeDetails = true) {
+		global $gallery;
+		$transactionId           = $transaction->getId();
+		$translator              =& $gallery->getTranslator();
+		$transactionLanguageCode = $transaction->getLanguageCode();
+		//$existingLanguageCode = $translator->getActiveLanguageCode();
+		$existingLanguageCode = $translator->_languageCode;
+
+		list($ret, $mp) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkout');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+		$fromAddress   = $mp['orderStatusFromAddress'];
+		$subjectPrefix = $mp['orderStatusSubject'];
+		$emails        = unserialize($mp['emails']);
+
+		foreach ($emails as $index => $recipient) {
+			// Don't send admin notifications unless required to
+			if ($adminOnly and !$recipient['isAdmin']) {
+				continue;
+			}
+
+			if ($index == 0) {
+				// First email goes to customer unless not required in admin page
+				if ($recipient['toAddress'] == 'false') {
+					continue;
+				}
+				$toAddress = $transaction->getEmail();
+				/* If email address from transaction is blank, then the plugin hasn't updated the customer details
+				in time. We will send an admin notification (unless the offending email is already an admin
+				notification - to avoid loops. Let's hope this code is re-entrant, hey?    */
+				if (empty($toAddress) && $templateName != 'notify') {
+					$adminMessage = array(
+						array(
+							'domain' => 'modules_checkout',
+							'data'   => $gallery->i18n("Unable to send email to customer: customer's email address not recorded at this time."),
+						),
+					);
+					$ret          = CheckoutTransactionEventHelper::handleAdminNotification($transaction, $adminMessage);
+
+					continue;
+				}
+
+				if (empty($toAddress)) {
+					// don't send notifications to empty address
+					continue;
+				}
+			} else {
+				$toAddress = $recipient['toAddress'];
+			}
+
+			if ($recipient['emailLanguage'] == 'transaction_language') {
+				$language = $transactionLanguageCode;
+			} else {
+				$language = $recipient['emailLanguage'];
+			}
+
+			// plugins
+			list($ret, $email['emailPlugins']) = CheckoutInterfaceHelper::getEmailPlugins($transactionId, $templateName);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+			$email['l10Domain']     = 'modules_checkout';
+			$email['showCustomer']  = $recipient['showCustomer'];
+			$email['showLinks']     = $recipient['showLinks'];
+			$email['showContents']  = $recipient['showContents'];
+			$email['showThumbs']    = $recipient['showThumbs'];
+			$email['transactionId'] = $transactionId;
+			$email['boundary']      = uniqid('checkout');
+
+			// callbacks require a theme variable which is not automatically set in an email template.
+			$email['theme'] = null;
+			$headers        = "MIME-Version: 1.0\n";
+			$headers       .= "Content-Type: multipart/alternative;\n";
+			$headers       .= '	boundary = "' . $email['boundary'] . '"';
+
+			// Set translator to required language
+			list($ret, $currentLanguageCode) = $translator->init($language);
+
+			if ($ret) {
+				list($ret2) = $translator->init($existingLanguageCode);
+
+				if ($ret2) {
+					return $ret2;
+				}
+
+				return $ret;
+			}
+			// see if $subject and $text need translating
+			/* subject either a string or a (domain, data) array
+			and data is itself a string or a (text, arg1, arg2...) array */
+			if (!is_array($subject)) {
+				$lSubject = $subjectPrefix . $subject;
+			} else {
+				list($ret, $thisLine) = $translator->translateDomain($subject['domain'], $subject['data']);
+
+				if ($ret) {
+					list($ret2) = $translator->init($existingLanguageCode);
+
+					if ($ret2) {
+						return $ret2;
+					}
+
+					return $ret;
+				}
+				$lSubject = $subjectPrefix . $thisLine;
+			}
+			/* text is either a string, or an array of strings or an array of (domain, data) arrays
+			   or a mixture of the two, and data is either a string or a (text, arg1, arg2...) array */
+			if (!is_array($text)) {
+				$lText = $text;
+			} else {
+				$lText = '';
+
+				foreach ($text as $line) {
+					if (is_array($line)) {
+						list($ret, $thisLine) = $translator->translateDomain($line['domain'], $line['data']);
+
+						if ($ret) {
+							list($ret2) = $translator->init($existingLanguageCode);
+
+							if ($ret2) {
+								return $ret2;
+							}
+
+							return $ret;
+						}
+						$lText .= $thisLine;
+					} else {
+						$lText .= $line;
+					}
+				}
+			}
+
+			$email['additionalText'] = $lText;
+			// This is where we actually send the email
+			$ret = GalleryCoreApi::sendTemplatedEmail(
+				'modules/checkout/templates/email/' . $templateName . '.tpl',
+				$email,
+				$fromAddress,
+				$toAddress,
+				$lSubject,
+				$headers
+			);
+
+			if ($ret) {
+				list($ret2) = $translator->init($existingLanguageCode);
+
+				if ($ret2) {
+					return $ret2;
+				}
+
+				return $ret;
+			}
+		}
+		// Put the language back to how we found it to finish the query
+		list($ret, $currentLanguageCode) = $translator->init($existingLanguageCode);
+
+		if ($ret) {
+			return $ret;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Update customer details in transaction record
+	 *
+	 * @param event
+	 * @return object GalleryStatus a status code
+	 */
+	public function _setTransactionFlag(&$transaction, $state, $flags) {
+
+		// If true, store the time, else zero
+		if ($state) {
+			$flagValue = time();
+		} else {
+			$flagValue = 0;
+		}
+
+		if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
+			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
+		}
+		// Check the transaction isn't in 'Hold' state
+
+		if ($transaction->getTimeHold()) {
+			// Failing silently in this case - not ideal - consider what else to do.
+			return null;
+		}
+
+		// Get a write lock and refresh the entity
+		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
+
+		if ($ret) {
+			return $ret;
+		}
+		list($ret, $transaction) = $transaction->refresh();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		foreach ($flags as $flag) {
+			// Set the relevant flag and take any appropriate actions
+			switch ($flag) {
+				case 'confirmed':
+					$transaction->setTimeConfirmed($flagValue);
+
+					break;
+
+				case 'paid':
+					$transaction->setTimePaid($flagValue);
+
+					break;
+
+				case 'cleared':
+					$transaction->setTimeCleared($flagValue);
+
+					break;
+
+				case 'fulfil':
+					$transaction->setTimeFulfil($flagValue);
+
+					break;
+
+				case 'fulfilled':
+					$transaction->setTimeFulfilled($flagValue);
+
+					break;
+
+				case 'completed':
+					$transaction->setTimeCompleted($flagValue);
+
+					break;
+
+				case 'hold':
+					$transaction->setTimeHold($flagValue);
+
+					break;
+
+				case 'problem':
+					$transaction->setTimeProblem($flagValue);
+
+					break;
+			}
+		}
+		// Save the modified transaction and release our lock
+		$ret = $transaction->save();
+
+		if ($ret) {
+			return $ret;
+		}
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+
+		if ($ret) {
+			return $ret;
+		}
+	}
+}

@@ -1,0 +1,233 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * Contains the grunt methods for bulk handling
+ *
+ * @package BulkManage
+ * @subpackage Helpers
+ * @author Aidan Lister <aidan@php.net>
+ * @version $Revision: 15513 $
+ */
+class BulkManageHelper {
+	/**
+	 * Iterates all children with albumId as a parent
+	 * while applying the plugins processItem() method
+	 *
+	 * @param int $albumId
+	 * @param BulkManagePlugin $plugin
+	 * @param array $params
+	 */
+	public function execute($albumId, $plugin, $params) {
+		global $gallery;
+
+		// Prevent timeout
+		$gallery->guaranteeTimeLimit(180);
+
+		// Get the action title
+		list($ret, $title) = $plugin->getActionTitle();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Load the module
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'bulkmanage');
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Grab some objects
+		$session         =& $gallery->getSession();
+		$templateAdapter =& $gallery->getTemplateAdapter();
+		$storage         =& $gallery->getStorage();
+
+		// Update progress bar
+		$templateAdapter->updateProgressBar(
+			$title,
+			$module->translate('Building item stack'),
+			0
+		);
+
+		// Get the items we're going to be operating on
+		if ($params['recursive']) {
+			list($ret, $albumItem) = GalleryCoreApi::loadEntitiesById($albumId, 'GalleryAlbumItem');
+
+			if ($ret) {
+				return $ret;
+			}
+			list($ret, $itemIds) = GalleryCoreApi::fetchDescendentItemIds($albumItem, null, null, 'core.edit');
+		} else {
+			list($ret, $itemIds) = GalleryCoreApi::fetchChildItemIdsWithPermission($albumId, 'core.edit');
+		}
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Update progress bar in at least in 5% steps
+		$total = count($itemIds);
+		$step  = min(50, intval($total / 20) + 1);
+
+		// Start iterating
+		$batchSize = 100;
+		$i         = 0;
+		$processed = 0;
+
+		while (!empty($itemIds)) {
+			// Grab a chunk
+			$itemIdsChunk = array_splice($itemIds, 0, $batchSize);
+
+			// Write lock on the chunk
+			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($itemIdsChunk);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			// Load the objects
+			list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIdsChunk);
+
+			if ($ret) {
+				GalleryCoreApi::releaseLocks($lockId);
+
+				return $ret;
+			}
+
+			// Process
+			foreach ($itemIdsChunk as $index => $itemId) {
+				// Update the progress bar
+				if (!(++$i % $step) || $i === $total) {
+					$message = $module->translate(
+						array(
+							'text' => 'Processing item %d of %d',
+							'arg1' => $i,
+							'arg2' => $total,
+						)
+					);
+					$templateAdapter->updateProgressBar($title, $message, $i / $total);
+
+					// Prevent PHP timeouts
+					$gallery->guaranteeTimeLimit(60);
+				}
+
+				// Process the item
+				list($ret, $status) = $plugin->processItem($items[$index], $params);
+
+				if ($ret) {
+					GalleryCoreApi::releaseLocks($lockId);
+
+					return $ret;
+				}
+
+				if ($status === true) {
+					$processed++;
+				}
+			}
+
+			// Free the lock
+			$ret = GalleryCoreApi::releaseLocks($lockId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			// Force PHP's garbage collection and save some memory
+			unset($items);
+
+			// Periodic checkpoints ensure that the work that has been done until now is not lost
+			$ret = $storage->checkPoint();
+
+			if ($ret) {
+				return $ret;
+			}
+		}
+
+		// Get the name of the active plugin
+		list($ret, $bulkPlugin) = $plugin->getId();
+
+		if ($ret) {
+			return $ret;
+		}
+
+		// Ensure the progress bar is at 100% and show a continue link
+		$urlGenerator =& $gallery->getUrlGenerator();
+		$redirect     = array(
+			'view'       => 'core.ItemAdmin',
+			'subView'    => 'bulkmanage.BulkManage',
+			'bulkPlugin' => $bulkPlugin,
+			'itemId'     => $albumId,
+			'statusId'   => $session->putStatus(
+				array(
+					'done'  => 1,
+					'count' => $processed,
+				)
+			),
+		);
+		$templateAdapter->updateProgressBar($title, $module->translate('Finished'), 1);
+		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
+
+		return array(null, true);
+	}
+
+	/**
+	 * Fetch all the BulkManagePlugins
+	 *
+	 * @static
+	 */
+	public function getAllPlugins() {
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'bulkmanage');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		// Get all the plugins
+		list($ret, $allPluginIds) = GalleryCoreApi::getAllFactoryImplementationIds('BulkManagePlugin');
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		// Load each plugin
+		$pluginInstances = array();
+
+		foreach (array_keys($allPluginIds) as $pluginId) {
+			list($ret, $plugin) = GalleryCoreApi::newFactoryInstanceById('BulkManagePlugin', $pluginId);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			// Compare the version
+			$isCompatabible = GalleryUtilities::isCompatibleWithApi(
+				$plugin->getRequiredApiVersion(),
+				$module->getBulkManageApiVersion()
+			);
+
+			if ($isCompatabible) {
+				$pluginInstances[$pluginId] = $plugin;
+			}
+		}
+
+		return array(null, $pluginInstances);
+	}
+}

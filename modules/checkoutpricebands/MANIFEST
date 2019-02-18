@@ -1,0 +1,7 @@
+# $Revision: 1506 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/checkoutpricebands/classes/CheckoutPriceBandsCustomPlugin.class	377535299	1065126697	1935	1997
+modules/checkoutpricebands/classes/CheckoutPriceBandsProductPlugin.class	1971993541	3278718836	1492	1536
+modules/checkoutpricebands/classes/CheckoutPriceBandsTransactionPlugin.class	1014502821	2499126282	1726	1775
+modules/checkoutpricebands/module.inc	1160740333	256532167	2666	2740
+modules/checkoutpricebands/templates/PriceBandsProducts.tpl	4246046811	1282545204	1471	1502

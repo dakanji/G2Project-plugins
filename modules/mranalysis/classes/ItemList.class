@@ -1,0 +1,152 @@
+<?php
+/*
+ * $RCSfile: ItemList.inc,v $
+ * $Revision: 1848 $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ *
+ * @package MRAnalysis
+ * @author Mark Ridgwell <g2development@markridgwell.com>
+ */
+
+
+/**
+ * @package MRAnalysis
+ * @subpackage ItemList
+ */
+class ItemList {
+	/**
+	 * returns the full path (+name) of object
+	 */
+	public static function itemname($itempair) {
+		$name = '';
+
+		foreach ($itempair['parent'] as $item) {
+			$name .= $item->title;
+			$name .= ' :: ';
+		}
+
+		$name .= $itempair['item']->title;
+
+		return $name;
+	}
+
+	/**
+	 * sorts the item by the full path and name
+	 */
+	public static function sort_by_item_path($item1, $item2) {
+		return strcasecmp(
+			ItemList::itemname($item1),
+			ItemList::itemname($item2)
+		);
+	}
+
+	public static function sort_by_item_title_then_path($item1, $item2) {
+		$cmp = strcasecmp($item1['item']->title, $item2['item']->title);
+
+		if (0 == $cmp) {
+			return ItemList::sort_by_item_path($item1, $item2);
+		}
+
+		return $cmp;
+	}
+
+	// A filter that does not filter anything out
+	public static function noop_filter($item) {
+		return true;
+	}
+
+	// Gets the item with its parents
+	public static function getitemithparentinformation($item) {
+		list($ret, $parentSequence) = GalleryCoreApi::fetchParents($item);
+
+		$newitem           = array();
+		$newitem['item']   = $item;
+		$newitem['parent'] = $parentSequence;
+
+		return $newitem;
+	}
+
+	public static function append_itemdata(&$item, $itemdata) {
+		$item['missing'] = $itemdata['missing'];
+		$item['typo']    = $itemdata['typo'];
+
+		foreach ($itemdata as $key => $value) {
+			//print '<br>' . $key;
+			//$item[ $key ] = $value;
+		}
+	}
+
+	/**
+	 * returns a list of items that the query read
+	 */
+	public static function readItemsFromQuery($query, $filter = null) {
+		global $gallery;
+		list($ret, $results) = $gallery->search($query);
+
+		if ($filter == null) {
+			$filter = array('ItemList', 'noop_filter');
+		}
+
+		$items = array();
+
+		if (!$ret) {
+			while ($result = $results->nextResult()) {
+				$currentid       = (int)$result[0];
+				list($ret, $ids) = GalleryCoreApi::loadEntitiesById($currentid, 'GalleryItem');
+
+				if (!$ret) {
+					$keep = call_user_func($filter, $ids);
+
+					if ($keep) {
+						$item = ItemList::getitemithparentinformation($ids);
+
+						if (is_array($keep)) {
+							ItemList::append_itemdata($item, $keep);
+						}
+
+						$items[] = $item;
+					}
+				}
+			}
+		}
+
+		usort($items, array('ItemList', 'sort_by_item_path'));
+
+		return $items;
+	}
+
+	/**
+	 * returns a list of items with full parentage
+	 */
+	public static function LoadSpecificItems($itemlist) {
+		$items = array();
+
+		foreach ($itemlist as $nextitem) {
+			$item = ItemList::getitemithparentinformation($nextitem);
+
+			$items[] = $item;
+		}
+
+		usort($items, array('ItemList', 'sort_by_item_path'));
+
+		return $items;
+	}
+}

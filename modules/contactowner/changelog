@@ -1,0 +1,36 @@
+/**
+ * Change Log
+ *
+ * v0.2.4 (PHPDuke)
+ *   + Fixed IE display issues
+ *
+ * v0.2.3 (voknelserp)
+ *   + Removed MIME header to avoid Google spam trap.
+ *
+ * v0.2.2 (voknelserp)
+ *   + Fixed MIME errors from reintroduction of MIME headers in v0.2.0.
+ *   + Reintroduced internationalisation changes done by bauchi in 0.1.1de.
+ *   + Reintroduced German translation done by bauchi in 0.1.1de.
+ *
+ * v0.2.0 [Should really be v0.2.1] (mridgwel)
+ *   + Added URL rewrite support so you can alias the contact page as something nicer. e.g. /contact.
+ *
+ * v0.2.0 (talmdal)
+ *   + Works with Gallery v2.3.
+ *   + Code cleanup to make it more compatible with the gallery coding standards.
+ *   + Send.inc was removed and the code integrated into Contact.inc as ContactController.
+ *
+ * v0.1.1de (bauchi)
+ *   + Expanded internationalisation strings.
+ *   + Added German translation.
+ *
+ * v0.1.1 (voknelserp)
+ *   + Introduced captcha challenge.
+ *   + Removed MIME header to avoid Google spam trap.
+ *
+ * v0.0.1
+ *   + Plugin to contact the site owner through a PHP form
+ *   + Derived from CheckoutEmail module
+ *   + Works with Gallery v2.1
+ *
+ */
