@@ -34,12 +34,9 @@ attic
 # Misc stuff #
 ##############
 composer.phar
-/modules/*.zip
-/themes/*.zip
-/modules/*.tgz
-/themes/*.tgz
-/modules/*.tar.gz
-/themes/*.tar.gz
+*.zip
+*.tgz
+*.tar.gz
 
 
 
