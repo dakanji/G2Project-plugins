@@ -1,0 +1,19 @@
+<!DOCTYPE maps SYSTEM "../../../lib/tools/dtd/MapsDefinition2.0.dtd">
+<maps>
+  <map>
+    <map-name>OpenIdMap</map-name>
+    <schema>
+      <schema-major>0</schema-major>
+      <schema-minor>1</schema-minor>
+    </schema>
+    <member>
+      <member-name>openId</member-name>
+      <member-type>STRING</member-type>
+      <member-size>MEDIUM</member-size>
+    </member>
+    <member>
+      <member-name>galleryId</member-name>
+      <member-type>INTEGER</member-type>
+    </member>
+  </map>
+</maps>

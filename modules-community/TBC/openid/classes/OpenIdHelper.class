@@ -1,0 +1,201 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+// TODO: Make library includes absolute
+ini_set(
+	'include_path',
+	dirname(dirname(__FILE__)) . '/lib' . PATH_SEPARATOR . ini_get('include_path')
+);
+GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/Consumer.php');
+GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/FileStore.php');
+GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/SReg.php');
+
+// Required simple registration attributes
+define('OPENID_SREG_REQUIRED', 'nickname,fullname,email');
+
+// Optional simple registration attributes
+define('OPENID_SREG_OPTIONAL', 'language');
+
+/**
+ * OpenID helper class.
+ * @package OpenId
+ * @subpackage Classes
+ * @author Jack Bates <ms419@freezone.co.uk>
+ * @version $Revision: 1574 $
+ * @static
+ */
+class OpenIdHelper {
+	public function &getConsumer() {
+		static $consumer;
+
+		if (!isset($consumer)) {
+			global $gallery;
+			$openIdDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules/openid';
+			list($ok)  = GalleryUtilities::guaranteeDirExists($openIdDir);
+
+			if (!$ok) {
+				return GalleryCoreApi::error(
+					ERROR_PLATFORM_FAILURE,
+					__FILE__,
+					__LINE__,
+					'mkdir failed for ' . $openIdDir
+				);
+			}
+
+			// TODO: Investigate file vs. SQL storage mechanisms
+			$store    = new Auth_OpenID_FileStore($openIdDir);
+			$consumer = new Auth_OpenID_Consumer($store, OpenIdSession::getSession());
+		}
+
+		return $consumer;
+	}
+
+	public function fetchOpenIdsByGalleryId($galleryId) {
+		global $gallery;
+
+		$query = '
+	    	SELECT
+				[OpenIdMap::openId]
+			FROM
+				[OpenIdMap],
+				[Entity]
+			WHERE
+				[Entity::id] = ?
+			AND
+				[OpenIdMap::galleryId] = [Entity::id]
+		';
+
+		list($ret, $results) = $gallery->search($query, $galleryId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$openIds = array();
+
+		while (($result = $results->nextResult()) === false) {
+			$openIds[] = (int)$result[0];
+		}
+
+		return array(null, $openIds);
+	}
+
+	public function fetchGalleryIdByOpenId($openId) {
+		global $gallery;
+
+		// TODO: Support other discovery methods
+		$openId = Auth_OpenID::normalizeUrl($openId);
+
+		$query = '
+	    	SELECT
+				[OpenIdMap::galleryId]
+	    	FROM
+				[OpenIdMap],
+				[Entity]
+	    	WHERE
+				[OpenIdMap::openId] = ?
+	    	AND
+				[OpenIdMap::galleryId] = [Entity::id]
+		';
+
+		list($ret, $results) = $gallery->search($query, $openId);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		if (($result = $results->nextResult()) === false) {
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+		}
+
+		return array(null, (int)$result[0]);
+	}
+
+	public function fetchUnusedGalleryIds() {
+		global $gallery;
+
+		$query = '
+			SELECT
+				[OpenIdMap::galleryId]
+			FROM
+				[OpenIdMap]
+			LEFT JOIN
+				[Entity]
+			ON
+				[OpenIdMap::galleryId] = [Entity::id]
+			WHERE
+				[Entity::id] IS NULL
+		';
+
+		list($ret, $results) = $gallery->search($query);
+
+		if ($ret) {
+			return array($ret, null);
+		}
+
+		$galleryIds = array();
+
+		while (($result = $results->nextResult()) !== false) {
+			$galleryIds[] = (int)$result[0];
+		}
+
+		return array(null, $galleryIds);
+	}
+}
+
+
+class OpenIdSession // implements Auth_Yadis_PHPSession
+{
+	public $_session;
+
+	/**
+	 * @static
+	 */
+	public function &getSession() {
+		static $session;
+
+		if (!isset($session)) {
+			global $gallery;
+
+			$session           = new OpenIdSession();
+			$session->_session = $gallery->getSession();
+		}
+
+		return $session;
+	}
+
+	public function get($key, $default = null) {
+		$key = 'openid.' . $key;
+
+		return $this->_session->exists($key) ? $this->_session->get($key) : $default;
+	}
+
+	public function set($key, $value) {
+		$this->_session->put('openid.' . $key, $value);
+	}
+
+	public function del($key) {
+		$this->_session->remove('openid.' . $key);
+	}
+
+	public function contents() {
+		return null;
+	}
+}
