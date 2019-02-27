@@ -1,0 +1,22 @@
+# $Id: strings.raw 1861 2009-05-11 22:52:18Z mridgwel $
+
+/* module.inc */
+gettext("Moderate")
+gettext("User/Moderation")
+gettext("Gallery")
+
+/* templates/AdminModeration.tpl */
+gettext("Moderation Page")
+gettext("Below you have items not yet approved. Choose you action for each one and then Commit.")
+gettext("Approve")
+gettext("Delete")
+gettext("Commit Actions")
+
+/* templates/ItemAddConfirmation.tpl */
+gettext("Upload Complete")
+ngettext("Successfully added %d file.", "Successfully added %d files.")
+ngettext("Your image will need to be approved before it will be publically displayed, this should take around 24 hours.", "Your images will need to be approved before they will be publically displayed, this should take around 24 hours.")
+gettext("No files added.")
+gettext("Added %s")
+gettext("Failed to add %s")
+gettext("Add more files")

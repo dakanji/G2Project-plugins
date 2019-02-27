@@ -1,0 +1,13 @@
+# $Revision: 1862 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/moderate/AdminModeration.inc	2684947617	3767025656	7432	7663
+modules/moderate/ModerateOption.inc	155666093	3896454128	3370	3472
+modules/moderate/classes/GNUmakefile	1995366819	843025639	51	52
+modules/moderate/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/moderate/classes/GalleryStorage/schema.tpl	1407105414	2957841052	1870	1947
+modules/moderate/classes/Maps.inc	479089185	1338488723	316	320
+modules/moderate/classes/Maps.xml	1616492267	3375066860	492	512
+modules/moderate/data/transparent.gif	2298612248	2298612248	43	43
+modules/moderate/module.inc	3899644447	3666776947	4141	4272
+modules/moderate/templates/AdminModeration.tpl	2436680802	563211632	1599	1648
+modules/moderate/templates/ItemAddConfirmation.tpl	1457004338	4111333458	1642	1693
