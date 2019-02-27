@@ -33,14 +33,19 @@ class SnapGalaxyModule extends GalleryModule {
 
 		$this->setId('snapgalaxy');
 		$this->setName($gallery->i18n('SnapGalaxy'));
-		$this->setDescription($gallery->i18n('SnapGalaxy Photo Printing Module'));
-		// Update "upgrade()" too!
-		$this->setVersion('7.0.0');
+		$this->setDescription(
+			$gallery->i18n(
+				'SnapGalaxy Photo Printing Module'
+			)
+		);
+
+		$this->setVersion('2.0.0'); // Update upgrade() as required
+		$this->setRequiredCoreApi(array(8, 0));
+		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
-		$this->setRequiredCoreApi(array(7, 43));
-		$this->setRequiredModuleApi(array(3, 9));
 	}
 
 	/**
