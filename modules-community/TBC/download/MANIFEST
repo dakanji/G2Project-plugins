@@ -1,0 +1,8 @@
+# $Revision: 779 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/download/Download.inc	2827774842	3560404716	2512	2588
+modules/download/lib/HTTP/Download.php	1727521124	1189227216	31074	30043
+modules/download/lib/HTTP/HTTP/Header.php	3898018728	1984746024	16420	15889
+modules/download/lib/HTTP/HTTP/LICENSE	2723373997	2778051701	1445	1420
+modules/download/lib/HTTP/LICENSE	599301641	3518887798	1374	1352
+modules/download/module.inc	1019917931	1747602882	2086	2154
