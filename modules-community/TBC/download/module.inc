@@ -53,6 +53,19 @@ class DownloadModule extends GalleryModule {
 	}
 
 	/**
+	 * Class Loader
+	 */
+	public static function getMe() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new DownloadModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::upgrade
 	 */
 	public function upgade($currentVersion) {

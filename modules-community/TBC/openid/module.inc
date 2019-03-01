@@ -22,8 +22,7 @@
  * @author Jack Bates <ms419@freezone.co.uk>
  * @version $Revision: 1578 $
  */
-class OpenIdModule extends GalleryModule // and GalleryEventListener
-{
+class OpenIdModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
 
@@ -31,7 +30,7 @@ class OpenIdModule extends GalleryModule // and GalleryEventListener
 		$this->setName($gallery->i18n('OpenID'));
 		$this->setDescription(
 			$gallery->i18n(
-				'Login with a distributed identity system (unfinished module; see Site Admin page)'
+				'Login with a distributed identity system (unfinished module)'
 			)
 		);
 
@@ -42,6 +41,19 @@ class OpenIdModule extends GalleryModule // and GalleryEventListener
 
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));
 		$this->setCallbacks('getSystemLinks|getSiteAdminViews|registerEventListeners');
+	}
+
+	/**
+	 * Class Loader
+	 */
+	public static function getMe() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new OpenIdModule();
+		}
+
+		return $singleton;
 	}
 
 	/**
@@ -100,23 +112,25 @@ class OpenIdModule extends GalleryModule // and GalleryEventListener
 
 			case '0.0.1':
 				// Add OpenIdMap
-
 			case '0.0.2':
 				// Add GalleryPendingUser::createGalleryUser event listener
-
 			case '0.0.3':
 				// Add GalleryEntity::delete event listener
-
 			case '0.0.4':
 				// Add site admin view
-
 			case '0.0.5':
 				// Add OpenID option to UserSelfRegistration
-
 			case '0.0.6':
 				// Add getSystemLinks for Login with OpenID link
-
+			case '0.0.7':
+			case '1.0.0':
+				// Updated GalleryCoreApi requirement to 8.0
+				// Upgraded GalleryModule requirement to 4.0
 			case 'end of upgrade path':
+				/*
+				 * Leave this bogus case at the end of the legitimate case statements
+				 * so that we always properly terminate our upgrade path with a break.
+				 */
 				break;
 
 			default:

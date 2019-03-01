@@ -53,6 +53,19 @@ class mapModule extends GalleryModule {
 	}
 
 	/**
+	 * Class Loader
+	 */
+	public static function getMe() {
+		static $singleton;
+
+		if (!isset($singleton)) {
+			$singleton = new mapModule();
+		}
+
+		return $singleton;
+	}
+
+	/**
 	 * @see GalleryModule::registerEventListeners()
 	 */
 	public function registerEventListeners() {
