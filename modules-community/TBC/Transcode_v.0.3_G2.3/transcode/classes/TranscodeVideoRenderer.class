@@ -1,0 +1,194 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
+
+/**
+ * A renderer for Transcoded movie items.
+ * @package Transcode
+ * @subpackage Classes
+ * @author Alan Harder <alan.harder@sun.com>
+ * @version $Revision: 15953 $
+ */
+class TranscodeVideoRenderer extends GalleryRenderer {
+	/**
+	 * @see GalleryRenderer::canBeViewedInline
+	 */
+
+	/**
+	 * @see GalleryDataItem::canBeViewedInline
+	 */
+	public function canBeViewedInline($item) {
+		$itemId                 = $item->getId();
+		list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds(array($itemId));
+
+		if ($ret) {
+			return array($ret, null, null, null);
+		}
+
+		if (isset($preferreds[$itemId])) {
+			foreach ($preferreds as $preferred) {
+				$op = strstr($preferred->getDerivativeOperations(), 'convert-to-video/x-flv');
+
+				if (strlen($op) > 0) {
+					$item = $preferred;
+				}
+			}
+		}
+		// The mimeTypes listed here should provide a render() output
+		static $mimeList = array(
+			'video/quicktime',
+			'video/mpeg',
+			'video/x-msvideo',
+			'video/x-ms-wmv',
+			'video/x-ms-asf',
+			'video/x-ms-asx',
+			'video/webm',
+			'video/ogg',
+		);
+
+		return $item->_canBeViewedInline(
+			GalleryUtilities::isA($item, 'GalleryMovieItem') && in_array($item->getMime(), $mimeList)
+		);
+	}
+
+	/**
+	 * @see GalleryRenderer::render
+	 */
+
+	/**
+	 * @see GalleryDataItem::render
+	 */
+	public function render($format, $entity, $item, $params) {
+		global $gallery;
+
+		static $mimeList = array(
+			'video/quicktime',
+			'video/mpeg',
+			'video/x-msvideo',
+			'video/x-ms-wmv',
+			'video/x-ms-asf',
+			'video/x-ms-asx',
+			'video/webm',
+			'video/ogg',
+		);
+
+		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
+
+		if ($format != 'HTML' || !in_array($entity->getMimeType(), $mimeList)) {
+			return null;
+		}
+
+		switch ($format) {
+			case 'HTML':
+				$urlGenerator =& $gallery->getUrlGenerator();
+				$src          = $urlGenerator->generateUrl(
+					array(
+						'view'         => 'core.DownloadItem',
+						'itemId'       => $entity->getId(),
+						'serialNumber' => $entity->getSerialNumber(),
+					),
+					array(
+						'forceFullUrl'   => true,
+						'forceSessionId' => true,
+					)
+				);
+
+				list($width, $height) = array($entity->getWidth(), $entity->getHeight());
+
+				switch ($entity->getMimeType()) {
+					case 'video/quicktime':
+					case 'video/webm':
+					case 'video/ogg':
+						GalleryCoreApi::requireOnce('modules/flashvideo/classes/FlashVideoRenderer.class');
+
+						return FlashVideoRenderer::render($format, $entity, $item, $params);
+
+					return sprintf(
+						'<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
+             codebase="http://www.apple.com/qtactivex/qtplugin.cab"
+             width="%s" height="%s" id="%s"%s>
+               <param name="src" value="%s"/>
+               <param name="controller" value="true"/>
+               <param name="autoplay" value="true"/>
+               <param name="loop" value="false"/>
+               <embed src="%s" width="%s" height="%s" type="%s"
+                  pluginspage="http://www.apple.com/quicktime/download/"
+                  controller="true" autoplay="true" loop="false"/>
+               <noembed>%s</noembed>
+         </object>',
+						$width,
+						$height + 16,
+						!empty($params['id']) ? $params['id'] : 'movie',
+						!empty($params['class']) ? ' class="' . $params['class'] . '"' : '',
+						$src,
+						$src,
+						$width,
+						$height + 16,
+						$entity->getMimeType(),
+						$fallback
+					);
+
+					case 'video/mpeg':
+					case 'video/x-msvideo':
+					case 'video/x-ms-wmv':
+								$classId = 'CLSID:05589FA1-C356-11CE-BF01-00AA0055595A';
+								// Fall Through
+					case 'video/x-ms-asf':
+					case 'video/x-ms-asx':
+						if (!isset($classId)) {
+							$classId = 'CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95';
+						}
+
+						return sprintf(
+							'<object classid="%s" width="%s" height="%s" id="%s"%s>
+               <param name="ShowDisplay" value="0"/>
+               <param name="ShowControls" value="1"/>
+               <param name="AutoStart" value="1"/>
+               <param name="AutoRewind" value="-1"/>
+               <param name="Volume" value="0"/>
+               <param name="FileName" value="%s"/>
+               <embed src="%s" width="%s" height="%s" type="%s"
+                  controller="true" autoplay="true" loop="false"/>
+               <noembed>%s</noembed>
+         </object>',
+							$classId,
+							$width,
+							$height + 50,
+							!empty($params['id']) ? $params['id'] : 'movie',
+							!empty($params['class']) ? ' class="' . $params['class'] . '"' : '',
+							$src,
+							$src,
+							$width,
+							$height + 50,
+							$entity->getMimeType(),
+							$fallback
+						);
+
+					default:
+						return $fallback;
+				}
+
+				// Fall Through
+			default:
+				return null;
+		}
+	}
+}
