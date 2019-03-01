@@ -1,0 +1,507 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2012 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
+
+/**
+ * A renderer for most media types.
+ * @package multimedia
+ * @subpackage Classes
+ * @author Wayne Patterson <suprsidr@flashyourweb.com>
+ * @version $Revision: 15953 $
+ */
+class MultimediaRenderer extends GalleryRenderer {
+	/**
+	 * @see GalleryRenderer::canBeViewedInline
+	 */
+	public function canBeViewedInline($item) {
+		return !GalleryUtilities::isA($item, 'GalleryPhotoItem')
+			&& (
+				preg_match('/video/', $item->getMimeType())
+				|| preg_match('/audio/', $item->getMimeType())
+			);
+	}
+
+	/**
+	 * @see GalleryRenderer::render
+	 * if preferred exists it will be $entity and original in $item
+	 */
+	public function render($format, $entity, $item, $params) {
+		global $gallery;
+
+		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
+
+		$av = preg_match('/video/', $entity->getMimeType()) ? 'video' : (preg_match('/audio/', $entity->getMimeType()) ? 'audio' : null);
+
+		if ($format != 'HTML' || !$av) {
+			return null;
+		}
+
+		$urlGenerator = &$gallery->getUrlGenerator();
+
+		// Including modernizr modernizr.com/
+		$modernizrUrl = $urlGenerator->generateUrl(
+			array(
+				'href' => 'modules/multimedia/lib/modernizr.js',
+			),
+			array(
+				'forceFullUrl' => true,
+			)
+		);
+
+		// Using flowplayer
+		$playerJsUrl = $urlGenerator->generateUrl(
+			array(
+				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.min.js',
+			),
+			array(
+				'forceFullUrl' => true,
+			)
+		);
+
+		$playerUrl = $urlGenerator->generateUrl(
+			array(
+				'href' => 'modules/multimedia/lib/flowplayer/flowplayer-3.2.7.swf',
+			),
+			array(
+				'forceFullUrl' => true,
+			)
+		);
+
+		$pseudoPluginUrl = $urlGenerator->generateUrl(
+			array(
+				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.pseudostreaming-3.2.7.swf',
+			),
+			array(
+				'forceFullUrl' => true,
+			)
+		);
+
+		$audioPluginUrl = $urlGenerator->generateUrl(
+			array(
+				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.audio-3.2.2.swf',
+			),
+			array(
+				'forceFullUrl' => true,
+			)
+		);
+
+		$itemId     = $item->getId();
+		$thumbUrl   = '';
+		$thumbWidth = $thumbHeight = 200;
+
+		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
+
+		if (!$ret && !empty($thumbnail)) {
+			$thumbUrl = $urlGenerator->generateUrl(
+				array(
+					'view'         => 'multimedia.DownloadItem',
+					'itemId'       => $thumbnail[$itemId]->getId(),
+					'serialNumber' => $thumbnail[$itemId]->getSerialNumber(),
+				),
+				array(
+					'forceFullUrl'   => true,
+					'forceSessionId' => true,
+					'htmlEntities'   => false,
+				)
+			);
+
+			if ($thumbnail[$itemId]->getWidth() >= 400) {
+				$thumbWidth = $thumbnail[$itemId]->getWidth();
+			} else {
+				$thumbWidth = 400;
+			}
+
+			$thumbHeight = $thumbnail[$itemId]->getHeight();
+		}
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'multimedia');
+
+		if ($ret) {
+			return null;
+		}
+
+		$jsWarning = $module->translate('JavaScript required to view this content.');
+
+		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
+
+		$title = smarty_modifier_markup($item->getTitle(), 'strip');
+
+		$src = $urlGenerator->generateUrl(
+			array(
+				'view'         => 'multimedia.DownloadItem',
+				'itemId'       => $entity->getId(),
+				'serialNumber' => $entity->getSerialNumber(),
+			),
+			array(
+				'forceFullUrl'   => true,
+				'forceSessionId' => true,
+				'htmlEntities'   => false,
+			)
+		);
+
+		switch ($av) {
+			case 'video':
+				if (method_exists($entity, 'getWidth')) {
+					list($width, $height) = array($entity->getWidth(), $entity->getHeight());
+
+					if ($width == 0 || $height == 0) {
+						list($width, $height) = array($item->getWidth(), $item->getHeight());
+					}
+				}
+
+				switch ($entity->getMimeType()) {
+					case 'video/mpeg':
+					case 'video/avi':
+					case 'video/x-msvideo':
+					case 'video/x-ms-wmv':
+						$classId = 'CLSID:05589FA1-C356-11CE-BF01-00AA0055595A';
+						// Fall Through
+					case 'video/x-ms-asf':
+					case 'video/x-ms-asx':
+						$classId = isset($classId) ? $classId : 'CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95';
+
+						$display = sprintf(
+							'<object classid="%s" width="%s" height="%s" id="multimedia-%s"> '
+							. '<param name="ShowDisplay" value="0"/> '
+							. '<param name="ShowControls" value="1"/> '
+							. '<param name="AutoStart" value="1"/> '
+							. '<param name="AutoRewind" value="-1"/> '
+							. '<param name="Volume" value="0"/> '
+							. '<param name="FileName" value="%s"/> '
+							. '<embed src="%s" width="%s" height="%s" type="%s" '
+							. 'controller="true" autoplay="true" loop="false"/> '
+							. '<noembed>%s</noembed> '
+							. '</object>',
+							$classId,
+							$width,
+							$height,
+							$entity->getId(),
+							$src,
+							$src,
+							$width,
+							$height,
+							$entity->getMimeType(),
+							$fallback
+						);
+
+						break;
+
+					case 'video/x-flv':
+					case 'video/quicktime':
+					case 'video/ogg':
+					case 'video/mp4':
+					case 'video/webm':
+						$display = sprintf(
+							"<div id=\"multimedia-%s\"><h3>%s</h3></div>
+            <script src=\"//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js\"></script>
+            <script src=\"%s\"></script>
+            <script src=\"%s\"></script>
+            <script>
+                var types = {
+                    'x-flv' : 'flv',
+                    'mp4' : 'h264',
+                    'ogg' : 'ogg',
+                    'webm' : 'webm'
+                };
+                // Safari can play quicktime as html5.video.h264(it is a mp4 after all)
+                if(navigator.userAgent.toLowerCase().indexOf('safari') && navigator.userAgent.toLowerCase().indexOf('android') == -1 && navigator.userAgent.toLowerCase().indexOf('chrome') == -1){
+                    types.quicktime = 'h264';
+                }
+                var ext = '%s'.split('/')[1];
+                if (Modernizr.video && Modernizr.video[types[ext]]) {
+                    // First try html5.video
+                    jQuery('#multimedia-%s').empty().css({'width':%s,'height': %s})
+                        .append(
+                            jQuery('<video />')
+                            .attr({
+                                'width' : %s,
+                                'height' : %s,
+                                'title' : '%s',
+                                'preload' : true,
+                                'autoplay' : true,
+                                'controls' : true,
+                                'poster' : '%s'
+                            }).append(
+                                jQuery('<source />')
+                                .attr({
+                                    'src' : '%s',
+                                    'type' : '%s'
+                                })
+                            )
+                        );
+
+                } else if (jQuery.inArray(ext, ['x-flv', 'f4v', 'mp4', 'm4v', 'm4a', 'quicktime']) != -1) {
+                    // Lets try flash
+                    jQuery('#multimedia-%s').empty().css({'width':%s,'height': %s});
+                    flowplayer(
+                        'multimedia-%s',
+                        {
+                            src: '%s',
+                            wmode: 'transparent',
+                            provider: 'pseudostreaming'
+                        },
+                        {
+                            plugins: {
+                                pseudostreaming: {
+                                    url: '%s'
+                                },
+                                controls: {
+                                    autoHide: 'always',
+                                    hideDelay: 2000
+                                }
+                            },
+                            clip: {
+                                url: '%s',
+                                scaling: 'fit'
+                            }
+                        }
+                    )
+                } else {
+                    jQuery('#multimedia-%s').html('Sorry your browser does not support HTML5.video.'+types[ext]+'<br />%s');
+                }
+            </script>",
+							$entity->getId(),
+							$jsWarning,
+							$playerJsUrl,
+							$modernizrUrl,
+							$entity->getMimeType(),
+							$entity->getId(),
+							$width,
+							$height,
+							$width,
+							$height,
+							$title,
+							$thumbUrl,
+							$src,
+							$entity->getMimeType(),
+							$entity->getId(),
+							$width,
+							$height,
+							$entity->getId(),
+							$playerUrl,
+							$pseudoPluginUrl,
+							urlencode($src),
+							$entity->getId(),
+							$fallback
+						);
+
+						break;
+
+					default:
+						$display = 'Sorry your browser does not support ' . $fallback;
+
+						break;
+				}
+
+				break; // end case: video
+
+			case 'audio':
+				switch ($entity->getMimeType()) {
+					case 'audio/ogg':
+					case 'audio/x-wav':
+					case 'audio/mpeg':
+						$display = sprintf(
+							"<div style=\"display:table;\"><div id=\"multimedia-%s\"><h3>%s</h3></div></div>
+                <script src=\"//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js\"></script>
+                <script src=\"%s\"></script>
+                <script src=\"%s\"></script>
+                <script>
+                    var types = {
+                        'x-wav' : 'wav',
+                        'wav' : 'wav',
+                        'ogg' : 'ogg',
+                        'mpeg' : 'mp3'
+                    };
+                    var ext = '%s'.split('/')[1];
+                    if (Modernizr.audio && Modernizr.audio[types[ext]]) {
+                        // First try html5.audio
+                        jQuery('#multimedia-%s').empty().css({'width':'auto','height':'auto', 'text-align':'center'})
+                            .append(jQuery('<img />').attr({'title':'%s', 'src':'%s'})).append('<br />')
+                            .append(
+                                jQuery('<audio />')
+                                .attr({
+                                    'title' : '%s',
+                                    'preload' : true,
+                                    'autoplay' : true,
+                                    'controls' : true
+                                }).append(
+                                    jQuery('<source />')
+                                    .attr({
+                                        'src' : '%s',
+                                        'type' : '%s'
+                                    })
+                                )
+                            );
+
+                    } else if (jQuery.inArray(ext, ['mp4', 'mpeg']) != -1) {
+                        // Lets try flash
+                        jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s'});
+                        flowplayer(
+                            'multimedia-%s',
+                            {
+                                src: '%s',
+                                wmode: 'transparent',
+                                allowfullscreen: false
+                            },
+                            {
+                                plugins: {
+                                    'audio': {
+                                        url: '%s'
+                                    },
+                                    controls: {
+                                        autoHide: false
+                                    }
+                                },
+                                clip: {
+                                    url: '%s',
+                                    provider: 'audio',
+
+                                    coverImage: { url: '%s', scaling: 'orig' }
+                                }
+                            }
+                        )
+                    } else {
+                        jQuery('#multimedia-%s').html('Sorry your browser does not support HTML5.audio.'+types[ext]+'<br />%s');
+                    }
+                </script>",
+							$entity->getId(),
+							$jsWarning,
+							$playerJsUrl,
+							$modernizrUrl,
+							$entity->getMimeType(),
+							$entity->getId(),
+							$title,
+							$thumbUrl,
+							$title,
+							$src,
+							$entity->getMimeType(),
+							$entity->getId(),
+							$thumbWidth,
+							$thumbHeight,
+							$entity->getId(),
+							$playerUrl,
+							$audioPluginUrl,
+							urlencode($src),
+							urlencode($thumbUrl),
+							$entity->getId(),
+							$fallback
+						);
+
+						break;
+
+					// Tried to merge this w/ above but too many differences like m4a is in actuality an audio only mp4 video
+					// so it will play in flowplayer as a video && appears audio/mp4 is also supported in html5 <audio /> in webkit/iOS/Android
+					case 'audio/mp4':
+						$display = sprintf(
+							"<div style=\"display:table;\"><div id=\"multimedia-%s\"><h3>%s</h3></div></div>
+                <script src=\"//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js\"></script>
+                <script src=\"%s\"></script>
+                <script src=\"%s\"></script>
+                <script>
+                    if (Modernizr.audio && Modernizr.audio.m4a) {
+                        // First try html5.audio
+                        jQuery('#multimedia-%s').empty().css({'width':'auto','height':'auto', 'text-align':'center'})
+                            .append(jQuery('<img />').attr({'title':'%s', 'src':'%s'})).append('<br />')
+                            .append(
+                                jQuery('<audio />')
+                                .attr({
+                                    'title' : '%s',
+                                    'preload' : true,
+                                    'autoplay' : true,
+                                    'controls' : true
+                                }).append(
+                                    jQuery('<source />')
+                                    .attr({
+                                        'src' : '%s',
+                                        'type' : '%s'
+                                    })
+                                )
+                            );
+
+                    } else {
+                        // Lets try flash
+                        jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s','position':'relative'});
+                        flowplayer(
+                            'multimedia-%s',
+                            {
+                                src: '%s',
+                                wmode: 'transparent',
+                                allowfullscreen: false,
+                                provider: 'pseudostreaming'
+                            },
+                            {
+                                plugins: {
+                                    pseudostreaming: {
+                                        url: '%s'
+                                    },
+                                    controls: {
+                                        autoHide: false
+                                    }
+                                },
+                                clip: {
+                                    url: '%s'
+                                }
+                            }
+                        )
+                        jQuery('#multimedia-%s').css({'background-image':'url(%s)', 'background-position':'top center', 'background-repeat':'no-repeat'});
+                    }
+                </script>",
+							$entity->getId(),
+							$jsWarning,
+							$playerJsUrl,
+							$modernizrUrl,
+							$entity->getId(),
+							$title,
+							$thumbUrl,
+							$title,
+							$src,
+							$entity->getMimeType(),
+							$entity->getId(),
+							$thumbWidth,
+							$thumbHeight,
+							$entity->getId(),
+							$playerUrl,
+							$pseudoPluginUrl,
+							urlencode($src),
+							$entity->getId(),
+							$thumbUrl,
+							$entity->getId(),
+							$fallback
+						);
+
+						break;
+
+					default:
+						// Sorry we don't support midi, wma, real, aiff...
+						return null;
+				}
+
+				break;
+
+			default:
+				$display = 'Sorry your browser does not support ' . $fallback;
+
+				break;// end case: audio
+		}
+
+		return $display;
+	}
+}
