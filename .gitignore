@@ -8,14 +8,17 @@
 ehthumbs.db
 Thumbs.db
 
+
 # svn folder #
 ##############
 **/.svn
+
 
 # style guide #
 ##############
 .php_cs.cache
 dev_vendor
+
 
 # installed G2 #
 ##############
@@ -25,11 +28,13 @@ config.php
 authFile.txt
 login.txt
 
+
 # IDE stuff #
 ##############
 .idea
 build
 attic
+
 
 # Misc stuff #
 ##############
@@ -37,7 +42,6 @@ composer.phar
 *.zip
 *.tgz
 *.tar.gz
-
 
 
 # Non G2 Modules #
@@ -55,6 +59,7 @@ composer.phar
 /locale
 /themes
 /upgrade
+
 
 # G2 Modules #
 ##############
@@ -75,14 +80,17 @@ modules-official/EOL/*
 !modules-official/EOL/shutterfly
 !modules-official/EOL/snapgalaxy
 
+
 # G2 Modules Official TBC #
 ###########################
 modules-official/TBC/*
+
 
 # G2 Modules Community EOL #
 ############################
 modules-community/EOL/*
 !modules-community/EOL/fotokasten
+
 
 # G2 Modules Community TBC #
 ############################
@@ -138,7 +146,3 @@ modules-community/EOL/*
 /modules-community/TBC/thumbpage
 /modules-community/TBC/useralbum
 /modules-community/TBC/watermark
-
-
-
-
