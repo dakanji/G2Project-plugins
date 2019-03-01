@@ -1,0 +1,784 @@
+<?php
+/*
+ * $RCSfile: DupeDetectHelperTest.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ * @version $Revision: 1.4 $ $Date: 2005/07/06 10:54:34 $
+ * @package DupeDetect
+ * @subpackage PHPUnit
+ * @author Aviad Tsherniak <tshernia@tau.ac.il>
+ */
+
+/**
+ * Helper class
+ */
+GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
+
+/**
+ * Map class
+ */
+
+//GalleryCoreApi::requireOnce('modules/quotas/classes/QuotasMap.class');
+/**
+ * Test DupeDetect functionality
+ *
+ * @package DupeDetect
+ * @subpackage PHPUnit
+ */
+class DupeDetectHelperTest extends GalleryTestCase {
+	public function __construct($methodName) {
+		parent::__construct($methodName);
+	}
+
+	/**
+	 * Prepare for our test
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		// Create a container album for any data items we create
+
+		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// acquire locks for the test album
+
+		list($ret, $this->_lockIds) = GalleryCoreApi::acquireReadLock($this->_album->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// upload test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/100.jpg';
+
+		list($ret, $this->_item) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// upload test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/50.jpg';
+
+		list($ret, $this->_item2) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	public function tearDown() {
+		$this->_markForCleanup($this->_item);
+		$this->_markForCleanup($this->_item2);
+		$this->_markForCleanup($this->_album);
+
+		$ret = GalleryCoreApi::releaseLocks($this->_lockIds);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		parent::tearDown();
+	}
+
+	/**
+	 * returns status of existence of CRC32 and histogram signature for item with given id
+	 */
+	public function _doesSignaturesExist($id) {
+		list($ret, $crcExists) = DupeDetectCrc32Helper::getCrc32Signature(array($id));
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret, null, null);
+		}
+
+		list($ret, $histogramExists) = DupeDetectHistogramHelper::getHistogramSignature(
+			array($id)
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret, null, null);
+		}
+
+		return array(GalleryStatus::success(), (bool)$crcExists, (bool)$histogramExists);
+	}
+
+	/**
+	 * tests functionalities of both createDupeSignatures() and removeDupeSignatures()
+	 */
+	public function testCreateRemoveDupeSignatures() {
+		// create the signatures
+		$ret = DupeDetectHelper::createDupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		// check that signatures were created
+
+		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->assert($crcSign, 'crc32 signature wasn\'t created');
+		$this->assert($histSign, 'histogram signature wasn\'t created');
+
+		// test removal of signatures
+		$ret = DupeDetectHelper::removeDupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		// check that signatures were created
+
+		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(!$crcSign, 'crc32 signature wasn\'t removed');
+		$this->assert(!$histSign, 'histogram signature wasn\'t removed');
+	}
+
+	/**
+	 * Tests the functionality of addDupes() and getExistDupePair()
+	 */
+	public function testAddDupes() {
+		$count = -1;
+
+		// call addDupes() with an empty dupes list
+
+		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), null);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($count, 0);
+
+		// upload another test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/100.jpg';
+
+		list($ret, $dupItem1) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->_markForCleanup($dupItem1);
+
+		// upload another test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/50.jpg';
+
+		list($ret, $dupItem2) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->_markForCleanup($dupItem2);
+
+		// test getDupePairs when the pair doesn't exist
+		$exist = true;
+
+		list($ret, $exist) = DupeDetectHelper::getDupePairs(
+			$this->_item->getId(),
+			$dupItem1->getId(),
+			0
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($exist, false);
+
+		// add two dupes pairs
+		$count    = -1;
+		$dupeList = array(
+			array(
+				$dupItem1->getId(),
+				0,
+			),
+			array(
+				$dupItem2->getId(),
+				1,
+			),
+		);
+
+		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), $dupeList);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($count, 2);
+
+		// check that they were added
+		$exist = false;
+
+		list($ret, $exist) = DupeDetectHelper::getDupePairs(
+			$this->_item->getId(),
+			$dupItem1->getId(),
+			0
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assert($exist != false);
+
+		$exist = false;
+
+		list($ret, $exist) = DupeDetectHelper::getDupePairs(
+			$this->_item->getId(),
+			$dupItem2->getId(),
+			1
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assert($exist != false);
+
+		// test getDupePairs() - get non existing pair (difference is in the dupType)
+		$exist = true;
+
+		list($ret, $exist) = DupeDetectHelper::getDupePairs(
+			$this->_item->getId(),
+			$dupItem1->getId(),
+			1
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($exist, false);
+
+		// try to add a dupes pair that already exist (1)
+		$dupeList = array(array($dupItem1->getId(), 0));
+
+		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), $dupeList);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($count, 0);
+
+		// try to add a dupes pair that already exist (2)
+		$dupeList = array(array($this->_item->getId(), 0));
+
+		list($ret, $count) = DupeDetectHelper::addDupes($dupItem1->getId(), $dupeList);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($count, 0);
+
+		// clean up
+		$ret = DupeDetectHelper::deleteDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	/**
+	 * Tests the functionality of deleteDupes()
+	 */
+	public function testDeleteDupes() {
+		$count = -1;
+
+		// upload another test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/100.jpg';
+
+		list($ret, $dupItem1) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->_markForCleanup($dupItem1);
+
+		// upload another test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/50.jpg';
+
+		list($ret, $dupItem2) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->_markForCleanup($dupItem2);
+
+		// add dupes pairs
+		$dupeList = array(array($this->_item->getId(), 1));
+
+		list($ret, $count) = DupeDetectHelper::addDupes($dupItem2->getId(), $dupeList);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($count, 1);
+
+		$dupeList = array(array($dupItem1->getId(), 0));
+
+		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), $dupeList);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($count, 1);
+
+		// test removal of these two dupe pairs, both of _item
+		$ret = DupeDetectHelper::deleteDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// check that were deleted
+		$exist = true;
+
+		list($ret, $exist) = DupeDetectHelper::getDupePairs(
+			$dupItem2->getId(),
+			$this->_item->getId(),
+			1
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($exist, false);
+
+		$exist = true;
+
+		list($ret, $exist) = DupeDetectHelper::getDupePairs(
+			$this->_item->getId(),
+			$dupItem1->getId(),
+			0
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($exist, false);
+	}
+
+	/**
+	 * test the functionality of the handleEvent() function, when a GalleryEntity::save
+	 * event is fired.
+	 */
+	public function testHandleSaveEvent() {
+
+		// call handleEvent()
+		$eventName = 'GalleryEntity::save';
+		$event     = GalleryCoreApi::newEvent($eventName);
+		$event->setEntity($this->_item);
+
+		list($ret, $result) = DupeDetectHelper::handleEvent($event);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// check that signatures were created
+
+		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->assert($crcSign, 'crc32 signature wasn\'t created in ::save event');
+		$this->assert($histSign, 'histogram signature wasn\'t created in ::save event');
+
+		// clean up
+		$ret = DupeDetectHelper::removeDupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$ret = DupeDetectHelper::deleteDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	/**
+	 * test the functionality of the handleEvent() function, when a GalleryEntity::delete
+	 * event is fired.
+	 */
+	public function testHandleDeleteEvent() {
+		// create signatures for item
+		$ret = DupeDetectHelper::createDupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// call handleEvent()
+		$eventName = 'GalleryEntity::delete';
+		$event     = GalleryCoreApi::newEvent($eventName);
+		$event->setEntity($this->_item);
+
+		list($ret, $result) = DupeDetectHelper::handleEvent($event);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// check that the handler had run and successfully deleted the signatures
+
+		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(!$crcSign, 'crc32 signature wasn\'t deleted');
+		$this->assert(!$histSign, 'histogram signature wasn\'t deleted');
+	}
+
+	/**
+	 * test the functionality of the discoverDupes() function.
+	 */
+	public function testDiscoverDupes() {
+		// try to discover before there are any signatures, should return empty array
+
+		list($ret, $dupes) = DupeDetectHelper::discoverDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assert(empty($dupes), 'should have returned an empty array of dupes');
+
+		// create signature for first item
+		$ret = DupeDetectHelper::createDupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		// there may already be dupes for this item in the real G2 database, count how many
+
+		list($ret, $dupes) = DupeDetectHelper::discoverDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$existingDupes = count($dupes);
+
+		// create signature for second item
+		$ret = DupeDetectHelper::createDupeSignatures($this->_item2);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		/* discover dupes again, this time the second item should be discovered as a histogram
+		 * duplicate to the first.
+		 */
+
+		list($ret, $dupes) = DupeDetectHelper::discoverDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($existingDupes + 1, count($dupes));
+		$existingDupes = count($dupes);
+
+		/* now add another dup image, that is exact dupe of $this->_item. two more dupe
+		 * pairs should be discovered now (one exact, one hist)
+		 */
+
+		// upload another test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/100.jpg';
+
+		list($ret, $dupItem2) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->_markForCleanup($dupItem2);
+
+		$ret = DupeDetectHelper::createDupeSignatures($dupItem2);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		list($ret, $dupes) = DupeDetectHelper::discoverDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($existingDupes + 2, count($dupes));
+
+		// clean up
+		$ret = DupeDetectHelper::removeDupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$ret = DupeDetectHelper::removeDupeSignatures($this->_item2->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$ret = DupeDetectHelper::removeDupeSignatures($dupItem2->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	/**
+	 * test markAsIgnoredDuplicate() and getDupePairs() functions
+	 */
+	public function testMarkAsIgnoredDuplicate() {
+		// test that fails when asked to mark a pair that doesn't exist
+		$ret = DupeDetectHelper::MarkAsIgnoredDuplicate($this->_item, $this->_item2);
+		$this->assert($ret->isError(), '');
+
+		// add 2 dupe pair records
+		$dupeList = array(
+			array($this->_item2->getId(), 0),
+			array($this->_item2->getId(), 1),
+		);
+
+		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), $dupeList);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($count, 2);
+
+		// mark (two of them) as ignored
+		$ret = DupeDetectHelper::MarkAsIgnoredDuplicate(
+			$this->_item->getId(),
+			$this->_item2->getId()
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		list($ret, $dupes) = DupeDetectHelper::getDupePairs(
+			$this->_item->getId(),
+			$this->_item2->getId()
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals(count($dupes), 2);
+		$this->assertEquals((int)$dupes[0]['userStatus'], DUPEDETECT_IGNORED_DUPLICATE);
+		$this->assertEquals((int)$dupes[1]['userStatus'], DUPEDETECT_IGNORED_DUPLICATE);
+
+
+		// clean up
+		$ret = DupeDetectHelper::deleteDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// check getDupeParis on non existing pair
+
+		list($ret, $dupes) = DupeDetectHelper::getDupePairs(
+			$this->_item->getId(),
+			$this->_item2->getId()
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$this->assertEquals($dupes, false);
+	}
+
+	/**
+	 * test linkItems() functionality
+	 */
+	public function testLinkItems() {
+		// Create a container album for any data items we create
+
+		list($ret, $this->_album2) = $this->_createRandomAlbum($this->_getRootId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->_markForCleanup($this->_album2);
+
+		// acquire locks for the test album
+
+		list($ret, $this->_lockIds2) = GalleryCoreApi::acquireReadLock($this->_album2->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		/* upload another test image, this time to album2.
+		 * doesn't need to be marked for cleanup as we delete it later */
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/50.jpg';
+
+		list($ret, $dupItem) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album2->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		$dupId = $dupItem->getId();
+
+		// call linkItems()
+
+		list($ret, $newItem) = DupeDetectHelper::linkItems($this->_item->getId(), $dupId);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// check that $dupItem has been deleted
+		$ret = $this->_verifyMissing($dupId);
+		$this->assert(!$ret->isError());
+
+		// check that new item is linked to _item
+		list($ret, $linkedItems) = GalleryCoreApi::fetchEntitiesLinkedTo($this->_item->getId());
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(
+			in_array($newItem->getId(), $linkedItems),
+			"newly created item not found in original item's linked items list"
+		);
+
+		// check that new item was created in _item's album
+		$this->assertEquals($newItem->getParentId(), $this->_album2->getId());
+
+		// clean up
+		$ret = GalleryCoreApi::releaseLocks($this->_lockIds2);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+	}
+}

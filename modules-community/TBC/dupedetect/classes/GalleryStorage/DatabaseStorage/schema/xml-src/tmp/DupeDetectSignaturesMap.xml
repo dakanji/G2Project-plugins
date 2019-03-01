@@ -1,0 +1,21 @@
+<!DOCTYPE class SYSTEM "../../../../../../../../lib/tools/dtd/GalleryClass2.0.dtd">
+<class>
+<class-name>DupeDetectSignaturesMap</class-name>
+<schema>
+<schema-name>DupeDetectSignaturesMap</schema-name>
+<schema-major>1</schema-major>
+<schema-minor>0</schema-minor>
+</schema>
+<map>
+<member>
+<member-name>itemId</member-name>
+<member-type>INTEGER</member-type>
+<primary/>
+</member>
+<member>
+<member-name>crc32</member-name>
+<member-type>INTEGER</member-type>
+<indexed/>
+</member>
+</map>
+</class>

@@ -1,0 +1,229 @@
+<?php
+
+/*
+ * $RCSfile: DupeDetectCrc32Helper.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ * @version $Revision: 0.9 $ $Date: 2005/07/23 16:33:39 $
+ * @package DupeDetect
+ * @author Aviad Tsherniak <vavi@netvision.net.il>
+ */
+
+/**
+ * A helper class for the DupeDetect module, containing functions that deal with CRC32 signature
+ *
+ * @package DupeDetect
+ * @subpackage Classes
+ */
+class DupeDetectCrc32Helper {
+	/**
+	 * Creates CRC32 signature for a image, inserts into map
+	 *
+	 * If signature already exist for an image - do nothing.
+	 *
+	 * @param array object GalleryDataItem the DataItems to create signatures for
+	 * @return array object GalleryStatus a status code
+	 *
+	 * @static
+	 */
+	public function createCrc32DupeSignatures($newEntity) {
+		global $gallery;
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectSignaturesMap.class');
+
+		// If for some reason there is already a signature for this item, return
+		list($ret, $hasSignature) = DupeDetectCrc32Helper::getCrc32Signature(
+			array($newEntity->getId())
+		);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		if ($hasSignature) {
+			return GalleryStatus::success();
+		}
+
+		list($ret, $path) = $newEntity->fetchPath();
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		// Read the file into an array
+		$data = file($path);
+
+		// Join the array into a string
+		$data = implode('', $data);
+
+		// Calculate the crc
+		$crc = crc32($data);
+
+		$ret = DupeDetectSignaturesMap::addMapEntry(
+			array(
+				'itemId' => $newEntity->getId(),
+				'crc32'  => $crc,
+			)
+		);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		return GalleryStatus::success();
+	}
+
+	/**
+	 * Return the CRC32 signature of a given image id
+	 *
+	 * @param array int the ids of the item
+	 * @return array object GalleryStatus a status code
+	 *               array int crc32 signatures
+	 * @static
+	 */
+	public function getCrc32Signature($ids) {
+		global $gallery;
+
+		$markers = GalleryUtilities::makeMarkers(count($ids));
+
+		$query = "
+			SELECT
+				[DupeDetectSignaturesMap::itemId],
+				[DupeDetectSignaturesMap::crc32]
+			FROM
+				[DupeDetectSignaturesMap]
+			WHERE
+				[DupeDetectSignaturesMap::itemId] IN ($markers)
+			ORDER BY
+				[DupeDetectSignaturesMap::itemId] ASC
+		";
+
+		list($ret, $searchResults) = $gallery->search($query, $ids);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Get data from query result
+		$signatures = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$signatures[$result[0]] = $result[1];
+		}
+
+		if (!empty($signatures)) {
+			$result = $signatures;
+		} else {
+			$result = false;
+		}
+
+		return array(GalleryStatus::success(), $result);
+	}
+
+	/**
+	 * Return a list of CRC32 duplicates for the input image
+	 *
+	 * @param int the id of current item
+	 * @return array object GalleryStatus a status code
+	 *               array of itemIds
+	 * @static
+	 */
+	public function discoverCrc32Dupes($id) {
+		global $gallery;
+
+		// get crc32 signature of current item
+
+		list($ret, $signature) = DupeDetectCrc32Helper::getCrc32Signature(array($id));
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		if (!$signature) {
+			return array(GalleryStatus::success(), array());
+		}
+
+		$query = '
+			SELECT
+				[DupeDetectSignaturesMap::itemId]
+			FROM
+				[DupeDetectSignaturesMap]
+			WHERE
+				[DupeDetectSignaturesMap::crc32] = ?
+			AND
+				[DupeDetectSignaturesMap::itemId] <> ?
+			ORDER BY
+				[DupeDetectSignaturesMap::itemId] ASC
+		';
+
+		$data   = array();
+		$data[] = $signature[$id];
+		$data[] = $id;
+
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Get the dupes ids from query result
+		$dups = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$dups[] = array($result[0], DUPEDETECT_CRC32_ALGORITHM);
+		}
+
+		return array(GalleryStatus::success(), $dups);
+	}
+
+	/**
+	 * Removes a CRC32 item signature from DB
+	 *
+	 * @param int the Item Id to remove its signature
+	 * @return array object GalleryStatus a status code
+	 *
+	 * @static
+	 */
+	public function removeCrc32DupeSignatures($id) {
+		global $gallery;
+
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectSignaturesMap.class');
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
+
+		list($ret, $hasSignature) = DupeDetectCrc32Helper::getCrc32Signature(array($id));
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		if ($hasSignature) {
+			$ret = DupeDetectSignaturesMap::removeMapEntry(
+				array(
+					'itemId' => $id,
+				)
+			);
+
+			if ($ret->isError()) {
+				return array($ret, null);
+			}
+		}
+
+		return GalleryStatus::success();
+	}
+}

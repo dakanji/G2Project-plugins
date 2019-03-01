@@ -1,0 +1,364 @@
+<?php
+/*
+ * $RCSfile: DupeDetectCrc32HelperTest.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ * @version $Revision: 1.4 $ $Date: 2005/07/06 10:54:34 $
+ * @package DupeDetect
+ * @subpackage PHPUnit
+ * @author Aviad Tsherniak <tshernia@tau.ac.il>
+ */
+
+/**
+ * Helper class
+ */
+GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectCrc32Helper.class');
+
+/**
+ * Map class
+ */
+GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectSignaturesMap.class');/**
+ * Test DupeDetect functionality
+ *
+ * @package DupeDetect
+ * @subpackage PHPUnit
+ */
+class DupeDetectCrc32HelperTest extends GalleryTestCase {
+	public function DupeDetectCrc32Helper($methodName) {
+		parent::__construct($methodName);
+	}
+
+	/**
+	 * Prepare for our test
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		// Create a container album for any data items we create
+
+		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// acquire locks for the test album
+
+		list($ret, $this->_lockIds) = GalleryCoreApi::acquireReadLock($this->_album->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// upload test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/CanonS30.small.jpg';
+
+		list($ret, $this->_item) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// upload another identical test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/CanonS30.small.jpg';
+
+		list($ret, $this->_dupItem) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		$this->_markForCleanup($this->_item);
+		$this->_markForCleanup($this->_dupItem);
+		$this->_markForCleanup($this->_album);
+	}
+
+	public function tearDown() {
+		$ret = GalleryCoreApi::releaseLocks($this->_lockIds);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		parent::tearDown();
+	}
+
+	// tests functionality of the getCrc32Signature() function
+	public function testGetCrc32Signature() {
+		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(
+			array(
+				$this->_item->getId(),
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assertTrue(
+			empty($signatures),
+			'Somehow there is already a signature for the new item'
+		);
+
+		// create two signatures
+		$ret = DupeDetectCrc32Helper::createCrc32DupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		$ret = DupeDetectCrc32Helper::createCrc32DupeSignatures($this->_dupItem);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(
+			array(
+				$this->_item->getId(),
+				$this->_dupItem->getId(),
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// signature fetched
+		$this->assert(count($signatures) == 2, 'didn\'t get 2 signatures as expected');
+
+		// clean the signatures created
+		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_dupItem->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	// Tests that a CRC32 signature is created and correct
+	public function testCreateCrc32Signature() {
+		$ret = DupeDetectCrc32Helper::createCrc32DupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// signature exists
+		$this->assert(!empty($signatures), 'Cannot find CRC32 for item');
+
+		// and correct
+		$this->assertEquals($signatures[$this->_item->getId()], '-1742438075');
+
+		// clean the signature created
+		$ret = DupeDetectSignaturesMap::removeMapEntry(
+			array(
+				'itemId' => $this->_item->getId(),
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	public function testRemoveCrc32Signature() {
+		// check that a signature does not already exist
+
+		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
+
+		// create a signature
+		$ret = DupeDetectSignaturesMap::addMapEntry(
+			array(
+				'itemId' => $this->_item->getId(),
+				'crc32'  => '12345',
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that created successfully
+
+		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(
+			array(
+				$this->_item->getId(),
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(!empty($signatures), 'Cannot find CRC32 for item');
+
+		// try to remove the signature
+		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that the signature was remove successfully
+
+		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(empty($signatures), 'CRC32 exist and should not');
+	}
+
+	public function testDiscoverDupes() {
+		// create a signature for 'original' image
+		$ret = DupeDetectCrc32Helper::createCrc32DupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		/* first check that no dupes are discovered as there's no
+		 * signature for the new file yet */
+
+		list($ret, $dupes) = DupeDetectCrc32Helper::discoverCrc32Dupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that no dupes are detected
+		$this->assert(empty($dupes), 'got dupes when should not');
+
+		// create a signature for it
+		$ret = DupeDetectCrc32Helper::createCrc32DupeSignatures($this->_dupItem);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that it is discovered as a dupe now
+		list($ret, $dupes) = DupeDetectCrc32Helper::discoverCrc32Dupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that a dupe exists and only one
+		$this->assert(count($dupes) == 1, 'did not get one (1) dupe entry as expected');
+
+		// check that the duplicate is the one we expect
+		$this->assertTrue(
+			$dupes[0][0] == $this->_dupItem->getId(),
+			'did not get the expected dupe'
+		);
+
+		// remove the signatures
+		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_dupItem->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+	}
+}

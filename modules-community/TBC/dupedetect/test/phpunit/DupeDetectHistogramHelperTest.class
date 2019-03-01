@@ -1,0 +1,388 @@
+<?php
+/*
+ * $RCSfile: DupeDetectHistogramHelperTest.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ * @version $Revision: 1.4 $ $Date: 2005/07/06 10:54:34 $
+ * @package DupeDetect
+ * @subpackage PHPUnit
+ * @author Aviad Tsherniak <tshernia@tau.ac.il>
+ */
+
+/**
+ * Helper class
+ */
+GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramHelper.class');
+
+/**
+ * Map class
+ */
+GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramsMap.class');/**
+ * Test DupeDetectHistogramHelper class functionality
+ *
+ * @package DupeDetect
+ * @subpackage PHPUnit
+ */
+class DupeDetectHistogramHelperTest extends GalleryTestCase {
+	public function DupeDetectHistogramHelper($methodName) {
+		parent::__construct($methodName);
+	}
+
+	/**
+	 * Prepare for our test
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		// Create a container album for any data items we create
+
+		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// acquire locks for the test album
+
+		list($ret, $this->_lockIds) = GalleryCoreApi::acquireReadLock($this->_album->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// upload test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/100.jpg';
+
+		list($ret, $this->_item) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		// upload another identical test image
+		$title = '_test_dupedetect_' . mt_rand();
+		$path  = dirname(__FILE__) . '/../data/50.jpg';
+
+		list($ret, $this->_dupItem) = GalleryCoreApi::addItemToAlbum(
+			$path,
+			$title,
+			$title,
+			'',
+			'',
+			'image/jpeg',
+			$this->_album->getId(),
+			false
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		$this->_markForCleanup($this->_item);
+		$this->_markForCleanup($this->_dupItem);
+		$this->_markForCleanup($this->_album);
+	}
+
+	public function tearDown() {
+		$ret = GalleryCoreApi::releaseLocks($this->_lockIds);
+
+		if ($ret->isError()) {
+			return $this->failWithStatus($ret);
+		}
+
+		parent::tearDown();
+	}
+
+	// tests functionality of the getHistogramSignature() function
+	public function testGetHistogramSignature() {
+		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(empty($signatures), 'Somehow there\'s already a signature for the new item');
+
+		// create two signatures
+		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($this->_dupItem);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(
+			array(
+				$this->_item->getId(),
+				$this->_dupItem->getId(),
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// signature fetched
+		$this->assert(count($signatures) == 2, 'didn\'t get 2 signatures as expected');
+
+		// check signatures
+		$this->assert(
+			count($signatures[$this->_item->getId()]) == 12,
+			'didn\'t get 12 values for the signature as expected'
+		);
+		$this->assert(
+			count($signatures[$this->_dupItem->getId()]) == 12,
+			'didn\'t get 12 values for the signature as expected'
+		);
+
+		// clean the signatures created
+		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_dupItem->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	// Tests that a histogram signature is created and correct
+	public function testCreateHistogramDupeSignatures() {
+		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// signature exists
+		$this->assert(!empty($signatures), 'can\'t find CRC32 for item');
+
+		// and correct
+		$this->assertEquals(
+			$signatures[$this->_item->getId()],
+			array(
+				'red0_63'      => '10',
+				'red64_127'    => '34',
+				'red128_191'   => '32',
+				'red192_255'   => '23',
+				'green0_63'    => '12',
+				'green64_127'  => '41',
+				'green128_191' => '30',
+				'green192_255' => '17',
+				'blue0_63'     => '25',
+				'blue64_127'   => '36',
+				'blue128_191'  => '20',
+				'blue192_255'  => '19',
+			)
+		);
+
+		// clean the signature created
+		$ret = DupeDetectHistogramsMap::removeMapEntry(
+			array(
+				'itemId' => $this->_item->getId(),
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+	}
+
+	// tests functinality of the removeHistogramDupeSigantures() function
+	public function testRemoveHistogramDupeSignatures() {
+		// check that a signature doesn't already exist
+
+		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
+
+		// create a dummy signature
+		$ret = DupeDetectHistogramsMap::addMapEntry(
+			array(
+				'itemId'       => $this->_item->getId(),
+				'red0_63'      => '1',
+				'red64_127'    => '2',
+				'red128_191'   => '3',
+				'red192_255'   => '4',
+				'green0_63'    => '100',
+				'green64_127'  => '110',
+				'green128_191' => '120',
+				'green192_255' => '130',
+				'blue0_63'     => '200',
+				'blue64_127'   => '210',
+				'blue128_191'  => '220',
+				'blue192_255'  => '230',
+			)
+		);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that created successfully
+
+		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(!empty($signatures), 'can\'t find CRC32 for item');
+
+		// try to remove the signature
+		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that the signature was remove successfully
+
+		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
+	}
+
+	public function testDiscoverDupes() {
+		// create a signature for 'original' image
+		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($this->_item);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		/* first check that no dupes are discovered as there's no
+		 * signature for the new file yet */
+
+		list($ret, $dupes) = DupeDetectHistogramHelper::discoverHistogramDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that no dupes are detected
+		$this->assert(empty($dupes), 'got dupes when shouldn\'t');
+
+		// create a signature for it
+		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($this->_dupItem);
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that it is discovered as a dupe now
+		list($ret, $dupes) = DupeDetectHistogramHelper::discoverHistogramDupes($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+
+		// check that a dupe exists and only one
+		$this->assert(count($dupes) == 1, 'didn\'t get 1 dupe entry as expected');
+
+		// check that the duplicate is the one we expect
+		$this->assertEquals((int)$dupes[0][0], $this->_dupItem->getId());
+
+		// remove the signatures
+		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_item->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_dupItem->getId());
+
+		if ($ret->isError()) {
+			echo $ret->getAsHtml();
+
+			return $this->failWithStatus($ret);
+		}
+	}
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE table
+  SYSTEM "../../../../../../../lib/tools/dtd/DatabaseTableDefinition2.0.dtd">
+<table>
+   <table-name>DupeDetectDupesListMap</table-name>
+   <schema>
+      <schema-major>1</schema-major>
+      <schema-minor>0</schema-minor>
+   </schema>
+   <column>
+      <column-name>srcItemId</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <column>
+      <column-name>dupItemId</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <column>
+      <column-name>dupType</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <column>
+      <column-name>userStatus</column-name>
+      <column-type>INTEGER</column-type>
+      <column-size>MEDIUM</column-size>
+   </column>
+   <index>
+      <column-name>srcItemId</column-name>
+   </index>
+   <index>
+      <column-name>dupItemId</column-name>
+   </index>
+   <index>
+      <column-name>dupType</column-name>
+   </index>
+   <index>
+      <column-name>userStatus</column-name>
+   </index>
+</table>

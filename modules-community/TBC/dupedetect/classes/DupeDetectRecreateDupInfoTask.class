@@ -1,0 +1,214 @@
+<?php
+/*
+ * $RCSfile: DupeDetectRecreateDupInfoTask.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+/**
+ * @version $Revision: 1.0 $ $Date: 2005/08/14 05:44:18 $
+ * @package DupeDetect
+ * @subpackage Classes
+ * @author Aviad Tsherniak <tshernia@tau.ac.il>
+ */
+GalleryCoreApi::requireOnce('modules/core/AdminMaintenance.inc');
+
+/**
+ * This is a MaintenanceTask that will attempt to create
+ * duplicate detection signatures for all existing images.
+ * After creating them, will discover all duplicates.
+ *
+ * @package DupeDetect
+ * @subpackage Classes
+ *
+ */
+class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
+	/**
+	 * @see MaintenanceTask::getInfo()
+	 */
+	public function getInfo() {
+		global $gallery;
+
+		return array(
+			'l10Domain'   => 'modules_dupedetect',
+			'title'       => $gallery->i18n('Rediscover duplicate images'),
+			'description' => $gallery->i18n(
+				'Create signatures for files that miss them and then discover duplicates. '
+					. 'A very time consuming task.'
+			),
+			'confirmRun'  => true,
+		);
+	}
+
+	/**
+	 * @see MaintenanceTask::run()
+	 */
+	public function run() {
+		global $gallery;
+		$templateAdapter =& $gallery->getTemplateAdapter();
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
+
+		if ($ret->isError()) {
+			return array($ret, null, null);
+		}
+		$message = $module->translate('Processing...');
+
+		$ret = $templateAdapter->updateProgressBar(
+			$module->translate('Create signatures'),
+			$message,
+			''
+		);
+
+		if ($ret->isError()) {
+			return array($ret, null, null);
+		}
+
+		// We are iterating over all dataitems and creating dupe signatures
+
+		list($ret, $results) = $gallery->search(
+			'SELECT [GalleryDataItem::id] FROM [GalleryDataItem] '
+				. 'ORDER BY [GalleryDataItem::id]'
+		);
+
+		if ($ret->isError()) {
+			return array($ret, null, null);
+		}
+
+		$i      = $updated      = 0;
+		$allIds = array();
+		$total  = $results->resultCount();
+
+		while ($result = $results->nextResult()) {
+			// extracting histogram information can take loooooong time
+			$gallery->guaranteeTimeLimit(60);
+			// Grab 5 items at a time
+			$ids      = array($result[0]);
+			$allIds[] = $result[0];
+
+			for ($j = 0; $j < 4 && ($result = $results->nextResult()); $j++) {
+				$ids[]    = $result[0];
+				$allIds[] = $result[0];
+			}
+
+			list($ret, $items) = GalleryCoreApi::loadEntitiesById($ids);
+
+			if ($ret->isError()) {
+				return array($ret, null, null);
+			}
+
+			foreach ($items as $item) {
+				$ret = DupeDetectHelper::createDupeSignatures($item);
+
+				if ($ret->isError()) {
+					return array($ret, null, null);
+				}
+				$i++;
+			}
+
+			$message = $module->translate(
+				array(
+					'text' => 'Creating signatures for item %d of %d',
+					'arg1' => $i,
+					'arg2' => $total,
+				)
+			);
+
+			$ret = $templateAdapter->updateProgressBar($message, '', $i / $total / 1.1);
+
+			if ($ret->isError()) {
+				return array($ret, null, null);
+			}
+		}
+
+		// now that all items have signatures, discover duplicates
+		$i = 0;
+
+		foreach ($allIds as $id) {
+			$i++;
+			// try to find duplicates for this image, based on its signatures
+			$dupes = array();
+
+			list($ret, $dupes) = DupeDetectHelper::discoverDupes($id);
+
+			if ($ret->isError()) {
+				return array($ret, null, null);
+			}
+
+			// add the duplicates info into DuplicatesMap
+			if (!empty($dupes)) {
+				list($ret, $count) = DupeDetectHelper::addDupes($id, $dupes);
+
+				if ($ret->isError()) {
+					return array($ret, null, null);
+				}
+			}
+
+			$message = $module->translate(
+				array(
+					'text' => 'Discovering duplicates for item %d of %d',
+					'arg1' => $i,
+					'arg2' => $total,
+				)
+			);
+
+			$ret = $templateAdapter->updateProgressBar(
+				$message,
+				'',
+				0.9 + (($i / $total) * 0.1)
+			);
+
+			if ($ret->isError()) {
+				return array($ret, null, null);
+			}
+		}
+
+		$message = $module->translate(
+			array(
+				'text' => 'Done',
+			)
+		);
+		$ret     = $templateAdapter->updateProgressBar($message, '', 1);
+
+		if ($ret->isError()) {
+			return array($ret, null, null);
+		}
+
+		return array(
+			GalleryStatus::success(),
+			true,
+			array(
+				$module->translate(
+					array(
+						'text' => 'Processed %d of %d items',
+						'arg1' => $i,
+						'arg2' => $total,
+					)
+				),
+			),
+		);
+	}
+
+	/**
+	 * @see MaintenanceTask::requiresProgressBar()
+	 */
+	public function requiresProgressBar() {
+		return true;
+	}
+}

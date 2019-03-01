@@ -1,0 +1,292 @@
+<?php
+
+/*
+ * $RCSfile: DupeDetectHistogramHelper.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ * @version $Revision: 0.9 $ $Date: 2005/07/23 16:33:39 $
+ * @package DupeDetect
+ * @author Aviad Tsherniak <vavi@netvision.net.il>
+ */
+
+/**
+ * A helper class for the DupeDetect module, containing functions that deal with histogram signature
+ *
+ * @package DupeDetect
+ * @subpackage Classes
+ */
+class DupeDetectHistogramHelper {
+	/**
+	 * Creates CRC32 signature for a image, inserts into map
+	 *
+	 * If signature already exist for an image - do nothing.
+	 *
+	 * @param array object GalleryDataItem the DataItems to create signatures for
+	 * @return array object GalleryStatus a status code
+	 *
+	 * @static
+	 */
+	public function createHistogramDupeSignatures($newEntity) {
+		global $gallery;
+		GalleryCoreApi::requireOnce(
+			'modules/dupedetect/classes/DupeDetectHistogramsMap.class'
+		);
+
+		// If for some reason there is already a signature for this item, do nothing
+
+		list($ret, $hasSignature) = DupeDetectHistogramHelper::getHistogramSignature(
+			$newEntity->getId()
+		);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		if ($hasSignature) {
+			return GalleryStatus::success();
+		}
+
+		// Fetch the file to extract signature from
+
+		list($ret, $path) = $newEntity->fetchPath();
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		$mimeType = $newEntity->getMimeType();
+
+		list($ret, $toolkit) = GalleryCoreApi::getToolkitByProperty($mimeType, 'histogram64');
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+		/* we don't want to fail if there is no adequate toolkit, or the item's mimeType
+		 * is not supported. (e.g. when it's not an image) */
+		if (!isset($toolkit)) {
+			return GalleryStatus::success();
+
+			//          return GalleryStatus::error(ERROR_TOOLKIT_FAILURE, __FILE__, __LINE__);
+		}
+
+		list($ret, $hist) = $toolkit->getProperty($mimeType, 'histogram64', $path);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		$histogram                 = array();
+		$histogram['itemId']       = $newEntity->getId();
+		$histogram['red0_63']      = $hist['red'][0];
+		$histogram['red64_127']    = $hist['red'][1];
+		$histogram['red128_191']   = $hist['red'][2];
+		$histogram['red192_255']   = $hist['red'][3];
+		$histogram['green0_63']    = $hist['green'][0];
+		$histogram['green64_127']  = $hist['green'][1];
+		$histogram['green128_191'] = $hist['green'][2];
+		$histogram['green192_255'] = $hist['green'][3];
+		$histogram['blue0_63']     = $hist['blue'][0];
+		$histogram['blue64_127']   = $hist['blue'][1];
+		$histogram['blue128_191']  = $hist['blue'][2];
+		$histogram['blue192_255']  = $hist['blue'][3];
+
+		$ret = DupeDetectHistogramsMap::addMapEntry($histogram);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		return GalleryStatus::success();
+	}
+
+	/**
+	 * Return the Histogram signature of a given image id if it exist
+	 *
+	 * @param array int the ids of the item
+	 * @return array object GalleryStatus a status code
+	 *               array int crc32 signatures if exist, false if not.
+	 * @static
+	 */
+	public function getHistogramSignature($ids) {
+		global $gallery;
+
+		$markers = GalleryUtilities::makeMarkers(count($ids));
+
+		$query = "
+			SELECT
+				[DupeDetectHistogramsMap::itemId],
+				[DupeDetectHistogramsMap::red0_63],
+				[DupeDetectHistogramsMap::red64_127],
+				[DupeDetectHistogramsMap::red128_191],
+				[DupeDetectHistogramsMap::red192_255],
+				[DupeDetectHistogramsMap::green0_63],
+				[DupeDetectHistogramsMap::green64_127],
+				[DupeDetectHistogramsMap::green128_191],
+				[DupeDetectHistogramsMap::green192_255],
+				[DupeDetectHistogramsMap::blue0_63],
+				[DupeDetectHistogramsMap::blue64_127],
+				[DupeDetectHistogramsMap::blue128_191],
+				[DupeDetectHistogramsMap::blue192_255]
+			FROM
+				[DupeDetectHistogramsMap]
+			WHERE
+				[DupeDetectHistogramsMap::itemId] IN ($markers)
+			ORDER BY
+				[DupeDetectHistogramsMap::itemId] ASC
+		";
+
+		list($ret, $searchResults) = $gallery->search($query, $ids);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Get data from query result
+		$signatures = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$signatures[$result[0]] = array(
+				'red0_63'      => $result[1],
+				'red64_127'    => $result[2],
+				'red128_191'   => $result[3],
+				'red192_255'   => $result[4],
+				'green0_63'    => $result[5],
+				'green64_127'  => $result[6],
+				'green128_191' => $result[7],
+				'green192_255' => $result[8],
+				'blue0_63'     => $result[9],
+				'blue64_127'   => $result[10],
+				'blue128_191'  => $result[11],
+				'blue192_255'  => $result[12],
+			);
+		}
+
+		if (!empty($signatures)) {
+			$result = $signatures;
+		} else {
+			$result = false;
+		}
+
+		return array(GalleryStatus::success(), $result);
+	}
+
+	/**
+	 * Return a list of CRC32 duplicates for the input image
+	 *
+	 * @param int the id of current item
+	 * @return array object GalleryStatus a status code
+	 *               array of itemIds
+	 * @static
+	 */
+	public function discoverHistogramDupes($id) {
+		global $gallery;
+
+		// get Histogram signature of current item
+
+		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature($id);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		if (!$signatures) {
+			return array(GalleryStatus::success(), array());
+		}
+
+		$data = array();
+
+		$query = '
+			SELECT
+				[DupeDetectHistogramsMap::itemId]
+			FROM
+				[DupeDetectHistogramsMap]
+			WHERE
+		';
+
+		$thrsh = 5;
+
+		foreach ($signatures[$id] as $field => $value) {
+			$query .= "[DupeDetectHistogramsMap::$field] > ? AND ";
+			$data[] = $value - $thrsh;
+			$query .= "[DupeDetectHistogramsMap::$field] < ? AND ";
+			$data[] = $value + $thrsh;
+		}
+
+		$query .= '
+				[DupeDetectHistogramsMap::itemId] <> ?
+			ORDER BY
+				[DupeDetectHistogramsMap::itemId] ASC
+		';
+
+		$data[] = $id;
+
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Get the dupes ids from query result
+		$dups = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$dups[] = array($result[0], DUPEDETECT_HISTOGRAM_ALGORITHM);
+		}
+
+		return array(GalleryStatus::success(), $dups);
+	}
+
+	/**
+	 * Removes a CRC32 item signature from DB
+	 *
+	 * @param int the Item Id to remove its signature
+	 * @return object GalleryStatus a status code
+	 *
+	 * @static
+	 */
+	public function removeHistogramDupeSignatures($id) {
+		global $gallery;
+
+		GalleryCoreApi::requireOnce(
+			'modules/dupedetect/classes/DupeDetectHistogramsMap.class'
+		);
+		list($ret, $signature) = DupeDetectHistogramHelper::getHistogramSignature($id);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		if (!$signature) {
+			return GalleryStatus::success();
+		}
+
+		$ret = DupeDetectHistogramsMap::removeMapEntry(
+			array(
+				'itemId' => $id,
+			)
+		);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		return GalleryStatus::success();
+	}
+}

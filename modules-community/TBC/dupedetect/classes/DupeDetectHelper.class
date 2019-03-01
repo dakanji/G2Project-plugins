@@ -1,0 +1,753 @@
+<?php
+/*
+ * $RCSfile: DupeDetectHelper.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2005 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+/**
+ * @version $Revision: 0.9 $ $Date: 2005/07/23 16:33:39 $
+ * @package DupeDetect
+ * @author Aviad Tsherniak <vavi@netvision.net.il>
+ */
+define('DUPEDETECT_UNHANDLED_DUPLICATE', 0);
+define('DUPEDETECT_IGNORED_DUPLICATE', 1);
+define('DUPEDETECT_CRC32_ALGORITHM', 0);
+define('DUPEDETECT_HISTOGRAM_ALGORITHM', 1);
+
+
+/**
+ * A helper class for the Image Block module.
+ *
+ * @package DupeDetect
+ * @subpackage Classes
+ */
+class DupeDetectHelper {
+	/**
+	 * Creates all the signatures for a new image or images.
+	 * If a signature already exist for an image it will be deleted and recreated.
+	 * Calls all the different methods that create dupe signatures (crc32, histogram, etc.)
+	 *
+	 * @param array object GalleryDataItem the DataItems to create signatures for
+	 * @return object GalleryStatus a status code
+	 *
+	 * @static
+	 */
+	public function createDupeSignatures($entity) {
+		/* linked items don't interest us as they share their image file with another,
+		 * non-linked image. we don't create signatures for them.
+		 */
+		if ($entity->isLinked()) {
+			return GalleryStatus::success();
+		}
+
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectCrc32Helper.class');
+
+		$ret = DupeDetectCrc32Helper::createCrc32DupeSignatures($entity);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramHelper.class');
+
+		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($entity);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		return GalleryStatus::success();
+	}
+
+	/**
+	 * Removes all item dupe signature from DB
+	 *
+	 * @param int the Item Id to remove its signature
+	 * @return object GalleryStatus a status code
+	 *
+	 * @static
+	 */
+	public function removeDupeSignatures($ids) {
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectCrc32Helper.class');
+
+		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($ids);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramHelper.class');
+
+		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($ids);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		return GalleryStatus::success();
+	}
+
+	/**
+	 * Event handler GalleryEntity::save, and GalleryEntity::delete
+	 *
+	 * @see GalleryEventListener::handleEvent
+	 */
+	public function handleEvent($event) {
+		switch ($event->getEventName()) {
+			case 'GalleryEntity::delete':
+				$entity = $event->getEntity();
+
+				// only DataItems have signatures
+				if (!GalleryUtilities::isA($entity, 'GalleryDataItem')) {
+					break;
+				}
+
+				/* linked items don't interest us as they share their image file with another,
+				 * non-linked image. we don't even create signatures for them, so don't delete anything.
+				 */
+				if ($entity->isLinked()) {
+					break;
+				}
+
+				// remove the item's signatures
+				$ret = DupeDetectHelper::removeDupeSignatures($entity->getId());
+
+				if ($ret->isError()) {
+					return array($ret, null);
+				}
+
+				// and all the dupe records if exist
+				$ret = DupeDetectHelper::deleteDupes($entity->getId());
+
+				if ($ret->isError()) {
+					return array($ret, null);
+				}
+
+				break;
+
+			case 'GalleryEntity::save':
+				/*
+				 * If the added entity is an image,
+				 * 1. create signatures and save them in the map,
+				 * 2. discover potential duplicates for it
+				 */
+
+				$entity = $event->getEntity();
+
+				/*
+				 * If the entity is a GalleryDataItem and is
+				 * Newly Created, continue processing, otherwise break out.
+				 */
+
+				//            if ( !($entity->testPersistentFlag(STORAGE_FLAG_NEWLY_CREATED)  &&
+				//                GalleryUtilities::isA($entity, 'GalleryDataItem'))) {
+				//                break;
+				//            }
+				if (!GalleryUtilities::isA($entity, 'GalleryDataItem')) {
+					break;
+				}
+
+				// create Signatures for the new image
+				$ret = DupeDetectHelper::createDupeSignatures($entity);
+
+				if ($ret->isError()) {
+					return array($ret, null);
+				}
+
+				// try to find duplicates for this image, based on its signatures
+				$dupes = array();
+
+				list($ret, $dupes) = DupeDetectHelper::discoverDupes($entity->getId());
+
+				if ($ret->isError()) {
+					return array($ret, null);
+				}
+
+				// add the duplicates info into DuplicatesMap
+				if (!empty($dupes)) {
+					list($ret, $count) = DupeDetectHelper::addDupes($entity->getId(), $dupes);
+
+					if ($ret->isError()) {
+						return array($ret, null);
+					}
+				}
+
+				break;
+		}
+
+		return array(GalleryStatus::success(), null);
+	}
+
+	/**
+	 * Return a list of duplicates for the input item.
+	 *
+	 * calls each one of the various discover method for each dupes algorithm
+	 *
+	 * @param int the id of current item
+	 * @return array object GalleryStatus a status code
+	 *               array of itemIds
+	 * @static
+	 */
+	public function discoverDupes($id) {
+		// Discover CRC32 dupes
+		GalleryCoreApi::requireOnce(
+			'modules/dupedetect/classes/DupeDetectCrc32Helper.class'
+		);
+
+		list($ret, $crcDupes) = DupeDetectCrc32Helper::discoverCrc32Dupes($id);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Discover Histogram dupes
+		GalleryCoreApi::requireOnce(
+			'modules/dupedetect/classes/DupeDetectHistogramHelper.class'
+		);
+
+		list($ret, $histDupes) = DupeDetectHistogramHelper::discoverHistogramDupes($id);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		$dupes = array_merge($crcDupes, $histDupes);
+
+		return array(GalleryStatus::success(), $dupes);
+	}
+
+	/**
+	 * Finds whether specified itemId has a signature in the map
+	 *
+	 * @param object GalleryDataItem DataItem to be checked if has signatures in the map
+	 * @return array object GalleryStatus a status code
+	 *               bool Flag for all data items
+	 * @static
+	 */
+	/*    function getHasSignature($itemId) {
+	global $gallery;
+
+		GalleryCoreApi::requireOnce(
+			'modules/dupedetect/classes/DupeDetectSignaturesMap.class');
+		$query = '
+			SELECT
+				[DupeDetectSignaturesMap::itemId]
+			FROM
+				[DupeDetectSignaturesMap]
+			WHERE
+				[DupeDetectSignaturesMap::itemId] = ?
+			  ';
+		list ($ret, $searchResults) = $gallery->search($query, array($itemId));
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		$result = false;
+		if ($rec = $searchResults->nextResult()) {
+			$result = (bool)$rec[0];
+		}
+
+		return array(GalleryStatus::success(), $result);
+	}
+	*/
+
+	/**
+	 * Return a list of current duplicate image pairs
+	 *
+	 * You can specify how many items to list, what type of duplication to show,
+	 * and whether to show only new duplications or also old ones.
+	 *
+	 * @param int [optional] the number of items desired
+	 * @param int [optional] the start of the range
+	 * @param int [optional] type of duplication
+	 * @param int [optional] status of duplicate pair (new / old)
+	 * @return array object GalleryStatus a status code
+	 *               array of itemId=>dupDetails
+	 * @static
+	 */
+	public function fetchDupes($count = null, $offset = null, $type = null, $dupStatus = null) {
+		global $gallery;
+
+		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.viewSource', $gallery->getActiveUserId());
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		if (empty($aclIds)) {
+			return array(GalleryStatus::success(), 0);
+		}
+		$aclMarkers = GalleryUtilities::makeMarkers($aclIds);
+
+		$data  = array();
+		$query = sprintf(
+			'
+			SELECT
+				[DupeDetectDupesListMap::srcItemId],
+				[DupeDetectDupesListMap::dupItemId],
+				[DupeDetectDupesListMap::dupType],
+				[DupeDetectDupesListMap::userStatus]
+			FROM
+				[DupeDetectDupesListMap],
+				[GalleryAccessSubscriberMap]
+			WHERE
+				[GalleryAccessSubscriberMap::itemId] = [DupeDetectDupesListMap::srcItemId]
+			AND
+				GalleryAccessSubscriberMap::accessListId]
+			IN
+				(%s)',
+			$aclMarkers
+		);
+
+		$data = $aclIds;
+
+		if (isset($type)) {
+			$query .= 'AND [DupeDetectDupesListMap::dupType] = ?';
+			$data[] = $type;
+		}
+
+		if (isset($dupStatus)) {
+			$query .= 'AND [DupeDetectDupesListMap::userStatus] = ?';
+			$data[] = $dupStatus;
+		}
+
+		$query .= 'ORDER BY [DupeDetectDupesListMap::srcItemId] ASC';
+
+		list($ret, $searchResults) = $gallery->search(
+			$query,
+			$data,
+			array(
+				'limit' => array(
+					'count'  => $count,
+					'offset' => $offset,
+				),
+			)
+		);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Get all data from query result
+		$dups = array();
+		$ids  = array(); // store both source and dup ids
+		while ($result = $searchResults->nextResult()) {
+			$dups[] = array(
+				'srcItemId'  => $result[0],
+				'dupItemId'  => $result[1],
+				'dupType'    => $result[2],
+				'userStatus' => $result[3],
+			);
+			$ids[]  = $result[0];
+			$ids[]  = $result[1];
+		}
+
+		// Fetch entities for the src and dup ids
+		if (!empty($ids)) {
+			list($ret, $entities) = GalleryCoreApi::loadEntitiesById($ids);
+
+			if ($ret->isError()) {
+				return array($ret, null);
+			}
+
+			$entitiesById = array();
+
+			foreach ($entities as $entity) {
+				$entitiesById[$entity->getId()] = $entity;
+			}
+
+			foreach ($dups as $key => $dup) {
+				$dups[$key]['srcItem'] = $entitiesById[$dup['srcItemId']];
+				$dups[$key]['dupItem'] = $entitiesById[$dup['dupItemId']];
+			}
+		}
+
+		return array(GalleryStatus::success(), $dups);
+	}
+
+	/**
+	 * Returns a duplicate pair if exists, false if not
+	 *
+	 * Order is not important - the lower id is always considered as the srcId.
+	 *
+	 * @param int id1 the id of the first Item
+	 * @param int id2 the id of the second Item
+	 * @param int type of duplication
+	 * @return array object GalleryStatus a status code
+	 *               array  dupe pairs
+	 * @static
+	 */
+	public function getDupePairs($id1, $id2 = null, $type = null) {
+		global $gallery;
+
+		$data  = array();
+		$query = '
+			SELECT
+				[DupeDetectDupesListMap::srcItemId],
+				[DupeDetectDupesListMap::dupItemId],
+				[DupeDetectDupesListMap::dupType],
+				[DupeDetectDupesListMap::userStatus]
+			FROM
+				[DupeDetectDupesListMap]
+			WHERE
+				([DupeDetectDupesListMap::srcItemId] = ?
+		';
+
+		if ($id2 != null) {
+			// always insert the lower id as the srcId
+			$srcId  = min($id1, $id2);
+			$dupId  = max($id1, $id2);
+			$query .= 'AND
+                      ';
+			$data[] = $srcId;
+			$data[] = $dupId;
+		} else {
+			/* if we have only one ID, we return all the pairs that has this ID
+			 * either in the srcId OR dupId fields */
+			$query .= 'OR
+                      ';
+			$data[] = $id1;
+			$data[] = $id1;
+		}
+
+		$query .= '[DupeDetectDupesListMap::dupItemId] = ?)';
+
+		if ($type != null) {
+			$query .= 'AND [DupeDetectDupesListMap::dupType] = ?';
+			$data[] = $type;
+		}
+
+		list($ret, $searchResults) = $gallery->search($query, $data);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		$dups = array();
+
+		while ($result = $searchResults->nextResult()) {
+			$dups[] = array(
+				'srcItemId'  => $result[0],
+				'dupItemId'  => $result[1],
+				'dupType'    => $result[2],
+				'userStatus' => $result[3],
+			);
+		}
+
+		if (!empty($dups)) {
+			$result = $dups;
+		} else {
+			$result = false;
+		}
+
+		return array(GalleryStatus::success(), $result);
+	}
+
+	/**
+	 * Creates duplication records for all the given dupes found for a specific image
+	 *
+	 * @param int the Id of the item that has duplicates - sourceItem
+	 * @param array int ids of duplicate items relative to sourceItem
+	 * @return array object GalleryStatus a status code
+	 *               integer count number of dupes pairs actually added
+	 *
+	 * @static
+	 */
+	public function addDupes($itemId, $dupesList) {
+		global $gallery;
+
+		$count = 0;
+
+		if (empty($dupesList)) {
+			return array(GalleryStatus::success(), $count);
+		}
+
+		GalleryCoreApi::requireOnce(
+			'modules/dupedetect/classes/DupeDetectDupesListMap.class'
+		);
+
+		foreach ($dupesList as $dupInfo) {
+			$dupeId  = $dupInfo[0];
+			$dupType = $dupInfo[1];
+
+			// always insert the lower id as the srcId
+			$srcId = min($itemId, $dupeId);
+			$dupId = max($itemId, $dupeId);
+
+			// we skip if we find that this items pair is already registered as duplicate
+
+			list($ret, $alreadyExist) = DupeDetectHelper::getDupePairs(
+				$srcId,
+				$dupId,
+				$dupType
+			);
+
+			if ($ret->isError()) {
+				return array($ret, $count);
+			}
+
+			if ($alreadyExist) {
+				break;
+			}
+
+			// add the record to the map
+			$ret = DupeDetectDupesListMap::addMapEntry(
+				array(
+					'srcItemId'  => $srcId,
+					'dupItemId'  => $dupId,
+					'dupType'    => $dupType,
+					'userStatus' => DUPEDETECT_UNHANDLED_DUPLICATE,
+				)
+			);
+
+			if ($ret->isError()) {
+				return array($ret, $count);
+			}
+			$count = $count + 1;
+		}
+
+		return array(GalleryStatus::success(), $count);
+	}
+
+	/**
+	 * Deletes all duplication records for the given item id
+	 *
+	 * @param int the id of the item to handle
+	 * @return array object GalleryStatus a status code
+	 *
+	 * @static
+	 */
+	public function deleteDupes($itemId) {
+		global $gallery;
+
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectDupesListMap.class');
+
+		// delete all the pairs where this item is the source and all the ones where it's the dup
+		$ret = DupeDetectDupesListMap::removeMapEntry(
+			array(
+				'srcItemId' => $itemId,
+			)
+		);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+		$ret = DupeDetectDupesListMap::removeMapEntry(
+			array(
+				'dupItemId' => $itemId,
+			)
+		);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		return GalleryStatus::success();
+	}
+
+	/**
+	 * Creates a new item linked to $orgItem used INSTEAD of $dupItem which will be deleted
+	 *
+	 * @param int $itemId the id of the item to link to
+	 * @return array object GalleryStatus a status code
+	 *               integer id of newly create linked item
+	 *
+	 * @static
+	 */
+	public function linkItems($itemId, $dupId) {
+
+		// Load the dupItem so we can read its parentId
+
+		list($ret, $dupItem) = GalleryCoreApi::loadEntitiesById($dupId);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// we create a new linked item, in the album of $dupItem
+		$destinationId = $dupItem->getParentId();
+
+		// Make sure we can write to the destination and read the source item
+
+		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems(
+			array(
+				$itemId,
+				$destinationId,
+			)
+		);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		if (!isset($permissions[$destinationId]['core.addDataItem'])) {
+			return array(
+				GalleryStatus::error(
+					ERROR_PERMISSION_DENIED,
+					__FILE__,
+					__LINE__
+				),
+				null,
+			);
+		}
+
+		if (!isset($permissions[$itemId]['core.viewSource'])) {
+			return array(
+				GalleryStatus::error(
+					ERROR_PERMISSION_DENIED,
+					__FILE__,
+					__LINE__
+				),
+				null,
+			);
+		}
+
+		// Load the item
+
+		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Look out for monkey business
+		if (!$item->getIsLinkable()) {
+			return array(
+				GalleryStatus::error(
+					ERROR_PERMISSION_DENIED,
+					__FILE__,
+					__LINE__
+				),
+				null,
+			);
+		}
+
+		/*
+		 * Ok we've got a linkable item and a legal destination album.
+		 * Lock everything up and start linkin'.  We need to read lock
+		 * the source ids, source hierarchy and destination hierarchy.
+		 */
+
+		list($ret, $locks[]) = GalleryCoreApi::acquireReadLock(
+			array($itemId, $destinationId)
+		);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		list($ret, $locks[]) = GalleryCoreApi::acquireReadLockParents($itemId);
+
+		if ($ret->isError()) {
+			GalleryCoreApi::releaseLocks($locks);
+
+			return array($ret, null);
+		}
+		list($ret, $locks[]) = GalleryCoreApi::acquireReadLockParents($destinationId);
+
+		if ($ret->isError()) {
+			GalleryCoreApi::releaseLocks($locks);
+
+			return array($ret, null);
+		}
+
+		// Create all our links
+		$classType  = get_class($item);
+		$linkedItem = new $classType();
+
+		// If we're linking to an item that's already a link, then link to its source instead
+		if ($item->isLinked()) {
+			$linkedEntity = $item->getLinkedEntity();
+			$ret          = $linkedItem->createLink($linkedEntity, $destinationId);
+		} else {
+			$ret = $linkedItem->createLink($item, $destinationId);
+		}
+
+		if ($ret->isError()) {
+			GalleryCoreApi::releaseLocks($locks);
+
+			return array($ret, null);
+		}
+
+		$ret = $linkedItem->save();
+
+		if ($ret->isError()) {
+			GalleryCoreApi::releaseLocks($locks);
+
+			return array($ret, null);
+		}
+
+		$ret = GalleryCoreApi::addExistingItemToAlbum($linkedItem, $destinationId);
+
+		if ($ret->isError()) {
+			GalleryCoreApi::releaseLocks($locks);
+
+			return array($ret, null);
+		}
+
+		// Release the locks
+		$ret = GalleryCoreApi::releaseLocks($locks);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		// Delete the dup item
+		$ret = GalleryCoreApi::deleteEntityById($dupId);
+
+		if ($ret->isError()) {
+			return array($ret, null);
+		}
+
+		return array(GalleryStatus::success(), $linkedItem);
+	}
+
+	/**
+	 * Mark a pair of dupe items as an ignored one. (that won't be defaulty displayed
+	 * in the list of duplicate pair
+	 *
+	 * @param int $id1 the id of the first item in the pair
+	 * @param int $id2 the id of the second item in the pair
+	 * @return array object GalleryStatus a status code
+	 */
+	public function markAsIgnoredDuplicate($id1, $id2) {
+		// always treat the lower id as the srcId
+		$srcId = min($id1, $id2);
+		$dupId = max($id1, $id2);
+
+		$match  = array(
+			'srcItemId' => $srcId,
+			'dupItemId' => $dupId,
+		);
+		$change = array(
+			'userStatus' => DUPEDETECT_IGNORED_DUPLICATE,
+		);
+
+		GalleryCoreApi::requireOnce(
+			'modules/dupedetect/classes/DupeDetectDupesListMap.class'
+		);
+
+		$ret = DupeDetectDupesListMap::updateMapEntry($match, $change);
+
+		if ($ret->isError()) {
+			return $ret;
+		}
+
+		return GalleryStatus::success();
+	}
+}
