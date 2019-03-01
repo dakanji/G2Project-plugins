@@ -56,13 +56,13 @@ class DupeDetectModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new DupeDetectModule();
+		if (!isset($instance)) {
+			$instance = new DupeDetectModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

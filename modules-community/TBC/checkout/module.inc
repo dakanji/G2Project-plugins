@@ -61,13 +61,13 @@ class CheckoutModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new CheckoutModule();
+		if (!isset($instance)) {
+			$instance = new CheckoutModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

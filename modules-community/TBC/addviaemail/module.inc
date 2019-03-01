@@ -48,13 +48,13 @@ class AddviaemailModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new AddviaemailModule();
+		if (!isset($instance)) {
+			$instance = new AddviaemailModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

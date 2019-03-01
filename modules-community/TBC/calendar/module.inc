@@ -48,13 +48,13 @@ class CalendarModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new CalendarModule();
+		if (!isset($instance)) {
+			$instance = new CalendarModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

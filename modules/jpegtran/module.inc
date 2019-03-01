@@ -53,13 +53,13 @@ class JpegtranModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new JpegtranModule();
+		if (!isset($instance)) {
+			$instance = new JpegtranModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

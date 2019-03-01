@@ -50,13 +50,13 @@ class CheckoutGoogleModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new CheckoutGoogleModule();
+		if (!isset($instance)) {
+			$instance = new CheckoutGoogleModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

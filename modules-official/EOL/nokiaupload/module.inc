@@ -54,13 +54,13 @@ class NokiaUploadModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new NokiaUploadModule();
+		if (!isset($instance)) {
+			$instance = new NokiaUploadModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

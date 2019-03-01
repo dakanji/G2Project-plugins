@@ -50,13 +50,13 @@ class TitleModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new TitleModule();
+		if (!isset($instance)) {
+			$instance = new TitleModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

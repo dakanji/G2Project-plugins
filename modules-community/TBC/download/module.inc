@@ -56,13 +56,13 @@ class DownloadModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new DownloadModule();
+		if (!isset($instance)) {
+			$instance = new DownloadModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

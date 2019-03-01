@@ -63,13 +63,13 @@ class BulkManageModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new BulkManageModule();
+		if (!isset($instance)) {
+			$instance = new BulkManageModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -49,13 +49,13 @@ class CheckoutPaypalModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new CheckoutPaypalModule();
+		if (!isset($instance)) {
+			$instance = new CheckoutPaypalModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

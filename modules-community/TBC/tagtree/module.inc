@@ -51,13 +51,13 @@ class TagTreeModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new TagTreeModule();
+		if (!isset($instance)) {
+			$instance = new TagTreeModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

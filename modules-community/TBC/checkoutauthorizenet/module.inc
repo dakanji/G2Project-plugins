@@ -47,13 +47,13 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new CheckoutAuthorizeNetModule();
+		if (!isset($instance)) {
+			$instance = new CheckoutAuthorizeNetModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

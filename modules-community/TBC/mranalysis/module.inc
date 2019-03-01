@@ -50,13 +50,13 @@ class MRAnalysisModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new MRAnalysisModule();
+		if (!isset($instance)) {
+			$instance = new MRAnalysisModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

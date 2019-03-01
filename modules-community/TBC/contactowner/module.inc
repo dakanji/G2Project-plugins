@@ -53,13 +53,13 @@ class ContactOwnerModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ContactOwnerModule();
+		if (!isset($instance)) {
+			$instance = new ContactOwnerModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

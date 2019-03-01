@@ -51,13 +51,13 @@ class CheckoutPDFInvoiceModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new CheckoutPDFInvoiceModule();
+		if (!isset($instance)) {
+			$instance = new CheckoutPDFInvoiceModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

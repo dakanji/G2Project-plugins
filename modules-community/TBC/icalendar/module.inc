@@ -52,13 +52,13 @@ class ICalendarModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ICalendarModule();
+		if (!isset($instance)) {
+			$instance = new ICalendarModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

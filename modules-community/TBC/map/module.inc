@@ -56,13 +56,13 @@ class mapModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new mapModule();
+		if (!isset($instance)) {
+			$instance = new mapModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

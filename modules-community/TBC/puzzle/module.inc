@@ -56,13 +56,13 @@ class puzzleModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new puzzleModule();
+		if (!isset($instance)) {
+			$instance = new puzzleModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

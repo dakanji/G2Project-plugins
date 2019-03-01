@@ -60,13 +60,13 @@ class UserinfoModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new UserinfoModule();
+		if (!isset($instance)) {
+			$instance = new UserinfoModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

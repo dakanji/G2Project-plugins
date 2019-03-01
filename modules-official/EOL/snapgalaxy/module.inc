@@ -52,13 +52,13 @@ class SnapGalaxyModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new SnapGalaxyModule();
+		if (!isset($instance)) {
+			$instance = new SnapGalaxyModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -52,13 +52,13 @@ class FavouritesModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new FavouritesModule();
+		if (!isset($instance)) {
+			$instance = new FavouritesModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

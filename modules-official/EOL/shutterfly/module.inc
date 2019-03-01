@@ -50,13 +50,13 @@ class ShutterflyModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ShutterflyModule();
+		if (!isset($instance)) {
+			$instance = new ShutterflyModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

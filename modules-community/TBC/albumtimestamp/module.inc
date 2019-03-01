@@ -56,13 +56,13 @@ class AlbumTimestampModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new AlbumTimestampModule();
+		if (!isset($instance)) {
+			$instance = new AlbumTimestampModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

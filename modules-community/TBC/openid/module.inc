@@ -47,13 +47,13 @@ class OpenIdModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new OpenIdModule();
+		if (!isset($instance)) {
+			$instance = new OpenIdModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

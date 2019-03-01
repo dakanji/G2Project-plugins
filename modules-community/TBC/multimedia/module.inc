@@ -49,13 +49,13 @@ class MultimediaModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new MultimediaModule();
+		if (!isset($instance)) {
+			$instance = new MultimediaModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

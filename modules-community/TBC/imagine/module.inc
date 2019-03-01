@@ -52,12 +52,12 @@ class ImagineModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ImagineModule();
+		if (!isset($instance)) {
+			$instance = new ImagineModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 }

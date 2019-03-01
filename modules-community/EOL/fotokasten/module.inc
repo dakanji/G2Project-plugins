@@ -53,13 +53,13 @@ class FotokastenModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new FotokastenModule();
+		if (!isset($instance)) {
+			$instance = new FotokastenModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -52,13 +52,13 @@ class RandomizeOnceModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new RandomizeOnceModule();
+		if (!isset($instance)) {
+			$instance = new RandomizeOnceModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

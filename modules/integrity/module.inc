@@ -47,13 +47,13 @@ class IntegrityModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new IntegrityModule();
+		if (!isset($instance)) {
+			$instance = new IntegrityModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

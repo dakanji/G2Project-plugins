@@ -53,13 +53,13 @@ class AboutPageModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new AboutPageModule();
+		if (!isset($instance)) {
+			$instance = new AboutPageModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

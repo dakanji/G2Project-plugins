@@ -52,13 +52,13 @@ class DigibugModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new DigibugModule();
+		if (!isset($instance)) {
+			$instance = new DigibugModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

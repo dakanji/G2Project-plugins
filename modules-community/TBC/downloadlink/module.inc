@@ -51,13 +51,13 @@ class DownloadLinkModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new DownloadLinkModule();
+		if (!isset($instance)) {
+			$instance = new DownloadLinkModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

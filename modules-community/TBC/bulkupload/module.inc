@@ -51,13 +51,13 @@ class BulkUploadModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new BulkUploadModule();
+		if (!isset($instance)) {
+			$instance = new BulkUploadModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -55,13 +55,13 @@ class LinksInTheHeadModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new LinksInTheHeadModule();
+		if (!isset($instance)) {
+			$instance = new LinksInTheHeadModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

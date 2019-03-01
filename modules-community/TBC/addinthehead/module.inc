@@ -48,13 +48,13 @@ class AddInTheHeadModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new AddInTheHeadModule();
+		if (!isset($instance)) {
+			$instance = new AddInTheHeadModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	public function addExternalLink($path, &$links, $containstext, $title, $url) {

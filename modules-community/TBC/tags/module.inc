@@ -52,13 +52,13 @@ class TagsModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new TagsModule();
+		if (!isset($instance)) {
+			$instance = new TagsModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

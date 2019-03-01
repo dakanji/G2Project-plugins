@@ -45,13 +45,13 @@ class UploadifyModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getMe() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new UploadifyModule();
+		if (!isset($instance)) {
+			$instance = new UploadifyModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**
