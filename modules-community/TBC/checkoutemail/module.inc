@@ -102,7 +102,7 @@ class CheckoutEmailModule extends GalleryModule {
 		list($ret, $value) = $this->getParameter('paymentText');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, empty($value));
@@ -164,7 +164,7 @@ class CheckoutEmailModule extends GalleryModule {
 					$ret = GalleryCoreApi::unregisterFactoryImplementationsByModuleId('checkoutemail');
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					$this->performFactoryRegistrations();
 					// Fall Through

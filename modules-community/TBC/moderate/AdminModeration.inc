@@ -38,13 +38,13 @@ class AdminModerationController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $core) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		$userid = $gallery->getActiveUserId();
 
@@ -57,13 +57,13 @@ class AdminModerationController extends GalleryController {
 					$ret = GalleryCoreApi::removeItemPermissions($itemtoapprove_int);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					//Add my permissions
 					$ret = GalleryCoreApi::addGroupPermission($itemtoapprove_int, $core['id.adminGroup'], 'core.all');
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					$viewPermissions = array('core.viewAll');
@@ -81,7 +81,7 @@ class AdminModerationController extends GalleryController {
 							$ret = GalleryCoreApi::addGroupPermission($itemtoapprove_int, $groupId, $permission);
 
 							if ($ret) {
-								return array($ret->wrap(__FILE__, __LINE__), null);
+								return array($ret, null);
 							}
 						}
 					}
@@ -90,26 +90,26 @@ class AdminModerationController extends GalleryController {
 					list($ret, $thisEntity) = GalleryCoreApi::loadEntitiesById($itemtoapprove_int);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					list($ret, $parentEntity) = GalleryCoreApi::loadEntitiesById($thisEntity->getParentId());
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					/*          list ($ret, $rootEntity) = GalleryCoreApi::loadEntitiesById($parentEntity->getParentId());
 					if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 					}
 					list ($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 					if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 					}
 					if ($rootEntity->getId() == $rootId) { */
 					$ret = GalleryCoreApi::addGroupPermission($parentEntity->getId(), $groupId, $permission);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					//          }
 
@@ -117,7 +117,7 @@ class AdminModerationController extends GalleryController {
 					list($ret, $moduleStatus) = GalleryCoreApi::fetchPluginStatus('module');
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					if (isset($moduleStatus['comment']) && !empty($moduleStatus['comment']['active'])
@@ -126,12 +126,12 @@ class AdminModerationController extends GalleryController {
 						$ret = GalleryCoreApi::addGroupPermission($itemtoapprove_int, $core['id.everybodyGroup'], array('comment.view'));
 
 						if ($ret) {
-							return array($ret->wrap(__FILE__, __LINE__), null);
+							return array($ret, null);
 						}
 						$ret = GalleryCoreApi::addGroupPermission($itemtoapprove_int, $core['id.allUserGroup'], array('comment.add'));
 
 						if ($ret) {
-							return array($ret->wrap(__FILE__, __LINE__), null);
+							return array($ret, null);
 						}
 					}
 
@@ -140,7 +140,7 @@ class AdminModerationController extends GalleryController {
 					list($ret, $searchResults) = $gallery->search($query, array($itemtoapprove));
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					if ($result = $searchResults->nextResult()) {
@@ -153,14 +153,14 @@ class AdminModerationController extends GalleryController {
 					$ret = GalleryCoreApi::addUserPermission($itemtoapprove_int, $myuserid, 'core.all');
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					//remove the ability to edit permissions
 					$ret = GalleryCoreApi::removeUserPermission($itemtoapprove_int, $myuserid, 'core.changePermissions');
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					//remove from ToApprove table in database
@@ -172,7 +172,7 @@ class AdminModerationController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 				}
 			}
@@ -182,7 +182,7 @@ class AdminModerationController extends GalleryController {
 					$itemtodelete = intval($itemtodelete);
 					$ret          = GalleryCoreApi::deleteEntityById($itemtodelete);
 					/*		if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 					}
 					 */
 					//remove from ToApprove table in database
@@ -194,7 +194,7 @@ class AdminModerationController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 				}
 			}
@@ -227,7 +227,7 @@ class AdminModerationView extends GalleryView {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		//$form['formName'] = 'Moderate';
@@ -238,7 +238,7 @@ class AdminModerationView extends GalleryView {
 		list($ret, $searchResults) = $gallery->search($query);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		while ($t1row = $searchResults->nextResult()) {

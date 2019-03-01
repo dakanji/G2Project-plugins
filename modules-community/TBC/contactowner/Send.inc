@@ -87,17 +87,17 @@ class SendController extends GalleryController {
 				list($ret, $toEmailAddress) = GalleryCoreApi::getPluginParameter('module', 'contactowner', 'toEmailAddress');
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				list($ret, $toSubject) = GalleryCoreApi::getPluginParameter('module', 'contactowner', 'toSubject');
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				list($ret, $maxEmailsPerSession) = GalleryCoreApi::getPluginParameter('module', 'contactowner', 'maxEmailsPerSession');
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				$temp = $session->get('contactowner.emailcount');
@@ -140,7 +140,7 @@ class SendController extends GalleryController {
 					);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					$emailsent           = true;
 					$form['custSubject'] = '';

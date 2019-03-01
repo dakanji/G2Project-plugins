@@ -60,7 +60,7 @@ class MakePuzzleView extends GalleryView {
 		list($ret, $permissions) = GalleryCoreApi::getPermissions($itemId);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		// DEBUG Information
@@ -82,7 +82,7 @@ class MakePuzzleView extends GalleryView {
 			list($ret, $source) = GalleryCoreApi::fetchPreferredSource($item);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null);
+				return array($ret, null, null);
 			}
 			$size = ($source->getWidth()) * ($source->getHeight());
 
@@ -101,7 +101,7 @@ class MakePuzzleView extends GalleryView {
 			list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			if (!empty($resizes[$itemId])) {
@@ -160,7 +160,7 @@ class MakePuzzleView extends GalleryView {
 		list($ret, $item) = $this->_getItem();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// find the parent album of this photo item.
@@ -169,7 +169,7 @@ class MakePuzzleView extends GalleryView {
 		if ($ret) {
 			// cannot find parent album.
 			// don't know how this can happen ... it is probably a bad, bad thing
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$gallery->debug('<br>(modules:puzzle) loadTemplate: found album for item, album id=' . $parentAlbum->getId());
@@ -179,7 +179,7 @@ class MakePuzzleView extends GalleryView {
 
 		if ($ret) {
 			// don't know what can cause this error
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$gallery->debug('<br>(modules:puzzle) loadTemplate: isEnabledForAlbum = ' . $enabled);
@@ -192,7 +192,7 @@ class MakePuzzleView extends GalleryView {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'puzzle');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$template->title($module->translate('Make a puzzle'));
@@ -219,7 +219,7 @@ class MakePuzzleView extends GalleryView {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'puzzle');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$template->title($module->translate('Make a puzzle'));
@@ -308,7 +308,7 @@ class MakePuzzleView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'puzzle');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$template->title($module->translate('Make a puzzle'));
@@ -328,7 +328,7 @@ class MakePuzzleView extends GalleryView {
 		list($ret, $core) = GalleryCoreApi::loadPlugin('module', 'core');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, $core->translate('Make a puzzle of an image.'));

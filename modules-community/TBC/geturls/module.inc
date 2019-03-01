@@ -67,7 +67,7 @@ class GetUrlsModule extends GalleryModule {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 		}
@@ -76,7 +76,7 @@ class GetUrlsModule extends GalleryModule {
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'geturls');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		// Remove the old params (changed param names and value in v0.9.0)
@@ -90,7 +90,7 @@ class GetUrlsModule extends GalleryModule {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 		}
@@ -109,7 +109,7 @@ class GetUrlsModule extends GalleryModule {
 				$ret = $this->setParameter($key, $value);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 		}
@@ -146,7 +146,7 @@ class GetUrlsModule extends GalleryModule {
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'geturls');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (empty($param['showItemSummaries'])) {
@@ -173,7 +173,7 @@ class GetUrlsModule extends GalleryModule {
 				list($ret, $data) = GetUrlsHelper::getUrlsByItemId($item->getId());
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				$urlsTemplate->setVariable('GetUrlsData', $data);
 
@@ -181,7 +181,7 @@ class GetUrlsModule extends GalleryModule {
 				list($ret, $html) = $urlsTemplate->fetch($tpl);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				$summaries[$item->getId()] = $html;

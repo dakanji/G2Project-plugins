@@ -81,13 +81,13 @@ class CmDatabaseTools {
 		$ret = $this->_dbImpl->openDatabase($this->_coppermineConfig);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		list($ret, $extraConfig) = $this->_dbImpl->getConfigSettings();
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$this->_coppermineConfig = array_merge($this->_coppermineConfig, $extraConfig);
 
@@ -112,19 +112,19 @@ class CmDatabaseTools {
 		list($ret, $categories) = $this->_dbImpl->getCategories();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $users) = $this->_dbImpl->getUsers();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $albums) = $this->_dbImpl->getAlbums();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, array_merge($categories, $users, $albums));
@@ -139,7 +139,7 @@ class CmDatabaseTools {
 		list($ret, $pics) = $this->_dbImpl->getPhotos($album->albumId - 20000);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, $pics);
@@ -155,7 +155,7 @@ class CmDatabaseTools {
 		list($ret, $albums) = $this->getAlbums();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		$stack = $result = array();
 		$depth = 0;
@@ -300,7 +300,7 @@ class CmDatabase {
 		$ret = $this->SelectCmDatabase();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		$result =& $this->_conn->GetAssoc(
 			'SELECT name, value FROM ' .
@@ -310,7 +310,7 @@ class CmDatabase {
 		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!$result) {
@@ -329,7 +329,7 @@ class CmDatabase {
 		$ret = $this->SelectCmDatabase();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$result =& $this->_conn->GetAll(
@@ -339,7 +339,7 @@ class CmDatabase {
 		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!$result) {
@@ -367,7 +367,7 @@ class CmDatabase {
 		$ret = $this->SelectCmDatabase();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$result =& $this->_conn->GetAll(
@@ -377,7 +377,7 @@ class CmDatabase {
 		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!$result) {
@@ -407,7 +407,7 @@ class CmDatabase {
 		$ret = $this->SelectCmDatabase();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$result =& $this->_conn->GetAll(
@@ -417,7 +417,7 @@ class CmDatabase {
 		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!$result) {
@@ -447,7 +447,7 @@ class CmDatabase {
 		$ret = $this->SelectCmDatabase();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$result =& $this->_conn->GetAll(
@@ -458,7 +458,7 @@ class CmDatabase {
 		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if ($this->_conn->ErrorNo() != 0) {

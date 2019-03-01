@@ -38,7 +38,7 @@ class GetUrlsView extends GalleryView {
 		list($ret, $data) = GetUrlsHelper::getUrlsByItemId($itemId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$template->setVariable('GetUrlsData', $data);
@@ -58,7 +58,7 @@ class GetUrlsView extends GalleryView {
 		list($ret, $geturls) = GalleryCoreApi::loadPlugin('module', 'geturls');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 		}
 
 		return array(null, $geturls->translate('Get item URLs'));

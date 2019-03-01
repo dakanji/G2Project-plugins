@@ -50,7 +50,7 @@
 		$ret = GalleryCoreApi::setPluginParameter('module', 'puzzle', 'enabled', $status, $item->getId());
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, null);
@@ -60,7 +60,7 @@
 		list($ret, $enabled) = GalleryCoreApi::getPluginParameter('module', 'puzzle', 'enabled', $item->getId());
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (empty($enabled)) {

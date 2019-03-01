@@ -81,7 +81,7 @@ class ModerateModule extends GalleryModule {
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		return null;
@@ -110,7 +110,7 @@ class ModerateModule extends GalleryModule {
 			list($ret, $core) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			$rootId = $core['id.rootAlbum'];
 
@@ -119,7 +119,7 @@ class ModerateModule extends GalleryModule {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			if ($parentEntity->getId() != $rootId) {
@@ -128,7 +128,7 @@ class ModerateModule extends GalleryModule {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				if ($rootEntity->getId() == $rootId) {
@@ -137,13 +137,13 @@ class ModerateModule extends GalleryModule {
 					);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					if ($child_count[$parentEntity->getId()] <= 1) {
 						/*	$ret = GalleryCoreApi::deleteEntityById($parentEntity->getId());
 						if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 						}
 						*/
 
@@ -155,7 +155,7 @@ class ModerateModule extends GalleryModule {
 						);
 
 						if ($ret) {
-							return array($ret->wrap(__FILE__, __LINE__), null);
+							return array($ret, null);
 						}
 					}
 				}

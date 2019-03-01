@@ -110,13 +110,13 @@ class MapLegendAdminController extends GalleryController {
 					list($ret, $themeId) = GalleryCoreApi::getPluginParameter('module', 'core', 'default.theme');
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					// Grab the Theme Default settings
 					list($ret, $deftheme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					$settings                      = $deftheme->getSettings(null);
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();
@@ -164,13 +164,13 @@ class MapLegendAdminController extends GalleryController {
 					list($ret, $themeId) = GalleryCoreApi::getPluginParameter('module', 'core', 'default.theme');
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					// Grab the Theme Default settings
 					list($ret, $deftheme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					$settings                      = $deftheme->getSettings(null);
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();

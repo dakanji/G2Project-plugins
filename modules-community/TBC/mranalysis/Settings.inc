@@ -42,7 +42,7 @@ class SettingsController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$error  = array();
@@ -52,24 +52,24 @@ class SettingsController extends GalleryController {
 			$ret = SettingsAccess::SetValue('TreatZeroSizedDerivativesAsBroken', $form['TreatZeroSizedDerivativesAsBroken']);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$ret = SettingsAccess::SetValue('CheckForDuplicateTitlesAcrossAlbums', $form['CheckForDuplicateTitlesAcrossAlbums']);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'mranalysis');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';

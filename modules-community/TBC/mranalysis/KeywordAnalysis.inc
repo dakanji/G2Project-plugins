@@ -40,7 +40,7 @@ class KeywordAnalysisController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$error  = array();
@@ -58,7 +58,7 @@ class KeywordAnalysisController extends GalleryController {
 				$ret = KeywordAnalysis::addkeyword($itemId, $keyword);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 			} elseif (0 == strcasecmp($action, 'CorrectTypo')) {
 				$orignal_keyword = $form['originalkeyword'];
@@ -67,7 +67,7 @@ class KeywordAnalysisController extends GalleryController {
 				$ret = KeywordAnalysis::correctkeyword($itemId, $orignal_keyword, $replace_keyword);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 			} else {
 				die('Unknown Action : ' . $action);
@@ -76,12 +76,12 @@ class KeywordAnalysisController extends GalleryController {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'mranalysis');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 

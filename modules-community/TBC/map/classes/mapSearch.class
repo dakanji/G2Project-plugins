@@ -45,7 +45,7 @@ class mapSearch extends GallerySearchInterface_1_0 {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$info = array(
@@ -71,7 +71,7 @@ class mapSearch extends GallerySearchInterface_1_0 {
 		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $gallery->getActiveUserId());
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		if (empty($aclIds)) {
@@ -130,7 +130,7 @@ class mapSearch extends GallerySearchInterface_1_0 {
 		list($ret, $results) = $gallery->search($countQuery, $data);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$result  = $results->nextResult();
 		$numRows = (int)$result[0];
@@ -147,7 +147,7 @@ class mapSearch extends GallerySearchInterface_1_0 {
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$searchResults = array();

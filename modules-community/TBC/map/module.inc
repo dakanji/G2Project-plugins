@@ -184,7 +184,7 @@ class mapModule extends GalleryModule {
 		$ret = GalleryCoreApi::addGroupPermission($rootalbum, $siteadmins, 'map.EditMap', true);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $redirect) = parent::activate($postActivationEvent);

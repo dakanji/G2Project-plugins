@@ -60,7 +60,7 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$query              = '
@@ -80,7 +80,7 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
 		list($ret, $result) = $gallery->search($query);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$ids = array();
 

@@ -88,13 +88,13 @@ class GoogleEarthView extends GalleryView {
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $placemarks) = GoogleEarthView::_createGETree($item, array(), array());
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!empty($placemarks)) {
@@ -147,7 +147,7 @@ class GoogleEarthView extends GalleryView {
 			list($ret, $childIds) = GalleryCoreApi::fetchChildItemIds($item);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			// If the list of direct children wasn't empty
 			if (!empty($childIds)) {
@@ -159,14 +159,14 @@ class GoogleEarthView extends GalleryView {
 					list($ret, $childItems) = GalleryCoreApi::loadEntitiesById($childIds);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					// Grab the field data for the child items
 					list($ret, $fielddata) = mapHelper::fetchFieldValues($childItems);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					foreach ($childItems as $childItem) {
@@ -174,7 +174,7 @@ class GoogleEarthView extends GalleryView {
 						list($ret, $childstring) = GoogleEarthView::_createGETree($childItem, $fielddata, $ancestors);
 
 						if ($ret) {
-							return array($ret->wrap(__FILE__, __LINE__), null);
+							return array($ret, null);
 						}
 						$returnstring .= $childstring;
 					}
@@ -198,7 +198,7 @@ class GoogleEarthView extends GalleryView {
 				list($ret, $childitemstring) = GoogleEarthView::_createGEChildItem($item, $data[$item->getId()]);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$returnstring .= $childitemstring;
 			}

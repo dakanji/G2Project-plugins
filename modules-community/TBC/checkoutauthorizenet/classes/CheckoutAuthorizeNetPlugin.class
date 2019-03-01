@@ -22,7 +22,7 @@
  * @version $Revision: 1200 $
  * @package CheckoutAuthorizeNet
  * @subpackage Classes
- * @author Michael Rodríguez-Torrent <mike@themikecam.com>
+ * @author Michael Rodrï¿½guez-Torrent <mike@themikecam.com>
  */
 
 /**
@@ -65,21 +65,21 @@ class CheckoutAuthorizeNetPlugin extends CheckoutPluginInterface_1_0 {
 		list($ret, $items) = CheckoutHelper::fetchCheckoutItems();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// Get the product and pricing details
 		list($ret, $product, $price) = CheckoutHelper::fetchProducts();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// Get the paper options
 		list($ret, $paper) = CheckoutHelper::fetchPapers();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$session->put('checkoutauthorizenet.items', serialize($items));

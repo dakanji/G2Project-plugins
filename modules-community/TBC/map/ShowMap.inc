@@ -37,7 +37,7 @@ class ShowMapController extends GalleryController {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		// When requested to save the settings and populate the GPS coordinate
@@ -99,7 +99,7 @@ class ShowMapController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				// Actually update the database with the coordinated passed on to the ItemID
 				$ret = GalleryCoreApi::addMapEntry(
@@ -114,7 +114,7 @@ class ShowMapController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				$ret = GalleryCoreApi::removeMapEntry(
 					'mapMap',
@@ -125,7 +125,7 @@ class ShowMapController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				// Actually update the database with the zoomlevel passed on to the ItemID
 				$ret = GalleryCoreApi::addMapEntry(
@@ -140,7 +140,7 @@ class ShowMapController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				if ($form['plugin'] == 'GroupCoord') {
@@ -263,7 +263,7 @@ class ShowMapView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 		}
 
 		// Get the real path for the map module installation
@@ -278,7 +278,7 @@ class ShowMapView extends GalleryView {
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// creates the array that will be later passed on to ShowMap.inc
@@ -1279,13 +1279,13 @@ class ShowMapView extends GalleryView {
 			list($ret, $themeId) = GalleryCoreApi::getPluginParameter('module', 'core', 'default.theme');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			// Grab the Theme Default settings
 			list($ret, $deftheme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			$settings  = $deftheme->getSettings(null);
 			$bodycolor = '';

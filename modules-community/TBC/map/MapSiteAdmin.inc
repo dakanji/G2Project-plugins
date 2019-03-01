@@ -313,7 +313,7 @@ class mapSiteAdminView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';

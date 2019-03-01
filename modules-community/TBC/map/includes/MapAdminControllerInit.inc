@@ -39,7 +39,7 @@ if (!empty($baseURL)) {
 	$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 if ($ret) {
-	return $ret->wrap(__FILE__, __LINE__);
+	return $ret;
 }
 
 	$status  = array();

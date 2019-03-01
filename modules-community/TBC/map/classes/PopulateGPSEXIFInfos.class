@@ -60,14 +60,14 @@ class PopulateGPSEXIFInfos extends MaintenanceTask {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$query              = 'SELECT [PhotoItem::id] FROM [PhotoItem] ORDER BY [PhotoItem::id]';
 		list($ret, $result) = $gallery->search($query);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$ids = array();
 
@@ -91,20 +91,20 @@ class PopulateGPSEXIFInfos extends MaintenanceTask {
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		foreach ($ids as $id) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($id);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			list($ret, $coords) = GoogleMapUtilities::getGPSCoordsFromExif($item);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			if ($coords != null) {
@@ -113,7 +113,7 @@ class PopulateGPSEXIFInfos extends MaintenanceTask {
 				$ret                = mapHelper::saveFieldValues($item, $fields[$id]);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 			$ret = $templateAdapter->updateProgressBar(
@@ -129,7 +129,7 @@ class PopulateGPSEXIFInfos extends MaintenanceTask {
 			);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 			$current++;
 		}

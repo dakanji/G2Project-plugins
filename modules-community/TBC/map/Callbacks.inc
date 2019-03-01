@@ -38,7 +38,7 @@ class mapCallbacks {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		switch ($callback) {
@@ -46,12 +46,12 @@ class mapCallbacks {
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($params['itemId']);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				list($ret, $fields) = mapHelper::fetchFieldValues(array($item), 'detail');
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				return null;
@@ -65,7 +65,7 @@ class mapCallbacks {
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					list($ret, $routes) = GalleryCoreApi::getPluginParameter(
@@ -75,7 +75,7 @@ class mapCallbacks {
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					$routefilters = array();
@@ -108,7 +108,7 @@ class mapCallbacks {
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					if (!empty($showalbumfilters) and $showalbumfilters == '1') {
@@ -119,7 +119,7 @@ class mapCallbacks {
 						);
 
 						if ($ret) {
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						$albumfilters = array();
@@ -207,7 +207,7 @@ class mapCallbacks {
 					list($ret, $item) = GalleryCoreApi::loadEntitiesById($params['itemId']);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					if ($item->getCanContainChildren()) {
@@ -221,7 +221,7 @@ class mapCallbacks {
 					list($ret, $data) = mapHelper::fetchFieldValues(array($item));
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					$lat      = array();
 					$lng      = array();
@@ -301,7 +301,7 @@ class mapCallbacks {
 					list($ret, $item) = GalleryCoreApi::loadEntitiesById($params['itemId']);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					if ($item->getCanContainChildren()) {
@@ -316,7 +316,7 @@ class mapCallbacks {
 					list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map');
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					// Get the API key for the current URL
@@ -413,7 +413,7 @@ class mapCallbacks {
 					list($ret, $results) = $gallery->search($query, $markerItemIds, array());
 					// $results is a series of rows with columns: itemId, field, value
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					$markerParams = array();

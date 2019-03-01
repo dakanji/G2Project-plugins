@@ -39,7 +39,7 @@ class AdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$error  = array();
@@ -49,7 +49,7 @@ class AdminController extends GalleryController {
 			list($ret, $markup) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			if ($markup == 'html') {
@@ -65,18 +65,18 @@ class AdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'aboutpage');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
@@ -126,7 +126,7 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$form['formName'] = 'AdminAboutPage';

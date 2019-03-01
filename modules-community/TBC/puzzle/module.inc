@@ -95,7 +95,7 @@ class puzzleModule extends GalleryModule {
 					if ($ret) {
 						// cannot find parent album.
 						// don't know how this can happen ... it is probably a bad, bad thing
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					$gallery->debug('<br>(modules:puzzle) getItemLinks: The parent album for this item is ' . $item->getId());
@@ -105,7 +105,7 @@ class puzzleModule extends GalleryModule {
 
 					if ($ret) {
 						// don't know what can cause this error
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					$gallery->debug(
@@ -172,7 +172,7 @@ class puzzleModule extends GalleryModule {
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		return null;

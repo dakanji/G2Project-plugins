@@ -327,7 +327,7 @@ class MapMarkersAdminController extends GalleryController {
 				list($ret, $magicpath) = GalleryCoreApi::getPluginParameter('module', 'imagemagick', 'path');
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				// For each color, creates a marker using Convert from the imagemagick toolkit

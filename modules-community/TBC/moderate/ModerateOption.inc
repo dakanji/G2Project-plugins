@@ -55,38 +55,38 @@ class ModerateOption extends ItemAddOption {
 		list($ret, $core) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 		}
 
 		for ($j = 0; $j < count($items); $j++) {
 			$ret = GalleryCoreApi::removeItemPermissions($items[$j]->getId());
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null);
+				return array($ret, null, null);
 			}
 			$ret = GalleryCoreApi::addGroupPermission($items[$j]->getId(), $core['id.adminGroup'], 'core.all');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null);
+				return array($ret, null, null);
 			}
 
 			list($ret, $childCounts) = GalleryCoreApi::fetchChildCounts(array($items[$j]->getParentId()));
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null);
+				return array($ret, null, null);
 			}
 			/*	if (!$childCounts) {
 			$ret = GalleryCoreApi::removeItemPermissions($items[$j]->getParentId());
 			if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 			}
 			$ret = GalleryCoreApi::addGroupPermission($items[$j]->getParentId(), $core['id.adminGroup'], 'core.all');
 			if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 			}
 			$ret = GalleryCoreApi::addUserPermission($items[$j]->getParentId(), $items[$j]->getOwnerId(), 'core.all');
 			if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 			}
 			}
 			 */
@@ -101,7 +101,7 @@ class ModerateOption extends ItemAddOption {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null);
+				return array($ret, null, null);
 			}
 		}
 

@@ -47,13 +47,13 @@ class AboutView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $markup) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if ($markup == 'html') {
@@ -64,7 +64,7 @@ class AboutView extends GalleryView {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'aboutpage');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$template->setVariable('form', $form);

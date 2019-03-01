@@ -67,18 +67,19 @@ class GalleryCheckoutPaypalIPNHelper {
 				);
 		}
 
-		$query                     = '
-        SELECT
-          [GalleryCheckoutPaypalIPN::id]
-        FROM
-          [GalleryCheckoutPaypalIPN], [GalleryChildEntity]
-        WHERE
-          [GalleryChildEntity::parentId] = ?
-          AND
-          [GalleryChildEntity::id] = [GalleryCheckoutPaypalIPN::id]
-        ORDER BY
-          [GalleryCheckoutPaypalIPN::ppDate] ' . $direction . '
-        ';
+		$query = "
+        	SELECT
+				[GalleryCheckoutPaypalIPN::id]
+			FROM
+				[GalleryCheckoutPaypalIPN], [GalleryChildEntity]
+			WHERE
+				[GalleryChildEntity::parentId] = ?
+			AND
+				[GalleryChildEntity::id] = [GalleryCheckoutPaypalIPN::id]
+			ORDER BY
+				[GalleryCheckoutPaypalIPN::ppDate] $direction
+		";
+
 		list($ret, $searchResults) = $gallery->search(
 			$query,
 			array($itemId),
@@ -90,7 +91,7 @@ class GalleryCheckoutPaypalIPNHelper {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// Get all of our ids
@@ -107,7 +108,7 @@ class GalleryCheckoutPaypalIPNHelper {
 			list($ret, $ppTransactions) = GalleryCoreApi::loadEntitiesById($allIds);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 		}
 
@@ -121,30 +122,34 @@ class GalleryCheckoutPaypalIPNHelper {
 	 * @return array object GalleryStatus a status code
 	 *               int a count
 	 * @access private
-	 * @static
 	 */
 	public function fetchPpTxnCounts($itemIds) {
 		global $gallery;
 
 		$markers = GalleryUtilities::makeMarkers(sizeof($itemIds));
-		$query   = '
-        SELECT
-          [GalleryChildEntity::parentId],
-          COUNT([GalleryCheckoutPaypalIPN::id])
-        FROM
-          [GalleryCheckoutPaypalIPN], [GalleryChildEntity]
-        WHERE
-          [GalleryChildEntity::parentId] IN (' . $markers . ')
-          AND
-          [GalleryChildEntity::id] = [GalleryCheckoutPaypalIPN::id]
-        GROUP BY
-          [GalleryChildEntity::parentId]
-        ';
+
+		$query = "
+			SELECT
+				[GalleryChildEntity::parentId],
+			COUNT
+				([GalleryCheckoutPaypalIPN::id])
+			FROM
+				[GalleryCheckoutPaypalIPN],
+				[GalleryChildEntity]
+			WHERE
+				[GalleryChildEntity::parentId]
+			IN
+				($markers)
+			AND
+				[GalleryChildEntity::id] = [GalleryCheckoutPaypalIPN::id]
+			GROUP BY
+				[GalleryChildEntity::parentId]
+		";
 
 		list($ret, $searchResults) = $gallery->search($query, $itemIds);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$data = array();

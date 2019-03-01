@@ -142,7 +142,7 @@ class ICalendarHelper {
 			/*$ret = GalleryCoreApi::addExistingItemToAlbum($newEntity, $resourceItem->getParentId(),
 			true);
 			if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 			}*/
 
 			$ret = GalleryCoreApi::addMapEntry(
@@ -227,7 +227,7 @@ class ICalendarHelper {
 
 			//$ret = $newItem->create($parentId, $calendar->serialize, ...);
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			$newItem->setFoo();
@@ -235,7 +235,7 @@ class ICalendarHelper {
 			$ret = $newItem->save();
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			$ret = GalleryCoreApi::addExistingItemToAlbum($newItem, $parentId, true);
@@ -256,7 +256,7 @@ class ICalendarHelper {
 			);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 		}
 

@@ -38,7 +38,7 @@ class PuzzleHelper {
 
 		if ($ret) {
 			// don't know what can cause this error
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if ($enabled == 'no') {

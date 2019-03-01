@@ -101,7 +101,7 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		return null;
@@ -114,7 +114,7 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 		list($ret, $value) = $this->getParameter('authorizeNetId');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, empty($value));

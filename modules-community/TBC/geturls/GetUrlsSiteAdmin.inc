@@ -33,7 +33,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$status = array();
@@ -48,14 +48,14 @@ class GetUrlsSiteAdminController extends GalleryController {
 				}
 			}
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'geturls',
-			'warnings',
-			implode('|', $param)
+				'module',
+				'geturls',
+				'warnings',
+				implode('|', $param)
 		);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$param = array();
@@ -68,14 +68,14 @@ class GetUrlsSiteAdminController extends GalleryController {
 				}
 			}
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'geturls',
-			'showCodes',
-			implode('|', $param)
+				'module',
+				'geturls',
+				'showCodes',
+				implode('|', $param)
 		);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			$param = array();
@@ -87,14 +87,14 @@ class GetUrlsSiteAdminController extends GalleryController {
 				}
 			}
 			$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'geturls',
-			'idReporting',
-			implode('|', $param)
+				'module',
+				'geturls',
+				'idReporting',
+				implode('|', $param)
 		);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			foreach (array('guestMode', 'showItemSummaries', 'showIeLinks') as $param) {
@@ -104,28 +104,28 @@ class GetUrlsSiteAdminController extends GalleryController {
 					$value = 1;
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'geturls',
-			$param,
-			$value
+					'module',
+					'geturls',
+					$param,
+					$value
 		);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 			}
 
 			if (isset($form['itemSummariesWidth']) &&
 			is_numeric($form['itemSummariesWidth'])) {
 				$ret = GalleryCoreApi::setPluginParameter(
-			'module',
-			'geturls',
-			'itemSummariesWidth',
-			$form['itemSummariesWidth']
+					'module',
+					'geturls',
+					'itemSummariesWidth',
+					$form['itemSummariesWidth']
 		);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 			}
 			$status['saved'] = 1;
@@ -171,7 +171,7 @@ class GetUrlsSiteAdminView extends GalleryView {
 		GalleryCoreApi::fetchAllPluginParameters('module', 'geturls');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			foreach (explode('|', $param['warnings']) as $tmp) {

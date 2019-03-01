@@ -21,7 +21,7 @@
 /**
  * @version $Revision: 1200 $
  * @package CheckoutAuthorizeNet
- * @author Michael Rodríguez-Torrent <mike@themikecam.com>
+ * @author Michael Rodrï¿½guez-Torrent <mike@themikecam.com>
  */
 
 /**
@@ -43,7 +43,7 @@ class ConfirmationView extends GalleryView {
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		// Get parameters from the checkout plugin
@@ -51,13 +51,13 @@ class ConfirmationView extends GalleryView {
 					= GalleryCoreApi::getPluginParameter('module', 'checkout', 'postage');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		list($ret, $csymbol)
 					= GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// Get our plugin parameters
@@ -68,7 +68,7 @@ class ConfirmationView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		list($ret, $subject) = GalleryCoreApi::getPluginParameter(
 			'module',
@@ -77,13 +77,13 @@ class ConfirmationView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// Begin constructing the data to pass to the email templates
 		$email = array(
 			'transactionId'
-																			    => unserialize($session->get('checkoutauthorizenet.transactionId')),
+																				   => unserialize($session->get('checkoutauthorizenet.transactionId')),
 			'items'             => unserialize($session->get('checkoutauthorizenet.items')),
 			'product'           => unserialize($session->get('checkoutauthorizenet.product')),
 			'price'             => unserialize($session->get('checkoutauthorizenet.price')),
@@ -120,7 +120,7 @@ class ConfirmationView extends GalleryView {
 					= GalleryCoreApi::fetchThumbnailsByItemIds(array_keys($email['items']));
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		foreach ($thumbnailList as $thumbnail) {
@@ -135,7 +135,7 @@ class ConfirmationView extends GalleryView {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		foreach ($toAddresses as $toAddress) {
@@ -156,7 +156,7 @@ class ConfirmationView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 		}
 

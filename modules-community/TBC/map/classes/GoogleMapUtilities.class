@@ -384,7 +384,7 @@ class GoogleMapUtilities {
 		list($ret, $filename) = $item->fetchPath();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null, null);
+			return array($ret, null, null, null);
 		}
 		$oldfilename      = dirname($filename) . '/old' . basename($filename);
 		$jpeg_header_data = get_jpeg_header_data($filename);
@@ -541,7 +541,7 @@ class GoogleMapUtilities {
 		list($ret, $filename) = $item->fetchPath();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!is_dir($filename)) {

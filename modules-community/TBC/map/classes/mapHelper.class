@@ -58,14 +58,14 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map', $containerId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 		}
 
 		if (empty($param) && $containerId > 0 && $fallback) {
 			list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null);
+				return array($ret, null, null);
 			}
 			$isContainer = false;
 		}
@@ -116,7 +116,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 		}
 
@@ -137,7 +137,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		list($ret, $param) = mapHelper::loadParameters($containerId, false);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		foreach ($param as $list) {
@@ -161,7 +161,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		return array(null, true);
@@ -213,7 +213,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				break;
@@ -228,7 +228,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 		}
 
@@ -324,7 +324,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map', $containerId);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$isContainer = !empty($param);
 
@@ -336,7 +336,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		foreach ($fields as $field => $value) {
@@ -353,7 +353,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 		}
@@ -380,7 +380,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 		}
 
@@ -391,7 +391,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				list($ret, $coords) = GoogleMapUtilities::getGPSCoordsFromExif($item);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				if ($coords != null) {
@@ -399,7 +399,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					$ret           = mapHelper::saveFieldValues($item, $fields);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 				}
 			}
@@ -424,7 +424,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			list($ret, $param) = mapHelper::loadParameters($containerId, false);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			foreach (array('common', 'album', 'photo') as $set) {
@@ -444,7 +444,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			$ret = mapHelper::saveParameters($newParam, $containerId);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 			$status['saved'] = 1;
 		} elseif (isset($form['action']['add'])) {
@@ -460,7 +460,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			list($ret, $added) = mapHelper::addField($newField, $set, $containerId);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			if ($added) {
@@ -474,7 +474,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			list($ret, $param, $isContainer) = mapHelper::loadParameters($containerId, false);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 			$idx = mapHelper::findParameter($param[$set], $form[$set]['goField']);
 
@@ -496,7 +496,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					break;
@@ -512,7 +512,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					$ret = mapHelper::deleteField(
 						$form[$set]['goField'],
@@ -520,7 +520,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					$status['removed'] = 1;
 
@@ -542,7 +542,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					$ret = mapHelper::deleteField(
 						$form[$set]['goField'],
@@ -551,7 +551,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					break;
@@ -574,7 +574,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			list($ret, $param) = mapHelper::loadParameters($containerId, false);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			foreach ($param as $set => $list) {
@@ -590,7 +590,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					$status['picklist'] = 1;
 
@@ -615,7 +615,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$form['set']   = array();
@@ -635,7 +635,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		list($ret, $form['fields']) = mapHelper::loadParameters($containerId, false);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		return null;
@@ -651,7 +651,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			list($ret, $added) = mapHelper::addField($fieldName, 'common', $containerId);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			if (!$added) {
@@ -669,12 +669,12 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$ret = mapHelper::saveFieldValues($item, $data);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		return null;

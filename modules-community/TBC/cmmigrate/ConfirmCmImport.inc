@@ -43,14 +43,14 @@ class ConfirmCmImportController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$copperminePath = GalleryUtilities::getRequestVariables('copperminePath');
 		$this->_openDatabase($copperminePath);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// build framework for error and status arrays
@@ -138,20 +138,20 @@ class ConfirmCmImportController extends GalleryController {
 		list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'cmmigrate');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$importPhotosMessage = $module->translate('Importing Photos');
 
 		list($ret, $markupType) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$itemsCreated = array();
@@ -174,7 +174,7 @@ class ConfirmCmImportController extends GalleryController {
 			list($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 			$form['destinationAlbumID'] = $rootId;
 		}
@@ -189,7 +189,7 @@ class ConfirmCmImportController extends GalleryController {
 		list($ret, $albums) = $this->_getAlbums();
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		foreach (array_keys($form['sourceAlbums']) as $sourceAlbumId) {
@@ -205,7 +205,7 @@ class ConfirmCmImportController extends GalleryController {
 			list($ret, $photos) = $this->_cmdb->getPhotos($albums[$sourceAlbumId]);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 			$picturesToImport[$sourceAlbumId] = $photos;
 			$totalItemsToImport              += 1 + count($photos);
@@ -247,7 +247,7 @@ class ConfirmCmImportController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				$desiredname = $platform->legalizePathComponent($album->name);
@@ -259,7 +259,7 @@ class ConfirmCmImportController extends GalleryController {
 
 					if ($ret) {
 						if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 						$invalidName = false;
 					} else {
@@ -275,21 +275,21 @@ class ConfirmCmImportController extends GalleryController {
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					// Try to load targeted parent
 					list($ret, $targetAlbumObject) = GalleryCoreApi::loadEntitiesById($targetAlbumID);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					// Get a lock on said parent
 					list($ret, $importLockIds[]) = GalleryCoreApi::acquireReadLock($targetAlbumObject->getId());
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					// If everything is good so far, we create a new instance to be our new album
@@ -299,7 +299,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						if (!isset($newAlbumInstance)) {
@@ -313,7 +313,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						$newAlbumInstanceId = $newAlbumInstance->getId();
@@ -342,7 +342,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 						$numberOfItemsImported++;
 
@@ -351,7 +351,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						$itemsCreated[] = $newAlbumInstance->getId();
@@ -362,7 +362,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						if ($coreParams['id.adminGroup']) {
@@ -374,7 +374,7 @@ class ConfirmCmImportController extends GalleryController {
 							);
 
 							if ($ret) {
-								return $ret->wrap(__FILE__, __LINE__);
+								return $ret;
 							}
 						}
 
@@ -383,21 +383,21 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 						list($ret, $theme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 						list($ret, $settings) = $theme->getSettings($newAlbumInstanceId);
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						if (isset($newAlbumInstanceId)) {
@@ -406,7 +406,7 @@ class ConfirmCmImportController extends GalleryController {
 						} else {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 					}
 					/*
@@ -416,7 +416,7 @@ class ConfirmCmImportController extends GalleryController {
 					$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					$importLockIds = array();
 
@@ -431,20 +431,20 @@ class ConfirmCmImportController extends GalleryController {
 					list($ret, $item)                    = GalleryCoreApi::loadEntitiesById($newAlbumInstanceId);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					list($ret, $importLockIds[]) = GalleryCoreApi::acquireReadLock($item->getId());
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array($item->getId()));
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($importLockIds);
 
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 					$albumNeedsThumbnail = empty($thumbnailTable) ? true : false;
 
@@ -465,7 +465,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						list($base, $extension) = GalleryUtilities::getFileNameComponents($filename);
@@ -474,7 +474,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						$data                = array(
@@ -502,7 +502,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 						$itemsCreated[] = $newItem->getId();
 						$numberOfItemsImported++;
@@ -512,7 +512,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						$itemLockIds               = array();
@@ -521,7 +521,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						$newItem->
@@ -541,7 +541,7 @@ class ConfirmCmImportController extends GalleryController {
 							if ($ret) {
 								GalleryCoreApi::releaseLocks($importLockIds);
 
-								return $ret->wrap(__FILE__, __LINE__);
+								return $ret;
 							}
 						}
 
@@ -550,13 +550,13 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 
 						$ret = GalleryCoreApi::releaseLocks($itemLockIds);
 
 						if ($ret) {
-							return $ret->wrap(__FILE__, __LINE__);
+							return $ret;
 						}
 						$itemLockIds = array();
 
@@ -573,7 +573,7 @@ class ConfirmCmImportController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				$album = null;
 				// $i keeps track of how many passes we make over the data
@@ -585,7 +585,7 @@ class ConfirmCmImportController extends GalleryController {
 		$ret = $storage->checkPoint();
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		foreach ($albumHighlight as $highlightRecipientId => $nameOfAlbumToHighlight) {
@@ -595,12 +595,12 @@ class ConfirmCmImportController extends GalleryController {
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($highlightRecipientId);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				list($ret, $importLockIds[]) = GalleryCoreApi::acquireReadLock($item->getId());
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				list($ret, $success) = GalleryCoreApi::setThumbnailFromItem(
 					$item->getId(),
@@ -610,7 +610,7 @@ class ConfirmCmImportController extends GalleryController {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($importLockIds);
 
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 		}
@@ -619,7 +619,7 @@ class ConfirmCmImportController extends GalleryController {
 			$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 			$importLockIds = array();
 		}
@@ -628,7 +628,7 @@ class ConfirmCmImportController extends GalleryController {
 		$ret = $storage->checkPoint();
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$templateAdapter->resetProgressBarStats();
@@ -649,14 +649,14 @@ class ConfirmCmImportController extends GalleryController {
 				list($ret, $thumbTable) = GalleryCoreApi::fetchThumbnailsByItemIds($chunk);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				foreach ($thumbTable as $thumbnail) {
 					list($ret, $newThumbnail, $wasRebuilt) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($thumbnail->getId());
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 
 					$thumbsCreated++;
@@ -673,7 +673,7 @@ class ConfirmCmImportController extends GalleryController {
 					);
 
 					if ($ret) {
-						return $ret->wrap(__FILE__, __LINE__);
+						return $ret;
 					}
 				}
 				GalleryDataCache::reset();
@@ -684,7 +684,7 @@ class ConfirmCmImportController extends GalleryController {
 		$ret = $storage->checkPoint();
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$session =& $gallery->getSession();
@@ -766,7 +766,7 @@ class ConfirmCmImportController extends GalleryController {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'migrate');
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 			$titleMessage     = $module->translate('%sTitle%s was truncated for %sitem %d%s.');
 			$summaryMessage   = $module->translate('%sSummary%s was truncated for %sitem %d%s.');
@@ -834,7 +834,7 @@ class ConfirmCmImportController extends GalleryController {
 		list($ret, $albums) = $this->_cmdb->getAlbums();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		foreach ($albums as $a) {
@@ -866,12 +866,12 @@ class ConfirmCmImportView extends GalleryView {
 		list($ret, $albums) = $this->_getAlbums($copperminePath);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		list($ret, $targetAlbum) = GalleryCoreApi::loadEntitiesById($destinationAlbumID);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		foreach ($form['sourceAlbums'] as $sourceAlbumId) {
@@ -898,7 +898,7 @@ class ConfirmCmImportView extends GalleryView {
 
 			if ($ret) {
 				if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$existingAlbums[$albumId] = false;
 			} else {
@@ -933,7 +933,7 @@ class ConfirmCmImportView extends GalleryView {
 		list($ret, $albums) = $cmdb->getAlbums();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		foreach ($albums as $a) {

@@ -68,14 +68,14 @@ class GetUrlsHelper {
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'geturls.view');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// We want to get the options for our module
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'geturls');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		foreach (explode('|', $param['warnings']) as $tmp) {
@@ -95,7 +95,7 @@ class GetUrlsHelper {
 		list($ret, $thumbMap) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (isset($thumbMap[$itemId])) {
@@ -105,7 +105,7 @@ class GetUrlsHelper {
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		/*
@@ -120,7 +120,7 @@ class GetUrlsHelper {
 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 
 			if ($userId != $guestUserId) {
@@ -133,13 +133,13 @@ class GetUrlsHelper {
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewSource', $userId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		list($ret, $hasViewResizesPermission) =
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewResizes', $userId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		$permissions = array('viewResizes' => $hasViewResizesPermission,
 				 'viewSource'              => $hasViewSourcePermission, );
@@ -156,7 +156,7 @@ class GetUrlsHelper {
 				list($ret, $resizesMap) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				if (isset($resizesMap[$itemId])) {

@@ -55,7 +55,7 @@ class GalleryAuthorizeNet {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		list($ret, $tranKey) = GalleryCoreApi::getPluginParameter(
 			'module',
@@ -64,7 +64,7 @@ class GalleryAuthorizeNet {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		$this->_authorizeNet = new AuthorizeNetAim($loginId, $tranKey);
 
@@ -75,18 +75,18 @@ class GalleryAuthorizeNet {
 		);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		$ret = $this->_authorizeNet->setMode($mode);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		$ret = $this->_authorizeNet->setMethod($method);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		list($ret, $curl) = GalleryCoreApi::getPluginParameter(
@@ -96,7 +96,7 @@ class GalleryAuthorizeNet {
 		);
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 		$this->_authorizeNet->setCurlPath($curl);
 
@@ -107,7 +107,7 @@ class GalleryAuthorizeNet {
 		list($ret, $error) = $this->_authorizeNet->process();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, $error);

@@ -209,7 +209,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 			// Actually update the database with the zoomlevel passed on to the ItemID
@@ -226,7 +226,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 			// Actually update the database with the color passed on to the ItemID
@@ -243,7 +243,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 
@@ -282,7 +282,7 @@ class MapGroupAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			$status['groupdeleted'] = 1;
@@ -382,7 +382,7 @@ class MapGroupAdminController extends GalleryController {
 			);
 
 			if ($ret) {
-				return $ret->wrap(__FILE__, __LINE__);
+				return $ret;
 			}
 
 			// Actually update the database with the coordinated passed on to the ItemID
@@ -399,7 +399,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 			// Actually update the database with the zoomlevel passed on to the ItemID
@@ -416,7 +416,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 			// Actually update the database with the color passed on to the ItemID
@@ -433,7 +433,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 
@@ -536,7 +536,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 			// Actually update the database with the zoomlevel passed on to the ItemID
@@ -553,7 +553,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 			// Actually update the database with the color passed on to the ItemID
@@ -570,7 +570,7 @@ class MapGroupAdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 			}
 

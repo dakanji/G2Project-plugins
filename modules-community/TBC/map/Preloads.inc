@@ -39,7 +39,7 @@ class mapPreloads {
 				list($ret, $tmp, $param, $isContainerSettings) = mapHelper::fetchFieldValues(array($item), null, 'photo');
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				if (isset($tmp[$item->getId()]['GPS'])

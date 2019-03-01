@@ -21,7 +21,7 @@
 /**
  * @version $Revision: 1200 $
  * @package CheckoutAuthorizeNet
- * @author Michael Rodríguez-Torrent <mike@themikecam.com>
+ * @author Michael Rodrï¿½guez-Torrent <mike@themikecam.com>
  */
 
 /**
@@ -156,7 +156,7 @@ class DetailsController extends GalleryController {
 				list($ret, $errorMsg) = $auth->process();
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				// If Authorize.Net returned an error, save for output
 				if (!empty($errorMsg)) {
@@ -165,11 +165,11 @@ class DetailsController extends GalleryController {
 				} else {
 					// Write the customer information back into the original transaction
 					$transactionId
-																							       = unserialize($session->get('checkoutauthorizenet.transactionId'));
+																								      = unserialize($session->get('checkoutauthorizenet.transactionId'));
 					list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					if (!isset($transaction)) {
@@ -183,12 +183,12 @@ class DetailsController extends GalleryController {
 							= GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					list($ret, $transaction) = $transaction->refresh();
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					// Set the customer information into the original transaction
 					$transaction->setFirstName($form['custFirstName']);
@@ -207,13 +207,13 @@ class DetailsController extends GalleryController {
 					$ret = $transaction->save();
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					// Release our lock
 					$ret = GalleryCoreApi::releaseLocks($lockId);
 
 					if ($ret) {
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 
 					$delegate['view'] = 'checkoutauthorizenet.Confirmation';

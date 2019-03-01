@@ -47,7 +47,7 @@ class mapItemEdit extends ItemEditPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null, null);
+			return array($ret, null, null, null);
 		}
 
 		if (isset($form['action']['save'])) {
@@ -98,7 +98,7 @@ class mapItemEdit extends ItemEditPlugin {
 				$ret = mapHelper::saveFieldValues($item, $form['fields']);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 				$status = $module->translate('Changes saved successfully');
 			}
@@ -107,12 +107,12 @@ class mapItemEdit extends ItemEditPlugin {
 			$ret                   = mapHelper::saveFieldValues($item, $form['fields']);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null, null);
+				return array($ret, null, null, null);
 			}
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null, null, null);
+				return array($ret, null, null, null);
 			}
 
 			$status = $module->translate('GPS coordinates successfully entered and saved');
@@ -125,7 +125,7 @@ class mapItemEdit extends ItemEditPlugin {
 				list($ret, $error, $status, $other) = GoogleMapUtilities::setGPSCoordsInExif($item, $coordinates, true);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null, null, null);
+					return array($ret, null, null, null);
 				}
 			} else {
 				$error[] = 'form[error][gps][missingGPSCoordinates]';
@@ -147,7 +147,7 @@ class mapItemEdit extends ItemEditPlugin {
 		list($ret, $form['exif']) = GoogleMapUtilities::getGPSCoordsFromExif($item);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 		}
 
 		if ($form['exif'] == null) {
@@ -166,7 +166,7 @@ class mapItemEdit extends ItemEditPlugin {
 		list($ret, $LegendEnable) = GalleryCoreApi::getPluginParameter('module', 'map', $type);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 		}
 
 		if ($LegendEnable) {
@@ -177,7 +177,7 @@ class mapItemEdit extends ItemEditPlugin {
 		list($ret, $tmp, $param, $isContainerSettings) = mapHelper::fetchFieldValues(array($item), null, $set);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null, null);
+			return array($ret, null, null);
 		}
 		$form['fields'] = $tmp[$item->getId()];
 
@@ -252,7 +252,7 @@ class mapItemEdit extends ItemEditPlugin {
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
-			return $ret->wrap(__FILE__, __LINE__);
+			return $ret;
 		}
 
 		return array(null, $module->translate('Google Map'));

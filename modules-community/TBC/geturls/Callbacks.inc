@@ -37,7 +37,7 @@ class GetUrlsCallbacks {
 				list($ret, $data) = GetUrlsHelper::getUrlsByItemId($itemId);
 
 				if ($ret) {
-					return $ret->wrap(__FILE__, __LINE__);
+					return $ret;
 				}
 
 				$block                        =& $smarty->_tpl_vars['block'];

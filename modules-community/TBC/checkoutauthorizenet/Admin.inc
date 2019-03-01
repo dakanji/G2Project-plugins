@@ -20,7 +20,7 @@
 /**
  * @version $Revision: 1200 $
  * @package CheckoutAuthorizeNet
- * @author Michael Rodríguez-Torrent <mike@themikecam.com>
+ * @author Michael Rodrï¿½guez-Torrent <mike@themikecam.com>
  */
 
 /**
@@ -37,7 +37,7 @@ class AdminController extends GalleryController {
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$error = $status = array();
@@ -81,7 +81,7 @@ class AdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -91,7 +91,7 @@ class AdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -101,7 +101,7 @@ class AdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -111,7 +111,7 @@ class AdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -121,7 +121,7 @@ class AdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -131,7 +131,7 @@ class AdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -141,18 +141,18 @@ class AdminController extends GalleryController {
 				);
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkoutauthorizenet');
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				list($ret, $isActive) = $module->isActive();
 
 				if ($ret) {
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				$redirect['view'] = 'core.SiteAdmin';
@@ -208,7 +208,7 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $form['tranKey']) = GalleryCoreApi::getPluginParameter(
 				'module',
@@ -217,7 +217,7 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $form['mode']) = GalleryCoreApi::getPluginParameter(
 				'module',
@@ -226,7 +226,7 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $form['curlPath']) = GalleryCoreApi::getPluginParameter(
 				'module',
@@ -235,7 +235,7 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			// A default to get the user started.
 			if (empty($form['curlPath'])) {
@@ -248,7 +248,7 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $form['emailSubject']) = GalleryCoreApi::getPluginParameter(
 				'module',
@@ -257,7 +257,7 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 			list($ret, $form['storeEmail']) = GalleryCoreApi::getPluginParameter(
 				'module',
@@ -266,19 +266,19 @@ class AdminView extends GalleryView {
 			);
 
 			if ($ret) {
-				return array($ret->wrap(__FILE__, __LINE__), null);
+				return array($ret, null);
 			}
 		}
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkoutauthorizenet');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 		list($ret, $isActive) = $module->isActive();
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!$isActive) {

@@ -59,19 +59,19 @@ class CalendarMonthController extends GalleryController {
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.addDataItem');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		list($ret, $lockId) = GalleryCoreApi::acquireReadLock($item->getId());
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		// Load the correct add plugin
@@ -80,7 +80,7 @@ class CalendarMonthController extends GalleryController {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockId);
 
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (!isset($plugin)) {
@@ -94,7 +94,7 @@ class CalendarMonthController extends GalleryController {
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockId);
 
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		if (empty($error) && isset($status['addedFiles'])) {
@@ -106,7 +106,7 @@ class CalendarMonthController extends GalleryController {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
 
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 			}
 
@@ -119,7 +119,7 @@ class CalendarMonthController extends GalleryController {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
 
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 
 				// Check if we should extract individual files out of an archive
@@ -131,7 +131,7 @@ class CalendarMonthController extends GalleryController {
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
 
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 				}
 
@@ -141,14 +141,14 @@ class CalendarMonthController extends GalleryController {
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
 
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					$ret = GalleryCoreApi::deleteEntityById($addedItem->getId());
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
 
-						return array($ret->wrap(__FILE__, __LINE__), null);
+						return array($ret, null);
 					}
 					unset($status['addedFiles'][$i--]);
 					$status['addedFiles'] = array_merge($status['addedFiles'], $addedFiles);
@@ -165,7 +165,7 @@ class CalendarMonthController extends GalleryController {
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
 
-					return array($ret->wrap(__FILE__, __LINE__), null);
+					return array($ret, null);
 				}
 				$error = array_merge($error, $optionErrors);
 				// for each item, put the items warnings into our status array
@@ -188,7 +188,7 @@ class CalendarMonthController extends GalleryController {
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		$results['status'] = $status;
@@ -216,24 +216,24 @@ class CalendarMonthView extends GalleryView {
 		/* Make sure we have permission to add to this item
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.addDataItem');
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		list ($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		/* Get all the add plugins
 		list ($ret, $allPluginIds) =
 		GalleryCoreApi::getAllFactoryImplementationIds('ItemAddPlugin');
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		$pluginInstances = array();
@@ -241,12 +241,12 @@ class CalendarMonthView extends GalleryView {
 		list ($ret, $plugin) =
 		GalleryCoreApi::newFactoryInstanceById('ItemAddPlugin', $pluginId);
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		list ($ret, $isAppropriate) = $plugin->isAppropriate();
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		if ($isAppropriate) {
@@ -257,7 +257,7 @@ class CalendarMonthView extends GalleryView {
 		/* Get all the add options
 		list ($ret, $optionInstances) = ItemAddOption::getAllAddOptions();
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		/*
@@ -280,7 +280,7 @@ class CalendarMonthView extends GalleryView {
 		foreach ($pluginInstances as $pluginId => $plugin) {
 		list ($ret, $title) =  $plugin->getTitle();
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 		$plugins[] = array('title' => $title,
 				   'id' => $pluginId,
@@ -296,7 +296,7 @@ class CalendarMonthView extends GalleryView {
 		list ($ret, $ItemAdd['pluginFile'], $ItemAdd['pluginL10Domain']) =
 		$pluginInstances[$addPlugin]->loadTemplate($template, $form, $item);
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		/* Now let all options load their template data
@@ -305,7 +305,7 @@ class CalendarMonthView extends GalleryView {
 		list ($ret, $entry['file'], $entry['l10Domain']) =
 		$option->loadTemplate($template, $form, $item);
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 		if (!empty($entry['file'])) {
 		$ItemAdd['options'][] = $entry;
@@ -315,7 +315,7 @@ class CalendarMonthView extends GalleryView {
 		/* Make sure that we've got some toolkits
 		list ($ret, $operations) = GalleryCoreApi::getToolkitOperations('image/jpeg');
 		if ($ret) {
-		return array($ret->wrap(__FILE__, __LINE__), null);
+		return array($ret, null);
 		}
 
 		$ItemAdd['hasToolkit'] = false;
@@ -383,7 +383,7 @@ class CalendarMonthView extends GalleryView {
 		list($ret, $core) = GalleryCoreApi::loadPlugin('module', 'core');
 
 		if ($ret) {
-			return array($ret->wrap(__FILE__, __LINE__), null);
+			return array($ret, null);
 		}
 
 		return array(null, $core->translate('add items'));
