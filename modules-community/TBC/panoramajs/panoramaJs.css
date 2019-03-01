@@ -1,0 +1,15 @@
+/*
+ * $Id: panoramaJs.css 15342 2007-07-01 11:14:46Z shivaya $
+ */
+
+.myPano {
+	cursor: pointer;
+}
+
+div.myPanoscrollLeft:hover {
+	background: transparent url(images/Left.png) no-repeat 4% 98%;
+}
+
+div.myPanoscrollRight:hover {
+	background: transparent url(images/Right.png) no-repeat 96% 98%;
+}

@@ -1,0 +1,131 @@
+<?php
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2007 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
+
+/**
+ * A GalleryRenderer that uses the panorama (Js)
+ * @package PanoramaJs
+ * @subpackage Classes
+ * @author shivaya <shivaya>at<users.sourceforge.net>
+ * @version $Revision: 15513 $
+ */
+class PanoramaJsRenderer extends GalleryRenderer {
+	/**
+	 * @see GalleryRenderer::canBeViewedInline
+	 */
+	public function canBeViewedInline($item) {
+		return true;
+	}
+
+	/**
+	 * @see GalleryRenderer::render
+	 */
+	public function render($format, $entity, $item, $params) {
+		global $gallery;
+		$urlGenerator =& $gallery->getUrlGenerator();
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'panoramajs');
+
+		if ($ret) {
+			return $ret;
+		}
+		list($ret, $viewWidth) = $module->getParameter('width');
+
+		if ($ret) {
+			return $ret;
+		}
+		list($ret, $rotate) = $module->getParameter('rotate');
+
+		if ($ret) {
+			return $ret;
+		}
+		list($ret, $speed) = $module->getParameter('speed');
+
+		if ($ret) {
+			return $ret;
+		}
+
+		$levier = array(
+			'1' => '0.01',
+			'2' => '0.04',
+			'3' => '0.06',
+			'4' => '0.08',
+			'5' => '0.14',
+		);
+		$speed  = $levier[$speed];
+
+		if ($rotate == 0) {
+			$speed        = 0;
+			$initPosition = 0;
+		} else {
+			$initPosition = -200;
+		}
+
+		if (!empty($params['forceRawImage']) || $entity->getWidth() < $viewWidth) {
+			// Return nothing so that we fall back to the default renderer
+			return null;
+		}
+
+		switch ($format) {
+			case 'HTML':
+				$src = $urlGenerator->generateUrl(
+					array(
+						'view'         => 'core.DownloadItem',
+						'itemId'       => $entity->getId(),
+						'serialNumber' => $entity->getSerialNumber(),
+					),
+					array(
+						'forceFullUrl'   => true,
+						'forceSessionId' => true,
+					)
+				);
+
+				$id_Pano = $entity->getId();
+
+				list($width, $height) = array($entity->getWidth(), $entity->getHeight());
+
+				return sprintf(
+					'
+		<div id="myPano%s" class="myPano" style="float: left; width: %dpx; height: %dpx; background-image: url(\'%s\'); background-position: %dpx 0px;"></div>
+			
+		<script type="text/javascript">
+		var myPano%s = new YajevLE(\'myPano%s\');		
+			myPano%s.setAutoRotate(%s);
+			myPano%s.launch();
+		</script>
+	    ',
+					$id_Pano,
+					$viewWidth,
+					$height,
+					$src,
+					$initPosition,
+					$id_Pano,
+					$id_Pano,
+					$id_Pano,
+					$speed,
+					$id_Pano
+				);
+
+			default:
+				return null;
+		}
+	}
+}
