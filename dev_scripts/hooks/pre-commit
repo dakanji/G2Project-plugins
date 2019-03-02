@@ -78,6 +78,30 @@ else
 			RET=$(git reset HEAD $PROJECT/$TARGET_FILE)
 
 
+			# Prepare misc items in target file for PHPCBF and PHP-CS-FIXER
+			# 1. Add blank line before "$query" calls
+			RET=$(perl -i -pe 's/\$query(\s+)(\.?=)/\$query $2/' $PROJECT/$TARGET_FILE)
+			RET=$(perl -i -pe 's/^(\s*)\$query (\.?=)/\n$1\$query $2/' $PROJECT/$TARGET_FILE)
+			# 2. Add blank line before "$ret" calls
+			RET=$(perl -i -pe 's/\$ret(\s+)=/\$ret =/' $PROJECT/$TARGET_FILE)
+			RET=$(perl -i -pe 's/^(\s*)\$ret =/\n$1\$ret =/' $PROJECT/$TARGET_FILE)
+			# 3. Add blank line after single line "$ret" calls
+			RET=$(perl -i -pe 's/^(\s*)\$ret(.+)$/$1\$ret$2\n/' $PROJECT/$TARGET_FILE)
+			# 4. Add blank line before "list" calls
+			RET=$(perl -i -pe 's/^(\s*)list\(/\n$1list(/' $PROJECT/$TARGET_FILE)
+			# 5. Add blank line after single line "list" calls
+			RET=$(perl -i -pe 's/^(\s*)list(.+)$/$1list$2\n/' $PROJECT/$TARGET_FILE)
+			# 6. Add blank line after closing braces
+			RET=$(perl -i -pe 's/^(\s*)\}(\s*)/$1\}$2\n/' $PROJECT/$TARGET_FILE)
+			# 7. Add blank line after closing multiline statements
+			RET=$(perl -i -pe 's/^(\s*)\);(\s*)/$1\);$2\n/' $PROJECT/$TARGET_FILE)
+			# 8. Remove superflous blank lines
+			RET=$(perl -i -0pe 's/(\n\s*){2,}(\n\s*)/\n$2/gms' $PROJECT/$TARGET_FILE)
+
+
+
+
+
 			# Apply coding style to target file
 			RET=$($PHP_CBF_BIN --standard=$PHP_CBF_CONFIG_START $PROJECT/$TARGET_FILE)
 			RET=$($PHP_FIX_BIN fix --config "$PHP_FIX_CONFIG" $PROJECT/$TARGET_FILE)
@@ -85,8 +109,8 @@ else
 
 
 			# Catch misc items in target file not covered by PHPCBF or PHP-CS-FIXER
-			# 1. Close empty braces on one line.
-			RET=$(perl -0777 -p -i -e 's|\{\n(\s+)?\}|{}|gms' $PROJECT/$TARGET_FILE)
+			# 1. Close empty braces on opening line
+			RET=$(perl -i -0pe 's/\{\n(\s*)\}/{}/g' $PROJECT/$TARGET_FILE)
 
 
 			# Stage target file

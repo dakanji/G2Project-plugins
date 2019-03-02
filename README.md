@@ -1,2 +1,2 @@
-# Gallery 2 Modules
-## A Home for Gallery 2 Modules
+# Gallery 2 Plugins
+## A Home for Gallery 2 Plugins
