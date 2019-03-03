@@ -119,6 +119,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 	 */
 	public function _addItem($parentItem, $webDavOptions, $stream, $mimeType, $path) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		// Following pattern from ItemAddWebCam
@@ -141,8 +142,9 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		$platform->fclose($handle);
 
-		$originalPath        = GalleryUtilities::getRequestVariables('originalPath');
-		$title               = empty($originalPath) ? basename($path) : basename($originalPath);
+		$originalPath = GalleryUtilities::getRequestVariables('originalPath');
+		$title        = empty($originalPath) ? basename($path) : basename($originalPath);
+
 		list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
 			$tmpFile,
 			basename($path),
@@ -152,6 +154,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			$mimeType,
 			$parentItem->getId()
 		);
+
 		@$platform->unlink($tmpFile);
 
 		if ($ret) {
@@ -187,12 +190,14 @@ class ItemAddWebDav extends ItemAddPlugin {
 	 */
 	public function _replaceItem($parentItem, $webDavOptions, $stream, $mimeType, $path, $itemId) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		/*
 		 * The parent is already read-locked by the ItemAddController. Read-lock the whole ancestor
 		 * sequence to ensure that filesystem path stays the same.
 		 */
+
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLockParents($parentItem->getId());
 
 		if ($ret) {
@@ -386,9 +391,11 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 		}
+
 		@$platform->unlink($tmpFile);
 
 		$newItem->setPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
+
 		$ret = $newItem->save();
 
 		if ($ret) {
@@ -461,6 +468,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$hasLink = !empty($linkedIds);
 		}
 

@@ -45,6 +45,7 @@ class DigibugPrintPhotosView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($itemId, $returnUrl) = GalleryUtilities::getRequestVariables('itemId', 'returnUrl');
@@ -62,6 +63,7 @@ class DigibugPrintPhotosView extends GalleryView {
 		if (empty($cartItemIds) || empty($returnUrl)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
+
 		$ret = $urlGenerator->assertIsInternalUrl($returnUrl);
 
 		if ($ret) {
@@ -69,7 +71,8 @@ class DigibugPrintPhotosView extends GalleryView {
 		}
 
 		// Load the necessary item data
-		$itemIds           = array_keys($cartItemIds);
+		$itemIds = array_keys($cartItemIds);
+
 		list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryPhotoItem');
 
 		if ($ret) {
@@ -113,6 +116,7 @@ class DigibugPrintPhotosView extends GalleryView {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds, $anonymousUserId, false);
 
 		if ($ret) {
@@ -142,7 +146,8 @@ class DigibugPrintPhotosView extends GalleryView {
 				 * Create a new session with the rights of current user for digibug to use.
 				 */
 				$dgSession = new GallerySession();
-				$ret       = $dgSession->initEmpty(true, $gallery->getActiveUserId());
+
+				$ret = $dgSession->initEmpty(true, $gallery->getActiveUserId());
 
 				if ($ret) {
 					return $ret;
@@ -150,18 +155,20 @@ class DigibugPrintPhotosView extends GalleryView {
 			}
 
 			if ($needSession) {
-				$sessionParam   = array(
+				$sessionParam = array(
 					$dgSession->getKey() => $dgSession->getId(),
 				);
+
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
 			}
 
-			$entry                = array(
+			$entry = array(
 				'item' => (array)$item,
 			);
-			$entry['imageUrl']    = $urlGenerator->generateUrl(
+
+			$entry['imageUrl'] = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -174,6 +181,7 @@ class DigibugPrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
+
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
 
@@ -184,7 +192,7 @@ class DigibugPrintPhotosView extends GalleryView {
 				$thumbSource = $thumbnails[$itemId];
 			}
 
-			$entry['thumbUrl']    = $urlGenerator->generateUrl(
+			$entry['thumbUrl'] = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbSource->getId(),
@@ -194,6 +202,7 @@ class DigibugPrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
+
 			$entry['thumbWidth']  = $thumbSource->getWidth();
 			$entry['thumbHeight'] = $thumbSource->getHeight();
 
@@ -216,6 +225,7 @@ class DigibugPrintPhotosView extends GalleryView {
 			 * sessionid in this session so we can reuse it for multiple print requests (and
 			 * just bump timeout each time).
 			 */
+
 			$ret = $dgSession->save();
 
 			if ($ret) {
@@ -252,6 +262,7 @@ class DigibugPrintPhotosView extends GalleryView {
 				'params'    => $params,
 			)
 		);
+
 		$template->display('gallery:modules/digibug/templates/DigibugPrintPhotos.tpl');
 
 		return null;

@@ -38,6 +38,7 @@
 		if ($anon) {
 			return null;
 		}
+
 		$thisUserId = $gallery->getActiveUserId();
 		// make visible according to group membership
 		foreach ($products as $position => $product) {

@@ -18,8 +18,6 @@
 //      Mike Mozolin <teddybearØmail*ru>                       //
 //                                                             //
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_tar extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -29,7 +27,6 @@ class getid3_tar extends getid3_handler {
 
 		$unpack_header = 'a100fname/a8mode/a8uid/a8gid/a12size/a12mtime/a8chksum/a1typflag/a100lnkname/a6magic/a2ver/a32uname/a32gname/a8devmaj/a8devmin/a155prefix';
 		$null_512k     = str_repeat("\x00", 512); // end-of-file marker
-
 		$this->fseek(0);
 
 		while (!feof($this->getid3->fp)) {
@@ -53,6 +50,7 @@ class getid3_tar extends getid3_handler {
 			for ($i = 156; $i < 512; $i++) {
 				$checksum += ord($buffer[$i]);
 			}
+
 			$attr    = unpack($unpack_header, $buffer);
 			$name    = (isset($attr['fname']) ? trim($attr['fname']) : '');
 			$mode    = octdec(isset($attr['mode']) ? trim($attr['mode']) : '');
@@ -98,10 +96,12 @@ class getid3_tar extends getid3_handler {
 				// Padding, throw away
 				$this->fseek((512 - $diff), SEEK_CUR);
 			}
+
 			// Protect against tar-files with garbage at the end
 			if ($name == '') {
 				break;
 			}
+
 			$info['tar']['file_details'][$name] = array(
 				'name'     => $name,
 				'mode_raw' => $mode,
@@ -120,7 +120,8 @@ class getid3_tar extends getid3_handler {
 				'devmajor' => $devmaj,
 				'devminor' => $devmin,
 			);
-			$info['tar']['files']               = getid3_lib::array_merge_clobber($info['tar']['files'], getid3_lib::CreateDeepArray($info['tar']['file_details'][$name]['name'], '/', $size));
+
+			$info['tar']['files'] = getid3_lib::array_merge_clobber($info['tar']['files'], getid3_lib::CreateDeepArray($info['tar']['file_details'][$name]['name'], '/', $size));
 		}
 
 		return true;
@@ -153,7 +154,6 @@ class getid3_tar extends getid3_handler {
 		else {
 			$type = 'u';
 		} // UNKNOWN
-
 		// Determine permissions
 		$owner['read']    = (($mode & 00400) ? 'r' : '-');
 		$owner['write']   = (($mode & 00200) ? 'w' : '-');

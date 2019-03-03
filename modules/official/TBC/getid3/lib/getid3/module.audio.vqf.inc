@@ -13,15 +13,12 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_vqf extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
 
 		// based loosely on code from TTwinVQ by Jurgen Faul <jfaulØgmx*de>
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
-
 		$info['fileformat']            = 'vqf';
 		$info['audio']['dataformat']   = 'vqf';
 		$info['audio']['bitrate_mode'] = 'cbr';
@@ -43,9 +40,9 @@ class getid3_vqf extends getid3_handler {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($thisfile_vqf_raw['header_tag']) . '"';
 			unset($info['vqf'], $info['fileformat']);
 
-
 			return false;
 		}
+
 		$offset                     += 4;
 		$thisfile_vqf_raw['version'] = substr($VQFheaderData, $offset, 8);
 		$offset                     += 8;
@@ -63,6 +60,7 @@ class getid3_vqf extends getid3_handler {
 
 				break;
 			}
+
 			$chunkoffset += 4;
 			$ChunkSize    = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
 			$chunkoffset += 4;

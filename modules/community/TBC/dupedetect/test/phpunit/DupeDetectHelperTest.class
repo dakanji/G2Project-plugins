@@ -54,7 +54,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		parent::setUp();
 
 		// Create a container album for any data items we create
-
 		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
 
 		if ($ret->isError()) {
@@ -64,7 +63,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		// acquire locks for the test album
-
 		list($ret, $this->_lockIds) = GalleryCoreApi::acquireReadLock($this->_album->getId());
 
 		if ($ret->isError()) {
@@ -157,13 +155,14 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
-		// check that signatures were created
 
+		// check that signatures were created
 		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
 
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert($crcSign, 'crc32 signature wasn\'t created');
 		$this->assert($histSign, 'histogram signature wasn\'t created');
 
@@ -173,13 +172,14 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
-		// check that signatures were created
 
+		// check that signatures were created
 		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
 
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(!$crcSign, 'crc32 signature wasn\'t removed');
 		$this->assert(!$histSign, 'histogram signature wasn\'t removed');
 	}
@@ -191,7 +191,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		$count = -1;
 
 		// call addDupes() with an empty dupes list
-
 		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), null);
 
 		if ($ret->isError()) {
@@ -218,6 +217,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->_markForCleanup($dupItem1);
 
 		// upload another test image
@@ -238,6 +238,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->_markForCleanup($dupItem2);
 
 		// test getDupePairs when the pair doesn't exist
@@ -374,6 +375,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->_markForCleanup($dupItem1);
 
 		// upload another test image
@@ -394,6 +396,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->_markForCleanup($dupItem2);
 
 		// add dupes pairs
@@ -472,12 +475,12 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		// check that signatures were created
-
 		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
 
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert($crcSign, 'crc32 signature wasn\'t created in ::save event');
 		$this->assert($histSign, 'histogram signature wasn\'t created in ::save event');
 
@@ -487,6 +490,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$ret = DupeDetectHelper::deleteDupes($this->_item->getId());
 
 		if ($ret->isError()) {
@@ -518,12 +522,12 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		// check that the handler had run and successfully deleted the signatures
-
 		list($ret, $crcSign, $histSign) = $this->_doesSignaturesExist($this->_item->getId());
 
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(!$crcSign, 'crc32 signature wasn\'t deleted');
 		$this->assert(!$histSign, 'histogram signature wasn\'t deleted');
 	}
@@ -533,7 +537,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 	 */
 	public function testDiscoverDupes() {
 		// try to discover before there are any signatures, should return empty array
-
 		list($ret, $dupes) = DupeDetectHelper::discoverDupes($this->_item->getId());
 
 		if ($ret->isError()) {
@@ -548,8 +551,8 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
-		// there may already be dupes for this item in the real G2 database, count how many
 
+		// there may already be dupes for this item in the real G2 database, count how many
 		list($ret, $dupes) = DupeDetectHelper::discoverDupes($this->_item->getId());
 
 		if ($ret->isError()) {
@@ -600,6 +603,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->_markForCleanup($dupItem2);
 
 		$ret = DupeDetectHelper::createDupeSignatures($dupItem2);
@@ -622,11 +626,13 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$ret = DupeDetectHelper::removeDupeSignatures($this->_item2->getId());
 
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$ret = DupeDetectHelper::removeDupeSignatures($dupItem2->getId());
 
 		if ($ret->isError()) {
@@ -679,7 +685,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		$this->assertEquals((int)$dupes[0]['userStatus'], DUPEDETECT_IGNORED_DUPLICATE);
 		$this->assertEquals((int)$dupes[1]['userStatus'], DUPEDETECT_IGNORED_DUPLICATE);
 
-
 		// clean up
 		$ret = DupeDetectHelper::deleteDupes($this->_item->getId());
 
@@ -688,7 +693,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		// check getDupeParis on non existing pair
-
 		list($ret, $dupes) = DupeDetectHelper::getDupePairs(
 			$this->_item->getId(),
 			$this->_item2->getId()
@@ -706,7 +710,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 	 */
 	public function testLinkItems() {
 		// Create a container album for any data items we create
-
 		list($ret, $this->_album2) = $this->_createRandomAlbum($this->_getRootId());
 
 		if ($ret->isError()) {
@@ -714,10 +717,10 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->_markForCleanup($this->_album2);
 
 		// acquire locks for the test album
-
 		list($ret, $this->_lockIds2) = GalleryCoreApi::acquireReadLock($this->_album2->getId());
 
 		if ($ret->isError()) {
@@ -749,7 +752,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		$dupId = $dupItem->getId();
 
 		// call linkItems()
-
 		list($ret, $newItem) = DupeDetectHelper::linkItems($this->_item->getId(), $dupId);
 
 		if ($ret->isError()) {
@@ -766,6 +768,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(
 			in_array($newItem->getId(), $linkedItems),
 			"newly created item not found in original item's linked items list"

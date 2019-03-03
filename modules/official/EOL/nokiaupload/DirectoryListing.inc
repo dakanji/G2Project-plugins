@@ -43,8 +43,9 @@ class DirectoryListingController extends GalleryController {
 		$results['delegate'] = array(
 			'view' => 'nokiaupload.DirectoryListing',
 		);
-		$results['status']   = ImageUploadHelper::getDirectoryListing();
-		$results['error']    = array();
+
+		$results['status'] = ImageUploadHelper::getDirectoryListing();
+		$results['error']  = array();
 
 		return array(null, $results);
 	}
@@ -56,7 +57,6 @@ class DirectoryListingController extends GalleryController {
 		return true;
 	}
 }
-
 
 /**
  * This view implements the Nokia Image Uploader API's 'Retrieve Directory Listing' command.
@@ -75,6 +75,7 @@ class DirectoryListingView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$gallery->debug("##### DirectoryListingView #####\n\$status = ");
 		$gallery->debug_r($status);
 

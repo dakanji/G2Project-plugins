@@ -38,6 +38,7 @@ class FotokastenCartPluginTest extends GalleryTestCase {
 		GalleryCoreApi::requireOnce(
 			'modules/fotokasten/classes/FotokastenCartPlugin.class'
 		);
+
 		$cartPlugin  = new FotokastenCartPlugin();
 		$cartItemIds = array(
 			123 => 1,
@@ -50,6 +51,7 @@ class FotokastenCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			array(
 				'controller' => 'fotokasten.PrintPhotos',

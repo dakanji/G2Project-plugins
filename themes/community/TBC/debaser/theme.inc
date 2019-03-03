@@ -230,7 +230,8 @@ class DebaserTheme extends GalleryTheme {
 	 */
 	public function showAlbumPage(&$template, $item, $params, $childIds) {
 		$params['pageWindowSize'] = 3;
-		$ret                      = $this->loadCommonTemplateData(
+
+		$ret = $this->loadCommonTemplateData(
 			$template,
 			$item,
 			$params,
@@ -285,6 +286,7 @@ class DebaserTheme extends GalleryTheme {
 		if (!empty($params['showMicroThumbs'])) {
 			$dataTypes[] = 'peerThumbnails';
 		}
+
 		$ret = $this->loadCommonTemplateData($template, $item, $params, $dataTypes);
 
 		if ($ret) {

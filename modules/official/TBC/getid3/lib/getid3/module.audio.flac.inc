@@ -13,8 +13,6 @@
 // dependencies: module.audio.ogg.php                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio.ogg.php', __FILE__, true);
 
 /**
@@ -32,6 +30,7 @@ class getid3_flac extends getid3_handler {
 		if ($StreamMarker != self::syncword) {
 			return $this->error('Expecting "' . getid3_lib::PrintHexBytes(self::syncword) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($StreamMarker) . '"');
 		}
+
 		$info['fileformat']            = 'flac';
 		$info['audio']['dataformat']   = 'flac';
 		$info['audio']['bitrate_mode'] = 'vbr';
@@ -149,6 +148,7 @@ class getid3_flac extends getid3_handler {
 					if (!isset($info['flac']['comments']['picture'])) {
 						$info['flac']['comments']['picture'] = array();
 					}
+
 					$comments_picture_data = array();
 
 					foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
@@ -156,6 +156,7 @@ class getid3_flac extends getid3_handler {
 							$comments_picture_data[$picture_key] = $entry[$picture_key];
 						}
 					}
+
 					$info['flac']['comments']['picture'][] = $comments_picture_data;
 					unset($comments_picture_data);
 				}
@@ -166,6 +167,7 @@ class getid3_flac extends getid3_handler {
 			if (!$this->isDependencyFor('matroska')) {
 				$info['flac']['compressed_audio_bytes'] = $info['avdataend'] - $info['avdataoffset'];
 			}
+
 			$info['flac']['uncompressed_audio_bytes'] = $info['flac']['STREAMINFO']['samples_stream'] * $info['flac']['STREAMINFO']['channels'] * ($info['flac']['STREAMINFO']['bits_per_sample'] / 8);
 
 			if ($info['flac']['uncompressed_audio_bytes'] == 0) {
@@ -294,6 +296,7 @@ class getid3_flac extends getid3_handler {
 		if ($this->isDependencyFor('matroska')) {
 			$getid3_ogg->setStringMode($this->data_string);
 		}
+
 		$getid3_ogg->ParseVorbisComments();
 
 		if (isset($info['ogg'])) {
@@ -317,8 +320,7 @@ class getid3_flac extends getid3_handler {
 		$info['flac']['CUESHEET']['flags']['is_cd']       = (bool)(getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1)) & 0x80);
 		$offset                                          += 1;
 
-		$offset += 258; // reserved
-
+		$offset                                   += 258; // reserved
 		$info['flac']['CUESHEET']['number_tracks'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1));
 		$offset                                   += 1;
 
@@ -339,7 +341,6 @@ class getid3_flac extends getid3_handler {
 			$info['flac']['CUESHEET']['tracks'][$TrackNumber]['flags']['pre_emphasis'] = (bool)($TrackFlagsRaw & 0x40);
 
 			$offset += 13; // reserved
-
 			$info['flac']['CUESHEET']['tracks'][$TrackNumber]['index_points'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1));
 			$offset += 1;
 
@@ -350,7 +351,6 @@ class getid3_flac extends getid3_handler {
 				$offset           += 1;
 
 				$offset += 3; // reserved
-
 				$info['flac']['CUESHEET']['tracks'][$TrackNumber]['indexes'][$IndexNumber] = $IndexSampleOffset;
 			}
 		}
@@ -373,6 +373,7 @@ class getid3_flac extends getid3_handler {
 		if ($descr_length) {
 			$picture['description'] = $this->fread($descr_length);
 		}
+
 		$picture['image_width']    = getid3_lib::BigEndian2Int($this->fread(4));
 		$picture['image_height']   = getid3_lib::BigEndian2Int($this->fread(4));
 		$picture['color_depth']    = getid3_lib::BigEndian2Int($this->fread(4));

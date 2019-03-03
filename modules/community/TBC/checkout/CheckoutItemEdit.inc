@@ -33,6 +33,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 	 */
 	public function handleRequest($form, &$item, &$preferred) {
 		global $gallery;
+
 		$status  = 0;
 		$error   = array();
 		$itemId  = $item->getId();
@@ -56,6 +57,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 
 					continue;
 				}
+
 				// otherwise ...
 				foreach ($productParameters as $paramName => $paramValue) {
 					$paramValue = trim($paramValue);
@@ -105,6 +107,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 						}
 					}
 				}
+
 				$displayPriority = trim($form['position']);
 
 				if ($displayPriority != '') {
@@ -117,6 +120,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 					return array($ret, null, null, null);
 				}
 			}
+
 			$status = $module->translate('Changes saved successfully');
 		}
 
@@ -139,7 +143,8 @@ class CheckoutItemEdit extends ItemEditPlugin {
 		if ($form['formName'] != 'CheckoutItemEdit') {
 			$form['formName'] = 'CheckoutItemEdit';
 
-			$thisId               = $item->getId();
+			$thisId = $item->getId();
+
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($thisId, true, false);
 			// must be using custom parameters, but don't pass via external plugins
 			if ($ret) {
@@ -169,6 +174,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 				} else {
 					$form['products'][$productIndex]['offerRemove'] = 'false';
 				}
+
 				$form['products'][$productIndex]['id']       = $productId;
 				$form['products'][$productIndex]['rootName'] = $globalProducts[$productIndex]['name'];
 			}
@@ -190,11 +196,13 @@ class CheckoutItemEdit extends ItemEditPlugin {
 						'postageBand' => $accessory['postageBand'],
 					);
 				}
+
 				// add two blank lines
 				$form['accessories'][] = array(
 					'id'          => -1,
 					'postageBand' => '0',
 				);
+
 				$form['accessories'][] = array(
 					'id'          => -2,
 					'postageBand' => '0',
@@ -209,12 +217,15 @@ class CheckoutItemEdit extends ItemEditPlugin {
 		if ($ret) {
 			return array($ret, null);
 		}
-		$isRootAlbum         = ($rootAlbumId == $thisId);
+
+		$isRootAlbum = ($rootAlbumId == $thisId);
+
 		list($ret, $csymbol) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $numPostageBands) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'numPostageBands');
 
 		if ($ret) {
@@ -227,6 +238,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->setVariable('csymbol', $csymbol);
 		$template->setVariable('numPostageBands', $numPostageBands);
 		$template->setVariable('isRootAlbum', $isRootAlbum);
@@ -241,7 +253,6 @@ class CheckoutItemEdit extends ItemEditPlugin {
 	 */
 	public function isSupported($item, $thumbnail) {
 		//check if this should return a result code or not
-
 		list($ret, $customPrices) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'customPrices');
 
 		if ($ret) {

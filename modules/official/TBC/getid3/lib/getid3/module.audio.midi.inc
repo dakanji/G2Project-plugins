@@ -13,10 +13,8 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 define('GETID3_MIDI_MAGIC_MTHD', 'MThd'); // MIDI file header magic
 define('GETID3_MIDI_MAGIC_MTRK', 'MTrk'); // MIDI track header magic
-
 class getid3_midi extends getid3_handler {
 	public $scanwholefile = true;
 
@@ -41,6 +39,7 @@ class getid3_midi extends getid3_handler {
 
 			return false;
 		}
+
 		$offset                            += 4;
 		$thisfile_midi_raw['headersize']    = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 4));
 		$offset                            += 4;
@@ -62,6 +61,7 @@ class getid3_midi extends getid3_handler {
 					return false;
 				}
 			}
+
 			$trackID = substr($MIDIdata, $offset, 4);
 			$offset += 4;
 
@@ -81,7 +81,6 @@ class getid3_midi extends getid3_handler {
 		if (!isset($trackdataarray) || !is_array($trackdataarray)) {
 			$info['error'][] = 'Cannot find MIDI track information';
 			unset($thisfile_midi, $info['fileformat']);
-
 
 			return false;
 		}
@@ -106,6 +105,7 @@ class getid3_midi extends getid3_handler {
 					if (isset($MIDIevents[$tracknumber]) && is_array($MIDIevents[$tracknumber])) {
 						$eventid = count($MIDIevents[$tracknumber]);
 					}
+
 					$deltatime = 0;
 
 					for ($i = 0; $i < 4; $i++) {
@@ -118,6 +118,7 @@ class getid3_midi extends getid3_handler {
 							break;
 						}
 					}
+
 					$CumulativeDeltaTime                            += $deltatime;
 					$TicksAtCurrentBPM                              += $deltatime;
 					$MIDIevents[$tracknumber][$eventid]['deltatime'] = $deltatime;
@@ -131,6 +132,7 @@ class getid3_midi extends getid3_handler {
 						// running event - assume last command
 						$eventsoffset--;
 					}
+
 					$MIDIevents[$tracknumber][$eventid]['eventid'] = $LastIssuedMIDIcommand;
 					$MIDIevents[$tracknumber][$eventid]['channel'] = $LastIssuedMIDIchannel;
 
@@ -205,6 +207,7 @@ class getid3_midi extends getid3_handler {
 								if (!isset($thisfile_midi['lyrics'])) {
 									$thisfile_midi['lyrics'] = '';
 								}
+
 								$thisfile_midi['lyrics'] .= $text_lyrics . "\n";
 
 								break;
@@ -231,6 +234,7 @@ class getid3_midi extends getid3_handler {
 
 									return false;
 								}
+
 								$thisfile_midi_raw['events'][$tracknumber][$CumulativeDeltaTime]['us_qnote'] = $CurrentMicroSecondsPerBeat;
 								$CurrentBeatsPerMinute                                 = (1000000 / $CurrentMicroSecondsPerBeat) * 60;
 								$MicroSecondsPerQuarterNoteAfter[$CumulativeDeltaTime] = $CurrentMicroSecondsPerBeat;
@@ -276,11 +280,11 @@ class getid3_midi extends getid3_handler {
 									6  => 'F#',
 									7  => 'C#',
 								);
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_sharps'] = (($keysig_sharpsflats > 0) ? abs($keysig_sharpsflats) : 0);
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_flats'] = (($keysig_sharpsflats < 0) ? abs($keysig_sharpsflats) : 0);
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor'] = (bool) $keysig_majorminor;
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_text'] = $keysigs[$keysig_sharpsflats].' '.($thisfile_midi_raw['events'][$tracknumber][$eventid]['keysig_minor'] ? 'minor' : 'major');
-
 								// $keysigs[$keysig_sharpsflats] gets an int key (correct) - $keysigs["$keysig_sharpsflats"] gets a string key (incorrect)
 								$thisfile_midi['keysignature'][] = $keysigs[$keysig_sharpsflats] . ' ' . ((bool)$keysig_majorminor ? 'minor' : 'major');
 
@@ -305,6 +309,7 @@ class getid3_midi extends getid3_handler {
 					$thisfile_midi['totalticks'] = max($thisfile_midi['totalticks'], $CumulativeDeltaTime);
 				}
 			}
+
 			$previoustickoffset = null;
 
 			ksort($MicroSecondsPerQuarterNoteAfter);
@@ -341,7 +346,6 @@ class getid3_midi extends getid3_handler {
 				$info['playtime_seconds'] += (($thisfile_midi['totalticks'] - $previoustickoffset) / $thisfile_midi_raw['ticksperqnote']) * ($microsecondsperbeat / 1000000);
 			}
 		}
-
 
 		if (!empty($info['playtime_seconds'])) {
 			$info['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];

@@ -41,7 +41,7 @@ class PanoramaJsUpgradeHelper {
 	public function revertEntities() {
 		global $gallery;
 
-		$query                     = '
+		$query = '
 	  SELECT
 	    [GalleryEntity::id], [GalleryEntity::entityType]
 	  FROM
@@ -49,6 +49,7 @@ class PanoramaJsUpgradeHelper {
 	  WHERE
 	    [GalleryEntity::entityType] IN (\'PanoramaJsPhotoItem\', \'PanoramaJsDerivativeImage\')
 	';
+
 		list($ret, $searchResults) = $gallery->search($query, array());
 
 		if ($ret) {
@@ -78,9 +79,11 @@ class PanoramaJsUpgradeHelper {
 		while ($photos) {
 			$ids     = array_splice($photos, 0, 500);
 			$markers = GalleryUtilities::makeMarkers($ids);
-			$query   = "UPDATE [GalleryItem] SET [::renderer] = 'PanoramaJsRenderer' " .
+
+			$query = "UPDATE [GalleryItem] SET [::renderer] = 'PanoramaJsRenderer' " .
 			"WHERE [GalleryItem::id] IN ($markers)";
-			$ret     = $storage->execute($query, $ids);
+
+			$ret = $storage->execute($query, $ids);
 
 			if ($ret) {
 				return $ret;
@@ -88,7 +91,8 @@ class PanoramaJsUpgradeHelper {
 
 			$query = "UPDATE [GalleryEntity] SET [::entityType] = 'GalleryPhotoItem' " .
 			"WHERE [GalleryEntity::id] IN ($markers)";
-			$ret   = $storage->execute($query, $ids);
+
+			$ret = $storage->execute($query, $ids);
 
 			if ($ret) {
 				return $ret;
@@ -99,9 +103,11 @@ class PanoramaJsUpgradeHelper {
 		while ($derivatives) {
 			$ids     = array_splice($derivatives, 0, 500);
 			$markers = GalleryUtilities::makeMarkers($ids);
-			$query   = "UPDATE [GalleryEntity] SET [::entityType] = 'GalleryDerivativeImage' " .
+
+			$query = "UPDATE [GalleryEntity] SET [::entityType] = 'GalleryDerivativeImage' " .
 			"WHERE [GalleryEntity::id] IN ($markers)";
-			$ret     = $storage->execute($query, $ids);
+
+			$ret = $storage->execute($query, $ids);
 
 			if ($ret) {
 				return $ret;

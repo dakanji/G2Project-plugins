@@ -97,6 +97,7 @@ class AuthorizeNetAim {
 
 	public function process() {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		// Get the data to send

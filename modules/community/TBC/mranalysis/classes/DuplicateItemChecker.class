@@ -26,11 +26,9 @@
  * @author Mark Ridgwell <g2development@markridgwell.com>
  */
 
-
 // Required files/Classes
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsAccess.class');
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsConstants.class');
-
 
 /**
  * @package MRAnalysis
@@ -43,7 +41,6 @@ class DuplicateItemChecker {
 
 	// Collection of items that after processing have become duplicated
 	public $duplicateitems;
-
 
 	// Setting: Check For Duplicate Titles across albums
 	public $checktitlesacrossalbums;
@@ -79,13 +76,11 @@ class DuplicateItemChecker {
 		if ($this->checktitlesacrossalbums == false) {
 			if ($this->lastitem->parentId != $item->parentId) {
 				// Item not in same album, and not checking titles across albums
-
 				$this->setLastItem($item, false);
 
 				return false;
 			}
 		}
-
 
 		if (0 == strcasecmp($this->lastitem->title, $item->title)) {
 			if (!$this->lastitemwasduplicate) {
@@ -98,7 +93,6 @@ class DuplicateItemChecker {
 
 			return true;
 		}
-
 
 		// Not a duplicate
 		$this->setLastItem($item, false);

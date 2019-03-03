@@ -40,6 +40,7 @@ class ModerateOption extends ItemAddOption {
 	 */
 	public function handleRequestAfterAdd($form, $items) {
 		global $gallery;
+
 		$warnings = $errors = array();
 
 		/**
@@ -64,6 +65,7 @@ class ModerateOption extends ItemAddOption {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ret = GalleryCoreApi::addGroupPermission($items[$j]->getId(), $core['id.adminGroup'], 'core.all');
 
 			if ($ret) {
@@ -75,24 +77,31 @@ class ModerateOption extends ItemAddOption {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			/*	if (!$childCounts) {
+
 			$ret = GalleryCoreApi::removeItemPermissions($items[$j]->getParentId());
 			if ($ret) {
 			return array($ret, null, null);
 			}
+
 			$ret = GalleryCoreApi::addGroupPermission($items[$j]->getParentId(), $core['id.adminGroup'], 'core.all');
 			if ($ret) {
 			return array($ret, null, null);
 			}
+
 			$ret = GalleryCoreApi::addUserPermission($items[$j]->getParentId(), $items[$j]->getOwnerId(), 'core.all');
 			if ($ret) {
 			return array($ret, null, null);
 			}
+
 			}
+
 			 */
 			$itemid  = $items[$j]->getId();
 			$ownerid = $items[$j]->getOwnerId();
-			$ret     = GalleryCoreApi::addMapEntry(
+
+			$ret = GalleryCoreApi::addMapEntry(
 				'ModerateMap',
 				array(
 					'itemId'  => $itemid,

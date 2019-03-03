@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 if (!defined('PHP_VER_LOWER43')) {
 	define('PHP_VER_LOWER43', version_compare(PHP_VERSION, '4.3', '<'));
 }/**

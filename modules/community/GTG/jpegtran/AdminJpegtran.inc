@@ -34,6 +34,7 @@ class AdminJpegtranController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
@@ -87,7 +88,8 @@ class AdminJpegtranController extends GalleryController {
 		}
 
 		if (isset($form['action']['save']) && empty($error)) {
-			$realPath                = $platform->realpath($form['path']);
+			$realPath = $platform->realpath($form['path']);
+
 			list($ret, $testResults) = JpegtranToolkitHelper::testBinary($realPath);
 
 			if ($ret) {
@@ -129,6 +131,7 @@ class AdminJpegtranController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$redirect['view'] = 'core.SiteAdmin';
 
 				if ($isActive) {
@@ -153,6 +156,7 @@ class AdminJpegtranController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'jpegtran.AdminJpegtran';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -169,6 +173,7 @@ class AdminJpegtranView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -183,7 +188,7 @@ class AdminJpegtranView extends GalleryView {
 			return array($ret, null);
 		}
 
-		// Load our default values if we didn't just come from this form.
+		// Load our default values if we did not just come from this form.
 		if ($form['formName'] != 'AdminJpegtran') {
 			$form['formName'] = 'AdminJpegtran';
 
@@ -201,8 +206,13 @@ class AdminJpegtranView extends GalleryView {
 		if (isset($form['action']['test']) && empty($form['error'])) {
 			if (!empty($form['path'])) {
 				$gallery->startRecordingDebugSnippet();
-				list($ret, $testResults) = JpegtranToolkitHelper::testBinary($platform->realpath($form['path']));
-				$debugSnippet            = $gallery->stopRecordingDebugSnippet();
+
+				list(
+					$ret,
+					$testResults
+				) = JpegtranToolkitHelper::testBinary($platform->realpath($form['path']));
+
+				$debugSnippet = $gallery->stopRecordingDebugSnippet();
 
 				if ($ret) {
 					if ($ret->getErrorCode() & ERROR_BAD_PATH) {
@@ -216,6 +226,7 @@ class AdminJpegtranView extends GalleryView {
 						if (!$testResult['success']) {
 							$failCount++;
 						}
+
 						$tests[] = $testResult;
 					}
 				}
@@ -235,7 +246,13 @@ class AdminJpegtranView extends GalleryView {
 		$AdminJpegtran['debugSnippet'] = $debugSnippet;
 		$AdminJpegtran['failCount']    = $failCount;
 		$AdminJpegtran['isConfigure']  = !$isActive;
-		$AdminJpegtran['canExec']      = !in_array('exec', preg_split('/,\s*/', ini_get('disable_functions')));
+		$AdminJpegtran['canExec']      = !in_array(
+			'exec',
+			preg_split(
+				'/,\s*/',
+				ini_get('disable_functions')
+			)
+		);
 
 		if ($failCount > 0) {
 			$template->javascript('lib/javascript/BlockToggle.js');

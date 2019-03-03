@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_rar extends getid3_handler {
 	public $option_use_rar_extension = false;
 
@@ -32,10 +30,12 @@ class getid3_rar extends getid3_handler {
 					foreach ($entries as $entry) {
 						$info['rar']['files'] = getid3_lib::array_merge_clobber($info['rar']['files'], getid3_lib::CreateDeepArray($entry->getName(), '/', $entry->getUnpackedSize()));
 					}
+
 					rar_close($rp);
 
 					return true;
 				}
+
 				$info['error'][] = 'failed to rar_open(' . $info['filename'] . ')';
 			} else {
 				$info['error'][] = 'RAR support does not appear to be available in this PHP installation';

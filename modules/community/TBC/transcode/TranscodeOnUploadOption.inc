@@ -50,6 +50,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 		if (!empty($form['TranscodeOnUploadOption']['transcodeNever'])) {
 			return array(null, $errors, $warnings);
 		}
+
 		list($ret, $onUpload) = GalleryCoreApi::getPluginParameter('module', 'transcode', 'onUpload');
 
 		if ($ret) {
@@ -69,9 +70,6 @@ class TranscodeOnUploadOption extends ItemAddOption {
 				$transcodeTypes = explode('|', $params['movieTypes']);
 			}
 
-
-
-
 			// Copy the array because we will change it with do / while / array_splice
 			$itemsInBatches = $items;
 			/*
@@ -87,6 +85,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 				foreach ($currentItems as $item) {
 					$itemIds[] = $item->getId();
 				}
+
 				list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($itemIds);
 
 				if ($ret) {
@@ -100,6 +99,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 						if ($ret) {
 							return array($ret, null, null);
 						}
+
 						GalleryCoreApi::releaseLocks($lockId);
 
 						$itemId = $currentItems[$i]->getId();
@@ -148,6 +148,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 							} else {
 								$renderer = 'TranscodeVideoRenderer';
 							}
+
 							// Set extra derivative operations
 							list($ret, $nativeWidth, $nativeHeight, $nativeFps, $nativeVideoBitrate,
 							$nativeAudioSampleRate, $nativeAudioChannels) = TranscodeHelper::_getProperties($item);
@@ -155,6 +156,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 							if ($ret) {
 								return array($ret, null, null);
 							}
+
 							$setVideoDimensions = '';
 
 							if ($nativeWidth > $params['maxWidth']) {
@@ -169,19 +171,23 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								if (($maxHeight % 2) != 0) {
 									$maxHeight = $maxHeight - 1;
 								}
+
 								$setVideoDimensions = 'set-video-dimensions|' . $maxWidth . ',' .
 								$maxHeight . ';';
 							}
+
 							$setVideoBitrate = '';
 
 							if (isset($params['defaultBitrate']) && ($params['defaultBitrate'] != '')) {
 								$setVideoBitrate = 'set-video-bitrate|' . $params['defaultBitrate'] . ';';
 							}
+
 							$setAudioChannels = '';
 
 							if (isset($params['defaultAudioChannels']) && ($params['defaultAudioChannels'] != '')) {
 								$setAudioChannels = 'set-audio-channels|' . $params['defaultAudioChannels'] . ';';
 							}
+
 							$setAudioSampleRate = '';
 
 							if (isset($params['defaultAudioSampleRate']) && ($params['defaultAudioSampleRate'] != '')) {
@@ -194,12 +200,15 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								$setAudioSampleRate . $setAudioChannels .
 								$setVideoBitrate . $setVideoDimensions . 'convert-to-' . $params['outputMime']
 							);
+
 							$derivative->setDerivativeSourceId($source->getId());
+
 							$ret = $derivative->save();
 
 							if ($ret) {
 								return array($ret, null, null, null);
 							}
+
 							// Set FlashVideoRenderer, is there a way of knowing whether it's available?
 							if (!$currentItems[$i]->getRenderer()) {
 								list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($currentItems[$i]->getId());
@@ -207,6 +216,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								if ($ret) {
 									return array($ret, null);
 								}
+
 								list($ret, $currentItems[$i]) = $currentItems[$i]->refresh();
 
 								if ($ret) {
@@ -214,7 +224,9 @@ class TranscodeOnUploadOption extends ItemAddOption {
 
 									return array($ret, null);
 								}
+
 								$currentItems[$i]->setRenderer($renderer);
+
 								$ret = $currentItems[$i]->save();
 
 								if ($ret) {
@@ -222,6 +234,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 
 									return array($ret, null);
 								}
+
 								$ret = GalleryCoreApi::releaseLocks($lockId);
 
 								if ($ret) {
@@ -265,6 +278,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 		} else {
 			$selectedMimeTypes = explode('|', $params['movieTypes']);
 		}
+
 		$template->setVariable('outputMime', $params['outputMime']);
 		$template->setVariable('selectedMimeTypes', $selectedMimeTypes);
 		$template->setVariable('onUpload', $params['onUpload']);

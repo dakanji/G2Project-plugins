@@ -88,6 +88,7 @@ class BulkTagsEditController extends GalleryController {
 							if ($ret) {
 								return array($ret, null);
 							}
+
 							$ret = TagsHelper::assignTag($id, $tagName);
 
 							if ($ret) {
@@ -140,6 +141,7 @@ class BulkTagsEditController extends GalleryController {
 			$results['delegate']['view']   = 'tags.BulkTagsEdit';
 			$results['delegate']['itemId'] = (int)$itemId;
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -198,11 +200,13 @@ class BulkTagsEditView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $params) = $theme->fetchParameters($itemId);
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$albumPageSize = $theme->getPageSize($params);
 
 				if (!empty($albumPageSize)) {
@@ -249,12 +253,14 @@ class BulkTagsEditView extends GalleryView {
 						}
 					}
 				}
+
 				// Add the tags
 				list($ret, $tags) = TagsHelper::getTagsByItemId($childId);
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$form['items'][$childId]['tags'] = implode(', ', $tags);
 			}
 		}

@@ -95,6 +95,7 @@ class DownloadPicLensView extends GalleryView {
 	 */
 	public function _sendFile($data) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
 
@@ -126,6 +127,7 @@ class DownloadPicLensView extends GalleryView {
 			if ($stats[7] > 0) {
 				$phpVm->header('Content-length: ' . $stats[7]);
 			}
+
 			/*
 			 * Don't use readfile() because it buffers the entire file in memory.  Profiling shows
 			 * that this approach is as efficient as fpassthru() but we get to call
@@ -138,9 +140,11 @@ class DownloadPicLensView extends GalleryView {
 					if (strlen($bytes) == 0) {
 						break;
 					}
+
 					echo $bytes;
 					$gallery->guaranteeTimeLimit(30);
 				}
+
 				$platform->fclose($fd);
 			}
 		}

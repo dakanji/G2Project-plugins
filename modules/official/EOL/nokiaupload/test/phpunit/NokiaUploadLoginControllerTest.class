@@ -38,6 +38,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		global $gallery;
 
 		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
@@ -69,6 +70,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		if (!$this->_user->isCorrectPassword($this->_password)) {
 			return $this->assert(false, "test user wasn't created with expected password");
 		}
+
 		$this->_saveUser = $gallery->getActiveUser();
 
 		$ret = $this->_markPluginParametersForCleanup('module', 'nokiaupload');
@@ -87,6 +89,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter(
 			'module',
 			'nokiaupload',
@@ -97,6 +100,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$_SERVER['HTTP_USER_AGENT'] = 'Nokia6630/1.0 (2.39.129) Series60/2.6 Profile/MIDP-2.0';
 	}
 
@@ -120,6 +124,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 			$results,
 			'user'
 		);
+
 		$this->assertEquals($this->_saveUser, $gallery->getActiveUser(), 'active user 1');
 
 		// Invalid password
@@ -139,6 +144,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 			$results,
 			'pass'
 		);
+
 		$this->assertEquals($this->_saveUser, $gallery->getActiveUser(), 'active user 2');
 
 		// Valid credentials
@@ -152,17 +158,20 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 			$results['delegate'],
 			'delegate'
 		);
+
 		$this->assertEquals(array(), $results['error'], 'error');
 		$this->assertEquals(NOKIAUPLOAD_ERR_NOERR, $results['status']['success'], 'success');
 		$this->assert(!empty($results['status']['rsurl']), 'rsurl');
 		$this->assertEquals(3, count($results['status']['capabilities']), 'capabilities');
 
 		$this->assertEquals($this->_user, $gallery->getActiveUser(), 'active user 3');
+
 		list($ret, $isMember) = GalleryCoreApi::isUserInGroup($this->_user->getId(), $this->_group->getId());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(true, $isMember, 'user added to mobile users group');
 	}
 }

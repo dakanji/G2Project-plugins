@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_tta extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -33,8 +31,6 @@ class getid3_tta extends getid3_handler {
 		if ($info['tta']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['tta']['magic']) . '"';
 			unset($info['fileformat'], $info['audio'], $info['tta']);
-
-
 
 			return false;
 		}

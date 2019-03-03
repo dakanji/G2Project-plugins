@@ -60,6 +60,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 	 */
 	public function run() {
 		global $gallery;
+
 		$templateAdapter =& $gallery->getTemplateAdapter();
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
 
@@ -68,6 +69,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		if ($ret->isError()) {
 			return array($ret, null, null);
 		}
+
 		$message = $module->translate('Processing...');
 
 		$ret = $templateAdapter->updateProgressBar(
@@ -81,7 +83,6 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		}
 
 		// We are iterating over all dataitems and creating dupe signatures
-
 		list($ret, $results) = $gallery->search(
 			'SELECT [GalleryDataItem::id] FROM [GalleryDataItem] '
 				. 'ORDER BY [GalleryDataItem::id]'
@@ -119,6 +120,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 				if ($ret->isError()) {
 					return array($ret, null, null);
 				}
+
 				$i++;
 			}
 
@@ -184,7 +186,8 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 				'text' => 'Done',
 			)
 		);
-		$ret     = $templateAdapter->updateProgressBar($message, '', 1);
+
+		$ret = $templateAdapter->updateProgressBar($message, '', 1);
 
 		if ($ret->isError()) {
 			return array($ret, null, null);

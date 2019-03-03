@@ -29,6 +29,7 @@
 class CheckoutGoogleModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('checkoutgoogle');
 		$this->setName('Checkout by Google');
 		$this->setDescription(
@@ -220,6 +221,7 @@ class CheckoutGoogleModule extends GalleryModule {
 			if ($data['pluginType'] != 'module' || $data['pluginId'] != 'checkoutgoogle') {
 				return array(null, null);
 			}
+
 			// this module being activate
 			$ret = $this->_activateRewriteRules();
 
@@ -245,6 +247,7 @@ class CheckoutGoogleModule extends GalleryModule {
 		if (!isset($rewriteApi)) {
 			return GalleryCoreApi::error(ERROR_CONFIGURATION_REQUIRED);
 		}
+
 		list($ret, $isCompatible) = $rewriteApi->isCompatibleWithApi(array(1, 1));
 
 		if ($ret) {
@@ -280,6 +283,7 @@ class CheckoutGoogleModule extends GalleryModule {
 		 * Only define the rule to pass the Authorization header to Gallery in a request variable if
 		 * it is already active, or if Gallery can't access HTTP usernames and passwords
 		 */
+
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 		if ($ret) {
@@ -321,6 +325,7 @@ class CheckoutGoogleModule extends GalleryModule {
 		if (!in_array('checkoutgoogle', $activeRules)) {
 			// Check that Gallery can access HTTP usernames and passwords
 			GalleryCoreApi::requireOnce('modules/checkoutgoogle/classes/CheckoutGoogleResponseHelper.class');
+
 			list($ret, $success) = CheckoutGoogleResponseHelper::checkHttpAuth();
 
 			if ($ret) {
@@ -370,6 +375,7 @@ class CheckoutGoogleModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $gcCallbackURL) = $this->getParameter('gcCallbackURL');
 
 		if ($ret) {

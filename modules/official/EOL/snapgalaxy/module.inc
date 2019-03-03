@@ -70,6 +70,7 @@ class SnapGalaxyModule extends GalleryModule {
 		if (!isset($currentVersion)) {
 			$currentVersion = '0';
 		}
+
 		list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 		if ($ret) {
@@ -88,8 +89,10 @@ class SnapGalaxyModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],

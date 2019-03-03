@@ -29,7 +29,6 @@ define('DUPEDETECT_IGNORED_DUPLICATE', 1);
 define('DUPEDETECT_CRC32_ALGORITHM', 0);
 define('DUPEDETECT_HISTOGRAM_ALGORITHM', 1);
 
-
 /**
  * A helper class for the Image Block module.
  *
@@ -244,6 +243,7 @@ class DupeDetectHelper {
 
 		GalleryCoreApi::requireOnce(
 			'modules/dupedetect/classes/DupeDetectSignaturesMap.class');
+
 		$query = '
 			SELECT
 				[DupeDetectSignaturesMap::itemId]
@@ -264,6 +264,7 @@ class DupeDetectHelper {
 
 		return array(GalleryStatus::success(), $result);
 	}
+
 	*/
 
 	/**
@@ -292,9 +293,11 @@ class DupeDetectHelper {
 		if (empty($aclIds)) {
 			return array(GalleryStatus::success(), 0);
 		}
+
 		$aclMarkers = GalleryUtilities::makeMarkers($aclIds);
 
-		$data  = array();
+		$data = array();
+
 		$query = sprintf(
 			'
 			SELECT
@@ -353,8 +356,9 @@ class DupeDetectHelper {
 				'dupType'    => $result[2],
 				'userStatus' => $result[3],
 			);
-			$ids[]  = $result[0];
-			$ids[]  = $result[1];
+
+			$ids[] = $result[0];
+			$ids[] = $result[1];
 		}
 
 		// Fetch entities for the src and dup ids
@@ -395,7 +399,8 @@ class DupeDetectHelper {
 	public function getDupePairs($id1, $id2 = null, $type = null) {
 		global $gallery;
 
-		$data  = array();
+		$data = array();
+
 		$query = '
 			SELECT
 				[DupeDetectDupesListMap::srcItemId],
@@ -410,8 +415,9 @@ class DupeDetectHelper {
 
 		if ($id2 != null) {
 			// always insert the lower id as the srcId
-			$srcId  = min($id1, $id2);
-			$dupId  = max($id1, $id2);
+			$srcId = min($id1, $id2);
+			$dupId = max($id1, $id2);
+
 			$query .= 'AND
                       ';
 			$data[] = $srcId;
@@ -419,6 +425,7 @@ class DupeDetectHelper {
 		} else {
 			/* if we have only one ID, we return all the pairs that has this ID
 			 * either in the srcId OR dupId fields */
+
 			$query .= 'OR
                       ';
 			$data[] = $id1;
@@ -490,7 +497,6 @@ class DupeDetectHelper {
 			$dupId = max($itemId, $dupeId);
 
 			// we skip if we find that this items pair is already registered as duplicate
-
 			list($ret, $alreadyExist) = DupeDetectHelper::getDupePairs(
 				$srcId,
 				$dupId,
@@ -518,6 +524,7 @@ class DupeDetectHelper {
 			if ($ret->isError()) {
 				return array($ret, $count);
 			}
+
 			$count = $count + 1;
 		}
 
@@ -547,6 +554,7 @@ class DupeDetectHelper {
 		if ($ret->isError()) {
 			return $ret;
 		}
+
 		$ret = DupeDetectDupesListMap::removeMapEntry(
 			array(
 				'dupItemId' => $itemId,
@@ -572,7 +580,6 @@ class DupeDetectHelper {
 	public function linkItems($itemId, $dupId) {
 
 		// Load the dupItem so we can read its parentId
-
 		list($ret, $dupItem) = GalleryCoreApi::loadEntitiesById($dupId);
 
 		if ($ret->isError()) {
@@ -583,7 +590,6 @@ class DupeDetectHelper {
 		$destinationId = $dupItem->getParentId();
 
 		// Make sure we can write to the destination and read the source item
-
 		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems(
 			array(
 				$itemId,
@@ -618,7 +624,6 @@ class DupeDetectHelper {
 		}
 
 		// Load the item
-
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 		if ($ret->isError()) {
@@ -658,6 +663,7 @@ class DupeDetectHelper {
 
 			return array($ret, null);
 		}
+
 		list($ret, $locks[]) = GalleryCoreApi::acquireReadLockParents($destinationId);
 
 		if ($ret->isError()) {
@@ -673,7 +679,8 @@ class DupeDetectHelper {
 		// If we're linking to an item that's already a link, then link to its source instead
 		if ($item->isLinked()) {
 			$linkedEntity = $item->getLinkedEntity();
-			$ret          = $linkedItem->createLink($linkedEntity, $destinationId);
+
+			$ret = $linkedItem->createLink($linkedEntity, $destinationId);
 		} else {
 			$ret = $linkedItem->createLink($item, $destinationId);
 		}
@@ -730,10 +737,11 @@ class DupeDetectHelper {
 		$srcId = min($id1, $id2);
 		$dupId = max($id1, $id2);
 
-		$match  = array(
+		$match = array(
 			'srcItemId' => $srcId,
 			'dupItemId' => $dupId,
 		);
+
 		$change = array(
 			'userStatus' => DUPEDETECT_IGNORED_DUPLICATE,
 		);

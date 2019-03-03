@@ -55,6 +55,7 @@ class IPNView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/checkoutpaypal/classes/GalleryCheckoutPaypalIPNHelper.class');
 
 		list($ret, $ppurl) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'ppurl');
@@ -62,6 +63,7 @@ class IPNView extends GalleryView {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ppurl             = 'http://' . $ppurl . '/cgi-bin/webscr';
 		$IPNVerified       = false;
 		$IPNAmountVerified = false;
@@ -69,7 +71,8 @@ class IPNView extends GalleryView {
 		$notes             = '';
 
 		// Post $_POST back to PayPal system to validate
-		$_POST['cmd']                                          = '_notify-validate';
+		$_POST['cmd'] = '_notify-validate';
+
 		list($responseBody, $responseStatus, $responseHeaders) = galleryCoreApi::postToWebPage($ppurl, $_POST);
 
 		if (preg_match('/^HTTP\/\d+\.\d+\s2\d{2}/', $responseStatus)) {
@@ -137,6 +140,7 @@ class IPNView extends GalleryView {
 						'arg2' => $paypalname,
 					),
 				);
+
 				$IPNReason[] = "\n";
 				$notes      .= 'Wrong Business Name: ' . $IPNpost[16] . ' and ours is ' . $paypalname;
 
@@ -151,8 +155,9 @@ class IPNView extends GalleryView {
 							'arg2' => $transaction->getamount(),
 						),
 					);
-					$IPNReason[]       = "\n";
-					$notes            .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
+
+					$IPNReason[] = "\n";
+					$notes      .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
 				} else {
 					$IPNAmountVerified = true;
 				}
@@ -165,6 +170,7 @@ class IPNView extends GalleryView {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Has this transaction already been posted back by PayPal? If not, create a record
 				if (!isset($ppTransactions[$transaction->getId()])) {
 					/* at the moment that condition always succeeds because the GalleryCheckoutPaypalIPN entity
@@ -176,6 +182,7 @@ class IPNView extends GalleryView {
 					if ($ret) {
 						return $ret;
 					}
+
 					// Set the IPN information into the original transaction
 					$data['custFirstName']     = $IPNpost[5];
 					$data['custLastName']      = $IPNpost[6];
@@ -190,11 +197,13 @@ class IPNView extends GalleryView {
 					$data['custCountry']       = $IPNpost[14];
 					$data['custComments']      = 'PayPal notes: ' . $IPNpost[15];
 					$data['telephone']         = $IPNpost[17];
-					$ret                       = GalleryCheckoutApi::transactionUpdate($transaction, $data);
+
+					$ret = GalleryCheckoutApi::transactionUpdate($transaction, $data);
 
 					if ($ret) {
 						return $ret;
 					}
+
 					list($ret, $transaction) = $transaction->refresh();
 
 					if ($ret) {
@@ -210,10 +219,12 @@ class IPNView extends GalleryView {
 						if ($ret) {
 							return $ret;
 						}
+
 						$IPNReason[] = array(
 							'domain' => 'checkoutpaypal',
 							'data'   => $gallery->i18n('PayPal payment is Completed. The PayPal payment has been accepted.'),
 						);
+
 						$IPNReason[] = "\n";
 						$notes      .= ' Accepted. ';
 
@@ -235,6 +246,7 @@ class IPNView extends GalleryView {
 							'domain' => 'checkoutpaypal',
 							'data'   => $gallery->i18n('Unhandled Paypal State:'),
 						);
+
 						$IPNReason[] = "\n";
 						$IPNReason[] = $IPNpost[2];
 						$IPNReason[] = "\n";
@@ -245,6 +257,7 @@ class IPNView extends GalleryView {
 			/* Post an administrative notification
 			so the admin can take up events not handled automatically
 			*/
+
 			$ret = GalleryCheckoutApi::SendAdminNotification($transaction, $IPNReason);
 
 			if ($ret) {
@@ -261,11 +274,13 @@ class IPNView extends GalleryView {
 			if (!isset($ppTransaction)) {
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
+
 			$ret = $ppTransaction->create($transaction->getId());
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ppTransaction->setppId($IPNpost[1]);
 			$ppTransaction->setppStatus($IPNpost[2]);
 			$ppTransaction->setppDate($IPNpost[3]);

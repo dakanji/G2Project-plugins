@@ -52,6 +52,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		if (strlen($this->data) > 1024 * Auth_OpenID_FETCHER_MAX_RESPONSE_KB) {
 			return 0;
 		}
+
 		$this->data .= $data;
 
 		return strlen($data);
@@ -117,6 +118,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 				CURLOPT_WRITEFUNCTION,
 				array(&$this, '_writeData')
 			);
+
 			curl_setopt(
 				$c,
 				CURLOPT_HEADERFUNCTION,
@@ -134,11 +136,13 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			} else {
 				$curl_user_agent = $cv;
 			}
+
 			curl_setopt(
 				$c,
 				CURLOPT_USERAGENT,
 				Auth_OpenID_USER_AGENT . ' ' . $curl_user_agent
 			);
+
 			curl_setopt($c, CURLOPT_TIMEOUT, $off);
 			curl_setopt($c, CURLOPT_URL, $url);
 			curl_setopt(

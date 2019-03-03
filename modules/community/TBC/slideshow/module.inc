@@ -29,6 +29,7 @@
 class SlideshowModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('slideshow');
 		$this->setName($gallery->i18n('Slideshow'));
 		$this->setDescription($gallery->i18n('Slideshow'));
@@ -93,9 +94,11 @@ class SlideshowModule extends GalleryModule {
 	 */
 	public function upgrade($currentVersion, $x1 = null) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
-		$dir           = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow';
+		$dir = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow';
+
 		list($success) = GalleryUtilities::guaranteeDirExists($dir);
 
 		if (!$success) {
@@ -126,6 +129,7 @@ class SlideshowModule extends GalleryModule {
 			GalleryCoreApi::requireOnce(
 				'modules/slideshow/classes/PicLensHelper.class'
 			);
+
 			list($ret, $version) = PicLensHelper::install();
 
 			if ($ret && $ret->getErrorCode() & ERROR_STORAGE_FAILURE) {
@@ -161,6 +165,7 @@ class SlideshowModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $picLensVersion) = $this->getParameter('piclens.version');
@@ -172,11 +177,12 @@ class SlideshowModule extends GalleryModule {
 		$links = array();
 
 		foreach ($items as $item) {
-			$itemId            = $item->getId();
-			$jsUrlParams       = array(
+			$itemId      = $item->getId();
+			$jsUrlParams = array(
 				'forJavascript' => true,
 				'forceFullUrl'  => true,
 			);
+
 			$jsUrlParamsDirect = array_merge(
 				$jsUrlParams,
 				array(
@@ -211,6 +217,7 @@ class SlideshowModule extends GalleryModule {
 
 					if (!$ret || !empty($query)) {
 						array_unshift($data, $item->getId());
+
 						list($ret, $searchResults) = $gallery->search(
 							$query,
 							$data,
@@ -228,7 +235,7 @@ class SlideshowModule extends GalleryModule {
 
 				if ($showSlideshowLink) {
 					if ($picLensVersion) {
-						$script           = sprintf(
+						$script = sprintf(
 							'var p=PicLensLite;'
 							. 'p.setCallbacks({onNoPlugins:function(){location.href=\'%s\'}});'
 							. 'p.setLiteURLs({swf:\'%s\'});'
@@ -257,6 +264,7 @@ class SlideshowModule extends GalleryModule {
 							),
 							$itemId
 						);
+
 						$links[$itemId][] = array(
 							'text'   => $this->translate('View Slideshow'),
 							'params' => array(
@@ -302,16 +310,18 @@ class SlideshowModule extends GalleryModule {
 	public function getRewriteRules() {
 		$rules = array();
 
-		$rule             = array();
-		$rule['comment']  = $this->translate('View Slideshow');
-		$rule['match']    = array(
+		$rule            = array();
+		$rule['comment'] = $this->translate('View Slideshow');
+		$rule['match']   = array(
 			'view' => 'slideshow.Slideshow',
 		);
-		$rule['onLoad']   = array(
+
+		$rule['onLoad'] = array(
 			'rewrite',
 			'RewriteSimpleHelper',
 			'loadItemIdFromPath',
 		);
+
 		$rule['pattern']  = 'v/%path%/slideshow.html';
 		$rule['keywords'] = array(
 			'path' => array(
@@ -326,7 +336,8 @@ class SlideshowModule extends GalleryModule {
 				),
 			),
 		);
-		$rules[]          = $rule;
+
+		$rules[] = $rule;
 
 		return $rules;
 	}
@@ -336,6 +347,7 @@ class SlideshowModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$data = $event->getData();

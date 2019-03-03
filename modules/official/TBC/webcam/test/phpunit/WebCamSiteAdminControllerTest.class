@@ -93,6 +93,7 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('7404', $params['duration']);
 		$this->assertEquals('off', $params['fromweb']);
 	}
@@ -119,6 +120,7 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('admin', $fromWeb);
 	}
 
@@ -145,6 +147,7 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('admin', $fromWeb);
 	}
 
@@ -174,6 +177,7 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('7404', $params['duration']);
 		$this->assertEquals('off', $params['fromweb']);
 	}

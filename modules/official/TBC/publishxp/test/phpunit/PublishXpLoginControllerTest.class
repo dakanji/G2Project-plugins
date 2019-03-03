@@ -32,6 +32,7 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -43,6 +44,7 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_user);
 	}
 

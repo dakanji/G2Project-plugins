@@ -95,6 +95,7 @@ class LinksInTheHeadTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$this->assertEquals(count($links_in_the_head), 2);
 
 		return array(null, null);

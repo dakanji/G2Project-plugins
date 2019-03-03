@@ -138,6 +138,7 @@ class Auth_OpenID_TrustRoot {
 		if (!in_array($scheme, $allowed_schemes)) {
 			return false;
 		}
+
 		$parts['scheme'] = $scheme;
 
 		$host      = strtolower($parts['host']);
@@ -155,6 +156,7 @@ class Auth_OpenID_TrustRoot {
 				) {
 					return false;
 				}
+
 				$host              = $hostparts[1];
 				$parts['wildcard'] = true;
 
@@ -185,7 +187,6 @@ class Auth_OpenID_TrustRoot {
 		if (!isset($parts['port'])) {
 			$parts['port'] = false;
 		}
-
 
 		$parts['unparsed'] = $trust_root;
 
@@ -256,6 +257,7 @@ class Auth_OpenID_TrustRoot {
 		if (!$matches) {
 			return false;
 		}
+
 		$tld = $matches[1];
 
 		if (count($host_parts) == 1) {
@@ -337,9 +339,10 @@ class Auth_OpenID_TrustRoot {
 			}
 		} else {
 			$base_query = $trust_root_parsed['query'];
-			$query      = @$url_parsed['query'];
-			$qplus      = substr($query, 0, strlen($base_query) + 1);
-			$bqplus     = $base_query . '&';
+
+			$query  = @$url_parsed['query'];
+			$qplus  = substr($query, 0, strlen($base_query) + 1);
+			$bqplus = $base_query . '&';
 
 			if ($base_path != $path
 				|| ($base_query != $query && $qplus != $bqplus)
@@ -400,7 +403,6 @@ function Auth_OpenID_returnToMatches($allowed_return_to_urls, $return_to) {
 		// it's not allowed to use a wildcard. We'll model this by
 		// parsing it as a realm, and not trying to match it if it has
 		// a wildcard.
-
 		$return_realm = Auth_OpenID_TrustRoot::_parse($allowed_return_to);
 
 		if (// Parses as a trust root

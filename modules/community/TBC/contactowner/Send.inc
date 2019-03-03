@@ -27,7 +27,6 @@
  * @author Darren Guiden <g2@pengs.co.uk>
  */
 
-
 /**
  * This controller will send the email to the gallery owner
  *
@@ -41,6 +40,7 @@ class SendController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		if (isset($form['action']['send'])) {
@@ -60,24 +60,28 @@ class SendController extends GalleryController {
 				$resubmit = true;
 				$badname  = true;
 			}
+
 			$session->put('contactowner.badname', serialize($badname));
 
 			if (!preg_match('(^[-\w\.]+@([-a-z0-9]+\.)+[a-z]{2,4}$)i', $form['custEmail'])) {
 				$resubmit = true;
 				$bademail = true;
 			}
+
 			$session->put('contactowner.bademail', serialize($bademail));
 
 			if (strlen($form['custSubject']) < 1) {
 				$resubmit   = true;
 				$badsubject = true;
 			}
+
 			$session->put('contactowner.badsubject', serialize($badsubject));
 
 			if (strlen($form['custMessage']) < 1) {
 				$resubmit   = true;
 				$badmessage = true;
 			}
+
 			$session->put('contactowner.badmessage', serialize($badmessage));
 
 			if ($resubmit == false) {
@@ -89,11 +93,13 @@ class SendController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $toSubject) = GalleryCoreApi::getPluginParameter('module', 'contactowner', 'toSubject');
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $maxEmailsPerSession) = GalleryCoreApi::getPluginParameter('module', 'contactowner', 'maxEmailsPerSession');
 
 				if ($ret) {
@@ -142,6 +148,7 @@ class SendController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$emailsent           = true;
 					$form['custSubject'] = '';
 					$form['custMessage'] = '';

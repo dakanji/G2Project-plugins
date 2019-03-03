@@ -97,7 +97,8 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->addMapEntry('DupeDetectSignaturesMap', $data);
+
+		$ret = $storage->addMapEntry('DupeDetectSignaturesMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -121,7 +122,8 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->removeMapEntry('DupeDetectSignaturesMap', $data);
+
+		$ret = $storage->removeMapEntry('DupeDetectSignaturesMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -140,7 +142,8 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->removeAllMapEntries('DupeDetectSignaturesMap');
+
+		$ret = $storage->removeAllMapEntries('DupeDetectSignaturesMap');
 
 		if ($ret->isError()) {
 			return $ret;
@@ -165,7 +168,8 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->updateMapEntry('DupeDetectSignaturesMap', $match, $change);
+
+		$ret = $storage->updateMapEntry('DupeDetectSignaturesMap', $match, $change);
 
 		if ($ret->isError()) {
 			return $ret;

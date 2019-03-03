@@ -144,15 +144,14 @@ class DownloadItemView extends GalleryView {
 			}
 		}
 
-
 		$ret = GalleryCoreApi::createFastDownloadFile($item);
 		// Ignore failures since the file has already been sent
-
 		return null;
 	}
 
 	public function _sendFile($data) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
 
@@ -190,6 +189,7 @@ class DownloadItemView extends GalleryView {
 			if ($stats[7] > 0) {
 				$phpVm->header('Content-length: ' . $stats[7]);
 			}
+
 			/*
 			 * Don't use readfile() because it buffers the entire file in memory.  Profiling shows
 			 * that this approach is as efficient as fpassthru() but we get to call
@@ -202,9 +202,11 @@ class DownloadItemView extends GalleryView {
 					if (strlen($bits) == 0) {
 						break;
 					}
+
 					echo $bits;
 					$gallery->guaranteeTimeLimit(30);
 				}
+
 				$platform->fclose($fd);
 			}
 		}
@@ -214,6 +216,7 @@ class DownloadItemView extends GalleryView {
 
 	public function _sendByteRange($data) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
 
@@ -224,6 +227,7 @@ class DownloadItemView extends GalleryView {
 		if (function_exists('apache_setenv') && !@$gallery->getConfig('apacheSetenvBroken')) {
 			@apache_setenv('no-gzip', '1');
 		}
+
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$fp = $platform->fopen($data['derivativePath'], 'rb');
 
@@ -262,6 +266,7 @@ class DownloadItemView extends GalleryView {
 				// (?) Echo some info to the client?
 				return GalleryCoreApi::error(ERROR_BAD_REQUEST);
 			}
+
 			// If the range starts with an '-' we start from the beginning
 			// If not, we forward the file pointer
 			// And make sure to get the end byte if spesified
@@ -273,6 +278,7 @@ class DownloadItemView extends GalleryView {
 				$c_start = $range[0];
 				$c_end   = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
 			}
+
 			/* Check the range and make sure it's treated according to the specs.
 			 * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
 			 */
@@ -285,12 +291,14 @@ class DownloadItemView extends GalleryView {
 				// (?) Echo some info to the client?
 				return GalleryCoreApi::error(ERROR_BAD_REQUEST);
 			}
+
 			$start  = $c_start;
 			$end    = $c_end;
 			$length = $end - $start + 1; // Calculate new content length
 			$platform->fseek($fp, $start);
 			$phpVm->header('HTTP/1.1 206 Partial Content');
 		}
+
 		// Notify the client the byte range we'll be outputting
 		$phpVm->header("Content-Range: bytes $start-$end/$size");
 		$phpVm->header("Content-Length: $length");
@@ -304,6 +312,7 @@ class DownloadItemView extends GalleryView {
 				// read past the length
 				$buffer = $end - $p + 1;
 			}
+
 			$gallery->guaranteeTimeLimit(30); // Reset time limit for big files
 			echo $platform->fread($fp, $buffer);
 			flush(); // Free up memory. Otherwise large files will trigger PHP's memory limit.
@@ -322,6 +331,7 @@ class DownloadItemView extends GalleryView {
 	 */
 	public function _assertPermissions($item, $derivativeType) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$itemIdForPermission = $item->getId();
@@ -351,6 +361,7 @@ class DownloadItemView extends GalleryView {
 				// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource
 			}
 		}
+
 		$ret = GalleryCoreApi::assertHasItemPermission($itemIdForPermission, $permission);
 
 		if ($ret) {

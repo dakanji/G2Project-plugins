@@ -48,7 +48,6 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryEntity.class');
  */
 class GalleryCheckoutTransaction extends GalleryEntity {
 	// Members
-
 	/**
 	 * Date of the transaction
 	 *
@@ -150,7 +149,6 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 	 * @access public
 	 */
 	public $postageType;
-
 
 	/**
 	 * Discount amount
@@ -401,7 +399,6 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 	 */
 	public $paymentPlugin;
 
-
 	/**
 	 * Time set when order is confirmed
 	 *
@@ -563,6 +560,7 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->setSecurity(uniqid(mt_rand(), true));
 		$this->setdate(time());
 		$this->setDownloadAttempts(0);
@@ -585,10 +583,11 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 	 */
 	public function delete() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		// Delete any children
-		$query                     = '
+		$query = '
 	SELECT
 	  [GalleryChildEntity::id]
 	FROM
@@ -596,6 +595,7 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 	WHERE
 	  [GalleryChildEntity::parentId] = ?
 	';
+
 		list($ret, $searchResults) = $gallery->search($query, array($this->getId()));
 
 		if ($ret) {

@@ -56,6 +56,7 @@ class PhotoAccessModule extends GalleryModule {
 			// Instead of enumerating all previous versions...
 			$currentVersion = '1.0.0';
 		}
+
 		list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 		if ($ret) {
@@ -74,8 +75,10 @@ class PhotoAccessModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -99,7 +102,9 @@ class PhotoAccessModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -110,6 +115,7 @@ class PhotoAccessModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 
 				// Fall Through
 			case '1.0.1':

@@ -52,11 +52,13 @@ class TagCloudCssView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		// Get the file timestamp
-		$slash                = $platform->getDirectorySeparator();
-		$cssDir               = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+		$slash  = $platform->getDirectorySeparator();
+		$cssDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+
 		$cssFile              = $cssDir . $slash . 'tags.css';
 		$cssFileStat          = $platform->stat($cssFile);
 		$fileLastModifiedDate = $cssFileStat[9];
@@ -80,9 +82,9 @@ class TagCloudCssView extends GalleryView {
 		}
 
 		// Send the CSS
-		$cssFileRelative = 'plugins_data' . $slash . 'modules' . $slash . 'tags' . $slash
-		. 'tags.css';
-		$success         = $gallery->fastDownload(
+		$cssFileRelative = 'plugins_data' . $slash . 'modules' . $slash . 'tags' . $slash . 'tags.css';
+
+		$success = $gallery->fastDownload(
 			$cssFileRelative,
 			'tags.css',
 			$fileLastModifiedDate,
@@ -95,7 +97,7 @@ class TagCloudCssView extends GalleryView {
 				ERROR_UNKNOWN,
 				__FILE__,
 				__LINE__,
-				'The CSS file couldn\'t be sent to the browser'
+				'The CSS file could not be sent to the browser'
 			);
 		}
 

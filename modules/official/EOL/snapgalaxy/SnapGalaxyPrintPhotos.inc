@@ -31,6 +31,7 @@ class SnapGalaxyPrintPhotosController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $item) = $this->getItem();
@@ -40,7 +41,8 @@ class SnapGalaxyPrintPhotosController extends GalleryController {
 		}
 
 		$returnUrl = GalleryUtilities::getRequestVariables('returnUrl');
-		$ret       = $urlGenerator->assertIsInternalUrl($returnUrl);
+
+		$ret = $urlGenerator->assertIsInternalUrl($returnUrl);
 
 		if ($ret) {
 			return array($ret, null);
@@ -49,6 +51,7 @@ class SnapGalaxyPrintPhotosController extends GalleryController {
 		$returnUrl = GalleryUtilities::htmlEntityDecode($returnUrl);
 
 		GalleryCoreApi::requireOnce('modules/snapgalaxy/classes/SnapGalaxyHelper.class');
+
 		list($ret, $cartUrl) = SnapGalaxyHelper::printPhotos(
 			array(
 				$item->getId() => 1,

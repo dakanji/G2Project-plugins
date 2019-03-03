@@ -67,7 +67,6 @@ class JpegtranModule extends GalleryModule {
 	 */
 	public function performFactoryRegistrations() {
 		// Register our graphics class with the factory
-
 		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'GalleryToolkit',
 			'JpegtranToolkit',
@@ -107,6 +106,7 @@ class JpegtranModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$priority = $priority ? $priority : 5;
 
 		foreach ($results['operations'] as $operation => $info) {
@@ -145,6 +145,7 @@ class JpegtranModule extends GalleryModule {
 		 * so that any event handlers triggered by the deactivation will see the world as it will
 		 * be after the deactivation is done.
 		 */
+
 		$ret = GalleryCoreApi::unregisterToolkit($this->getId());
 
 		if ($ret) {
@@ -220,6 +221,7 @@ class JpegtranModule extends GalleryModule {
 				if ($path[strlen($path) - 1] != $slash) {
 					$path .= $slash;
 				}
+
 				$paths[] = $path . 'jpegtran.exe';
 			}
 
@@ -244,6 +246,7 @@ class JpegtranModule extends GalleryModule {
 				if ($path[strlen($path) - 1] != $slash) {
 					$path .= $slash;
 				}
+
 				$paths[] = $path . 'jpegtran';
 			}
 

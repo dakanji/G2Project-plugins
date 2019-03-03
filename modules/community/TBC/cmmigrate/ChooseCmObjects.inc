@@ -76,6 +76,7 @@ class ChooseCmObjectsView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$slash    = $platform->getDirectorySeparator();
 
@@ -90,6 +91,7 @@ class ChooseCmObjectsView extends GalleryView {
 			$form['destinationAlbumID'] = '';
 			$form['generateThumbnails'] = 1;
 		}
+
 		list($ret, $cmAlbumTree) = $this->_createCmAlbumTree($copperminePath);
 
 		if ($ret) {
@@ -116,6 +118,7 @@ class ChooseCmObjectsView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$g2AlbumTree = GalleryUtilities::createAlbumTree($albums);
 
 		$ChooseCmObjects = array(

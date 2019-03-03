@@ -48,11 +48,6 @@
  *
  ******************************************************************************/
 
-
-
-
-
-
 /******************************************************************************
  * Global Variable:      IFD_Tag_Definitions
  *
@@ -64,16 +59,13 @@
 
 $GLOBALS['IFD_Tag_Definitions'] = array(
 
-
 	//
 	//
 	// TIFF Tags
 	//
 	//
 
-
 	'TIFF' => array(
-
 
 		256 => array(
 			'Name'        => 'Image Width',
@@ -96,7 +88,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Units'       => 'bits ( for each colour component )',
 		),
 
-
 		259 => array(
 			'Name'        => 'Compression',
 			'Description' => 'Specifies what type of compression is used 1 = uncompressed, 6 = JPEG compression (thumbnails only), Other = reserved',
@@ -107,7 +98,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			7             => 'JPEG Compression',
 			8             => 'ZIP Compression',
 		),                                // Change: Added TIFF compression types as of version 1.11
-
 		262 => array(
 			'Name'        => 'Photometric Interpretation',
 			'Description' => 'Specifies Pixel Composition - 0 or 1 = monochrome, 2 = RGB, 3 = Palatte Colour, 4 = Transparency Mask, 6 = YCbCr',
@@ -158,7 +148,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Type'        => 'Special',
 		),
 
-
 		531 => array(
 			'Name'        => 'YCbCr Positioning',
 			'Description' => 'Specifies location of chrominance and luminance components - 1 = centered, 2 = co-sited',
@@ -166,7 +155,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1             => 'Chrominance components Centred in relation to luminance components',
 			2             => 'Chrominance and luminance components Co-Sited',
 		),
-
 
 		282 => array(
 			'Name'        => 'X Resolution',
@@ -320,13 +308,11 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 
 	),
 
-
 	//
 	//
 	// EXIF Tags
 	//
 	//
-
 
 	'EXIF' => array(
 
@@ -343,7 +329,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 		),
 
 		// Change: removed GPS IFD tag from here as it was incorrect location - as of version 1.11
-
 		40960 => array(
 			'Name' => 'FlashPix Version',
 			'Type' => 'String',
@@ -452,7 +437,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Name' => 'Gamma Compensation for Playback',
 			'Type' => 'Numeric',
 		),
-
 
 		37381 => array(
 			'Name' => 'APEX Maximum Aperture Value',
@@ -743,16 +727,9 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Type' => 'String',
 		),
 
-
-
 	//  11  => "ACDComment",
 	//  255 => "NewSubfileType"
-
-
 	),
-
-
-
 
 	//
 	//
@@ -790,7 +767,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 		),
 
 	),
-
 
 	//
 	//
@@ -991,14 +967,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 
 	),
 
-
-
-
-
-
-
-
-
 	//
 	//
 	// META (App3) Tags
@@ -1006,7 +974,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 	//
 
 	'Meta' => array(
-
 
 		50000 => array(
 			'Name' => 'CaptureDevice.FilmProductCode',
@@ -1181,8 +1148,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 		),
 
 	),
-
-
 
 	//
 	//

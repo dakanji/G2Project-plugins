@@ -53,56 +53,67 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcMerchantId', trim($form['gcMerchantId']));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcMerchantKey', trim($form['gcMerchantKey']));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantId', trim($form['gcTestMerchantId']));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantKey', trim($form['gcTestMerchantKey']));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcMode', $form['gcMode']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcCurrency', $form['gcCurrency']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcLocation', $form['gcLocation']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'gcCallbackURL', trim($form['gcCallbackURL']));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'overrideURL', isset($form['overrideURL']) ? 1 : 0);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkoutgoogle');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
@@ -123,8 +134,9 @@ class AdminController extends GalleryController {
 			$redirect['subView'] = 'checkoutgoogle.Admin';
 		} elseif (isset($form['action']['test'])) {
 			// Send Test Notification
-			$testXML              = '<?xml version="1.0" encoding="UTF-8"?><gallery-test><google-order-number>0</google-order-number></gallery-test>';
-			$testURL              = $form['gcCallbackURL'] . '?g2_view=checkoutgoogle.Response';
+			$testXML = '<?xml version="1.0" encoding="UTF-8"?><gallery-test><google-order-number>0</google-order-number></gallery-test>';
+			$testURL = $form['gcCallbackURL'] . '?g2_view=checkoutgoogle.Response';
+
 			list($success, $body) = CheckoutGoogleResponseHelper::SendData($testXML, $testURL);
 
 			if ($success && ($body == 'OK')) {
@@ -134,6 +146,7 @@ class AdminController extends GalleryController {
 				$status['testFailed'] = 1;
 				$status['testResult'] = $body;
 			}
+
 			$redirect['view']    = 'core.SiteAdmin';
 			$redirect['subView'] = 'checkoutgoogle.Admin';
 		}
@@ -152,8 +165,6 @@ class AdminController extends GalleryController {
 	}
 }
 
-
-
 class AdminView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
@@ -162,52 +173,62 @@ class AdminView extends GalleryView {
 		global $gallery;
 
 		if ($form['formName'] != 'AdminCheckoutGoogle') {
-			$form['formName']           = 'AdminCheckoutGoogle';
+			$form['formName'] = 'AdminCheckoutGoogle';
+
 			list($ret, $form['active']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'active');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcMerchantId']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantId');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcMerchantKey']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantKey');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcTestMerchantId']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantId');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcTestMerchantKey']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantKey');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcMode']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMode');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcCurrency']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcCurrency');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcLocation']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcLocation');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['gcCallbackURL']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcCallbackURL');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['overrideURL']) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'overrideURL');
 
 			if ($ret) {

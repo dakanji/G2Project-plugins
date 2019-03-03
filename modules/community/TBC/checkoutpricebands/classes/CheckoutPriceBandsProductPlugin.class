@@ -33,6 +33,7 @@
 				if (!isset($products[$position]['description'])) {
 					$products[$position]['description'] = '';
 				}
+
 				$products[$position]['description'] .= $product['priceBandDescription'];
 			}
 		}

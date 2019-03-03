@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_aa extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -54,7 +52,6 @@ class getid3_aa extends getid3_handler {
 
 		//$info['playtime_seconds'] = 0;
 		//$info['audio']['bitrate'] = 0;
-
 		return true;
 	}
 }

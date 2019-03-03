@@ -133,10 +133,8 @@ class ICalendarModule extends GalleryModule {
 		switch ($currentVersion) {
 			case null:
 				// Initial install
-
 			case '0.0.1':
 				// FIXME Added ICalendarResourceItem & ICalendarResourceMap
-
 			case 'end of upgrade path':
 				break;
 

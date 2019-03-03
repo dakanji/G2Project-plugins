@@ -245,11 +245,13 @@ class MapSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $isActive) = $module->isActive();
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$results['redirect']['view'] = 'core.SiteAdmin';
 
 				if ($isActive) {
@@ -418,12 +420,14 @@ class mapSiteAdminView extends GalleryView {
 			return $ret;
 		}
 
-		$editUrl             = GalleryUtilities::getRequestVariables('keyUrl');
+		$editUrl = GalleryUtilities::getRequestVariables('keyUrl');
+
 		list($ret, $profile) = mapHelper::fetchKeyProfileForUrl($editUrl);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$form['editProfile'] = $profile;
 
 		if ($template->hasVariable('SiteAdmin')) {
@@ -433,6 +437,7 @@ class mapSiteAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
+
 		$template->setVariable('controller', 'map.MapSiteAdmin');
 
 		return array(

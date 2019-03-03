@@ -55,7 +55,12 @@ class CheckoutEmailEmailPlugin extends CheckoutEmailInterface_1_0 {
 
 		switch ($templateName) {
 			case 'confirm':
-				return array(null, 'modules/checkoutemail/templates/email/confirm.tpl', 'modules_checkoutemail', null);
+				return array(
+					null,
+					'modules/checkoutemail/templates/email/confirm.tpl',
+					'modules_checkoutemail',
+					null,
+				);
 
 			break;
 		}

@@ -56,7 +56,6 @@ class AdminMembersController extends GalleryController {
 
 			$status['saved'] = 1;
 		} // else $form['action']['cancel']
-
 		if (empty($error)) {
 			$results['redirect'] = array(
 				'view'    => 'core.SiteAdmin',
@@ -66,6 +65,7 @@ class AdminMembersController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'members.AdminMembers';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -102,6 +102,7 @@ class AdminMembersView extends GalleryView {
 					return array($ret, null);
 				}
 			}
+
 			$form['formName'] = 'AdminMembers';
 		}
 
@@ -116,13 +117,15 @@ class AdminMembersView extends GalleryView {
 				return array($ret, null);
 			}
 		}
+
 		$members                = array();
 		$members['memberViews'] = array(
 			$groupIds[1] => $module->translate('Everybody'),
 			$groupIds[2] => $module->translate('Registered Users'),
 			$groupIds[0] => $module->translate('Site Admins'),
 		);
-		$members['emailViews']  = array(
+
+		$members['emailViews'] = array(
 			1 => $module->translate('Show Email Addresses'),
 			0 => $module->translate("Don't Show Email Addresses"),
 		);

@@ -91,7 +91,6 @@ $map['widthTypeHyb']   = '75';
 $map['padTopTypeHyb']  = '0';
 $map['padLeftTypeHyb'] = '430';
 
-
 // GxMagnifier location
 $map['GxPosY'] = '5';
 $map['GxPosX'] = '5';

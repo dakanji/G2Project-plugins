@@ -52,6 +52,7 @@ class DetailsController extends GalleryController {
 	 */
 	public function handleRequest(&$form) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 		$error   = $status   = array();
 
@@ -122,9 +123,11 @@ class DetailsController extends GalleryController {
 					|| $checksum != 0) {
 				$error[] = 'form[error][custAbaCode][bad]';
 			}
+
 			if (empty($form['custAccountNumber']) || !is_numeric($form['custAccountNumber'])) {
 				$error[] = 'form[error][custAccountNumber][bad]';
 			}
+
 			*/
 
 			// The input seems okay, let's move on
@@ -134,10 +137,12 @@ class DetailsController extends GalleryController {
 					GalleryCoreApi::requireOnce(
 						'modules/checkoutauthorizenet/classes/GalleryAuthorizeNet.class'
 					);
+
 					$auth = new GalleryAuthorizeNet();
 				} else {
 					$auth =& $this->_authorizeNet;
 				}
+
 				$auth->init();
 
 				$auth->setFirstName($form['custFirstName']);
@@ -153,11 +158,13 @@ class DetailsController extends GalleryController {
 				$auth->setZip($form['custCcZip']);
 				$auth->setCountry($form['custCcCountry']);
 				$auth->setAmount(unserialize($session->get('checkoutauthorizenet.total')));
+
 				list($ret, $errorMsg) = $auth->process();
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				// If Authorize.Net returned an error, save for output
 				if (!empty($errorMsg)) {
 					$error[] = 'form[error][authorizeNet][fail]';
@@ -165,7 +172,8 @@ class DetailsController extends GalleryController {
 				} else {
 					// Write the customer information back into the original transaction
 					$transactionId
-																									     = unserialize($session->get('checkoutauthorizenet.transactionId'));
+																										 = unserialize($session->get('checkoutauthorizenet.transactionId'));
+
 					list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
 					if ($ret) {
@@ -178,6 +186,7 @@ class DetailsController extends GalleryController {
 							null,
 						);
 					}
+
 					// Get a write lock for the transaction and refresh from database
 					list($ret, $lockId)
 							= GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
@@ -185,11 +194,13 @@ class DetailsController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					list($ret, $transaction) = $transaction->refresh();
 
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// Set the customer information into the original transaction
 					$transaction->setFirstName($form['custFirstName']);
 					$transaction->setLastName($form['custLastName']);
@@ -209,6 +220,7 @@ class DetailsController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// Release our lock
 					$ret = GalleryCoreApi::releaseLocks($lockId);
 
@@ -272,6 +284,7 @@ class DetailsView extends GalleryView {
 		for ($x = 0; $x < 20; $x++) {
 			$Details['ccYears'][] = $year + $x;
 		}
+
 		$template->setVariable('Details', $Details);
 		$form['controller'] = 'checkoutauthorizenet.Details';
 		$template->title(

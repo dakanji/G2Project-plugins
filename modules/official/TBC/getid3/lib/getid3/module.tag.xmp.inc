@@ -20,7 +20,6 @@
 //   called by getID3 in module.graphic.jpg.php                //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 /**************************************************************************************************
  * SWISScenter Source                                                              Nigel Barnes
  *
@@ -123,7 +122,6 @@ class Image_XMP {
 		// Cycle through the file until, one of: 1) an EOI (End of image) marker is hit,
 		//                                       2) we have hit the compressed image data (no more headers are allowed after data)
 		//                                       3) or end of file is hit
-
 		while (($data[1] != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd))) {
 			// Found a segment to look at.
 			// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
@@ -223,7 +221,6 @@ class Image_XMP {
 		$xml_parser = xml_parser_create('UTF-8');
 
 		// Change: Fixed problem that caused the whitespace (especially newlines) to be destroyed when converting xml text to an xml array, as of revision 1.10
-
 		// We would like to remove unneccessary white space, but this will also
 		// remove things like newlines (&#xA;) in the XML values, so white space
 		// will have to be removed later
@@ -259,7 +256,6 @@ class Image_XMP {
 		$xmp_array = array();
 
 		// The XMP data has now been parsed into an array ...
-
 		// Cycle through each of the array elements
 		$current_property = ''; // current property being processed
 		$container_index  = -1; // -1 = no container open, otherwise index of container content
@@ -289,11 +285,14 @@ class Image_XMP {
 									}
 								}
 							}
+
+
 							// Fall Through
 						case 'cdata':
 						case 'close':
 							break;
 					}
+
 
 					// Fall Through
 				case 'rdf:ID':
@@ -315,6 +314,7 @@ class Image_XMP {
 							$xmp_array[$current_property][$container_index] = (isset($xml_elem['value']) ? $xml_elem['value'] : '');
 							$container_index                               += 1;
 						}
+
 						//else unidentified attribute!!
 					}
 
@@ -672,6 +672,7 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'exif:Rows',
 	'exif:Settings',
 );
+
 */
 
 /**

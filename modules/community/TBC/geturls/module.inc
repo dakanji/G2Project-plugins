@@ -175,6 +175,7 @@ class GetUrlsModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 				$urlsTemplate->setVariable('GetUrlsData', $data);
 
 				// Render and get the html

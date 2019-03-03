@@ -74,6 +74,7 @@ class CheckoutDownloadModule extends GalleryModule {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutEmailInterface_1_0',
 			'CheckoutDownloadEmailPlugin',

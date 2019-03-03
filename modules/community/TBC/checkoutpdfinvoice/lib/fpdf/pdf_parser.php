@@ -251,6 +251,7 @@ class pdf_parser {
 					}
 				}
 			}
+
 			$start = $data[0];
 			$end   = $start + $data[1];
 		}
@@ -329,7 +330,6 @@ class pdf_parser {
 			case '<':
 				// This is a hex string.
 				// Read the value, then the terminator
-
 				$pos = $c->offset;
 
 				while (1) {
@@ -337,7 +337,6 @@ class pdf_parser {
 
 					// If you can't find it, try
 					// reading more data from the stream
-
 					if ($match === false) {
 						if (!$c->increase_length()) {
 							return false;
@@ -356,7 +355,6 @@ class pdf_parser {
 
 			case '<<':
 				// This is a dictionary.
-
 				$result = array();
 
 				// Recurse into this function until we reach
@@ -369,6 +367,7 @@ class pdf_parser {
 					if (($value = $this->pdf_read_value($c)) === false) {
 						return false;
 					}
+
 					$result[$key] = $value;
 				}
 
@@ -376,7 +375,6 @@ class pdf_parser {
 
 			case '[':
 				// This is an array.
-
 				$result = array();
 
 				// Recurse into this function until we reach
@@ -397,18 +395,15 @@ class pdf_parser {
 
 			case '(':
 				// This is a string
-
 				$pos = $c->offset;
 
 				while (1) {
 					// Start by finding the next closed
 					// parenthesis
-
 					$match = strpos($c->buffer, ')', $pos);
 
 					// If you can't find it, try
 					// reading more data from the stream
-
 					if ($match === false) {
 						if (!$c->increase_length()) {
 							return false;
@@ -428,12 +423,14 @@ class pdf_parser {
 
 						return array(PDF_TYPE_STRING, $result);
 					}
+
 					$pos = $match + 1;
 
 					if ($pos > $c->offset + $c->length) {
 						$c->increase_length();
 					}
 				}
+
 
 				// Fall Through
 			case 'stream':
@@ -465,8 +462,8 @@ class pdf_parser {
 				} else {
 					$v = '';
 				}
-				$c->reset($startpos + $e + $length + 9); // 9 = strlen("endstream")
 
+				$c->reset($startpos + $e + $length + 9); // 9 = strlen("endstream")
 				return array(PDF_TYPE_STREAM, $v);
 
 			default:
@@ -488,6 +485,7 @@ class pdf_parser {
 									case 'R':
 										return array(PDF_TYPE_OBJREF, (int)$token, (int)$tok2);
 								}
+
 								// If we get to this point, that numeric value up
 								// there was just a numeric value. Push the extra
 								// tokens back into the stack and return the value.
@@ -500,6 +498,7 @@ class pdf_parser {
 
 					return array(PDF_TYPE_NUMERIC, $token);
 				}
+
 					// Just a token. Return it.
 				return array(PDF_TYPE_TOKEN, $token);
 		}
@@ -526,12 +525,10 @@ class pdf_parser {
 				// references while you're reading another object
 				// (e.g.: if you need to determine the length
 				// of a stream)
-
 				$old_pos = ftell($c->file);
 
 				// Reposition the file pointer and
 				// load the object header.
-
 				$c->reset($this->xref['xref'][$obj_spec[1]][$obj_spec[2]]);
 
 				$header = $this->pdf_read_value($c, null, true);
@@ -594,22 +591,20 @@ class pdf_parser {
 		// If there is a token available
 		// on the stack, pop it out and
 		// return it.
-
 		if (count($c->stack)) {
 			return array_pop($c->stack);
 		}
 
 		// Strip away any whitespace
-
 		do {
 			if (!$c->ensure_content()) {
 				return false;
 			}
+
 			$c->offset += _strspn($c->buffer, " \n\r\t", $c->offset);
 		} while ($c->offset >= $c->length - 1);
 
 		// Get the first character in the stream
-
 		$char = $c->buffer[$c->offset++];
 
 		switch ($char) {
@@ -619,7 +614,6 @@ class pdf_parser {
 			case ')':
 				// This is either an array or literal string
 				// delimiter, Return it
-
 				return $char;
 
 			case '<':
@@ -627,11 +621,11 @@ class pdf_parser {
 				// This could either be a hex string or
 				// dictionary delimiter. Determine the
 				// appropriate case and return the token
-
 				if ($c->buffer[$c->offset] == $char) {
 					if (!$c->ensure_content()) {
 						return false;
 					}
+
 					$c->offset++;
 
 					return $char . $char;
@@ -639,30 +633,27 @@ class pdf_parser {
 
 				return $char;
 
-
 			default:
 				// This is "another" type of token (probably
 				// a dictionary entry or a numeric value)
 				// Find the end and return it.
-
 				if (!$c->ensure_content()) {
 					return false;
 				}
 
 				while (1) {
 					// Determine the length of the token
-
 					$pos = _strcspn($c->buffer, " []<>()\r\n\t/", $c->offset);
 
 					if ($c->offset + $pos <= $c->length - 1) {
 						break;
 					}
+
 					// If the script reaches this point,
 					// the token may span beyond the end
 					// of the current buffer. Therefore,
 					// we increase the size of the buffer
 					// and try again--just to be safe.
-
 					$c->increase_length();
 				}
 

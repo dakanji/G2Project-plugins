@@ -37,6 +37,7 @@ class DownloadView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
 
@@ -73,6 +74,7 @@ class DownloadView extends GalleryView {
 				if ($size > 0) {
 					echo 'Content-Length: ' . $size . "\n";
 				}
+
 				echo "\n";
 			} else {
 				// Poor IE6 doesn't know multipart.. just send zip
@@ -92,15 +94,16 @@ class DownloadView extends GalleryView {
 					if (strlen($data) == 0) {
 						break;
 					}
+
 					echo $data;
 					$gallery->guaranteeTimeLimit(30);
 				}
+
 				$platform->fclose($fd);
 			}
 
 			@$platform->unlink($file);
 			@$platform->unlink(substr($file, 0, -4));   // Remove file created by tempnam() too
-
 			if ($sendMultipart) {
 				echo "\n--G2ZipCart\nContent-Type: text/html\nPragma: No-cache\n\n";
 				echo "<html><body onload=\"location.reload()\"></body></html>\n\n";

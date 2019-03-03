@@ -35,7 +35,6 @@
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 
-
 /**
  * A helper class for CheckoutDownload
  *
@@ -66,12 +65,14 @@ class CheckoutDownloadHelper {
 
 				return array($ret, null);
 			}
+
 			// Fetch products for that item
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($item[0], true);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// $products *not* indexed by productId, so need to check each one
 			foreach ($products as $product) {
 				if ($product['productId'] == $item[1] && isset($product['download']) && $product['download'] == 'true') {
@@ -128,6 +129,7 @@ class CheckoutDownloadHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $itemIdsAndOperations) = CheckoutDownloadHelper::getDownloadableItemIds($itemList);
 
 		if ($ret) {
@@ -137,6 +139,7 @@ class CheckoutDownloadHelper {
 		if (empty($itemIdsAndOperations)) {
 			return array(null, 'empty');
 		}
+
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
 		if ($ret) {
@@ -146,6 +149,7 @@ class CheckoutDownloadHelper {
 		if (!isset($transaction)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
+
 		list($ret, $checkoutParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkoutdownload');
 
 		if ($checkoutParams['limitNumDLsAllowed'] && $checkoutParams['numDLsAllowed'] <= $transaction->getDownloadAttempts()) {

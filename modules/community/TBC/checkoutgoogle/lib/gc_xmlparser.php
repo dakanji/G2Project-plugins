@@ -102,6 +102,7 @@ class gc_xmlparser {
 				default:
 					break;
 			}
+
 			xml_parser_set_option($xmlp, $opt, $optVal);
 		}
 
@@ -109,6 +110,7 @@ class gc_xmlparser {
 			$this->root   = $this->_foldCase($vals[0]['tag']);
 			$this->params = $this->xml2ary($vals);
 		}
+
 		xml_parser_free($xmlp);
 	}
 
@@ -137,10 +139,12 @@ class gc_xmlparser {
 					} else {
 						$ary[$t] = array($ary[$t], array());
 					}
+
 					$cv =&$ary[$t][count($ary[$t]) - 1];
 				} else {
 					$cv =&$ary[$t];
 				}
+
 				$cv = array();
 
 				if (isset($r['attributes'])) {
@@ -158,6 +162,7 @@ class gc_xmlparser {
 					} else {
 						$ary[$t] = array($ary[$t], array());
 					}
+
 					$cv =&$ary[$t][count($ary[$t]) - 1];
 				} else {
 					$cv =&$ary[$t];
@@ -168,6 +173,7 @@ class gc_xmlparser {
 						$cv[$k] = $v;
 					}
 				}
+
 				$cv['VALUE'] = (isset($r['value']) ? $r['value'] : '');
 			} elseif ($r['type'] == 'close') {
 				$ary =&$ary['_p'];

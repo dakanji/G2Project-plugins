@@ -41,6 +41,7 @@ class AdminOrderController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		//check plugins first...
 		list($ret, $results) = CheckoutInterfaceHelper::handleStatusPagePlugins($form);
 
@@ -58,6 +59,7 @@ class AdminOrderController extends GalleryController {
 		if (isset($form['messageText'])) {
 			$messageText = wordwrap($form['messageText'], 70);
 		}
+
 		$error  = array();
 		$status = array();
 
@@ -67,6 +69,7 @@ class AdminOrderController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['transactionDeleted']   = 1;
 			$results['redirect']['view']    = 'core.SiteAdmin';
 			$results['redirect']['subView'] = 'checkout.AdminTransactions';
@@ -94,6 +97,7 @@ class AdminOrderController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['addressSaved'] = 1;
 		}
 
@@ -103,6 +107,7 @@ class AdminOrderController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['reconfirmed'] = 1;
 		}
 
@@ -112,6 +117,7 @@ class AdminOrderController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['cleared'] = 1;
 		}
 
@@ -121,6 +127,7 @@ class AdminOrderController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['dispatched'] = 1;
 		}
 
@@ -130,6 +137,7 @@ class AdminOrderController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['notified'] = 1;
 		}
 
@@ -147,6 +155,7 @@ class AdminOrderController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['notesSaved'] = 1;
 		}
 
@@ -166,6 +175,7 @@ class AdminOrderView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
@@ -182,6 +192,7 @@ class AdminOrderView extends GalleryView {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 		}
+
 		list($ret, $tpl['busname']) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'busname');
 
 		if ($ret) {

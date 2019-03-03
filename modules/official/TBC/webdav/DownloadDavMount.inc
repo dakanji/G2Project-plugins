@@ -38,14 +38,17 @@ class DownloadDavMountView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		GalleryUtilities::setResponseHeader(
 			'Content-Type: application/davmount+xml; charset=UTF-8'
 		);
+
 		GalleryUtilities::setResponseHeader(
 			'Content-Disposition: inline; filename="Gallery.davmount"'
 		);
+
 		echo "<dm:mount xmlns:dm=\"http://purl.org/NET/webdav/mount\">\n";
 
 		/*

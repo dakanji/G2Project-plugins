@@ -13,15 +13,12 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_monkey extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
 
 		// based loosely on code from TMonkey by Jurgen Faul <jfaulØgmx*de>
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
-
 		$info['fileformat']            = 'mac';
 		$info['audio']['dataformat']   = 'mac';
 		$info['audio']['bitrate_mode'] = 'vbr';
@@ -43,8 +40,8 @@ class getid3_monkey extends getid3_handler {
 
 			return false;
 		}
-		$thisfile_monkeysaudio_raw['nVersion'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, 4, 2)); // appears to be uint32 in 3.98+
 
+		$thisfile_monkeysaudio_raw['nVersion'] = getid3_lib::LittleEndian2Int(substr($MACheaderData, 4, 2)); // appears to be uint32 in 3.98+
 		if ($thisfile_monkeysaudio_raw['nVersion'] < 3980) {
 			$thisfile_monkeysaudio_raw['nCompressionLevel']    = getid3_lib::LittleEndian2Int(substr($MACheaderData, 6, 2));
 			$thisfile_monkeysaudio_raw['nFormatFlags']         = getid3_lib::LittleEndian2Int(substr($MACheaderData, 8, 2));
@@ -108,6 +105,7 @@ class getid3_monkey extends getid3_handler {
 		if ($thisfile_monkeysaudio_raw['nVersion'] < 3980) {
 			$thisfile_monkeysaudio['samples_per_frame'] = $this->MonkeySamplesPerFrame($thisfile_monkeysaudio_raw['nVersion'], $thisfile_monkeysaudio_raw['nCompressionLevel']);
 		}
+
 		$thisfile_monkeysaudio['bits_per_sample'] = ($thisfile_monkeysaudio['flags']['24-bit'] ? 24 : ($thisfile_monkeysaudio['flags']['8-bit'] ? 8 : 16));
 		$thisfile_monkeysaudio['channels']        = $thisfile_monkeysaudio_raw['nChannels'];
 		$info['audio']['channels']                = $thisfile_monkeysaudio['channels'];
@@ -118,6 +116,7 @@ class getid3_monkey extends getid3_handler {
 
 			return false;
 		}
+
 		$info['audio']['sample_rate'] = $thisfile_monkeysaudio['sample_rate'];
 
 		if ($thisfile_monkeysaudio['flags']['peak_level']) {
@@ -130,6 +129,7 @@ class getid3_monkey extends getid3_handler {
 		} else {
 			$thisfile_monkeysaudio['samples'] = (($thisfile_monkeysaudio_raw['nTotalFrames'] - 1) * $thisfile_monkeysaudio['samples_per_frame']) + $thisfile_monkeysaudio_raw['nFinalFrameSamples'];
 		}
+
 		$thisfile_monkeysaudio['playtime'] = $thisfile_monkeysaudio['samples'] / $thisfile_monkeysaudio['sample_rate'];
 
 		if ($thisfile_monkeysaudio['playtime'] == 0) {
@@ -137,6 +137,7 @@ class getid3_monkey extends getid3_handler {
 
 			return false;
 		}
+
 		$info['playtime_seconds']                   = $thisfile_monkeysaudio['playtime'];
 		$thisfile_monkeysaudio['compressed_size']   = $info['avdataend'] - $info['avdataoffset'];
 		$thisfile_monkeysaudio['uncompressed_size'] = $thisfile_monkeysaudio['samples'] * $thisfile_monkeysaudio['channels'] * ($thisfile_monkeysaudio['bits_per_sample'] / 8);
@@ -146,6 +147,7 @@ class getid3_monkey extends getid3_handler {
 
 			return false;
 		}
+
 		$thisfile_monkeysaudio['compression_ratio'] = $thisfile_monkeysaudio['compressed_size'] / ($thisfile_monkeysaudio['uncompressed_size'] + $thisfile_monkeysaudio_raw['nHeaderDataBytes']);
 		$thisfile_monkeysaudio['bitrate']           = (($thisfile_monkeysaudio['samples'] * $thisfile_monkeysaudio['channels'] * $thisfile_monkeysaudio['bits_per_sample']) / $thisfile_monkeysaudio['playtime']) * $thisfile_monkeysaudio['compression_ratio'];
 		$info['audio']['bitrate']                   = $thisfile_monkeysaudio['bitrate'];
@@ -178,8 +180,6 @@ class getid3_monkey extends getid3_handler {
 				}
 			}
 		}
-
-
 
 		$info['audio']['bits_per_sample'] = $thisfile_monkeysaudio['bits_per_sample'];
 		$info['audio']['encoder']         = 'MAC v' . number_format($thisfile_monkeysaudio['version'], 2);

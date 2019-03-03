@@ -33,6 +33,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 	 */
 	public function getImageFrameList() {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		/*
@@ -40,6 +41,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		 * it's possible that this is getting called during the core upgrade, when we won't be
 		 * able to properly deal with deactivated plugins.
 		 */
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe', true);
 
 		if ($ret) {
@@ -49,7 +51,8 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		$frames = array(
 			'solid' => $module->translate('Solid'),
 		);
-		$dir    = __DIR__ . '/../frames';
+
+		$dir = __DIR__ . '/../frames';
 
 		if ($platform->is_dir($dir) && $platform->is_readable($dir)
 			&& $fd = $platform->opendir($dir)
@@ -63,8 +66,10 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 					$frames[$file] = $module->translate($frameData['name']);
 				}
 			}
+
 			$platform->closedir($fd);
 		}
+
 		asort($frames);
 
 		return array(
@@ -83,11 +88,12 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 	 */
 	public function init(&$template, $frameIds) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		static $simpleFrames;
 
 		if (!$template->hasVariable('ImageFrameData')) {
-			$simpleFrames    = array(
+			$simpleFrames = array(
 				'none' => array(
 					'type'  => 'style',
 					'style' => 'border-style: none',
@@ -97,6 +103,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 					'style' => 'border: 1px solid black !important',
 				),
 			);
+
 			$templateAdapter =& $gallery->getTemplateAdapter();
 			$template->setVariable(
 				'ImageFrameData',
@@ -106,6 +113,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 				)
 			);
 		}
+
 		$template->head('modules/imageframe/templates/ImageFrameHead.tpl');
 		$data =& $template->getVariableByReference('ImageFrameData');
 
@@ -114,6 +122,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		if ($ret) {
 			return $ret;
 		}
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$baseUrl      = $urlGenerator->generateUrl(
 			array(
@@ -160,10 +169,12 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 						$frame['rowspan'] = 1 + ($frame['hVT'] > 0 ? 1 : 0) + ($frame['hVB'] > 0 ? 1 : 0);
 						$frame['colspan'] = 1 + ($frame['wHL'] > 0 ? 1 : 0) + ($frame['wHR'] > 0 ? 1 : 0);
 					}
+
 					$data['data'][$frameId] = $frame;
 				}
 			}
 		}
+
 		$data['idList'] = implode('|', array_keys($data['data']));
 
 		return null;
@@ -189,6 +200,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 	 */
 	public function getSampleUrl($itemId = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$params       = array(
 			'view' => 'imageframe.Sample',

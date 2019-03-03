@@ -152,6 +152,7 @@ class MapRouteAdminController extends GalleryController {
 			} else {
 				$error[] = 'form[error][canotopentemplate]';
 			}
+
 			$status['changesucess'] = 1;
 
 			$direction                      = (empty($error)) ? 'redirect' : 'delegate';
@@ -181,17 +182,20 @@ class MapRouteAdminController extends GalleryController {
 				if (empty($RouteColor)) {
 					$RouteColor = '#8A2BE2';
 				}
+
 				$RouteName   = $_POST['RouteName'];
 				$RouteWeight = $_POST['RouteWeight'];
 
 				if (empty($RouteWeight)) {
 					$RouteWeight = '3';
 				}
+
 				$RouteOpacity = $_POST['RouteOpacity'];
 
 				if (empty($RouteOpacity)) {
 					$RouteOpacity = '1';
 				}
+
 				$RouteEnabled = $_POST['RouteEnabled'];
 				$RouteFilter  = $_POST['RouteFilter'];
 
@@ -216,10 +220,12 @@ class MapRouteAdminController extends GalleryController {
 								}
 							}
 						}
+
 						$lastkey   = $key;
 						$lastvalue = $value;
 					}
 				}
+
 				ksort($hash, SORT_NUMERIC);
 				$allgpspoint = '';
 
@@ -239,6 +245,7 @@ class MapRouteAdminController extends GalleryController {
 					foreach ($routestrings as $temproute) {
 						$temproutes[] = explode('`', $temproute);
 					}
+
 					$maxRouteId = 0;
 					$editIdDupe = false;
 					$routesById = array();
@@ -251,14 +258,17 @@ class MapRouteAdminController extends GalleryController {
 							if ($num == $routeArray[0]) {
 								$editIdDupe = true;
 							}
+
 							// Move the dupe to the end
 							$maxRouteId = $maxRouteId + 1;
 							// reassign route ID to highest ID + 1
 							$temproutes[$routeKey][0] = $maxRouteId;
 						}
+
 						// Store the route string into the array, keyed by route ID
 						$routesById[$temproutes[$routeKey][0]] = implode('`', $temproutes[$routeKey]);
 					}
+
 					/*
 					 * if $num was not found in the existing Route IDs (i.e., it's new)
 					 * or if it was a dupe, then add it as a new route, else leave it alone
@@ -313,7 +323,6 @@ class MapRouteAdminController extends GalleryController {
 				GalleryCoreApi::setPluginParameter('module', 'map', 'EnableRouteNumber', 0);
 			}
 
-
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -342,8 +351,9 @@ class MapRouteAdminView extends GalleryView {
 		$form['now'] = strftime($dateFormat, strtotime('now'));
 
 		// Select items that have GPS coordinates filled out
-		$storage             =& $gallery->getStorage();
-		$query               = '
+		$storage =& $gallery->getStorage();
+
+		$query = '
         SELECT
 	  [mapMap::itemId],
 	  [mapMap::value]
@@ -352,6 +362,7 @@ class MapRouteAdminView extends GalleryView {
 	WHERE
 	  [mapMap::field] = \'GPS\'
 	';
+
 		list($ret, $results) = $gallery->search($query, array(), array());
 
 		if (!$ret) {
@@ -393,8 +404,9 @@ class MapRouteAdminView extends GalleryView {
 					if (array_key_exists($id, $pointHash)) {
 						$pointHash[$id]['type'] = 'GoogleMapGroup';
 						$groupid                = substr($id, 1);
-						list($ret, $tmpparam)   = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
-						$groups                 = explode('|', $tmpparam);
+
+						list($ret, $tmpparam) = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
+						$groups               = explode('|', $tmpparam);
 
 						foreach ($groups as $group) {
 							if (!empty($group)) {
@@ -422,8 +434,8 @@ class MapRouteAdminView extends GalleryView {
 					$tmp[] = $id;
 				}
 			}
-			$ids = $tmp;
 
+			$ids = $tmp;
 
 			// Trim the list down to the items that the user is allowed to see
 			list($ret, $perms) = GalleryCoreApi::fetchPermissionsForItems($ids, $gallery->getActiveUserId());
@@ -439,7 +451,8 @@ class MapRouteAdminView extends GalleryView {
 			$ids = array_values($ids);
 			// Retrieve data for each entity
 			list($ret, $entities) = $storage->loadEntities($ids);
-			list($ret, $thumbs)   = GalleryCoreApi::fetchThumbnailsByItemIds($ids);
+
+			list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds($ids);
 
 			/*
 			 * Fill out additional properties for each entity, taking care to
@@ -454,16 +467,17 @@ class MapRouteAdminView extends GalleryView {
 					array('', ''),
 					$entity->getDescription()
 				);
-				$pointHash[$entity->getId()]['thumb']       = $urlGenerator->generateUrl(
+
+				$pointHash[$entity->getId()]['thumb'] = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $thumbs[$entity->getId()]->getId(),
 						'serialNumber' => $thumbs[$entity->getId()]->getSerialNumber(),
 					)
 				);
-				$pointHash[$entity->getId()]['date']        = strftime($dateFormat, $entity->getOriginationTimestamp());
-			}
 
+				$pointHash[$entity->getId()]['date'] = strftime($dateFormat, $entity->getOriginationTimestamp());
+			}
 
 			$GPSItem = array();
 

@@ -64,6 +64,7 @@ class ConfirmController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// Load the required info from the cart
 			list($ret, $items) = CheckoutHelper::fetchCheckoutItems();
 
@@ -78,24 +79,29 @@ class ConfirmController extends GalleryController {
 				if (!is_numeric($itemId)) {
 					continue;
 				}
+
 				list($ret, $thisItemsProducts) = CheckoutProductMapHelper::fetchVisibleProducts($itemId, true);
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$itemProducts[$itemId] = $thisItemsProducts;
 			}
+
 			list($ret, $paper) = CheckoutHelper::fetchPapers();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// Get the postage options
 			list($ret, $posts) = CheckoutHelper::fetchPostages();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// fetch discounts
 			list($ret, $discounts) = CheckoutDiscountMapHelper::fetchDiscounts();
 
@@ -106,6 +112,7 @@ class ConfirmController extends GalleryController {
 			/* allow plugins to alter $itemProducts, $paper, $posts, $discounts
 			   note: building $itemProducts already calls fetchVisibleProducts which in turn passes through
 			   the checkoutProductList interface - so no need to repeat modifications to products list done there */
+
 			$ret = checkoutInterfaceHelper::doTransactionDetailsPlugins($items, $itemProducts, $paper, $posts, $discounts);
 
 			if ($ret) {
@@ -122,6 +129,7 @@ class ConfirmController extends GalleryController {
 			if (!isset($transaction)) {
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
+
 			$ret = $transaction->create();
 
 			if ($ret) {
@@ -143,6 +151,7 @@ class ConfirmController extends GalleryController {
 				if (!is_numeric($itemId)) {
 					continue;
 				}
+
 				$subtotal                 = 0;
 				$atLeastOneQtySetThisItem = false;
 
@@ -170,11 +179,13 @@ class ConfirmController extends GalleryController {
 					if (!isset($txnItem)) {
 						return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 					}
+
 					$ret = $txnItem->create($transaction->getId());
 
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// store the txnItem Id in the cart for other modules to use
 					$items[$itemId][$product['productId']]['txnItemId'] = $txnItem->getId();
 
@@ -191,6 +202,7 @@ class ConfirmController extends GalleryController {
 					$txnItem->setPriceTotal(
 						number_format($item[$product['productId']]['quant'] * $product['price'], 2, '.', '')
 					);
+
 					$subtotal += ($item[$product['productId']]['quant'] * $product['price']);
 
 					if ($product['paperSet']) {
@@ -200,6 +212,7 @@ class ConfirmController extends GalleryController {
 							$missingPaper = true;
 						}
 					}
+
 					$ret = $txnItem->save();
 
 					if ($ret) {
@@ -210,6 +223,7 @@ class ConfirmController extends GalleryController {
 				if ($atLeastOneQtySetThisItem) {
 					$itemCount++;
 				}
+
 				$total                     += $subtotal;
 				$items[$itemId]['subtotal'] = number_format($subtotal, 2, '.', '');
 			}
@@ -240,11 +254,13 @@ class ConfirmController extends GalleryController {
 						if (!isset($txnItem)) {
 							return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 						}
+
 						$ret = $txnItem->create($transaction->getId());
 
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						// store the txnItem Id in the cart for other modules to use
 						$items['accessories'][$optionId]['txnItemId'] = $txnItem->getId();
 						$txnItem->setItem($accessoryDetails['id']);
@@ -259,13 +275,15 @@ class ConfirmController extends GalleryController {
 						$txnItem->setPriceTotal(number_format($items['accessories'][$optionId]['quant'] * $option['price'], 2, '.', ''));
 						$subtotal                                   += ($items['accessories'][$optionId]['quant'] * $option['price']);
 						$items['accessories'][$optionId]['subtotal'] = number_format($subtotal, 2, '.', '');
-						$ret                                         = $txnItem->save();
+
+						$ret = $txnItem->save();
 
 						if ($ret) {
 							return array($ret, null);
 						}
 					}
 				}
+
 				$total += $subtotal;
 			}
 
@@ -275,8 +293,8 @@ class ConfirmController extends GalleryController {
 			if ($ret) {
 				return $ret;
 			}
-			$belowMinimumValue = ($total < $minOrderValue);
 
+			$belowMinimumValue = ($total < $minOrderValue);
 
 			// Calculate appropriate discount
 			unset($myDiscount);
@@ -297,11 +315,13 @@ class ConfirmController extends GalleryController {
 					) {
 						continue;
 					}
+
 					$myDiscount = $discount;
 
 					break;
 				}
 			}
+
 			// Actuate it
 			if (isset($myDiscount)) {
 				$discountAmount  = $total * $myDiscount['discountPercent'] / 100;
@@ -326,6 +346,7 @@ class ConfirmController extends GalleryController {
 				if (isset($myDiscount['freePostage']) && $myDiscount['freePostage'] == 'true') {
 					$postage = 0;
 				}
+
 				$transaction->setPostageType($posts[$items['postage']]['type']);
 				$transaction->setPostage($postage);
 				$total += $postage;
@@ -337,35 +358,38 @@ class ConfirmController extends GalleryController {
 			}
 
 			// tax interface here?
-
 			// avoid negative balances
 			if ($total < 0) {
 				$total = 0;
 			}
 
 			// Set and save the data
-
 			$transaction->sethost(GalleryUtilities::getRemoteHostAddress());
-			$translator               =& $gallery->getTranslator();
+			$translator =& $gallery->getTranslator();
+
 			list($ret, $languageCode) = $translator->getDefaultLanguageCode();
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$transaction->setLanguageCode($languageCode);
 			$transaction->setbuyerId($gallery->getActiveUserId());
 			// Because the G2 storage API only handles INTEGER numeric storage, store as string
 			$total = number_format($total, 2, '.', '');
 			$transaction->setamount($total);
+
 			$ret = $transaction->save();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// call an event for other modules to know a new transaction has been stored
 			$event = GalleryCoreApi::newEvent('GalleryCheckout::newTransaction');
 			$event->setEntity($transaction);
 			$event->setData($items);
+
 			list($ret) = GalleryCoreApi::postEvent($event);
 
 			if ($ret) {
@@ -412,7 +436,6 @@ class ConfirmController extends GalleryController {
 			$results['redirect']['view'] = 'checkout.Select';
 		}
 
-
 		// OR EMPTY CART
 		elseif (isset($form['action']['emptycart'])) {
 			// Call the helper to update the item records based on the form
@@ -421,6 +444,7 @@ class ConfirmController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$results['redirect']['view'] = 'checkout.Select';
 		}
 
@@ -437,6 +461,7 @@ class ConfirmController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$returnURL = CheckoutHelper::fetchReturnURL();
 
 			if (!isset($returnURL)) {
@@ -454,6 +479,7 @@ class ConfirmController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$results['redirect']['view'] = 'checkout.Select';
 		}
 
@@ -463,7 +489,6 @@ class ConfirmController extends GalleryController {
 		return array(null, $results);
 	}
 }
-
 
 /**
  * This view is for letting the user confirm their order
@@ -486,7 +511,6 @@ class ConfirmView extends GalleryView {
 		global $gallery;
 
 		//$this->setCacheControl($template, 'no-cache'); restore for 2.3
-
 		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
 
 		if ($ret) {
@@ -509,11 +533,13 @@ class ConfirmView extends GalleryView {
 		$tpl['controller']    = 'checkout.Confirm';
 		$tpl['payments']      = $plugins;
 		$tpl['paymentPlugin'] = $transaction->getPaymentPlugin();
-		list($ret, $module)   = GalleryCoreApi::loadPlugin('module', 'checkout');
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkout');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->title($tpl['busname'] . ' ' . $module->translate('Checkout'));
 		$template->setVariable('tpl', $tpl);
 

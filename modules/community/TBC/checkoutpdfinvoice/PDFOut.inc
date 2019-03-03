@@ -66,13 +66,13 @@ class PDFOutView extends GalleryView {
 			return $ret;
 		}
 
-
 		// Figure out which item we're talking about
 		$transactionId = (int)GalleryUtilities::getRequestVariables('transactionId');
 
 		if (empty($transactionId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
+
 		// get the transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
@@ -148,7 +148,8 @@ class PDFOutView extends GalleryView {
 
 			// items
 			foreach ($myGroup as $myItemId) {
-				$curY                        = $pdf->GetY();
+				$curY = $pdf->GetY();
+
 				list($ret, $transactionItem) = GalleryCoreApi::loadEntitiesById($myItemId);
 
 				if ($ret) {
@@ -158,12 +159,15 @@ class PDFOutView extends GalleryView {
 				if (!isset($transactionItem)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
-				$masterId           = $transactionItem->getItem();
+
+				$masterId = $transactionItem->getItem();
+
 				list($ret, $thumbs) = GalleryDerivativeHelper_simple::fetchThumbnailsByItemIds(array($masterId));
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$thumb = $thumbs[$masterId];
 
 				if (method_exists($thumb, 'fetchPath')) {
@@ -174,6 +178,7 @@ class PDFOutView extends GalleryView {
 						$pdf->Image($path, $col1X + ($thumbWidth - $printWidth) / 2, $curY - $thumbHeight / 2, 0, $thumbHeight, 'JPEG');
 					}
 				}
+
 				$pdf->SetXY($col2X, $curY);
 				$itemName = PDFOutView::fString($transactionItem->getItemName());
 				$pdf->MultiCell($col2Width, $lineHeight, $itemName, 0, 'L');
@@ -195,8 +200,8 @@ class PDFOutView extends GalleryView {
 				$pdf->SetY($curY + $itemYinc);
 			}
 		}
-		// if the last page was full or nearly full, start a new page
 
+		// if the last page was full or nearly full, start a new page
 		$itemGroups = array_reverse($itemGroups);
 
 		if (count($itemGroups[0]) + 1 >= $itemsPerPage) {
@@ -219,6 +224,7 @@ class PDFOutView extends GalleryView {
 			$pdf->MultiCell($col6Width, $lineHeight, '-' . $csymbol . sprintf($cformat, $discount), 0, 'R');
 			$pdf->SetY($curY + $itemYinc / 4);
 		}
+
 		// postage
 		$curY = $pdf->GetY();
 		$pdf->SetXY($col3X, $curY);
@@ -250,6 +256,7 @@ class PDFOutView extends GalleryView {
 			$paymentCleared = PDFOutView::fString($gallery->i18n('Payment has cleared - thank you.'));
 			$pdf->Text($col3X, $curY, $paymentCleared);
 		}
+
 		// Comments
 		$pdf->SetLeftMargin($leftMargin);
 		$pdf->SetRightMargin($rightMargin);
@@ -262,7 +269,6 @@ class PDFOutView extends GalleryView {
 		$commentText = PDFOutView::fString($commentText);
 		$pdf->Write($lineHeight, $commentText);
 
-
 		// send the output
 		$pdf->SetDisplayMode('fullpage');
 		$pdf->Output("invoice_$transactionId.pdf", 'I');
@@ -272,6 +278,7 @@ class PDFOutView extends GalleryView {
 
 	public function writeHeader($transaction, &$pdf) {
 		global $gallery;
+
 		$lineHeight = 3.5;
 		// put the date
 		$pdf->Text(156, 49, strftime('%d %b %Y', $transaction->getDate()));
@@ -283,7 +290,6 @@ class PDFOutView extends GalleryView {
 		// page
 		$pdf->Text(156, 87, $pdf->PageNo() . ' / {nb}');
 		// addressee
-
 		$line1 = PDFOutView::fString($transaction->getRecipientName());
 
 		if (empty($line1)) {
@@ -302,6 +308,7 @@ class PDFOutView extends GalleryView {
 		} else {
 			$addressblock = $gallery->i18n('(continued)');
 		}
+
 		$addressblock = PDFOutView::fString($addressblock);
 		$pdf->SetLeftMargin(40);
 		$pdf->SetXY(40, 55);
@@ -317,6 +324,7 @@ class PDFOutView extends GalleryView {
 		} else {
 			$string = utf8_decode($string);
 		}
+
 		$string = html_entity_decode($string);
 
 		return $string;

@@ -33,6 +33,7 @@
 class DupeDetectModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('dupedetect');
 		$this->setName($gallery->i18n('DupeDetect'));
 		$this->setDescription(

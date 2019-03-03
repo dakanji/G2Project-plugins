@@ -20,11 +20,9 @@
 define('FPDI_VERSION', '1.2');
 
 ini_set('auto_detect_line_endings', 1); // Strongly required!
-
 require_once 'fpdf_tpl.php';
 
 require_once 'fpdi_pdf_parser.php';
-
 
 class FPDI extends FPDF_TPL {
 	/**
@@ -96,6 +94,7 @@ class FPDI extends FPDF_TPL {
 		if (!isset($this->parsers[$fn])) {
 			$this->parsers[$fn] = new fpdi_pdf_parser($fn, $this);
 		}
+
 		$this->current_parser =& $this->parsers[$fn];
 
 		return $this->parsers[$fn]->getPageCount();
@@ -127,6 +126,7 @@ class FPDI extends FPDF_TPL {
 		if (!in_array($boxName, $parser->availableBoxes)) {
 			return $this->Error(sprintf('Unknown box: %s', $boxName));
 		}
+
 		$pageboxes = $parser->getPageBoxes($pageno);
 
 		/**
@@ -147,6 +147,7 @@ class FPDI extends FPDF_TPL {
 		if (!isset($pageboxes[$boxName])) {
 			return false;
 		}
+
 		$this->lastUsedPageBox = $boxName;
 
 		$box        = $pageboxes[$boxName];
@@ -302,6 +303,7 @@ class FPDI extends FPDF_TPL {
 					foreach ($this->_res['tpl'][$tplidx]['fonts'] as $font) {
 						$this->_out('/F' . $font['i'] . ' ' . $font['n'] . ' 0 R');
 					}
+
 					$this->_out('>>');
 				}
 
@@ -321,8 +323,10 @@ class FPDI extends FPDF_TPL {
 							$this->_out($this->tplprefix . $i . ' ' . $tpl['n'] . ' 0 R');
 						}
 					}
+
 					$this->_out('>>');
 				}
+
 				$this->_out('>>');
 			}
 
@@ -367,7 +371,6 @@ class FPDI extends FPDF_TPL {
 			case PDF_TYPE_ARRAY:
 				// An array. Output the proper
 				// structure and move on.
-
 				$this->_out('[', false);
 
 				for ($i = 0; $i < count($value[1]); $i++) {
@@ -403,6 +406,7 @@ class FPDI extends FPDF_TPL {
 					$this->_obj_stack[$cpfn][$value[1]]     = array($this->n, $value);
 					$this->_don_obj_stack[$cpfn][$value[1]] = array($this->n, $value);
 				}
+
 				$objid = $this->_don_obj_stack[$cpfn][$value[1]][0];
 
 				$this->_out("{$objid} 0 R"); //{$value[2]}
@@ -432,7 +436,6 @@ class FPDI extends FPDF_TPL {
 
 			case PDF_TYPE_NULL:
 				// The null object.
-
 				$this->_out('null');
 
 				break;

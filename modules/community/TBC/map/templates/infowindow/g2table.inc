@@ -14,6 +14,7 @@ foreach ($map['mapPoints'] as $point) {
 	$point['summary']     = str_replace(']', '>', $point['summary']);
 	$tmp[]                = $point;
 }
+
 $map['mapPoints'] = $tmp;
 //Create the HTML for the window
 $map['Labels'][0] = 'none';

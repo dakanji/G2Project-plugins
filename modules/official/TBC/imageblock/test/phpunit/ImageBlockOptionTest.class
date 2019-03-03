@@ -32,6 +32,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -130,6 +131,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert($disabledFlag, 'Album not set disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
@@ -137,6 +139,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!$disabledFlag, 'SubAlbum set disabled 1');
 
 		// Disable the Option
@@ -151,6 +154,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!$disabledFlag, 'Album set disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
@@ -158,11 +162,13 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!$disabledFlag, 'SubAlbum set disabled 2');
 	}
 
 	public function testImageBlockOptionRecursive() {
 		global $gallery;
+
 		$mockAdapter               = new MockTemplateAdapter();
 		$gallery->_templateAdapter =& $mockAdapter;
 
@@ -178,6 +184,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert($disabledFlag, 'Album not set disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
@@ -185,6 +192,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert($disabledFlag, 'SubAlbum not set disabled');
 
 		// Disable the Option recursively
@@ -199,6 +207,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!$disabledFlag, 'Album still disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
@@ -206,6 +215,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!$disabledFlag, 'SubAlbum still disabled');
 	}
 }

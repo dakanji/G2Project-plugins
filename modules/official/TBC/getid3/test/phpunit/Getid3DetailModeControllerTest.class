@@ -32,6 +32,7 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 
 	public function testSwitchToSummary() {
 		global $gallery;
+
 		GalleryUtilities::putRequestVariable('mode', 'summary');
 
 		// Perform the request and verify that we succeeded
@@ -54,11 +55,13 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
 			$this->fail('Missing session value');
 		}
+
 		$this->assertEquals('summary', $session->get('getid3.module.LoadGetid3Info.mode'));
 	}
 
 	public function testSwitchToDetailed() {
 		global $gallery;
+
 		GalleryUtilities::putRequestVariable('mode', 'detailed');
 
 		// Perform the request and verify that we succeeded
@@ -81,11 +84,13 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
 			$this->fail('Missing session value');
 		}
+
 		$this->assertEquals('detailed', $session->get('getid3.module.LoadGetid3Info.mode'));
 	}
 
 	public function testSwitchToBogus() {
 		global $gallery;
+
 		GalleryUtilities::putRequestVariable('mode', 'BoGuS');
 
 		// Perform the request and verify that we succeeded
@@ -108,6 +113,7 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
 			$this->fail('Missing session value');
 		}
+
 		$this->assertEquals('summary', $session->get('getid3.module.LoadGetid3Info.mode'));
 	}
 }

@@ -88,7 +88,6 @@ class UploadAppletSiteAdminController extends GalleryController {
 			}
 		}
 
-
 		// Figure out where to redirect upon success
 		$method                      = empty($error) ? 'redirect' : 'delegate';
 		$results[$method]['view']    = 'core.SiteAdmin';
@@ -184,6 +183,7 @@ class UploadAppletSiteAdminView extends GalleryView {
 				foreach ($variablesArray as $variable) {
 					$variables[] = $variable;
 				}
+
 				$form[$key] = $variables;
 			}
 		}

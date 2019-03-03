@@ -78,6 +78,7 @@ class ConfigureView extends GalleryView {
 				return array($ret, null);
 			}
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter(
 			'module',
 			'simpleviewersource',
@@ -88,6 +89,7 @@ class ConfigureView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$status['configured'] = 1;
 
 		$template->setVariable('status', $status);

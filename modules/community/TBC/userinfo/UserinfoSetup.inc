@@ -45,7 +45,12 @@ class UserinfoSetupController extends GalleryController {
 		if ($canSave) {
 			if ($form['action'] = 'save1') {
 				$tableName3 = 'UserinfoSetupMap';
-				$select3    = array('uiPerPage', 'uiDefaultSortColumn', 'uiDefaultSortOrder', 'uiDateFormat');
+				$select3    = array(
+					'uiPerPage',
+					'uiDefaultSortColumn',
+					'uiDefaultSortOrder',
+					'uiDateFormat',
+				);
 
 				list($ret, $searchResults3) = GalleryCoreApi::getMapEntry($tableName3, $select3);
 
@@ -64,7 +69,6 @@ class UserinfoSetupController extends GalleryController {
 					$uiDefaultSortOrder  = $data['result']['uiDefaultSortOrder'];
 					$uiDateFormat        = $data['result']['uiDateFormat'];
 				}
-
 
 				if (!empty($form['uiPerPage'])) {
 					if ($form['uiPerPage'] == $uiPerPage) {
@@ -103,7 +107,8 @@ class UserinfoSetupController extends GalleryController {
 		if ($canSave && empty($error)) {
 			if ($form['action'] = 'save1') {
 				$match['rowId'] = '1';
-				$ret            = GalleryCoreApi::updateMapEntry(
+
+				$ret = GalleryCoreApi::updateMapEntry(
 					$tableName3,
 					$match,
 					array(
@@ -117,6 +122,7 @@ class UserinfoSetupController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$status['save1'] = 1;
 			}
 
@@ -135,13 +141,13 @@ class UserinfoSetupController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'userinfo.UserinfoSetup';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
 		return array(null, $results);
 	}
 }
-
 
 /**
  * This view will show setup options for this module
@@ -168,9 +174,15 @@ class UserinfoSetupView extends GalleryView {
 		if ($form['formName'] != 'UserInfoTab') {
 			// Load up our form data
 			$tableName = 'UserinfoSetupMap';
-			$select    = array('uiPerPage', 'uiDefaultSortColumn', 'uiDefaultSortOrder', 'uiDateFormat');
+			$select    = array(
+				'uiPerPage',
+				'uiDefaultSortColumn',
+				'uiDefaultSortOrder',
+				'uiDateFormat',
+			);
 
-			$UserinfoSetup['data']     = array();
+			$UserinfoSetup['data'] = array();
+
 			list($ret, $searchResults) = GalleryCoreApi::getMapEntry($tableName, $select);
 
 			while ($result = $searchResults->nextResult()) {
@@ -183,13 +195,17 @@ class UserinfoSetupView extends GalleryView {
 			}
 
 			for ($i = 1; $i <= count($UserinfoSetup['data']['result']); $i++) {
-				$form['uiPerPage']           = $UserinfoSetup['data']['result']['uiPerPage'];
+				$form['uiPerPage'] = $UserinfoSetup['data']['result']['uiPerPage'];
+
 				$form['uiDefaultSortColumn'] = $UserinfoSetup['data']['result']['uiDefaultSortColumn'];
-				$form['uiDefaultSortOrder']  = $UserinfoSetup['data']['result']['uiDefaultSortOrder'];
-				$form['uiDateFormat']        = $UserinfoSetup['data']['result']['uiDateFormat'];
+
+				$form['uiDefaultSortOrder'] = $UserinfoSetup['data']['result']['uiDefaultSortOrder'];
+
+				$form['uiDateFormat'] = $UserinfoSetup['data']['result']['uiDateFormat'];
 			}
 
-			$mapName             = 'UserinfoMap';
+			$mapName = 'UserinfoMap';
+
 			list($ret, $mapInfo) = GalleryCoreApi::describeMap($mapName);
 
 			if ($ret) {
@@ -236,11 +252,22 @@ class UserinfoSetupView extends GalleryView {
 				}
 			}
 
-			$UserinfoSetup['uiPerPageList']            = array('10', '25', '50', '100', '150', '200', '250');
-			$UserinfoSetup['uiDefaultSortColumnList']  = (array_keys($mapInfo));
-			$UserinfoSetup['uiDefaultSortColumnList2'] = array($column1, $column2, $column3, $column4, $column5, $column6);
-			$UserinfoSetup['uiDefaultSortOrderList']   = array('ASC', 'DES');
-			$UserinfoSetup['uiDefaultSortOrderList2']  = array('Ascending', 'Descending');
+			$UserinfoSetup['uiPerPageList'] = array('10', '25', '50', '100', '150', '200', '250');
+
+			$UserinfoSetup['uiDefaultSortColumnList'] = (array_keys($mapInfo));
+
+			$UserinfoSetup['uiDefaultSortColumnList2'] = array(
+				$column1,
+				$column2,
+				$column3,
+				$column4,
+				$column5,
+				$column6,
+			);
+
+			$UserinfoSetup['uiDefaultSortOrderList'] = array('ASC', 'DES');
+
+			$UserinfoSetup['uiDefaultSortOrderList2'] = array('Ascending', 'Descending');
 
 			$form['formName'] = 'UserInfoTab';
 		}

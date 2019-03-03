@@ -270,6 +270,7 @@ function Auth_OpenID_AX_toTypeURIs(&$namespace_map, $alias_list_s) {
 					)
 				);
 			}
+
 			$uris[] = $type_uri;
 		}
 	}
@@ -879,7 +880,6 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 			// same attributes should be present in each, and the
 			// counts in the response must be no more than the counts
 			// in the request)
-
 			foreach ($this->data as $type_uri => $unused) {
 				if (!$request->contains($type_uri)) {
 					return new Auth_OpenID_AX_Error(

@@ -48,6 +48,7 @@ class SlideshowMediaRssView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$phpVm = $gallery->getPhpVm();
 
 		$SlideShowMediaRss = array();
@@ -68,6 +69,7 @@ class SlideshowMediaRssView extends GalleryView {
 			foreach (explode('|', $itemListString) as $id) {
 				$itemIds[] = (int)$id;
 			}
+
 			list($ret, $items, $start) = SlideshowHelper::buildItemsSlideshow($itemIds);
 
 			if ($ret) {
@@ -92,6 +94,7 @@ class SlideshowMediaRssView extends GalleryView {
 		if (!$phpVm->headers_sent()) {
 			$phpVm->header('Content-Type: text/xml; charset=UTF-8');
 		}
+
 		$template = new GalleryTemplate(GalleryCoreApi::getCodeBasePath());
 		$template->setVariable(
 			'SlideshowMediaRss',

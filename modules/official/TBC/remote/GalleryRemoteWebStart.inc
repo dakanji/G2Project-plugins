@@ -115,4 +115,5 @@ class GalleryRemoteWebStartView extends GalleryView {
 		return null;
 	}
 }
+
 ?>

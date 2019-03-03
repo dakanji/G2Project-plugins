@@ -62,7 +62,8 @@ class ImagineView extends GalleryView {
                [GalleryItem::title] NOT LIKE "IMG%"
             '
 			);
-			$stopWords           = array_flip(
+
+			$stopWords = array_flip(
 				array(
 					'and',
 					'on',
@@ -162,7 +163,8 @@ class ImagineView extends GalleryView {
 					}
 				}
 
-				$biggerId            = $bigger->getId();
+				$biggerId = $bigger->getId();
+
 				list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds(array($biggerId));
 
 				if ($ret) {
@@ -185,6 +187,7 @@ class ImagineView extends GalleryView {
 						'htmlEntities'   => false,
 					)
 				);
+
 				echo $url;
 				echo "\n";
 			}

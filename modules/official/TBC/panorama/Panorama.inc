@@ -37,6 +37,7 @@ class PanoramaView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $image) = PanoramaHelper::fetchViewableImages(array($item));
 
 		if ($ret) {
@@ -46,6 +47,7 @@ class PanoramaView extends GalleryView {
 		if (empty($image)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
+
 		$image = $image[$item->getId()];
 
 		list($ret, $renderer) = GalleryCoreApi::newFactoryInstance('GalleryRenderer', 'PanoramaRenderer');
@@ -71,6 +73,7 @@ class PanoramaView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->title($module->translate('Panorama'));
 
 		return array(

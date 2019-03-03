@@ -96,6 +96,7 @@ class MultimediaModule extends GalleryModule {
 	 */
 	public function activate($postActivationEvent = true) {
 		global $gallery;
+
 		$storage = &$gallery->getStorage();
 
 		// Add renderer our renderer to the mime types that need it
@@ -119,6 +120,7 @@ class MultimediaModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ids = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -126,7 +128,8 @@ class MultimediaModule extends GalleryModule {
 		}
 
 		while (!empty($ids)) {
-			$itemIds           = array_splice($ids, 0, 100);
+			$itemIds = array_splice($ids, 0, 100);
+
 			list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryDataItem');
 
 			if ($ret) {
@@ -142,6 +145,7 @@ class MultimediaModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					list($ret, $item) = $item->refresh();
 
 					if ($ret) {
@@ -149,7 +153,9 @@ class MultimediaModule extends GalleryModule {
 
 						return array($ret, null);
 					}
+
 					$item->setRenderer('MultimediaRenderer');
+
 					$ret = $item->save();
 
 					if ($ret) {
@@ -157,6 +163,7 @@ class MultimediaModule extends GalleryModule {
 
 						return array($ret, null);
 					}
+
 					$ret = GalleryCoreApi::releaseLocks($lockId);
 
 					if ($ret) {
@@ -164,6 +171,7 @@ class MultimediaModule extends GalleryModule {
 					}
 				}
 			}
+
 			$ret = $storage->checkPoint();
 
 			if ($ret) {

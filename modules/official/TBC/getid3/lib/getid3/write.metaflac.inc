@@ -13,8 +13,6 @@
 // dependencies: /helperapps/metaflac.exe                      //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_write_metaflac {
 	public $filename;
 	public $tag_data;
@@ -41,6 +39,7 @@ class getid3_write_metaflac {
 					fwrite($fpcomments, $this->CleanmetaflacName($key) . '=' . $commentdata . "\n");
 				}
 			}
+
 			fclose($fpcomments);
 		} else {
 			$this->errors[] = 'failed to open temporary tags file, tags not written - fopen("' . $tempcommentsfilename . '", "wb")';
@@ -58,7 +57,6 @@ class getid3_write_metaflac {
 				//  the metaflac pathname and the target filename. For whatever reason...??
 				//  The solution is simply ensure that the metaflac pathname has no spaces,
 				//  and therefore does not need to be quoted
-
 				// On top of that, if error messages are not always captured properly under Windows
 				// To at least see if there was a problem, compare file modification timestamps before and after writing
 				clearstatcache();
@@ -145,7 +143,6 @@ class getid3_write_metaflac {
 		// A case-insensitive field name that may consist of ASCII 0x20 through 0x7D, 0x3D ('=') excluded.
 		// ASCII 0x41 through 0x5A inclusive (A-Z) is to be considered equivalent to ASCII 0x61 through
 		// 0x7A inclusive (a-z).
-
 		// replace invalid chars with a space, return uppercase text
 		// Thanks Chris Bolt <chris-getid3Øbolt*cx> for improving this function
 		// note: *reg_replace() replaces nulls with empty string (not space)

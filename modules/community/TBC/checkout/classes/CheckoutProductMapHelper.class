@@ -27,7 +27,6 @@
  */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
 
-
 class CheckoutProductMapHelper {
 	/**
 	 * Return the product parameters owned by a given album or photo
@@ -38,6 +37,7 @@ class CheckoutProductMapHelper {
 	 */
 	public function fetchLocalParams($itemId) {
 		global $gallery;
+
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'CheckoutProductMap',
 			array('productId', 'paramName', 'paramValue'),
@@ -49,6 +49,7 @@ class CheckoutProductMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$params = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -59,6 +60,7 @@ class CheckoutProductMapHelper {
 			if ($result[0] == 0) {
 				continue;
 			}
+
 			$params[] = array(
 				'productId'  => $result[0],
 				'paramName'  => $result[1],
@@ -82,6 +84,7 @@ class CheckoutProductMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$products = array();
 
 		foreach ($params as $param) {
@@ -111,32 +114,38 @@ class CheckoutProductMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$result          = $searchResults->nextResult();
 		$displayPriority = '';
 
 		if ($result) {
 			$displayPriority = $result[0];
 		}
+
 		list($ret, $params) = CheckoutProductMapHelper::fetchLocalParams($itemId);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$accessories = array();
 
 		foreach ($params as $param) {
 			$accessories[$param['productId']][$param['paramName']] = $param['paramValue'];
 		}
+
 		// ony accessories
 		foreach ($accessories as $accessoryId => $accessory) {
 			if (!isset($accessory['isAccessory'])) {
 				unset($accessories[$accessoryId]);
 			}
 		}
+
 		// Add id
 		foreach ($accessories as $accessoryId => $accessory) {
 			$accessories[$accessoryId]['accessoryId'] = $accessoryId;
 		}
+
 		// and sort:
 		usort($accessories, create_function('$a,$b', 'return $a["position"] > $b["position"];'));
 
@@ -149,6 +158,7 @@ class CheckoutProductMapHelper {
 	 */
 	public function fetchAccessories() {
 		global $gallery;
+
 		// Get the entire product parameter list
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'CheckoutProductMap',
@@ -159,6 +169,7 @@ class CheckoutProductMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$accessories = array();
 		// Sort into products etc
 		while ($result = $searchResults->nextResult()) {
@@ -168,6 +179,7 @@ class CheckoutProductMapHelper {
 				$accessories[$result[3]]['options'][$result[0]][$result[1]] = $result[2];
 			}
 		}
+
 		/*
 		 *  Dropping the ones that aren't accessories,
 		 *  set ids as one of the values
@@ -181,28 +193,34 @@ class CheckoutProductMapHelper {
 
 					continue;
 				}
+
 				$accessories[$itemId]['options'][$optionId]['id'] = $optionId;
 			}
+
 			// If the item has no options, remove it
 			if (empty($accessories[$itemId]['options'])) {
 				unset($accessories[$itemId]);
 
 				continue;
 			}
+
 			// make the ItemId a parameter
 			$accessories[$itemId]['id'] = $itemId;
 			// make sure it has a position to sort by
 			if (!isset($item['position'])) {
 				$accessories[$itemId]['position'] = 0;
 			}
+
 			// Add full item details for displaying in the template
 			list($ret, $fullItem) = GalleryCoreApi::loadEntitiesById($itemId);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$accessories[$itemId]['fullItemDetails'] = (array)$fullItem;
 		}
+
 		/*
 		 * Sort the items, and also the products within each item
 		 * This reindexes the arrays, which is why we had to insert the ids as
@@ -230,6 +248,7 @@ class CheckoutProductMapHelper {
 	 */
 	public function fetchProducts($itemId, $checkUseLocal = true, $checkPlugins = true) {
 		global $gallery;
+
 		$itemIdTree = array();
 
 		// Using custom parameters?
@@ -254,6 +273,7 @@ class CheckoutProductMapHelper {
 
 			return array($ret, null);
 		}
+
 		// ... and include the item itself:
 		$itemIdTree = array_merge(array_values($itemIdTree), array($itemId));
 
@@ -278,6 +298,7 @@ class CheckoutProductMapHelper {
 				$products[$productParams['productId']][$productParams['paramName']] = $productParams['paramValue'];
 			}
 		}
+
 		/* Add the existing key (productId) as a value (under the key 'productId') into each sub-array as
 		sorting by display order will re-key the array */
 		foreach ($products as $productId => $product) {
@@ -291,6 +312,7 @@ class CheckoutProductMapHelper {
 				unset($products[$productId]);
 			}
 		}
+
 		// and sort:
 		usort($products, create_function('$a,$b', 'return $a["position"] > $b["position"];'));
 
@@ -298,6 +320,7 @@ class CheckoutProductMapHelper {
 		if ($checkPlugins) {
 			$ret = checkoutInterfaceHelper::doProductListPlugins($products, $itemId);
 		}
+
 		// Done
 		return array(null, $products);
 	}
@@ -315,6 +338,7 @@ class CheckoutProductMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		/* Now strip out the ones for which visible is not 'true' or
 		   which don't apply according to whether the item is an album or not */
 		foreach ($products as $which => $product) {
@@ -323,6 +347,7 @@ class CheckoutProductMapHelper {
 
 				continue;
 			}
+
 			list($ret, $item) = GalleryCoreAPI::loadEntitiesById($itemId, 'GalleryEntity');
 
 			if ($ret) {
@@ -352,8 +377,10 @@ class CheckoutProductMapHelper {
 	 */
 	public function setParam($productId, $paramName, $paramValue, $ownerId) {
 		global $gallery;
+
 		/* Need to read lock this section?
 		Delete the parameter if it already exists */
+
 		$ret = GalleryCoreApi::removeMapEntry(
 			'CheckoutProductMap',
 			array(
@@ -362,6 +389,7 @@ class CheckoutProductMapHelper {
 				'ownerId'   => $ownerId,
 			)
 		);
+
 		// Don't check return code
 		$ret = GalleryCoreApi::addMapEntry(
 			'CheckoutProductMap',
@@ -390,6 +418,7 @@ class CheckoutProductMapHelper {
 	 */
 	public function removeParam($productId, $paramName, $ownerId) {
 		global $gallery;
+
 		// Need to read lock this section?
 		$ret = GalleryCoreApi::removeMapEntry(
 			'CheckoutProductMap',
@@ -418,6 +447,7 @@ class CheckoutProductMapHelper {
 	 */
 	public function deleteParam($productId, $paramName, $paramValue, $ownerId) {
 		global $gallery;
+
 		// Need to read lock this section?
 		$ret = GalleryCoreApi::removeMapEntry(
 			'CheckoutProductMap',

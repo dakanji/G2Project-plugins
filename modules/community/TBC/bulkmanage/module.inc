@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 /**
  * The Bulk Manage module
  *
@@ -41,6 +40,7 @@ class BulkManageModule extends GalleryModule {
 	 */
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('bulkmanage');
 		$this->setName($gallery->i18n('Bulk Manage'));
 		$this->setDescription(
@@ -103,11 +103,13 @@ class BulkManageModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $childCounts) = GalleryCoreApi::fetchChildCounts(array($item->getId()));
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$childCount = empty($childCounts[$item->getId()]) ? 0 : $childCounts[$item->getId()];
 
 		if (isset($permissions['core.edit']) && $childCount > 1) {

@@ -286,6 +286,7 @@ class Auth_Yadis_dom extends Auth_Yadis_XMLParser {
 }
 
 global $__Auth_Yadis_defaultParser;
+
 $__Auth_Yadis_defaultParser = null;
 
 /**
@@ -299,6 +300,7 @@ $__Auth_Yadis_defaultParser = null;
  */
 function Auth_Yadis_setDefaultParser(&$parser) {
 	global $__Auth_Yadis_defaultParser;
+
 	$__Auth_Yadis_defaultParser =& $parser;
 }
 

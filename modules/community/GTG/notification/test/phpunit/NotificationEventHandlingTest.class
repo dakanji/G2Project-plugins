@@ -21,21 +21,27 @@
 GalleryCoreApi::requireOnce(
 	'modules/notification/classes/NotificationHelper.class'
 );
+
 GalleryCoreApi::requireOnce(
 	'modules/notification/classes/NotificationEvent_1_0.class'
 );
+
 GalleryCoreApi::requireOnce(
 	'modules/notification/classes/NotificationRouter.class'
 );
+
 GalleryCoreApi::requireOnce(
 	'modules/notification/classes/NotificationHandler_1_0.class'
 );
+
 GalleryCoreApi::requireOnce(
 	'modules/notification/classes/NotificationItemStateChangeHandler.class'
 );
+
 GalleryCoreApi::requireOnce(
 	'modules/notification/classes/GalleryCoreEventNotifications.class'
 );
+
 GalleryCoreApi::requireOnce(
 	'modules/notification/classes/NotificationMethodEmail.class'
 );
@@ -117,25 +123,28 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$cacheKey                = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$cacheKey = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+
 		list($ret, $pluginParms) = GalleryCoreApi::fetchAllPluginParameters('module', 'notification');
 
 		if ($ret) {
 			return $ret;
 		}
 
-		$enabled['Test::Event1']    = array(
+		$enabled['Test::Event1'] = array(
 			'Test::EventHandler1' => array(
 				'public'  => true,
 				'enabled' => true,
 			),
 		);
-		$enabled['Test::Event2']    = array(
+
+		$enabled['Test::Event2'] = array(
 			'NotificationRouterTestHandler' => array(
 				'public'  => true,
 				'enabled' => false,
 			),
 		);
+
 		$pluginParms['_enabledMap'] = serialize($enabled);
 		GalleryDataCache::put($cacheKey, $pluginParms);
 
@@ -153,7 +162,9 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($parentAlbum);
+
 		list($ret, $this->_childAlbum) = $this->_createRandomAlbum($parentAlbum->getId());
 
 		if ($ret) {
@@ -191,7 +202,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			}
 		}
 
-		$userId    = $gallery->getActiveUserId();
+		$userId = $gallery->getActiveUserId();
+
 		list($ret) = GalleryCoreApi::fetchPermissionsForItems($entities, $userId);
 
 		if ($ret) {
@@ -203,6 +215,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $childItems) = GalleryCoreApi::fetchChildItemIds($this->_childAlbum);
 
 		if ($ret) {
@@ -234,6 +247,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 	public function tearDown() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$gallery->_lockSystem =& $this->_saveLockSystem;
@@ -247,6 +261,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 	public function testRouterEnabledEvent() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$eventId = 'Test::Event';
@@ -277,6 +292,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 				),
 			)
 		);
+
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -294,6 +310,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(array())))
 		);
+
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -316,7 +333,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			)
 		);
 
-		$handler          = new NotificationRouter();
+		$handler = new NotificationRouter();
+
 		list($ret, $data) = $handler->handleEvent($event);
 
 		if ($ret) {
@@ -341,6 +359,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$expected->setEvent($event);
 
 			$notification = GalleryDataCache::get('NotificationEventHandlingTest:notification');
@@ -350,6 +369,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 	public function testRouterEnabledEventNoSubscribers() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$eventId = 'Test::Event';
@@ -411,7 +431,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			array(null, new UnitTestStorageSearchResults(array()))
 		);
 
-		$handler          = new NotificationRouter();
+		$handler = new NotificationRouter();
+
 		list($ret, $data) = $handler->handleEvent($event);
 
 		if ($ret) {
@@ -423,6 +444,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 	public function testRouterDisabledEvent() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$event = GalleryCoreApi::newEvent('Test::Event2');
@@ -468,7 +490,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			array(null, new UnitTestStorageSearchResults(array(array())))
 		);
 
-		$handler          = new NotificationRouter();
+		$handler = new NotificationRouter();
+
 		list($ret, $data) = $handler->handleEvent($event);
 
 		if ($ret) {
@@ -480,6 +503,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 	public function testEmailHandler() {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'notification');
@@ -580,6 +604,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 	public function testItemSave() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$itemId   = $this->_childAlbum->getId();
@@ -624,6 +649,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($hintLockId), 10),
@@ -665,6 +691,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 			),
 			null
 		);
+
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
@@ -676,7 +703,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 		$this->_childAlbum->setPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
 		$event->setEntity($this->_childAlbum);
 
-		$handler          = new NotificationItemStateChangeHandler();
+		$handler = new NotificationItemStateChangeHandler();
+
 		list($ret, $data) = $handler->handleEvent($event);
 
 		if ($ret) {
@@ -688,6 +716,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 	public function testItemDelete() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$storage->setReply(
@@ -704,7 +733,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 		$event = GalleryCoreApi::newEvent('GalleryEntity::delete');
 		$event->setEntity($this->_rootAlbum);
 
-		$handler          = new NotificationItemStateChangeHandler();
+		$handler = new NotificationItemStateChangeHandler();
+
 		list($ret, $data) = $handler->handleEvent($event);
 
 		if ($ret) {
@@ -801,6 +831,7 @@ class NotificationEventHandlingPlatform {
 		if (array_key_exists('l10Domain', $body)) {
 			unset($body['l10Domain']);
 		}
+
 		$body = implode("\n\n", $body);
 
 		// Handle Email..

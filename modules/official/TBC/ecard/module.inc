@@ -127,8 +127,10 @@ class EcardModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Give everybody permission by default
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],

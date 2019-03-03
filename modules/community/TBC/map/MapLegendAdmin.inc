@@ -28,7 +28,6 @@
 GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
 GalleryCoreApi::requireOnce('modules/map/classes/GoogleMapUtilities.class');
 
-
 /**
  * @package map
  * @subpackage UserInterface
@@ -99,6 +98,7 @@ class MapLegendAdminController extends GalleryController {
 					$grouplegenditem .= $_POST['G' . $i] . '|';
 				}
 			}
+
 			$form['PhotoLegends'] = $photolegenditem;
 			$form['AlbumLegends'] = $albumlegenditem;
 			$form['GroupLegends'] = $grouplegenditem;
@@ -112,13 +112,16 @@ class MapLegendAdminController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// Grab the Theme Default settings
 					list($ret, $deftheme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 					if ($ret) {
 						return array($ret, null);
 					}
-					$settings                      = $deftheme->getSettings(null);
+
+					$settings = $deftheme->getSettings(null);
+
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();
 					/*
 					 * This block manipulation logic only works for earlier block encoding,
@@ -131,11 +134,13 @@ class MapLegendAdminController extends GalleryController {
 
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
-									list($ret, $value)    = $deftheme->unpackSetting('block-list', $values);
-									$value                = str_replace('[map.Legend]', '', $value);
-									$value                = '[map.Legend] ' . $value;
+									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
+									$value             = str_replace('[map.Legend]', '', $value);
+									$value             = '[map.Legend] ' . $value;
+
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -145,10 +150,13 @@ class MapLegendAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-									$value                 = str_replace('[map.Legend]', '', $value);
-									$value                 = '[map.Legend] ' . $value;
-									list($ret, $newvalue)  = $deftheme->packSetting('block-list', $value);
-									$ret                   = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$value = str_replace('[map.Legend]', '', $value);
+									$value = '[map.Legend] ' . $value;
+
+									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -166,13 +174,16 @@ class MapLegendAdminController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// Grab the Theme Default settings
 					list($ret, $deftheme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 					if ($ret) {
 						return array($ret, null);
 					}
-					$settings                      = $deftheme->getSettings(null);
+
+					$settings = $deftheme->getSettings(null);
+
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();
 					/*
 					 * This block manipulation logic only works for earlier block encoding,
@@ -185,10 +196,12 @@ class MapLegendAdminController extends GalleryController {
 
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
-									list($ret, $value)    = $deftheme->unpackSetting('block-list', $values);
-									$value                = str_replace('[map.Legend]', '', $value);
+									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
+									$value             = str_replace('[map.Legend]', '', $value);
+
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -198,9 +211,12 @@ class MapLegendAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-									$value                 = str_replace('[map.Legend]', '', $value);
-									list($ret, $newvalue)  = $deftheme->packSetting('block-list', $value);
-									$ret                   = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$value = str_replace('[map.Legend]', '', $value);
+
+									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -231,6 +247,7 @@ class MapLegendAdminController extends GalleryController {
 					(isset($form[$setting]) && $form[$setting]) ? 1 : 0
 				);
 			}
+
 			$status['saved'] = 1;
 
 			$results['status']              = $status;

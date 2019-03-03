@@ -58,6 +58,7 @@ class CmMigrateHelper {
 	 */
 	public function isValidCopperminePath($baseDir) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		if (!$platform->is_dir($baseDir)) {

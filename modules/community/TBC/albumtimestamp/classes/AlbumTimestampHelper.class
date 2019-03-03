@@ -56,10 +56,12 @@ class AlbumTimestampHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$searchIds = array_merge(array_reverse($parentIds), array(0));
 		} else {
 			$searchIds = array(0);
 		}
+
 		$param = null;
 
 		foreach ($searchIds as $id) {
@@ -87,6 +89,7 @@ class AlbumTimestampHelper {
 
 		if ($itemId != 0) {
 			global $gallery;
+
 			list($ret, $param) = GalleryCoreApi::getPluginParameter(
 				'module',
 				'albumtimestamp',
@@ -98,7 +101,9 @@ class AlbumTimestampHelper {
 				return array($ret, null);
 			}
 		}
+
 		global $gallery;
+
 		$gallery->debug(
 			'LEO: getItemParam: ' . $itemId . ', ' . $paramName . ' = '
 			. $param
@@ -121,16 +126,19 @@ class AlbumTimestampHelper {
 
 	public function getItemInheritedParam($paramName, $itemId = 0) {
 		global $gallery;
+
 		list($ret, $itemParam) = AlbumTimestampHelper::getItemParam($paramName, $itemId);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $interitedParam) = AlbumTimestampHelper::getInheritedParam($paramName, $itemId);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$gallery->debug(
 			'LEO: getItemInheritedParam: ' . $itemId . ', ' . $paramName . ' = '
 			. $itemParam . ', ' . $interitedParam
@@ -145,6 +153,7 @@ class AlbumTimestampHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = null;
 		AlbumTimestampHelper::log("LEO: setItemParam: $itemId: $name = $value ($currentValue)");
 
@@ -176,8 +185,10 @@ class AlbumTimestampHelper {
 
 	public function setAlbumTimestampMode($item, $value) {
 		global $gallery;
+
 		$itemId = $item->getId();
 		$gallery->debug('LEO: setAlbumTimestampMode: ' . $itemId . ', ' . $value);
+
 		list($ret, $oldValue) = AlbumTimestampHelper::setItemParam(
 			'albumTimestampMode',
 			$value,
@@ -204,6 +215,7 @@ class AlbumTimestampHelper {
 	// used when changing the timestamp-mode of an album - recurses into child albums
 	public function autoSetAlbumTimestamps($item, $mode = null, $recurse = 1, $overrideChild = null, $recurseAll = null) {
 		global $gallery;
+
 		$itemId = $item->getId();
 		$gallery->debug("LEO: autoSetAlbumTimestamps: itemId=$itemId, rec=$recurse, override=" . empty($overrideChild));
 		AlbumTimestampHelper::log(
@@ -236,6 +248,7 @@ class AlbumTimestampHelper {
 
 			/* recurse into childalbums before handling this album itself,
 			   to set timestamps on the leaves first */
+
 			list($ret, $childIds) = GalleryCoreApi::fetchChildAlbumItemIds($item);
 
 			/* check if the albumTimestampMode parameter is not set
@@ -257,6 +270,7 @@ class AlbumTimestampHelper {
 						$recurseIds[] = $childId;
 					}
 				}
+
 				$recurseMode = $mode;
 			}
 
@@ -335,6 +349,7 @@ class AlbumTimestampHelper {
 				if ($ret) {
 					return $ret;
 				}
+
 				$ret = $item->save();
 
 				if ($ret) {
@@ -342,6 +357,7 @@ class AlbumTimestampHelper {
 
 					return $ret;
 				}
+
 				$ret = GalleryCoreApi::releaseLocks($lockId);
 
 				if ($ret) {
@@ -355,6 +371,7 @@ class AlbumTimestampHelper {
 
 	public function findNewAlbumTimestamp($album, $mode, $overrideChild = null) {
 		global $gallery;
+
 		$gallery->debug(
 			'LEO: findNewAlbumTimestamp: itemId=' . $album->getId() . ", mode: $mode, override: "
 			. (empty($overrideChild) ? '-' : $overrideChild->getId())
@@ -363,11 +380,13 @@ class AlbumTimestampHelper {
 		if (!isset($mode) || $mode == 'off') {
 			return array(null, null);
 		}
+
 		list($ret, $childIds) = GalleryCoreApi::fetchChildItemIdsIgnorePermissions($album);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// item for which the save event was triggered is not saved yet!
 		// remove $overrideChild
 		if (isset($overrideChild)) {
@@ -396,11 +415,13 @@ class AlbumTimestampHelper {
 			} elseif ($mode == 'oldest') {
 				$func = '__reduceTimestampMin';
 			}
+
 			$gallery->debug('LEO: findNewAlbumTimestamp: func: ' . $func);
 
 			if (!isset($func)) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
+
 			$newTimestamp = array_reduce($childItems, $func);
 		}
 
@@ -418,6 +439,7 @@ class AlbumTimestampHelper {
 		if (is_null($value)) {
 			return $enabled;
 		}
+
 		$enabled = $value;
 
 		return $enabled;
@@ -436,6 +458,7 @@ class AlbumTimestampHelper {
 				} else {
 					$id = '<no session id>';
 				}
+
 				fwrite($fd, "$date [" . $id . "] $msg\n");
 				fclose($fd);
 			}
@@ -449,6 +472,7 @@ class AlbumTimestampHelper {
 			if ($last != $row['file']) {
 				$bt[] = "File: $file\n'";
 			}
+
 			$last = $row['file'];
 			$bt[] = " Line: $row[line]: ";
 
@@ -457,6 +481,7 @@ class AlbumTimestampHelper {
 			} else {
 				$bt[] = "$row[function]";
 			}
+
 			$bt[] = '(' . join("', '", $args) . ")\n";
 		}
 

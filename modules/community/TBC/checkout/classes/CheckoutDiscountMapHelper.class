@@ -60,6 +60,7 @@ class CheckoutDiscountMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$discounts = array();
 		$i         = 0;
 
@@ -91,6 +92,7 @@ class CheckoutDiscountMapHelper {
 	 */
 	public function setDiscount($thisDiscount) {
 		global $gallery;
+
 		//need to read lock this section
 		//delete the discount if it already exists
 		$ret = GalleryCoreApi::removeMapEntry(
@@ -99,6 +101,7 @@ class CheckoutDiscountMapHelper {
 				'discountId' => $thisDiscount['discountId'],
 			)
 		);
+
 		//don't check return code
 		$ret = GalleryCoreApi::addMapEntry(
 			'CheckoutDiscountMap',

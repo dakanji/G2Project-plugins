@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_shorten extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -29,6 +27,7 @@ class getid3_shorten extends getid3_handler {
 
 			return false;
 		}
+
 		$info['fileformat']            = 'shn';
 		$info['audio']['dataformat']   = 'shn';
 		$info['audio']['lossless']     = true;
@@ -68,7 +67,6 @@ class getid3_shorten extends getid3_handler {
 			//   long Offset0[4];
 			//   long Offset1[4];
 			// }TSeekEntry;
-
 			$SeekTableData                           = $this->fread($info['shn']['seektable']['length'] - 16);
 			$info['shn']['seektable']['entry_count'] = floor(strlen($SeekTableData) / 80);
 			//$info['shn']['seektable']['entries'] = array();
@@ -127,6 +125,7 @@ class getid3_shorten extends getid3_handler {
 					return false;
 				}
 			}
+
 			$commandline = GETID3_HELPERAPPSDIR . 'shorten.exe -x "' . $info['filenamepath'] . '" - | ' . GETID3_HELPERAPPSDIR . 'head.exe -c 64';
 			$commandline = str_replace('/', '\\', $commandline);
 		} else {
@@ -141,6 +140,7 @@ class getid3_shorten extends getid3_handler {
 
 				return false;
 			}
+
 			$commandline = (file_exists('/usr/local/bin/shorten') ? '/usr/local/bin/' : '') . 'shorten -x ' . escapeshellarg($info['filenamepath']) . ' - | head -c 64';
 		}
 

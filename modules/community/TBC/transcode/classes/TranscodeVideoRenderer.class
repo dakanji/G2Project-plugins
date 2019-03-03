@@ -36,7 +36,8 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 	 * @see GalleryDataItem::canBeViewedInline
 	 */
 	public function canBeViewedInline($item) {
-		$itemId                 = $item->getId();
+		$itemId = $item->getId();
+
 		list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds(array($itemId));
 
 		if ($ret) {
@@ -52,6 +53,7 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 				}
 			}
 		}
+
 		// The mimeTypes listed here should provide a render() output
 		static $mimeList = array(
 			'video/quicktime',
@@ -150,6 +152,7 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 					case 'video/x-msvideo':
 					case 'video/x-ms-wmv':
 								$classId = 'CLSID:05589FA1-C356-11CE-BF01-00AA0055595A';
+
 								// Fall Through
 					case 'video/x-ms-asf':
 					case 'video/x-ms-asx':
@@ -185,6 +188,7 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 					default:
 						return $fallback;
 				}
+
 
 				// Fall Through
 			default:

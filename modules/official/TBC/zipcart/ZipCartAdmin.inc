@@ -69,12 +69,14 @@ class ZipCartAdminController extends GalleryController {
 				if ($success = $platform->copy(__FILE__, $zipBase)) {
 					list($success) = $platform->exec(array(array($form['path'], $zipFile, $zipBase)));
 				}
+
 				$debugSnippet = $gallery->stopRecordingDebugSnippet();
 
 				if (!$success || !$platform->file_exists($zipFile)) {
 					$error[] = 'form[error][path][badZip]';
 					GalleryUtilities::putRequestVariable('debugSnippet', $debugSnippet);
 				}
+
 				@$platform->unlink($zipFile);
 				@$platform->unlink($zipBase);
 			}
@@ -92,6 +94,7 @@ class ZipCartAdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
@@ -121,6 +124,7 @@ class ZipCartAdminController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'zipcart.ZipCartAdmin';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -143,7 +147,8 @@ class ZipCartAdminView extends GalleryView {
 		}
 
 		if ($form['formName'] != 'ZipCartAdmin') {
-			$form['formName']         = 'ZipCartAdmin';
+			$form['formName'] = 'ZipCartAdmin';
+
 			list($ret, $form['path']) = GalleryCoreApi::getPluginParameter('module', 'zipcart', 'path');
 
 			if ($ret) {
@@ -160,6 +165,7 @@ class ZipCartAdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $isActive) = $module->isActive();
 
 		if ($ret) {

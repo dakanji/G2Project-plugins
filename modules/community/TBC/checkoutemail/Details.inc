@@ -51,11 +51,15 @@ class DetailsController extends GalleryController {
 			// Entry from checkout page here
 			$results['delegate']['view'] = 'checkoutemail.Details';
 		} elseif (isset($form['action']['send'])) {
-			if (!empty($form['custEmail']) && GalleryUtilities::isValidEmailString($form['custEmail'])) {
+			if (!empty($form['custEmail'])
+				&& GalleryUtilities::isValidEmailString($form['custEmail'])
+			) {
 				$form['custRecipientName'] = trim($form['custRecipientName']);
 
 				if (empty($form['custRecipientName'])) {
-					$form['custRecipientName'] = $form['custFirstName'] . ' ' . $form['custLastName'];
+					$form['custRecipientName'] = $form['custFirstName']
+						. ' '
+						. $form['custLastName'];
 				}
 
 				$ret = GalleryCheckoutApi::setPaymentPlugin($transaction, 'checkoutemail');
@@ -111,8 +115,13 @@ class DetailsView extends GalleryView {
 
 			if (!$anonymous) {
 				$user = $gallery->getActiveUser();
-				list($form['custFirstName'], $form['custLastName']) = explode(' ', $user->getFullName(), 2);
-				$form['custEmail']                                  = $user->getEmail();
+
+				list(
+					$form['custFirstName'],
+					$form['custLastName']
+				) = explode(' ', $user->getFullName(), 2);
+
+				$form['custEmail'] = $user->getEmail();
 			}
 		}
 
@@ -120,16 +129,22 @@ class DetailsView extends GalleryView {
 
 		$form['controller'] = 'checkoutemail.Details';
 
-		list($ret, $busname) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'busname');
+		list($ret, $busname) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkout',
+			'busname'
+		);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkoutemail');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->title($busname . ' ' . $module->translate('Customer Details'));
 
 		$template->setVariable('form', $form);

@@ -47,7 +47,6 @@ class LinksInTheHeadSiteAdminController extends GalleryController {
 
 		if (isset($form['action']['save'])) {
 			//	Explicitly erase whatever was previously set
-
 			list($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
 
 			if ($ret) {
@@ -63,7 +62,6 @@ class LinksInTheHeadSiteAdminController extends GalleryController {
 					}
 				}
 			}
-
 
 			for ($i = 0; $i < count($form['url']); $i++) {
 				// Only write real links to the module parameters
@@ -124,6 +122,7 @@ class LinksInTheHeadSiteAdminController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'linksinthehead.LinksInTheHeadSiteAdmin';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -147,13 +146,9 @@ class LinksInTheHeadSiteAdminView extends GalleryView {
 	public function loadTemplate(&$template = null, &$form = null) {
 		if ($form['formName'] != 'LinksInTheHeadSiteAdmin') {
 			// Get module options
-
-
 			$form['formName'] = 'LinksInTheHeadSiteAdmin';
 
-
 			list($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
-
 
 			if ($ret) {
 				return array($ret, null);
@@ -173,10 +168,10 @@ class LinksInTheHeadSiteAdminView extends GalleryView {
 					$i++;
 				}
 			}
+
 			$form['linkname'][$i] = '';
 			$form['url'][$i]      = '';
 		}
-
 
 		$template->setVariable('controller', 'linksinthehead.LinksInTheHeadSiteAdmin');
 

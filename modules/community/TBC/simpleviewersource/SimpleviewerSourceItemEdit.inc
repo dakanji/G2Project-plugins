@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 /**
  * This plugin will handle assigning values to custom fields
  * @package SimpleviewerSource
@@ -30,9 +29,10 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 	 * @see ItemEditPlugin::handleRequest
 	 */
 	public function handleRequest($form, &$item, &$preferred) {
-		$status             = 0;
-		$error              = array();
-		$albumId            = $item->getId();
+		$status  = 0;
+		$error   = array();
+		$albumId = $item->getId();
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'simpleviewersource');
 
 		if ($ret) {
@@ -51,6 +51,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 				if (!isset($myTuple['paramValue'])) {
 					$myTuple['paramValue'] = '';
 				}
+
 				// parameters must have a non-blank name
 				if (strlen($myTuple['paramName'])
 					&& strlen($myTuple['paramValue'])
@@ -79,6 +80,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 						return array($ret, null);
 					}
 				}
+
 				// dead parameters
 				if (isset($myTuple['delete']) && $myTuple['delete']) {
 					$ret = SimpleviewerParameterMapHelper::deleteParam($myTuple['id']);
@@ -88,6 +90,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 					}
 				}
 			}
+
 			$status = $module->translate('Changes saved successfully');
 		}
 
@@ -116,6 +119,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 					'htmlEntities'   => false,
 				)
 			);
+
 			// and escape the & to %26
 			$XMLurl = ereg_replace('&', '%26', $XMLurl);
 
@@ -215,6 +219,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 				'paramValue' => null,
 			);
 		}
+
 		$template->setVariable('XMLurl', $XMLurl);
 		$template->setVariable('controller', 'simpleviewersource.SimpleviewerSourceItemEdit');
 

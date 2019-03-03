@@ -174,6 +174,7 @@ class _parse_lockinfo {
 					$ns_attr = ' xmlns="' . $ns . '"';
 				}
 			}
+
 			$this->owner .= "<$ns_short$name$ns_attr>";
 		} elseif ($ns == 'DAV:') {
 			// parse only the essential tags
@@ -230,6 +231,7 @@ class _parse_lockinfo {
 					$ns_attr = ' xmlns="' . $ns . '"';
 				}
 			}
+
 			$this->owner .= "</$ns_short$name$ns_attr>";
 		}
 	}

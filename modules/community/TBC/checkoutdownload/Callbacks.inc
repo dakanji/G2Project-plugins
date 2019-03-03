@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-
  /**
   * @version $Revision: 1690 $
   * @package CheckoutDownload
@@ -44,14 +43,20 @@ class CheckoutdownloadCallbacks {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				$block                                =& $smarty->_tpl_vars['block'];
 				$block['checkoutDownload']['verify1'] = $transaction->getDate();
 				$block['checkoutDownload']['verify2'] = $transaction->getSecurity();
-				list($ret, $block['checkoutDownload']['downloadTest']) = CheckoutDownloadHelper::checkDownloadOffer($params['transactionId']);
+
+				list(
+					$ret,
+					$block['checkoutDownload']['downloadTest']
+				) = CheckoutDownloadHelper::checkDownloadOffer($params['transactionId']);
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$block['checkoutDownload']['downloaded']       = $transaction->getTimeDownloaded();
 				$block['checkoutDownload']['downloadAttempts'] = $transaction->getDownloadAttempts();
 

@@ -66,7 +66,8 @@ class ItemAddWebCam extends ItemAddPlugin {
 				$error[]            = 'form[error][imageUrl][invalid]';
 				$successfullyCopied = true;
 			} elseif ($urlComponents['scheme'] == 'http') {
-				$tmpFile                                       = $platform->tempnam($tmpDir, 'webcam');
+				$tmpFile = $platform->tempnam($tmpDir, 'webcam');
+
 				list($successfullyCopied, $response, $headers) = GalleryCoreApi::fetchWebFile($url, $tmpFile);
 
 				if (!$successfullyCopied) {
@@ -77,6 +78,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 				if (!isset($urlComponents['path']) && isset($urlComponents['host'])) {
 					$urlComponents['path'] = $urlComponents['host'];
 				}
+
 				$tmpFile            = $urlComponents['path'];
 				$successfullyCopied = $platform->file_exists($tmpFile);
 			} else {
@@ -100,7 +102,8 @@ class ItemAddWebCam extends ItemAddPlugin {
 				}
 
 				// Get the mime type.
-				$base                 = GalleryUtilities::getFileBase($basename);
+				$base = GalleryUtilities::getFileBase($basename);
+
 				list($ret, $mimeType) = GalleryCoreApi::getMimeType($basename, $mimeType);
 
 				if ($ret) {
@@ -109,6 +112,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 
 				$title = $basename;
 				GalleryUtilities::sanitizeInputValues($title);
+
 				list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
 					$tmpFile,
 					$basename,
@@ -133,7 +137,9 @@ class ItemAddWebCam extends ItemAddPlugin {
 					if ($ret) {
 						return array($ret, null, null);
 					}
+
 					$newItem->addOnLoadHandler('WebCam');
+
 					$ret = $newItem->save();
 
 					if ($ret) {
@@ -141,6 +147,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 
 						return array($ret, null, null);
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
 						'webcam',
@@ -154,6 +161,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 
 						return array($ret, null, null);
 					}
+
 					$ret = GalleryCoreApi::releaseLocks($lockId);
 
 					if ($ret) {
@@ -230,6 +238,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$isAdmin = false;
 
 		if ($param == 'admin') {

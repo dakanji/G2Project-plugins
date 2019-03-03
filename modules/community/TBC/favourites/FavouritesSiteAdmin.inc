@@ -40,8 +40,9 @@ class FavouritesSiteAdminController extends GalleryController {
 
 		if (isset($form['action']['displayFromText'])) {
 			// look for userName first, then fullName if not found
-			$user             = null;
-			$userId           = null;
+			$user   = null;
+			$userId = null;
+
 			list($ret, $user) = GalleryCoreApi::fetchUserByUserName($form['text']['userName']);
 
 			if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
@@ -52,6 +53,7 @@ class FavouritesSiteAdminController extends GalleryController {
 				$userId = $user->getId();
 			} else {
 				GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 				list($ret, $userId) = FavouritesMapHelper::fetchUserIdByFullName($form['text']['userName']);
 
 				if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
@@ -82,14 +84,13 @@ class FavouritesSiteAdminController extends GalleryController {
 			return array(null, $results);
 		}
 
-
-
 		if (isset($form['action']['save']) && empty($error)) {
 			list($ret, $themeSettingsId) = GalleryCoreApi::getPluginParameter('module', 'favourites', 'themeSettingsId');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $error, $status) = GalleryCoreApi::handleThemeSettingsRequest(
 				$form['currentThemeId'],
 				$themeSettingsId,
@@ -99,6 +100,7 @@ class FavouritesSiteAdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status = empty($status) ? array() : array(
 				'statusMessage' => $status,
 			);
@@ -119,6 +121,7 @@ class FavouritesSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			// yes/no data
 			foreach (array('offerToGuests') as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
@@ -132,6 +135,7 @@ class FavouritesSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$status['saved'] = 1;
 		}
 
@@ -180,6 +184,7 @@ class FavouritesSiteAdminView extends GalleryView {
 
 		// fetch all users with favourites
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		list($ret, $results) = FavouritesMapHelper::fetchUsersWithFavourites();
 
 		if ($ret) {
@@ -214,9 +219,10 @@ class FavouritesSiteAdminView extends GalleryView {
 		}
 
 		// Set up theme selection list
-		$themeList               = array(
+		$themeList = array(
 			'' => $module->translate('&laquo; default theme &raquo;'),
 		);
+
 		list($ret, $themeStatus) = GalleryCoreApi::fetchPluginStatus('theme');
 
 		if ($ret) {
@@ -230,6 +236,7 @@ class FavouritesSiteAdminView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$themeList[$id] = $theme->translate($theme->getName());
 			}
 		}
@@ -240,6 +247,7 @@ class FavouritesSiteAdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = GalleryCoreApi::loadThemeSettingsForm(
 			$form['themeId'],
 			$themeSettingsId,
@@ -263,6 +271,7 @@ class FavouritesSiteAdminView extends GalleryView {
 				'defaultList' => $defaultList,
 			)
 		);
+
 		$template->setVariable('controller', 'favourites.FavouritesSiteAdmin');
 
 		return array(

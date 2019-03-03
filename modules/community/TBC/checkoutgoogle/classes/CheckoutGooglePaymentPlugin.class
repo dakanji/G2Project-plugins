@@ -27,7 +27,6 @@ GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class')
  * @version $Revision: 1601 $
  */
 
-
 /**
  * This is an implementation of the checkout module's CheckoutPaymentInterface_1_3
  *
@@ -45,32 +44,36 @@ class CheckoutGooglePaymentPlugin extends CheckoutPaymentInterface_1_3 {
 	 */
 	public function getVariables() {
 		// Prepare the variables to return for the PayPal form
-
 		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $active) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'active');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $gcLocation) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcLocation');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantId');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $gcMode) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMode');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$orderTotal = $transaction->getAmount();
 
 		return array(

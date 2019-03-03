@@ -68,6 +68,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($this->_mapCount, $mapCount, 'Test altered number of map entries!');
 
 		$ret = parent::tearDown();
@@ -128,6 +129,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			$g1MapHandlerAlbum->getId(),
 			$mapping,
@@ -143,6 +145,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			$g1MapHandlerItem->getId(),
 			$mapping,
@@ -151,6 +154,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 
 		$event = GalleryCoreApi::newEvent('GalleryEntity::delete');
 		$event->setEntity($g1MapHandlerItem);
+
 		list($ret) = MigrateModule::getme()->handleEvent($event);
 
 		if ($ret) {
@@ -159,6 +163,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 
 		$event = GalleryCoreApi::newEvent('GalleryEntity::delete');
 		$event->setEntity($g1MapHandlerAlbum);
+
 		list($ret) = MigrateModule::getme()->handleEvent($event);
 
 		if ($ret) {
@@ -171,6 +176,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(null, $mapping, 'G1MigrateMap does not match Album Id');
 
 		// Verify item mapping
@@ -182,6 +188,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(null, $mapping, 'G1MigrateMap does not match Item Id');
 	}
 }

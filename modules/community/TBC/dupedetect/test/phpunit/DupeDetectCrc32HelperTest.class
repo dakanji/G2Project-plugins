@@ -52,7 +52,6 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 		parent::setUp();
 
 		// Create a container album for any data items we create
-
 		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
 
 		if ($ret->isError()) {
@@ -62,7 +61,6 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 		}
 
 		// acquire locks for the test album
-
 		list($ret, $this->_lockIds) = GalleryCoreApi::acquireReadLock($this->_album->getId());
 
 		if ($ret->isError()) {
@@ -139,6 +137,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assertTrue(
 			empty($signatures),
 			'Somehow there is already a signature for the new item'
@@ -185,6 +184,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_dupItem->getId());
 
 		if ($ret->isError()) {
@@ -234,7 +234,6 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 	public function testRemoveCrc32Signature() {
 		// check that a signature does not already exist
-
 		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(array($this->_item->getId()));
 
 		if ($ret->isError()) {
@@ -242,6 +241,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
 
 		// create a signature
@@ -259,7 +259,6 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 		}
 
 		// check that created successfully
-
 		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(
 			array(
 				$this->_item->getId(),
@@ -271,6 +270,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(!empty($signatures), 'Cannot find CRC32 for item');
 
 		// try to remove the signature
@@ -283,7 +283,6 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 		}
 
 		// check that the signature was remove successfully
-
 		list($ret, $signatures) = DupeDetectCrc32Helper::getCrc32Signature(array($this->_item->getId()));
 
 		if ($ret->isError()) {
@@ -291,6 +290,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(empty($signatures), 'CRC32 exist and should not');
 	}
 
@@ -353,6 +353,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_dupItem->getId());
 
 		if ($ret->isError()) {

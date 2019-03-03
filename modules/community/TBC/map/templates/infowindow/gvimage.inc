@@ -14,7 +14,6 @@ foreach ($map['mapPoints'] as $point) {
 	$point['summary'] = str_replace('[/url]', '</a>', $point['summary']);
 	$point['summary'] = str_replace(']', '>', $point['summary']);
 
-
 	if ($point['type'] == 'GalleryMovieItem') {
 		$point['itemLink'] = '<div style=\";margin-top:10px;width:250px;height:180px;overflow:auto;\"><center><embed src=\"' . $gurl->generateUrl(
 			array(
@@ -41,6 +40,7 @@ foreach ($map['mapPoints'] as $point) {
 
 	$tmp[] = $point;
 }
+
 $map['mapPoints'] = $tmp;
 //Create the HTML for the window
 $map['Labels'][0] = 'none';
@@ -67,5 +67,6 @@ if ($map['showZoomLinks']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><a href=\"#zoominlink\" onclick=\"javascript:map.setCenter(new GLatLng('+lat+','+lon+'), '+zoomlevel+'); return false;\">" . $module->translate('Zoom In') . "</a>'";
 }
+
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'</div>'";

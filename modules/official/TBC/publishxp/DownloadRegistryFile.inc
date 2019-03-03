@@ -55,6 +55,7 @@ class DownloadRegistryFileView extends GalleryView {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $hasPermission) = GalleryCoreApi::hasItemPermission($rootId, 'core.view');
 
 		if ($ret) {
@@ -70,6 +71,7 @@ class DownloadRegistryFileView extends GalleryView {
 			if ($ret) {
 				return $ret;
 			}
+
 			$title = $root->getTitle();
 		}
 
@@ -87,6 +89,7 @@ class DownloadRegistryFileView extends GalleryView {
 		$DownloadRegistryFile['title']        = $title;
 		$DownloadRegistryFile['domain']       = $domain;
 		$template->setVariable('DownloadRegistryFile', $DownloadRegistryFile);
+
 		list($ret, $registryFileContents) = $template->fetch('gallery:modules/publishxp/templates/DownloadRegistryFile.tpl');
 
 		if ($ret) {
@@ -124,6 +127,7 @@ class DownloadRegistryFileView extends GalleryView {
 					'language. Error: ' . $ret->getAsText()
 				);
 			}
+
 			$languageCode = '';
 		}
 
@@ -136,8 +140,10 @@ class DownloadRegistryFileView extends GalleryView {
 					'language. Error: ' . $ret->getAsText()
 				);
 			}
+
 			$defaultLanguageCode = 'en_US';
 		}
+
 		$languageCode = empty($languageCode) ? $defaultLanguageCode : $languageCode;
 
 		if ($languageCode == $defaultLanguageCode) {

@@ -149,6 +149,7 @@ class fpdi_pdf_parser extends pdf_parser {
 		if (!isset($obj[1][1]['/Parent'])) {
 			return false;
 		}
+
 		$res = $this->_getPageResources($obj[1][1]['/Parent']);
 
 		if ($res[0] == PDF_TYPE_OBJECT) {
@@ -347,6 +348,7 @@ class fpdi_pdf_parser extends pdf_parser {
 		if (!isset($obj[1][1]['/Parent'])) {
 			return false;
 		}
+
 		$res = $this->_getPageRotation($obj[1][1]['/Parent']);
 
 		if ($res[0] == PDF_TYPE_OBJECT) {

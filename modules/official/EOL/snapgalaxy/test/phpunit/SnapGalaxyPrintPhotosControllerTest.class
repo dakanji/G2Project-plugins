@@ -33,6 +33,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -57,6 +58,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		 * that this plugin will print.  Make it an unsupported mime type so that no graphics
 		 * toolkits will get involved.
 		 */
+
 		list($ret, $this->_photo) = $this->_createRandomDataItem(
 			$this->_album->getId(),
 			'test/jpeg',
@@ -101,6 +103,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_photo->getId(),
 			$gallery->getActiveUserId(),
@@ -119,7 +122,8 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		$this->_sourceId = $this->_photo->getId();
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -172,6 +176,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			100
 		);
+
 		$platform->setReply('fflush', array('testFd'), true);
 		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
 		$platform->setReply('feof', array('testFd'), false);
@@ -183,6 +188,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			'requesturl="' .
 			$requestUrl . '" redirecturl="' . $redirectUrl . '"'
 		);
+
 		$platform->setReply('feof', array('testFd'), true);
 		$platform->setReply('fclose', array('testFd'), true);
 
@@ -191,6 +197,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function testSnapGalaxyPrintPhotos() {
 		global $gallery;
+
 		$gallery->setPlatform(
 			$this->_getTestPlatform('pt/ptcartpost', '/REQUEST_URL', '/REDIRECT_URL')
 		);
@@ -218,6 +225,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function testPrintSecondPhoto() {
 		global $gallery;
+
 		$gallery->setPlatform(
 			$this->_getTestPlatform(
 				'EXISTING_FRAGMENT',
@@ -288,7 +296,8 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		// Make sure we don't get any platform calls during test from releasing flock locks
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -325,11 +334,13 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			$content,
 			$matches
 		);
+
 		$snapgalaxySessionId = $matches[1][0];
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $snapgalaxySessionId;
 		$snapgalaxySession             = new GallerySession();
-		$ret                           = $snapgalaxySession->init();
+
+		$ret = $snapgalaxySession->init();
 
 		if ($ret) {
 			return $ret;

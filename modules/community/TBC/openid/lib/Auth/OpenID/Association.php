@@ -217,6 +217,7 @@ class Auth_OpenID_Association {
 			if (is_array($value)) {
 				list($key, $value) = $value;
 			}
+
 			$keys[]   = $key;
 			$values[] = $value;
 		}
@@ -329,6 +330,7 @@ class Auth_OpenID_Association {
 			'signed',
 			implode(',', $signed_list)
 		);
+
 		$sig = $this->getMessageSignature($signed_message);
 		$signed_message->setArg(Auth_OpenID_OPENID_NS, 'sig', $sig);
 

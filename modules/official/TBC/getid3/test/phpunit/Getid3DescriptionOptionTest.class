@@ -34,11 +34,13 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
 
 		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
@@ -46,6 +48,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_album);
 
 		$ret = $this->_markPluginParametersForCleanup('module', 'getid3');
@@ -54,7 +57,8 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		$this->_items                = array();
+		$this->_items = array();
+
 		list($ret, $this->_items[0]) = $this->_createRandomDataItem(
 			$this->_album->getId(),
 			'audio/mpeg',
@@ -131,6 +135,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals('8000Hz sine', $item->getTitle(), "title $j");
 		}
 	}
@@ -187,6 +192,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals("original title $j", $item->getTitle(), "title $j");
 		}
 	}

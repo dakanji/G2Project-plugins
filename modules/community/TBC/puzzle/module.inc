@@ -78,12 +78,12 @@ class puzzleModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/puzzle/classes/PuzzleHelper.class');
 
 		$links = array();
 		// use item to find the album
 		// list ($ret, $enabled) = GalleryCoreApi::getPluginParameter('module','puzzle','enabled',$item->getId());
-
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 
@@ -136,10 +136,10 @@ class puzzleModule extends GalleryModule {
 	// if there is a Gallery function which does this, please send me an email about it
 	public function findParentAlbum($item) {
 		global $gallery;
+
 		$found = false;
 
 		$count = 0; // just being paranoid
-
 		// The parent of any photo should be the album, but we traverse the tree to make sure
 		while (true) {
 			// Avoid an infinite loop.

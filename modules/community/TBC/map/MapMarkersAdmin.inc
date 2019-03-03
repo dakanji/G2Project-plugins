@@ -40,6 +40,7 @@ class MapMarkersAdminController extends GalleryController {
 		include dirname(__FILE__) . '/includes/MapAdminControllerInit.inc';
 
 		global $gallery;
+
 		$platform = $gallery->getPlatform();
 
 		// If we want to "add" a marker, call the marker creation tool
@@ -82,7 +83,8 @@ class MapMarkersAdminController extends GalleryController {
 						. $form['useMarkerSet'] . '/colorlist',
 						'r'
 					);
-					$list   = explode(
+
+					$list = explode(
 						'*',
 						fread(
 							$handle,
@@ -92,6 +94,7 @@ class MapMarkersAdminController extends GalleryController {
 							) - 1
 						)
 					);
+
 					fclose($handle);
 
 					$newparam['photo']   = array();
@@ -109,7 +112,8 @@ class MapMarkersAdminController extends GalleryController {
 						. $form['useAlbumMarkerSet'] . '/colorlist',
 						'r'
 					);
-					$list   = explode(
+
+					$list = explode(
 						'*',
 						fread(
 							$handle,
@@ -119,6 +123,7 @@ class MapMarkersAdminController extends GalleryController {
 							) - 1
 						)
 					);
+
 					fclose($handle);
 
 					$newparam['album']   = array();
@@ -187,7 +192,6 @@ class MapMarkersAdminController extends GalleryController {
 		// Generate the markers according to specs
 		if (isset($form['action']['generate'])) {
 			// Check for errors
-
 			if (!array_key_exists('base', $form)) {
 				$error[] = 'form[error][base]';
 			} elseif ($form['setname'] == '') {
@@ -219,10 +223,11 @@ class MapMarkersAdminController extends GalleryController {
 							$basegallerydir . 'map/images/basemarkers/'
 							. $basemarkername . '.png'
 						);
-						$height50    = $currentsize[1] / 2;
-						$width50     = $currentsize[0] / 2;
-						$height200   = $currentsize[1] * 2;
-						$width200    = $currentsize[0] * 2;
+
+						$height50  = $currentsize[1] / 2;
+						$width50   = $currentsize[0] / 2;
+						$height200 = $currentsize[1] * 2;
+						$width200  = $currentsize[0] * 2;
 
 						if ($form['size'][0] == '50') {
 							$resize = $width50 . 'x' . $height50;
@@ -320,6 +325,7 @@ class MapMarkersAdminController extends GalleryController {
 					$colorlist[] = $name;
 					fwrite($handle, $name . '*');
 				}
+
 				fclose($handle);
 
 				$statusexec = 0;
@@ -341,6 +347,7 @@ class MapMarkersAdminController extends GalleryController {
 						$command[] = '-resize';
 						$command[] = $resize;
 					}
+
 					$command[]   = $basegallerydir . 'map/images/basemarkers/' . $basemarkername
 					. '.png';
 					$command[]   = $basegallerydir . 'map/images/markers/' . $setname
@@ -412,6 +419,7 @@ class MapMarkersAdminController extends GalleryController {
 			} else {
 				$status['uploaded'] = 1;
 			}
+
 			$method                      = empty($error) ? 'redirect' : 'delegate';
 			$results['status']           = $status;
 			$results['error']            = $error;
@@ -454,6 +462,7 @@ class MapMarkersAdminController extends GalleryController {
 			} else {
 				$status['uploaded'] = 1;
 			}
+
 			$method                      = empty($error) ? 'redirect' : 'delegate';
 			$results['status']           = $status;
 			$results['error']            = $error;
@@ -512,7 +521,6 @@ class MapMarkersAdminView extends GalleryView {
 		if (array_key_exists('markers', $form)) {
 			$form['markerlist'] = '"' . implode('","', $form['markers']) . '"';
 		}
-
 
 		// Set default values for undefined plugin parameters
 		if (!array_key_exists('regroupAlbums', $form)) {
@@ -580,14 +588,16 @@ class MapMarkersAdminView extends GalleryView {
 		}
 
 		// Create the list of marker available and select the right one for Photos & albums
-		$form['markerset']      = GoogleMapUtilities::OptionFromFolder(
+		$form['markerset'] = GoogleMapUtilities::OptionFromFolder(
 			$basegallerydir . 'modules/map/images/markers/',
 			$form['useMarkerSet']
 		);
+
 		$form['albummarkerset'] = GoogleMapUtilities::OptionFromFolder(
 			$basegallerydir . 'modules/map/images/markers/',
 			$form['useAlbumMarkerSet']
 		);
+
 		$form['groupmarkerset'] = GoogleMapUtilities::OptionFromFolder(
 			$basegallerydir . 'modules/map/images/markers/',
 			$form['useGroupMarkerSet']
@@ -601,10 +611,12 @@ class MapMarkersAdminView extends GalleryView {
 			$basegallerydir . 'modules/map/images/markers/' . $form['useMarkerSet'],
 			$form['defaultphotocolor']
 		);
+
 		$form['colorGoption'] = GoogleMapUtilities::OptionFromColorList(
 			$basegallerydir . 'modules/map/images/markers/' . $form['useGroupMarkerSet'],
 			$form['defaultgroupcolor']
 		);
+
 		$form['colorAoption'] = GoogleMapUtilities::OptionFromColorList(
 			$basegallerydir . 'modules/map/images/markers/' . $form['useAlbumMarkerSet'],
 			$form['defaultalbumcolor']

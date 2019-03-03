@@ -28,6 +28,7 @@
 class FlashVideoModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('flashvideo');
 		$this->setName($gallery->i18n('Flash Video'));
 		$this->setDescription(
@@ -96,6 +97,7 @@ class FlashVideoModule extends GalleryModule {
 	 */
 	public function activate($postActivationEvent = true) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		// Add renderer on all GalleryMovieItems with video/x-flv mime type that need it
@@ -113,6 +115,7 @@ class FlashVideoModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ids = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -120,7 +123,8 @@ class FlashVideoModule extends GalleryModule {
 		}
 
 		while (!empty($ids)) {
-			$itemIds           = array_splice($ids, 0, 100);
+			$itemIds = array_splice($ids, 0, 100);
+
 			list($ret, $items) = GalleryCoreApi::loadEntitiesById(
 				$itemIds,
 				'GalleryDataItem'
@@ -139,6 +143,7 @@ class FlashVideoModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					list($ret, $item) = $item->refresh();
 
 					if ($ret) {
@@ -146,7 +151,9 @@ class FlashVideoModule extends GalleryModule {
 
 						return array($ret, null);
 					}
+
 					$item->setRenderer('FlashVideoRenderer');
+
 					$ret = $item->save();
 
 					if ($ret) {
@@ -154,6 +161,7 @@ class FlashVideoModule extends GalleryModule {
 
 						return array($ret, null);
 					}
+
 					$ret = GalleryCoreApi::releaseLocks($lockId);
 
 					if ($ret) {
@@ -161,6 +169,7 @@ class FlashVideoModule extends GalleryModule {
 					}
 				}
 			}
+
 			$ret = $storage->checkPoint();
 
 			if ($ret) {

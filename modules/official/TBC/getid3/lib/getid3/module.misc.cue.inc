@@ -20,7 +20,6 @@
 //   into getID3 by James Heinrich <info@getid3.org>           //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 /*
  * CueSheet parser by Nigel Barnes.
  *
@@ -62,6 +61,7 @@ class getid3_cue extends getid3_handler {
 				$cue_lines[] = trim($line);
 			}
 		}
+
 		$this->parseCueSheet($cue_lines);
 
 		return $this->cuesheet;

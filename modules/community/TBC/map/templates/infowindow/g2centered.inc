@@ -14,6 +14,7 @@ foreach ($map['mapPoints'] as $point) {
 	$point['summary']     = str_replace(']', '>', $point['summary']);
 	$tmp[]                = $point;
 }
+
 $map['mapPoints'] = $tmp;
 //Create the HTML for the window
 $map['Labels'][0]      = 'none';
@@ -52,5 +53,6 @@ if ($map['showZoomLinks']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><a href=\"#zoominlink\" onclick=\"javascript:map.setCenter(new GLatLng('+lat+','+lon+'), '+zoomlevel+'); return false;\">" . $module->translate('Zoom In') . "</a>'";
 }
+
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'</center></div>'";

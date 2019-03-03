@@ -37,7 +37,9 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
@@ -53,6 +55,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $this->_group) = $this->_createRandomGroup();
 
 		if ($ret) {
@@ -70,11 +73,13 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $this->_user) = $this->_createRandomUser();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_user);
 
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $this->_group->getId());
@@ -99,6 +104,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter(
 			'module',
 			'nokiaupload',
@@ -109,11 +115,13 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$_SERVER['HTTP_USER_AGENT'] = 'Nokia6630/1.0 (2.39.129) Series60/2.6 Profile/MIDP-2.0';
 
 		$gallery->setActiveUser($this->_user);
 
 		$session->remove('permissionCache');
+
 		$ret = GalleryCoreApi::assertHasItemPermission($this->_getRootId(), 'core.addAlbumItem');
 
 		if (!$ret) {
@@ -148,7 +156,8 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'size'     => 0,
 			'tmp_name' => '',
 		);
-		$results             = $this->handleRequest();
+
+		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -170,6 +179,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'size'     => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
+
 		GalleryUtilities::putRequestVariable('DirId', 'badId', false);
 		$results = $this->handleRequest();
 		$this->assertEquals(
@@ -193,6 +203,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'size'     => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
+
 		GalleryUtilities::putRequestVariable('DirId', $this->_subAlbum->getId(), false);
 		$results = $this->handleRequest();
 		$this->assertEquals(
@@ -216,6 +227,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'size'     => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
+
 		GalleryUtilities::putRequestVariable('Desc', 'this is the description', false);
 		$results = $this->handleRequest();
 		$this->assertEquals(
@@ -242,11 +254,13 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals(
 				'this is the description',
 				$item->getDescription(),
 				'description mismatch'
 			);
+
 			$this->assertEquals($this->_album->getId(), $item->getParentId(), 'Wrong parent id');
 		} else {
 			$this->fail('Missing itemId. Has no item been created?');

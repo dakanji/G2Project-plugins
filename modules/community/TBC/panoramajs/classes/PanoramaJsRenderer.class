@@ -40,6 +40,7 @@ class PanoramaJsRenderer extends GalleryRenderer {
 	 */
 	public function render($format, $entity, $item, $params) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'panoramajs');
@@ -47,16 +48,19 @@ class PanoramaJsRenderer extends GalleryRenderer {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $viewWidth) = $module->getParameter('width');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $rotate) = $module->getParameter('rotate');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $speed) = $module->getParameter('speed');
 
 		if ($ret) {
@@ -70,7 +74,8 @@ class PanoramaJsRenderer extends GalleryRenderer {
 			'4' => '0.08',
 			'5' => '0.14',
 		);
-		$speed  = $levier[$speed];
+
+		$speed = $levier[$speed];
 
 		if ($rotate == 0) {
 			$speed        = 0;

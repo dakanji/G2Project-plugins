@@ -101,8 +101,7 @@ class Auth_OpenID_Parse {
 	 */
 	public $_tag_expr = "<%s\b(?!:)([^>]*?)(?:\/>|>(.*?)(?:<\/?%s\s*>|\Z))";
 
-	public $_attr_find = '\b(\w+)=("[^"]*"|\'[^\']*\'|[^\'"\s\/<>]+)';
-
+	public $_attr_find      = '\b(\w+)=("[^"]*"|\'[^\']*\'|[^\'"\s\/<>]+)';
 	public $_open_tag_expr  = "<%s\b";
 	public $_close_tag_expr = "<((\/%s\b)|(%s[^>\/]*\/))>";
 
@@ -183,6 +182,7 @@ class Auth_OpenID_Parse {
 		if ($result === false || !$matches) {
 			return false;
 		}
+
 		// Return the offset of the first match.
 		return $matches[0][1];
 	}
@@ -199,6 +199,7 @@ class Auth_OpenID_Parse {
 		if ($result === false || !$matches) {
 			return false;
 		}
+
 		// Return the offset of the first match.
 		return $matches[count($matches) - 1][1];
 	}
@@ -296,6 +297,7 @@ class Auth_OpenID_Parse {
 
 				$link_attrs[strtolower($name)] = $value;
 			}
+
 			$link_data[] = $link_attrs;
 		}
 
@@ -356,6 +358,7 @@ class Auth_OpenID_Parse {
 		if (!$matches) {
 			return null;
 		}
+
 		$first = $matches[0];
 
 		return Auth_OpenID::arrayGet($first, 'href', null);
@@ -379,6 +382,7 @@ function Auth_OpenID_legacy_discover(
 	if ($server_url === null) {
 		return false;
 	}
+
 	$delegate_url = $p->findFirstHref(
 		$link_attrs,
 		$delegate_rel

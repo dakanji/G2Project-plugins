@@ -61,6 +61,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_album);
 
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
@@ -68,6 +69,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_album->getId(),
 			$gallery->getActiveUserId(),
@@ -98,7 +100,8 @@ class WebDavTest extends GalleryTestCase {
 
 		// Tests fail for Oracle / PostgreSQL without this checkpoint
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -124,6 +127,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$gallery->setUrlGenerator($this->_urlGenerator);
 
 		$this->_registerTestEventListener('Gallery::Error', new WebDavModule());
@@ -164,6 +168,7 @@ class WebDavTest extends GalleryTestCase {
 
 	public function tearDown() {
 		$this->_streamWrapperRegistration(true);
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -211,6 +216,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -267,6 +273,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -352,6 +359,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -380,6 +388,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $itemPath) = $this->_item->fetchLogicalPath();
 
 		if ($ret) {
@@ -399,6 +408,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -483,6 +493,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -543,6 +554,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $subSubAlbum) = $this->_createRandomAlbum($this->_subAlbum->getId());
 
 		if ($ret) {
@@ -554,11 +566,13 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $itemPath) = $this->_item->fetchLogicalPath();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $subAlbumPath) = $this->_subAlbum->fetchLogicalPath();
 
 		if ($ret) {
@@ -578,6 +592,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -685,6 +700,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -775,6 +791,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -846,6 +863,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$summary = $this->_item->getSummary();
 
 		GalleryUtilities::putRequestVariable('path', $path);
@@ -866,6 +884,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -878,6 +897,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($summary, $item->getSummary(), 'item summary changed');
 	}
 
@@ -903,6 +923,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -960,6 +981,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -995,6 +1017,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1040,6 +1063,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1091,6 +1115,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1147,6 +1172,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1186,6 +1212,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
+
 		list($ret, $data) = ItemAddController::handleRequest(array());
 
 		if ($ret && !($ret->getErrorCode() & ERROR_REQUEST_FORGED)) {
@@ -1232,6 +1259,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1283,6 +1311,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1324,6 +1353,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$mimeType = $this->_item->getMimeType();
 
 		GalleryUtilities::putRequestVariable('path', $path);
@@ -1341,6 +1371,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1352,6 +1383,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($mimeType, $this->_item->getMimeType(), 'mimetype changed');
 	}
 
@@ -1379,6 +1411,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$mimeType = $linkedEntity->getMimeType();
 
 		GalleryUtilities::putRequestVariable('path', $path);
@@ -1396,6 +1429,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1408,6 +1442,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($mimeType, $linkedEntity->getMimeType(), 'mimetype changed');
 	}
 
@@ -1422,6 +1457,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_item->getId(),
 			$gallery->getActiveUserId(),
@@ -1431,6 +1467,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_subAlbum->getId(),
 			$gallery->getActiveUserId(),
@@ -1465,6 +1502,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1492,7 +1530,8 @@ class WebDavTest extends GalleryTestCase {
 
 		// Make the transaction visible to the test framework (tearDown)
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -1507,6 +1546,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_item->getId(),
 			$gallery->getActiveUserId(),
@@ -1516,6 +1556,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_subAlbum->getId(),
 			$gallery->getActiveUserId(),
@@ -1550,6 +1591,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1562,16 +1604,19 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $pathAfterTest) = $item->fetchLogicalPath();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($path, $pathAfterTest, 'item path');
 
 		// Make the transaction visible to the test framework (tearDown)
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -1586,6 +1631,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_item->getId(),
 			$gallery->getActiveUserId(),
@@ -1595,6 +1641,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_subAlbum->getId(),
 			$gallery->getActiveUserId(),
@@ -1629,6 +1676,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1641,16 +1689,19 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $pathAfterTest) = $item->fetchLogicalPath();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($path, $pathAfterTest, 'item path');
 
 		// Make the transaction visible to the test framework (tearDown)
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -1665,6 +1716,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_item->getId(),
 			$gallery->getActiveUserId(),
@@ -1692,6 +1744,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1719,7 +1772,8 @@ class WebDavTest extends GalleryTestCase {
 
 		// Make the transaction visible to the test framework (tearDown)
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -1754,6 +1808,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we failed
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1766,6 +1821,7 @@ class WebDavTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $pathAfterTest) = $item->fetchLogicalPath();
 
 		if ($ret) {
@@ -1776,7 +1832,8 @@ class WebDavTest extends GalleryTestCase {
 
 		// Make the transaction visible to the test framework (tearDown)
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -1816,6 +1873,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1824,7 +1882,8 @@ class WebDavTest extends GalleryTestCase {
 			return array($ret, null);
 		}
 
-		$path                   = ltrim($path, '/');
+		$path = ltrim($path, '/');
+
 		list($ret, list($lock)) = WebDavHelper::getLocks($path);
 
 		if ($ret) {
@@ -1885,6 +1944,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1964,6 +2024,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -1972,7 +2033,8 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$path                   = ltrim($path, '/');
+		$path = ltrim($path, '/');
+
 		list($ret, list($lock)) = WebDavHelper::getLocks($path);
 
 		if ($ret) {
@@ -2066,6 +2128,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -2074,7 +2137,8 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$path              = ltrim($path, '/');
+		$path = ltrim($path, '/');
+
 		list($ret, $locks) = WebDavHelper::getLocks($path);
 
 		if ($ret) {
@@ -2147,11 +2211,13 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 
 		if ($ret) {
 			_GalleryMain_errorHandler($ret, $g2Data);
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -2206,11 +2272,13 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 
 		if ($ret) {
 			_GalleryMain_errorHandler($ret, $g2Data);
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -2227,11 +2295,13 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 
 		if ($ret) {
 			_GalleryMain_errorHandler($ret, $g2Data);
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -2242,7 +2312,8 @@ class WebDavTest extends GalleryTestCase {
 		$this->assertEquals(file_get_contents($filePath), $output);
 
 		// Verify that the item has the right title, name, etc.
-		$legalPathComponent    = $this->_platform->legalizePathComponent($pathComponent);
+		$legalPathComponent = $this->_platform->legalizePathComponent($pathComponent);
+
 		list($ret, $newItemId) = GalleryCoreApi::fetchItemIdByPath($albumPath . $legalPathComponent);
 
 		if ($ret) {
@@ -2288,11 +2359,13 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 
 		if ($ret) {
 			_GalleryMain_errorHandler($ret, $g2Data);
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -2343,11 +2416,13 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 
 		if ($ret) {
 			_GalleryMain_errorHandler($ret, $g2Data);
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -2373,11 +2448,13 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 
 		if ($ret) {
 			_GalleryMain_errorHandler($ret, $g2Data);
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -2413,6 +2490,7 @@ class WebDavTest extends GalleryTestCase {
 
 		// Perform the request and verify that we succeeded
 		ob_start();
+
 		list($ret, $g2Data) = _GalleryMain();
 		$output             = ob_get_contents();
 		ob_end_clean();
@@ -2430,7 +2508,8 @@ class WebDavTest extends GalleryTestCase {
 
 		$this->assertEquals('', $output);
 
-		$legalPathComponent     = $this->_platform->legalizePathComponent($pathComponent);
+		$legalPathComponent = $this->_platform->legalizePathComponent($pathComponent);
+
 		list($ret, $newAlbumId) = GalleryCoreApi::fetchItemIdByPath($albumPath . $legalPathComponent);
 
 		if ($ret) {

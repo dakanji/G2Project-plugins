@@ -51,6 +51,7 @@ class RemoteSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$status['saved'] = 1;
 		}
 
@@ -86,7 +87,8 @@ class RemoteSiteAdminView extends GalleryView {
 		}
 
 		if ($form['formName'] != 'RemoteSiteAdmin') {
-			$form['formName']   = 'RemoteSiteAdmin';
+			$form['formName'] = 'RemoteSiteAdmin';
+
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'remote');
 
 			if ($ret) {

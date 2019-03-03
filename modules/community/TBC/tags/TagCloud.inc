@@ -34,6 +34,7 @@ class TagCloudView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$template->style(
@@ -43,6 +44,7 @@ class TagCloudView extends GalleryView {
 				)
 			)
 		);
+
 		$template->javascript('modules/tags/js/Tags.js');
 
 		list($ret, $tags) = TagsHelper::getTagListWithTagCount();

@@ -23,6 +23,7 @@
 GalleryCoreApi::requireOnce(
 	'modules/core/classes/helpers/GalleryDerivativeHelper_simple.class'
 );
+
 GalleryCoreApi::requireOnce(
 	'modules/core/DownloadItem.inc'
 );
@@ -49,6 +50,7 @@ class DownloadThumbView extends DownloadItemView {
 		if (empty($masterId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
+
 		// Make sure we have permission to view this item
 		$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'core.view');
 
@@ -61,6 +63,7 @@ class DownloadThumbView extends DownloadItemView {
 		if ($ret) {
 			return $ret;
 		}
+
 		$item   = $thumbs[$masterId];
 		$itemId = $item->getId();
 
@@ -83,6 +86,7 @@ class DownloadThumbView extends DownloadItemView {
 		 */
 
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
+
 		list($ret, $view) = GalleryView::loadView('core.DownloadItem');
 
 		if ($ret) {

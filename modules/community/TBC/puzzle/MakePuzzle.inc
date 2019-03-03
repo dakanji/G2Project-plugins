@@ -84,11 +84,13 @@ class MakePuzzleView extends GalleryView {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$size = ($source->getWidth()) * ($source->getHeight());
 
 			if ($size > 0) {
 				$images[$size] = $source;
 			}
+
 			$gallery->debug(
 				'<hr>(modules:puzzle) findAppletItemId: indexing item ' . $source->getId() .
 							' (' . $source->getWidth() . 'x' . $source->getHeight() . ').'
@@ -113,6 +115,7 @@ class MakePuzzleView extends GalleryView {
 					if ($size > 0) {
 						$images[$size] = $resizedImage;
 					}
+
 					$gallery->debug(
 						'<br>(modules:puzzle) findAppletItemId: indexing item ' . $resizedImage->getId() .
 									' (' . $resizedImage->getWidth() . 'x' . $resizedImage->getHeight() . ').'
@@ -127,11 +130,8 @@ class MakePuzzleView extends GalleryView {
 		}
 
 		// we have an images[size] array populated with one or more images which we are allowed to see
-
 		krsort($images);  // sort the array by sizes from largest to smallest
-
 		$targetImage = array_shift($images);  // default to the first element
-
 		// return if the targetImage was our only image
 		if (empty($images)) {
 			return array(true, $targetImage);
@@ -143,6 +143,7 @@ class MakePuzzleView extends GalleryView {
 				// this image is too small, we will use the last one we remember
 				break;
 			}
+
 			// this image good, remember it
 			$targetImage = $images[$size];
 		}
@@ -151,9 +152,9 @@ class MakePuzzleView extends GalleryView {
 	}
 
 	//findAppletItemId
-
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/puzzle/classes/PuzzleHelper.class');
 
 		// Load our item

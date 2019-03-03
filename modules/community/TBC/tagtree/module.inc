@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 /**
  * The implementation of the TagTree module
  *
@@ -30,6 +29,7 @@
 class TagTreeModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('tagtree');
 		$this->setName($gallery->i18n('Tag Tree'));
 		$this->setDescription(
@@ -124,6 +124,7 @@ class TagTreeModule extends GalleryModule {
 	 */
 	public function needsConfiguration() {
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeCompatibilityHelper.class');
+
 		list($ret, $isCompatible) = TagTreeCompatibilityHelper::isCompatibleTagsModuleActive();
 
 		if ($ret) {
@@ -142,6 +143,7 @@ class TagTreeModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// The Tags module needs to be updated, and the user should request that explicitly.
 		return array(null, !$needsConfiguration);
 	}

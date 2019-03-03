@@ -13,7 +13,6 @@
 // dependencies: module.audio-video.riff.php                   //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 
 class getid3_lpac extends getid3_handler {
@@ -28,6 +27,7 @@ class getid3_lpac extends getid3_handler {
 
 			return false;
 		}
+
 		$info['avdataoffset'] += 14;
 
 		$info['fileformat']            = 'lpac';

@@ -71,6 +71,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 		 * test. (Verify all header() calls, including those from loadView())
 		 */
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryView.class');
+
 		list($ret, $this->_view) = GalleryView::getMe()->loadView('slideshow.DownloadPicLens');
 
 		if ($ret) {
@@ -84,26 +85,31 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Content-type: application/x-javascript', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-Disposition: inline; filename="piclens.js"', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Cache-Control: public', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-length: 1000', null),
@@ -115,6 +121,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('/modules/slideshow/piclens.js'),
 			true
 		);
+
 		$gallery->_platform->setReply(
 			'stat',
 			array('/modules/slideshow/piclens.js'),
@@ -123,21 +130,25 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 				9 => strtotime('Sun, 23 Sep 2001 08:00:00 GMT'),
 			)
 		);
+
 		$gallery->_platform->setReply(
 			'fopen',
 			array('/modules/slideshow/piclens.js', 'rb', 0),
 			'FD'
 		);
+
 		$gallery->_platform->setReply(
 			'fread',
 			array('FD', 65535),
 			'DATA'
 		);
+
 		$gallery->_platform->setReply(
 			'fread',
 			array('FD', 65535),
 			null
 		);
+
 		$gallery->_platform->setReply(
 			'fclose',
 			array('FD'),
@@ -164,26 +175,31 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Content-type: application/x-javascript', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-Disposition: inline; filename="piclens.js"', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Cache-Control: public', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-length: 0', null),
@@ -195,6 +211,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('/modules/slideshow/piclens.js'),
 			true
 		);
+
 		$gallery->_platform->setReply(
 			'stat',
 			array('/modules/slideshow/piclens.js'),
@@ -223,26 +240,31 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Content-type: application/x-shockwave-flash', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-Disposition: inline; filename="PicLensLite.swf"', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Cache-Control: public', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-length: 1000', null),
@@ -254,6 +276,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('/modules/slideshow/PicLensLite.swf'),
 			true
 		);
+
 		$gallery->_platform->setReply(
 			'stat',
 			array('/modules/slideshow/PicLensLite.swf'),
@@ -262,21 +285,25 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 				9 => strtotime('Sun, 23 Sep 2001 08:00:00 GMT'),
 			)
 		);
+
 		$gallery->_platform->setReply(
 			'fopen',
 			array('/modules/slideshow/PicLensLite.swf', 'rb', 0),
 			'FD'
 		);
+
 		$gallery->_platform->setReply(
 			'fread',
 			array('FD', 65535),
 			'DATA'
 		);
+
 		$gallery->_platform->setReply(
 			'fread',
 			array('FD', 65535),
 			null
 		);
+
 		$gallery->_platform->setReply(
 			'fclose',
 			array('FD'),
@@ -303,26 +330,31 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Content-type: application/x-shockwave-flash', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-Disposition: inline; filename="PicLensLite.swf"', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Cache-Control: public', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Content-length: 0', null),
@@ -334,6 +366,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('/modules/slideshow/PicLensLite.swf'),
 			true
 		);
+
 		$gallery->_platform->setReply(
 			'stat',
 			array('/modules/slideshow/PicLensLite.swf'),

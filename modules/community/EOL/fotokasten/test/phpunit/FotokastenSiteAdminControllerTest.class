@@ -87,6 +87,7 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('1234', $params['affiliateId'], 'affiliateId');
 		$this->assertEquals('abcde12345', $params['affiliateIdPass'], 'affiliateIdPass');
 	}
@@ -116,11 +117,13 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			FOTOKASTEN_GALLERY_AFFILIATE_ID,
 			$params['affiliateId'],
 			'affiliateId'
 		);
+
 		$this->assertEquals(
 			FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD,
 			$params['affiliateIdPass'],

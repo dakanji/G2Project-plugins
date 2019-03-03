@@ -34,6 +34,7 @@ class GetUrlsCallbacks {
 				$itemId = $params['itemId'];
 
 				GalleryCoreApi::requireOnce('modules/geturls/classes/GetUrlsHelper.class');
+
 				list($ret, $data) = GetUrlsHelper::getUrlsByItemId($itemId);
 
 				if ($ret) {

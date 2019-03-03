@@ -61,43 +61,51 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 	 */
 	public function fulfillCart($cartItemIds) {
 		global $gallery;
-		$platform      =& $gallery->getPlatform();
-		$slash         = $platform->getDirectorySeparator();
-		$zipBase       = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'zip_');
-		$zipDir        = $zipBase . '.dir';
-		$zipFile       = $zipBase . '.zip';
+
+		$platform =& $gallery->getPlatform();
+		$slash    = $platform->getDirectorySeparator();
+		$zipBase  = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'zip_');
+		$zipDir   = $zipBase . '.dir';
+		$zipFile  = $zipBase . '.zip';
+
 		list($success) = GalleryUtilities::guaranteeDirExists($zipDir);
 
 		if (!$success) {
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null);
 		}
+
 		list($ret, $zip) = GalleryCoreApi::getPluginParameter('module', 'zipcart', 'path');
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-		$itemIds           = array_keys($cartItemIds);
+		$itemIds = array_keys($cartItemIds);
+
 		list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryDataItem');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds($itemIds);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $resizes) = GalleryCoreApi::fetchResizesByItemIds($itemIds);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds($itemIds);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
 
 		if ($ret) {
@@ -114,11 +122,13 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			if ($i++ % 50) {
 				$gallery->guaranteeTimeLimit(30);
 			}
+
 			list($ret, $path) = $item->fetchPath();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$relativePath = (strpos($path, $albumDir) === 0) ?
 				substr($path, strlen($albumDir)) : basename($path);
 
@@ -158,6 +168,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				// Bug 1462984: Make sure we use the right extension
 				$derivativeMimeType = $item->getMimeType();
 
@@ -182,19 +193,22 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			}
 
 			// Copy file into temp dir with right subdir/filename
-			$target                  = $zipDir . $slash . $relativePath;
+			$target = $zipDir . $slash . $relativePath;
+
 			list($success, $created) = GalleryUtilities::guaranteeDirExists(dirname($target));
 
 			if (!$success) {
 				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE),
 				 null, );
 			}
+
 			$tmpDirs = array_merge($tmpDirs, $created);
 
 			if (!$platform->copy($path, $target)) {
 				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE),
 				 null, );
 			}
+
 			$tmpFiles[] = $target;
 			$cmd[]      = $relativePath;
 		}
@@ -204,7 +218,9 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 		if (!$platform->chdir($zipDir)) {
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null);
 		}
+
 		$gallery->guaranteeTimeLimit(60);
+
 		list($success) = $platform->exec(array($cmd));
 
 		if (!empty($cwd)) {
@@ -218,6 +234,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 		foreach (array_reverse($tmpDirs) as $path) {
 			@$platform->rmdir($path);
 		}
+
 		@$platform->rmdir($zipDir);
 
 		if (!$success) {
@@ -225,6 +242,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null);
 		}
+
 		$platform->chmod($zipFile);
 
 		return array(null,

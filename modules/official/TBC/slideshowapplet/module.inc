@@ -26,6 +26,7 @@
 class SlideshowAppletModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('slideshowapplet');
 		$this->setName($gallery->i18n('Slideshow Applet'));
 		$this->setDescription(
@@ -96,6 +97,7 @@ class SlideshowAppletModule extends GalleryModule {
 				// install
 				$newDefault = 'slideshowRecursive=false|slideshowMaxPictures=0';
 			}
+
 			$ret = $this->setParameter('slideshowdefaultVariables', $newDefault);
 
 			if ($ret) {
@@ -152,6 +154,7 @@ class SlideshowAppletModule extends GalleryModule {
 
 					if (!$ret || !empty($query)) {
 						array_unshift($data, $item->getId());
+
 						list($ret, $searchResults) = $gallery->search($query, $data, null);
 
 						if (!$ret) {
@@ -184,11 +187,12 @@ class SlideshowAppletModule extends GalleryModule {
 	public function getRewriteRules() {
 		$rules = array();
 
-		$rule             = array();
-		$rule['comment']  = $this->translate('View Slideshow (Fullscreen)');
-		$rule['match']    = array(
+		$rule            = array();
+		$rule['comment'] = $this->translate('View Slideshow (Fullscreen)');
+		$rule['match']   = array(
 			'view' => 'slideshowapplet.SlideshowApplet',
 		);
+
 		$rule['onLoad']   = array('rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath');
 		$rule['pattern']  = 'v/%path%/slideshowapplet.html';
 		$rule['keywords'] = array(
@@ -198,7 +202,8 @@ class SlideshowAppletModule extends GalleryModule {
 				'help'     => $this->translate('Path to an item (eg, /album/image.jpg.html)'),
 			),
 		);
-		$rules[]          = $rule;
+
+		$rules[] = $rule;
 
 		return $rules;
 	}

@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_rkau extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -63,9 +61,9 @@ class getid3_rkau extends getid3_handler {
 			$info['avdataoffset']            += 16;
 			$info['rkau']['compressed_bytes'] = $info['avdataend'] - $info['avdataoffset'] - 1;
 		}
+
 		// Note: compressed_bytes does not always equal what appears to be the actual number of compressed bytes,
 		// sometimes it's more, sometimes less. No idea why(?)
-
 		$info['audio']['lossless']        = $info['rkau']['lossless'];
 		$info['audio']['channels']        = $info['rkau']['channels'];
 		$info['audio']['bits_per_sample'] = $info['rkau']['bits_per_sample'];

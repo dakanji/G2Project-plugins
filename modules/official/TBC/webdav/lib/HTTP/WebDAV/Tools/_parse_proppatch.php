@@ -163,9 +163,10 @@ class _parse_proppatch {
 		}
 
 		if ($this->depth == 3) {
-			$prop          = array(
+			$prop = array(
 				'name' => $name,
 			);
+
 			$this->current = array(
 				'name'   => $name,
 				'ns'     => $ns,
@@ -184,6 +185,7 @@ class _parse_proppatch {
 				$this->current['value'] .= ' ' . $key . '="'
 					. str_replace('"', '&quot;', $value) . '"';
 			}
+
 			$this->current['value'] .= '>';
 		}
 

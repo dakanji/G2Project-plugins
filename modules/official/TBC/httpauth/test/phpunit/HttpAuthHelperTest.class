@@ -38,7 +38,9 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Mock activate the rewrite module
@@ -47,6 +49,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 				'active' => true,
 			),
 		);
+
 		GalleryDataCache::put('GalleryPluginHelper::fetchPluginList(module)', $moduleStatus);
 
 		// Mock preGallery rewrite parser.  Mock activate HTTP auth rewrite rules.
@@ -142,6 +145,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_user);
 
 		list($ret, $this->_authInterface) = GalleryCoreApi::newFactoryInstance('HttpAuthInterface_1_0');
@@ -149,6 +153,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(isset($this->_authInterface), 'Could not instantiate auth interface.');
 
 		// Use HttpAuthModuleTestPhpVm
@@ -168,6 +173,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function tearDown() {
 		global $gallery;
+
 		GalleryDataCache::reset();
 		$gallery->_session = $this->_saveSession;
 
@@ -189,6 +195,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 				if ($ret) {
 					$this->failWithStatus($ret);
 				}
+
 				$ret = $module->performFactoryRegistrations();
 
 				if ($ret) {
@@ -197,7 +204,8 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			}
 
 			$storage =& $gallery->getStorage();
-			$ret     = $storage->commitTransaction();
+
+			$ret = $storage->commitTransaction();
 
 			if ($ret) {
 				$this->failWithStatus($ret);
@@ -306,6 +314,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckHttpAuthPluginDisabled() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
+
 		$ret = GalleryCoreApi::removePluginParameter('module', 'httpauth', 'httpAuthPlugin');
 
 		if ($ret) {
@@ -486,6 +495,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($this->_user, $user);
 	}
 
@@ -560,7 +570,8 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testSetConfiguration() {
 		$this->_resetFactory = true;
-		$ret                 = $this->_authInterface->setConfiguration(false, true, false);
+
+		$ret = $this->_authInterface->setConfiguration(false, true, false);
 
 		if ($ret) {
 			return $ret;
@@ -575,18 +586,21 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		$this->assert(!(bool)$params['httpAuthPlugin'], 'wrong httpAuthPlugin value');
 		$this->assert((bool)$params['serverAuthPlugin'], 'wrong serverAuthPlugin value');
 		$this->assert(!(bool)$params['useGlobally'], 'wrong useGlobally value');
+
 		list($ret, $authPlugins) = GalleryCoreApi::getAllFactoryImplementationIds('GalleryAuthPlugin');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!isset($authPlugins['HttpAuthPlugin']), 'HttpAuthPlugin still registerd');
 		$this->assert(isset($authPlugins['ServerAuthPlugin']), 'ServerAuthPlugin not registered');
 	}
 
 	public function testSetConfigurationDefaults() {
 		$this->_resetFactory = true;
-		$ret                 = $this->_authInterface->setConfiguration(true);
+
+		$ret = $this->_authInterface->setConfiguration(true);
 
 		if ($ret) {
 			return $ret;
@@ -682,6 +696,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testRegenerateSessionIfNecessary() {
 		global $gallery;
+
 		$gallery->_session = new HttpAuthHelperTestSession();
 
 		$ret = HttpAuthHelper::regenerateSessionIfNecessary($this->_user);
@@ -695,6 +710,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testRegenerateSessionIfNecessarySameUserAsFromSession() {
 		global $gallery;
+
 		$gallery->_session = new HttpAuthHelperTestSession($this->_user->getId());
 
 		$ret = HttpAuthHelper::regenerateSessionIfNecessary($this->_user);
@@ -708,6 +724,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testRegenerateSessionIfNecessaryOtherUserThanFromSession() {
 		global $gallery;
+
 		$gallery->_session = new HttpAuthHelperTestSession('OTHER_USER');
 
 		$ret = HttpAuthHelper::regenerateSessionIfNecessary($this->_user);
@@ -721,6 +738,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testRegenerateSessionIfNecessaryNoAuthenticatedUser() {
 		global $gallery;
+
 		$gallery->_session = new HttpAuthHelperTestSession($this->_user->getId());
 
 		$ret = HttpAuthHelper::regenerateSessionIfNecessary(null);
@@ -802,6 +820,7 @@ class HttpAuthHelperTestPlatform extends GalleryPlatform {
 
 			return strlen($string);
 		}
+
 		echo "unexpected fwrite: $string ";
 	}
 

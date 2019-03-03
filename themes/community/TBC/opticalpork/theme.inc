@@ -103,7 +103,9 @@ class OpticalporkTheme extends GalleryTheme {
 		// Find the thumbnail size for this album
 		$theme['params']['thumbnailSize'] = 150;
 
-		list($ret, $preferences) = GalleryCoreApi::fetchDerivativePreferencesForItem($item->getId());
+		list($ret, $preferences) = GalleryCoreApi::fetchDerivativePreferencesForItem(
+			$item->getId()
+		);
 
 		if ($ret) {
 			return array($ret, null);
@@ -111,13 +113,18 @@ class OpticalporkTheme extends GalleryTheme {
 
 		foreach ($preferences as $preference) {
 			if ($preference['derivativeType'] == DERIVATIVE_TYPE_IMAGE_THUMBNAIL
-				&& preg_match('/thumbnail\|(\d+)/', $preference['derivativeOperations'], $matches)
+				&& preg_match(
+					'/thumbnail\|(\d+)/',
+					$preference['derivativeOperations'],
+					$matches
+				)
 			) {
 				$theme['params']['thumbnailSize'] = $matches[1];
 
 				break;
 			}
 		}
+
 		// Lightbox customization - Fetch resize IDs
 		foreach ($childIds as $childId) {
 			list($ret, $resizeTable) = GalleryCoreApi::fetchResizesByItemIds(array($childId));
@@ -258,6 +265,7 @@ class OpticalporkTheme extends GalleryTheme {
 			),
 			'value'      => $params['contentWidth'],
 		);
+
 		$settings[] = array(
 			'key'   => 'groupByYear',
 			'name'  => $this->translate(
@@ -266,6 +274,7 @@ class OpticalporkTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['groupByYear'],
 		);
+
 		$settings[] = array(
 			'key'   => 'enableImageMap',
 			'name'  => $this->translate(

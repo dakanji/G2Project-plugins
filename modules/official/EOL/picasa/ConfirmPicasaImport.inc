@@ -53,6 +53,7 @@ class ConfirmPicasaImportController extends GalleryController {
 				array($this, 'performImport'),
 				array($form)
 			);
+
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -62,6 +63,7 @@ class ConfirmPicasaImportController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'picasa.ConfirmPicasaImport';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -76,6 +78,7 @@ class ConfirmPicasaImportController extends GalleryController {
 	 */
 	public function performImport($form) {
 		global $gallery;
+
 		$storage         = $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
 
@@ -118,6 +121,7 @@ class ConfirmPicasaImportController extends GalleryController {
 			if ($ret) {
 				return $ret;
 			}
+
 			$form['destinationAlbumId'] = $rootId;
 		}
 
@@ -144,6 +148,7 @@ class ConfirmPicasaImportController extends GalleryController {
 		if (empty($totalItemsToImport)) {
 			$totalItemsToImport = 1;
 		}
+
 		$i = 0;
 
 		$numberOfItemsImported = 0;
@@ -170,6 +175,7 @@ class ConfirmPicasaImportController extends GalleryController {
 				if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
 					return $ret;
 				}
+
 				$invalidName = false;
 			} else {
 				$desiredname = $picasaAlbum['albumName'] . '_' . $k++;
@@ -240,6 +246,7 @@ class ConfirmPicasaImportController extends GalleryController {
 						$sourceEncoding
 					)
 				);
+
 				$newAlbumInstance->setSummary(
 					PicasaImportHelper::convertHtml(
 						$markupType,
@@ -248,6 +255,7 @@ class ConfirmPicasaImportController extends GalleryController {
 					)
 				);
 			}
+
 			$newAlbumInstance->setKeywords('');
 
 			$ret = $newAlbumInstance->save();
@@ -262,6 +270,7 @@ class ConfirmPicasaImportController extends GalleryController {
 			$status['albumImportSuccess'][$sanitizedAlbumName] = $newAlbumInstanceId;
 			$status['albumId']                                 = $newAlbumInstanceId;
 		}
+
 		/*
 		 * we can let the parent album (and anything else that we might
 		 * have tied up) be edited by others now
@@ -272,8 +281,8 @@ class ConfirmPicasaImportController extends GalleryController {
 		if ($ret) {
 			return $ret;
 		}
-		$importLockIds = array();
 
+		$importLockIds = array();
 
 		list($ret, $importLockIds[]) = GalleryCoreApi::acquireReadLock($newAlbumInstanceId);
 
@@ -294,17 +303,21 @@ class ConfirmPicasaImportController extends GalleryController {
 				$importAlbumItem['caption'],
 				$sourceEncoding
 			);
+
 			$templateAdapter->updateProgressBar(
 				$module->translate('Importing photos'),
 				$sanitizedAlbumName . ' ' . $sanitizedFilename,
 				$numberOfItemsImported / $totalItemsToImport
 			);
+
 			list($base, $extension) = GalleryUtilities::getFileNameComponents($sanitizedFilename);
-			list($ret, $mimeType)   = GalleryCoreApi::convertExtensionToMime($extension);
+
+			list($ret, $mimeType) = GalleryCoreApi::convertExtensionToMime($extension);
 
 			if ($ret) {
 				return $ret;
 			}
+
 			list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
 				$filepath,
 				$filename,
@@ -318,12 +331,14 @@ class ConfirmPicasaImportController extends GalleryController {
 			if ($ret) {
 				return $ret;
 			}
+
 			$itemsCreated[] = $newItem->getId();
 			$numberOfItemsImported++;
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$status['pictureImportSuccess'][$sanitizedFilename] = $newItem->getId();
 		}
 
@@ -374,13 +389,15 @@ class ConfirmPicasaImportView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $targetAlbum) = GalleryCoreApi::loadEntitiesById($destinationAlbumId, 'GalleryAlbumItem');
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-		$albumName                   = $album['albumName'];
+		$albumName = $album['albumName'];
+
 		list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent(
 			$destinationAlbumId,
 			$platform->legalizePathComponent($albumName)

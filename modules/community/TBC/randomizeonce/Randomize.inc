@@ -29,6 +29,7 @@ class RandomizeController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$error    = array();
 		$status   = array();
 		$redirect = array();
@@ -79,6 +80,7 @@ class RandomizeView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		// collect album id
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
 		// Check permissions
@@ -91,6 +93,7 @@ class RandomizeView extends GalleryView {
 		if ($form['formName'] != 'Randomize') {
 			$form['formName'] = 'Randomize';
 		}
+
 		$template->setVariable('controller', 'randomizeonce.Randomize');
 
 		return array(

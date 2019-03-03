@@ -45,6 +45,7 @@ class SampleView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = $imageframe->init($template, array_keys($list));
 
 		if ($ret) {
@@ -54,7 +55,8 @@ class SampleView extends GalleryView {
 		$ImageFrameSample = array(
 			'list' => $list,
 		);
-		$itemId           = GalleryUtilities::getRequestVariables('itemId');
+
+		$itemId = GalleryUtilities::getRequestVariables('itemId');
 
 		if (!empty($itemId)) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
@@ -62,11 +64,13 @@ class SampleView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $canSee) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
 
 			if ($ret) {
@@ -107,8 +111,10 @@ class SampleView extends GalleryView {
 			if (!($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
 				return array($ret, null, null, null);
 			}
+
 			// Fallback to default theme if given invalid itemId
 			GalleryUtilities::removeRequestVariable('itemId');
+
 			list($ret, $theme, $params, $item) = parent::loadThemeAndParameters();
 
 			if ($ret) {

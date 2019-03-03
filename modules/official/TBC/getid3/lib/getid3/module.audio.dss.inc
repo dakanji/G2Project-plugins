@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_dss extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -48,7 +46,6 @@ class getid3_dss extends getid3_handler {
 		$info['dss']['priority']          = ord(substr($DSSheader, 793, 1));
 		$info['dss']['comments']          = trim(substr($DSSheader, 798, 100));
 		$info['dss']['sample_rate_index'] = ord(substr($DSSheader, 1538, 1));  // this isn't certain, this may or may not be where the sample rate info is stored, but it seems consistent on my small selection of sample files
-
 		$info['audio']['bits_per_sample'] = 16; // maybe, maybe not -- most compressed audio formats don't have a fixed bits-per-sample value, but this is a reasonable approximation
 		$info['audio']['sample_rate']     = $this->DSSsampleRateLookup($info['dss']['sample_rate_index']);
 		$info['audio']['channels']        = 1;
@@ -60,6 +57,7 @@ class getid3_dss extends getid3_handler {
 			$info['playtime_seconds'] = $info['dss']['playtime_sec'];
 			$this->getid3->warning('playtime_ms (' . number_format($info['dss']['playtime_ms'] / 1000, 3) . ') does not match playtime_sec (' . number_format($info['dss']['playtime_sec']) . ') - using playtime_sec value');
 		}
+
 		$info['audio']['bitrate'] = ($info['filesize'] * 8) / $info['playtime_seconds'];
 
 		return true;

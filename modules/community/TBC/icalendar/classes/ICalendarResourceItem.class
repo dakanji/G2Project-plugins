@@ -49,6 +49,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 	 */
 	public function create($parentId, $fspath, $mimeType, $targetName = null, $symlink = false) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		// Create our data item
@@ -77,6 +78,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 	 */
 	public function rescan() {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		$ret = parent::rescan();
@@ -86,13 +88,14 @@ class ICalendarResourceItem extends GalleryDataItem {
 		}
 
 		// Delete existing entities from this resource
-		$query               = '
+		$query = '
 	    SELECT
 	      [ICalendarResourceMap::entityId]
 	    FROM
 	      [ICalendarResourceMap]
 	    WHERE
 	      [ICalendarResourceMap::resourceId] = ?';
+
 		list($ret, $results) = $gallery->search($query, array($this->getId()));
 
 		if ($ret) {
@@ -180,11 +183,13 @@ class ICalendarResourceItem extends GalleryDataItem {
 					$comp->properties['DTSTART'][0]->value
 				)
 			);
+
 			$newEntity->setEnd(
 				ICalendarParser::datetime_to_timestamp(
 					$comp->properties['DTEND'][0]->value
 				)
 			);
+
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
 
 			$ret = $newEntity->save();
@@ -201,6 +206,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 
 			/* save is usually called after rescan, so the resourceSerialNumber will always be
 			   out-of-date */
+
 			$ret = GalleryCoreApi::addMapEntry(
 				'ICalendarResourceMap',
 				array(

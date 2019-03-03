@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_mod extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -36,6 +34,7 @@ class getid3_mod extends getid3_handler {
 		if (preg_match('#^.{1080}(M\\.K\\.|M!K!|FLT4|FLT8|[5-9]CHN|[1-3][0-9]CH)#', $fileheader)) {
 			return $this->getMODheaderFilepointer();
 		}
+
 		$info['error'][] = 'This is not a known type of MOD file';
 
 		return false;

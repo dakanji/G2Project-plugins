@@ -21,6 +21,7 @@
  * its own storage.
  */
 global $__Auth_OpenID_PEAR_AVAILABLE;
+
 $__Auth_OpenID_PEAR_AVAILABLE = @require_once 'DB.php';
 
 /**
@@ -461,6 +462,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		if (!$assocs || (count($assocs) == 0)) {
 			return null;
 		}
+
 		$associations = array();
 
 		foreach ($assocs as $assoc_row) {
@@ -602,6 +604,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
 	public function cleanupNonces() {
 		global $Auth_OpenID_SKEW;
+
 		$v = time() - $Auth_OpenID_SKEW;
 
 		$this->connection->query($this->sql['clean_nonce'], array($v));
@@ -616,6 +619,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 			$this->sql['clean_assoc'],
 			array(time())
 		);
+
 		$num = $this->connection->affectedRows();
 		$this->connection->commit();
 

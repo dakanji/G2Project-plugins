@@ -75,12 +75,14 @@ class ASCII85Decode {
 				for ($j = 0; $j < 5; ++$j) {
 					$r = $r * 85 + $chn[$j];
 				}
+
 				$out .= chr($r >> 24);
 				$out .= chr($r >> 16);
 				$out .= chr($r >> 8);
 				$out .= chr($r);
 			}
 		}
+
 		$r = 0;
 
 		if ($state == 1) {

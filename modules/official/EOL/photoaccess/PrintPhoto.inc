@@ -31,6 +31,7 @@ class PrintPhotoController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $item) = $this->getItem();
@@ -40,13 +41,15 @@ class PrintPhotoController extends GalleryController {
 		}
 
 		$returnUrl = GalleryUtilities::getRequestVariables('returnUrl');
-		$ret       = $urlGenerator->assertIsInternalUrl($returnUrl);
+
+		$ret = $urlGenerator->assertIsInternalUrl($returnUrl);
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
 		GalleryCoreApi::requireOnce('modules/photoaccess/classes/PhotoAccessHelper.class');
+
 		list($ret, $cartUrl) = PhotoAccessHelper::printPhotos(
 			array(
 				$item->getId() => 1,

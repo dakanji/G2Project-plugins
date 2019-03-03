@@ -13,7 +13,6 @@
 // dependencies: module.audio.riff.php                         //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 
 class getid3_optimfrog extends getid3_handler {
@@ -44,7 +43,6 @@ class getid3_optimfrog extends getid3_handler {
 
 	public function ParseOptimFROGheader42() {
 		// for fileformat of v4.21 and older
-
 		$info = &$this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$OptimFROGheaderData  = $this->fread(45);
@@ -90,7 +88,6 @@ class getid3_optimfrog extends getid3_handler {
 
 	public function ParseOptimFROGheader45() {
 		// for fileformat of v4.50a and higher
-
 		$info     = &$this->getid3->info;
 		$RIFFdata = '';
 		$this->fseek($info['avdataoffset']);
@@ -109,6 +106,7 @@ class getid3_optimfrog extends getid3_handler {
 			if (!isset($info['ofr'][$BlockName])) {
 				$info['ofr'][$BlockName] = array();
 			}
+
 			$thisfile_ofr_thisblock = &$info['ofr'][$BlockName];
 
 			switch ($BlockName) {
@@ -130,6 +128,7 @@ class getid3_optimfrog extends getid3_handler {
 
 							break;
 					}
+
 					$BlockData .= $this->fread($BlockSize);
 
 					$thisfile_ofr_thisblock['total_samples']      = getid3_lib::LittleEndian2Int(substr($BlockData, $offset, 6));
@@ -173,10 +172,8 @@ class getid3_optimfrog extends getid3_handler {
 
 					break;
 
-
 				case 'COMP':
 					// unlike other block types, there CAN be multiple COMP blocks
-
 					$COMPdata['offset'] = $BlockOffset;
 					$COMPdata['size']   = $BlockSize;
 
@@ -238,7 +235,6 @@ class getid3_optimfrog extends getid3_handler {
 
 				case 'RECV':
 					// block contains no useful meta data - simply note and skip
-
 					$thisfile_ofr_thisblock['offset'] = $BlockOffset;
 					$thisfile_ofr_thisblock['size']   = $BlockSize;
 
@@ -246,10 +242,8 @@ class getid3_optimfrog extends getid3_handler {
 
 					break;
 
-
 				case 'APET':
 					// APEtag v2
-
 					$thisfile_ofr_thisblock['offset'] = $BlockOffset;
 					$thisfile_ofr_thisblock['size']   = $BlockSize;
 					$info['warning'][]                = 'APEtag processing inside OptimFROG not supported in this version (' . $this->getid3->version() . ') of getID3()';
@@ -258,10 +252,8 @@ class getid3_optimfrog extends getid3_handler {
 
 					break;
 
-
 				case 'MD5 ':
 					// APEtag v2
-
 					$thisfile_ofr_thisblock['offset'] = $BlockOffset;
 					$thisfile_ofr_thisblock['size']   = $BlockSize;
 
@@ -275,7 +267,6 @@ class getid3_optimfrog extends getid3_handler {
 					}
 
 					break;
-
 
 				default:
 					$thisfile_ofr_thisblock['offset'] = $BlockOffset;
@@ -371,11 +362,9 @@ class getid3_optimfrog extends getid3_handler {
 	//     static $OptimFROGalgorithmNameLookup = array();
 	//     return (isset($OptimFROGalgorithmNameLookup[$AlgorithID]) ? $OptimFROGalgorithmNameLookup[$AlgorithID] : false);
 	// }
-
 	public static function OptimFROGencoderNameLookup($EncoderID) {
 		// version = (encoderID >> 4) + 4500
 		// system =  encoderID & 0xF
-
 		$EncoderVersion  = number_format(((($EncoderID & 0xF0) >> 4) + 4500) / 1000, 3);
 		$EncoderSystemID = ($EncoderID & 0x0F);
 
@@ -391,10 +380,8 @@ class getid3_optimfrog extends getid3_handler {
 	public static function OptimFROGcompressionLookup($CompressionID) {
 		// mode = compression >> 3
 		// speedup = compression & 0x07
-
 		$CompressionModeID = ($CompressionID & 0xF8) >> 3;
 		//$CompressionSpeedupID = ($CompressionID & 0x07);
-
 		static $OptimFROGencoderModeLookup = array(
 			0x00 => 'fast',
 			0x01 => 'normal',
@@ -414,7 +401,6 @@ class getid3_optimfrog extends getid3_handler {
 	public static function OptimFROGspeedupLookup($CompressionID) {
 		// mode = compression >> 3
 		// speedup = compression & 0x07
-
 		//$CompressionModeID = ($CompressionID & 0xF8) >> 3;
 		$CompressionSpeedupID = ($CompressionID & 0x07);
 

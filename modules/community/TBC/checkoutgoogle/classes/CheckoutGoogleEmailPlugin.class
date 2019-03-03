@@ -35,7 +35,6 @@ class CheckoutGoogleEmailPlugin extends CheckoutEmailInterface_1_0 {
 	 */
 	public function getEmailTemplateAndVariables($transactionId, $templateName) {
 
-
 		// check here to see if a Google Checkout transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 

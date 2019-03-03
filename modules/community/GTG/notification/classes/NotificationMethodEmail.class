@@ -43,6 +43,7 @@ class NotificationMethodEmail extends NotificationHandler_1_0 {
 	 */
 	public function handleNotification($subscribers, $notification) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$event = $notification->getEvent();
@@ -59,6 +60,7 @@ class NotificationMethodEmail extends NotificationHandler_1_0 {
 			if (!GalleryUtilities::isValidEmailString($user->getEmail())) {
 				continue;
 			}
+
 			list($ret, $language) = GalleryCoreApi::fetchLanguageCodeForUser($user->getId());
 
 			if ($ret) {
@@ -106,6 +108,7 @@ class NotificationMethodEmail extends NotificationHandler_1_0 {
 			if ($ret) {
 				return $ret;
 			}
+
 			$subject = $notificationName;
 
 			list($ret, $body) = $notification->getNotificationMessage();

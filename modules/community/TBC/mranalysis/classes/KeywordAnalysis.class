@@ -196,7 +196,6 @@ class KeywordAnalysis {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
-
 	public static function addkeyword($itemId, $keyword) {
 		global $gallery;
 
@@ -379,7 +378,6 @@ class KeywordAnalysis {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
-
 	// has it got a normal keyword?
 	public static function has_normal_keyword($keywords, $searchkeyword) {
 		foreach ($keywords as $ksrch) {
@@ -418,7 +416,6 @@ class KeywordAnalysis {
 
 		// Support specialword in middle of keyword e.g.
 		// Foo [name] Bar
-
 		return false;
 	}
 
@@ -506,7 +503,6 @@ class KeywordAnalysis {
 
 			if (($keywordlength % 2) == 0) {
 				// look for [Keyword][Keyword]
-
 				$midpoint = $keywordlength / 2;
 
 				$left  = substr($ksrch, 0, $midpoint);
@@ -534,10 +530,8 @@ class KeywordAnalysis {
 			for ($pos = 0; $pos < $weirdseparatorslen; ++$pos) {
 				$sep = substr($weirdseparators, $pos, 1);
 				//print '<br>Weird Separator : ' . $sep;
-
 				if (!(false === strpos($ksrch, $sep))) {
 					//print '<br>Found Weirdness in ' . $ksrch . ' with separator ' . $sep;
-
 					$keywordtypos['strangeseparator' . $sep] = $ksrch;
 				}
 			}

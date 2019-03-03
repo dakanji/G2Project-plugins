@@ -38,18 +38,19 @@ class BuildDownloadController extends GalleryController {
 
 	public function handleRequest($form) {
 		global $gallery;
+
 		$platform        =& $gallery->getPlatform();
 		$templateAdapter =& $gallery->getTemplateAdapter();
 		$error           = array();
 		$status          = array();
 		$results         = array();
 
-
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
 
 		if (empty($transactionId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
+
 		// get the transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
@@ -72,7 +73,9 @@ class BuildDownloadController extends GalleryController {
 		if ($verify1 != $transaction->getDate() || $verify2 != $transaction->getSecurity()) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
-		$file                         = '';
+
+		$file = '';
+
 		list($ret, $permissionResult) = CheckoutDownloadHelper::checkDownloadOffer($transactionId);
 
 		if ($ret) {
@@ -98,6 +101,7 @@ class BuildDownloadController extends GalleryController {
 
 	public function BuildDownload($transactionId, $verify1, $verify2) {
 		global $gallery;
+
 		$templateAdapter =& $gallery->getTemplateAdapter();
 		$platform        =& $gallery->getPlatform();
 		$slash           = $platform->getDirectorySeparator();
@@ -116,11 +120,13 @@ class BuildDownloadController extends GalleryController {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $itemIdsAndOperations) = CheckoutDownloadHelper::getDownloadableItemIds($itemList);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$count = count($itemIdsAndOperations);
 
 		if (empty($itemIdsAndOperations) || !isset($transactionId)) {
@@ -142,6 +148,7 @@ class BuildDownloadController extends GalleryController {
 		if (!$success) {
 			return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 		}
+
 		$albumDir = $gallery->getConfig('data.gallery.albums');
 
 		$stripPath = $zipDir;
@@ -167,8 +174,10 @@ class BuildDownloadController extends GalleryController {
 					'arg2' => $count,
 				)
 			);
+
 			$templateAdapter->updateProgressBar($heading, $message, $i / $count);
-			$itemId           = $itemRecord['id'];
+			$itemId = $itemRecord['id'];
+
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 			if ($ret) {
@@ -191,6 +200,7 @@ class BuildDownloadController extends GalleryController {
 			} else {
 				$relativePath = (strpos($originalPath, $albumDir) === 0) ? substr($originalPath, strlen($albumDir)) : basename($originalPath);
 			}
+
 			$destination = $zipDir . $slash . $relativePath;
 			// Insert file-size into name
 			if ($scaleToFit != '') {
@@ -203,6 +213,7 @@ class BuildDownloadController extends GalleryController {
 			if (!$success) {
 				return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 			}
+
 			// Copy or scale?
 			if ($scaleToFit == '' && $OperationString == '') {
 				if (!$platform->copy($originalPath, $destination)) {
@@ -221,8 +232,10 @@ class BuildDownloadController extends GalleryController {
 					// Don't put unknown size into context
 					$context = array();
 				}
+
 				// Get the appropriate toolkit
-				$mimeType                           = $item->getMimeType();
+				$mimeType = $item->getMimeType();
+
 				list($ret, $toolkit, $nextMimeType) = GalleryCoreApi::getToolkitByOperation($mimeType, $operationName);
 
 				if ($ret) {
@@ -232,6 +245,7 @@ class BuildDownloadController extends GalleryController {
 				if (!isset($toolkit)) {
 					return GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION, __FILE__, __LINE__, "$operationName $mimeType");
 				}
+
 				// Perform the operation
 				list($ret, $outputMimeType, $context) = $toolkit->performOperation(
 					$mimeType,
@@ -246,6 +260,7 @@ class BuildDownloadController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			// save new file names for addition to zip
 			if ($archive->add($destination, PCLZIP_OPT_REMOVE_PATH, $stripPath) == 0) {
 				@$platform->unlink($zipFile);
@@ -270,6 +285,7 @@ class BuildDownloadController extends GalleryController {
 				'text' => 'Finishing off...',
 			)
 		);
+
 		$templateAdapter->updateProgressBar($heading, $message, 1);
 		$finalFile = $gallery->getConfig('data.gallery.tmp') . $transactionId . '.zip';
 		@$platform->unlink($finalFile);
@@ -290,18 +306,21 @@ class BuildDownloadController extends GalleryController {
 				'text' => 'Hit Continue to download your file.',
 			)
 		);
+
 		$message = $module->translate(
 			array(
 				'text' => 'Done.',
 			)
 		);
+
 		$templateAdapter->updateProgressBar($heading, $message, 1);
-		$redirect     = array(
+		$redirect = array(
 			'view'          => 'checkoutdownload.FetchDownload',
 			'transactionId' => $transactionId,
 			'verify1'       => $verify1,
 			'verify2'       => $verify2,
 		);
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 

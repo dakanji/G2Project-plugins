@@ -46,9 +46,6 @@
  *
  ******************************************************************************/
 
-
-
-
 /******************************************************************************
  *
  * Function:     get_jpeg_header_data
@@ -68,7 +65,6 @@ function get_jpeg_header_data($filename) {
 		// prevent refresh from aborting file operations and hosing file
 	ignore_user_abort(true);
 
-
 	// Attempt to open the jpeg file - the at symbol supresses the error message about
 	// not being able to open files. The file_exists would have been used, but it
 	// does not work with files fetched over http or ftp.
@@ -82,7 +78,6 @@ function get_jpeg_header_data($filename) {
 		return false;
 	}
 
-
 	// Read the first two characters
 	$data = network_safe_fread($filehnd, 2);
 
@@ -93,7 +88,6 @@ function get_jpeg_header_data($filename) {
 
 		return false;
 	}
-
 
 	// Read the third character
 	$data = network_safe_fread($filehnd, 2);
@@ -109,11 +103,9 @@ function get_jpeg_header_data($filename) {
 	// Flag that we havent yet hit the compressed image data
 	$hit_compressed_image_data = false;
 
-
 	// Cycle through the file until, one of: 1) an EOI (End of image) marker is hit,
 	//                                       2) we have hit the compressed image data (no more headers are allowed after data)
 	//                                       3) or end of file is hit
-
 	while (($data[1] != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd))) {
 		// Found a segment to look at.
 		// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
@@ -130,7 +122,6 @@ function get_jpeg_header_data($filename) {
 
 			// Read the segment data with length indicated by the previously read size
 			$segdata = network_safe_fread($filehnd, $decodedsize['size'] - 2);
-
 
 			// Store the segment information in the output array
 			$headerdata[] = array(
@@ -170,10 +161,6 @@ function get_jpeg_header_data($filename) {
 }
 
 // End of Function:     get_jpeg_header_data
-
-
-
-
 /******************************************************************************
  *
  * Function:     put_jpeg_header_data
@@ -217,7 +204,6 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 		return false;
 	}
 
-
 	// Cycle through new headers
 	foreach ($jpeg_header_data as $segno => $segment) {
 		// Check that this header is smaller than the maximum size
@@ -230,8 +216,6 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 	}
 
 	ignore_user_abort(true);    // prevent refresh from aborting file operations and hosing file
-
-
 	// Attempt to open the new jpeg file
 	$newfilehnd = @fopen($new_filename, 'wb');
 	// Check if the file opened successfully
@@ -269,14 +253,10 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 	// Alow the user to abort from now on
 	ignore_user_abort(false);
 
-
 	return true;
 }
 
 // End of Function:     put_jpeg_header_data
-
-
-
 /******************************************************************************
  *
  * Function:     get_jpeg_Comment
@@ -305,13 +285,12 @@ function get_jpeg_Comment($jpeg_header_data) {
 		// A COM segment was found, return it's contents
 		return $jpeg_header_data[$i]['SegData'];
 	}
+
 	// No COM segment found
 	return false;
 }
 
 // End of Function:     get_jpeg_Comment
-
-
 /******************************************************************************
  *
  * Function:     put_jpeg_Comment
@@ -341,15 +320,12 @@ function put_jpeg_Comment($jpeg_header_data, $new_Comment) {
 		}
 	}
 
-
-
 	// No preexisting Comment block found, find where to put it by searching for the highest app segment
 	$i = 0;
 
 	while (($i < count($jpeg_header_data)) && ($jpeg_header_data[$i]['SegType'] >= 0xE0)) {
 		$i++;
 	}
-
 
 	// insert a Comment segment new at the position found of the header data.
 	array_splice(
@@ -370,10 +346,6 @@ function put_jpeg_Comment($jpeg_header_data, $new_Comment) {
 }
 
 // End of Function:     put_jpeg_Comment
-
-
-
-
 /******************************************************************************
  *
  * Function:     Interpret_Comment_to_HTML
@@ -406,10 +378,6 @@ function Interpret_Comment_to_HTML($jpeg_header_data) {
 }
 
 // End of Function:     Interpret_Comment_to_HTML
-
-
-
-
 /******************************************************************************
  *
  * Function:     get_jpeg_intrinsic_values
@@ -439,7 +407,6 @@ function get_jpeg_intrinsic_values($jpeg_header_data) {
 	// Check if a SOF segment has been found
 	if (substr($jpeg_header_data[$i]['SegName'], 0, 3) == 'SOF') {
 		// SOF segment was found, extract the information
-
 		$data = $jpeg_header_data[$i]['SegData'];
 
 		// First byte is Bits per component
@@ -472,11 +439,6 @@ function get_jpeg_intrinsic_values($jpeg_header_data) {
 }
 
 // End of Function:     get_jpeg_intrinsic_values
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     Interpret_intrinsic_values_to_HTML
@@ -519,13 +481,6 @@ function Interpret_intrinsic_values_to_HTML($values) {
 }
 
 // End of Function:     Interpret_intrinsic_values_to_HTML
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     get_jpeg_image_data
@@ -553,7 +508,6 @@ function get_jpeg_image_data($filename) {
 		return false;
 	}
 
-
 	// Read the first two characters
 	$data = network_safe_fread($filehnd, 2);
 
@@ -564,8 +518,6 @@ function get_jpeg_image_data($filename) {
 
 		return false;
 	}
-
-
 
 	// Read the third character
 	$data = network_safe_fread($filehnd, 2);
@@ -581,11 +533,9 @@ function get_jpeg_image_data($filename) {
 	// Flag that we havent yet hit the compressed image data
 	$hit_compressed_image_data = false;
 
-
 	// Cycle through the file until, one of: 1) an EOI (End of image) marker is hit,
 	//                                       2) we have hit the compressed image data (no more headers are allowed after data)
 	//                                       3) or end of file is hit
-
 	while (($data[1] != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd))) {
 		// Found a segment to look at.
 		// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
@@ -610,7 +560,6 @@ function get_jpeg_image_data($filename) {
 			// Can't use the filesize function to work out
 			// how much to read, as it won't work for files being read by http or ftp
 			// So instead read 1Mb at a time till EOF
-
 			$compressed_data = '';
 
 			do {
@@ -640,7 +589,6 @@ function get_jpeg_image_data($filename) {
 	// Alow the user to abort from now on
 	ignore_user_abort(false);
 
-
 	// Return the compressed data if it was found
 	if ($hit_compressed_image_data) {
 		return $compressed_data;
@@ -650,13 +598,6 @@ function get_jpeg_image_data($filename) {
 }
 
 // End of Function:     get_jpeg_image_data
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     Generate_JPEG_APP_Segment_HTML
@@ -676,28 +617,22 @@ function Generate_JPEG_APP_Segment_HTML($jpeg_header_data) {
 		return '';
 	}
 
-
 	// Write Heading
 	$output = "<h2 class=\"JPEG_APP_Segments_Main_Heading\">Application Metadata Segments</h2>\n";
 
 	// Create table
 	$output .= "<table class=\"JPEG_APP_Segments_Table\" border=1>\n";
 
-
 	// Cycle through each segment in the array
-
 	foreach ($jpeg_header_data as $jpeg_header) {
 		// Check if the segment is a APP segment
-
 		if (($jpeg_header['SegType'] >= 0xE0) && ($jpeg_header['SegType'] <= 0xEF)) {
 			// This is an APP segment
-
 			// Read APP Segment Name - a Null terminated string at the start of the segment
 			$seg_name = strtok($jpeg_header['SegData'], "\x00");
 
 			// Some Segment names are either too long or not meaningfull, so
 			// we should clean them up
-
 			if ($seg_name == 'http://ns.adobe.com/xap/1.0/') {
 				$seg_name = 'XAP/RDF ("http://ns.adobe.com/xap/1.0/")';
 			} elseif ($seg_name == 'Photoshop 3.0') {
@@ -713,7 +648,6 @@ function Generate_JPEG_APP_Segment_HTML($jpeg_header_data) {
 			) {
 				$seg_name = 'HP segment full of "HHHHH"';
 			}
-
 
 			// Clean the segment name so it doesn't cause problems with HTML
 			$seg_name = htmlentities($seg_name);
@@ -731,10 +665,6 @@ function Generate_JPEG_APP_Segment_HTML($jpeg_header_data) {
 }
 
 // End of Function:     Generate_JPEG_APP_Segment_HTML
-
-
-
-
 /******************************************************************************
  *
  * Function:     network_safe_fread
@@ -757,7 +687,6 @@ function network_safe_fread($file_handle, $length) {
 
 	// Keep reading data from the file until either EOF occurs or we have
 	// retrieved the requested number of bytes
-
 	while ((!feof($file_handle)) && (strlen($data) < $length)) {
 		$data .= fread($file_handle, $length - strlen($data));
 	}
@@ -767,10 +696,6 @@ function network_safe_fread($file_handle, $length) {
 }
 
 // End of Function:     network_safe_fread
-
-
-
-
 /******************************************************************************
  * Global Variable:      JPEG_Segment_Names
  *
@@ -832,7 +757,6 @@ $GLOBALS['JPEG_Segment_Names'] = array(
 	0xEE => 'APP14',
 	0xEF => 'APP15',
 
-
 	0xF0 => 'JPG0',
 	0xF1 => 'JPG1',
 	0xF2 => 'JPG2',
@@ -855,8 +779,6 @@ $GLOBALS['JPEG_Segment_Names'] = array(
 );
 
 // End of Global Variable:     JPEG_Segment_Names
-
-
 /******************************************************************************
  * Global Variable:      JPEG_Segment_Descriptions
  *
@@ -919,7 +841,6 @@ $GLOBALS['JPEG_Segment_Descriptions'] = array(
 	0xED => 'Application Field 13 (APP13) - usually photoshop IRB / IPTC',
 	0xEE => 'Application Field 14 (APP14)',
 	0xEF => 'Application Field 15 (APP15)',
-
 
 	0xF0 => 'Reserved for JPEG extensions (JPG0)',
 	0xF1 => 'Reserved for JPEG extensions (JPG1)',

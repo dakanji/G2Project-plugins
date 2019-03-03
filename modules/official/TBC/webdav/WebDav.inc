@@ -34,6 +34,7 @@ class WebDavController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		/*
@@ -42,6 +43,7 @@ class WebDavController extends GalleryController {
 		 * registered for this request.  Since this is the WebDAV controller, we know it is a WebDAV
 		 * request.
 		 */
+
 		$ret = GalleryCoreApi::registerFactoryImplementationForRequest(
 			'GalleryEventListener',
 			'WebDavModule',
@@ -110,6 +112,7 @@ class WebDavController extends GalleryController {
 			WebDavServer::getme()->setResponseStatus(
 				'200 OK'
 			);
+
 			$handle = WebDavServer::getme()->openRequestBody();
 
 			while (!feof($handle)) {
@@ -126,6 +129,7 @@ class WebDavController extends GalleryController {
 			GalleryUtilities::unsanitizeInputValues($pathComponent);
 			$pathComponents[$key] = $platform->legalizePathComponent($pathComponent);
 		}
+
 		$path = implode('/', $pathComponents);
 		GalleryUtilities::putRequestVariable('path', $path);
 

@@ -51,10 +51,10 @@ class PuzzleHelper {
 	// if there is a Gallery function which does this, please send me an email about it
 	public function findParentAlbum($item) {
 		global $gallery;
+
 		$found = false;
 
 		$count = 0; // just being paranoid
-
 		// I think the parent of any photo is the album, but let's traverse the tree to make sure
 		while (true) {
 			// just because I hate the idea of an infinite loop.

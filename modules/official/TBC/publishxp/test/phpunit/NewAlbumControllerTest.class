@@ -32,6 +32,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -43,6 +44,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($parentAlbum);
 		$this->_parentAlbumId = $parentAlbum->getId();
 		$this->_userId        = $gallery->getActiveUserId();
@@ -53,6 +55,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 			'form[pathComponent]',
 			$this->_pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
+
 		GalleryUtilities::putRequestVariable('form[title]', 'test title');
 		GalleryUtilities::putRequestVariable('form[summary]', 'test summary');
 		GalleryUtilities::putRequestVariable('form[description]', 'test description');
@@ -146,6 +149,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 			'form[pathComponent]',
 			$pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
+
 		GalleryUtilities::putRequestVariable('form[title]', 'test<script>evil</script> title');
 		GalleryUtilities::putRequestVariable('form[summary]', 'test<script>evil</script> summary');
 		GalleryUtilities::putRequestVariable('form[description]', 'test<script>evil</script> desc');

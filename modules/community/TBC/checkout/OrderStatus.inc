@@ -33,13 +33,10 @@
  * @subpackage UserInterface
  */
 
-
 /**
  * Required classes
  */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
-
-
 
 class OrderStatusController extends GalleryController {
 	/**
@@ -83,6 +80,7 @@ class OrderStatusView extends GalleryView {
 		if (empty($transactionId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
+
 		// get the transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
@@ -106,7 +104,6 @@ class OrderStatusView extends GalleryView {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
-
 		if ($form['formName'] != 'OrderStatus') {
 			$form['formName'] = 'OrderStatus';
 			// Figure out which item we're talking about
@@ -119,17 +116,20 @@ class OrderStatusView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// if the user is site admin we can show button for ordersadmin page
 		list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $tpl['busname']) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'busname');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$tpl['isAdmin']    = $isAdmin;
 		$tpl['id']         = $transactionId;
 		$tpl['controller'] = 'checkout.OrderStatus';
@@ -142,6 +142,7 @@ class OrderStatusView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->title($tpl['busname'] . ' ' . $module->translate('Order Status'));
 
 		return array(

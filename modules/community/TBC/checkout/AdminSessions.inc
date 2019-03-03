@@ -33,6 +33,7 @@ class AdminSessionsView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
@@ -90,12 +91,12 @@ class AdminSessionsView extends GalleryView {
 				}
 			}
 
-
 			$items = $mySession->get('checkout.items');
 			/* Remove empty carts
 			if (empty($items)) {
 			continue;
 			}
+
 			*/
 
 			$transactionId = $mySession->get('checkout.transactionId');
@@ -123,11 +124,13 @@ class AdminSessionsView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$userNames = array();
 
 		foreach ($users as $user) {
 			$userNames[$user->getId()] = $user->getFullName();
 		}
+
 		$template->setVariable('sessions', $sessions);
 		$template->setVariable('userNames', $userNames);
 		$template->setVariable('controller', 'checkout.AdminTransactions');

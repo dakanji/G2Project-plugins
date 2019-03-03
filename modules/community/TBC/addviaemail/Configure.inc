@@ -154,6 +154,7 @@ class ConfigureController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
@@ -184,6 +185,7 @@ class ConfigureController extends GalleryController {
 				'subView' => 'addviaemail.Configure',
 			);
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -237,6 +239,7 @@ class ConfigureView extends GalleryView {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						$form['owner'] = $user->getUserName();
 					}
 				} else {
@@ -254,6 +257,7 @@ class ConfigureView extends GalleryView {
 				}
 			}
 		}
+
 		$form['passWord'] = '';
 		$configure        = array();
 
@@ -271,11 +275,13 @@ class ConfigureView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$configure['albumTree'] = GalleryUtilities::createAlbumTree($albums);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'addviaemail');
@@ -283,11 +289,13 @@ class ConfigureView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $isActive) = $module->isActive();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$configure['isConfigure'] = !$isActive;
 
 		$template->setVariable('AddviaEmailConfigure', $configure);

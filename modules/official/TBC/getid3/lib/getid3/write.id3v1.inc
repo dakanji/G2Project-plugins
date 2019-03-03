@@ -13,7 +13,6 @@
 // dependencies: module.tag.id3v1.php                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.id3v1.php', __FILE__, true);
 
 class getid3_write_id3v1 {
@@ -46,6 +45,7 @@ class getid3_write_id3v1 {
 				} else {
 					fseek($fp_source, 0, SEEK_END);    // append new ID3v1 tag
 				}
+
 				$this->tag_data['track'] = (isset($this->tag_data['track']) ? $this->tag_data['track'] : (isset($this->tag_data['track_number']) ? $this->tag_data['track_number'] : (isset($this->tag_data['tracknumber']) ? $this->tag_data['tracknumber'] : '')));
 
 				$new_id3v1_tag_data = getid3_id3v1::GenerateID3v1Tag(
@@ -57,15 +57,18 @@ class getid3_write_id3v1 {
 					(isset($this->tag_data['comment']) ? $this->tag_data['comment'] : ''),
 					(isset($this->tag_data['track']) ? $this->tag_data['track'] : '')
 				);
+
 				fwrite($fp_source, $new_id3v1_tag_data, 128);
 				fclose($fp_source);
 
 				return true;
 			}
+
 			$this->errors[] = 'Could not fopen(' . $this->filename . ', "r+b")';
 
 			return false;
 		}
+
 		$this->errors[] = 'File is not writeable: ' . $this->filename;
 
 		return false;
@@ -74,7 +77,6 @@ class getid3_write_id3v1 {
 	public function FixID3v1Padding() {
 		// ID3v1 data is supposed to be padded with NULL characters, but some taggers incorrectly use spaces
 		// This function rewrites the ID3v1 tag with correct padding
-
 		// Initialize getID3 engine
 		$getID3                    = new getID3();
 		$getID3->option_tag_id3v2  = false;
@@ -88,6 +90,7 @@ class getid3_write_id3v1 {
 			foreach ($ThisFileInfo['tags']['id3v1'] as $key => $value) {
 				$id3v1data[$key] = implode(',', $value);
 			}
+
 			$this->tag_data = $id3v1data;
 
 			return $this->WriteID3v1();
@@ -113,12 +116,13 @@ class getid3_write_id3v1 {
 				if (fread($fp_source, 3) == 'TAG') {
 					ftruncate($fp_source, $this->filesize - 128);
 				}
-				// no ID3v1 tag to begin with - do nothing
 
+				// no ID3v1 tag to begin with - do nothing
 				fclose($fp_source);
 
 				return true;
 			}
+
 			$this->errors[] = 'Could not fopen(' . $this->filename . ', "r+b")';
 		} else {
 			$this->errors[] = $this->filename . ' is not writeable';
@@ -133,6 +137,7 @@ class getid3_write_id3v1 {
 
 			return true;
 		}
+
 		// 32-bit PHP will not return correct values for filesize() if file is >=2GB
 		// but getID3->analyze() has workarounds to get actual filesize
 		$getID3                    = new getID3();

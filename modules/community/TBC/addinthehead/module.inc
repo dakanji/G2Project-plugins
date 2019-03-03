@@ -27,6 +27,7 @@
 class AddInTheHeadModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('addinthehead');
 		$this->setName('Add Items in the Heading');
 		$this->setDescription(
@@ -135,7 +136,6 @@ class AddInTheHeadModule extends GalleryModule {
 			 * }
 			 */
 		}
-
 
 		/*
 		 * AddInTheHeadModule::addExternalLink(

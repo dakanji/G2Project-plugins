@@ -54,6 +54,7 @@ class PanoramaSiteAdminController extends GalleryController {
 						return array($ret, null);
 					}
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'panorama',
@@ -64,6 +65,7 @@ class PanoramaSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$status['saved'] = 1;
 			}
 		}

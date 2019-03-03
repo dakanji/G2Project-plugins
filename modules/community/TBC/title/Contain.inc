@@ -28,6 +28,7 @@ GalleryCoreApi::requireOnce('modules/title/Begin.inc');/**
 class ContainView extends BeginView {
 	public function __construct() {
 		global $gallery;
+
 		$this->_view            = 'title.Contain';
 		$this->_title           = $gallery->i18n('Items whose titles contain');
 		$this->_itemType        = array($gallery->i18n('Contain'), $gallery->i18n('contain'));
@@ -63,7 +64,8 @@ class ContainView extends BeginView {
 				[GalleryItem::title]
 		';
 
-		$queryOptions              = array($chars);
+		$queryOptions = array($chars);
+
 		list($ret, $searchResults) = $gallery->search($query, $queryOptions);
 
 		if ($ret) {

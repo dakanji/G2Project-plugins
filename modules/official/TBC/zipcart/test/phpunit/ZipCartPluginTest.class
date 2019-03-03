@@ -33,6 +33,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -58,6 +59,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markToolkitForCleanup('ZipCartToolkit');
 
 		$ret = GalleryCoreApi::registerToolkitOperation(
@@ -95,6 +97,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_album);
 
 		// Photo with core.viewSource
@@ -120,6 +123,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $derivativeId) = $this->_addDerivative($this->_items[1], DERIVATIVE_TYPE_IMAGE_PREFERRED);
 
 		if ($ret) {
@@ -137,6 +141,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $derivativeId) = $this->_addDerivative($this->_items[2], DERIVATIVE_TYPE_IMAGE_RESIZE);
 
 		if ($ret) {
@@ -166,6 +171,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $derivativeId) = $this->_addDerivative(
 			$this->_items[4],
 			DERIVATIVE_TYPE_IMAGE_PREFERRED,
@@ -190,6 +196,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			$this->failWithStatus($ret);
 		}
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -203,11 +210,13 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = GalleryCoreApi::removeItemPermissions($item->getId());
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = GalleryCoreApi::addGroupPermission($item->getId(), $this->_everybodyId, 'core.view');
 
 		if ($ret) {
@@ -239,15 +248,18 @@ class ZipCartPluginTest extends GalleryTestCase {
 		if (!isset($derivative)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
+
 		$ret = $derivative->create($item->getId(), $derivativeType);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$derivative->setDerivativeSourceId($item->getId());
 		$derivative->setMimeType($item->getMimeType());
 		$operation = empty($operation) ? 'testoperation|0' : $operation;
 		$derivative->setDerivativeOperations($operation);
+
 		$ret = $derivative->save();
 
 		if ($ret) {
@@ -269,7 +281,8 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 		// Create a mock mime type for derivative
 		$extension = 'test-' . mt_rand(111, 999);
-		$ret       = GalleryCoreApi::addMimeType($extension, 'test/out', false);
+
+		$ret = GalleryCoreApi::addMimeType($extension, 'test/out', false);
 
 		if ($ret) {
 			return $ret;
@@ -277,7 +290,8 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce('modules/zipcart/classes/ZipCartPlugin.class');
-		$cartPlugin            = new ZipCartPlugin();
+		$cartPlugin = new ZipCartPlugin();
+
 		list($ret, $urlParams) = $cartPlugin->fulfillCart($cartItemIds);
 
 		if ($ret) {
@@ -291,6 +305,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 			),
 			$urlParams
 		);
+
 		$platform =& $gallery->getPlatform();
 		@$platform->unlink($gallery->_zipCartTempnam);
 		$slash = $platform->getDirectorySeparator();
@@ -307,20 +322,24 @@ class ZipCartPluginTest extends GalleryTestCase {
 			$gallery->_zipCartFiles,
 			'zip files'
 		);
+
 		// Check that derivatives were used appropriately..
 		$this->assertEquals(5, count($gallery->_zipCartSources), '5 sources');
 		$this->assert(
 			strpos($gallery->_zipCartSources[0], "${slash}albums${slash}") !== false,
 			'first item from original (' . $gallery->_zipCartSources[0] . ')'
 		);
+
 		$this->assert(
 			strpos($gallery->_zipCartSources[1], "${slash}derivative/") !== false,
 			'second item from derivative (' . $gallery->_zipCartSources[1] . ')'
 		);
+
 		$this->assert(
 			strpos($gallery->_zipCartSources[2], "${slash}derivative/") !== false,
 			'third item from derivative (' . $gallery->_zipCartSources[2] . ')'
 		);
+
 		$this->assert(
 			strpos($gallery->_zipCartSources[3], "${slash}albums${slash}") !== false,
 			'fourth item from original (' . $gallery->_zipCartSources[3] . ')'
@@ -341,6 +360,7 @@ class ZipCartPluginTestPlatform {
 
 	public function tempnam($dir, $prefix) {
 		global $gallery;
+
 		$gallery->_zipCartTempnam = $this->_platform->tempnam($dir, $prefix);
 
 		return $gallery->_zipCartTempnam;
@@ -399,6 +419,7 @@ class ZipCartPluginTestPlatform {
 
 		if (strpos($dest, 'tmp' . $slash . 'zip') !== false) {
 			global $gallery;
+
 			$gallery->_zipCartSources[] = $source;
 		}
 
@@ -468,6 +489,7 @@ class ZipCartToolkit extends GalleryToolkit {
 				);
 			}
 		}
+
 		$outputMimeType = ($operationName == 'testconvert' ? 'test/out' : $mimeType);
 
 		return array(null, $outputMimeType, $context);

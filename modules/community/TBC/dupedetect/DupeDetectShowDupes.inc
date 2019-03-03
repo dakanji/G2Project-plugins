@@ -79,7 +79,8 @@ class DupeDetectShowDupesController extends GalleryController {
 								'src' => $srcId,
 								'dup' => $dupId,
 							);
-							$status['ignored'][]    = $pairId;
+
+							$status['ignored'][] = $pairId;
 
 							break;
 
@@ -88,19 +89,21 @@ class DupeDetectShowDupesController extends GalleryController {
 							break;
 
 						case 'linkToSrc':
-							$pairsToLink[]      = array(
+							$pairsToLink[] = array(
 								'master' => $srcId,
 								'slave'  => $dupId,
 							);
+
 							$status['linked'][] = $pairId;
 
 							break;
 
 						case 'linkToDup':
-							$pairsToLink[]      = array(
+							$pairsToLink[] = array(
 								'master' => $dupId,
 								'slave'  => $srcId,
 							);
+
 							$status['linked'][] = $pairId;
 
 							break;
@@ -131,6 +134,7 @@ class DupeDetectShowDupesController extends GalleryController {
 					if ($ret->isError()) {
 						return array($ret, null);
 					}
+
 					$redirect = true;
 					$status['linked']['count']++;
 				}
@@ -147,6 +151,7 @@ class DupeDetectShowDupesController extends GalleryController {
 					if ($ret->isError()) {
 						return array($ret, null);
 					}
+
 					$redirect = true;
 					$status['ignored']['count']++;
 				}
@@ -156,7 +161,6 @@ class DupeDetectShowDupesController extends GalleryController {
 			if (isset($itemsToDelete)) {
 				foreach ($itemsToDelete as $id) {
 					// Make sure we have permission to delete this item
-
 					list($ret, $permissions) = GalleryCoreApi::getPermissions($id);
 
 					if ($ret->isError()) {
@@ -181,6 +185,7 @@ class DupeDetectShowDupesController extends GalleryController {
 					if ($ret->isError()) {
 						return array($ret, null);
 					}
+
 					$redirect = true;
 					$status['deleted']['count']++;
 				}
@@ -217,8 +222,8 @@ class DupeDetectShowDupesView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
-		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
 
+		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
 
 		if ($form['formName'] != 'DupeDetectShowDupes') {
 			$form['showIgnored'] = false;
@@ -271,6 +276,7 @@ class DupeDetectShowDupesView extends GalleryView {
 				$pairsIds[$pairId] = $key;
 			}
 		}
+
 		// create a list of ids for all the items - source and dups - for thumb extraction
 		$allIds = array();
 
@@ -280,7 +286,6 @@ class DupeDetectShowDupesView extends GalleryView {
 		}
 
 		// get thumbnails
-
 		list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds($allIds);
 
 		if ($ret->isError()) {
@@ -309,7 +314,8 @@ class DupeDetectShowDupesView extends GalleryView {
 			$dupRecord['dupItemData'] = $dupRecord['dupItem']->getMemberData();
 			// attach thumbnail
 			if (isset($thumbnails[$dupRecord['dupItem']->getId()])) {
-				$thumbnail             = $thumbnails[$dupRecord['dupItem']->getId()];
+				$thumbnail = $thumbnails[$dupRecord['dupItem']->getId()];
+
 				list($ret, $thumbnail) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent(
 					$thumbnail->getId()
 				);
@@ -326,17 +332,19 @@ class DupeDetectShowDupesView extends GalleryView {
 			$pairsList[] = $dupRecord;
 		}
 
-		$form['list']        = $pairsList;
-		$dupTypeList         = array(
+		$form['list'] = $pairsList;
+		$dupTypeList  = array(
 			DUPEDETECT_CRC32_ALGORITHM     => 'Exact <BR> (CRC32)',
 			DUPEDETECT_HISTOGRAM_ALGORITHM => 'Similar <BR>(Histogram)',
 		);
+
 		$form['dupTypeList'] = $dupTypeList;
 
-		$dupStatus             = array(
+		$dupStatus = array(
 			DUPEDETECT_UNHANDLED_DUPLICATE => 'New duplicate',
 			DUPEDETECT_IGNORED_DUPLICATE   => 'Marked as ignored',
 		);
+
 		$form['dupStatusList'] = $dupStatus;
 
 		$template->setVariable('controller', 'dupedetect.DupeDetectShowDupes');

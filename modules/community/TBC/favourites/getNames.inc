@@ -18,11 +18,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
-
-
-
-
 /**
  * @package favourites
  * @author AlecMyers <alec@alecmyers.com>
@@ -62,6 +57,7 @@ class GetNamesView extends GalleryView {
 		switch ($command) {
 			case 'lookupUsername':
 				GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 				list($ret, $usernames) = FavouritesMapHelper::fetchUsernamesWithFavouritesLike($like);
 
 				if (!$ret) {

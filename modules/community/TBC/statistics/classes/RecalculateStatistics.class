@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 GalleryCoreApi::requireOnce('modules/core/AdminMaintenance.inc');
 
 /**
@@ -51,6 +50,7 @@ class RecalculateStatisticsTask extends MaintenanceTask {
 	 */
 	public function run() {
 		global $gallery;
+
 		$templateAdapter =& $gallery->getTemplateAdapter();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'statistics');
@@ -64,6 +64,7 @@ class RecalculateStatisticsTask extends MaintenanceTask {
 			$module->translate('Loading maintenance tasks for plugins'),
 			0
 		);
+
 		flush();
 
 		// Get all the plugins
@@ -93,13 +94,11 @@ class RecalculateStatisticsTask extends MaintenanceTask {
 			list($ret, $status) = $plugin->recalculateTask($module, $templateAdapter);
 		}
 
-
 		$templateAdapter->updateProgressBar(
 			$module->translate('Recalculate Statistics'),
 			'Finished',
 			1
 		);
-
 
 		$result = array($module->translate('All statistics successfully recalculated'));
 

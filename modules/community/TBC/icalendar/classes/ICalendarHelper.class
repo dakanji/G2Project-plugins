@@ -32,13 +32,14 @@ class ICalendarHelper {
 	public function updateStorage($resourceItem) {
 
 		// Delete existing events for this resource
-		$query               = '
+		$query = '
 	    SELECT
 	      [ICalendarResourceMap::entityId]
 	    FROM
 	      [ICalendarResourceMap]
 	    WHERE
 	      [ICalendarResourceMap::resourceId] = ?';
+
 		list($ret, $results) = $gallery->search($query, array($resourceItem->getId()));
 
 		if ($ret) {
@@ -126,11 +127,13 @@ class ICalendarHelper {
 					$comp->properties['DTSTART'][0]->value
 				)
 			);
+
 			$newEntity->setEnd(
 				ICalendarParser::datetime_to_timestamp(
 					$comp->properties['DTEND'][0]->value
 				)
 			);
+
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
 
 			$ret = $newEntity->save();
@@ -167,7 +170,7 @@ class ICalendarHelper {
 		global $gallery;
 
 		// Serialize entities without resources
-		$query               = '
+		$query = '
 	    SELECT
 	      [Entity::id]
 	    FROM
@@ -178,6 +181,7 @@ class ICalendarHelper {
 	      [Entity::id] = [ICalendarResourceMap::entityId]
 	    WHERE
 	      [ICalendarResourceMap::resourceId] IS NULL';
+
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
@@ -204,6 +208,7 @@ class ICalendarHelper {
 			if (!is_array($components[$component->name])) {
 				$components[$component->name] = array();
 			}
+
 			$components[$comonent->name][] = $component;
 		}
 
@@ -211,7 +216,6 @@ class ICalendarHelper {
 			$calendar = new iCalendar();
 
 			// FIXME Set required properties
-
 			foreach ($components as $component) {
 				$calendar->add_component($component);
 			}
@@ -261,7 +265,7 @@ class ICalendarHelper {
 		}
 
 		// Update updated entities' resources
-		$query               = '
+		$query = '
 	    SELECT
 	      [Entity::id]
 	    FROM
@@ -271,6 +275,7 @@ class ICalendarHelper {
 	      [Entity::id] = [ICalendarResourceMap::entityId]
 	    AND
 	      [Entity::serialNumber] != [ICalendarResourceMap::entitySerialNumber]';
+
 		list($ret, $results) = $gallery->search($query, array($resourceItem->getId()));
 
 		if ($ret) {
@@ -304,9 +309,8 @@ class ICalendarHelper {
 		}
 
 		// Update markers
-
 		// Remove removed entities
-		$query               = '
+		$query = '
 	    SELECT
 	      [ICalendarResourceMap::resourceId]
 	    FROM
@@ -317,6 +321,7 @@ class ICalendarHelper {
 	      [ICalendarResourceMap::entityId] = [Entity::id]
 	    WHERE
 	      [Entity::id] IS NULL';
+
 		list($ret, $results) = $gallery->search($query, array($resourceItem->getId()));
 
 		if ($ret) {

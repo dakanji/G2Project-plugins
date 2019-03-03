@@ -55,6 +55,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_item);
 
 		list($ret, $this->_derivative) = $this->_createDerivative(
@@ -90,6 +91,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$this->_item->setRenderer('PanoramaRenderer');
+
 		$ret = $this->_item->save();
 
 		if ($ret) {
@@ -116,6 +118,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('PanoramaRenderer', $item->getRenderer());
 	}
 
@@ -134,6 +137,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		// For Oracle, null is replaced with '' when loading data from the database
 		$this->assert(in_array($item->getRenderer(), array(null, '')), 'renderer not empty');
 	}
@@ -144,6 +148,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(isset($images[$this->_item->getId()]), 'Missing result');
 		$this->assertEquals(
 			$this->_derivative->getId(),
@@ -165,10 +170,12 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			preg_match('{<param name="archive" value="http}', $html),
 			'item: jar full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match('{<param[^>]*name="ScrollerThumb"[^>]*value="http}', $html),
 			'item: slider full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match(
 				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
@@ -183,10 +190,12 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			preg_match('{<param name="archive" value="http}', $html),
 			'deriv: jar full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match('{<param[^>]*name="ScrollerThumb"[^>]*value="http}', $html),
 			'deriv: slider full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match(
 				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
@@ -205,6 +214,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 				'forceRawImage' => true,
 			)
 		);
+
 		$this->assertEquals(null, $html, 'item: raw image');
 
 		$html = $this->_renderer->render(
@@ -215,6 +225,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 				'forceRawImage' => true,
 			)
 		);
+
 		$this->assertEquals(null, $html, 'deriv: raw image');
 	}
 }

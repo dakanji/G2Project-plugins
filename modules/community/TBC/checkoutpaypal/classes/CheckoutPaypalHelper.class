@@ -47,6 +47,7 @@ class CheckoutPaypalHelper {
 	 */
 	public function getPaypalItems() {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
@@ -88,6 +89,7 @@ class CheckoutPaypalHelper {
 				$ppItem[$ppItems]['options']['os1_' . $ppItems] = $item['notes'];
 			}
 		}
+
 		// paypal doesn't allow discounts or negative price items, so we have to 'cheat'
 		// subtract the discount item-wise from the end of the order until it reaches zero
 		$discount = $transaction->getDiscount();
@@ -103,6 +105,7 @@ class CheckoutPaypalHelper {
 					if (($perItemDiscount * $ppItem[$key]['quantity']) < $discount) {
 						$perItemDiscount += 0.01;
 					}
+
 					$ppItem[$key]['amount'] -= $perItemDiscount;
 					$discount               -= $ppItem[$key]['quantity'] * $perItemDiscount;
 					$discount                = round($discount, 2);
@@ -123,6 +126,7 @@ class CheckoutPaypalHelper {
 						$ppItem[$ppItems]['shipping']                   = 0;
 					}
 				}
+
 				$ppItem[$key]['options']['on1_' . $key] = 'Discount applied to this item';
 			}
 		}

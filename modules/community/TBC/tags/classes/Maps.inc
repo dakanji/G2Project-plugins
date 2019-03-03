@@ -10,7 +10,8 @@ $mapInfo['TagItemMap'] = array(
 		'size' => STORAGE_SIZE_MEDIUM,
 	),
 );
-$mapInfo['TagMap']     = array(
+
+$mapInfo['TagMap'] = array(
 	'tagId' => array(
 		'type'    => STORAGE_TYPE_INTEGER,
 		'size'    => STORAGE_SIZE_MEDIUM,

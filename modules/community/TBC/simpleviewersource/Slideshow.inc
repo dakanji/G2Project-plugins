@@ -34,6 +34,7 @@ class SlideshowView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
 
 		$myUrlGenerator =& $gallery->getUrlGenerator();
@@ -48,7 +49,6 @@ class SlideshowView extends GalleryView {
 				'htmlEntities'   => false,
 			)
 		);
-
 
 		// and escape the & to %26
 		$XMLurl = ereg_replace('&', '%26', $XMLurl);

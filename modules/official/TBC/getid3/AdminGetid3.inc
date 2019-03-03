@@ -135,6 +135,7 @@ class AdminGetid3Controller extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['restored']['summary'] = 1;
 			$redirect['view']              = 'core.SiteAdmin';
 			$redirect['subView']           = 'getid3.AdminGetid3';
@@ -175,6 +176,7 @@ class AdminGetid3Controller extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['restored']['detailed'] = 1;
 			$redirect['view']               = 'core.SiteAdmin';
 			$redirect['subView']            = 'getid3.AdminGetid3';
@@ -328,7 +330,8 @@ class AdminGetid3Controller extends GalleryController {
 			}
 		} elseif (isset($form['action']['save'])) {
 			$addOptions = (isset($form['item']['mp3title']) ? GETID3_MP3_TITLE : 0);
-			$ret        = GalleryCoreApi::setPluginParameter(
+
+			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'getid3',
 				'addOption',
@@ -338,6 +341,7 @@ class AdminGetid3Controller extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['saved']     = 1;
 			$redirect['view']    = 'core.SiteAdmin';
 			$redirect['subView'] = 'getid3.AdminGetid3';
@@ -349,6 +353,7 @@ class AdminGetid3Controller extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'getid3.AdminGetid3';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -386,6 +391,7 @@ class AdminGetid3View extends GalleryView {
 					return array($ret, null);
 				}
 			}
+
 			$form['formName'] = 'AdminGetid3';
 
 			list($ret, $addOption) = $module->getParameter('addOption');
@@ -393,6 +399,7 @@ class AdminGetid3View extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$form['item'] = array(
 				'mp3title' => $addOption & GETID3_MP3_TITLE,
 			);
@@ -402,7 +409,8 @@ class AdminGetid3View extends GalleryView {
 		$visibleKeys = array();
 
 		// Prepare the summary list
-		$summaryList     = array();
+		$summaryList = array();
+
 		list($ret, $tmp) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 		if ($ret) {
@@ -414,7 +422,8 @@ class AdminGetid3View extends GalleryView {
 		}
 
 		// Prepare the detailed list
-		$detailedList    = array();
+		$detailedList = array();
+
 		list($ret, $tmp) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 		if ($ret) {

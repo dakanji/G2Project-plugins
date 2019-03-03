@@ -67,6 +67,7 @@ class AdminDigibugController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $isActive) = $module->isActive();
 
 				if ($ret) {
@@ -154,6 +155,7 @@ class AdminDigibugView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $isActive) = $module->isActive();
 
 		if ($ret) {
@@ -168,8 +170,10 @@ class AdminDigibugView extends GalleryView {
 					return array($ret, null);
 				}
 			}
+
 			$form['formName'] = 'AdminDigibug';
 		}
+
 		$template->style('modules/digibug/digibug.css');
 		$template->setVariable(
 			'AdminDigibug',
@@ -177,6 +181,7 @@ class AdminDigibugView extends GalleryView {
 				'isConfigure' => !$isActive,
 			)
 		);
+
 		$template->setVariable('controller', 'digibug.AdminDigibug');
 
 		return array(

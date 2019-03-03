@@ -55,12 +55,14 @@ class SlideshowAppletView extends GalleryView {
 
 		if (!$item->getCanContainChildren()) {
 			// Photo: do slideshow of parent album, start at this photo
-			$startId          = $item->getId();
+			$startId = $item->getId();
+
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($item->getParentId(), 'GalleryItem');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $canView) = GalleryCoreApi::hasItemPermission($item->getId(), 'core.view');
 
 			if ($ret) {
@@ -86,16 +88,19 @@ class SlideshowAppletView extends GalleryView {
 			 * communicate to G2 directly, even when G2 is embedded
 			 */
 			$SlideshowApplet['g2BaseUrl'] = $urlGenerator->getCurrentUrlDir(true);
-			list($ret, $cookiePath)       = $urlGenerator->getCookiePath(true);
+
+			list($ret, $cookiePath) = $urlGenerator->getCookiePath(true);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $cookieDomain) = $session->getCookieDomain();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$SlideshowApplet['NoProtocolError'] = 0;
 			$SlideshowApplet['cookieName']      = $session->getKey();
 			$SlideshowApplet['cookieValue']     = $session->getId();
@@ -111,6 +116,7 @@ class SlideshowAppletView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$SlideshowApplet['locale'] = $locale;
 
 			if (isset($startId)) {

@@ -35,6 +35,7 @@ class NewAlbumController extends GalleryController {
 	 */
 	public function handleRequest(&$form) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$results  = $error  = $status  = array();
 
@@ -42,6 +43,7 @@ class NewAlbumController extends GalleryController {
 			if (empty($form['parentId'])) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
+
 			list($ret, $permissions) = GalleryCoreApi::getPermissions((int)$form['parentId']);
 
 			if ($ret) {
@@ -94,6 +96,7 @@ class NewAlbumController extends GalleryController {
 		} else {
 			$results['delegate']['view'] = 'publishxp.NewAlbum';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -129,6 +132,7 @@ class NewAlbumView extends GalleryView {
 			$form['keywords']      = '';
 			$form['description']   = '';
 		}
+
 		$form['parentId'] = (int)$form['parentId'];
 
 		list($ret, $canView) = GalleryCoreApi::hasItemPermission($form['parentId'], 'core.view');
@@ -164,6 +168,7 @@ class NewAlbumView extends GalleryView {
 		for ($i = 0; $i < sizeof($parents); $i ++) {
 			$parents[$i] = (array)$parents[$i];
 		}
+
 		$parents[] = (array)$parent;
 
 		$NewAlbum            = array();

@@ -31,6 +31,7 @@
 class RandomizeOnceModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('randomizeonce');
 		$this->setName('Randomize Once');
 		$this->setDescription(
@@ -66,6 +67,7 @@ class RandomizeOnceModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
+
 		$links = array();
 
 		foreach ($items as $item) {
@@ -95,7 +97,8 @@ class RandomizeOnceModule extends GalleryModule {
 	public function getItemAdminViews($item) {
 		global $gallery;
 
-		$views                   = array();
+		$views = array();
+
 		list($ret, $permissions) = GalleryCoreApi::getPermissions($item->getId());
 
 		if ($ret) {

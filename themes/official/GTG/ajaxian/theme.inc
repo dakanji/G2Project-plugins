@@ -99,6 +99,7 @@ class AjaxianTheme extends GalleryTheme {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = $this->preloadBlock($template, 'search.SearchBlock');
 
 		if ($ret) {
@@ -109,6 +110,7 @@ class AjaxianTheme extends GalleryTheme {
 		$theme =& $template->getVariableByReference('theme');
 
 		// From slider
+
 		list($ret, $imageWidths, $imageHeights) = $this->_buildItemList(
 			$childIds,
 			$theme['children']
@@ -143,11 +145,13 @@ class AjaxianTheme extends GalleryTheme {
 		if (!empty($params['showMicroThumbs'])) {
 			$dataTypes[] = 'navThumbnails';
 		}
+
 		$ret = $this->loadCommonTemplateData($template, $item, $params, $dataTypes);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = $this->preloadBlock($template, 'search.SearchBlock');
 
 		if ($ret) {
@@ -171,6 +175,7 @@ class AjaxianTheme extends GalleryTheme {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = $this->preloadBlock($template, 'search.SearchBlock');
 
 		if ($ret) {
@@ -194,6 +199,7 @@ class AjaxianTheme extends GalleryTheme {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = $this->preloadBlock($template, 'search.SearchBlock');
 
 		if ($ret) {
@@ -224,6 +230,7 @@ class AjaxianTheme extends GalleryTheme {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = $this->preloadBlock($template, 'search.SearchBlock');
 
 		if ($ret) {
@@ -246,6 +253,7 @@ class AjaxianTheme extends GalleryTheme {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $childItems) = GalleryCoreApi::loadEntitiesById(
 				$childIds,
 				'GalleryItem'
@@ -254,22 +262,26 @@ class AjaxianTheme extends GalleryTheme {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $resizedImages) = GalleryCoreApi::fetchResizesByItemIds($childIds);
 
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $preferredFullImages) = GalleryCoreApi::fetchPreferredsByItemIds($childIds);
 
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds($childIds);
 
 			if ($ret) {
 				return array($ret, null, null);
 			}
 		}
+
 		$i = -1;
 
 		foreach ($childItems as $child) {
@@ -291,6 +303,7 @@ class AjaxianTheme extends GalleryTheme {
 						return array($ret, null, null);
 					}
 				}
+
 				$children[$i]['thumbnail'] = (array)$thumbnails[$childId];
 			}
 
@@ -332,8 +345,10 @@ class AjaxianTheme extends GalleryTheme {
 						return array($ret, null, null);
 					}
 				}
+
 				$image = (array)$image;
 			}
+
 			$children[$i]['imageIndex'] = count($imageWidths);
 
 			if (GalleryUtilities::isExactlyA($child, 'GalleryPhotoItem')

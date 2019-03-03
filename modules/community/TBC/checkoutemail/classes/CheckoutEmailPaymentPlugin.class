@@ -31,7 +31,6 @@
  * Required classes
  */
 
-
 /**
  * This is an implementation of the checkout module's CheckoutPaymentInterface_1_3
  *
@@ -52,6 +51,7 @@ class CheckoutEmailPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 	public function getVariables() {
 		// Copy info between the session variables
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
@@ -59,22 +59,35 @@ class CheckoutEmailPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$transactionId = $transaction->getId();
 		$orderTotal    = $transaction->getAmount();
 
-		list($ret, $paymentButtonText) = GalleryCoreApi::getPluginParameter('module', 'checkoutemail', 'paymentButtonText');
+		list($ret, $paymentButtonText) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkoutemail',
+			'paymentButtonText'
+		);
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-		list($ret, $paymentText) = GalleryCoreApi::getPluginParameter('module', 'checkoutemail', 'paymentText');
+		list($ret, $paymentText) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkoutemail',
+			'paymentText'
+		);
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-		list($ret, $active) = GalleryCoreApi::getPluginParameter('module', 'checkoutemail', 'active');
+		list($ret, $active) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkoutemail',
+			'active'
+		);
 
 		if ($ret) {
 			return array($ret, null);

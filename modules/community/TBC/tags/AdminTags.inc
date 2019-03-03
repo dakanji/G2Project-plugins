@@ -43,7 +43,8 @@ class AdminTagsController extends GalleryController {
 
 		if (isset($form['action']['add'])) {
 			if (isset($form['TagNameAdd']) && $form['TagNameAdd'] != '') {
-				$tagName             = $form['TagNameAdd'];
+				$tagName = $form['TagNameAdd'];
+
 				list($ret, $tagList) = TagsHelper::splitTags($tagName);
 
 				if ($ret) {
@@ -57,6 +58,7 @@ class AdminTagsController extends GalleryController {
 						return $ret;
 					}
 				}
+
 				$status['added'] = 1;
 			} else {
 				$error[] = 'form[error][notagname]';
@@ -69,6 +71,7 @@ class AdminTagsController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['deleted'] = 1;
 		}
 
@@ -79,6 +82,7 @@ class AdminTagsController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$status['renamed'] = 1;
 			} else {
 				$error[]           = 'form[error][nonewtagname]';
@@ -107,6 +111,7 @@ class AdminTagsView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$TagNameEdit = GalleryUtilities::getRequestVariables('TagEdit');
 
 		$template->setVariable('Tags', $tags);

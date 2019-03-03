@@ -46,6 +46,7 @@ class ShowTreeView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$entityId = $entity->getId();
 		} else {
 			list($ret, $entity) = GalleryCoreApi::loadEntitiesById($entityId, 'GalleryEntity');
@@ -99,6 +100,7 @@ class ShowTreeView extends GalleryView {
 				return array($ret, null);
 			}
 		}
+
 		$entityObjects[] = $entity;
 
 		foreach ($entityObjects as $entity) {

@@ -26,6 +26,7 @@
 class CheckoutAuthorizeNetModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('checkoutauthorizenet');
 		$this->setName('Checkout by Authorize.Net');
 		$this->setDescription(
@@ -70,7 +71,6 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 			case '0':
 			case '0.1.0':
 				// Fix AuthorizeNetAim.class:109 direct call of cURL, now uses $this->_curlPath
-
 			case 'end of upgrade path':
 				break;
 

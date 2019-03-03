@@ -103,7 +103,6 @@ class WebDavModule extends GalleryModule {
 		switch ($currentVersion) {
 			case null:
 				// Initial install
-
 				// Activate essential rewrite rules
 				$ret = $this->_activateRewriteRules();
 
@@ -115,16 +114,12 @@ class WebDavModule extends GalleryModule {
 
 			case '0.0.3':
 				// Add WebDavSiteAdmin and WebDavLockMap
-
 			case '0.0.4':
 				// Add modules/webdav/webdav.php and WebDavUrlGenerator
-
 			case '0.0.5':
 				// Add WebDavInitEventListener
-
 			case '0.0.6':
 				// Add item link
-
 			case '0.2.0':
 				/*
 				 * Activate essential short URL rules automatically
@@ -145,10 +140,8 @@ class WebDavModule extends GalleryModule {
 
 			case '0.4.1':
 				// Add GalleryView::isControllerLike to WebDAV view
-
 			case '0.4.2':
 				// Add support for the php-cgi server API
-
 			case '0.6.0':
 				// Remove view with WebDAV permission
 				$ret = GalleryCoreApi::unregisterModulePermissions($this->getId());
@@ -156,6 +149,8 @@ class WebDavModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
+
 				// Fall Through
 			case '0.6.1':
 				/*
@@ -173,10 +168,8 @@ class WebDavModule extends GalleryModule {
 				// Add HttpAuth check through interface
 			case '0.7.3':
 				// Version 1.0.0 for Gallery 2.2 release
-
 			case '1.0.0':
 				// .mo file migration
-
 			case '1.0.1':
 				// Avoid matching paths starting with 'w[^/]' with URL rewrite rule keyword
 				$ret = $this->_activateRewriteRules();
@@ -184,6 +177,7 @@ class WebDavModule extends GalleryModule {
 				if ($ret && !($ret->getErrorCode() & ERROR_CONFIGURATION_REQUIRED)) {
 					return $ret;
 				}
+
 
 				// Fall Through
 			case '1.0.0.1':
@@ -267,6 +261,7 @@ class WebDavModule extends GalleryModule {
 			if (!$item->getCanContainChildren() || empty($wantsDetailedLinks[$item->getId()])) {
 				continue;
 			}
+
 			$links[$item->getId()][] = array(
 				'text'   => $this->translate('Mount with WebDAV'),
 				'params' => array(
@@ -299,6 +294,7 @@ class WebDavModule extends GalleryModule {
 	 */
 	public function getRewriteRules() {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$rules = array();
@@ -350,6 +346,7 @@ class WebDavModule extends GalleryModule {
 		 * Only define the rule to redirect OPTIONS requests so we can set DAV headers if it is
 		 * already active, or if OPTIONS responses are missing DAV headers
 		 */
+
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 		if ($ret) {

@@ -13,8 +13,6 @@
 // dependencies: module.tag.apetag.php                         //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.apetag.php', __FILE__, true);
 
 class getid3_write_apetag {
@@ -30,7 +28,6 @@ class getid3_write_apetag {
 
 	public function WriteAPEtag() {
 		// NOTE: All data passed to this function must be UTF-8 format
-
 		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
 
@@ -41,6 +38,7 @@ class getid3_write_apetag {
 				if (!$this->DeleteAPEtag()) {
 					return false;
 				}
+
 				$ThisFileInfo = $getID3->analyze($this->filename);
 			}
 		}
@@ -69,6 +67,7 @@ class getid3_write_apetag {
 				if (isset($ThisFileInfo['lyrics3']['tag_offset_start'])) {
 					$PostAPEdataOffset = max($PostAPEdataOffset, $ThisFileInfo['lyrics3']['tag_offset_start']);
 				}
+
 				fseek($fp, $PostAPEdataOffset);
 				$PostAPEdata = '';
 
@@ -81,12 +80,14 @@ class getid3_write_apetag {
 				if (isset($ThisFileInfo['ape']['tag_offset_start'])) {
 					fseek($fp, $ThisFileInfo['ape']['tag_offset_start']);
 				}
+
 				ftruncate($fp, ftell($fp));
 				fwrite($fp, $APEtag, strlen($APEtag));
 
 				if (!empty($PostAPEdata)) {
 					fwrite($fp, $PostAPEdata, strlen($PostAPEdata));
 				}
+
 				flock($fp, LOCK_UN);
 				fclose($fp);
 				ignore_user_abort($oldignoreuserabort);
@@ -136,7 +137,6 @@ class getid3_write_apetag {
 
 	public function GenerateAPEtag() {
 		// NOTE: All data passed to this function must be UTF-8 format
-
 		$items = array();
 
 		if (!is_array($this->tag_data)) {
@@ -153,6 +153,7 @@ class getid3_write_apetag {
 			foreach ($arrayofvalues as $value) {
 				$valuestring .= str_replace("\x00", '', $value) . "\x00";
 			}
+
 			$valuestring = rtrim($valuestring, "\x00");
 
 			// Length of the assigned value in bytes

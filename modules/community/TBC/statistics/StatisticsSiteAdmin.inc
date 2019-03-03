@@ -60,15 +60,14 @@ class StatisticsSiteAdminController extends GalleryController {
 	}
 }
 
-
 class StatisticsSiteAdminView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
-		$statisticsPlugin = GalleryUtilities::getRequestVariables('statisticsPlugin');
 
+		$statisticsPlugin = GalleryUtilities::getRequestVariables('statisticsPlugin');
 
 		// Get all the plugins
 		list($ret, $allPluginIds) = GalleryCoreApi::getAllFactoryImplementationIds('StatisticsSiteAdminPlugin');
@@ -109,6 +108,7 @@ class StatisticsSiteAdminView extends GalleryView {
 				$statisticsPlugin = $ids[0];
 			}
 		}
+
 		$session->put($statisticsPluginSessionKey, $statisticsPlugin);
 
 		// Get display data for all plugins
@@ -120,6 +120,7 @@ class StatisticsSiteAdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$plugins[] = array(
 				'title'      => $title,
 				'id'         => $pluginId,
@@ -149,7 +150,6 @@ class StatisticsSiteAdminView extends GalleryView {
 		);
 	}
 }
-
 
 class StatisticsSiteAdminPlugin {
 	public function isSupported($item) {

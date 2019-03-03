@@ -31,8 +31,9 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			'type'   => 'entity',
 			'itemId' => 'Statistics_SiteAdmin_Disk_Module',
 		);
-		$cache       = GalleryDataCache::getFromDisk($cacheParams);
-		$statistics  = array();
+
+		$cache      = GalleryDataCache::getFromDisk($cacheParams);
+		$statistics = array();
 
 		// Safety check for when blank cache
 		if (is_array($cache)) {
@@ -81,6 +82,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 	public function recalculateTask($module, $templateAdapter) {
 		global $gallery;
+
 		$taskname = $module->translate('Calculating Disk Usage');
 
 		// Reset progress bar
@@ -92,7 +94,8 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		// Size of physical database
 		// Get major mysql version
-		$query               = 'SELECT SUBSTRING(VERSION(),1,1)';
+		$query = 'SELECT SUBSTRING(VERSION(),1,1)';
+
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
@@ -103,7 +106,8 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		$dbversion = (int)$dbversion[0];
 
 		// Query the database
-		$query               = 'SHOW TABLE STATUS';
+		$query = 'SHOW TABLE STATUS';
+
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
@@ -127,10 +131,12 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 					break;
 			}
 		}
+
 		$statistics['database'] = $total;
 
 		// Size of items according to database
-		$query           = 'SELECT SUM([GalleryDataItem::size]) FROM [GalleryDataItem]';
+		$query = 'SELECT SUM([GalleryDataItem::size]) FROM [GalleryDataItem]';
+
 		list($ret, $res) = $gallery->search($query);
 
 		if ($ret) {
@@ -141,7 +147,8 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		$statistics['galbums'] = $row[0];
 
 		// Size of derivatives according to database
-		$query           = 'SELECT SUM([GalleryDerivative::derivativeSize]) FROM [GalleryDerivative]';
+		$query = 'SELECT SUM([GalleryDerivative::derivativeSize]) FROM [GalleryDerivative]';
+
 		list($ret, $res) = $gallery->search($query);
 
 		if ($ret) {
@@ -151,7 +158,6 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		$row                       = $res->nextResult();
 		$statistics['gderivative'] = $row[0];
 
-
 		// Paths
 		$progress = 0.1;
 		$minitask = $module->translate('Scanning root directory');
@@ -160,6 +166,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			$minitask,
 			$progress
 		);
+
 		$base       = $gallery->getConfig('data.gallery.base');
 		$derivative = $gallery->getConfig('data.gallery.cache') . 'derivative/';
 		$albums     = $gallery->getConfig('data.gallery.albums');
@@ -176,6 +183,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			$minitask,
 			$progress
 		);
+
 		$statistics['derivative'] = $this->_dirSize($derivative, $minitask, $taskname, $progress, $module, $templateAdapter);
 
 		$progress = 0.8;
@@ -185,13 +193,15 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			$minitask,
 			$progress
 		);
+
 		$statistics['albums'] = $this->_dirSize($albums, $taskname, $minitask, $progress, $module, $templateAdapter);
 
 		// Put to disk
-		$cacheParams        = array(
+		$cacheParams = array(
 			'type'   => 'entity',
 			'itemId' => 'Statistics_SiteAdmin_Disk_Module',
 		);
+
 		list($ret, $status) = GalleryDataCache::putToDisk($cacheParams, $statistics);
 
 		if ($ret) {

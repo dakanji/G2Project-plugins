@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_zip extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -32,6 +30,7 @@ class getid3_zip extends getid3_handler {
 
 			return false;
 		}
+
 		$EOCDsearchData    = '';
 		$EOCDsearchCounter = 0;
 
@@ -114,7 +113,6 @@ class getid3_zip extends getid3_handler {
 			}
 		}
 
-
 		if (!$this->getZIPentriesFilepointer()) {
 			unset($info['zip']);
 			$info['fileformat'] = '';
@@ -128,6 +126,7 @@ class getid3_zip extends getid3_handler {
 		if ($info['zip']['compressed_size'] > ($info['filesize'] - 46 - 22)) {
 			$info['error'][] = 'Warning: Truncated file! - Total compressed file sizes (' . $info['zip']['compressed_size'] . ' bytes) is greater than filesize minus Central Directory and End Of Central Directory structures (' . ($info['filesize'] - 46 - 22) . ' bytes)';
 		}
+
 		$info['error'][] = 'Cannot find End Of Central Directory - returned list of files in [zip][entries] array may not be complete';
 
 		foreach ($info['zip']['entries'] as $key => $valuearray) {
@@ -226,6 +225,7 @@ class getid3_zip extends getid3_handler {
 			$this->fseek($LocalFileHeader['offset']); // seek back to where filepointer originally was so it can be handled properly
 			return false;
 		}
+
 		$LocalFileHeader['raw']['extract_version']    = getid3_lib::LittleEndian2Int(substr($ZIPlocalFileHeader, 4, 2));
 		$LocalFileHeader['raw']['general_flags']      = getid3_lib::LittleEndian2Int(substr($ZIPlocalFileHeader, 6, 2));
 		$LocalFileHeader['raw']['compression_method'] = getid3_lib::LittleEndian2Int(substr($ZIPlocalFileHeader, 8, 2));
@@ -276,9 +276,9 @@ class getid3_zip extends getid3_handler {
 				}
 			}
 		}
+
 		$LocalFileHeader['data_offset'] = $this->ftell();
 		$this->fseek($LocalFileHeader['compressed_size'], SEEK_CUR); // this should (but may not) match value in $LocalFileHeader['raw']['compressed_size'] -- $LocalFileHeader['compressed_size'] could have been overwritten above with value from Central Directory
-
 		if ($LocalFileHeader['flags']['data_descriptor_used']) {
 			$DataDescriptor                                  = $this->fread(16);
 			$LocalFileHeader['data_descriptor']['signature'] = getid3_lib::LittleEndian2Int(substr($DataDescriptor, 0, 4));
@@ -288,6 +288,7 @@ class getid3_zip extends getid3_handler {
 				$this->fseek($LocalFileHeader['offset']); // seek back to where filepointer originally was so it can be handled properly
 				return false;
 			}
+
 			$LocalFileHeader['data_descriptor']['crc_32']            = getid3_lib::LittleEndian2Int(substr($DataDescriptor, 4, 4));
 			$LocalFileHeader['data_descriptor']['compressed_size']   = getid3_lib::LittleEndian2Int(substr($DataDescriptor, 8, 4));
 			$LocalFileHeader['data_descriptor']['uncompressed_size'] = getid3_lib::LittleEndian2Int(substr($DataDescriptor, 12, 4));
@@ -328,6 +329,7 @@ class getid3_zip extends getid3_handler {
 			$this->fseek($CentralDirectory['offset']); // seek back to where filepointer originally was so it can be handled properly
 			return false;
 		}
+
 		$CentralDirectory['raw']['create_version']       = getid3_lib::LittleEndian2Int(substr($ZIPcentralDirectory, 4, 2));
 		$CentralDirectory['raw']['extract_version']      = getid3_lib::LittleEndian2Int(substr($ZIPcentralDirectory, 6, 2));
 		$CentralDirectory['raw']['general_flags']        = getid3_lib::LittleEndian2Int(substr($ZIPcentralDirectory, 8, 2));
@@ -388,6 +390,7 @@ class getid3_zip extends getid3_handler {
 			$this->fseek($EndOfCentralDirectory['offset']); // seek back to where filepointer originally was so it can be handled properly
 			return false;
 		}
+
 		$EndOfCentralDirectory['disk_number_current']         = getid3_lib::LittleEndian2Int(substr($ZIPendOfCentralDirectory, 4, 2));
 		$EndOfCentralDirectory['disk_number_start_directory'] = getid3_lib::LittleEndian2Int(substr($ZIPendOfCentralDirectory, 6, 2));
 		$EndOfCentralDirectory['directory_entries_this_disk'] = getid3_lib::LittleEndian2Int(substr($ZIPendOfCentralDirectory, 8, 2));
@@ -421,7 +424,6 @@ class getid3_zip extends getid3_handler {
 		$ParsedFlags['mask_header_values'] = (bool)($flagbytes & 0x2000);
 		//                                                             0x4000 - reserved
 		//                                                             0x8000 - reserved
-
 		switch ($compressionmethod) {
 			case 6:
 				$ParsedFlags['dictionary_size']    = (($flagbytes & 0x0002) ? 8192 : 4096);
@@ -524,7 +526,6 @@ class getid3_zip extends getid3_handler {
 		// 0-4    Day of the month (1-31)
 		// 5-8    Month (1 = January, 2 = February, and so on)
 		// 9-15   Year offset from 1980 (add 1980 to get actual year)
-
 		$UNIXday   = ($DOSdate & 0x001F);
 		$UNIXmonth = (($DOSdate & 0x01E0) >> 5);
 		$UNIXyear  = (($DOSdate & 0xFE00) >> 9) + 1980;
@@ -535,7 +536,6 @@ class getid3_zip extends getid3_handler {
 		// 0-4    Second divided by 2
 		// 5-10   Minute (0-59)
 		// 11-15  Hour (0-23 on a 24-hour clock)
-
 		$UNIXsecond = ($DOStime & 0x001F) * 2;
 		$UNIXminute = (($DOStime & 0x07E0) >> 5);
 		$UNIXhour   = (($DOStime & 0xF800) >> 11);

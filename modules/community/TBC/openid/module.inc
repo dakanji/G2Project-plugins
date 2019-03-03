@@ -148,6 +148,7 @@ class OpenIdModule extends GalleryModule {
 	 */
 	public function getSystemLinks() {
 		global $gallery;
+
 		$links = array();
 
 		if ($gallery->getConfig('login')) {
@@ -216,7 +217,8 @@ class OpenIdModule extends GalleryModule {
 
 					// Remove corresponding OpenIDs
 					$galleryIds[] = $entity->getId();
-					$ret          = GalleryCoreApi::removeMapEntry(
+
+					$ret = GalleryCoreApi::removeMapEntry(
 						'OpenIdMap',
 						array(
 							'galleryId' => $galleryIds,

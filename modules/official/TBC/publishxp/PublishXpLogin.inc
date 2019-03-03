@@ -34,6 +34,7 @@ class PublishXpLoginController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$results = $error = array();
 
 		if (isset($form['action']['login'])) {
@@ -69,6 +70,7 @@ class PublishXpLoginController extends GalleryController {
 
 					$event = GalleryCoreApi::newEvent('Gallery::Login');
 					$event->setEntity($user);
+
 					list($ret, $ignoreTheRedirect) = GalleryCoreApi::postEvent($event);
 
 					if ($ret) {
@@ -86,6 +88,7 @@ class PublishXpLoginController extends GalleryController {
 						'userName' => $form['userName'],
 					)
 				);
+
 				list($ret, $ignored) = GalleryCoreApi::postEvent($event);
 
 				if ($ret) {
@@ -97,6 +100,7 @@ class PublishXpLoginController extends GalleryController {
 		if (empty($results['redirect']) && !isset($results['delegate']['view'])) {
 			$results['delegate']['view'] = 'publishxp.PublishXpLogin';
 		}
+
 		$results['status'] = array();
 		$results['error']  = $error;
 

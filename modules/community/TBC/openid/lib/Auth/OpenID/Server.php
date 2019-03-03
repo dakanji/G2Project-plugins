@@ -120,6 +120,7 @@ define('AUTH_OPENID_HTTP_ERROR', 400);
  * @access private
  */
 global $_Auth_OpenID_Request_Modes;
+
 $_Auth_OpenID_Request_Modes = array(
 	'checkid_setup',
 	'checkid_immediate',
@@ -375,6 +376,7 @@ class Auth_OpenID_CheckAuthRequest extends Auth_OpenID_Request {
 		if ($invalidate_handle !== null) {
 			$this->invalidate_handle = $invalidate_handle;
 		}
+
 		$this->namespace = Auth_OpenID_OPENID2_NS;
 		$this->message   = null;
 	}
@@ -532,6 +534,7 @@ class Auth_OpenID_DiffieHellmanSHA1ServerSession {
 					'Failed to parse dh_mod or dh_gen'
 				);
 			}
+
 			$dh = new Auth_OpenID_DiffieHellman($dh_modulus, $dh_gen);
 		} else {
 			$dh = new Auth_OpenID_DiffieHellman();
@@ -568,6 +571,7 @@ class Auth_OpenID_DiffieHellmanSHA1ServerSession {
 		if (is_a($result, 'Auth_OpenID_ServerError')) {
 			return $result;
 		}
+
 		list($dh, $consumer_pubkey) = $result;
 
 		return new Auth_OpenID_DiffieHellmanSHA1ServerSession(
@@ -607,6 +611,7 @@ class Auth_OpenID_DiffieHellmanSHA256ServerSession extends Auth_OpenID_DiffieHel
 		if (is_a($result, 'Auth_OpenID_ServerError')) {
 			return $result;
 		}
+
 		list($dh, $consumer_pubkey) = $result;
 
 		return new Auth_OpenID_DiffieHellmanSHA256ServerSession(
@@ -750,6 +755,7 @@ class Auth_OpenID_AssociateRequest extends Auth_OpenID_Request {
 			'error_code',
 			'unsupported-type'
 		);
+
 		$response->fields->setArg(
 			Auth_OpenID_OPENID_NS,
 			'error',
@@ -792,7 +798,6 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 	 * The mode of this request.
 	 */
 	public $mode = 'checkid_setup'; // or "checkid_immediate"
-
 	/**
 	 * Whether this request is for immediate mode.
 	 */
@@ -935,10 +940,11 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 			return new Auth_OpenID_ServerError($message, $fmt);
 		}
 
-		$identity   = $message->getArg(
+		$identity = $message->getArg(
 			Auth_OpenID_OPENID_NS,
 			'identity'
 		);
+
 		$claimed_id = $message->getArg(Auth_OpenID_OPENID_NS, 'claimed_id');
 
 		if ($message->isOpenID1()) {
@@ -971,6 +977,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		} else {
 			$trust_root_param = 'realm';
 		}
+
 		$trust_root = $message->getArg(
 			Auth_OpenID_OPENID_NS,
 			$trust_root_param
@@ -1244,7 +1251,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 					);
 				}
 
-				$setup_request          = new Auth_OpenID_CheckIDRequest(
+				$setup_request = new Auth_OpenID_CheckIDRequest(
 					$this->identity,
 					$this->return_to,
 					$this->trust_root,
@@ -1252,6 +1259,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 					$this->assoc_handle,
 					$this->server
 				);
+
 				$setup_request->message = $this->message;
 
 				$setup_url = $setup_request->encodeToURL($server_url);
@@ -1280,7 +1288,6 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		// used in both the client and server code, so Requests are
 		// Encodable too.  That's right, code imported from alternate
 		// realities all for the love of you, id_res/user_setup_url.
-
 		$q = array(
 			'mode'       => $this->mode,
 			'identity'   => $this->identity,
@@ -1303,6 +1310,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		$response = new Auth_OpenID_Message(
 			$this->message->getOpenIDNamespace()
 		);
+
 		$response->updateArgs(Auth_OpenID_OPENID_NS, $q);
 
 		return $response->toURL($server_url);
@@ -1325,6 +1333,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		$response = new Auth_OpenID_Message(
 			$this->message->getOpenIDNamespace()
 		);
+
 		$response->setArg(Auth_OpenID_OPENID_NS, 'mode', 'cancel');
 
 		return $response->toURL($this->return_to);
@@ -1499,6 +1508,7 @@ class Auth_OpenID_Signatory {
 					'invalidate_handle',
 					$assoc_handle
 				);
+
 				$assoc_type = ($assoc ? $assoc->assoc_type : 'HMAC-SHA1');
 
 				if ($assoc && ($assoc->getExpiresIn() <= 0)) {
@@ -1587,6 +1597,7 @@ class Auth_OpenID_Signatory {
 		} else {
 			$key = $this->normal_key;
 		}
+
 		$this->store->removeAssociation($key, $assoc_handle);
 	}
 }
@@ -1667,6 +1678,7 @@ class Auth_OpenID_SigningEncoder extends Auth_OpenID_Encoder {
 			if ($response->fields->hasKey(Auth_OpenID_OPENID_NS, 'sig')) {
 				return new Auth_OpenID_AlreadySigned($response);
 			}
+
 			$response = $this->signatory->sign($response);
 		}
 
@@ -1902,12 +1914,14 @@ class Auth_OpenID_Server {
 
 			return $request->answer($assoc);
 		}
-		$message                                             = sprintf(
+
+		$message = sprintf(
 			'Association type %s is not supported with ' .
 							   'session type %s',
 			$assoc_type,
 			$session_type
 		);
+
 		list($preferred_assoc_type, $preferred_session_type) = $this->negotiator->getAllowedType();
 
 		return $request->answerUnsupported(

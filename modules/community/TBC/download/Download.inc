@@ -37,6 +37,7 @@ GalleryCoreApi::requireOnce('modules/download/lib/HTTP/Download.php');/**
 class DownloadView extends DownloadItemView {
 	public function _sendFile($data) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		// Print services bypass security so they can get access to full size version of prints
@@ -57,6 +58,7 @@ class DownloadView extends DownloadItemView {
 
 				// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource
 			}
+
 			$ret = GalleryCoreApi::assertHasItemPermission($data['parentId'], $permission);
 
 			if ($ret) {

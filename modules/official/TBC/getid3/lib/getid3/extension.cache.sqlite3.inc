@@ -102,6 +102,7 @@ class getID3_cached_sqlite3 extends getID3 {
 		if ($hide) {
 			$file = __DIR__ . '/.ht.' . basename(__FILE__, 'php') . 'sqlite';
 		}
+
 		$this->db = new SQLite3($file);
 		$db       = $this->db;
 		$this->create_table();   // Create cache table if not exists
@@ -109,7 +110,8 @@ class getID3_cached_sqlite3 extends getID3 {
 		$sql     = $this->version_check;
 		$stmt    = $db->prepare($sql);
 		$stmt->bindValue(':filename', getID3::VERSION, SQLITE3_TEXT);
-		$result        = $stmt->execute();
+		$result = $stmt->execute();
+
 		list($version) = $result->fetchArray();
 
 		if ($version != getID3::VERSION) { // Check version number and clear cache if changed
@@ -166,6 +168,7 @@ class getID3_cached_sqlite3 extends getID3 {
 		if (!file_exists($filename)) {
 			return false;
 		}
+
 		// items to track for caching
 		$filetime      = filemtime($filename);
 		$filesize_real = filesize($filename);
@@ -179,12 +182,14 @@ class getID3_cached_sqlite3 extends getID3 {
 		$stmt->bindValue(':filename', $filename, SQLITE3_TEXT);
 		$stmt->bindValue(':filesize', $filesize_real, SQLITE3_INTEGER);
 		$stmt->bindValue(':filetime', $filetime, SQLITE3_INTEGER);
-		$res          = $stmt->execute();
+		$res = $stmt->execute();
+
 		list($result) = $res->fetchArray();
 
 		if (count($result) > 0) {
 			return unserialize(base64_decode($result));
 		}
+
 		// if it hasn't been analyzed before, then do it now
 		$analysis = parent::analyze($filename, $filesize, $original_filename);
 		// Save result

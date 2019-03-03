@@ -36,7 +36,9 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Load HTTP auth module
@@ -140,7 +142,6 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		// Reset auth related server and request variables
 		unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $_SERVER['REMOTE_USER']);
 
-
 		GalleryUtilities::removeRequestVariable('authorization');
 
 		$this->_registerTestEventListener('Gallery::ActivatePlugin', $this->_module);
@@ -150,6 +151,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 	public function tearDown() {
 		GalleryDataCache::reset();
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -184,6 +186,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 				'pluginId'   => 'rewrite',
 			)
 		);
+
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -201,6 +204,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 				'error' => $error,
 			)
 		);
+
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -236,6 +240,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 				'error' => $error,
 			)
 		);
+
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -251,6 +256,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		$activeUser = $gallery->getActiveUser();
 		$event      = GalleryCoreApi::newEvent('Gallery::Logout');
 		$event->setEntity($activeUser);
+
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -268,6 +274,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		$event = GalleryCoreApi::newEvent('Gallery::Logout');
 		$event->setEntity($activeUser);
+
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -294,6 +301,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		$event = GalleryCoreApi::newEvent('Gallery::Logout');
 		$event->setEntity($activeUser);
+
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {

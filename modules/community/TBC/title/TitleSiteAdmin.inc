@@ -38,13 +38,13 @@ class TitleSiteAdminController extends GalleryController {
 
 		$status = $error = array();
 
-
 		if (isset($form['action']['save']) && empty($error)) {
 			list($ret, $themeSettingsId) = GalleryCoreApi::getPluginParameter('module', 'title', 'themeSettingsId');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $error, $status) = GalleryCoreApi::handleThemeSettingsRequest(
 				$form['currentThemeId'],
 				$themeSettingsId,
@@ -54,6 +54,7 @@ class TitleSiteAdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status = empty($status) ? array() : array(
 				'statusMessage' => $status,
 			);
@@ -73,6 +74,7 @@ class TitleSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			// yes/no data
 			$status['saved'] = 1;
 		}
@@ -118,6 +120,7 @@ class TitleSiteAdminView extends GalleryView {
 			// Reset theme selection on validation error for theme settings
 			$form['themeId'] = $form['currentThemeId'];
 		}
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'title');
 
 		if ($ret) {
@@ -125,9 +128,10 @@ class TitleSiteAdminView extends GalleryView {
 		}
 
 		// Set up theme selection list
-		$themeList               = array(
+		$themeList = array(
 			'' => $module->translate('&laquo; default theme &raquo;'),
 		);
+
 		list($ret, $themeStatus) = GalleryCoreApi::fetchPluginStatus('theme');
 
 		if ($ret) {
@@ -141,6 +145,7 @@ class TitleSiteAdminView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$themeList[$id] = $theme->translate($theme->getName());
 			}
 		}
@@ -151,6 +156,7 @@ class TitleSiteAdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = GalleryCoreApi::loadThemeSettingsForm(
 			$form['themeId'],
 			$themeSettingsId,
@@ -172,6 +178,7 @@ class TitleSiteAdminView extends GalleryView {
 				'themeList' => $themeList,
 			)
 		);
+
 		$template->setVariable('controller', 'title.TitleSiteAdmin');
 
 		return array(

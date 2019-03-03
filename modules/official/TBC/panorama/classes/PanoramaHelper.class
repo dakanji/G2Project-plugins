@@ -46,16 +46,19 @@ class PanoramaHelper {
 		if (!isset($ids)) {
 			return array(null, array());
 		}
+
 		list($ret, $preferredFullImages) = GalleryCoreApi::fetchPreferredsByItemIds($ids);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $resizedImages) = GalleryCoreApi::fetchResizesByItemIds($ids);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = GalleryCoreApi::studyPermissions($ids);
 
 		if ($ret) {
@@ -70,6 +73,7 @@ class PanoramaHelper {
 			if (!in_array($id, $ids)) {
 				continue;
 			}
+
 			list($ret, $permissions) = GalleryCoreApi::getPermissions($id);
 
 			if ($ret) {

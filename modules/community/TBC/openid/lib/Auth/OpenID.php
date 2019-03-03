@@ -213,6 +213,7 @@ class Auth_OpenID {
 		if (is_dir($dir_name) || @mkdir($dir_name)) {
 			return true;
 		}
+
 		$parent_dir = dirname($dir_name);
 
 		// Terminal case; there is no parent directory to create.
@@ -254,6 +255,7 @@ class Auth_OpenID {
 
 			return $fallback;
 		}
+
 		trigger_error(
 			'Auth_OpenID::arrayGet (key = ' . $key . ') expected ' .
 						  'array as first parameter, got ' .
@@ -349,6 +351,7 @@ class Auth_OpenID {
 			foreach ($keys as $key) {
 				$new_args[] = array($key, $args[$key]);
 			}
+
 			$args = $new_args;
 		}
 
@@ -448,6 +451,7 @@ class Auth_OpenID {
 		if ($normalized === null) {
 			return null;
 		}
+
 		list($defragged, $frag) = Auth_OpenID::urldefrag($normalized);
 
 		return $defragged;

@@ -71,6 +71,7 @@ class MigrateModule extends GalleryModule {
 	 */
 	public function upgrade($currentVersion, $statusMonitor = null) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		// We don't care about anything older than 1.0.4
@@ -87,6 +88,7 @@ class MigrateModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 
 				// Fall Through
 			case '1.0.5':
@@ -185,6 +187,7 @@ class MigrateModule extends GalleryModule {
 	 */
 	public function getRewriteRules() {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$url          = $urlGenerator->generateUrl(
 			array(

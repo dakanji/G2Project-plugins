@@ -29,6 +29,7 @@
 class FavouritesModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('favourites');
 		$this->setName($gallery->i18n('Favorites'));
 		$this->setDescription(
@@ -103,16 +104,19 @@ class FavouritesModule extends GalleryModule {
 					'Unable to get a GalleryEntity instance'
 				);
 			}
+
 			$ret = $entity->create();
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = $entity->save(false);
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = $this->setParameter('themeSettingsId', $entity->getId());
 
 			if ($ret) {
@@ -135,9 +139,9 @@ class FavouritesModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
 		$userId = $gallery->getActiveUserId();
-
 
 		// show to guest user for tantalisation purposes?
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'favourites');
@@ -145,6 +149,7 @@ class FavouritesModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $anonId) = GalleryCoreApi::getAnonymousUserId();
 
 		if ($ret) {
@@ -154,11 +159,13 @@ class FavouritesModule extends GalleryModule {
 		if (!$params['offerToGuests'] && ($userId == $anonId)) {
 			return array(null, array());
 		}
+
 		$viewingFavourites = false;
 
 		if ('favourites.FavouritesAlbum' == $gallery->getCurrentView()) {
 			$viewingFavourites = true;
 		}
+
 		$links = array();
 
 		foreach ($items as $item) {
@@ -234,19 +241,23 @@ class FavouritesModule extends GalleryModule {
 
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
 
-		$links                       = array();
-		$userId                      = $gallery->getActiveUserId();
+		$links  = array();
+		$userId = $gallery->getActiveUserId();
+
 		list($ret, $anonymousUserId) = GalleryCoreApi::getAnonymousUserId();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// don't offer to show favourites to guests
 		if ($userId == $anonymousUserId) {
 			return array(null, $links);
 		}
+
 		// Do not offer to show favourites if there are none for this user
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		list($ret, $favourites) = FavouritesMapHelper::fetchFavourites($userId);
 
 		if ($ret) {
@@ -344,7 +355,6 @@ class FavouritesModule extends GalleryModule {
 				),
 				'help'     => $this->translate('Short URL for album of Favorite Items'),
 			),
-
 
 		);
 	}

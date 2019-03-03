@@ -36,6 +36,7 @@ class EditFeedController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$status = $results = $error = array();
 
 		$mode   = empty($form['mode']) ? '' : $form['mode'];
@@ -46,6 +47,7 @@ class EditFeedController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $canView) = GalleryCoreApi::hasItemPermission($item->getId(), 'core.view');
 
 		if ($ret) {
@@ -62,6 +64,7 @@ class EditFeedController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret) = RssMapHelper::canConfigureFeed($item, $param, $gallery->getActiveUserId(), true);
 
 		if ($ret) {
@@ -188,6 +191,7 @@ class EditFeedController extends GalleryController {
 			 * Delete button was pressed, delete feed, return to feedlist.
 			 * We might want to provide an 'are you sure' here in the future.
 			 */
+
 			$ret = RssMapHelper::deleteFeed($form['action']['delete']);
 
 			if ($ret) {
@@ -215,7 +219,6 @@ class EditFeedController extends GalleryController {
 	}
 }
 
-
 /**
  * This view will show a form to generate an URL to an RSS feed.
  */
@@ -239,6 +242,7 @@ class EditFeedView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret) = RssMapHelper::canConfigureFeed($item, $param, $gallery->getActiveUserId(), true);
 
 		if ($ret) {
@@ -358,6 +362,7 @@ class EditFeedView extends GalleryView {
 			 * Retieving all the feeds for this 'itemId'
 			 * Fetch all feed definitions
 			 */
+
 			list($ret, $feeds) = RssMapHelper::fetchFeedsForItem($EditFeed['itemId']);
 
 			if ($ret) {

@@ -46,6 +46,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_album);
 
 		list($ret, $this->_lockId) = GalleryCoreApi::acquireReadLock($this->_album->getId());
@@ -73,6 +74,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $this->_module->setParameter(
 			'imageUrl',
 			'http://test.com/test.jpg',
@@ -124,11 +126,13 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $isAppropriate) = $this->_plugin->isAppropriate();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(false, $isAppropriate, 'off');
 	}
 
@@ -138,11 +142,13 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $isAppropriate) = $this->_plugin->isAppropriate();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(true, $isAppropriate, 'admin for admin');
 	}
 
@@ -152,16 +158,19 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $this->_becomeGuestUser();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $isAppropriate) = $this->_plugin->isAppropriate();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(false, $isAppropriate, 'admin for guest');
 	}
 
@@ -171,16 +180,19 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $this->_becomeGuestUser();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $isAppropriate) = $this->_plugin->isAppropriate();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(true, $isAppropriate, 'on');
 	}
 
@@ -212,13 +224,14 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			'http://blah' => array(),
 			'file://hoho' => array(),
 		) as $url => $error) {
-			$form                        = array(
+			$form = array(
 				'action'   => array(
 					'checkUrl' => 1,
 				),
 				'formName' => 'ItemAddWebCam',
 				'imageUrl' => $url,
 			);
+
 			list($ret, $tpl, $l10Domain) = $this->_plugin->loadTemplate($template, $form, $this->_album);
 
 			if ($ret) {
@@ -248,6 +261,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_album->getId(),
 			$gallery->getActiveUserId(),
@@ -269,13 +283,14 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			),
 			'http://blah' => array(),
 		) as $url => $error) {
-			$form                        = array(
+			$form = array(
 				'action'   => array(
 					'checkUrl' => 1,
 				),
 				'formName' => 'ItemAddWebCam',
 				'imageUrl' => $url,
 			);
+
 			list($ret, $tpl, $l10Domain) = $this->_plugin->loadTemplate($template, $form, $this->_album);
 
 			if ($ret) {
@@ -301,6 +316,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
+
 		$this->assertEquals('test.jpg', $results[1]['addedFiles'][0]['fileName'], 'fileName');
 	}
 
@@ -310,6 +326,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$results = $this->handleRequest($this->_album, ERROR_PERMISSION_DENIED);
 		$this->assertEquals(array(null, null), $results);
 	}
@@ -328,6 +345,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
+
 		$this->assertEquals('testimage', $results[1]['addedFiles'][0]['fileName'], 'fileName');
 	}
 
@@ -371,6 +389,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
+
 		$this->assertEquals('test.jpg', $results[1]['addedFiles'][0]['fileName'], 'fileName');
 	}
 
@@ -389,6 +408,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_album->getId(),
 			$gallery->getActiveUserId(),
@@ -424,11 +444,13 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 			array_keys($results[1]['addedFiles'][0]),
 			'key'
 		);
+
 		$this->assertEquals(
 			'foo&lt;script&gt;bar.jpg',
 			$results[1]['addedFiles'][0]['fileName'],
 			'fileName'
 		);
+
 		$this->assertEquals(array(), $results[0], 'no error');
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById(
@@ -439,6 +461,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('foo&lt;script&gt;bar.jpg', $item->getTitle());
 		$this->assertEquals('foo_script_bar.jpg', $item->getPathComponent());
 	}
@@ -449,6 +472,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		// If refreshed successfully then our fake filesize should be set
 		$this->assertEquals(7, $refresh->getSize());
 	}
@@ -467,6 +491,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markToolkitForCleanup('ItemAddWebCamTestToolkit');
 
 		$ret = GalleryCoreApi::registerToolkitProperty(
@@ -487,6 +512,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		// If refreshed successfully then our fake filesize should be set
 		$this->assertEquals(7, $refresh->getSize());
 	}
@@ -564,6 +590,7 @@ class ItemAddWebCamTestPlatform {
 		} elseif ($handle == '/test/webcam') {
 			return strlen($string);
 		}
+
 		echo "Unexpected write: $handle $string\n";
 
 		return 0;
@@ -715,6 +742,7 @@ class ItemAddWebCamTestPlatform {
 
 			return $tmp;
 		}
+
 		$buf                        = join("\n", $this->_readBuffer[$handle]);
 		$tmp                        = substr($buf, 0, $length);
 		$this->_readBuffer[$handle] = explode("\n", substr($buf, $length + 1));

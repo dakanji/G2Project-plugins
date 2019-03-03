@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 /**
  * Dynamic album view of favourite items!
  * @package Favourites
@@ -28,6 +27,7 @@
  */class FavouritesAlbumView extends GalleryView {
 	public function __construct() {
 		global $gallery;
+
 		$this->_view            = 'favourites.FavouritesAlbum';
 		$this->_title           = $gallery->i18n('Favorite Items');
 		$this->_itemType        = array($gallery->i18n('Favorite'), $gallery->i18n('favorite'));
@@ -57,11 +57,13 @@
 		if (!isset($item)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null, null, null);
 		}
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'favourites');
 
 		if ($ret) {
 			return array($ret, null, null, null);
 		}
+
 		list($targetUserId, $itemId) = GalleryUtilities::getRequestVariables('targetUserId', 'itemId');
 
 		// only admins can ask for others' favourites
@@ -71,17 +73,20 @@
 			$targetUserId = $gallery->getActiveUserId();
 			GalleryUtilities::putRequestVariable('targetUserId', $targetUserId);
 		}
+
 		// get user name
 		list($ret, $targetUser) = GalleryCoreApi::loadEntitiesById($targetUserId, 'GalleryUser');
 
 		if ($ret) {
 			return array($ret, null, null, null);
 		}
+
 		// thought that loadEntitiesById with specified entity type would protect against loading non-users but apparently not always
 		if (!GalleryUtilities::isA($targetUser, 'GalleryUser')) {
 			// Invalid targetUserId given, return MISSING_OBJECT to get standard error page
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null, null, null);
 		}
+
 		$targetUserName = $targetUser->GetFullName();
 		$item->create(
 			$module->translate(
@@ -120,11 +125,12 @@
 			}
 
 			// Provide parent, parent URL and get-children function to Theme API
-			$item->urlParams           = array(
+			$item->urlParams = array(
 				'view'         => 'favourites.FavouritesAlbum',
 				'targetUserId' => $targetUserId,
 				'highlightId'  => $itemId,
 			);
+
 			$item->getChildrenFunction = array('FavouritesAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -182,6 +188,7 @@
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $result) = $showItem->loadTemplate($template, $form);
 
 			if ($ret) {

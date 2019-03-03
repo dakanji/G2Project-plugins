@@ -44,7 +44,6 @@ class DownloadMaxView extends DownloadItemView {
 		$maxImageHeight = (int)GalleryUtilities::getRequestVariables('maxImageHeight');
 		$maxImageWidth  = (int)GalleryUtilities::getRequestVariables('maxImageWidth');
 
-
 		if (empty($masterId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -61,6 +60,7 @@ class DownloadMaxView extends DownloadItemView {
 		if ($ret) {
 			return $ret;
 		}
+
 		/*
 		$urlgen =& $gallery->getUrlGenerator();
 		$mainUrl = $urlgen->generateUrl( array ( 'view' => 'core.DownloadItem',
@@ -73,6 +73,7 @@ class DownloadMaxView extends DownloadItemView {
 		header("Location:$mainUrl", TRUE, 307 );
 		*/
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
+
 		list($ret, $view) = GalleryView::loadView('core.DownloadItem');
 
 		if ($ret) {
@@ -107,9 +108,11 @@ class DownloadMaxView extends DownloadItemView {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$potentialImages[] = $item;
 			}
 		}
+
 		// If the user can see resized versions consider those too
 		$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'core.viewResizes');
 
@@ -127,6 +130,7 @@ class DownloadMaxView extends DownloadItemView {
 					if ($ret) {
 						return $ret;
 					}
+
 					$potentialImages[] = $uptodateResize;
 				}
 			}
@@ -138,8 +142,8 @@ class DownloadMaxView extends DownloadItemView {
 		if ($ret) {
 			return array($ret, null);
 		}
-		$potentialImages[] = $thumbs[$masterId];
 
+		$potentialImages[] = $thumbs[$masterId];
 
 		/*
 		 * true if maxDimensions are taller/narrower than image,
@@ -148,7 +152,6 @@ class DownloadMaxView extends DownloadItemView {
 		$widthbound = (!$maxImageHeight || $potentialImages[0]->height * $maxImageWidth < $potentialImages[0]->width * $maxImageHeight) ? 1 : 0;
 
 		usort($potentialImages, array('DownloadMaxView', 'byWidth'));
-
 
 		if ($maxImageWidth && $widthbound) {
 			foreach ($potentialImages as $potentialImage) {
@@ -165,6 +168,7 @@ class DownloadMaxView extends DownloadItemView {
 				}
 			}
 		}
+
 		$bestImage = array_pop($potentialImages);
 
 		//none of them big enough - use the largest

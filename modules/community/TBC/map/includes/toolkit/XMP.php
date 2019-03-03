@@ -53,10 +53,6 @@
 
 require_once 'XML.php';
 
-
-
-
-
 /******************************************************************************
  *
  * Function:     get_XMP_text
@@ -97,12 +93,6 @@ function get_XMP_text($jpeg_header_data) {
 }
 
 // End of Function:     get_XMP_text
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     put_XMP_text
@@ -147,8 +137,6 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
 		$i++;
 	}
 
-
-
 	// Insert a new XMP/RDF APP1 segment at the specified point.
 	// Change: changed to properly construct array element as of revision 1.04 - requires two array statements not one, requires insertion at $i, not $i - 1
 	array_splice(
@@ -170,12 +158,6 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
 }
 
 // End of Function:     put_XMP_text
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     read_XMP_array_from_text
@@ -200,11 +182,6 @@ function read_XMP_array_from_text($xmptext) {
 }
 
 // End of Function:     read_XMP_array_from_text
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     write_XMP_array_to_text
@@ -240,7 +217,6 @@ function write_XMP_array_to_text($xmparray) {
 	// Add the XML text
 	$output_XMP_text .= write_xml_array_to_text($xmparray, 0);
 
-
 	// The XMP standard recommends adding 2-4k of white space at the
 	// end for in place editing, so we will add it to the XML now
 	$output_XMP_text .= str_repeat("                                                                                                   \n", 30);
@@ -253,12 +229,6 @@ function write_XMP_array_to_text($xmparray) {
 }
 
 // End of Function:     write_XMP_array_to_text
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     Interpret_XMP_to_HTML
@@ -300,10 +270,8 @@ function Interpret_XMP_to_HTML($XMP_array) {
 		// Cycle through each of the items in the RDF tree array, and process them
 		foreach ($RDF_Contents as $RDF_Item) {
 			// Check if the item is a rdf:Description tag - these are the only ones that can be processed
-
 			if (($RDF_Item['tag'] == 'rdf:Description') && (array_key_exists('children', $RDF_Item))) {
 				// Item is a rdf:Description tag.
-
 				// Cycle through each of the attributes for this tag, looking
 				// for a xmlns: attribute, which tells us what Namespace the
 				// sub-items will be in.
@@ -394,9 +362,7 @@ function Interpret_XMP_to_HTML($XMP_array) {
 				// Add the start of the table to the HTML output
 				$output .= "\n<table  class=\"XMP_Table\" border=1>\n";
 
-
 				// Check if this element has sub-items
-
 				if (array_key_exists('children', $RDF_Item)) {
 					// Cycle through each of the sub-items
 					foreach ($RDF_Item['children'] as $child_item) {
@@ -413,6 +379,7 @@ function Interpret_XMP_to_HTML($XMP_array) {
 						if ($value_str == '') {
 							$value_str = '&nbsp;';
 						}
+
 						// Add the table row to the output html
 						$output .= '<tr class="XMP_Table_Row"><td  class="XMP_Caption_Cell">' . $tag_caption . ':</td><td  class="XMP_Value_Cell">' . $value_str . "</td></tr>\n";
 					}
@@ -421,44 +388,17 @@ function Interpret_XMP_to_HTML($XMP_array) {
 				// Add the end of the table to the html
 				$output .= "\n</table>\n";
 			}
+
 			// Don't know how to process tags other than rdf:Description - do nothing
 		}
 	}
+
 	// Return the resulting HTML
 	return $output;
 }
 
 // End of Function:     Interpret_XMP_to_HTML
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // INTERNAL FUNCTIONS
-
-
-
-
-
-
-
-
-
-
-
 
 /******************************************************************************
  *
@@ -480,7 +420,6 @@ function Interpret_XMP_to_HTML($XMP_array) {
 function Interpret_RDF_Item($Item) {
 
 		// TODO: Many RDF items have not been tested - only photoshop 7.0 and CS items
-
 	// Create a string to receive the HTML output
 	$value_str = '';
 
@@ -492,7 +431,6 @@ function Interpret_RDF_Item($Item) {
 		// Item has no caption - make one
 		$tag_caption = 'Unknown field ' . $Item['tag'];
 	}
-
 
 	// Process specially the item according to it's tag
 	switch ($Item['tag']) {
@@ -510,19 +448,11 @@ function Interpret_RDF_Item($Item) {
 			break;
 	}
 
-
-
-
 	// Return the captiona and value
 	return array($tag_caption, $value_str);
 }
 
 // End of Function:     Interpret_RDF_Item
-
-
-
-
-
 /******************************************************************************
  *
  * Internal Function:     get_RDF_field_html_value
@@ -561,12 +491,14 @@ function get_RDF_field_html_value($rdf_item) {
 						list($tag_caption, $value_str) = Interpret_RDF_Item($child);
 						$output_str                   .= "$tag_caption  =  $value_str\n";
 					}
+
 					// The output text will have an extra \n on it - remove it
 					$output_str = rtrim($output_str);
 				}
 			}
 		}
 	}
+
 	// If the item did not have sub-resources, it may still have sub-items - check for this
 	elseif (array_key_exists('children', $rdf_item)) {
 		// Non-resource Sub-items found, Cycle through each
@@ -604,6 +536,7 @@ function get_RDF_field_html_value($rdf_item) {
 								list($tag_caption, $value_str) = Interpret_RDF_Item($child);
 								$output_str                   .= "$tag_caption  =  $value_str\n";
 							}
+
 							// The output text will have an extra \n on it - remove it
 							$output_str = rtrim($output_str);
 						}
@@ -620,6 +553,7 @@ function get_RDF_field_html_value($rdf_item) {
 			elseif (array_key_exists('value', $child_item)) {
 				$output_str .= $rdf_item['value'] . "\n";
 			}
+
 			// no info - do nothing
 		}
 	}
@@ -629,14 +563,6 @@ function get_RDF_field_html_value($rdf_item) {
 }
 
 // End of Function:     get_RDF_field_html_value
-
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Internal Function:     interpret_RDF_collection
@@ -686,6 +612,7 @@ function interpret_RDF_collection($item) {
 									list($tag_caption, $value_str) = Interpret_RDF_Item($child);
 									$output_str                   .= "$tag_caption  =  $value_str\n";
 								}
+
 								// The output text will have an extra \n on it - remove it
 								$output_str = rtrim($output_str);
 							}
@@ -700,32 +627,17 @@ function interpret_RDF_collection($item) {
 				}
 			}
 		}
+
 		// The list of sub-items formed will have a trailing \n, remove it.
 		$output_str = rtrim($output_str);
 	}
+
 	// No sub-items in collection - can't do anything
-
-
 	// Return the output value
 	return $output_str;
 }
 
 // End of Function:     interpret_RDF_collection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /******************************************************************************
  * Global Variable:      XMP_tag_captions
  *
@@ -774,7 +686,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xap:Nickname'                     => 'Nickname',
 	'xap:Thumbnails'                   => 'Thumbnails',
 	'xapidq:Scheme'                    => 'Identification Scheme',
-
 
 	'xapRights:Certificate'            => 'Certificate',
 	'xapRights:Copyright'              => 'Copyright',
@@ -826,7 +737,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'photoshop:TransmissionReference'  => 'Technical (Transmission) Reference',
 	'photoshop:Urgency'                => 'Urgency',
 
-
 	'tiff:ImageWidth'                  => 'Image Width',
 	'tiff:ImageLength'                 => 'Image Length',
 	'tiff:BitsPerSample'               => 'Bits Per Sample',
@@ -852,7 +762,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'tiff:Software'                    => 'Software',
 	'tiff:Artist'                      => 'Artist',
 	'tiff:Copyright'                   => 'Copyright',
-
 
 	'exif:ExifVersion'                 => 'Exif Version',
 	'exif:FlashpixVersion'             => 'Flash pix Version',
@@ -964,8 +873,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'stVer:modifier'                   => '',
 	'stVer:version'                    => '',
 
-
-
 	'stJob:name'                       => 'Job Name',
 	'stJob:id'                         => 'Unique Job ID',
 	'stJob:url'                        => 'URL for External Job Management File',
@@ -988,13 +895,10 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'exif:Rows'                        => 'Rows',
 	'exif:Values'                      => 'Values',
 
-
 	// Exif DeviceSettings
 	'exif:Columns'                     => 'Columns',
 	'exif:Rows'                        => 'Rows',
 	'exif:Settings'                    => 'Settings',
-
-
 
 );
 

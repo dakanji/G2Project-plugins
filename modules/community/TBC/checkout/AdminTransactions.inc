@@ -51,6 +51,7 @@ class AdminTransactionsController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$status['transactionDeleted']   = 1;
 			$results['redirect']['view']    = 'core.SiteAdmin';
 			$results['redirect']['subView'] = 'checkout.AdminTransactions';
@@ -89,6 +90,7 @@ class AdminTransactionsView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
@@ -98,12 +100,14 @@ class AdminTransactionsView extends GalleryView {
 		if ($form['formName'] != 'Transactions') {
 			$form['formName'] = 'Transactions';
 		}
+
 		//tidy up transaction table
 		$ret = CheckoutTransactionHelper::purgeDeadTransactions();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($page, $sortBy, $order, $showDelete) = GalleryUtilities::getRequestVariables('page', 'sortBy', 'order', 'showDelete');
 
 		if (!isset($page) || $page < 1) {
@@ -141,8 +145,9 @@ class AdminTransactionsView extends GalleryView {
 			$order = 'DESC';
 		}
 
-		$results                   = array();
-		$query                     = "SELECT 
+		$results = array();
+
+		$query = "SELECT 
 		[GalleryCheckoutTransaction::date], 			
 		[GalleryCheckoutTransaction::id],
 		[GalleryUser::fullName],
@@ -165,11 +170,13 @@ class AdminTransactionsView extends GalleryView {
 		  OR ([GalleryCheckoutTransaction::timeConfirmed] != 0)
 		ORDER BY $SQLsortBy $order
 		";
+
 		list($ret, $searchResults) = $gallery->search($query);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$txns = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -185,6 +192,7 @@ class AdminTransactionsView extends GalleryView {
 		if (isset($txns)) {
 			$countOrders = count($txns);
 		}
+
 		$pageDetails['count']    = $countOrders;
 		$pageDetails['pageSize'] = $countOrders > $perPage ? $perPage : $countOrders;
 		// Figure out our max pages, make sure our current page fits in it

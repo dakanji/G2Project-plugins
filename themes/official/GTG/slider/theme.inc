@@ -98,6 +98,7 @@ class SliderTheme extends GalleryTheme {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$theme =& $template->getVariableByReference('theme');
 
 		list($ret, $imageWidths, $imageHeights) = $this->_buildItemList($childIds, $theme['children']);
@@ -123,6 +124,7 @@ class SliderTheme extends GalleryTheme {
 
 		if (!empty($renderId)) {
 			// Render this item
+
 			list($ret, $image) = GalleryCoreApi::loadEntitiesById(
 				$renderId,
 				array('GalleryDataItem', 'GalleryDerivative')
@@ -138,6 +140,7 @@ class SliderTheme extends GalleryTheme {
 				// Malicious URL.. renderId not for this item
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
+
 			$template->setVariable(
 				'theme',
 				array(
@@ -150,6 +153,7 @@ class SliderTheme extends GalleryTheme {
 		}
 
 		// Otherwise, load the parent with initial view of this item
+
 		list($ret, $parent) = GalleryCoreApi::loadEntitiesById(
 			$item->getParentId(),
 			'GalleryItem'
@@ -158,6 +162,7 @@ class SliderTheme extends GalleryTheme {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $childIds) = GalleryCoreApi::fetchChildItemIds($parent);
 
 		if ($ret) {
@@ -169,6 +174,7 @@ class SliderTheme extends GalleryTheme {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$theme =& $template->getVariableByReference('theme');
 
 		foreach ($theme['children'] as $tmp) {
@@ -258,6 +264,7 @@ class SliderTheme extends GalleryTheme {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $childItems) = GalleryCoreApi::loadEntitiesById(
 				$childIds,
 				'GalleryItem'
@@ -266,6 +273,7 @@ class SliderTheme extends GalleryTheme {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $preferredFullImages) = GalleryCoreApi::fetchPreferredsByItemIds(
 				$childIds
 			);
@@ -273,6 +281,7 @@ class SliderTheme extends GalleryTheme {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $resizedImages) = GalleryCoreApi::fetchResizesByItemIds(
 				$childIds
 			);
@@ -280,6 +289,7 @@ class SliderTheme extends GalleryTheme {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds(
 				$childIds
 			);
@@ -288,6 +298,7 @@ class SliderTheme extends GalleryTheme {
 				return array($ret, null, null);
 			}
 		}
+
 		$i = -1;
 
 		foreach ($childItems as $child) {
@@ -310,6 +321,7 @@ class SliderTheme extends GalleryTheme {
 						return array($ret, null, null);
 					}
 				}
+
 				$children[$i]['thumbnail'] = (array)$thumbnails[$childId];
 			}
 
@@ -355,6 +367,7 @@ class SliderTheme extends GalleryTheme {
 						return array($ret, null, null);
 					}
 				}
+
 				$image                      = (array)$image;
 				$children[$i]['image']      = $image;
 				$children[$i]['imageIndex'] = count($imageWidths);

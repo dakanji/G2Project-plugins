@@ -80,6 +80,7 @@ class PanoramaJsModule extends GalleryModule {
 				GalleryCoreApi::requireOnce(
 					'modules/panoramajs/classes/PanoramaJsUpgradeHelper.class'
 				);
+
 				$ret = PanoramaJsUpgradeHelper::revertEntities();
 
 				if ($ret) {
@@ -159,6 +160,7 @@ class PanoramaJsModule extends GalleryModule {
 			 * determine if a panorama is even possible.  We'll still also gate on the acting
 			 * user's permissions that we receive.
 			 */
+
 			list($ret, $images) = PanoramaJsHelper::fetchViewableImages($items);
 
 			if ($ret) {
@@ -171,6 +173,7 @@ class PanoramaJsModule extends GalleryModule {
 				if (!isset($images[$itemId])) {
 					continue;
 				}
+
 				$image    = $images[$itemId];
 				$mimeType = $item->getMimeType();
 				$width    = $image->getWidth();

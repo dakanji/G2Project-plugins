@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -32,7 +31,6 @@ GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class')
  * @author Alec Myers <alec@alecmyers.com>
  *
  */
-
 
 /**
  * This controller will handle the email checkout process
@@ -50,18 +48,23 @@ class EmailController extends GalleryController {
 		$results = array();
 
 		if (isset($form['action']['send'])) {
-			if (!empty($form['custEmail']) && GalleryUtilities::isValidEmailString($form['custEmail'])) {
+			if (!empty($form['custEmail'])
+				&& GalleryUtilities::isValidEmailString($form['custEmail'])
+			) {
 				list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$transactionId = $transaction->getId();
 
 				$form['custRecipientName'] = trim($form['custRecipientName']);
 
 				if (empty($form['custRecipientName'])) {
-					$form['custRecipientName'] = $form['custFirstName'] . ' ' . $form['custLastName'];
+					$form['custRecipientName'] = $form['custFirstName']
+						. ' '
+						. $form['custLastName'];
 				}
 
 				$ret = GalleryCheckoutApi::setPaymentPlugin($transaction, 'checkoutemail');

@@ -47,6 +47,7 @@ class AdminEcardController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$redirect['view']    = 'core.SiteAdmin';
 			$redirect['subView'] = 'ecard.AdminEcard';
 			$status['saved']     = 1;
@@ -61,6 +62,7 @@ class AdminEcardController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'ecard.AdminEcard';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 

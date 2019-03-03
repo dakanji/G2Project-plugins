@@ -32,6 +32,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -50,6 +51,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		$this->assert($this->_platform->isComplete(), $this->_platform->getRemaining());
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -185,6 +187,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
+
 		$this->_platform->setReply(
 			'copy',
 			array(
@@ -198,11 +201,13 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$this->_platform->setReply(
 			'exec',
 			array(array(array('/validPath/zip', 'tempfile.zip', 'tempfile'))),
 			array(true, array(), array())
 		);
+
 		$this->_platform->setReply('file_exists', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile'), true);
@@ -242,6 +247,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
+
 		$this->_platform->setReply(
 			'copy',
 			array(
@@ -255,11 +261,13 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$this->_platform->setReply(
 			'exec',
 			array(array(array('/validPath/zip', 'tempfile.zip', 'tempfile'))),
 			array(true, array(), array())
 		);
+
 		$this->_platform->setReply('file_exists', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile'), true);
@@ -316,6 +324,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
+
 		$this->_platform->setReply(
 			'copy',
 			array(
@@ -329,11 +338,13 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$this->_platform->setReply(
 			'exec',
 			array(array(array('/validPath/unzip', 'tempfile.zip', 'tempfile'))),
 			array(false, array(), array())
 		);
+
 		$this->_platform->setReply('unlink', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile'), true);
 

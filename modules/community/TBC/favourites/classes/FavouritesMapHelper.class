@@ -46,6 +46,7 @@ class FavouritesMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$faves = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -55,6 +56,7 @@ class FavouritesMapHelper {
 				$faves[] = $result[0];
 			}
 		}
+
 		$faves = array_unique($faves);
 
 		return array(null, $faves);
@@ -63,7 +65,7 @@ class FavouritesMapHelper {
 	public function fetchUserIdByFullName($fullName = null) {
 		global $gallery;
 
-		$query                     = '
+		$query = '
 	SELECT
 	  [GalleryUser::id]
 	FROM
@@ -71,6 +73,7 @@ class FavouritesMapHelper {
 	WHERE
 	  [GalleryUser::fullName] = ?
 	';
+
 		list($ret, $searchResults) = $gallery->search($query, array($fullName));
 
 		if ($ret) {
@@ -80,6 +83,7 @@ class FavouritesMapHelper {
 		if ($searchResults->resultCount() == 0) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
+
 		$result = $searchResults->nextResult();
 		$id     = $result[0];
 
@@ -95,8 +99,10 @@ class FavouritesMapHelper {
 	 */
 	public function fetchUsersWithFavourites() {
 		global $gallery;
-		$results                   = array();
-		$query                     = 'SELECT 
+
+		$results = array();
+
+		$query        = 'SELECT 
 		[GalleryUser::id],
 		COUNT([GalleryUser::id]), 
 		[GalleryUser::fullName],
@@ -108,7 +114,8 @@ class FavouritesMapHelper {
 		GROUP BY [GalleryUser::id],[GalleryUser::fullName],[GalleryUser::userName]
 		ORDER BY [GalleryUser::fullName]
 		';
-		$queryOptions              = array();
+		$queryOptions = array();
+
 		list($ret, $searchResults) = $gallery->search($query, $queryOptions);
 
 		if ($ret) {
@@ -132,8 +139,10 @@ class FavouritesMapHelper {
 	 */
 	public function fetchUsernamesWithFavouritesLike($like) {
 		global $gallery;
-		$results                   = array();
-		$query                     = 'SELECT DISTINCT
+
+		$results = array();
+
+		$query = 'SELECT DISTINCT
 		[GalleryUser::fullName]
 		FROM [GalleryUser]
 		INNER JOIN [GalleryFavouritesMap]
@@ -141,6 +150,7 @@ class FavouritesMapHelper {
 		AND [GalleryUser::fullName] LIKE ?
 		ORDER BY [GalleryUser::fullName]
 		';
+
 		list($ret, $searchResults) = $gallery->search($query, array("$like%"));
 
 		if ($ret) {
@@ -150,7 +160,8 @@ class FavouritesMapHelper {
 		while ($result = $searchResults->nextResult()) {
 			$results[] = $result[0];
 		}
-		$query                     = 'SELECT DISTINCT
+
+		$query = 'SELECT DISTINCT
 		[GalleryUser::userName]
 		FROM [GalleryUser]
 		INNER JOIN [GalleryFavouritesMap]
@@ -158,6 +169,7 @@ class FavouritesMapHelper {
 		AND [GalleryUser::userName] LIKE ?
 		ORDER BY [GalleryUser::userName]
 		';
+
 		list($ret, $searchResults) = $gallery->search($query, array("$like%"));
 
 		if ($ret) {
@@ -259,6 +271,7 @@ class FavouritesMapHelper {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::removeMapEntry(
 			'FavouritesMap',
 			array(

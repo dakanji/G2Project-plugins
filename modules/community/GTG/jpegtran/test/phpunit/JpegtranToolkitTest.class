@@ -57,6 +57,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testGoodBinary() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $results) = JpegtranToolkitHelper::testBinary($this->_jpegtranPath);
 
 		if ($ret) {
@@ -71,6 +72,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testRotateOnlyBinary() {
 		$this->_platform->setTestEnvironment('rotateOnly');
+
 		list($ret, $results) = JpegtranToolkitHelper::testBinary($this->_jpegtranPath);
 
 		if ($ret) {
@@ -95,6 +97,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testBadBinary() {
 		$this->_platform->setTestEnvironment('badBinary');
+
 		list($ret, $results) = JpegtranToolkitHelper::testBinary($this->_jpegtranPath);
 
 		if ($ret) {
@@ -109,6 +112,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testGetOperations() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $results) = JpegtranToolkitHelper::getOperations();
 
 		if ($ret) {
@@ -158,6 +162,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testGetOperationsRotateOnly() {
 		$this->_platform->setTestEnvironment('rotateOnly');
+
 		list($ret, $results) = JpegtranToolkitHelper::getOperations();
 
 		if ($ret) {
@@ -185,6 +190,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testGetOperationsBadBinary() {
 		$this->_platform->setTestEnvironment('badBinary');
+
 		list($ret, $results) = JpegtranToolkitHelper::getOperations();
 
 		if ($ret) {
@@ -197,6 +203,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testPerformOperationCrop() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/jpeg',
 			'crop',
@@ -218,11 +225,13 @@ class JpegtranToolkitTest extends GalleryTestCase {
 			$context,
 			'context'
 		);
+
 		$this->assertEquals('image/jpeg', $mimeType, 'output mimetype != input mimetype');
 	}
 
 	public function testPerformOperationCropNotMcuBoundary() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/jpeg',
 			'crop',
@@ -244,11 +253,13 @@ class JpegtranToolkitTest extends GalleryTestCase {
 			$context,
 			'bad mcu boundaries without context'
 		);
+
 		$this->assertEquals('image/jpeg', $mimeType, 'output mimetype != input mimetype');
 	}
 
 	public function testPerformOperationCropWithContext() {
 		$this->_platform->setTestEnvironment('hasGetImageSize');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/jpeg',
 			'crop',
@@ -273,11 +284,13 @@ class JpegtranToolkitTest extends GalleryTestCase {
 			$context,
 			'context'
 		);
+
 		$this->assertEquals('image/jpeg', $mimeType, 'output mimetype != input mimetype');
 	}
 
 	public function testPerformOperationCropWithContextNotMcuBoundary() {
 		$this->_platform->setTestEnvironment('hasGetImageSize');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/jpeg',
 			'crop',
@@ -302,11 +315,13 @@ class JpegtranToolkitTest extends GalleryTestCase {
 			$context,
 			'bad mcu boundaries with context'
 		);
+
 		$this->assertEquals('image/jpeg', $mimeType, 'output mimetype != input mimetype');
 	}
 
 	public function testPerformOperationRotate() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/pjpeg',
 			'rotate',
@@ -326,6 +341,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testPerformOperationRotateWithContext() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/pjpeg',
 			'rotate',
@@ -350,11 +366,13 @@ class JpegtranToolkitTest extends GalleryTestCase {
 			$context,
 			'context'
 		);
+
 		$this->assertEquals('image/pjpeg', $mimeType, 'output mimetype != input mimetype');
 	}
 
 	public function testPerformOperationChangesWorkingDirectory() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/jpeg',
 			'crop',
@@ -375,6 +393,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testPerformOperationForUnsupportedOperation() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/pjpeg',
 			'thumbnail',
@@ -396,6 +415,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testPerformOperationForUnsupportedMimetype() {
 		$this->_platform->setTestEnvironment('normal');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/gif',
 			'rotate',
@@ -417,6 +437,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 	public function testPerformOperationUsesPhpGetImagesize() {
 		$this->_platform->setTestEnvironment('hasGetImageSize');
+
 		list($ret, $mimeType, $context) = $this->_toolkit->performOperation(
 			'image/jpeg',
 			'crop',
@@ -617,6 +638,7 @@ class JpegtranToolkitTestPlatform {
 				// Crop operation that uses PHP's getImagesize() to get the dimensions
 				return array($this->_envId == 'hasGetImageSize', array(), array());
 		}
+
 		printf('Unexpected command for mock toolkit<pre>%s</pre>', print_r($cmd, true));
 
 		return array(0, '', 'unprepared for exec()');

@@ -35,11 +35,13 @@ class CheckoutGoogleResponseHelper {
 	 */
 	public function checkHttpAuth() {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		/*
 		 * Use the Basic auth-type for tests. PHP does not define auth variables for arbitrary
 		 * auth-types.
 		 */
+
 		list($status, $headers, $body) = GalleryCoreApi::requestWebPage(
 			$urlGenerator->generateUrl(
 				array(
@@ -55,6 +57,7 @@ class CheckoutGoogleResponseHelper {
 				'Authorization' => 'Basic ' . base64_encode('USERNAME:PASSWORD'),
 			)
 		);
+
 		//$found = strpos($body, "USERNAME\nPASSWORD");
 		//return array(null, $found !== false);
 		return array(null, $body == "USERNAME\nPASSWRD");
@@ -78,6 +81,7 @@ class CheckoutGoogleResponseHelper {
 
 		if (!empty($authorization)) {
 			list($authtype, $authdata) = explode(' ', $authorization);
+
 			list($username, $password) = explode(':', base64_decode($authdata));
 		}
 
@@ -102,6 +106,7 @@ class CheckoutGoogleResponseHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantKey');
 
 			if ($ret) {
@@ -113,12 +118,14 @@ class CheckoutGoogleResponseHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantKey');
 
 			if ($ret) {
 				return array($ret, null);
 			}
 		}
+
 		list($compareMerchantId, $compareMerchantKey) = CheckoutGoogleResponseHelper::getHttpAuth();
 
 		if ($compareMerchantId != $gcMerchantId || $compareMerchantKey != $gcMerchantKey) {
@@ -159,6 +166,7 @@ class CheckoutGoogleResponseHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$result = $results->nextResult();
 
 		return array(null, $result[0]);
@@ -181,6 +189,7 @@ class CheckoutGoogleResponseHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$result = $results->nextResult();
 
 		return array(null, $result[0], $result[1]);
@@ -203,6 +212,7 @@ class CheckoutGoogleResponseHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcTestMerchantKey');
 
 			if ($ret) {
@@ -214,12 +224,14 @@ class CheckoutGoogleResponseHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $gcMerchantKey) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantKey');
 
 			if ($ret) {
 				return array($ret, null);
 			}
 		}
+
 		$authorizationKey = base64_encode($gcMerchantId . ':' . $gcMerchantKey);
 
 		switch ($type) {
@@ -259,6 +271,7 @@ class CheckoutGoogleResponseHelper {
 				$url = WebHelper_simple::_parseLocation($responseHeaders['Location'], parse_url($url));
 				$depth++;
 			}
+
 			list($returnStatus, $headers, $body) = GalleryCoreApi::requestWebPage($url, 'POST', $googleHeaders, $data);
 		} while ($depth < 5 && isset($headers['Location']));
 
@@ -277,10 +290,12 @@ class CheckoutGoogleResponseHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
-		$xml                  = '<?xml version="1.0" encoding="UTF-8"?>
+
+		$xml = '<?xml version="1.0" encoding="UTF-8"?>
 		<deliver-order xmlns="http://checkout.google.com/schema/2" google-order-number="' . $googleOrderNumber . '">
     		<send-email>false</send-email>
 		</deliver-order>';
+
 		list($success, $body) = CheckoutGoogleResponseHelper::SendData($xml, 'order processing');
 
 		return array(null, $success, $body);
@@ -295,11 +310,13 @@ class CheckoutGoogleResponseHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
-		$xml                  = '<?xml version="1.0" encoding="UTF-8"?>
+
+		$xml = '<?xml version="1.0" encoding="UTF-8"?>
 		<add-merchant-order-number xmlns="http://checkout.google.com/schema/2"
     		google-order-number="' . $googleOrderNumber . '">
     		<merchant-order-number>' . $transactionId . '</merchant-order-number>
 		</add-merchant-order-number>';
+
 		list($success, $body) = CheckoutGoogleResponseHelper::SendData($xml, 'order processing');
 
 		return array(null, $success, $body);

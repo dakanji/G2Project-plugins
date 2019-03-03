@@ -57,7 +57,6 @@ class SelectView extends GalleryView {
 		global $gallery;
 
 		//$this->setCacheControl($template, 'no-cache'); RESTORE for 2.3
-
 		// entry point for checkout
 		CheckoutHelper::StoreReturnURL();
 
@@ -113,8 +112,6 @@ class SelectView extends GalleryView {
 			$tpl['postageSet'] = -1;
 		}
 
-
-
 		// Build table of available products for each item in the cart
 		$itemProducts = array();
 
@@ -124,6 +121,7 @@ class SelectView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$itemProducts[$item['id']] = $thisItemsProducts;
 
 			/* count how many products with unset quantities there are
@@ -134,9 +132,11 @@ class SelectView extends GalleryView {
 				if (!isset($item[$thisProduct['productId']]['quant']) && $thisProduct['dropdown'] == 'true') {
 					$comboCount++;
 				}
+
 				$items[$item['id']]['comboCount'] = $comboCount;
 			}
 		}
+
 		// decide whether to include postage options in the template
 		$offerPostage          = false;
 		$tpl['postageOptions'] = array();
@@ -167,11 +167,13 @@ class SelectView extends GalleryView {
 		foreach ($tpl['accessories'] as $accessory) {
 			$thumbnailIdList[] = $accessory['id'];
 		}
+
 		list($ret, $thumbnailList) = GalleryCoreApi::fetchThumbnailsByItemIds($thumbnailIdList);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$thumbnails = array();
 
 		foreach ($thumbnailList as $thumbnail) {
@@ -200,11 +202,11 @@ class SelectView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->title($tpl['busname'] . ' ' . $module->translate('Checkout'));
 		$template->setVariable('tpl', $tpl);
 
 		// $template->setVariable('status', $status);
-
 		return array(
 			null,
 			array(

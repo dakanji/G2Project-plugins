@@ -67,6 +67,7 @@ class CheckoutPDFInvoiceStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 			if ($transaction->getClassName() != 'GalleryCheckoutTransaction') {
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
+
 			$results['redirect']['view']          = 'checkoutpdfinvoice.PDFOut';
 			$results['redirect']['transactionId'] = $form['checkoutpdfinvoice']['transactionId'];
 			$results['redirect']['verify1']       = $transaction->getDate();

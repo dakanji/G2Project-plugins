@@ -45,12 +45,12 @@ class DupeDetectHistogramHelper {
 	 */
 	public function createHistogramDupeSignatures($newEntity) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce(
 			'modules/dupedetect/classes/DupeDetectHistogramsMap.class'
 		);
 
 		// If for some reason there is already a signature for this item, do nothing
-
 		list($ret, $hasSignature) = DupeDetectHistogramHelper::getHistogramSignature(
 			$newEntity->getId()
 		);
@@ -64,7 +64,6 @@ class DupeDetectHistogramHelper {
 		}
 
 		// Fetch the file to extract signature from
-
 		list($ret, $path) = $newEntity->fetchPath();
 
 		if ($ret->isError()) {
@@ -78,6 +77,7 @@ class DupeDetectHistogramHelper {
 		if ($ret->isError()) {
 			return $ret;
 		}
+
 		/* we don't want to fail if there is no adequate toolkit, or the item's mimeType
 		 * is not supported. (e.g. when it's not an image) */
 		if (!isset($toolkit)) {
@@ -199,7 +199,6 @@ class DupeDetectHistogramHelper {
 		global $gallery;
 
 		// get Histogram signature of current item
-
 		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature($id);
 
 		if ($ret->isError()) {
@@ -225,6 +224,7 @@ class DupeDetectHistogramHelper {
 		foreach ($signatures[$id] as $field => $value) {
 			$query .= "[DupeDetectHistogramsMap::$field] > ? AND ";
 			$data[] = $value - $thrsh;
+
 			$query .= "[DupeDetectHistogramsMap::$field] < ? AND ";
 			$data[] = $value + $thrsh;
 		}
@@ -267,6 +267,7 @@ class DupeDetectHistogramHelper {
 		GalleryCoreApi::requireOnce(
 			'modules/dupedetect/classes/DupeDetectHistogramsMap.class'
 		);
+
 		list($ret, $signature) = DupeDetectHistogramHelper::getHistogramSignature($id);
 
 		if ($ret->isError()) {

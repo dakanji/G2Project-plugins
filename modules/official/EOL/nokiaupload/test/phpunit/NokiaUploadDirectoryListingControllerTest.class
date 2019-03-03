@@ -37,6 +37,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		if ($ret) {
 			return $ret;
 		}
+
 		global $gallery;
 
 		list($ret, $this->_album) = $this->_createRandomAlbum(
@@ -67,11 +68,13 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $this->_user) = $this->_createRandomUser();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_user);
 
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $this->_group->getId());
@@ -102,6 +105,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter(
 			'module',
 			'nokiaupload',
@@ -112,6 +116,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		if ($ret) {
 			return $ret;
 		}
+
 		$_SERVER['HTTP_USER_AGENT'] = 'Nokia6630/1.0 (2.39.129) Series60/2.6 Profile/MIDP-2.0';
 	}
 
@@ -123,6 +128,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 
 		$session =& $gallery->getSession();
 		$session->remove('permissionCache');
+
 		$ret = GalleryCoreApi::assertHasItemPermission($this->_getRootId(), 'core.addAlbumItem');
 
 		if (!$ret) {
@@ -135,6 +141,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 			$results['delegate'],
 			'delegate'
 	);
+
 		$this->assertEquals(array(), $results['error'], 'error');
 		$this->assertEquals(NOKIAUPLOAD_ERR_NOERR, $results['status']['success'], 'success');
 		$this->assert(!empty($results['status']['albums']), 'album list');
@@ -148,6 +155,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 				break;
 			}
 		}
+
 		$this->assert(isset($foundIt), 'upload album');
 	}
 }

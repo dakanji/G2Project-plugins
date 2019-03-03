@@ -167,6 +167,7 @@ class PanoramaModule extends GalleryModule {
 			 * This is ok as it is only used to determine if a panorama is  possible.
 			 * We will still also gate on the acting user permissions received.
 			 */
+
 			list($ret, $images) = PanoramaHelper::fetchViewableImages($items);
 
 			if ($ret) {
@@ -179,6 +180,7 @@ class PanoramaModule extends GalleryModule {
 				if (!isset($images[$itemId])) {
 					continue;
 				}
+
 				$image    = $images[$itemId];
 				$mimeType = $item->getMimeType();
 				$width    = $image->getWidth();

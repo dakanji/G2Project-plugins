@@ -49,6 +49,7 @@ class GalleryMembersHelper {
 		if (empty($aclIds)) {
 			return array(null, 0);
 		}
+
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
 		$query = sprintf(
@@ -118,6 +119,7 @@ class GalleryMembersHelper {
 		if (empty($aclIds)) {
 			return array(null, array());
 		}
+
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
 		$query = sprintf(
@@ -293,6 +295,7 @@ class GalleryMembersHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $totalUserCount) = GalleryCoreApi::fetchUserCount(null, $groupId);
 
 		if ($ret) {

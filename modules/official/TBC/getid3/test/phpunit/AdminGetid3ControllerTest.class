@@ -32,6 +32,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -39,6 +40,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		}
 
 		GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
+
 		list($ret, $this->_save['summary']) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 		if ($ret) {
@@ -50,6 +52,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = Getid3Helper::setDefaultProperties(GETID3_SUMMARY);
 
 		if ($ret) {
@@ -65,6 +68,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		global $gallery;
+
 		$ret = parent::tearDown();
 
 		if ($ret) {

@@ -57,6 +57,7 @@ class ImageFrameTest extends GalleryTestCase {
 		if (!function_exists('smarty_function_counter')) {
 			GalleryCoreApi::requireOnce('lib/smarty/plugins/modifier.counter.php');
 		}
+
 		$smarty = new Smarty();
 		$params = array(
 			'name'      => 'ImageFrame_counter',
@@ -75,16 +76,19 @@ class ImageFrameTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(isset($list['none'], $list['dots'], $list['wood']));
 	}
 
 	public function testImageFrameInit() {
 		$template = new ImageFrameDummyGalleryTemplate();
-		$ret      = $this->_imageframe->init($template, array('none', 'dots', 'wood'));
+
+		$ret = $this->_imageframe->init($template, array('none', 'dots', 'wood'));
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(isset($template->data['ImageFrameData']), 'template data');
 		$data = $template->data['ImageFrameData'];
 		$this->assertEquals(array('idList', 'data'), array_keys($data), 'Data keys');
@@ -97,15 +101,18 @@ class ImageFrameTest extends GalleryTestCase {
 			$data['data']['none'],
 			'None'
 		);
+
 		$this->assertEquals('style', $data['data']['dots']['type'], 'Dots type');
 		$this->assert(
 			preg_match('/border.*dashed.*padding/', $data['data']['dots']['style']),
 			'Dots style'
 		);
+
 		$this->assert(
 			count($data['data']['wood']) > 20 && isset($data['data']['wood']['name']),
 			'Wood'
 		);
+
 		$this->assert(strpos($data['data']['wood']['imageTL'], 'frames/wood'), 'Wood image');
 		$this->assert(isset($template->data['head']), 'head data');
 		$this->assertEquals(
@@ -120,6 +127,7 @@ class ImageFrameTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$data = $template->data['ImageFrameData'];
 		$this->assertEquals('none|dots|wood|solid', $data['idList'], 'Id list 2');
 	}
@@ -130,12 +138,15 @@ class ImageFrameTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(strpos($url, 'imageframe.Sample'), 'sample url');
+
 		list($ret, $url) = $this->_imageframe->getSampleUrl(12345);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(strpos($url, 'itemId=12345'), 'url2 id');
 	}
 

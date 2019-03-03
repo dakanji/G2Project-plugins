@@ -18,8 +18,6 @@
 //      Mike Mozolin <teddybearØmail*ru>                       //
 //                                                             //
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_gzip extends getid3_handler {
 	// public: Optional file list - disable for speed.
 	public $option_gzip_parse_contents = false; // decode gzipped files, if possible, and parse recursively (.tar.gz for example)
@@ -34,12 +32,12 @@ class getid3_gzip extends getid3_handler {
 		//+---+---+---+---+---+---+---+---+---+---+
 		//|ID1|ID2|CM |FLG|     MTIME     |XFL|OS |
 		//+---+---+---+---+---+---+---+---+---+---+
-
 		if ($info['php_memory_limit'] && ($info['filesize'] > $info['php_memory_limit'])) {
 			$info['error'][] = 'File is too large (' . number_format($info['filesize']) . ' bytes) to read into memory (limit: ' . number_format($info['php_memory_limit'] / 1048576) . 'MB)';
 
 			return false;
 		}
+
 		$this->fseek(0);
 		$buffer = $this->fread($info['filesize']);
 
@@ -53,6 +51,7 @@ class getid3_gzip extends getid3_handler {
 				if (strlen($arr_members[$i]) == 0) {
 					continue;
 				}
+
 				$buf = "\x1F\x8B\x08" . $arr_members[$i];
 
 				$attr = unpack($unpack_header, substr($buf, 0, $start_length));
@@ -81,6 +80,7 @@ class getid3_gzip extends getid3_handler {
 			if (strlen($arr_members[$i]) == 0) {
 				continue;
 			}
+
 			$thisInfo = &$info['gzip']['member_header'][++$idx];
 
 			$buff = "\x1F\x8B\x08" . $arr_members[$i];
@@ -131,6 +131,7 @@ class getid3_gzip extends getid3_handler {
 					if ($idx >= $xlen) {
 						break;
 					}
+
 					$si1 = ord(substr($buff, $fpointer + $idx++, 1));
 					$si2 = ord(substr($buff, $fpointer + $idx++, 1));
 
@@ -144,8 +145,10 @@ class getid3_gzip extends getid3_handler {
 						break;
 					}
 				}
+
 				$fpointer += $xlen;
 			}
+
 			// bit 3 - FLG.FNAME
 			//+=========================================+
 			//|...original file name, zero-terminated...|
@@ -162,10 +165,12 @@ class getid3_gzip extends getid3_handler {
 
 						break;
 					}
+
 					$thisInfo['filename'] .= $buff[$fpointer];
 					$fpointer++;
 				}
 			}
+
 			// bit 4 - FLG.FCOMMENT
 			//+===================================+
 			//|...file comment, zero-terminated...|
@@ -177,10 +182,12 @@ class getid3_gzip extends getid3_handler {
 
 						break;
 					}
+
 					$thisInfo['comment'] .= $buff[$fpointer];
 					$fpointer++;
 				}
 			}
+
 			// bit 1 - FLG.FHCRC
 			//+---+---+
 			//| CRC16 |
@@ -190,12 +197,12 @@ class getid3_gzip extends getid3_handler {
 				$thisInfo['crc16'] = getid3_lib::LittleEndian2Int($w_crc);
 				$fpointer         += 2;
 			}
+
 			// bit 0 - FLG.FTEXT
 			//if ($thisInfo['raw']['flags'] & 0x01) {
 			//	Ignored...
 			//}
 			// bits 5, 6, 7 - reserved
-
 			$thisInfo['crc32']    = getid3_lib::LittleEndian2Int(substr($buff, strlen($buff) - 8, 4));
 			$thisInfo['filesize'] = getid3_lib::LittleEndian2Int(substr($buff, strlen($buff) - 4));
 

@@ -73,12 +73,13 @@ class RssMapHelper {
 			$params = unserialize($result[3]);
 
 			if ($params != false) {
-				$feed      = array(
+				$feed = array(
 					'name'    => $result[0],
 					'itemId'  => $result[1],
 					'ownerId' => $result[2],
 					'params'  => $params,
 				);
+
 				$feeds[]   = $feed;
 				$itemIds[] = $result[1];
 			} else {
@@ -187,11 +188,12 @@ class RssMapHelper {
 
 				return array(null, $params);
 			}
+
 			// unserialization error
 			return array(
-					GalleryCoreApi::error(ERROR_STORAGE_FAILURE),
-					null,
-				);
+				GalleryCoreApi::error(ERROR_STORAGE_FAILURE),
+				null,
+			);
 		}
 
 		return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);

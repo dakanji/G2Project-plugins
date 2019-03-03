@@ -157,6 +157,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(false, $result);
 
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $adminGroupId);
@@ -170,6 +171,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(true, $result);
 	}
 
@@ -193,6 +195,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(false, $result);
 
 		// not admin, view emails on
@@ -212,6 +215,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(true, $result);
 
 		// admin, view emails off
@@ -243,6 +247,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(true, $result);
 
 		// admin, view emails on
@@ -268,6 +273,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(true, $result);
 	}
 
@@ -279,6 +285,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(0, $result, '0 days');
 
 		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($this->_user->getId());
@@ -289,11 +296,13 @@ class MembersTest extends GalleryTestCase {
 
 		$sevenDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 7, date('Y')));
 		$this->_user->setCreationTimestamp($sevenDays);
+
 		$ret = $this->_user->save();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
 		if ($ret) {
@@ -305,6 +314,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(7, $result, '7 days ago');
 
 		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($this->_user->getId());
@@ -315,11 +325,13 @@ class MembersTest extends GalleryTestCase {
 
 		$sixDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 6, date('Y')));
 		$this->_user->setCreationTimestamp($sixDays);
+
 		$ret = $this->_user->save();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
 		if ($ret) {
@@ -331,6 +343,7 @@ class MembersTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(6, $result, '6 days ago');
 	}
 }

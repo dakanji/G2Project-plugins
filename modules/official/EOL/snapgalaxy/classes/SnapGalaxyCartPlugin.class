@@ -59,6 +59,7 @@ class SnapGalaxyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 	 */
 	public function fulfillCart($cartItemIds) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$returnUrl = $urlGenerator->generateUrl(
@@ -67,6 +68,7 @@ class SnapGalaxyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 	);
 
 		GalleryCoreApi::requireOnce('modules/snapgalaxy/classes/SnapGalaxyHelper.class');
+
 		list($ret, $cartUrl) = SnapGalaxyHelper::printPhotos($cartItemIds, $returnUrl);
 
 		if ($ret) {

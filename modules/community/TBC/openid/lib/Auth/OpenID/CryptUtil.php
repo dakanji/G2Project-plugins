@@ -61,6 +61,7 @@ class Auth_OpenID_CryptUtil {
 			for ($i = 0; $i < $num_bytes; $i += 4) {
 				$bytes .= pack('L', mt_rand());
 			}
+
 			$bytes = substr($bytes, 0, $num_bytes);
 		} else {
 			$bytes = fread($f, $num_bytes);

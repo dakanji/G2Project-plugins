@@ -89,6 +89,7 @@ class GetUrlsHelper {
 		foreach (explode('|', $param['idReporting']) as $tmp) {
 			$options[$tmp] = 1;
 		}
+
 		$data['showIeLinks'] = $param['showIeLinks'];
 
 		// We'll need to load the thumbnail for this item if we want to use that linking option
@@ -126,6 +127,7 @@ class GetUrlsHelper {
 			if ($userId != $guestUserId) {
 				$data['guestMode'] = 1;
 			}
+
 			$userId = $guestUserId;
 		}
 
@@ -135,12 +137,14 @@ class GetUrlsHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $hasViewResizesPermission) =
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewResizes', $userId);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$permissions = array('viewResizes' => $hasViewResizesPermission,
 				 'viewSource'              => $hasViewSourcePermission, );
 
@@ -153,6 +157,7 @@ class GetUrlsHelper {
 				 * Because the user can't access the source image, we'll try using the
 				 * resized versions instead.
 				 */
+
 				list($ret, $resizesMap) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));
 
 				if ($ret) {

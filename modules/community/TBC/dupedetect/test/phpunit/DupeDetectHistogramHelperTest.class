@@ -52,7 +52,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 		parent::setUp();
 
 		// Create a container album for any data items we create
-
 		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
 
 		if ($ret->isError()) {
@@ -62,7 +61,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 		}
 
 		// acquire locks for the test album
-
 		list($ret, $this->_lockIds) = GalleryCoreApi::acquireReadLock($this->_album->getId());
 
 		if ($ret->isError()) {
@@ -135,6 +133,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(empty($signatures), 'Somehow there\'s already a signature for the new item');
 
 		// create two signatures
@@ -175,6 +174,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			count($signatures[$this->_item->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
 		);
+
 		$this->assert(
 			count($signatures[$this->_dupItem->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
@@ -188,6 +188,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_dupItem->getId());
 
 		if ($ret->isError()) {
@@ -254,7 +255,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 	// tests functinality of the removeHistogramDupeSigantures() function
 	public function testRemoveHistogramDupeSignatures() {
 		// check that a signature doesn't already exist
-
 		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
 
 		if ($ret->isError()) {
@@ -262,6 +262,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
 
 		// create a dummy signature
@@ -290,7 +291,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 		}
 
 		// check that created successfully
-
 		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
 
 		if ($ret->isError()) {
@@ -298,6 +298,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(!empty($signatures), 'can\'t find CRC32 for item');
 
 		// try to remove the signature
@@ -310,7 +311,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 		}
 
 		// check that the signature was remove successfully
-
 		list($ret, $signatures) = DupeDetectHistogramHelper::getHistogramSignature(array($this->_item->getId()));
 
 		if ($ret->isError()) {
@@ -318,6 +318,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
 	}
 
@@ -377,6 +378,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 			return $this->failWithStatus($ret);
 		}
+
 		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_dupItem->getId());
 
 		if ($ret->isError()) {

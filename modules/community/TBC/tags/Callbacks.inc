@@ -24,11 +24,13 @@
 class TagsCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 		switch ($callback) {
 			case 'TagsLink':
-				$tags             = array();
+				$tags = array();
+
 				list($ret, $tags) = TagsHelper::getTagsByItemId($params['itemId']);
 
 				if ($ret) {
@@ -58,8 +60,10 @@ class TagsCallbacks {
 					foreach ($tagCloud as $tag) {
 						$totalTagCount += $tag['rawTagCount'];
 					}
+
 					$block['tags']['totalTagCount'] = $tagCloud;
 				}
+
 				$block['tags']['taglist'] = $tagCloud;
 
 				return null;

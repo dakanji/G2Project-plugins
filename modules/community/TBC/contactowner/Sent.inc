@@ -38,6 +38,7 @@ class SentView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'contactowner');

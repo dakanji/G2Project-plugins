@@ -33,6 +33,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -49,6 +50,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_album);
 
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
@@ -56,6 +58,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_album->getId(),
 			$gallery->getActiveUserId(),
@@ -90,12 +93,14 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Public view permission on one
 		list($ret, $anonymousUserId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_items[2]->getId(),
 			$anonymousUserId,
@@ -163,6 +168,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			!strpos($basket['item1']['photo_url'], $this->_sessionKey),
 			'should be no session param in photo url for public photo'
 		);
+
 		$this->assert(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
@@ -223,6 +229,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			strpos($basket['item1']['photo_url'], $this->_sessionKey),
 			'should be a session param in photo url for private photo'
 		);
+
 		$this->assert(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
@@ -236,7 +243,8 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $fotokastenSessionId;
 		$fotokastenSession             = new GallerySession();
-		$ret                           = $fotokastenSession->init();
+
+		$ret = $fotokastenSession->init();
 
 		if ($ret) {
 			return $ret;
@@ -251,6 +259,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function testPrintCart() {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 		$session->put(
 			'fotokasten.cart',
@@ -292,14 +301,17 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		} else {
 			$this->assert(false, 'missing sessionid: ' . $basket['item1']['photo_url']);
 		}
+
 		$this->assert(
 			!strpos($basket['item2']['photo_url'], $this->_sessionKey),
 			'should be no session param in photo url for public photo'
 		);
+
 		$this->assert(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[0]->getId()),
 			'item id 1'
 		);
+
 		$this->assert(
 			strpos($basket['item2']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id 2'

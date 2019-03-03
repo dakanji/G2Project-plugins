@@ -87,16 +87,19 @@ class AdminController extends GalleryController {
 					unset($form['postages'][$index]);
 				}
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($form['emails']));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'postages', serialize($form['postages']));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'papers', serialize($form['papers']));
 
 			if ($ret) {
@@ -129,6 +132,7 @@ class AdminController extends GalleryController {
 				if ($productParameters['name'] == '') {
 					continue;
 				}
+
 				// If the productId is negative, it's new, so assign a unique Id
 				if ($productId < 0) {
 					list($ret, $productId) = $storage->getUniqueId();
@@ -177,6 +181,7 @@ class AdminController extends GalleryController {
 
 					continue;
 				}
+
 				//make sure that at least one required field is non-zero:
 				if ($discount['discountPercent'] == '' && $discount['discountFixed'] == '' && !isset($discount['freePostage'])) {
 					continue;
@@ -190,6 +195,7 @@ class AdminController extends GalleryController {
 						return array($ret, null);
 					}
 				}
+
 				//make sure that tick-box fields exist
 				foreach (array('applyDefault', 'freePostage') as $booleanParam) {
 					if (!isset($discount[$booleanParam])) {
@@ -199,7 +205,8 @@ class AdminController extends GalleryController {
 
 				//then go ahead and store it
 				$discount['discountId'] = $discountId;
-				$ret                    = CheckoutDiscountMapHelper::setDiscount($discount);
+
+				$ret = CheckoutDiscountMapHelper::setDiscount($discount);
 
 				if ($ret) {
 					return array($ret, null);
@@ -212,6 +219,7 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'deleteAllDays', $form['deleteAllDays']);
 
 			if ($ret) {
@@ -224,26 +232,31 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'TandCLink', $form['TandCLink']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'busname', $form['busname']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'csymbol', $form['csymbol']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'cformat', $form['cformat']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'minOrderValue', $form['minOrderValue']);
 
 			if ($ret) {
@@ -255,6 +268,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['cartredirect'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'cartredirect', $form['cartredirect']);
 
 			if ($ret) {
@@ -266,6 +280,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['askDiscountCode'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'askDiscountCode', $form['askDiscountCode']);
 
 			if ($ret) {
@@ -277,6 +292,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['customPrices'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'customPrices', $form['customPrices']);
 
 			if ($ret) {
@@ -288,6 +304,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['requireTandCs'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'requireTandCs', $form['requireTandCs']);
 
 			if ($ret) {
@@ -299,6 +316,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['treatAlbumAsCollection'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'treatAlbumAsCollection', $form['treatAlbumAsCollection']);
 
 			if ($ret) {
@@ -310,6 +328,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['alwaysShowAddToCart'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'alwaysShowAddToCart', $form['alwaysShowAddToCart']);
 
 			if ($ret) {
@@ -321,11 +340,13 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'orderStatusFromAddress', $form['orderStatusFromAddress']);
 
 			if ($ret) {
@@ -334,14 +355,17 @@ class AdminController extends GalleryController {
 
 			$form['numPostageBands'] = min(20, $form['numPostageBands']);
 			$form['numPostageBands'] = max($form['numPostageBands'], 2);
-			$ret                     = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPostageBands', $form['numPostageBands']);
+
+			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPostageBands', $form['numPostageBands']);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$form['numPaperSets'] = min(20, $form['numPaperSets']);
 			$form['numPaperSets'] = max($form['numPaperSets'], 1);
-			$ret                  = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPaperSets', $form['numPaperSets']);
+
+			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPaperSets', $form['numPaperSets']);
 
 			if ($ret) {
 				return array($ret, null);
@@ -391,6 +415,7 @@ class AdminController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'checkout.Admin';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -418,6 +443,7 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// Put Single-value parameters into $form
 			$form = $mp;
 
@@ -435,6 +461,7 @@ class AdminView extends GalleryView {
 				'isAdmin'       => '',
 				'emailLanguage' => 'transaction_language',
 			);
+
 			$form['emails'][] = array(
 				'showCustomer'  => '',
 				'showContents'  => '',
@@ -454,6 +481,7 @@ class AdminView extends GalleryView {
 			$form['postages'][] = array(
 				'price' => array(),
 			);
+
 			$form['postages'][] = array(
 				'price' => array(),
 			);
@@ -523,12 +551,12 @@ class AdminView extends GalleryView {
 			}
 
 			// products section
-
 			list($ret, $rootAlbumId) = GalleryCoreApi::getDefaultAlbumId();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($rootAlbumId, true, false);
 			// Do use local settings, don't pass products to plugins to modify
 			if ($ret) {
@@ -555,6 +583,7 @@ class AdminView extends GalleryView {
 					'dropdown'        => key_exists('dropdown', $product) ? $product['dropdown'] : '',
 				);
 			}
+
 			// Add four blank lines
 			for ($i = -4; $i < 0; $i++) {
 				$form['products'][] = array(
@@ -576,12 +605,12 @@ class AdminView extends GalleryView {
 			}
 
 			// discounts
-
 			list($ret, $discounts) = CheckoutDiscountMapHelper::fetchDiscounts();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$form['discounts'] = $discounts;
 			$displayPos        = count($discounts);
 			// add two blank lines
@@ -613,13 +642,13 @@ class AdminView extends GalleryView {
 			}
 		}
 
-
 		// group list for discounts
 		list($ret, $groupList) = GalleryCoreApi::fetchGroupNames();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// language settings for emails
 		$platform     =& $gallery->getPlatform();
 		$translator   =& $gallery->getTranslator();
@@ -638,6 +667,7 @@ class AdminView extends GalleryView {
 				}
 			}
 		}
+
 		$template->setVariable('groupList', $groupList);
 		$template->setVariable('languageList', $languageList);
 		$template->setVariable('canTranslate', $canTranslate);

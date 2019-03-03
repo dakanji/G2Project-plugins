@@ -48,28 +48,45 @@ class AdminController extends GalleryController {
 		$status = array();
 
 		if (isset($form['action']['save'])) {
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutemail', 'paymentText', $form['paymentText']);
-
-			if ($ret) {
-				return array($ret, null);
-			}
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutemail', 'paymentButtonText', $form['paymentButtonText']);
-
-			if ($ret) {
-				return array($ret, null);
-			}
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutemail', 'active', $form['active']);
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutemail',
+				'paymentText',
+				$form['paymentText']
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutemail',
+				'paymentButtonText',
+				$form['paymentButtonText']
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
+
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutemail',
+				'active',
+				$form['active']
+			);
+
+			if ($ret) {
+				return array($ret, null);
+			}
 
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkoutemail');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
@@ -118,17 +135,31 @@ class AdminView extends GalleryView {
 		if ($form['formName'] != 'AdminCheckoutEmail') {
 			$form['formName'] = 'AdminCheckoutEmail';
 
-			list($ret, $form['paymentText']) = GalleryCoreApi::getPluginParameter('module', 'checkoutemail', 'paymentText');
+			list($ret, $form['paymentText']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutemail',
+				'paymentText'
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
-			list($ret, $form['paymentButtonText']) = GalleryCoreApi::getPluginParameter('module', 'checkoutemail', 'paymentButtonText');
+
+			list($ret, $form['paymentButtonText']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutemail',
+				'paymentButtonText'
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
-			list($ret, $form['active']) = GalleryCoreApi::getPluginParameter('module', 'checkoutemail', 'active');
+
+			list($ret, $form['active']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutemail',
+				'active'
+			);
 
 			if ($ret) {
 				return array($ret, null);

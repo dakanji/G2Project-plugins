@@ -45,7 +45,8 @@ class TagTreeHelper {
 			return array($ret, null);
 		}
 
-		$onlyAlbums                  = false;
+		$onlyAlbums = false;
+
 		list($ret, $rootHierarchies) = TagTreeHelper::fetchMatchingRootHierarchies($tags, $albumId, $onlyAlbums, $aclIds);
 
 		if ($ret) {
@@ -157,12 +158,14 @@ class TagTreeHelper {
 			}
 
 			foreach ($rootTags as $tagId) {
-				$rootTag              = array(
+				$rootTag = array(
 					'tagId'     => $tagId,
 					'hierarchy' => $rootHierarchy,
 				);
+
 				$rootDescendantTags[] = $rootTag;
 			}
+
 			$descendantTags[] = $rootDescendantTags;
 		}
 
@@ -177,11 +180,13 @@ class TagTreeHelper {
 				$tagId                          = $descendantTag['tagId'];
 				$rootSeenDescendantTags[$tagId] = true;
 			}
+
 			// Promote tags that are descendants of more than one root.
 			foreach (array_keys($rootSeenDescendantTags) as $tagId) {
 				if (array_key_exists($tagId, $seenDescendantTags)) {
 					$promotedTags[$tagId] = true;
 				}
+
 				$seenDescendantTags[$tagId] = true;
 			}
 		}
@@ -218,6 +223,7 @@ class TagTreeHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$children[] = $childNode;
 		}
 
@@ -227,6 +233,7 @@ class TagTreeHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$children[] = $childNode;
 		}
 
@@ -240,7 +247,8 @@ class TagTreeHelper {
 			'[GalleryTagItemMap::tagId] NOT IN (%s) AND ',
 			GalleryUtilities::makeMarkers($excludedTags)
 		);
-		$aclMarkers        = empty($aclIds) ? 'NULL' : GalleryUtilities::makeMarkers($aclIds);
+
+		$aclMarkers = empty($aclIds) ? 'NULL' : GalleryUtilities::makeMarkers($aclIds);
 
 		$query = sprintf(
 			'
@@ -279,14 +287,15 @@ class TagTreeHelper {
 		$descendantTags = array();
 
 		while ($result = $searchResults->nextResult()) {
-			$tagId            = $result[0];
-			$albumId          = $result[1];
-			$parentSequence   = $result[2];
-			$hierarchy        = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
-			$descendantTag    = array(
+			$tagId          = $result[0];
+			$albumId        = $result[1];
+			$parentSequence = $result[2];
+			$hierarchy      = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
+			$descendantTag  = array(
 				'tagId'     => $tagId,
 				'hierarchy' => $hierarchy,
 			);
+
 			$descendantTags[] = $descendantTag;
 		}
 
@@ -378,6 +387,7 @@ class TagTreeHelper {
 				}
 			}
 		}
+
 		$dominatingTags = array();
 
 		for ($i = 0; $i < count($otherHierarchies); $i++) {
@@ -422,8 +432,9 @@ class TagTreeHelper {
       '
 			);
 
-			$data                      = array();
-			$data[]                    = $itemId;
+			$data   = array();
+			$data[] = $itemId;
+
 			list($ret, $searchResults) = $gallery->search($query, $data);
 
 			if ($ret) {
@@ -437,6 +448,7 @@ class TagTreeHelper {
 			$isAlbum         = $result[0];
 			$childNode->type = $isAlbum ? 'album' : 'item';
 		}
+
 		$childNode->itemId = $itemId;
 		$childNode->tags   = $parentNode->tags;
 
@@ -479,8 +491,9 @@ class TagTreeHelper {
     '
 		);
 
-		$data                      = array();
-		$data[]                    = $albumId;
+		$data   = array();
+		$data[] = $albumId;
+
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {
@@ -520,9 +533,10 @@ class TagTreeHelper {
 			$albumMarkers
 		);
 
-		$data                      = array();
-		$data                      = array_merge($data, $excludedTags);
-		$data                      = array_merge($data, $albums);
+		$data = array();
+		$data = array_merge($data, $excludedTags);
+		$data = array_merge($data, $albums);
+
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {
@@ -545,6 +559,7 @@ class TagTreeHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$title = $item->getTitle() ? $item->getTitle() : $item->getPathComponent();
 
 		if ($ret) {
@@ -556,6 +571,7 @@ class TagTreeHelper {
 
 	public function getTagName($tagId) {
 		global $gallery;
+
 		$query = sprintf(
 			'
     SELECT
@@ -567,8 +583,9 @@ class TagTreeHelper {
     '
 		);
 
-		$data                      = array();
-		$data[]                    = $tagId;
+		$data   = array();
+		$data[] = $tagId;
+
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {

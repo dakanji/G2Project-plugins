@@ -52,6 +52,7 @@ class WebDavHelper {
 	 */
 	public static function checkConfiguration() {
 		global $gallery;
+
 		$phpVm        = $gallery->getPhpVm();
 		$urlGenerator =& $gallery->getUrlGenerator();
 
@@ -185,6 +186,7 @@ class WebDavHelper {
 					$gallery->debug('Error in WebDavHelper::checkConfiguration:'
 					. ' this server doesn\'t pass ' . $requestMethod . ' requests to Gallery.');
 				}
+
 				$code |= WEBDAV_STATUS_METHOD_NOT_HANDLED;
 			}
 		}
@@ -207,6 +209,7 @@ class WebDavHelper {
 	 */
 	public static function checkRequestMethod($requestMethod) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($status, $headers, $body) = GalleryCoreApi::requestWebPage($urlGenerator->generateUrl(
@@ -263,17 +266,19 @@ class WebDavHelper {
 	 */
 	public static function getMountLink($itemId) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$userAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
 
-		$url           = $urlGenerator->generateUrl(
+		$url = $urlGenerator->generateUrl(
 			array('controller' => 'webdav.WebDav',
 			'itemId'           => $itemId, ),
 			array('forceFullUrl' => true,
 			'forceSessionId'     => false,
 			'useAuthToken'       => false, )
 		);
+
 		$link['attrs'] = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
 
 		if (strpos($userAgent, 'MSIE') !== false) {
@@ -281,7 +286,7 @@ class WebDavHelper {
 			 * Mount with JavaScript only if using MSIE.  By default, dropdowns link to davmount
 			 * resources.
 			 */
-			$url            = $urlGenerator->generateUrl(
+			$url = $urlGenerator->generateUrl(
 				array('controller' => 'webdav.WebDav',
 				'itemId'           => $itemId, ),
 				array('forceFullUrl' => true,
@@ -289,6 +294,7 @@ class WebDavHelper {
 				'forceSessionId'     => false,
 				'useAuthToken'       => false, )
 			);
+
 			$link['script'] = "this.style.behavior = 'url(#default#httpFolder)'; this.navigate('$url')";
 		}
 
@@ -345,7 +351,8 @@ class WebDavHelper {
 	 *               GalleryEntity the mirror entity
 	 */
 	public static function mirrorEntity($sourceEntity, $mirrorEntity) {
-		$className              = $mirrorClassName              = $mirrorEntity->getClassName();
+		$className = $mirrorClassName              = $mirrorEntity->getClassName();
+
 		list($ret, $entityInfo) = GalleryCoreApi::describeEntity($className);
 
 		if ($ret) {
@@ -357,6 +364,7 @@ class WebDavHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// We need to override id and pathComponent
 		$override = array('id', 'pathComponent');
 
@@ -397,6 +405,7 @@ class WebDavHelper {
 
 		if (!isset($webDavServer)) {
 			global $gallery;
+
 			$urlGenerator =& $gallery->getUrlGenerator();
 
 			$webDavServer = new WebDavServer();
@@ -444,7 +453,8 @@ class WebDavHelper {
 			return array($ret, null);
 		}
 
-		$data  = array();
+		$data = array();
+
 		$query = '
 		SELECT
 		[WebDavLockMap::depth],
@@ -462,10 +472,12 @@ class WebDavHelper {
 		 */
 		if ($getDescendentsLocks) {
 			$data[] = "$path%";
+
 			$query .= '
 			[WebDavLockMap::path] LIKE ?';
 		} else {
 			$data[] = $path;
+
 			$query .= '
 			[WebDavLockMap::path] = ?';
 		}
@@ -548,6 +560,7 @@ class WebDavHelper {
 		GalleryUtilities::setResponseHeader(
 			'Allow: OPTIONS,PROPFIND,PROPPATCH,MKCOL,GET,HEAD,DELETE,PUT,MOVE,LOCK,UNLOCK'
 		);
+
 		GalleryUtilities::setResponseHeader('DAV: 1,2');
 		GalleryUtilities::setResponseHeader('Content-Length: 0');
 		GalleryUtilities::setResponseHeader('MS-Author-Via: DAV');
@@ -602,6 +615,7 @@ class WebDavHelper {
 		if ($ret) {
 			return $ret;
 		}
+
 		$depth = trim(GalleryUtilities::strToLower($depth));
 
 		$path = GalleryUtilities::getRequestVariables('path');
@@ -634,7 +648,8 @@ class WebDavHelper {
 		}
 
 		$files = array();
-		$ret   = WebDavHelper::_propfindFiles($item, $path, $depth, $files);
+
+		$ret = WebDavHelper::_propfindFiles($item, $path, $depth, $files);
 
 		if ($ret) {
 			return $ret;
@@ -686,15 +701,18 @@ class WebDavHelper {
 			'creationdate',
 			$item->getCreationTimestamp()
 		);
-		$displayName     = $item->getTitle();
+
+		$displayName = $item->getTitle();
 
 		if (empty($displayName)) {
 			$displayName = $item->getPathComponent();
 		}
+
 		$file['props'][] = WebDavServer::getme()->mkprop(
 			'displayname',
 			$displayName
 		);
+
 		$file['props'][] = WebDavServer::getme()->mkprop(
 			'getlastmodified',
 			$item->getModificationTimestamp()
@@ -720,6 +738,7 @@ class WebDavHelper {
 		 * WebDavHelper::getLocks is potentially expensive.  Could optimize this if we knew
 		 * $webDavOptions['props'] didn't contain 'lockdiscovery' or 'allprop'.
 		 */
+
 		list($ret, $locks) = WebDavHelper::getLocks($path);
 
 		if ($ret) {
@@ -740,10 +759,12 @@ class WebDavHelper {
 				'getcontentlength',
 				0
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'getcontenttype',
 				'httpd/unix-directory'
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'resourcetype',
 				'collection'
@@ -754,19 +775,23 @@ class WebDavHelper {
 			if (method_exists($item, 'getSize')) {
 				$size = $item->getSize();
 			}
+
 			$mimeType = 'application/unknown';
 
 			if (method_exists($item, 'getMimeType')) {
 				$mimeType = $item->getMimeType();
 			}
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'getcontentlength',
 				$size
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'getcontenttype',
 				$mimeType
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'resourcetype',
 				null
@@ -1028,6 +1053,7 @@ class WebDavHelper {
 			if (is_string($value)) {
 				GalleryUtilities::sanitizeInputValues($value);
 			}
+
 			$item->$setter($value);
 		}
 
@@ -1048,6 +1074,7 @@ class WebDavHelper {
 	 */
 	public static function mkcolValidateHelper($parentId, $pathComponent) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		$error = array();
@@ -1196,7 +1223,8 @@ class WebDavHelper {
 
 		$originalPath = GalleryUtilities::getRequestVariables('originalPath');
 		$title        = empty($originalPath) ? $pathComponent : basename($originalPath);
-		$ret          = WebDavHelper::mkcolHelper($parentId, $pathComponent, $title, '', '', '');
+
+		$ret = WebDavHelper::mkcolHelper($parentId, $pathComponent, $title, '', '', '');
 
 		if ($ret) {
 			if ($ret->getErrorCode() & ERROR_ILLEGAL_CHILD) {
@@ -1420,6 +1448,7 @@ class WebDavHelper {
 	 */
 	public static function copyMoveRequestHelper() {
 		global $gallery;
+
 		$platform     =& $gallery->getPlatform();
 		$webDavServer =& WebDavHelper::getWebDavServer();
 
@@ -1523,6 +1552,7 @@ class WebDavHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$newParentAncestorIds[] = $newParentId;
 		}
 
@@ -1723,6 +1753,7 @@ class WebDavHelper {
 			 * Read lock both parent hierarchies
 			 * TODO Optimize this
 			 */
+
 			list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLockParents($newParentId);
 
 			if ($ret) {
@@ -2007,7 +2038,7 @@ class WebDavHelper {
 		// Refresh lock
 		if (!empty($update)) {
 			// Don't join with the Gallery lock table since we might be using flock system
-			$query               = '
+			$query = '
 			SELECT
 			[WebDavLockMap::depth],
 			[WebDavLockMap::owner],
@@ -2018,6 +2049,7 @@ class WebDavHelper {
 			[WebDavLockMap::path] = ?
 			AND
 			[WebDavLockMap::token] = ?';
+
 			list($ret, $results) = $gallery->search($query, array($path, $update));
 
 			if ($ret) {
@@ -2099,13 +2131,14 @@ class WebDavHelper {
 		}
 
 		// Use Gallery lock freshUntil for WebDAV lock timeout
-		$query               = '
+		$query = '
 		SELECT
 		[Lock::freshUntil]
 		FROM
 		[Lock]
 		WHERE
 		[Lock::lockId] = ?';
+
 		list($ret, $results) = $gallery->search($query, array($lockId));
 
 		if ($ret) {
@@ -2204,7 +2237,7 @@ class WebDavHelper {
 		$path = GalleryUtilities::getRequestVariables('path');
 		$path = trim($path, '/');
 
-		$query               = '
+		$query = '
 		SELECT
 		[WebDavLockMap::galleryLockId]
 		FROM
@@ -2213,6 +2246,7 @@ class WebDavHelper {
 		[WebDavLockMap::path] = ?
 		AND
 		[WebDavLockMap::token] = ?';
+
 		list($ret, $results) = $gallery->search($query, array($path, $token));
 
 		if ($ret) {
@@ -2222,6 +2256,7 @@ class WebDavHelper {
 		if (($result = $results->nextResult()) === false) {
 			return GalleryCoreApi::error(ERROR_MISSING_VALUE);
 		}
+
 		$lockId = $result[0];
 
 		$ret = GalleryCoreApi::releaseLocks($lockId);
@@ -2284,6 +2319,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 	 */
 	public function getHref($path) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		return $urlGenerator->generateUrl(
@@ -2304,6 +2340,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 	 */
 	public function openRequestBody() {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		return $platform->fopen('php://input', 'rb');

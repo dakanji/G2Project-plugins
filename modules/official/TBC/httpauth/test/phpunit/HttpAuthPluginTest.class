@@ -34,6 +34,7 @@ class HttpAuthPluginTest extends GalleryTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -46,6 +47,7 @@ class HttpAuthPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_user);
 		$_SERVER['AUTH_TYPE'] = 'Test';
 
@@ -63,6 +65,7 @@ class HttpAuthPluginTest extends GalleryTestCase {
 
 	public function tearDown() {
 		global $gallery;
+
 		$gallery->_session = $this->_saveSession;
 
 		$ret = GalleryCoreApi::removeAllMapEntries('FailedLoginsMap');
@@ -80,6 +83,7 @@ class HttpAuthPluginTest extends GalleryTestCase {
 
 	public function testValidUser() {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$_SERVER['PHP_AUTH_USER'] = $this->_user->getUserName();

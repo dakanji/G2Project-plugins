@@ -13,8 +13,6 @@
 // dependencies: module.tag.lyrics3.php                        //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_write_lyrics3 {
 	public $filename;
 	public $tag_data;
@@ -62,10 +60,12 @@ class getid3_write_lyrics3 {
 
 				return true;
 			}
+
 			$this->errors[] = 'Cannot fopen(' . $this->filename . ', "a+b")';
 
 			return false;
 		}
+
 		// no Lyrics3 present
 		return true;
 	}

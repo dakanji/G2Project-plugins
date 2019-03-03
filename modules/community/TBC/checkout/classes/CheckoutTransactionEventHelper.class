@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
 
 /**
@@ -54,6 +53,7 @@ class CheckoutTransactionEventHelper {
 				if ($ret) {
 					return $ret;
 				}
+
 				$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
 					$transaction,
 					'confirm',
@@ -79,6 +79,7 @@ class CheckoutTransactionEventHelper {
 				if ($ret) {
 					return $ret;
 				}
+
 				$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
 					$transaction,
 					'paid',
@@ -104,6 +105,7 @@ class CheckoutTransactionEventHelper {
 				if ($ret) {
 					return $ret;
 				}
+
 				$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
 					$transaction,
 					'completed',
@@ -135,6 +137,7 @@ class CheckoutTransactionEventHelper {
 	 */
 	public function handleAdminNotification($transaction, $message) {
 		global $gallery;
+
 		$ret = CheckoutTransactionEventHelper::_SendTransactionEmail(
 			$transaction,
 			'notify',
@@ -169,11 +172,13 @@ class CheckoutTransactionEventHelper {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $transaction) = $transaction->refresh();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		// Set the customer information into the original transaction
 		if (isset($data['custFirstName'])) {
 			$transaction->setFirstName(trim($data['custFirstName']));
@@ -230,18 +235,21 @@ class CheckoutTransactionEventHelper {
 		if (isset($data['custNotes'])) {
 			$transaction->appendCustNotes(trim($data['custNotes']));
 		}
+
 		// Save the modified transaction
 		$ret = $transaction->save();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		// Release our lock
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		// job done
 		return null;
 	}
@@ -256,17 +264,18 @@ class CheckoutTransactionEventHelper {
 	public function handleSetPaymentPlugin($transaction, $pluginName) {
 
 		// for payment plugin to insert its name
-
 		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
 
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $transaction) = $transaction->refresh();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$transaction->setPaymentPlugin($pluginName);
 		// Save the modified transaction
 		$ret = $transaction->save();
@@ -274,6 +283,7 @@ class CheckoutTransactionEventHelper {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Release our lock
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
@@ -297,6 +307,7 @@ class CheckoutTransactionEventHelper {
 	 */
 	public function _sendTransactionEmail(&$transaction, $templateName, $subject = '', $text = '', $adminOnly = false, $includeDetails = true) {
 		global $gallery;
+
 		$transactionId           = $transaction->getId();
 		$translator              =& $gallery->getTranslator();
 		$transactionLanguageCode = $transaction->getLanguageCode();
@@ -308,6 +319,7 @@ class CheckoutTransactionEventHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$fromAddress   = $mp['orderStatusFromAddress'];
 		$subjectPrefix = $mp['orderStatusSubject'];
 		$emails        = unserialize($mp['emails']);
@@ -323,6 +335,7 @@ class CheckoutTransactionEventHelper {
 				if ($recipient['toAddress'] == 'false') {
 					continue;
 				}
+
 				$toAddress = $transaction->getEmail();
 				/* If email address from transaction is blank, then the plugin hasn't updated the customer details
 				in time. We will send an admin notification (unless the offending email is already an admin
@@ -334,7 +347,8 @@ class CheckoutTransactionEventHelper {
 							'data'   => $gallery->i18n("Unable to send email to customer: customer's email address not recorded at this time."),
 						),
 					);
-					$ret          = CheckoutTransactionEventHelper::handleAdminNotification($transaction, $adminMessage);
+
+					$ret = CheckoutTransactionEventHelper::handleAdminNotification($transaction, $adminMessage);
 
 					continue;
 				}
@@ -359,6 +373,7 @@ class CheckoutTransactionEventHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$email['l10Domain']     = 'modules_checkout';
 			$email['showCustomer']  = $recipient['showCustomer'];
 			$email['showLinks']     = $recipient['showLinks'];
@@ -385,6 +400,7 @@ class CheckoutTransactionEventHelper {
 
 				return $ret;
 			}
+
 			// see if $subject and $text need translating
 			/* subject either a string or a (domain, data) array
 			and data is itself a string or a (text, arg1, arg2...) array */
@@ -402,8 +418,10 @@ class CheckoutTransactionEventHelper {
 
 					return $ret;
 				}
+
 				$lSubject = $subjectPrefix . $thisLine;
 			}
+
 			/* text is either a string, or an array of strings or an array of (domain, data) arrays
 			   or a mixture of the two, and data is either a string or a (text, arg1, arg2...) array */
 			if (!is_array($text)) {
@@ -424,6 +442,7 @@ class CheckoutTransactionEventHelper {
 
 							return $ret;
 						}
+
 						$lText .= $thisLine;
 					} else {
 						$lText .= $line;
@@ -452,6 +471,7 @@ class CheckoutTransactionEventHelper {
 				return $ret;
 			}
 		}
+
 		// Put the language back to how we found it to finish the query
 		list($ret, $currentLanguageCode) = $translator->init($existingLanguageCode);
 
@@ -480,8 +500,8 @@ class CheckoutTransactionEventHelper {
 		if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
-		// Check the transaction isn't in 'Hold' state
 
+		// Check the transaction isn't in 'Hold' state
 		if ($transaction->getTimeHold()) {
 			// Failing silently in this case - not ideal - consider what else to do.
 			return null;
@@ -493,6 +513,7 @@ class CheckoutTransactionEventHelper {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $transaction) = $transaction->refresh();
 
 		if ($ret) {
@@ -543,12 +564,14 @@ class CheckoutTransactionEventHelper {
 					break;
 			}
 		}
+
 		// Save the modified transaction and release our lock
 		$ret = $transaction->save();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
 		if ($ret) {

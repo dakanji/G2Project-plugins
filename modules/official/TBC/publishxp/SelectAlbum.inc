@@ -121,6 +121,7 @@ class SelectAlbumView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$filteredIds = array();
 
 			foreach ($albumIds['allIds'] as $id) {
@@ -128,6 +129,7 @@ class SelectAlbumView extends GalleryView {
 					$filteredIds[] = $id;
 				}
 			}
+
 			$albumIds['allIds'] = $filteredIds;
 		}
 

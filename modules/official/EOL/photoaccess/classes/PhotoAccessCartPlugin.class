@@ -61,6 +61,7 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 	 */
 	public function fulfillCart($cartItemIds) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnUrl    = $urlGenerator->generateUrl(
 			array(
@@ -72,6 +73,7 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 		);
 
 		GalleryCoreApi::requireOnce('modules/photoaccess/classes/PhotoAccessHelper.class');
+
 		list($ret, $cartUrl) = PhotoAccessHelper::printPhotos($cartItemIds, $returnUrl);
 
 		if ($ret) {

@@ -70,6 +70,7 @@ class DigibugModule extends GalleryModule {
 		if (!isset($currentVersion)) {
 			$currentVersion = '0';
 		}
+
 		list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 		if ($ret) {
@@ -88,8 +89,10 @@ class DigibugModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -100,6 +103,7 @@ class DigibugModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 				$ret = $this->_setGalleryDefaultId();
 
 				if ($ret) {
@@ -130,6 +134,7 @@ class DigibugModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 
 				// Fall Through
 			case '1.0.7':
@@ -183,6 +188,7 @@ class DigibugModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId = null) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$links = array();

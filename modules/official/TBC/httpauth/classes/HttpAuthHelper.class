@@ -44,6 +44,7 @@ class HttpAuthHelper {
 	 */
 	public static function checkConfiguration() {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$code = 0x00000000;
@@ -119,12 +120,14 @@ class HttpAuthHelper {
 	 */
 	public static function checkHttpAuth() {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		/*
 		 * Only check if the HTTP auth plugin is enabled.  Otherwise, access to HTTP usernames and
 		 * passwords is not required.
 		 */
+
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'httpauth');
 
 		if ($ret) {
@@ -139,6 +142,7 @@ class HttpAuthHelper {
 		 * Use the Basic auth-type for tests. PHP does not define auth variables for arbitrary
 		 * auth-types.
 		 */
+
 		list($status, $headers, $body) = GalleryCoreApi::requestWebPage(
 			$urlGenerator->generateUrl(
 				array(
@@ -179,6 +183,7 @@ class HttpAuthHelper {
 
 		if (!empty($authorization)) {
 			list($authtype, $authdata) = explode(' ', $authorization);
+
 			list($username, $password) = explode(':', base64_decode($authdata));
 		}
 
@@ -254,6 +259,7 @@ class HttpAuthHelper {
 	 */
 	public static function regenerateSessionIfNecessary($authenticatedUser) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$oldUserId = $session->getUserId();
@@ -291,7 +297,6 @@ class HttpAuthHelper {
 	public static function stripHttpAuthFromUrl($url) {
 		$components = parse_url($url);
 		unset($components['user'], $components['pass']);
-
 
 		return HttpAuthHelper::_buildUrl($components);
 	}
@@ -345,6 +350,7 @@ class HttpAuthHelper {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $module->performFactoryRegistrations();
 
 		if ($ret) {
@@ -398,6 +404,7 @@ class HttpAuthHelper {
 				if (!empty($components['pass'])) {
 					$auth .= ':' . $components['pass'];
 				}
+
 				$auth .= '@';
 			}
 

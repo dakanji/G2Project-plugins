@@ -13,7 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 class getid3_apetag extends getid3_handler {
 	public $inline_attachments = true; // true: return full data for all attachments; false: return no data for all attachments; integer: return data for attachments <= than this; string: save as file to this directory
 	public $overrideendoffset  = 0;
@@ -40,7 +39,7 @@ class getid3_apetag extends getid3_handler {
 				// APE tag found before ID3v1
 				$info['ape']['tag_offset_end'] = $info['filesize'] - $id3v1tagsize;
 
-			//} elseif (preg_match('/APETAGEX.{24}$/i', $APEfooterID3v1)) {} elseif (substr($APEfooterID3v1, strlen($APEfooterID3v1) - $apetagheadersize, 8) == 'APETAGEX') {
+				//} elseif (preg_match('/APETAGEX.{24}$/i', $APEfooterID3v1)) {} elseif (substr($APEfooterID3v1, strlen($APEfooterID3v1) - $apetagheadersize, 8) == 'APETAGEX') {
 				// APE tag found, no ID3v1
 				$info['ape']['tag_offset_end'] = $info['filesize'];
 			}
@@ -80,6 +79,7 @@ class getid3_apetag extends getid3_handler {
 			$this->fseek($thisfile_ape['tag_offset_start']);
 			$APEtagData = $this->fread($thisfile_ape['footer']['raw']['tagsize']);
 		}
+
 		$info['avdataend'] = $thisfile_ape['tag_offset_start'];
 
 		if (isset($info['id3v1']['tag_offset_start']) && ($info['id3v1']['tag_offset_start'] < $thisfile_ape['tag_offset_end'])) {
@@ -123,6 +123,7 @@ class getid3_apetag extends getid3_handler {
 
 				return false;
 			}
+
 			$ItemKeyLength = strpos($APEtagData, "\x00", $offset) - $offset;
 			$item_key      = strtolower(substr($APEtagData, $offset, $ItemKeyLength));
 
@@ -269,6 +270,7 @@ class getid3_apetag extends getid3_handler {
 						$info['warning'][]                  = 'APEtag "' . $item_key . '" should be flagged as Binary data, but was incorrectly flagged as UTF-8';
 						$thisfile_ape_items_current['data'] = implode("\x00", $thisfile_ape_items_current['data']);
 					}
+
 					list($thisfile_ape_items_current['filename'], $thisfile_ape_items_current['data']) = explode("\x00", $thisfile_ape_items_current['data'], 2);
 					$thisfile_ape_items_current['data_offset']                                         = $thisfile_ape_items_current['offset'] + strlen($thisfile_ape_items_current['filename'] . "\x00");
 					$thisfile_ape_items_current['data_length']                                         = strlen($thisfile_ape_items_current['data']);
@@ -283,6 +285,7 @@ class getid3_apetag extends getid3_handler {
 
 							break;
 						}
+
 						$thisfile_ape_items_current['image_mime'] = image_type_to_mime_type($imagechunkcheck[2]);
 
 						if ($this->inline_attachments === false) {
@@ -313,6 +316,7 @@ class getid3_apetag extends getid3_handler {
 								break;
 							}
 						}
+
 						// if we get this far, must be OK
 						if (is_string($this->inline_attachments)) {
 							$destination_filename = $this->inline_attachments . DIRECTORY_SEPARATOR . md5($info['filenamepath']) . '_' . $thisfile_ape_items_current['data_offset'];
@@ -322,12 +326,14 @@ class getid3_apetag extends getid3_handler {
 							} else {
 								$info['warning'][] = 'attachment at ' . $thisfile_ape_items_current['offset'] . ' cannot be saved to "' . $destination_filename . '" (not writable)';
 							}
+
 							$thisfile_ape_items_current['data_filename'] = $destination_filename;
 							unset($thisfile_ape_items_current['data']);
 						} else {
 							if (!isset($info['ape']['comments']['picture'])) {
 								$info['ape']['comments']['picture'] = array();
 							}
+
 							$comments_picture_data = array();
 
 							foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
@@ -335,6 +341,7 @@ class getid3_apetag extends getid3_handler {
 									$comments_picture_data[$picture_key] = $thisfile_ape_items_current[$picture_key];
 								}
 							}
+
 							$info['ape']['comments']['picture'][] = $comments_picture_data;
 							unset($comments_picture_data);
 						}
@@ -362,7 +369,6 @@ class getid3_apetag extends getid3_handler {
 
 	public function parseAPEheaderFooter($APEheaderFooterData) {
 		// http://www.uni-jena.de/~pfk/mpp/sv8/apeheader.html
-
 		// shortcut
 		$headerfooterinfo['raw'] = array();
 		$headerfooterinfo_raw    = &$headerfooterinfo['raw'];
@@ -372,6 +378,7 @@ class getid3_apetag extends getid3_handler {
 		if ($headerfooterinfo_raw['footer_tag'] != 'APETAGEX') {
 			return false;
 		}
+
 		$headerfooterinfo_raw['version']      = getid3_lib::LittleEndian2Int(substr($APEheaderFooterData, 8, 4));
 		$headerfooterinfo_raw['tagsize']      = getid3_lib::LittleEndian2Int(substr($APEheaderFooterData, 12, 4));
 		$headerfooterinfo_raw['tag_items']    = getid3_lib::LittleEndian2Int(substr($APEheaderFooterData, 16, 4));

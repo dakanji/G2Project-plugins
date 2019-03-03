@@ -34,6 +34,7 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -45,11 +46,13 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'core', 'default.language', 'en_US');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$gallery->setActiveLanguageCode('en_US');
 
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
@@ -83,6 +86,7 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'ja';
 		$this->assertEquals('CP932', $this->view->_getCharsetFromRequest(), 'HTTP override');
 	}
@@ -106,6 +110,7 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 
 	public function _setActiveLanguageCode($languageCode) {
 		global $gallery;
+
 		$ret = $gallery->setActiveLanguageCode($languageCode);
 
 		if ($ret) {

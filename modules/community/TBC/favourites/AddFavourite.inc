@@ -30,13 +30,16 @@ class AddFavouriteController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
-		$results                = array();
-		$errors                 = array();
+
+		$results = array();
+		$errors  = array();
+
 		list($itemId, $command) = GalleryUtilities::getRequestVariables('itemId', 'command');
 
-
 		global $gallery;
-		$userId                      = $gallery->getActiveUserId();
+
+		$userId = $gallery->getActiveUserId();
+
 		list($ret, $isAnonymousUser) = GalleryCoreApi::isAnonymousUser($userId);
 
 		if ($ret) {
@@ -52,6 +55,7 @@ class AddFavouriteController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$results['status']['removed'] = 1;
 			} elseif ($command == 'clear') {
 				$ret = FavouritesMapHelper::clearFavourites($userId);
@@ -59,8 +63,10 @@ class AddFavouriteController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$results['status']['cleared'] = 1;
-				list($ret, $itemId)           = GalleryCoreApi::getDefaultAlbumId();
+
+				list($ret, $itemId) = GalleryCoreApi::getDefaultAlbumId();
 
 				if ($ret) {
 					return array($ret, null);
@@ -71,6 +77,7 @@ class AddFavouriteController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$results['status']['added'] = 1;
 			}
 		} else {
@@ -82,20 +89,21 @@ class AddFavouriteController extends GalleryController {
 				'view'   => 'favourites.AddFavourite',
 				'itemId' => $itemId,
 			);
-			$results['status']   = array();
-			$results['error']    = $errors;
+
+			$results['status'] = array();
+			$results['error']  = $errors;
 		} else {
 			$results['redirect'] = array(
 				'view'   => 'favourites.AddFavourite',
 				'itemId' => $itemId,
 			);
-			$results['error']    = array();
+
+			$results['error'] = array();
 		}
 
 		return array(null, $results);
 	}
 }
-
 
 class AddFavouriteView extends GalleryView {
 	/**
@@ -111,6 +119,7 @@ class AddFavouriteView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$template->setVariable(
 				'itemDetails',
 				array(

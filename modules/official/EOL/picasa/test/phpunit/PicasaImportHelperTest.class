@@ -49,26 +49,32 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[b]bold[/b]',
 			PicasaImportHelper::convertHtmlToBbcode('<b>bold</b>')
 		);
+
 		$this->assertEquals(
 			'[i]italic[/i]',
 			PicasaImportHelper::convertHtmlToBbcode('<i>italic</i>')
 		);
+
 		$this->assertEquals(
 			'[i]italic[/i]',
 			PicasaImportHelper::convertHtmlToBbcode('<em>italic</em>')
 		);
+
 		$this->assertEquals(
 			'[b]bold[/b]',
 			PicasaImportHelper::convertHtmlToBbcode('<strong>bold</strong>')
 		);
+
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br>')
 		);
+
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br/>')
 		);
+
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br />')
@@ -79,22 +85,27 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[img]foo.jpg[/img]',
 			PicasaImportHelper::convertHtmlToBbcode('<img src=\'foo.jpg\'>')
 		);
+
 		$this->assertEquals(
 			'[img]foo.jpg[/img]',
 			PicasaImportHelper::convertHtmlToBbcode('<img src="foo.jpg">')
 		);
+
 		$this->assertEquals(
 			'[img]foo.jpg[/img]',
 			PicasaImportHelper::convertHtmlToBbcode('<img src=foo.jpg>')
 		);
+
 		$this->assertEquals(
 			'[img]foo.jpg[/img]',
 			PicasaImportHelper::convertHtmlToBbcode('<img style=foo src=\'foo.jpg\'>')
 		);
+
 		$this->assertEquals(
 			'[img]foo.jpg[/img]',
 			PicasaImportHelper::convertHtmlToBbcode('<img src=\'foo.jpg\' class="bar">')
 		);
+
 		$this->assertEquals(
 			'[img]foo.jpg[/img]',
 			PicasaImportHelper::convertHtmlToBbcode(
@@ -107,10 +118,12 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[list][/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul></ul>')
 		);
+
 		$this->assertEquals(
 			'[list][*]foo[/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul><li>foo</li></ul>')
 		);
+
 		$this->assertEquals(
 			'[list][*]foo[/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul><li>foo</ul>')
@@ -121,42 +134,49 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[url=http://google.com]Google[/url]',
 			PicasaImportHelper::convertHtmlToBbcode('<a href="http://google.com">Google</a>')
 		);
+
 		$this->assertEquals(
 			'[url=http://google.com]Google[/url][url=http://poogle.com]Poogle[/url]',
 			PicasaImportHelper::convertHtmlToBbcode(
 				'<a href="http://google.com">Google</a><a href="http://poogle.com">Poogle</a>'
 			)
 		);
+
 		$this->assertEquals(
 			'[url=http://google.com]Google[/url]',
 			PicasaImportHelper::convertHtmlToBbcode(
 				'<a href=\'http://google.com\'>Google</a>'
 			)
 		);
+
 		$this->assertEquals(
 			'[url=http://google.com]Google[/url]',
 			PicasaImportHelper::convertHtmlToBbcode(
 				'<a title="foo" href="http://google.com" class="bar">Google</a>'
 			)
 		);
+
 		$this->assertEquals(
 			'[url=http://google.com]Google[/url]',
 			PicasaImportHelper::convertHtmlToBbcode(
 				'<a title=foo href=http://google.com class=bar>Google</a>'
 			)
 		);
+
 		$this->assertEquals(
 			'[url=http://google.com]Google[/url]',
 			PicasaImportHelper::convertHtmlToBbcode(
 				'<a href=http://google.com class=bar>Google</a>'
 			)
 		);
+
 		$this->assertEquals(
 			'[url=http://google.com]Google[/url]',
 			PicasaImportHelper::convertHtmlToBbcode(
 				'<a title=foo href=http://google.com>Google</a>'
 			)
 		);
+
 		$this->assertEquals(
 			'[url=http://www.topozone.com/map.asp?z=11&n=' .
 				'4163644&e=275692&s=25&size=m&u=1]Topo[/url]',
@@ -173,6 +193,7 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 				'<a href="http://google.com"><i>Google</i></a>'
 			)
 		);
+
 		$this->assertEquals(
 			'[b][url=http://google.com]Google[/url][/b]',
 			PicasaImportHelper::convertHtmlToBbcode(

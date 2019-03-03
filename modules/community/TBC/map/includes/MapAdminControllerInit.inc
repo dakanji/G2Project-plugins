@@ -24,6 +24,7 @@
  */
 	$basegallerydir = substr(dirname(__FILE__), 0, -12);
 	global $gallery;
+
 	$urlGenerator  =& $gallery->getUrlGenerator();
 	$urlComponents = parse_url($urlGenerator->getCurrentUrlDir(true));
 	$base          = $urlComponents['path'];

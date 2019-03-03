@@ -46,11 +46,11 @@ class AddviaEmailCallbacks {
 					if ($ret) {
 						$block['addviaemail']['failure'] = 1;
 					}
+
 					$block['addviaemail']['checkperformed'] = '1';
 				} else {
 					$block['addviaemail']['checkperformed'] = '0';
 				}
-
 
 				list($ret, $moduleParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'addviaemail');
 

@@ -40,6 +40,7 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_platform = new UnitTestPlatform();
 	}
 
@@ -87,6 +88,7 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 	 */
 	public function testGoodPicasaXmlPath() {
 		global $gallery;
+
 		// Activate the mock platform
 		$gallery->setPlatform($this->_platform);
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');

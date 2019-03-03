@@ -33,6 +33,7 @@ GalleryCoreApi::requireOnce('modules/bulkmanage/classes/BulkManageHelper.class')
 class BulkManageController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
+
 		list($itemId, $bulkPlugin) = GalleryUtilities::getRequestVariables('itemId', 'bulkPlugin');
 
 		// Load the item
@@ -68,7 +69,6 @@ class BulkManageController extends GalleryController {
 		// Load the helper class
 		$helper = new BulkManageHelper();
 
-
 		// Check form
 		if (isset($form['action']['bulkmanage'])) {
 			// The "Go" button was hit so tell the plugin
@@ -85,9 +85,9 @@ class BulkManageController extends GalleryController {
 				// Parameters passed to helper
 					array($itemId, $plugin, $params)
 			);
+
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
-
 
 		// If we have an error then pass back to plugin to handle it
 		$results['error']  = $error;
@@ -103,7 +103,6 @@ class BulkManageController extends GalleryController {
 	}
 }
 
-
 /**
  * This view will show the selected plugin for bulkmanaging items
  */
@@ -113,6 +112,7 @@ class BulkManageView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		list($itemId, $bulkPlugin) = GalleryUtilities::getRequestVariables('itemId', 'bulkPlugin');
 
 		// Check permissions
@@ -153,6 +153,7 @@ class BulkManageView extends GalleryView {
 				$bulkPlugin = $ids[0];
 			}
 		}
+
 		$session->put($bulkPluginSessionKey, $bulkPlugin);
 
 		// Get display data for all plugins
@@ -164,6 +165,7 @@ class BulkManageView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$plugins[] = array(
 				'title'      => $title,
 				'id'         => $pluginId,
@@ -194,7 +196,6 @@ class BulkManageView extends GalleryView {
 		);
 	}
 }
-
 
 /**
  * Interface for plugins to extend

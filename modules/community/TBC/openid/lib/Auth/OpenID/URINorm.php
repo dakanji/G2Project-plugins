@@ -85,7 +85,6 @@ function Auth_OpenID_pct_encoded_replace_unreserved($mo) {
 
 	return strtoupper($mo[0]);
 
-
 	return $mo[0];
 }
 
@@ -127,11 +126,13 @@ function Auth_OpenID_remove_dot_segments($path) {
 			if ($path[0] == '/') {
 				$i = 1;
 			}
+
 			$i = strpos($path, '/', $i);
 
 			if ($i === false) {
 				$i = strlen($path);
 			}
+
 			$result_segments[] = substr($path, 0, $i);
 			$path              = substr($path, $i);
 		}
@@ -219,6 +220,7 @@ function Auth_OpenID_urinorm($uri) {
 			'Auth_OpenID_pct_encoded_replace',
 			$host
 		);
+
 	// NO IDNA.
 		// $host = unicode($host, 'utf-8').encode('idna');
 	} else {

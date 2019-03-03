@@ -48,11 +48,13 @@ class Auth_Yadis_ProxyResolver {
 			if ($response->status != 200 and $response->status != 206) {
 				continue;
 			}
+
 			$xrds = Auth_Yadis_XRDS::parseXRDS($response->body);
 
 			if (!$xrds) {
 				continue;
 			}
+
 			$canonicalID = Auth_Yadis_getCanonicalID(
 				$xri,
 				$xrds

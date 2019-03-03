@@ -25,8 +25,6 @@
  * @author Alec Myers <alec@alecmyers.com>
  */
 
-
-
 /**
  * A helper class to handle events
  * events are posted by payment plugins
@@ -45,6 +43,7 @@ class CheckoutGroupsEventHelper {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
 		global $gallery;
+
 		$transaction = $event->getEntity(); // =, or =& ??
 		$data        = $event->getData();
 
@@ -58,7 +57,8 @@ class CheckoutGroupsEventHelper {
 		if ($data['type'] == 'clear') {
 			// payment cleared, add user to groups
 			// get the purchaser's userId
-			$userId           = $transaction->getBuyerId();
+			$userId = $transaction->getBuyerId();
+
 			list($ret, $anon) = GalleryCoreApi::isAnonymousUser($userId);
 
 			if ($ret) {
@@ -72,6 +72,7 @@ class CheckoutGroupsEventHelper {
 				if ($ret) {
 					return $ret;
 				}
+
 				// $item.itemId and $item.product are the two things we need
 				foreach ($items as $item) {
 					list($ret, $products) = CheckoutProductMapHelper::fetchProducts($item['itemId'], true, true);

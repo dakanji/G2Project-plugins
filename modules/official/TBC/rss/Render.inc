@@ -171,6 +171,7 @@ class RenderView extends GalleryView {
 		if ($count > $maxcount) {
 			$count = $maxcount;
 		}
+
 		$params['count'] = $count;
 
 		// create an instance of the rss data generator

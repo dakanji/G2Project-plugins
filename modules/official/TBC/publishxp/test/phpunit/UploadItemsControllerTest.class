@@ -32,6 +32,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -43,6 +44,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_parent);
 		$this->_controller->setOptionInstances(array());
 
@@ -57,6 +59,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		global $gallery;
+
 		$ret = GalleryCoreApi::removeMimeType(
 			array(
 				'extension' => 'phpunit_ext',
@@ -95,8 +98,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter      =& GalleryTestCase::getEntityCounter();
-		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter =& GalleryTestCase::getEntityCounter();
+		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -131,8 +135,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter      =& GalleryTestCase::getEntityCounter();
-		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter =& GalleryTestCase::getEntityCounter();
+		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -186,8 +191,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter      =& GalleryTestCase::getEntityCounter();
-		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter =& GalleryTestCase::getEntityCounter();
+		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -222,8 +228,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter      =& GalleryTestCase::getEntityCounter();
-		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter =& GalleryTestCase::getEntityCounter();
+		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {
@@ -239,6 +246,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 	public function testUploadItemsWithOption() {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 		$session->put(
 			'publishxp.extraOptionsForm',
@@ -273,8 +281,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		$entityCounter      =& GalleryTestCase::getEntityCounter();
-		$id                 = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+		$entityCounter =& GalleryTestCase::getEntityCounter();
+		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
 		if ($ret) {

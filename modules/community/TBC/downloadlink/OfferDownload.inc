@@ -28,6 +28,7 @@ GalleryCoreApi::requireOnce('modules/core/DownloadItem.inc');/**
 class OfferDownloadView extends DownloadItemView {
 	public function _sendFile($data) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
 
@@ -65,6 +66,7 @@ class OfferDownloadView extends DownloadItemView {
 			if ($stats[7] > 0) {
 				$phpVm->header('Content-length: ' . $stats[7]);
 			}
+
 			/*
 			 * Don't use readfile() because it buffers the entire file in memory.  Profiling shows
 			 * that this approach is as efficient as fpassthru() but we get to call
@@ -77,9 +79,11 @@ class OfferDownloadView extends DownloadItemView {
 					if (strlen($bits) == 0) {
 						break;
 					}
+
 					echo $bits;
 					$gallery->guaranteeTimeLimit(30);
 				}
+
 				$platform->fclose($fd);
 			}
 		}
@@ -95,6 +99,7 @@ class OfferDownloadView extends DownloadItemView {
 	 */
 	public function _assertPermissions($item, $derivativeType) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$itemIdForPermission = $item->getId();
@@ -118,6 +123,7 @@ class OfferDownloadView extends DownloadItemView {
 				break;
 			// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource
 		}
+
 		$ret = GalleryCoreApi::assertHasItemPermission($itemIdForPermission, $permission);
 
 		if ($ret) {

@@ -33,6 +33,7 @@ class TagsPreloads {
 
 		if ($preload == 'TagLinks') {
 			global $gallery;
+
 			$urlGenerator =& $gallery->getUrlGenerator();
 
 			$loaded[$preload] = 1;

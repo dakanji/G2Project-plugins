@@ -32,6 +32,7 @@ class AddviaemailAdminHelper {
 	 */
 	public function testRequiredFunctions() {
 		global $gallery;
+
 		$phpVm = $gallery->getPhpVm();
 
 		$emailFunctions   = array();

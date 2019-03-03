@@ -31,6 +31,7 @@ GalleryCoreApi::requireOnce('modules/nokiaupload/classes/ImageUploadHelper.class
 class ImageUploadHelperTest extends GalleryTestCase {
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -107,6 +108,7 @@ class ImageUploadHelperTest extends GalleryTestCase {
 				'userName' => $this->_user->getUserName(),
 			)
 		);
+
 		$this->assertEquals(
 			array(
 				'success' => '2',

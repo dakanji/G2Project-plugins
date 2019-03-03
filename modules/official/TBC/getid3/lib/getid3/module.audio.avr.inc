@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_avr extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -51,14 +49,12 @@ class getid3_avr extends getid3_handler {
 		// 128    bytes    ?    sample data    (12 bits samples are coded on 16 bits:
 		//                     0000 xxxx xxxx xxxx)
 		// ---------------------------------------------------------------------
-
 		// Note that all values are in motorola (big-endian) format, and that long is
 		// assumed to be 4 bytes, and short 2 bytes.
 		// When reading the samples, you should handle both signed and unsigned data,
 		// and be prepared to convert 16->8 bit, or mono->stereo if needed. To convert
 		// 8-bit data between signed/unsigned just add 127 to the sample values.
 		// Simularly for 16-bit data you should add 32769
-
 		$info['fileformat'] = 'avr';
 
 		$this->fseek($info['avdataoffset']);
@@ -71,9 +67,9 @@ class getid3_avr extends getid3_handler {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['avr']['raw']['magic']) . '"';
 			unset($info['fileformat'], $info['avr']);
 
-
 			return false;
 		}
+
 		$info['avdataoffset'] += 128;
 
 		$info['avr']['sample_name']        = rtrim(substr($AVRheader, 4, 8));
@@ -119,7 +115,6 @@ class getid3_avr extends getid3_handler {
 		$info['audio']['channels']        = ($info['avr']['flags']['stereo'] ? 2 : 1);
 		$info['playtime_seconds']         = ($info['avr']['sample_length'] / $info['audio']['channels'])                        / $info['avr']['sample_rate'];
 		$info['audio']['bitrate']         = ($info['avr']['sample_length'] * (($info['avr']['bits_per_sample'] == 8) ? 8 : 16)) / $info['playtime_seconds'];
-
 
 		return true;
 	}

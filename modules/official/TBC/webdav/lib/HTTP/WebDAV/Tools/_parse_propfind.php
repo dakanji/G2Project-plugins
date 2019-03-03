@@ -161,6 +161,7 @@ class _parse_propfind {
 			if ($ns) {
 				$prop['ns'] = $ns;
 			}
+
 			$this->props[] = $prop;
 		}
 

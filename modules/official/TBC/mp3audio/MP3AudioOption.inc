@@ -38,6 +38,7 @@ class MP3AudioOption extends ItemAddOption {
 	 */
 	public function handleRequestAfterAdd($form, $items) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 		$errors  = $mp3Items  = array();
 
@@ -73,6 +74,7 @@ class MP3AudioOption extends ItemAddOption {
 				}
 
 				$item->setRenderer('MP3AudioRenderer');
+
 				$ret = $item->save();
 
 				if ($ret) {
@@ -87,6 +89,7 @@ class MP3AudioOption extends ItemAddOption {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ret = $storage->checkPoint();
 
 			if ($ret) {

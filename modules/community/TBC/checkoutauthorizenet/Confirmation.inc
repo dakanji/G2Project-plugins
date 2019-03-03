@@ -36,10 +36,12 @@ class ConfirmationView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		// First, empty out the shopping cart
-		$event     = GalleryCoreApi::newEvent('GalleryCheckout::emptyCart');
+		$event = GalleryCoreApi::newEvent('GalleryCheckout::emptyCart');
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -53,6 +55,7 @@ class ConfirmationView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $csymbol)
 					= GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
 
@@ -70,6 +73,7 @@ class ConfirmationView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $subject) = GalleryCoreApi::getPluginParameter(
 			'module',
 			'checkoutauthorizenet',
@@ -127,7 +131,8 @@ class ConfirmationView extends GalleryView {
 			$email['thumbnails'][$thumbnail->getParentId()] = (array)$thumbnail;
 		}
 
-		$toAddresses               = array($email['custEmail']);
+		$toAddresses = array($email['custEmail']);
+
 		list($ret, $toAddresses[]) = GalleryCoreApi::getPluginParameter(
 			'module',
 			'checkoutauthorizenet',

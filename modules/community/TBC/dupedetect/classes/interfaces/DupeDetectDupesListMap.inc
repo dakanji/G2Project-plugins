@@ -104,7 +104,8 @@ class DupeDetectDupesListMap extends DupeDetectDupesListMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->addMapEntry('DupeDetectDupesListMap', $data);
+
+		$ret = $storage->addMapEntry('DupeDetectDupesListMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -128,7 +129,8 @@ class DupeDetectDupesListMap extends DupeDetectDupesListMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->removeMapEntry('DupeDetectDupesListMap', $data);
+
+		$ret = $storage->removeMapEntry('DupeDetectDupesListMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -147,7 +149,8 @@ class DupeDetectDupesListMap extends DupeDetectDupesListMap_core {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->removeAllMapEntries('DupeDetectDupesListMap');
+
+		$ret = $storage->removeAllMapEntries('DupeDetectDupesListMap');
 
 		if ($ret->isError()) {
 			return $ret;
@@ -172,7 +175,8 @@ class DupeDetectDupesListMap extends DupeDetectDupesListMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->updateMapEntry('DupeDetectDupesListMap', $match, $change);
+
+		$ret = $storage->updateMapEntry('DupeDetectDupesListMap', $match, $change);
 
 		if ($ret->isError()) {
 			return $ret;

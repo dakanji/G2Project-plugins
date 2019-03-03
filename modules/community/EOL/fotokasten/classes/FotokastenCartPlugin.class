@@ -25,8 +25,9 @@
  * @author Ioana Ciocanescu <service@fotokasten.de>
  * @version $Revision: 17580 $
  */
-class FotokastenCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterface_1_1
-{
+
+ // implements CartPluginInterface_1_0 and CartPluginInterface_1_1
+class FotokastenCartPlugin {
 	/**
 	 * @see CartPluginInterface_1_0::getSupportedItemTypes
 	 */
@@ -59,9 +60,16 @@ class FotokastenCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 	 */
 	public function fulfillCart($cartItemIds) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 		$session->put('fotokasten.cart', $cartItemIds);
 
-		return array(null, array('controller' => 'fotokasten.PrintPhotos', 'return' => 1));
+		return array(
+			null,
+			array(
+				'controller' => 'fotokasten.PrintPhotos',
+				'return'     => 1,
+			),
+		);
 	}
 }

@@ -41,14 +41,15 @@ class FlashVideoRenderer extends GalleryRenderer {
 	 */
 	public function render($format, $entity, $item, $params) {
 		global $gallery;
+
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
 
 		if ($format != 'HTML' || $entity->getMimeType() != 'video/x-flv') {
 			return null;
 		}
 
-		$urlGenerator                 =& $gallery->getUrlGenerator();
-		$src                          = $urlGenerator->generateUrl(
+		$urlGenerator =& $gallery->getUrlGenerator();
+		$src          = $urlGenerator->generateUrl(
 			array(
 				'view'         => 'core.DownloadItem',
 				'itemId'       => $entity->getId(),
@@ -60,6 +61,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'htmlEntities'   => false,
 			)
 		);
+
 		list($width, $height, $title) = array($entity->getWidth(), $entity->getHeight(), $item->getTitle());
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
 		$title = smarty_modifier_markup($title, 'strip');
@@ -69,7 +71,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		 * Including SWFObject<http://blog.deconcept.com/swfobject/> to defeat the
 		 * "Click to activate..." in IE
 		 */
-		$SWFObjectUrl      = $urlGenerator->generateUrl(
+		$SWFObjectUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/swfobject.js',
 			),
@@ -77,6 +79,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
+
 		$expressInstallUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/expressinstall.swf',
@@ -85,7 +88,8 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$playerUrl         = $urlGenerator->generateUrl(
+
+		$playerUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/G2flv.swf',
 			),
@@ -93,30 +97,28 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$flashVars         = 'flvUrl=' . urlencode($src) . '&Width=' . $width . '&Height=' . $height
+
+		$flashVars = 'flvUrl=' . urlencode($src) . '&Width=' . $width . '&Height=' . $height
 		   . '&title=' . urlencode($title);
-		$extraAttr         = '';
+		$extraAttr = '';
 
 		// Uncomment the next line to allow download button. Default: false
 		//$flashVars .= '&allowDownload=true';
-
 		// Uncomment the next line to disallow fullscreen button. Default: true
 		//$flashVars .= '&allowFullscreen=false';
-
 		/*
 		 * Uncomment the next line to allow the share button also the swfUrl below.
 		 * Default: false
 		 */
 		//$flashVars .= '&share=true';
-
 		// To allow for sharing we must also pass the playerUrl
 		//$flashVars .= '&swfUrl=' . urlencode($playerUrl);
+		$itemId = $item->getId();
 
-		$itemId                = $item->getId();
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if (!$ret && !empty($thumbnail)) {
-			$thumbUrl   = $urlGenerator->generateUrl(
+			$thumbUrl = $urlGenerator->generateUrl(
 				array(
 					'view'         => 'core.DownloadItem',
 					'itemId'       => $thumbnail[$itemId]->getId(),
@@ -128,8 +130,10 @@ class FlashVideoRenderer extends GalleryRenderer {
 					'htmlEntities'   => false,
 				)
 			);
+
 			$flashVars .= '&thumbUrl=' . urlencode($thumbUrl);
 		}
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'flashvideo');
 
 		if ($ret) {
@@ -150,6 +154,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		) as $key => $value) {
 			$flashVars .= '&' . $key . '=' . urlencode($value);
 		}
+
 		$jsWarning = $module->translate('JavaScript required to view this content.');
 
 		/*
@@ -164,7 +169,6 @@ class FlashVideoRenderer extends GalleryRenderer {
 			urlencode($src));
 		$extraAttr = ' wmode="transparent"';
 		*/
-
 
 		/*
 		 * To use FLVPlayer ( http://www.peldi.com/fmswiki/index.php?title=FLVPlayer )
@@ -190,6 +194,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		obj.style.width = nw + "px";
 		obj.style.height = nh + "px";
 	     }
+
 	     // ]]>
 	     </script>
 	     <div id="flashvideo" style="align:left;width:496px;height:250px">

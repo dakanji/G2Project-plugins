@@ -49,6 +49,7 @@ class MP3AudioRendererTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_item);
 	}
 
@@ -58,6 +59,7 @@ class MP3AudioRendererTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$item->setMimeType('image/jpeg');
 		$item->setWidth(100);
 		$item->setHeight(100);
@@ -68,6 +70,7 @@ class MP3AudioRendererTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$item->setMimeType('audio/wav');
 		$this->assert(!$this->_renderer->canBeViewedInline($item), 'wav');
 
@@ -76,6 +79,7 @@ class MP3AudioRendererTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$item->setMimeType('audio/mpeg');
 		$this->assert($this->_renderer->canBeViewedInline($item), 'mp3');
 
@@ -91,6 +95,7 @@ class MP3AudioRendererTest extends GalleryTestCase {
 				'fallback' => 'FALLBACK',
 			)
 		);
+
 		$this->assert(strpos($html, '<div id="soContent"') !== false, 'flash <div> placeholder');
 		$this->assert(strpos($html, '.swf'), '.swf');
 		$this->assert(strpos($html, 'http'), 'http');

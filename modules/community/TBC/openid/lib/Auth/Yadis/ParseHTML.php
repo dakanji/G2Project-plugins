@@ -141,6 +141,7 @@ class Auth_Yadis_ParseHTML {
 		} else {
 			$self_close = '';
 		}
+
 		$expr = sprintf($this->_tag_expr, $close, $tag_names, $self_close);
 
 		return sprintf('/%s/%s', $expr, $this->_re_flags);
@@ -164,7 +165,7 @@ class Auth_Yadis_ParseHTML {
 			$html_string
 		);
 
-		$key_tags     = array(
+		$key_tags = array(
 			$this->tagPattern('html', false, false),
 			$this->tagPattern('head', false, false),
 			$this->tagPattern('head', true, false),
@@ -184,6 +185,7 @@ class Auth_Yadis_ParseHTML {
 				'maybe'
 			),
 		);
+
 		$key_tags_pos = array();
 
 		foreach ($key_tags as $pat) {
@@ -196,10 +198,12 @@ class Auth_Yadis_ParseHTML {
 				$key_tags_pos[] = null;
 			}
 		}
+
 		// no opening head tag
 		if (is_null($key_tags_pos[1])) {
 			return array();
 		}
+
 		// the effective </head> is the min of the following
 		if (is_null($key_tags_pos[2])) {
 			$key_tags_pos[2] = strlen($html_string);
@@ -210,15 +214,18 @@ class Auth_Yadis_ParseHTML {
 				$key_tags_pos[2] = $pos;
 			}
 		}
+
 		// closing head tag comes before opening head tag
 		if ($key_tags_pos[1] > $key_tags_pos[2]) {
 			return array();
 		}
+
 		// if there is an opening html tag, make sure the opening head tag
 		// comes after it
 		if (!is_null($key_tags_pos[0]) && $key_tags_pos[1] < $key_tags_pos[0]) {
 			return array();
 		}
+
 		$html_string = substr(
 			$html_string,
 			$key_tags_pos[1],
@@ -250,6 +257,7 @@ class Auth_Yadis_ParseHTML {
 
 				$link_attrs[strtolower($name)] = $value;
 			}
+
 			$link_data[] = $link_attrs;
 		}
 

@@ -60,6 +60,7 @@ class Auth_OpenID_ServiceEndpoint {
 		if (!$this->claimed_id) {
 			return $this->claimed_id;
 		}
+
 		$parsed = parse_url($this->claimed_id);
 		$scheme = $parsed['scheme'];
 		$host   = $parsed['host'];
@@ -274,7 +275,6 @@ class Auth_OpenID_ServiceEndpoint {
 		// If no delegate is found, returns null.  Returns false on
 		// discovery failure (when multiple delegate/localID tags have
 		// different values).
-
 		$service->parser->registerNamespace(
 			'openid',
 			Auth_OpenID_XMLNS_1_0
@@ -338,7 +338,6 @@ class Auth_OpenID_ServiceEndpoint {
 		// contain a type that comes earlier in the preferred types list
 		// come before service elements that come later. If a service
 		// element has more than one type, the most preferred one wins.
-
 		foreach ($preferred_types as $index => $typ) {
 			if (in_array($typ, $service->type_uris)) {
 				return $index;
@@ -351,7 +350,6 @@ class Auth_OpenID_ServiceEndpoint {
 	public function Auth_OpenID_arrangeByType($service_list, $preferred_types) {
 		// Rearrange service_list in a new list so services are ordered by
 		// types listed in preferred_types.  Return the new list.
-
 		// Build a list with the service elements in tuples whose
 		// comparison will prefer the one with the best matching service
 		$prio_services = array();
@@ -446,7 +444,6 @@ class Auth_OpenID_ServiceEndpoint {
 	) {
 		// Discover OpenID services for a URI. Tries Yadis and falls back
 		// on old-style <link rel='...'> discovery if Yadis fails.
-
 		// Might raise a yadis.discover.DiscoveryFailure if no document
 		// came back for that URI at all.  I don't think falling back to
 		// OpenID 1.0 discovery on the same URL will help, so don't bother
@@ -524,7 +521,8 @@ class Auth_OpenID_ServiceEndpoint {
 	}
 
 	public function Auth_OpenID_discoverXRI($iname, &$fetcher) {
-		$resolver                           = new Auth_Yadis_ProxyResolver($fetcher);
+		$resolver = new Auth_Yadis_ProxyResolver($fetcher);
+
 		list($canonicalID, $yadis_services) = $resolver->query(
 			$iname,
 			Auth_OpenID_getOpenIDTypeURIs(),
@@ -564,7 +562,8 @@ class Auth_OpenID_ServiceEndpoint {
 		// If the fetcher doesn't support SSL, we can't interact with
 		// HTTPS server URLs; remove those endpoints from the list.
 		if (!$fetcher->supportsSSL()) {
-			$http_endpoints            = array();
+			$http_endpoints = array();
+
 			list($new_uri, $endpoints) = $result;
 
 			foreach ($endpoints as $e) {

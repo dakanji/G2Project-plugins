@@ -53,6 +53,7 @@ class SelectCmAlbumController extends GalleryController {
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
 				}
+
 				$form['copperminePath'] = trim($tmp);
 
 				if (!CmMigrateHelper::isValidCopperminePath($form['copperminePath'], $slash)) {
@@ -74,6 +75,7 @@ class SelectCmAlbumController extends GalleryController {
 				} else {
 					$recentPaths[$form['copperminePath']] = 1;
 				}
+
 				$session->put('cmmigrate.view.SelectCmAlbum.recentPaths', $recentPaths);
 
 				$redirect['view']           = 'core.SiteAdmin';
@@ -88,6 +90,7 @@ class SelectCmAlbumController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'cmmigrate.SelectCmAlbum';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 

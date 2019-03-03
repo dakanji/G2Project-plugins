@@ -58,6 +58,7 @@ class FinishLoginController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnTo     = $urlGenerator->generateUrl(
 			array(
@@ -91,9 +92,10 @@ class FinishLoginController extends GalleryController {
 
 		if ($responseStatus != Auth_OpenID_CANCEL) {
 			// Prepare for validation
-			$options                      = array(
+			$options = array(
 				'pass' => $responseStatus == Auth_OpenID_SUCCESS,
 			);
+
 			list($ret, $options['level']) = GalleryCoreApi::getPluginParameter('module', 'core', 'validation.level');
 
 			if ($ret) {
@@ -257,6 +259,7 @@ class FinishLoginController extends GalleryController {
 
 			$event = GalleryCoreApi::newEvent('Gallery::Login');
 			$event->setEntity($user);
+
 			list($ret, $redirect) = GalleryCoreApi::postEvent($event);
 
 			if ($ret) {
@@ -264,7 +267,8 @@ class FinishLoginController extends GalleryController {
 			}
 
 			$session =& $gallery->getSession();
-			$ret     = $session->regenerate();
+
+			$ret = $session->regenerate();
 
 			if ($ret) {
 				return array($ret, null);
@@ -290,6 +294,7 @@ class FinishLoginController extends GalleryController {
 				$error[] = 'form[error][userName][pending]';
 			}
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 

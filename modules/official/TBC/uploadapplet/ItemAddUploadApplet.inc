@@ -55,16 +55,19 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 			 * communicate to G2 directly, even when G2 is embedded
 			 */
 			$ItemAddUploadApplet['g2BaseUrl'] = $urlGenerator->getCurrentUrlDir(true);
-			list($ret, $cookiePath)           = $urlGenerator->getCookiePath(true);
+
+			list($ret, $cookiePath) = $urlGenerator->getCookiePath(true);
 
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			list($ret, $cookieDomain) = $session->getCookieDomain();
 
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ItemAddUploadApplet['NoProtocolError'] = 0;
 			$ItemAddUploadApplet['cookieName']      = $session->getKey();
 			$ItemAddUploadApplet['cookieValue']     = $session->getId();
@@ -80,6 +83,7 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ItemAddUploadApplet['locale'] = $locale;
 
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'uploadapplet');

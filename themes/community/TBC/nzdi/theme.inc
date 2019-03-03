@@ -155,6 +155,7 @@ class NZDITheme extends GalleryTheme {
 		if (!empty($params['showMicroThumbs'])) {
 			$dataTypes[] = 'navThumbnails';
 		}
+
 		$ret = $this->loadCommonTemplateData($template, $item, $params, $dataTypes);
 
 		if ($ret) {
@@ -246,24 +247,28 @@ class NZDITheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GalleryBreadcrumbs'],
 		);
+
 		$settings[] = array(
 			'key'   => 'enableImageMap',
 			'name'  => $this->translate('Prev/Next on image hover'),
 			'type'  => 'checkbox',
 			'value' => $params['enableImageMap'],
 		);
+
 		$settings[] = array(
 			'key'   => 'fullsizepopup',
 			'name'  => $this->translate('Full size image in popup window'),
 			'type'  => 'checkbox',
 			'value' => $params['fullsizepopup'],
 		);
+
 		$settings[] = array(
 			'key'   => 'LatestImagesAlbum',
 			'name'  => $this->translate('Show thumbnail preview on photo pages'),
 			'type'  => 'checkbox',
 			'value' => $params['LatestImagesAlbum'],
 		);
+
 		$settings[] = array(
 			'key'        => 'maxThumbnails',
 			'name'       => $this->translate('Maximum number of thumbnails to show'),
@@ -273,6 +278,7 @@ class NZDITheme extends GalleryTheme {
 			),
 			'value'      => $params['maxThumbnails'],
 		);
+
 		$settings[] = array(
 			'key'        => 'sizeThumbnails',
 			'name'       => $this->translate('Size of thumbnails in pixels'),
@@ -282,30 +288,35 @@ class NZDITheme extends GalleryTheme {
 			),
 			'value'      => $params['sizeThumbnails'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showSummaries',
 			'name'  => $this->translate('Show summary data with thumbnails'),
 			'type'  => 'checkbox',
 			'value' => $params['showSummaries'],
 		);
+
 		$settings[] = array(
 			'key'   => 'ItemViewCount',
 			'name'  => $this->translate('Show item view count'),
 			'type'  => 'checkbox',
 			'value' => $params['ItemViewCount'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showCorePager',
 			'name'  => $this->translate('Show pager links on album pages'),
 			'type'  => 'checkbox',
 			'value' => $params['showCorePager'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showFooter',
 			'name'  => $this->translate('Support gallery - Show gallery footer'),
 			'type'  => 'checkbox',
 			'value' => $params['showFooter'],
 		);
+
 		$settings[] = array(
 			'key'        => 'nzdiFooter',
 			'name'       => $this->translate('Custom footer below gallery'),

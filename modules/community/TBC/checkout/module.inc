@@ -40,6 +40,7 @@ GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.c
 class CheckoutModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('checkout');
 		$this->setName($gallery->i18n('Checkout'));
 		$this->setDescription(
@@ -146,7 +147,6 @@ class CheckoutModule extends GalleryModule {
 			// Ignore errors
 			//    $platform->recursiveRmdir($templateCacheDir);
 			// }
-
 			$storage =& $gallery->getStorage();
 
 			switch ($currentVersion) {
@@ -171,12 +171,14 @@ class CheckoutModule extends GalleryModule {
 							return $ret;
 						}
 					}
+
 					// Do the schema upgrade
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.0'));
 
 					if ($ret) {
 						return $ret;
 					}
+
 
 					// Fall Through
 				case '0.1.6':
@@ -186,6 +188,7 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					// Convert the old integer amounts to strings by dividing by 100
 					$query = '
 	        UPDATE
@@ -193,11 +196,13 @@ class CheckoutModule extends GalleryModule {
 	        SET
 	          [::amount] = [::amount]/100
 	        ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
 					}
+
 
 					// Fall Through
 				case '0.1.7':
@@ -207,6 +212,7 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					// For transactions with an email address, set flagPaid
 					$query = '
 	            UPDATE
@@ -216,7 +222,8 @@ class CheckoutModule extends GalleryModule {
 	            WHERE
 	              [::email] IS NOT NULL
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
@@ -246,7 +253,8 @@ class CheckoutModule extends GalleryModule {
 	                SET
 	                  [GalleryCheckoutTransaction::paymentPlugin] = \'checkoutpaypal\'
 	                ';
-						$ret   = $storage->execute($query);
+
+						$ret = $storage->execute($query);
 
 						if ($ret) {
 							return $ret;
@@ -262,11 +270,13 @@ class CheckoutModule extends GalleryModule {
 	            WHERE
 	              [::paymentPlugin] IS NULL
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
 					}
+
 
 					// Fall Through
 				case '0.1.8':
@@ -276,6 +286,7 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 
 					// Fall Through
 				case '0.1.9':
@@ -297,6 +308,8 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.1.16':
 					// Do the schema upgrade
@@ -305,16 +318,20 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutItem:1.1'));
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.6'));
 
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.1.17':
 				case '0.1.17.1':
@@ -337,6 +354,7 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					//rewrite the old product details
 					for ($i = 0; $i < $numProducts; $i++) {
 						list($ret, $name) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'product' . $i);
@@ -344,21 +362,25 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 						list($ret, $price) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'price' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
+
 						list($ret, $restrict) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'restrict' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
+
 						list($ret, $downloadable) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'downloadable' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
+
 						list($ret, $productId) = $storage->getUniqueId();
 
 						if ($ret) {
@@ -389,16 +411,20 @@ class CheckoutModule extends GalleryModule {
 								return $ret;
 							}
 						}
+
 						$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numProducts');
 
 						if ($ret) {
 							return $ret;
 						}
 					}
+
+
 					// Fall Through
 				case '0.2.0':
 					/* version number cockup in galleryCheckoutTransaction.class in 0.1.18 means we
 					need to manually advance the schema from 1.6 to 1.7 where it should have been */
+
 					$query = '
 	            UPDATE
 	              [GallerySchema]
@@ -409,7 +435,8 @@ class CheckoutModule extends GalleryModule {
 	            AND
 	              [::minor] = 6
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
@@ -421,51 +448,65 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					// update postage
 					list($ret, $postage) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'postage');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginparameter('module', 'checkout', 'postPrice0', $postage);
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginparameter('module', 'checkout', 'postType0', $gallery->i18n('Standard'));
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginparameter('module', 'checkout', 'numPostages', 1);
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'postage');
 
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.2.1':
+
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.8'));
 
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.3.0':
+
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.9'));
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'selecttype');
 
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.3.1':
 					//new installs of 0.3.1 had the wrong schema...
@@ -479,11 +520,13 @@ class CheckoutModule extends GalleryModule {
 	            AND
 	              [::minor] = 9
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = $storage->configureStore(
 						$this->getId(),
 						array(
@@ -496,89 +539,108 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					//remove parameters now associated with checkoutdownload module
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'allowDownloadsPrePurchase');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'allowDownloadOriginal');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'displayDLLink');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'limitDaysDLAvailable');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'limitNumDLsAllowed');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'useFoldersInDL');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'daysDLAvailable');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numDLsAllowed');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'zipfilename');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'useUniqueDLFilename');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'emailDLFromAddress');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'emailDLSubject');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'emailDownloadLink');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'allowDownloadsPostPurchase');
 
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.3.2':
+
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.11'));
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'cformat', '%.2f');
 
 					if ($ret) {
 						return $ret;
 					}
+
 
 					// Fall Through
 				case '0.3.3':
@@ -588,21 +650,25 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					list($ret, $defaultqty) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'defaultqty');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'canAddAlbum');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'defaultqty');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginparameter('module', 'checkout', 'treatAlbumAsCollection', $canAddAlbum);
 
 					if ($ret) {
@@ -615,6 +681,7 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					list($ret, $products) = CheckoutProductMapHelper::fetchProducts($rootAlbumId, true, false);
 					// do use local settings, don't pass products to plugins to modify
 					if ($ret) {
@@ -627,6 +694,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 						// once only, may set initialQuantity on a product
 						if ($defaultqty) {
 							$ret = CheckoutProductMapHelper::setParam($product['productId'], 'initialQuantity', '1', $rootAlbumId);
@@ -634,9 +702,11 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
+
 							$defaultqty = false;
 						}
 					}
+
 					// register new purchase album permission
 					$permissions[] = array('purchaseAlbum', $gallery->i18n('[checkout] Purchase album'), 0, array());
 
@@ -648,13 +718,17 @@ class CheckoutModule extends GalleryModule {
 						}
 					}
 
+
 					// Fall Through
 				case '0.3.4':
+
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.12'));
 
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.3.5':
 				case '0.4.0':
@@ -670,61 +744,72 @@ class CheckoutModule extends GalleryModule {
 	            AND
 	              [::minor] = 12
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
 					}
+
 					// add new columns
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.13'));
 
 					if ($ret) {
 						return $ret;
 					}
+
 					// copy old to new
 					foreach (array('Confirmed', 'Paid', 'Cleared', 'Fulfil', 'Fulfilled', 'Completed', 'Hold', 'Problem', 'Downloaded') as $title) {
 						$query = "UPDATE [GalleryCheckoutTransaction] SET [::time$title] = 1 WHERE [::flag$title] = 1;";
 						$gallery->debug("Monster query: $query");
+
 						$ret = $storage->execute($query);
 
 						if ($ret) {
 							return $ret;
 						}
 					}
+
 					// Remove old columns
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.14'));
 
 					if ($ret) {
 						return $ret;
 					}
+
 					// Put email, postage and paper settings into new format
 					list($ret, $mp) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkout');
 
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// Postage settings
 					$posts = array();
 
 					for ($i = 0; $i < $mp['numPostages']; $i++) {
 						$posts[$i]['type']  = $mp['postType' . $i];
 						$posts[$i]['price'] = $mp['postPrice' . $i];
-						$ret                = GalleryCoreApi::removePluginParameter('module', 'checkout', 'postType' . $i);
+
+						$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'postType' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
+
 						$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'postPrice' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numPostages');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'postages', serialize($posts));
 
 					if ($ret) {
@@ -736,17 +821,20 @@ class CheckoutModule extends GalleryModule {
 
 					for ($i = 0; $i < $mp['numPapers']; $i++) {
 						$papers[$i] = $mp['paper' . $i];
-						$ret        = GalleryCoreApi::removePluginParameter('module', 'checkout', 'paper' . $i);
+
+						$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'paper' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numPapers');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'papers', serialize($papers));
 
 					if ($ret) {
@@ -759,7 +847,8 @@ class CheckoutModule extends GalleryModule {
 					for ($i = 0; $i < $mp['numAddresses']; $i++) {
 						foreach (array('toAddress', 'emailLanguage') as $paramName) {
 							$emails[$i][$paramName] = $mp[$paramName . $i];
-							$ret                    = GalleryCoreApi::removePluginParameter('module', 'checkout', $paramName . $i);
+
+							$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', $paramName . $i);
 
 							if ($ret) {
 								return $ret;
@@ -768,23 +857,27 @@ class CheckoutModule extends GalleryModule {
 
 						foreach (array('showCustomer', 'showLinks', 'showContents', 'showThumbs', 'isAdmin') as $paramName) {
 							$emails[$i][$paramName] = $mp[$paramName . $i] ? 1 : 0;
-							$ret                    = GalleryCoreApi::removePluginParameter('module', 'checkout', $paramName . $i);
+
+							$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', $paramName . $i);
 
 							if ($ret) {
 								return $ret;
 							}
 						}
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numAddresses');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
 
 					if ($ret) {
 						return $ret;
 					}
+
 
 					// Fall Through
 				case '0.4.2':
@@ -794,6 +887,7 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$papers   = unserialize($mp['papers']);
 					$postages = unserialize($mp['postages']);
 
@@ -820,7 +914,8 @@ class CheckoutModule extends GalleryModule {
 	            AND
 	              [::paramValue] = \'false\'
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
@@ -836,7 +931,8 @@ class CheckoutModule extends GalleryModule {
 	            AND
 	              [::paramValue] = \'true\'
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
@@ -852,7 +948,8 @@ class CheckoutModule extends GalleryModule {
 	            AND
 	              [::paramValue] = \'false\'
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
@@ -868,26 +965,31 @@ class CheckoutModule extends GalleryModule {
 	            AND
 	              [::paramValue] = \'true\'
 	            ';
-					$ret   = $storage->execute($query);
+
+					$ret = $storage->execute($query);
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPostageBands', '2');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPaperSets', '2');
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'postages', serialize($postages));
 
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'papers', serialize($papers));
 
 					if ($ret) {
@@ -916,6 +1018,7 @@ class CheckoutModule extends GalleryModule {
 					return $ret;
 				}
 			}
+
 			// Set current user's email address to receive order notifications
 			// And also to send email to purchaser
 			list($ret, $user) = GalleryCoreApi::loadEntitiesById($gallery->getActiveUserId(), 'GalleryUser');
@@ -923,6 +1026,7 @@ class CheckoutModule extends GalleryModule {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$emails[0] = array(
 				'toAddress'     => '1',
 				'showCustomer'  => '1',
@@ -932,6 +1036,7 @@ class CheckoutModule extends GalleryModule {
 				'isAdmin'       => '0',
 				'emailLanguage' => 'transaction_language',
 			);
+
 			$emails[1] = array(
 				'toAddress'     => $user->getEmail(),
 				'showCustomer'  => '1',
@@ -941,43 +1046,52 @@ class CheckoutModule extends GalleryModule {
 				'isAdmin'       => '1',
 				'emailLanguage' => 'transaction_language',
 			);
-			$ret       = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
+
+			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'postages', serialize(array()));
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'papers', serialize(array()));
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPostageBands', '2');
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'numPaperSets', '2');
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'csymbol', '');
 
 			if ($ret) {
 				return $ret;
 			}
+
 			// give purchase permission to everyone on root album
 			list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$gallery->guaranteeTimeLimit(300);
+
 			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'checkout.purchase', true);
 
 			if ($ret) {
@@ -1051,6 +1165,7 @@ class CheckoutModule extends GalleryModule {
 		if ($ret) {
 			return $ret;
 		}
+
 		$links = array();
 
 		foreach ($items as $item) {

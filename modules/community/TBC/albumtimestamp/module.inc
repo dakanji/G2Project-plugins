@@ -104,6 +104,7 @@ class AlbumTimestampModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/albumtimestamp/classes/AlbumTimestampHelper.class');
 
 		if (!AlbumTimestampHelper::eventHandlerEnabled()) {
@@ -112,6 +113,7 @@ class AlbumTimestampModule extends GalleryModule {
 
 			return array(null, null);
 		}
+
 		$eventName = $event->getEventName();
 		$item      = $event->getEntity();
 
@@ -132,6 +134,7 @@ class AlbumTimestampModule extends GalleryModule {
 			/* it's a new album
 			set the albumTimestampMode according to newAlbumTimestampMode
 			   no inheritance here - only set the mode if the parent album has an explicit setting */
+
 			list($ret, $newAlbumMode) = AlbumTimestampHelper::getItemParam(
 				'newAlbumTimestampMode',
 				$albumId,
@@ -141,6 +144,7 @@ class AlbumTimestampModule extends GalleryModule {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			AlbumTimestampHelper::log(
 				"LEO: handleEvent: new album $itemId, mode: $newAlbumMode"
 			);
@@ -179,13 +183,15 @@ class AlbumTimestampModule extends GalleryModule {
 			return array(null, null);
 		}
 
-		$prevTimestamp     = $item->getOriginalValue('originationTimestamp');
-		$currentTimestamp  = $item->getOriginationTimestamp();
+		$prevTimestamp    = $item->getOriginalValue('originationTimestamp');
+		$currentTimestamp = $item->getOriginationTimestamp();
+
 		list($ret, $album) = $item->fetchParent();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$albumTimestamp = $album->getOriginationTimestamp();
 
 		switch ($eventName) {
@@ -218,6 +224,7 @@ class AlbumTimestampModule extends GalleryModule {
 						}
 					}
 				}
+
 				// in all other cases we have to determine the new album timestamp
 				// TODO: $album is locked - need to set it directly here
 				$ret = AlbumTimestampHelper::autoSetAlbumTimestamps(

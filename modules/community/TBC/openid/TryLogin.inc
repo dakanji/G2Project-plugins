@@ -41,6 +41,7 @@ class TryLoginController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$results = array();
@@ -67,6 +68,7 @@ class TryLoginController extends GalleryController {
 				 * for Yahoo! openid you can enter "yahoo.com" and we don't get the particular
 				 * user's identity URL until returning from the provider.
 				 */
+
 				list($ret, $userId) = OpenIdHelper::fetchGalleryIdByOpenId($form['openId']);
 
 				if ($ret) {
@@ -79,6 +81,7 @@ class TryLoginController extends GalleryController {
 					 * with approval policy selected in that module's configuration.
 					 * Note: RegisterApi not yet implemented in register module as of Gallery 2.3!
 					 */
+
 					list($ret, $registerApi) = GalleryCoreApi::newFactoryInstance('RegisterApi');
 
 					if ($ret) {
@@ -120,7 +123,8 @@ class TryLoginController extends GalleryController {
 				if (empty($error)) {
 					// Ensure we have a persistent session before URL generation (need authToken)
 					$session = $gallery->getSession();
-					$ret     = $session->start();
+
+					$ret = $session->start();
 
 					if ($ret) {
 						return array($ret, null);
@@ -141,7 +145,8 @@ class TryLoginController extends GalleryController {
 							'forceSessionId' => false,
 						)
 					);
-					$returnTo  = $urlGenerator->generateUrl(
+
+					$returnTo = $urlGenerator->generateUrl(
 						array(
 							'controller' => 'openid.FinishLogin',
 							'form'       => $form,
@@ -151,7 +156,8 @@ class TryLoginController extends GalleryController {
 							'htmlEntities' => false,
 						)
 					);
-					$redirect  = $request->redirectURL($trustRoot, $returnTo);
+
+					$redirect = $request->redirectURL($trustRoot, $returnTo);
 
 					if (Auth_OpenID::isFailure($redirect)) {
 						return array(
@@ -162,6 +168,7 @@ class TryLoginController extends GalleryController {
 							null,
 						);
 					}
+
 					$results['redirect'] = array(
 						'href' => $redirect,
 					);
@@ -180,6 +187,7 @@ class TryLoginController extends GalleryController {
 			$results['delegate']['view']    = 'core.UserAdmin';
 			$results['delegate']['subView'] = 'openid.UserLogin';
 		}
+
 		$results['status'] = array();
 		$results['error']  = $error;
 

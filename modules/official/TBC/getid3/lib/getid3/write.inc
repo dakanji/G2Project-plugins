@@ -19,7 +19,6 @@
 //               write.lyrics3.php (optional)                  //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 if (!defined('GETID3_INCLUDEPATH')) {
 	throw new Exception('getid3.php MUST be included before calling getid3_writetags');
 }
@@ -27,7 +26,6 @@ if (!defined('GETID3_INCLUDEPATH')) {
 if (!include_once GETID3_INCLUDEPATH . 'getid3.lib.php') {
 	throw new Exception('write.php depends on getid3.lib.php, which is missing.');
 }
-
 
 // NOTES:
 //
@@ -44,23 +42,18 @@ if (!include_once GETID3_INCLUDEPATH . 'getid3.lib.php') {
 // http://www.personal.uni-jena.de/~pfk/mpp/sv8/apekey.html
 // The APEv2 Tag Items Keys definition says "TRACK" is correct but foobar2000 uses "TRACKNUMBER" instead
 // Pass data here as "TRACKNUMBER" for compatability with all formats
-
-
 class getid3_writetags {
 	// public
 	public $filename;                            // absolute filename of file to write tags to
-	public $tagformats        = array();        // array of tag formats to write ('id3v1', 'id3v2.2', 'id2v2.3', 'id3v2.4', 'ape', 'vorbiscomment', 'metaflac', 'real')
-	public $tag_data          = array(array()); // 2-dimensional array of tag data (ex: $data['ARTIST'][0] = 'Elvis')
-	public $tag_encoding      = 'ISO-8859-1';   // text encoding used for tag data ('ISO-8859-1', 'UTF-8', 'UTF-16', 'UTF-16LE', 'UTF-16BE', )
-	public $overwrite_tags    = true;          // if true will erase existing tag data and write only passed data; if false will merge passed data with existing tag data
-	public $remove_other_tags = false;          // if true will erase remove all existing tags and only write those passed in $tagformats; if false will ignore any tags not mentioned in $tagformats
-
+	public $tagformats         = array();        // array of tag formats to write ('id3v1', 'id3v2.2', 'id2v2.3', 'id3v2.4', 'ape', 'vorbiscomment', 'metaflac', 'real')
+	public $tag_data           = array(array()); // 2-dimensional array of tag data (ex: $data['ARTIST'][0] = 'Elvis')
+	public $tag_encoding       = 'ISO-8859-1';   // text encoding used for tag data ('ISO-8859-1', 'UTF-8', 'UTF-16', 'UTF-16LE', 'UTF-16BE', )
+	public $overwrite_tags     = true;          // if true will erase existing tag data and write only passed data; if false will merge passed data with existing tag data
+	public $remove_other_tags  = false;          // if true will erase remove all existing tags and only write those passed in $tagformats; if false will ignore any tags not mentioned in $tagformats
 	public $id3v2_tag_language = 'eng';          // ISO-639-2 3-character language code needed for some ID3v2 frames (http://www.id3.org/iso639-2.html)
 	public $id3v2_paddedlength = 4096;           // minimum length of ID3v2 tags (will be padded to this length if tag data is shorter)
-
-	public $warnings = array();        // any non-critical errors will be stored here
-	public $errors   = array();        // any critical errors will be stored here
-
+	public $warnings           = array();        // any non-critical errors will be stored here
+	public $errors             = array();        // any critical errors will be stored here
 	// private
 	private $ThisFileInfo; // analysis of file before writing
 
@@ -95,7 +88,8 @@ class getid3_writetags {
 			$this->ThisFileInfo = array(
 				'fileformat' => '',
 			);
-			$AllowedTagFormats  = array('id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3');
+
+			$AllowedTagFormats = array('id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3');
 		} else {
 			$getID3             = new getID3();
 			$getID3->encoding   = $this->tag_encoding;
@@ -237,6 +231,7 @@ class getid3_writetags {
 
 			return false;
 		}
+
 		// convert supplied data array keys to upper case, if they're not already
 		foreach ($this->tag_data as $tag_key => $tag_array) {
 			if (strtoupper($tag_key) !== $tag_key) {
@@ -244,6 +239,7 @@ class getid3_writetags {
 				unset($this->tag_data[$tag_key]);
 			}
 		}
+
 		// convert source data array keys to upper case, if they're not already
 		if (!empty($this->ThisFileInfo['tags'])) {
 			foreach ($this->ThisFileInfo['tags'] as $tag_format => $tag_data_array) {
@@ -481,6 +477,7 @@ class getid3_writetags {
 			if (!isset($this->ThisFileInfo['tags'][$TagFormat])) {
 				return false;
 			}
+
 			$tag_data = array_merge_recursive($tag_data, $this->ThisFileInfo['tags'][$TagFormat]);
 		}
 
@@ -513,6 +510,7 @@ class getid3_writetags {
 					break;
 			}
 		}
+
 		$this->MergeExistingTagData('ape', $ape_tag_data);
 
 		return $ape_tag_data;
@@ -530,6 +528,7 @@ class getid3_writetags {
 				}
 			}
 		}
+
 		$tag_data_id3v1['title']   = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['TITLE']) ? $this->tag_data['TITLE'] : array())));
 		$tag_data_id3v1['artist']  = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['ARTIST']) ? $this->tag_data['ARTIST'] : array())));
 		$tag_data_id3v1['album']   = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['ALBUM']) ? $this->tag_data['ALBUM'] : array())));
@@ -553,10 +552,12 @@ class getid3_writetags {
 			'ISO-8859-1' => 0,
 			'UTF-16'     => 1,
 		);
+
 		$ID3v2_text_encoding_lookup[3] = array(
 			'ISO-8859-1' => 0,
 			'UTF-16'     => 1,
 		);
+
 		$ID3v2_text_encoding_lookup[4] = array(
 			'ISO-8859-1' => 0,
 			'UTF-16'     => 1,
@@ -617,6 +618,7 @@ class getid3_writetags {
 												break 2;
 											}
 										}
+
 										$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 0;
 										$tag_data_id3v2[$ID3v2_framename][$key]['data']       = $value;
 										$ID3v2_tag_data_converted                             = true;
@@ -644,6 +646,7 @@ class getid3_writetags {
 					break;
 			}
 		}
+
 		$this->MergeExistingTagData('id3v2', $tag_data_id3v2);
 
 		return $tag_data_id3v2;
@@ -677,6 +680,7 @@ class getid3_writetags {
 				}
 			}
 		}
+
 		$this->MergeExistingTagData('vorbiscomment', $tag_data_vorbiscomment);
 
 		return $tag_data_vorbiscomment;

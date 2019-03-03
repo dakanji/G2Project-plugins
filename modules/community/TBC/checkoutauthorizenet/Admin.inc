@@ -83,6 +83,7 @@ class AdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'checkoutauthorizenet',
@@ -93,6 +94,7 @@ class AdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'checkoutauthorizenet',
@@ -103,6 +105,7 @@ class AdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'checkoutauthorizenet',
@@ -113,6 +116,7 @@ class AdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'checkoutauthorizenet',
@@ -123,6 +127,7 @@ class AdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'checkoutauthorizenet',
@@ -133,6 +138,7 @@ class AdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'checkoutauthorizenet',
@@ -149,6 +155,7 @@ class AdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $isActive) = $module->isActive();
 
 				if ($ret) {
@@ -210,6 +217,7 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['tranKey']) = GalleryCoreApi::getPluginParameter(
 				'module',
 				'checkoutauthorizenet',
@@ -219,6 +227,7 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['mode']) = GalleryCoreApi::getPluginParameter(
 				'module',
 				'checkoutauthorizenet',
@@ -228,6 +237,7 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['curlPath']) = GalleryCoreApi::getPluginParameter(
 				'module',
 				'checkoutauthorizenet',
@@ -237,10 +247,12 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// A default to get the user started.
 			if (empty($form['curlPath'])) {
 				$form['curlPath'] = '/usr/bin/curl';
 			}
+
 			list($ret, $form['fromEmail']) = GalleryCoreApi::getPluginParameter(
 				'module',
 				'checkoutauthorizenet',
@@ -250,6 +262,7 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['emailSubject']) = GalleryCoreApi::getPluginParameter(
 				'module',
 				'checkoutauthorizenet',
@@ -259,6 +272,7 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $form['storeEmail']) = GalleryCoreApi::getPluginParameter(
 				'module',
 				'checkoutauthorizenet',
@@ -275,6 +289,7 @@ class AdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $isActive) = $module->isActive();
 
 		if ($ret) {

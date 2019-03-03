@@ -13,7 +13,6 @@
 // dependencies: module.audio.mp3.php                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio.mp3.php', __FILE__, true);
 
 class getid3_mpeg extends getid3_handler {
@@ -36,9 +35,8 @@ class getid3_mpeg extends getid3_handler {
 		$MPEGstreamData       = $this->fread($this->getid3->option_fread_buffer_size);
 		$MPEGstreamBaseOffset = 0; // how far are we from the beginning of the file data ($info['avdataoffset'])
 		$MPEGstreamDataOffset = 0; // how far are we from the beginning of the buffer data (~32kB)
-
-		$StartCodeValue     = false;
-		$prevStartCodeValue = false;
+		$StartCodeValue       = false;
+		$prevStartCodeValue   = false;
 
 		$GOPcounter       = -1;
 		$FramesByGOP      = array();
@@ -62,11 +60,11 @@ class getid3_mpeg extends getid3_handler {
 				//echo 'no more start codes found.<br>';
 				break;
 			}
+
 			$MPEGstreamDataOffset = $StartCodeOffset;
 			$prevStartCodeValue   = $StartCodeValue;
 			$StartCodeValue       = ord(substr($MPEGstreamData, $StartCodeOffset + 3, 1));
 			//echo 'Found "'.strtoupper(dechex($StartCodeValue)).'" at offset '.($MPEGstreamBaseOffset + $StartCodeOffset).' ($MPEGstreamDataOffset = '.$MPEGstreamDataOffset.')<br>';
-
 			$MPEGstreamDataOffset += 4;
 
 			switch ($StartCodeValue) {
@@ -81,7 +79,6 @@ class getid3_mpeg extends getid3_handler {
 						$PictureHeader['picture_coding_type'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 3); //  3 bits for picture_coding_type
 						$PictureHeader['vbv_delay']           = self::readBitsFromStream($bitstream, $bitstreamoffset, 16); // 16 bits for vbv_delay
 						//... etc
-
 						$FramesByGOP[$GOPcounter][] = $PictureHeader;
 					}
 
@@ -94,9 +91,8 @@ class getid3_mpeg extends getid3_handler {
 						  Also the MPEG stream is designed as a bitstream and often doesn't align nicely with byte boundaries.
 					*/
 					$info['video']['codec'] = 'MPEG-1'; // will be updated if extension_start_code found
-
-					$bitstream       = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 4, 8));
-					$bitstreamoffset = 0;
+					$bitstream              = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 4, 8));
+					$bitstreamoffset        = 0;
 
 					$info['mpeg']['video']['raw']['horizontal_size_value']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for horizontal frame size. Note: horizontal_size_extension, if present, will add 2 most-significant bits to this value
 					$info['mpeg']['video']['raw']['vertical_size_value']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 12); // 12 bits for vertical frame size.   Note: vertical_size_extension,   if present, will add 2 most-significant bits to this value
@@ -107,7 +103,6 @@ class getid3_mpeg extends getid3_handler {
 					$info['mpeg']['video']['raw']['vbv_buffer_size']        = self::readBitsFromStream($bitstream, $bitstreamoffset, 10); // 10 bits vbv_buffer_size_value
 					$info['mpeg']['video']['raw']['constrained_param_flag'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: constrained_param_flag
 					$info['mpeg']['video']['raw']['load_intra_quantiser_matrix'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: load_intra_quantiser_matrix
-
 					if ($info['mpeg']['video']['raw']['load_intra_quantiser_matrix']) {
 						$bitstream .= getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 12, 64));
 
@@ -115,6 +110,7 @@ class getid3_mpeg extends getid3_handler {
 							$info['mpeg']['video']['raw']['intra_quantiser_matrix'][$i] = self::readBitsFromStream($bitstream, $bitstreamoffset, 8);
 						}
 					}
+
 					$info['mpeg']['video']['raw']['load_non_intra_quantiser_matrix'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1);
 
 					if ($info['mpeg']['video']['raw']['load_non_intra_quantiser_matrix']) {
@@ -137,6 +133,7 @@ class getid3_mpeg extends getid3_handler {
 						$info['mpeg']['video']['bitrate_mode'] = 'cbr';
 						$info['video']['bitrate']              = $info['mpeg']['video']['bitrate'];
 					}
+
 					$info['video']['resolution_x']       = $info['mpeg']['video']['raw']['horizontal_size_value'];
 					$info['video']['resolution_y']       = $info['mpeg']['video']['raw']['vertical_size_value'];
 					$info['video']['frame_rate']         = $info['mpeg']['video']['frame_rate'];
@@ -168,12 +165,11 @@ class getid3_mpeg extends getid3_handler {
 							$info['mpeg']['video']['raw']['low_delay']                 = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: low_delay
 							$info['mpeg']['video']['raw']['frame_rate_extension_n']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 2); //  2 bits for frame_rate_extension_n
 							$info['mpeg']['video']['raw']['frame_rate_extension_d']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for frame_rate_extension_d
-
-							$info['video']['resolution_x']          = ($info['mpeg']['video']['raw']['horizontal_size_extension'] << 12) | $info['mpeg']['video']['raw']['horizontal_size_value'];
-							$info['video']['resolution_y']          = ($info['mpeg']['video']['raw']['vertical_size_extension'] << 12)   | $info['mpeg']['video']['raw']['vertical_size_value'];
-							$info['video']['interlaced']            = !$info['mpeg']['video']['raw']['progressive_sequence'];
-							$info['mpeg']['video']['interlaced']    = !$info['mpeg']['video']['raw']['progressive_sequence'];
-							$info['mpeg']['video']['chroma_format'] = self::chromaFormatTextLookup($info['mpeg']['video']['raw']['chroma_format']);
+							$info['video']['resolution_x']                             = ($info['mpeg']['video']['raw']['horizontal_size_extension'] << 12) | $info['mpeg']['video']['raw']['horizontal_size_value'];
+							$info['video']['resolution_y']                             = ($info['mpeg']['video']['raw']['vertical_size_extension'] << 12)   | $info['mpeg']['video']['raw']['vertical_size_value'];
+							$info['video']['interlaced']                               = !$info['mpeg']['video']['raw']['progressive_sequence'];
+							$info['mpeg']['video']['interlaced']                       = !$info['mpeg']['video']['raw']['progressive_sequence'];
+							$info['mpeg']['video']['chroma_format']                    = self::chromaFormatTextLookup($info['mpeg']['video']['raw']['chroma_format']);
 
 							break;
 
@@ -185,11 +181,11 @@ class getid3_mpeg extends getid3_handler {
 								$info['mpeg']['video']['raw']['transfer_characteristics'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 8); //  8 bits for transfer_characteristics
 								$info['mpeg']['video']['raw']['matrix_coefficients']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 8); //  8 bits for matrix_coefficients
 							}
+
 							$info['mpeg']['video']['raw']['display_horizontal_size'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for display_horizontal_size
 							$marker_bit                                            = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
 							$info['mpeg']['video']['raw']['display_vertical_size'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for display_vertical_size
-
-							$info['mpeg']['video']['video_format'] = self::videoFormatTextLookup($info['mpeg']['video']['raw']['video_format']);
+							$info['mpeg']['video']['video_format']                 = self::videoFormatTextLookup($info['mpeg']['video']['raw']['video_format']);
 
 							break;
 
@@ -212,6 +208,7 @@ class getid3_mpeg extends getid3_handler {
 								if ($info['mpeg']['video']['raw']['picture_mux_enable']) {
 									$info['mpeg']['video']['raw']['mux_to_progressive_sequence'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: mux_to_progressive_sequence
 								}
+
 								$info['mpeg']['video']['raw']['picture_mux_order']  = self::readBitsFromStream($bitstream, $bitstreamoffset, 3); //  3 bits for picture_mux_order
 								$info['mpeg']['video']['raw']['picture_mux_factor'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 3); //  3 bits for picture_mux_factor
 							}
@@ -267,7 +264,6 @@ class getid3_mpeg extends getid3_handler {
 
 					break;
 
-
 				case 0xB8: // group_of_pictures_header
 					$GOPcounter++;
 
@@ -286,9 +282,8 @@ class getid3_mpeg extends getid3_handler {
 						$GOPheader['time_code_pictures'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 6); //  6 bits for time_code_pictures
 						$GOPheader['closed_gop']         = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: closed_gop
 						$GOPheader['broken_link']        = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: broken_link
-
-						$time_code_separator    = ($GOPheader['drop_frame_flag'] ? ';' : ':'); // While non-drop time code is displayed with colons separating the digit pairs�"HH:MM:SS:FF"�drop frame is usually represented with a semi-colon (;) or period (.) as the divider between all the digit pairs�"HH;MM;SS;FF", "HH.MM.SS.FF"
-						$GOPheader['time_code'] = sprintf('%02d' . $time_code_separator . '%02d' . $time_code_separator . '%02d' . $time_code_separator . '%02d', $GOPheader['time_code_hours'], $GOPheader['time_code_minutes'], $GOPheader['time_code_seconds'], $GOPheader['time_code_pictures']);
+						$time_code_separator             = ($GOPheader['drop_frame_flag'] ? ';' : ':'); // While non-drop time code is displayed with colons separating the digit pairs�"HH:MM:SS:FF"�drop frame is usually represented with a semi-colon (;) or period (.) as the divider between all the digit pairs�"HH;MM;SS;FF", "HH.MM.SS.FF"
+						$GOPheader['time_code']          = sprintf('%02d' . $time_code_separator . '%02d' . $time_code_separator . '%02d' . $time_code_separator . '%02d', $GOPheader['time_code_hours'], $GOPheader['time_code_minutes'], $GOPheader['time_code_seconds'], $GOPheader['time_code_pictures']);
 
 						$info['mpeg']['group_of_pictures'][] = $GOPheader;
 					}
@@ -346,6 +341,7 @@ class getid3_mpeg extends getid3_handler {
 					if (isset($ParsedAVchannels[$StartCodeValue])) {
 						break;
 					}
+
 					$ParsedAVchannels[$StartCodeValue] = $StartCodeValue;
 					// http://en.wikipedia.org/wiki/Packetized_elementary_stream
 					// http://dvd.sourceforge.net/dvdinfo/pes-hdr.html
@@ -358,6 +354,7 @@ class getid3_mpeg extends getid3_handler {
 						$PackedElementaryStream['stream_type'] = 'audio';
 						$PackedElementaryStream['stream_id'] = $StartCodeValue - 0xC0;
 					}
+
 					$PackedElementaryStream['packet_length'] = getid3_lib::BigEndian2Int(substr($MPEGstreamData, $StartCodeOffset + 4, 2));
 
 					$bitstream = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 6, 3)); // more may be needed below
@@ -379,7 +376,6 @@ class getid3_mpeg extends getid3_handler {
 					$PackedElementaryStream['crc_flag'] = self::readBitsFromStream($bitstream, $bitstreamoffset,  1); //  1 bit flag: crc_flag
 					$PackedElementaryStream['extension_flag'] = self::readBitsFromStream($bitstream, $bitstreamoffset,  1); //  1 bit flag: extension_flag
 					$PackedElementaryStream['pes_remain_header_length'] = self::readBitsFromStream($bitstream, $bitstreamoffset,  8); //  1 bit flag: priority
-
 					$additional_header_bytes = 0;
 					$additional_header_bytes += ($PackedElementaryStream['pts_flag']                  ? 5 : 0);
 					$additional_header_bytes += ($PackedElementaryStream['dts_flag']                  ? 5 : 0);
@@ -413,6 +409,7 @@ class getid3_mpeg extends getid3_handler {
 							break;
 						}
 					}
+
 					unset($getid3_temp, $getid3_mp3);
 
 					break;
@@ -445,8 +442,6 @@ class getid3_mpeg extends getid3_handler {
 					break;
 			}
 		} while (true);
-
-
 
 		//      // Temporary hack to account for interleaving overhead:
 		//      if (!empty($info['video']['bitrate']) && !empty($info['audio']['bitrate'])) {
@@ -499,8 +494,11 @@ class getid3_mpeg extends getid3_handler {
 					$byte_prev = $byte_this;
 					$vbr_bitrates[] = $this_bitrate;
 				}
+
 			}
+
 		}
+
 		echo 'average_File_bitrate = '.number_format(array_sum($vbr_bitrates) / count($vbr_bitrates), 1).'<br>';
 		*/
 		//echo '<pre>'.print_r($FramesByGOP, true).'</pre>';
@@ -514,6 +512,7 @@ class getid3_mpeg extends getid3_handler {
 				$overall_bitrate          = ($info['avdataend'] - $info['avdataoffset']) * 8 / $info['playtime_seconds'];
 				$info['video']['bitrate'] = $overall_bitrate - (isset($info['audio']['bitrate']) ? $info['audio']['bitrate'] : 0);
 			}
+
 			unset($info['mpeg']['group_of_pictures']);
 		}
 
@@ -536,8 +535,6 @@ class getid3_mpeg extends getid3_handler {
 
 		$AudioBitrate = max(min($AudioBitrate / 1000, 384), 32); // limit to range of 32kbps - 384kbps (should be only legal bitrates, but maybe VBR?)
 		$VideoBitrate = max(min($VideoBitrate / 1000, 10000), 10); // limit to range of 10kbps -  10Mbps (beyond that curves flatten anyways, no big loss)
-
-
 		//OMBB[audiobitrate] = array(video-10kbps,       video-100kbps,      video-1000kbps,     video-10000kbps)
 		$OverheadMultiplierByBitrate[32]  = array(0, 0.9676287944368530, 0.9802276264360310, 0.9844916183244460, 0.9852821845179940);
 		$OverheadMultiplierByBitrate[48]  = array(0, 0.9779100089209830, 0.9787770035359320, 0.9846738664076130, 0.9852683013799960);
@@ -566,8 +563,10 @@ class getid3_mpeg extends getid3_handler {
 
 				break;
 			}
+
 			$previousBitrate = $key;
 		}
+
 		$FactorA = ($BitrateToUseMax - $AudioBitrate) / ($BitrateToUseMax - $BitrateToUseMin);
 
 		$VideoBitrateLog10 = log10($VideoBitrate);

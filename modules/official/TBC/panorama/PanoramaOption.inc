@@ -33,16 +33,19 @@ class PanoramaOption extends ItemEditOption {
 		if (!GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 			return array(null, false);
 		}
+
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'panorama');
 
 		if ($ret || !$param['itemType']) {
 			return array(null, false);
 		}
+
 		list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($item->getId()));
 
 		if ($ret) {
 			return array(null, false);
 		}
+
 		$width    = empty($preferred) ? $item->getWidth() : $preferred[$item->getId()]->getWidth();
 		$mimeType = empty($preferred) ? $item->getMimeType() : $preferred[$item->getId()]->getMimeType();
 
@@ -63,6 +66,7 @@ class PanoramaOption extends ItemEditOption {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$form['PanoramaOption']['isPanorama'] = $item->getRenderer() == 'PanoramaRenderer';
 
 		return array(null, 'modules/panorama/templates/PanoramaOption.tpl', 'modules_panorama');

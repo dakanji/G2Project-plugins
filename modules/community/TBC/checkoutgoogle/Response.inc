@@ -44,6 +44,7 @@ class ResponseView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Verify Authentification
@@ -52,11 +53,13 @@ class ResponseView extends GalleryView {
 		}
 
 		// Retrieve the XML sent in the HTTP POST request to the ResponseHandler
-		$xmlResponse       = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : file_get_contents('php://input');
+		$xmlResponse = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : file_get_contents('php://input');
+
 		list($root, $data) = CheckoutGoogleResponseHelper::GetParsedXML($xmlResponse);
 		// Record notification
 		$googleOrderNumber = $data[$root]['google-order-number']['VALUE'];
-		$ret               = GalleryCoreApi::addMapEntry(
+
+		$ret = GalleryCoreApi::addMapEntry(
 			'CheckoutGoogleResponseMap',
 			array(
 				'googleOrderNumber' => $googleOrderNumber,
@@ -75,6 +78,7 @@ class ResponseView extends GalleryView {
 				if (!headers_sent()) {
 					header('Content-type: text/plain; charset=UTF-8');
 				}
+
 				echo 'OK';
 
 				break;
@@ -85,7 +89,8 @@ class ResponseView extends GalleryView {
 				$urlGenerator->init($baseUri = $mainURL);
 
 				// Figure out which order
-				$transactionId           = $data[$root]['shopping-cart']['merchant-private-data']['transactionId']['VALUE'];
+				$transactionId = $data[$root]['shopping-cart']['merchant-private-data']['transactionId']['VALUE'];
+
 				list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
 
 				if ($ret) {
@@ -95,6 +100,7 @@ class ResponseView extends GalleryView {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				// Record Google order Number + URL
 				$ret = GalleryCoreApi::addMapEntry(
 					'CheckoutGoogleOrderMap',
@@ -108,12 +114,14 @@ class ResponseView extends GalleryView {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Set Payment Plugin for this transaction
 				$ret = GalleryCheckoutApi::setPaymentPlugin($transaction, 'checkoutgoogle');
 
 				if ($ret) {
 					return $ret;
 				}
+
 				// Store Customer Details
 				$custDetails['custFirstName']     = $data[$root]['buyer-billing-address']['structured-name']['first-name']['VALUE'];
 				$custDetails['custLastName']      = $data[$root]['buyer-billing-address']['structured-name']['last-name']['VALUE'];
@@ -135,22 +143,26 @@ class ResponseView extends GalleryView {
 				$data[$root]['buyer-shipping-address']['country-code']['VALUE'];
 				$custDetails['custNotes']         = 'Google Order Number:' . $googleOrderNumber . "  \n";
 				$custDetails['custNotes']        .= $shipToAddress;
-				$ret                              = GalleryCheckoutApi::transactionUpdate($transaction, $custDetails);
+
+				$ret = GalleryCheckoutApi::transactionUpdate($transaction, $custDetails);
 
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $transaction) = $transaction->refresh();
 
 				if ($ret) {
 					return $ret;
 				}
+
 				// Tell Google our order number?
 				list($ret, $result) = CheckoutGoogleResponseHelper::SendTransactionId($transactionId);
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				// Tell admin
 				$statusMessage   = array();
 				$statusMessage[] = array(
@@ -162,14 +174,17 @@ class ResponseView extends GalleryView {
 
 			case 'charge-amount-notification':
 				// Find transactionId and load transaction
-				$googleOrderNumber                   = $data[$root]['google-order-number']['VALUE'];
+				$googleOrderNumber = $data[$root]['google-order-number']['VALUE'];
+
 				list($ret, $transactionId, $mainURL) = CheckoutGoogleResponseHelper::fetchTransactionId($googleOrderNumber);
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$urlGenerator->init($baseUri = $mainURL);
-				list($ret, $transaction)     = GalleryCoreApi::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
+
+				list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
 
 				if ($ret) {
 					return $ret;
@@ -178,6 +193,7 @@ class ResponseView extends GalleryView {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				// Check to see if the whole amount was received
 				if ($data[$root]['total-charge-amount']['VALUE'] == $transaction->getAmount()) {
 					$ret = GalleryCheckoutApi::changeTransactionStatus($transaction, 'clear');
@@ -185,6 +201,7 @@ class ResponseView extends GalleryView {
 					if ($ret) {
 						return $ret;
 					}
+
 					$statusMessage   = array();
 					$statusMessage[] = array(
 						'domain' => 'modules_checkoutgoogle',
@@ -196,6 +213,7 @@ class ResponseView extends GalleryView {
 						'domain' => 'modules_checkoutgoogle',
 						'data'   => $gallery->i18n('Google Checkout payment state has changed.'),
 					);
+
 					$statusMessage[] = "\n";
 					$statusMessage[] = array(
 						'domain' => 'modules_checkoutgoogle',
@@ -204,6 +222,7 @@ class ResponseView extends GalleryView {
 							'arg1' => $transaction->getAmount(),
 						),
 					);
+
 					$statusMessage[] = "\n";
 					$statusMessage[] = array(
 						'domain' => 'modules_checkoutgoogle',
@@ -231,14 +250,17 @@ class ResponseView extends GalleryView {
 			default:
 				// Invalid or unhandled message
 				 // Find transactionId and load transaction
-				$googleOrderNumber                   = $data[$root]['google-order-number']['VALUE'];
+				$googleOrderNumber = $data[$root]['google-order-number']['VALUE'];
+
 				list($ret, $transactionId, $mainURL) = CheckoutGoogleResponseHelper::fetchTransactionId($googleOrderNumber);
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$urlGenerator->init($baseUri = $mainURL);
-				list($ret, $transaction)     = GalleryCoreApi::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
+
+				list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
 
 				if ($ret) {
 					return $ret;
@@ -247,19 +269,22 @@ class ResponseView extends GalleryView {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
-				$statusMessage       = array();
-				$statusMessage[]     = array(
+
+				$statusMessage   = array();
+				$statusMessage[] = array(
 					'domain' => 'modules_checkoutgoogle',
 					'data'   => array(
 						'text' => $gallery->i18n('Google Notification Recieved: %s'),
 						'arg1' => $root,
 					),
 				);
-				$statusMessage[]     = "\n\n";
-				$statusMessage[]     = array(
+
+				$statusMessage[] = "\n\n";
+				$statusMessage[] = array(
 					'domain' => 'modules_checkoutgoogle',
 					'data'   => $gallery->i18n('The full data received is:'),
 				);
+
 				$statusMessage[]     = "\n";
 					$statusMessage[] = $xmlResponse;
 		}

@@ -55,6 +55,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 				E_USER_ERROR
 			);
 		}
+
 		$directory = realpath($directory);
 
 		$this->directory = $directory;
@@ -69,7 +70,6 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		$this->temp_dir = $directory . DIRECTORY_SEPARATOR . 'temp';
 
 		$this->max_nonce_age = 6 * 60 * 60; // Six hours, in seconds
-
 		if (!$this->_setup()) {
 			trigger_error(
 				"Failed to initialize OpenID file store in $directory",
@@ -114,6 +114,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		if ($file_obj !== false) {
 			return array($file_obj, $name);
 		}
+
 		Auth_OpenID_FileStore::_removeIfPresent($name);
 	}
 
@@ -197,11 +198,12 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 			return false;
 		}
 
-		$association_s        = $association->serialize();
-		$filename             = $this->getAssociationFilename(
+		$association_s = $association->serialize();
+		$filename      = $this->getAssociationFilename(
 			$server_url,
 			$association->handle
 		);
+
 		list($tmp_file, $tmp) = $this->_mktemp();
 
 		if (!$tmp_file) {
@@ -222,6 +224,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		if (@rename($tmp, $filename)) {
 			return true;
 		}
+
 		// In case we are running on Windows, try unlinking the
 		// file in case it exists.
 		@unlink($filename);
@@ -231,7 +234,6 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		if (@rename($tmp, $filename)) {
 			return true;
 		}
-
 
 		// If there was an error, don't leave the temporary file
 		// around.
@@ -264,6 +266,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		if ($handle) {
 			return $this->_getAssociation($filename);
 		}
+
 		$association_files = Auth_OpenID_FileStore::_listdir($this->association_dir);
 		$matching_files    = array();
 
@@ -377,6 +380,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		if ($assoc === null) {
 			return false;
 		}
+
 		$filename = $this->getAssociationFilename($server_url, $handle);
 
 		return Auth_OpenID_FileStore::_removeIfPresent($filename);
@@ -421,6 +425,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 			$url_hash,
 			$salt_hash
 		);
+
 		$filename = $this->nonce_dir . DIRECTORY_SEPARATOR . $filename;
 
 		$result = @fopen($filename, 'x');
@@ -428,6 +433,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		if ($result === false) {
 			return false;
 		}
+
 		fclose($result);
 
 		return true;
@@ -452,6 +458,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 					$association_file,
 					filesize($association_filename)
 				);
+
 				fclose($association_file);
 
 				// Remove expired or corrupted associations
@@ -536,6 +543,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
 			return true;
 		}
+
 		// Couldn't open directory.
 		return false;
 	}

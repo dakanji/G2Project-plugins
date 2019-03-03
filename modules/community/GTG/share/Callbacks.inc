@@ -24,12 +24,13 @@
 class ShareCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		switch ($callback) {
-			case 'ShareBlockParams':// Fetch all module parameters and store them in the $block variable
+			case 'ShareBlockParams':
 				list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'share');
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$block =& $smarty->_tpl_vars['block'];
 
 				foreach ($param as $key => $value) {

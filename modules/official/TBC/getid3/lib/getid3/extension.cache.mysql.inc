@@ -15,8 +15,6 @@
 // Table name mod by Carlo Capocasa <calroØcarlocapocasa*com>  //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 /**
  * This is a caching extension for getID3(). It works the exact same
  * way as the getID3 class, but return cached information very fast

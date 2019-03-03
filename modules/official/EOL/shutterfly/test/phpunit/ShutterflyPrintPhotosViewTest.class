@@ -35,6 +35,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -54,6 +55,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_item);
 
 		list($ret, $this->_publicItem) = $this->_createRandomDataItem(
@@ -67,6 +69,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_publicItem);
 
 		list($ret, $everybodyGroupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
@@ -74,6 +77,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $ret = GalleryCoreApi::addGroupPermission(
 			$this->_publicItem->getId(),
 			$everybodyGroupId,
@@ -120,6 +124,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		}
 
 		ob_start();
+
 		$ret     = $this->_view->renderImmediate(array(), array());
 		$results = ob_get_contents();
 		ob_end_clean();
@@ -136,7 +141,8 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 		$_COOKIE[SESSION_ID_PARAMETER] = $shutterflySessionId;
 		$shutterflySession             = new GallerySession();
-		$ret                           = $shutterflySession->init();
+
+		$ret = $shutterflySession->init();
 
 		if ($ret) {
 			return $ret;
@@ -152,6 +158,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 	public function testShutterflySessionPermissionsForSessionBasedPermissions() {
 		// See bug 1706657
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$itemId       = $this->_item->getId();
@@ -202,6 +209,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		}
 
 		ob_start();
+
 		$ret     = $this->_view->renderImmediate(array(), array());
 		$results = ob_get_contents();
 		ob_end_clean();
@@ -222,7 +230,8 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 			$_COOKIE[SESSION_ID_PARAMETER] = $shutterflySessionId;
 			$shutterflySession             = new GallerySession();
-			$ret                           = $shutterflySession->init();
+
+			$ret = $shutterflySession->init();
 
 			if ($ret) {
 				return $ret;

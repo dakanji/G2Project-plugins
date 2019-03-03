@@ -48,6 +48,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 	 */
 	public function run() {
 		global $gallery;
+
 		$templateAdapter =& $gallery->getTemplateAdapter();
 		$platform        =& $gallery->getPlatform();
 		$slash           = $platform->getDirectorySeparator();
@@ -60,6 +61,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$title  = $module->translate('Integrity Check');
 		$output = array();
 
@@ -79,6 +81,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$result = $results->nextResult();
 		$total  = (int)$result[0];
 
@@ -101,6 +104,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		 * */
 		for ($i = 0, $j = 0; !$i || count($ids) == $batch_size; $i += $batch_size) {
 			$gallery->guaranteeTimeLimit(120);
+
 			list($ret, $results) = $gallery->search(
 				$query,
 				array(),
@@ -115,6 +119,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ids = array();
 
 			while ($result = $results->nextResult()) {
@@ -125,12 +130,14 @@ class IntegrityCheckTask extends MaintenanceTask {
 				if ($j ++ % ($batch_size / 10) == 0) {
 					$gallery->guaranteeTimeLimit(120);
 				}
+
 				list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id);
 
 				if ($ret) {
 					$failIds[] = $id;
 				}
 			}
+
 			$templateAdapter->updateProgressBar(
 				$title,
 				$message . ", $i+$start_id",
@@ -165,6 +172,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		unset($allEntityData['GalleryEntity']);
 		$tables = array_keys($allEntityData);
 
@@ -194,6 +202,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ids = array();
 
 			while ($result = $results->nextResult()) {
@@ -237,6 +246,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$ids = array();
 
 		while ($result = $results->nextResult()) {
@@ -252,8 +262,8 @@ class IntegrityCheckTask extends MaintenanceTask {
 				)
 			);
 		}
-		$templateAdapter->updateProgressBar($message, '', 1);
 
+		$templateAdapter->updateProgressBar($message, '', 1);
 
 		/* Check other orphaned data;
 		 * ItemAttributesMap, AccessSubscriberMap, AccessMap,
@@ -269,6 +279,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			array('AccessMap', 'accessListId', 'AccessSubscriberMap', 'accessListId'),
 			array('DerivativePreferencesMap', 'itemId', 'GalleryAlbumItem', 'id'),
 		);
+
 		$i     = 0;
 		$total = count($tables) + 1;
 
@@ -297,6 +308,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ids = array();
 
 			while ($result = $results->nextResult()) {
@@ -314,6 +326,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 				);
 			}
 		}
+
 		// Check GalleryDerivative
 		$templateAdapter->updateProgressBar($message, 'GalleryDerivative', $i ++ / $total);
 
@@ -337,6 +350,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$ids = array();
 
 		while ($result = $results->nextResult()) {
@@ -352,6 +366,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 				)
 			);
 		}
+
 		$templateAdapter->updateProgressBar($message, '', 1);
 
 		//
@@ -386,6 +401,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 				);
 			}
 		}
+
 		$templateAdapter->updateProgressBar($message, $table, 0.5);
 
 		$query = '
@@ -410,6 +426,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$ids = array();
 
 		while ($result = $results->nextResult()) {
@@ -426,6 +443,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 				)
 			);
 		}
+
 		$templateAdapter->updateProgressBar($message, $table, 1);
 
 		//
@@ -445,6 +463,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$result = $results->nextResult();
 		$total  = (int)$result[0];
 
@@ -467,11 +486,13 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$ids = array();
 
 		while ($result = $results->nextResult()) {
 			$ids[] = $result[0];
 		}
+
 		list($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 
 		if ($ret) {
@@ -487,13 +508,16 @@ class IntegrityCheckTask extends MaintenanceTask {
 				)
 			);
 		}
+
 		// Traverse album directories
 		$examine = array(array($rootId, $gallery->getConfig('data.gallery.albums')));
 		$i       = 0;
 
 		while (!empty($examine)) {
 			$gallery->guaranteeTimeLimit(120);
-			list($id, $dir)                                 = array_shift($examine);
+
+			list($id, $dir) = array_shift($examine);
+
 			list($ret, $dbComponents, $fsComponents, $dirs) = $this->_checkDir($dir, $id);
 
 			if ($ret) {
@@ -529,9 +553,8 @@ class IntegrityCheckTask extends MaintenanceTask {
 				$templateAdapter->updateProgressBar($message, '', $i / $total);
 			}
 		}
+
 		$templateAdapter->updateProgressBar($message, '', 1);
-
-
 
 		return array(null, true, $output);
 	}
@@ -549,6 +572,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 	 */
 	public function _checkDir($dir, $id) {
 		global $gallery;
+
 		$platform     =& $gallery->getPlatform();
 		$fsComponents = $dirs = array();
 
@@ -570,12 +594,14 @@ class IntegrityCheckTask extends MaintenanceTask {
 			if ($file == '.' || $file == '..') {
 				continue;
 			}
+
 			$fsComponents[$file] = true;
 
 			if ($platform->is_dir($dir . $file)) {
 				$dirs[$file] = true;
 			}
 		}
+
 		$platform->closedir($dh);
 
 		// Skip linked entities (data file is elsewhere) and GalleryLinkItems (no data file)
@@ -605,6 +631,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		if ($ret) {
 			return array($ret, null, null, null);
 		}
+
 		$dbComponents = array();
 
 		while ($result = $results->nextResult()) {

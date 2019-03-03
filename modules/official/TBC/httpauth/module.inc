@@ -183,16 +183,14 @@ class HttpAuthModule extends GalleryModule {
 					}
 				}
 
+
 				// Fall Through
 			case '0.0.1':
 				// Add AuthFilterPlugin and RegexAuthFilterPlugin
-
 			case '0.1.0':
 				// Update to lighter event subsystem
-
 			case '0.1.1':
 				// Introduce auth plugins
-
 				list($ret, $params) = $this->fetchParameters();
 
 				if ($ret) {
@@ -241,13 +239,12 @@ class HttpAuthModule extends GalleryModule {
 					}
 				}
 
+
 				// Fall Through
 			case '0.2.0':
 				// Some 2.2 API changes
-
 			case '0.2.1':
 				// Simplify auth plugin system
-
 			case '0.3.0':
 				// Add support for the php-cgi server API
 				$ret = $this->_activateRewriteRules();
@@ -256,10 +253,10 @@ class HttpAuthModule extends GalleryModule {
 					return $ret;
 				}
 
+
 				// Fall Through
 			case '0.4.0':
 				// Add logout view to clear browsers' authentication cache
-
 			case '0.5.0':
 				// Adding HttpAuthInterface and new site admin option
 				$ret = $this->setParameter('useGlobally', false);
@@ -268,10 +265,10 @@ class HttpAuthModule extends GalleryModule {
 					return $ret;
 				}
 
+
 				// Fall Through
 			case '0.5.1':
 				// Version 1.0.0 for Gallery 2.2 release
-
 			case '1.0.0':
 				// .mo file migration
 			case '1.0.1':
@@ -326,6 +323,7 @@ class HttpAuthModule extends GalleryModule {
 		 * Only define the rule to pass the Authorization header to Gallery in a request variable if
 		 * it is already active, or if Gallery can't access HTTP usernames and passwords
 		 */
+
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 		if ($ret) {
@@ -367,6 +365,7 @@ class HttpAuthModule extends GalleryModule {
 		if (!in_array('authorization', $activeRules)) {
 			// Check that Gallery can access HTTP usernames and passwords
 			GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
+
 			list($ret, $success) = HttpAuthHelper::checkHttpAuth();
 
 			if ($ret) {
@@ -445,6 +444,7 @@ class HttpAuthModule extends GalleryModule {
 				}
 
 				GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
+
 				$ret = HttpAuthHelper::requestAuthentication(false);
 
 				if ($ret) {
@@ -464,6 +464,7 @@ class HttpAuthModule extends GalleryModule {
 				 * which tries to clear the browser's authentication cache
 				 */
 				GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
+
 				list($authtype, $username, $password) = HttpAuthHelper::getHttpAuth();
 				$remoteUser                           = GalleryUtilities::getServerVar('REMOTE_USER');
 

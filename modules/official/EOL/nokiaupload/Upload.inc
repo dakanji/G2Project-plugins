@@ -43,8 +43,9 @@ class UploadController extends GalleryController {
 		$results['delegate'] = array(
 			'view' => 'nokiaupload.Upload',
 		);
-		$results['status']   = ImageUploadHelper::doUpload();
-		$results['error']    = array();
+
+		$results['status'] = ImageUploadHelper::doUpload();
+		$results['error']  = array();
 
 		return array(null, $results);
 	}
@@ -56,7 +57,6 @@ class UploadController extends GalleryController {
 		return true;
 	}
 }
-
 
 /**
  * This view implements the Nokia Image Uploader API's 'Upload' command.
@@ -75,6 +75,7 @@ class UploadView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$gallery->debug("##### UploadView #####\n\$status = ");
 		$gallery->debug_r($status);
 

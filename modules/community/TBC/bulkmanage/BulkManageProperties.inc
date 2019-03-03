@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 /**
  * Provide Bulk Property Editing
  *
@@ -131,7 +130,8 @@ class BulkManageProperties extends BulkManagePlugin {
 
 			// Rename file
 			$newfilename = sprintf($params['enumfilename']['pattern'], $startnum + $i++, $ext);
-			$ret         = $item->rename($newfilename);
+
+			$ret = $item->rename($newfilename);
 
 			if ($ret) {
 				return array($ret, null);
@@ -174,6 +174,7 @@ class BulkManageProperties extends BulkManagePlugin {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$item->setOriginationTimestamp($originationTimestamp);
 			}
 		}

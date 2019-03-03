@@ -79,8 +79,8 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$cacheKey             = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
-		$enabledMap           = array(
+		$cacheKey   = 'GalleryPluginHelper::fetchAllParameters(module, notification, 0)';
+		$enabledMap = array(
 			'Test::TestEvent' => array(
 				'handler' => 'Test::EventHandler',
 			),
@@ -88,6 +88,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			),
 		);
+
 		$parms['_enabledMap'] = serialize($enabledMap);
 		GalleryDataCache::put($cacheKey, $parms);
 
@@ -96,9 +97,11 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_testAlbum);
 
-		$entities  = array($this->_testAlbum->getId());
+		$entities = array($this->_testAlbum->getId());
+
 		list($ret) = GalleryCoreApi::loadEntitiesById($entities, 'GalleryAlbumItem');
 
 		if ($ret) {
@@ -111,10 +114,11 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$permissions        = array(
+		$permissions = array(
 			'core.edit' => 1,
 			'core.view' => 1,
 		);
+
 		$itemId             = $this->_testAlbum->getId();
 		$userId             = $testUser->getId();
 		$sessionPermissions = (int)true;
@@ -126,6 +130,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $group) = GalleryCoreApi::loadEntitiesById($this->_adminGroupId, 'GalleryGroup');
 
 		if ($ret) {
@@ -163,6 +168,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$gallery->_lockSystem =& $this->_saveLockSystem;
@@ -176,6 +182,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testSaveWithNoChanges() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$activeUser   = $gallery->getActiveUser();
@@ -212,6 +219,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
+
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -240,6 +248,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testSaveWithChangesUnsubscribe() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$activeUser   = $gallery->getActiveUser();
@@ -290,6 +299,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($hintLockId), 10),
@@ -304,6 +314,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
+
 		$storage->setReply(
 			'search',
 			array(
@@ -314,6 +325,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(array(0))))
 		);
+
 		$storage->setReply(
 			'updateMapEntry',
 			array(
@@ -329,6 +341,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
+
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
@@ -342,6 +355,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
+
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -369,6 +383,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testSaveWithChangesSubscribe() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$activeUser   = $gallery->getActiveUser();
@@ -406,6 +421,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($hintLockId), 10),
@@ -420,6 +436,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
+
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply(
@@ -436,6 +453,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
+
 		$storage->setReply('checkPoint', array(), null);
 
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
@@ -448,6 +466,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
+
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -477,6 +496,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testSaveGlobalSubscribe() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$activeUser   = $gallery->getActiveUser();
@@ -508,6 +528,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($hintLockId), 10),
@@ -522,6 +543,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
+
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply(
@@ -538,6 +560,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
+
 		$storage->setReply('checkPoint', array(), null);
 
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
@@ -550,6 +573,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
+
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -579,6 +603,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testSaveGlobalUnsubscribe() {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$activeUser   = $gallery->getActiveUser();
@@ -628,6 +653,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($hintLockId), 10),
@@ -642,6 +668,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
+
 		$storage->setReply(
 			'search',
 			array(
@@ -652,6 +679,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(array(0))))
 		);
+
 		$storage->setReply(
 			'updateMapEntry',
 			array(
@@ -667,6 +695,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
+
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
@@ -680,6 +709,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
+
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(

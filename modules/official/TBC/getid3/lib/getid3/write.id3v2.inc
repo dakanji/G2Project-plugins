@@ -13,7 +13,6 @@
 // dependencies: module.tag.id3v2.php                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.id3v2.php', __FILE__, true);
 
 class getid3_write_id3v2 {
@@ -36,7 +35,6 @@ class getid3_write_id3v2 {
 	public function WriteID3v2() {
 		// File MUST be writeable - CHMOD(646) at least. It's best if the
 		// directory is also writeable, because that method is both faster and less susceptible to errors.
-
 		if (!empty($this->filename) && (is_writeable($this->filename) || (!file_exists($this->filename) && is_writeable(dirname($this->filename))))) {
 			// Initialize getID3 engine
 			$getID3          = new getID3();
@@ -55,6 +53,7 @@ class getid3_write_id3v2 {
 					$this->tag_data = $this->array_join_merge($OldThisFileInfo['id3v2'], $this->tag_data);
 				}
 			}
+
 			$this->paddedlength = (isset($OldThisFileInfo['id3v2']['headerlength']) ? max($OldThisFileInfo['id3v2']['headerlength'], $this->paddedlength) : $this->paddedlength);
 
 			if ($NewID3v2Tag = $this->GenerateID3v2Tag()) {
@@ -100,6 +99,7 @@ class getid3_write_id3v2 {
 
 								return true;
 							}
+
 							$this->errors[] = 'Could not fopen("' . $tempfilename . '", "wb")';
 
 							fclose($fp_source);
@@ -120,6 +120,7 @@ class getid3_write_id3v2 {
 
 			return true;
 		}
+
 		$this->errors[] = 'WriteID3v2() failed: !is_writeable(' . $this->filename . ')';
 
 		return false;
@@ -142,6 +143,7 @@ class getid3_write_id3v2 {
 
 					return false;
 				}
+
 				rewind($fp_source);
 
 				if ($OldThisFileInfo['avdataoffset'] !== false) {
@@ -152,10 +154,12 @@ class getid3_write_id3v2 {
 					while ($buffer = fread($fp_source, $this->fread_buffer_size)) {
 						fwrite($fp_temp, $buffer, strlen($buffer));
 					}
+
 					fclose($fp_temp);
 				} else {
 					$this->errors[] = 'Could not fopen("' . $this->filename . 'getid3tmp", "w+b")';
 				}
+
 				fclose($fp_source);
 			} else {
 				$this->errors[] = 'Could not fopen("' . $this->filename . '", "rb")';
@@ -164,6 +168,7 @@ class getid3_write_id3v2 {
 			if (file_exists($this->filename)) {
 				unlink($this->filename);
 			}
+
 			rename($this->filename . 'getid3tmp', $this->filename);
 		} elseif (is_writable($this->filename)) {
 			// less desirable alternate method - double-copies the file, overwrites original file
@@ -179,6 +184,7 @@ class getid3_write_id3v2 {
 
 					return false;
 				}
+
 				rewind($fp_source);
 
 				if ($OldThisFileInfo['avdataoffset'] !== false) {
@@ -189,6 +195,7 @@ class getid3_write_id3v2 {
 					while ($buffer = fread($fp_source, $this->fread_buffer_size)) {
 						fwrite($fp_temp, $buffer, strlen($buffer));
 					}
+
 					fclose($fp_source);
 
 					if (is_writable($this->filename) && is_file($this->filename) && ($fp_source = fopen($this->filename, 'wb'))) {
@@ -197,11 +204,13 @@ class getid3_write_id3v2 {
 						while ($buffer = fread($fp_temp, $this->fread_buffer_size)) {
 							fwrite($fp_source, $buffer, strlen($buffer));
 						}
+
 						fseek($fp_temp, -128, SEEK_END);
 						fclose($fp_source);
 					} else {
 						$this->errors[] = 'Could not fopen("' . $this->filename . '", "wb")';
 					}
+
 					fclose($fp_temp);
 				} else {
 					$this->errors[] = 'Could not create tmpfile()';
@@ -304,6 +313,7 @@ class getid3_write_id3v2 {
 		if (!getid3_id3v2::IsValidID3v2FrameName($frame_name, $this->majorversion)) {
 			return false;
 		}
+
 		$framedata = '';
 
 		if (($this->majorversion < 3) || ($this->majorversion > 4)) {
@@ -503,6 +513,7 @@ class getid3_write_id3v2 {
 										$framedata    .= chr(255);
 										$val['tempo'] -= 255;
 									}
+
 									$framedata .= chr($val['tempo']);
 									$framedata .= getid3_lib::BigEndian2String($val['timestamp'], 4, false);
 								}
@@ -729,6 +740,7 @@ class getid3_write_id3v2 {
 										// put MSB of frequency to 1 if increment, 0 if decrement
 										$key |= 0x8000;
 									}
+
 									$framedata .= getid3_lib::BigEndian2String($key, 2, false);
 									$framedata .= getid3_lib::BigEndian2String($val, ceil($source_data_array['adjustmentbits'] / 8), false);
 								}
@@ -964,6 +976,7 @@ class getid3_write_id3v2 {
 									$this->errors[] = $source_data_array['frameid'] . ' is not a valid Frame Identifier in ' . $frame_name . ' (in ID3v2.' . $this->majorversion . ')';
 								}
 
+
 								// Fall Through
 							default:
 								if ((substr($source_data_array['frameid'], 0, 1) == 'T') || (substr($source_data_array['frameid'], 0, 1) == 'W')) {
@@ -1069,6 +1082,7 @@ class getid3_write_id3v2 {
 								$this->errors[] = 'Invalid Price String in ' . $frame_name . ' (' . $key . $val['value'] . ')';
 							}
 						}
+
 						$framedata .= implode('/', $pricestrings);
 						$framedata .= $source_data_array['pricevaliduntil'];
 						$framedata .= str_replace("\x00", '', $source_data_array['contacturl']) . "\x00";
@@ -1185,7 +1199,6 @@ class getid3_write_id3v2 {
 					//   b - originator code
 					//   c - sign bit
 					//   d - replay gain adjustment
-
 					if (($source_data_array['track_adjustment'] > 51) || ($source_data_array['track_adjustment'] < -51)) {
 						$this->errors[] = 'Invalid Track Adjustment in ' . $frame_name . ' (' . $source_data_array['track_adjustment'] . ') (range = -51.0 to +51.0)';
 					} elseif (($source_data_array['album_adjustment'] > 51) || ($source_data_array['album_adjustment'] < -51)) {
@@ -1628,7 +1641,6 @@ class getid3_write_id3v2 {
 
 	public function GenerateID3v2Tag($noerrorsonly = true) {
 		$this->ID3v2FrameIsAllowed(null, ''); // clear static array in case this isn't the first call to $this->GenerateID3v2Tag()
-
 		$tagstring = '';
 
 		if (is_array($this->tag_data)) {
@@ -1670,12 +1682,14 @@ class getid3_write_id3v2 {
 											$TagUnsynchronisation = false;
 										}
 									}
+
 									unset($unsynchdata);
 
 									$frame_length = getid3_lib::BigEndian2String(strlen($frame_data), 4, true);
 								} else {
 									$frame_length = getid3_lib::BigEndian2String(strlen($frame_data), 4, false);
 								}
+
 								$frame_flags = $this->GenerateID3v2FrameFlags($this->ID3v2FrameFlagsLookupTagAlter($frame_name), $this->ID3v2FrameFlagsLookupFileAlter($frame_name), false, false, false, false, $FrameUnsynchronisation, false);
 							}
 						} else {
@@ -1688,6 +1702,7 @@ class getid3_write_id3v2 {
 							if ($noerrorsonly) {
 								return false;
 							}
+
 							unset($frame_name);
 						}
 					} else {
@@ -1745,10 +1760,12 @@ class getid3_write_id3v2 {
 					'unsynchronisation' => $TagUnsynchronisation,
 				)
 			);
+
 			$tagheader .= getid3_lib::BigEndian2String(strlen($tagstring), 4, true);
 
 			return $tagheader . $tagstring;
 		}
+
 		$this->errors[] = 'tag_data is not an array in GenerateID3v2Tag()';
 
 		return false;
@@ -1771,6 +1788,7 @@ class getid3_write_id3v2 {
 		switch ($framename) {
 			case 'RGAD':
 				$allow = true;
+
 				// Fall Through
 			default:
 				$allow = false;
@@ -1921,7 +1939,6 @@ class getid3_write_id3v2 {
 		// altered, so they won't be affected by the decoding process. Therefore
 		// all the $FF 00 combinations have to be replaced with the $FF 00 00
 		// combination during the unsynchronisation.
-
 		$data          = str_replace("\xFF\x00", "\xFF\x00\x00", $data);
 		$unsyncheddata = '';
 		$datalength    = strlen($data);
@@ -1981,6 +1998,7 @@ class getid3_write_id3v2 {
 
 			return $new_array;
 		}
+
 		// not the same ... take new one if defined, else the old one stays
 		return $arr2 ? $arr2 : $arr1;
 	}
@@ -2194,7 +2212,6 @@ class getid3_write_id3v2 {
 			$ID3v2ShortFrameNameLookup[3]['recording_dates']            = 'TRDA';
 			$ID3v2ShortFrameNameLookup[3]['size']                       = 'TSIZ';
 			$ID3v2ShortFrameNameLookup[3]['year']                       = 'TYER';
-
 
 			// The following are unique to ID3v2.4
 			$ID3v2ShortFrameNameLookup[4]['audio_seek_point_index']     = 'ASPI';

@@ -55,6 +55,7 @@ class SelectPicasaExportPathController extends GalleryController {
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
 				}
+
 				GalleryUtilities::unsanitizeInputValues($tmp, false);
 				$form['picasaXmlPath'] = trim($tmp);
 
@@ -76,6 +77,7 @@ class SelectPicasaExportPathController extends GalleryController {
 				} else {
 					$recentPaths[$form['picasaXmlPath']] = 1;
 				}
+
 				$session->put('picasa.view.SelectPicasaExportPath.recentPaths', $recentPaths);
 				$redirect['view']               = 'core.SiteAdmin';
 				$redirect['subView']            = 'picasa.ConfirmPicasaImport';
@@ -90,6 +92,7 @@ class SelectPicasaExportPathController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'picasa.SelectPicasaExportPath';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -142,6 +145,7 @@ class SelectPicasaExportPathView extends GalleryView {
 				break;
 			}
 		}
+
 		// Get ids of all all albums where we can add new album items
 		list($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addAlbumItem');
 
@@ -155,6 +159,7 @@ class SelectPicasaExportPathView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$albumTree = GalleryUtilities::createAlbumTree($albums);
 
 		$SelectPicasaExportPath                = array();

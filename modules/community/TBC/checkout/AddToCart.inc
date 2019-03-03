@@ -45,26 +45,31 @@ class AddToCartController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
-		$items                              = array();
-		$IPQ                                = array();
-		$session                            =& $gallery->getSession();
+
+		$items   = array();
+		$IPQ     = array();
+		$session =& $gallery->getSession();
+
 		list($ret, $treatAlbumAsCollection) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'treatAlbumAsCollection');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$itemsDetails = explode(',', GalleryUtilities::getRequestVariables('itemId'));
 
 		foreach ($itemsDetails as $itemDetails) {
 			if (empty($itemDetails)) {
 				continue;
 			}
+
 			// break out product and quantity if set
 			$itemProductQuantity = explode('|', $itemDetails);
 
 			if (empty($itemProductQuantity[0])) {
 				continue;
 			}
+
 			$itemId = $itemProductQuantity[0];
 
 			// check permission to purchase
@@ -77,12 +82,12 @@ class AddToCartController extends GalleryController {
 			if (!$hasPermission) {
 				return array(GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null);
 			}
+
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 			if ($ret) {
 				return array($ret, null);
 			}
-
 
 			// Figure out what items we care about
 			if ($item->getCanContainChildren() && $treatAlbumAsCollection) {
@@ -91,6 +96,7 @@ class AddToCartController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $newItems) = GalleryCoreApi::loadEntitiesById($ids, 'GalleryEntity');
 
 				if ($ret) {
@@ -100,11 +106,13 @@ class AddToCartController extends GalleryController {
 				$ids      = array($itemId);
 				$newItems = array($item);
 			}
+
 			// deal with each item to add
 			foreach ($newItems as $newItem) {
 				if (!isset($firstItemId)) {
 					$firstItemId = $newItem->getId();
 				}
+
 				$items[] = $newItem;
 
 				if (isset($itemProductQuantity[1], $itemProductQuantity[2])) {
@@ -119,19 +127,20 @@ class AddToCartController extends GalleryController {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Add the new items
 		$ret = CheckoutHelper::addItemsToItemList($checkoutItems, $items, $IPQ);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// Save the cart
 		$ret = CheckoutHelper::storeItemListInSession($checkoutItems);
 
 		if ($ret) {
 			return $ret;
 		}
-
 
 		// Prepare our results
 		list($ret, $cartRedirect) = GalleryCoreApi::getPluginParameter(
@@ -151,6 +160,7 @@ class AddToCartController extends GalleryController {
 			if (isset($firstItemId)) {
 				$results['redirect']['fragment'] = $firstItemId;
 			}
+
 			$results['status'] = array();
 		} else {
 			$returnUrl                   = GalleryUtilities::getRequestVariables('return');
@@ -159,6 +169,7 @@ class AddToCartController extends GalleryController {
 				'checkoutSuccess' => true,
 			);
 		}
+
 		$results['error'] = array();
 
 		return array(null, $results);

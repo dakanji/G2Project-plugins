@@ -74,7 +74,12 @@ class AdminController extends GalleryController {
 
 					if ($productParameters[$textParam] == '') {
 						unset($productParameters[$textParam]);
-						$ret = CheckoutProductMapHelper::removeParam($productId, $textParam, $rootAlbumId);
+
+						$ret = CheckoutProductMapHelper::removeParam(
+							$productId,
+							$textParam,
+							$rootAlbumId
+						);
 
 						if ($ret) {
 							return array($ret, null);
@@ -84,7 +89,12 @@ class AdminController extends GalleryController {
 
 				// Then go ahead and store each parameter for that product
 				foreach ($productParameters as $paramName => $paramValue) {
-					$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $rootAlbumId);
+					$ret = CheckoutProductMapHelper::setParam(
+						$productId,
+						$paramName,
+						$paramValue,
+						$rootAlbumId
+					);
 
 					if ($ret) {
 						return array($ret, null);
@@ -102,6 +112,7 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -112,6 +123,7 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -128,6 +140,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['allowDownloadsPrePurchase'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -139,12 +152,12 @@ class AdminController extends GalleryController {
 				return array($ret, null);
 			}
 
-
 			if (!isset($form['limitDaysDLAvailable'])) {
 				$form['limitDaysDLAvailable'] = 0;
 			} else {
 				$form['limitDaysDLAvailable'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -161,6 +174,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['limitNumDLsAllowed'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -177,6 +191,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['useFoldersInDL'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -193,6 +208,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['useUniqueDLFilename'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -209,6 +225,7 @@ class AdminController extends GalleryController {
 			} else {
 				$form['canAddAlbum'] = 1;
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'checkoutdownload',
@@ -219,7 +236,6 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
-
 
 			$redirect['view']    = 'core.SiteAdmin';
 			$redirect['subView'] = 'checkoutdownload.Admin';
@@ -235,6 +251,7 @@ class AdminController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'checkoutdownload.Admin';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -255,7 +272,10 @@ class AdminView extends GalleryView {
 
 		if ($form['formName'] != 'AdminCheckoutDownload') {
 			// Get module options
-			list($ret, $form) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkoutdownload');
+			list($ret, $form) = GalleryCoreApi::fetchAllPluginParameters(
+				'module',
+				'checkoutdownload'
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -343,7 +363,13 @@ class AdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
-			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($rootAlbumId, true, false);
+
+			list($ret, $products) = CheckoutProductMapHelper::fetchProducts(
+				$rootAlbumId,
+				true,
+				false
+			);
+
 			//do use local settings, don't pass products to plugins to modify
 			if ($ret) {
 				return array($ret, null);
@@ -359,6 +385,7 @@ class AdminView extends GalleryView {
 				);
 			}
 		}
+
 		$template->setVariable('controller', 'checkoutdownload.Admin');
 
 		return array(

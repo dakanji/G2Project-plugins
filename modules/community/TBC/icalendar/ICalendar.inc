@@ -114,7 +114,8 @@ class ICalendarController extends GalleryController {
 			$addedItems = array();
 
 			for ($i = 0; $i < count($status['addedFiles']); $i++) {
-				$file                  =& $status['addedFiles'][$i];
+				$file =& $status['addedFiles'][$i];
+
 				list($ret, $addedItem) = GalleryCoreApi::loadEntitiesById($file['id']);
 
 				if ($ret) {
@@ -144,6 +145,7 @@ class ICalendarController extends GalleryController {
 
 						return array($ret, null);
 					}
+
 					$ret = GalleryCoreApi::deleteEntityById($addedItem->getId());
 
 					if ($ret) {
@@ -151,6 +153,7 @@ class ICalendarController extends GalleryController {
 
 						return array($ret, null);
 					}
+
 					unset($status['addedFiles'][$i--]);
 					$status['addedFiles'] = array_merge($status['addedFiles'], $addedFiles);
 				} else {
@@ -168,6 +171,7 @@ class ICalendarController extends GalleryController {
 
 					return array($ret, null);
 				}
+
 				$error = array_merge($error, $optionErrors);
 				// for each item, put the items warnings into our status array
 				for ($j = 0; $j < count($optionWarnings); $j++) {
@@ -215,6 +219,7 @@ class ICalendarView extends GalleryView {
 		list ($itemId, $addPlugin) = GalleryUtilities::getRequestVariables('itemId', 'addPlugin');
 
 		/* Make sure we have permission to add to this item
+
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.addDataItem');
 		if ($ret) {
 		return array($ret, null);
@@ -253,6 +258,7 @@ class ICalendarView extends GalleryView {
 		if ($isAppropriate) {
 		$pluginInstances[$pluginId] = $plugin;
 		}
+
 		}
 
 		/* Get all the add options
@@ -273,7 +279,9 @@ class ICalendarView extends GalleryView {
 		$ids = array_keys($pluginInstances);
 		$addPlugin = $ids[0];
 		}
+
 		}
+
 		$session->put($addPluginSessionKey, $addPlugin);
 
 		/* Get display data for all plugins
@@ -283,6 +291,7 @@ class ICalendarView extends GalleryView {
 		if ($ret) {
 		return array($ret, null);
 		}
+
 		$plugins[] = array('title' => $title,
 				   'id' => $pluginId,
 				   'isSelected' => ($pluginId == $addPlugin));
@@ -308,9 +317,11 @@ class ICalendarView extends GalleryView {
 		if ($ret) {
 		return array($ret, null);
 		}
+
 		if (!empty($entry['file'])) {
 		$ItemAdd['options'][] = $entry;
 		}
+
 		}
 
 		/* Make sure that we've got some toolkits
@@ -325,6 +336,7 @@ class ICalendarView extends GalleryView {
 		$ItemAdd['hasToolkit'] = true;
 		break;
 		}
+
 		}
 
 		$template->setVariable('ItemAdd', $ItemAdd);

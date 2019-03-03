@@ -57,6 +57,7 @@ class TagsSearch extends GallerySearchInterface_1_0 {
 	 */
 	public function search($options, $criteria, $offset = 0, $count = -1) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds(
@@ -133,6 +134,7 @@ class TagsSearch extends GallerySearchInterface_1_0 {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$result  = $results->nextResult();
 		$numRows = (int)$result[0];
 

@@ -57,6 +57,7 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$parameters = array(
 				'toEmailAddress'      => $smtpFrom,
 				'toSubject'           => $module->translate('Contact Received From Gallery Website'),
@@ -177,6 +178,7 @@ class AdminView extends GalleryView {
 				}
 			}
 		}
+
 		$template->setVariable('controller', 'contactowner.Admin');
 
 		return array(

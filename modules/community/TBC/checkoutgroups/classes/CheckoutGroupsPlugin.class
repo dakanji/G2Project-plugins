@@ -54,6 +54,7 @@ class CheckoutGroupsPlugin extends CheckoutCustomPageInterface_1_0 {
 		if ($ret) {
 			return $ret;
 		}
+
 		$template->setVariable('groups', $groups);
 
 		return null;

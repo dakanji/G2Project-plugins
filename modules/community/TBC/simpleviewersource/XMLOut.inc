@@ -58,8 +58,8 @@ class XMLOutView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
-		// get the title
 
+		// get the title
 		$albumTitle = $albumItem->getTitle();
 		// fetch the childrenIds that we can see
 		list($ret, $showItemIds) = GalleryCoreApi::fetchChildItemIdsWithPermission($itemId, 'core.view');
@@ -76,11 +76,13 @@ class XMLOutView extends GalleryView {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $moduleParams) = SimpleviewerParameterMapHelper::fetchParams($itemId, 'private');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $customParams) = SimpleviewerParameterMapHelper::fetchParams($itemId, '');
 
 		if ($ret) {
@@ -102,6 +104,7 @@ class XMLOutView extends GalleryView {
 				'htmlEntities'   => true,
 			)
 		);
+
 		$fnParams['imagePath'] = $urlgen->generateUrl(
 			array(
 				'view'           => 'simpleviewersource.DownloadMax',
@@ -121,6 +124,7 @@ class XMLOutView extends GalleryView {
 		if (!$moduleParams['enabled']) {
 			return null;
 		}
+
 		// output simpleviewer options
 		header('Content-type: text/xml');
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -152,6 +156,7 @@ class XMLOutView extends GalleryView {
 				}
 			}
 		}
+
 		// done
 		echo '</simpleviewerGallery>';
 

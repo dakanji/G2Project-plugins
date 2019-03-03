@@ -68,6 +68,7 @@ class Getid3DescriptionOption extends ItemAddOption {
 			foreach ($currentItems as $item) {
 				$itemIds[] = $item->getId();
 			}
+
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($itemIds);
 
 			if ($ret) {

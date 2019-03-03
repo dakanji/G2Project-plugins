@@ -51,7 +51,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 define('GETID3_FLV_TAG_AUDIO', 8);
 define('GETID3_FLV_TAG_VIDEO', 9);
 define('GETID3_FLV_TAG_META', 18);
@@ -107,6 +106,7 @@ class getid3_flv extends getid3_handler {
 		if ($FrameSizeDataLength > $FLVheaderFrameLength) {
 			$this->fseek($FrameSizeDataLength - $FLVheaderFrameLength, SEEK_CUR);
 		}
+
 		$Duration                  = 0;
 		$found_video               = false;
 		$found_audio               = false;
@@ -118,7 +118,8 @@ class getid3_flv extends getid3_handler {
 			'audio' => 0,
 			'video' => 0,
 		);
-		$flv_framecount            = &$info['flv']['framecount'];
+
+		$flv_framecount = &$info['flv']['framecount'];
 
 		while ((($this->ftell() + 16) < $info['avdataend']) && (($tagParseCount++ <= $this->max_frames) || !$found_valid_meta_playtime)) {
 			$ThisTagHeader = $this->fread(16);
@@ -161,7 +162,6 @@ class getid3_flv extends getid3_handler {
 
 						if ($info['flv']['video']['videoCodec'] == GETID3_FLV_VIDEO_H264) {
 							// this code block contributed by: moysevichØgmail*com
-
 							$AVCPacketType = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 0, 1));
 
 							if ($AVCPacketType == H264_AVC_SEQUENCE_HEADER) {
@@ -188,6 +188,7 @@ class getid3_flv extends getid3_handler {
 									}
 								}
 							}
+
 							// end: moysevichØgmail*com
 						} elseif ($info['flv']['video']['videoCodec'] == GETID3_FLV_VIDEO_H263) {
 							$PictureSizeType                        = (getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 3, 2))) >> 7;
@@ -202,7 +203,6 @@ class getid3_flv extends getid3_handler {
 									//$PictureSizeEnc = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 6, 2));
 									//$PictureSizeEnc <<= 1;
 									//$info['video']['resolution_y'] = ($PictureSizeEnc & 0xFF00) >> 8;
-
 									$PictureSizeEnc['x']           = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 4, 2)) >> 7;
 									$PictureSizeEnc['y']           = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 5, 2)) >> 7;
 									$info['video']['resolution_x'] = $PictureSizeEnc['x'] & 0xFF;
@@ -262,6 +262,7 @@ class getid3_flv extends getid3_handler {
 								$info['video']['resolution_x'] = ($PictureSizeEnc['x'] & 0xFF) << 3;
 								$info['video']['resolution_y'] = ($PictureSizeEnc['y'] & 0xFF) << 3;
 							}
+
 							// end schouwerwouØgmail*com
 						}
 
@@ -327,6 +328,7 @@ class getid3_flv extends getid3_handler {
 					// noop
 					break;
 			}
+
 			$this->fseek($NextOffset);
 		}
 
@@ -623,12 +625,12 @@ class AMFReader {
 	public function readObject() {
 		// Get highest numerical index - ignored
 		//      $highestIndex = $this->stream->readLong();
-
 		$data = array();
 
 		while ($key = $this->stream->readUTF()) {
 			$data[$key] = $this->readData();
 		}
+
 		// Mixed array record ends with empty string (0x00 0x00) and 0x09
 		if (($key == '') && ($this->stream->peekByte() == 0x09)) {
 			// Consume byte
@@ -648,8 +650,10 @@ class AMFReader {
 			if (is_numeric($key)) {
 				$key = (float)$key;
 			}
+
 			$data[$key] = $this->readData();
 		}
+
 		// Mixed array record ends with empty string (0x00 0x00) and 0x09
 		if (($key == '') && ($this->stream->peekByte() == 0x09)) {
 			// Consume byte
@@ -725,18 +729,18 @@ class AVCSequenceParameterSetReader {
 					$this->expGolombSe();                           // offset_for_ref_frame[ i ]
 				}
 			}
+
 			$this->expGolombUe();                                   // num_ref_frames
 			$this->skipBits(1);                                     // gaps_in_frame_num_value_allowed_flag
 			$pic_width_in_mbs_minus1        = $this->expGolombUe();        // pic_width_in_mbs_minus1
 			$pic_height_in_map_units_minus1 = $this->expGolombUe(); // pic_height_in_map_units_minus1
-
-			$frame_mbs_only_flag = $this->getBits(1);               // frame_mbs_only_flag
+			$frame_mbs_only_flag            = $this->getBits(1);               // frame_mbs_only_flag
 			if ($frame_mbs_only_flag == 0) {
 				$this->skipBits(1);                                 // mb_adaptive_frame_field_flag
 			}
-			$this->skipBits(1);                                     // direct_8x8_inference_flag
-			$frame_cropping_flag = $this->getBits(1);               // frame_cropping_flag
 
+			$this->skipBits(1);                                     // direct_8x8_inference_flag
+			$frame_cropping_flag      = $this->getBits(1);               // frame_cropping_flag
 			$frame_crop_left_offset   = 0;
 			$frame_crop_right_offset  = 0;
 			$frame_crop_top_offset    = 0;
@@ -748,9 +752,9 @@ class AVCSequenceParameterSetReader {
 				$frame_crop_top_offset    = $this->expGolombUe();   // frame_crop_top_offset
 				$frame_crop_bottom_offset = $this->expGolombUe();   // frame_crop_bottom_offset
 			}
+
 			$this->skipBits(1);                                     // vui_parameters_present_flag
 			// etc
-
 			$this->width  = (($pic_width_in_mbs_minus1 + 1) * 16)                                     - ($frame_crop_left_offset * 2)                                     - ($frame_crop_right_offset * 2);
 			$this->height = ((2 - $frame_mbs_only_flag) * ($pic_height_in_map_units_minus1 + 1) * 16) - ($frame_crop_top_offset * 2) - ($frame_crop_bottom_offset * 2);
 		}

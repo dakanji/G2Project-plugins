@@ -120,6 +120,7 @@ class SimpleviewerSourceModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
 
 		$links = array();
@@ -140,6 +141,7 @@ class SimpleviewerSourceModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// look for photo items before offering a slideshow
 					foreach ($showItemIds as $showItemId) {
 						list($ret, $showItem) = GalleryCoreApi::loadEntitiesByID($showItemId);
@@ -210,6 +212,7 @@ class SimpleviewerSourceModule extends GalleryModule {
 
 			if (GalleryUtilities::isA($entity, 'GalleryAlbumItem')) {
 				GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
+
 				list($ret, $paramIds) = SimpleviewerParameterMapHelper::fetchParamIdsForAlbum($entity->getId());
 
 				if ($ret) {

@@ -33,6 +33,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -51,6 +52,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 	public function testDownloadIE() {
 		global $gallery;
+
 		$platform = new UnitTestPlatform();
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
@@ -67,11 +69,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		set_error_handler('ZipCartDownloadTest_error_handler');
 		ob_start();
+
 		$ret = $this->_view->renderImmediate(array(), array());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -84,11 +88,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 			$this->_header,
 			'header'
 		);
+
 		$this->assertEquals('zipdata', $output, 'output');
 	}
 
 	public function testDownloadMultipart() {
 		global $gallery;
+
 		$platform = new UnitTestPlatform();
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
@@ -105,11 +111,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		set_error_handler('ZipCartDownloadTest_error_handler');
 		ob_start();
+
 		$ret = $this->_view->renderImmediate(array(), array());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -118,6 +126,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 			$this->_header,
 			'header'
 		);
+
 		$this->assertEquals(
 			"--G2ZipCart\nContent-Type: application/zip\nContent-Disposition: " .
 			"inline; filename=\"G2cart.zip\"\nContent-Length: 123\n\nzipdata\n--G2ZipCart\n" .
@@ -130,6 +139,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 	public function testCartRedirect() {
 		global $gallery;
+
 		$platform = new UnitTestPlatform();
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), false);
 		$gallery->setPlatform($platform);
@@ -137,11 +147,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('file', 'test');
 
 		ob_start();
+
 		$ret = $this->_view->renderImmediate(array(), array());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -152,6 +164,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 	public function testBadFile() {
 		global $gallery;
+
 		$platform = new UnitTestPlatform();
 		$platform->setReply('is_readable', array('/data/tmp/passwd.zip'), false);
 		$gallery->setPlatform($platform);
@@ -160,11 +173,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('file', '../../etc/passwd');
 
 		ob_start();
+
 		$ret = $this->_view->renderImmediate(array(), array());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$output = ob_get_contents();
 		ob_end_clean();
 

@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_bmp extends getid3_handler {
 	public $ExtractPalette = false;
 	public $ExtractData    = false;
@@ -35,7 +33,6 @@ class getid3_bmp extends getid3_handler {
 		// WORD    bfReserved1;
 		// WORD    bfReserved2;
 		// DWORD   bfOffBits;
-
 		$this->fseek($info['avdataoffset']);
 		$offset    = 0;
 		$BMPheader = $this->fread(14 + 40);
@@ -48,7 +45,6 @@ class getid3_bmp extends getid3_handler {
 		if ($thisfile_bmp_header_raw['identifier'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($thisfile_bmp_header_raw['identifier']) . '"';
 			unset($info['fileformat'], $info['bmp']);
-
 
 			return false;
 		}
@@ -63,7 +59,6 @@ class getid3_bmp extends getid3_handler {
 		$offset                                += 4;
 		$thisfile_bmp_header_raw['header_size'] = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 4));
 		$offset                                += 4;
-
 
 		// check if the hardcoded-to-1 "planes" is at offset 22 or 26
 		$planes22 = getid3_lib::LittleEndian2Int(substr($BMPheader, 22, 2));
@@ -91,7 +86,6 @@ class getid3_bmp extends getid3_handler {
 			$info['error'][] = 'Unknown BMP subtype (or not a BMP file)';
 			unset($info['fileformat'], $info['bmp']);
 
-
 			return false;
 		}
 
@@ -103,13 +97,11 @@ class getid3_bmp extends getid3_handler {
 		if ($thisfile_bmp['type_os'] == 'OS/2') {
 			// OS/2-format BMP
 			// http://netghost.narod.ru/gff/graphics/summary/os2bmp.htm
-
 			// DWORD  Size;             /* Size of this structure in bytes */
 			// DWORD  Width;            /* Bitmap width in pixels */
 			// DWORD  Height;           /* Bitmap height in pixel */
 			// WORD   NumPlanes;        /* Number of bit planes (color depth) */
 			// WORD   BitsPerPixel;     /* Number of bits per pixel per plane */
-
 			$thisfile_bmp_header_raw['width']          = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 2));
 			$offset                                   += 2;
 			$thisfile_bmp_header_raw['height']         = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 2));
@@ -139,7 +131,6 @@ class getid3_bmp extends getid3_handler {
 				// DWORD  Size2;            /* Reserved for halftoning algorithm use */
 				// DWORD  ColorEncoding;    /* Color model used in bitmap */
 				// DWORD  Identifier;       /* Reserved for application use */
-
 				$thisfile_bmp_header_raw['compression']      = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 4));
 				$offset                                     += 4;
 				$thisfile_bmp_header_raw['bmp_data_size']    = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 4));
@@ -175,7 +166,6 @@ class getid3_bmp extends getid3_handler {
 			}
 		} elseif ($thisfile_bmp['type_os'] == 'Windows') {
 			// Windows-format BMP
-
 			// BITMAPINFOHEADER - [40 bytes] http://msdn.microsoft.com/library/en-us/gdi/bitmaps_1rw2.asp
 			// all versions
 			// DWORD  biSize;
@@ -189,9 +179,7 @@ class getid3_bmp extends getid3_handler {
 			// LONG   biYPelsPerMeter;
 			// DWORD  biClrUsed;
 			// DWORD  biClrImportant;
-
 			// possibly integrate this section and module.audio-video.riff.php::ParseBITMAPINFOHEADER() ?
-
 			$thisfile_bmp_header_raw['width']            = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 4), true);
 			$offset                                     += 4;
 			$thisfile_bmp_header_raw['height']           = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 4), true);
@@ -286,7 +274,6 @@ class getid3_bmp extends getid3_handler {
 			return false;
 		}
 
-
 		if ($this->ExtractPalette || $this->ExtractData) {
 			$PaletteEntries = 0;
 
@@ -315,6 +302,7 @@ class getid3_bmp extends getid3_handler {
 					} else {
 						$paletteoffset++; // padding byte
 					}
+
 					$thisfile_bmp['palette'][$i] = (($red << 16) | ($green << 8) | $blue);
 				}
 			}
@@ -427,7 +415,6 @@ class getid3_bmp extends getid3_handler {
 
 					break;
 
-
 				case 1: // BI_RLE8 - http://msdn.microsoft.com/library/en-us/gdi/bitmaps_6x0u.asp
 					switch ($thisfile_bmp_header_raw['bits_per_pixel']) {
 						case 8:
@@ -505,8 +492,6 @@ class getid3_bmp extends getid3_handler {
 					}
 
 					break;
-
-
 
 				case 2: // BI_RLE4 - http://msdn.microsoft.com/library/en-us/gdi/bitmaps_6x0u.asp
 					switch ($thisfile_bmp_header_raw['bits_per_pixel']) {
@@ -601,7 +586,6 @@ class getid3_bmp extends getid3_handler {
 
 					break;
 
-
 				case 3: // BI_BITFIELDS
 					switch ($thisfile_bmp_header_raw['bits_per_pixel']) {
 						case 16:
@@ -649,7 +633,6 @@ class getid3_bmp extends getid3_handler {
 
 					break;
 
-
 				default: // unhandled compression type
 					$info['error'][] = 'Unknown/unhandled compression type value (' . $thisfile_bmp_header_raw['compression'] . ') - cannot decompress pixel data';
 
@@ -668,6 +651,7 @@ class getid3_bmp extends getid3_handler {
 
 			return false;
 		}
+
 		set_time_limit(intval(round($BMPinfo['resolution_x'] * $BMPinfo['resolution_y'] / 10000)));
 
 		if ($im = imagecreatetruecolor($BMPinfo['resolution_x'], $BMPinfo['resolution_y'])) {
@@ -680,6 +664,7 @@ class getid3_bmp extends getid3_handler {
 						$pixelcolor = imagecolorallocate($im, $red, $green, $blue);
 						imagesetpixel($im, $col, $row, $pixelcolor);
 					}
+
 					//echo 'ERROR: no data for pixel '.$row.' x '.$col.'<BR>';
 						//return false;
 				}
@@ -691,6 +676,7 @@ class getid3_bmp extends getid3_handler {
 
 				exit;
 			}
+
 			header('Content-type: image/png');
 			imagepng($im);
 			imagedestroy($im);

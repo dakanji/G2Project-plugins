@@ -29,6 +29,7 @@
 class TitleModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('title');
 		$this->setName($gallery->i18n('Title Search'));
 		$this->setDescription(

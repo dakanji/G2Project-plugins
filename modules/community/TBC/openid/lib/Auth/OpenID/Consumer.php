@@ -327,7 +327,6 @@ class Auth_OpenID_Consumer {
 		// Set the 'stale' attribute of the manager.  If discovery
 		// fails in a fatal way, the stale flag will cause the manager
 		// to be cleaned up next time discovery is attempted.
-
 		$m      = $disco->getManager();
 		$loader = new Auth_Yadis_ManagerLoader();
 
@@ -443,6 +442,7 @@ class Auth_OpenID_Consumer {
 					$response->identity_url,
 					$this->session_key_prefix
 				);
+
 				$disco->cleanup(true);
 			}
 		}
@@ -792,6 +792,7 @@ class Auth_OpenID_GenericConsumer {
 		if (Auth_OpenID::isFailure($signed_list_str)) {
 			return $signed_list_str;
 		}
+
 		$signed_list = explode(',', $signed_list_str);
 
 		$signed_fields = Auth_OpenID::addPrefix($signed_list, 'openid.');
@@ -806,7 +807,6 @@ class Auth_OpenID_GenericConsumer {
 		// Check an OpenID message and its openid.return_to value
 		// against a return_to URL from an application.  Return True
 		// on success, False on failure.
-
 		// Check the openid.return_to args against args in the
 		// original message.
 		$result = Auth_OpenID_GenericConsumer::_verifyReturnToArgs($message->toPostArgs());
@@ -873,13 +873,13 @@ class Auth_OpenID_GenericConsumer {
 	public function _verifyReturnToArgs($query) {
 		// Verify that the arguments in the return_to URL are present in this
 		// response.
-
 		$message   = Auth_OpenID_Message::fromPostArgs($query);
 		$return_to = $message->getArg(Auth_OpenID_OPENID_NS, 'return_to');
 
 		if (Auth_OpenID::isFailure($return_to)) {
 			return $return_to;
 		}
+
 		// XXX: this should be checked by _idResCheckForFields
 		if (!$return_to) {
 			return new Auth_OpenID_FailureResponse(null, 'Response has no return_to');
@@ -904,6 +904,7 @@ class Auth_OpenID_GenericConsumer {
 					)
 				);
 			}
+
 			$value = $query[$rt_key];
 
 			if ($rt_value != $value) {
@@ -1171,6 +1172,7 @@ class Auth_OpenID_GenericConsumer {
 			// oidutil.log('No pre-discovered information supplied.')
 			return $this->_discoverAndVerify($to_match->claimed_id, array($to_match));
 		}
+
 		// The claimed ID matches, so we use the endpoint that we
 		// discovered in initiation. This should be the most
 		// common case.
@@ -1183,7 +1185,6 @@ class Auth_OpenID_GenericConsumer {
 				return $endpoint;
 			}
 		}
-
 
 		// The endpoint we return should have the claimed ID from the
 		// message we just verified, fragment and all.
@@ -1224,7 +1225,6 @@ class Auth_OpenID_GenericConsumer {
 	public function _verifyDiscoveryServices($claimed_id, &$services, &$to_match_endpoints) {
 		// Search the services resulting from discovery to find one
 		// that matches the information from the assertion
-
 		foreach ($services as $endpoint) {
 			foreach ($to_match_endpoints as $to_match_endpoint) {
 				$result = $this->_verifyDiscoverySingle($endpoint, $to_match_endpoint);
@@ -1357,6 +1357,7 @@ class Auth_OpenID_GenericConsumer {
 		if (Auth_OpenID::isFailure($signed_list_str)) {
 			return $signed_list_str;
 		}
+
 		$signed_list = explode(',', $signed_list_str);
 
 		foreach ($require_sigs[$message->getOpenIDNamespace()] as $field) {
@@ -1410,6 +1411,7 @@ class Auth_OpenID_GenericConsumer {
 				}
 			}
 		}
+
 		$ca_message = $message->copy();
 		$ca_message->setArg(
 			Auth_OpenID_OPENID_NS,
@@ -1525,7 +1527,6 @@ class Auth_OpenID_GenericConsumer {
 		// The server didn't like the association/session type that we
 		// sent, and it sent us back a message that might tell us how
 		// to handle it.
-
 		// Extract the session_type and assoc_type from the error
 		// message
 		$assoc_type = $server_error->message->getArg(Auth_OpenID_OPENID_NS, 'assoc_type');
@@ -1790,7 +1791,6 @@ class Auth_OpenID_GenericConsumer {
 
 		// Handle the differences between no-encryption association
 		// respones in OpenID 1 and 2:
-
 		// no-encryption is not really a valid session type for OpenID
 		// 1, but we'll accept it anyway, while issuing a warning.
 		if ($session_type == 'no-encryption') {
@@ -1830,7 +1830,8 @@ class Auth_OpenID_AuthRequest {
 		$this->message        = new Auth_OpenID_Message(
 			$endpoint->preferredNamespace()
 		);
-		$this->_anonymous     = false;
+
+		$this->_anonymous = false;
 	}
 
 	/**
@@ -1879,6 +1880,7 @@ class Auth_OpenID_AuthRequest {
 		if ($is_anonymous && $this->message->isOpenID1()) {
 			return false;
 		}
+
 		$this->_anonymous = $is_anonymous;
 
 		return true;
@@ -2234,6 +2236,7 @@ class Auth_OpenID_ServerErrorContainer {
 			'error',
 			'<no error message supplied>'
 		);
+
 		$error_code = $message->getArg(Auth_OpenID_OPENID_NS, 'error_code');
 
 		return new Auth_OpenID_ServerErrorContainer($error_text, $error_code, $message);

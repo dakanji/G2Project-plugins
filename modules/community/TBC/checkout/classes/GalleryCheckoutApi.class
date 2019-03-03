@@ -52,9 +52,11 @@
 	 */
 	public function getCurrentTransactionForPayment() {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
-		$transactionId           = $session->get('checkout.transactionId');
+		$transactionId = $session->get('checkout.transactionId');
+
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
 
 		if ($ret) {
@@ -75,14 +77,17 @@
 	 */
 	public function sendAdminNotification($transaction, $statusMessage) {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+
 		$ret = CheckoutTransactionEventHelper::handleAdminNotification($transaction, $statusMessage);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::adminNotify');
 		$event->setEntity($transaction);
 		$event->setData($statusMessage);
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		return $ret;
@@ -96,14 +101,17 @@
 	 */
 	public function transactionUpdate($transaction, $custDetails) {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+
 		$ret = CheckoutTransactionEventHelper::handleTransactionUpdate($transaction, $custDetails);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionUpdate');
 		$event->setEntity($transaction);
 		$event->setData($custDetails);
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		return $ret;
@@ -117,14 +125,17 @@
 	 */
 	public function setPaymentPlugin($transaction, $pluginName) {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+
 		$ret = CheckoutTransactionEventHelper::handleSetPaymentPlugin($transaction, $pluginName);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionSetPaymentPlugin');
 		$event->setEntity($transaction);
 		$event->setData($pluginName);
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		return $ret;
@@ -139,11 +150,13 @@
 	 */
 	public function changeTransactionStatus($transaction, $type, $message = '') {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionEventHelper.class');
+
 		$ret = CheckoutTransactionEventHelper::handleChangeTransactionStatus($transaction, $type, $message);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionChange');
 		$event->setEntity($transaction);
 		$event->setData(
@@ -152,6 +165,7 @@
 				'message' => $message,
 			)
 		);
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		return $ret;

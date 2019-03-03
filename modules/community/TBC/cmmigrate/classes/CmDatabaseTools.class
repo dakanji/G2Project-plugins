@@ -89,6 +89,7 @@ class CmDatabaseTools {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_coppermineConfig = array_merge($this->_coppermineConfig, $extraConfig);
 
 		return null;
@@ -151,12 +152,14 @@ class CmDatabaseTools {
 	 *               array of object CmEntity
 	 */
 	public function getAlbumsSorted() {
-		$parent             = 0;
+		$parent = 0;
+
 		list($ret, $albums) = $this->getAlbums();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$stack = $result = array();
 		$depth = 0;
 
@@ -165,10 +168,11 @@ class CmDatabaseTools {
 
 			foreach ($albums as $i => $a) {
 				if ($a->getParent() == $parent) {
-					$entry    = array(
+					$entry = array(
 						'depth' => $depth++,
 						'data'  => $a,
 					);
+
 					$result[] = $entry;
 					array_push($stack, $parent);
 					$parent    = $a->getAlbumId($a);
@@ -183,6 +187,7 @@ class CmDatabaseTools {
 				if (count($stack) == 0) {
 					break;
 				}
+
 				$parent = array_pop($stack);
 				$depth--;
 			}
@@ -302,6 +307,7 @@ class CmDatabase {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$result =& $this->_conn->GetAssoc(
 			'SELECT name, value FROM ' .
 			$this->config['TABLE_PREFIX'] . 'config'
@@ -336,7 +342,8 @@ class CmDatabase {
 			'SELECT user_id, user_name FROM ' .
 			$this->config['TABLE_PREFIX'] . 'users'
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -374,7 +381,8 @@ class CmDatabase {
 			'SELECT cid, name, description, parent FROM ' .
 			$this->config['TABLE_PREFIX'] . 'categories'
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -414,7 +422,8 @@ class CmDatabase {
 			'SELECT aid, title, description, category FROM ' .
 			$this->config['TABLE_PREFIX'] . 'albums'
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -455,7 +464,8 @@ class CmDatabase {
 					'keywords, hits FROM ' . $this->config['TABLE_PREFIX'] .
 			'pictures WHERE aid = ' . $albumid
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);

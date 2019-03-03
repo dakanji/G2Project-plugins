@@ -42,6 +42,7 @@ class SendEcardController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$session  =& $gallery->getSession();
 		$redirect = $status = $error = array();
 
@@ -50,6 +51,7 @@ class SendEcardController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$itemId = $item->getId();
 
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'ecard.send');
@@ -111,6 +113,7 @@ class SendEcardController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$error = array_merge($error, $pluginErrors);
 
 					if (!$continue) {
@@ -134,6 +137,7 @@ class SendEcardController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $path) = $resize->fetchPath();
 
 			if ($ret) {
@@ -145,6 +149,7 @@ class SendEcardController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $canLink) = GalleryCoreApi::hasItemPermission($itemId, 'core.view', $anonymousUserId);
 
 			if ($ret) {
@@ -157,6 +162,7 @@ class SendEcardController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$urlGenerator =& $gallery->getUrlGenerator();
 			$link         = $canLink ? $urlGenerator->generateUrl(
 				array(
@@ -192,6 +198,7 @@ class SendEcardController extends GalleryController {
 			if (!empty($config['bcc'])) {
 				$headers['bcc'] = $config['bcc'];
 			}
+
 			GalleryUtilities::unsanitizeInputValues($headers, false);
 
 			$mime     = new Mail_mime("\n");
@@ -200,6 +207,7 @@ class SendEcardController extends GalleryController {
 			$messagePlain = $platform->file_get_contents(
 				__DIR__ . '/templates/Message.txt'
 			);
+
 			$messagePlain = EcardHelper::replaceKeywords($messagePlain, $dataPlain);
 			$mime->setTXTBody($messagePlain);
 
@@ -210,6 +218,7 @@ class SendEcardController extends GalleryController {
 				$messageHtml = $platform->file_get_contents(
 					__DIR__ . '/templates/Message.html'
 				);
+
 				$messageHtml = EcardHelper::replaceKeywords($messageHtml, $data);
 				$mime->setHTMLBody($messageHtml);
 
@@ -236,6 +245,7 @@ class SendEcardController extends GalleryController {
 			if (isset($headers['bcc'])) {
 				$tmp['bcc'] = $headers['bcc'];
 			}
+
 			$hdrs = '';
 
 			foreach ($mime->headers($tmp) as $key => $value) {
@@ -251,6 +261,7 @@ class SendEcardController extends GalleryController {
 				// Encode subject for UTF-8 display if any extended characters are present
 				$headers['subject'] = '=?utf-8?q?' . $buf . '?=';
 			}
+
 			$success = $platform->mail($headers['to'], $headers['subject'], $body, $hdrs);
 
 			if (!$success) {
@@ -288,6 +299,7 @@ class SendEcardController extends GalleryController {
 		} else {
 			$results['delegate']['view'] = 'ecard.SendEcard';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -315,6 +327,7 @@ class SendEcardView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		// Load our item
@@ -376,11 +389,13 @@ class SendEcardView extends GalleryView {
 		if (!empty($config['bcc'])) {
 			$SendEcard['bcc'] = $config['bcc'];
 		}
+
 		$SendEcard['header'] = EcardHelper::replaceKeywords($config['header'], $form);
 		$SendEcard['footer'] = EcardHelper::replaceKeywords($config['footer'], $form);
 
 		// Check if we should use validation plugins
-		$plugins                          = array();
+		$plugins = array();
+
 		list($ret, $useValidationPlugins) = EcardHelper::useValidationPlugins();
 
 		if ($ret) {
@@ -401,6 +416,7 @@ class SendEcardView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $data['file'], $data['l10Domain']) = $plugin->loadTemplate($form);
 
 				if ($ret) {

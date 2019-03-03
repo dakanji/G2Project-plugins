@@ -13,7 +13,6 @@
 // dependencies: module.tag.real.php                           //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 class getid3_write_real {
 	public $filename;
 	public $tag_data          = array();
@@ -108,6 +107,7 @@ class getid3_write_real {
 					while ($buffer = fread($fp_source, $this->fread_buffer_size)) {
 						fwrite($fp_temp, $buffer, strlen($buffer));
 					}
+
 					fclose($fp_temp);
 
 					if (copy($tempfilename, $this->filename)) {
@@ -116,16 +116,19 @@ class getid3_write_real {
 
 						return true;
 					}
+
 					unlink($tempfilename);
 					$this->errors[] = 'FAILED: copy(' . $tempfilename . ', ' . $this->filename . ')';
 				} else {
 					$this->errors[] = 'Could not fopen("' . $tempfilename . '", "wb")';
 				}
 			}
+
 			fclose($fp_source);
 
 			return false;
 		}
+
 		$this->errors[] = 'Could not fopen("' . $this->filename . '", "r+b")';
 
 		return false;
@@ -141,6 +144,7 @@ class getid3_write_real {
 				$oldCONTexists = true;
 			}
 		}
+
 		$newHeadersCount = $chunks[$chunkNameKeys['.RMF']]['headers_count'] + ($oldCONTexists ? 0 : 1);
 
 		$RMFchunk  = "\x00\x00"; // object version
@@ -171,6 +175,7 @@ class getid3_write_real {
 				}
 			}
 		}
+
 		$CONTdelta = strlen($new_CONT_tag_data) - $old_CONT_length;
 
 		$PROPchunk  = "\x00\x00"; // object version
@@ -196,8 +201,7 @@ class getid3_write_real {
 			$this->tag_data[$key] = substr($value, 0, 65535);
 		}
 
-		$CONTchunk = "\x00\x00"; // object version
-
+		$CONTchunk  = "\x00\x00"; // object version
 		$CONTchunk .= getid3_lib::BigEndian2String((!empty($this->tag_data['title']) ? strlen($this->tag_data['title']) : 0), 2);
 		$CONTchunk .= (!empty($this->tag_data['title']) ? strlen($this->tag_data['title']) : '');
 
@@ -215,7 +219,6 @@ class getid3_write_real {
 		}
 
 		$CONTchunk = 'CONT' . getid3_lib::BigEndian2String(strlen($CONTchunk) + 8, 4) . $CONTchunk; // CONT chunk identifier + chunk length
-
 		return $CONTchunk;
 	}
 
@@ -263,6 +266,7 @@ class getid3_write_real {
 					while ($buffer = fread($fp_source, $this->fread_buffer_size)) {
 						fwrite($fp_temp, $buffer, strlen($buffer));
 					}
+
 					fclose($fp_temp);
 
 					if (copy($tempfilename, $this->filename)) {
@@ -271,16 +275,19 @@ class getid3_write_real {
 
 						return true;
 					}
+
 					unlink($tempfilename);
 					$this->errors[] = 'FAILED: copy(' . $tempfilename . ', ' . $this->filename . ')';
 				} else {
 					$this->errors[] = 'Could not fopen("' . $tempfilename . '", "wb")';
 				}
 			}
+
 			fclose($fp_source);
 
 			return false;
 		}
+
 		$this->errors[] = 'Could not fopen("' . $this->filename . '", "r+b")';
 
 		return false;

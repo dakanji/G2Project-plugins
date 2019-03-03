@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 GalleryCoreApi::requireOnce('modules/migrate/classes/Gallery1DataParser.class');
 
 /**
@@ -90,7 +89,7 @@ class ChooseObjectsView extends GalleryView {
 
 		$defaultLanguage = GalleryTranslator::getme()->getLanguageCodeFromRequest();
 
-		$availableEncodings    = array(
+		$availableEncodings = array(
 			'af_ZA Afrikaans (ISO-8859-1)'                      => 'ISO-8859-1',
 			'bg_BG &#x0411;&#x044a;&#x043b;&#x0433;&#x0430;&#x0440;' .
 			'&#x0441;&#x043a;&#x0438; (CP1251)'                 => 'CP1251',
@@ -162,6 +161,7 @@ class ChooseObjectsView extends GalleryView {
 			'windows-1257'                                      => 'CP1257',
 			'Latin-1'                                           => 'ISO-8859-1',
 		);
+
 		$possibleEncodingMatch = '';
 
 		foreach ($availableEncodings as $encodingName => $encoding) {
@@ -169,6 +169,7 @@ class ChooseObjectsView extends GalleryView {
 				$possibleEncodingMatch = $encodingName;
 			}
 		}
+
 		$platform =& $gallery->getPlatform();
 		$slash    = $platform->getDirectorySeparator();
 
@@ -178,7 +179,8 @@ class ChooseObjectsView extends GalleryView {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
 
-		$existingUsers        = $newUsers        = array();
+		$existingUsers = $newUsers        = array();
+
 		list($ret, $allUsers) = Gallery1DataParser::getme()->getUserUids($albumsPath);
 
 		if ($ret) {
@@ -217,6 +219,7 @@ class ChooseObjectsView extends GalleryView {
 			foreach ($newUsers as $uid => $username) {
 				$form['migrateUser'][$uid] = null;
 			}
+
 			$form['destinationAlbumID'] = '';
 			$form['urlRedirect']        = 1;
 			$form['generateThumbnails'] = 1;
@@ -225,8 +228,10 @@ class ChooseObjectsView extends GalleryView {
 				'summary'     => 'blank',
 				'description' => 'blank',
 			);
-			$form['customFields']       = $form['skipCustomItemFields'] = 1;
+
+			$form['customFields'] = $form['skipCustomItemFields'] = 1;
 		}
+
 		list($ret, $g1AlbumTree) = $this->_createG1AlbumTree($albumsPath);
 
 		if ($ret) {
@@ -246,6 +251,7 @@ class ChooseObjectsView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$g2AlbumTree = GalleryUtilities::createAlbumTree($albums);
 
 		// See if customfield module is available

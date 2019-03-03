@@ -23,6 +23,7 @@ ini_set(
 	'include_path',
 	dirname(dirname(__FILE__)) . '/lib' . PATH_SEPARATOR . ini_get('include_path')
 );
+
 GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/Consumer.php');
 GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/FileStore.php');
 GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/SReg.php');
@@ -47,8 +48,10 @@ class OpenIdHelper {
 
 		if (!isset($consumer)) {
 			global $gallery;
+
 			$openIdDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules/openid';
-			list($ok)  = GalleryUtilities::guaranteeDirExists($openIdDir);
+
+			list($ok) = GalleryUtilities::guaranteeDirExists($openIdDir);
 
 			if (!$ok) {
 				return GalleryCoreApi::error(
@@ -159,7 +162,6 @@ class OpenIdHelper {
 		return array(null, $galleryIds);
 	}
 }
-
 
 class OpenIdSession // implements Auth_Yadis_PHPSession
 {

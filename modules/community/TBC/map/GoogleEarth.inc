@@ -82,9 +82,11 @@ class GoogleEarthView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		$phpVm = $gallery->getPhpVm();
 
-		$itemId           = GalleryUtilities::getRequestVariables('itemId');
+		$itemId = GalleryUtilities::getRequestVariables('itemId');
+
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 
 		if ($ret) {
@@ -117,8 +119,8 @@ class GoogleEarthView extends GalleryView {
 			$phpVm->header('Content-Length: ' . strlen($outstring));
 			echo $outstring;
 		}
-		// Should probably return some error that no child elements had valid GPS coordinates
 
+		// Should probably return some error that no child elements had valid GPS coordinates
 		return null;
 	}
 
@@ -149,6 +151,7 @@ class GoogleEarthView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// If the list of direct children wasn't empty
 			if (!empty($childIds)) {
 				// If we haven't already included this item in a parent folder
@@ -176,6 +179,7 @@ class GoogleEarthView extends GalleryView {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						$returnstring .= $childstring;
 					}
 
@@ -200,6 +204,7 @@ class GoogleEarthView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$returnstring .= $childitemstring;
 			}
 		}
@@ -227,6 +232,7 @@ class GoogleEarthView extends GalleryView {
 			GalleryUtilities::markup($item->getDescription(), 'strip'),
 			80
 		);
+
 		/** @todo If/when KML officially supports HTML in Snippet blocks, remove the 'strip' */
 		$returnstring = '<name><![CDATA[' . GalleryUtilities::markup($title)
 			. "]]></name>\n<description><![CDATA["
@@ -307,6 +313,7 @@ class GoogleEarthView extends GalleryView {
 				$goodcoords = ((abs($lat) < 90) and (abs($lon) < 180));
 			}
 		}
+
 		/*
 		 * Use sprintf and %F to force non-locale-aware float printing to avoid inadvertant
 		 * commas in the float values. Limit decimal places for range, tilt, heading. If %F is
@@ -327,6 +334,7 @@ class GoogleEarthView extends GalleryView {
 					$heading    = (float)$lookat[0];
 					$headingstr = sprintf('%.2F', $heading) == '' ? $lookat[0] : sprintf('%.2F', $heading);
 				}
+
 				/*
 				 * If at least two parameters, then #2 is the tilt in degrees.
 				 * Must be between 0 and 90 degrees
@@ -337,12 +345,14 @@ class GoogleEarthView extends GalleryView {
 					$tilt    = (float)$lookat[1];
 					$tiltstr = sprintf('%.2F', $tilt) == '' ? $lookat[1] : sprintf('%.2F', $tilt);
 				}
+
 				// If at least three parameters, then #3 is the range in meters. Must be > 0
 				if (count($lookat) >= 3 and !empty($lookat[2]) and $lookat[2] > 0) {
 					$range    = (float)$lookat[2];
 					$rangestr = sprintf('%.2F', $range) == '' ? $lookat[2] : sprintf('%.2F', $range);
 				}
 			}
+
 			$lonstr       = $posxy[1];
 			$latstr       = $posxy[0];
 			$returnstring = sprintf(
@@ -392,6 +402,7 @@ class GoogleEarthView extends GalleryView {
 				'htmlEntities' => false,
 			)
 		);
+
 		$hsitemLink = $urlGenerator->generateUrl(
 			array(
 				'view'   => 'core.ShowItem',

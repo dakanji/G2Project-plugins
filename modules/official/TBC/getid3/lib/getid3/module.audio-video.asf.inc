@@ -13,13 +13,11 @@
 // dependencies: module.audio-video.riff.php                   //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 
 class getid3_asf extends getid3_handler {
 	public function __construct(getID3 $getid3) {
 		parent::__construct($getid3);  // extends getid3_handler::__construct()
-
 		// initialize all GUID constants
 		$GUIDarray = $this->KnownGUIDs();
 
@@ -43,7 +41,6 @@ class getid3_asf extends getid3_handler {
 		$thisfile_asf['header_object'] = array();
 		$thisfile_asf_headerobject     = &$thisfile_asf['header_object'];
 
-
 		// ASF structure:
 		// * Header Object [required]
 		//   * File Properties Object [required]   (global file attributes)
@@ -55,7 +52,6 @@ class getid3_asf extends getid3_handler {
 		// * Data Object [required]
 		//   * Data Packets
 		// * Index Object
-
 		// Header Object: (mandatory, one only)
 		// Field Name                   Field Type   Size (bits)
 		// Object ID                    GUID         128             // GUID for header object - GETID3_ASF_Header_Object
@@ -63,7 +59,6 @@ class getid3_asf extends getid3_handler {
 		// Number of Header Objects     DWORD        32              // number of objects in header object
 		// Reserved1                    BYTE         8               // hardcoded: 0x01
 		// Reserved2                    BYTE         8               // hardcoded: 0x02
-
 		$info['fileformat'] = 'asf';
 
 		$this->fseek($info['avdataoffset']);
@@ -77,6 +72,7 @@ class getid3_asf extends getid3_handler {
 
 			return $this->error('ASF header GUID {' . $this->BytestringToGUID($thisfile_asf_headerobject['objectid']) . '} does not match expected "GETID3_ASF_Header_Object" GUID {' . $this->BytestringToGUID(GETID3_ASF_Header_Object) . '}');
 		}
+
 		$thisfile_asf_headerobject['objectsize']    = getid3_lib::LittleEndian2Int(substr($HeaderObjectData, 16, 8));
 		$thisfile_asf_headerobject['headerobjects'] = getid3_lib::LittleEndian2Int(substr($HeaderObjectData, 24, 4));
 		$thisfile_asf_headerobject['reserved1']     = getid3_lib::LittleEndian2Int(substr($HeaderObjectData, 28, 1));
@@ -113,7 +109,6 @@ class getid3_asf extends getid3_handler {
 					// Minimum Data Packet Size     DWORD        32              // in bytes. should be same as Maximum Data Packet Size. Invalid if Broadcast Flag == 1
 					// Maximum Data Packet Size     DWORD        32              // in bytes. should be same as Minimum Data Packet Size. Invalid if Broadcast Flag == 1
 					// Maximum Bitrate              DWORD        32              // maximum instantaneous bitrate in bits per second for entire file, including all data streams and ASF overhead
-
 					// shortcut
 					$thisfile_asf['file_properties_object'] = array();
 					$thisfile_asf_filepropertiesobject      = &$thisfile_asf['file_properties_object'];
@@ -180,11 +175,9 @@ class getid3_asf extends getid3_handler {
 					// Reserved                     DWORD        32              // reserved - set to zero
 					// Type-Specific Data           BYTESTREAM   variable        // type-specific format data, depending on value of Stream Type
 					// Error Correction Data        BYTESTREAM   variable        // error-correction-specific format data, depending on value of Error Correct Type
-
 					// There is one GETID3_ASF_Stream_Properties_Object for each stream (audio, video) but the
 					// stream number isn't known until halfway through decoding the structure, hence it
 					// it is decoded to a temporary variable and then stuck in the appropriate index later
-
 					$StreamPropertiesObjectData['offset']             = $NextObjectOffset + $offset;
 					$StreamPropertiesObjectData['objectid']           = $NextObjectGUID;
 					$StreamPropertiesObjectData['objectid_guid']      = $NextObjectGUIDtext;
@@ -248,7 +241,6 @@ class getid3_asf extends getid3_handler {
 					// Reserved Field 2             WORD         16              // hardcoded: 0x00000006
 					// Header Extension Data Size   DWORD        32              // in bytes. valid: 0, or > 24. equals object size minus 46
 					// Header Extension Data        BYTESTREAM   variable        // array of zero or more extended header objects
-
 					// shortcut
 					$thisfile_asf['header_extension_object'] = array();
 					$thisfile_asf_headerextensionobject      = &$thisfile_asf['header_extension_object'];
@@ -266,6 +258,7 @@ class getid3_asf extends getid3_handler {
 						//return false;
 						break;
 					}
+
 					$thisfile_asf_headerextensionobject['reserved_2'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
 					$offset                                          += 2;
 
@@ -274,6 +267,7 @@ class getid3_asf extends getid3_handler {
 						//return false;
 						break;
 					}
+
 					$thisfile_asf_headerextensionobject['extension_data_size'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 4));
 					$offset += 4;
 					$thisfile_asf_headerextensionobject['extension_data']        = substr($ASFHeaderData, $offset, $thisfile_asf_headerextensionobject['extension_data_size']);
@@ -283,6 +277,7 @@ class getid3_asf extends getid3_handler {
 					if ($unhandled_sections === 0) {
 						unset($thisfile_asf_headerextensionobject['extension_data']);
 					}
+
 					$offset += $thisfile_asf_headerextensionobject['extension_data_size'];
 
 					break;
@@ -302,7 +297,6 @@ class getid3_asf extends getid3_handler {
 					// * Codec Description          WCHAR        variable        // array of Unicode characters - description of format used to create the content
 					// * Codec Information Length   WORD         16              // number of Unicode characters stored in the Codec Information field
 					// * Codec Information          BYTESTREAM   variable        // opaque array of information bytes about the codec used to create the content
-
 					// shortcut
 					$thisfile_asf['codec_list_object'] = array();
 					$thisfile_asf_codeclistobject      = &$thisfile_asf['codec_list_object'];
@@ -320,6 +314,7 @@ class getid3_asf extends getid3_handler {
 						//return false;
 						break;
 					}
+
 					$thisfile_asf_codeclistobject['codec_entries_count'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 4));
 					$offset                                             += 4;
 
@@ -357,6 +352,7 @@ class getid3_asf extends getid3_handler {
 								if (!isset($thisfile_audio['bitrate']) && strstr($AudioCodecBitrate, 'kbps')) {
 									$thisfile_audio['bitrate'] = (int)(trim(str_replace('kbps', '', $AudioCodecBitrate)) * 1000);
 								}
+
 								//if (!isset($thisfile_video['bitrate']) && isset($thisfile_audio['bitrate']) && isset($thisfile_asf['file_properties_object']['max_bitrate']) && ($thisfile_asf_codeclistobject['codec_entries_count'] > 1)) {
 								if (empty($thisfile_video['bitrate']) && !empty($thisfile_audio['bitrate']) && !empty($info['bitrate'])) {
 									//$thisfile_video['bitrate'] = $thisfile_asf['file_properties_object']['max_bitrate'] - $thisfile_audio['bitrate'];
@@ -455,7 +451,6 @@ class getid3_asf extends getid3_handler {
 					// * Type Index                 WORD         16              // type of this command, as a zero-based index into the array of Command Types of this object
 					// * Command Name Length        WORD         16              // number of Unicode characters for Command Name
 					// * Command Name               WCHAR        variable        // array of Unicode characters - name of this command
-
 					// shortcut
 					$thisfile_asf['script_command_object'] = array();
 					$thisfile_asf_scriptcommandobject      = &$thisfile_asf['script_command_object'];
@@ -473,6 +468,7 @@ class getid3_asf extends getid3_handler {
 						//return false;
 						break;
 					}
+
 					$thisfile_asf_scriptcommandobject['commands_count'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
 					$offset                                            += 2;
 					$thisfile_asf_scriptcommandobject['command_types_count'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
@@ -518,7 +514,6 @@ class getid3_asf extends getid3_handler {
 					// * Marker Description Length  DWORD        32              // number of bytes in Marker Description field
 					// * Marker Description         WCHAR        variable        // array of Unicode characters - description of marker entry
 					// * Padding                    BYTESTREAM   variable        // optional padding bytes
-
 					// shortcut
 					$thisfile_asf['marker_object'] = array();
 					$thisfile_asf_markerobject     = &$thisfile_asf['marker_object'];
@@ -536,6 +531,7 @@ class getid3_asf extends getid3_handler {
 
 						break;
 					}
+
 					$thisfile_asf_markerobject['markers_count'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 4));
 					$offset                                    += 4;
 					$thisfile_asf_markerobject['reserved_2']    = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
@@ -546,6 +542,7 @@ class getid3_asf extends getid3_handler {
 
 						break;
 					}
+
 					$thisfile_asf_markerobject['name_length'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
 					$offset                                  += 2;
 					$thisfile_asf_markerobject['name']        = substr($ASFHeaderData, $offset, $thisfile_asf_markerobject['name_length']);
@@ -584,7 +581,6 @@ class getid3_asf extends getid3_handler {
 					// Exlusion Type                GUID         128             // nature of mutual exclusion relationship. one of: (GETID3_ASF_Mutex_Bitrate, GETID3_ASF_Mutex_Unknown)
 					// Stream Numbers Count         WORD         16              // number of video streams
 					// Stream Numbers               WORD         variable        // array of mutually exclusive video stream numbers. 1 <= valid <= 127
-
 					// shortcut
 					$thisfile_asf['bitrate_mutual_exclusion_object'] = array();
 					$thisfile_asf_bitratemutualexclusionobject       = &$thisfile_asf['bitrate_mutual_exclusion_object'];
@@ -602,6 +598,7 @@ class getid3_asf extends getid3_handler {
 						//return false;
 						break;
 					}
+
 					$thisfile_asf_bitratemutualexclusionobject['stream_numbers_count'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
 					$offset += 2;
 
@@ -620,7 +617,6 @@ class getid3_asf extends getid3_handler {
 					// Error Correction Type        GUID         128             // type of error correction. one of: (GETID3_ASF_No_Error_Correction, GETID3_ASF_Audio_Spread)
 					// Error Correction Data Length DWORD        32              // number of bytes in Error Correction Data field
 					// Error Correction Data        BYTESTREAM   variable        // structure depends on value of Error Correction Type field
-
 					// shortcut
 					$thisfile_asf['error_correction_object'] = array();
 					$thisfile_asf_errorcorrectionobject      = &$thisfile_asf['error_correction_object'];
@@ -649,7 +645,6 @@ class getid3_asf extends getid3_handler {
 							// Virtual Chunk Length         WORD         16              // size of largest audio payload found in audio stream
 							// Silence Data Length          WORD         16              // number of bytes in Silence Data field
 							// Silence Data                 BYTESTREAM   variable        // hardcoded: 0x00 * (Silence Data Length) bytes
-
 							$thisfile_asf_errorcorrectionobject['span'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 1));
 							$offset                                    += 1;
 							$thisfile_asf_errorcorrectionobject['virtual_packet_length'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
@@ -686,7 +681,6 @@ class getid3_asf extends getid3_handler {
 					// Copyright                    WCHAR        16              // array of Unicode characters - Copyright
 					// Description                  WCHAR        16              // array of Unicode characters - Description
 					// Rating                       WCHAR        16              // array of Unicode characters - Rating
-
 					// shortcut
 					$thisfile_asf['content_description_object'] = array();
 					$thisfile_asf_contentdescriptionobject      = &$thisfile_asf['content_description_object'];
@@ -750,7 +744,6 @@ class getid3_asf extends getid3_handler {
 																					// 0x0005 = WORD           (WORD,  16 bits)
 					// * Descriptor Value Length    WORD         16              // number of bytes stored in Descriptor Value field
 					// * Descriptor Value           variable     variable        // value for Content Descriptor
-
 					// shortcut
 					$thisfile_asf['extended_content_description_object'] = array();
 					$thisfile_asf_extendedcontentdescriptionobject       = &$thisfile_asf['extended_content_description_object'];
@@ -896,6 +889,7 @@ class getid3_asf extends getid3_handler {
 								foreach ($WMpicture as $key => $value) {
 									$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current[$key] = $value;
 								}
+
 								unset($WMpicture);
 								/*
 								$wm_picture_offset = 0;
@@ -930,9 +924,11 @@ class getid3_asf extends getid3_handler {
 								if (!empty($imagechunkcheck)) {
 									$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['image_mime'] = image_type_to_mime_type($imagechunkcheck[2]);
 								}
+
 								if (!isset($thisfile_asf_comments['picture'])) {
 									$thisfile_asf_comments['picture'] = array();
 								}
+
 								$thisfile_asf_comments['picture'][] = array('data'=>$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['data'], 'image_mime'=>$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['image_mime']);
 								*/
 								break;
@@ -967,7 +963,6 @@ class getid3_asf extends getid3_handler {
 					// * * Stream Number            bits         7  (0x007F)     // number of this stream
 					// * * Reserved                 bits         9  (0xFF80)     // hardcoded: 0
 					// * Average Bitrate            DWORD        32              // in bits per second
-
 					// shortcut
 					$thisfile_asf['stream_bitrate_properties_object'] = array();
 					$thisfile_asf_streambitratepropertiesobject       = &$thisfile_asf['stream_bitrate_properties_object'];
@@ -995,7 +990,6 @@ class getid3_asf extends getid3_handler {
 					// Object ID                    GUID         128             // GUID for Padding object - GETID3_ASF_Padding_Object
 					// Object Size                  QWORD        64              // size of Padding object, including 24 bytes of ASF Padding Object header
 					// Padding Data                 BYTESTREAM   variable        // ignore
-
 					// shortcut
 					$thisfile_asf['padding_object'] = array();
 					$thisfile_asf_paddingobject     = &$thisfile_asf['padding_object'];
@@ -1024,6 +1018,7 @@ class getid3_asf extends getid3_handler {
 					} else {
 						$info['warning'][] = 'unknown GUID {' . $NextObjectGUIDtext . '} in ASF header at offset ' . ($offset - 16 - 8);
 					}
+
 					$offset += ($NextObjectSize - 16 - 8);
 
 					break;
@@ -1079,7 +1074,6 @@ class getid3_asf extends getid3_handler {
 						// Bits per sample              WORD         16              // bits per sample of mono data. set to zero for variable bitrate codecs. defined as wBitsPerSample field of WAVEFORMATEX structure
 						// Codec Specific Data Size     WORD         16              // size in bytes of Codec Specific Data buffer - defined as cbSize field of WAVEFORMATEX structure
 						// Codec Specific Data          BYTESTREAM   variable        // array of codec-specific data bytes
-
 						// shortcut
 						$thisfile_asf['audio_media'][$streamnumber] = array();
 						$thisfile_asf_audiomedia_currentstream      = &$thisfile_asf['audio_media'][$streamnumber];
@@ -1115,6 +1109,7 @@ class getid3_asf extends getid3_handler {
 								$thisfile_audio['bitrate'] += $thisfile_asf_audiomedia_currentstream['bitrate'];
 							}
 						}
+
 						$thisfile_audio['streams'][$streamnumber]               = $thisfile_asf_audiomedia_currentstream;
 						$thisfile_audio['streams'][$streamnumber]['wformattag'] = $thisfile_asf_audiomedia_currentstream['raw']['wFormatTag'];
 						$thisfile_audio['streams'][$streamnumber]['lossless']   = $thisfile_audio['lossless'];
@@ -1148,7 +1143,6 @@ class getid3_asf extends getid3_handler {
 						// * Colors Used Count          DWORD        32              // number of color indexes in the color table that are actually used - defined as biClrUsed field of BITMAPINFOHEADER structure
 						// * Important Colors Count     DWORD        32              // number of color index required for displaying bitmap. if zero, all colors are required. defined as biClrImportant field of BITMAPINFOHEADER structure
 						// * Codec Specific Data        BYTESTREAM   variable        // array of codec-specific data bytes
-
 						// shortcut
 						$thisfile_asf['video_media'][$streamnumber] = array();
 						$thisfile_asf_videomedia_currentstream      = &$thisfile_asf['video_media'][$streamnumber];
@@ -1232,7 +1226,6 @@ class getid3_asf extends getid3_handler {
 					// File ID                          GUID         128             // unique identifier. identical to File ID field in Header Object
 					// Total Data Packets               QWORD        64              // number of Data Packet entries in Data Object. invalid if FilePropertiesObject.BroadcastFlag == 1
 					// Reserved                         WORD         16              // hardcoded: 0x0101
-
 					// shortcut
 					$thisfile_asf['data_object'] = array();
 					$thisfile_asf_dataobject     = &$thisfile_asf['data_object'];
@@ -1265,7 +1258,6 @@ class getid3_asf extends getid3_handler {
 					// * * Error Correction Length Type bits         2               // number of bits for size of the error correction data. hardcoded: 00
 					// * * Error Correction Present     bits         1               // If set, use Opaque Data Packet structure, else use Payload structure
 					// * Error Correction Data
-
 					$info['avdataoffset'] = $this->ftell();
 					$this->fseek(($thisfile_asf_dataobject['objectsize'] - 50), SEEK_CUR); // skip actual audio/video data
 					$info['avdataend'] = $this->ftell();
@@ -1284,7 +1276,6 @@ class getid3_asf extends getid3_handler {
 					// Index Entries                    array of:    variable        //
 					// * Packet Number                  DWORD        32              // number of the Data Packet associated with this index entry
 					// * Packet Count                   WORD         16              // number of Data Packets to sent at this index entry
-
 					// shortcut
 					$thisfile_asf['simple_index_object'] = array();
 					$thisfile_asf_simpleindexobject      = &$thisfile_asf['simple_index_object'];
@@ -1325,7 +1316,6 @@ class getid3_asf extends getid3_handler {
 					// Index Entry Time Interval        DWORD        32              // Specifies the time interval between each index entry in ms.
 					// Index Specifiers Count           WORD         16              // Specifies the number of Index Specifiers structures in this Index Object.
 					// Index Blocks Count               DWORD        32              // Specifies the number of Index Blocks structures in this Index Object.
-
 					// Index Entry Time Interval        DWORD        32              // Specifies the time interval between index entries in milliseconds.  This value cannot be 0.
 					// Index Specifiers Count           WORD         16              // Specifies the number of entries in the Index Specifiers list.  Valid values are 1 and greater.
 					// Index Specifiers                 array of:    varies          //
@@ -1339,7 +1329,6 @@ class getid3_asf extends getid3_handler {
 					// * Block Positions                QWORD        varies          // Specifies a list of byte offsets of the beginnings of the blocks relative to the beginning of the first Data Packet (i.e., the beginning of the Data Object + 50 bytes). The number of entries in this list is specified by the value of the Index Specifiers Count field. The order of those byte offsets is tied to the order in which Index Specifiers are listed.
 					// * Index Entries                  array of:    varies          //
 					// * * Offsets                      DWORD        varies          // An offset value of 0xffffffff indicates an invalid offset value
-
 					// shortcut
 					$thisfile_asf['asf_index_object'] = array();
 					$thisfile_asf_asfindexobject      = &$thisfile_asf['asf_index_object'];
@@ -1391,7 +1380,6 @@ class getid3_asf extends getid3_handler {
 
 					break;
 
-
 				default:
 					// Implementations shall ignore any standard or non-standard object that they do not know how to handle.
 					if ($this->GUIDname($NextObjectGUIDtext)) {
@@ -1399,6 +1387,7 @@ class getid3_asf extends getid3_handler {
 					} else {
 						$info['warning'][] = 'unknown GUID {' . $NextObjectGUIDtext . '} in ASF body at offset ' . ($this->ftell() - 16 - 8);
 					}
+
 					$this->fseek(($NextObjectSize - 16 - 8), SEEK_CUR);
 
 					break;
@@ -1519,6 +1508,7 @@ class getid3_asf extends getid3_handler {
 				}
 			}
 		}
+
 		$info['bitrate'] = (isset($thisfile_audio['bitrate']) ? $thisfile_audio['bitrate'] : 0) + (isset($thisfile_video['bitrate']) ? $thisfile_video['bitrate'] : 0);
 
 		if ((!isset($info['playtime_seconds']) || ($info['playtime_seconds'] <= 0)) && ($info['bitrate'] > 0)) {
@@ -1682,10 +1672,8 @@ class getid3_asf extends getid3_handler {
 		// next 2 bytes are appended in little-endian order
 		// next 2 bytes are appended in big-endian order
 		// next 6 bytes are appended in big-endian order
-
 		// AaBbCcDd-EeFf-GgHh-IiJj-KkLlMmNnOoPp is stored as this 16-byte string:
 		// $Dd $Cc $Bb $Aa $Ff $Ee $Hh $Gg $Ii $Jj $Kk $Ll $Mm $Nn $Oo $Pp
-
 		$hexbytecharstring  = chr(hexdec(substr($GUIDstring, 6, 2)));
 		$hexbytecharstring .= chr(hexdec(substr($GUIDstring, 4, 2)));
 		$hexbytecharstring .= chr(hexdec(substr($GUIDstring, 2, 2)));
@@ -1771,6 +1759,7 @@ class getid3_asf extends getid3_handler {
 				0x13 => 'Band Logotype',
 				0x14 => 'Publisher Logotype',
 			);
+
 			$lookup = array_map(
 				function ($str) {
 					return getid3_lib::iconv_fallback('UTF-8', 'UTF-16LE', $str);
@@ -1784,7 +1773,6 @@ class getid3_asf extends getid3_handler {
 
 	public function HeaderExtensionObjectDataParse(&$asf_header_extension_object_data, &$unhandled_sections) {
 		// http://msdn.microsoft.com/en-us/library/bb643323.aspx
-
 		$offset                      = 0;
 		$objectOffset                = 0;
 		$HeaderExtensionObjectParsed = array();
@@ -2015,6 +2003,7 @@ class getid3_asf extends getid3_handler {
 							foreach ($WMpicture as $key => $value) {
 								$descriptionRecord['data'] = $WMpicture;
 							}
+
 							unset($WMpicture);
 						}
 
@@ -2034,6 +2023,7 @@ class getid3_asf extends getid3_handler {
 
 					break;
 			}
+
 			$HeaderExtensionObjectParsed[] = $thisObject;
 
 			$objectOffset += $thisObject['size'];
@@ -2064,7 +2054,6 @@ class getid3_asf extends getid3_handler {
 		//  DWORD  dwDataLen;
 		//  BYTE*  pbData;
 		//} WM_PICTURE;
-
 		$WMpicture = array();
 
 		$offset                     = 0;
@@ -2105,6 +2094,7 @@ class getid3_asf extends getid3_handler {
 		if (!isset($this->getid3->info['asf']['comments']['picture'])) {
 			$this->getid3->info['asf']['comments']['picture'] = array();
 		}
+
 		$this->getid3->info['asf']['comments']['picture'][] = array(
 			'data'       => $WMpicture['data'],
 			'image_mime' => $WMpicture['image_mime'],

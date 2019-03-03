@@ -34,6 +34,7 @@ class TryLogoutView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Ask browser to authenticate with bogus authtype
@@ -44,7 +45,7 @@ class TryLogoutView extends GalleryView {
 		$TryLogout = array();
 
 		foreach (array('scriptUrl', 'hrefUrl') as $key) {
-			$url             = $urlGenerator->generateUrl(
+			$url = $urlGenerator->generateUrl(
 				array(
 					'view' => 'httpauth.FinishLogout',
 				),
@@ -53,6 +54,7 @@ class TryLogoutView extends GalleryView {
 					'htmlEntities' => $key == 'hrefUrl',
 				)
 			);
+
 			$TryLogout[$key] = HttpAuthHelper::addHttpAuthToUrl($url, '__LOGOUT__' . mt_rand(), mt_rand());
 		}
 

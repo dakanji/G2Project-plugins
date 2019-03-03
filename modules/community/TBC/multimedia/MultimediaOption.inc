@@ -38,6 +38,7 @@ class MultimediaOption extends ItemAddOption {
 	 */
 	public function handleRequestAfterAdd($form, $items) {
 		global $gallery;
+
 		$storage = &$gallery->getStorage();
 		$errors  = $multimediaItems  = array();
 
@@ -71,6 +72,7 @@ class MultimediaOption extends ItemAddOption {
 				}
 
 				$item->setRenderer('MultimediaRenderer');
+
 				$ret = $item->save();
 
 				if ($ret) {
@@ -85,6 +87,7 @@ class MultimediaOption extends ItemAddOption {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ret = $storage->checkPoint();
 
 			if ($ret) {

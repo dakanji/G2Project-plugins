@@ -66,6 +66,7 @@ class Getid3Module extends GalleryModule {
 		if (!isset($currentVersion)) {
 			// Initial install
 			GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
+
 			$ret = Getid3Helper::setDefaultProperties(GETID3_SUMMARY);
 
 			if ($ret) {
@@ -160,7 +161,6 @@ class Getid3Module extends GalleryModule {
 			return $ret;
 		}
 
-
 		return null;
 	}
 
@@ -169,6 +169,7 @@ class Getid3Module extends GalleryModule {
 	 */
 	public function activate($postActivationEvent = true) {
 		global $gallery;
+
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'Getid3',
 			array('video/x-msvideo'),

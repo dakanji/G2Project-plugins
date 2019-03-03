@@ -219,6 +219,7 @@ function Auth_Yadis_getXRDExpiration($xrd_element, $default = null) {
 	if ($expires_element === null) {
 		return $default;
 	}
+
 	$expires_string = $expires_element->text;
 
 	// Will raise ValueError if the string is not the expected
@@ -475,6 +476,7 @@ class Auth_Yadis_XRDS {
 					if (!array_key_exists($pri, $filtered)) {
 						$filtered[$pri] = array();
 					}
+
 					$filtered[$pri][] = $service;
 				}
 			}

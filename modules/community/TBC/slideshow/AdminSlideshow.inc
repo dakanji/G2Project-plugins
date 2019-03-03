@@ -59,11 +59,13 @@ class AdminSlideshowController extends GalleryController {
 				if ($ret->getErrorCode() & ERROR_STORAGE_FAILURE) {
 					return array($ret, null);
 				}
+
 				// It should be safe to swallow non storage failures.
 				$status['downloadFailed'] = 1;
 			} else {
 				$status['installed'] = $version;
-				$ret                 = GalleryCoreApi::setPluginParameter(
+
+				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'slideshow',
 					'piclens.version',
@@ -90,6 +92,7 @@ class AdminSlideshowController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$status['uninstalled'] = 1;
 
 			$ret = GalleryCoreApi::removePluginParameter('module', 'slideshow', 'piclens.version');
@@ -154,7 +157,8 @@ class AdminSlideshowView extends GalleryView {
 
 		if (empty($info)) {
 			$update = null;
-			$ret    = GalleryCoreApi::addEventLogEntry(
+
+			$ret = GalleryCoreApi::addEventLogEntry(
 				'slideshow',
 				'Unable to get latest piclens info',
 				''
@@ -173,6 +177,7 @@ class AdminSlideshowView extends GalleryView {
 				'update'  => $update,
 			),
 		);
+
 		$template->setVariable('AdminSlideshow', $AdminSlideshow);
 		$template->setVariable('controller', 'slideshow.AdminSlideshow');
 

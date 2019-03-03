@@ -33,6 +33,7 @@ class MembersProfileView extends GalleryView {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/members/classes/GalleryMembersHelper.class');
+
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());
 
 		if ($ret) {
@@ -68,6 +69,7 @@ class MembersProfileView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$MembersProfile['user'] = (array)$user;
 
 		list($ret, $lastItems) = GalleryMembersHelper::fetchLastUserItems($user->getId(), 0, 5, ORDER_DESCENDING);
@@ -87,6 +89,7 @@ class MembersProfileView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$MembersProfile['daysSinceCreation'] = $daysSinceCreation;
 
 		list($ret, $canViewProfileEmail) = GalleryMembersHelper::canViewProfileEmail($gallery->getActiveUserId());
@@ -94,6 +97,7 @@ class MembersProfileView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$MembersProfile['canViewProfileEmail'] = $canViewProfileEmail;
 
 		$template->setVariable('MembersProfile', $MembersProfile);

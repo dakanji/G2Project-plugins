@@ -41,6 +41,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 	 */
 	public function render($format, $entity, $item, $params) {
 		global $gallery;
+
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
 
 		if ($format != 'HTML' || $entity->getMimeType() != 'audio/mpeg') {
@@ -60,12 +61,13 @@ class MP3AudioRenderer extends GalleryRenderer {
 				'htmlEntities'   => false,
 			)
 		);
-		$flashVars    = 'mp3Url=' . urlencode($src);
+
+		$flashVars = 'mp3Url=' . urlencode($src);
 		/*
 		 * Including SWFObject<http://blog.deconcept.com/swfobject/> to defeat the
 		 * "Click to activate..." in IE
 		 */
-		$SWFObjectUrl      = $urlGenerator->generateUrl(
+		$SWFObjectUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/mp3audio/lib/swfobject.js',
 			),
@@ -73,6 +75,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
+
 		$expressInstallUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/mp3audio/lib/expressinstall.swf',
@@ -81,7 +84,8 @@ class MP3AudioRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$playerUrl         = $urlGenerator->generateUrl(
+
+		$playerUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/mp3audio/lib/G2mp3.swf',
 			),
@@ -96,21 +100,19 @@ class MP3AudioRenderer extends GalleryRenderer {
 
 		// Uncomment the next line to allow download button. Default: false
 		//$flashVars .= '&allowDownload=true';
-
 		/*
 		 * Uncomment the next line to allow the share button (also the swfUrl below).
 		 * Default: false
 		 */
 		//$flashVars .= '&share=true';
-
 		// To allow for sharing we must also pass the playerUrl
 		//$flashVars .= '&swfUrl=' . urlencode($playerUrl);
+		$itemId = $item->getId();
 
-		$itemId                = $item->getId();
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if (!$ret && !empty($thumbnail)) {
-			$thumbUrl   = $urlGenerator->generateUrl(
+			$thumbUrl = $urlGenerator->generateUrl(
 				array(
 					'view'         => 'core.DownloadItem',
 					'itemId'       => $thumbnail[$itemId]->getId(),
@@ -122,6 +124,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 					'htmlEntities'   => false,
 				)
 			);
+
 			$flashVars .= '&thumbUrl=' . urlencode($thumbUrl);
 		}
 
@@ -150,6 +153,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 		) as $key => $value) {
 			$flashVars .= '&' . $key . '=' . urlencode($value);
 		}
+
 		$jsWarning = $module->translate('JavaScript required to view this content.');
 
 		return sprintf(

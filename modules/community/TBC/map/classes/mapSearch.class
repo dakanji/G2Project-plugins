@@ -85,6 +85,7 @@ class mapSearch extends GallerySearchInterface_1_0 {
 				),
 			);
 		}
+
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
 		$countQuery = sprintf(
@@ -132,6 +133,7 @@ class mapSearch extends GallerySearchInterface_1_0 {
 		if ($ret) {
 			return $ret;
 		}
+
 		$result  = $results->nextResult();
 		$numRows = (int)$result[0];
 

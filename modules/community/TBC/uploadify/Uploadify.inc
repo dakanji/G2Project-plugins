@@ -81,12 +81,14 @@ class UploadifyController extends GalleryController {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
-		$controller       = new ItemAddController();
+		$controller = new ItemAddController();
+
 		list($ret, $item) = $controller->getItem();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$itemId = $item->getId();
 		// Make sure we have permission to add to this item
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.addDataItem');
@@ -196,7 +198,6 @@ class UploadifyController extends GalleryController {
 		$base     = GalleryUtilities::getFileBase($filename);
 
 		//$this->_log(print_r($_REQUEST,true));
-
 		$title       = (isset($form['set']['title']) && $form['set']['title'] == 1) ? $base : '';
 		$summary     = (isset($form['set']['summary']) && $form['set']['summary'] == 1) ? $base : '';
 		$description = (isset($form['set']['description']) && $form['set']['description'] == 1) ? $base : '';
@@ -213,6 +214,7 @@ class UploadifyController extends GalleryController {
 			if (!$tmpFile) {
 				return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 			}
+
 			$needToDeleteTmpFile = true;
 		} else {
 			$tmpFile             = $file['tmp_name'];
@@ -248,6 +250,7 @@ class UploadifyController extends GalleryController {
 			$optionInstances = $this->_optionInstances;
 		} else {
 			GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
+
 			list($ret, $optionInstances) = ItemAddOption::getAllAddOptions();
 
 			if ($ret) {
@@ -273,6 +276,7 @@ class UploadifyController extends GalleryController {
 			 * because of quota limitations, then we'll get an error that we should report back.
 			 */
 		}
+
 		// Check if buildResizes is checked and execute.
 		if (isset($form['buildResizes']) && $form['buildResizes'] == 1) {
 			list($ret) = $this->_runBuildResizes($newItem);
@@ -291,12 +295,14 @@ class UploadifyController extends GalleryController {
 		if (is_array($logentry)) {
 			$logentry = implode("\n", $logentry);
 		}
+
 		$logentry  = str_replace(array('<?', '?>'), array('(@', '@)'), $logentry);
 		$timestamp = strftime('%c');
 		fwrite(
 			fopen($gallery->getConfig('data.gallery.base') . 'tmp/uploadify.log', 'a'),
 			$timestamp . ': ' . $logentry . "\n"
 		);
+
 		chmod($gallery->getConfig('data.gallery.base') . 'tmp/uploadify.log', 0777);
 	}
 
@@ -318,6 +324,7 @@ class UploadifyController extends GalleryController {
 		if ($ret) {
 			return $ret;
 		}
+
 		$resizesTable = array();
 
 		foreach ($resizesSet as $itemId => $resizes) {
@@ -362,6 +369,7 @@ class UploadifyController extends GalleryController {
 		if ($ret) {
 			return $ret;
 		}
+
 		$mimeType = $source->getMimeType();
 
 		/*
@@ -386,12 +394,14 @@ class UploadifyController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			$resize = $resizePrefs[$albumId][$i];
 
 			// Validate toolkit support before adding back the resizes
 			if (empty($resize[$mimeType]['operations'])) {
 				continue;
 			}
+
 			$operations = $resize[$mimeType]['operations'];
 
 			// Special case to make sure that we don't upsample photos
@@ -411,16 +421,19 @@ class UploadifyController extends GalleryController {
 				if ($ret) {
 					return $ret;
 				}
+
 				unset($resizesTable[$itemId][$operations]);
 			} else {
 				// Create resize with these settings on next pass
 				$newResizes[] = $resize;
 			}
 		}
+
 		// Add new resizes, using existing derivative entities until we run out
 		foreach ($newResizes as $resize) {
 			if (!empty($resizesTable[$itemId])) {
-				$derivative         = array_shift($resizesTable[$itemId]);
+				$derivative = array_shift($resizesTable[$itemId]);
+
 				list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($derivative->getId());
 
 				if ($ret) {
@@ -469,8 +482,10 @@ class UploadifyController extends GalleryController {
 				if ($ret) {
 					return $ret;
 				}
+
 				$lockId = null;
 			}
+
 			// Build if requested
 			list($ret) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent(
 				$derivative->getId()
@@ -480,6 +495,7 @@ class UploadifyController extends GalleryController {
 				return $ret;
 			}
 		}
+
 		// Remove any leftover resizes
 		if (isset($resizesTable[$itemId])) {
 			foreach ($resizesTable[$itemId] as $resize) {
@@ -493,6 +509,7 @@ class UploadifyController extends GalleryController {
 				}
 			}
 		}
+
 		$ret = $storage->checkPoint();
 
 		if ($ret) {

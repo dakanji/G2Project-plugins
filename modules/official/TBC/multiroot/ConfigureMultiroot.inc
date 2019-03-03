@@ -73,6 +73,7 @@ class ConfigureMultirootView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -101,11 +102,13 @@ class ConfigureMultirootView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds, 'GalleryAlbumItem');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$multiroot['albumTree'] = GalleryUtilities::createAlbumTree($albums);
 
 		if (isset($form['generate']['go'])) {
@@ -155,6 +158,7 @@ class ConfigureMultirootView extends GalleryView {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$multiroot['createdUser'] = true;
 				} else {
 					return array($ret, null);
@@ -189,12 +193,15 @@ class ConfigureMultirootView extends GalleryView {
 		if (!isset($user)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
+
 		$ret = $user->create($userName);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$user->setHashedPassword('nopasswd');
+
 		$ret = $user->save();
 
 		if ($ret) {
@@ -206,6 +213,7 @@ class ConfigureMultirootView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ret = GalleryCoreApi::removeUserFromGroup($user->getId(), $allUserGroupId);
 
 		if ($ret) {

@@ -47,6 +47,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 	 */
 	public function run() {
 		global $gallery;
+
 		$templateAdapter =& $gallery->getTemplateAdapter();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'mranalysis');
@@ -61,10 +62,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 			0
 		);
 
-
-
 		$items = KeywordAnalysis::get_item_list();
-
 
 		$result = array();
 
@@ -93,7 +91,6 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 					if (!in_array($keyword, $keywordsadded_to_this_item)) {
 						//print '<br>-----' . $reason . ': Change ' . $sourcekeyword . ' -> ' . $keyword;
 						//print '<br>-----' . $reason;
-
 						$ret = KeywordAnalysis::correctkeyword($itemid, $sourcekeyword, $keyword);
 
 						if (!$ret) {
@@ -135,12 +132,14 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 				'arg1' => $total,
 			)
 		);
+
 		$result[] = $module->translate(
 			array(
 				'text' => '%d items changed',
 				'arg1' => $itemschanged,
 			)
 		);
+
 		$result[] = $module->translate(
 			array(
 				'text' => '%d keywords changed',
@@ -153,6 +152,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 
 	public function _updateProgress(&$module, $i, $total) {
 		global $gallery;
+
 		$storage         =& $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
 
@@ -163,6 +163,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 				'arg2' => $total,
 			)
 		);
+
 		$templateAdapter->updateProgressBar($message, '', $i / $total);
 		// Release locks (avoid too many open files for flock based locking)
 		$ret = $storage->checkPoint();
@@ -170,6 +171,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 		if ($ret) {
 			return $ret;
 		}
+
 		$gallery->guaranteeTimeLimit(120);
 
 		return null;
@@ -179,6 +181,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 		if ($count == 1) {
 			echo '<br/><h3>' . $module->translate('Debug output for failed items:') . '</h3>';
 		}
+
 		echo '<pre class="gcBackground1 gcBorder2">' . $message . '</pre>';
 	}
 

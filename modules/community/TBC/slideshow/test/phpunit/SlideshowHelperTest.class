@@ -58,8 +58,9 @@ class SlideshowHelperTest extends GalleryTestCase {
 		$itemIds = array();
 
 		foreach ($optionList as $options) {
-			$options          = explode(',', $options);
-			$entityType       = in_array('nonphoto', $options) ? 'GalleryUnknownItem' : 'GalleryPhotoItem';
+			$options    = explode(',', $options);
+			$entityType = in_array('nonphoto', $options) ? 'GalleryUnknownItem' : 'GalleryPhotoItem';
+
 			list($ret, $item) = $this->_createRandomDataItem(
 				$album->getId(),
 				'image/png',
@@ -110,7 +111,8 @@ class SlideshowHelperTest extends GalleryTestCase {
 
 					case 'resize_100':
 					case 'resize_200':
-						$size                  = $option == 'resize_100' ? 100 : 200;
+						$size = $option == 'resize_100' ? 100 : 200;
+
 						list($ret, $resizes[]) = $this->_createDerivative(
 							$item,
 							$item->getId(),
@@ -181,6 +183,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			),
 			$result
 		);
+
 		$this->assertEquals(1, $start, 'Should start at second photo');
 	}
 
@@ -214,6 +217,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			),
 			$result
 		);
+
 		$this->assertEquals(1, $start, 'Should start at second photo');
 	}
 
@@ -302,6 +306,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			),
 			$result
 		);
+
 		$this->assertEquals(1, $start, 'Should start at second photo');
 	}
 
@@ -434,6 +439,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$itemInfo[0]['item']->getId(),
 			$gallery->getActiveUserId(),
@@ -477,6 +483,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$itemInfo[0]['item']->getId(),
 			$gallery->getActiveUserId(),
@@ -532,6 +539,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$result,
 			'Photo data should match'
 		);
+
 		$this->assertEquals(0, $start, 'Should start at first photo');
 	}
 
@@ -590,6 +598,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$prevOffset,
 			'Previous page offset should match'
 		);
+
 		$this->assertEquals(null, $nextOffset, 'Should be no next page');
 	}
 

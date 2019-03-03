@@ -46,6 +46,7 @@ class AdminModerationController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$userid = $gallery->getActiveUserId();
 
 		if (isset($form)) {
@@ -59,6 +60,7 @@ class AdminModerationController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					//Add my permissions
 					$ret = GalleryCoreApi::addGroupPermission($itemtoapprove_int, $core['id.adminGroup'], 'core.all');
 
@@ -92,27 +94,32 @@ class AdminModerationController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					list($ret, $parentEntity) = GalleryCoreApi::loadEntitiesById($thisEntity->getParentId());
 
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					/*          list ($ret, $rootEntity) = GalleryCoreApi::loadEntitiesById($parentEntity->getParentId());
 					if ($ret) {
 					return array($ret, null);
 					}
+
 					list ($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
 					if ($ret) {
 					return array($ret, null);
 					}
+
 					if ($rootEntity->getId() == $rootId) { */
+
 					$ret = GalleryCoreApi::addGroupPermission($parentEntity->getId(), $groupId, $permission);
 
 					if ($ret) {
 						return array($ret, null);
 					}
-					//          }
 
+					//          }
 					/* Check if the comments module is active */        //j0yst1ck mod
 					list($ret, $moduleStatus) = GalleryCoreApi::fetchPluginStatus('module');
 
@@ -128,6 +135,7 @@ class AdminModerationController extends GalleryController {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						$ret = GalleryCoreApi::addGroupPermission($itemtoapprove_int, $core['id.allUserGroup'], array('comment.add'));
 
 						if ($ret) {
@@ -136,7 +144,8 @@ class AdminModerationController extends GalleryController {
 					}
 
 					//get OwnerId
-					$query                     = 'SELECT [::ownerId] FROM [ModerateMap] WHERE [::itemId] = ?';
+					$query = 'SELECT [::ownerId] FROM [ModerateMap] WHERE [::itemId] = ?';
+
 					list($ret, $searchResults) = $gallery->search($query, array($itemtoapprove));
 
 					if ($ret) {
@@ -180,10 +189,12 @@ class AdminModerationController extends GalleryController {
 			if (isset($form['deleted'])) {
 				foreach ($form['deleted'] as $itemtodelete) {
 					$itemtodelete = intval($itemtodelete);
-					$ret          = GalleryCoreApi::deleteEntityById($itemtodelete);
+
+					$ret = GalleryCoreApi::deleteEntityById($itemtodelete);
 					/*		if ($ret) {
 					return array($ret, null);
 					}
+
 					 */
 					//remove from ToApprove table in database
 					$ret = GalleryCoreApi::removeMapEntry(
@@ -231,10 +242,11 @@ class AdminModerationView extends GalleryView {
 		}
 
 		//$form['formName'] = 'Moderate';
-
 		//add images IDs
-		$images                    = array();
-		$query                     = 'SELECT [::itemId] FROM [ModerateMap]';
+		$images = array();
+
+		$query = 'SELECT [::itemId] FROM [ModerateMap]';
+
 		list($ret, $searchResults) = $gallery->search($query);
 
 		if ($ret) {

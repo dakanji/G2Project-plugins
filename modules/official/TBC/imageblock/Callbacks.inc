@@ -35,6 +35,7 @@ class ImageBlockCallbacks {
 					 * If we're overriding the defaults, then overlay our changes on top of the
 					 * defaults and pass in a complete 'show' parameter.
 					 */
+
 					list($ret, $moduleParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'imageblock');
 
 					if ($ret) {

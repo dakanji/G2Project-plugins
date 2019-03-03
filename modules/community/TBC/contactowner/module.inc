@@ -32,6 +32,7 @@
 class ContactOwnerModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('contactowner');
 		$this->setName('Contact Owner');
 		$this->setDescription(

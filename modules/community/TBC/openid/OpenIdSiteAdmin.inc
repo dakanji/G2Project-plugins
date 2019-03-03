@@ -49,6 +49,7 @@ class OpenIdSiteAdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::addMapEntry(
 				'OpenIdMap',
 				array(
@@ -87,6 +88,7 @@ class OpenIdSiteAdminView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -113,11 +115,13 @@ class OpenIdSiteAdminView extends GalleryView {
 			$OpenIdSiteAdmin['randSize']     = $stat['size'];
 			$platform->fclose($OpenIdSiteAdmin['randHandle']);
 		}
+
 		$OpenIdSiteAdmin['uname'] = php_uname();
 
 		$OpenIdSiteAdmin['xmlExtension'] = Auth_Yadis_getXMLParser();
 
 		global $__Services_Yadis_xml_extensions;
+
 		$OpenIdSiteAdmin['xmlExtensions'] = $__Services_Yadis_xml_extensions;
 
 		$OpenIdSiteAdmin['curlPresent'] = Auth_Yadis_Yadis::curlPresent();

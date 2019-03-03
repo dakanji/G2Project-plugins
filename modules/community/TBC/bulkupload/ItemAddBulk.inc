@@ -71,7 +71,8 @@ class ItemAddBulk extends ItemAddPlugin {
 					}
 
 					list($base, $extension) = GalleryUtilities::getFileNameComponents(basename($line['filename']));
-					list($ret, $mimeType)   = GalleryCoreApi::convertExtensionToMime($extension);
+
+					list($ret, $mimeType) = GalleryCoreApi::convertExtensionToMime($extension);
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
@@ -118,6 +119,7 @@ class ItemAddBulk extends ItemAddPlugin {
 							}
 
 							$newItem->setKeywords($line['keywords']);
+
 							$ret = $newItem->save();
 
 							if ($ret) {
@@ -130,6 +132,7 @@ class ItemAddBulk extends ItemAddPlugin {
 								return array($ret, null, null);
 							}
 						}
+
 						$newItemId = $newItem->getId();
 					} else {
 						$newItemId = null;

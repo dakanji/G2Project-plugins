@@ -10,8 +10,6 @@
 // See readme.txt for more details                             //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_lib {
 	public static function PrintHexBytes($string, $hex = true, $spaces = true, $htmlencoding = 'UTF-8') {
 		$returnstring = '';
@@ -32,6 +30,7 @@ class getid3_lib {
 			if ($htmlencoding === true) {
 				$htmlencoding = 'UTF-8'; // prior to getID3 v1.9.0 the function's 4th parameter was boolean
 			}
+
 			$returnstring = htmlentities($returnstring, ENT_QUOTES, $htmlencoding);
 		}
 
@@ -92,6 +91,7 @@ class getid3_lib {
 				define('PHP_INT_MIN', ~PHP_INT_MAX);
 			}
 		}
+
 		// if integers are 64-bit - no other check required
 		if ($hasINT64 || (($num <= PHP_INT_MAX) && ($num >= PHP_INT_MIN))) {
 			return true;
@@ -120,6 +120,7 @@ class getid3_lib {
 		} elseif ($binarypointnumber[0] == '.') {
 			$binarypointnumber = '0' . $binarypointnumber;
 		}
+
 		$exponent = 0;
 
 		while (($binarypointnumber[0] != '1') || (substr($binarypointnumber, 1, 1) != '.')) {
@@ -133,6 +134,7 @@ class getid3_lib {
 				$binarypointnumber = $binarypointnumber[0] . '.' . substr($binarypointnumber, 1);
 			}
 		}
+
 		$binarypointnumber = str_pad(substr($binarypointnumber, 0, $maxbits + 2), $maxbits + 2, '0', STR_PAD_RIGHT);
 
 		return array(
@@ -153,6 +155,7 @@ class getid3_lib {
 			$pointbitstring .= (string)self::trunc($floatpart);
 			$floatpart      -= self::trunc($floatpart);
 		}
+
 		$binarypointnumber = decbin($intpart) . '.' . $pointbitstring;
 
 		return $binarypointnumber;
@@ -184,6 +187,7 @@ class getid3_lib {
 		} else {
 			$signbit = '1';
 		}
+
 		$normalizedbinary  = self::NormalizeBinaryPoint(self::Float2BinaryDecimal($floatvalue), $fractionbits);
 		$biasedexponent    = 2 ** ($exponentbits - 1) - 1 + $normalizedbinary['exponent']; // (127 or 1023) +/- exponent
 		$exponentbitstring = str_pad(decbin($biasedexponent), $exponentbits, '0', STR_PAD_LEFT);
@@ -200,12 +204,12 @@ class getid3_lib {
 		// ANSI/IEEE Standard 754-1985, Standard for Binary Floating Point Arithmetic
 		// http://www.psc.edu/general/software/packages/ieee/ieee.html
 		// http://www.scri.fsu.edu/~jac/MAD3401/Backgrnd/ieee.html
-
 		$bitword = self::BigEndian2Bin($byteword);
 
 		if (!$bitword) {
 			return 0;
 		}
+
 		$signbit = $bitword[0];
 
 		switch (strlen($byteword) * 8) {
@@ -244,6 +248,7 @@ class getid3_lib {
 
 				break;
 		}
+
 		$exponentstring = substr($bitword, 1, $exponentbits);
 		$fractionstring = substr($bitword, $exponentbits + 1, $fractionbits);
 		$exponent       = self::Bin2Dec($exponentstring);
@@ -264,6 +269,7 @@ class getid3_lib {
 			} else {
 				$floatvalue = 0;
 			}
+
 			$floatvalue = ($signbit ? 0 : -0);
 		} elseif (($exponent == 0) && ($fraction != 0)) {
 			// These are 'unnormalized' values
@@ -335,6 +341,7 @@ class getid3_lib {
 		if ($number < 0) {
 			throw new Exception('ERROR: self::BigEndian2String() does not support negative numbers');
 		}
+
 		$maskbyte  = (($synchsafe || $signed) ? 0x7F : 0xFF);
 		$intstring = '';
 
@@ -342,6 +349,7 @@ class getid3_lib {
 			if ($minbytes > PHP_INT_SIZE) {
 				throw new Exception('ERROR: Cannot have signed integers larger than ' . (8 * PHP_INT_SIZE) . '-bits in self::BigEndian2String()');
 			}
+
 			$number = $number & (0x80 << (8 * ($minbytes - 1)));
 		}
 
@@ -359,6 +367,7 @@ class getid3_lib {
 			$bytes[] = (($number / 256) - (floor($number / 256))) * 256;
 			$number  = floor($number / 256);
 		}
+
 		$bytes[]   = $number;
 		$binstring = '';
 
@@ -376,8 +385,10 @@ class getid3_lib {
 			if ($binstring[0] == '1') {
 				$signmult = -1;
 			}
+
 			$binstring = substr($binstring, 1);
 		}
+
 		$decvalue = 0;
 
 		for ($i = 0; $i < strlen($binstring); $i++) {
@@ -421,6 +432,7 @@ class getid3_lib {
 		if (!is_array($array1) || !is_array($array2)) {
 			return false;
 		}
+
 		$newarray = $array1;
 
 		foreach ($array2 as $key => $val) {
@@ -438,6 +450,7 @@ class getid3_lib {
 		if (!is_array($array1) || !is_array($array2)) {
 			return false;
 		}
+
 		$newarray = $array1;
 
 		foreach ($array2 as $key => $val) {
@@ -455,6 +468,7 @@ class getid3_lib {
 		if (!is_array($array1) || !is_array($array2)) {
 			return false;
 		}
+
 		// naturally, this only works non-recursively
 		$newarray = array_flip($array1);
 
@@ -597,6 +611,7 @@ class getid3_lib {
 		if (!is_object($XMLobject) && !is_array($XMLobject)) {
 			return $XMLobject;
 		}
+
 		$XMLarray = (is_object($XMLobject) ? get_object_vars($XMLobject) : $XMLobject);
 
 		foreach ($XMLarray as $key => $value) {
@@ -637,6 +652,7 @@ class getid3_lib {
 
 				break;
 		}
+
 		$size = $end - $offset;
 
 		while (true) {
@@ -655,6 +671,7 @@ class getid3_lib {
 						break 2;
 					}
 				}
+
 				$commandline  = GETID3_HELPERAPPSDIR . 'head.exe -c ' . $end . ' ' . escapeshellarg(str_replace('/', DIRECTORY_SEPARATOR, $file)) . ' | ';
 				$commandline .= GETID3_HELPERAPPSDIR . 'tail.exe -c ' . $size . ' | ';
 				$commandline .= GETID3_HELPERAPPSDIR . $windows_call;
@@ -679,6 +696,7 @@ class getid3_lib {
 			$tempdir     = $getid3_temp->tempdir;
 			unset($getid3_temp);
 		}
+
 		// try to create a temporary file in the system temp directory - invalid dirname should force to system temp dir
 		if (($data_filename = tempnam($tempdir, 'gI3')) === false) {
 			// can't find anywhere to create a temp file, just fail
@@ -695,6 +713,7 @@ class getid3_lib {
 		} catch (Exception $e) {
 			throw new Exception('self::CopyFileParts() failed in getid_lib::hash_data(): ' . $e->getMessage());
 		}
+
 		unlink($data_filename);
 
 		return $result;
@@ -724,6 +743,7 @@ class getid3_lib {
 			} else {
 				throw new Exception('failed to create file for writing ' . $filename_dest);
 			}
+
 			fclose($fp_src);
 		} else {
 			throw new Exception('failed to open file for reading ' . $filename_source);
@@ -761,6 +781,7 @@ class getid3_lib {
 		if (function_exists('utf8_encode')) {
 			return utf8_encode($string);
 		}
+
 		// utf8_encode() unavailable, use getID3()'s iconv_fallback() conversions (possibly PHP is compiled without XML support)
 		$newcharstring = '';
 
@@ -816,6 +837,7 @@ class getid3_lib {
 		if (function_exists('utf8_decode')) {
 			return utf8_decode($string);
 		}
+
 		// utf8_decode() unavailable, use getID3()'s iconv_fallback() conversions (possibly PHP is compiled without XML support)
 		$newcharstring = '';
 		$offset        = 0;
@@ -859,6 +881,7 @@ class getid3_lib {
 		if ($bom) {
 			$newcharstring .= "\xFE\xFF";
 		}
+
 		$offset       = 0;
 		$stringlength = strlen($string);
 
@@ -900,6 +923,7 @@ class getid3_lib {
 		if ($bom) {
 			$newcharstring .= "\xFF\xFE";
 		}
+
 		$offset       = 0;
 		$stringlength = strlen($string);
 
@@ -945,6 +969,7 @@ class getid3_lib {
 			// strip BOM
 			$string = substr($string, 2);
 		}
+
 		$newcharstring = '';
 
 		for ($i = 0; $i < strlen($string); $i += 2) {
@@ -961,6 +986,7 @@ class getid3_lib {
 			// strip BOM
 			$string = substr($string, 2);
 		}
+
 		$newcharstring = '';
 
 		for ($i = 0; $i < strlen($string); $i += 2) {
@@ -977,6 +1003,7 @@ class getid3_lib {
 			// strip BOM
 			$string = substr($string, 2);
 		}
+
 		$newcharstring = '';
 
 		for ($i = 0; $i < strlen($string); $i += 2) {
@@ -993,6 +1020,7 @@ class getid3_lib {
 			// strip BOM
 			$string = substr($string, 2);
 		}
+
 		$newcharstring = '';
 
 		for ($i = 0; $i < strlen($string); $i += 2) {
@@ -1056,7 +1084,6 @@ class getid3_lib {
 			return $string;
 		}
 
-
 		// iconv() not available
 		static $ConversionFunctionList = array();
 
@@ -1100,6 +1127,7 @@ class getid3_lib {
 
 			return $return_data;
 		}
+
 		// integer, float, objects, resources, etc
 		return $data;
 	}
@@ -1248,6 +1276,7 @@ class getid3_lib {
 		} else {
 			$signbit = '0';
 		}
+
 		$storedreplaygain = intval(round($replaygain * 10));
 		$gainstring       = str_pad(decbin($namecode), 3, '0', STR_PAD_LEFT);
 		$gainstring      .= str_pad(decbin($originatorcode), 3, '0', STR_PAD_LEFT);
@@ -1275,10 +1304,12 @@ class getid3_lib {
 					if ($getid3_temp_tempdir = $getid3_temp->tempdir) {
 						$tempdir = $getid3_temp_tempdir;
 					}
+
 					unset($getid3_temp, $getid3_temp_tempdir);
 				}
 			}
 		}
+
 		$GetDataImageSize = false;
 
 		if ($tempfilename = tempnam($tempdir, 'gI3')) {
@@ -1290,9 +1321,11 @@ class getid3_lib {
 				if (($GetDataImageSize === false) || !isset($GetDataImageSize[0]) || !isset($GetDataImageSize[1])) {
 					return false;
 				}
+
 				$GetDataImageSize['height'] = $GetDataImageSize[0];
 				$GetDataImageSize['width']  = $GetDataImageSize[1];
 			}
+
 			unlink($tempfilename);
 		}
 
@@ -1431,7 +1464,6 @@ class getid3_lib {
 			//	$cache[$file][$name][$keycheck] = substr($line, $keylength + 1);
 			//	break;
 			//}
-
 			// METHOD B: cache all keys in this lookup - more memory but faster on next lookup of not-previously-looked-up key
 			//$cache[$file][$name][substr($line, 0, $keylength)] = trim(substr($line, $keylength + 1));
 			$explodedLine                  = explode("\t", $line, 2);
@@ -1453,6 +1485,7 @@ class getid3_lib {
 			if (include_once $filename) {
 				return true;
 			}
+
 			$diemessage = basename($sourcefile) . ' depends on ' . $filename . ', which has errors';
 		} else {
 			$diemessage = basename($sourcefile) . ' depends on ' . $filename . ', which is missing';
@@ -1461,6 +1494,7 @@ class getid3_lib {
 		if ($DieOnFailure) {
 			throw new Exception($diemessage);
 		}
+
 		$GETID3_ERRORARRAY[] = $diemessage;
 
 		return false;

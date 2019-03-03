@@ -51,6 +51,7 @@ class CompleteController extends GalleryController {
 		if (empty($transactionId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
+
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
 		if ($ret) {
@@ -64,6 +65,7 @@ class CompleteController extends GalleryController {
 		if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
+
 		// Security check
 		$verify1 = GalleryUtilities::getRequestVariables('verify1');
 		$verify2 = GalleryUtilities::getRequestVariables('verify2');
@@ -103,13 +105,13 @@ class CompleteController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$results['redirect']['view']          = 'checkout.OrderStatus';
 			$results['redirect']['transactionId'] = $transactionId;
 			$results['redirect']['verify1']       = $verify1;
 			$results['redirect']['verify2']       = $verify2;
 			$results['status']['newlyPlaced']     = 1;
 		}
-
 
 		return array(null, $results);
 	}

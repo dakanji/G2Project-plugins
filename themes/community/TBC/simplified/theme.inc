@@ -131,6 +131,7 @@ class SimplifiedTheme extends GalleryTheme {
 				}
 			}
 		}
+
 		$theme['params']['albumThumbnailSize'] = $albumThumbnailSize;
 
 		$childrenInRowCount = 0;
@@ -158,6 +159,7 @@ class SimplifiedTheme extends GalleryTheme {
 				} else {
 					$maxAlbumThumbSize = $childItem['thumbnail']['height'] - 24;
 				}
+
 				$theme['children'][$index]['maxAlbumThumbSize'] = $maxAlbumThumbSize;
 			}
 
@@ -181,6 +183,7 @@ class SimplifiedTheme extends GalleryTheme {
 		if (!isset($maxRowSizes[1])) {
 			$maxRowSizes[1] = $albumThumbnailSize;
 		}
+
 		$theme['params']['maxRowSizes'] = $maxRowSizes;
 
 		return array(null, 'theme.tpl');
@@ -200,7 +203,8 @@ class SimplifiedTheme extends GalleryTheme {
 			'itemNavigator',
 			'imageViews',
 		);
-		$ret       = $this->loadCommonTemplateData($template, $item, $params, $dataTypes);
+
+		$ret = $this->loadCommonTemplateData($template, $item, $params, $dataTypes);
 
 		if ($ret) {
 			return array($ret->wrap(__FILE__, __LINE__), null);

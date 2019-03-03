@@ -64,6 +64,7 @@ class AdminSettingsTagsController extends GalleryController {
 							return array($ret, null);
 						}
 					}
+
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
 						'tags',
@@ -96,6 +97,7 @@ class AdminSettingsTagsController extends GalleryController {
 								if ($settings['color'] == '') {
 									$settings['color'] = '#000000'; // default to black
 								}
+
 								$tagCssClass .= $settings['font'] . '|' . $settings['color'] . '&&';
 							} else {
 								// Only store if the font / color are all set
@@ -104,6 +106,7 @@ class AdminSettingsTagsController extends GalleryController {
 								break;
 							}
 						}
+
 						$form['tagCssClass'] = substr($tagCssClass, 0, -2);
 
 						foreach (array('classNumber', 'tagCssClass', 'tagCloudTemplate')
@@ -119,6 +122,7 @@ class AdminSettingsTagsController extends GalleryController {
 								return array($ret, null);
 							}
 						}
+
 						// Create the css file to use for the Tag Cloud
 						$ret = TagsHelper::createCssFile(true);
 
@@ -173,6 +177,7 @@ class AdminSettingsTagsView extends GalleryView {
 			$classSetting  = explode('|', $class);
 			$tagCssClass[] = array($classSetting[0], $classSetting[1]);
 		}
+
 		$Settings['tagCssClass'] = $tagCssClass;
 
 		$tagAdminMode = GalleryUtilities::getRequestVariables('tagAdminMode');

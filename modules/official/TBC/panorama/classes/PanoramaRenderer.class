@@ -40,6 +40,7 @@ class PanoramaRenderer extends GalleryRenderer {
 	 */
 	public function render($format, $entity, $item, $params) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'panorama');
@@ -47,6 +48,7 @@ class PanoramaRenderer extends GalleryRenderer {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $viewWidth) = $module->getParameter('width');
 
 		if ($ret) {
@@ -60,7 +62,7 @@ class PanoramaRenderer extends GalleryRenderer {
 
 		switch ($format) {
 			case 'HTML':
-				$src         = $urlGenerator->generateUrl(
+				$src = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $entity->getId(),
@@ -71,7 +73,8 @@ class PanoramaRenderer extends GalleryRenderer {
 						'forceSessionId' => true,
 					)
 				);
-				$jarUrl      = $urlGenerator->generateUrl(
+
+				$jarUrl = $urlGenerator->generateUrl(
 					array(
 						'href' => 'modules/panorama/java/Metamorphose.jar',
 					),
@@ -79,6 +82,7 @@ class PanoramaRenderer extends GalleryRenderer {
 						'forceFullUrl' => true,
 					)
 				);
+
 				$scrollerUrl = $urlGenerator->generateUrl(
 					array(
 						'href' => 'modules/panorama/images/slider.png',

@@ -28,6 +28,7 @@
 class MP3AudioModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('mp3audio');
 		$this->setName($gallery->i18n('MP3 Audio'));
 		$this->setDescription(
@@ -96,6 +97,7 @@ class MP3AudioModule extends GalleryModule {
 	 */
 	public function activate($postActivationEvent = true) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		// Add renderer on all GalleryDataItems with audio/mpeg mime type that need it
@@ -113,6 +115,7 @@ class MP3AudioModule extends GalleryModule {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$ids = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -120,7 +123,8 @@ class MP3AudioModule extends GalleryModule {
 		}
 
 		while (!empty($ids)) {
-			$itemIds           = array_splice($ids, 0, 100);
+			$itemIds = array_splice($ids, 0, 100);
+
 			list($ret, $items) = GalleryCoreApi::loadEntitiesById(
 				$itemIds,
 				'GalleryDataItem'
@@ -141,6 +145,7 @@ class MP3AudioModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					list($ret, $item) = $item->refresh();
 
 					if ($ret) {
@@ -148,7 +153,9 @@ class MP3AudioModule extends GalleryModule {
 
 						return array($ret, null);
 					}
+
 					$item->setRenderer('MP3AudioRenderer');
+
 					$ret = $item->save();
 
 					if ($ret) {
@@ -156,6 +163,7 @@ class MP3AudioModule extends GalleryModule {
 
 						return array($ret, null);
 					}
+
 					$ret = GalleryCoreApi::releaseLocks($lockId);
 
 					if ($ret) {
@@ -163,6 +171,7 @@ class MP3AudioModule extends GalleryModule {
 					}
 				}
 			}
+
 			$ret = $storage->checkPoint();
 
 			if ($ret) {

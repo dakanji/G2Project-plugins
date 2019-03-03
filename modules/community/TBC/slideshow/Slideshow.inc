@@ -33,6 +33,7 @@ class SlideshowView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$Slideshow = array();
@@ -55,6 +56,7 @@ class SlideshowView extends GalleryView {
 			foreach (explode('|', $itemListString) as $id) {
 				$itemIds[] = (int)$id;
 			}
+
 			list($ret, $items, $start) = SlideshowHelper::buildItemsSlideshow($itemIds, $startId);
 
 			if ($ret) {
@@ -67,6 +69,7 @@ class SlideshowView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $items, $start) = SlideshowHelper::buildAlbumSlideshow($item, $startId, $offset);
 
 			if ($ret) {
@@ -116,17 +119,19 @@ class SlideshowView extends GalleryView {
 				)
 			);
 
-			$jsUrlParams                = array(
+			$jsUrlParams = array(
 				'forJavascript' => true,
 				'forceFullUrl'  => true,
 				'htmlEntities'  => false,
 			);
-			$jsUrlParamsDirect          = array_merge(
+
+			$jsUrlParamsDirect = array_merge(
 				$jsUrlParams,
 				array(
 					'forceDirect' => true,
 				)
 			);
+
 			$Slideshow['piclensSwfUrl'] = $urlGenerator->generateUrl(
 				array(
 					'view' => 'slideshow.DownloadPicLens',
@@ -175,6 +180,7 @@ class SlideshowView extends GalleryView {
 					$jsUrlParams
 				);
 			}
+
 			$Slideshow['returnUrl'] = $urlGenerator->makeAbsoluteUrl($Slideshow['returnUrl']);
 		}
 

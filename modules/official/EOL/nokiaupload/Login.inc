@@ -43,8 +43,9 @@ class LoginController extends GalleryController {
 		$results['delegate'] = array(
 			'view' => 'nokiaupload.Login',
 		);
-		$results['status']   = ImageUploadHelper::doLogin();
-		$results['error']    = array();
+
+		$results['status'] = ImageUploadHelper::doLogin();
+		$results['error']  = array();
 
 		return array(null, $results);
 	}
@@ -56,7 +57,6 @@ class LoginController extends GalleryController {
 		return true;
 	}
 }
-
 
 /**
  * This view implements the Nokia Image Uploader API's 'Login' command.
@@ -75,6 +75,7 @@ class LoginView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$gallery->debug("##### LoginView #####\n\$status = ");
 		$gallery->debug_r($status);
 

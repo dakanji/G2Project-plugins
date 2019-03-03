@@ -96,6 +96,7 @@ class TagsCallbackView extends GalleryView {
 						if ($ret) {
 							return $ret;
 						}
+
 						$ret = TagsHelper::assignTag($itemId, $tag);
 
 						if ($ret) {
@@ -107,7 +108,8 @@ class TagsCallbackView extends GalleryView {
 				break;
 
 			case 'getTagList':
-				$prefix              = GalleryUtilities::getRequestVariables('prefix');
+				$prefix = GalleryUtilities::getRequestVariables('prefix');
+
 				list($ret, $tagList) = TagsHelper::getTaglist($prefix);
 
 				if (!$ret) {
@@ -123,8 +125,10 @@ class TagsCallbackView extends GalleryView {
 						/** @todo Remove this check / call on the next major API change. */
 						GalleryUtilities::unsanitizeInputValues($tagList, false);
 					}
+
 					echo implode("\n", $tagList);
 				}
+
 				// @todo Log Error when debug is on
 				break;
 

@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_aac extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -41,7 +39,6 @@ class getid3_aac extends getid3_handler {
 
 		if (substr($AACheader, 0, 4) == 'ADIF') {
 			// http://faac.sourceforge.net/wiki/index.php?page=ADIF
-
 			// http://libmpeg.org/mpeg4/doc/w2203tfs.pdf
 			// adif_header() {
 			//     adif_id                                32
@@ -59,7 +56,6 @@ class getid3_aac extends getid3_handler {
 			//         program_config_element()
 			//     }
 			// }
-
 			$AACheaderBitstream = getid3_lib::BigEndian2Bin($AACheader);
 			$bitoffset          = 0;
 
@@ -74,6 +70,7 @@ class getid3_aac extends getid3_handler {
 				$info['aac']['header']['copyright_id'] = getid3_lib::Bin2String(substr($AACheaderBitstream, $bitoffset, 72));
 				$bitoffset                            += 72;
 			}
+
 			$info['aac']['header']['original_copy'] = (bool)(substr($AACheaderBitstream, $bitoffset, 1) == '1');
 			$bitoffset                             += 1;
 			$info['aac']['header']['home']          = (bool)(substr($AACheaderBitstream, $bitoffset, 1) == '1');
@@ -97,14 +94,13 @@ class getid3_aac extends getid3_handler {
 
 				return false;
 			}
+
 			$info['aac']['header']['num_program_configs'] = 1 + getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 4));
 			$bitoffset                                   += 4;
 
 			for ($i = 0; $i < $info['aac']['header']['num_program_configs']; $i++) {
 				// http://www.audiocoding.com/wiki/index.php?page=program_config_element
-
 				// buffer_fullness                       20
-
 				// element_instance_tag                   4
 				// object_type                            2
 				// sampling_frequency_index               4
@@ -148,11 +144,11 @@ class getid3_aac extends getid3_handler {
 				// for (i = 0; i < comment_field_bytes; i++) {
 				//     comment_field_data[i]              8
 				// }
-
 				if (!$info['aac']['header']['is_vbr']) {
 					$info['aac']['program_configs'][$i]['buffer_fullness'] = getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 20));
 					$bitoffset                                            += 20;
 				}
+
 				$info['aac']['program_configs'][$i]['element_instance_tag'] = getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 4));
 				$bitoffset                                        += 4;
 				$info['aac']['program_configs'][$i]['object_type'] = getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 2));
@@ -178,6 +174,7 @@ class getid3_aac extends getid3_handler {
 					$info['aac']['program_configs'][$i]['mono_mixdown_element_number'] = getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 4));
 					$bitoffset += 4;
 				}
+
 				$info['aac']['program_configs'][$i]['stereo_mixdown_present'] = (bool)getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 1));
 				$bitoffset += 1;
 
@@ -185,6 +182,7 @@ class getid3_aac extends getid3_handler {
 					$info['aac']['program_configs'][$i]['stereo_mixdown_element_number'] = getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 4));
 					$bitoffset += 4;
 				}
+
 				$info['aac']['program_configs'][$i]['matrix_mixdown_idx_present'] = (bool)getid3_lib::Bin2Dec(substr($AACheaderBitstream, $bitoffset, 1));
 				$bitoffset += 1;
 
@@ -240,7 +238,6 @@ class getid3_aac extends getid3_handler {
 				$info['aac']['program_configs'][$i]['comment_field'] = getid3_lib::Bin2String(substr($AACheaderBitstream, $bitoffset, 8 * $info['aac']['program_configs'][$i]['comment_field_bytes']));
 				$bitoffset                                          += 8 * $info['aac']['program_configs'][$i]['comment_field_bytes'];
 
-
 				$info['aac']['header']['profile']                         = self::AACprofileLookup($info['aac']['program_configs'][$i]['object_type'], $info['aac']['header']['mpeg_version']);
 				$info['aac']['program_configs'][$i]['sampling_frequency'] = self::AACsampleRateLookup($info['aac']['program_configs'][$i]['sampling_frequency_index']);
 				$info['audio']['sample_rate']                             = $info['aac']['program_configs'][$i]['sampling_frequency'];
@@ -250,11 +247,10 @@ class getid3_aac extends getid3_handler {
 					$info['aac']['comments'][] = $info['aac']['program_configs'][$i]['comment_field'];
 				}
 			}
+
 			$info['playtime_seconds'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['audio']['bitrate'];
 
 			$info['audio']['encoder_options'] = $info['aac']['header_type'] . ' ' . $info['aac']['header']['profile'];
-
-
 
 			return true;
 		}
@@ -271,11 +267,8 @@ class getid3_aac extends getid3_handler {
 
 		// based loosely on code from AACfile by Jurgen Faul  <jfaulØgmx.de>
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
-
-
 		// http://faac.sourceforge.net/wiki/index.php?page=ADTS // dead link
 		// http://wiki.multimedia.cx/index.php?title=ADTS
-
 		// * ADTS Fixed Header: these don't change from frame to frame
 		// syncword                                       12    always: '111111111111'
 		// ID                                              1    0: MPEG-4, 1: MPEG-2
@@ -288,17 +281,14 @@ class getid3_aac extends getid3_handler {
 		// original/copy                                   1    0: original; 1: copy
 		// home                                            1    usually 0
 		// emphasis                                        2    only if ID == 0 (ie MPEG-4)  // not present in some documentation?
-
 		// * ADTS Variable Header: these can change from frame to frame
 		// copyright_identification_bit                    1
 		// copyright_identification_start                  1
 		// aac_frame_length                               13    length of the frame including header (in bytes)
 		// adts_buffer_fullness                           11    0x7FF indicates VBR
 		// no_raw_data_blocks_in_frame                     2
-
 		// * ADTS Error check
 		// crc_check                                      16    only if protection_absent == 0
-
 		$byteoffset  = $info['avdataoffset'];
 		$framenumber = 0;
 
@@ -313,16 +303,15 @@ class getid3_aac extends getid3_handler {
 		// used to calculate bitrate below
 		$BitrateCache = array();
 
-
 		while (true) {
 			// breaks out when end-of-file encountered, or invalid data found,
 			// or MaxFramesToScan frames have been scanned
-
 			if (!getid3_lib::intValueSupported($byteoffset)) {
 				$info['warning'][] = 'Unable to parse AAC file beyond ' . $this->ftell() . ' (PHP does not support file operations beyond ' . round(PHP_INT_MAX / 1073741824) . 'GB)';
 
 				return false;
 			}
+
 			$this->fseek($byteoffset);
 
 			// First get substring
@@ -334,6 +323,7 @@ class getid3_aac extends getid3_handler {
 
 				return false;
 			}
+
 			// this would be easier with 64-bit math, but split it up to allow for 32-bit:
 			$header1 = getid3_lib::BigEndian2Int(substr($substring, 0, 2));
 			$header2 = getid3_lib::BigEndian2Int(substr($substring, 2, 4));
@@ -404,6 +394,7 @@ class getid3_aac extends getid3_handler {
 			if (!isset($BitrateCache[$FrameLength])) {
 				$BitrateCache[$FrameLength] = ($info['aac']['header']['sample_frequency'] / 1024) * $FrameLength * 8;
 			}
+
 			getid3_lib::safe_inc($info['aac']['bitrate_distribution'][$BitrateCache[$FrameLength]], 1);
 
 			$info['aac'][$framenumber]['aac_frame_length'] = $FrameLength;
@@ -415,6 +406,7 @@ class getid3_aac extends getid3_handler {
 			} else {
 				$info['audio']['bitrate_mode'] = 'cbr';
 			}
+
 			$info['aac'][$framenumber]['num_raw_data_blocks'] = (($header3 & 0x03) >> 0);
 
 			if ($info['aac']['header']['crc_present']) {
@@ -432,6 +424,7 @@ class getid3_aac extends getid3_handler {
 				$rounded_bitrate = round($bitrate / $rounded_precision) * $rounded_precision;
 				getid3_lib::safe_inc($info['aac']['bitrate_distribution_rounded'][$rounded_bitrate], $count);
 			}
+
 			ksort($info['aac']['bitrate_distribution_rounded']);
 			*/
 
@@ -447,6 +440,7 @@ class getid3_aac extends getid3_handler {
 
 					return false;
 				}
+
 				$info['audio']['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
 				ksort($info['aac']['bitrate_distribution']);
 
@@ -455,6 +449,7 @@ class getid3_aac extends getid3_handler {
 				return true;
 			}
 		}
+
 		// should never get here.
 	}
 

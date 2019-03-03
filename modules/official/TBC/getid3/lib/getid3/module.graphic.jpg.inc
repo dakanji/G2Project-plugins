@@ -14,8 +14,6 @@
 //               module.tag.xmp.php (optional)                 //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_jpg extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -31,8 +29,6 @@ class getid3_jpg extends getid3_handler {
 		$imageinfo = array();
 		//list($width, $height, $type) = getid3_lib::GetDataImageSize($this->fread($info['filesize']), $imageinfo);
 		list($width, $height, $type) = getimagesize($info['filenamepath'], $imageinfo); // http://www.getid3.org/phpBB3/viewtopic.php?t=1474
-
-
 		if (isset($imageinfo['APP13'])) {
 			// http://php.net/iptcparse
 			// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/IPTC.html
@@ -77,6 +73,7 @@ class getid3_jpg extends getid3_handler {
 						$info['warning'][] = 'EXIF parsing only available when ' . (GETID3_OS_ISWINDOWS ? 'php_exif.dll enabled' : 'compiled with --enable-exif');
 					}
 				}
+
 				$returnOK = true;
 
 				break;
@@ -84,7 +81,6 @@ class getid3_jpg extends getid3_handler {
 			default:
 				break;
 		}
-
 
 		$cast_as_appropriate_keys = array('EXIF', 'IFD0', 'THUMBNAIL');
 
@@ -96,12 +92,12 @@ class getid3_jpg extends getid3_handler {
 			}
 		}
 
-
 		if (isset($info['jpg']['exif']['GPS'])) {
 			if (isset($info['jpg']['exif']['GPS']['GPSVersion'])) {
 				for ($i = 0; $i < 4; $i++) {
 					$version_subparts[$i] = ord(substr($info['jpg']['exif']['GPS']['GPSVersion'], $i, 1));
 				}
+
 				$info['jpg']['exif']['GPS']['computed']['version'] = 'v' . implode('.', $version_subparts);
 			}
 
@@ -125,6 +121,7 @@ class getid3_jpg extends getid3_handler {
 						$computed_time[$key] = getid3_lib::DecimalizeFraction($value);
 					}
 				}
+
 				$info['jpg']['exif']['GPS']['computed']['timestamp'] = gmmktime($computed_time[0], $computed_time[1], $computed_time[2], $computed_time[3], $computed_time[4], $computed_time[5]);
 			}
 
@@ -134,6 +131,7 @@ class getid3_jpg extends getid3_handler {
 				foreach ($info['jpg']['exif']['GPS']['GPSLatitude'] as $key => $value) {
 					$computed_latitude[$key] = getid3_lib::DecimalizeFraction($value);
 				}
+
 				$info['jpg']['exif']['GPS']['computed']['latitude'] = $direction_multiplier * ($computed_latitude[0] + ($computed_latitude[1] / 60) + ($computed_latitude[2] / 3600));
 			}
 
@@ -143,6 +141,7 @@ class getid3_jpg extends getid3_handler {
 				foreach ($info['jpg']['exif']['GPS']['GPSLongitude'] as $key => $value) {
 					$computed_longitude[$key] = getid3_lib::DecimalizeFraction($value);
 				}
+
 				$info['jpg']['exif']['GPS']['computed']['longitude'] = $direction_multiplier * ($computed_longitude[0] + ($computed_longitude[1] / 60) + ($computed_longitude[2] / 3600));
 			}
 
@@ -155,7 +154,6 @@ class getid3_jpg extends getid3_handler {
 				$info['jpg']['exif']['GPS']['computed']['altitude'] = $direction_multiplier * getid3_lib::DecimalizeFraction($info['jpg']['exif']['GPS']['GPSAltitude']);
 			}
 		}
-
 
 		getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.xmp.php', __FILE__, true);
 

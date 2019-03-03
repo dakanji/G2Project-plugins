@@ -18,11 +18,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
-
-
-
-
 /**
  * @package Titles
  * @author AlecMyers <alec@alecmyers.com>
@@ -69,9 +64,10 @@ class GetTitlesView extends GalleryView {
 			default:
 				return null;
 		}
+
 		$results = array();
 
-		$query                     = 'SELECT 
+		$query        = 'SELECT 
 		[GalleryItem::title]
 		FROM [GalleryItem]
 		WHERE
@@ -79,7 +75,8 @@ class GetTitlesView extends GalleryView {
 		LIKE ?
 		ORDER BY [GalleryItem::title]
 		';
-		$queryOptions              = array($chars);
+		$queryOptions = array($chars);
+
 		list($ret, $searchResults) = $gallery->search($query, $queryOptions);
 
 		if ($ret) {
@@ -89,6 +86,7 @@ class GetTitlesView extends GalleryView {
 		while ($result = $searchResults->nextResult()) {
 			$results[] = $result[0];
 		}
+
 		// safety limit of first 100 results
 		$results = array_slice($results, 0, 100);
 		echo implode("\n", $results);

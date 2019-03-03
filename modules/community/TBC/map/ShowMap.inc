@@ -87,6 +87,7 @@ class ShowMapController extends GalleryController {
 				} else {
 					$id = $form['id'];
 				}
+
 				$coordinate = $form['coord'];
 				$zoom       = $form['zoom'];
 
@@ -101,6 +102,7 @@ class ShowMapController extends GalleryController {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Actually update the database with the coordinated passed on to the ItemID
 				$ret = GalleryCoreApi::addMapEntry(
 					'mapMap',
@@ -116,6 +118,7 @@ class ShowMapController extends GalleryController {
 				if ($ret) {
 					return $ret;
 				}
+
 				$ret = GalleryCoreApi::removeMapEntry(
 					'mapMap',
 					array(
@@ -127,6 +130,7 @@ class ShowMapController extends GalleryController {
 				if ($ret) {
 					return $ret;
 				}
+
 				// Actually update the database with the zoomlevel passed on to the ItemID
 				$ret = GalleryCoreApi::addMapEntry(
 					'mapMap',
@@ -145,7 +149,7 @@ class ShowMapController extends GalleryController {
 
 				if ($form['plugin'] == 'GroupCoord') {
 					// Get the coordinates and such in the map database
-					$query              = '
+					$query = '
 		    SELECT
 		      [mapMap::field],
 		      [mapMap::value]
@@ -154,6 +158,7 @@ class ShowMapController extends GalleryController {
 		    WHERE
 		      [mapMap::itemId] = \'' . $id . '\'
 		    ';
+
 					list($ret, $result) = $gallery->search($query, array(), array());
 
 					$params = '';
@@ -191,6 +196,7 @@ class ShowMapController extends GalleryController {
 					'centerLongLat',
 					$form['coord']
 				);
+
 				GalleryCoreApi::setPluginParameter('module', 'map', 'zoomLevel', $form['zoom']);
 
 				// return to the page "AdminPanel"
@@ -230,6 +236,7 @@ class ShowMapController extends GalleryController {
 							$infos = explode('`', $filterinfos);
 							$ids[] = $infos[0];
 						}
+
 						$newid         = max($ids) + 1;
 						$neweditfilter = $newid . '``' . $form['zoom'] . '`' . $form['coord'];
 					} else {
@@ -258,6 +265,7 @@ class ShowMapView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$platform = $gallery->getPlatform();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
@@ -272,7 +280,6 @@ class ShowMapView extends GalleryView {
 		$mapModBaseDir = dirname(__FILE__) . '/';
 
 		// Include header that links to the Google Maps script
-
 		$template->head('modules/map/templates/MapHeader.tpl');
 
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map');
@@ -353,7 +360,6 @@ class ShowMapView extends GalleryView {
 		}
 
 		// "Normal" Mode to display the map
-
 		$storage =& $gallery->getStorage();
 		$gurl    =& $gallery->getUrlGenerator();
 
@@ -457,6 +463,7 @@ class ShowMapView extends GalleryView {
 					} else { // No groups at all ...
 						$map['GroupHackingError'] = 1;
 					}
+
 					$ids = array_values($ids);
 				}
 
@@ -470,6 +477,7 @@ class ShowMapView extends GalleryView {
 					foreach ($map['listalbums'] as $tmp) {
 						$temp[] = implode('`', $tmp);
 					}
+
 					$listofalbums = implode('`', array_unique($temp));
 					$temp         = explode('`', $listofalbums);
 					$listofalbums = implode('`', array_unique($temp));
@@ -531,6 +539,7 @@ class ShowMapView extends GalleryView {
 								$pointHash[$id]['parentDist']     = -1;
 								$pointHash[$id]['hasHiddenChild'] = false;
 							}
+
 							$pointHash[$id]['group']   = -1;
 							$pointHash[$id]['display'] = true;
 						}
@@ -551,12 +560,13 @@ class ShowMapView extends GalleryView {
 						if (array_key_exists('regroupItems', $param)
 							and $param['regroupItems']
 						) {
-							$map['regroupItems']       = true;
-							$map['regroupIcon']        = $param['regroupIcon'];
-							$iconsize                  = $platform->getimagesize(
+							$map['regroupItems'] = true;
+							$map['regroupIcon']  = $param['regroupIcon'];
+							$iconsize            = $platform->getimagesize(
 								$mapModBaseDir . 'images/multi/'
 								. $param['regroupIcon'] . '.png'
 							);
+
 							$map['ReplaceMarkerSizeX'] = $iconsize[0];
 							$map['ReplaceMarkerSizeY'] = $iconsize[1];
 
@@ -583,6 +593,7 @@ class ShowMapView extends GalleryView {
 								if ($DEBUG_REGROUP) {
 									echo " -------------- ZOOMLEVEL $z -----------------\n";
 								}
+
 								/*
 								 * unset points that are not visible and set new points
 								 * (album based)
@@ -602,9 +613,11 @@ class ShowMapView extends GalleryView {
 										if (!isset($showItems[$id])) {
 											$showItems[$id] = true;
 										}
+
 										$mapPoints[$id]['display'] = true;
 									}
 								}
+
 								// check first if any items can be added to an existing group
 								foreach ($showItems as $id => $true2) {
 									foreach ($showGroups as $groupId => $true) {
@@ -615,13 +628,15 @@ class ShowMapView extends GalleryView {
 												$groups[$groupId]['gps'],
 												$z
 											);
-											$pixdist                       = $groupItemDists[$groupId][$id];
+
+											$pixdist = $groupItemDists[$groupId][$id];
 
 											if ($pixdist <= $regroupDist) {
 												if ($mapPoints[$id]['regroupShowLow'] == $z) {
 													if ($DEBUG_REGROUP) {
 														echo " ITEM $id NEVER SHOWS UP\n";
 													}
+
 													/*
 													 * in this case, we don't add the marker to
 													 * the group because it was never showed.
@@ -634,6 +649,7 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " Adding Item  $id to groups $groupId\n";
 													}
+
 													$groups[$groupId]['items']++;
 													$groups[$groupId]['directItems']++;
 													$mapPoints[$id]['group']           = $groupId;
@@ -658,11 +674,12 @@ class ShowMapView extends GalleryView {
 								foreach ($showItems as $id1 => $true1) {
 									foreach ($showItems as $id2 => $true2) {
 										if ($id1 != $id2) {
-											$dist                  = mapHelper::PixelDistance(
+											$dist = mapHelper::PixelDistance(
 												$mapPoints[$id1]['gps'],
 												$mapPoints[$id2]['gps'],
 												$z
 											);
+
 											$distances[$id1][$id2] = $dist;
 											$pixdist               = $distances[$id1][$id2];
 
@@ -679,6 +696,7 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " ITEMS $id1 and $id2 close but $id1 never shows up => skip $id1 and $id2\n";
 													}
+
 													$mapPoints[$id1]['display']         = false;
 													$mapPoints[$id1]['regroupShowHigh'] = $z + 1;
 
@@ -695,11 +713,13 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " ITEMS $id1 and $id2 close but $id2 never shows up => skip $id2\n";
 													}
+
 													$mapPoints[$id2]['display']         = false;
 													$mapPoints[$id2]['regroupShowHigh'] = $z + 1;
 
 													continue;
 												}
+
 												// check if these items have been grouped
 												$g1 = $mapPoints[$id1]['group'];
 												$g2 = $mapPoints[$id2]['group'];
@@ -708,29 +728,34 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " regrouping ITEMS $id1 and $id2, CREATING NEW GROUP $nbgroups !!!\n";
 													}
+
 													// make a new group merging two elements
 													$groups[$nbgroups]['regroupShowLow'] = $z;
 													$groups[$nbgroups]['maxx']           = max(
 														$mapPoints[$id1]['posx'],
 														$mapPoints[$id2]['posx']
 													);
-													$groups[$nbgroups]['minx']           = min(
+
+													$groups[$nbgroups]['minx'] = min(
 														$mapPoints[$id1]['posx'],
 														$mapPoints[$id2]['posx']
 													);
-													$groups[$nbgroups]['maxy']           = max(
+
+													$groups[$nbgroups]['maxy'] = max(
 														$mapPoints[$id1]['posy'],
 														$mapPoints[$id2]['posy']
 													);
-													$groups[$nbgroups]['miny']           = min(
+
+													$groups[$nbgroups]['miny'] = min(
 														$mapPoints[$id1]['posy'],
 														$mapPoints[$id2]['posy']
 													);
-													$groups[$nbgroups]['group']          = -1;
-													$groups[$nbgroups]['groups']         = 0;
-													$groups[$nbgroups]['display']        = true;
-													$groups[$nbgroups]['items']          = 2;
-													$groups[$nbgroups]['directItems']    = 2;
+
+													$groups[$nbgroups]['group']       = -1;
+													$groups[$nbgroups]['groups']      = 0;
+													$groups[$nbgroups]['display']     = true;
+													$groups[$nbgroups]['items']       = 2;
+													$groups[$nbgroups]['directItems'] = 2;
 
 													$mapPoints[$id1]['group']           = $nbgroups;
 													$mapPoints[$id2]['group']           = $nbgroups;
@@ -743,23 +768,28 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " regrouping ITEMS $id1 and $id2, putting $id1 into $g2\n";
 													}
+
 													// item1 not yet grouped, put item1 in g2
 													$groups[$g2]['maxx'] = max(
 														$groups[$g2]['maxx'],
 														$mapPoints[$id1]['posx']
 													);
+
 													$groups[$g2]['minx'] = min(
 														$groups[$g2]['minx'],
 														$mapPoints[$id1]['posx']
 													);
+
 													$groups[$g2]['maxy'] = max(
 														$groups[$g2]['maxy'],
 														$mapPoints[$id1]['posy']
 													);
+
 													$groups[$g2]['miny'] = min(
 														$groups[$g2]['miny'],
 														$mapPoints[$id1]['posy']
 													);
+
 													$groups[$g2]['items']++;
 													$groups[$g2]['directItems']++;
 
@@ -782,6 +812,7 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " regrouping ITEMS $id1 and $id2, putting $id2 into $g1\n";
 													}
+
 													// put item2 in g1
 													/*
 													 * if old item2 was already in a new group,
@@ -791,18 +822,22 @@ class ShowMapView extends GalleryView {
 														$groups[$g1]['maxx'],
 														$mapPoints[$id2]['posx']
 													);
+
 													$groups[$g1]['minx'] = min(
 														$groups[$g1]['minx'],
 														$mapPoints[$id2]['posx']
 													);
+
 													$groups[$g1]['maxy'] = max(
 														$groups[$g1]['maxy'],
 														$mapPoints[$id2]['posy']
 													);
+
 													$groups[$g1]['miny'] = min(
 														$groups[$g1]['miny'],
 														$mapPoints[$id2]['posy']
 													);
+
 													$groups[$g1]['items']++;
 													$groups[$g1]['directItems']++;
 
@@ -814,6 +849,7 @@ class ShowMapView extends GalleryView {
 														if ($DEBUG_REGROUP) {
 															echo " regrouping ITEMS $id1 and $id2, both were in a group ($g1 and $g2). Moving elements of $g2 into $g1\n";
 														}
+
 														// item2 was already in a new group.
 														/*
 														 * move other elements of this new group
@@ -827,23 +863,28 @@ class ShowMapView extends GalleryView {
 																	if ($DEBUG_REGROUP) {
 																		echo " moving ITEM $id3 from {$mapPoints[$id3]['group']} to $g1\n";
 																	}
+
 																	// now this icon3 goes also in NEW g1
 																	$groups[$g1]['maxx'] = max(
 																		$groups[$g1]['maxx'],
 																		$mapPoints[$id3]['posx']
 																	);
+
 																	$groups[$g1]['minx'] = min(
 																		$groups[$g1]['minx'],
 																		$mapPoints[$id3]['posx']
 																	);
+
 																	$groups[$g1]['maxy'] = max(
 																		$groups[$g1]['maxy'],
 																		$mapPoints[$id3]['posy']
 																	);
+
 																	$groups[$g1]['miny'] = min(
 																		$groups[$g1]['miny'],
 																		$mapPoints[$id3]['posy']
 																	);
+
 																	$groups[$g1]['items']++;
 																	$groups[$g1]['directItems']++;
 
@@ -857,6 +898,7 @@ class ShowMapView extends GalleryView {
 														if ($DEBUG_REGROUP) {
 															echo " DELETING new group $g2\n";
 														}
+
 														unset($groups[$g2]);
 
 														if (isset($showGroups[$g2])) {
@@ -898,12 +940,14 @@ class ShowMapView extends GalleryView {
 												$groups[$gid2]['gps'],
 												$z
 											);
-											$pixdist                  = $groupDists[$gid1][$gid2];
+
+											$pixdist = $groupDists[$gid1][$gid2];
 
 											if ($pixdist <= $regroupDist) {
 												if ($DEBUG_REGROUP) {
 													echo " groups $gid1 and $gid2 have dist $pixdist\n";
 												}
+
 												// check if these groups have been regrouped
 												$g1 = $groups[$gid1]['group'];
 												$g2 = $groups[$gid2]['group'];
@@ -912,29 +956,34 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " regrouping groups $gid1 and $gid2, CREATING NEW GROUP $nbgroups !!!\n";
 													}
+
 													// make a new group merging two (old) groups
 													$groups[$nbgroups]['regroupShowLow'] = $z;
 													$groups[$nbgroups]['maxx']           = max(
 														$groups[$gid1]['maxx'],
 														$groups[$gid2]['maxx']
 													);
-													$groups[$nbgroups]['minx']           = min(
+
+													$groups[$nbgroups]['minx'] = min(
 														$groups[$gid1]['minx'],
 														$groups[$gid2]['minx']
 													);
-													$groups[$nbgroups]['maxy']           = max(
+
+													$groups[$nbgroups]['maxy'] = max(
 														$groups[$gid1]['maxy'],
 														$groups[$gid2]['maxy']
 													);
-													$groups[$nbgroups]['miny']           = min(
+
+													$groups[$nbgroups]['miny'] = min(
 														$groups[$gid1]['miny'],
 														$groups[$gid2]['miny']
 													);
-													$groups[$nbgroups]['group']          = -1;
-													$groups[$nbgroups]['groups']         = 2;
-													$groups[$nbgroups]['display']        = true;
-													$groups[$nbgroups]['items']          = $groups[$gid1]['items'] + $groups[$gid2]['items'];
-													$groups[$nbgroups]['directItems']    = 0;
+
+													$groups[$nbgroups]['group']       = -1;
+													$groups[$nbgroups]['groups']      = 2;
+													$groups[$nbgroups]['display']     = true;
+													$groups[$nbgroups]['items']       = $groups[$gid1]['items'] + $groups[$gid2]['items'];
+													$groups[$nbgroups]['directItems'] = 0;
 
 													$groups[$gid1]['group']           = $nbgroups;
 													$groups[$gid2]['group']           = $nbgroups;
@@ -947,23 +996,28 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " adding group1 $gid1 (group2 = $gid2) to NEW group $g2\n";
 													}
+
 													// put (old) group1 in NEW g2
 													$groups[$g2]['maxx'] = max(
 														$groups[$g2]['maxx'],
 														$groups[$gid1]['maxx']
 													);
+
 													$groups[$g2]['minx'] = min(
 														$groups[$g2]['minx'],
 														$groups[$gid1]['minx']
 													);
+
 													$groups[$g2]['maxy'] = max(
 														$groups[$g2]['maxy'],
 														$groups[$gid1]['maxy']
 													);
+
 													$groups[$g2]['miny'] = min(
 														$groups[$g2]['miny'],
 														$groups[$gid1]['miny']
 													);
+
 													$groups[$g2]['groups']++;
 													$groups[$g2]['items'] += $groups[$gid1]['items'];
 
@@ -986,6 +1040,7 @@ class ShowMapView extends GalleryView {
 													if ($DEBUG_REGROUP) {
 														echo " adding group2 $gid2 (group1 = $gid1) to NEW group $g1\n";
 													}
+
 													// put (old) group2 in NEW g1
 													/*
 													 * if old group2 was already in a new group,
@@ -996,18 +1051,22 @@ class ShowMapView extends GalleryView {
 														$groups[$g1]['maxx'],
 														$groups[$gid2]['maxx']
 													);
+
 													$groups[$g1]['minx'] = min(
 														$groups[$g1]['minx'],
 														$groups[$gid2]['minx']
 													);
+
 													$groups[$g1]['maxy'] = max(
 														$groups[$g1]['maxy'],
 														$groups[$gid2]['maxy']
 													);
+
 													$groups[$g1]['miny'] = min(
 														$groups[$g1]['miny'],
 														$groups[$gid2]['miny']
 													);
+
 													$groups[$g1]['groups']++;
 													$groups[$g1]['items'] += $groups[$gid2]['items'];
 
@@ -1019,6 +1078,7 @@ class ShowMapView extends GalleryView {
 														if ($DEBUG_REGROUP) {
 															echo " group2 $gid2 was in NEW group $g2\n";
 														}
+
 														// group2 was already in a new group.
 														/*
 														 * move other elements of this new group
@@ -1032,23 +1092,28 @@ class ShowMapView extends GalleryView {
 																	if ($DEBUG_REGROUP) {
 																		echo " adding group3 $gid3 to NEW group $g1\n";
 																	}
+
 																	// now this (old) group3 comes also in NEW g1
 																	$groups[$g1]['maxx'] = max(
 																		$groups[$g1]['maxx'],
 																		$groups[$gid3]['maxx']
 																	);
+
 																	$groups[$g1]['minx'] = min(
 																		$groups[$g1]['minx'],
 																		$groups[$gid3]['minx']
 																	);
+
 																	$groups[$g1]['maxy'] = max(
 																		$groups[$g1]['maxy'],
 																		$groups[$gid3]['maxy']
 																	);
+
 																	$groups[$g1]['miny'] = min(
 																		$groups[$g1]['miny'],
 																		$groups[$gid3]['miny']
 																	);
+
 																	$groups[$g1]['groups']++;
 																	$groups[$g1]['items'] += $groups[$gid3]['items'];
 
@@ -1062,6 +1127,7 @@ class ShowMapView extends GalleryView {
 														if ($DEBUG_REGROUP) {
 															echo " DELETING new group $g2\n";
 														}
+
 														unset($groups[$g2]);
 
 														if (isset($showGroups[$g2])) {
@@ -1090,6 +1156,7 @@ class ShowMapView extends GalleryView {
 										. number_format($groups[$id]['posy'], 10, '.', '');
 									}
 								}
+
 								// ok, done for this zoomlevel. next zoomlevel please!
 							}
 
@@ -1184,6 +1251,7 @@ class ShowMapView extends GalleryView {
 					$map['zoomLevel']      = $param['zoomLevel'];
 				}
 			}
+
 			$map['zoomInLevel']          = (array_key_exists('zoomInLevel', $param)) ? $param['zoomInLevel'] : '0';
 			$map['showMapType']          = (array_key_exists('showMapType', $param)) ? $param['showMapType'] : '0';
 			$map['showScale']            = (array_key_exists('showScale', $param)) ? $param['showScale'] : '0';
@@ -1235,17 +1303,17 @@ class ShowMapView extends GalleryView {
 			$map['GroupMarkerSizeY'] = $SizesG[1];
 			$map['routeitem']        = array();
 
-			$MarkerSets    = array(
+			$MarkerSets = array(
 				'GalleryPhotoItem' => $map['useMarkerSet'],
 				'GalleryAlbumItem' => $map['useAlbumMarkerSet'],
 				'GoogleMapGroup'   => $map['useGroupMarkerSet'],
 			);
+
 			$DefaultColors = array(
 				'GalleryPhotoItem' => $map['defaultphotocolor'],
 				'GalleryAlbumItem' => $map['defaultalbumcolor'],
 				'GoogleMapGroup'   => $map['defaultgroupcolor'],
 			);
-
 
 			if ((array_key_exists('Routes', $param)) and ($param['Routes'] != '')) {
 				list($ret, $map['Routes'], $map['routeitem']) = mapHelper::getRoutes($mapPoints, $map['EnableRouteNumber'], $MarkerSets, $DefaultColors);
@@ -1265,7 +1333,6 @@ class ShowMapView extends GalleryView {
 			$map['LegendPos']         = (!array_key_exists('LegendPos', $param)) ? 0 : $param['LegendPos'];
 			$map['allmarkers']        = GoogleMapUtilities::AllMarkers();
 
-
 			/**
 			 * @todo replace this with a nice function to get the background color and check
 			 * for existence of a sidebar
@@ -1281,12 +1348,14 @@ class ShowMapView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// Grab the Theme Default settings
 			list($ret, $deftheme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$settings  = $deftheme->getSettings(null);
 			$bodycolor = '';
 
@@ -1306,8 +1375,10 @@ class ShowMapView extends GalleryView {
 								$buffer = fgets($filepointer, 4096);
 								$file  .= $buffer;
 							}
+
 							fclose($filepointer);
 						}
+
 						preg_match('/body.gallery { background-color: (.*) }/', $file, $match);
 						$result    = explode(' ', $match[1]);
 						$bodycolor = $result[0];
@@ -1318,6 +1389,7 @@ class ShowMapView extends GalleryView {
 					$bodycolor = 'white';
 				}
 			}
+
 			$map['bodycolor'] = $bodycolor;
 
 			if ($deftheme->getName() == 'Floatrix') {
@@ -1368,6 +1440,7 @@ class ShowMapView extends GalleryView {
 			if (!array_key_exists('ShowFilters', $param)) {
 				$param['ShowFilters'] = '0';
 			}
+
 			$map['ShowFilters'] = $param['ShowFilters'];
 		}
 
@@ -1403,7 +1476,7 @@ class ShowMapView extends GalleryView {
 				}
 
 				// Get coordinates for this item
-				$query               = '
+				$query = '
 		SELECT
 		  [mapMap::field],
 		  [mapMap::value]
@@ -1412,6 +1485,7 @@ class ShowMapView extends GalleryView {
 		WHERE
 		  [mapMap::itemId] = \'' . $form['id'] . '\'
 		';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
@@ -1465,11 +1539,11 @@ class ShowMapView extends GalleryView {
 				}
 			}
 
-
 			// make sure parameters are set.
 			if (!isset($map['coordinates'])) {
 				$map['coordinates'] = (isset($map['GVMCenter']) && $map['GVMCenter'] != '') ? $map['GVMCenter'] : '33,-20';
 			}
+
 			$map['centerLongLat'] = $map['coordinates'];
 
 			if (!isset($map['zoomLevel']) or $map['zoomLevel'] == '') {
@@ -1487,6 +1561,7 @@ class ShowMapView extends GalleryView {
 			if (!isset($map['mapType'])) {
 				$map['mapType'] = 'G_MAP_TYPE';
 			}
+
 			// Feature set transfert
 			if (array_key_exists('LegendFeature', $param)) {
 				$map['LegendFeature'] = $param['LegendFeature'];
@@ -1496,7 +1571,8 @@ class ShowMapView extends GalleryView {
 		}
 
 		$map['hasadminrights'] = false;
-		$ret                   = GalleryCoreApi::assertUserIsSiteAdministrator();
+
+		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if (!$ret) {
 			$map['hasadminrights'] = true;

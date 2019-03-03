@@ -23,6 +23,7 @@
  *
  */
 	global $gallery;
+
 	$urlGenerator =& $gallery->getUrlGenerator();
 
 	// Fetch the real path of the gallery installation for file operation
@@ -38,15 +39,18 @@ foreach ($param as $key => $value) {
 
 	// Add the google map fields (we don't care about errors)
 	list($ret, $added) = mapHelper::addField('GPS', 'common', 0);
+
 	list($ret, $added) = mapHelper::addField('ZoomLevel', 'common', 0);
+
 	list($ret, $added) = mapHelper::addField('GELookAt', 'common', 0);
 
 	// Save the Color Names into the Custom Field
-	$handle    = fopen(
+	$handle = fopen(
 		$basegallerydir . 'modules/map/images/markers/' . $param['useMarkerSet']
 				. '/colorlist',
 		'r'
 	);
+
 	$photolist = explode(
 		'*',
 		fread(
@@ -57,13 +61,15 @@ foreach ($param as $key => $value) {
 			) - 1
 		)
 	);
+
 	fclose($handle);
 
-	$handle    = fopen(
+	$handle = fopen(
 		$basegallerydir . 'modules/map/images/markers/' . $param['useAlbumMarkerSet']
 				. '/colorlist',
 		'r'
 	);
+
 	$albumlist = explode(
 		'*',
 		fread(
@@ -74,6 +80,7 @@ foreach ($param as $key => $value) {
 			) - 1
 		)
 	);
+
 	fclose($handle);
 
 	list($ret, $params) = mapHelper::loadParameters(0, false);

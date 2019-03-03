@@ -218,9 +218,11 @@ class MapThemeAdminView extends GalleryView {
 				) {
 					$form['windowlist'] .= 'selected';
 				}
+
 				$form['windowlist'] .= '>' . substr($file, 0, -4) . "</option>\n\t";
 			}
 		}
+
 		$mydir->close();
 		/*
 		 * Just make sure anything got created, if, not return an error that there is no control

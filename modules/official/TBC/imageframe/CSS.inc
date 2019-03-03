@@ -56,6 +56,7 @@ class CSSView extends GalleryView {
 		if (empty($frameList)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
+
 		$frameList = explode('|', $frameList);
 
 		if (function_exists('getallheaders')) {
@@ -70,6 +71,7 @@ class CSSView extends GalleryView {
 			) {
 				// Check date on frame.inc files to determine if we should resend the CSS
 				global $gallery;
+
 				$platform =& $gallery->getPlatform();
 
 				foreach ($frameList as $frameId) {

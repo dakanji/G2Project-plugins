@@ -13,7 +13,6 @@
 // dependencies: module.tag.id3v1.php                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.id3v1.php', __FILE__, true);
 
 class getid3_id3v2 extends getid3_handler {
@@ -36,20 +35,16 @@ class getid3_id3v2 extends getid3_handler {
 		//        +-----------------------------+
 		//        | Footer (10 bytes, OPTIONAL) |
 		//        +-----------------------------+
-
 		//    Header
 		//        ID3v2/file identifier      "ID3"
 		//        ID3v2 version              $04 00
 		//        ID3v2 flags                (%ab000000 in v2.2, %abc00000 in v2.3, %abcd0000 in v2.4.x)
 		//        ID3v2 size             4 * %0xxxxxxx
-
-
 		// shortcuts
 		$info['id3v2']['header'] = true;
 		$thisfile_id3v2          = &$info['id3v2'];
 		$thisfile_id3v2['flags'] = array();
 		$thisfile_id3v2_flags    = &$thisfile_id3v2['flags'];
-
 
 		$this->fseek($this->StartingOffset);
 		$header = $this->fread(10);
@@ -97,21 +92,16 @@ class getid3_id3v2 extends getid3_handler {
 				break;
 		}
 
-		$thisfile_id3v2['headerlength'] = getid3_lib::BigEndian2Int(substr($header, 6, 4), 1) + 10; // length of ID3v2 tag in 10-byte header doesn't include 10-byte header length
-
+		$thisfile_id3v2['headerlength']     = getid3_lib::BigEndian2Int(substr($header, 6, 4), 1) + 10; // length of ID3v2 tag in 10-byte header doesn't include 10-byte header length
 		$thisfile_id3v2['tag_offset_start'] = $this->StartingOffset;
 		$thisfile_id3v2['tag_offset_end']   = $thisfile_id3v2['tag_offset_start'] + $thisfile_id3v2['headerlength'];
-
-
 
 		// create 'encoding' key - used by getid3::HandleAllTags()
 		// in ID3v2 every field can have it's own encoding type
 		// so force everything to UTF-8 so it can be handled consistantly
 		$thisfile_id3v2['encoding'] = 'UTF-8';
 
-
 		//    Frames
-
 		//        All ID3v2 frames consists of one frame header followed by one or more
 		//        fields containing the actual information. The header is always 10
 		//        bytes and laid out as follows:
@@ -119,7 +109,6 @@ class getid3_id3v2 extends getid3_handler {
 		//        Frame ID      $xx xx xx xx  (four characters)
 		//        Size      4 * %0xxxxxxx
 		//        Flags         $xx xx
-
 		$sizeofframes = $thisfile_id3v2['headerlength'] - 10; // not including 10-byte initial header
 		if (!empty($thisfile_id3v2['exthead']['length'])) {
 			$sizeofframes -= ($thisfile_id3v2['exthead']['length'] + 4);
@@ -131,22 +120,18 @@ class getid3_id3v2 extends getid3_handler {
 
 		if ($sizeofframes > 0) {
 			$framedata = $this->fread($sizeofframes); // read all frames from file into $framedata variable
-
 			//    if entire frame data is unsynched, de-unsynch it now (ID3v2.3.x)
 			if (!empty($thisfile_id3v2_flags['unsynch']) && ($id3v2_majorversion <= 3)) {
 				$framedata = $this->DeUnsynchronise($framedata);
 			}
+
 			//        [in ID3v2.4.0] Unsynchronisation [S:6.1] is done on frame level, instead
 			//        of on tag level, making it easier to skip frames, increasing the streamability
 			//        of the tag. The unsynchronisation flag in the header [S:3.1] indicates that
 			//        there exists an unsynchronised frame, while the new unsynchronisation flag in
 			//        the frame header [S:4.1.2] indicates unsynchronisation.
-
-
 			//$framedataoffset = 10 + ($thisfile_id3v2['exthead']['length'] ? $thisfile_id3v2['exthead']['length'] + 4 : 0); // how many bytes into the stream - start from after the 10-byte header (and extended header length+4, if present)
 			$framedataoffset = 10; // how many bytes into the stream - start from after the 10-byte header
-
-
 			//    Extended Header
 			if (!empty($thisfile_id3v2_flags['exthead'])) {
 				$extended_header_offset = 0;
@@ -158,7 +143,6 @@ class getid3_id3v2 extends getid3_handler {
 					//     %x0000000 %00000000 // v2.3
 					//     x - CRC data present
 					//Size of padding       $xx xx xx xx
-
 					$thisfile_id3v2['exthead']['length'] = getid3_lib::BigEndian2Int(substr($framedata, $extended_header_offset, 4), 0);
 					$extended_header_offset             += 4;
 
@@ -175,6 +159,7 @@ class getid3_id3v2 extends getid3_handler {
 						$thisfile_id3v2['exthead']['flag_data']['crc'] = getid3_lib::BigEndian2Int(substr($framedata, $extended_header_offset, 4));
 						$extended_header_offset                       += 4;
 					}
+
 					$extended_header_offset += $thisfile_id3v2['exthead']['padding_size'];
 				} elseif ($id3v2_majorversion == 4) {
 					// v2.4 definition:
@@ -189,7 +174,6 @@ class getid3_id3v2 extends getid3_handler {
 					//         Total frame CRC    5 * %0xxxxxxx
 					//     d - Tag restrictions
 					//         Flag data length       $01
-
 					$thisfile_id3v2['exthead']['length'] = getid3_lib::BigEndian2Int(substr($framedata, $extended_header_offset, 4), true);
 					$extended_header_offset             += 4;
 
@@ -222,12 +206,11 @@ class getid3_id3v2 extends getid3_handler {
 						// %ppqrrstt
 						$restrictions_raw        = getid3_lib::BigEndian2Int(substr($framedata, $extended_header_offset, 1));
 						$extended_header_offset += 1;
-						$thisfile_id3v2['exthead']['flags']['restrictions']['tagsize']  = ($restrictions_raw & 0xC0) >> 6; // p - Tag size restrictions
-						$thisfile_id3v2['exthead']['flags']['restrictions']['textenc']  = ($restrictions_raw & 0x20) >> 5; // q - Text encoding restrictions
-						$thisfile_id3v2['exthead']['flags']['restrictions']['textsize'] = ($restrictions_raw & 0x18) >> 3; // r - Text fields size restrictions
-						$thisfile_id3v2['exthead']['flags']['restrictions']['imgenc']   = ($restrictions_raw & 0x04) >> 2; // s - Image encoding restrictions
-						$thisfile_id3v2['exthead']['flags']['restrictions']['imgsize']  = ($restrictions_raw & 0x03) >> 0; // t - Image size restrictions
-
+						$thisfile_id3v2['exthead']['flags']['restrictions']['tagsize']       = ($restrictions_raw & 0xC0) >> 6; // p - Tag size restrictions
+						$thisfile_id3v2['exthead']['flags']['restrictions']['textenc']       = ($restrictions_raw & 0x20) >> 5; // q - Text encoding restrictions
+						$thisfile_id3v2['exthead']['flags']['restrictions']['textsize']      = ($restrictions_raw & 0x18) >> 3; // r - Text fields size restrictions
+						$thisfile_id3v2['exthead']['flags']['restrictions']['imgenc']        = ($restrictions_raw & 0x04) >> 2; // s - Image encoding restrictions
+						$thisfile_id3v2['exthead']['flags']['restrictions']['imgsize']       = ($restrictions_raw & 0x03) >> 0; // t - Image size restrictions
 						$thisfile_id3v2['exthead']['flags']['restrictions_text']['tagsize']  = $this->LookupExtendedHeaderRestrictionsTagSizeLimits($thisfile_id3v2['exthead']['flags']['restrictions']['tagsize']);
 						$thisfile_id3v2['exthead']['flags']['restrictions_text']['textenc']  = $this->LookupExtendedHeaderRestrictionsTextEncodings($thisfile_id3v2['exthead']['flags']['restrictions']['textenc']);
 						$thisfile_id3v2['exthead']['flags']['restrictions_text']['textsize'] = $this->LookupExtendedHeaderRestrictionsTextFieldSize($thisfile_id3v2['exthead']['flags']['restrictions']['textsize']);
@@ -243,8 +226,6 @@ class getid3_id3v2 extends getid3_handler {
 				$framedataoffset += $extended_header_offset;
 				$framedata        = substr($framedata, $extended_header_offset);
 			} // end extended header
-
-
 			while (isset($framedata) && (strlen($framedata) > 0)) { // cycle through until no more frame data is left to parse
 				if (strlen($framedata) <= $this->ID3v2HeaderLength($id3v2_majorversion)) {
 					// insufficient room left in ID3v2 header for actual data - must be padding
@@ -269,7 +250,6 @@ class getid3_id3v2 extends getid3_handler {
 					// Frame ID  $xx xx xx (three characters)
 					// Size      $xx xx xx (24-bit integer)
 					// Flags     $xx xx
-
 					$frame_header = substr($framedata, 0, 6); // take next 6 bytes for header
 					$framedata    = substr($framedata, 6);    // and leave the rest in $framedata
 					$frame_name   = substr($frame_header, 0, 3);
@@ -279,11 +259,9 @@ class getid3_id3v2 extends getid3_handler {
 					// Frame ID  $xx xx xx xx (four characters)
 					// Size      $xx xx xx xx (32-bit integer in v2.3, 28-bit synchsafe in v2.4+)
 					// Flags     $xx xx
-
 					$frame_header = substr($framedata, 0, 10); // take next 10 bytes for header
 					$framedata    = substr($framedata, 10);    // and leave the rest in $framedata
-
-					$frame_name = substr($frame_header, 0, 4);
+					$frame_name   = substr($frame_header, 0, 4);
 
 					if ($id3v2_majorversion == 3) {
 						$frame_size = getid3_lib::BigEndian2Int(substr($frame_header, 4, 4), 0); // 32-bit integer
@@ -305,13 +283,11 @@ class getid3_id3v2 extends getid3_handler {
 						}
 					}
 
-
 					$frame_flags = getid3_lib::BigEndian2Int(substr($frame_header, 8, 2));
 				}
 
 				if ((($id3v2_majorversion == 2) && ($frame_name == "\x00\x00\x00")) || ($frame_name == "\x00\x00\x00\x00")) {
 					// padding encountered
-
 					$thisfile_id3v2['padding']['start']  = $framedataoffset;
 					$thisfile_id3v2['padding']['length'] = strlen($frame_header) + strlen($framedata);
 					$thisfile_id3v2['padding']['valid']  = true;
@@ -394,19 +370,17 @@ class getid3_id3v2 extends getid3_handler {
 						$info['error'][] = 'error parsing "' . $frame_name . '" (' . $framedataoffset . ' bytes into the ID3v2.' . $id3v2_majorversion . ' tag).';
 					}
 				}
+
 				$framedataoffset += ($frame_size + $this->ID3v2HeaderLength($id3v2_majorversion));
 			}
 		}
 
-
 		//    Footer
-
 		//    The footer is a copy of the header, but with a different identifier.
 		//        ID3v2 identifier           "3DI"
 		//        ID3v2 version              $04 00
 		//        ID3v2 flags                %abcd0000
 		//        ID3v2 size             4 * %0xxxxxxx
-
 		if (isset($thisfile_id3v2_flags['isfooter']) && $thisfile_id3v2_flags['isfooter']) {
 			$footer = $this->fread(10);
 
@@ -426,7 +400,6 @@ class getid3_id3v2 extends getid3_handler {
 				$thisfile_id3v2['footerlength'] = getid3_lib::BigEndian2Int(substr($footer, 6, 4), 1);
 			}
 		} // end footer
-
 		if (isset($thisfile_id3v2['comments']['genre'])) {
 			$genres = array();
 
@@ -435,6 +408,7 @@ class getid3_id3v2 extends getid3_handler {
 					$genres[] = $genre;
 				}
 			}
+
 			$thisfile_id3v2['comments']['genre'] = array_unique($genres);
 			unset($key, $value, $genres, $genre);
 		}
@@ -450,7 +424,6 @@ class getid3_id3v2 extends getid3_handler {
 		if (!isset($thisfile_id3v2['comments']['year']) && !empty($thisfile_id3v2['comments']['recording_time'][0]) && preg_match('#^([0-9]{4})#', trim($thisfile_id3v2['comments']['recording_time'][0]), $matches)) {
 			$thisfile_id3v2['comments']['year'] = array($matches[1]);
 		}
-
 
 		if (!empty($thisfile_id3v2['TXXX'])) {
 			// MediaMonkey does this, maybe others: write a blank RGAD frame, but put replay-gain adjustment values in TXXX frames
@@ -479,7 +452,6 @@ class getid3_id3v2 extends getid3_handler {
 				}
 			}
 		}
-
 
 		// Set avdataoffset
 		$info['avdataoffset'] = $thisfile_id3v2['headerlength'];
@@ -538,6 +510,7 @@ class getid3_id3v2 extends getid3_handler {
 		if (empty($parsedFrame['framenamelong'])) {
 			unset($parsedFrame['framenamelong']);
 		}
+
 		$parsedFrame['framenameshort'] = $this->FrameNameShortLookup($parsedFrame['frame_name']);
 
 		if (empty($parsedFrame['framenameshort'])) {
@@ -565,7 +538,6 @@ class getid3_id3v2 extends getid3_handler {
 				$parsedFrame['flags']['Encryption']            = (bool)($parsedFrame['frame_flags_raw'] & 0x0004); // m - Encryption
 				$parsedFrame['flags']['Unsynchronisation']     = (bool)($parsedFrame['frame_flags_raw'] & 0x0002); // n - Unsynchronisation
 				$parsedFrame['flags']['DataLengthIndicator']   = (bool)($parsedFrame['frame_flags_raw'] & 0x0001); // p - Data length indicator
-
 				// Frame-level de-unsynchronisation - ID3v2.4
 				if ($parsedFrame['flags']['Unsynchronisation']) {
 					$parsedFrame['data'] = $this->DeUnsynchronise($parsedFrame['data']);
@@ -613,6 +585,7 @@ class getid3_id3v2 extends getid3_handler {
 				default:
 					break;
 			}
+
 			$info['warning'][] = $warning;
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'UFID'))  // 4.1   UFID Unique file identifier
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'UFI'))
@@ -634,7 +607,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Text encoding     $xx
 			// Description       <text string according to encoding> $00 (00)
 			// Value             <text string according to encoding>
-
 			$frame_offset                  = 0;
 			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
@@ -643,17 +615,20 @@ class getid3_id3v2 extends getid3_handler {
 				$info['warning'][]             = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 				$frame_textencoding_terminator = "\x00";
 			}
+
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
 
 			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
+
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
+
 			$parsedFrame['encodingid'] = $frame_textencoding;
 			$parsedFrame['encoding']   = $this->TextEncodingNameLookup($frame_textencoding);
 
@@ -669,6 +644,7 @@ class getid3_id3v2 extends getid3_handler {
 					$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = trim(getid3_lib::iconv_fallback($parsedFrame['encoding'], $info['id3v2']['encoding'], $parsedFrame['data']));
 				}
 			}
+
 			//unset($parsedFrame['data']); do not unset, may be needed elsewhere, e.g. for replaygain
 		} elseif ($parsedFrame['frame_name'][0] == 'T') { // 4.2. T??[?] Text information frame
 			//   There may only be one text information frame of its kind in an tag.
@@ -676,7 +652,6 @@ class getid3_id3v2 extends getid3_handler {
 			// excluding 'TXXX' described in 4.2.6.>
 			// Text encoding                $xx
 			// Information                  <text string(s) according to encoding>
-
 			$frame_offset       = 0;
 			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 
@@ -709,6 +684,7 @@ class getid3_id3v2 extends getid3_handler {
 
 						break;
 				}
+
 				$Txxx_elements              = array();
 				$Txxx_elements_start_offset = 0;
 
@@ -718,6 +694,7 @@ class getid3_id3v2 extends getid3_handler {
 						$Txxx_elements_start_offset = $i + $wordsize;
 					}
 				}
+
 				$Txxx_elements[] = substr($parsedFrame['data'], $Txxx_elements_start_offset, $i - $Txxx_elements_start_offset);
 
 				foreach ($Txxx_elements as $Txxx_element) {
@@ -727,6 +704,7 @@ class getid3_id3v2 extends getid3_handler {
 						$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = $string;
 					}
 				}
+
 				unset($string, $wordsize, $i, $Txxx_elements, $Txxx_element, $Txxx_elements_start_offset);
 			}
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'WXXX'))  // 4.3.2 WXXX User defined URL link frame
@@ -738,7 +716,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Text encoding     $xx
 			// Description       <text string according to encoding> $00 (00)
 			// URL               <text string>
-
 			$frame_offset                  = 0;
 			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
@@ -747,17 +724,20 @@ class getid3_id3v2 extends getid3_handler {
 				$info['warning'][]             = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 				$frame_textencoding_terminator = "\x00";
 			}
+
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
 
 			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
+
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
+
 			$parsedFrame['data'] = substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator);
@@ -784,6 +764,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (!empty($parsedFrame['framenameshort']) && $parsedFrame['url']) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = getid3_lib::iconv_fallback($parsedFrame['encoding'], $info['id3v2']['encoding'], $parsedFrame['url']);
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ($parsedFrame['frame_name'][0] == 'W') { // 4.3. W??? URL link frames
 			//   There may only be one URL link frame of its kind in a tag,
@@ -791,12 +772,12 @@ class getid3_id3v2 extends getid3_handler {
 			// <Header for 'URL link frame', ID: 'W000' - 'WZZZ', excluding 'WXXX'
 			// described in 4.3.2.>
 			// URL              <text string>
-
 			$parsedFrame['url'] = trim($parsedFrame['data']);
 
 			if (!empty($parsedFrame['framenameshort']) && $parsedFrame['url']) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = $parsedFrame['url'];
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion == 3) && ($parsedFrame['frame_name'] == 'IPLS'))  // 4.4  IPLS Involved people list (ID3v2.3 only)
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'IPL'))
@@ -806,13 +787,13 @@ class getid3_id3v2 extends getid3_handler {
 			// <Header for 'User defined URL link frame', ID: 'IPL'>
 			// Text encoding     $xx
 			// People list strings    <textstrings>
-
 			$frame_offset       = 0;
 			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
 				$info['warning'][] = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 			}
+
 			$parsedFrame['encodingid'] = $frame_textencoding;
 			$parsedFrame['encoding']   = $this->TextEncodingNameLookup($parsedFrame['encodingid']);
 			$parsedFrame['data_raw']   = (string)substr($parsedFrame['data'], $frame_offset);
@@ -874,8 +855,9 @@ class getid3_id3v2 extends getid3_handler {
 								'position' => $position,
 								'person'   => $person,
 							);
-							$position     = '';
-							$person       = '';
+
+							$position = '';
+							$person   = '';
 						}
 					}
 				} else {
@@ -886,6 +868,7 @@ class getid3_id3v2 extends getid3_handler {
 			} else {
 				$IPLS_parts = preg_split('#[;,\\r\\n\\t]#', $parsedFrame['data_raw']);
 			}
+
 			$parsedFrame['data'] = $IPLS_parts;
 
 			if (!empty($parsedFrame['framenameshort']) && !empty($parsedFrame['data'])) {
@@ -897,7 +880,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   There may only be one 'MCDI' frame in each tag
 			// <Header for 'Music CD identifier', ID: 'MCDI'>
 			// CD TOC                <binary data>
-
 			if (!empty($parsedFrame['framenameshort']) && !empty($parsedFrame['data'])) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = $parsedFrame['data'];
 			}
@@ -915,7 +897,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Time stamp      $xx (xx ...)
 			//   The 'Time stamp' is set to zero if directly at the beginning of the sound
 			//   or after the previous event. All events MUST be sorted in chronological order.
-
 			$frame_offset                   = 0;
 			$parsedFrame['timestampformat'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 
@@ -925,6 +906,7 @@ class getid3_id3v2 extends getid3_handler {
 				$parsedFrame['timestamp'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 				$frame_offset            += 4;
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'MLLT'))  // 4.6   MLLT MPEG location lookup table
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'MLL'))
@@ -939,7 +921,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   Then for every reference the following data is included;
 			// Deviation in bytes         %xxx....
 			// Deviation in milliseconds  %xxx....
-
 			$frame_offset                           = 0;
 			$parsedFrame['framesbetweenreferences'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], 0, 2));
 			$parsedFrame['bytesbetweenreferences']  = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], 2, 3));
@@ -951,6 +932,7 @@ class getid3_id3v2 extends getid3_handler {
 			while ($frame_offset < strlen($parsedFrame['data'])) {
 				$deviationbitstream .= getid3_lib::BigEndian2Bin(substr($parsedFrame['data'], $frame_offset++, 1));
 			}
+
 			$reference_counter = 0;
 
 			while (strlen($deviationbitstream) > 0) {
@@ -959,6 +941,7 @@ class getid3_id3v2 extends getid3_handler {
 				$deviationbitstream                               = substr($deviationbitstream, $parsedFrame['bitsforbytesdeviation'] + $parsedFrame['bitsformsdeviation']);
 				$reference_counter++;
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'SYTC'))  // 4.7   SYTC Synchronised tempo codes
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'STC'))
@@ -970,7 +953,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   Where time stamp format is:
 			// $01  (32-bit value) MPEG frames from beginning of file
 			// $02  (32-bit value) milliseconds from beginning of file
-
 			$frame_offset                   = 0;
 			$parsedFrame['timestampformat'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$timestamp_counter              = 0;
@@ -981,10 +963,12 @@ class getid3_id3v2 extends getid3_handler {
 				if ($parsedFrame[$timestamp_counter]['tempo'] == 255) {
 					$parsedFrame[$timestamp_counter]['tempo'] += ord(substr($parsedFrame['data'], $frame_offset++, 1));
 				}
+
 				$parsedFrame[$timestamp_counter]['timestamp'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 				$frame_offset                                += 4;
 				$timestamp_counter++;
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'USLT'))  // 4.8   USLT Unsynchronised lyric/text transcription
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'ULT'))
@@ -996,7 +980,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Language             $xx xx xx
 			// Content descriptor   <text string according to encoding> $00 (00)
 			// Lyrics/text          <full text string according to encoding>
-
 			$frame_offset                  = 0;
 			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
@@ -1005,6 +988,7 @@ class getid3_id3v2 extends getid3_handler {
 				$info['warning'][]             = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 				$frame_textencoding_terminator = "\x00";
 			}
+
 			$frame_language      = substr($parsedFrame['data'], $frame_offset, 3);
 			$frame_offset       += 3;
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
@@ -1012,12 +996,14 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
+
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
+
 			$parsedFrame['data'] = substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
 
 			$parsedFrame['encodingid'] = $frame_textencoding;
@@ -1030,6 +1016,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (!empty($parsedFrame['framenameshort']) && !empty($parsedFrame['data'])) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = getid3_lib::iconv_fallback($parsedFrame['encoding'], $info['id3v2']['encoding'], $parsedFrame['data']);
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'SYLT'))  // 4.9   SYLT Synchronised lyric/text
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'SLT'))
@@ -1047,7 +1034,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   Terminated text to be synced (typically a syllable)
 			//   Sync identifier (terminator to above string)   $00 (00)
 			//   Time stamp                                     $xx (xx ...)
-
 			$frame_offset                  = 0;
 			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
@@ -1056,6 +1042,7 @@ class getid3_id3v2 extends getid3_handler {
 				$info['warning'][]             = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 				$frame_textencoding_terminator = "\x00";
 			}
+
 			$frame_language                 = substr($parsedFrame['data'], $frame_offset, 3);
 			$frame_offset                  += 3;
 			$parsedFrame['timestampformat'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
@@ -1080,6 +1067,7 @@ class getid3_id3v2 extends getid3_handler {
 					if (ord(substr($frame_remainingdata, $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 						$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 					}
+
 					$parsedFrame['lyrics'][$timestampindex]['data'] = substr($frame_remainingdata, $frame_offset, $frame_terminatorpos - $frame_offset);
 
 					$frame_remainingdata = substr($frame_remainingdata, $frame_terminatorpos + strlen($frame_textencoding_terminator));
@@ -1090,9 +1078,11 @@ class getid3_id3v2 extends getid3_handler {
 						$parsedFrame['lyrics'][$timestampindex]['timestamp'] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, 0, 4));
 						$frame_remainingdata                                 = substr($frame_remainingdata, 4);
 					}
+
 					$timestampindex++;
 				}
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'COMM'))  // 4.10  COMM Comments
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'COM'))
@@ -1104,7 +1094,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Language               $xx xx xx
 			// Short content descrip. <text string according to encoding> $00 (00)
 			// The actual text        <full text string according to encoding>
-
 			if (strlen($parsedFrame['data']) < 5) {
 				$info['warning'][] = 'Invalid data (too short) for "' . $parsedFrame['frame_name'] . '" frame at offset ' . $parsedFrame['dataoffset'];
 			} else {
@@ -1116,6 +1105,7 @@ class getid3_id3v2 extends getid3_handler {
 					$info['warning'][]             = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 					$frame_textencoding_terminator = "\x00";
 				}
+
 				$frame_language      = substr($parsedFrame['data'], $frame_offset, 3);
 				$frame_offset       += 3;
 				$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
@@ -1123,12 +1113,14 @@ class getid3_id3v2 extends getid3_handler {
 				if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 					$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 				}
+
 				$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 				if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 					// if description only contains a BOM or terminator then make it blank
 					$frame_description = '';
 				}
+
 				$frame_text = (string)substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
 
 				$parsedFrame['encodingid'] = $frame_textencoding;
@@ -1161,13 +1153,13 @@ class getid3_id3v2 extends getid3_handler {
 			// Volume adjustment       $xx xx
 			// Bits representing peak  $xx
 			// Peak volume             $xx (xx ...)
-
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00");
 			$frame_idstring      = substr($parsedFrame['data'], 0, $frame_terminatorpos);
 
 			if (ord($frame_idstring) === 0) {
 				$frame_idstring = '';
 			}
+
 			$frame_remainingdata        = substr($parsedFrame['data'], $frame_terminatorpos + strlen("\x00"));
 			$parsedFrame['description'] = $frame_idstring;
 			$RVA2channelcounter         = 0;
@@ -1186,11 +1178,13 @@ class getid3_id3v2 extends getid3_handler {
 
 					break;
 				}
+
 				$frame_bytespeakvolume                          = ceil($parsedFrame[$RVA2channelcounter]['bitspeakvolume'] / 8);
 				$parsedFrame[$RVA2channelcounter]['peakvolume'] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, $frame_offset, $frame_bytespeakvolume));
 				$frame_remainingdata                            = substr($frame_remainingdata, $frame_offset + $frame_bytespeakvolume);
 				$RVA2channelcounter++;
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion == 3) && ($parsedFrame['frame_name'] == 'RVAD'))  // 4.12  RVAD Relative volume adjustment (ID3v2.3 only)
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'RVA'))
@@ -1215,7 +1209,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   ID3v2.3 only, optional (not present in ID3v2.2):
 			// Relative volume change, bass       $xx xx (xx ...) // f
 			// Peak volume bass                   $xx xx (xx ...)
-
 			$frame_offset                         = 0;
 			$frame_incrdecrflags                  = getid3_lib::BigEndian2Bin(substr($parsedFrame['data'], $frame_offset++, 1));
 			$parsedFrame['incdec']['right']       = (bool)substr($frame_incrdecrflags, 6, 1);
@@ -1227,12 +1220,14 @@ class getid3_id3v2 extends getid3_handler {
 			if ($parsedFrame['incdec']['right'] === false) {
 				$parsedFrame['volumechange']['right'] *= -1;
 			}
+
 			$frame_offset                       += $frame_bytesvolume;
 			$parsedFrame['volumechange']['left'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 
 			if ($parsedFrame['incdec']['left'] === false) {
 				$parsedFrame['volumechange']['left'] *= -1;
 			}
+
 			$frame_offset                      += $frame_bytesvolume;
 			$parsedFrame['peakvolume']['right'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 			$frame_offset                      += $frame_bytesvolume;
@@ -1250,18 +1245,21 @@ class getid3_id3v2 extends getid3_handler {
 					if ($parsedFrame['incdec']['rightrear'] === false) {
 						$parsedFrame['volumechange']['rightrear'] *= -1;
 					}
+
 					$frame_offset                           += $frame_bytesvolume;
 					$parsedFrame['volumechange']['leftrear'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 
 					if ($parsedFrame['incdec']['leftrear'] === false) {
 						$parsedFrame['volumechange']['leftrear'] *= -1;
 					}
+
 					$frame_offset                          += $frame_bytesvolume;
 					$parsedFrame['peakvolume']['rightrear'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 					$frame_offset                          += $frame_bytesvolume;
 					$parsedFrame['peakvolume']['leftrear']  = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 					$frame_offset                          += $frame_bytesvolume;
 				}
+
 				$parsedFrame['data'] = substr($parsedFrame['data'], $frame_offset);
 
 				if (strlen($parsedFrame['data']) > 0) {
@@ -1271,10 +1269,12 @@ class getid3_id3v2 extends getid3_handler {
 					if ($parsedFrame['incdec']['center'] === false) {
 						$parsedFrame['volumechange']['center'] *= -1;
 					}
+
 					$frame_offset                       += $frame_bytesvolume;
 					$parsedFrame['peakvolume']['center'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 					$frame_offset                       += $frame_bytesvolume;
 				}
+
 				$parsedFrame['data'] = substr($parsedFrame['data'], $frame_offset);
 
 				if (strlen($parsedFrame['data']) > 0) {
@@ -1284,11 +1284,13 @@ class getid3_id3v2 extends getid3_handler {
 					if ($parsedFrame['incdec']['bass'] === false) {
 						$parsedFrame['volumechange']['bass'] *= -1;
 					}
+
 					$frame_offset                     += $frame_bytesvolume;
 					$parsedFrame['peakvolume']['bass'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesvolume));
 					$frame_offset                     += $frame_bytesvolume;
 				}
 			}
+
 			unset($parsedFrame['data']);
 		} elseif (($id3v2_majorversion >= 4) && ($parsedFrame['frame_name'] == 'EQU2')) { // 4.12  EQU2 Equalisation (2) (ID3v2.4+ only)
 			//   There may be more than one 'EQU2' frame in each tag,
@@ -1301,7 +1303,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   The following is then repeated for every adjustment point
 			// Frequency          $xx xx
 			// Volume adjustment  $xx xx
-
 			$frame_offset              = 0;
 			$frame_interpolationmethod = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_terminatorpos       = strpos($parsedFrame['data'], "\x00", $frame_offset);
@@ -1310,6 +1311,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord($frame_idstring) === 0) {
 				$frame_idstring = '';
 			}
+
 			$parsedFrame['description'] = $frame_idstring;
 			$frame_remainingdata        = substr($parsedFrame['data'], $frame_terminatorpos + strlen("\x00"));
 
@@ -1318,6 +1320,7 @@ class getid3_id3v2 extends getid3_handler {
 				$parsedFrame['data'][$frame_frequency] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, 2, 2), false, true);
 				$frame_remainingdata                   = substr($frame_remainingdata, 4);
 			}
+
 			$parsedFrame['interpolationmethod'] = $frame_interpolationmethod;
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion == 3) && ($parsedFrame['frame_name'] == 'EQUA'))  // 4.12  EQUA Equalisation (ID3v2.3 only)
@@ -1332,7 +1335,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Increment/decrement   %x (MSB of the Frequency)
 			// Frequency             (lower 15 bits)
 			// Adjustment            $xx (xx ...)
-
 			$frame_offset                  = 0;
 			$parsedFrame['adjustmentbits'] = substr($parsedFrame['data'], $frame_offset++, 1);
 			$frame_adjustmentbytes         = ceil($parsedFrame['adjustmentbits'] / 8);
@@ -1349,8 +1351,10 @@ class getid3_id3v2 extends getid3_handler {
 				if ($parsedFrame[$frame_frequency]['incdec'] === false) {
 					$parsedFrame[$frame_frequency]['adjustment'] *= -1;
 				}
+
 				$frame_remainingdata = substr($frame_remainingdata, 2 + $frame_adjustmentbytes);
 			}
+
 			unset($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'RVRB'))  // 4.13  RVRB Reverb
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'REV'))
@@ -1367,7 +1371,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Reverb feedback, right to left   $xx
 			// Premix left to right             $xx
 			// Premix right to left             $xx
-
 			$frame_offset              = 0;
 			$parsedFrame['left']       = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 2));
 			$frame_offset             += 2;
@@ -1395,7 +1398,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Picture type       $xx
 			// Description        <text string according to encoding> $00 (00)
 			// Picture data       <binary data>
-
 			$frame_offset                  = 0;
 			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
@@ -1417,11 +1419,13 @@ class getid3_id3v2 extends getid3_handler {
 					if (ord($frame_mimetype) === 0) {
 						$frame_mimetype = '';
 					}
+
 					$frame_imagetype = strtoupper(str_replace('image/', '', strtolower($frame_mimetype)));
 
 					if ($frame_imagetype == 'JPEG') {
 						$frame_imagetype = 'JPG';
 					}
+
 					$frame_offset = $frame_terminatorpos + strlen("\x00");
 				} else {
 					$frame_offset += 3;
@@ -1435,6 +1439,7 @@ class getid3_id3v2 extends getid3_handler {
 				if (ord($frame_mimetype) === 0) {
 					$frame_mimetype = '';
 				}
+
 				$frame_offset = $frame_terminatorpos + strlen("\x00");
 			}
 
@@ -1448,12 +1453,14 @@ class getid3_id3v2 extends getid3_handler {
 				if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 					$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 				}
+
 				$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 				if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 					// if description only contains a BOM or terminator then make it blank
 					$frame_description = '';
 				}
+
 				$parsedFrame['encodingid'] = $frame_textencoding;
 				$parsedFrame['encoding']   = $this->TextEncodingNameLookup($frame_textencoding);
 
@@ -1462,6 +1469,7 @@ class getid3_id3v2 extends getid3_handler {
 				} else {
 					$parsedFrame['mime'] = $frame_mimetype;
 				}
+
 				$parsedFrame['picturetypeid'] = $frame_picturetype;
 				$parsedFrame['picturetype']   = $this->APICPictureTypeLookup($frame_picturetype);
 				$parsedFrame['description']   = $frame_description;
@@ -1503,6 +1511,7 @@ class getid3_id3v2 extends getid3_handler {
 							unset($parsedFrame['data']);
 							break;
 						}
+
 						*/
 					} elseif (is_string($this->getid3->option_save_attachments)) {
 						$dir = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $this->getid3->option_save_attachments), DIRECTORY_SEPARATOR);
@@ -1515,6 +1524,7 @@ class getid3_id3v2 extends getid3_handler {
 							break;
 						}
 					}
+
 					// if we get this far, must be OK
 					if (is_string($this->getid3->option_save_attachments)) {
 						$destination_filename = $dir . DIRECTORY_SEPARATOR . md5($info['filenamepath']) . '_' . $frame_offset;
@@ -1524,6 +1534,7 @@ class getid3_id3v2 extends getid3_handler {
 						} else {
 							$info['warning'][] = 'attachment at ' . $frame_offset . ' cannot be saved to "' . $destination_filename . '" (not writable)';
 						}
+
 						$parsedFrame['data_filename'] = $destination_filename;
 						unset($parsedFrame['data']);
 					} else {
@@ -1531,6 +1542,7 @@ class getid3_id3v2 extends getid3_handler {
 							if (!isset($info['id3v2']['comments']['picture'])) {
 								$info['id3v2']['comments']['picture'] = array();
 							}
+
 							$comments_picture_data = array();
 
 							foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
@@ -1538,6 +1550,7 @@ class getid3_id3v2 extends getid3_handler {
 									$comments_picture_data[$picture_key] = $parsedFrame[$picture_key];
 								}
 							}
+
 							$info['id3v2']['comments']['picture'][] = $comments_picture_data;
 							unset($comments_picture_data);
 						}
@@ -1555,7 +1568,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Filename               <text string according to encoding> $00 (00)
 			// Content description    <text string according to encoding> $00 (00)
 			// Encapsulated object    <binary data>
-
 			$frame_offset                  = 0;
 			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
@@ -1564,12 +1576,14 @@ class getid3_id3v2 extends getid3_handler {
 				$info['warning'][]             = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 				$frame_textencoding_terminator = "\x00";
 			}
+
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_mimetype      = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (ord($frame_mimetype) === 0) {
 				$frame_mimetype = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
@@ -1577,11 +1591,13 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
+
 			$frame_filename = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (ord($frame_filename) === 0) {
 				$frame_filename = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen($frame_textencoding_terminator);
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
@@ -1589,12 +1605,14 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
+
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen($frame_textencoding_terminator);
 
 			$parsedFrame['objectdata'] = (string)substr($parsedFrame['data'], $frame_offset);
@@ -1613,7 +1631,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   front of the counter thus making the counter eight bits bigger
 			// <Header for 'Play counter', ID: 'PCNT'>
 			// Counter        $xx xx xx xx (xx ...)
-
 			$parsedFrame['data'] = getid3_lib::BigEndian2Int($parsedFrame['data']);
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'POPM'))  // 4.17  POPM Popularimeter
 			|| (($id3v2_majorversion == 2) && ($parsedFrame['frame_name'] == 'POP'))
@@ -1624,7 +1641,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Email to user   <text string> $00
 			// Rating          $xx
 			// Counter         $xx xx xx xx (xx ...)
-
 			$frame_offset        = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_emailaddress  = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1632,6 +1648,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord($frame_emailaddress) === 0) {
 				$frame_emailaddress = '';
 			}
+
 			$frame_offset           = $frame_terminatorpos + strlen("\x00");
 			$frame_rating           = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$parsedFrame['counter'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset));
@@ -1646,7 +1663,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Buffer size               $xx xx xx
 			// Embedded info flag        %0000000x
 			// Offset to next tag        $xx xx xx xx
-
 			$frame_offset              = 0;
 			$parsedFrame['buffersize'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 3));
 			$frame_offset             += 3;
@@ -1662,7 +1678,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Owner identifier      <textstring> $00 (00)
 			// Content/explanation   <textstring> $00 (00)
 			// Encrypted datablock   <binary data>
-
 			$frame_offset        = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid       = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1675,6 +1690,7 @@ class getid3_id3v2 extends getid3_handler {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
 
 			$parsedFrame['ownerid']     = $frame_ownerid;
@@ -1691,7 +1707,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Preview start      $xx xx
 			// Preview length     $xx xx
 			// Encryption info    <binary data>
-
 			$frame_offset        = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid       = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1699,6 +1714,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord($frame_ownerid) === 0) {
 				$frame_ownerid = '';
 			}
+
 			$frame_offset                  = $frame_terminatorpos + strlen("\x00");
 			$parsedFrame['ownerid']        = $frame_ownerid;
 			$parsedFrame['previewstart']   = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 2));
@@ -1717,7 +1733,6 @@ class getid3_id3v2 extends getid3_handler {
 			// ID3v2.2 => Frame identifier   $xx xx xx
 			// URL                            <text string> $00
 			// ID and additional data         <text string(s)>
-
 			$frame_offset = 0;
 
 			if ($id3v2_majorversion == 2) {
@@ -1734,6 +1749,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord($frame_url) === 0) {
 				$frame_url = '';
 			}
+
 			$frame_offset       = $frame_terminatorpos + strlen("\x00");
 			$parsedFrame['url'] = $frame_url;
 
@@ -1742,13 +1758,13 @@ class getid3_id3v2 extends getid3_handler {
 			if (!empty($parsedFrame['framenameshort']) && $parsedFrame['url']) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = getid3_lib::iconv_fallback_iso88591_utf8($parsedFrame['url']);
 			}
+
 			unset($parsedFrame['data']);
 		} elseif (($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'POSS')) { // 4.21  POSS Position synchronisation frame (ID3v2.3+ only)
 			//   There may only be one 'POSS' frame in each tag
 			// <Head for 'Position synchronisation', ID: 'POSS'>
 			// Time stamp format         $xx
 			// Position                  $xx (xx ...)
-
 			$frame_offset                   = 0;
 			$parsedFrame['timestampformat'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$parsedFrame['position']        = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset));
@@ -1760,13 +1776,13 @@ class getid3_id3v2 extends getid3_handler {
 			// Text encoding        $xx
 			// Language             $xx xx xx
 			// The actual text      <text string according to encoding>
-
 			$frame_offset       = 0;
 			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
 				$info['warning'][] = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 			}
+
 			$frame_language              = substr($parsedFrame['data'], $frame_offset, 3);
 			$frame_offset               += 3;
 			$parsedFrame['language']     = $frame_language;
@@ -1779,6 +1795,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (!empty($parsedFrame['framenameshort']) && !empty($parsedFrame['data'])) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = getid3_lib::iconv_fallback($parsedFrame['encoding'], $info['id3v2']['encoding'], $parsedFrame['data']);
 			}
+
 			unset($parsedFrame['data']);
 		} elseif (($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'OWNE')) { // 4.23  OWNE Ownership frame (ID3v2.3+ only)
 			//   There may only be one 'OWNE' frame in a tag
@@ -1787,13 +1804,13 @@ class getid3_id3v2 extends getid3_handler {
 			// Price paid        <text string> $00
 			// Date of purch.    <text string>
 			// Seller            <text string according to encoding>
-
 			$frame_offset       = 0;
 			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
 				$info['warning'][] = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 			}
+
 			$parsedFrame['encodingid'] = $frame_textencoding;
 			$parsedFrame['encoding']   = $this->TextEncodingNameLookup($frame_textencoding);
 
@@ -1810,6 +1827,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (!$this->IsValidDateStampString($parsedFrame['purchasedate'])) {
 				$parsedFrame['purchasedateunix'] = mktime(0, 0, 0, substr($parsedFrame['purchasedate'], 4, 2), substr($parsedFrame['purchasedate'], 6, 2), substr($parsedFrame['purchasedate'], 0, 4));
 			}
+
 			$frame_offset += 8;
 
 			$parsedFrame['seller'] = (string)substr($parsedFrame['data'], $frame_offset);
@@ -1827,7 +1845,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Description        <text string according to encoding> $00 (00)
 			// Picture MIME type  <string> $00
 			// Seller logo        <binary data>
-
 			$frame_offset                  = 0;
 			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
@@ -1862,11 +1879,13 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
+
 			$frame_sellername = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (ord($frame_sellername) === 0) {
 				$frame_sellername = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen($frame_textencoding_terminator);
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
@@ -1874,12 +1893,14 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
+
 			$frame_description = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 
 			if (in_array($frame_description, array("\x00", "\x00\x00", "\xFF\xFE", "\xFE\xFF"))) {
 				// if description only contains a BOM or terminator then make it blank
 				$frame_description = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen($frame_textencoding_terminator);
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
@@ -1908,7 +1929,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Owner identifier    <text string> $00
 			// Method symbol       $xx
 			// Encryption data     <binary data>
-
 			$frame_offset        = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid       = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1916,6 +1936,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord($frame_ownerid) === 0) {
 				$frame_ownerid = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
 
 			$parsedFrame['ownerid']      = $frame_ownerid;
@@ -1929,7 +1950,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Owner identifier      <text string> $00
 			// Group symbol          $xx
 			// Group dependent data  <binary data>
-
 			$frame_offset        = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid       = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1937,6 +1957,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord($frame_ownerid) === 0) {
 				$frame_ownerid = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
 
 			$parsedFrame['ownerid']     = $frame_ownerid;
@@ -1948,7 +1969,6 @@ class getid3_id3v2 extends getid3_handler {
 			// <Header for 'Private frame', ID: 'PRIV'>
 			// Owner identifier      <text string> $00
 			// The private data      <binary data>
-
 			$frame_offset        = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid       = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1956,6 +1976,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (ord($frame_ownerid) === 0) {
 				$frame_ownerid = '';
 			}
+
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
 
 			$parsedFrame['ownerid'] = $frame_ownerid;
@@ -1966,7 +1987,6 @@ class getid3_id3v2 extends getid3_handler {
 			// <Header for 'Signature frame', ID: 'SIGN'>
 			// Group symbol      $xx
 			// Signature         <binary data>
-
 			$frame_offset               = 0;
 			$parsedFrame['groupsymbol'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$parsedFrame['data']        = (string)substr($parsedFrame['data'], $frame_offset);
@@ -1974,7 +1994,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   There may only be one 'seek frame' in a tag
 			// <Header for 'Seek frame', ID: 'SEEK'>
 			// Minimum offset to next tag       $xx xx xx xx
-
 			$frame_offset        = 0;
 			$parsedFrame['data'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 		} elseif (($id3v2_majorversion >= 4) && ($parsedFrame['frame_name'] == 'ASPI')) { // 4.30  ASPI Audio seek point index (ID3v2.4+ only)
@@ -1986,7 +2005,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Bits per index point (b)       $xx
 			//   Then for every index point the following data is included:
 			// Fraction at index (Fi)          $xx (xx)
-
 			$frame_offset                     = 0;
 			$parsedFrame['datastart']         = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 			$frame_offset                    += 4;
@@ -2001,6 +2019,7 @@ class getid3_id3v2 extends getid3_handler {
 				$parsedFrame['indexes'][$i] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, $frame_bytesperpoint));
 				$frame_offset              += $frame_bytesperpoint;
 			}
+
 			unset($parsedFrame['data']);
 		} elseif (($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'RGAD')) { // Replay Gain Adjustment
 			// http://privatewww.essex.ac.uk/~djmrob/replaygain/file_format_id3v2.html
@@ -2013,7 +2032,6 @@ class getid3_id3v2 extends getid3_handler {
 			//   b - originator code
 			//   c - sign bit
 			//   d - replay gain adjustment
-
 			$frame_offset                              = 0;
 			$parsedFrame['peakamplitude']              = getid3_lib::BigEndian2Float(substr($parsedFrame['data'], $frame_offset, 4));
 			$frame_offset                             += 4;
@@ -2052,7 +2070,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Start offset    $xx xx xx xx
 			// End offset      $xx xx xx xx
 			// <Optional embedded sub-frames>
-
 			$frame_offset                     = 0;
 			@list($parsedFrame['element_id']) = explode("\x00", $parsedFrame['data'], 2);
 			$frame_offset                    += strlen($parsedFrame['element_id'] . "\x00");
@@ -2065,12 +2082,14 @@ class getid3_id3v2 extends getid3_handler {
 				// "If these bytes are all set to 0xFF then the value should be ignored and the start time value should be utilized."
 				$parsedFrame['offset_begin'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 			}
+
 			$frame_offset += 4;
 
 			if (substr($parsedFrame['data'], $frame_offset, 4) != "\xFF\xFF\xFF\xFF") {
 				// "If these bytes are all set to 0xFF then the value should be ignored and the start time value should be utilized."
 				$parsedFrame['offset_end'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 			}
+
 			$frame_offset += 4;
 
 			if ($frame_offset < strlen($parsedFrame['data'])) {
@@ -2091,6 +2110,7 @@ class getid3_id3v2 extends getid3_handler {
 
 						break;
 					}
+
 					$subframe_rawdata = substr($parsedFrame['data'], $frame_offset, $subframe['size']);
 					$frame_offset    += $subframe['size'];
 
@@ -2127,11 +2147,13 @@ class getid3_id3v2 extends getid3_handler {
 						} elseif ($subframe['name'] == 'TIT3') {
 							$parsedFrame['chapter_description'] = $encoding_converted_text;
 						}
+
 						$parsedFrame['subframes'][] = $subframe;
 					} else {
 						$info['warning'][] = 'ID3v2.CHAP subframe "' . $subframe['name'] . '" not handled (only TIT2 and TIT3)';
 					}
 				}
+
 				unset($subframe_rawdata, $subframe, $encoding_converted_text);
 			}
 
@@ -2146,6 +2168,7 @@ class getid3_id3v2 extends getid3_handler {
 			if (!isset($info['id3v2']['chapters'])) {
 				$info['id3v2']['chapters'] = array();
 			}
+
 			$info['id3v2']['chapters'][] = $id3v2_chapter_entry;
 			unset($id3v2_chapter_entry, $id3v2_chapter_key);
 		} elseif (($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'CTOC')) { // CTOC Chapters Table Of Contents frame (ID3v2.3+ only)
@@ -2156,7 +2179,6 @@ class getid3_id3v2 extends getid3_handler {
 			// Entry count       $xx
 			// Child Element ID  <string>$00   /* zero or more child CHAP or CTOC entries */
 			// <Optional embedded sub-frames>
-
 			$frame_offset                     = 0;
 			@list($parsedFrame['element_id']) = explode("\x00", $parsedFrame['data'], 2);
 			$frame_offset                    += strlen($parsedFrame['element_id'] . "\x00");
@@ -2196,6 +2218,7 @@ class getid3_id3v2 extends getid3_handler {
 
 						break;
 					}
+
 					$subframe_rawdata = substr($parsedFrame['data'], $frame_offset, $subframe['size']);
 					$frame_offset    += $subframe['size'];
 
@@ -2232,11 +2255,13 @@ class getid3_id3v2 extends getid3_handler {
 						} elseif ($subframe['name'] == 'TIT3') {
 							$parsedFrame['toc_description'] = $encoding_converted_text;
 						}
+
 						$parsedFrame['subframes'][] = $subframe;
 					} else {
 						$info['warning'][] = 'ID3v2.CTOC subframe "' . $subframe['name'] . '" not handled (only TIT2 and TIT3)';
 					}
 				}
+
 				unset($subframe_rawdata, $subframe, $encoding_converted_text);
 			}
 		}
@@ -2699,10 +2724,7 @@ class getid3_id3v2 extends getid3_handler {
 		// describe the language of the frame's content, according to ISO-639-2
 		// [ISO-639-2]. The language should be represented in lower case. If the
 		// language is not known the string "XXX" should be used.
-
-
 		// ISO 639-2 - http://www.id3.org/iso639-2.html
-
 		$begin = __LINE__;
 
 		/** This is not a comment!
@@ -3696,6 +3718,7 @@ class getid3_id3v2 extends getid3_handler {
 		if (!self::IsANumber($datestamp, false)) {
 			return false;
 		}
+
 		$year  = substr($datestamp, 0, 4);
 		$month = substr($datestamp, 4, 2);
 		$day   = substr($datestamp, 6, 2);

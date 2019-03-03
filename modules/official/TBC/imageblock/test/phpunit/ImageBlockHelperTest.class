@@ -37,6 +37,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$this->_markForCleanup($album);
 
 		return array(null, $album);
@@ -48,6 +49,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_topAlbum);
 
 		list($ret, $this->_subAlbum, $this->_subItems) = $this->_createSubAlbumWithItems($this->_topAlbum->getId());
@@ -95,6 +97,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
 		$this->assert($disabledFlag, 'getDisabledFlag returned false');
 
@@ -133,6 +136,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		foreach ($this->_topItems as $item) {
 			$itemIds[] = (int)$item->getId();
 		}
+
 		$itemIds[] = (int)$this->_topAlbum->getId();
 		sort($itemIds);
 
@@ -153,6 +157,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
+
 		sort($itemIds);
 		sort($dbItemIds);
 		$this->assertEquals($itemIds, $dbItemIds, 'Items not added to the DisableMap');
@@ -174,6 +179,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
+
 		$this->assertEquals(array(), $dbItemIds, 'Items not removed from the DisabledMap');
 	}
 
@@ -200,6 +206,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		foreach (array_merge($this->_topItems, $this->_subItems) as $item) {
 			$itemIds[] = (int)$item->getId();
 		}
+
 		$itemIds[] = (int)$this->_topAlbum->getId();
 		$itemIds[] = (int)$this->_subAlbum->getId();
 		sort($itemIds);
@@ -221,6 +228,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
+
 		sort($dbItemIds);
 		$this->assertEquals($itemIds, $dbItemIds, 'Items not added to the DisableMap');
 
@@ -247,6 +255,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
+
 		$this->assertEquals(array(), $dbItemIds, 'Items not removed from the DisabledMap');
 	}
 
@@ -271,6 +280,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		foreach ($this->_subItems as $item) {
 			$itemIds[] = (int)$item->getId();
 		}
+
 		$itemIds[] = (int)$this->_subAlbum->getId();
 
 		// Verify the precondition of the test
@@ -310,6 +320,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		foreach ($this->_topItems as $item) {
 			$itemIds[] = (int)$item->getId();
 		}
+
 		$itemIds[] = (int)$this->_topAlbum->getId();
 
 		// Verify the results
@@ -422,6 +433,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($photo);
 
 		list($ret, $thumbnail) = $this->_createDerivative(
@@ -439,6 +451,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $resize) = $this->_createDerivative(
 			$photo,
 			$photo->getId(),
@@ -470,6 +483,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$photo->getId(),
 			$gallery->getActiveUserId(),
@@ -534,6 +548,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 	public function testFetchViewableDataForRandomImageWithCache() {
 		global $gallery;
+
 		$gallery->_storage = new UnitTestStorage();
 		$storage           =& $gallery->getStorage();
 		$gallery->_phpVm   = new UnitTestPhpVm();
@@ -610,6 +625,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 	 */
 	public function testFetchViewableDataForMultipleRandomImages() {
 		global $gallery;
+
 		$max    = (int)0x7fffffff;
 		$userId = $gallery->getActiveUserId();
 
@@ -618,6 +634,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($album);
 
 		// Thumbnails must be generated for the cache to be properly updated
@@ -663,6 +680,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 	public function testGetRandomKeyRange() {
 		global $gallery;
+
 		$gallery->_storage = new UnitTestStorage();
 		$storage           =& $gallery->getStorage();
 

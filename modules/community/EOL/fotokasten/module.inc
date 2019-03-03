@@ -104,8 +104,10 @@ class FotokastenModule extends GalleryModule {
 			if ($ret) {
 				return $ret;
 			}
+
 			// Give everybody print permission by default
 			$gallery->guaranteeTimeLimit(300);
+
 			$ret = GalleryCoreApi::addGroupPermission(
 				$coreParams['id.rootAlbum'],
 				$coreParams['id.everybodyGroup'],
@@ -163,6 +165,7 @@ class FotokastenModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId = null) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$links = array();

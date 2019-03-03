@@ -39,21 +39,26 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 		$entity    = $event->getEntity();
 
 		if (empty($entity)) {
-			return array(GalleryCoreApi::error(
-				ERROR_MISSING_OBJECT,
+			return array(
+				GalleryCoreApi::error(
+					ERROR_MISSING_OBJECT,
+					null,
+					null,
+					'No entity supplied for ' . $eventName
+				),
 				null,
-				null,
-				'No entity supplied for ' . $eventName
-		), null);
+			);
 		}
 
 		if ($eventName == 'GalleryEntity::save') {
 			if (!$entity->testPersistentFlag(STORAGE_FLAG_NEWLY_CREATED)
-		|| !method_exists($entity, 'getParentId')) {
+				|| !method_exists($entity, 'getParentId')
+			) {
 				return array(null, null);
 			}
 
-			$parentId             = $entity->getParentId();
+			$parentId = $entity->getParentId();
+
 			list($ret, $eventMap) = NotificationHelper::getSubscriberByEntityId($parentId);
 
 			if ($ret) {
@@ -67,10 +72,13 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			}
 		} elseif ($eventName == 'GalleryEntity::delete') {
 			$deleteByColumn = GalleryUtilities::isA($entity, 'GalleryUser') ? 'userId' : 'itemId';
-			$ret            = GalleryCoreApi::removeMapEntry(
+
+			$ret = GalleryCoreApi::removeMapEntry(
 				'SubscriptionMap',
-				array($deleteByColumn => $entity->getId())
-		);
+				array(
+					$deleteByColumn => $entity->getId(),
+				)
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -95,7 +103,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			list($ret, $notification) = GalleryCoreApi::newFactoryInstanceById(
 				'NotificationEvent_1_0',
 				$notificationName
-		);
+			);
 
 			if ($ret) {
 				return $ret;
@@ -108,11 +116,12 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			list($ret, $hints) = GalleryCoreApi::getFactoryDefinitionHints(
 				'NotificationEvent_1_0',
 				$notificationName
-		);
+			);
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$eventName = $hints[0];
 
 			$requiredPermission = $notification->getPermission();
@@ -135,7 +144,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 					$notificationName,
 					$data[1],
 					true
-		);
+				);
 
 				if ($ret) {
 					return $ret;

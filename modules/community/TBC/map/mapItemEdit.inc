@@ -40,10 +40,12 @@ class mapItemEdit extends ItemEditPlugin {
 	 */
 	public function handleRequest($form, &$item, &$preferred) {
 		global $gallery;
+
 		$gurl =& $gallery->getUrlGenerator();
 
-		$status             = null;
-		$error              = array();
+		$status = null;
+		$error  = array();
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
@@ -100,15 +102,18 @@ class mapItemEdit extends ItemEditPlugin {
 				if ($ret) {
 					return $ret;
 				}
+
 				$status = $module->translate('Changes saved successfully');
 			}
 		} elseif (isset($form['action']['getexif'])) {
 			$form['fields']['GPS'] = $form['exif'];
-			$ret                   = mapHelper::saveFieldValues($item, $form['fields']);
+
+			$ret = mapHelper::saveFieldValues($item, $form['fields']);
 
 			if ($ret) {
 				return array($ret, null, null, null);
 			}
+
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 			if ($ret) {
@@ -173,12 +178,14 @@ class mapItemEdit extends ItemEditPlugin {
 			list($ret, $Legends) = GalleryCoreApi::getPluginParameter('module', 'map', $type . 's');
 		}
 
-		$set                                           = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 'album' : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 'photo' : 'common');
+		$set = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 'album' : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 'photo' : 'common');
+
 		list($ret, $tmp, $param, $isContainerSettings) = mapHelper::fetchFieldValues(array($item), null, $set);
 
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$form['fields'] = $tmp[$item->getId()];
 
 		foreach (array(
@@ -195,11 +202,13 @@ class mapItemEdit extends ItemEditPlugin {
 		if ($set == 'album') {
 			$form['adminFlag'] = $isContainerSettings[$item->getId()] ? 1 : 2;
 		}
+
 		$tpl = 'modules/map/templates/mapItemEdit.tpl';
 		$template->setVariable('controller', 'map.mapItemEdit');
 
 		// Add stuff for the help system
-		$form['picbase']              = GalleryUtilities::convertPathToUrl(substr(dirname(__FILE__), 0, -11)) . 'modules/map/images/';
+		$form['picbase'] = GalleryUtilities::convertPathToUrl(substr(dirname(__FILE__), 0, -11)) . 'modules/map/images/';
+
 		list($ret, $form['UserHelp']) = GalleryCoreApi::getPluginParameter('module', 'map', 'UserHelp');
 		$msie                         = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
 
@@ -229,6 +238,7 @@ class mapItemEdit extends ItemEditPlugin {
 		if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 			return true;
 		}
+
 		list($ret, $param) = mapHelper::loadParameters($item->getParentId());
 
 		if ($ret) {
@@ -249,6 +259,7 @@ class mapItemEdit extends ItemEditPlugin {
 	 */
 	public function getTitle() {
 		global $gallery;
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {

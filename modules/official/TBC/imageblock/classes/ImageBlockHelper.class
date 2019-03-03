@@ -39,6 +39,7 @@ class ImageBlockHelper {
 	 */
 	public static function loadImageBlocks(&$template, $params) {
 		global $gallery;
+
 		list($ret, $moduleParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'imageblock');
 
 		if ($ret) {
@@ -52,6 +53,7 @@ class ImageBlockHelper {
 		if (isset($params['repeatBlock']) && ($i = intval($params['repeatBlock'])) > 1) {
 			$params['blocks'] .= str_repeat('|' . $params['blocks'], $i - 1);
 		}
+
 		$params = array_merge($moduleParams, $params);
 
 		if (isset($params['itemId'])) {
@@ -63,11 +65,13 @@ class ImageBlockHelper {
 				return $ret;
 			}
 		}
+
 		$show = array();
 
 		foreach (explode('|', $params['show']) as $key) {
 			$show[$key] = 1;
 		}
+
 		$fullSize = isset($show['fullSize']);
 		$heading  = isset($show['heading']);
 
@@ -85,14 +89,17 @@ class ImageBlockHelper {
 			if (!isset($blockCount[$block])) {
 				$blockCount[$block] = 0;
 			}
+
 			$blockCount[$block]++;
 		}
+
 		$maxSize = isset($params['maxSize']) ? $params['maxSize'] : (isset($params['exactSize']) ? $params['exactSize'] : null);
 
 		foreach ($blockCount as $block => $count) {
 			if (!preg_match('{^(.*?)([A-Z].*)$}', $block, $matches)) {
 				continue;
 			}
+
 			list($tmp, $order, $itemType) = $matches;
 
 			list($ret, $blockData[$block]) = ImageBlockHelper::_getBlockData(
@@ -230,6 +237,7 @@ class ImageBlockHelper {
 						$nextBlock['title'] = $title;
 					}
 				}
+
 				$blocks[] = $nextBlock;
 				$lastType = $block;
 			}
@@ -240,6 +248,7 @@ class ImageBlockHelper {
 		if (isset($params['maxSize']) || isset($params['exactSize'])) {
 			$ImageBlockData['maxSize'] = $maxSize;
 		}
+
 		$ImageBlockData['link'] = isset($params['link']) ? $params['link'] : '';
 
 		if (isset($params['linkTarget'])) {
@@ -346,6 +355,7 @@ class ImageBlockHelper {
 
 						break;
 				}
+
 				list($ret, $tmp) = GalleryCoreApi::getPluginParameter('module', 'imageblock', $key);
 
 				if ($ret) {
@@ -375,14 +385,17 @@ class ImageBlockHelper {
 						break;
 					}
 				}
+
 				// Set random selection for anonymous user
-				$order              = 'random';
-				$count              = 1;
+				$order = 'random';
+				$count = 1;
+
 				list($ret, $userId) = GalleryCoreApi::getAnonymousUserId();
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				// Fall through to pick new item
 
 				// Fall Through
@@ -411,6 +424,7 @@ class ImageBlockHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$data = array($data);
 		} elseif (isset($key) && !empty($data)) {
 			// Record the id and time for selected item
@@ -427,12 +441,14 @@ class ImageBlockHelper {
 		}
 
 		foreach ($data as $itemData) {
-			$id               = $itemData['id'];
+			$id = $itemData['id'];
+
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($id, 'GalleryItem');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $owner) = GalleryCoreApi::loadEntitiesById(
 				$item->getOwnerId(),
 				'GalleryUser'
@@ -441,11 +457,13 @@ class ImageBlockHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($id));
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$thumbnail          = isset($thumbnail[$id]) ? $thumbnail[$id] : null;
 			$image              = null;
 			$source             = null;
@@ -457,6 +475,7 @@ class ImageBlockHelper {
 					// No thumbnail, no source for larger size.. just skip this block
 					continue;
 				}
+
 				$source = $thumbnail;
 
 				while (GalleryUtilities::isA($source, 'GalleryDerivative')
@@ -488,6 +507,7 @@ class ImageBlockHelper {
 						// Can't view source item, so no fullsize is available
 						continue;
 					}
+
 					// Can't view source item, so just stick with album thumbnail
 					$derivativeParentId = $id;
 					$source             = null;
@@ -519,6 +539,7 @@ class ImageBlockHelper {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$image = isset($preferred[$id]) ? $preferred[$id] : $item;
 				}
 			} elseif ($maxSize && isset($thumbnail) && ($thumbnail->getWidth() >= $maxSize
@@ -560,9 +581,11 @@ class ImageBlockHelper {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						$image = isset($preferred[$id]) ? $preferred[$id] : $item;
 					}
 				}
+
 				/*
 				 * Start with an arbitrarily large differential, in case we can't view the full
 				 * size or we don't have a height/width for the raw image (maybe it's not viewable?)
@@ -575,7 +598,8 @@ class ImageBlockHelper {
 				}
 
 				// Get the list of resizes
-				$resizes        = array();
+				$resizes = array();
+
 				list($ret, $ok) = GalleryCoreApi::hasItemPermission(
 					$derivativeParentId,
 					'core.viewResizes',
@@ -592,6 +616,7 @@ class ImageBlockHelper {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$resizes = isset($resizes[$derivativeParentId]) ? $resizes[$derivativeParentId] : array();
 				}
 
@@ -605,6 +630,7 @@ class ImageBlockHelper {
 					if ($biggerOnly && $rawDifferential < 0) {
 						continue;
 					}
+
 					$resizeDifferential = abs($rawDifferential);
 					$resizeSize         = $imageObject->getHeight() * $imageObject->getWidth();
 
@@ -633,6 +659,7 @@ class ImageBlockHelper {
 				if ($image->getId() != $id && !GalleryUtilities::isA($image, 'GalleryDerivative')) {
 					$itemData['forceItem'] = true;
 				}
+
 				$blocks[] = $itemData;
 			}
 		}
@@ -653,6 +680,7 @@ class ImageBlockHelper {
 	 */
 	public static function fetchViewableData($itemType, $order, $count, $parentId = null, $userId = null) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 		$typeMap = array(
 			'Image' => 1,
@@ -709,12 +737,14 @@ class ImageBlockHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// Only use LIKE statement if necessary
 		$parentSequence = null;
 
 		if (isset($parentId) && $parentId != $rootAlbumId) {
 			/** @todo Evaluate adding parentSequence to the ImageBlockCachedMap (and its index) */
-			$where[]              = '[GalleryItemAttributesMap::parentSequence] LIKE ?';
+			$where[] = '[GalleryItemAttributesMap::parentSequence] LIKE ?';
+
 			list($ret, $sequence) = GalleryCoreApi::fetchParentSequence($parentId);
 
 			if ($ret) {
@@ -726,14 +756,16 @@ class ImageBlockHelper {
 			} else {
 				$sequence = '';
 			}
+
 			$data[] = $parentSequence = $sequence . $parentId . '/%';
 		}
 
 		if ($order == 'random') {
 			// Prepare where clause for use in second query below
-			$whereRequery       = $where;
-			$whereRequery[]     = '[ImageBlockCacheMap::random] < ?';
-			$where[]            = '[ImageBlockCacheMap::random] > ?';
+			$whereRequery   = $where;
+			$whereRequery[] = '[ImageBlockCacheMap::random] < ?';
+			$where[]        = '[ImageBlockCacheMap::random] > ?';
+
 			list($ret, $minMax) = ImageBlockHelper::getRandomKeyRange(
 				(int)$userId,
 				$typeMap[$itemType],
@@ -743,6 +775,7 @@ class ImageBlockHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// We want that the returned integer is smaller than any number in the range
 			$data[] = ImageBlockHelper::getRandomKey($minMax[0], $minMax[1]) - 1;
 		}
@@ -813,6 +846,7 @@ class ImageBlockHelper {
 	 */
 	public static function _buildOrderBy($order) {
 		global $gallery;
+
 		$orderBy = null;
 
 		switch ($order) {
@@ -843,11 +877,13 @@ class ImageBlockHelper {
 	 */
 	public static function _runQuery($query, $data) {
 		global $gallery;
+
 		list($ret, $searchResults) = $gallery->search($query, $data);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$results = array();
 
 		while ($rec = $searchResults->nextResult()) {
@@ -858,6 +894,7 @@ class ImageBlockHelper {
 			if (isset($rec[1])) {
 				$result['viewCount'] = (int)$rec[1];
 			}
+
 			$results[] = $result;
 		}
 
@@ -869,6 +906,7 @@ class ImageBlockHelper {
 	 */
 	public static function _isCached($userId) {
 		global $gallery;
+
 		list($ret, $searchResults) = $gallery->search(
 			'SELECT COUNT(*) FROM [ImageBlockCacheMap] WHERE [ImageBlockCacheMap::userId] = ?',
 			array((int)$userId)
@@ -877,6 +915,7 @@ class ImageBlockHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$isCached = ($rec = $searchResults->nextResult()) && ($rec[0] > 0);
 
 		return array(null, $isCached);
@@ -890,6 +929,7 @@ class ImageBlockHelper {
 	 */
 	public static function cacheViewableTree($userId) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $userId);
@@ -901,6 +941,7 @@ class ImageBlockHelper {
 		if (empty($aclIds)) {
 			return null;
 		}
+
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
 		list($ret, $randStatement) = $storage->getFunctionSql('RANDOM_INTEGER', array());
@@ -942,7 +983,8 @@ class ImageBlockHelper {
 		}
 
 		$data[1] = 2;
-		$ret     = $storage->execute(sprintf($query, 'GalleryAlbumItem', 'GalleryAlbumItem'), $data);
+
+		$ret = $storage->execute(sprintf($query, 'GalleryAlbumItem', 'GalleryAlbumItem'), $data);
 
 		if ($ret) {
 			return $ret;
@@ -1026,7 +1068,6 @@ class ImageBlockHelper {
 				 */
 				$entity = $event->getEntity();
 
-
 				/*
 				 * If the entity is a GalleryDataItem or GalleryAlbumItem and is
 				 * Newly Created or the parent has changed (item moved), continue
@@ -1091,6 +1132,7 @@ class ImageBlockHelper {
 					 * A new album cannot have sub items and setDisabledFlag doesn't work for items
 					 * that are not yet in the persistent store (database), thus use addMapEntry()
 					 */
+
 					$ret = GalleryCoreApi::addMapEntry(
 						'ImageBlockDisabledMap',
 						array(
@@ -1141,11 +1183,13 @@ class ImageBlockHelper {
 			 * We don't care about ERROR_MISSING_OBJECT because it's generated if
 			 * the album is at the top-level
 			 */
+
 			list($ret, $sequence) = GalleryCoreApi::fetchParentSequence($parentAlbum->getId());
 
 			if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
 				return $ret;
 			}
+
 			$sequence = empty($sequence) ? '' : (implode('/', $sequence) . '/');
 
 			// Build the query
@@ -1255,6 +1299,7 @@ class ImageBlockHelper {
 	 */
 	public static function getRandomKey($min = 0, $max = 2147483647) {
 		global $gallery;
+
 		$phpVm              = $gallery->getPhpVm();
 		static $initialized = false;
 
@@ -1279,6 +1324,7 @@ class ImageBlockHelper {
 	 */
 	public static function getRandomKeyRange($userId, $itemType, $parentSequence = null) {
 		global $gallery;
+
 		$storage = $gallery->getStorage();
 
 		$from[]  = '[ImageBlockCacheMap] LEFT JOIN [ImageBlockDisabledMap] ON '

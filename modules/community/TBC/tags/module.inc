@@ -29,6 +29,7 @@
 class TagsModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('tags');
 		$this->setName($gallery->i18n('Tags'));
 		$this->setDescription(
@@ -86,6 +87,7 @@ class TagsModule extends GalleryModule {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'MaintenanceTask',
 			'TimestampToTags',
@@ -98,6 +100,7 @@ class TagsModule extends GalleryModule {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Register the search plugin
 		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'GallerySearchInterface_1_0',
@@ -139,6 +142,7 @@ class TagsModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
+
 		$links = array();
 
 		list($ret, $canViewCloud) = GalleryCoreApi::getPluginParameter(
@@ -195,6 +199,7 @@ class TagsModule extends GalleryModule {
 	 */
 	public function getItemSummaries($items, $permissions, &$template) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $canViewSummaries) = GalleryCoreApi::getPluginParameter('module', 'tags', 'SummaryShow');
@@ -238,8 +243,10 @@ class TagsModule extends GalleryModule {
 						if (!empty($tagsLink)) {
 							$tagsLink .= ', ';
 						}
+
 						$tagsLink .= '<a href="' . $tagUrl . '">' . $tagName . '</a>';
 					}
+
 					$summaries[$itemId] = $this->translate('Tags:') . ' ' . $tagsLink;
 				}
 			}
@@ -266,12 +273,15 @@ class TagsModule extends GalleryModule {
 				if (!isset($summaries[$itemId])) {
 					$summaries[$itemId] = '';
 				}
+
 				$urlsTemplate->setVariable('itemId', $itemId);
+
 				list($ret, $summary) = $urlsTemplate->fetch($tpl);
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$summaries[$itemId] .= $summary;
 			}
 		}
@@ -316,6 +326,7 @@ class TagsModule extends GalleryModule {
 	 */
 	public function upgrade($currentVersion) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
@@ -427,6 +438,7 @@ class TagsModule extends GalleryModule {
 
 				do {
 					$gallery->guaranteeTimeLimit(30);
+
 					list($ret, $oldTagsSearchResults) = $gallery->search(
 						$oldTagsQuery,
 						array(),
@@ -472,12 +484,14 @@ class TagsModule extends GalleryModule {
 							while (($row = $oldTagItemMapSearchResults->nextResult()) !== false) {
 								$gallery->guaranteeTimeLimit(30);
 								$itemId = (int)$row[0];
-								$ret    = TagsHelper::assignTagById($itemId, $newTagId);
+
+								$ret = TagsHelper::assignTagById($itemId, $newTagId);
 
 								if ($ret) {
 									return $ret;
 								}
 							}
+
 							$ret = $storage->execute($deleteOldTagItemMapQuery, array($oldTagId));
 
 							if ($ret) {
@@ -499,6 +513,7 @@ class TagsModule extends GalleryModule {
 					}
 				} while ($oldTagsSearchResults->resultCount() != 0);
 
+
 				// Fall Through
 			case '1.2.0':
 			case '1.2.1':
@@ -507,6 +522,7 @@ class TagsModule extends GalleryModule {
 				// Look if an empty tag is in the database and delete it
 				$ret = TagsHelper::removeTag('');
 				// We don't care about errors
+
 				// Fall Through
 			case '1.2.4':
 				// Adding the Edit Tag Permission into the system
@@ -521,6 +537,8 @@ class TagsModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
+
 				// Fall Through
 			case '1.3.0':
 			case '1.3.1':

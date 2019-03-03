@@ -200,6 +200,7 @@ class FPDF_TPL extends FPDF {
 		if ($_y == null) {
 			$_y = $y;
 		}
+
 		$wh = $this->getTemplateSize($tplidx, $_w, $_h);
 		$_w = $wh['w'];
 		$_h = $wh['h'];
@@ -295,6 +296,7 @@ class FPDF_TPL extends FPDF {
 		if ($this->_intpl) {
 			$this->Error('Adding pages in templates isn\'t possible!');
 		}
+
 		parent::AddPage($orientation);
 	}
 
@@ -305,6 +307,7 @@ class FPDF_TPL extends FPDF {
 		if ($this->_intpl) {
 			$this->Error('Using links in templates aren\'t possible!');
 		}
+
 		parent::Link($x, $y, $w, $h, $link);
 	}
 
@@ -320,6 +323,7 @@ class FPDF_TPL extends FPDF {
 		if ($this->_intpl) {
 			$this->Error('Setting links in templates aren\'t possible!');
 		}
+
 		parent::SetLink($link, $y, $page);
 	}
 
@@ -348,6 +352,7 @@ class FPDF_TPL extends FPDF {
 				foreach ($this->_res['tpl'][$tplidx]['fonts'] as $font) {
 					$this->_out('/F' . $font['i'] . ' ' . $font['n'] . ' 0 R');
 				}
+
 				$this->_out('>>');
 			}
 
@@ -367,8 +372,10 @@ class FPDF_TPL extends FPDF {
 						$this->_out($this->tplprefix . $i . ' ' . $tpl['n'] . ' 0 R');
 					}
 				}
+
 				$this->_out('>>');
 			}
+
 			$this->_out('>>');
 
 			$this->_out('/Length ' . strlen($p) . ' >>');

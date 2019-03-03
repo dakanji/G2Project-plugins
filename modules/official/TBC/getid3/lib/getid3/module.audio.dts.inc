@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                             //
 /////////////////////////////////////////////////////////////////
-
-
 /**
  * @tutorial http://wiki.multimedia.cx/index.php?title=DTS
  */
@@ -34,15 +32,15 @@ class getid3_dts extends getid3_handler {
 		1 => "\xFE\x7F\x01\x80",  // raw little-endian
 		2 => "\x1F\xFF\xE8\x00",  // 14-bit big-endian
 		3 => "\xFF\x1F\x00\xE8",
-	); // 14-bit little-endian
+	);
 
+	// 14-bit little-endian
 	public function Analyze() {
 		$info               = &$this->getid3->info;
 		$info['fileformat'] = 'dts';
 
 		$this->fseek($info['avdataoffset']);
 		$DTSheader = $this->fread(20); // we only need 2 words magic + 6 words frame header, but these words may be normal 16-bit words OR 14-bit words with 2 highest bits set to zero, so 8 words can be either 8*16/8 = 16 bytes OR 8*16*(16/14)/8 = 18.3 bytes
-
 		// check syncword
 		$sync = substr($DTSheader, 0, 4);
 
@@ -108,6 +106,7 @@ class getid3_dts extends getid3_handler {
 		if ($info['dts']['flags']['crc_present']) {
 			$info['dts']['raw']['crc16'] = $this->readBinData($fhBS, 16);
 		}
+
 		$info['dts']['flags']['mri_perfect_reconst'] = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['raw']['encoder_soft_version']  = $this->readBinData($fhBS, 4);
 		$info['dts']['raw']['copy_history']          = $this->readBinData($fhBS, 2);
@@ -116,7 +115,6 @@ class getid3_dts extends getid3_handler {
 		$info['dts']['flags']['front_sum_diff']      = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['flags']['surround_sum_diff']   = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['raw']['dialog_normalization']  = $this->readBinData($fhBS, 4);
-
 
 		$info['dts']['bitrate']              = self::bitrateLookup($info['dts']['raw']['bitrate']);
 		$info['dts']['bits_per_sample']      = self::bitPerSampleLookup($info['dts']['raw']['bits_per_sample']);

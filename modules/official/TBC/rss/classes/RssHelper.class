@@ -122,6 +122,7 @@ class RssHelper {
 				'registerProcedure' => $param['cloudRegisterProcedure'],
 				'protocol'          => $param['cloudProtocol'],
 			);
+
 			$generator->addProperty('cloud', $cloud);
 		}
 
@@ -137,6 +138,7 @@ class RssHelper {
 		if (isset($param['useMedia'])) {
 			$generator->addProperty('useMedia', $param['useMedia']);
 		}
+
 		list($ret, $version) = GalleryCoreApi::getPluginParameter('module', 'rss', '_version');
 		$generator->addProperty('generator', 'Gallery 2 RSS Module, version ' . $version);
 		$generator->addProperty('ttl', $param['ttl']);
@@ -556,6 +558,7 @@ class RssHelper {
 		$random = false
 	) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 		$userId  = $gallery->getActiveUserId();
 
@@ -564,6 +567,7 @@ class RssHelper {
 		if (empty($aclIds)) {
 			return array(null, array());
 		}
+
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
 		list($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
@@ -586,6 +590,7 @@ class RssHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$parentSequence[] = $itemId;
 			$parentSequence   = implode('/', $parentSequence);
 		}
@@ -598,6 +603,7 @@ class RssHelper {
 		if ($ret || !$newDays) {
 			$newDays = 21; // Use default on error or zero setting
 		}
+
 		$timeCutOff = time() - 3600 * 24 * $newDays;
 
 		if ($random) {

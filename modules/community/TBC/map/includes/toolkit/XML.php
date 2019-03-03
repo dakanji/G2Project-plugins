@@ -45,8 +45,6 @@
  ******************************************************************************/
 
 require_once 'Unicode.php';          // Unicode is required as XML is always Unicode encoded
-
-
 /******************************************************************************
  *
  * Function:     read_xml_array_from_text
@@ -74,9 +72,7 @@ function read_xml_array_from_text($xmltext) {
 	// Create an instance of a xml parser to parse the XML text
 	$xml_parser = xml_parser_create('UTF-8');
 
-
 	// Change: Fixed problem that caused the whitespace (especially newlines) to be destroyed when converting xml text to an xml array, as of revision 1.10
-
 	// We would like to remove unneccessary white space, but this will also
 	// remove things like newlines (&#xA;) in the XML values, so white space
 	// will have to be removed later
@@ -108,12 +104,9 @@ function read_xml_array_from_text($xmltext) {
 	// Destroy the xml parser
 	xml_parser_free($xml_parser);
 
-
 	// Change: Fixed problem that caused the whitespace (especially newlines) to be destroyed when converting xml text to an xml array, as of revision 1.10
-
 	// Since the xml was processed with whitespace enabled, it will have many values which are
 	// only whitespace. These need to be removed to make a sensible array.
-
 	$newvals = array();
 
 	// Cycle through each of the items
@@ -122,6 +115,7 @@ function read_xml_array_from_text($xmltext) {
 		if ((array_key_exists('value', $val)) && (trim($val['value']) == '')) {
 			unset($val['value']);
 		}
+
 		// If the item has a value (which will be non blank now) or is of type other than cdata, add it to the new array
 		if (($val['type'] != 'cdata') || (array_key_exists('value', $val))) {
 			$newvals[] = $val;
@@ -136,11 +130,6 @@ function read_xml_array_from_text($xmltext) {
 }
 
 // End of Function:     read_xml_array_from_text
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     write_xml_array_to_text
@@ -165,7 +154,6 @@ function read_xml_array_from_text($xmltext) {
 function write_xml_array_to_text($xmlarray, $indentlevel) {
 	// Create a string to receive the XML
 	$output_xml_text = '';
-
 
 	// Cycle through each xml element at this level
 	foreach ($xmlarray as $xml_elem) {
@@ -194,7 +182,6 @@ function write_xml_array_to_text($xmlarray, $indentlevel) {
 		// Check if there are any lower levels contained by this element
 		if (array_key_exists('children', $xml_elem)) {
 			// There are sub-elements for this element
-
 			// Add a newline to the output, so the sub-elements start on a fresh line
 			$output_xml_text .= "\n";
 
@@ -214,35 +201,7 @@ function write_xml_array_to_text($xmlarray, $indentlevel) {
 }
 
 // End of Function:     write_xml_array_to_text
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // INTERNAL FUNCTIONS
-
-
-
-
-
 
 /******************************************************************************
  *
@@ -269,14 +228,12 @@ function xml_get_children(&$input_xml_array, &$item_num) {
 		// Make an array to receive the output XML tree structure
 	$children = array();
 
-
 	// Cycle through all the elements of the input XML array
 	while ($item_num < count($input_xml_array)) {
 		// Retrieve the current array element
 		$v = &$input_xml_array[$item_num++];
 
 		// Check what type of XML array element this is, and process accordingly
-
 		switch ($v['type']) {
 			case 'cdata':     // This is a non parsed Character Data tag
 			case 'complete':  // This is a pair of XML matching tags possibly with text (but no tags) inside
@@ -289,7 +246,6 @@ function xml_get_children(&$input_xml_array, &$item_num) {
 					$children[] = xml_get_child($v, xml_get_children($input_xml_array, $item_num));
 
 				break;    // This is a single opening tag
-
 			case 'close':     // This is a single closing tag
 				break 2;  // leave "while" loop (and the function)
 		}
@@ -300,8 +256,6 @@ function xml_get_children(&$input_xml_array, &$item_num) {
 }
 
 // End of Function:     xml_get_children
-
-
 /******************************************************************************
  *
  * Internal Function:     xml_get_child

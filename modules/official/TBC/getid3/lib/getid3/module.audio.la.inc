@@ -13,7 +13,6 @@
 // dependencies: module.audio.riff.php                         //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 
 class getid3_la extends getid3_handler {
@@ -53,6 +52,7 @@ class getid3_la extends getid3_handler {
 
 					return false;
 				}
+
 				$offset += 4;
 
 				$info['la']['fmt_size'] = 24;
@@ -73,6 +73,7 @@ class getid3_la extends getid3_handler {
 
 					return false;
 				}
+
 				$offset  += 4;
 				$fmt_size = getid3_lib::LittleEndian2Int(substr($rawdata, $offset, 4));
 				$offset  += 4;
@@ -175,6 +176,7 @@ class getid3_la extends getid3_handler {
 								$this->fseek($info['la']['footerstart']);
 								$RIFFdata .= $this->fread($info['avdataend'] - $info['la']['footerstart']);
 							}
+
 							$RIFFdata = 'RIFF' . getid3_lib::LittleEndian2String(strlen($RIFFdata), 4, false) . $RIFFdata;
 							fwrite($RIFF_fp, $RIFFdata, strlen($RIFFdata));
 							fclose($RIFF_fp);
@@ -189,8 +191,10 @@ class getid3_la extends getid3_handler {
 							} else {
 								$info['warning'][] = 'Error parsing RIFF portion of La file: ' . implode($getid3_temp->info['error']);
 							}
+
 							unset($getid3_temp, $getid3_riff);
 						}
+
 						unlink($RIFFtempfilename);
 					}
 				}

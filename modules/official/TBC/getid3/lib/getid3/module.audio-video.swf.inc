@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_swf extends getid3_handler {
 	public $ReturnAllTagData = false;
 
@@ -25,11 +23,9 @@ class getid3_swf extends getid3_handler {
 		$info['video']['dataformat'] = 'swf';
 
 		// http://www.openswf.org/spec/SWFfileformat.html
-
 		$this->fseek($info['avdataoffset']);
 
-		$SWFfileData = $this->fread($info['avdataend'] - $info['avdataoffset']); // 8 + 2 + 2 + max(9) bytes NOT including Frame_Size RECT data
-
+		$SWFfileData                        = $this->fread($info['avdataend'] - $info['avdataoffset']); // 8 + 2 + 2 + max(9) bytes NOT including Frame_Size RECT data
 		$info['swf']['header']['signature'] = substr($SWFfileData, 0, 3);
 
 		switch ($info['swf']['header']['signature']) {
@@ -47,11 +43,11 @@ class getid3_swf extends getid3_handler {
 				$info['error'][] = 'Expecting "FWS" or "CWS" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['swf']['header']['signature']) . '"';
 				unset($info['swf'], $info['fileformat']);
 
-
 				return false;
 
 				break;
 		}
+
 		$info['swf']['header']['version'] = getid3_lib::LittleEndian2Int(substr($SWFfileData, 3, 1));
 		$info['swf']['header']['length']  = getid3_lib::LittleEndian2Int(substr($SWFfileData, 4, 4));
 
@@ -75,6 +71,7 @@ class getid3_swf extends getid3_handler {
 		for ($i = 1; $i < $FrameSizeDataLength; $i++) {
 			$FrameSizeDataString .= str_pad(decbin(ord(substr($SWFfileData, 8 + $i, 1))), 8, '0', STR_PAD_LEFT);
 		}
+
 		list($X1, $X2, $Y1, $Y2)               = explode("\n", wordwrap($FrameSizeDataString, $FrameSizeBitsPerValue, "\n", 1));
 		$info['swf']['header']['frame_width']  = getid3_lib::Bin2Dec($X2);
 		$info['swf']['header']['frame_height'] = getid3_lib::Bin2Dec($Y2);
@@ -84,7 +81,6 @@ class getid3_swf extends getid3_handler {
 		// It is supposed to be stored as a 16bit integer, but the first byte
 		// (or last depending on how you look at it) is completely ignored.
 		// Example: 0x000C  ->  0x0C  ->  12     So the frame rate is 12 fps.
-
 		// Byte at (8 + $FrameSizeDataLength) is always zero and ignored
 		$info['swf']['header']['frame_rate']  = getid3_lib::LittleEndian2Int(substr($SWFfileData, 9 + $FrameSizeDataLength, 1));
 		$info['swf']['header']['frame_count'] = getid3_lib::LittleEndian2Int(substr($SWFfileData, 10 + $FrameSizeDataLength, 2));
@@ -97,17 +93,14 @@ class getid3_swf extends getid3_handler {
 		if (($info['swf']['header']['frame_count'] > 0) && ($info['swf']['header']['frame_rate'] > 0)) {
 			$info['playtime_seconds'] = $info['swf']['header']['frame_count'] / $info['swf']['header']['frame_rate'];
 		}
+
 		//echo __LINE__.'='.number_format(microtime(true) - $start_time, 3).'<br>';
-
-
 		// SWF tags
-
 		$CurrentOffset = 12 + $FrameSizeDataLength;
 		$SWFdataLength = strlen($SWFfileData);
 
 		while ($CurrentOffset < $SWFdataLength) {
 			//echo __LINE__.'='.number_format(microtime(true) - $start_time, 3).'<br>';
-
 			$TagIDTagLength = getid3_lib::LittleEndian2Int(substr($SWFfileData, $CurrentOffset, 2));
 			$TagID          = ($TagIDTagLength & 0xFFFC) >> 6;
 			$TagLength      = ($TagIDTagLength & 0x003F);

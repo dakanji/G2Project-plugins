@@ -68,6 +68,7 @@ class ItemAddUploadify extends ItemAddPlugin {
 				'htmlEntities'   => false,
 			)
 		);
+
 		// this is needed for flash
 		$ItemAddUploadify['submitUrl'] = urlencode($ItemAddUploadify['submitUrl']);
 

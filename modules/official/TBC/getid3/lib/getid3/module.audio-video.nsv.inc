@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_nsv extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -218,6 +216,7 @@ class getid3_nsv extends getid3_handler {
 		if ($framerateindex <= 127) {
 			return (float)$framerateindex;
 		}
+
 		static $NSVframerateLookup = array();
 
 		if (empty($NSVframerateLookup)) {

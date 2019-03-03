@@ -106,6 +106,7 @@ class Getid3Helper {
 	 */
 	public static function _fetchRawGetid3Data($path, &$rawGetid3Data) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/getid3/lib/getid3/getid3.inc');
 
 		$platform =& $gallery->getPlatform();
@@ -200,6 +201,7 @@ class Getid3Helper {
 				),
 			);
 		}
+
 		// File probably isn't an archive
 		return array(null, null);
 	}
@@ -330,6 +332,7 @@ class Getid3Helper {
 				default:
 					return null;
 			}
+
 			$time = mktime(
 				(int)$m[4],
 				(int)$m[5],
@@ -437,6 +440,7 @@ class Getid3Helper {
 				if ($ret || empty($format)) {
 					$format = '$x $X';
 				}
+
 				$platform =& $gallery->getPlatform();
 				$value    = $platform->strftime($format, $time);
 
@@ -470,11 +474,13 @@ class Getid3Helper {
 				if (isset($tmp)) {
 					return $tmp;
 				}
+
 				$tmp = Getid3Helper::getTimeDowMDHMSY($value);
 
 				if (isset($tmp)) {
 					return $tmp;
 				}
+
 				$tmp = Getid3Helper::getTimeYMDHMS($value);
 
 				if (isset($tmp)) {
@@ -609,6 +615,7 @@ class Getid3Helper {
 	 */
 	public static function getGetid3Keys() {
 		global $gallery;
+
 		static $data;
 
 		if (!empty($data)) {

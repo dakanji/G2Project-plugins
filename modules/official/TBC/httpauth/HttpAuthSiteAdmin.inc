@@ -46,6 +46,7 @@ class HttpAuthSiteAdminController extends GalleryController {
 			if (preg_match($form['authtypePattern'], '') === false) {
 				$error[] = 'form[error][authtype][regex][invalid]';
 			}
+
 			$status['authtypeRegexMessage'] = ob_get_contents();
 			ob_clean();
 
@@ -54,6 +55,7 @@ class HttpAuthSiteAdminController extends GalleryController {
 			if (preg_match($form['usernamePattern'], '') === false) {
 				$error[] = 'form[error][username][regex][invalid]';
 			}
+
 			$status['usernameRegexMessage'] = ob_get_contents();
 			ob_clean();
 

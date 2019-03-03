@@ -41,6 +41,7 @@ class NotificationItemsAddedOption extends ItemAddOption {
 		// Tell the world we were successful
 		$itemAddEvent = GalleryCoreApi::newEvent('Gallery::ItemAdded');
 		$itemAddEvent->setData($items);
+
 		list($ret) = GalleryCoreApi::postEvent($itemAddEvent);
 
 		if ($ret) {

@@ -41,6 +41,7 @@ class NodeExpansionCallbackView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeNode.class');
 		$userId = $gallery->getActiveUserId();
@@ -56,6 +57,7 @@ class NodeExpansionCallbackView extends GalleryView {
 		if (empty($tags)) {
 			$tags = array();
 		}
+
 		$tags    = array_map(create_function('$tagId', 'return intval($tagId);'), $tags);
 		$albumId = intval($albumId);
 
@@ -66,7 +68,8 @@ class NodeExpansionCallbackView extends GalleryView {
 		}
 
 		if (!$tree) {
-			$onlyAlbums       = !$params['showItems'];
+			$onlyAlbums = !$params['showItems'];
+
 			list($ret, $tree) = NodeExpansionCallbackView::generateTagTree($tags, $albumId, $onlyAlbums, $userId);
 
 			if ($ret) {
@@ -94,6 +97,7 @@ class NodeExpansionCallbackView extends GalleryView {
 
 	public function printTree($tree, $userId, $params) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$children = $tree->children;
@@ -143,7 +147,8 @@ class NodeExpansionCallbackView extends GalleryView {
 							'href' => 'modules/tagtree/lib/xloadtree/images/foldericon.png',
 						)
 					);
-					$openIcon   = $urlGenerator->generateUrl(
+
+					$openIcon = $urlGenerator->generateUrl(
 						array(
 							'href' => 'modules/tagtree/lib/xloadtree/images/openfoldericon.png',
 						)
@@ -166,10 +171,12 @@ class NodeExpansionCallbackView extends GalleryView {
 							'href' => 'modules/tagtree/images/item.png',
 						)
 					);
-					$openIcon   = null;
+
+					$openIcon = null;
 
 					break;
 			}
+
 			$icons = sprintf(' icon="%s"', $closedIcon);
 
 			if (!is_null($openIcon)) {
@@ -199,7 +206,8 @@ class NodeExpansionCallbackView extends GalleryView {
 							'albumId' => $node->itemId,
 						)
 					);
-					$nodeSrc      = sprintf('src="%s" ', $nodeChildren);
+
+					$nodeSrc = sprintf('src="%s" ', $nodeChildren);
 				}
 			}
 
@@ -275,6 +283,7 @@ class NodeExpansionCallbackView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('core.view', $userId, false);
 
 		if ($ret) {

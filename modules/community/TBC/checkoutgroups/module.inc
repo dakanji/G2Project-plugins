@@ -100,6 +100,7 @@ class CheckoutGroupsModule extends GalleryModule {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutStatusPageInterface_1_0',
 			'CheckoutGroupsStatusPlugin',
@@ -160,6 +161,7 @@ class CheckoutGroupsModule extends GalleryModule {
 
 		if ($event->getEventName() == 'GalleryCheckout::transactionChange') {
 			GalleryCoreApi::requireOnce('modules/checkoutgroups/classes/CheckoutGroupsEventHelper.class');
+
 			$ret = CheckoutGroupsEventHelper::handleTransactionChange($event);
 
 			if ($ret) {

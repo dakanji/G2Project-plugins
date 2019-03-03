@@ -44,6 +44,7 @@ function Auth_OpenID_SHA1($text) {
 
 		return $raw;
 	}
+
 	// Explode.
 	trigger_error('No SHA1 function found', E_USER_ERROR);
 }

@@ -146,6 +146,7 @@ class mapModule extends GalleryModule {
 		GalleryCoreApi::setPluginParameter('module', 'map', 'linktype', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'AdminHelp', 1);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'UserHelp', 1);
+
 		list($ret, $exifModule) = GalleryCoreApi::loadPlugin('module', 'exif', false);
 
 		if ($ret) {
@@ -266,13 +267,15 @@ class mapModule extends GalleryModule {
 	 */
 	public function getRewriteRules() {
 		global $gallery;
+
 		$rules = array();
 
-		$rule             = array();
-		$rule['comment']  = 'View Google Map Group';
-		$rule['match']    = array(
+		$rule            = array();
+		$rule['comment'] = 'View Google Map Group';
+		$rule['match']   = array(
 			'view' => 'map.ShowMap',
 		);
+
 		$rule['pattern']  = 'Map/%Group%';
 		$rule['keywords'] = array(
 			'Group' => array(
@@ -282,7 +285,8 @@ class mapModule extends GalleryModule {
 				),
 			),
 		);
-		$rules[0]         = $rule;
+
+		$rules[0] = $rule;
 
 		return $rules;
 	}
@@ -374,6 +378,7 @@ class mapModule extends GalleryModule {
 		if (empty($linktype)) {
 			$linktype = 0;
 		}
+
 		list($ret, $ExportGELink) = GalleryCoreApi::getPluginParameter('module', 'map', 'ShowExportGELink');
 
 		foreach ($items as $item) {
@@ -386,6 +391,7 @@ class mapModule extends GalleryModule {
 				} else {
 					$NitemId = $itemId;
 				}
+
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($NitemId);
 				$name             = $item->getTitle();
 
@@ -419,6 +425,7 @@ class mapModule extends GalleryModule {
 							),
 						);
 					}
+
 					// The Google Map link
 					if ($goodalbum) {
 						$links[$itemId][] = array(
@@ -435,6 +442,7 @@ class mapModule extends GalleryModule {
 						 * The current album (or parent of the current photo) does not have any
 						 * GPS item, check from the root
 						 */
+
 						list($ret, $count) = mapHelper::getCountItemWithCoords();
 
 						if ($ret) {
@@ -460,6 +468,7 @@ class mapModule extends GalleryModule {
 
 	public function upgrade($currentVersion) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		list($ret, $exifModule) = GalleryCoreApi::loadPlugin('module', 'exif', false);
@@ -471,6 +480,7 @@ class mapModule extends GalleryModule {
 			 */
 			return $ret;
 		}
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'oldexifversion', 0);
 
 		if (!version_compare('1.0.1', $exifModule->getVersion(), '<=')) {
@@ -486,9 +496,8 @@ class mapModule extends GalleryModule {
 			 */
 			return $ret;
 		}
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'noimagemagick', 0);
-
-
 
 		if (!isset($currentVersion)) {
 			$currentVersion = '0';
@@ -511,9 +520,8 @@ class mapModule extends GalleryModule {
 			case '0.3.2':
 			case '0.3.2b':
 				// Upgrade from when we were using CustomField
-
 				// get CustomfieldMap table fields related to Map
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryCustomFieldMap]
@@ -526,6 +534,7 @@ class mapModule extends GalleryModule {
 	      OR
 	      [GalleryCustomFieldMap::field] = \'ZoomLevel\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -547,6 +556,8 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
+
+
 				// Fall Through
 			case '0.4.0':
 			case '0.4.1':
@@ -605,6 +616,7 @@ class mapModule extends GalleryModule {
 					0777,
 					false
 				);
+
 				@rm($basegallerydir . 'images/map');
 
 				// Upgrade routes to be pointing to Item instead of coordinates of items
@@ -623,7 +635,7 @@ class mapModule extends GalleryModule {
 
 						for ($i = 7; $i < count($routeinfos); $i++) {
 							// Search for the itemid from the coordinate and replace
-							$query               = '
+							$query = '
 			SELECT
 			  [mapMap::itemId]
 			FROM
@@ -631,6 +643,7 @@ class mapModule extends GalleryModule {
 			WHERE
 			  [mapMap::value] = \'' . $routeinfos[$i] . '\'
 			';
+
 							list($ret, $results) = $storage->search($query);
 
 							if ($results->resultCount > 0) {
@@ -647,9 +660,12 @@ class mapModule extends GalleryModule {
 							$newroutes .= '|' . $theroute;
 						}
 					}
+
 					// Replace route with new infos
 					GalleryCoreApi::setPluginParameter('module', 'map', 'Routes', $newroutes);
 				}
+
+
 				// Fall Through
 			case '0.4.5':
 			case '0.4.5c':
@@ -660,7 +676,6 @@ class mapModule extends GalleryModule {
 			case '0.4.7c':
 			case '0.4.7d':
 				// attempt to change the database itemId from int to varchar
-
 				$query = '
 	    ALTER TABLE
 	      [mapMap]
@@ -673,6 +688,8 @@ class mapModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
+
 				// Fall Through
 			case '0.4.8':
 			case '0.4.8b':
@@ -697,6 +714,8 @@ class mapModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
+
 				// Fall Through
 			case '0.5.0':
 			case '0.5.0b':
@@ -706,13 +725,14 @@ class mapModule extends GalleryModule {
 			case '0.5.0f':
 			case '0.5.0g':
 				// Reverse the existing 'GPS' coordinates in the DB
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [mapMap]
 	    WHERE
 	      [mapMap::field] = \'GPS\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -743,10 +763,10 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
-				// End reversing GPS coordinates in DB
 
+				// End reversing GPS coordinates in DB
 				// Update map type
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryPluginParameterMap]
@@ -757,6 +777,7 @@ class mapModule extends GalleryModule {
 	      AND
 	      [GalleryPluginParameterMap::parameterName] = \'mapType\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -796,10 +817,10 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
-				// End updating the Map Type in the DB
 
+				// End updating the Map Type in the DB
 				// Reverse the Map Center parameter
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryPluginParameterMap]
@@ -810,6 +831,7 @@ class mapModule extends GalleryModule {
 	      AND
 	      [GalleryPluginParameterMap::parameterName] = \'centerLongLat\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -840,10 +862,10 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
-				// End reversing the coordinates in the Map Center Paramater
 
+				// End reversing the coordinates in the Map Center Paramater
 				// Reverse the Default Map Center parameter
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryPluginParameterMap]
@@ -853,6 +875,7 @@ class mapModule extends GalleryModule {
 	      [GalleryPluginParameterMap::pluginId] = \'map\'
 	      AND [GalleryPluginParameterMap::parameterName] = \'GVMCenter\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -883,10 +906,10 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
-				// End reversing the coordinates in the Default Map Center Paramater
 
+				// End reversing the coordinates in the Default Map Center Paramater
 				// Updating the Zoom Level
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryPluginParameterMap]
@@ -897,6 +920,7 @@ class mapModule extends GalleryModule {
 	      AND
 	      [GalleryPluginParameterMap::parameterName] = \'zoomLevel\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -926,10 +950,10 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
-				// End updating the Map Zoom
 
+				// End updating the Map Zoom
 				// Updating the Default Zoom Level
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryPluginParameterMap]
@@ -940,6 +964,7 @@ class mapModule extends GalleryModule {
 	      AND
 	      [GalleryPluginParameterMap::parameterName] = \'GVMZoom\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -969,10 +994,10 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
-				// End updating the Default Map Zoom
 
+				// End updating the Default Map Zoom
 				// Updating the Default ZoomIn Level
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryPluginParameterMap]
@@ -983,6 +1008,7 @@ class mapModule extends GalleryModule {
 	      AND
 	      [GalleryPluginParameterMap::parameterName] = \'zoomInLevel\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -1012,10 +1038,10 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
-				// End updating the Default Map ZoomIn
 
+				// End updating the Default Map ZoomIn
 				// Updating the Manual Filter information
-				$query               = '
+				$query = '
 	    SELECT *
 	    FROM
 	      [GalleryPluginParameterMap]
@@ -1026,6 +1052,7 @@ class mapModule extends GalleryModule {
 	      AND
 	      [GalleryPluginParameterMap::parameterName] = \'Filters\'
 	    ';
+
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) { // Verify that it isn't empty
@@ -1042,6 +1069,7 @@ class mapModule extends GalleryModule {
 								// put the new infos back into the original array
 								$filterarray[$key] = implode('`', $infos);
 							}
+
 							// put all the fixed filter into the result
 							$result[4] = implode('|', $filterarray);
 						}
@@ -1067,6 +1095,7 @@ class mapModule extends GalleryModule {
 						}
 					}
 				}
+
 				// End updating the Manual Filter Information
 
 				// Fall Through
@@ -1090,17 +1119,21 @@ class mapModule extends GalleryModule {
 	      OR
 	      [mapMap::field] = \'PhotoColor\'
 	    ';
-				$ret         = $storage->execute($updatequery); // put the values in Mapmap
+
+				$ret = $storage->execute($updatequery); // put the values in Mapmap
 				if ($ret) {
 					return $ret;
 				}
+
+
 				// Fall Through
 			case '0.5.3':
 			case '0.5.4':
 			case '0.5.5':
 			case '0.5.6':
 				// Change stored map keys to new style
-				$newKeys             = array();
+				$newKeys = array();
+
 				list($ret, $mapKeys) = GalleryCoreApi::getPluginParameter('module', 'map', 'MapKeys');
 				/* Format of old keys as serialized in the database:
 				 * 1`P1Name`P1Host`P1Port`P1ApiKey|2`P2Name`P2Host`P2Port`P2ApiKey
@@ -1128,9 +1161,11 @@ class mapModule extends GalleryModule {
 							'apiKey' => $temp[4],
 						);
 					}
+
 					// remove it first, otherwise mysql will throw a name collision, even though
 					// the case is different
 					GalleryCoreApi::removePluginParameter('module', 'map', 'MapKeys');
+
 					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
 						'map',
@@ -1144,8 +1179,10 @@ class mapModule extends GalleryModule {
 
 						return $ret;
 					}
+
 					GalleryCoreApi::removePluginParameter('module', 'map', 'EditKey');
 				}
+
 
 				// Fall Through
 			case 'end of upgrade path':

@@ -106,12 +106,12 @@ class ModerateModule extends GalleryModule {
 			}
 
 			//check if parent item is root album for user
-
 			list($ret, $core) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$rootId = $core['id.rootAlbum'];
 
 			list($ret, $parentEntity) = GalleryCoreApi::loadEntitiesById(
@@ -145,6 +145,7 @@ class ModerateModule extends GalleryModule {
 						if ($ret) {
 						return array($ret, null);
 						}
+
 						*/
 
 						$ret = GalleryCoreApi::removeGroupPermission(

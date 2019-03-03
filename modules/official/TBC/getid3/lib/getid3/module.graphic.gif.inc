@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_gif extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -36,7 +34,6 @@ class getid3_gif extends getid3_handler {
 		if ($info['gif']['header']['raw']['identifier'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['gif']['header']['raw']['identifier']) . '"';
 			unset($info['fileformat'], $info['gif']);
-
 
 			return false;
 		}
@@ -65,6 +62,7 @@ class getid3_gif extends getid3_handler {
 		} else {
 			$info['gif']['header']['bits_per_pixel'] = 0;
 		}
+
 		$info['gif']['header']['flags']['global_color_sorted'] = (bool)($info['gif']['header']['raw']['flags'] & 0x40);
 
 		if ($info['gif']['header']['flags']['global_color_table']) {
@@ -166,7 +164,6 @@ class getid3_gif extends getid3_handler {
 		//
 		//          }
 		//      }
-
 		return true;
 	}
 
@@ -176,6 +173,7 @@ class getid3_gif extends getid3_handler {
 		while (strlen($bitbuffer) < $bits) {
 			$bitbuffer = str_pad(decbin(ord($this->fread(1))), 8, '0', STR_PAD_LEFT) . $bitbuffer;
 		}
+
 		$value     = bindec(substr($bitbuffer, 0 - $bits));
 		$bitbuffer = substr($bitbuffer, 0, 0 - $bits);
 

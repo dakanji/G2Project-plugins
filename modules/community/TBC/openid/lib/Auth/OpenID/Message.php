@@ -16,7 +16,6 @@ require_once 'Auth/OpenID/KVForm.php';
 require_once 'Auth/Yadis/XML.php';
 
 require_once 'Auth/OpenID/Consumer.php'; // For Auth_OpenID_FailureResponse
-
 // This doesn't REALLY belong here, but where is better?
 define(
 	'Auth_OpenID_IDENTIFIER_SELECT',
@@ -60,6 +59,7 @@ define('Auth_OpenID_OPENID1_URL_LIMIT', 2047);
 
 // All OpenID protocol fields.  Used to check namespace aliases.
 global $Auth_OpenID_OPENID_PROTOCOL_FIELDS;
+
 $Auth_OpenID_OPENID_PROTOCOL_FIELDS = array(
 	'ns',
 	'mode',
@@ -88,6 +88,7 @@ $Auth_OpenID_OPENID_PROTOCOL_FIELDS = array(
 // Global namespace / alias registration map.  See
 // Auth_OpenID_registerNamespaceAlias.
 global $Auth_OpenID_registered_aliases;
+
 $Auth_OpenID_registered_aliases = array();
 
 /**
@@ -403,7 +404,6 @@ class Auth_OpenID_NamespaceMap {
 	public function add($namespace_uri) {
 		// Add this namespace URI to the mapping, without caring what
 		// alias it ends up with
-
 		// See if this namespace is already mapped to an alias
 		$alias = $this->namespace_to_alias->get($namespace_uri);
 
@@ -507,7 +507,6 @@ class Auth_OpenID_Message {
 
 	public function fromOpenIDArgs($openid_args) {
 		// Takes an array.
-
 		// Construct a Message from a parsed KVForm message
 		$obj = new Auth_OpenID_Message();
 
@@ -525,7 +524,6 @@ class Auth_OpenID_Message {
 		global $Auth_OpenID_registered_aliases;
 
 		// Takes an Auth_OpenID_Mapping instance OR an array.
-
 		if (!Auth_OpenID_Mapping::isA($openid_args)) {
 			$openid_args = new Auth_OpenID_Mapping($openid_args);
 		}
@@ -640,7 +638,6 @@ class Auth_OpenID_Message {
 	public function toPostArgs() {
 		// Return all arguments with openid. in front of namespaced
 		// arguments.
-
 		$args = array();
 
 		// Add namespace definitions to the output
@@ -656,14 +653,16 @@ class Auth_OpenID_Message {
 			} else {
 				$ns_key = 'openid.ns.' . $alias;
 			}
+
 			$args[$ns_key] = $ns_uri;
 		}
 
 		foreach ($this->args->items() as $pair) {
 			list($ns_parts, $value) = $pair;
-			list($ns_uri, $ns_key)  = $ns_parts;
-			$key                    = $this->getKey($ns_uri, $ns_key);
-			$args[$key]             = $value;
+
+			list($ns_uri, $ns_key) = $ns_parts;
+			$key                   = $this->getKey($ns_uri, $ns_key);
+			$args[$key]            = $value;
 		}
 
 		return $args;
@@ -682,6 +681,7 @@ class Auth_OpenID_Message {
 				//   'contains arguments that are not prefixed with "openid."')
 				return null;
 			}
+
 			$kvargs[substr($k, 7)] = $v;
 		}
 
@@ -704,7 +704,6 @@ class Auth_OpenID_Message {
 		$form_tag_attrs['method'] = 'post';
 
 		unset($form_tag_attrs['enctype'], $form_tag_attrs['accept-charset']);
-
 
 		if ($form_tag_attrs) {
 			foreach ($form_tag_attrs as $name => $attr) {
@@ -764,7 +763,6 @@ class Auth_OpenID_Message {
 	public function _fixNS($namespace) {
 		// Convert an input value into the internally used values of
 		// this object
-
 		if ($namespace == Auth_OpenID_OPENID_NS) {
 			if ($this->_openid_ns_uri === null) {
 				return new Auth_OpenID_FailureResponse(
@@ -772,6 +770,7 @@ class Auth_OpenID_Message {
 					'OpenID namespace not set'
 				);
 			}
+
 			$namespace = $this->_openid_ns_uri;
 		}
 
@@ -793,7 +792,6 @@ class Auth_OpenID_Message {
 		) {
 			// fmt = 'OpenID 2.0 namespace identifiers SHOULD be URIs. Got %r'
 			// warnings.warn(fmt % (namespace,), DeprecationWarning)
-
 			if ($namespace == 'sreg') {
 				// fmt = 'Using %r instead of "sreg" as namespace'
 				// warnings.warn(fmt % (SREG_URI,), DeprecationWarning,)
@@ -868,16 +866,17 @@ class Auth_OpenID_Message {
 
 	public function getArgs($namespace) {
 		// Get the arguments that are defined for this namespace URI
-
 		$namespace = $this->_fixNS($namespace);
 
 		if (Auth_OpenID::isFailure($namespace)) {
 			return $namespace;
 		}
+
 		$stuff = array();
 
 		foreach ($this->args->items() as $pair) {
-			list($key, $value)      = $pair;
+			list($key, $value) = $pair;
+
 			list($pair_ns, $ns_key) = $key;
 
 			if ($pair_ns == $namespace) {
@@ -890,7 +889,6 @@ class Auth_OpenID_Message {
 
 	public function updateArgs($namespace, $updates) {
 		// Set multiple key/value pairs in one call
-
 		$namespace = $this->_fixNS($namespace);
 
 		if (Auth_OpenID::isFailure($namespace)) {
@@ -911,6 +909,7 @@ class Auth_OpenID_Message {
 		if (Auth_OpenID::isFailure($namespace)) {
 			return $namespace;
 		}
+
 		$this->args->set(array($namespace, $key), $value);
 
 		if ($namespace !== Auth_OpenID_BARE_NS) {
@@ -943,6 +942,7 @@ class Auth_OpenID_Message {
 				// parameter.
 				return $this->namespaces->getNamespaceURI($key);
 			}
+
 			$ns = $this->namespaces->getNamespaceURI($alias);
 		}
 

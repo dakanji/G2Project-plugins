@@ -72,6 +72,7 @@ class AdminTranscodeController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			list($ret, $mimeTypes) = GalleryCoreApi::getPluginParameter('module', 'transcode', 'movieTypes');
 			$mimeTypes             = explode('|', $mimeTypes);
 
@@ -80,6 +81,7 @@ class AdminTranscodeController extends GalleryController {
 					$selectedMimeTypes .= $key . '|';
 				}
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter('module', 'transcode', 'selectedMimeTypes', $selectedMimeTypes);
 
 			if ($ret) {
@@ -97,6 +99,7 @@ class AdminTranscodeController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'transcode.AdminTranscode';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -138,8 +141,10 @@ class AdminTranscodeView extends GalleryView {
 				}
 			}
 		}
+
 		list($ret, $path) = GalleryCoreApi::getPluginParameter('module', 'ffmpeg', 'path');
 		GalleryCoreApi::requireOnce('modules/ffmpeg/classes/FfmpegToolkitHelper.class');
+
 		list($ret, $tests, $mimeTypes, $supportsOffset,
 			  $mimeTypesEncoder, $encoderCodecs, $version) = FfmpegToolkitHelper::testBinary($path);
 		/** Its time to trim the fat and lose the non-web friendly mime types */
@@ -151,14 +156,15 @@ class AdminTranscodeView extends GalleryView {
 				$outputOptions[] = $option;
 			}
 		}
-		$template->setVariable('outputOptions', $outputOptions);
 
+		$template->setVariable('outputOptions', $outputOptions);
 
 		list($ret, $mimeTypes) = GalleryCoreApi::getPluginParameter('module', 'transcode', 'movieTypes');
 
 		if (!$ret && empty($form['transcodableMime'])) {
 			$template->setVariable('transcodableMime', explode('|', $mimeTypes));
 		}
+
 		list($ret, $selectedMimeTypes) = GalleryCoreApi::getPluginParameter('module', 'transcode', 'selectedMimeTypes');
 
 		if (count($selectedMimeTypes) > 0) {
@@ -166,10 +172,10 @@ class AdminTranscodeView extends GalleryView {
 		} else {
 			$selectedMimeTypes = explode('|', $mimeTypes);
 		}
+
 		$template->setVariable('selectedMimeTypes', $selectedMimeTypes);
 
 		//$template->setVariable('selectedMimeTypes', explode('|', $mimeTypes));
-
 		//$template->setVariable('AdminTranscode', array());
 		$template->setVariable('controller', 'transcode:AdminTranscode');
 

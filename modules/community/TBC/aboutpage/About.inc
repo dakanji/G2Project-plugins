@@ -50,7 +50,11 @@ class AboutView extends GalleryView {
 			return array($ret, null);
 		}
 
-		list($ret, $markup) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
+		list($ret, $markup) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'core',
+			'misc.markup'
+		);
 
 		if ($ret) {
 			return array($ret, null);

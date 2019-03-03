@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 /**
  * Dynamic album view of items starting with given chars
  * @package Title
@@ -28,6 +27,7 @@
  */class BeginView extends GalleryView {
 	public function __construct() {
 		global $gallery;
+
 		$this->_view            = 'title.Begin'; //got this one
 		$this->_title           = $gallery->i18n('Items that begin with');
 		$this->_itemType        = array($gallery->i18n('Begin'), $gallery->i18n('begin'));
@@ -57,11 +57,13 @@
 		if (!isset($item)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null, null, null);
 		}
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'title');
 
 		if ($ret) {
 			return array($ret, null, null, null);
 		}
+
 		list($chars, $itemId) = GalleryUtilities::getRequestVariables('chars', 'itemId');
 
 		$item->create(
@@ -79,7 +81,6 @@
 			$item->setDescription($moduleParams['description.' . $this->_param]);
 		}
 
-
 		if (!empty($itemId)) {
 			// Viewing an item in this dynamic album
 			list($ret, $viewItem) = GalleryCoreApi::loadEntitiesById($itemId);
@@ -94,11 +95,12 @@
 			}
 
 			// Provide parent, parent URL and get-children function to Theme API
-			$item->urlParams           = array(
+			$item->urlParams = array(
 				'view'        => $this->_view,
 				'chars'       => $chars,
 				'highlightId' => $itemId,
 			);
+
 			$item->getChildrenFunction = array(get_class($this), 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -146,6 +148,7 @@
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// if only one item, go straight to an item view
 		if (empty($itemId) && count($childIds) == 1) {
 			$itemId   = $childIds[0];
@@ -160,6 +163,7 @@
 					'redirect' => $redirect,
 				),
 			);
+
 			//GalleryUtilities::putRequestVariable('itemId',$itemId);
 		}
 
@@ -172,6 +176,7 @@
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $result) = $showItem->loadTemplate($template, $form);
 
 			if ($ret) {
@@ -199,9 +204,11 @@
 		}
 
 		global $gallery;
-		$results                   = array();
-		$chars                    .= '%';
-		$query                     = 'SELECT 
+
+		$results = array();
+		$chars  .= '%';
+
+		$query        = 'SELECT 
 		[GalleryItem::id]
 		FROM [GalleryItem]
 		WHERE
@@ -209,7 +216,8 @@
 		LIKE ?
 		ORDER BY [GalleryItem::title]
 		';
-		$queryOptions              = array($chars);
+		$queryOptions = array($chars);
+
 		list($ret, $searchResults) = $gallery->search($query, $queryOptions);
 
 		if ($ret) {
@@ -219,6 +227,7 @@
 		while ($result = $searchResults->nextResult()) {
 			$results[] = $result[0];
 		}
+
 		// safety limit of first 100 results
 		$results = array_slice($results, 0, 100);
 

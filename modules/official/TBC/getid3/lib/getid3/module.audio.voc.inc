@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_voc extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -42,7 +40,6 @@ class getid3_voc extends getid3_handler {
 		$thisfile_audio['lossless']        = true;
 		$thisfile_audio['channels']        = 1; // might be overriden below
 		$thisfile_audio['bits_per_sample'] = 8; // might be overriden below
-
 		// byte #     Description
 		// ------     ------------------------------------------
 		// 00-12      'Creative Voice File'
@@ -50,7 +47,6 @@ class getid3_voc extends getid3_handler {
 		// 14-15      Offset of first datablock in .voc file (std 1A 00 in Intel Notation)
 		// 16-17      Version number (minor,major) (VOC-HDR puts 0A 01)
 		// 18-19      2's Comp of Ver. # + 1234h (VOC-HDR puts 29 11)
-
 		$thisfile_voc['header']['datablock_offset'] = getid3_lib::LittleEndian2Int(substr($VOCheader, 20, 2));
 		$thisfile_voc['header']['minor_version']    = getid3_lib::LittleEndian2Int(substr($VOCheader, 22, 1));
 		$thisfile_voc['header']['major_version']    = getid3_lib::LittleEndian2Int(substr($VOCheader, 23, 1));
@@ -75,6 +71,7 @@ class getid3_voc extends getid3_handler {
 					if ($info['avdataoffset'] <= $OriginalAVdataOffset) {
 						$info['avdataoffset'] = $this->ftell();
 					}
+
 					$this->fseek($BlockSize - 2, SEEK_CUR);
 
 					$ThisBlock['sample_rate_id']   = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 1));
@@ -125,6 +122,7 @@ class getid3_voc extends getid3_handler {
 					if ($info['avdataoffset'] <= $OriginalAVdataOffset) {
 						$info['avdataoffset'] = $this->ftell();
 					}
+
 					$this->fseek($BlockSize - 12, SEEK_CUR);
 
 					$ThisBlock['sample_rate']     = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 4));

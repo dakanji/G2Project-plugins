@@ -13,7 +13,6 @@
 // dependencies: module.audio.flac.php                         //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio.flac.php', __FILE__, true);
 
 class getid3_ogg extends getid3_handler {
@@ -36,9 +35,7 @@ class getid3_ogg extends getid3_handler {
 			$info['warning'][] = 'Illegal APE tag present.';
 		}
 
-
 		// Page 1 - Stream Header
-
 		$this->fseek($info['avdataoffset']);
 
 		$oggpageinfo                                           = $this->ParseOggPageHeader();
@@ -47,7 +44,6 @@ class getid3_ogg extends getid3_handler {
 		if ($this->ftell() >= $this->getid3->fread_buffer_size()) {
 			$info['error'][] = 'Could not find start of Ogg page in the first ' . $this->getid3->fread_buffer_size() . ' bytes (this might not be an Ogg-Vorbis file?)';
 			unset($info['fileformat'], $info['ogg']);
-
 
 			return false;
 		}
@@ -67,7 +63,6 @@ class getid3_ogg extends getid3_handler {
 			}
 		} elseif (substr($filedata, 0, 8) == 'Speex   ') {
 			// http://www.speex.org/manual/node10.html
-
 			$info['audio']['dataformat']   = 'speex';
 			$info['mime_type']             = 'audio/speex';
 			$info['audio']['bitrate_mode'] = 'abr';
@@ -118,7 +113,6 @@ class getid3_ogg extends getid3_handler {
 			}
 		} elseif (substr($filedata, 0, 7) == "\x80" . 'theora') {
 			// http://www.theora.org/doc/Theora.pdf (section 6.2)
-
 			$info['ogg']['pageheader']['theora']['theora_magic']     = substr($filedata, $filedataoffset, 7); // hard-coded to "\x80.'theora'
 			$filedataoffset                                         += 7;
 			$info['ogg']['pageheader']['theora']['version_major']    = getid3_lib::BigEndian2Int(substr($filedata, $filedataoffset, 1));
@@ -175,6 +169,7 @@ class getid3_ogg extends getid3_handler {
 			if ($info['ogg']['pageheader']['theora']['pixel_aspect_denominator'] > 0) {
 				$info['video']['pixel_aspect_ratio'] = (float)$info['ogg']['pageheader']['theora']['pixel_aspect_numerator'] / $info['ogg']['pageheader']['theora']['pixel_aspect_denominator'];
 			}
+
 			$info['warning'][] = 'Ogg Theora (v3) not fully supported in this version of getID3 [' . $this->getid3->version() . '] -- bitrate, playtime and all audio data are currently unavailable';
 		} elseif (substr($filedata, 0, 8) == "fishead\x00") {
 			// Ogg Skeleton version 3.0 Format Specification
@@ -199,7 +194,6 @@ class getid3_ogg extends getid3_handler {
 			$info['ogg']['skeleton']['fishead']['presentationtime'] = $info['ogg']['skeleton']['fishead']['raw']['presentationtime_numerator'] / $info['ogg']['skeleton']['fishead']['raw']['presentationtime_denominator'];
 			$info['ogg']['skeleton']['fishead']['basetime']         = $info['ogg']['skeleton']['fishead']['raw']['basetime_numerator']         / $info['ogg']['skeleton']['fishead']['raw']['basetime_denominator'];
 			$info['ogg']['skeleton']['fishead']['utc']              = $info['ogg']['skeleton']['fishead']['raw']['utc'];
-
 
 			$counter = 0;
 
@@ -239,6 +233,7 @@ class getid3_ogg extends getid3_handler {
 					$info['error'][] = 'unexpected';
 					//break;
 				}
+
 				//} while ($oggpageinfo['page_seqno'] == 0);
 			} while (($oggpageinfo['page_seqno'] == 0) && (substr($filedata, 0, 8) != "fisbone\x00"));
 
@@ -249,7 +244,6 @@ class getid3_ogg extends getid3_handler {
 		} else {
 			$info['error'][] = 'Expecting either "Speex   ", "OpusHead" or "vorbis" identifier strings, found "' . substr($filedata, 0, 8) . '"';
 			unset($info['ogg'], $info['mime_type']);
-
 
 			return false;
 		}
@@ -263,7 +257,6 @@ class getid3_ogg extends getid3_handler {
 				$filedata = $this->fread($info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['page_length']);
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['packet_type'] = getid3_lib::LittleEndian2Int(substr($filedata, 0, 1));
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno']]['stream_type'] = substr($filedata, 1, 6); // hard-coded to 'vorbis'
-
 				$this->ParseVorbisComments();
 
 				break;
@@ -276,6 +269,7 @@ class getid3_ogg extends getid3_handler {
 
 					return false;
 				}
+
 				unset($flac);
 
 				break;
@@ -339,6 +333,7 @@ class getid3_ogg extends getid3_handler {
 
 				return false;
 			}
+
 			$info['playtime_seconds'] = (float)((($info['avdataend'] - $info['avdataoffset']) * 8) / $info['audio']['bitrate']);
 		}
 
@@ -389,6 +384,7 @@ class getid3_ogg extends getid3_handler {
 
 			return false;
 		}
+
 		$info['audio']['sample_rate']   = $info['ogg']['samplerate'];
 		$info['ogg']['samples']         = 0; // filled in later
 		$info['ogg']['bitrate_average'] = 0; // filled in later
@@ -401,8 +397,7 @@ class getid3_ogg extends getid3_handler {
 		$info['ogg']['blocksize_small'] = 2 ** (getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1)) & 0x0F);
 		$info['ogg']['blocksize_large'] = 2 ** ((getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1)) & 0xF0) >> 4);
 		$info['ogg']['stop_bit']        = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1)); // must be 1, marks end of packet
-
-		$info['audio']['bitrate_mode'] = 'vbr'; // overridden if actually abr
+		$info['audio']['bitrate_mode']  = 'vbr'; // overridden if actually abr
 		if ($info['ogg']['bitrate_max'] == 0xFFFFFFFF) {
 			unset($info['ogg']['bitrate_max']);
 			$info['audio']['bitrate_mode'] = 'abr';
@@ -459,10 +454,8 @@ class getid3_ogg extends getid3_handler {
 
 		//$info['ogg']['pageheader']['opus']['output_gain'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset,  2));
 		//$filedataoffset += 2;
-
 		//$info['ogg']['pageheader']['opus']['channel_mapping_family'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset,  1));
 		//$filedataoffset += 1;
-
 		$info['opus']['opus_version']      = $info['ogg']['pageheader']['opus']['version'];
 		$info['opus']['sample_rate']       = $info['ogg']['pageheader']['opus']['sample_rate'];
 		$info['opus']['out_channel_count'] = $info['ogg']['pageheader']['opus']['out_channel_count'];
@@ -476,9 +469,8 @@ class getid3_ogg extends getid3_handler {
 	public function ParseOggPageHeader() {
 		// http://xiph.org/ogg/vorbis/doc/framing.html
 		$oggheader['page_start_offset'] = $this->ftell(); // where we started from in the file
-
-		$filedata       = $this->fread($this->getid3->fread_buffer_size());
-		$filedataoffset = 0;
+		$filedata                       = $this->fread($this->getid3->fread_buffer_size());
+		$filedataoffset                 = 0;
 
 		while ((substr($filedata, $filedataoffset++, 4) != 'OggS')) {
 			if (($this->ftell() - $oggheader['page_start_offset']) >= $this->getid3->fread_buffer_size()) {
@@ -493,8 +485,8 @@ class getid3_ogg extends getid3_handler {
 				}
 			}
 		}
-		$filedataoffset += strlen('OggS') - 1; // page, delimited by 'OggS'
 
+		$filedataoffset               += strlen('OggS') - 1; // page, delimited by 'OggS'
 		$oggheader['stream_structver'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1));
 		$filedataoffset               += 1;
 		$oggheader['flags_raw']        = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 1));
@@ -502,7 +494,6 @@ class getid3_ogg extends getid3_handler {
 		$oggheader['flags']['fresh']   = (bool)($oggheader['flags_raw'] & 0x01); // fresh packet
 		$oggheader['flags']['bos']     = (bool)($oggheader['flags_raw'] & 0x02); // first page of logical bitstream (bos)
 		$oggheader['flags']['eos']     = (bool)($oggheader['flags_raw'] & 0x04); // last page of logical bitstream (eos)
-
 		$oggheader['pcm_abs_position'] = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 8));
 		$filedataoffset               += 8;
 		$oggheader['stream_serialno']  = getid3_lib::LittleEndian2Int(substr($filedata, $filedataoffset, 4));
@@ -520,6 +511,7 @@ class getid3_ogg extends getid3_handler {
 			$filedataoffset                += 1;
 			$oggheader['page_length']      += $oggheader['segment_table'][$i];
 		}
+
 		$oggheader['header_end_offset'] = $oggheader['page_start_offset'] + $filedataoffset;
 		$oggheader['page_end_offset']   = $oggheader['header_end_offset'] + $oggheader['page_length'];
 		$this->fseek($oggheader['header_end_offset']);
@@ -611,6 +603,7 @@ class getid3_ogg extends getid3_handler {
 					$commentdata .= $this->fread($this->OggPageSegmentLength($info['ogg']['pageheader'][$VorbisCommentPage], 1));
 				}
 			}
+
 			$ThisFileInfo_ogg_comments_raw[$i]['size'] = getid3_lib::LittleEndian2Int(substr($commentdata, $commentdataoffset, 4));
 
 			// replace avdataoffset with position just after the last vorbiscomment
@@ -649,6 +642,7 @@ class getid3_ogg extends getid3_handler {
 
 					break;
 				}
+
 				$readlength = self::OggPageSegmentLength($info['ogg']['pageheader'][$VorbisCommentPage], 1);
 
 				if ($readlength <= 0) {
@@ -656,10 +650,12 @@ class getid3_ogg extends getid3_handler {
 
 					break;
 				}
+
 				$commentdata .= $this->fread($readlength);
 
 				//$filebaseoffset += $oggpageinfo['header_end_offset'] - $oggpageinfo['page_start_offset'];
 			}
+
 			$ThisFileInfo_ogg_comments_raw[$i]['offset'] = $commentdataoffset;
 			$commentstring                               = substr($commentdata, $commentdataoffset, $ThisFileInfo_ogg_comments_raw[$i]['size']);
 			$commentdataoffset                          += $ThisFileInfo_ogg_comments_raw[$i]['size'];
@@ -703,6 +699,7 @@ class getid3_ogg extends getid3_handler {
 						'image_width'  => $imageinfo['width'],
 						'data'         => $ogg->saveAttachment('coverart', 0, strlen($data), $imageinfo['mime']),
 					);
+
 					unset($ogg);
 				} else {
 					$info['ogg']['comments'][strtolower($ThisFileInfo_ogg_comments_raw[$i]['key'])][] = $ThisFileInfo_ogg_comments_raw[$i]['value'];
@@ -710,10 +707,11 @@ class getid3_ogg extends getid3_handler {
 			} else {
 				$info['warning'][] = '[known problem with CDex >= v1.40, < v1.50b7] Invalid Ogg comment name/value pair [' . $i . ']: ' . $commentstring;
 			}
+
 			unset($ThisFileInfo_ogg_comments_raw[$i]);
 		}
-		unset($ThisFileInfo_ogg_comments_raw);
 
+		unset($ThisFileInfo_ogg_comments_raw);
 
 		// Replay Gain Adjustment
 		// http://privatewww.essex.ac.uk/~djmrob/replaygain/
@@ -811,6 +809,7 @@ class getid3_ogg extends getid3_handler {
 			// q9 to q10
 			$qval = ($nominal_bitrate + 1300) / 180;
 		}
+
 		//return $qval; // 5.031324
 		//return intval($qval); // 5
 		return round($qval, 1); // 5 or 4.9

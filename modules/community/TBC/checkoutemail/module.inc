@@ -32,6 +32,7 @@
 class CheckoutEmailModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('checkoutemail');
 		$this->setName($gallery->i18n('Checkout by Email'));
 		$this->setDescription(
@@ -79,6 +80,7 @@ class CheckoutEmailModule extends GalleryModule {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'CheckoutEmailInterface_1_0',
 			'CheckoutEmailEmailPlugin',
@@ -166,7 +168,9 @@ class CheckoutEmailModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					$this->performFactoryRegistrations();
+
 					// Fall Through
 				case '0.0.9':
 				case '0.0.9.1':
@@ -188,27 +192,33 @@ class CheckoutEmailModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 						$ret = GalleryCoreApi::removePluginParameter('module', 'checkoutemail', 'showCustomer' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
+
 						$ret = GalleryCoreApi::removePluginParameter('module', 'checkoutemail', 'showThumbs' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
+
 						$ret = GalleryCoreApi::removePluginParameter('module', 'checkoutemail', 'showLinks' . $i);
 
 						if ($ret) {
 							return $ret;
 						}
 					}
+
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkoutemail', 'numAddresses');
 
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.3.2':
 				case '0.3.3':

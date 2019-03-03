@@ -87,6 +87,7 @@ function Auth_Yadis_iriToURI($iri) {
 	if (1) {
 		return $iri;
 	}
+
 	// According to RFC 3987, section 3.1, "Mapping of IRIs to URIs"
 	return preg_replace_callback(
 		Auth_Yadis_getEscapeRE(),
@@ -99,7 +100,6 @@ function Auth_Yadis_XRIAppendArgs($url, $args) {
 	// Append some arguments to an HTTP query.  Yes, this is just like
 	// OpenID's appendArgs, but with special seasoning for XRI
 	// queries.
-
 	if (count($args) == 0) {
 		return $url;
 	}
@@ -118,6 +118,7 @@ function Auth_Yadis_XRIAppendArgs($url, $args) {
 		foreach ($keys as $key) {
 			$new_args[] = array($key, $args[$key]);
 		}
+
 		$args = $new_args;
 	}
 
@@ -145,7 +146,6 @@ function Auth_Yadis_providerIsAuthoritative($providerID, $canonicalID) {
 
 function Auth_Yadis_rootAuthority($xri) {
 	// Return the root authority for an XRI.
-
 	$root = null;
 
 	if (Auth_Yadis_startswith($xri, 'xri://')) {
@@ -173,6 +173,7 @@ function Auth_Yadis_rootAuthority($xri) {
 		foreach ($_segments as $s) {
 			$segments = array_merge($segments, explode('*', $s));
 		}
+
 		$root = $segments[0];
 	}
 
@@ -189,7 +190,6 @@ function Auth_Yadis_XRI($xri) {
 
 function Auth_Yadis_getCanonicalID($iname, $xrds) {
 	// Returns false or a canonical ID value.
-
 	// Now nodes are in reverse order.
 	$xrd_list = array_reverse($xrds->allXrdNodes);
 	$parser   =& $xrds->parser;
@@ -215,6 +215,7 @@ function Auth_Yadis_getCanonicalID($iname, $xrds) {
 		if (!$parentCID) {
 			return false;
 		}
+
 		$parentCID = Auth_Yadis_XRI($parser->content($parentCID[0]));
 
 		if (strcasecmp($parent_sought, $parentCID)) {

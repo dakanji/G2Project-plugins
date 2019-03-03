@@ -63,6 +63,7 @@ class WebCamSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'webcam',
@@ -73,6 +74,7 @@ class WebCamSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$status['saved'] = 1;
 			}
 		}
@@ -117,6 +119,7 @@ class WebCamSiteAdminView extends GalleryView {
 					return array($ret, null);
 				}
 			}
+
 			// String conversion here may use comma as fraction separator, based on locale
 			$form['duration'] = (string)round($form['duration'] / 60, 2);
 		}

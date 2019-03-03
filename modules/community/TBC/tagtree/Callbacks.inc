@@ -28,6 +28,7 @@ class TagTreeCallbacks {
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
 
 		global $gallery;
+
 		static $idCount = '';
 
 		switch ($callback) {
@@ -43,11 +44,13 @@ class TagTreeCallbacks {
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $rootAlbum) = GalleryCoreApi::loadEntitiesById($rootAlbumId);
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$rootAlbumTitle = $rootAlbum->getTitle() ? $rootAlbum->getTitle() : $rootAlbum->getPathComponent();
 
 				$translator    =& $gallery->getTranslator();

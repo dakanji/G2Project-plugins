@@ -230,6 +230,7 @@ class Auth_OpenID_BcMathWrapper extends Auth_OpenID_MathLibrary {
 			if ($this->mod($exponent, 2)) {
 				$result = $this->mod($this->mul($result, $square), $modulus);
 			}
+
 			$square   = $this->mod($this->mul($square, $square), $modulus);
 			$exponent = $this->div($exponent, 2);
 		}
@@ -421,6 +422,7 @@ function &Auth_OpenID_getMathLib() {
 		foreach (Auth_OpenID_math_extensions() as $extinfo) {
 			$tried[] = $extinfo['extension'];
 		}
+
 		$triedstr = implode(', ', $tried);
 
 		Auth_OpenID_setNoMathSupport();

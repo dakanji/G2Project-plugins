@@ -39,6 +39,7 @@
 class UserinfoModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('userinfo');
 		$this->setName($gallery->i18n('User Info'));
 		$this->setDescription(
@@ -110,6 +111,7 @@ class UserinfoModule extends GalleryModule {
 					return array($ret, null);
 				}
 
+
 				// Fall Through
 			case '1.0.3':
 			case '1.0.4':
@@ -164,7 +166,6 @@ class UserinfoModule extends GalleryModule {
 	 *   return null;
 	 *    }
 	 */
-
 
 	// Added this to show the module in the admin menu
 

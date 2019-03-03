@@ -52,11 +52,13 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutPaymentInterface_1_3';
 		// Find all our payment plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$plugins = array();
 
 		foreach ($ids as $id => $className) {
@@ -65,6 +67,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $plugins[$id]['paymentTemplate']) = $instances[$id]->getPaymentTemplate();
 
 			if ($ret) {
@@ -94,6 +97,7 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutCustomPageInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
@@ -108,12 +112,14 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// do the work
 			list($ret, $plugins[$id]['customPageTemplate'], $plugins[$id]['l10Domain']) = $instances[$id]->getCustomPageTemplate();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$ret = $instances[$id]->loadTemplate($template, $form, $item, $thumbnail);
 
 			if ($ret) {
@@ -128,11 +134,13 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutCustomPageInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$pluginStatus = array();
 		$pluginError  = array();
 
@@ -142,6 +150,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			// do the work
 			list($ret, $pluginError['$id'], $pluginStatus['$id']) = $instances[$id]->handleRequest($form, $item, $preferred);
 
@@ -164,11 +173,13 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutStatusPageInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$plugins = array();
 
 		foreach ($ids as $id => $className) {
@@ -177,12 +188,14 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// do the work
 			list($ret, $plugins[$id]['statusPageTemplate'], $plugins[$id]['l10Domain']) = $instances[$id]->loadTemplate($template, $form);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// if no template declared by this plugin then don't call the plugin
 			if (empty($plugins[$id]['statusPageTemplate'])) {
 				unset($plugins[$id]);
@@ -204,11 +217,13 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutStatusPageInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$plugins = array();
 
 		foreach ($ids as $id => $className) {
@@ -217,12 +232,14 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// do the work
 			list($ret, $results) = $instances[$id]->handleRequest($form);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			//send back the first set of results we get
 			if ($results) {
 				return array(null, $results);
@@ -244,6 +261,7 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutProductListInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
@@ -256,6 +274,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			// do the work
 			$ret = $instances[$id]->adjustItemList($items);
 
@@ -279,6 +298,7 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutProductListInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
@@ -291,6 +311,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			// do the work
 			$ret = $instances[$id]->adjustProductList($products, $itemId = null);
 
@@ -313,6 +334,7 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutProductListInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
@@ -325,6 +347,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			// do the work
 			$ret = $instances[$id]->adjustCartContents($form, $items);
 
@@ -347,6 +370,7 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutTransactionDetailsInterface_1_1';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
@@ -359,6 +383,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			// do the work
 			$ret = $instances[$id]->adjustTransactionDetails($items, $itemProducts, $paper, $posts, $discounts);
 
@@ -381,11 +406,13 @@ class CheckoutInterfaceHelper {
 		$pluginInterface = 'CheckoutEmailInterface_1_0';
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
+
 		list($ret, $ids) = GalleryCoreApi::getAllFactoryImplementationIds($pluginInterface);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$plugins = array();
 
 		foreach ($ids as $id => $className) {
@@ -394,6 +421,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// do the work
 			list($ret, $plugins[$id]['emailTemplate'], $plugins[$id]['l10Domain'], $plugins[$id]['emailVariables'])
 				= $instances[$id]->getEmailTemplateAndVariables($transactionId, $templateName);
@@ -401,6 +429,7 @@ class CheckoutInterfaceHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// if no email template, don't bother
 			if (empty($plugins[$id]['emailTemplate'])) {
 				unset($plugins[$id]);

@@ -36,6 +36,7 @@ class mapPreloads {
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {
 				GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
+
 				list($ret, $tmp, $param, $isContainerSettings) = mapHelper::fetchFieldValues(array($item), null, 'photo');
 
 				if ($ret) {

@@ -36,6 +36,7 @@ class SendDataController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$error        = array();
 		$status       = array();
 		$urlGenerator =& $gallery->getUrlGenerator();
@@ -66,8 +67,9 @@ class SendDataController extends GalleryController {
 				'verify2'       => $verify2,
 				'error'         => 'alreadyPlaced',
 			);
-			$results['error']    = $error;
-			$results['status']   = $status;
+
+			$results['error']  = $error;
+			$results['status'] = $status;
 
 			return array(null, $results);
 		}
@@ -77,6 +79,7 @@ class SendDataController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $items) = GalleryCheckoutApi::fetchFullTransactionItems($transactionId);
 
 		if ($ret) {
@@ -86,9 +89,8 @@ class SendDataController extends GalleryController {
 		$discount = $transaction->getDiscount();
 		$postage  = $transaction->getPostage();
 
-
 		// Build URLs for altering order, finishing
-		$editURL     = $urlGenerator->generateUrl(
+		$editURL = $urlGenerator->generateUrl(
 			array(
 				'view' => 'checkout.Confirm',
 			),
@@ -96,6 +98,7 @@ class SendDataController extends GalleryController {
 				'forceFullUrl' => true,
 			)
 		);
+
 		$continueURL = $urlGenerator->generateUrl(
 			array(
 				'controller'    => 'checkout.Complete',
@@ -107,13 +110,13 @@ class SendDataController extends GalleryController {
 				'forceFullUrl' => true,
 			)
 		);
-		$mainURL     = $urlGenerator->generateUrl(
+
+		$mainURL = $urlGenerator->generateUrl(
 			array(),
 			array(
 				'forceFullUrl' => true,
 			)
 		);
-
 
 		// Start
 		$googleData  = '	<?xml version="1.0" encoding="UTF-8"?>
@@ -166,6 +169,7 @@ class SendDataController extends GalleryController {
         		    </flat-rate-shipping>
       			    </shipping-methods>';
 		}
+
 		$googleData .= '<edit-cart-url>' . $editURL . '</edit-cart-url>
 			<continue-shopping-url>' . $continueURL . '</continue-shopping-url>
     			</merchant-checkout-flow-support>
@@ -187,33 +191,40 @@ class SendDataController extends GalleryController {
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('GoogleCheckout: there was a problem preparing an order when a user tried to use Google Checkout.'),
 			);
+
 			$statusMessage[] = "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('We contacted Google at this url:'),
 			);
+
 			$statusMessage[] = "\n" . $url . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('The content of our message was:'),
 			);
+
 			$statusMessage[] = "\n\n" . $googleData . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('The response code was:'),
 			);
+
 			$statusMessage[] = "\n" . $url . $returnStatus . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('The Google Website returned the following response in the body:'),
 			);
+
 			$statusMessage[] = "\n\n";
 			$statusMessage[] = $body;
-			$ret             = GalleryCheckoutApi::SendAdminNotification($transaction, $statusMessage);
+
+			$ret = GalleryCheckoutApi::SendAdminNotification($transaction, $statusMessage);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$error[] = 'form[error][checkoutgoogle][redirectFailed]';
 		}
 

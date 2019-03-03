@@ -55,6 +55,7 @@ class ShareSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$status['saved'] = 1;
 		} elseif (isset($form['action']['reset'])) {
 			// do nothing

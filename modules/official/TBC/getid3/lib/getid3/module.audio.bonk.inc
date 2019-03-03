@@ -13,8 +13,6 @@
 // dependencies: module.tag.id3v2.php (optional)               //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_bonk extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -44,6 +42,7 @@ class getid3_bonk extends getid3_handler {
 
 					return false;
 				}
+
 				$BonkTagName = substr($TagHeaderTest, 1, 4);
 
 				$thisfile_bonk[$BonkTagName]['size']   = $BonkTagSize;
@@ -58,6 +57,7 @@ class getid3_bonk extends getid3_handler {
 
 					return true;
 				}
+
 				$this->fseek($NextTagEndOffset);
 				$PossibleBonkTag = $this->fread(8);
 			}
@@ -86,6 +86,7 @@ class getid3_bonk extends getid3_handler {
 					default:
 						break 2;
 				}
+
 				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
 				$thisfile_bonk[$BonkTagName]['size']   = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
 				$thisfile_bonk[$BonkTagName]['offset'] = $thisfile_bonk['dataoffset'];
@@ -172,7 +173,6 @@ class getid3_bonk extends getid3_handler {
 						//$CurrentSeekInfo['offset'] = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 0, 4));
 						//$CurrentSeekInfo['nextbit'] = getid3_lib::LittleEndian2Int(substr($NextInfoDataPair, 4, 1));
 						//$thisfile_bonk_INFO[] = $CurrentSeekInfo;
-
 						$NextInfoDataPair = $this->fread(5);
 
 						if ($this->BonkIsValidTagName(substr($NextInfoDataPair, 1, 4))) {
@@ -180,6 +180,7 @@ class getid3_bonk extends getid3_handler {
 
 							break;
 						}
+
 						$thisfile_bonk_INFO['entries_count']++;
 					}
 				}
@@ -217,6 +218,7 @@ class getid3_bonk extends getid3_handler {
 					if ($info['bonk'][' ID3']['valid']) {
 						$info['id3v2'] = $getid3_temp->info['id3v2'];
 					}
+
 					unset($getid3_temp, $getid3_id3v2);
 				}
 

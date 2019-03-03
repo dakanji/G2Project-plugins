@@ -60,6 +60,7 @@ class CheckoutAuthorizeNetPlugin extends CheckoutPluginInterface_1_0 {
 	public function getPaymentVariables() {
 		// Copy info between the session variables
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		list($ret, $items) = CheckoutHelper::fetchCheckoutItems();

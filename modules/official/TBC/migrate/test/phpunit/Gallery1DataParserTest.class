@@ -174,6 +174,7 @@ class Gallery1DataParserTest extends GalleryControllerTestCase {
 			'ecards'                   => null,
 			'poll_orientation'         => 'horizontal',
 		);
+
 		$this->assertEquals($expected, $albumFields);
 	}
 
@@ -183,6 +184,7 @@ class Gallery1DataParserTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(2, $countOfPhotos);
 	}
 
@@ -192,6 +194,7 @@ class Gallery1DataParserTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			array(
 				'monkey!',
@@ -211,6 +214,7 @@ class Gallery1DataParserTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			array(
 				'monkey!' => '.root',
@@ -233,6 +237,7 @@ class Gallery1DataParserTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			array(
 				'monkey!',
@@ -255,6 +260,7 @@ class Gallery1DataParserTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			array(
 				'monkey!' => array(),
@@ -278,6 +284,7 @@ class Gallery1DataParserTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			array(
 				'1054014347_1233740678' => 'admin',

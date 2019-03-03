@@ -41,6 +41,7 @@ class ImportResultsView extends GalleryView {
 		if ($form['formName'] != 'ImportResults') {
 			$form['formName'] = 'ImportResults';
 		}
+
 		$status = $template->getVariable('status');
 		$counts = array();
 

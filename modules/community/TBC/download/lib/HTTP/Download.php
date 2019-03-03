@@ -1,6 +1,5 @@
 <?php
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
-
 /**
  * HTTP::Download
  *
@@ -26,7 +25,6 @@ require_once 'PEAR.php';
  */
 require_once 'HTTP/Header.php';
 // }}}
-
 // {{{ constants
 // #@+ Use with HTTP_Download::setContentDisposition()
 /**
@@ -38,7 +36,6 @@ define('HTTP_DOWNLOAD_ATTACHMENT', 'attachment');
  */
 define('HTTP_DOWNLOAD_INLINE', 'inline');
 // #@-
-
 // #@+ Use with HTTP_Download::sendArchive()
 /**
  * Send as uncompressed tar archive
@@ -57,7 +54,6 @@ define('HTTP_DOWNLOAD_BZ2', 'BZ2');
  */
 define('HTTP_DOWNLOAD_ZIP', 'ZIP');
 // #@-
-
 /**#@+
  * Error constants
  */
@@ -72,7 +68,6 @@ define('HTTP_DOWNLOAD_E_INVALID_CONTENT_TYPE', -8);
 define('HTTP_DOWNLOAD_E_INVALID_ARCHIVE_TYPE', -9);
 // #@-
 // }}}
-
 /**
  * Send HTTP Downloads/Responses.
  *
@@ -203,7 +198,6 @@ class HTTP_Download {
 	 */
 	public $sentBytes = 0;
 	// }}}
-
 	// {{{ constructor
 
 	/**
@@ -244,7 +238,6 @@ class HTTP_Download {
 	}
 
 	// }}}
-
 	// {{{ public methods
 
 	/**
@@ -305,6 +298,7 @@ class HTTP_Download {
 				HTTP_DOWNLOAD_E_INVALID_FILE
 			);
 		}
+
 		$this->setLastModified(filemtime($file));
 		$this->file = $file;
 		$this->size = filesize($file);
@@ -376,6 +370,7 @@ class HTTP_Download {
 				HTTP_DOWNLOAD_E_NO_EXT_ZLIB
 			);
 		}
+
 		$this->gzip = (bool)$gzip;
 
 		return true;
@@ -460,6 +455,7 @@ class HTTP_Download {
 				HTTP_DOWNLOAD_E_INVALID_PARAM
 			);
 		}
+
 		$this->bufferSize = abs($bytes);
 
 		return true;
@@ -540,6 +536,7 @@ class HTTP_Download {
 		} elseif ($this->file) {
 			$cd .= '; filename="' . basename($this->file) . '"';
 		}
+
 		$this->headers['Content-Disposition'] = $cd;
 	}
 
@@ -561,6 +558,7 @@ class HTTP_Download {
 				HTTP_DOWNLOAD_E_INVALID_CONTENT_TYPE
 			);
 		}
+
 		$this->headers['Content-Type'] = $content_type;
 
 		return true;
@@ -775,7 +773,6 @@ class HTTP_Download {
 	}
 
 	// }}}
-
 	// {{{ protected methods
 
 	/**
@@ -792,6 +789,7 @@ class HTTP_Download {
 				$fst = is_resource($this->handle) ? fstat($this->handle) : stat($this->file);
 				$md5 = md5($fst['mtime'] . '=' . $fst['ino'] . '=' . $fst['size']);
 			}
+
 			$this->etag = '"' . $md5 . '-' . crc32($md5) . '"';
 		}
 
@@ -820,6 +818,7 @@ class HTTP_Download {
 				return $e;
 			}
 		}
+
 		// echo "\r\n--$bound--\r\n";
 		return true;
 	}
@@ -854,6 +853,7 @@ class HTTP_Download {
 			if ($this->isRangeRequest()) {
 				$this->headers['Content-Range'] = 'bytes ' . $range;
 			}
+
 			$this->sendHeaders();
 		}
 
@@ -871,6 +871,7 @@ class HTTP_Download {
 			if (!is_resource($this->handle)) {
 				$this->handle = fopen($this->file, 'rb');
 			}
+
 			fseek($this->handle, $offset);
 
 			while (($length -= $this->bufferSize) > 0) {
@@ -906,6 +907,7 @@ class HTTP_Download {
 				$o = $this->size - $e;
 				$e = $this->size - 1;
 			}
+
 			$parts[] = array($o, $e);
 		}
 
@@ -1027,6 +1029,7 @@ class HTTP_Download {
 		foreach ($this->headers as $header => $value) {
 			$this->HTTP->setHeader($header, $value);
 		}
+
 		$this->HTTP->sendHeaders();
 		// NSAPI won't output anything if we did this
 		if (strncasecmp(PHP_SAPI, 'nsapi', 5)) {
@@ -1047,6 +1050,7 @@ class HTTP_Download {
 			$this->sentBytes += $dlen;
 			echo $data;
 		}
+
 		ob_flush();
 		flush();
 	}

@@ -75,13 +75,10 @@ require_once 'IPTC.php';
 
 require_once 'Unicode.php';
 
-
-
 // TODO: Many Photoshop IRB resources not interpeted
 // TODO: Obtain a copy of the Photoshop CS File Format Specification
 // TODO: Find out what Photoshop IRB resources 1061, 1062 & 1064 are
 // TODO: Test get_Photoshop_IRB and put_Photoshop_IRB with multiple APP13 segments
-
 /******************************************************************************
  *
  * Function:     get_Photoshop_IRB
@@ -104,7 +101,6 @@ function get_Photoshop_IRB($jpeg_header_data) {
 	// Photoshop Image Resource blocks can span several JPEG APP13 segments, so we need to join them up if there are more than one
 	$joined_IRB = '';
 
-
 	//Cycle through the header segments
 	for ($i = 0; $i < count($jpeg_header_data); $i++) {
 		// If we find an APP13 header,
@@ -123,21 +119,12 @@ function get_Photoshop_IRB($jpeg_header_data) {
 		// Change: Moved code into unpack_Photoshop_IRB_Data to allow TIFF reading as of 1.11
 		return unpack_Photoshop_IRB_Data($joined_IRB);
 	}
+
 	// No Photoshop IRB found
 	return false;
 }
 
 // End of Function:     get_Photoshop_IRB
-
-
-
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     put_Photoshop_IRB
@@ -162,7 +149,6 @@ function get_Photoshop_IRB($jpeg_header_data) {
 
 function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 	// Delete all existing Photoshop IRB blocks - the new one will replace them
-
 	//Cycle through the header segments
 	for ($i = 0; $i < count($jpeg_header_data); $i++) {
 		// If we find an APP13 header,
@@ -175,17 +161,13 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 		}
 	}
 
-
 	// Now we have deleted the pre-existing blocks
-
-
 	// Retrieve the Packed Photoshop IRB Data
 	// Change: Moved code into pack_Photoshop_IRB_Data to allow TIFF writing as of 1.11
 	$packed_IRB_data = pack_Photoshop_IRB_Data($new_IRB_data);
 
 	// Change : This section changed to fix incorrect positioning of IRB segment, as of revision 1.10
 	//          when there are no APP segments present
-
 	//Cycle through the header segments in reverse order (to find where to put the APP13 block - after any APP0 to APP12 blocks)
 	$i = count($jpeg_header_data) - 1;
 
@@ -193,12 +175,9 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 		$i--;
 	}
 
-
-
 	// Cycle through the packed output data until it's size is less than 32000 bytes, outputting each 32000 byte block to an APP13 segment
 	while (strlen($packed_IRB_data) > 32000) {
 		// Change: Fixed put_Photoshop_IRB to output "Photoshop 3.0\x00" string with every APP13 segment, not just the first one, as of 1.03
-
 		// Write a 32000 byte APP13 segment
 		array_splice(
 			$jpeg_header_data,
@@ -234,14 +213,6 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 }
 
 // End of Function:     put_Photoshop_IRB
-
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     get_Photoshop_IPTC
@@ -278,17 +249,12 @@ function get_Photoshop_IPTC($Photoshop_IRB_data) {
 		// Then return false
 		return false;
 	}
+
 	// Otherwise return the array
 	return $IPTC_Data_Out;
 }
 
 // End of Function:     get_Photoshop_IPTC
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     put_Photoshop_IPTC
@@ -326,7 +292,6 @@ function put_Photoshop_IPTC($Photoshop_IRB_data, $new_IPTC_block) {
 		$iptc_block_pos = count($Photoshop_IRB_data);
 	}
 
-
 	// Write the new IRB resource to the Photoshop IRB array with no data
 	$Photoshop_IRB_data[$iptc_block_pos] = array(
 		'ResID'           => 0x0404,
@@ -336,20 +301,11 @@ function put_Photoshop_IPTC($Photoshop_IRB_data, $new_IPTC_block) {
 		'ResData'         => put_IPTC($new_IPTC_block),
 	);
 
-
 	// Return the modified IRB
 	return $Photoshop_IRB_data;
 }
 
 // End of Function:     put_Photoshop_IPTC
-
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     Interpret_IRB_to_HTML
@@ -396,7 +352,6 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 		// Cycle through each of the Photoshop IRB records, creating HTML for each
 		foreach ($IRB_array as $IRB_Resource) {
 			// Check if the entry is a known Photoshop IRB resource
-
 			// Get the Name of the Resource
 			if (array_key_exists($IRB_Resource['ResID'], $GLOBALS['Photoshop_ID_Names'])) {
 				$Resource_Name = $GLOBALS['Photoshop_ID_Names'][$IRB_Resource['ResID']];
@@ -405,6 +360,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 				if ($GLOBALS['HIDE_UNKNOWN_TAGS'] == true) {
 					continue;
 				}
+
 				// Unknown Resource - Make appropriate name
 				$Resource_Name = 'Unknown Resource (' . $IRB_Resource['ResID'] . ')';
 			}
@@ -533,6 +489,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						} else {
 							$output_str .= "Cell Text is NOT HTML<br>\n";
 						}
+
 						$Slicepos++;
 
 						// Unpack the length of a Unicode String
@@ -541,7 +498,6 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						// Extract a Unicode String
 						$output_str .= "Cell Text = '" . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], $Slicepos, $CellTextlen * 2), true) . "'<br>\n";
 						$Slicepos   += $CellTextlen * 2;
-
 
 						// Unpack the last 12 bytes of the slice
 						$SliceC      = unpack('NAlignH/NAlignV/CAlpha/CRed/CGreen/CBlue', substr($IRB_Resource['ResData'], $Slicepos));
@@ -556,7 +512,6 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						$output_str .= "</td></tr>\n";
 
 					break;
-
 
 				case 0x0408: // Grid and Guides information
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\">";
@@ -699,6 +654,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 								break;
 						}
 					}
+
 									$output_str .= "</td></tr>\n";
 
 					break;
@@ -748,6 +704,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						$url         = substr($urlstr, 0, $url_data['URLSize']);
 						$output_str .= 'URL = <a href="' . xml_UTF16_clean($url, true) . '">' . HTML_UTF16_Escape($url, true) . "</a><br>\n";
 					}
+
 						$output_str .= "</td></tr>\n";
 
 					break;
@@ -835,6 +792,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					} else {
 						$output_str .= 'Caption Not Selected';
 					}
+
 									$output_str .= "</pre></td></tr>\n";
 
 					break;
@@ -899,6 +857,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					} else {
 						$output_str .= 'Display units for Image Height = Unknown Value (' . $ResInfo['heightUnit'] . ')';
 					}
+
 									$output_str .= "</pre></td></tr>\n";
 
 					break;
@@ -920,19 +879,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 }
 
 // End of Function:     Interpret_IRB_to_HTML
-
-
-
-
-
-
 // INTERNAL FUNCTIONS
-
-
-
-
-
-
 
 /******************************************************************************
  *
@@ -965,7 +912,6 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 		$namestartpos = $pos;
 
 		// Change: Fixed processing of embedded resource names, as of revision 1.10
-
 		// NOTE: Photoshop does not process resource names according to the standard :
 		// "Adobe Photoshop 6.0 File Formats Specification, Version 6.0, Release 2, November 2000"
 		//
@@ -973,7 +919,6 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 		// One byte name length, followed by the null terminated ascii name string.
 		// The field is then padded with a Null character if required, to ensure that the
 		// total length of the name length and name is even.
-
 		// Name - process it
 		// Get the length
 		$namelen = ord($IRB_Data[$namestartpos]);
@@ -984,10 +929,10 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 			// add one to length to make it odd
 			$namelen ++;
 		}
+
 		// Extract the name
 		$resembeddedname = trim(substr($IRB_Data, $namestartpos + 1, $namelen));
 		$pos            += $namelen + 1;
-
 
 		// Next is a four byte size field indicating the size in bytes of the record's data  - MSB first
 		$datasize = ord($IRB_Data[$pos]) * 16777216 + ord($IRB_Data[$pos + 1]) * 65536 + ord($IRB_Data[$pos + 2]) * 256 + ord($IRB_Data[$pos + 3]);
@@ -1017,9 +962,7 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 			$ResName = '';
 		}
 
-
 		// Store the Resource in the array to be returned
-
 		$IRB_Array[] = array(
 			'ResID'           => $ID,
 			'ResName'         => $ResName,
@@ -1037,17 +980,6 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 }
 
 // End of Function:     unpack_Photoshop_IRB_Data
-
-
-
-
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Function:     pack_Photoshop_IRB_Data
@@ -1068,7 +1000,6 @@ function pack_Photoshop_IRB_Data($IRB_data) {
 	// Cycle through each resource in the IRB,
 	foreach ($IRB_data as $resource) {
 		// Change: Fix to avoid creating blank resources, as of revision 1.10
-
 		// Check if there is actually any data for this resource
 		if (strlen($resource['ResData']) == 0) {
 			// No data for resource - skip it
@@ -1078,9 +1009,7 @@ function pack_Photoshop_IRB_Data($IRB_data) {
 		// Append the 8BIM tag, and resource ID to the packed output data
 		$packed_IRB_data .= pack('a4n', '8BIM', $resource['ResID']);
 
-
 		// Change: Fixed processing of embedded resource names, as of revision 1.10
-
 		// NOTE: Photoshop does not process resource names according to the standard :
 		// "Adobe Photoshop 6.0 File Formats Specification, Version 6.0, Release 2, November 2000"
 		//
@@ -1088,7 +1017,6 @@ function pack_Photoshop_IRB_Data($IRB_data) {
 		// One byte name length, followed by the null terminated ascii name string.
 		// The field is then padded with a Null character if required, to ensure that the
 		// total length of the name length and name is even.
-
 		// Append Name Size
 		$packed_IRB_data .= pack('c', strlen(trim($resource['ResEmbeddedName'])));
 
@@ -1120,14 +1048,6 @@ function pack_Photoshop_IRB_Data($IRB_data) {
 }
 
 // End of Function:     pack_Photoshop_IRB_Data
-
-
-
-
-
-
-
-
 /******************************************************************************
  *
  * Internal Function:     Interpret_Transfer_Function
@@ -1156,6 +1076,7 @@ function Interpret_Transfer_Function($Transfer_Function_Binary) {
 			// Value should be negative - make it so
 			$val = $val - 65536;
 		}
+
 		// Check that the Override item is not getting in this list, and
 		// that the value is not -1, which means ignored
 		if (($Key != 'Override') && ($val != -1)) {
@@ -1176,11 +1097,6 @@ function Interpret_Transfer_Function($Transfer_Function_Binary) {
 }
 
 // End of Function:     Interpret_Transfer_Function
-
-
-
-
-
 /******************************************************************************
 *
 * Internal Function:     Interpret_Halftone
@@ -1256,18 +1172,6 @@ function Interpret_Halftone($Halftone_Binary) {
 }
 
 // End of Global Variable:     Interpret_Halftone
-
-
-
-
-
-
-
-
-
-
-
-
 /******************************************************************************
  * Global Variable:      Photoshop_ID_Names
  *
@@ -1334,11 +1238,6 @@ $GLOBALS['Photoshop_ID_Names'] = array(
 );
 
 // End of Global Variable:     Photoshop_ID_Names
-
-
-
-
-
 /******************************************************************************
  * Global Variable:      Photoshop_ID_Descriptions
  *

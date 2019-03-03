@@ -14,8 +14,6 @@
 // This extension written by Allan Hansen <ahØartemis*dk>      //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 /**
  * This is a caching extension for getID3(). It works the exact same
  * way as the getID3 class, but return cached information very fast
@@ -93,6 +91,7 @@ class getID3_cached_dbm extends getID3 {
 		if (!is_writeable($lock_filename)) {
 			throw new Exception('lock file: ' . $lock_filename . ' is not writable');
 		}
+
 		$this->lock = fopen($lock_filename, 'w');
 
 		// Acquire exclusive write lock to lock file

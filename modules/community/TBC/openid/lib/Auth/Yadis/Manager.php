@@ -467,7 +467,6 @@ class Auth_Yadis_Discovery {
 	public function &getManager($force = false) {
 		// Extract the YadisServiceManager for this object's URL and
 		// suffix from the session.
-
 		$manager_str = $this->session->get($this->getSessionKey());
 		$manager     = null;
 
@@ -479,6 +478,7 @@ class Auth_Yadis_Discovery {
 		if ($manager && ($manager->forURL($this->url) || $force)) {
 			return $manager;
 		}
+
 		$unused = null;
 
 		return $unused;
@@ -502,6 +502,7 @@ class Auth_Yadis_Discovery {
 				$services,
 				$key
 			);
+
 			$this->session->set(
 				$this->session_key,
 				serialize($loader->toSession($manager))
@@ -509,6 +510,7 @@ class Auth_Yadis_Discovery {
 
 			return $manager;
 		}
+
 		// Oh, PHP.
 		$unused = null;
 

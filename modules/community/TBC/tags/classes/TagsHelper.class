@@ -78,6 +78,7 @@ class TagsHelper {
 	 */
 	public function addNewTag($tagName) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		list($ret, $tagId) = TagsHelper::getTagIdFromName($tagName);
@@ -93,6 +94,7 @@ class TagsHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = GalleryCoreApi::addMapEntry(
 				'TagMap',
 				array(
@@ -106,7 +108,8 @@ class TagsHelper {
 			}
 		}
 
-		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		$event = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -153,7 +156,8 @@ class TagsHelper {
 			return $ret;
 		}
 
-		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		$event = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -177,6 +181,7 @@ class TagsHelper {
 				'tagName' => new GallerySqlFragment('LIKE ?', $prefix . '%'),
 			);
 		}
+
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry('TagMap', array('tagName'), $where);
 
 		if ($ret) {
@@ -201,6 +206,7 @@ class TagsHelper {
 	 */
 	public function getTagListWithTagCount($includeNullCount = false) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		list($ret, $as) = $storage->getFunctionSql('AS', array());
@@ -360,7 +366,8 @@ class TagsHelper {
 			return $ret;
 		}
 
-		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		$event = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -388,7 +395,8 @@ class TagsHelper {
 			return $ret;
 		}
 
-		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		$event = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -424,7 +432,8 @@ class TagsHelper {
 			return $ret;
 		}
 
-		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		$event = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -456,7 +465,8 @@ class TagsHelper {
 			return $ret;
 		}
 
-		$event     = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+		$event = GalleryCoreApi::newEvent('GalleryTagMap::Change');
+
 		list($ret) = GalleryCoreApi::postEvent($event);
 
 		if ($ret) {
@@ -475,7 +485,8 @@ class TagsHelper {
 	public function handleEvent($event) {
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$item = $event->getEntity();
-			$ret  = TagsHelper::removeAllTags($item->getId());
+
+			$ret = TagsHelper::removeAllTags($item->getId());
 
 			if ($ret) {
 				return array($ret, null);
@@ -495,6 +506,7 @@ class TagsHelper {
 	public function splitTags($tagSplit) {
 		$tagList = array();
 		GalleryUtilities::unsanitizeInputValues($tagSplit, false);
+
 		list($ret, $split) = GalleryCoreApi::getPluginParameter(
 			'module',
 			'keyalbum',
@@ -530,11 +542,13 @@ class TagsHelper {
 	 */
 	public function createTagCloudFromList($tagList) {
 		ksort($tagList);
+
 		list($ret, $steps) = GalleryCoreApi::getPluginParameter('module', 'tags', 'classNumber');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$maxCount = max($tagList);
 		$minCount = min($tagList);
 
@@ -572,11 +586,13 @@ class TagsHelper {
 	 */
 	public function createCssFile($forceOverwrite = false) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		// Get if the current file exists
-		$slash         = $platform->getDirectorySeparator();
-		$cssDir        = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+		$slash  = $platform->getDirectorySeparator();
+		$cssDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+
 		list($success) = GalleryUtilities::guaranteeDirExists($cssDir);
 
 		if (!$success) {
@@ -622,6 +638,7 @@ class TagsHelper {
 		#folksonomy ul li a:hover {
 		  text-decoration: underline;
 		}
+
 	    ';
 
 			list($ret, $numberSteps) = GalleryCoreApi::getPluginParameter('module', 'tags', 'classNumber');
@@ -642,7 +659,8 @@ class TagsHelper {
 				if (empty($dbCss[$i])) {
 					// No info in the DB for that tag CSS class
 					$numberSteps = $i;
-					$ret         = GalleryCoreApi::setPluginParameter(
+
+					$ret = GalleryCoreApi::setPluginParameter(
 						'module',
 						'tags',
 						'classNumber',
@@ -655,6 +673,7 @@ class TagsHelper {
 
 					break;
 				}
+
 				// There are info, process and store
 				$tempCss         = explode('|', $dbCss[$i]);
 				$cssFileContent .= '

@@ -54,16 +54,19 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 		if (empty($transactionId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null);
 		}
+
 		list($ret, $items) = CheckoutTransactionHelper::fetchFullTransactionItems($transactionId);
 
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		list($ret, $transaction) = GalleryCoreAPI::loadEntitiesById($transactionId, 'GalleryCheckoutTransaction');
 
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$buyerId   = $transaction->getBuyerId();
 		$hasGroup  = false;
 		$groupInfo = array();
@@ -77,17 +80,20 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 
 			foreach ($products as $product) {
 				if ($product['productId'] == $item['product'] && isset($product['groupId'])) {//matches one from order
-					$hasGroup          = true;
+					$hasGroup = true;
+
 					list($ret, $group) = GalleryCoreAPI::loadEntitiesById($product['groupId'], 'GalleryGroup');
 
 					if ($ret) {
 						return array($ret, null, null);
 					}
+
 					list($ret, $isInGroup) = GalleryCoreAPI::isUserInGroup($buyerId, $product['groupId']);
 
 					if ($ret) {
 						return array($ret, null, null);
 					}
+
 					$groupInfo[] = array(
 						'itemName'    => $item['itemName'],
 						'productName' => $item['productName'],
@@ -97,11 +103,13 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 				}
 			}
 		}
+
 		list($ret, $anon) = GalleryCoreApi::isAnonymousUser($buyerId);
 
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$checkoutgroups['isGuest']   = $anon;
 		$checkoutgroups['hasGroups'] = $hasGroup;
 		$checkoutgroups['groupInfo'] = $groupInfo;

@@ -18,10 +18,12 @@ define(
 	'PAPE_AUTH_MULTI_FACTOR_PHYSICAL',
 	'http://schemas.openid.net/pape/policies/2007/06/multi-factor-physical'
 );
+
 define(
 	'PAPE_AUTH_MULTI_FACTOR',
 	'http://schemas.openid.net/pape/policies/2007/06/multi-factor'
 );
+
 define(
 	'PAPE_AUTH_PHISHING_RESISTANT',
 	'http://schemas.openid.net/pape/policies/2007/06/phishing-resistant'
@@ -31,6 +33,7 @@ define(
 	'PAPE_TIME_VALIDATOR',
 	'^[0-9]{4,4}-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z$'
 );
+
 /**
  * A Provider Authentication Policy request, sent from a relying party
  * to a provider
@@ -253,6 +256,7 @@ class Auth_OpenID_PAPE_Response extends Auth_OpenID_Extension {
 				if ($strict) {
 					return false;
 				}
+
 				$nist_level = null;
 			}
 
@@ -287,6 +291,7 @@ class Auth_OpenID_PAPE_Response extends Auth_OpenID_Extension {
 			if (!in_array($this->nist_auth_level, range(0, 4), true)) {
 				return false;
 			}
+
 			$ns_args['nist_auth_level'] = strval($this->nist_auth_level);
 		}
 

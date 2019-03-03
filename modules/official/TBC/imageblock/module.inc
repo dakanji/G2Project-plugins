@@ -28,6 +28,7 @@
 class ImageBlockModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('imageblock');
 		$this->setName($gallery->i18n('Image Block'));
 		$this->setDescription(
@@ -86,6 +87,7 @@ class ImageBlockModule extends GalleryModule {
 	 */
 	public function upgrade($currentVersion, $x1 = null) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		if (!empty($currentVersion) && version_compare($currentVersion, '1.0.1', '<')) {
@@ -141,6 +143,7 @@ class ImageBlockModule extends GalleryModule {
 			GalleryCoreApi::requireOnce(
 				'modules/imageblock/classes/ImageBlockHelper.class'
 			);
+
 			$ret = $storage->removeAllMapEntries('ImageBlockCacheMap', true);
 
 			if ($ret) {

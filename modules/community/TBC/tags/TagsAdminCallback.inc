@@ -41,13 +41,15 @@ class TagsAdminCallbackView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($tagClassValues, $classNumber) = GalleryUtilities::getRequestVariables(
 			'tagClassValues',
 			'classNumber'
 		);
-		list($ret, $module)                 = GalleryCoreApi::loadPlugin('module', 'tags');
+
+		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'tags');
 
 		if ($ret) {
 			return $ret;
@@ -87,6 +89,7 @@ class TagsAdminCallbackView extends GalleryView {
 			if (isset($passedCss[$i])) {
 				$currentCss = explode('|', $passedCss[$i]);
 			}
+
 			echo '<tr>
 		<th><label for="tagClass' . $i . '">' . $module->translate('Tag Class ') . ($i + 1)
 			. '</label></th>';
@@ -98,6 +101,7 @@ class TagsAdminCallbackView extends GalleryView {
 			if (!empty($currentCss)) {
 				echo $currentCss[0];
 			}
+
 			echo '" /> em - ' . $module->translate('Font Color: ')
 			. '<input type="text" size="8" id="colorPicker' . $i . 'field" name="'
 			. GalleryUtilities::prefixFormVariable('form[tagCssClass][' . $i . '][color]')
@@ -106,6 +110,7 @@ class TagsAdminCallbackView extends GalleryView {
 			if (!empty($currentCss)) {
 				echo $currentCss[1];
 			}
+
 			echo '" onchange="relateColor(\'colorPicker' . $i . '\', this.value);" />';
 			echo '<a href="javascript:ColorChooserShow(\'colorPicker' . $i . '\');" 
 		id="colorPicker' . $i . '" style="padding:5px">'

@@ -37,6 +37,7 @@ class ContactController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		if (isset($form['action']['send'])) {
@@ -155,6 +156,7 @@ class ContactController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$emailsent = true;
 					$session->remove('contactowner.custsubject');
 					$session->remove('contactowner.custmessage');
@@ -190,6 +192,7 @@ class ContactView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'contactowner');
@@ -198,7 +201,8 @@ class ContactView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$plugins                = array();
+		$plugins = array();
+
 		list($ret, $parameters) = $module->fetchParameters();
 
 		if ($ret) {
@@ -221,6 +225,7 @@ class ContactView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $data['file'], $data['l10Domain']) = $plugin->loadTemplate($form);
 
 				if ($ret) {
@@ -232,6 +237,7 @@ class ContactView extends GalleryView {
 				}
 			}
 		}
+
 		$template->setVariable('validationPlugins', $plugins);
 
 		$maxEmailsPerSession = $parameters['maxEmailsPerSession'];
@@ -252,12 +258,14 @@ class ContactView extends GalleryView {
 
 		if ($emailCount <= $maxEmailsPerSession) {
 			if (empty($form['formName'])) {
-				$form['formName']            = 'ContactView';
+				$form['formName'] = 'ContactView';
+
 				list($ret, $isAnonymousUser) = GalleryCoreApi::isAnonymousUser();
 
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				// Populate the form if a user is logged in
 				if (!$isAnonymousUser) {
 					// Get the current user information

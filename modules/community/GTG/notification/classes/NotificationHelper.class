@@ -68,7 +68,6 @@ class NotificationHelper {
 				return array($ret, null, null);
 			}
 
-
 			list($ret, $eventMapLockId) = GalleryCoreApi::acquireWriteLock($eventMapLock);
 
 			if ($ret) {
@@ -114,7 +113,8 @@ class NotificationHelper {
 	 *           array (event id => event description)
 	 */
 	public static function getDefinedEvents($display = false) {
-		$descriptions       = $events       = array();
+		$descriptions = $events       = array();
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'notification');
 
 		if ($ret) {
@@ -136,11 +136,13 @@ class NotificationHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $description) = $notification->getDescription();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$descriptions[$description] = $notificationName;
 			$events[$notificationName]  = array(
 				'global'      => $notification->isGlobal(),
@@ -160,6 +162,7 @@ class NotificationHelper {
 			foreach ($descriptions as $notificationName) {
 				$sortedEvents[$notificationName] = $events[$notificationName];
 			}
+
 			$events = $sortedEvents;
 		}
 
@@ -195,6 +198,7 @@ class NotificationHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $handlers[$handlerName]) = $handler->getDescription();
 
 			if ($ret) {
@@ -222,6 +226,7 @@ class NotificationHelper {
 		if (isset($itemId)) {
 			$selection['itemId'] = $itemId;
 		}
+
 		list($ret, $searchResult) = GalleryCoreApi::getMapEntry(
 			'SubscriptionMap',
 			array('notificationName', 'itemId'),
@@ -231,6 +236,7 @@ class NotificationHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$subscriptions = array();
 
 		while ($row = $searchResult->nextResult()) {
@@ -264,6 +270,7 @@ class NotificationHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$specs    = $notification->getEventSpecs();
 			$events[] = $specs['eventName'];
 
@@ -352,6 +359,7 @@ class NotificationHelper {
 				) {
 					continue;
 				}
+
 				$subscriptions[] = $userId;
 			} else {
 				list($ret, $inGroup) = GalleryCoreApi::isUserInSiteAdminGroup($userId);
@@ -494,6 +502,7 @@ class NotificationHelper {
 	 */
 	public static function removeHintFromListener($event) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		list($ret, $hintsLockId) = NotificationHelper::_lockHints();
@@ -513,8 +522,9 @@ class NotificationHelper {
 			return $ret;
 		}
 
-		$sql                 = 'SELECT COUNT(*) FROM [SubscriptionMap]
+		$sql = 'SELECT COUNT(*) FROM [SubscriptionMap]
 		WHERE [SubscriptionMap::notificationName] = ?';
+
 		list($ret, $results) = $storage->search($sql, array($event));
 
 		if ($ret) {
@@ -532,6 +542,7 @@ class NotificationHelper {
 			if (!empty($hints)) {
 				$key = array_search($hint, $hints);
 				unset($hints[$key]);
+
 				$ret = GalleryCoreApi::updateFactoryDefinitionHints(
 					'GalleryEventListener',
 					'NotificationRouter',
@@ -569,6 +580,7 @@ class NotificationHelper {
 	 */
 	public static function subscribe($userId, $item, $eventName, $notificationName, $handler, $recursive) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		list($ret, $hintsLockId) = NotificationHelper::_lockHints();
@@ -669,6 +681,7 @@ class NotificationHelper {
 			$itemId             = 0;
 			$canContainChildren = false;
 		}
+
 		$ret = GalleryCoreApi::addMapEntry(
 			'SubscriptionMap',
 			array(
@@ -721,7 +734,6 @@ class NotificationHelper {
 					if (!$notification->isAppropriateForItem($child)) {
 						continue;
 					}
-
 
 					list($ret, $permissions) = GalleryCoreApi::getPermissions($childId, $userId);
 

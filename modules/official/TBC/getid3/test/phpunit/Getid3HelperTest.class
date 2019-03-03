@@ -107,7 +107,6 @@ class Getid3HelperTest extends GalleryTestCase {
 			),
 		);
 
-
 		list($ret, $this->_save['summary']) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 		if ($ret) {
@@ -165,6 +164,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(4, sizeof($id3ArchiveData), 'iso test number of files');
 		$this->assertEquals($id3ArchiveData[0]['name'], 'FILE1.TXT', 'file1.txt');
 		$this->assertEquals($id3ArchiveData[0]['size'], 2, 'file1.txt size');
@@ -188,6 +188,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($this->_expectedTarResults, $id3ArchiveData);
 	}
 
@@ -203,6 +204,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($this->_expectedTarResults, $id3ArchiveData);
 	}
 
@@ -218,6 +220,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals($this->_expectedZipResults, $id3ArchiveData);
 	}
 
@@ -268,6 +271,7 @@ class Getid3HelperTest extends GalleryTestCase {
 						$id3Data[$i]['value'],
 						'Audio Codec Mismatch'
 					);
+
 					$verifiedCount++;
 
 					break;
@@ -284,6 +288,7 @@ class Getid3HelperTest extends GalleryTestCase {
 						$id3Data[$i]['value'],
 						'Video Codec Mismatch'
 					);
+
 					$verifiedCount++;
 
 					break;
@@ -307,6 +312,7 @@ class Getid3HelperTest extends GalleryTestCase {
 					break;
 			}
 		}
+
 		$this->assertEquals(6, $verifiedCount, 'Verified count');
 		$this->assertEquals(0, $unknownCount, 'Unknown count');
 
@@ -375,6 +381,7 @@ class Getid3HelperTest extends GalleryTestCase {
 					break;
 			}
 		}
+
 		$this->assertEquals(4, $verifiedCount, 'verified count');
 
 		// Make sure there are no duplicates in the list
@@ -419,6 +426,7 @@ class Getid3HelperTest extends GalleryTestCase {
 				$verifiedCount++;
 			}
 		}
+
 		$this->assertEquals(2, $verifiedCount);
 
 		// Make sure there are no duplicates in the list
@@ -468,6 +476,7 @@ class Getid3HelperTest extends GalleryTestCase {
 					break;
 			}
 		}
+
 		$this->assertEquals(2, $verifiedCount);
 		// Make sure there are no duplicates in the list
 		$seen = array();
@@ -504,6 +513,7 @@ class Getid3HelperTest extends GalleryTestCase {
 				$verifiedCount++;
 			}
 		}
+
 		$this->assertEquals(1, $verifiedCount, 'verified count');
 
 		// Make sure there are no duplicates in the list
@@ -548,6 +558,7 @@ class Getid3HelperTest extends GalleryTestCase {
 				$verifiedCount++;
 			}
 		}
+
 		$this->assertEquals(2, $verifiedCount);
 		// Make sure there are no duplicates in the list
 		$seen = array();

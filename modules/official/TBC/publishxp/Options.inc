@@ -35,6 +35,7 @@ class OptionsController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$results = array();
 
 		if (isset($form['action']['setOptions'])) {
@@ -54,6 +55,7 @@ class OptionsController extends GalleryController {
 		} else {
 			$results['delegate']['view'] = 'publishxp.Options';
 		}
+
 		$results['status'] = array();
 		$results['error']  = array();
 
@@ -88,6 +90,7 @@ class OptionsView extends GalleryView {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 		}
+
 		$form['albumId'] = (int)$form['albumId'];
 
 		// Get all the add options

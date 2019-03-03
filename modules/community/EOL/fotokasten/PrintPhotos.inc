@@ -46,6 +46,7 @@ class PrintPhotosController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
@@ -65,7 +66,8 @@ class PrintPhotosController extends GalleryController {
 		}
 
 		// Load the necessary item data
-		$itemIds           = array_keys($cartItemIds);
+		$itemIds = array_keys($cartItemIds);
+
 		list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryPhotoItem');
 
 		if ($ret) {
@@ -109,11 +111,13 @@ class PrintPhotosController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds, $anonymousUserId, false);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// Assemble all our data
 		$i       = 0;
 		$entries = $protectedIds = array();
@@ -137,7 +141,8 @@ class PrintPhotosController extends GalleryController {
 				 * Create a new session with the rights of current user for fotokasten to use.
 				 */
 				$foSession = new GallerySession();
-				$ret       = $foSession->initEmpty(true, $gallery->getActiveUserId());
+
+				$ret = $foSession->initEmpty(true, $gallery->getActiveUserId());
 
 				if ($ret) {
 					return array($ret, null);
@@ -145,9 +150,10 @@ class PrintPhotosController extends GalleryController {
 			}
 
 			if ($needSession) {
-				$sessionParam   = array(
+				$sessionParam = array(
 					$foSession->getKey() => $foSession->getId(),
 				);
+
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
@@ -212,6 +218,7 @@ class PrintPhotosController extends GalleryController {
 			 * sessionid in this session so we can reuse it for multiple print requests (and
 			 * just bump timeout each time).
 			 */
+
 			$ret = $foSession->save();
 
 			if ($ret) {
@@ -225,6 +232,7 @@ class PrintPhotosController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$this->affiliate_id      = $params['affiliateId'];
 		$this->affiliate_id_pass = $params['affiliateIdPass'];
 		$this->server            = array(
@@ -278,6 +286,7 @@ class PrintPhotosController extends GalleryController {
 	 */
 	public function getFotokastenSession() {
 		global $gallery;
+
 		$session  =& $gallery->getSession();
 		$endpoint = $session->get('fotokasten.endpoint');
 
@@ -323,6 +332,7 @@ class PrintPhotosController extends GalleryController {
 					$return['error_code']
 				);
 			}
+
 			// this endpoint has to be used for all further requests
 			$session->put(
 				'fotokasten.endpoint',
@@ -391,6 +401,7 @@ class PrintPhotosController extends GalleryController {
 					null,
 				);
 			}
+
 			// Link for user Browser to show shopping basket
 			$referer = $return['browserlink'];
 		} else {

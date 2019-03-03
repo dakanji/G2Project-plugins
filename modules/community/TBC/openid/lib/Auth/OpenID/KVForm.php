@@ -108,6 +108,7 @@ class Auth_OpenID_KVForm {
 			if (strpos($value, "\n") !== false) {
 				return null;
 			}
+
 			$serialized .= "$key:$value\n";
 		}
 

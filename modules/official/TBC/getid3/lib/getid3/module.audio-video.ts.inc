@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_ts extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -28,10 +26,10 @@ class getid3_ts extends getid3_handler {
 
 			return false;
 		}
+
 		$info['fileformat'] = 'ts';
 
 		// http://en.wikipedia.org/wiki/.ts
-
 		$offset                       = 0;
 		$info['ts']['packet']['sync'] = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 1));
 		$offset                      += 1;

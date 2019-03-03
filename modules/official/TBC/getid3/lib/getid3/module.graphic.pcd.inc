@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_pcd extends getid3_handler {
 	public $ExtractData = 0;
 
@@ -25,12 +23,10 @@ class getid3_pcd extends getid3_handler {
 		$info['video']['dataformat'] = 'pcd';
 		$info['video']['lossless']   = false;
 
-
 		$this->fseek($info['avdataoffset'] + 72);
 
 		$PCDflags      = $this->fread(1);
 		$PCDisVertical = ((ord($PCDflags) & 0x01) ? true : false);
-
 
 		if ($PCDisVertical) {
 			$info['video']['resolution_x'] = 3072;
@@ -39,7 +35,6 @@ class getid3_pcd extends getid3_handler {
 			$info['video']['resolution_x'] = 2048;
 			$info['video']['resolution_y'] = 3072;
 		}
-
 
 		if ($this->ExtractData > 3) {
 			$info['error'][] = 'Cannot extract PSD image data for detail levels above BASE (level-3) because encrypted with Kodak-proprietary compression/encryption.';
@@ -50,7 +45,6 @@ class getid3_pcd extends getid3_handler {
 			//$PCD_levels[4] = array(1536, 1024,    ??); // BASE*4  - encrypted with Kodak-proprietary compression/encryption
 			//$PCD_levels[5] = array(3072, 2048,    ??); // BASE*16 - encrypted with Kodak-proprietary compression/encryption
 			//$PCD_levels[6] = array(6144, 4096,    ??); // BASE*64 - encrypted with Kodak-proprietary compression/encryption; PhotoCD-Pro only
-
 			list($PCD_width, $PCD_height, $PCD_dataOffset) = $PCD_levels[3];
 
 			$this->fseek($info['avdataoffset'] + $PCD_dataOffset);
@@ -61,7 +55,6 @@ class getid3_pcd extends getid3_handler {
 				// consisting of w bytes, where w is the width of the image-subtype. The first w bytes and
 				// the first half of the third w bytes contain data for the first RGB-line, the second w bytes
 				// and the second half of the third w bytes contain data for a second RGB-line.
-
 				$PCD_data_Y1 = $this->fread($PCD_width);
 				$PCD_data_Y2 = $this->fread($PCD_width);
 				$PCD_data_Cb = $this->fread(intval(round($PCD_width / 2)));

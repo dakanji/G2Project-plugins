@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-
 /**
  * @package Favourites
  * @author Alec Myers <alec@alecmyers.com>
@@ -41,6 +40,7 @@ class FavouritesCallbacks {
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $extra) = FavouritesMapHelper::fetchFavourites(6);
 
 				if ($ret) {
@@ -50,6 +50,7 @@ class FavouritesCallbacks {
 				foreach ($extra as $additional) {
 					$block['favourites']['Top10'][] = $additional;
 				}
+
 				$block['favourites']['Top10'] = array_slice($block['favourites']['Top10'], 0, 14);
 
 				foreach (array_slice($block['favourites']['Top10'], 0, 5) as $additional) {

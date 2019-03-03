@@ -37,6 +37,7 @@ class PanoramaJsView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $image) = PanoramaJsHelper::fetchViewableImages(array($item));
 
 		if ($ret) {
@@ -46,9 +47,13 @@ class PanoramaJsView extends GalleryView {
 		if (empty($image)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
+
 		$image = $image[$item->getId()];
 
-		list($ret, $renderer) = GalleryCoreApi::newFactoryInstance('GalleryRenderer', 'PanoramaJsRenderer');
+		list($ret, $renderer) = GalleryCoreApi::newFactoryInstance(
+			'GalleryRenderer',
+			'PanoramaJsRenderer'
+		);
 
 		if ($ret) {
 			return array($ret, null);
@@ -86,7 +91,6 @@ class PanoramaJsView extends GalleryView {
 		$template->javascript('modules/panoramajs/lib/env.js');
 		$template->javascript('modules/panoramajs/lib/yajevLE.js');
 		$template->style('modules/panoramajs/panoramaJs.css');
-
 
 		return array(
 			null,

@@ -76,7 +76,6 @@ class Classification {
 
 			if ($pos === false) {
 				//print ' -- not found';
-
 				// prefix not in use - skip
 				continue;
 			}

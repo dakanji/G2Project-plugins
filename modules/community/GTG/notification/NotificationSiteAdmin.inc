@@ -34,6 +34,7 @@ class NotificationSiteAdminController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		$error = $status = array();
@@ -59,6 +60,7 @@ class NotificationSiteAdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$inputRows = 0;
 
 			foreach ($form['notificationMap'] as $i => $notificationMap) {
@@ -94,6 +96,7 @@ class NotificationSiteAdminController extends GalleryController {
 						|| $notificationMap['currentHandler'] != $handlerId
 					) {
 						$this->_removeHandlerEntry($notifications, $notificationMap);
+
 						$ret = $this->_addHandlerEntry($notifications, $notificationMap);
 
 						if ($ret) {
@@ -138,6 +141,7 @@ class NotificationSiteAdminController extends GalleryController {
 		if ($returnOption == 'delegate') {
 			$results['delegate']['form[displayRows]'] = $displayRows;
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -212,6 +216,7 @@ class NotificationSiteAdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->setVariable('definedEvents', $definedEvents);
 
 		list($ret, $handlers) = NotificationHelper::getDefinedHandlers(true);
@@ -219,6 +224,7 @@ class NotificationSiteAdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$template->setVariable('eventHandlers', $handlers);
 
 		if ($form['formName'] != 'NotificationSiteAdmin') {

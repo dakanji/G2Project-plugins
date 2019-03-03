@@ -29,6 +29,7 @@ class MRAnalysisModule extends GalleryModule {
 	// Constructor
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('mranalysis');
 		$this->setName('Analysis');
 		$this->setDescription(

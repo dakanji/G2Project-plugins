@@ -47,6 +47,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 					$param[] = $key;
 				}
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'geturls',
@@ -67,6 +68,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 					$param[] = $key;
 				}
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'geturls',
@@ -86,6 +88,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 					$param[] = $key;
 				}
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'geturls',
@@ -103,6 +106,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 				} else {
 					$value = 1;
 				}
+
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'geturls',
@@ -128,9 +132,9 @@ class GetUrlsSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$status['saved'] = 1;
 		} // else $form['action']['reset']
-
 		// Figure out where to redirect upon success
 		$results['redirect']['view']    = 'core.SiteAdmin';
 		$results['redirect']['subView'] = 'geturls.GetUrlsSiteAdmin';
@@ -185,6 +189,7 @@ class GetUrlsSiteAdminView extends GalleryView {
 			foreach (explode('|', $param['idReporting']) as $tmp) {
 				$form[$tmp] = 1;
 			}
+
 			$form['guestMode']          = $param['guestMode'];
 			$form['showItemSummaries']  = $param['showItemSummaries'];
 			$form['itemSummariesWidth'] = $param['itemSummariesWidth'];

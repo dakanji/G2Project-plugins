@@ -26,7 +26,6 @@
  * @author Mark Ridgwell <g2development@markridgwell.com>
  */
 
-
 /**
  * @package MRAnalysis
  * @subpackage ItemList
@@ -99,6 +98,7 @@ class ItemList {
 	 */
 	public static function readItemsFromQuery($query, $filter = null) {
 		global $gallery;
+
 		list($ret, $results) = $gallery->search($query);
 
 		if ($filter == null) {
@@ -109,7 +109,8 @@ class ItemList {
 
 		if (!$ret) {
 			while ($result = $results->nextResult()) {
-				$currentid       = (int)$result[0];
+				$currentid = (int)$result[0];
+
 				list($ret, $ids) = GalleryCoreApi::loadEntitiesById($currentid, 'GalleryItem');
 
 				if (!$ret) {

@@ -73,6 +73,7 @@ class AdminController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
@@ -99,6 +100,7 @@ class AdminController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'aboutpage.Admin';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 

@@ -30,9 +30,10 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		global $gallery;
 
 		// Total views
-		$query               = '
+		$query = '
             SELECT SUM([GalleryItemAttributesMap::viewCount])
             FROM [GalleryItemAttributesMap]';
+
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
@@ -44,14 +45,15 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
+
 		$statistics['views'] = $count;
 
-
 		// Total items
-		$query               = '
+		$query = '
             SELECT COUNT([GalleryItem::id])
             FROM [GalleryItem]
             WHERE [GalleryItem::canContainChildren] = 0';
+
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
@@ -63,13 +65,15 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
+
 		$statistics['items'] = $count;
 
 		// Total albums
-		$query               = '
+		$query = '
             SELECT COUNT([GalleryItem::id])
             FROM [GalleryItem]
             WHERE [GalleryItem::canContainChildren] = 1';
+
 		list($ret, $results) = $gallery->search($query);
 
 		if ($ret) {
@@ -81,6 +85,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
+
 		$statistics['albums'] = $count;
 
 		// Total users
@@ -95,6 +100,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		if ($ret) {
 			return $ret;
 		}
+
 		$statistics['users'] = $count + 1;
 
 		$template->setVariable(
@@ -103,7 +109,6 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 				'Cursory' => $statistics,
 			)
 		);
-
 
 		// Controller
 		$template->setVariable('controller', 'statistics.StatisticsSiteAdmin');

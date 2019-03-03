@@ -59,6 +59,7 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 	 */
 	public function fulfillCart($cartItemIds) {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 		$session->put('digibug.cart', $cartItemIds);
 

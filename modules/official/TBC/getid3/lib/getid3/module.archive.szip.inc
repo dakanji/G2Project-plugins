@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_szip extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -27,6 +25,7 @@ class getid3_szip extends getid3_handler {
 
 			return false;
 		}
+
 		$info['fileformat']            = 'szip';
 		$info['szip']['major_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 4, 1));
 		$info['szip']['minor_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 5, 1));
@@ -60,7 +59,6 @@ class getid3_szip extends getid3_handler {
 						//4 byte creation time (like in unix)
 						//4 byte modification time (like in unix)
 						//4 byte access time (like in unix)
-
 						$BHdataArray['filename'] = substr($BHheaderdata, $BHheaderoffset, strcspn($BHheaderdata, "\x00"));
 						$BHheaderoffset         += (strlen($BHdataArray['filename']) + 1);
 

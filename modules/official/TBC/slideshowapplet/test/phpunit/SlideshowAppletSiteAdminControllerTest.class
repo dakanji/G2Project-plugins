@@ -55,6 +55,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		GalleryUtilities::putRequestVariable('form[default][name]', 'name');
 		GalleryUtilities::putRequestVariable('form[default][value]', 'value');
 		GalleryUtilities::putRequestVariable('form[variable][type]', 'default');
@@ -83,6 +84,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals($expectedValue, $value, $key);
 		}
 
@@ -111,6 +113,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals($expectedValue, $value, $key);
 		}
 	}
@@ -125,6 +128,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		GalleryUtilities::putRequestVariable('form[override][name]', 'name');
 		GalleryUtilities::putRequestVariable('form[override][value]', 'value');
 		GalleryUtilities::putRequestVariable('form[variable][type]', 'override');
@@ -153,6 +157,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals($expectedValue, $value, $key);
 		}
 	}
@@ -167,6 +172,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		GalleryUtilities::putRequestVariable('form[default][name]', 'name');
 		GalleryUtilities::putRequestVariable('form[default][value]', 'value');
 		GalleryUtilities::putRequestVariable('form[variable][type]', 'default');
@@ -195,6 +201,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals($expectedValue, $value, $key);
 		}
 
@@ -225,6 +232,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals($expectedValue, $value, $key);
 		}
 	}

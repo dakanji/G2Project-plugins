@@ -51,6 +51,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$_SERVER['HTTP_USER_AGENT'] = 'Nokia6630/1.0 (2.39.129) Series60/2.6 Profile/MIDP-2.0';
 	}
 
@@ -62,6 +63,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 				return $ret;
 			}
 		}
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -155,11 +157,13 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $config) = $module->needsConfiguration();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(false, $config, 'Needs Configuration');
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'nokiaupload');
@@ -167,6 +171,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!empty($params['id.mobileGroup']), 'group param');
 		$this->assert(!empty($params['id.uploadAlbum']), 'album param');
 		$this->_groupId = $params['id.mobileGroup'];
@@ -190,6 +195,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 				$hasDataItem = true;
 			}
 		}
+
 		$this->assert($hasDataItem, 'missing addDataItem permission');
 	}
 }

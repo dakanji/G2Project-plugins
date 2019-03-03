@@ -54,6 +54,7 @@ class NotificationItemAdminController extends GalleryController {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$itemId = $item->getId();
 
 		$returnOption = 'redirect';
@@ -114,7 +115,8 @@ class NotificationItemAdminController extends GalleryController {
 							);
 						} else {
 							$error[] = 'form[error][notifications][' . $i . '][notAuthorized]';
-							$ret     = null;
+
+							$ret = null;
 						}
 					}
 
@@ -138,8 +140,9 @@ class NotificationItemAdminController extends GalleryController {
 			'subView' => 'notification.NotificationItemAdmin',
 			'itemId'  => $itemId,
 		);
-		$results['status']      = $status;
-		$results['error']       = $error;
+
+		$results['status'] = $status;
+		$results['error']  = $error;
 
 		return array(null, $results);
 	}
@@ -204,6 +207,7 @@ class NotificationItemAdminView extends GalleryView {
 		if ($ret) {
 			return $ret;
 		}
+
 		$itemId = $item->getId();
 
 		// Subscriptions
@@ -236,7 +240,8 @@ class NotificationItemAdminView extends GalleryView {
 			}
 
 			if (!$isAdminGroup) {
-				$permission                  = $instance->getPermission();
+				$permission = $instance->getPermission();
+
 				list($ret, $itemPermissions) = GalleryCoreApi::getPermissions($itemId);
 
 				if ($ret) {
@@ -268,11 +273,13 @@ class NotificationItemAdminView extends GalleryView {
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $handlerDescription) = $handler->getDescription();
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$form['notifications'][++$i] = array(
 					'name'               => $notificationName,
 					'description'        => $description,

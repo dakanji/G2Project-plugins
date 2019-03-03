@@ -70,6 +70,7 @@ class CheckoutGoogleEventHelper {
 						return array($ret, null);
 					}
 				}
+
 				$ret = GalleryCoreApi::removeMapEntry(
 					'CheckoutGoogleOrderMap',
 					array(

@@ -34,6 +34,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -45,11 +46,13 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'validation.level', 'HIGH');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'subject', 'You got eCard');
 
 		if ($ret) {
@@ -61,6 +64,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_album);
 
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
@@ -68,6 +72,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_album->getId(),
 			$gallery->getActiveUserId(),
@@ -77,11 +82,13 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $this->_everybodyId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addGroupPermission(
 			$this->_album->getId(),
 			$this->_everybodyId,
@@ -92,9 +99,10 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$pathComponent           = 'test-' . mt_rand(1, 5000);
-		$this->_itemFile         = $pathComponent . '.dat';
-		$this->_resizeFile       = $pathComponent . '.jpg';
+		$pathComponent     = 'test-' . mt_rand(1, 5000);
+		$this->_itemFile   = $pathComponent . '.dat';
+		$this->_resizeFile = $pathComponent . '.jpg';
+
 		list($ret, $this->_item) = $this->_createRandomDataItem(
 			$this->_album->getId(),
 			'application/unknown',
@@ -106,6 +114,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $this->_resize) = $this->_createDerivative(
 			$this->_item,
 			$this->_item->getId(),
@@ -135,6 +144,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		$this->assert($this->_platform->isComplete(), $this->_platform->getRemaining());
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -209,12 +219,15 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testEcardNoSendPermission() {
 		global $gallery;
+
 		$itemId = $this->_item->getId();
-		$ret    = GalleryCoreApi::removeItemPermissions($itemId);
+
+		$ret = GalleryCoreApi::removeItemPermissions($itemId);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission($itemId, $gallery->getActiveUserId(), 'core.view');
 
 		if ($ret) {
@@ -234,6 +247,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testSendEcard() {
 		global $gallery;
+
 		$itemId = $this->_item->getId();
 
 		// Use html format and param specified 'from' for this test
@@ -242,6 +256,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'from', 'eCard Test');
 
 		if ($ret) {
@@ -255,6 +270,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'The plaintext message: %text% %link%'
 		);
+
 		$this->_platform->setReply(
 			'file_get_contents',
 			array(
@@ -262,6 +278,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'The html message: %text% %link% %image%'
 		);
+
 		$this->_platform->setReply(
 			'mail',
 			array(
@@ -273,6 +290,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$gallery->setPlatform($this->_platform);
 
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
@@ -303,6 +321,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 	public function testLinkPermission() {
 		// Verify that without public core.view permission, no link is included
 		global $gallery;
+
 		$itemId = $this->_item->getId();
 
 		$ret = GalleryCoreApi::removeGroupPermission($itemId, $this->_everybodyId, 'core.view');
@@ -317,6 +336,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'from', 'eCard Test');
 
 		if ($ret) {
@@ -330,6 +350,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'The plaintext message: %text% %link%'
 		);
+
 		$this->_platform->setReply(
 			'file_get_contents',
 			array(
@@ -337,6 +358,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'The html message: %text% %link% %image%'
 		);
+
 		$this->_platform->setReply(
 			'mail',
 			array(
@@ -348,6 +370,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$gallery->setPlatform($this->_platform);
 
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
@@ -378,6 +401,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 	public function testSizePermission() {
 		// Verify permission check for size of image included in email
 		global $gallery;
+
 		$itemId = $this->_item->getId();
 
 		$ret = GalleryCoreApi::removeUserPermission(
@@ -396,6 +420,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'from', 'eCard Test');
 
 		if ($ret) {
@@ -410,6 +435,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'message: %image%'
 		);
+
 		$this->_platform->setReply(
 			'mail',
 			array(
@@ -420,6 +446,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$gallery->setPlatform($this->_platform);
 
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
@@ -449,9 +476,11 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testValidationPlugin() {
 		global $gallery;
+
 		$this->_controller->_pluginInstances = array(new AddEcardTestValidation());
 
 		$this->_becomeGuestUser();
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_item->getId(),
 			$gallery->getActiveUserId(),
@@ -487,6 +516,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testValidationAlternateGuest() {
 		global $gallery;
+
 		$gallery->setConfig('anonymousUserId', $gallery->getActiveUserId());
 		$this->_controller->_pluginInstances = array(new AddEcardTestValidation());
 		$gallery->setPlatform($this->_platform);
@@ -514,6 +544,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testValidationPluginOff() {
 		global $gallery;
+
 		$this->_controller->_pluginInstances = array(new AddEcardTestValidation());
 
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'validation.level', 'OFF');
@@ -521,12 +552,14 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Use plain format and form specified 'from' for this test
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'format', 'plain');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'from', '');
 
 		if ($ret) {
@@ -534,6 +567,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_becomeGuestUser();
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_item->getId(),
 			$gallery->getActiveUserId(),
@@ -543,6 +577,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addGroupPermission(
 			$this->_item->getId(),
 			$this->_everybodyId,
@@ -560,6 +595,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'The plaintext message: %text%'
 		);
+
 		$this->_platform->setReply(
 			'mail',
 			array(
@@ -570,6 +606,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$gallery->setPlatform($this->_platform);
 
 		GalleryUtilities::putRequestVariable('itemId', $this->_item->getId());
@@ -603,6 +640,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		 * (if this changes then we'll need to use htmlSafe on content)
 		 */
 		global $gallery;
+
 		$itemId = $this->_item->getId();
 
 		$ret = $this->_setMarkupType('html', true);
@@ -610,11 +648,13 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'format', 'html');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', 'from', 'Bad eCard');
 
 		if ($ret) {
@@ -628,6 +668,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'The plaintext message: %text%'
 		);
+
 		$this->_platform->setReply(
 			'file_get_contents',
 			array(
@@ -635,6 +676,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			'The html message: %text%'
 		);
+
 		$this->_platform->setReply(
 			'mail',
 			array(
@@ -646,6 +688,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			),
 			true
 		);
+
 		$gallery->setPlatform($this->_platform);
 
 		GalleryUtilities::putRequestVariable('form[to]', 'sucker@example.com');

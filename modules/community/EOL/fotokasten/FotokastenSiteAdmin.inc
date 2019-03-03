@@ -62,6 +62,7 @@ class FotokastenSiteAdminController extends GalleryController {
 						return array($ret, null);
 					}
 				}
+
 				$status['saved'] = 1;
 			}
 		} elseif (isset($form['action']['useGalleryId'])) {
@@ -80,9 +81,9 @@ class FotokastenSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$status['usingGalleryId'] = 1;
 		}
-
 
 		$method                      = empty($error) ? 'redirect' : 'delegate';
 		$results[$method]['view']    = 'core.SiteAdmin';

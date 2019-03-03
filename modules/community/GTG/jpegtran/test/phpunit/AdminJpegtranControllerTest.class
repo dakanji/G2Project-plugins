@@ -32,6 +32,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -76,6 +77,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('/validPath/jpegtran', $params['path'], 'wrong path stored in DB');
 	}
 
@@ -200,6 +202,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals('/incompletePath/jpegtran.exe', $path);
 	}
 

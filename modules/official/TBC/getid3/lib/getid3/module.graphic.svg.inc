@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_svg extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -42,6 +40,7 @@ class getid3_svg extends getid3_handler {
 				if (!isset($info['svg'][$section_to_fix])) {
 					continue;
 				}
+
 				$section_data = array();
 
 				while (preg_match('/ "([^"]+)"/', $info['svg'][$section_to_fix]['raw'][1], $matches)) {
@@ -53,6 +52,7 @@ class getid3_svg extends getid3_handler {
 					$section_data[]                         = $matches[0];
 					$info['svg'][$section_to_fix]['raw'][1] = str_replace($matches[0], '', $info['svg'][$section_to_fix]['raw'][1]);
 				}
+
 				$section_data = array_merge($section_data, preg_split('/[\s,]+/', $info['svg'][$section_to_fix]['raw'][1]));
 
 				foreach ($section_data as $keyvaluepair) {
@@ -105,6 +105,7 @@ class getid3_svg extends getid3_handler {
 
 			return true;
 		}
+
 		$info['error'][] = 'Did not find expected <svg> tag';
 
 		return false;

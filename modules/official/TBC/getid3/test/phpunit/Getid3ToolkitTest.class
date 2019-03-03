@@ -53,6 +53,7 @@ class Getid3ToolkitTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			array(mktime(15, 06, 18, 1, 15, 2006)),
 			$results,
@@ -68,6 +69,7 @@ class Getid3ToolkitTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Use mktime() instead of hardcoding a value
 		// mktime(21, 18, 18, 5, 28, 2000)
 		$date  = getdate(863289129);
@@ -79,6 +81,7 @@ class Getid3ToolkitTest extends GalleryTestCase {
 			$date['mday'],
 			$date['year']
 		);
+
 		$this->assertEquals(
 			array($stamp),
 			$results,

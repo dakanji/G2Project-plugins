@@ -39,6 +39,7 @@ class VirtualAlbumView extends GalleryView {
 	 */
 	public function loadThemeAndParameters() {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
 
 		list($ret, $item) = GalleryCoreApi::newFactoryInstance('GalleryDynamicAlbum');
@@ -50,11 +51,13 @@ class VirtualAlbumView extends GalleryView {
 		if (!isset($item)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null, null, null);
 		}
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'tagtree');
 
 		if ($ret) {
 			return array($ret, null, null, null);
 		}
+
 		list($tags, $albumId, $itemId) = GalleryUtilities::getRequestVariables('tags', 'albumId', 'itemId');
 
 		list($ret, $albumTitle) = TagTreeHelper::getItemTitle($albumId);
@@ -70,6 +73,7 @@ class VirtualAlbumView extends GalleryView {
 				'itemId' => $albumId,
 			)
 		);
+
 		$albumLink = sprintf('<a href="%s">%s</a>', $albumUrl, $albumTitle);
 
 		if (empty($tags)) {
@@ -88,15 +92,18 @@ class VirtualAlbumView extends GalleryView {
 				if ($ret) {
 					return array($ret, null);
 				}
-				$tagUrl  = $generator->generateUrl(
+
+				$tagUrl = $generator->generateUrl(
 					array(
 						'view'    => 'tags.VirtualAlbum',
 						'tagName' => $tagName,
 					)
 				);
+
 				$tagLink = sprintf('<a href="%s">%s</a>', $tagUrl, $tagName);
 				array_push($tagLinks, $tagLink);
 			}
+
 			$tagSummary = implode(',', $tagLinks);
 
 			$title = $module->translate(
@@ -107,6 +114,7 @@ class VirtualAlbumView extends GalleryView {
 				)
 			);
 		}
+
 		$item->create(
 			$title,
 			array(
@@ -131,12 +139,13 @@ class VirtualAlbumView extends GalleryView {
 			// Provide parent, parent URL and get-children function to Theme API
 			$rawTagName = $tagName;
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
-			$item->urlParams           = array(
+			$item->urlParams = array(
 				'view'        => 'tagtree.VirtualAlbum',
 				'tags'        => $tags,
 				'albumId'     => $albumId,
 				'highlightId' => $itemId,
 			);
+
 			$item->getChildrenFunction = array('VirtualAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -172,6 +181,7 @@ class VirtualAlbumView extends GalleryView {
 			'tags'    => $tags,
 			'albumId' => $albumId,
 		);
+
 		// Perform query for this dynamic album
 		list($ret, $theme['allChildIds']) = $this->getChildIds($theme['actingUserId'], $tags, $albumId);
 

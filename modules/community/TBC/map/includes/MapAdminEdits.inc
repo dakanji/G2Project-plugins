@@ -41,6 +41,7 @@ if (array_key_exists('EditRoute', $param) and $param['EditRoute'] != '') {
 				$routevalues[$form['EditRoute'][$i]] .= ',' . $num;
 			}
 		}
+
 		$form['routevalues'] = $routevalues;
 	} else { // We have a route in the edit state that didn't get saved ... restoring
 		$oldroutes = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
@@ -50,6 +51,7 @@ if (array_key_exists('EditRoute', $param) and $param['EditRoute'] != '') {
 		} else {
 			$newroutes = $form['EditRoute'];
 		}
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'Routes', $newroutes);
 		$tmp             = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
 		$param['Routes'] = $tmp[1];
@@ -69,6 +71,7 @@ if (array_key_exists('EditFilter', $form) and $form['EditFilter'] != '') {
 		} else {
 			$newfilters = $form['EditFilter'];
 		}
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $newfilters);
 		$tmp              = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 		$param['Filters'] = $tmp[1];
@@ -78,11 +81,12 @@ if (array_key_exists('EditFilter', $form) and $form['EditFilter'] != '') {
 
 if (array_key_exists('EditGroup', $form) and $form['EditGroup'] != '') {
 	if (array_key_exists('mode', $form) and $form['mode'] == 'AddGroup') {
-		$form['EditGroup']    = explode('`', $form['EditGroup']);
-		$pic                  = GalleryUtilities::convertPathToUrl(
+		$form['EditGroup'] = explode('`', $form['EditGroup']);
+		$pic               = GalleryUtilities::convertPathToUrl(
 			$basegallerydir . 'modules/map/images/groups/'
 							  . $form['EditGroup'][4]
 		);
+
 		$form['EditGroup'][4] = '"' . $pic . '"';
 		$form['EditGroup'][5] = strftime($dateFormat, $form['EditGroup'][5]);
 		$editparams           = array();
@@ -96,6 +100,7 @@ if (array_key_exists('EditGroup', $form) and $form['EditGroup'] != '') {
 				$editparams[$tmparray[0]] = $tmparray[1];
 			}
 		}
+
 		$form['EditGroupParam'] = $editparams;
 		$form['OldGroup']       = $param['EditGroup'];
 	} else { // We have a Group in the Edit state that did not get saved .... restoring
@@ -106,6 +111,7 @@ if (array_key_exists('EditGroup', $form) and $form['EditGroup'] != '') {
 		} else {
 			$newgroups = $form['EditGroup'];
 		}
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'MapGroups', $newgroups);
 		$tmp                = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 		$param['MapGroups'] = $tmp[1];

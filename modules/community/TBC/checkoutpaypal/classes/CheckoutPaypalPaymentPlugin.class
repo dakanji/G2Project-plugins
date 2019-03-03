@@ -55,11 +55,13 @@ class CheckoutPaypalPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		// Prepare the variables to return for the PayPal form
 		// get the info from the session variable
 		global $gallery;
+
 		list($ret, $transaction) = GalleryCheckoutApi::getCurrentTransactionForPayment();
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$transactionId = $transaction->getId();
 
 		$orderTotal = $transaction->getAmount();
@@ -81,11 +83,13 @@ class CheckoutPaypalPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $imageUrl) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'imageUrl');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $pprtnbuttontext) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'pprtnbuttontext');
 
 		if ($ret) {
@@ -116,7 +120,6 @@ class CheckoutPaypalPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		// Paypal wants just the country code
 		list($language, $country) = preg_split('/[-_]/', "${languageCode}_");
 		$langCountry              = GalleryUtilities::strToUpper($country);
-
 
 		return array(
 			null,

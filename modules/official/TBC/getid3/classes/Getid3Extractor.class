@@ -48,15 +48,18 @@ class Getid3Extractor extends Getid3Interface_1_0 {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			// Only look at GalleryDataItems
 			if (!GalleryUtilities::isA($item, 'GalleryDataItem')) {
 				continue;
 			}
+
 			list($ret, $path) = $item->fetchPath();
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$data[$itemId] = array();
 
 			GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');

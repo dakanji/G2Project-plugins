@@ -61,6 +61,7 @@ class EcardHelper {
 							return array($ret, null);
 						}
 					}
+
 					$dimensions = $resize->getWidth() + $resize->getHeight();
 
 					if (!$currentDimensions || $dimensions < $currentDimensions) {
@@ -79,6 +80,7 @@ class EcardHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($itemId));
 
 			if ($ret) {

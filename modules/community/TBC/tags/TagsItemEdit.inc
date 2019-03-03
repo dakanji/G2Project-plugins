@@ -63,6 +63,7 @@ class TagsItemEditController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$items = array_merge($items, $tmpItems);
 				}
 
@@ -72,6 +73,7 @@ class TagsItemEditController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$items = array_merge($items, $tmpItems);
 				}
 
@@ -86,6 +88,7 @@ class TagsItemEditController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$items = array_merge($items, $tmpItems);
 				}
 
@@ -100,6 +103,7 @@ class TagsItemEditController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$items = array_merge($items, $tmpItems);
 				}
 
@@ -108,6 +112,7 @@ class TagsItemEditController extends GalleryController {
 					array($this, 'runApplyTags'),
 					array($items, $itemId)
 				);
+
 				$results['delegate']['view'] = 'core.ProgressBar';
 			} else {
 				$results['delegate']['view']   = 'tags.TagsItemEdit';
@@ -124,6 +129,7 @@ class TagsItemEditController extends GalleryController {
 
 	public function runApplyTags($items, $itemId) {
 		global $gallery;
+
 		$storage         =& $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
 
@@ -153,7 +159,9 @@ class TagsItemEditController extends GalleryController {
 						'arg2' => $total,
 					)
 				);
+
 				$templateAdapter->updateProgressBar($heading, $message, ($key + 1) / $total);
+
 				$ret = TagsHelper::assignTag($id, $tagName);
 
 				if ($ret) {
@@ -161,6 +169,7 @@ class TagsItemEditController extends GalleryController {
 				}
 			}
 		}
+
 		$redirect = array(
 			'view'   => 'tags.TagsItemEdit',
 			'itemId' => $itemId,
@@ -198,7 +207,8 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		/** @todo Interact with the EXIF factory instead */
-		$exifModuleActive       = false;
+		$exifModuleActive = false;
+
 		list($ret, $exifModule) = GalleryCoreApi::loadPlugin('module', 'exif');
 
 		if ($ret) {
@@ -219,11 +229,13 @@ class TagsItemEditView extends GalleryView {
 			// Grab the list of fields in 'details'
 			list($ret, $path) = $item->fetchPath();
 			GalleryCoreApi::requireOnce('modules/exif/classes/ExifHelper.class');
+
 			list($ret, $exifData) = ExifHelper::getExifData($path, EXIF_DETAILED);
 
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$tagExifInfo = $exifData;
 		}
 
@@ -251,11 +263,13 @@ class TagsItemEditView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$tempArray = array();
 
 		foreach ($thisItemTagList as $tagId => $tagName) {
 			$tempArray[$tagName] = $tagId;
 		}
+
 		$thisItemTagList = $tempArray;
 
 		list($ret, $limitPop) = GalleryCoreApi::getPluginParameter(

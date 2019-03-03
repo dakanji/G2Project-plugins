@@ -88,17 +88,34 @@ class ShadowMatrixTheme extends GalleryTheme {
 	 * @see GalleryTheme::showAlbumPage
 	 */
 	public function showAlbumPage(&$template, $item, $params, $childIds) {
-		$ret = $this->loadCommonTemplateData($template, $item, $params, array('owner', 'viewCount', 'childCount', 'descendentCount', 'parents', 'systemLinks', 'itemLinks', 'itemSummaries', 'permissions', 'thumbnails', 'pageNavigator', 'jumpRange'), $childIds);
+		$ret = $this->loadCommonTemplateData(
+			$template,
+			$item,
+			$params,
+			array(
+				'owner',
+				'viewCount',
+				'childCount',
+				'descendentCount',
+				'parents',
+				'systemLinks',
+				'itemLinks',
+				'itemSummaries',
+				'permissions',
+				'thumbnails',
+				'pageNavigator',
+				'jumpRange',
+			),
+			$childIds
+		);
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-
 		// Add in our extra stuff
 		$theme                   = &$template->getVariableByReference('theme');
 		$theme['columnWidthPct'] = floor(100 / $params['columns']);
-
 
 		// Add resizeId for shadowbox urls
 		$i = 0;
@@ -110,10 +127,12 @@ class ShadowMatrixTheme extends GalleryTheme {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$theme['children'][$i]['resizeId'] = $id;
 			} else {
 				$theme['children'][$i]['resizeId'] = $child['id'];
 			}
+
 			$i++;
 		}
 
@@ -135,6 +154,7 @@ class ShadowMatrixTheme extends GalleryTheme {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$tmp = array();
 			$i   = 0;
 
@@ -153,6 +173,7 @@ class ShadowMatrixTheme extends GalleryTheme {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$tmp[$i]['id']          = $itemId;
 					$tmp[$i]['resizeId']    = $id;
 					$tmp[$i]['entityType']  = $item->getEntityType();
@@ -160,12 +181,13 @@ class ShadowMatrixTheme extends GalleryTheme {
 					$tmp[$i]['summary']     = $item->getSummary();
 					$tmp[$i]['description'] = $item->getDescription();
 				}
+
 				$i++;
 			}
+
 			$theme['item']['childIds'] = $childIds;
 			$theme['children']         = $tmp;
 		}
-
 
 		// Add our header and styles
 		return array(null, 'theme.tpl');
@@ -175,11 +197,21 @@ class ShadowMatrixTheme extends GalleryTheme {
 	 * @see GalleryTheme::showPhotoPage
 	 */
 	public function showPhotoPage(&$template, $item, $params) {
-		$dataTypes = array('owner', 'parents', 'systemLinks', 'itemLinks', 'permissions', 'itemLinksDetailed', 'itemNavigator', 'imageViews');
+		$dataTypes = array(
+			'owner',
+			'parents',
+			'systemLinks',
+			'itemLinks',
+			'permissions',
+			'itemLinksDetailed',
+			'itemNavigator',
+			'imageViews',
+		);
 
 		if (!empty($params['showMicroThumbs'])) {
 			$dataTypes[] = 'navThumbnails';
 		}
+
 		$ret = $this->loadCommonTemplateData($template, $item, $params, $dataTypes);
 
 		if ($ret) {
@@ -193,7 +225,15 @@ class ShadowMatrixTheme extends GalleryTheme {
 	 * @see GalleryTheme::showModulePage
 	 */
 	public function showModulePage(&$template, $item, $params, $templateFile) {
-		$ret = $this->loadCommonTemplateData($template, $item, $params, array('parents', 'systemLinks'));
+		$ret = $this->loadCommonTemplateData(
+			$template,
+			$item,
+			$params,
+			array(
+				'parents',
+				'systemLinks',
+			)
+		);
 
 		if ($ret) {
 			return array($ret, null);
@@ -206,7 +246,15 @@ class ShadowMatrixTheme extends GalleryTheme {
 	 * @see GalleryTheme::showAdminPage
 	 */
 	public function showAdminPage(&$template, $item, $params, $templateFile) {
-		$ret = $this->loadCommonTemplateData($template, $item, $params, array('parents', 'systemLinks'));
+		$ret = $this->loadCommonTemplateData(
+			$template,
+			$item,
+			$params,
+			array(
+				'parents',
+				'systemLinks',
+			)
+		);
 
 		if ($ret) {
 			return array($ret, null);
@@ -226,7 +274,15 @@ class ShadowMatrixTheme extends GalleryTheme {
 	 * @see GalleryTheme::showProgressBarPage
 	 */
 	public function showProgressBarPage(&$template, $item, $params) {
-		$ret = $this->loadCommonTemplateData($template, $item, $params, array('parents', 'systemLinks'));
+		$ret = $this->loadCommonTemplateData(
+			$template,
+			$item,
+			$params,
+			array(
+				'parents',
+				'systemLinks',
+			)
+		);
 
 		if ($ret) {
 			return array($ret, null);
@@ -243,11 +299,15 @@ class ShadowMatrixTheme extends GalleryTheme {
 		$potentialImages = array();
 
 		//how about the original?
+
 		$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'core.viewSource');
 
 		if (!$ret) {
 			//is there a preferred derivative of the original?
-			list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($masterId));
+
+			list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(
+				array($masterId)
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -257,6 +317,7 @@ class ShadowMatrixTheme extends GalleryTheme {
 				$potentialImages[] = $preferred[$masterId];
 			} else {
 				//if no preferred, use the original original
+
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($masterId);
 
 				if ($ret) {
@@ -266,10 +327,13 @@ class ShadowMatrixTheme extends GalleryTheme {
 				if ($item->getEntityType() != 'GalleryPhotoItem') {
 					return array(null, $masterId);
 				}
+
 				$potentialImages[] = $item;
 			}
 		}
+
 		// If the user can see resized versions consider those too
+
 		$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'core.viewResizes');
 
 		if (!$ret) {
@@ -285,12 +349,15 @@ class ShadowMatrixTheme extends GalleryTheme {
 				}
 			}
 		}
+
 		//can always use the thumbnail
+
 		list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($masterId));
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$potentialImages[] = $thumbs[$masterId];
 
 		usort($potentialImages, array($this, 'bySize'));

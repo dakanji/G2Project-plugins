@@ -33,18 +33,26 @@ class PanoramaJsOption extends ItemEditOption {
 		if (!GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 			return array(null, false);
 		}
+
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'panoramajs');
 
 		if ($ret || !$param['itemType']) {
 			return array(null, false);
 		}
+
 		list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(array($item->getId()));
 
 		if ($ret) {
 			return array(null, false);
 		}
-		$width    = empty($preferred) ? $item->getWidth() : $preferred[$item->getId()]->getWidth();
-		$mimeType = empty($preferred) ? $item->getMimeType() : $preferred[$item->getId()]->getMimeType();
+
+		if (empty($preferred)) {
+			$width    = $item->getWidth();
+			$mimeType = $item->getMimeType();
+		} else {
+			$width    = $preferred[$item->getId()]->getWidth();
+			$mimeType = $preferred[$item->getId()]->getMimeType();
+		}
 
 		return array(
 			null,
@@ -63,6 +71,7 @@ class PanoramaJsOption extends ItemEditOption {
 		if ($ret) {
 			return array($ret, null, null);
 		}
+
 		$form['PanoramaJsOption']['isPanoramaJs'] = $item->getRenderer() == 'PanoramaJsRenderer';
 
 		return array(null, 'modules/panoramajs/templates/PanoramaJsOption.tpl', 'modules_panoramajs');

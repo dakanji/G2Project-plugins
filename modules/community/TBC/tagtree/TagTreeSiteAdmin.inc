@@ -56,6 +56,7 @@ class TagTreeSiteAdminController extends GalleryController {
 					return array($ret, null);
 				}
 			}
+
 			$status['saved'] = 1;
 
 			// Clear our cache
@@ -105,7 +106,8 @@ class TagTreeSiteAdminView extends GalleryView {
 		}
 
 		if ($form['formName'] != 'TagTreeSiteAdmin') {
-			$form['formName']   = 'TagTreeSiteAdmin';
+			$form['formName'] = 'TagTreeSiteAdmin';
+
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'tagtree');
 
 			if ($ret) {

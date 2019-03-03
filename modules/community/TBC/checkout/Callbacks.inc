@@ -47,6 +47,7 @@ class CheckoutCallbacks {
 					if (!is_numeric($itemId)) {
 						continue;
 					}
+
 					// get thumbnail
 					list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
@@ -57,6 +58,7 @@ class CheckoutCallbacks {
 					if (isset($thumbnail[$itemId])) {
 						$thumbnails[$itemId] = (array)$thumbnail[$itemId];
 					}
+
 					$itemCount++;
 				}
 
@@ -67,12 +69,8 @@ class CheckoutCallbacks {
 
 				return null;
 
-
 			case 'itemPrices':
 				// prices for an individual item
-
-
-
 				$block =& $smarty->_tpl_vars['block'];
 				// permission to purchase?
 				list($ret, $canPurchase) = CheckoutHelper::hasPurchasePermission($params['itemId']);
@@ -86,29 +84,33 @@ class CheckoutCallbacks {
 
 					return null;
 				}
+
 					GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+
 					list($ret, $products) = CheckoutProductMapHelper::fetchVisibleProducts($params['itemId'], true);
 
 				if ($ret) {
 					return $ret;
 				}
+
 					list($ret, $csymbol) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
 
 				if ($ret) {
 					return $ret;
 				}
+
 					list($ret, $cformat) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'cformat');
 
 				if ($ret) {
 					return $ret;
 				}
+
 					$block['checkout']['showProducts'] = true;
 					$block['checkout']['products']     = $products;
 					$block['checkout']['csymbol']      = $csymbol;
 					$block['checkout']['cformat']      = $cformat;
 
 				return null;
-
 
 			case 'transactionTotal':
 				list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($params['transactionId']);
@@ -120,16 +122,19 @@ class CheckoutCallbacks {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				list($ret, $csymbol) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
 
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $cformat) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'cformat');
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$block                        =& $smarty->_tpl_vars['block'];
 				$block['checkout']['csymbol'] = $csymbol;
 				$block['checkout']['cformat'] = $cformat;
@@ -148,6 +153,7 @@ class CheckoutCallbacks {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				$block                              =& $smarty->_tpl_vars['block'];
 				$block['checkout']['date']          = $transaction->getDate();
 				$block['checkout']['buyerId']       = $transaction->getBuyerId();
@@ -173,6 +179,7 @@ class CheckoutCallbacks {
 				if ($ret) {
 					return $ret;
 				}
+
 				$block['checkout']['orderStatusSubject'] = $orderStatusSubject;
 
 				return null;
@@ -188,6 +195,7 @@ class CheckoutCallbacks {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				$block                                 =& $smarty->_tpl_vars['block'];
 				$block['checkout']['date']             = $transaction->getDate();
 				$block['checkout']['confirmed']        = $transaction->getTimeConfirmed();
@@ -205,7 +213,8 @@ class CheckoutCallbacks {
 
 			case 'transactionItems':
 				// get the transaction items for display in a page or email
-				$transactionId           = $params['transactionId'];
+				$transactionId = $params['transactionId'];
+
 				list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
 				if ($ret) {
@@ -215,6 +224,7 @@ class CheckoutCallbacks {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				$block                                    =& $smarty->_tpl_vars['block'];
 				$block['checkout']['total']               = $transaction->getAmount();
 				$block['checkout']['postage']             = $transaction->getPostage();
@@ -222,23 +232,29 @@ class CheckoutCallbacks {
 				$block['checkout']['discount']            = $transaction->getDiscount();
 				$block['checkout']['comments']            = $transaction->getCustComments();
 				$block['checkout']['discountDescription'] = $transaction->getDiscountDescription();
-				list($ret, $csymbol)                      = GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
+
+				list($ret, $csymbol) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$block['checkout']['csymbol'] = $csymbol;
-				list($ret, $cformat)          = GalleryCoreApi::getPluginParameter('module', 'checkout', 'cformat');
+
+				list($ret, $cformat) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'cformat');
 
 				if ($ret) {
 					return $ret;
 				}
+
 				$block['checkout']['cformat'] = $cformat;
-				list($ret, $items)            = CheckoutTransactionHelper::fetchFullTransactionItems($transactionId);
+
+				list($ret, $items) = CheckoutTransactionHelper::fetchFullTransactionItems($transactionId);
 
 				if ($ret) {
 					return $ret;
 				}
+
 				//add full items and thumbnails - just to display thumbs!
 				foreach ($items as $lineNo => $item) {
 					list($ret, $fullItem) = GalleryCoreApi::loadEntitiesById($item['itemId']);
@@ -251,8 +267,10 @@ class CheckoutCallbacks {
 
 						return $ret;
 					}
+
 					$items[$lineNo]['fullItem'] = (array)$fullItem;
-					list($ret, $thumbnail)      = GalleryCoreApi::fetchThumbnailsByItemIds(array($item['itemId']));
+
+					list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($item['itemId']));
 
 					if ($ret) {
 						if ($ret->getErrorCode() & ERROR_MISSING_OBJECT) {
@@ -262,8 +280,10 @@ class CheckoutCallbacks {
 
 						return $ret;
 					}
+
 					$items[$lineNo]['thumbnail'] = (array)$thumbnail[$item['itemId']];
 				}
+
 				$block['checkout']['items'] = $items;
 
 				return null;
@@ -280,6 +300,7 @@ class CheckoutCallbacks {
 				if (!isset($transaction)) {
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
+
 				$block                        =& $smarty->_tpl_vars['block'];
 				$block['checkout']['verify1'] = $transaction->getDate();
 				$block['checkout']['verify2'] = $transaction->getSecurity();

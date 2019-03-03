@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_iso extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -60,7 +58,6 @@ class getid3_iso extends getid3_handler {
 	public function ParsePrimaryVolumeDescriptor(&$ISOheader) {
 		// ISO integer values are stored *BOTH* Little-Endian AND Big-Endian format!!
 		// ie 12345 == 0x3039  is stored as $39 $30 $30 $39 in a 4-byte field
-
 		// shortcuts
 		$info                                            = &$this->getid3->info;
 		$info['iso']['primary_volume_descriptor']['raw'] = array();
@@ -74,10 +71,8 @@ class getid3_iso extends getid3_handler {
 			$info['error'][] = 'Expected "CD001" at offset (' . ($thisfile_iso_primaryVD['offset'] + 1) . '), found "' . $thisfile_iso_primaryVD_raw['standard_identifier'] . '" instead';
 			unset($info['fileformat'], $info['iso']);
 
-
 			return false;
 		}
-
 
 		$thisfile_iso_primaryVD_raw['volume_descriptor_version'] = getid3_lib::LittleEndian2Int(substr($ISOheader, 6, 1));
 		//$thisfile_iso_primaryVD_raw['unused_1'] =                              substr($ISOheader,    7, 1);
@@ -110,7 +105,6 @@ class getid3_iso extends getid3_handler {
 		//$thisfile_iso_primaryVD_raw['unused_4'] = getid3_lib::LittleEndian2Int(substr($ISOheader,  882, 1));
 		$thisfile_iso_primaryVD_raw['application_data'] = substr($ISOheader, 883, 512);
 		//$thisfile_iso_primaryVD_raw['unused_5'] =                              substr($ISOheader, 1395, 653);
-
 		$thisfile_iso_primaryVD['system_identifier']             = trim($thisfile_iso_primaryVD_raw['system_identifier']);
 		$thisfile_iso_primaryVD['volume_identifier']             = trim($thisfile_iso_primaryVD_raw['volume_identifier']);
 		$thisfile_iso_primaryVD['volume_set_identifier']         = trim($thisfile_iso_primaryVD_raw['volume_set_identifier']);
@@ -135,7 +129,6 @@ class getid3_iso extends getid3_handler {
 	public function ParseSupplementaryVolumeDescriptor(&$ISOheader) {
 		// ISO integer values are stored Both-Endian format!!
 		// ie 12345 == 0x3039  is stored as $39 $30 $30 $39 in a 4-byte field
-
 		// shortcuts
 		$info = &$this->getid3->info;
 		$info['iso']['supplementary_volume_descriptor']['raw'] = array();
@@ -148,7 +141,6 @@ class getid3_iso extends getid3_handler {
 		if ($thisfile_iso_supplementaryVD_raw['standard_identifier'] != 'CD001') {
 			$info['error'][] = 'Expected "CD001" at offset (' . ($thisfile_iso_supplementaryVD['offset'] + 1) . '), found "' . $thisfile_iso_supplementaryVD_raw['standard_identifier'] . '" instead';
 			unset($info['fileformat'], $info['iso']);
-
 
 			return false;
 		}
@@ -191,7 +183,6 @@ class getid3_iso extends getid3_handler {
 		//$thisfile_iso_supplementaryVD_raw['unused_4'] = getid3_lib::LittleEndian2Int(substr($ISOheader,  882, 1));
 		$thisfile_iso_supplementaryVD_raw['application_data'] = substr($ISOheader, 883, 512);
 		//$thisfile_iso_supplementaryVD_raw['unused_5'] =                              substr($ISOheader, 1395, 653);
-
 		$thisfile_iso_supplementaryVD['system_identifier']             = trim($thisfile_iso_supplementaryVD_raw['system_identifier']);
 		$thisfile_iso_supplementaryVD['volume_identifier']             = trim($thisfile_iso_supplementaryVD_raw['volume_identifier']);
 		$thisfile_iso_supplementaryVD['volume_set_identifier']         = trim($thisfile_iso_supplementaryVD_raw['volume_set_identifier']);
@@ -268,6 +259,7 @@ class getid3_iso extends getid3_handler {
 			} else {
 				$thisfile_iso_pathtable_directories_current['full_path'] = $info['iso']['path_table']['directories'][$thisfile_iso_pathtable_directories_current['parent_directory']]['full_path'] . $thisfile_iso_pathtable_directories_current['name_ascii'] . '/';
 			}
+
 			$FullPathArray[] = $thisfile_iso_pathtable_directories_current['full_path'];
 
 			$pathcounter++;
@@ -362,7 +354,6 @@ class getid3_iso extends getid3_handler {
 		// 5: Minute of the hour from 0 to 59
 		// 6: second of the minute from 0 to 59
 		// 7: Offset from Greenwich Mean Time in number of 15 minute intervals from -48 (West) to +52 (East)
-
 		$UNIXyear   = ord($ISOtime[0]) + 1900;
 		$UNIXmonth  = ord($ISOtime[1]);
 		$UNIXday    = ord($ISOtime[2]);
@@ -381,11 +372,11 @@ class getid3_iso extends getid3_handler {
 		// If it is negative, make it positive by inverting the bits and adding one.
 		// Then, convert the result to decimal.
 		// The negative of this number is the value of the original binary.
-
 		if ($BinaryValue & 0x80) {
 			// negative number
 			return 0 - ((~$BinaryValue & 0xFF) + 1);
 		}
+
 		// positive number
 		return $BinaryValue;
 	}

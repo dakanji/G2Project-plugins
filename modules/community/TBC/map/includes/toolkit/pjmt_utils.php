@@ -44,7 +44,6 @@
  *
  ******************************************************************************/
 
-
 /******************************************************************************
  *
  * Function:     get_relative_path
@@ -86,7 +85,6 @@ function get_relative_path($target, $fromdir) {
 		$to = substr($to, $colonpos + 1);
 	}
 
-
 	$path   = '../';
 	$posval = 0;
 	// Step through the paths until a difference is found (ignore slash, backslash differences
@@ -97,6 +95,7 @@ function get_relative_path($target, $fromdir) {
 				($from[$posval] && $to[$posval])) {
 		$posval++;
 	}
+
 	// Save the position of the first difference
 	$diffpos = $posval;
 
@@ -109,6 +108,7 @@ function get_relative_path($target, $fromdir) {
 		// Build relative path starting with a ./
 		return './' . substr($target, $posval + 1, strlen($target));
 	}
+
 	// target is outside the fromdir branch
 	// find out how many "../"'s are necessary
 	// Step through the fromdir path, checking for slashes
@@ -129,8 +129,8 @@ function get_relative_path($target, $fromdir) {
 	while (($to[$diffpos] != '/') && ($to[$diffpos] != '\\') && $to[$diffpos]) {
 		$diffpos--;
 	}
-	// Build relative path to return
 
+	// Build relative path to return
 	return $path . substr($target, $diffpos + 1, strlen($target));
 }
 

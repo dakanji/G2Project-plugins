@@ -26,6 +26,7 @@
 class WebCamModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('webcam');
 		$this->setName($gallery->i18n('WebCam'));
 		$this->setDescription(
@@ -109,6 +110,7 @@ class WebCamModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					list($ret, $handlers) = $storage->getFunctionSql(
 						'CONCAT',
 						array('[GalleryEntity::onLoadHandlers]', "'WebCam|'")
@@ -257,6 +259,7 @@ class WebCamModule extends GalleryModule {
 		if ($duringUpgrade) {
 			return null;
 		}
+
 		list($ret, $duration) = $this->getParameter('duration');
 
 		if ($ret) {
@@ -268,13 +271,16 @@ class WebCamModule extends GalleryModule {
 				// Item already busy (maybe being deleted).. don't update now
 				return null;
 			}
+
 			// Lock and refresh to ensure another request didn't just update image..
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($id);
 
 			if ($ret) {
 				return $ret;
 			}
+
 			GalleryDataCache::put("webcam:load-$id", true);
+
 			list($ret, $refresh) = $item->refresh();
 
 			if ($ret) {
@@ -290,9 +296,11 @@ class WebCamModule extends GalleryModule {
 
 		if ($old) {
 			global $gallery;
-			$platform        =& $gallery->getPlatform();
-			$tmpDir          = $gallery->getConfig('data.gallery.tmp');
-			$backupFile      = $platform->tempnam($tmpDir, 'webcambak');
+
+			$platform   =& $gallery->getPlatform();
+			$tmpDir     = $gallery->getConfig('data.gallery.tmp');
+			$backupFile = $platform->tempnam($tmpDir, 'webcambak');
+
 			list($ret, $url) = $this->getParameter('imageUrl', $id);
 
 			if ($ret) {
@@ -308,10 +316,12 @@ class WebCamModule extends GalleryModule {
 				if (!isset($urlComponents['path']) && isset($urlComponents['host'])) {
 					$urlComponents['path'] = $urlComponents['host'];
 				}
+
 				$tmpFile            = $urlComponents['path'];
 				$successfullyCopied = $platform->file_exists($tmpFile);
 			} else {
-				$tmpFile                                       = $platform->tempnam($tmpDir, 'webcam');
+				$tmpFile = $platform->tempnam($tmpDir, 'webcam');
+
 				list($successfullyCopied, $response, $headers) = GalleryCoreApi::fetchWebFile($url, $tmpFile);
 			}
 
@@ -325,6 +335,7 @@ class WebCamModule extends GalleryModule {
 
 					return $ret;
 				}
+
 				// Backup previous file
 				$ret = $platform->copy($path, $backupFile);
 
@@ -333,6 +344,7 @@ class WebCamModule extends GalleryModule {
 
 					return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 				}
+
 				$ret = $platform->copy($tmpFile, $path);
 
 				if (!$ret) {
@@ -340,6 +352,7 @@ class WebCamModule extends GalleryModule {
 
 					return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 				}
+
 				$ret = $item->rescan();
 
 				if ($ret) {
@@ -348,10 +361,12 @@ class WebCamModule extends GalleryModule {
 
 						return $ret;
 					}
+
 					// Problem with new file (maybe html response, not data file); rollback
 					$platform->copy($backupFile, $path);
 				} else {
 					$item->setOriginationTimestamp(time());
+
 					$ret = $item->save();
 
 					if ($ret) {
@@ -359,6 +374,7 @@ class WebCamModule extends GalleryModule {
 
 						return $ret;
 					}
+
 					$ret = GalleryCoreApi::expireDerivativeTreeBySourceIds(array($id));
 
 					if ($ret) {
@@ -367,6 +383,7 @@ class WebCamModule extends GalleryModule {
 						return $ret;
 					}
 				}
+
 				@$platform->unlink($backupFile);
 			}
 

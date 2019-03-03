@@ -1,5 +1,6 @@
 function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	global $gallery;
+
 	/*
 	*   $urlGenerator =& $gallery->getUrlGenerator();
 	*   $theme2['themeUrl'] =
@@ -22,13 +23,13 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	$count = $count;
 	$totalRecords = $myTotalRecords;
 
-
 	if (!isset($theme2['pageUrl'])) {
 		$theme2['pageUrl'] = array(
-'view' => $view,
-'subView' => $subView);
-	}
+			'view' => $view,
+			'subView' => $subView
+		);
 
+	}
 
 	/* If we care about pagination, then figure out the current page and total pages */
 	$perPage = $count;
@@ -36,7 +37,6 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	$page = GalleryUtilities::getRequestVariables('page');
 	if ($perPage == 0 || empty($page)) {
 		$page = 1;
-
 
 		/* Redirect to the new page */
 		/*
@@ -47,7 +47,6 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 		*       return array(null, array('redirect' => $redirect));
 		*/
 	}
-
 
 		/* Store the total pages in the theme2 */
 		$theme2['totalPages'] = ceil($totalRecords / $perPage);
@@ -63,7 +62,7 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	*               $results['redirect'] = $redirect;
 	*
 	*               return array(null, $results);
-	*           }   
+	*           }
 	*       }
 	*/
 

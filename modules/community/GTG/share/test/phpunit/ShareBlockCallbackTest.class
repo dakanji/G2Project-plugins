@@ -89,6 +89,7 @@ class ShareBlockCallbackTest extends GalleryTestCase {
 		if (isset($itemId)) {
 			$params['itemId'] = $itemId;
 		}
+
 		$result = $callbacks->callback($params, $smarty, 'ShareBlockParams', $userId);
 
 		if (!$result) {
@@ -98,7 +99,6 @@ class ShareBlockCallbackTest extends GalleryTestCase {
 		return $result;
 	}
 }
-
 
 // Allow for suppressed php errors
 function ShareBlockTest_error_handler($errno, $errstr, $errfile, $errline) {

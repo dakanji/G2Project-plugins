@@ -31,6 +31,7 @@ define('TAGTREE_REQUIRED_TAGS_MINOR_VERSION', 4);/**
 class TagTreeCompatibilityHelper {
 	public function isCompatibleTagsModuleActive() {
 		global $gallery;
+
 		$isCompatible = false;
 
 		list($ret, $modules) = GalleryCoreApi::fetchPluginList('module');

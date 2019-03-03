@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_id3v1 extends getid3_handler {
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -45,6 +43,7 @@ class getid3_id3v1 extends getid3_handler {
 				$ParsedID3v1['track']   = ord(substr($ParsedID3v1['comment'], 29, 1));
 				$ParsedID3v1['comment'] = substr($ParsedID3v1['comment'], 0, 28);
 			}
+
 			$ParsedID3v1['comment'] = $this->cutfield($ParsedID3v1['comment']);
 
 			$ParsedID3v1['genre'] = $this->LookupGenreName($ParsedID3v1['genreid']);
@@ -62,7 +61,7 @@ class getid3_id3v1 extends getid3_handler {
 			}
 
 			// ID3v1 data is supposed to be padded with NULL characters, but some taggers pad with spaces
-			$GoodFormatID3v1tag           = $this->GenerateID3v1Tag(
+			$GoodFormatID3v1tag = $this->GenerateID3v1Tag(
 				$ParsedID3v1['title'],
 				$ParsedID3v1['artist'],
 				$ParsedID3v1['album'],
@@ -71,6 +70,7 @@ class getid3_id3v1 extends getid3_handler {
 				$ParsedID3v1['comment'],
 				(!empty($ParsedID3v1['track']) ? $ParsedID3v1['track'] : '')
 			);
+
 			$ParsedID3v1['padding_valid'] = true;
 
 			if ($id3v1tag !== $GoodFormatID3v1tag) {
@@ -88,7 +88,6 @@ class getid3_id3v1 extends getid3_handler {
 			// The way iTunes handles tags is, well, brain-damaged.
 			// It completely ignores v1 if ID3v2 is present.
 			// This goes as far as adding a new v1 tag *even if there already is one*
-
 			// A suspected double-ID3v1 tag has been detected, but it could be that
 			// the "TAG" identifier is a legitimate part of an APE or Lyrics3 tag
 			if (substr($preid3v1, 96, 8) == 'APETAGEX') {
@@ -304,9 +303,11 @@ class getid3_id3v1 extends getid3_handler {
 				if (!is_numeric($genreid)) {
 					return false;
 				}
+
 				$genreid = intval($genreid); // to handle 3 or '3' or '03'
 				break;
 		}
+
 		$GenreLookup = self::ArrayOfGenres($allowSCMPXextended);
 
 		return isset($GenreLookup[$genreid]) ? $GenreLookup[$genreid] : false;
@@ -347,6 +348,7 @@ class getid3_id3v1 extends getid3_handler {
 			if (gettype($track) == 'string') {
 				$track = (int)$track;
 			}
+
 			$ID3v1Tag .= chr($track);
 		} else {
 			$ID3v1Tag .= str_pad(trim(substr($comment, 0, 30)), 30, "\x00", STR_PAD_RIGHT);

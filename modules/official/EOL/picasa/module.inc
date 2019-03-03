@@ -27,6 +27,7 @@
 class PicasaModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('picasa');
 		$this->setName($gallery->i18n('Picasa'));
 		$this->setDescription(

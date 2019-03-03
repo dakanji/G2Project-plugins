@@ -32,6 +32,7 @@
 class AboutPageModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('aboutpage');
 		$this->setName('About Page');
 		$this->setDescription(

@@ -38,6 +38,7 @@ class FlashVideoOption extends ItemAddOption {
 	 */
 	public function handleRequestAfterAdd($form, $items) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 		$errors  = $flvItems  = array();
 
@@ -73,6 +74,7 @@ class FlashVideoOption extends ItemAddOption {
 				}
 
 				$item->setRenderer('FlashVideoRenderer');
+
 				$ret = $item->save();
 
 				if ($ret) {
@@ -87,6 +89,7 @@ class FlashVideoOption extends ItemAddOption {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$ret = $storage->checkPoint();
 
 			if ($ret) {

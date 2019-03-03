@@ -81,7 +81,6 @@ class ShareModule extends GalleryModule {
 		switch ($currentVersion) {
 			case null:
 				// Initial install
-
 				foreach (array(
 					'onlyWhenLoggedIn' => false,
 					'addThisAccountId' => 'addThisAccountId',
@@ -92,6 +91,7 @@ class ShareModule extends GalleryModule {
 						return $ret;
 					}
 				}
+
 				// keep going
 
 				// Fall Through

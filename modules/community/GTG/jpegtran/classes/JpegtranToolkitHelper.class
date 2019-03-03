@@ -114,6 +114,7 @@ class JpegtranToolkitHelper {
 	 */
 	public static function testBinary($jpegtranPath) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$slash    = $platform->getDirectorySeparator();
 		$dataPath = dirname(__DIR__) . "${slash}data${slash}";
@@ -220,7 +221,7 @@ class JpegtranToolkitHelper {
 		}
 
 		// Test the optional crop support (only patched versions of jpegtran can crop)
-		$command                         = array(
+		$command = array(
 			$jpegtranPath,
 			'-verbose',
 			'-copy',
@@ -231,6 +232,7 @@ class JpegtranToolkitHelper {
 			$tmpFilename,
 			$dataPath . 'test.jpg',
 		);
+
 		list($success, $stdout, $stderr) = $platform->exec(array($command));
 
 		if (!$success) {

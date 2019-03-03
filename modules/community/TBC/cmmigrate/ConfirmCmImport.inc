@@ -66,6 +66,7 @@ class ConfirmCmImportController extends GalleryController {
 				array($this, 'performCmImport'),
 				array($form, $copperminePath)
 			);
+
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -75,6 +76,7 @@ class ConfirmCmImportController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'cmmigrate.ConfirmCmImport';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 
@@ -90,6 +92,7 @@ class ConfirmCmImportController extends GalleryController {
 	 */
 	public function performCmImport($form, $copperminePath) {
 		global $gallery;
+
 		$storage         = $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
 
@@ -146,6 +149,7 @@ class ConfirmCmImportController extends GalleryController {
 		if ($ret) {
 			return $ret;
 		}
+
 		$importPhotosMessage = $module->translate('Importing Photos');
 
 		list($ret, $markupType) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
@@ -176,6 +180,7 @@ class ConfirmCmImportController extends GalleryController {
 			if ($ret) {
 				return $ret;
 			}
+
 			$form['destinationAlbumID'] = $rootId;
 		}
 
@@ -183,9 +188,9 @@ class ConfirmCmImportController extends GalleryController {
 		$destinationAlbumID = $form['destinationAlbumID'];
 
 		// Go through the list of selected coppermine albums to import
-
 		$totalItemsToImport = 0;
 		$albumFields        = $albumHighlight        = array();
+
 		list($ret, $albums) = $this->_getAlbums();
 
 		if ($ret) {
@@ -200,6 +205,7 @@ class ConfirmCmImportController extends GalleryController {
 			if (!in_array($sourceAlbumId, array_keys($albums))) {
 				return GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__);
 			}
+
 			$albumFields[$sourceAlbumId] = $albums[$sourceAlbumId];
 
 			list($ret, $photos) = $this->_cmdb->getPhotos($albums[$sourceAlbumId]);
@@ -207,9 +213,11 @@ class ConfirmCmImportController extends GalleryController {
 			if ($ret) {
 				return $ret;
 			}
+
 			$picturesToImport[$sourceAlbumId] = $photos;
 			$totalItemsToImport              += 1 + count($photos);
 		}
+
 		/*
 		 * Go through the array of albums' metadata one album at a time.  We limit the number of
 		 * passes through this list to n^2 times to avoid an infinite loop.  This allows us to make
@@ -261,6 +269,7 @@ class ConfirmCmImportController extends GalleryController {
 						if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
 							return $ret;
 						}
+
 						$invalidName = false;
 					} else {
 						$desiredname = $album->name . '_' . $k++;
@@ -307,6 +316,7 @@ class ConfirmCmImportController extends GalleryController {
 
 							return GalleryCoreApi::error(ERROR_MISSING_OBJECT, __FILE__, __LINE__);
 						}
+
 						// this is where the album is actually created
 						$ret = $newAlbumInstance->create($targetAlbumID, $desiredname);
 
@@ -321,11 +331,13 @@ class ConfirmCmImportController extends GalleryController {
 							'title'   => null,
 							'summary' => null,
 						);
+
 						// load up the album with metadata from the old album
 						if (isset($album->name)) {
 							$sourceData['title'] = $this->convertHtml($markupType, $album->name, $sourceEncoding);
 							$newAlbumInstance->setTitle($sourceData['title']);
 						}
+
 						$newAlbumInstance->setKeywords('');
 
 						if (isset($album->description)) {
@@ -334,8 +346,10 @@ class ConfirmCmImportController extends GalleryController {
 								$album->description,
 								$sourceEncoding
 							);
+
 							$newAlbumInstance->setSummary($sourceData['summary']);
 						}
+
 						// Save the new album
 						$ret = $newAlbumInstance->save();
 
@@ -344,6 +358,7 @@ class ConfirmCmImportController extends GalleryController {
 
 							return $ret;
 						}
+
 						$numberOfItemsImported++;
 
 						$ret = $this->checkTruncation($newAlbumInstance, $sourceData);
@@ -385,6 +400,7 @@ class ConfirmCmImportController extends GalleryController {
 
 							return $ret;
 						}
+
 						list($ret, $theme) = GalleryCoreApi::loadPlugin('theme', $themeId);
 
 						if ($ret) {
@@ -392,6 +408,7 @@ class ConfirmCmImportController extends GalleryController {
 
 							return $ret;
 						}
+
 						list($ret, $settings) = $theme->getSettings($newAlbumInstanceId);
 
 						if ($ret) {
@@ -409,17 +426,19 @@ class ConfirmCmImportController extends GalleryController {
 							return $ret;
 						}
 					}
+
 					/*
 					 * we can let the parent album (and anything else that we might
 					 * have tied up) be edited by others now
 					 */
+
 					$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 					if ($ret) {
 						return $ret;
 					}
-					$importLockIds = array();
 
+					$importLockIds = array();
 
 					$photos = $picturesToImport[$album->albumId];
 
@@ -428,7 +447,8 @@ class ConfirmCmImportController extends GalleryController {
 					}
 
 					$albumHighlight[$newAlbumInstanceId] = false;
-					list($ret, $item)                    = GalleryCoreApi::loadEntitiesById($newAlbumInstanceId);
+
+					list($ret, $item) = GalleryCoreApi::loadEntitiesById($newAlbumInstanceId);
 
 					if ($ret) {
 						return $ret;
@@ -439,6 +459,7 @@ class ConfirmCmImportController extends GalleryController {
 					if ($ret) {
 						return $ret;
 					}
+
 					list($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array($item->getId()));
 
 					if ($ret) {
@@ -446,6 +467,7 @@ class ConfirmCmImportController extends GalleryController {
 
 						return $ret;
 					}
+
 					$albumNeedsThumbnail = empty($thumbnailTable) ? true : false;
 
 					foreach ($photos as $j => $importAlbumItem) {
@@ -469,7 +491,8 @@ class ConfirmCmImportController extends GalleryController {
 						}
 
 						list($base, $extension) = GalleryUtilities::getFileNameComponents($filename);
-						list($ret, $mimeType)   = GalleryCoreApi::convertExtensionToMime($extension);
+
+						list($ret, $mimeType) = GalleryCoreApi::convertExtensionToMime($extension);
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
@@ -477,7 +500,7 @@ class ConfirmCmImportController extends GalleryController {
 							return $ret;
 						}
 
-						$data                = array(
+						$data = array(
 							'title' => $this->convertHtml(
 								$markupType,
 								$importAlbumItem->title,
@@ -489,6 +512,7 @@ class ConfirmCmImportController extends GalleryController {
 								$sourceEncoding
 							),
 						);
+
 						list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
 							$filepath,
 							$filename,
@@ -504,6 +528,7 @@ class ConfirmCmImportController extends GalleryController {
 
 							return $ret;
 						}
+
 						$itemsCreated[] = $newItem->getId();
 						$numberOfItemsImported++;
 
@@ -515,7 +540,8 @@ class ConfirmCmImportController extends GalleryController {
 							return $ret;
 						}
 
-						$itemLockIds               = array();
+						$itemLockIds = array();
+
 						list($ret, $itemLockIds[]) = GalleryCoreApi::acquireWriteLock($newItem->getId());
 
 						if ($ret) {
@@ -558,6 +584,7 @@ class ConfirmCmImportController extends GalleryController {
 						if ($ret) {
 							return $ret;
 						}
+
 						$itemLockIds = array();
 
 						$status['addFromLocalServer'][] = array(
@@ -566,6 +593,7 @@ class ConfirmCmImportController extends GalleryController {
 						);
 					}
 				}
+
 				$ret = $templateAdapter->updateProgressBar(
 					$importPhotosMessage,
 					$album->name,
@@ -575,6 +603,7 @@ class ConfirmCmImportController extends GalleryController {
 				if ($ret) {
 					return $ret;
 				}
+
 				$album = null;
 				// $i keeps track of how many passes we make over the data
 				$i++;
@@ -597,11 +626,13 @@ class ConfirmCmImportController extends GalleryController {
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $importLockIds[]) = GalleryCoreApi::acquireReadLock($item->getId());
 
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $success) = GalleryCoreApi::setThumbnailFromItem(
 					$item->getId(),
 					$finishedAlbums[$nameOfAlbumToHighlight]
@@ -621,6 +652,7 @@ class ConfirmCmImportController extends GalleryController {
 			if ($ret) {
 				return $ret;
 			}
+
 			$importLockIds = array();
 		}
 
@@ -645,7 +677,8 @@ class ConfirmCmImportController extends GalleryController {
 			$thumbsCreated       = 0;
 
 			while (!empty($itemsCreated)) {
-				$chunk                  = array_splice($itemsCreated, 0, 20);
+				$chunk = array_splice($itemsCreated, 0, 20);
+
 				list($ret, $thumbTable) = GalleryCoreApi::fetchThumbnailsByItemIds($chunk);
 
 				if ($ret) {
@@ -660,6 +693,7 @@ class ConfirmCmImportController extends GalleryController {
 					}
 
 					$thumbsCreated++;
+
 					$ret = $templateAdapter->updateProgressBar(
 						$createThumbsMessage,
 						$module->translate(
@@ -676,6 +710,7 @@ class ConfirmCmImportController extends GalleryController {
 						return $ret;
 					}
 				}
+
 				GalleryDataCache::reset();
 			}
 		}
@@ -721,6 +756,7 @@ class ConfirmCmImportController extends GalleryController {
 			default:
 				$item = strip_tags($item);
 		}
+
 		GalleryUtilities::sanitizeInputValues($item, false);
 
 		return $item;
@@ -746,8 +782,9 @@ class ConfirmCmImportController extends GalleryController {
 				'#<img[^>]*\s+src\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>#is' => '[img]$1[/img]',
 				'#<a[^>]*\s+href\s*=\s*["\']{0,1}([^\s"\'>]+)["\']{0,1}[^>]*>\s*(.*?)\s*</a>#is' => '[url=$1]$2[/url]',
 			);
-			$match    = array_keys($patterns);
-			$replace  = array_values($patterns);
+
+			$match   = array_keys($patterns);
+			$replace = array_values($patterns);
 		}
 
 		$item = preg_replace($match, $replace, $item);
@@ -760,6 +797,7 @@ class ConfirmCmImportController extends GalleryController {
 	 */
 	public function checkTruncation(&$item, $sourceData) {
 		global $gallery;
+
 		static $titleMessage, $summaryMessage, $setMessage, $truncatedMessage;
 
 		if (!isset($titleMessage)) {
@@ -768,6 +806,7 @@ class ConfirmCmImportController extends GalleryController {
 			if ($ret) {
 				return $ret;
 			}
+
 			$titleMessage     = $module->translate('%sTitle%s was truncated for %sitem %d%s.');
 			$summaryMessage   = $module->translate('%sSummary%s was truncated for %sitem %d%s.');
 			$setMessage       = $module->translate('Set:');
@@ -790,6 +829,7 @@ class ConfirmCmImportController extends GalleryController {
 				if (!isset($urlGenerator)) {
 					$urlGenerator =& $gallery->getUrlGenerator();
 				}
+
 				printf(
 					"<div class=\"gbBlock\">$message<br/>" .
 					"<b>$setMessage</b> %s<br/><b>$truncatedMessage</b> %s</div>",
@@ -820,7 +860,8 @@ class ConfirmCmImportController extends GalleryController {
 	 */
 	public function _openDatabase($copperminePath) {
 		$this->_cmdb = new CmDatabaseTools($copperminePath);
-		$ret         = $this->_cmdb->openDatabase();
+
+		$ret = $this->_cmdb->openDatabase();
 
 		return $ret;
 	}
@@ -854,12 +895,14 @@ class ConfirmCmImportView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$platform       =& $gallery->getPlatform();
 		$existingAlbums = $titles = array();
 
 		if (!isset($form['sourceAlbums'])) {
 			$form['sourceAlbums'] = array();
 		}
+
 		$copperminePath     = GalleryUtilities::getRequestVariables('copperminePath');
 		$destinationAlbumID = $form['destinationAlbumID'];
 
@@ -868,6 +911,7 @@ class ConfirmCmImportView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $targetAlbum) = GalleryCoreApi::loadEntitiesById($destinationAlbumID);
 
 		if ($ret) {
@@ -878,8 +922,10 @@ class ConfirmCmImportView extends GalleryView {
 			if (!in_array($sourceAlbumId, array_keys($albums))) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__), null);
 			}
+
 			$albumFields[$sourceAlbumId] = $albums[$sourceAlbumId];
 		}
+
 		$i = 0;
 
 		if (!isset($albumFields)) {
@@ -900,10 +946,12 @@ class ConfirmCmImportView extends GalleryView {
 				if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
 					return array($ret, null);
 				}
+
 				$existingAlbums[$albumId] = false;
 			} else {
 				$existingAlbums[$albumId] = $existingAlbumId;
 			}
+
 			$titles[$albumId] = $album->description;
 			$names[$albumId]  = $albumName;
 		}
@@ -930,6 +978,7 @@ class ConfirmCmImportView extends GalleryView {
 	public function _getAlbums($copperminePath) {
 		$cmdb = new CmDatabaseTools($copperminePath);
 		$cmdb->openDatabase();
+
 		list($ret, $albums) = $cmdb->getAlbums();
 
 		if ($ret) {

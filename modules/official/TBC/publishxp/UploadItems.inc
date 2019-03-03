@@ -61,6 +61,7 @@ class UploadItemsController extends GalleryController {
 			if (!isset($form['albumId'])) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
+
 			$form['albumId'] = (int)$form['albumId'];
 
 			list($ret, $canView) = GalleryCoreApi::hasItemPermission($form['albumId'], 'core.view');
@@ -78,7 +79,8 @@ class UploadItemsController extends GalleryController {
 			}
 
 			// Get the file passed in this submission
-			$file                  = GalleryUtilities::getFile('userFile', false);
+			$file = GalleryUtilities::getFile('userFile', false);
+
 			list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLock($form['albumId']);
 
 			if ($ret) {
@@ -97,6 +99,7 @@ class UploadItemsController extends GalleryController {
 			if ($gallery->getDebug()) {
 				$gallery->debug("Source encoding from Windows client: $sourceEncoding");
 			}
+
 			$file['name'] = GalleryCoreApi::convertToUtf8($file['name'], $sourceEncoding);
 
 			// Get the mime type.
@@ -117,6 +120,7 @@ class UploadItemsController extends GalleryController {
 			if (!empty($form['setCaptions'])) {
 				$caption = $title;
 			}
+
 			list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
 				$file['tmp_name'],
 				basename($file['name']),
@@ -132,6 +136,7 @@ class UploadItemsController extends GalleryController {
 
 				return array($ret, null);
 			}
+
 			$ret = GalleryCoreApi::releaseLocks($lockIds);
 
 			if ($ret) {
@@ -142,6 +147,7 @@ class UploadItemsController extends GalleryController {
 				$optionInstances = $this->_optionInstances;
 			} else {
 				GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
+
 				list($ret, $optionInstances) = ItemAddOption::getAllAddOptions();
 
 				if ($ret) {
@@ -181,6 +187,7 @@ class UploadItemsController extends GalleryController {
 		} else {
 			$results['delegate']['view'] = 'publishxp.UploadItems';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 

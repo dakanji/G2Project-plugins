@@ -74,6 +74,7 @@ class BulkManageHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			list($ret, $itemIds) = GalleryCoreApi::fetchDescendentItemIds($albumItem, null, null, 'core.edit');
 		} else {
 			list($ret, $itemIds) = GalleryCoreApi::fetchChildItemIdsWithPermission($albumId, 'core.edit');
@@ -123,6 +124,7 @@ class BulkManageHelper {
 							'arg2' => $total,
 						)
 					);
+
 					$templateAdapter->updateProgressBar($title, $message, $i / $total);
 
 					// Prevent PHP timeouts
@@ -182,6 +184,7 @@ class BulkManageHelper {
 				)
 			),
 		);
+
 		$templateAdapter->updateProgressBar($title, $module->translate('Finished'), 1);
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 

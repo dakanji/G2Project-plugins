@@ -32,11 +32,13 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		GalleryCoreApi::requireOnce('modules/imageblock/classes/ImageBlockHelper.class');
 
 		list($ret, $this->_topAlbum, $this->_topItems) = $this->_createSubAlbumWithItems($this->_getRootId());
@@ -119,6 +121,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert($disabledFlag, 'Add eventHandler failed');
 
 		$ret = GalleryCoreApi::deleteEntityById($this->_handlerItem->getId(), 'GalleryDataItem');
@@ -132,6 +135,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assert(!$disabledFlag, 'Delete eventHandler failed');
 	}
 
@@ -423,26 +427,29 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Just make sure the test runs without errors
-
 		// Execute the test
 		list($ret, $user) = $this->_createRandomUser();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($user);
 
 		$user->setFullName('new name to trigger new save');
+
 		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($user->getId());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $user->save();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::releaseLocks($lockId);
 
 		if ($ret) {
@@ -471,16 +478,19 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireWriteLock($item->getId());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $item->move($newParent->getId());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = $item->save();
 
 		if ($ret) {
@@ -491,6 +501,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 			 */
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::releaseLocks($lockIds);
 
 		if ($ret) {
@@ -506,6 +517,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 			$this->assertEquals(
 				$expectedValue,
 				!empty($disabledFlag),
@@ -521,12 +533,14 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Assert that the item is in the disable map, or not
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($item->getId());
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->assertEquals(
 			$value,
 			!empty($disabledFlag),

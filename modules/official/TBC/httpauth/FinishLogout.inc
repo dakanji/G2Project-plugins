@@ -33,6 +33,7 @@ class FinishLogoutView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();

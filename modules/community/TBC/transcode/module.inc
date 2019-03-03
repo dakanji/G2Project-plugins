@@ -129,7 +129,6 @@ class TranscodeModule extends GalleryModule {
 			return array($ret, null);
 		}
 
-
 		list($ret, $redirect) = parent::activate($postActivationEvent);
 
 		if ($ret) {
@@ -170,8 +169,7 @@ class TranscodeModule extends GalleryModule {
 	 */
 	public function _getSupportedMovieTypes() {
 		list($ret, $mimeTypes) = GalleryCoreApi::getToolkitOperationMimeTypes(
-			'
-		convert-to-video/x-flv'
+			'convert-to-video/x-flv'
 		);
 
 		if ($ret) {

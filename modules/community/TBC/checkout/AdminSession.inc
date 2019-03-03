@@ -63,6 +63,7 @@ class AdminSessionController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$pSession                     = $searchResults->nextResult();
 			$mySession->_sessionId        = $form['sessId'];
 			$mySession->_userId           = (int)$pSession[0];
@@ -91,6 +92,7 @@ class AdminSessionController extends GalleryController {
 						return array($ret, null);
 					}
 				}
+
 				$mySession->put('checkout.items', $items);
 				$status['saved'] = 1;
 			}
@@ -127,6 +129,7 @@ class AdminSessionView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
+
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
@@ -195,13 +198,13 @@ class AdminSessionView extends GalleryView {
 			'returnURL'         => $mySession->get('checkout.returnURL'),
 		);
 
-
 		// Get user name
 		list($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$session['userName'] = $user->getFullName();
 
 		list($ret, $tpl) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkout');
@@ -213,7 +216,6 @@ class AdminSessionView extends GalleryView {
 		$tpl['askDiscountCode'] = true;
 
 		// get the items from the required session
-
 		$rawItems = $mySession->get('checkout.items');
 
 		if (is_null($rawItems)) {
@@ -225,7 +227,6 @@ class AdminSessionView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
-
 
 		// plugins adjust list of items before fetching products
 		$ret = CheckoutInterfaceHelper::doItemListPlugins($items);
@@ -263,7 +264,6 @@ class AdminSessionView extends GalleryView {
 			$tpl['postageSet'] = -1;
 		}
 
-
 		// build table of available products for each item in the cart
 		$itemProducts = array();
 
@@ -273,6 +273,7 @@ class AdminSessionView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$itemProducts[$item['id']] = $thisItemsProducts;
 
 			/* count how many products with unset quantities there are
@@ -283,6 +284,7 @@ class AdminSessionView extends GalleryView {
 				if (!isset($item[$thisProduct['productId']]['quant']) && $thisProduct['dropdown'] == 'true') {
 					$comboCount++;
 				}
+
 				$items[$item['id']]['comboCount'] = $comboCount;
 			}
 		}
@@ -316,11 +318,13 @@ class AdminSessionView extends GalleryView {
 		foreach ($tpl['accessories'] as $accessory) {
 			$thumbnailIdList[] = $accessory['id'];
 		}
+
 		list($ret, $thumbnailList) = GalleryCoreApi::fetchThumbnailsByItemIds($thumbnailIdList);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$thumbnails = array();
 
 		foreach ($thumbnailList as $thumbnail) {
@@ -349,6 +353,7 @@ class AdminSessionView extends GalleryView {
 		if ($tpl['csymbol'] == 'e') {
 			$tpl['csymbol'] = '&euro;';
 		}
+
 		$tpl['itemCount'] = count($items);
 		$template->setVariable('tpl', $tpl);
 		$template->setVariable('session', $session);

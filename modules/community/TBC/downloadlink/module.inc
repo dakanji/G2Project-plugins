@@ -66,7 +66,6 @@ class DownloadLinkModule extends GalleryModule {
 	public function upgrade($currentVersion) {
 		global $gallery;
 
-
 		if (!empty($currentVersion)) {
 			$storage =& $gallery->getStorage();
 
@@ -89,6 +88,7 @@ class DownloadLinkModule extends GalleryModule {
 			if ($ret) {
 				return $ret;
 			}
+
 			// register permissions
 			$permissions[] = array('original', $gallery->i18n('[downloadlink] Show Download Original Link'), 0, array());
 			$permissions[] = array('resizes', $gallery->i18n('[downloadlink] Show Download Resize(s) Links'), 0, array());
@@ -101,12 +101,14 @@ class DownloadLinkModule extends GalleryModule {
 					return $ret;
 				}
 			}
+
 			// Give everybody download permissions by default
 			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'downloadlink.original', true);
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'downloadlink.resizes', true);
 
 			if ($ret) {
@@ -124,6 +126,7 @@ class DownloadLinkModule extends GalleryModule {
 			if (!GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 				continue;
 			}
+
 			$masterId        = $item->getId();
 			$potentialImages = array();
 
@@ -143,9 +146,11 @@ class DownloadLinkModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$potentialImages[] = $result;
 				}
 			}
+
 			// resizes
 			$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.resizes');
 
@@ -163,6 +168,7 @@ class DownloadLinkModule extends GalleryModule {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						$potentialImages[] = $result;
 					}
 				}
@@ -170,7 +176,8 @@ class DownloadLinkModule extends GalleryModule {
 
 			// How about the original?
 			$includeOriginal = false;
-			$ret             = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.original');
+
+			$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'downloadlink.original');
 
 			if (!$ret) {
 				// fetch preferred
@@ -186,12 +193,12 @@ class DownloadLinkModule extends GalleryModule {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$potentialImages[] = $result;
 				} else {
 					$potentialImages[] = $item;
 				}
 			}
-
 
 			$itemTypeNames = $item->itemTypeName();
 

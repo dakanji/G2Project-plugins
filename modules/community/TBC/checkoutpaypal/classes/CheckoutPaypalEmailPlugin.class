@@ -42,7 +42,6 @@ class CheckoutPaypalEmailPlugin extends CheckoutEmailInterface_1_0 {
 	 */
 	public function getEmailTemplateAndVariables($transactionId, $templateName) {
 
-
 		// check here to see if a checkoutemail transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 

@@ -35,6 +35,7 @@ class WebDavMountView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $canView) = GalleryCoreApi::hasItemPermission($item->getId(), 'core.view');
 
 		if ($ret) {

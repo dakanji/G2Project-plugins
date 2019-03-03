@@ -19,5 +19,6 @@ if ($map['showZoomLinks']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><a href=\"#zoominlink\" onclick=\"javascript:map.setCenter(new GLatLng('+lat+','+lon+'), '+zoomlevel+'); return false;\">" . $module->translate('Zoom In') . "<\/a>'";
 }
+
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<\/div>'";

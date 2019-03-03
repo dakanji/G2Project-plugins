@@ -46,6 +46,7 @@ class ImageBlockSiteAdminController extends GalleryController {
 					$param[] = $key;
 				}
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'imageblock',
@@ -71,9 +72,9 @@ class ImageBlockSiteAdminController extends GalleryController {
 					}
 				}
 			}
+
 			$status['saved'] = 1;
 		} // else $form['action']['reset']
-
 		// Figure out where to redirect upon success
 		$results['redirect']['view']    = 'core.SiteAdmin';
 		$results['redirect']['subView'] = 'imageblock.ImageBlockSiteAdmin';
@@ -104,6 +105,7 @@ class ImageBlockSiteAdminView extends GalleryView {
 			foreach (array('heading', 'title', 'date', 'views', 'owner') as $tmp) {
 				$form[$tmp] = 0;
 			}
+
 			list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'imageblock');
 
 			if ($ret) {
@@ -113,9 +115,11 @@ class ImageBlockSiteAdminView extends GalleryView {
 			foreach (explode('|', $param['show']) as $tmp) {
 				$form[$tmp] = 1;
 			}
+
 			$form['albumFrame'] = $param['albumFrame'];
 			$form['itemFrame']  = $param['itemFrame'];
 		}
+
 		$ImageBlockSiteAdmin = array(
 			'prefix' => GALLERY_FORM_VARIABLE_PREFIX,
 		);
@@ -133,6 +137,7 @@ class ImageBlockSiteAdminView extends GalleryView {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $ImageBlockSiteAdmin['sampleUrl']) = $imageframe->getSampleUrl();
 
 			if ($ret) {

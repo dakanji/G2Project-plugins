@@ -122,10 +122,8 @@ class CalendarModule extends GalleryModule {
 		switch ($currentVersion) {
 			case null:
 				// Initial install
-
 			case '0.0.1':
 				// FIXME Added CalendarEvent
-
 			case 'end of upgrade path':
 				break;
 

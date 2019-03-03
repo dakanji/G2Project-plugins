@@ -33,6 +33,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -49,6 +50,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$this->_markForCleanup($this->_album);
 
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
@@ -56,6 +58,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_album->getId(),
 			$gallery->getActiveUserId(),
@@ -72,6 +75,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			 * type that this plugin will print.  Make it an unsupported mime type so that no
 			 * graphics toolkits will get involved.
 			 */
+
 			list($ret, $this->_items[$i]) = $this->_createRandomDataItem(
 				$this->_album->getId(),
 				'test/jpeg',
@@ -140,6 +144,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_items[2]->getId(),
 			$anonymousUserId,
@@ -151,7 +156,8 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->checkPoint();
+
+		$ret = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -184,6 +190,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		} else {
 			$session->remove('snapgalaxy.cartUrlFragment');
 		}
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -193,6 +200,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 
 	public function testFulfillCart() {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce(
@@ -217,6 +225,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			),
 			100
 		);
+
 		$platform->setReply('fflush', array('testFd'), true);
 		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
 		$platform->setReply('feof', array('testFd'), false);
@@ -227,11 +236,13 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			array('testFd', 4096),
 			'requesturl="/REQUEST_URL" redirecturl="/REDIRECT_URL"'
 		);
+
 		$platform->setReply('feof', array('testFd'), true);
 		$platform->setReply('fclose', array('testFd'), true);
 		$gallery->setPlatform($platform);
 
-		$cartPlugin            = new SnapGalaxyCartPlugin();
+		$cartPlugin = new SnapGalaxyCartPlugin();
+
 		list($ret, $urlParams) = $cartPlugin->fulfillCart($cartItemIds);
 
 		if ($ret) {

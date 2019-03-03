@@ -34,6 +34,7 @@ class ImageBlockPreloads {
 				if ($ret) {
 					return $ret;
 				}
+
 				$frameIds = array();
 
 				foreach ($paramSet as $params) {
@@ -47,7 +48,8 @@ class ImageBlockPreloads {
 				}
 
 				if (!empty($frameIds)) {
-					$frameIds               = array_keys($frameIds);
+					$frameIds = array_keys($frameIds);
+
 					list($ret, $imageframe) = GalleryCoreApi::newFactoryInstance('ImageFrameInterface_1_1');
 
 					if ($ret) {
@@ -69,7 +71,6 @@ class ImageBlockPreloads {
 
 				return null;
 		}
-
 
 		return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 	}

@@ -54,7 +54,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		$fallback = true,
 		$sets = array('common', 'album', 'photo')
 	) {
-		$isContainer       = ($containerId > 0);
+		$isContainer = ($containerId > 0);
+
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map', $containerId);
 
 		if ($ret) {
@@ -67,6 +68,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 			$isContainer = false;
 		}
 
@@ -100,6 +102,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			if (!isset($param[$set])) {
 				continue;
 			}
+
 			$list = array();
 			/** @todo: fix this to use serialize/unserialize */
 			foreach ($param[$set] as $item) {
@@ -107,6 +110,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				  . ($item['detail'] ? 1 : 0)
 				  . (!empty($item['choices']) ? ('`' . implode('`', $item['choices'])) : '');
 			}
+
 			$ret = GalleryCoreApi::setPluginParameter(
 				'module',
 				'map',
@@ -147,13 +151,15 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				return array(null, false);
 			}
 		}
+
 		$param[$set][] = array(
 			'field'   => $newField,
 			'summary' => false,
 			'detail'  => true,
 			'choices' => array(),
 		);
-		$ret           = mapHelper::saveParameters(
+
+		$ret = mapHelper::saveParameters(
 			array(
 				$set => $param[$set],
 			),
@@ -198,11 +204,13 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		switch ($exceptType) {
 			case 'album':
 				$setTypes = array(0, 2);
+
 				// Fall Through
 			case 'photo':
 				if (!isset($setTypes)) {
 					$setTypes = array(0, 1);
 				}
+
 				$ret = GalleryCoreApi::removeMapEntry(
 					'mapMap',
 					array(
@@ -219,6 +227,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				break;
 
 			default:
+
 				$ret = GalleryCoreApi::removeMapEntry(
 					'mapMap',
 					array(
@@ -230,6 +239,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				if ($ret) {
 					return $ret;
 				}
+
 		}
 
 		return null;
@@ -250,6 +260,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function fetchFieldValues($items, $viewType = null, $fillSet = null) {
 		global $gallery;
+
 		$data = $result = array();
 
 		if (empty($items) || !is_array($items)) {
@@ -319,13 +330,15 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 * @static
 	 */
 	public function saveFieldValues(&$item, $fields) {
-		$set               = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 1 : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 2 : 0);
-		$containerId       = ($set == 1) ? $item->getId() : $item->getParentId();
+		$set         = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 1 : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 2 : 0);
+		$containerId = ($set == 1) ? $item->getId() : $item->getParentId();
+
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map', $containerId);
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$isContainer = !empty($param);
 
 		$ret = GalleryCoreApi::removeMapEntry(
@@ -372,7 +385,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$item = $event->getEntity();
-			$ret  = GalleryCoreApi::removeMapEntry(
+
+			$ret = GalleryCoreApi::removeMapEntry(
 				'mapMap',
 				array(
 					'itemId' => $item->getId(),
@@ -396,7 +410,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 				if ($coords != null) {
 					$fields['GPS'] = $coords;
-					$ret           = mapHelper::saveFieldValues($item, $fields);
+
+					$ret = mapHelper::saveFieldValues($item, $fields);
 
 					if ($ret) {
 						return $ret;
@@ -441,11 +456,13 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					}
 				}
 			}
+
 			$ret = mapHelper::saveParameters($newParam, $containerId);
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$status['saved'] = 1;
 		} elseif (isset($form['action']['add'])) {
 			foreach ($form['action']['add'] as $set => $tmp) {} /** @todo: Is this intended--empty action for foreach? */
@@ -456,6 +473,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 				return array(null, $status);
 			}
+
 			list($ret, $added) = mapHelper::addField($newField, $set, $containerId);
 
 			if ($ret) {
@@ -474,6 +492,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			if ($ret) {
 				return $ret;
 			}
+
 			$idx = mapHelper::findParameter($param[$set], $form[$set]['goField']);
 
 			if ($idx < 0) {
@@ -485,6 +504,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					// Remove from $set, add to common; no db change
 					$param['common'][] = $param[$set][$idx];
 					unset($param[$set][$idx]);
+
 					$ret = mapHelper::saveParameters(
 						array(
 							'common' => $param['common'],
@@ -502,6 +522,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				case 'remove':
 					// Remove from $set; delete from all items
 					unset($param[$set][$idx]);
+
 					$ret = mapHelper::saveParameters(
 						array(
 							$set => $param[$set],
@@ -512,6 +533,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = mapHelper::deleteField(
 						$form[$set]['goField'],
 						$isContainer ? $containerId : 0
@@ -520,6 +542,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					if ($ret) {
 						return $ret;
 					}
+
 					$status['removed'] = 1;
 
 					break;
@@ -531,6 +554,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					$newSet           = $form[$set]['goAction'];
 					$param[$newSet][] = $param[$set][$idx];
 					unset($param[$set][$idx]);
+
 					$ret = mapHelper::saveParameters(
 						array(
 							'common' => $param['common'],
@@ -542,6 +566,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					if ($ret) {
 						return $ret;
 					}
+
 					$ret = mapHelper::deleteField(
 						$form[$set]['goField'],
 						$isContainer ? $containerId : 0,
@@ -569,6 +594,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					$choices[] = $tmp;
 				}
 			}
+
 			list($ret, $param) = mapHelper::loadParameters($containerId, false);
 
 			if ($ret) {
@@ -580,7 +606,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 				if ($idx >= 0) {
 					$param[$set][$idx]['choices'] = $choices;
-					$ret                          = mapHelper::saveParameters(
+
+					$ret = mapHelper::saveParameters(
 						array(
 							$set => $param[$set],
 						),
@@ -590,13 +617,13 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					if ($ret) {
 						return $ret;
 					}
+
 					$status['picklist'] = 1;
 
 					break;
 				}
 			}
 		} // else $form['action']['reset']
-
 		return array(null, $status);
 	}
 
@@ -610,6 +637,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function loadAdminForm(&$form, $containerId = 0) {
 		global $gallery;
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
@@ -621,10 +649,12 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			'key'  => 'common',
 			'name' => $gallery->i18n('Common Fields'),
 		);
+
 		$form['set'][] = array(
 			'key'  => 'album',
 			'name' => $gallery->i18n('Album Fields'),
 		);
+
 		$form['set'][] = array(
 			'key'  => 'photo',
 			'name' => $gallery->i18n('Photo Fields'),
@@ -669,6 +699,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		if ($ret) {
 			return $ret;
 		}
+
 		$ret = mapHelper::saveFieldValues($item, $data);
 
 		if ($ret) {
@@ -706,12 +737,14 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Grab the current URL directory
-		$urlDir              = $urlGenerator->getCurrentUrlDir();
+		$urlDir = $urlGenerator->getCurrentUrlDir();
+
 		list($ret, $profile) = mapHelper::fetchKeyProfileForUrl($urlDir);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$key = (array_key_exists('apiKey', $profile)) ? $profile['apiKey'] : '';
 
 		return array($ret, $key);
@@ -787,6 +820,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$addNew = false;
 
 		if (!empty($oldUrl)) {
@@ -814,6 +848,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				'apiKey' => $apiKey,
 			);
 		}
+
 		$ret = mapHelper::_saveAllKeyProfiles($allKeySets);
 
 		return $ret;
@@ -969,6 +1004,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function _getPropertiesForItemId($itemId) {
 		global $gallery;
+
 		$gurl       =& $gallery->getUrlGenerator();
 		$properties = array();
 
@@ -984,12 +1020,14 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// Get the thumbnail information
 		list($ret, $thumb) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		// Get the date format
 		list($ret, $dateFormat) = GalleryCoreApi::getPluginParameter('module', 'core', 'format.date');
 
@@ -1017,8 +1055,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 		if (array_key_exists($itemId, $thumb)) {
 			// Add the Thumbnail Info to the array
-			$pointThumb                = $thumb[$itemId];
-			$properties['thumbLink']   = $gurl->generateUrl(
+			$pointThumb              = $thumb[$itemId];
+			$properties['thumbLink'] = $gurl->generateUrl(
 				array(
 					'view'         => 'core.DownloadItem',
 					'itemId'       => $pointThumb->getId(),
@@ -1028,6 +1066,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					'forceFullUrl' => true,
 				)
 			);
+
 			$properties['thumbWidth']  = $pointThumb->getWidth();
 			$properties['thumbHeight'] = $pointThumb->getHeight();
 		} else {
@@ -1040,7 +1079,6 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		// Set the Thumbnail Bar Sizes
 		$properties['thumbbarWidth']  = $mapThumbHeight * $properties['thumbWidth']  / $properties['thumbHeight'];
 		$properties['thumbbarHeight'] = $mapThumbHeight * $properties['thumbHeight'] / $properties['thumbWidth'];
-
 
 		return array(null, $properties);
 	}
@@ -1055,6 +1093,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function getGPSItems() {
 		global $gallery;
+
 		$gurl =& $gallery->getUrlGenerator();
 
 		// Only retrieve items that we have permissions to
@@ -1067,6 +1106,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		if (empty($aclIds)) {
 			return array($ret, null);
 		}
+
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
 
 		$query = '
@@ -1144,6 +1184,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function _getGroupsFromDB() {
 		global $gallery;
+
 		$gurl     =& $gallery->getUrlGenerator();
 		$platform =& $gallery->getPlatform();
 
@@ -1161,6 +1202,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$tmpgroups = explode('|', $tmpparam);
 
 		foreach ($tmpgroups as $tmpgroup) {
@@ -1211,6 +1253,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function getGPSGroups() {
 		global $gallery;
+
 		$gurl =& $gallery->getUrlGenerator();
 
 		list($ret, $mapThumbHeight) = GalleryCoreApi::getPluginParameter('module', 'map', 'ThumbHeight');
@@ -1236,7 +1279,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			return array($ret, array());
 		}
 
-		$items                   = array();
+		$items = array();
+
 		list($ret, $groupsinfos) = mapHelper::_getGroupsFromDB();
 
 		if ($ret) {
@@ -1314,6 +1358,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				list($ret, $albuminfos) = GalleryCoreApi::loadEntitiesById($parents[$id]);
 
 				if ($ret) {
@@ -1340,6 +1385,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				if ($ret) {
 					return array($ret, null);
 				}
+
 				$parentId = $parents[$id][count($parents[$id]) - 1];
 
 				for ($i = $fromLevel; $i < count($parents[$id]); $i++) {
@@ -1389,6 +1435,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function getCountItemWithCoords($itemId = null) {
 		global $gallery;
+
 		$userId = $gallery->getActiveUserId();
 
 		if ($itemId == null) {
@@ -1414,7 +1461,6 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		if ($ret) {
 			return array($ret, null);
 		}
-
 
 		if (empty($itemIds)) {
 			return array(null, 0);
@@ -1454,6 +1500,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 */
 	public function getRoutes($Points, $EnableRouteNumbering = false, $MarkerSets, $DefaultColors) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		list($ret, $DBRoutes) = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
@@ -1461,6 +1508,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		list($ret, $impath) = GalleryCoreApi::getPluginParameter('module', 'imagemagick', 'path');
 
 		if ($ret) {
@@ -1503,6 +1551,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						$type         = $item->getEntityType();
 						$imagename    = $MarkerSets[$type];
 						$defaultcolor = $DefaultColors[$type];
@@ -1528,7 +1577,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 						 * quotes used before text and after the text to be drawn ($nb), and
 						 * the single quotes around the text to be drawn on the image.
 						 */
-						$command     = array(
+						$command = array(
 							$impath . 'convert',
 							$sourceimage,
 							'-draw',
@@ -1537,12 +1586,15 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 							'\'' . $nb . '\'"',
 							$destination,
 						);
+
 						$returnstuff = $platform->exec(array($command));
 					}
+
 					// for each item, grab the coordinates and store them in an array.
 					$tmppoint[] = explode(',', mapHelper::getItemGPSCoordinatesFromDB($routeinfo[$i]));
 				}
 			}
+
 			$routeitems[$routeinfo[1]] = $rawitem;
 			$tmpparam[]                = $tmppoint;
 			$allrouteparam[]           = $tmpparam;

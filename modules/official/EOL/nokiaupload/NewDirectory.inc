@@ -43,8 +43,9 @@ class NewDirectoryController extends GalleryController {
 		$results['delegate'] = array(
 			'view' => 'nokiaupload.NewDirectory',
 		);
-		$results['status']   = ImageUploadHelper::createNewDirectory();
-		$results['error']    = array();
+
+		$results['status'] = ImageUploadHelper::createNewDirectory();
+		$results['error']  = array();
 
 		return array(null, $results);
 	}
@@ -74,6 +75,7 @@ class NewDirectoryView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
+
 		$gallery->debug("##### NewDirectoryView #####\n\$status = ");
 		$gallery->debug_r($status);
 

@@ -56,7 +56,6 @@ define(
  */
 class HTTP_WebDAV_Server {
 	// {{{ Member Variables
-
 	/**
 	 * URL path for this request
 	 *
@@ -109,7 +108,6 @@ class HTTP_WebDAV_Server {
 	public $_prop_encoding = 'utf-8';
 
 	// }}}
-
 	// {{{ handleRequest
 
 	/**
@@ -125,6 +123,7 @@ class HTTP_WebDAV_Server {
 		if (empty($this->dav_powered_by)) {
 			$this->dav_powered_by = 'PHP class: ' . get_class($this);
 		}
+
 		$this->setResponseHeader('X-Dav-Powered-By: ' . $this->dav_powered_by);
 
 		// set path
@@ -139,9 +138,10 @@ class HTTP_WebDAV_Server {
 
 		// set base URL
 		if (empty($this->baseUrl)) {
-			$this->baseUrl         = parse_url(
+			$this->baseUrl = parse_url(
 				"http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"
 			);
+
 			$this->baseUrl['path'] = substr(
 				$this->baseUrl['path'],
 				0,
@@ -206,11 +206,8 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ abstract WebDAV methods
-
 	// {{{ PROPFIND
-
 	/**
 	 * PROPFIND implementation
 	 *
@@ -224,12 +221,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ PROPPATCH
-
 	/**
 	 * PROPPATCH implementation
 	 *
@@ -243,12 +239,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ MKCOL
-
 	/**
 	 * MKCOL implementation
 	 *
@@ -262,12 +257,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ GET
-
 	/**
 	 * GET implementation
 	 *
@@ -289,12 +283,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ DELETE
-
 	/**
 	 * DELETE implementation
 	 *
@@ -308,12 +301,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ PUT
-
 	/**
 	 * PUT implementation
 	 *
@@ -327,12 +319,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ COPY
-
 	/**
 	 * COPY implementation
 	 *
@@ -346,12 +337,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ MOVE
-
 	/**
 	 * MOVE implementation
 	 *
@@ -365,12 +355,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ LOCK
-
 	/**
 	 * LOCK implementation
 	 *
@@ -384,12 +373,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ UNLOCK
-
 	/**
 	 * UNLOCK implementation
 	 *
@@ -403,16 +391,13 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// }}}
-
 	// {{{ other abstract methods
-
 	// {{{ checkAuth
-
 	/**
 	 * Check authentication
 	 *
@@ -430,12 +415,11 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// {{{ getLocks
-
 	/**
 	 * Get lock entries for a resource
 	 *
@@ -453,14 +437,12 @@ class HTTP_WebDAV_Server {
 	   {
 		   // dummy entry for PHPDoc
 	   }
+
 	*/
 
 	// }}}
-
 	// }}}
-
 	// {{{ WebDAV HTTP method wrappers
-
 	// {{{ options
 
 	/**
@@ -496,7 +478,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ propfind_request_helper
 
 	/**
@@ -531,7 +512,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ propfind_response_helper
 
 	/**
@@ -635,7 +615,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ propfind_wrapper
 
 	/**
@@ -660,7 +639,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ proppatch_request_helper
 
 	/**
@@ -687,7 +665,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ proppatch_response_helper
 
 	/**
@@ -748,7 +725,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ proppatch_wrapper
 
 	/**
@@ -778,7 +754,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ mkcol_wrapper
 
 	/**
@@ -797,7 +772,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ get_request_helper
 
 	/**
@@ -808,7 +782,6 @@ class HTTP_WebDAV_Server {
 	 */
 	public function get_request_helper(&$options) {
 		// TODO check for invalid stream
-
 		$options         = array();
 		$options['path'] = $this->path;
 
@@ -846,7 +819,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ get_response_helper
 
 	/**
@@ -871,6 +843,7 @@ class HTTP_WebDAV_Server {
 		if (empty($options['mimetype'])) {
 			$options['mimetype'] = 'application/octet-stream';
 		}
+
 		$this->setResponseHeader("Content-Type: $options[mimetype]");
 
 		if (!empty($options['mtime'])) {
@@ -882,12 +855,10 @@ class HTTP_WebDAV_Server {
 
 		if ($options['stream']) {
 			// GET handler returned a stream
-
 			if (!empty($options['ranges'])
 				&& (fseek($options['stream'], 0, SEEK_SET) === 0)
 			) {
 				// partial request and stream is seekable
-
 				if (count($options['ranges']) === 1) {
 					$range = $options['ranges'][0];
 
@@ -924,11 +895,13 @@ class HTTP_WebDAV_Server {
 									'Content-Length: '
 									. ($options['size'] - $range['start'])
 								);
+
 								$this->setResponseHeader(
 									"Content-Range: $range[start]-$range[end]/"
 									. (!empty($options['size']) ? $options['size'] : '*')
 								);
 							}
+
 							fpassthru($options['stream']);
 						}
 					} else {
@@ -947,6 +920,7 @@ class HTTP_WebDAV_Server {
 							$from = $options['size'] - $range['last'] - 1;
 							$to   = $options['size'] - 1;
 						}
+
 						$total = !empty($options['size']) ? $options['size'] : '*';
 						$size  = $to - $from + 1;
 						$this->_multipart_byterange_header(
@@ -984,6 +958,7 @@ class HTTP_WebDAV_Server {
 					'Content-Length: '
 					. strlen($options['data'])
 				);
+
 				echo $options['data'];
 			}
 		}
@@ -1039,7 +1014,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ get_wrapper
 
 	/**
@@ -1062,7 +1036,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ head_response_helper
 
 	/**
@@ -1087,6 +1060,7 @@ class HTTP_WebDAV_Server {
 		if (empty($options['mimetype'])) {
 			$options['mimetype'] = 'application/octet-stream';
 		}
+
 		$this->setResponseHeader("Content-Type: $options[mimetype]");
 
 		if (!empty($options['mtime'])) {
@@ -1098,12 +1072,10 @@ class HTTP_WebDAV_Server {
 
 		if (!empty($options['stream'])) {
 			// GET handler returned a stream
-
 			if (!empty($options['ranges'])
 				&& (fseek($options['stream'], 0, SEEK_SET) === 0)
 			) {
 				// partial request and stream is seekable
-
 				if (count($options['ranges']) === 1) {
 					$range = $options['ranges'][0];
 
@@ -1134,6 +1106,7 @@ class HTTP_WebDAV_Server {
 									'Content-Length: '
 									. ($options['size'] - $range['start'])
 								);
+
 								$this->setResponseHeader(
 									"Content-Range: $start-$end/"
 									. (!empty($options['size']) ? $options['size'] : '*')
@@ -1144,6 +1117,7 @@ class HTTP_WebDAV_Server {
 						$this->setResponseHeader(
 							"Content-Length: $range[last]"
 						);
+
 						fseek($options['stream'], -$range['last'], SEEK_END);
 					}
 				} else {
@@ -1157,6 +1131,7 @@ class HTTP_WebDAV_Server {
 							$from = $options['size'] - $range['last'] - 1;
 							$to   = $options['size'] - 1;
 						}
+
 						$total = !empty($options['size']) ? $options['size'] : '*';
 						$size  = $to - $from + 1;
 						$this->_multipart_byterange_header(
@@ -1168,6 +1143,7 @@ class HTTP_WebDAV_Server {
 
 						fseek($options['stream'], $start, SEEK_SET);
 					}
+
 					$this->_multipart_byterange_header(); // end multipart
 				}
 			} else {
@@ -1189,7 +1165,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ head_wrapper
 
 	/**
@@ -1217,7 +1192,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ put_request_helper
 
 	/**
@@ -1234,6 +1208,7 @@ class HTTP_WebDAV_Server {
 		if (!isset($_SERVER['CONTENT_LENGTH'])) {
 			return;
 		}
+
 		$options['content_length'] = $_SERVER['CONTENT_LENGTH'];
 
 		// default content type if none given
@@ -1305,6 +1280,7 @@ class HTTP_WebDAV_Server {
 					if (is_numeric($matches[3])) {
 						$range['total_length'] = $matches[3];
 					}
+
 					$option['ranges'][] = $range;
 
 					// TODO make sure the implementation supports partial PUT
@@ -1338,7 +1314,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ put_response_helper
 
 	/**
@@ -1385,7 +1360,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ put_wrapper
 
 	/**
@@ -1415,7 +1389,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ delete_wrapper
 
 	/**
@@ -1455,7 +1428,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ copymove_request_helper
 
 	/**
@@ -1521,7 +1493,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ copy_wrapper
 
 	/**
@@ -1532,7 +1503,6 @@ class HTTP_WebDAV_Server {
 	 */
 	public function copy_wrapper() {
 		// no need to check source is not locked
-
 		// perpare data-structure from COPY request
 		if (!$this->copymove_request_helper($options)) {
 			return;
@@ -1558,7 +1528,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ move_wrapper
 
 	/**
@@ -1600,7 +1569,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ lock_request_helper
 
 	/**
@@ -1652,7 +1620,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ lock_response_helper
 
 	/**
@@ -1738,7 +1705,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ lock_wrapper
 
 	/**
@@ -1777,7 +1743,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ unlock_request_helper
 
 	/**
@@ -1801,7 +1766,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ unlock_wrapper
 
 	/**
@@ -1828,7 +1792,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	public function _multistatusResponseHelper($responses) {
 		// now we generate the response header...
 		$this->setResponseStatus('207 Multi-Status', false);
@@ -1851,6 +1814,7 @@ class HTTP_WebDAV_Server {
 					$namespaces .= " xmlns:$prefix=\"$name\"";
 				}
 			}
+
 			echo "  <D:response$namespaces>\n";
 			echo "    <D:href>$response[href]</D:href>\n";
 
@@ -1914,6 +1878,7 @@ class HTTP_WebDAV_Server {
 											$prop['value']
 										);
 									}
+
 									echo "        <D:supportedlock>\n";
 									echo "          $prop[value]\n";
 									echo "        </D:supportedlock>\n";
@@ -1926,6 +1891,7 @@ class HTTP_WebDAV_Server {
 											$prop['value']
 										);
 									}
+
 									echo "        <D:lockdiscovery>\n";
 									echo "          $prop[value]\n";
 									echo "        </D:lockdiscovery>\n";
@@ -2113,7 +2079,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ mkprop
 
 	/**
@@ -2142,7 +2107,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ check_auth_wrapper
 
 	/**
@@ -2175,7 +2139,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ UUID stuff
 
 	/**
@@ -2192,7 +2155,6 @@ class HTTP_WebDAV_Server {
 
 		// fallback
 		$uuid = md5(microtime() . getmypid()); // this should be random enough for now
-
 		// set variant and version fields for 'true' random uuid
 		$uuid[12] = '4';
 		$n        = 8 + (ord($uuid[16]) & 3);
@@ -2218,7 +2180,6 @@ class HTTP_WebDAV_Server {
 	}
 
 	// }}}
-
 	// {{{ WebDAV If: header parsing
 
 	/**
@@ -2378,6 +2339,7 @@ class HTTP_WebDAV_Server {
 
 				continue;
 			}
+
 			$uris[$uri] = $list;
 		}
 

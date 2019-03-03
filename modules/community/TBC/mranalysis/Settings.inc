@@ -26,11 +26,9 @@
  * @author Mark Ridgwell <g2development@markridgwell.com>
  */
 
-
 // Required Files\Classes
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsAccess.class');
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsConstants.class');
-
 
 class SettingsController extends GalleryController {
 	/**
@@ -66,6 +64,7 @@ class SettingsController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			list($ret, $isActive) = $module->isActive();
 
 			if ($ret) {
@@ -96,7 +95,6 @@ class SettingsController extends GalleryController {
 		return array(null, $results);
 	}
 }
-
 
 /**
  * @package mranalysis

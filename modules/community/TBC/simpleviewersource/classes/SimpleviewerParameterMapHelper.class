@@ -52,6 +52,7 @@ class SimpleviewerParameterMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$params = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -74,6 +75,7 @@ class SimpleviewerParameterMapHelper {
 	 */
 	public function fetchParamIdsForAlbum($albumId) {
 		global $gallery;
+
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'SimpleviewerParameterMap',
 			array('id'),
@@ -85,6 +87,7 @@ class SimpleviewerParameterMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$paramIds = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -118,6 +121,7 @@ class SimpleviewerParameterMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$params = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -135,6 +139,7 @@ class SimpleviewerParameterMapHelper {
 	 */
 	public function fetchParamNames($albumId, $category) {
 		global $gallery;
+
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'SimpleviewerParameterMap',
 			array('paramName'),
@@ -146,11 +151,13 @@ class SimpleviewerParameterMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$paramNames = array();
 
 		while ($result = $searchResults->nextResult()) {
 			$paramNames[] = $result[0];
 		}
+
 		$paramNames = array_unique($paramNames);
 		sort($paramNames);
 
@@ -170,6 +177,7 @@ class SimpleviewerParameterMapHelper {
 	public function fetchParam($albumId, $paramName, $category) {
 		// returns only the first match - consider duplicates?
 		global $gallery;
+
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'SimpleviewerParameterMap',
 			array('id', 'paramValue'),
@@ -183,6 +191,7 @@ class SimpleviewerParameterMapHelper {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$params = array();
 
 		while ($result = $searchResults->nextResult()) {
@@ -204,14 +213,15 @@ class SimpleviewerParameterMapHelper {
 	 */
 	public function fetchParams($itemId, $category) {
 		global $gallery;
-		// build parent tree
 
+		// build parent tree
 		// get item's parent ids in a list...
 		list($ret, $albumIdTree) = GalleryCoreApi::fetchParentSequence($itemId);
 
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$albumIdTree = array_reverse($albumIdTree);
 		// ... and include the item itself:
 		$albumIdTree = array_merge(array($itemId), array_values($albumIdTree));
@@ -228,6 +238,7 @@ class SimpleviewerParameterMapHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$params = array_merge($albumParams, $params);
 		}
 
@@ -245,12 +256,15 @@ class SimpleviewerParameterMapHelper {
 	 */
 	public function createParam($albumId, $paramName, $category = null, $paramValue = null) {
 		global $gallery;
-		$storage        =& $gallery->getStorage();
+
+		$storage =& $gallery->getStorage();
+
 		list($ret, $id) = $storage->getUniqueId();
 
 		if ($ret) {
 			return $ret;
 		}
+
 		// maybe check for collisions etc?
 		$ret = GalleryCoreApi::addMapEntry(
 			'SimpleviewerParameterMap',

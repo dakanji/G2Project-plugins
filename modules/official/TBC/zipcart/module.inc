@@ -142,6 +142,7 @@ class ZipCartModule extends GalleryModule {
 				if ($path[strlen($path) - 1] != $slash) {
 					$path .= $slash;
 				}
+
 				$paths[] = $path . 'zip.exe';
 			}
 
@@ -160,6 +161,7 @@ class ZipCartModule extends GalleryModule {
 				if ($path[strlen($path) - 1] != $slash) {
 					$path .= $slash;
 				}
+
 				$paths[] = $path . 'zip';
 			}
 

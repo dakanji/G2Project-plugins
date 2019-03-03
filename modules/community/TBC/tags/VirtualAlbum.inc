@@ -48,11 +48,13 @@ class VirtualAlbumView extends GalleryView {
 		if (!isset($item)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null, null, null);
 		}
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'tags');
 
 		if ($ret) {
 			return array($ret, null, null, null);
 		}
+
 		list($tagName, $itemId) = GalleryUtilities::getRequestVariables('tagName', 'itemId');
 
 		$item->create(
@@ -87,11 +89,12 @@ class VirtualAlbumView extends GalleryView {
 			// Provide parent, parent URL and get-children function to Theme API
 			$rawTagName = $tagName;
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
-			$item->urlParams           = array(
+			$item->urlParams = array(
 				'view'        => 'tags.VirtualAlbum',
 				'tagName'     => $rawTagName,
 				'highlightId' => $itemId,
 			);
+
 			$item->getChildrenFunction = array('VirtualAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -146,6 +149,7 @@ class VirtualAlbumView extends GalleryView {
 	 */
 	public function getChildIds($userId, $tagName = null) {
 		global $gallery;
+
 		$storage =& $gallery->getStorage();
 
 		if (!isset($tagName)) {
@@ -188,6 +192,7 @@ class VirtualAlbumView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		$itemIds = array();
 
 		while ($result = $searchResults->nextResult()) {

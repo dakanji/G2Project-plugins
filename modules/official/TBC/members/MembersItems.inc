@@ -33,6 +33,7 @@ class MembersItemsView extends GalleryView {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/members/classes/GalleryMembersHelper.class');
+
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());
 
 		if ($ret) {

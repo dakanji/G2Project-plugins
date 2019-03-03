@@ -189,7 +189,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		);
 
 		// check that the pair was indeed marked as ignored
-
 		list($ret, $dupes) = DupeDetectHelper::getDupePairs($pair['srcItemId'], $pair['dupItemId']);
 
 		if ($ret->isError()) {
@@ -213,7 +212,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 	 */
 	public function testSubmitDelete() {
 		// get a test dupe pair
-
 		list($ret, $pair) = $this->_createTestPair();
 
 		if ($ret->isError()) {
@@ -262,7 +260,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		// get a test dupe pair
-
 		list($ret, $pair) = $this->_createTestPair();
 
 		if ($ret->isError()) {
@@ -319,7 +316,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 	 */
 	public function testSubmitLink() {
 		// get a test dupe pair
-
 		list($ret, $pair) = $this->_createTestPair();
 
 		if ($ret->isError()) {
@@ -361,7 +357,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		$this->assert($ret->isError() == false, 'item still exists');
 
 		// check that there is indeed an item linked to item1
-
 		list($ret, $linkedItems) = GalleryCoreApi::fetchEntitiesLinkedTo($this->_item1->getId());
 
 		if ($ret->isError()) {
@@ -378,7 +373,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		// get a test dupe pair
-
 		list($ret, $pair) = $this->_createTestPair();
 
 		if ($ret->isError()) {
@@ -423,7 +417,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		$this->assert($ret->isError() == false, 'item still exists');
 
 		// check that there is indeed an item linked to item1
-
 		list($ret, $linkedItems) = GalleryCoreApi::fetchEntitiesLinkedTo($this->_item2->getId());
 
 		if ($ret->isError()) {
@@ -448,7 +441,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 	 */
 	public function _createTestPair() {
 		// Create a container album for any data items we create
-
 		list($ret, $this->_album) = $this->_createRandomAlbum($this->_getRootId());
 
 		if ($ret->isError()) {
@@ -458,7 +450,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		// acquire locks for the test album
-
 		list($ret, $this->_lockIds) = GalleryCoreApi::acquireReadLock($this->_album->getId());
 
 		if ($ret->isError()) {
@@ -528,7 +519,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		$dupRecord['dupItem'] = $entities[1];
 
 		// get thumbnails
-
 		list($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds($allIds);
 
 		if ($ret->isError()) {

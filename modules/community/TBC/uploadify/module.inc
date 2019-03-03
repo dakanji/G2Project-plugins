@@ -25,6 +25,7 @@
 class UploadifyModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('uploadify');
 		$this->setName($gallery->i18n('Uploadify'));
 		$this->setDescription(
@@ -70,7 +71,6 @@ class UploadifyModule extends GalleryModule {
 		}
 
 		// Set default plugin parameters here
-
 		return null;
 	}
 

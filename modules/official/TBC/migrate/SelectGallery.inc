@@ -55,6 +55,7 @@ class SelectGalleryController extends GalleryController {
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
 				}
+
 				$form['albumsPath'] = trim($tmp);
 
 				if (!Gallery1DataParser::getme()->isValidAlbumsPath($form['albumsPath'])) {
@@ -76,6 +77,7 @@ class SelectGalleryController extends GalleryController {
 				} else {
 					$recentPaths[$form['albumsPath']] = 1;
 				}
+
 				$session->put('migrate.view.SelectGallery.recentPaths', $recentPaths);
 
 				$redirect['view']       = 'core.SiteAdmin';
@@ -100,6 +102,7 @@ class SelectGalleryController extends GalleryController {
 			$results['delegate']['view']    = 'core.SiteAdmin';
 			$results['delegate']['subView'] = 'migrate.SelectGallery';
 		}
+
 		$results['status'] = $status;
 		$results['error']  = $error;
 

@@ -32,6 +32,7 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 
 	public function setUp($x1 = null) {
 		global $gallery;
+
 		$ret = parent::setUp();
 
 		if ($ret) {
@@ -45,8 +46,10 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 
 	public function tearDown() {
 		global $gallery;
+
 		$gallery->_session = $this->_saveSession;
-		$ret               = parent::tearDown();
+
+		$ret = parent::tearDown();
 
 		if ($ret) {
 			$this->failWithStatus($ret);

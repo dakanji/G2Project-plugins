@@ -13,8 +13,6 @@
 // dependencies: NONE                                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-
-
 class getid3_ac3 extends getid3_handler {
 	private $AC3header = array();
 	private $BSIoffset = 0;
@@ -30,9 +28,7 @@ class getid3_ac3 extends getid3_handler {
 		$thisfile_ac3_raw          = &$thisfile_ac3['raw'];
 		$thisfile_ac3_raw_bsi      = &$thisfile_ac3_raw['bsi'];
 
-
 		// http://www.atsc.org/standards/a_52a.pdf
-
 		$info['fileformat'] = 'ac3';
 
 		// An AC-3 serial coded audio bit stream is made up of a sequence of synchronization frames
@@ -45,14 +41,12 @@ class getid3_ac3 extends getid3_handler {
 		// additional CRC word is located in the SI header, the use of which, by a decoder, is optional.
 		//
 		// syncinfo() | bsi() | AB0 | AB1 | AB2 | AB3 | AB4 | AB5 | Aux | CRC
-
 		// syncinfo() {
 		// 	 syncword    16
 		// 	 crc1        16
 		// 	 fscod        2
 		// 	 frmsizecod   6
 		// } /* end of syncinfo */
-
 		$this->fseek($info['avdataoffset']);
 		$this->AC3header['syncinfo'] = $this->fread(5);
 
@@ -65,6 +59,7 @@ class getid3_ac3 extends getid3_handler {
 
 				return $this->error('Expecting "' . getid3_lib::PrintHexBytes(self::syncword) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($this->AC3header['syncinfo'], 0, 2)) . '"');
 			}
+
 			$offset = 0;
 			$this->fseek(-2, SEEK_CUR);
 		}
@@ -131,6 +126,7 @@ class getid3_ac3 extends getid3_handler {
 
 				break;
 		}
+
 		$info['audio']['channels'] = $thisfile_ac3['num_channels'];
 
 		if ($thisfile_ac3_raw_bsi['acmod'] & 0x01) {
@@ -193,7 +189,6 @@ class getid3_ac3 extends getid3_handler {
 			// If acmod is 0, then two completely independent program channels (dual mono)
 			// are encoded into the bit stream, and are referenced as Ch1, Ch2. In this case,
 			// a number of additional items are present in BSI or audblk to fully describe Ch2.
-
 			// This indicates how far the average dialogue level is below digital 100 percent. Valid values are 1-31.
 			// The value of 0 is reserved. The values of 1 to 31 are interpreted as -1 dB to -31 dB with respect to digital 100 percent.
 			$thisfile_ac3_raw_bsi['dialnorm2']       = $this->readHeaderBSI(5);
@@ -424,7 +419,6 @@ class getid3_ac3 extends getid3_handler {
 		// The meaning of the X values is most simply described by considering X to represent a 4-bit
 		// signed integer with values from -8 to +7. The gain indicated by X is then (X + 1) * 6.02 dB. The
 		// following table shows this in detail.
-
 		// Meaning of 4 msb of compr
 		//  7    +48.16 dB
 		//  6    +42.14 dB
@@ -442,7 +436,6 @@ class getid3_ac3 extends getid3_handler {
 		// -6    -30.10 dB
 		// -7    -36.12 dB
 		// -8    -42.14 dB
-
 		$fourbit = str_pad(decbin(($compre & 0xF0) >> 4), 4, '0', STR_PAD_LEFT);
 
 		if ($fourbit[0] == '1') {
@@ -450,19 +443,18 @@ class getid3_ac3 extends getid3_handler {
 		} else {
 			$log_gain = bindec(substr($fourbit, 1));
 		}
+
 		$log_gain = ($log_gain + 1) * getid3_lib::RGADamplitude2dB(2);
 
 		// The value of Y is a linear representation of a gain change of up to -6 dB. Y is considered to
 		// be an unsigned fractional integer, with a leading value of 1, or: 0.1 Y4 Y5 Y6 Y7 (base 2). Y can
 		// represent values between 0.111112 (or 31/32) and 0.100002 (or 1/2). Thus, Y can represent gain
 		// changes from -0.28 dB to -6.02 dB.
-
 		$lin_gain = (16 + ($compre & 0x0F)) / 32;
 
 		// The combination of X and Y values allows compr to indicate gain changes from
 		//  48.16 - 0.28 = +47.89 dB, to
 		// -42.14 - 6.02 = -48.16 dB.
-
 		return $log_gain - $lin_gain;
 	}
 

@@ -33,8 +33,10 @@ GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
 class mapCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;
-		$platform           = $gallery->getPlatform();
-		static $blockNum    = 0;
+
+		$platform        = $gallery->getPlatform();
+		static $blockNum = 0;
+
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
 
 		if ($ret) {
@@ -48,6 +50,7 @@ class mapCallbacks {
 				if ($ret) {
 					return $ret;
 				}
+
 				list($ret, $fields) = mapHelper::fetchFieldValues(array($item), 'detail');
 
 				if ($ret) {
@@ -96,6 +99,7 @@ class mapCallbacks {
 									'Group'  => '',
 									'filter' => 'Route: ' . $routeinfos[1],
 								);
+
 								$i++;
 							}
 						}
@@ -136,6 +140,7 @@ class mapCallbacks {
 									'Group' => '',
 									'album' => $album,
 								);
+
 								$i++;
 							}
 						}
@@ -165,6 +170,7 @@ class mapCallbacks {
 								'Group'  => '',
 								'filter' => $options[1],
 							);
+
 							$i++;
 						}
 					} elseif (empty($routefilters) and empty($albumfilters)) {
@@ -191,6 +197,7 @@ class mapCallbacks {
 							$filteroptions[] = $albumfilter;
 						}
 					}
+
 					$filter                                  = GalleryUtilities::getRequestVariables('filter');
 					$album                                   = GalleryUtilities::getRequestVariables('album');
 					$filterOn                                = ($filter == '' or empty($filter)) ? $albumword . ' ' . $album : $filter;
@@ -217,12 +224,14 @@ class mapCallbacks {
 					} else { // Handle other cases (data items)
 						$ItemType = $module->translate('Item');
 					}
+
 					// Grab the field data for the item
 					list($ret, $data) = mapHelper::fetchFieldValues(array($item));
 
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					$lat      = array();
 					$lng      = array();
 					$dir      = array(); // directions
@@ -232,18 +241,21 @@ class mapCallbacks {
 							'hint' => 'North abbreviation',
 						)
 					);
+
 					$dir['S'] = $module->translate(
 						array(
 							'text' => 'S',
 							'hint' => 'South abbreviation',
 						)
 					);
+
 					$dir['E'] = $module->translate(
 						array(
 							'text' => 'E',
 							'hint' => 'East abbreviation',
 						)
 					);
+
 					$dir['W'] = $module->translate(
 						array(
 							'text' => 'W',
@@ -285,6 +297,7 @@ class mapCallbacks {
 							$lng['dir'] = $coords[1] > 0 ? $dir['E'] : $dir['W'];
 						}
 					}
+
 					// Send variable to the template for processing
 					$block =& $smarty->_tpl_vars['block'];
 
@@ -378,16 +391,19 @@ class mapCallbacks {
 						} elseif ($params['albumItems'] == 3) { // show all subitems
 							list($ret, $markerItemIds) = GalleryCoreApi::fetchDescendentItemIds($item);
 						}
+
 						// Get the site default zoom level
 						if (array_key_exists('zoomInLevel', $param)) {
 							$mapZoom = $param['zoomInLevel'];
 						}
 					}
+
 					// Add parent sequence to items to fetch from database.
 					if ($params['useParentCoords']) {
 						list($ret, $itemParents) = GalleryCoreApi::fetchParentSequence($item->getId());
 						$markerItemIds           = array_merge($markerItemIds, $itemParents);
 					}
+
 					/*
 					 * Now add the main item to the markerItemIds array so it will grab its data.
 					 * The item may be removed from the markerParams later as block settings dictate.
@@ -443,6 +459,7 @@ class mapCallbacks {
 								$mapCenter = $markerParams[$parentId]['GPS'];
 								$mapZoom   = (array_key_exists('ZoomLevel', $markerParams[$parentId])) ? $markerParams[$parentId]['ZoomLevel'] : $mapZoom;
 							}
+
 							// Now that we have the data, remove the parent items
 							unset($markerParams[$parentId]);
 						}
@@ -477,6 +494,7 @@ class mapCallbacks {
 
 							continue;
 						}
+
 						$ItemColor  = (array_key_exists('Color', $markerParams[$markerItem->getId()])) ? $markerParams[$markerItem->getId()]['Color'] : (($markerItem->getCanContainChildren()) ? $DefaultAlbumColor : $DefaultPhotoColor);
 						$ItemMarker = ($markerItem->getCanContainChildren()) ? $DefaultAlbumMarker : $DefaultPhotoMarker;
 
@@ -488,6 +506,7 @@ class mapCallbacks {
 									. $ItemMarker . '/marker_' . $ItemColor . '.png',
 								)
 							);
+
 							/** @todo Each icon type should have it's own shadow */
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]['shadowUrl'] = $gurl->generateUrl(
 								array(
@@ -497,13 +516,15 @@ class mapCallbacks {
 
 							/** @todo Figure out error handling if image file doesn't exist */
 							// Get the Marker Size
-							$imageSizes                                          = $platform->getimagesize(
+							$imageSizes = $platform->getimagesize(
 								$mapModBaseDir . 'images/markers/'
 								. $ItemMarker . '/marker_' . $ItemColor . '.png'
 							);
+
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]['width']  = $imageSizes[0];
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]['height'] = $imageSizes[1];
 						}
+
 						// Now associate the marker icon to the marker itself (allows for sharing)
 						$markerParams[$markerItem->getId()]['icon']  = "{$ItemMarker}_{$ItemColor}";
 						$markerParams[$markerItem->getId()]['title'] = html_entity_decode(

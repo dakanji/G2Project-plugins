@@ -173,6 +173,7 @@ class MultimediaRenderer extends GalleryRenderer {
 					case 'video/x-msvideo':
 					case 'video/x-ms-wmv':
 						$classId = 'CLSID:05589FA1-C356-11CE-BF01-00AA0055595A';
+
 						// Fall Through
 					case 'video/x-ms-asf':
 					case 'video/x-ms-asx':
@@ -225,6 +226,7 @@ class MultimediaRenderer extends GalleryRenderer {
                 if(navigator.userAgent.toLowerCase().indexOf('safari') && navigator.userAgent.toLowerCase().indexOf('android') == -1 && navigator.userAgent.toLowerCase().indexOf('chrome') == -1){
                     types.quicktime = 'h264';
                 }
+
                 var ext = '%s'.split('/')[1];
                 if (Modernizr.video && Modernizr.video[types[ext]]) {
                     // First try html5.video
@@ -267,16 +269,20 @@ class MultimediaRenderer extends GalleryRenderer {
                                     autoHide: 'always',
                                     hideDelay: 2000
                                 }
+
                             },
                             clip: {
                                 url: '%s',
                                 scaling: 'fit'
                             }
+
                         }
+
                     )
                 } else {
                     jQuery('#multimedia-%s').html('Sorry your browser does not support HTML5.video.'+types[ext]+'<br />%s');
                 }
+
             </script>",
 							$entity->getId(),
 							$jsWarning,
@@ -312,7 +318,6 @@ class MultimediaRenderer extends GalleryRenderer {
 				}
 
 				break; // end case: video
-
 			case 'audio':
 				switch ($entity->getMimeType()) {
 					case 'audio/ogg':
@@ -369,6 +374,7 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
+
                                 },
                                 clip: {
                                     url: '%s',
@@ -376,11 +382,14 @@ class MultimediaRenderer extends GalleryRenderer {
 
                                     coverImage: { url: '%s', scaling: 'orig' }
                                 }
+
                             }
+
                         )
                     } else {
                         jQuery('#multimedia-%s').html('Sorry your browser does not support HTML5.audio.'+types[ext]+'<br />%s');
                     }
+
                 </script>",
 							$entity->getId(),
 							$jsWarning,
@@ -455,14 +464,18 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
+
                                 },
                                 clip: {
                                     url: '%s'
                                 }
+
                             }
+
                         )
                         jQuery('#multimedia-%s').css({'background-image':'url(%s)', 'background-position':'top center', 'background-repeat':'no-repeat'});
                     }
+
                 </script>",
 							$entity->getId(),
 							$jsWarning,

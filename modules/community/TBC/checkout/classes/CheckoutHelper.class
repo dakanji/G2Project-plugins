@@ -54,6 +54,7 @@ class CheckoutHelper {
 	 */
 	public function storeReturnURL() {
 		global $gallery;
+
 		$session =& $gallery->getSession();
 
 		$returnURL = GalleryUtilities::getRequestVariables('return');
@@ -71,6 +72,7 @@ class CheckoutHelper {
 	 */
 	public function fetchReturnURL() {
 		global $gallery;
+
 		$session   =& $gallery->getSession();
 		$returnURL = $session->get('checkout.returnURL');
 
@@ -87,6 +89,7 @@ class CheckoutHelper {
 	 */
 	public function loadCheckoutItemsFromSession() {
 		global $gallery;
+
 		$session       =& $gallery->getSession();
 		$checkoutItems = $session->get('checkout.items');
 
@@ -179,17 +182,21 @@ class CheckoutHelper {
 
 						return array($ret, null);
 					}
+
 					/* BUILD hierarchy of albums for parentTitle field
 					/* get item's parent ids in a list... */
+
 					list($ret, $itemIdTree) = GalleryCoreApi::fetchParentSequence($itemId);
 
 					if ($ret) {
 						return array($ret, null);
 					}
+
 					// drop the root album if there's more than one level
 					if (count($itemIdTree) > 1) {
 						array_shift($itemIdTree);
 					}
+
 					// work through each level
 					$pathstring = '';
 
@@ -199,8 +206,10 @@ class CheckoutHelper {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 						$pathstring .= ' / ' . $parentEntity->getTitle();
 					}
+
 					$checkoutItems[$itemId]                    = $item;
 					$checkoutItems[$itemId]['fullItemDetails'] = (array)$fullItem;
 					$checkoutItems[$itemId]['parentTitle']     = substr($pathstring, 3);
@@ -225,6 +234,7 @@ class CheckoutHelper {
 		if ($ret) {
 			return $ret;
 		}
+
 		// Write the updated item records back into the cart
 		$ret = CheckoutHelper::storeItemListInSession($items);
 
@@ -251,6 +261,7 @@ class CheckoutHelper {
 			if (isset($itemDetails['remove'])) {
 				continue;
 			}
+
 			$items[$itemId]['id'] = $itemId;
 			//table view
 			//we leave the quantity record set, but blank - for zeros
@@ -269,6 +280,7 @@ class CheckoutHelper {
 					}
 				}
 			}
+
 			//dropdown view
 			if (isset($itemDetails['newproduct']) && $itemDetails['newproduct'] != '') {
 				if (intval($itemDetails['newqty']) != 0) {
@@ -288,10 +300,12 @@ class CheckoutHelper {
 		if (isset($form['postage']) && $form['postage'] != '') {
 			$items['postage'] = $form['postage'];
 		}
+
 		// Discount Option
 		if (isset($form['discountCode']) && $form['discountCode'] != '') {
 			$items['discountCode'] = $form['discountCode'];
 		}
+
 		// Instructions Option
 		if (isset($form['instructions']) && $form['instructions'] != '') {
 			$items['instructions'] = $form['instructions'];
@@ -309,7 +323,9 @@ class CheckoutHelper {
 	 */
 	public function addItemsToItemList(&$checkoutItems, $items, $IPQ = null) {
 		global $gallery;
-		$phpVm                     = $gallery->getPhpVm();
+
+		$phpVm = $gallery->getPhpVm();
+
 		list($ret, $checkoutItems) = CheckoutHelper::loadCheckoutItemsFromSession();
 
 		if ($ret) {
@@ -317,7 +333,8 @@ class CheckoutHelper {
 		}
 
 		foreach ($items as $item) {
-			$id                      = $item->getId();
+			$id = $item->getId();
+
 			list($ret, $permissions) = GalleryCoreApi::getPermissions($id);
 
 			if ($ret) {
@@ -334,12 +351,14 @@ class CheckoutHelper {
 						'timeAdded' => $phpVm->time(),
 					);
 				}
+
 				// get products
 				list($ret, $products) = CheckoutProductMapHelper::fetchVisibleProducts($id, true);
 
 				if ($ret) {
 					return $ret;
 				}
+
 				// for each item use either IPQ values or initial quantities
 				foreach ($products as $product) {
 					if (isset($IPQ[$id])) {
@@ -385,6 +404,7 @@ class CheckoutHelper {
 	 */
 	public function storeItemListInSession($checkoutItems) {
 		global $gallery;
+
 		$phpVm   = $gallery->getPhpVm();
 		$session =& $gallery->getSession();
 
@@ -397,8 +417,10 @@ class CheckoutHelper {
 					unset($checkoutItems[$key]['fullItemDetails']);
 				}
 			}
+
 			$session->put('checkout.items', $checkoutItems);
 		}
+
 		$session->put('checkout.cartLastModified', $phpVm->time());
 
 		return null;

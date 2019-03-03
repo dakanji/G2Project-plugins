@@ -28,6 +28,7 @@
 class CheckoutPaypalModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
+
 		$this->setId('checkoutpaypal');
 		$this->setName('Checkout by Paypal');
 		$this->setDescription(
@@ -181,7 +182,9 @@ class CheckoutPaypalModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
 					$this->performFactoryRegistrations();
+
 					// Fall Through
 				case '0.1.11.1':
 				case '0.1.12':
@@ -195,6 +198,8 @@ class CheckoutPaypalModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
+
+
 					// Fall Through
 				case '0.3.2':
 				case '0.3.3':

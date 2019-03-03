@@ -73,8 +73,9 @@ class MapGroupAdminController extends GalleryController {
 					$editgroup = $group;
 				}
 			}
+
 			// Get the coordinates and such in the map database
-			$query              = '
+			$query = '
             SELECT
 	      [mapMap::field],
 	      [mapMap::value]
@@ -83,6 +84,7 @@ class MapGroupAdminController extends GalleryController {
 	    WHERE
 	      [mapMap::itemId] = \'G' . $id . '\'
 	    ';
+
 			list($ret, $result) = $gallery->search($query, array(), array());
 
 			$params = '';
@@ -137,6 +139,7 @@ class MapGroupAdminController extends GalleryController {
 				foreach ($groupstrings as $tempgroup) {
 					$tempgroups[] = explode('`', $tempgroup);
 				}
+
 				$maxGroupId = 0;
 				$editIdDupe = false;
 				$groupsById = array();
@@ -149,14 +152,17 @@ class MapGroupAdminController extends GalleryController {
 						if ($num == $groupArray[0]) {
 							$editIdDupe = true;
 						}
+
 						// Move the dupe to the (currently-known) end
 						$maxGroupId = $maxGroupId + 1;
 						// reassign group ID to highest ID + 1
 						$tempgroups[$groupKey][0] = $maxGroupId;
 					}
+
 					// Store the group string into the array, keyed by group ID
 					$groupsById[$tempgroups[$groupKey][0]] = implode('`', $tempgroups[$groupKey]);
 				}
+
 				/*
 				 * if $num was not found in the existing Group IDs (i.e., it's new)
 				 * or if it was a dupe, then add it as a new group, else leave it alone
@@ -181,6 +187,7 @@ class MapGroupAdminController extends GalleryController {
 			if ($GroupName == '') {
 				$GroupName = 'Group ' . $num;
 			}
+
 			$editgroup = $num . '`'
 			 . $GroupName . '`'
 			 . $GroupDesc . '`'
@@ -212,6 +219,7 @@ class MapGroupAdminController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			// Actually update the database with the zoomlevel passed on to the ItemID
 			if ($zoom != '') {
 				$ret = GalleryCoreApi::addMapEntry(
@@ -229,6 +237,7 @@ class MapGroupAdminController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			// Actually update the database with the color passed on to the ItemID
 			if ($color != '') {
 				$ret = GalleryCoreApi::addMapEntry(
@@ -273,7 +282,8 @@ class MapGroupAdminController extends GalleryController {
 			GalleryCoreApi::setPluginParameter('module', 'map', 'MapGroups', $newgroups);
 
 			// Also need to delete any (map) parameters in the database related to this item
-			$id  = 'G' . $id;
+			$id = 'G' . $id;
+
 			$ret = GalleryCoreApi::removeMapEntry(
 				'mapMap',
 				array(
@@ -313,6 +323,7 @@ class MapGroupAdminController extends GalleryController {
 				foreach ($groupstrings as $tempgroup) {
 					$tempgroups[] = explode('`', $tempgroup);
 				}
+
 				$maxGroupId = 0;
 				$editIdDupe = false;
 				$groupsById = array();
@@ -325,14 +336,17 @@ class MapGroupAdminController extends GalleryController {
 						if ($num == $groupArray[0]) {
 							$editIdDupe = true;
 						}
+
 						// Move the dupe to the (currently-known) end
 						$maxGroupId = $maxGroupId + 1;
 						// reassign group ID to highest ID + 1
 						$tempgroups[$groupKey][0] = $maxGroupId;
 					}
+
 					// Store the group string into the array, keyed by group ID
 					$groupsById[$tempgroups[$groupKey][0]] = implode('`', $tempgroups[$groupKey]);
 				}
+
 				/*
 				 * if $num was not found in the existing Group IDs (i.e., it's new)
 				 * or if it was a dupe, then add it as a new group, else leave it alone
@@ -357,6 +371,7 @@ class MapGroupAdminController extends GalleryController {
 			if ($GroupName == '') {
 				$GroupName = 'Group ' . $num;
 			}
+
 			$newgroup = $num . '`'
 			. $GroupName . '`'
 			. $GroupDesc . '`'
@@ -366,7 +381,6 @@ class MapGroupAdminController extends GalleryController {
 			. $GroupItems;
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditGroup', $newgroup);
-
 
 			$id         = 'G' . $num;
 			$coordinate = (isset($_POST['GroupGPS'])) ? $_POST['GroupGPS'] : '';
@@ -402,6 +416,7 @@ class MapGroupAdminController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			// Actually update the database with the zoomlevel passed on to the ItemID
 			if ($zoom != '') {
 				$ret = GalleryCoreApi::addMapEntry(
@@ -419,6 +434,7 @@ class MapGroupAdminController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			// Actually update the database with the color passed on to the ItemID
 			if ($color != '') {
 				$ret = GalleryCoreApi::addMapEntry(
@@ -436,7 +452,6 @@ class MapGroupAdminController extends GalleryController {
 					return $ret;
 				}
 			}
-
 
 			$results['status']              = $status;
 			$results['error']               = $error;
@@ -464,6 +479,7 @@ class MapGroupAdminController extends GalleryController {
 				foreach ($groupstrings as $tempgroup) {
 					$tempgroups[] = explode('`', $tempgroup);
 				}
+
 				$maxGroupId = 0;
 				$editIdDupe = false;
 				$groupsById = array();
@@ -476,14 +492,17 @@ class MapGroupAdminController extends GalleryController {
 						if ($num == $groupArray[0]) {
 							$editIdDupe = true;
 						}
+
 						// Move the dupe to the (currently-known) end
 						$maxGroupId = $maxGroupId + 1;
 						// reassign group ID to highest ID + 1
 						$tempgroups[$groupKey][0] = $maxGroupId;
 					}
+
 					// Store the group string into the array, keyed by group ID
 					$groupsById[$tempgroups[$groupKey][0]] = implode('`', $tempgroups[$groupKey]);
 				}
+
 				/*
 				 * if $num was not found in the existing Group IDs (i.e., it's new)
 				 * or if it was a dupe, then add it as a new group, else leave it alone
@@ -508,6 +527,7 @@ class MapGroupAdminController extends GalleryController {
 			if ($GroupName == '') {
 				$GroupName = 'Group ' . $num;
 			}
+
 			$editgroup = $num . '`'
 			 . $GroupName . '`'
 			 . $GroupDesc . '`'
@@ -539,6 +559,7 @@ class MapGroupAdminController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			// Actually update the database with the zoomlevel passed on to the ItemID
 			if ($zoom != '') {
 				$ret = GalleryCoreApi::addMapEntry(
@@ -556,6 +577,7 @@ class MapGroupAdminController extends GalleryController {
 					return $ret;
 				}
 			}
+
 			// Actually update the database with the color passed on to the ItemID
 			if ($color != '') {
 				$ret = GalleryCoreApi::addMapEntry(
@@ -607,8 +629,9 @@ class MapGroupAdminView extends GalleryView {
 		$form['now']            = strftime($dateFormat, strtotime('now'));
 
 		// Select items that have GPS coordinates filled out
-		$storage             =& $gallery->getStorage();
-		$query               = '
+		$storage =& $gallery->getStorage();
+
+		$query = '
 	SELECT
 	  [mapMap::itemId],
 	  [mapMap::value]
@@ -617,6 +640,7 @@ class MapGroupAdminView extends GalleryView {
 	WHERE
 	  [mapMap::field] = \'GPS\'
 	';
+
 		list($ret, $results) = $gallery->search($query, array(), array());
 
 		if (!$ret) {
@@ -642,7 +666,6 @@ class MapGroupAdminView extends GalleryView {
 				$pointHash[$id]['id']  = $id;
 				$pointHash[$id]['gps'] = $result[1];
 
-
 				$tmp = array();
 
 				if (substr($id, 0, 1) == 'G') {
@@ -659,8 +682,9 @@ class MapGroupAdminView extends GalleryView {
 					if (array_key_exists($id, $pointHash)) {
 						$pointHash[$id]['type'] = 'GoogleMapGroup';
 						$groupid                = substr($id, 1);
-						list($ret, $tmpparam)   = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
-						$groups                 = explode('|', $tmpparam);
+
+						list($ret, $tmpparam) = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
+						$groups               = explode('|', $tmpparam);
 
 						foreach ($groups as $group) {
 							if (!empty($group)) {
@@ -688,8 +712,8 @@ class MapGroupAdminView extends GalleryView {
 					$tmp[] = $id;
 				}
 			}
-			$ids = $tmp;
 
+			$ids = $tmp;
 
 			// Trim the list down to the items that the user is allowed to see
 			list($ret, $perms) = GalleryCoreApi::fetchPermissionsForItems($ids, $gallery->getActiveUserId());
@@ -705,7 +729,8 @@ class MapGroupAdminView extends GalleryView {
 			$ids = array_values($ids);
 			// Retrieve data for each entity
 			list($ret, $entities) = $storage->loadEntities($ids);
-			list($ret, $thumbs)   = GalleryCoreApi::fetchThumbnailsByItemIds($ids);
+
+			list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds($ids);
 
 			/*
 			 * Fill out additional properties for each entity, taking care to
@@ -723,9 +748,9 @@ class MapGroupAdminView extends GalleryView {
 						'serialNumber' => $thumbs[$entity->getId()]->getSerialNumber(),
 					)
 				);
-				$pointHash[$entity->getId()]['date']        = strftime($dateFormat, $entity->getCreationTimestamp());
-			}
 
+				$pointHash[$entity->getId()]['date'] = strftime($dateFormat, $entity->getCreationTimestamp());
+			}
 
 			$GPSItem = array();
 
@@ -750,7 +775,8 @@ class MapGroupAdminView extends GalleryView {
 					. $form['useMarkerSet'] . '/colorlist',
 					'r'
 				);
-				$list   = explode(
+
+				$list = explode(
 					'*',
 					fread(
 						$handle,
@@ -762,6 +788,7 @@ class MapGroupAdminView extends GalleryView {
 						) - 1
 					)
 				);
+
 				fclose($handle);
 				$form['colorGoption'] = '';
 
@@ -780,6 +807,7 @@ class MapGroupAdminView extends GalleryView {
 					) {
 						$form['colorGoption'] .= 'selected';
 					}
+
 					$form['colorGoption'] .= '>' . $color . '</option>';
 				}
 			}
@@ -791,12 +819,13 @@ class MapGroupAdminView extends GalleryView {
 			sort($groups);
 
 			foreach ($groups as $group) {
-				$tmp                 = explode('`', $group);
-				$tmp[5]              = strftime($dateFormat, $tmp[5]);
-				$pic                 = GalleryUtilities::convertPathToUrl(
+				$tmp    = explode('`', $group);
+				$tmp[5] = strftime($dateFormat, $tmp[5]);
+				$pic    = GalleryUtilities::convertPathToUrl(
 					$basegallerydir
 					. 'modules/map/images/groups/' . $tmp[4]
 				);
+
 				$tmp[4]              = '<img width=80px src="' . $pic . '" />';
 				$form['thegroups'][] = $tmp;
 			}

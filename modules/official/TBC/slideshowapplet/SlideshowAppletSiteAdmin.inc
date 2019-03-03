@@ -181,6 +181,7 @@ class SlideshowAppletSiteAdminView extends GalleryView {
 				foreach ($variablesArray as $variable) {
 					$variables[] = $variable;
 				}
+
 				$form[$key] = $variables;
 			}
 		}

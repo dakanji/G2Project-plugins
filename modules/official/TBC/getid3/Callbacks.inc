@@ -92,8 +92,10 @@ class Getid3Callbacks {
 					if ($ret) {
 						return $ret;
 					}
+
 					$mode = null;
 				}
+
 				list($ret, $getid3ArchiveData) = Getid3Helper::getId3ArchiveData($path, $filter);
 
 				if ($ret) {

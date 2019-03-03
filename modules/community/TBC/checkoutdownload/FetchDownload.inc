@@ -46,6 +46,7 @@ class FetchDownloadView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
 
@@ -54,6 +55,7 @@ class FetchDownloadView extends GalleryView {
 		if (empty($transactionId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
+
 		// get the transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
@@ -76,7 +78,9 @@ class FetchDownloadView extends GalleryView {
 		if ($verify1 != $transaction->getDate() || $verify2 != $transaction->getSecurity()) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
-		$file                         = '';
+
+		$file = '';
+
 		list($ret, $permissionResult) = CheckoutDownloadHelper::checkDownloadOffer($transactionId);
 
 		if ($ret) {
@@ -110,22 +114,26 @@ class FetchDownloadView extends GalleryView {
 			$event = GalleryCoreApi::newEvent('GalleryCheckoutDownload::downloadNotify');
 			$event->setEntity($transaction);
 			$event->setData('permitted');
+
 			list($ret) = GalleryCoreApi::postEvent($event);
 
 			if ($ret) {
 				return $ret;
 			}
+
 			// Get a write lock for the transaction and refresh from database
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
 
 			if ($ret) {
 				return $ret;
 			}
+
 			list($ret, $transaction) = $transaction->refresh();
 
 			if ($ret) {
 				return $ret;
 			}
+
 			$transaction->setTimeDownloaded(time());
 			$transaction->setDownloadAttempts($transaction->getDownloadAttempts() + 1);
 			// Save the modified transaction
@@ -134,6 +142,7 @@ class FetchDownloadView extends GalleryView {
 			if ($ret) {
 				return $ret;
 			}
+
 			// Release our lock
 			$ret = GalleryCoreApi::releaseLocks($lockId);
 
@@ -147,6 +156,7 @@ class FetchDownloadView extends GalleryView {
 			if ($ret) {
 				return $ret;
 			}
+
 			list($ret, $uniquefilename) = GalleryCoreApi::getPluginParameter('module', 'checkoutDownload', 'useUniqueDLFilename');
 
 			if ($ret) {
@@ -158,12 +168,14 @@ class FetchDownloadView extends GalleryView {
 			} else {
 				$filenamebase = 'G2cart';
 			}
+
 			$extension = 'zip';
 			$uniqueId  = '';
 
 			if ($uniquefilename) {
 				$uniqueId = '-' . date('YmdHis');
 			}
+
 			$zipName = $filenamebase . $uniqueId . '.' . $extension;
 			$size    = $platform->filesize($file);
 			// Disable output compression (if necessary) since IE seems to have problems with it
@@ -182,11 +194,14 @@ class FetchDownloadView extends GalleryView {
 					if (strlen($data) == 0) {
 						break;
 					}
+
 					echo $data;
 					$gallery->guaranteeTimeLimit(30);
 				}
+
 				$platform->fclose($fd);
 			}
+
 			@$platform->unlink($file);
 		}
 

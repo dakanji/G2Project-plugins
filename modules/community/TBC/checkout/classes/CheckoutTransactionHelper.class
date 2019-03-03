@@ -30,7 +30,6 @@
   * Required classes
   */
 
-
 /**
  * A helper class for Checkout Transactions
  *
@@ -104,11 +103,13 @@ class CheckoutTransactionHelper {
 	 */
 	public function purgeDeadTransactions() {
 		global $gallery;
+
 		list($ret, $moduleParameters) = GalleryCoreApi::fetchAllPluginParameters('module', 'checkout');
 
 		if ($ret) {
 			return $ret;
 		}
+
 		$query1 = '
         SELECT
           [GalleryCheckoutTransaction::id]
@@ -138,6 +139,7 @@ class CheckoutTransactionHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			// Delete these transactions
 			while ($result = $searchResults->nextResult()) {
 				$ret = GalleryCoreApi::deleteEntityById($result[0]);
@@ -147,6 +149,7 @@ class CheckoutTransactionHelper {
 				}
 			}
 		}
+
 		/* Search for all transaction IDs where the transaction date was more than
 		 * required number of days
 		 */
@@ -156,6 +159,7 @@ class CheckoutTransactionHelper {
 			if ($ret) {
 				return $ret;
 			}
+
 			// Delete these transactions
 			while ($result = $searchResults->nextResult()) {
 				$ret = GalleryCoreApi::deleteEntityById($result[0]);

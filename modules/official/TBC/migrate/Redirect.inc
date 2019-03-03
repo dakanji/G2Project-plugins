@@ -52,6 +52,7 @@ class RedirectController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		global $gallery;
+
 		$phpVm = $gallery->getPhpVm();
 		GalleryCoreApi::requireOnce('modules/migrate/classes/G1MigrateHelper.class');
 
@@ -70,6 +71,8 @@ class RedirectController extends GalleryController {
 					} elseif ($file[1] == 'thumb') {
 						$derivative = DERIVATIVE_TYPE_IMAGE_THUMBNAIL;
 					}
+
+
 					// Fall Through
 				case 2:
 					$view    = 'core.DownloadItem';
@@ -85,6 +88,7 @@ class RedirectController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$itemId = $id;
 
 			if (isset($id, $derivative)) {
@@ -123,6 +127,7 @@ class RedirectController extends GalleryController {
 					if (is_array($derivative)) {
 						$derivative = array_shift($derivative);
 					}
+
 					$id = $derivative->getId();
 				}
 			}
@@ -132,6 +137,7 @@ class RedirectController extends GalleryController {
 			if ($ret) {
 				return array($ret, null);
 			}
+
 			$itemId = $id;
 		}
 

@@ -61,7 +61,6 @@ class GoogleMapUtilities {
 		 * post: returns "ideal" zoom and center for the map
 		 */
 		$base = (3.725E-06) * 1.5; // constant Mercantor Radian miles per pixel at zoom level 5
-
 		// verify that more than one distinct coordinate exists
 		if (!is_array($coords)) {
 			$zoom   = 15;
@@ -96,11 +95,13 @@ class GoogleMapUtilities {
 			array_push($merclat, log($x + sqrt($x * $x + 1)) / log(exp(1)));
 			array_push($lon, $c[0]);
 		}
+
 		$centerlong = (min($lon) + max($lon)) / 2;
 
 		if (strpos($centerlong, ',')) {
 			$centerlong = str_replace(',', '.', $centerlong);
 		}
+
 		$centerlat = rad2deg(atan(sinh((min($merclat) + max($merclat)) / 2)));
 
 		if (strpos($centerlat, ',')) {
@@ -188,6 +189,7 @@ class GoogleMapUtilities {
 				if ($selected == $color) {
 					$colorlist .= 'selected';
 				}
+
 				$colorlist .= '>' . $color . '</option>';
 			}
 		}
@@ -219,9 +221,11 @@ class GoogleMapUtilities {
 				if ($selected == $file) {
 					$list .= 'selected';
 				}
+
 				$list .= '>' . $file . "</option>\n\t";
 			}
 		}
+
 		$mydir->close();
 
 		if ($list == '') {
@@ -272,11 +276,13 @@ class GoogleMapUtilities {
 							. 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\''
 						. $base . $imagefolder . $name . '.png\');"';
 					}
+
 					$sizes[2]         = $src;
 					$filenames[$name] = $sizes;
 				}
 			}
 		}
+
 		$mydir->close();
 
 		return $filenames;
@@ -291,6 +297,7 @@ class GoogleMapUtilities {
 	 */
 	public function AllMarkers($imagetype = 'markers') {
 		global $gallery;
+
 		$gurl           =& $gallery->getUrlGenerator();
 		$basegallerydir = substr(dirname(__FILE__), 0, -19);
 		$base           = $gurl->generateUrl(
@@ -301,18 +308,20 @@ class GoogleMapUtilities {
 				'forceFullUrl' => true,
 			)
 		);
-		$mydir          = dir($basegallerydir . 'modules/map/images/' . $imagetype . '/');
-		$filenamearray  = array();
+
+		$mydir         = dir($basegallerydir . 'modules/map/images/' . $imagetype . '/');
+		$filenamearray = array();
 
 		while (($filenames = $mydir->read()) !== false) {
 			if (is_dir($basegallerydir . 'modules/map/images/' . $imagetype . '/' . $filenames)
 				&& $filenames != '.' && $filenames != '..' && $filenames != 'multi'
 				&& $filenames != 'CVS' && $filenames != '.svn'
 			) {
-				$mydir2     = dir(
+				$mydir2 = dir(
 					$basegallerydir . 'modules/map/images/' . $imagetype . '/'
 					  . $filenames . '/'
 				);
+
 				$imagearray = array();
 
 				while (($images = $mydir2->read()) !== false) {
@@ -324,6 +333,7 @@ class GoogleMapUtilities {
 						$imagearray[] = $images;
 					}
 				}
+
 				$mydir2->close();
 				sort($imagearray, SORT_STRING);
 
@@ -348,9 +358,11 @@ class GoogleMapUtilities {
 						. $filenames . '/' . $images . '\');"/>';
 					}
 				}
+
 				$filenamearray[$filenames] = $allimagesarray;
 			}
 		}
+
 		$mydir->close();
 
 		ksort($filenamearray, SORT_STRING);
@@ -378,6 +390,7 @@ class GoogleMapUtilities {
 	 */
 	public function setGPSCoordsInExif($item, $coordinates, $overwrite = false) {
 		global $gallery;
+
 		$error  = array();
 		$status = '';
 
@@ -386,12 +399,14 @@ class GoogleMapUtilities {
 		if ($ret) {
 			return array($ret, null, null, null);
 		}
+
 		$oldfilename      = dirname($filename) . '/old' . basename($filename);
 		$jpeg_header_data = get_jpeg_header_data($filename);
 		// backup the file as "oldxyz.jpg" if it doesn't exist
 		if (!file_exists($oldfilename)) {
 			put_jpeg_header_data($filename, $oldfilename, $jpeg_header_data);
 		}
+
 		$exifdata = get_EXIF_JPEG($filename);
 
 		if (is_array($exifdata[0]) && array_key_exists(34853, $exifdata[0])
@@ -405,11 +420,13 @@ class GoogleMapUtilities {
 					unserialize(file_get_contents($baseexif)),
 					$jpeg_header_data
 				);
+
 				put_jpeg_header_data($filename, $filename, $new_jpeg_header_data);
 
 				$jpeg_header_data = get_jpeg_header_data($filename);
 				$exifdata         = get_EXIF_JPEG($filename);
 			}
+
 			$coords                = explode(',', $coordinates);
 			$lat[0]['Numerator']   = floor(abs($coords[0]));
 			$lat[0]['Denominator'] = 1;
@@ -442,7 +459,8 @@ class GoogleMapUtilities {
 				'Text Value'      => '2,0,0,0',
 				'Decoded'         => 1,
 			);
-			$gpslatref             = array(
+
+			$gpslatref = array(
 				'Tag Number'      => 1,
 				'Tag Name'        => 'North or South Latitude',
 				'Tag Description' => '',
@@ -453,7 +471,8 @@ class GoogleMapUtilities {
 				'Text Value'      => $latRef[0],
 				'Decoded'         => 1,
 			);
-			$gpslat                = array(
+
+			$gpslat = array(
 				'Tag Number'      => 2,
 				'Tag Name'        => 'Latitude',
 				'Tag Description' => '',
@@ -470,7 +489,8 @@ class GoogleMapUtilities {
 					. '), (Degrees Minutes Seconds North or South)',
 				'Decoded'         => 1,
 			);
-			$gpslonref             = array(
+
+			$gpslonref = array(
 				'Tag Number'      => 3,
 				'Tag Name'        => 'East or West Longitude',
 				'Tag Description' => '',
@@ -481,7 +501,8 @@ class GoogleMapUtilities {
 				'Text Value'      => $lonRef[0],
 				'Decoded'         => 1,
 			);
-			$gpslon                = array(
+
+			$gpslon = array(
 				'Tag Number'      => 4,
 				'Tag Name'        => 'Longitude',
 				'Tag Description' => '',
@@ -498,7 +519,8 @@ class GoogleMapUtilities {
 					. '), (Degrees Minutes Seconds North or South)',
 				'Decoded'         => 1,
 			);
-			$gpsinfos              = array(
+
+			$gpsinfos = array(
 				'Tags Name'   => 'GPS',
 				'Tiff Offset' => 12,
 				'0'           => $gpsversion,
@@ -507,7 +529,8 @@ class GoogleMapUtilities {
 				'3'           => $gpslonref,
 				'4'           => $gpslon,
 			);
-			$exifdata[0][34853]    = array(
+
+			$exifdata[0][34853] = array(
 				'Tag Number'      => 34853,
 				'Tag Name'        => 'GPS Info Image File Directory (IFD)',
 				'Tag Description' => '',
@@ -520,7 +543,8 @@ class GoogleMapUtilities {
 				'Text Value'      => '',
 				'Decoded'         => 1,
 			);
-			$jpeg_header_data      = put_EXIF_JPEG($exifdata, $jpeg_header_data);
+
+			$jpeg_header_data = put_EXIF_JPEG($exifdata, $jpeg_header_data);
 			put_jpeg_header_data($filename, $filename, $jpeg_header_data);
 		}
 
@@ -642,6 +666,7 @@ class GoogleMapUtilities {
 						if ($point['regroupShowHigh'] <= $z) {
 							$points[$id]['regroupShowHigh'] = $z + 1;
 						}
+
 						$points[$point['parentId']]['hasHiddenChild'] = true;
 					}
 				}
@@ -673,6 +698,7 @@ class GoogleMapUtilities {
 	 */
 	public function setPreloadFromFolder($preload, $set) {
 		global $gallery;
+
 		$platform =& $gallery->getPlatform();
 
 		$Sizes = array();
@@ -692,6 +718,7 @@ class GoogleMapUtilities {
 					}
 				}
 			}
+
 			$platform->closedir($mydir);
 		}
 
