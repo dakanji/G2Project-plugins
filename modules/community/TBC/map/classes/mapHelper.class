@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Eric Daniel <ehdaniel@gmail.com>
@@ -24,6 +26,7 @@
  *
  * based on a code from Alan Harder <alan.harder@sun.com>
  */
+
 // Session key for storing item admin mode
 define('map_SESSION_KEY', 'map.adminMode.itemId');
 
@@ -104,6 +107,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			}
 
 			$list = array();
+
 			/** @todo: fix this to use serialize/unserialize */
 			foreach ($param[$set] as $item) {
 				$list[] = $item['field'] . '`' . ($item['summary'] ? 1 : 0) . '`'
@@ -239,7 +243,6 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				if ($ret) {
 					return $ret;
 				}
-
 		}
 
 		return null;
@@ -276,7 +279,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			$itemId          = (int)$item->getId();
 			$itemIds[]       = $itemId;
 			$result[$itemId] = array();
-			$containerId     = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? (int)$itemId : (int)$item->getParentId();
+
+			$containerId = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? (int)$itemId : (int)$item->getParentId();
 
 			list($ret, $param[$itemId], $isContainer[$itemId]) = mapHelper::loadParameters($containerId);
 
@@ -330,7 +334,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 * @static
 	 */
 	public function saveFieldValues(&$item, $fields) {
-		$set         = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 1 : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 2 : 0);
+		$set = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 1 : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 2 : 0);
+
 		$containerId = ($set == 1) ? $item->getId() : $item->getParentId();
 
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map', $containerId);
@@ -385,8 +390,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$item = $event->getEntity();
-
-			$ret = GalleryCoreApi::removeMapEntry(
+			$ret  = GalleryCoreApi::removeMapEntry(
 				'mapMap',
 				array(
 					'itemId' => $item->getId(),
@@ -649,12 +653,10 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			'key'  => 'common',
 			'name' => $gallery->i18n('Common Fields'),
 		);
-
 		$form['set'][] = array(
 			'key'  => 'album',
 			'name' => $gallery->i18n('Album Fields'),
 		);
-
 		$form['set'][] = array(
 			'key'  => 'photo',
 			'name' => $gallery->i18n('Photo Fields'),
@@ -1035,8 +1037,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			return array($ret, null);
 		}
 
-		$itemTitle = $item->getTitle();
-
+		$itemTitle  = $item->getTitle();
 		$properties = array(
 			'type'        => $item->getEntityType(),
 			'title'       => (empty($itemTitle)) ? preg_replace(array('/\n/', '/\r/'), array('', ''), $item->getPathComponent()) : preg_replace(array('/\n/', '/\r/'), array('', ''), $itemTitle),
@@ -1055,8 +1056,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 		if (array_key_exists($itemId, $thumb)) {
 			// Add the Thumbnail Info to the array
-			$pointThumb              = $thumb[$itemId];
-			$properties['thumbLink'] = $gurl->generateUrl(
+			$pointThumb                = $thumb[$itemId];
+			$properties['thumbLink']   = $gurl->generateUrl(
 				array(
 					'view'         => 'core.DownloadItem',
 					'itemId'       => $pointThumb->getId(),
@@ -1066,7 +1067,6 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					'forceFullUrl' => true,
 				)
 			);
-
 			$properties['thumbWidth']  = $pointThumb->getWidth();
 			$properties['thumbHeight'] = $pointThumb->getHeight();
 		} else {
@@ -1139,8 +1139,8 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 				return array($ret, null);
 			}
 
-			$explodedCoord = explode(',', $result[1]);
-			$itemLink      = $gurl->generateUrl(
+			$explodedCoord     = explode(',', $result[1]);
+			$itemLink          = $gurl->generateUrl(
 				array(
 					'view'   => 'core.ShowItem',
 					'itemId' => $result[0],
@@ -1149,7 +1149,6 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 					'forceFullUrl' => true,
 				)
 			);
-
 			$items[$result[0]] = array(
 				'id'        => $result[0],
 				'gps'       => $result[1],
@@ -1207,9 +1206,9 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 		foreach ($tmpgroups as $tmpgroup) {
 			$groupinfo = explode('`', $tmpgroup);
+			$thumbpic  = substr(dirname(__FILE__), 0, -7) . 'images/groups/' . $groupinfo[4];
 
-			$thumbpic = substr(dirname(__FILE__), 0, -7) . 'images/groups/' . $groupinfo[4];
-			$Tsizes   = $platform->getimagesize($thumbpic);
+			$Tsizes = $platform->getimagesize($thumbpic);
 
 			if ($Tsizes !== false) {
 				$thumbWidth     = $Tsizes[0];
@@ -1520,7 +1519,6 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		}
 
 		$mapModBaseDir = substr(dirname(__FILE__), 0, -7);
-
 		$allrouteparam = array();
 		$routeitems    = array();
 		$routes        = explode('|', $DBRoutes);
@@ -1552,26 +1550,28 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 							return array($ret, null);
 						}
 
-						$type         = $item->getEntityType();
+						$type = $item->getEntityType();
+
 						$imagename    = $MarkerSets[$type];
 						$defaultcolor = $DefaultColors[$type];
 						$color        = mapHelper::getItemColor($routeinfo[$i]);
 						$color        = ($color == 'default') ? $defaultcolor : $color;
-
-						$sourceimage = $mapModBaseDir . 'images/markers/' . $imagename
+						$sourceimage  = $mapModBaseDir . 'images/markers/' . $imagename
 						. '/marker_' . strtoupper($color) . '.png';
-						$destination = $mapModBaseDir . 'images/routes/' . $routeinfo[1] . '/'
+						$destination  = $mapModBaseDir . 'images/routes/' . $routeinfo[1] . '/'
 						. $nb . '-marker_' . strtoupper($color) . '.png';
 
 						$picsize = $platform->getimagesize($sourceimage);
 
 						$xpos = $picsize[0] / 2 - 3;
 						$ypos = $picsize[1] / 2 + 2;
+
 						/**
 						 * @todo Change this to use ImageMagick's "annotate" instead of
 						 * "draw text".
 						 * Can't do it yet because ImageMagick 6 is required.
 						 */
+
 						/* ImageMagick's convert is picky about the format used for the
 						 * -draw text argument and how it's quoted, so note the extra double
 						 * quotes used before text and after the text to be drawn ($nb), and

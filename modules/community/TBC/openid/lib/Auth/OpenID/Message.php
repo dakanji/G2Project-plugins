@@ -10,11 +10,8 @@
  * Import tools needed to deal with messages.
  */
 require_once 'Auth/OpenID.php';
-
 require_once 'Auth/OpenID/KVForm.php';
-
 require_once 'Auth/Yadis/XML.php';
-
 require_once 'Auth/OpenID/Consumer.php'; // For Auth_OpenID_FailureResponse
 // This doesn't REALLY belong here, but where is better?
 define(
@@ -25,7 +22,6 @@ define(
 // URI for Simple Registration extension, the only commonly deployed
 // OpenID 1.x extension, and so a special case
 define('Auth_OpenID_SREG_URI', 'http://openid.net/sreg/1.0');
-
 // The OpenID 1.X namespace URI
 define('Auth_OpenID_OPENID1_NS', 'http://openid.net/signon/1.0');
 define('Auth_OpenID_THE_OTHER_OPENID1_NS', 'http://openid.net/signon/1.1');
@@ -37,7 +33,6 @@ function Auth_OpenID_isOpenID1($ns) {
 
 // The OpenID 2.0 namespace URI
 define('Auth_OpenID_OPENID2_NS', 'http://specs.openid.net/auth/2.0');
-
 // The namespace consisting of pairs with keys that are prefixed with
 // "openid."  but not in another namespace.
 define('Auth_OpenID_NULL_NAMESPACE', 'Null namespace');
@@ -252,9 +247,8 @@ class Auth_OpenID_Mapping {
 	public function _reflow() {
 		// PHP is broken yet again.  Sort the arrays to remove the
 		// hole in the numeric indexes that make up the array.
-		$old_keys   = $this->keys;
-		$old_values = $this->values;
-
+		$old_keys     = $this->keys;
+		$old_values   = $this->values;
 		$this->keys   = array();
 		$this->values = array();
 
@@ -276,7 +270,6 @@ class Auth_OpenID_Mapping {
 
 		if ($index !== false) {
 			unset($this->keys[$index], $this->values[$index]);
-
 			$this->_reflow();
 
 			return true;
@@ -451,14 +444,14 @@ class Auth_OpenID_Message {
 			Auth_OpenID_THE_OTHER_OPENID1_NS,
 			Auth_OpenID_OPENID2_NS,
 		);
-
-		$this->args       = new Auth_OpenID_Mapping();
-		$this->namespaces = new Auth_OpenID_NamespaceMap();
+		$this->args                      = new Auth_OpenID_Mapping();
+		$this->namespaces                = new Auth_OpenID_NamespaceMap();
 
 		if ($openid_namespace === null) {
 			$this->_openid_ns_uri = null;
 		} else {
 			$implicit = Auth_OpenID_isOpenID1($openid_namespace);
+
 			$this->setOpenIDNamespace($openid_namespace, $implicit);
 		}
 	}
@@ -533,8 +526,7 @@ class Auth_OpenID_Message {
 		// Resolve namespaces
 		foreach ($openid_args->items() as $pair) {
 			list($rest, $value) = $pair;
-
-			$parts = explode('.', $rest, 2);
+			$parts              = explode('.', $rest, 2);
 
 			if (count($parts) == 2) {
 				list($ns_alias, $ns_key) = $parts;
@@ -569,7 +561,8 @@ class Auth_OpenID_Message {
 		// Actually put the pairs into the appropriate namespaces
 		foreach ($ns_args as $triple) {
 			list($ns_alias, $ns_key, $value) = $triple;
-			$ns_uri                          = $this->namespaces->getNamespaceURI($ns_alias);
+
+			$ns_uri = $this->namespaces->getNamespaceURI($ns_alias);
 
 			if ($ns_uri === null) {
 				$ns_uri = $this->_getDefaultNamespace($ns_alias);
@@ -661,8 +654,10 @@ class Auth_OpenID_Message {
 			list($ns_parts, $value) = $pair;
 
 			list($ns_uri, $ns_key) = $ns_parts;
-			$key                   = $this->getKey($ns_uri, $ns_key);
-			$args[$key]            = $value;
+
+			$key = $this->getKey($ns_uri, $ns_key);
+
+			$args[$key] = $value;
 		}
 
 		return $args;
@@ -672,7 +667,8 @@ class Auth_OpenID_Message {
 		// Return all namespaced arguments, failing if any
 		// non-namespaced arguments exist.
 		$post_args = $this->toPostArgs();
-		$kvargs    = array();
+
+		$kvargs = array();
 
 		foreach ($post_args as $k => $v) {
 			if (strpos($k, 'openid.') !== 0) {
@@ -702,7 +698,6 @@ class Auth_OpenID_Message {
 
 		$form_tag_attrs['action'] = $action_url;
 		$form_tag_attrs['method'] = 'post';
-
 		unset($form_tag_attrs['enctype'], $form_tag_attrs['accept-charset']);
 
 		if ($form_tag_attrs) {
@@ -948,7 +943,8 @@ class Auth_OpenID_Message {
 
 		if ($ns === null) {
 			$key = $aliased_key;
-			$ns  = $this->getOpenIDNamespace();
+
+			$ns = $this->getOpenIDNamespace();
 		}
 
 		return $this->getArg($ns, $key, $default);

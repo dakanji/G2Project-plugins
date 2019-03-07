@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -44,7 +45,8 @@ class WebDavCallbacks {
 					$link = WebDavHelper::getMountLink($params['itemId']);
 				}
 
-				$block                            =& $smarty->_tpl_vars['block'];
+				$block =& $smarty->_tpl_vars['block'];
+
 				$block['webdav']['LoadMountLink'] = array(
 					'link'          => $link,
 					'hasPermission' => $hasPermission,

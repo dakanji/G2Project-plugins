@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 /**
@@ -266,8 +266,8 @@ class BulkTagsEditView extends GalleryView {
 		}
 
 		$urlGenerator =& $gallery->getUrlGenerator();
+		$BulkTagsEdit = array();
 
-		$BulkTagsEdit              = array();
 		$BulkTagsEdit['canCancel'] = $urlGenerator->isNavigationBackPossible();
 		$BulkTagsEdit['page']      = $page;
 		$BulkTagsEdit['itemId']    = $itemId;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -61,7 +62,6 @@ class ZipCartPluginTest extends GalleryTestCase {
 		}
 
 		$this->_markToolkitForCleanup('ZipCartToolkit');
-
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ZipCartToolkit',
 			array('test/jpeg'),
@@ -258,8 +258,8 @@ class ZipCartPluginTest extends GalleryTestCase {
 		$derivative->setDerivativeSourceId($item->getId());
 		$derivative->setMimeType($item->getMimeType());
 		$operation = empty($operation) ? 'testoperation|0' : $operation;
-		$derivative->setDerivativeOperations($operation);
 
+		$derivative->setDerivativeOperations($operation);
 		$ret = $derivative->save();
 
 		if ($ret) {
@@ -290,6 +290,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce('modules/zipcart/classes/ZipCartPlugin.class');
+
 		$cartPlugin = new ZipCartPlugin();
 
 		list($ret, $urlParams) = $cartPlugin->fulfillCart($cartItemIds);
@@ -305,11 +306,12 @@ class ZipCartPluginTest extends GalleryTestCase {
 			),
 			$urlParams
 		);
-
 		$platform =& $gallery->getPlatform();
+
 		@$platform->unlink($gallery->_zipCartTempnam);
 		$slash = $platform->getDirectorySeparator();
 		$path  = $this->_album->getPathComponent();
+
 		// Check that the right files were selected..
 		$this->assertEquals(
 			array(
@@ -329,17 +331,14 @@ class ZipCartPluginTest extends GalleryTestCase {
 			strpos($gallery->_zipCartSources[0], "${slash}albums${slash}") !== false,
 			'first item from original (' . $gallery->_zipCartSources[0] . ')'
 		);
-
 		$this->assert(
 			strpos($gallery->_zipCartSources[1], "${slash}derivative/") !== false,
 			'second item from derivative (' . $gallery->_zipCartSources[1] . ')'
 		);
-
 		$this->assert(
 			strpos($gallery->_zipCartSources[2], "${slash}derivative/") !== false,
 			'third item from derivative (' . $gallery->_zipCartSources[2] . ')'
 		);
-
 		$this->assert(
 			strpos($gallery->_zipCartSources[3], "${slash}albums${slash}") !== false,
 			'fourth item from original (' . $gallery->_zipCartSources[3] . ')'

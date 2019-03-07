@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OpenID Server Request
  *

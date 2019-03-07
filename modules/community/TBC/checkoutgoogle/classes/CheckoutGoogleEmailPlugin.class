@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -34,7 +35,6 @@ class CheckoutGoogleEmailPlugin extends CheckoutEmailInterface_1_0 {
 	 * @see CheckoutEmailInterface_1_0::getCustomPageTemplate()
 	 */
 	public function getEmailTemplateAndVariables($transactionId, $templateName) {
-
 		// check here to see if a Google Checkout transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
@@ -48,7 +48,12 @@ class CheckoutGoogleEmailPlugin extends CheckoutEmailInterface_1_0 {
 
 		switch ($templateName) {
 			case 'paid':
-				return array(null, 'modules/checkoutgoogle/templates/email/paid.tpl', 'modules_checkoutgoogle', null);
+				return array(
+					null,
+					'modules/checkoutgoogle/templates/email/paid.tpl',
+					'modules_checkoutgoogle',
+					null,
+				);
 
 			break;
 		}

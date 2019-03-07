@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -283,6 +284,7 @@ class ImageBlockHelper {
 
 			$ImageBlockData['blocks']       = $blocks;
 			$ImageBlockData['forceFullUrl'] = 0;
+
 			$template->setVariable('ImageBlockData', $ImageBlockData);
 		}
 
@@ -397,7 +399,6 @@ class ImageBlockHelper {
 				}
 
 				// Fall through to pick new item
-
 				// Fall Through
 			default:
 				list($ret, $data) = ImageBlockHelper::fetchViewableData(
@@ -632,7 +633,8 @@ class ImageBlockHelper {
 					}
 
 					$resizeDifferential = abs($rawDifferential);
-					$resizeSize         = $imageObject->getHeight() * $imageObject->getWidth();
+
+					$resizeSize = $imageObject->getHeight() * $imageObject->getWidth();
 
 					/*
 					 * If this differential is smaller than the last, update the image target and
@@ -655,6 +657,7 @@ class ImageBlockHelper {
 				$itemData['deriv'] = (array)$image;
 				$itemData['owner'] = (array)$owner;
 				$itemData['thumb'] = (array)$image;
+
 				// {g->image} won't work with item!=image and image not a derivative
 				if ($image->getId() != $id && !GalleryUtilities::isA($image, 'GalleryDerivative')) {
 					$itemData['forceItem'] = true;
@@ -1132,7 +1135,6 @@ class ImageBlockHelper {
 					 * A new album cannot have sub items and setDisabledFlag doesn't work for items
 					 * that are not yet in the persistent store (database), thus use addMapEntry()
 					 */
-
 					$ret = GalleryCoreApi::addMapEntry(
 						'ImageBlockDisabledMap',
 						array(
@@ -1183,7 +1185,6 @@ class ImageBlockHelper {
 			 * We don't care about ERROR_MISSING_OBJECT because it's generated if
 			 * the album is at the top-level
 			 */
-
 			list($ret, $sequence) = GalleryCoreApi::fetchParentSequence($parentAlbum->getId());
 
 			if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
@@ -1206,7 +1207,8 @@ class ImageBlockHelper {
 				AND
 				[ImageBlockDisabledMap::itemId] IS ' . ($disabled ? '' : 'NOT ') . 'NULL
 				';
-			$data  = array($sequence . $parentAlbumId . '/%', (int)$parentAlbum->getId());
+
+			$data = array($sequence . $parentAlbumId . '/%', (int)$parentAlbum->getId());
 
 			list($ret, $searchResult) = $gallery->search($query, $data);
 
@@ -1219,7 +1221,8 @@ class ImageBlockHelper {
 			}
 		} else {
 			list($ret, $childIds) = GalleryCoreApi::fetchChildDataItemIds($parentAlbum);
-			$childIds[]           = (int)$parentAlbum->getId();
+
+			$childIds[] = (int)$parentAlbum->getId();
 
 			if ($ret) {
 				return $ret;
@@ -1300,11 +1303,13 @@ class ImageBlockHelper {
 	public static function getRandomKey($min = 0, $max = 2147483647) {
 		global $gallery;
 
-		$phpVm              = $gallery->getPhpVm();
+		$phpVm = $gallery->getPhpVm();
+
 		static $initialized = false;
 
 		if (!$initialized) {
 			list($usec, $sec) = explode(' ', microtime());
+
 			mt_srand($sec + $usec * 100000);
 			$initialized = true;
 		}
@@ -1326,7 +1331,6 @@ class ImageBlockHelper {
 		global $gallery;
 
 		$storage = $gallery->getStorage();
-
 		$from[]  = '[ImageBlockCacheMap] LEFT JOIN [ImageBlockDisabledMap] ON '
 			. '[ImageBlockCacheMap::itemId]=[ImageBlockDisabledMap::itemId]';
 		$where[] = '[ImageBlockCacheMap::userId] = ?';

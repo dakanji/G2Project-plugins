@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -14,7 +15,6 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.id3v2.php', __FILE__, true);
-
 class getid3_write_id3v2 {
 	public $filename;
 	public $tag_data;
@@ -42,6 +42,7 @@ class getid3_write_id3v2 {
 
 			if (!getid3_lib::intValueSupported($OldThisFileInfo['filesize'])) {
 				$this->errors[] = 'Unable to write ID3v2 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
+
 				fclose($fp_source);
 
 				return false;
@@ -81,7 +82,6 @@ class getid3_write_id3v2 {
 						if (is_readable($this->filename) && is_file($this->filename) && ($fp_source = fopen($this->filename, 'rb'))) {
 							if (is_writable($tempfilename) && is_file($tempfilename) && ($fp_temp = fopen($tempfilename, 'wb'))) {
 								fwrite($fp_temp, $NewID3v2Tag, strlen($NewID3v2Tag));
-
 								rewind($fp_source);
 
 								if (!empty($OldThisFileInfo['avdataoffset'])) {
@@ -139,6 +139,7 @@ class getid3_write_id3v2 {
 
 				if (!getid3_lib::intValueSupported($OldThisFileInfo['filesize'])) {
 					$this->errors[] = 'Unable to remove ID3v2 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
+
 					fclose($fp_source);
 
 					return false;
@@ -180,6 +181,7 @@ class getid3_write_id3v2 {
 
 				if (!getid3_lib::intValueSupported($OldThisFileInfo['filesize'])) {
 					$this->errors[] = 'Unable to remove ID3v2 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
+
 					fclose($fp_source);
 
 					return false;
@@ -276,7 +278,6 @@ class getid3_write_id3v2 {
 				$flag1 .= $FileAlter ? '1' : '0'; // b - File alter preservation (true == discard)
 				$flag1 .= $ReadOnly ? '1' : '0'; // c - Read only (true == read only)
 				$flag1 .= '0000';
-
 				$flag2  = '0';
 				$flag2 .= $GroupingIdentity ? '1' : '0'; // h - Grouping identity (true == contains group information)
 				$flag2 .= '00';
@@ -292,7 +293,6 @@ class getid3_write_id3v2 {
 				$flag1 .= $FileAlter ? '1' : '0';  // b - File alter preservation (true == discard)
 				$flag1 .= $ReadOnly ? '1' : '0';  // c - Read only (true == read only)
 				$flag1 .= '00000';
-
 				$flag2  = $Compression ? '1' : '0';      // i - Compression (true == compressed)
 				$flag2 .= $Encryption ? '1' : '0';      // j - Encryption (true == encrypted)
 				$flag2 .= $GroupingIdentity ? '1' : '0';      // k - Grouping identity (true == contains group information)
@@ -976,7 +976,6 @@ class getid3_write_id3v2 {
 									$this->errors[] = $source_data_array['frameid'] . ' is not a valid Frame Identifier in ' . $frame_name . ' (in ID3v2.' . $this->majorversion . ')';
 								}
 
-
 								// Fall Through
 							default:
 								if ((substr($source_data_array['frameid'], 0, 1) == 'T') || (substr($source_data_array['frameid'], 0, 1) == 'W')) {
@@ -1648,7 +1647,6 @@ class getid3_write_id3v2 {
 				foreach ($frame_rawinputdata as $irrelevantindex => $source_data_array) {
 					if (getid3_id3v2::IsValidID3v2FrameName($frame_name, $this->majorversion)) {
 						unset($frame_length, $frame_flags);
-
 						$frame_data = false;
 
 						if ($this->ID3v2FrameIsAllowed($frame_name, $source_data_array)) {
@@ -1684,7 +1682,6 @@ class getid3_write_id3v2 {
 									}
 
 									unset($unsynchdata);
-
 									$frame_length = getid3_lib::BigEndian2String(strlen($frame_data), 4, true);
 								} else {
 									$frame_length = getid3_lib::BigEndian2String(strlen($frame_data), 4, false);
@@ -1708,6 +1705,7 @@ class getid3_write_id3v2 {
 					} else {
 						// ignore any invalid frame names, including 'title', 'header', etc
 						$this->warnings[] = 'Ignoring invalid ID3v2 frame type: "' . $frame_name . '"';
+
 						unset($frame_name, $frame_length, $frame_flags, $frame_data);
 					}
 
@@ -1752,7 +1750,8 @@ class getid3_write_id3v2 {
 				$tagstring           .= "\x00";
 			}
 
-			$tagheader  = 'ID3';
+			$tagheader = 'ID3';
+
 			$tagheader .= chr($this->majorversion);
 			$tagheader .= chr($this->minorversion);
 			$tagheader .= $this->GenerateID3v2TagFlags(
@@ -1760,7 +1759,6 @@ class getid3_write_id3v2 {
 					'unsynchronisation' => $TagUnsynchronisation,
 				)
 			);
-
 			$tagheader .= getid3_lib::BigEndian2String(strlen($tagstring), 4, true);
 
 			return $tagheader . $tagstring;

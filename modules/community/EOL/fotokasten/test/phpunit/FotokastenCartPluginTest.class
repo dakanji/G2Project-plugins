@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -59,7 +60,6 @@ class FotokastenCartPluginTest extends GalleryTestCase {
 			),
 			$urlParams
 		);
-
 		$session   =& $gallery->getSession();
 		$printCart = $session->get('fotokasten.cart');
 		$this->assertEquals($cartItemIds, $printCart, 'cart');

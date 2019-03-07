@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -78,7 +79,6 @@ class PanoramaJsView extends GalleryView {
 		}
 
 		/*  to do, but i search...
-
 		if (!empty($PanoramaJs.item.title)) {
 		$template->title($module->translate(array('text' => 'PanoramaJs for %s', $PanoramaJs.item.title)));
 		} else {
@@ -86,7 +86,6 @@ class PanoramaJsView extends GalleryView {
 		}
 
 		*/
-
 		$template->title($module->translate('PanoramaJs'));
 		$template->javascript('modules/panoramajs/lib/env.js');
 		$template->javascript('modules/panoramajs/lib/yajevLE.js');

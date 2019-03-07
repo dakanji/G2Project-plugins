@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -61,8 +62,7 @@ class SnapGalaxyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$returnUrl = $urlGenerator->generateUrl(
+		$returnUrl    = $urlGenerator->generateUrl(
 			array('view' => 'cart.ViewCart'),
 			array('forceFullUrl' => true, 'htmlEntities' => false)
 	);

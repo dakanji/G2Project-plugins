@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -128,7 +129,8 @@ class SlideshowAppletSiteAdminController extends GalleryController {
 
 			foreach ($variables1 as $variable) {
 				list($key, $value) = explode('=', $variable);
-				$variables2[$key]  = $value;
+
+				$variables2[$key] = $value;
 			}
 
 			return array(null, $variables2);

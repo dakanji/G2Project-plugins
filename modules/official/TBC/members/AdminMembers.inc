@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -124,12 +125,10 @@ class AdminMembersView extends GalleryView {
 			$groupIds[2] => $module->translate('Registered Users'),
 			$groupIds[0] => $module->translate('Site Admins'),
 		);
-
-		$members['emailViews'] = array(
+		$members['emailViews']  = array(
 			1 => $module->translate('Show Email Addresses'),
 			0 => $module->translate("Don't Show Email Addresses"),
 		);
-
 		$template->setVariable('Members', $members);
 		$template->setVariable('controller', 'members.AdminMembers');
 

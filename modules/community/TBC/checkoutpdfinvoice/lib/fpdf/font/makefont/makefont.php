@@ -1,10 +1,10 @@
 <?php
+
 /*******************************************************************************
  * Utility to generate font definition files                                    *
  * Version: 1.13                                                                *
  * Date:    2004-12-31                                                          *
  *******************************************************************************/
-
 function ReadMap($enc) {
 	//Read a map file
 	$file = dirname(__FILE__) . '/' . strtolower($enc) . '.map';
@@ -181,9 +181,11 @@ function MakeFontDescriptor($fm, $symbolic) {
 	//Ascent
 	$asc = (isset($fm['Ascender']) ? $fm['Ascender'] : 1000);
 	$fd  = "array('Ascent'=>" . $asc;
+
 	//Descent
 	$desc = (isset($fm['Descender']) ? $fm['Descender'] : -200);
 	$fd  .= ",'Descent'=>" . $desc;
+
 	//CapHeight
 	if (isset($fm['CapHeight'])) {
 		$ch = $fm['CapHeight'];
@@ -194,6 +196,7 @@ function MakeFontDescriptor($fm, $symbolic) {
 	}
 
 	$fd .= ",'CapHeight'=>" . $ch;
+
 	//Flags
 	$flags = 0;
 
@@ -214,6 +217,7 @@ function MakeFontDescriptor($fm, $symbolic) {
 	}
 
 	$fd .= ",'Flags'=>" . $flags;
+
 	//FontBBox
 	if (isset($fm['FontBBox'])) {
 		$fbb = $fm['FontBBox'];
@@ -222,9 +226,11 @@ function MakeFontDescriptor($fm, $symbolic) {
 	}
 
 	$fd .= ",'FontBBox'=>'[" . $fbb[0] . ' ' . $fbb[1] . ' ' . $fbb[2] . ' ' . $fbb[3] . "]'";
+
 	//ItalicAngle
 	$ia  = (isset($fm['ItalicAngle']) ? $fm['ItalicAngle'] : 0);
 	$fd .= ",'ItalicAngle'=>" . $ia;
+
 	//StemV
 	if (isset($fm['StdVW'])) {
 		$stemv = $fm['StdVW'];
@@ -235,6 +241,7 @@ function MakeFontDescriptor($fm, $symbolic) {
 	}
 
 	$fd .= ",'StemV'=>" . $stemv;
+
 	//MissingWidth
 	if (isset($fm['MissingWidth'])) {
 		$fd .= ",'MissingWidth'=>" . $fm['MissingWidth'];
@@ -332,6 +339,7 @@ function CheckTTF($file) {
 	fseek($f, 4, SEEK_CUR);
 	$nb = ReadShort($f);
 	fseek($f, 6, SEEK_CUR);
+
 	//Seek OS/2 table
 	$found = false;
 
@@ -354,6 +362,7 @@ function CheckTTF($file) {
 	fseek($f, 4, SEEK_CUR);
 	$offset = ReadLong($f);
 	fseek($f, $offset, SEEK_SET);
+
 	//Extract fsType flags
 	fseek($f, 8, SEEK_CUR);
 	$fsType = ReadShort($f);
@@ -402,6 +411,7 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 	}
 
 	$fd = MakeFontDescriptor($fm, empty($map));
+
 	//Find font type
 	if ($fontfile) {
 		$ext = strtolower(substr($fontfile, -3));

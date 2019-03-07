@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -38,12 +39,10 @@ class HttpAuthModule extends GalleryModule {
 				'Login using HTTP authentication.'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -183,7 +182,6 @@ class HttpAuthModule extends GalleryModule {
 					}
 				}
 
-
 				// Fall Through
 			case '0.0.1':
 				// Add AuthFilterPlugin and RegexAuthFilterPlugin
@@ -239,7 +237,6 @@ class HttpAuthModule extends GalleryModule {
 					}
 				}
 
-
 				// Fall Through
 			case '0.2.0':
 				// Some 2.2 API changes
@@ -253,7 +250,6 @@ class HttpAuthModule extends GalleryModule {
 					return $ret;
 				}
 
-
 				// Fall Through
 			case '0.4.0':
 				// Add logout view to clear browsers' authentication cache
@@ -264,7 +260,6 @@ class HttpAuthModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '0.5.1':
@@ -323,7 +318,6 @@ class HttpAuthModule extends GalleryModule {
 		 * Only define the rule to pass the Authorization header to Gallery in a request variable if
 		 * it is already active, or if Gallery can't access HTTP usernames and passwords
 		 */
-
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 		if ($ret) {
@@ -466,7 +460,8 @@ class HttpAuthModule extends GalleryModule {
 				GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
 
 				list($authtype, $username, $password) = HttpAuthHelper::getHttpAuth();
-				$remoteUser                           = GalleryUtilities::getServerVar('REMOTE_USER');
+
+				$remoteUser = GalleryUtilities::getServerVar('REMOTE_USER');
 
 				if (!empty($username) || !empty($remoteUser)) {
 					return array(

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -24,7 +25,6 @@
  * @author Charles Knowlton charles2007@users.sourceforge.net
  * @version $Revision$
  */
-
 class MyEventHandlerClass // extends GalleryEventListener
 {
 	/**
@@ -55,20 +55,18 @@ class MyEventHandlerClass // extends GalleryEventListener
 		}
 
 		if ($event->getEventName() == 'Gallery::Login') {
-			$user      = $event->getEntity();
-			$userName2 = $user->getUserName();
-			$userId2   = $user->getId();
-
+			$user                    = $event->getEntity();
+			$userName2               = $user->getUserName();
+			$userId2                 = $user->getId();
 			$currentRemoteIdentifier = $this->getRemoteIdentifier();
 			$this->_remoteIdentifier = $currentRemoteIdentifier;
 			$remoteHost              = $this->_remoteIdentifier[0];
-
-			$id        = $myUniqueID;
-			$userId    = $userId2;
-			$userName  = $userName2;
-			$ipAddress = $remoteHost;
-			$timeStamp = time();
-			$action    = 'Login';
+			$id                      = $myUniqueID;
+			$userId                  = $userId2;
+			$userName                = $userName2;
+			$ipAddress               = $remoteHost;
+			$timeStamp               = time();
+			$action                  = 'Login';
 
 			$ret = GalleryCoreApi::addMapEntry(
 				'UserinfoMap',
@@ -88,20 +86,18 @@ class MyEventHandlerClass // extends GalleryEventListener
 		}
 
 		if ($event->getEventName() == 'Gallery::Logout') {
-			$user      = $event->getEntity();
-			$userName2 = $user->getUserName();
-			$userId2   = $user->getId();
-
+			$user                    = $event->getEntity();
+			$userName2               = $user->getUserName();
+			$userId2                 = $user->getId();
 			$currentRemoteIdentifier = $this->getRemoteIdentifier();
 			$this->_remoteIdentifier = $currentRemoteIdentifier;
 			$remoteHost              = $this->_remoteIdentifier[0];
-
-			$id        = $myUniqueID;
-			$userId    = $userId2;
-			$userName  = $userName2;
-			$ipAddress = $remoteHost;
-			$timeStamp = time();
-			$action    = 'Logout';
+			$id                      = $myUniqueID;
+			$userId                  = $userId2;
+			$userName                = $userName2;
+			$ipAddress               = $remoteHost;
+			$timeStamp               = time();
+			$action                  = 'Logout';
 
 			$ret = GalleryCoreApi::addMapEntry(
 				'UserinfoMap',

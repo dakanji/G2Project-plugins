@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -36,12 +37,10 @@ class ShutterflyModule extends GalleryModule {
 				'Shutterfly Photo Printing Module'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -93,7 +92,6 @@ class ShutterflyModule extends GalleryModule {
 
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
-
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -119,7 +117,6 @@ class ShutterflyModule extends GalleryModule {
 				}
 
 				$gallery->guaranteeTimeLimit(300);
-
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -130,7 +127,6 @@ class ShutterflyModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '1.0.1':
@@ -201,8 +197,7 @@ class ShutterflyModule extends GalleryModule {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
-		$links = array();
+		$links   = array();
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();

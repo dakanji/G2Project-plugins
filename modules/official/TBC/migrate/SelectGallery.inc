@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/migrate/classes/Gallery1DataParser.class');
 GalleryCoreApi::requireOnce('modules/migrate/classes/G1MigrateHelper.class');
 
@@ -50,7 +50,8 @@ class SelectGalleryController extends GalleryController {
 			} else {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
-				$tmp      = trim($form['albumsPath']);
+
+				$tmp = trim($form['albumsPath']);
 
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
@@ -79,7 +80,6 @@ class SelectGalleryController extends GalleryController {
 				}
 
 				$session->put('migrate.view.SelectGallery.recentPaths', $recentPaths);
-
 				$redirect['view']       = 'core.SiteAdmin';
 				$redirect['subView']    = 'migrate.ChooseObjects';
 				$redirect['albumsPath'] = $form['albumsPath'];

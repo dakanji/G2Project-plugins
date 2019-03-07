@@ -1,22 +1,16 @@
 <?php
-//
+
 //  FPDF_TPL - Version 1.1.1
-//
 //    Copyright 2004-2007 Setasign - Jan Slabon
-//
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
-//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//
-
 require_once 'fpdf.php';
 
 class FPDF_TPL extends FPDF {
@@ -118,13 +112,11 @@ class FPDF_TPL extends FPDF {
 			'w'               => $w,
 			'h'               => $h,
 		);
-
 		$this->SetAutoPageBreak(false);
 
 		// Define own high and width to calculate possitions correct
-		$this->h = $h;
-		$this->w = $w;
-
+		$this->h      = $h;
+		$this->w      = $w;
 		$this->_intpl = true;
 		$this->SetXY($x + $this->lMargin, $y + $this->tMargin);
 		$this->SetRightMargin($this->w - $w + $this->rMargin);
@@ -204,7 +196,6 @@ class FPDF_TPL extends FPDF {
 		$wh = $this->getTemplateSize($tplidx, $_w, $_h);
 		$_w = $wh['w'];
 		$_h = $wh['h'];
-
 		$this->_out(sprintf('q %.4f 0 0 %.4f %.2f %.2f cm', ($_w / $w), ($_h / $h), $_x * $this->k, ($this->h - ($_y + $_h)) * $this->k)); // Translate
 		$this->_out($this->tplprefix . $tplidx . ' Do Q');
 
@@ -230,8 +221,9 @@ class FPDF_TPL extends FPDF {
 		}
 
 		$tpl =& $this->tpls[$tplidx];
-		$w   = $tpl['w'];
-		$h   = $tpl['h'];
+
+		$w = $tpl['w'];
+		$h = $tpl['h'];
 
 		if ($_w == 0 and $_h == 0) {
 			$_w = $w;
@@ -332,6 +324,7 @@ class FPDF_TPL extends FPDF {
 	 */
 	public function _putformxobjects() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
+
 		reset($this->tpls);
 
 		foreach ($this->tpls as $tplidx => $tpl) {
@@ -343,7 +336,6 @@ class FPDF_TPL extends FPDF {
 			$this->_out('/FormType 1');
 			$this->_out(sprintf('/BBox [%.2f %.2f %.2f %.2f]', $tpl['x'] * $this->k, ($tpl['h'] - $tpl['y']) * $this->k, $tpl['w'] * $this->k, ($tpl['h'] - $tpl['y'] - $tpl['h']) * $this->k));
 			$this->_out('/Resources ');
-
 			$this->_out('<</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
 
 			if (isset($this->_res['tpl'][$tplidx]['fonts']) && count($this->_res['tpl'][$tplidx]['fonts'])) {
@@ -377,7 +369,6 @@ class FPDF_TPL extends FPDF {
 			}
 
 			$this->_out('>>');
-
 			$this->_out('/Length ' . strlen($p) . ' >>');
 			$this->_putstream($p);
 			$this->_out('endobj');
@@ -391,6 +382,7 @@ class FPDF_TPL extends FPDF {
 		$this->_putfonts();
 		$this->_putimages();
 		$this->_putformxobjects();
+
 		//Resource dictionary
 		$this->offsets[2] = strlen($this->buffer);
 		$this->_out('2 0 obj');

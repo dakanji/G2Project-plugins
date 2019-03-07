@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHandler_1_0.class');
 
 /**
@@ -40,7 +40,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->_unregisterFactoryImplementationForTest('NotificationEvent_1_0');
 		$this->_unregisterFactoryImplementationForTest('NotificationHandler_1_0');
-
 		$ret = $this->_registerFactoryImplementationForTest(
 			'NotificationEvent_1_0',
 			'NotificationEventTest',
@@ -113,6 +112,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$pluginParms['_enabledMap'] = serialize($enabledMap);
+
 		GalleryDataCache::put($cacheKey, $pluginParms);
 
 		list($ret, $this->_hintLockId) = GalleryCoreApi::getPluginParameter(
@@ -127,8 +127,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->_storageSet = true;
 		$gallery->_storage = new UnitTestStorage();
-
-		$storage =& $gallery->getStorage();
+		$storage           =& $gallery->getStorage();
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -146,7 +145,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(true)))
 		);
-
 		$this->_saveLockSystem = $gallery->_lockSystem;
 		$gallery->_lockSystem  = null;
 	}
@@ -154,8 +152,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function tearDown() {
 		global $gallery;
 
-		$storage =& $gallery->getStorage();
-
+		$storage              =& $gallery->getStorage();
 		$gallery->_lockSystem =& $this->_saveLockSystem;
 
 		if (!empty($this->_storageSet)) {
@@ -169,7 +166,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($this->_hintLockId), 10),
@@ -184,7 +180,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$enabledMap = array(
 			'Test:TestEvent' => array(
 				'Test:EventHandler' => array(),
@@ -214,7 +209,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -230,7 +224,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'enabled'          => 'on',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -256,7 +249,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'
@@ -267,7 +259,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($this->_hintLockId), 10),
@@ -282,7 +273,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -298,7 +288,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'userAvailable'    => 'on',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -311,7 +300,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -331,7 +319,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($this->_hintLockId), 10),
@@ -346,7 +333,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$storage->setReply(
 			'updateMapEntry',
 			array(
@@ -364,7 +350,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -378,7 +363,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'currentHandler'   => 'Test:EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -404,7 +388,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'
@@ -415,7 +398,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($this->_hintLockId), 10),
@@ -430,7 +412,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$expectedMap = array(
 			'Test:Event2' => array(
 				'Test:EventHandler' => array(
@@ -457,7 +438,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -472,7 +452,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'handler'          => 'Test:EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -498,7 +477,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'
@@ -509,7 +487,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($this->_hintLockId), 10),
@@ -524,7 +501,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -538,7 +514,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'handler'          => '',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -569,7 +544,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($this->_hintLockId), 10),
@@ -584,7 +558,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$expectedMap = array(
 			'Test:TestEvent' => array(
 				'Test:NewHandler' => array(
@@ -611,7 +584,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -626,7 +598,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'handler'          => 'Test:NewHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -652,7 +623,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'
@@ -663,7 +633,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'acquireWriteLock',
 			array(array($this->_hintLockId), 10),
@@ -678,7 +647,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$expectedMap = array(
 			'Test:TestEvent' => array(
 				'Test:EventHandler' => array(
@@ -705,7 +673,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -721,7 +688,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'public'           => 'on',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -747,7 +713,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'
@@ -762,6 +727,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		$enabled  = unserialize($parms['_enabledMap']);
 		$enabled['Test:TestEvent']['Test:EventHandler']['public'] = true;
 		$parms['_enabledMap']                                     = serialize($enabled);
+
 		GalleryDataCache::put($cacheKey, $parms);
 
 		$storage =& $gallery->getStorage();
@@ -779,7 +745,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$expectedMap = array(
 			'Test:TestEvent' => array(
 				'Test:EventHandler' => array(
@@ -806,7 +771,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -821,7 +785,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'handler'          => 'Test:EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -847,7 +810,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'
@@ -863,6 +825,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		$enabled['Test:TestEvent']['Test:EventHandler']['public']  = true;
 		$enabled['Test:TestEvent']['Test:EventHandler']['enabled'] = true;
 		$parms['_enabledMap']                                      = serialize($enabled);
+
 		GalleryDataCache::put($cacheKey, $parms);
 
 		$storage =& $gallery->getStorage();
@@ -880,7 +843,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$expectedMap = array(
 			'Test:TestEvent' => array(
 				'Test:EventHandler' => array(
@@ -907,7 +869,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -924,7 +885,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'enabled'          => 'on',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -950,7 +910,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'
@@ -966,6 +925,7 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 		$enabled['Test:TestEvent']['Test:EventHandler']['public']  = true;
 		$enabled['Test:TestEvent']['Test:EventHandler']['enabled'] = true;
 		$parms['_enabledMap']                                      = serialize($enabled);
+
 		GalleryDataCache::put($cacheKey, $parms);
 
 		$storage =& $gallery->getStorage();
@@ -983,7 +943,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
-
 		$expectedMap = array(
 			'Test:TestEvent' => array(
 				'Test:EventHandler' => array(
@@ -1010,7 +969,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 
@@ -1025,7 +983,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 				'handler'          => 'Test:EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notificationMap][1]',
 			array(
@@ -1051,7 +1008,6 @@ class NotificationSiteAdminControllerTest extends GalleryControllerTestCase {
 			$results,
 			'Unexpected results array'
 		);
-
 		$this->assertTrue(
 			empty($_GET['g2_form']['notificationMap'][0]['errorMsg']),
 			'Error message returned'

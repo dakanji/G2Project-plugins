@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: DupeDetectShowDupes.inc,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @version $Revision: 0.9 $ $Date: 2005/08/09 05:46:20 $
  * @package dupedetect
@@ -61,10 +63,9 @@ class DupeDetectShowDupesController extends GalleryController {
 			$status['ignored']['count'] = 0;
 			$status['linked']['count']  = 0;
 			$status['deleted']['count'] = 0;
-
-			$pairsToLink          = array();
-			$pairsToMarkAsIgnored = array();
-			$itemsToDelete        = array();
+			$pairsToLink                = array();
+			$pairsToMarkAsIgnored       = array();
+			$itemsToDelete              = array();
 
 			// now let's see what we have to do
 			GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
@@ -222,7 +223,6 @@ class DupeDetectShowDupesView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
 
 		if ($form['formName'] != 'DupeDetectShowDupes') {
@@ -263,12 +263,15 @@ class DupeDetectShowDupesView extends GalleryView {
 
 			if (array_key_exists($pairId, $pairsIds)) {
 				$gallery->debug("dupList size is $dupList\n");
+
 				// take the exact one
 				if ($dupRecord['dupType'] == DUPEDETECT_HISTOGRAM_ALGORITHM) {
 					$gallery->debug("***splicing out pair $key ($pairId)- new is histogram***\n");
+
 					unset($dupList[$key]);
 				} else { // $dupRecord is CRC32 duplication, so delete the other one
 					$gallery->debug("***splicing out pair $pairId  - new is CRC32***\n");
+
 					unset($dupList[$pairsIds[$pairId]]);
 					$pairsIds[$pairId] = $key;
 				}
@@ -296,6 +299,7 @@ class DupeDetectShowDupesView extends GalleryView {
 
 		foreach ($dupList as $dupRecord) {
 			$dupRecord['srcItemData'] = $dupRecord['srcItem']->getMemberData();
+
 			// attach thumbnail
 			if (isset($thumbnails[$dupRecord['srcItem']->getId()])) {
 				$thumbnail = $thumbnails[$dupRecord['srcItem']->getId()];
@@ -312,6 +316,7 @@ class DupeDetectShowDupesView extends GalleryView {
 			}
 
 			$dupRecord['dupItemData'] = $dupRecord['dupItem']->getMemberData();
+
 			// attach thumbnail
 			if (isset($thumbnails[$dupRecord['dupItem']->getId()])) {
 				$thumbnail = $thumbnails[$dupRecord['dupItem']->getId()];
@@ -328,8 +333,7 @@ class DupeDetectShowDupesView extends GalleryView {
 			}
 
 			$dupRecord['pairId'] = count($pairsList);
-
-			$pairsList[] = $dupRecord;
+			$pairsList[]         = $dupRecord;
 		}
 
 		$form['list'] = $pairsList;
@@ -339,8 +343,7 @@ class DupeDetectShowDupesView extends GalleryView {
 		);
 
 		$form['dupTypeList'] = $dupTypeList;
-
-		$dupStatus = array(
+		$dupStatus           = array(
 			DUPEDETECT_UNHANDLED_DUPLICATE => 'New duplicate',
 			DUPEDETECT_IGNORED_DUPLICATE   => 'Marked as ignored',
 		);

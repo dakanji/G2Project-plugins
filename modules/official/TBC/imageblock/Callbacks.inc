@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -35,7 +36,6 @@ class ImageBlockCallbacks {
 					 * If we're overriding the defaults, then overlay our changes on top of the
 					 * defaults and pass in a complete 'show' parameter.
 					 */
-
 					list($ret, $moduleParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'imageblock');
 
 					if ($ret) {
@@ -74,7 +74,8 @@ class ImageBlockCallbacks {
 				 * ImageBlockHelper expects a GalleryTemplate, but Smarty callbacks don't provide
 				 * one, so create a temporary wrapper.
 				 */
-				$template          = new GalleryTemplate(__DIR__, false);
+				$template = new GalleryTemplate(__DIR__, false);
+
 				$template->_smarty =& $smarty;
 
 				// Remove null parameters

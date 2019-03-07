@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -33,12 +34,10 @@ class IntegrityModule extends GalleryModule {
 				'Check integrity of the Gallery database and files'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('');
 	}

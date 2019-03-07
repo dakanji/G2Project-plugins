@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc $
  * $Revision: 1845 $
@@ -31,6 +32,7 @@
  * @author Leo Bergolth <leo@strike.wu.ac.at>
  * @version
  */
+
  // also extends GalleryEventListener
 class AlbumTimestampModule extends GalleryModule {
 	public function __construct() {
@@ -43,12 +45,10 @@ class AlbumTimestampModule extends GalleryModule {
 				'Automatically set album timestamps based on child item times'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $this->translate('Gallery'));
 	}
 
@@ -104,7 +104,6 @@ class AlbumTimestampModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/albumtimestamp/classes/AlbumTimestampHelper.class');
 
 		if (!AlbumTimestampHelper::eventHandlerEnabled()) {
@@ -125,6 +124,7 @@ class AlbumTimestampModule extends GalleryModule {
 		$itemId  = $item->getId();
 		$albumId = $item->getParentId();
 		$isNew   = $item->testPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
+
 		AlbumTimestampHelper::log("LEO: handleEvent: $eventName itemId=$itemId");
 
 		if (GalleryUtilities::isA($item, 'GalleryAlbumItem')
@@ -134,7 +134,6 @@ class AlbumTimestampModule extends GalleryModule {
 			/* it's a new album
 			set the albumTimestampMode according to newAlbumTimestampMode
 			   no inheritance here - only set the mode if the parent album has an explicit setting */
-
 			list($ret, $newAlbumMode) = AlbumTimestampHelper::getItemParam(
 				'newAlbumTimestampMode',
 				$albumId,

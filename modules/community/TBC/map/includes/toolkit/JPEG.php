@@ -59,10 +59,8 @@
  *               FALSE - if headers could not be read
  *
  ******************************************************************************/
-
 function get_jpeg_header_data($filename) {
-
-		// prevent refresh from aborting file operations and hosing file
+	// prevent refresh from aborting file operations and hosing file
 	ignore_user_abort(true);
 
 	// Attempt to open the jpeg file - the at symbol supresses the error message about
@@ -153,6 +151,7 @@ function get_jpeg_header_data($filename) {
 
 	// Close File
 	fclose($filehnd);
+
 	// Alow the user to abort from now on
 	ignore_user_abort(false);
 
@@ -187,8 +186,7 @@ function get_jpeg_header_data($filename) {
  ******************************************************************************/
 
 function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
-
-		// Change: added check to ensure data exists, as of revision 1.10
+	// Change: added check to ensure data exists, as of revision 1.10
 	// Check if the data to be written exists
 	if ($jpeg_header_data == false) {
 		// Data to be written not valid - abort
@@ -218,6 +216,7 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 	ignore_user_abort(true);    // prevent refresh from aborting file operations and hosing file
 	// Attempt to open the new jpeg file
 	$newfilehnd = @fopen($new_filename, 'wb');
+
 	// Check if the file opened successfully
 	if (!$newfilehnd) {
 		// Could't open the file - exit
@@ -495,8 +494,7 @@ function Interpret_intrinsic_values_to_HTML($values) {
  ******************************************************************************/
 
 function get_jpeg_image_data($filename) {
-
-		// prevent refresh from aborting file operations and hosing file
+	// prevent refresh from aborting file operations and hosing file
 	ignore_user_abort(true);
 
 	// Attempt to open the jpeg file
@@ -702,9 +700,7 @@ function network_safe_fread($file_handle, $length) {
  * Contents:     The names of the JPEG segment markers, indexed by their marker number
  *
  ******************************************************************************/
-
 $GLOBALS['JPEG_Segment_Names'] = array(
-
 	0xC0 => 'SOF0',
 	0xC1 => 'SOF1',
 	0xC2 => 'SOF2',
@@ -721,7 +717,6 @@ $GLOBALS['JPEG_Segment_Names'] = array(
 	0xCF => 'SOF15',
 	0xC4 => 'DHT',
 	0xCC => 'DAC',
-
 	0xD0 => 'RST0',
 	0xD1 => 'RST1',
 	0xD2 => 'RST2',
@@ -730,7 +725,6 @@ $GLOBALS['JPEG_Segment_Names'] = array(
 	0xD5 => 'RST5',
 	0xD6 => 'RST6',
 	0xD7 => 'RST7',
-
 	0xD8 => 'SOI',
 	0xD9 => 'EOI',
 	0xDA => 'SOS',
@@ -739,7 +733,6 @@ $GLOBALS['JPEG_Segment_Names'] = array(
 	0xDD => 'DRI',
 	0xDE => 'DHP',
 	0xDF => 'EXP',
-
 	0xE0 => 'APP0',
 	0xE1 => 'APP1',
 	0xE2 => 'APP2',
@@ -756,7 +749,6 @@ $GLOBALS['JPEG_Segment_Names'] = array(
 	0xED => 'APP13',
 	0xEE => 'APP14',
 	0xEF => 'APP15',
-
 	0xF0 => 'JPG0',
 	0xF1 => 'JPG1',
 	0xF2 => 'JPG2',
@@ -771,11 +763,9 @@ $GLOBALS['JPEG_Segment_Names'] = array(
 	0xFB => 'JPG11',
 	0xFC => 'JPG12',
 	0xFD => 'JPG13',
-
 	0xFE => 'COM',
 	0x01 => 'TEM',
 	0x02 => 'RES',
-
 );
 
 // End of Global Variable:     JPEG_Segment_Names
@@ -785,7 +775,6 @@ $GLOBALS['JPEG_Segment_Names'] = array(
  * Contents:     The descriptions of the JPEG segment markers, indexed by their marker number
  *
  ******************************************************************************/
-
 $GLOBALS['JPEG_Segment_Descriptions'] = array(
 
 	// JIF Marker byte pairs in JPEG Interchange Format sequence
@@ -805,7 +794,6 @@ $GLOBALS['JPEG_Segment_Descriptions'] = array(
 	0xCF => 'Start Of Frame Arithmetic - Differential spatial (SOF15)',
 	0xC4 => 'Define Huffman Table(s) (DHT)',
 	0xCC => 'Define Arithmetic coding conditioning(s) (DAC)',
-
 	0xD0 => 'Restart with modulo 8 count 0 (RST0)',
 	0xD1 => 'Restart with modulo 8 count 1 (RST1)',
 	0xD2 => 'Restart with modulo 8 count 2 (RST2)',
@@ -814,7 +802,6 @@ $GLOBALS['JPEG_Segment_Descriptions'] = array(
 	0xD5 => 'Restart with modulo 8 count 5 (RST5)',
 	0xD6 => 'Restart with modulo 8 count 6 (RST6)',
 	0xD7 => 'Restart with modulo 8 count 7 (RST7)',
-
 	0xD8 => 'Start of Image (SOI)',
 	0xD9 => 'End of Image (EOI)',
 	0xDA => 'Start of Scan (SOS)',
@@ -823,7 +810,6 @@ $GLOBALS['JPEG_Segment_Descriptions'] = array(
 	0xDD => 'Define Restart Interval (DRI)',
 	0xDE => 'Define Hierarchical progression (DHP)',
 	0xDF => 'Expand Reference Component(s) (EXP)',
-
 	0xE0 => 'Application Field 0 (APP0) - usually JFIF or JFXX',
 	0xE1 => 'Application Field 1 (APP1) - usually EXIF or XMP/RDF',
 	0xE2 => 'Application Field 2 (APP2) - usually Flashpix',
@@ -832,7 +818,6 @@ $GLOBALS['JPEG_Segment_Descriptions'] = array(
 	0xE5 => 'Application Field 5 (APP5)',
 	0xE6 => 'Application Field 6 (APP6)',
 	0xE7 => 'Application Field 7 (APP7)',
-
 	0xE8 => 'Application Field 8 (APP8)',
 	0xE9 => 'Application Field 9 (APP9)',
 	0xEA => 'Application Field 10 (APP10)',
@@ -841,7 +826,6 @@ $GLOBALS['JPEG_Segment_Descriptions'] = array(
 	0xED => 'Application Field 13 (APP13) - usually photoshop IRB / IPTC',
 	0xEE => 'Application Field 14 (APP14)',
 	0xEF => 'Application Field 15 (APP15)',
-
 	0xF0 => 'Reserved for JPEG extensions (JPG0)',
 	0xF1 => 'Reserved for JPEG extensions (JPG1)',
 	0xF2 => 'Reserved for JPEG extensions (JPG2)',
@@ -856,11 +840,9 @@ $GLOBALS['JPEG_Segment_Descriptions'] = array(
 	0xFB => 'Reserved for JPEG extensions (JPG11)',
 	0xFC => 'Reserved for JPEG extensions (JPG12)',
 	0xFD => 'Reserved for JPEG extensions (JPG13)',
-
 	0xFE => 'Comment (COM)',
 	0x01 => 'For temp private use arith code (TEM)',
 	0x02 => 'Reserved (RES)',
-
 );
 
 // End of Global Variable:     JPEG_Segment_Descriptions

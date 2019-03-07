@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -40,6 +41,7 @@
 		}
 
 		$thisUserId = $gallery->getActiveUserId();
+
 		// make visible according to group membership
 		foreach ($products as $position => $product) {
 			if (isset($product['groupVisibleId'])) {

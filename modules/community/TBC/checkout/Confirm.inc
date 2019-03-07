@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -58,6 +59,7 @@ class ConfirmController extends GalleryController {
 		// CONTINUE TO CHECKOUT
 		if (isset($form['action']['continue'])) {
 			$session =& $gallery->getSession();
+
 			// Update the item records based on the form
 			$ret = CheckoutHelper::updateCart($form);
 
@@ -112,7 +114,6 @@ class ConfirmController extends GalleryController {
 			/* allow plugins to alter $itemProducts, $paper, $posts, $discounts
 			   note: building $itemProducts already calls fetchVisibleProducts which in turn passes through
 			   the checkoutProductList interface - so no need to repeat modifications to products list done there */
-
 			$ret = checkoutInterfaceHelper::doTransactionDetailsPlugins($items, $itemProducts, $paper, $posts, $discounts);
 
 			if ($ret) {
@@ -139,10 +140,13 @@ class ConfirmController extends GalleryController {
 			$total        = 0;
 			$itemCount    = 0;
 			$productCount = 0;
+
 			// will be set to true if at least one product has non-zero qty
 			$atLeastOneQtySet = false;
+
 			// does the order require a postage charge?
 			$postageBand = 0;
+
 			// Any required paper choices missing?
 			$missingPaper = false;
 
@@ -169,6 +173,7 @@ class ConfirmController extends GalleryController {
 					$atLeastOneQtySet         = true;
 					$atLeastOneQtySetThisItem = true;
 					$postageBand              = max($postageBand, $product['postageBand']);
+
 					// Create the item entry
 					list($ret, $txnItem) = GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryCheckoutItem');
 
@@ -188,21 +193,19 @@ class ConfirmController extends GalleryController {
 
 					// store the txnItem Id in the cart for other modules to use
 					$items[$itemId][$product['productId']]['txnItemId'] = $txnItem->getId();
-
 					$txnItem->setItem($itemId);
 					$txnItem->setTransaction($transaction->getId());
-
 					$txnItem->setItemName($item['fullItemDetails']['pathComponent']);
 					$txnItem->setItemText($item['parentTitle']);
 					$txnItem->setProduct($product['productId']);
 					$txnItem->setProductName($product['name']);
 					$txnItem->setQty($item[$product['productId']]['quant']);
 					$productCount += $item[$product['productId']]['quant'];
+
 					$txnItem->setPriceEach($product['price']);
 					$txnItem->setPriceTotal(
 						number_format($item[$product['productId']]['quant'] * $product['price'], 2, '.', '')
 					);
-
 					$subtotal += ($item[$product['productId']]['quant'] * $product['price']);
 
 					if ($product['paperSet']) {
@@ -271,6 +274,7 @@ class ConfirmController extends GalleryController {
 						$txnItem->setProductName($option['name']);
 						$txnItem->setQty($items['accessories'][$optionId]['quant']);
 						$productCount += $items['accessories'][$optionId]['quant'];
+
 						$txnItem->setPriceEach($option['price']);
 						$txnItem->setPriceTotal(number_format($items['accessories'][$optionId]['quant'] * $option['price'], 2, '.', ''));
 						$subtotal                                   += ($items['accessories'][$optionId]['quant'] * $option['price']);
@@ -327,8 +331,10 @@ class ConfirmController extends GalleryController {
 				$discountAmount  = $total * $myDiscount['discountPercent'] / 100;
 				$discountAmount += $myDiscount['discountFixed'];
 				$discountAmount  = number_format($discountAmount, 2, '.', '');
+
 				$transaction->setDiscount($discountAmount);
 				$transaction->setDiscountDescription($myDiscount['description']);
+
 				$total -= $discountAmount;
 			}
 
@@ -375,10 +381,11 @@ class ConfirmController extends GalleryController {
 
 			$transaction->setLanguageCode($languageCode);
 			$transaction->setbuyerId($gallery->getActiveUserId());
+
 			// Because the G2 storage API only handles INTEGER numeric storage, store as string
 			$total = number_format($total, 2, '.', '');
-			$transaction->setamount($total);
 
+			$transaction->setamount($total);
 			$ret = $transaction->save();
 
 			if ($ret) {
@@ -387,6 +394,7 @@ class ConfirmController extends GalleryController {
 
 			// call an event for other modules to know a new transaction has been stored
 			$event = GalleryCoreApi::newEvent('GalleryCheckout::newTransaction');
+
 			$event->setEntity($transaction);
 			$event->setData($items);
 
@@ -529,9 +537,10 @@ class ConfirmView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$tpl['id']            = $transaction->getId();
-		$tpl['controller']    = 'checkout.Confirm';
-		$tpl['payments']      = $plugins;
+		$tpl['id']         = $transaction->getId();
+		$tpl['controller'] = 'checkout.Confirm';
+		$tpl['payments']   = $plugins;
+
 		$tpl['paymentPlugin'] = $transaction->getPaymentPlugin();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkout');

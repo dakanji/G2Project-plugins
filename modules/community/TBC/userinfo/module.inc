@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -47,12 +48,10 @@ class UserinfoModule extends GalleryModule {
 				'Displays User Information'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 	}
@@ -111,7 +110,6 @@ class UserinfoModule extends GalleryModule {
 					return array($ret, null);
 				}
 
-
 				// Fall Through
 			case '1.0.3':
 			case '1.0.4':
@@ -143,7 +141,9 @@ class UserinfoModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		GalleryCoreApi::requireOnce('modules/userinfo/classes/MyEventHandlerClass.class');
+
 		$listener = new MyEventHandlerClass();
+
 		GalleryCoreApi::registerEventListener('Gallery::Login', $listener);
 		GalleryCoreApi::registerEventListener('Gallery::FailedLogin', $listener);
 		GalleryCoreApi::registerEventListener('Gallery::Logout', $listener);
@@ -153,6 +153,7 @@ class UserinfoModule extends GalleryModule {
 	 * @see GalleryModule::performFactoryRegistrations
 	 * Only works on 2.3(svn) and above
 	 */
+
 	/*
 	 *    function performFactoryRegistrations() {
 	 *   $ret = GalleryCoreApi::registerFactoryImplementation('GalleryEventListener',

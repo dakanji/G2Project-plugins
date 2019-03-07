@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/httpauth/classes/ServerAuthPlugin.class');
 
 /**
@@ -51,8 +51,7 @@ class ServerAuthPluginTest extends GalleryTestCase {
 		$this->_markForCleanup($this->_user);
 		$_SERVER['AUTH_TYPE'] = 'Test';
 
-		$this->_plugin = new ServerAuthPlugin();
-
+		$this->_plugin      = new ServerAuthPlugin();
 		$this->_saveSession = $gallery->_session;
 		$gallery->_session  = new ServerAuthPluginTestSession();
 	}
@@ -61,8 +60,7 @@ class ServerAuthPluginTest extends GalleryTestCase {
 		global $gallery;
 
 		$gallery->_session = $this->_saveSession;
-
-		$ret = GalleryCoreApi::removeAllMapEntries('FailedLoginsMap');
+		$ret               = GalleryCoreApi::removeAllMapEntries('FailedLoginsMap');
 
 		if ($ret) {
 			$this->failWithStatus($ret);
@@ -78,8 +76,7 @@ class ServerAuthPluginTest extends GalleryTestCase {
 	public function testValidUser() {
 		global $gallery;
 
-		$session =& $gallery->getSession();
-
+		$session                =& $gallery->getSession();
 		$_SERVER['REMOTE_USER'] = $this->_user->getUserName();
 
 		list($ret, $user) = $this->_plugin->getUser();

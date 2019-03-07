@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -47,9 +48,8 @@ class FetchDownloadView extends GalleryView {
 	public function renderImmediate($status, $error) {
 		global $gallery;
 
-		$platform =& $gallery->getPlatform();
-		$phpVm    = $gallery->getPhpVm();
-
+		$platform      =& $gallery->getPlatform();
+		$phpVm         = $gallery->getPhpVm();
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
 
 		if (empty($transactionId)) {
@@ -112,6 +112,7 @@ class FetchDownloadView extends GalleryView {
 
 			// send event about download attempt
 			$event = GalleryCoreApi::newEvent('GalleryCheckoutDownload::downloadNotify');
+
 			$event->setEntity($transaction);
 			$event->setData('permitted');
 
@@ -136,6 +137,7 @@ class FetchDownloadView extends GalleryView {
 
 			$transaction->setTimeDownloaded(time());
 			$transaction->setDownloadAttempts($transaction->getDownloadAttempts() + 1);
+
 			// Save the modified transaction
 			$ret = $transaction->save();
 
@@ -177,7 +179,9 @@ class FetchDownloadView extends GalleryView {
 			}
 
 			$zipName = $filenamebase . $uniqueId . '.' . $extension;
-			$size    = $platform->filesize($file);
+
+			$size = $platform->filesize($file);
+
 			// Disable output compression (if necessary) since IE seems to have problems with it
 			@$phpVm->ini_set('zlib.output_compression', 0);
 			$phpVm->header('Content-Type: application/octet-stream');
@@ -196,6 +200,7 @@ class FetchDownloadView extends GalleryView {
 					}
 
 					echo $data;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 

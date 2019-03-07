@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -48,12 +49,10 @@ class CheckoutModule extends GalleryModule {
 				'Shopping cart module supporting different products and payment'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews|getItemLinks|getSystemLinks');
 	}
@@ -179,7 +178,6 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-
 					// Fall Through
 				case '0.1.6':
 					// Do the schema upgrade
@@ -202,7 +200,6 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.1.7':
@@ -235,7 +232,6 @@ class CheckoutModule extends GalleryModule {
 					 * Only run this step if CheckoutPaypal is activated
 					 *
 					 */
-
 					list($ret, $moduleStatus) = GalleryCoreApi::fetchPluginStatus('module', true);
 
 					if ($ret) {
@@ -277,7 +273,6 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-
 					// Fall Through
 				case '0.1.8':
 					// Do the schema upgrade
@@ -286,7 +281,6 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.1.9':
@@ -309,7 +303,6 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-
 					// Fall Through
 				case '0.1.16':
 					// Do the schema upgrade
@@ -330,7 +323,6 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.1.17':
@@ -419,12 +411,10 @@ class CheckoutModule extends GalleryModule {
 						}
 					}
 
-
 					// Fall Through
 				case '0.2.0':
 					/* version number cockup in galleryCheckoutTransaction.class in 0.1.18 means we
 					need to manually advance the schema from 1.6 to 1.7 where it should have been */
-
 					$query = '
 	            UPDATE
 	              [GallerySchema]
@@ -480,20 +470,16 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-
 					// Fall Through
 				case '0.2.1':
-
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.8'));
 
 					if ($ret) {
 						return $ret;
 					}
 
-
 					// Fall Through
 				case '0.3.0':
-
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.9'));
 
 					if ($ret) {
@@ -505,7 +491,6 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.3.1':
@@ -625,10 +610,8 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-
 					// Fall Through
 				case '0.3.2':
-
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.11'));
 
 					if ($ret) {
@@ -640,7 +623,6 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.3.3':
@@ -683,6 +665,7 @@ class CheckoutModule extends GalleryModule {
 					}
 
 					list($ret, $products) = CheckoutProductMapHelper::fetchProducts($rootAlbumId, true, false);
+
 					// do use local settings, don't pass products to plugins to modify
 					if ($ret) {
 						return $ret;
@@ -718,16 +701,13 @@ class CheckoutModule extends GalleryModule {
 						}
 					}
 
-
 					// Fall Through
 				case '0.3.4':
-
 					$ret = $storage->configureStore($this->getId(), array('GalleryCheckoutTransaction:1.12'));
 
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.3.5':
@@ -761,8 +741,8 @@ class CheckoutModule extends GalleryModule {
 					// copy old to new
 					foreach (array('Confirmed', 'Paid', 'Cleared', 'Fulfil', 'Fulfilled', 'Completed', 'Hold', 'Problem', 'Downloaded') as $title) {
 						$query = "UPDATE [GalleryCheckoutTransaction] SET [::time$title] = 1 WHERE [::flag$title] = 1;";
-						$gallery->debug("Monster query: $query");
 
+						$gallery->debug("Monster query: $query");
 						$ret = $storage->execute($query);
 
 						if ($ret) {
@@ -877,7 +857,6 @@ class CheckoutModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.4.2':
@@ -996,7 +975,6 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-
 					// Fall Through
 				case 'end of upgrade path':
 					break;
@@ -1046,8 +1024,7 @@ class CheckoutModule extends GalleryModule {
 				'isAdmin'       => '1',
 				'emailLanguage' => 'transaction_language',
 			);
-
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
+			$ret       = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
 
 			if ($ret) {
 				return $ret;
@@ -1091,7 +1068,6 @@ class CheckoutModule extends GalleryModule {
 			}
 
 			$gallery->guaranteeTimeLimit(300);
-
 			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'checkout.purchase', true);
 
 			if ($ret) {

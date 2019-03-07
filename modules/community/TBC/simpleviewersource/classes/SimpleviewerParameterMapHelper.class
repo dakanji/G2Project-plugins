@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -223,8 +224,10 @@ class SimpleviewerParameterMapHelper {
 		}
 
 		$albumIdTree = array_reverse($albumIdTree);
+
 		// ... and include the item itself:
 		$albumIdTree = array_merge(array($itemId), array_values($albumIdTree));
+
 		// work through each album
 		$params      = array();
 		$albumParams = array();

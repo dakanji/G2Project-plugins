@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryToolkit.class');
 
 /**
@@ -147,8 +147,7 @@ class JpegtranToolkit extends GalleryToolkit {
 				$pixelY = JpegtranToolkit::round_mcu($parameters[1] / 100 * $height);
 				$width  = round($parameters[2] / 100 * $width);
 				$height = round($parameters[3] / 100 * $height);
-
-				$cmd = array(
+				$cmd    = array(
 					$jpegtran,
 					'-verbose',
 					'-copy',
@@ -179,7 +178,6 @@ class JpegtranToolkit extends GalleryToolkit {
 		}
 
 		$platform->chdir($oldCwd);
-
 		$success = $platform->rename($tmpFilename, $destFilename);
 
 		if (!$success) {
@@ -255,6 +253,7 @@ class JpegtranToolkit extends GalleryToolkit {
 		$cmd = array($jpegtran, '-verbose', '-outfile', $tmpFilename, $filename);
 
 		list($success, $ignored, $output) = $platform->exec(array($cmd));
+
 		@$platform->unlink($tmpFilename);
 		$platform->chdir($oldCwd);
 

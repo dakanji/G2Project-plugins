@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * FIXME The implementation of the core-module
  *
  * Strictly, this module is separate from the CalDAV module.  However it is designed with CalDAV in
@@ -38,12 +41,10 @@ class ICalendarModule extends GalleryModule {
 				'FIXME iCalendar format'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('misc', $gallery->i18n('Miscellaneous'));
 		$this->setCallbacks('getSiteAdminViews');
 	}

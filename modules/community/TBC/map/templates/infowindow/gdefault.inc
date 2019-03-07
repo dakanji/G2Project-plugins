@@ -1,4 +1,5 @@
 <?php
+
 //Fix the description , summary and title HREFs
 $tmp = array();
 
@@ -16,6 +17,7 @@ foreach ($map['mapPoints'] as $point) {
 }
 
 $map['mapPoints'] = $tmp;
+
 //Create the HTML for the window
 $map['Labels'][0]      = 'none';
 $map['extramap']       = '';

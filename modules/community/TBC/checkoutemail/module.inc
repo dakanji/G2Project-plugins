@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -40,12 +41,10 @@ class CheckoutEmailModule extends GalleryModule {
 				'Complete checkout by email'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -217,7 +216,6 @@ class CheckoutEmailModule extends GalleryModule {
 					if ($ret) {
 						return $ret;
 					}
-
 
 					// Fall Through
 				case '0.3.2':

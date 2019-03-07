@@ -1,4 +1,5 @@
 <?php
+
 //Fix the description , summary and title HREFs
 $tmp = array();
 
@@ -16,15 +17,14 @@ foreach ($map['mapPoints'] as $point) {
 }
 
 $map['mapPoints'] = $tmp;
-//Create the HTML for the window
-$map['Labels'][0] = 'Picture';
-$map['Labels'][1] = 'Details';
-$map['extramap']  = '';
 
+//Create the HTML for the window
+$map['Labels'][0]      = 'Picture';
+$map['Labels'][1]      = 'Details';
+$map['extramap']       = '';
 $map['infowindows'][0] = "''
 	+'<div style=\"height:200px;width:200px;\"><a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'+title+'</a><br/>'
 	+'<a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\"><img src=\"'+thumbLink+'\" width=\"'+thw+'\" height=\"'+thh+'\" alt=\"'+title+'\" style=\"max-width:200px;max-height:200px;\"/></a></div>'";
-
 $map['infowindows'][1] = "''
 	+'<table width=200px height=200px><tr><td><a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'+title+'</a><br/>'
 	+'<font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font>'";

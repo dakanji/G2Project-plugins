@@ -17,7 +17,6 @@
  * Interface import
  */
 require_once 'Auth/Yadis/HTTPFetcher.php';
-
 require_once 'Auth/OpenID.php';
 
 /**
@@ -80,14 +79,12 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			return null;
 		}
 
-		$stop = time() + $this->timeout;
-		$off  = $this->timeout;
-
+		$stop  = time() + $this->timeout;
+		$off   = $this->timeout;
 		$redir = true;
 
 		while ($redir && ($off > 0)) {
 			$this->reset();
-
 			$c = curl_init();
 
 			if ($c === false) {
@@ -152,8 +149,8 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			);
 
 			curl_exec($c);
+			$code = curl_getinfo($c, CURLINFO_HTTP_CODE);
 
-			$code    = curl_getinfo($c, CURLINFO_HTTP_CODE);
 			$body    = $this->data;
 			$headers = $this->headers;
 
@@ -169,17 +166,18 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			}
 
 			if (in_array($code, array(301, 302, 303, 307))) {
-				$url   = $this->_findRedirect($headers);
+				$url = $this->_findRedirect($headers);
+
 				$redir = true;
 			} else {
 				$redir = false;
 				curl_close($c);
-
 				$new_headers = array();
 
 				foreach ($headers as $header) {
 					if (strpos($header, ': ')) {
 						list($name, $value) = explode(': ', $header, 2);
+
 						$new_headers[$name] = $value;
 					}
 				}
@@ -210,7 +208,6 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		}
 
 		$this->reset();
-
 		$c = curl_init();
 
 		if (defined('CURLOPT_NOSIGNAL')) {
@@ -228,7 +225,6 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		);
 
 		curl_exec($c);
-
 		$code = curl_getinfo($c, CURLINFO_HTTP_CODE);
 
 		if (!$code) {
@@ -240,12 +236,12 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		$body = $this->data;
 
 		curl_close($c);
-
 		$new_headers = $extra_headers;
 
 		foreach ($this->headers as $header) {
 			if (strpos($header, ': ')) {
 				list($name, $value) = explode(': ', $header, 2);
+
 				$new_headers[$name] = $value;
 			}
 		}

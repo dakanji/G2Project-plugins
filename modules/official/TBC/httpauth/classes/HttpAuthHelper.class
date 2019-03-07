@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -46,8 +47,7 @@ class HttpAuthHelper {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$code = 0x00000000;
+		$code         = 0x00000000;
 
 		// Check that Gallery can access HTTP usernames and passwords
 		list($ret, $success) = HttpAuthHelper::checkHttpAuth();
@@ -127,7 +127,6 @@ class HttpAuthHelper {
 		 * Only check if the HTTP auth plugin is enabled.  Otherwise, access to HTTP usernames and
 		 * passwords is not required.
 		 */
-
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'httpauth');
 
 		if ($ret) {
@@ -142,7 +141,6 @@ class HttpAuthHelper {
 		 * Use the Basic auth-type for tests. PHP does not define auth variables for arbitrary
 		 * auth-types.
 		 */
-
 		list($status, $headers, $body) = GalleryCoreApi::requestWebPage(
 			$urlGenerator->generateUrl(
 				array(
@@ -170,10 +168,9 @@ class HttpAuthHelper {
 	 *               string HTTP password
 	 */
 	public static function getHttpAuth() {
-		$authtype = GalleryUtilities::getServerVar('AUTH_TYPE');
-		$username = GalleryUtilities::getServerVar('PHP_AUTH_USER');
-		$password = GalleryUtilities::getServerVar('PHP_AUTH_PW');
-
+		$authtype      = GalleryUtilities::getServerVar('AUTH_TYPE');
+		$username      = GalleryUtilities::getServerVar('PHP_AUTH_USER');
+		$password      = GalleryUtilities::getServerVar('PHP_AUTH_PW');
 		$authorization = GalleryUtilities::getRequestVariables('authorization');
 
 		if (empty($authorization)) {
@@ -260,8 +257,7 @@ class HttpAuthHelper {
 	public static function regenerateSessionIfNecessary($authenticatedUser) {
 		global $gallery;
 
-		$session =& $gallery->getSession();
-
+		$session   =& $gallery->getSession();
 		$oldUserId = $session->getUserId();
 
 		if (isset($authenticatedUser) && $oldUserId != $authenticatedUser->getId()) {

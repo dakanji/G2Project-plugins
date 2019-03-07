@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -42,6 +43,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		// Use mock soap client
 		$this->_controller->soapclient = 'FotokastenTestSoapClient';
+
 		FotokastenTestSoapClient::setTest($this);
 
 		// Create some random photo items that we can print
@@ -52,7 +54,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
-
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
 
 		if ($ret) {
@@ -146,7 +147,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function testPrintSingle() {
 		GalleryUtilities::putRequestVariable('itemId', $this->_items[2]->getId());
-
 		$result = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -158,7 +158,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$result
 		);
-
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
@@ -168,7 +167,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			!strpos($basket['item1']['photo_url'], $this->_sessionKey),
 			'should be no session param in photo url for public photo'
 		);
-
 		$this->assert(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
@@ -179,6 +177,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$itemId = $this->_items[2]->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 
 		// We only have permission to print and view the thumbnail
@@ -219,7 +218,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$result
 		);
-
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
@@ -229,7 +227,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			strpos($basket['item1']['photo_url'], $this->_sessionKey),
 			'should be a session param in photo url for private photo'
 		);
-
 		$this->assert(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
@@ -238,9 +235,9 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		// Grab session we provide for the raw image
 		$session    =& $gallery->getSession();
 		$sessionVar = GalleryUtilities::prefixFormVariable($session->getKey());
-		preg_match_all("/$sessionVar=([0-9a-f]*)/", $basket['item1']['photo_url'], $matches);
-		$fotokastenSessionId = $matches[1][0];
 
+		preg_match_all("/$sessionVar=([0-9a-f]*)/", $basket['item1']['photo_url'], $matches);
+		$fotokastenSessionId           = $matches[1][0];
 		$_COOKIE[SESSION_ID_PARAMETER] = $fotokastenSessionId;
 		$fotokastenSession             = new GallerySession();
 
@@ -269,7 +266,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 				$this->_items[2]->getId() => 2,
 			)
 		);
-
 		$result = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -281,15 +277,14 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$result
 		);
-
 		$printCart = $session->get('fotokasten.cart');
 		$this->assertEquals(null, $printCart, 'cart');
-
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
 		$this->assertEquals(array('item1', 'item2'), array_keys($basket), 'item keys');
 		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
+
 		preg_match(
 			'/' . $this->_sessionKey . '=([A-Za-z0-9]+)/',
 			$basket['item1']['photo_url'],
@@ -306,12 +301,10 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			!strpos($basket['item2']['photo_url'], $this->_sessionKey),
 			'should be no session param in photo url for public photo'
 		);
-
 		$this->assert(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[0]->getId()),
 			'item id 1'
 		);
-
 		$this->assert(
 			strpos($basket['item2']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id 2'

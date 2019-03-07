@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -172,6 +173,7 @@ class GetUrlsSiteAdminView extends GalleryView {
 			$form['formName'] = 'GetUrlsSiteAdmin';
 
 			list($ret, $param) =
+
 		GalleryCoreApi::fetchAllPluginParameters('module', 'geturls');
 
 			if ($ret) {

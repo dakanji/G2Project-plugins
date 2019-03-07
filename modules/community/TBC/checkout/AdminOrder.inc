@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -26,6 +27,7 @@
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
+
 /**
  * View Checkout Transactions
  */
@@ -102,7 +104,11 @@ class AdminOrderController extends GalleryController {
 		}
 
 		if (isset($form['action']['reconfirm'])) {
-			$ret = GalleryCheckoutApi::changeTransactionStatus($transaction, 'confirm', $messageText);
+			$ret = GalleryCheckoutApi::changeTransactionStatus(
+				$transaction,
+				'confirm',
+				$messageText
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -112,7 +118,11 @@ class AdminOrderController extends GalleryController {
 		}
 
 		if (isset($form['action']['clear'])) {
-			$ret = GalleryCheckoutApi::changeTransactionStatus($transaction, 'clear', $messageText);
+			$ret = GalleryCheckoutApi::changeTransactionStatus(
+				$transaction,
+				'clear',
+				$messageText
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -122,7 +132,11 @@ class AdminOrderController extends GalleryController {
 		}
 
 		if (isset($form['action']['complete'])) {
-			$ret = GalleryCheckoutApi::changeTransactionStatus($transaction, 'complete', $messageText);
+			$ret = GalleryCheckoutApi::changeTransactionStatus(
+				$transaction,
+				'complete',
+				$messageText
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -185,6 +199,7 @@ class AdminOrderView extends GalleryView {
 		if ($form['formName'] != 'AdminOrder') {
 			$form['formName']    = 'AdminOrder';
 			$form['messageText'] = '';
+
 			// Figure out which item we're talking about
 			$form['transactionId'] = (int)GalleryUtilities::getRequestVariables('transactionId');
 
@@ -193,7 +208,11 @@ class AdminOrderView extends GalleryView {
 			}
 		}
 
-		list($ret, $tpl['busname']) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'busname');
+		list($ret, $tpl['busname']) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkout',
+			'busname'
+		);
 
 		if ($ret) {
 			return array($ret, null);

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -61,6 +62,7 @@ class XMLOutView extends GalleryView {
 
 		// get the title
 		$albumTitle = $albumItem->getTitle();
+
 		// fetch the childrenIds that we can see
 		list($ret, $showItemIds) = GalleryCoreApi::fetchChildItemIdsWithPermission($itemId, 'core.view');
 
@@ -90,8 +92,7 @@ class XMLOutView extends GalleryView {
 		}
 
 		// get url generator
-		$urlgen =& $gallery->getUrlGenerator();
-
+		$urlgen                =& $gallery->getUrlGenerator();
 		$fnParams['thumbPath'] = $urlgen->generateUrl(
 			array(
 				'view'   => 'simpleviewersource.DownloadThumb',
@@ -104,7 +105,6 @@ class XMLOutView extends GalleryView {
 				'htmlEntities'   => true,
 			)
 		);
-
 		$fnParams['imagePath'] = $urlgen->generateUrl(
 			array(
 				'view'           => 'simpleviewersource.DownloadMax',
@@ -149,6 +149,7 @@ class XMLOutView extends GalleryView {
 			if (GalleryUtilities::isA($myItem, 'GalleryPhotoItem')) {
 				$myFilename = $myItem->getTitle();
 				$myCaption  = $myItem->getSummary();
+
 				echo "<image><filename>$myItemId</filename><caption>$myFilename</caption></image>\n";
 
 				if (isset($moduleParams['maxItems']) && !(--$moduleParams['maxItems'])) {

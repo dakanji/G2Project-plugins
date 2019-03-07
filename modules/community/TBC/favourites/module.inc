@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  *
@@ -37,12 +38,10 @@ class FavouritesModule extends GalleryModule {
 				'Stores and displays registered users favorite items'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks(
 			'registerEventListeners|getItemLinks|getSystemLinks|getSiteAdminViews'
@@ -139,8 +138,8 @@ class FavouritesModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		$userId = $gallery->getActiveUserId();
 
 		// show to guest user for tantalisation purposes?
@@ -238,10 +237,10 @@ class FavouritesModule extends GalleryModule {
 	 */
 	public function getSystemLinks() {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
 
-		$links  = array();
+		$links = array();
+
 		$userId = $gallery->getActiveUserId();
 
 		list($ret, $anonymousUserId) = GalleryCoreApi::getAnonymousUserId();
@@ -298,6 +297,7 @@ class FavouritesModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		$data = $event->getData();
 
 		if ($event->getEventName() == 'GalleryEntity::delete') {
@@ -321,7 +321,6 @@ class FavouritesModule extends GalleryModule {
 				'pattern' => 'favourites$',
 				'help'    => $this->translate('Shortest URL for album of Favorite Items'),
 			),
-
 			array(
 				'comment'  => $this->translate('Favorites Album'),
 				'match'    => array(
@@ -336,7 +335,6 @@ class FavouritesModule extends GalleryModule {
 				),
 				'help'     => $this->translate('Shorter URL for album of Favorite Items'),
 			),
-
 			array(
 				'comment'  => $this->translate('Favorites Album'),
 				'match'    => array(
@@ -355,7 +353,6 @@ class FavouritesModule extends GalleryModule {
 				),
 				'help'     => $this->translate('Short URL for album of Favorite Items'),
 			),
-
 		);
 	}
 }

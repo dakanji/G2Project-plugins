@@ -1,4 +1,5 @@
 <?php
+
 /*******************************************************************************
  * Software: FPDF                                                               *
  * Version:  1.53                                                               *
@@ -8,10 +9,8 @@
  *                                                                              *
  * You may use, modify and redistribute this software as you wish.              *
  *******************************************************************************/
-
 if (!class_exists('FPDF')) {
 	define('FPDF_VERSION', '1.53');
-
 	class FPDF {
 		//Private properties
 		public $page;               //current page number
@@ -78,6 +77,7 @@ if (!class_exists('FPDF')) {
 		public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4') {
 			//Some checks
 			$this->_dochecks();
+
 			//Initialization of properties
 			$this->page               = 0;
 			$this->n                  = 2;
@@ -101,6 +101,7 @@ if (!class_exists('FPDF')) {
 			$this->TextColor          = '0 g';
 			$this->ColorFlag          = false;
 			$this->ws                 = 0;
+
 			//Standard fonts
 			$this->CoreFonts = array(
 				'courier'      => 'Courier',
@@ -159,6 +160,7 @@ if (!class_exists('FPDF')) {
 
 			$this->fw = $this->fwPt / $this->k;
 			$this->fh = $this->fhPt / $this->k;
+
 			//Page orientation
 			$orientation = strtolower($orientation);
 
@@ -177,19 +179,26 @@ if (!class_exists('FPDF')) {
 			$this->CurOrientation = $this->DefOrientation;
 			$this->w              = $this->wPt / $this->k;
 			$this->h              = $this->hPt / $this->k;
+
 			//Page margins (1 cm)
 			$margin = 28.35 / $this->k;
 			$this->SetMargins($margin, $margin);
+
 			//Interior cell margin (1 mm)
 			$this->cMargin = $margin / 10;
+
 			//Line width (0.2 mm)
 			$this->LineWidth = .567 / $this->k;
+
 			//Automatic page break
 			$this->SetAutoPageBreak(true, 2 * $margin);
+
 			//Full width display mode
 			$this->SetDisplayMode('fullwidth');
+
 			//Enable compression
 			$this->SetCompression(true);
+
 			//Set default PDF version number
 			$this->PDFVersion = '1.3';
 		}
@@ -310,8 +319,10 @@ if (!class_exists('FPDF')) {
 			$this->InFooter = true;
 			$this->Footer();
 			$this->InFooter = false;
+
 			//Close page
 			$this->_endpage();
+
 			//Close document
 			$this->_enddoc();
 		}
@@ -336,17 +347,21 @@ if (!class_exists('FPDF')) {
 				$this->InFooter = true;
 				$this->Footer();
 				$this->InFooter = false;
+
 				//Close page
 				$this->_endpage();
 			}
 
 			//Start new page
 			$this->_beginpage($orientation);
+
 			//Set line cap style to square
 			$this->_out('2 J');
+
 			//Set line width
 			$this->LineWidth = $lw;
 			$this->_out(sprintf('%.2f w', $lw * $this->k));
+
 			//Set font
 			if ($family) {
 				$this->SetFont($family, $style, $size);
@@ -367,8 +382,10 @@ if (!class_exists('FPDF')) {
 
 			$this->TextColor = $tc;
 			$this->ColorFlag = $cf;
+
 			//Page header
 			$this->Header();
+
 			//Restore line width
 			if ($this->LineWidth != $lw) {
 				$this->LineWidth = $lw;
@@ -449,7 +466,8 @@ if (!class_exists('FPDF')) {
 
 		public function GetStringWidth($s) {
 			//Get width of a string in the current font
-			$s  = (string)$s;
+			$s = (string)$s;
+
 			$cw =&$this->CurrentFont['cw'];
 			$w  = 0;
 			$l  = strlen($s);
@@ -533,7 +551,8 @@ if (!class_exists('FPDF')) {
 
 			if ($diff) {
 				//Search existing encodings
-				$d  = 0;
+				$d = 0;
+
 				$nb = count($this->diffs);
 
 				for ($i = 1; $i <= $nb; $i++) {
@@ -545,7 +564,8 @@ if (!class_exists('FPDF')) {
 				}
 
 				if ($d == 0) {
-					$d               = $nb + 1;
+					$d = $nb + 1;
+
 					$this->diffs[$d] = $diff;
 				}
 
@@ -785,7 +805,8 @@ if (!class_exists('FPDF')) {
 				}
 
 				$txt2 = str_replace(')', '\\)', str_replace('(', '\\(', str_replace('\\', '\\\\', $txt)));
-				$s   .= sprintf('BT %.2f %.2f Td (%s) Tj ET', ($this->x + $dx) * $k, ($this->h - ($this->y + .5 * $h + .3 * $this->FontSize)) * $k, $txt2);
+
+				$s .= sprintf('BT %.2f %.2f Td (%s) Tj ET', ($this->x + $dx) * $k, ($this->h - ($this->y + .5 * $h + .3 * $this->FontSize)) * $k, $txt2);
 
 				if ($this->underline) {
 					$s .= ' ' . $this->_dounderline($this->x + $dx, $this->y + .5 * $h + .3 * $this->FontSize, $txt);
@@ -875,6 +896,7 @@ if (!class_exists('FPDF')) {
 					}
 
 					$this->Cell($w, $h, substr($s, $j, $i - $j), $b, 2, $align, $fill);
+
 					$i++;
 					$sep = -1;
 					$j   = $i;
@@ -917,6 +939,7 @@ if (!class_exists('FPDF')) {
 						}
 
 						$this->Cell($w, $h, substr($s, $j, $sep - $j), $b, 2, $align, $fill);
+
 						$i = $sep + 1;
 					}
 
@@ -950,8 +973,9 @@ if (!class_exists('FPDF')) {
 
 		public function Write($h, $txt, $link = '') {
 			//Output text in flowing mode
-			$cw   =&$this->CurrentFont['cw'];
-			$w    = $this->w - $this->rMargin - $this->x;
+			$cw =&$this->CurrentFont['cw'];
+			$w  = $this->w - $this->rMargin - $this->x;
+
 			$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 			$s    = str_replace("\r", '', $txt);
 			$nb   = strlen($s);
@@ -968,6 +992,7 @@ if (!class_exists('FPDF')) {
 				if ($c == "\n") {
 					//Explicit line break
 					$this->Cell($w, $h, substr($s, $j, $i - $j), 0, 2, '', 0, $link);
+
 					$i++;
 					$sep = -1;
 					$j   = $i;
@@ -976,7 +1001,8 @@ if (!class_exists('FPDF')) {
 					if ($nl == 1) {
 						$this->x = $this->lMargin;
 						$w       = $this->w - $this->rMargin - $this->x;
-						$wmax    = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+
+						$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 					}
 
 					$nl++;
@@ -998,7 +1024,8 @@ if (!class_exists('FPDF')) {
 							$this->x  = $this->lMargin;
 							$this->y += $h;
 							$w        = $this->w - $this->rMargin - $this->x;
-							$wmax     = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+
+							$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 							$i++;
 							$nl++;
 
@@ -1012,6 +1039,7 @@ if (!class_exists('FPDF')) {
 						$this->Cell($w, $h, substr($s, $j, $i - $j), 0, 2, '', 0, $link);
 					} else {
 						$this->Cell($w, $h, substr($s, $j, $sep - $j), 0, 2, '', 0, $link);
+
 						$i = $sep + 1;
 					}
 
@@ -1022,7 +1050,8 @@ if (!class_exists('FPDF')) {
 					if ($nl == 1) {
 						$this->x = $this->lMargin;
 						$w       = $this->w - $this->rMargin - $this->x;
-						$wmax    = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+
+						$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 					}
 
 					$nl++;
@@ -1071,6 +1100,7 @@ if (!class_exists('FPDF')) {
 				}
 
 				set_magic_quotes_runtime($mqr);
+
 				$info['i']           = count($this->images) + 1;
 				$this->images[$file] = $info;
 			} else {
@@ -1302,8 +1332,9 @@ if (!class_exists('FPDF')) {
 						if (is_string($pl[4])) {
 							$annots .= '/A <</S /URI /URI ' . $this->_textstring($pl[4]) . '>>>>';
 						} else {
-							$l       = $this->links[$pl[4]];
-							$h       = isset($this->OrientationChanges[$l[0]]) ? $wPt : $hPt;
+							$l = $this->links[$pl[4]];
+							$h = isset($this->OrientationChanges[$l[0]]) ? $wPt : $hPt;
+
 							$annots .= sprintf('/Dest [%d 0 R /XYZ 0 %.2f null]>>', 1 + 2 * $l[0], $h - $l[1] * $this->k);
 						}
 					}
@@ -1313,6 +1344,7 @@ if (!class_exists('FPDF')) {
 
 				$this->_out('/Contents ' . ($this->n + 1) . ' 0 R>>');
 				$this->_out('endobj');
+
 				//Page content
 				$p = ($this->compress) ? gzcompress($this->pages[$n]) : $this->pages[$n];
 				$this->_newobj();
@@ -1356,7 +1388,8 @@ if (!class_exists('FPDF')) {
 				$this->_newobj();
 				$this->FontFiles[$file]['n'] = $this->n;
 				$font                        = '';
-				$f                           = fopen($this->_getfontpath() . $file, 'rb', 1);
+
+				$f = fopen($this->_getfontpath() . $file, 'rb', 1);
 
 				if (!$f) {
 					$this->Error('Font file not found');
@@ -1441,6 +1474,7 @@ if (!class_exists('FPDF')) {
 
 					$this->_out('>>');
 					$this->_out('endobj');
+
 					//Widths
 					$this->_newobj();
 					$cw =&$font['cw'];
@@ -1452,6 +1486,7 @@ if (!class_exists('FPDF')) {
 
 					$this->_out($s . ']');
 					$this->_out('endobj');
+
 					//Descriptor
 					$this->_newobj();
 					$s = '<</Type /FontDescriptor /FontName /' . $name;
@@ -1483,6 +1518,7 @@ if (!class_exists('FPDF')) {
 
 		public function _putimages() {
 			$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
+
 			reset($this->images);
 
 			while (list($file, $info) = each($this->images)) {
@@ -1525,8 +1561,10 @@ if (!class_exists('FPDF')) {
 
 				$this->_out('/Length ' . strlen($info['data']) . '>>');
 				$this->_putstream($info['data']);
+
 				unset($this->images[$file]['data']);
 				$this->_out('endobj');
+
 				//Palette
 				if ($info['cs'] == 'Indexed') {
 					$this->_newobj();
@@ -1561,6 +1599,7 @@ if (!class_exists('FPDF')) {
 		public function _putresources() {
 			$this->_putfonts();
 			$this->_putimages();
+
 			//Resource dictionary
 			$this->offsets[2] = strlen($this->buffer);
 			$this->_out('2 0 obj');
@@ -1633,18 +1672,21 @@ if (!class_exists('FPDF')) {
 			$this->_putheader();
 			$this->_putpages();
 			$this->_putresources();
+
 			//Info
 			$this->_newobj();
 			$this->_out('<<');
 			$this->_putinfo();
 			$this->_out('>>');
 			$this->_out('endobj');
+
 			//Catalog
 			$this->_newobj();
 			$this->_out('<<');
 			$this->_putcatalog();
 			$this->_out('>>');
 			$this->_out('endobj');
+
 			//Cross-ref
 			$o = strlen($this->buffer);
 			$this->_out('xref');
@@ -1673,6 +1715,7 @@ if (!class_exists('FPDF')) {
 			$this->x                  = $this->lMargin;
 			$this->y                  = $this->tMargin;
 			$this->FontFamily         = '';
+
 			//Page orientation
 			if (!$orientation) {
 				$orientation = $this->DefOrientation;
@@ -1745,6 +1788,7 @@ if (!class_exists('FPDF')) {
 			}
 
 			$bpc = isset($a['bits']) ? $a['bits'] : 8;
+
 			//Read whole file
 			$f    = fopen($file, 'rb');
 			$data = '';
@@ -1819,6 +1863,7 @@ if (!class_exists('FPDF')) {
 
 			fread($f, 4);
 			$parms = '/DecodeParms <</Predictor 15 /Colors ' . ($ct == 2 ? 3 : 1) . ' /BitsPerComponent ' . $bpc . ' /Columns ' . $w . '>>';
+
 			//Scan chunks looking for palette, transparency and image data
 			$pal  = '';
 			$trns = '';

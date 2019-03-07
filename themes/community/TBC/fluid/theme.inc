@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile$
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @version $Revision: 527 $ $Date: 2006-03-28 08:45:22 -0800 (Tue, 28 Mar 2006) $
  * @package FluidTheme
@@ -45,11 +47,9 @@ class FluidTheme extends GalleryTheme {
 				'A Flash based Theme'
 			)
 		);
-
 		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'perPage'       => 12,
@@ -121,8 +121,7 @@ class FluidTheme extends GalleryTheme {
 		// Add in our extra stuff
 		$theme                   =& $template->getVariableByReference('theme');
 		$theme['columnWidthPct'] = floor(100 / $params['perPage']);
-
-		$showXml = GalleryUtilities::getRequestVariables('showxml');
+		$showXml                 = GalleryUtilities::getRequestVariables('showxml');
 
 		return array(null, $showXml == 'album' ? 'theme_xml.tpl' : 'theme_flash.tpl');
 	}

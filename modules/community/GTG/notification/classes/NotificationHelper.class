@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -292,8 +293,7 @@ class NotificationHelper {
 		global $gallery;
 
 		$markers = GalleryUtilities::makeMarkers(count($notificationEvents));
-
-		$sql = '
+		$sql     = '
 		SELECT DISTINCT [::notificationName], [::handlerName]
 		FROM [SubscriptionMap]
 		WHERE [::notificationName] IN (' . $markers . ')';
@@ -321,9 +321,8 @@ class NotificationHelper {
 	 *               array Array of userid that are subscribed to the event for the specfied item
 	 */
 	public static function getSubscribers($notificationName, $notification) {
-		$event  = $notification->getEvent();
-		$itemId = $notification->getItemId();
-
+		$event              = $notification->getEvent();
+		$itemId             = $notification->getItemId();
 		$requiredPermission = $notification->getPermission();
 
 		list($ret, $searchResult) = GalleryCoreApi::getMapEntry(
@@ -605,6 +604,7 @@ class NotificationHelper {
 
 		if (!empty($hints)) {
 			$key = array_search($hint, $hints);
+
 			// Only add if it is not in the hint list already
 			if ($key === false) {
 				$hints[]     = $hint;

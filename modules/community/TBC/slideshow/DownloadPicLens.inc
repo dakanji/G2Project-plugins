@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -116,6 +117,7 @@ class DownloadPicLensView extends GalleryView {
 		$stats = $platform->stat($data['path']);
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
+
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
 		$phpVm->header('Cache-Control: public');
@@ -142,6 +144,7 @@ class DownloadPicLensView extends GalleryView {
 					}
 
 					echo $bytes;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
 GalleryCoreApi::requireOnce('modules/webdav/classes/WebDavHelper.class');
 
@@ -43,7 +43,6 @@ class WebDavController extends GalleryController {
 		 * registered for this request.  Since this is the WebDAV controller, we know it is a WebDAV
 		 * request.
 		 */
-
 		$ret = GalleryCoreApi::registerFactoryImplementationForRequest(
 			'GalleryEventListener',
 			'WebDavModule',
@@ -101,10 +100,12 @@ class WebDavController extends GalleryController {
 		 * This condition may be relaxed in future if it's a problem.
 		 */
 		$path = GalleryUtilities::getRequestVariables('path');
+
 		/**
 		 * @todo Refactor towards a cleaner approach, e.g. using a map for public paths.
 		 */
 		GalleryUtilities::putRequestVariable('originalPath', $path);
+
 		$pathComponent = basename($path);
 
 		// Special case to suppress Mac '._' and '.DS_Store files.  Ignore but return success.
@@ -112,7 +113,6 @@ class WebDavController extends GalleryController {
 			WebDavServer::getme()->setResponseStatus(
 				'200 OK'
 			);
-
 			$handle = WebDavServer::getme()->openRequestBody();
 
 			while (!feof($handle)) {
@@ -127,10 +127,12 @@ class WebDavController extends GalleryController {
 
 		foreach ($pathComponents as $key => $pathComponent) {
 			GalleryUtilities::unsanitizeInputValues($pathComponent);
+
 			$pathComponents[$key] = $platform->legalizePathComponent($pathComponent);
 		}
 
 		$path = implode('/', $pathComponents);
+
 		GalleryUtilities::putRequestVariable('path', $path);
 
 		$requestMethod = GalleryUtilities::strToLower(
@@ -207,6 +209,7 @@ class WebDavController extends GalleryController {
 			// Until there's a better way to delegate to ItemAdd
 			GalleryUtilities::putRequestVariable('itemId', $parentId);
 			GalleryUtilities::putRequestVariable('addPlugin', 'ItemAddWebDav');
+
 			// Let the ItemAddPlugin handle the replacement for the auth-token check
 			list($ret, $data) = ItemAddController::handleRequest($form);
 

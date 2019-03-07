@@ -1,4 +1,5 @@
 <?php
+
 //Fix the description , summary and title HREFs
 $tmp = array();
 
@@ -16,15 +17,14 @@ foreach ($map['mapPoints'] as $point) {
 }
 
 $map['mapPoints'] = $tmp;
-//Create the HTML for the window
-$map['Labels'][0] = 'Picture';
-$map['Labels'][1] = 'Details';
-$map['extramap']  = '';
 
+//Create the HTML for the window
+$map['Labels'][0]      = 'Picture';
+$map['Labels'][1]      = 'Details';
+$map['extramap']       = '';
 $map['infowindows'][0] = "''
 	+'<a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'+title+'</a><br/>'
 	+'<a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\"><img src=\"'+thumbLink+'\" width=\"'+thw+'\" height=\"'+thh+'\" alt=\"'+title+'\" style=\"max-width:200px;max-height:200px;\"/></a>'";
-
 $map['infowindows'][1] = "''
 +'<div style=\";margin-top:10px;width:250px;height:150px;overflow:auto;\">'
 	+'<table border=0 cellpadding=0 style=\"width:90%;height:100%;border-collapse: collapse;\">'
@@ -43,7 +43,6 @@ if ($map['showItemDescriptions']) {
 
 $map['infowindows'][1] = $map['infowindows'][1] . "
 	+'<br/><br/><font color=black><b>Location:</b><br>'+lat+','+lon+'</font>'";
-
 $map['infowindows'][1] = $map['infowindows'][1] . "
         +'<br/><br/><b>Directions To Location:</b><br/>'
         + 'Start address:<form action=\"http://maps.google.com/maps?daddr='+lat+','+lon+'&saddr=\" target=\"gpop\" onsubmit=\"window.open(action+saddr.value, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'

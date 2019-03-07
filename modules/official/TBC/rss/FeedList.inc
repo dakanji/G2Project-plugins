@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
 
 /**
@@ -46,7 +46,6 @@ class FeedListView extends GalleryView {
 				'feeds' => $feeds,
 			)
 		);
-
 		$template->setVariable('view', 'rss.FeedList');
 
 		return array(

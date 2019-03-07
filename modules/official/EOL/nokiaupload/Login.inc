@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/nokiaupload/classes/ImageUploadHelper.class');
 
 /**
@@ -78,7 +78,6 @@ class LoginView extends GalleryView {
 
 		$gallery->debug("##### LoginView #####\n\$status = ");
 		$gallery->debug_r($status);
-
 		$reply   = array($status['success'] . "\r\n");
 		$reply[] = 'Version=' . NOKIAUPLOAD_PROTOCOLVERSION . "\r\n";
 
@@ -105,6 +104,7 @@ class LoginView extends GalleryView {
 		}
 
 		$reply = implode('', $reply);
+
 		$gallery->debug("Sending:\n$reply");
 
 		header('Content-type: text/plain; charset=UTF-8');

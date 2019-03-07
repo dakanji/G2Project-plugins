@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -118,6 +119,7 @@ class GetUrlsHelper {
 
 		if ($param['guestMode']) {
 			list($ret, $guestUserId) =
+
 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
 
 			if ($ret) {
@@ -132,6 +134,7 @@ class GetUrlsHelper {
 		}
 
 		list($ret, $hasViewSourcePermission) =
+
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewSource', $userId);
 
 		if ($ret) {
@@ -139,6 +142,7 @@ class GetUrlsHelper {
 		}
 
 		list($ret, $hasViewResizesPermission) =
+
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewResizes', $userId);
 
 		if ($ret) {
@@ -157,7 +161,6 @@ class GetUrlsHelper {
 				 * Because the user can't access the source image, we'll try using the
 				 * resized versions instead.
 				 */
-
 				list($ret, $resizesMap) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));
 
 				if ($ret) {
@@ -166,6 +169,7 @@ class GetUrlsHelper {
 
 				if (isset($resizesMap[$itemId])) {
 					$resizes = $resizesMap[$itemId];
+
 					// TODO Pick any of the resizes (might change this to pick the largest one)
 					foreach ($resizes as $resize) {
 						$data['resizeId'] = $resize->getId();
@@ -185,7 +189,8 @@ class GetUrlsHelper {
 		$data['itemId']      = $itemId;
 		$data['options']     = $options;
 		$data['permissions'] = $permissions;
-		$data['itemTitle']   = $item->getTitle();
+
+		$data['itemTitle'] = $item->getTitle();
 
 		return  array(null, $data);
 	}

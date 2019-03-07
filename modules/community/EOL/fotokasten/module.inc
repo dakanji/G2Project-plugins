@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 define('FOTOKASTEN_GALLERY_AFFILIATE_ID', '1927');
 define('FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD', 'f12a65d90445f95b90e5fd30c75ee74e');
 
@@ -39,12 +39,10 @@ class FotokastenModule extends GalleryModule {
 				'Fotokasten Photo Printing Module'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $this->translate('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 	}
@@ -107,7 +105,6 @@ class FotokastenModule extends GalleryModule {
 
 			// Give everybody print permission by default
 			$gallery->guaranteeTimeLimit(300);
-
 			$ret = GalleryCoreApi::addGroupPermission(
 				$coreParams['id.rootAlbum'],
 				$coreParams['id.everybodyGroup'],
@@ -167,8 +164,7 @@ class FotokastenModule extends GalleryModule {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
-		$links = array();
+		$links   = array();
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();

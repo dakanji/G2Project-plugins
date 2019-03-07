@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/openid/classes/OpenIdHelper.class');
 
 /**
@@ -70,11 +70,11 @@ class FinishLoginController extends GalleryController {
 				'htmlEntities' => false,
 			)
 		);
-
-		$results = $status = $error = array();
+		$results      = $status = $error = array();
 
 		// Complete the authentication using the server's response
-		$consumer       =& OpenIdHelper::getConsumer();
+		$consumer =& OpenIdHelper::getConsumer();
+
 		$response       = $consumer->complete($returnTo);
 		$responseStatus = empty($response->status) || empty($response->identity_url) ? '' : $response->status;
 
@@ -177,8 +177,9 @@ class FinishLoginController extends GalleryController {
 
 				if (empty($error)) {
 					$sregResponse = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
-					$sreg         = $sregResponse->contents();
-					$data         = array();
+
+					$sreg = $sregResponse->contents();
+					$data = array();
 
 					foreach (array(
 						'userName' => 'nickname',
@@ -256,8 +257,8 @@ class FinishLoginController extends GalleryController {
 		 */
 		if (empty($error) && GalleryUtilities::isA($user, 'GalleryUser')) {
 			$gallery->setActiveUser($user);
-
 			$event = GalleryCoreApi::newEvent('Gallery::Login');
+
 			$event->setEntity($user);
 
 			list($ret, $redirect) = GalleryCoreApi::postEvent($event);
@@ -267,8 +268,7 @@ class FinishLoginController extends GalleryController {
 			}
 
 			$session =& $gallery->getSession();
-
-			$ret = $session->regenerate();
+			$ret     = $session->regenerate();
 
 			if ($ret) {
 				return array($ret, null);

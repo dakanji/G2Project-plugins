@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>                               //
 //  available at http://getid3.sourceforge.net                                 //
@@ -9,6 +10,7 @@
 // extension.cache.sqlite3.php - part of getID3()                              //
 // Please see readme.txt for more information                                  //
 //                                                                            ///
+
 /////////////////////////////////////////////////////////////////////////////////
 ///                                                                            //
 // MySQL extension written by Allan Hansen <ahØartemis*dk>                     //
@@ -107,8 +109,9 @@ class getID3_cached_sqlite3 extends getID3 {
 		$db       = $this->db;
 		$this->create_table();   // Create cache table if not exists
 		$version = '';
-		$sql     = $this->version_check;
-		$stmt    = $db->prepare($sql);
+
+		$sql  = $this->version_check;
+		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':filename', getID3::VERSION, SQLITE3_TEXT);
 		$result = $stmt->execute();
 
@@ -172,9 +175,11 @@ class getID3_cached_sqlite3 extends getID3 {
 		// items to track for caching
 		$filetime      = filemtime($filename);
 		$filesize_real = filesize($filename);
+
 		// this will be saved for a quick directory lookup of analized files
 		// ... why do 50 seperate sql quries when you can do 1 for the same result
 		$dirname = dirname($filename);
+
 		// Lookup file
 		$db   = $this->db;
 		$sql  = $this->get_id3_data;
@@ -192,6 +197,7 @@ class getID3_cached_sqlite3 extends getID3 {
 
 		// if it hasn't been analyzed before, then do it now
 		$analysis = parent::analyze($filename, $filesize, $original_filename);
+
 		// Save result
 		$sql  = $this->cache_file;
 		$stmt = $db->prepare($sql);
@@ -231,6 +237,7 @@ class getID3_cached_sqlite3 extends getID3 {
 	public function get_cached_dir($dir) {
 		$db   = $this->db;
 		$rows = array();
+
 		$sql  = $this->get_cached_dir;
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':dirname', $dir, SQLITE3_TEXT);

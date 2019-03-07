@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -54,6 +55,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
 		$platform->setReply('fopen', array('/data/tmp/test.zip', 'rb', 0), 'testfd');
@@ -65,8 +67,8 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		$gallery->setPlatform($platform);
 
 		GalleryUtilities::putRequestVariable('file', 'test');
-		$_SERVER['HTTP_USER_AGENT'] = 'This is MSIE 6 browser';
 
+		$_SERVER['HTTP_USER_AGENT'] = 'This is MSIE 6 browser';
 		set_error_handler('ZipCartDownloadTest_error_handler');
 		ob_start();
 
@@ -78,7 +80,6 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		$output = ob_get_contents();
 		ob_end_clean();
-
 		$this->assertEquals(
 			array(
 				'Content-Type: application/zip',
@@ -88,7 +89,6 @@ class ZipCartDownloadTest extends GalleryTestCase {
 			$this->_header,
 			'header'
 		);
-
 		$this->assertEquals('zipdata', $output, 'output');
 	}
 
@@ -96,6 +96,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
 		$platform->setReply('fopen', array('/data/tmp/test.zip', 'rb', 0), 'testfd');
@@ -107,8 +108,8 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		$gallery->setPlatform($platform);
 
 		GalleryUtilities::putRequestVariable('file', 'test');
-		$_SERVER['HTTP_USER_AGENT'] = 'This is some Gecko browser';
 
+		$_SERVER['HTTP_USER_AGENT'] = 'This is some Gecko browser';
 		set_error_handler('ZipCartDownloadTest_error_handler');
 		ob_start();
 
@@ -120,13 +121,11 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		$output = ob_get_contents();
 		ob_end_clean();
-
 		$this->assertEquals(
 			array('Content-Type: multipart/mixed; boundary=G2ZipCart'),
 			$this->_header,
 			'header'
 		);
-
 		$this->assertEquals(
 			"--G2ZipCart\nContent-Type: application/zip\nContent-Disposition: " .
 			"inline; filename=\"G2cart.zip\"\nContent-Length: 123\n\nzipdata\n--G2ZipCart\n" .
@@ -141,6 +140,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), false);
 		$gallery->setPlatform($platform);
 
@@ -166,6 +166,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/passwd.zip'), false);
 		$gallery->setPlatform($platform);
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -91,6 +92,7 @@ class GoogleMapUtilities {
 		foreach ($coords as $val) {
 			$c = explode(',', $val);
 			$x = tan(deg2rad($c[1]));
+
 			// math nonsense to translate to xy coordinates in Mercator projection
 			array_push($merclat, log($x + sqrt($x * $x + 1)) / log(exp(1)));
 			array_push($lon, $c[0]);
@@ -108,8 +110,7 @@ class GoogleMapUtilities {
 			$centerlat = str_replace(',', '.', $centerlat);
 		}
 
-		$center = $centerlong . ',' . $centerlat;
-
+		$center       = $centerlong . ',' . $centerlat;
 		$maxmercmiles = max($merclat) - min($merclat);
 		$maxlonmiles  = deg2rad(max($lon) - min($lon));
 
@@ -212,6 +213,7 @@ class GoogleMapUtilities {
 	public function OptionFromFolder($folder, $selected) {
 		$list  = '';
 		$mydir = dir($folder);
+
 		// Loop through all file and folder in the directory
 		while (($file = $mydir->read()) !== false) {
 			// if the "file" is a folder and isn't "." or ".." or "CVS" then proceed with it
@@ -249,8 +251,7 @@ class GoogleMapUtilities {
 	public function TableFromFiles($folder, $webpath, $imagefolder) {
 		$basegallerydir = substr(dirname(__FILE__), 0, -19);
 		$base           = GalleryUtilities::convertPathToUrl($basegallerydir);
-
-		$mydir = dir($folder . $imagefolder);
+		$mydir          = dir($folder . $imagefolder);
 
 		// go thought the files in the basemarker folder inside the module to use them as base.
 		while (($file = $mydir->read()) !== false) {
@@ -298,7 +299,8 @@ class GoogleMapUtilities {
 	public function AllMarkers($imagetype = 'markers') {
 		global $gallery;
 
-		$gurl           =& $gallery->getUrlGenerator();
+		$gurl =& $gallery->getUrlGenerator();
+
 		$basegallerydir = substr(dirname(__FILE__), 0, -19);
 		$base           = $gurl->generateUrl(
 			array(
@@ -308,20 +310,18 @@ class GoogleMapUtilities {
 				'forceFullUrl' => true,
 			)
 		);
-
-		$mydir         = dir($basegallerydir . 'modules/map/images/' . $imagetype . '/');
-		$filenamearray = array();
+		$mydir          = dir($basegallerydir . 'modules/map/images/' . $imagetype . '/');
+		$filenamearray  = array();
 
 		while (($filenames = $mydir->read()) !== false) {
 			if (is_dir($basegallerydir . 'modules/map/images/' . $imagetype . '/' . $filenames)
 				&& $filenames != '.' && $filenames != '..' && $filenames != 'multi'
 				&& $filenames != 'CVS' && $filenames != '.svn'
 			) {
-				$mydir2 = dir(
+				$mydir2     = dir(
 					$basegallerydir . 'modules/map/images/' . $imagetype . '/'
 					  . $filenames . '/'
 				);
-
 				$imagearray = array();
 
 				while (($images = $mydir2->read()) !== false) {
@@ -335,8 +335,8 @@ class GoogleMapUtilities {
 				}
 
 				$mydir2->close();
-				sort($imagearray, SORT_STRING);
 
+				sort($imagearray, SORT_STRING);
 				$allimagesarray = array();
 
 				foreach ($imagearray as $images) {
@@ -402,6 +402,7 @@ class GoogleMapUtilities {
 
 		$oldfilename      = dirname($filename) . '/old' . basename($filename);
 		$jpeg_header_data = get_jpeg_header_data($filename);
+
 		// backup the file as "oldxyz.jpg" if it doesn't exist
 		if (!file_exists($oldfilename)) {
 			put_jpeg_header_data($filename, $oldfilename, $jpeg_header_data);
@@ -422,7 +423,6 @@ class GoogleMapUtilities {
 				);
 
 				put_jpeg_header_data($filename, $filename, $new_jpeg_header_data);
-
 				$jpeg_header_data = get_jpeg_header_data($filename);
 				$exifdata         = get_EXIF_JPEG($filename);
 			}

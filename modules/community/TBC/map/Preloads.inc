@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,17 +18,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @version $Revision: 1253 $
  *
  */
+
 // Written by Nic Roets. Placed in the public domain.
 class mapPreloads {
 	public function preload(&$template, $preload, $paramSet) {
 		static $loaded = false;
-		$loaded        = true;
-		$itemId        = GalleryUtilities::getRequestVariables('itemId');
+
+		$loaded = true;
+		$itemId = GalleryUtilities::getRequestVariables('itemId');
 
 		if (!empty($itemId)) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);

@@ -26,11 +26,8 @@ define('Auth_OpenID_VERSION', '2.1.1');
  * Require the fetcher code.
  */
 require_once 'Auth/Yadis/PlainHTTPFetcher.php';
-
 require_once 'Auth/Yadis/ParanoidHTTPFetcher.php';
-
 require_once 'Auth/OpenID/BigMath.php';
-
 require_once 'Auth/OpenID/URINorm.php';
 
 /**
@@ -157,7 +154,6 @@ class Auth_OpenID {
 			// Do nothing.
 		} else {
 			// XXX HACK FIXME HORRIBLE.
-			//
 			// POSTing to a URL with query parameters is acceptable, but
 			// we don't have a clean way to distinguish those parameters
 			// when we need to do things like return_to verification
@@ -185,8 +181,7 @@ class Auth_OpenID {
 
 	public function params_from_string($str) {
 		$chunks = explode('&', $str);
-
-		$data = array();
+		$data   = array();
 
 		foreach ($chunks as $chunk) {
 			$parts = explode('=', $chunk, 2);
@@ -196,7 +191,8 @@ class Auth_OpenID {
 			}
 
 			list($k, $v) = $parts;
-			$data[$k]    = urldecode($v);
+
+			$data[$k] = urldecode($v);
 		}
 
 		return $data;
@@ -274,8 +270,7 @@ class Auth_OpenID {
 			return null;
 		}
 
-		$parts = explode('&', $query);
-
+		$parts     = explode('&', $query);
 		$new_parts = array();
 
 		for ($i = 0; $i < count($parts); $i++) {
@@ -286,7 +281,8 @@ class Auth_OpenID {
 			}
 
 			list($key, $value) = $pair;
-			$new_parts[$key]   = urldecode($value);
+
+			$new_parts[$key] = urldecode($value);
 		}
 
 		return $new_parts;

@@ -165,7 +165,9 @@ class Auth_OpenID_MathLibrary {
 
 		do {
 			$bytes = "\x00" . Auth_OpenID_CryptUtil::getBytes($nbytes);
-			$n     = $this->binaryToLong($bytes);
+
+			$n = $this->binaryToLong($bytes);
+
 			// Keep looping if this value is in the low duplicated range
 		} while ($this->cmp($n, $duplicate) < 0);
 
@@ -424,9 +426,7 @@ function &Auth_OpenID_getMathLib() {
 		}
 
 		$triedstr = implode(', ', $tried);
-
 		Auth_OpenID_setNoMathSupport();
-
 		$result = null;
 
 		return $result;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -51,7 +52,9 @@ class ItemAddWebCam extends ItemAddPlugin {
 			$platform =& $gallery->getPlatform();
 			$tmpDir   = $gallery->getConfig('data.gallery.tmp');
 			$url      = $form['imageUrl'];
+
 			GalleryUtilities::unsanitizeInputValues($url, false);
+
 			$urlComponents = parse_url($url);
 
 			list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
@@ -79,7 +82,8 @@ class ItemAddWebCam extends ItemAddPlugin {
 					$urlComponents['path'] = $urlComponents['host'];
 				}
 
-				$tmpFile            = $urlComponents['path'];
+				$tmpFile = $urlComponents['path'];
+
 				$successfullyCopied = $platform->file_exists($tmpFile);
 			} else {
 				$error[]            = 'form[error][imageUrl][invalid]';
@@ -111,6 +115,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 				}
 
 				$title = $basename;
+
 				GalleryUtilities::sanitizeInputValues($title);
 
 				list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
@@ -139,7 +144,6 @@ class ItemAddWebCam extends ItemAddPlugin {
 					}
 
 					$newItem->addOnLoadHandler('WebCam');
-
 					$ret = $newItem->save();
 
 					if ($ret) {

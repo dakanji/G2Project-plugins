@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/webdav/classes/WebDavHelper.class');
 
 /**
@@ -125,8 +125,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 		// Following pattern from ItemAddWebCam
 		$tmpDir  = $gallery->getConfig('data.gallery.tmp');
 		$tmpFile = $platform->tempnam($tmpDir, 'webdav');
-
-		$handle = $platform->fopen($tmpFile, 'wb');
+		$handle  = $platform->fopen($tmpFile, 'wb');
 
 		if (!$handle) {
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
@@ -141,7 +140,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 		}
 
 		$platform->fclose($handle);
-
 		$originalPath = GalleryUtilities::getRequestVariables('originalPath');
 		$title        = empty($originalPath) ? basename($path) : basename($originalPath);
 
@@ -197,7 +195,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 		 * The parent is already read-locked by the ItemAddController. Read-lock the whole ancestor
 		 * sequence to ensure that filesystem path stays the same.
 		 */
-
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLockParents($parentItem->getId());
 
 		if ($ret) {
@@ -376,6 +373,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			@$platform->unlink($tmpFile);
+
 			GalleryCoreApi::releaseLocks($lockIds);
 
 			return array($ret, null, null);
@@ -387,15 +385,14 @@ class ItemAddWebDav extends ItemAddPlugin {
 		 */
 		if (!$platform->copy($tmpFile, $filePath)) {
 			@$platform->unlink($tmpFile);
+
 			GalleryCoreApi::releaseLocks($lockIds);
 
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 		}
 
 		@$platform->unlink($tmpFile);
-
 		$newItem->setPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
-
 		$ret = $newItem->save();
 
 		if ($ret) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: Admin.inc,v $
  *
@@ -19,11 +20,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 GalleryCoreApi::requireOnce(
 	'modules/core/classes/helpers/GalleryDerivativeHelper_simple.class'
 );
-
 GalleryCoreApi::requireOnce(
 	'modules/core/DownloadItem.inc'
 );
@@ -64,7 +63,8 @@ class DownloadThumbView extends DownloadItemView {
 			return $ret;
 		}
 
-		$item   = $thumbs[$masterId];
+		$item = $thumbs[$masterId];
+
 		$itemId = $item->getId();
 
 		/*
@@ -84,7 +84,6 @@ class DownloadThumbView extends DownloadItemView {
 		 * header("Location:$mainUrl", TRUE, 307);
 		 * return null;
 		 */
-
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 
 		list($ret, $view) = GalleryView::loadView('core.DownloadItem');

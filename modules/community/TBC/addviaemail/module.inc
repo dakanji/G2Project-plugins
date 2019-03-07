@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * Add via Email
  *
  * @package Addviaemail
@@ -34,12 +37,10 @@ class AddviaemailModule extends GalleryModule {
 				'Add via Email module'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -64,7 +65,8 @@ class AddviaemailModule extends GalleryModule {
 		$links = array();
 
 		foreach ($items as $item) {
-			$params['view']          = 'addviaemail.Addviaemail';
+			$params['view'] = 'addviaemail.Addviaemail';
+
 			$params['itemId']        = $item->getId();
 			$links[$item->getId()][] = array(
 				'text'   => $this->translate('Add via Email'),
@@ -80,6 +82,7 @@ class AddviaemailModule extends GalleryModule {
 	 */
 	public function needsConfiguration() {
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailAdminHelper.class');
+
 		$funcsReport = AddviaemailAdminHelper::testRequiredFunctions();
 
 		if (count($funcsReport['fail']) > 0) {

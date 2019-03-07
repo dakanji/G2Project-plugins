@@ -1,8 +1,8 @@
 <?php
+
 // $Id: frame.inc 15342 2006-12-01 21:14:46Z andy_st $
   // Contributed by: carlandtracey.com
 $frameData = array(
-
 	'name'      => $gallery->i18n('Spiral Notebook (square)'),
 	'square'    => true,
 
@@ -17,10 +17,8 @@ $frameData = array(
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
-
 	'imageTT'   => 'TT.gif',
 	'heightTT'  => 14,
-
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
 
@@ -32,20 +30,16 @@ $frameData = array(
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
-
 	'imageLL'   => 'LL.gif',
 	'widthLL'   => 30,
-
 	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
-
 	'imageRR'   => 'RR.gif',
 	'widthRR'   => 15,
-
 	'imageRRB'  => '',
 	'heightRRB' => 0,
 
@@ -57,10 +51,8 @@ $frameData = array(
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
-
 	'imageBB'   => 'BB.gif',
 	'heightBB'  => 15,
-
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
 
@@ -68,5 +60,4 @@ $frameData = array(
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 15,
 	'heightBR'  => 15,
-
 );

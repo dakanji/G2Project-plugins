@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * Callbacks for AddviaEmail
  * @package AddviaEmaail
  * @author Brian Janice <cobalt027@users.sourceforge.net>
@@ -33,12 +36,12 @@ class AddviaEmailCallbacks {
 				}
 
 				$block =& $smarty->_tpl_vars['block'];
+
 				GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailHelper.class');
 
 				$mintutesBetweenChecks = $moduleParams['pollFloor'];
 				$secondsBetweenChecks  = $mintutesBetweenChecks * 60;
-
-				$timeOfLastCheck = $moduleParams['timeOfLastCheck'];
+				$timeOfLastCheck       = $moduleParams['timeOfLastCheck'];
 
 				if ((time() - $timeOfLastCheck) > $secondsBetweenChecks) {
 					list($ret, $params) = AddviaemailHelper::processEmails();

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/transcode/classes/TranscodeHelper.class');
 
 /**
@@ -72,6 +72,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 
 			// Copy the array because we will change it with do / while / array_splice
 			$itemsInBatches = $items;
+
 			/*
 			 * Batch size should be <= ulimit max open files, as long as we don't query this value,
 			 * assume a value of 100 which is fairly low
@@ -200,9 +201,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								$setAudioSampleRate . $setAudioChannels .
 								$setVideoBitrate . $setVideoDimensions . 'convert-to-' . $params['outputMime']
 							);
-
 							$derivative->setDerivativeSourceId($source->getId());
-
 							$ret = $derivative->save();
 
 							if ($ret) {
@@ -226,7 +225,6 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								}
 
 								$currentItems[$i]->setRenderer($renderer);
-
 								$ret = $currentItems[$i]->save();
 
 								if ($ret) {

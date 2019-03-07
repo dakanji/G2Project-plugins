@@ -57,8 +57,7 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 			$server_url,
 			$association->handle
 		);
-
-		$serverKey = $this->associationServerKey($server_url);
+		$serverKey      = $this->associationServerKey($server_url);
 
 		// get list of associations
 		$serverAssociations = $this->connection->get($serverKey);
@@ -108,6 +107,7 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 
 		// get list of associations
 		$serverAssociations = $this->connection->get($serverKey);
+
 		// return null if failed or got empty list
 		if (!$serverAssociations) {
 			return null;
@@ -138,6 +138,7 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 
 		// get list of associations
 		$serverAssociations = $this->connection->get($serverKey);
+
 		// return null if failed or got empty list
 		if (!$serverAssociations) {
 			return false;

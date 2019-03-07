@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: ClassCode.xsl,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @package ImageBlock
  * @subpackage ClassInterfaces
@@ -122,8 +124,7 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->addMapEntry('DupeDetectHistogramsMap', $data);
+		$ret     = $storage->addMapEntry('DupeDetectHistogramsMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -147,8 +148,7 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->removeMapEntry('DupeDetectHistogramsMap', $data);
+		$ret     = $storage->removeMapEntry('DupeDetectHistogramsMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -167,8 +167,7 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->removeAllMapEntries('DupeDetectHistogramsMap');
+		$ret     = $storage->removeAllMapEntries('DupeDetectHistogramsMap');
 
 		if ($ret->isError()) {
 			return $ret;
@@ -193,8 +192,7 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->updateMapEntry('DupeDetectHistogramsMap', $match, $change);
+		$ret     = $storage->updateMapEntry('DupeDetectHistogramsMap', $match, $change);
 
 		if ($ret->isError()) {
 			return $ret;

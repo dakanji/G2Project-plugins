@@ -65,9 +65,9 @@
  ******************************************************************************/
 
 function get_IPTC($Data_Str) {
-
-		// Initialise the start position
+	// Initialise the start position
 	$pos = 0;
+
 	// Create the array to receive the data
 	$OutputArray = array();
 
@@ -204,6 +204,7 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">Decoding not yet implemented<br>\n (Hex Data: " . bin2hex($IPTC_Record['RecData']) . ")</td></tr>\n";
 
 						break;
+
 												// TODO: Implement decoding of IPTC record 1:90
 					case '1:20':
 							$formatno = hexdec(bin2hex($IPTC_Record['RecData']));
@@ -292,6 +293,7 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">460x128 pixel black and white caption image</td></tr>\n";
 
 						break;
+
 												// TODO: Display Rasterised Caption for IPTC record 2:125
 					case '2:130':   // Application Record:Image Type
 							// Lookup Number of Components
@@ -352,8 +354,8 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
  * Contents:     The names of the IPTC-NAA IIM fields
  *
  ******************************************************************************/
-
 $GLOBALS['IPTC_Entry_Names'] = array(
+
 	// Envelope Record
 	'1:00'  => 'Model Version',
 	'1:05'  => 'Destination',
@@ -439,7 +441,6 @@ $GLOBALS['IPTC_Entry_Names'] = array(
 
 	// Post ObjectData Descriptor Record
 	'9:10'  => 'Confirmed ObjectData Size',
-
 );
 
 // End of Global Variable:     IPTC_Entry_Names
@@ -449,8 +450,8 @@ $GLOBALS['IPTC_Entry_Names'] = array(
  * Contents:     The Descriptions of the IPTC-NAA IIM fields
  *
  ******************************************************************************/
-
 $GLOBALS['IPTC_Entry_Descriptions'] = array(
+
 	// Envelope Record
 	'1:00'  => '2 byte binary version number',
 	'1:05'  => 'Max 1024 characters of Destination',
@@ -536,7 +537,6 @@ $GLOBALS['IPTC_Entry_Descriptions'] = array(
 
 	// Post ObjectData Descriptor Record
 	'9:10'  => 'Confirmed ObjectData Size',
-
 );
 
 // End of Global Variable:     IPTC_Entry_Descriptions
@@ -546,7 +546,6 @@ $GLOBALS['IPTC_Entry_Descriptions'] = array(
  * Contents:     The names of the IPTC-NAA IIM File Formats for field 1:20
  *
  ******************************************************************************/
-
 $GLOBALS['IPTC_File Formats'] = array(
 	00 => 'No ObjectData',
 	01 => 'IPTC-NAA Digital Newsphoto Parameter Record',
@@ -587,7 +586,6 @@ $GLOBALS['IPTC_File Formats'] = array(
  * Contents:     The names of the colour components for IPTC-NAA IIM field 2:130
  *
  ******************************************************************************/
-
 $GLOBALS['ImageType_Names'] = array(
 	'M' => 'Monochrome',
 	'Y' => 'Yellow Component',

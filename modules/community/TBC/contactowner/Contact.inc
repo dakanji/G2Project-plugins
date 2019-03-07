@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: Contact.inc,v $
  *
@@ -45,9 +46,8 @@ class ContactController extends GalleryController {
 			$form['custEmail']   = GalleryUtilities::htmlSafe($form['custEmail'], true);
 			$form['custSubject'] = GalleryUtilities::htmlSafe($form['custSubject'], true);
 			$form['custMessage'] = GalleryUtilities::htmlSafe($form['custMessage'], true);
-
-			$emailsent = false;
-			$error     = $status     = $results     = array();
+			$emailsent           = false;
+			$error               = $status               = $results               = array();
 
 			if (strlen($form['custName']) < 1) {
 				$error[] = 'form[error][contactOwner][name]';
@@ -112,8 +112,7 @@ class ContactController extends GalleryController {
 				$toEmailAddress      = $parameters['toEmailAddress'];
 				$toSubject           = $parameters['toSubject'];
 				$maxEmailsPerSession = $parameters['maxEmailsPerSession'];
-
-				$emailCount = 1;
+				$emailCount          = 1;
 
 				if ($session->exists('contactowner.emailcount')) {
 					$emailCount = $session->get('contactowner.emailcount');
@@ -158,6 +157,7 @@ class ContactController extends GalleryController {
 					}
 
 					$emailsent = true;
+
 					$session->remove('contactowner.custsubject');
 					$session->remove('contactowner.custmessage');
 					$session->put('contactowner.emailcount', $emailCount);
@@ -168,13 +168,11 @@ class ContactController extends GalleryController {
 		}
 
 		$session->put('contactowner.emailsent', $emailsent);
-
 		$returnType                      = empty($error) ? 'redirect' : 'delegate';
 		$results[$returnType]['view']    = 'core.UserAdmin';
 		$results[$returnType]['subView'] = $nextView;
 		$results['status']               = $status;
-
-		$results['error'] = $error;
+		$results['error']                = $error;
 
 		return array(null, $results);
 	}
@@ -239,7 +237,6 @@ class ContactView extends GalleryView {
 		}
 
 		$template->setVariable('validationPlugins', $plugins);
-
 		$maxEmailsPerSession = $parameters['maxEmailsPerSession'];
 
 		if ($session->exists('contactowner.emailcount')) {
@@ -280,8 +277,9 @@ class ContactView extends GalleryView {
 			$body = 'modules/contactowner/templates/Contact.tpl';
 		} else {
 			$contactOwner['emailsent'] = false;
-			$contactOwner['title']     = $gallery->translate('Contact::Email Failed');
-			$body                      = 'modules/contactowner/templates/Sent.tpl';
+
+			$contactOwner['title'] = $gallery->translate('Contact::Email Failed');
+			$body                  = 'modules/contactowner/templates/Sent.tpl';
 		}
 
 		$template->setVariable('ContactOwner', $contactOwner);

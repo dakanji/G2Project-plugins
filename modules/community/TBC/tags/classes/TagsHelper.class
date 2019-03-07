@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -298,7 +299,9 @@ class TagsHelper {
 
 		while (($result = $searchResults->nextResult()) !== false) {
 			$tagName = $rawTagName = $result[1];
+
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
+
 			$tagList[$rawTagName] = $tagName;
 		}
 
@@ -485,8 +488,7 @@ class TagsHelper {
 	public function handleEvent($event) {
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$item = $event->getEntity();
-
-			$ret = TagsHelper::removeAllTags($item->getId());
+			$ret  = TagsHelper::removeAllTags($item->getId());
 
 			if ($ret) {
 				return array($ret, null);
@@ -505,6 +507,7 @@ class TagsHelper {
 	 */
 	public function splitTags($tagSplit) {
 		$tagList = array();
+
 		GalleryUtilities::unsanitizeInputValues($tagSplit, false);
 
 		list($ret, $split) = GalleryCoreApi::getPluginParameter(
@@ -526,6 +529,7 @@ class TagsHelper {
 
 			if (!empty($tag)) {
 				GalleryUtilities::sanitizeInputValues($tag, false);
+
 				$tagList[$rawTag] = $tag;
 			}
 		}
@@ -551,10 +555,8 @@ class TagsHelper {
 
 		$maxCount = max($tagList);
 		$minCount = min($tagList);
-
-		$steps = ($steps < 2) ? 2 : $steps;
-		$delta = ($maxCount - $minCount) / ($steps - 1);
-
+		$steps    = ($steps < 2) ? 2 : $steps;
+		$delta    = ($maxCount - $minCount) / ($steps - 1);
 		$tagCloud = array();
 
 		/*
@@ -562,11 +564,12 @@ class TagsHelper {
 		 * http://files.blog-city.com/files/J05/88284/b/insearchofperfecttagcloud.pdf
 		 * Simplified to avoid double loop.
 		 */
-
 		foreach ($tagList as $tagName => $tagCount) {
 			$tagWeight  = ceil(($tagCount - $minCount) / $delta) + 1;
 			$rawTagName = $tagName;
+
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
+
 			$tagCloud[$rawTagName] = array(
 				'count'    => $tagWeight,
 				'name'     => $tagName,

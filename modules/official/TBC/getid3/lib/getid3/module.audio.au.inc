@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,8 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_au extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$AUheader = $this->fread(8);
 
@@ -29,18 +29,16 @@ class getid3_au extends getid3_handler {
 		}
 
 		// shortcut
-		$info['au']  = array();
-		$thisfile_au = &$info['au'];
-
+		$info['au']                    = array();
+		$thisfile_au                   =& $info['au'];
 		$info['fileformat']            = 'au';
 		$info['audio']['dataformat']   = 'au';
 		$info['audio']['bitrate_mode'] = 'cbr';
 		$thisfile_au['encoding']       = 'ISO-8859-1';
+		$thisfile_au['header_length']  = getid3_lib::BigEndian2Int(substr($AUheader, 4, 4));
 
-		$thisfile_au['header_length'] = getid3_lib::BigEndian2Int(substr($AUheader, 4, 4));
-		$AUheader                    .= $this->fread($thisfile_au['header_length'] - 8);
-		$info['avdataoffset']        += $thisfile_au['header_length'];
-
+		$AUheader                            .= $this->fread($thisfile_au['header_length'] - 8);
+		$info['avdataoffset']                += $thisfile_au['header_length'];
 		$thisfile_au['data_size']             = getid3_lib::BigEndian2Int(substr($AUheader, 8, 4));
 		$thisfile_au['data_format_id']        = getid3_lib::BigEndian2Int(substr($AUheader, 12, 4));
 		$thisfile_au['sample_rate']           = getid3_lib::BigEndian2Int(substr($AUheader, 16, 4));
@@ -86,7 +84,6 @@ class getid3_au extends getid3_handler {
 			12 => '16-bit fixed-point',
 			13 => '24-bit fixed-point',
 			14 => '32-bit fixed-point',
-
 			16 => 'non-audio display data',
 			17 => 'SND_FORMAT_MULAW_SQUELCH',
 			18 => '16-bit linear with emphasis',
@@ -113,18 +110,14 @@ class getid3_au extends getid3_handler {
 			5  => 32,
 			6  => 32,
 			7  => 64,
-
 			11 => 8,
 			12 => 16,
 			13 => 24,
 			14 => 32,
-
 			18 => 16,
 			19 => 16,
 			20 => 16,
-
 			23 => 16,
-
 			25 => 16,
 			26 => 16,
 			27 => 8,
@@ -142,18 +135,14 @@ class getid3_au extends getid3_handler {
 			5  => 32,
 			6  => 32,
 			7  => 64,
-
 			11 => 8,
 			12 => 16,
 			13 => 24,
 			14 => 32,
-
 			18 => 16,
 			19 => 16,
 			20 => 16,
-
 			23 => 4,
-
 			25 => 3,
 			26 => 5,
 			27 => 8,

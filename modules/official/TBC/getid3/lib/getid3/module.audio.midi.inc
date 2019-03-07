@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -19,18 +20,18 @@ class getid3_midi extends getid3_handler {
 	public $scanwholefile = true;
 
 	public function Analyze() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 
 		// shortcut
-		$info['midi']['raw'] = array();
-		$thisfile_midi       = &$info['midi'];
-		$thisfile_midi_raw   = &$thisfile_midi['raw'];
-
+		$info['midi']['raw']         = array();
+		$thisfile_midi               =& $info['midi'];
+		$thisfile_midi_raw           =& $thisfile_midi['raw'];
 		$info['fileformat']          = 'midi';
 		$info['audio']['dataformat'] = 'midi';
 
 		$this->fseek($info['avdataoffset']);
-		$MIDIdata     = $this->fread($this->getid3->fread_buffer_size());
+		$MIDIdata = $this->fread($this->getid3->fread_buffer_size());
+
 		$offset       = 0;
 		$MIDIheaderID = substr($MIDIdata, $offset, 4); // 'MThd'
 		if ($MIDIheaderID != GETID3_MIDI_MAGIC_MTHD) {
@@ -56,7 +57,8 @@ class getid3_midi extends getid3_handler {
 					$MIDIdata .= $buffer;
 				} else {
 					$info['warning'][] = 'only processed ' . ($i - 1) . ' of ' . $thisfile_midi_raw['tracks'] . ' tracks';
-					$info['error'][]   = 'Unabled to read more file data at ' . $this->ftell() . ' (trying to seek to : ' . $offset . '), was expecting at least 8 more bytes';
+
+					$info['error'][] = 'Unabled to read more file data at ' . $this->ftell() . ' (trying to seek to : ' . $offset . '), was expecting at least 8 more bytes';
 
 					return false;
 				}
@@ -68,6 +70,7 @@ class getid3_midi extends getid3_handler {
 			if ($trackID == GETID3_MIDI_MAGIC_MTRK) {
 				$tracksize = getid3_lib::BigEndian2Int(substr($MIDIdata, $offset, 4));
 				$offset   += 4;
+
 				//$thisfile_midi['tracks'][$i]['size'] = $tracksize;
 				$trackdataarray[$i] = substr($MIDIdata, $offset, $tracksize);
 				$offset            += $tracksize;
@@ -149,8 +152,7 @@ class getid3_midi extends getid3_handler {
 						$controllernum = ord(substr($trackdata, $eventsoffset++, 1));
 						$newvalue      = ord(substr($trackdata, $eventsoffset++, 1));
 					} elseif ($MIDIevents[$tracknumber][$eventid]['eventid'] == 0x0C) { // Program (patch) change
-						$newprogramnum = ord(substr($trackdata, $eventsoffset++, 1));
-
+						$newprogramnum                                            = ord(substr($trackdata, $eventsoffset++, 1));
 						$thisfile_midi_raw['track'][$tracknumber]['instrumentid'] = $newprogramnum;
 
 						if ($tracknumber == 10) {
@@ -173,11 +175,13 @@ class getid3_midi extends getid3_handler {
 						switch ($METAeventCommand) {
 							case 0x00: // Set track sequence number
 								$track_sequence_number = getid3_lib::BigEndian2Int(substr($METAeventData, 0, $METAeventLength));
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['seqno'] = $track_sequence_number;
 								break;
 
 							case 0x01: // Text: generic
 								$text_generic = substr($METAeventData, 0, $METAeventLength);
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['text'] = $text_generic;
 								$thisfile_midi['comments']['comment'][] = $text_generic;
 
@@ -185,6 +189,7 @@ class getid3_midi extends getid3_handler {
 
 							case 0x02: // Text: copyright
 								$text_copyright = substr($METAeventData, 0, $METAeventLength);
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['copyright'] = $text_copyright;
 								$thisfile_midi['comments']['copyright'][] = $text_copyright;
 
@@ -198,11 +203,13 @@ class getid3_midi extends getid3_handler {
 
 							case 0x04: // Text: track instrument name
 								$text_instrument = substr($METAeventData, 0, $METAeventLength);
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['instrument'] = $text_instrument;
 								break;
 
 							case 0x05: // Text: lyrics
 								$text_lyrics = substr($METAeventData, 0, $METAeventLength);
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['lyrics'] = $text_lyrics;
 								if (!isset($thisfile_midi['lyrics'])) {
 									$thisfile_midi['lyrics'] = '';
@@ -214,11 +221,13 @@ class getid3_midi extends getid3_handler {
 
 							case 0x06: // Text: marker
 								$text_marker = substr($METAeventData, 0, $METAeventLength);
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['marker'] = $text_marker;
 								break;
 
 							case 0x07: // Text: cue point
 								$text_cuepoint = substr($METAeventData, 0, $METAeventLength);
+
 								//$thisfile_midi_raw['events'][$tracknumber][$eventid]['cuepoint'] = $text_cuepoint;
 								break;
 
@@ -311,7 +320,6 @@ class getid3_midi extends getid3_handler {
 			}
 
 			$previoustickoffset = null;
-
 			ksort($MicroSecondsPerQuarterNoteAfter);
 
 			foreach ($MicroSecondsPerQuarterNoteAfter as $tickoffset => $microsecondsperbeat) {
@@ -330,9 +338,8 @@ class getid3_midi extends getid3_handler {
 					}
 
 					$info['playtime_seconds'] += (($tickoffset - $previoustickoffset) / $thisfile_midi_raw['ticksperqnote']) * ($prevmicrosecondsperbeat / 1000000);
-
-					$prevmicrosecondsperbeat = $microsecondsperbeat;
-					$previoustickoffset      = $tickoffset;
+					$prevmicrosecondsperbeat   = $microsecondsperbeat;
+					$previoustickoffset        = $tickoffset;
 				}
 			}
 
@@ -493,7 +500,6 @@ class getid3_midi extends getid3_handler {
 		 * 127  Gunshot
 		 *
 		 */
-
 		return getid3_lib::EmbeddedLookup($instrumentid, $begin, __LINE__, __FILE__, 'GeneralMIDIinstrument');
 	}
 
@@ -550,7 +556,6 @@ class getid3_midi extends getid3_handler {
 		 * 81   Open Triangle
 		 *
 		 */
-
 		return getid3_lib::EmbeddedLookup($instrumentid, $begin, __LINE__, __FILE__, 'GeneralMIDIpercussion');
 	}
 }

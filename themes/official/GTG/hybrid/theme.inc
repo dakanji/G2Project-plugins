@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -36,11 +37,9 @@ class HybridTheme extends GalleryTheme {
 				'Combined album/image/slideshow dynamic view'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'rows'             => 30,
@@ -105,42 +104,36 @@ class HybridTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showText'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showAlbumDate',
 			'name'  => $this->translate('Show dates for albums'),
 			'type'  => 'checkbox',
 			'value' => $params['showAlbumDate'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showImageDate',
 			'name'  => $this->translate('Show dates with thumbnails'),
 			'type'  => 'checkbox',
 			'value' => $params['showImageDate'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showDateInViewer',
 			'name'  => $this->translate('Show dates in image view'),
 			'type'  => 'checkbox',
 			'value' => $params['showDateInViewer'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showSize',
 			'name'  => $this->translate('Show album sizes'),
 			'type'  => 'checkbox',
 			'value' => $params['showSize'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showViewCount',
 			'name'  => $this->translate('Show view counts'),
 			'type'  => 'checkbox',
 			'value' => $params['showViewCount'],
 		);
-
 		$settings[] = array(
 			'key'     => 'thumbTitle',
 			'name'    => $this->translate('Mouseover on thumbnails'),
@@ -166,8 +159,7 @@ class HybridTheme extends GalleryTheme {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$data = array(
+		$data         = array(
 			'parents',
 			'systemLinks',
 			'itemLinks',
@@ -235,6 +227,7 @@ class HybridTheme extends GalleryTheme {
 
 		if (isset($viewIndex)) {
 			$theme['viewIndex'] = $viewIndex;
+
 			// Set cookie to popup image just once
 			setcookie('G2_hybrid_view', $slide ? '2' : '1');
 		}
@@ -252,7 +245,6 @@ class HybridTheme extends GalleryTheme {
 
 		if (!empty($renderId)) {
 			// Render this item
-
 			list($ret, $image) = GalleryCoreApi::loadEntitiesById(
 				$renderId,
 				array('GalleryDataItem', 'GalleryDerivative')
@@ -280,7 +272,6 @@ class HybridTheme extends GalleryTheme {
 
 		if (!empty($detail)) {
 			// View item details
-
 			$ret = $this->loadCommonTemplateData(
 				$template,
 				$item,
@@ -310,7 +301,6 @@ class HybridTheme extends GalleryTheme {
 		}
 
 		// Otherwise, redirect to parent with initial view of this item
-
 		list($ret, $parent) = GalleryCoreApi::loadEntitiesById($item->getParentId(), 'GalleryItem');
 
 		if ($ret) {
@@ -459,6 +449,7 @@ class HybridTheme extends GalleryTheme {
 
 		foreach ($childItems as $child) {
 			$i++;
+
 			$childId = $child->getId();
 
 			if (isset($thumbnails[$childId])) {

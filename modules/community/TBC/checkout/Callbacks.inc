@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -34,7 +35,9 @@ class CheckoutCallbacks {
 			case 'countCheckoutItems':
 				$itemCount  = 0;
 				$thumbnails = array();
+
 				GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
+
 				// full details of all items in cart including product/quantity and paper info
 				list($ret, $items) = CheckoutHelper::fetchCheckoutItems();
 
@@ -72,6 +75,7 @@ class CheckoutCallbacks {
 			case 'itemPrices':
 				// prices for an individual item
 				$block =& $smarty->_tpl_vars['block'];
+
 				// permission to purchase?
 				list($ret, $canPurchase) = CheckoutHelper::hasPurchasePermission($params['itemId']);
 
@@ -87,7 +91,10 @@ class CheckoutCallbacks {
 
 					GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
 
-					list($ret, $products) = CheckoutProductMapHelper::fetchVisibleProducts($params['itemId'], true);
+					list($ret, $products) = CheckoutProductMapHelper::fetchVisibleProducts(
+						$params['itemId'],
+						true
+					);
 
 				if ($ret) {
 					return $ret;
@@ -138,7 +145,8 @@ class CheckoutCallbacks {
 				$block                        =& $smarty->_tpl_vars['block'];
 				$block['checkout']['csymbol'] = $csymbol;
 				$block['checkout']['cformat'] = $cformat;
-				$block['checkout']['total']   = $transaction->getAmount();
+
+				$block['checkout']['total'] = $transaction->getAmount();
 
 				return null;
 
@@ -173,6 +181,7 @@ class CheckoutCallbacks {
 				$block['checkout']['custNotes']     = $transaction->getCustNotes();
 				$block['checkout']['custComments']  = $transaction->getCustComments();
 				$block['checkout']['paymentPlugin'] = $transaction->getPaymentPlugin();
+
 				//this one so we can setup a mailto link with sensible subject
 				list($ret, $orderStatusSubject) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'orderStatusSubject');
 

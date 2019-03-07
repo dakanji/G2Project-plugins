@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/webdav/classes/WebDavRewriteHelper.class');
 GalleryCoreApi::requireOnce('modules/rewrite/classes/RewriteUrlGenerator.class');
 
@@ -43,6 +43,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 		}
 
 		$urlGenerator = new RewriteUrlGenerator();
+
 		$urlGenerator->init('phpunit');
 		$gallery->setUrlGenerator($urlGenerator);
 	}
@@ -77,8 +78,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		// Rename the album
 		$oldPathComponent = $album->getPathComponent();
-
-		$ret = $album->rename('The Quick!Brown#Fox');
+		$ret              = $album->rename('The Quick!Brown#Fox');
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
@@ -90,6 +90,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			$album->rename($oldPathComponent);
+
 			GalleryCoreApi::releaseLocks($lockIds);
 
 			return $ret;
@@ -127,8 +128,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		// Rename the item
 		$oldPathComponent = $item->getPathComponent();
-
-		$ret = $item->rename('Jumps Over%The/Lazy_Dog');
+		$ret              = $item->rename('Jumps Over%The/Lazy_Dog');
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
@@ -140,6 +140,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			$item->rename($oldPathComponent);
+
 			GalleryCoreApi::releaseLocks($lockIds);
 
 			return $ret;
@@ -157,7 +158,6 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 			'controller' => 'webdav.WebDav',
 			'itemId'     => $item->getId(),
 		);
-
 		$entity = null;
 
 		// Perform the request and verify that we succeeded
@@ -172,7 +172,6 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 			$params,
 			'params'
 		);
-
 		$this->assertEquals($item, $entity, 'entity');
 
 		// Use valid inputs
@@ -202,7 +201,6 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 			$params,
 			'params'
 		);
-
 		$this->assertEquals(null, $entity, 'entity');
 	}
 }

@@ -42,26 +42,23 @@ class Auth_Yadis_ParseHTML {
 	public $_attr_find = '\b([-\w]+)=(".*?"|\'.*?\'|.+?)[\/\s>]';
 
 	public function __construct() {
-		$this->_attr_find = sprintf(
+		$this->_attr_find           = sprintf(
 			'/%s/%s',
 			$this->_attr_find,
 			$this->_re_flags
 		);
-
-		$this->_removed_re = sprintf(
+		$this->_removed_re          = sprintf(
 			'/%s/%s',
 			$this->_removed_re,
 			$this->_re_flags
 		);
-
 		$this->_entity_replacements = array(
 			'amp'  => '&',
 			'lt'   => '<',
 			'gt'   => '>',
 			'quot' => '"',
 		);
-
-		$this->_ent_replace = sprintf(
+		$this->_ent_replace         = sprintf(
 			'&(%s);',
 			implode('|', $this->_entity_replacements)
 		);
@@ -164,8 +161,7 @@ class Auth_Yadis_ParseHTML {
 			'',
 			$html_string
 		);
-
-		$key_tags = array(
+		$key_tags    = array(
 			$this->tagPattern('html', false, false),
 			$this->tagPattern('head', false, false),
 			$this->tagPattern('head', true, false),

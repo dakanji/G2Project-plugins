@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -44,6 +45,7 @@
 //  improved AVCSequenceParameterSetReader::readData()         //
 //    by Xander Schouwerwou <schouwerwouØgmail*com>            //
 //                                                             //
+
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // module.audio-video.flv.php                                  //
@@ -54,14 +56,12 @@
 define('GETID3_FLV_TAG_AUDIO', 8);
 define('GETID3_FLV_TAG_VIDEO', 9);
 define('GETID3_FLV_TAG_META', 18);
-
 define('GETID3_FLV_VIDEO_H263', 2);
 define('GETID3_FLV_VIDEO_SCREEN', 3);
 define('GETID3_FLV_VIDEO_VP6FLV', 4);
 define('GETID3_FLV_VIDEO_VP6FLV_ALPHA', 5);
 define('GETID3_FLV_VIDEO_SCREENV2', 6);
 define('GETID3_FLV_VIDEO_H264', 7);
-
 define('H264_AVC_SEQUENCE_HEADER', 0);
 define('H264_PROFILE_BASELINE', 66);
 define('H264_PROFILE_MAIN', 77);
@@ -71,20 +71,17 @@ define('H264_PROFILE_HIGH10', 110);
 define('H264_PROFILE_HIGH422', 122);
 define('H264_PROFILE_HIGH444', 144);
 define('H264_PROFILE_HIGH444_PREDICTIVE', 244);
-
 class getid3_flv extends getid3_handler {
-	const magic = 'FLV';
-
+	const magic        = 'FLV';
 	public $max_frames = 100000; // break out of the loop if too many frames have been scanned; only scan this many if meta frame does not contain useful duration
 
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 
 		$FLVdataLength = $info['avdataend'] - $info['avdataoffset'];
-		$FLVheader     = $this->fread(5);
 
+		$FLVheader                          = $this->fread(5);
 		$info['fileformat']                 = 'flv';
 		$info['flv']['header']['signature'] = substr($FLVheader, 0, 3);
 		$info['flv']['header']['version']   = getid3_lib::BigEndian2Int(substr($FLVheader, 3, 1));
@@ -119,17 +116,17 @@ class getid3_flv extends getid3_handler {
 			'video' => 0,
 		);
 
-		$flv_framecount = &$info['flv']['framecount'];
+		$flv_framecount =& $info['flv']['framecount'];
 
 		while ((($this->ftell() + 16) < $info['avdataend']) && (($tagParseCount++ <= $this->max_frames) || !$found_valid_meta_playtime)) {
-			$ThisTagHeader = $this->fread(16);
-
+			$ThisTagHeader     = $this->fread(16);
 			$PreviousTagLength = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 0, 4));
 			$TagType           = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 4, 1));
 			$DataLength        = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 5, 3));
 			$Timestamp         = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 8, 3));
 			$LastHeaderByte    = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 15, 1));
-			$NextOffset        = $this->ftell() - 1 + $DataLength;
+
+			$NextOffset = $this->ftell() - 1 + $DataLength;
 
 			if ($Timestamp > $Duration) {
 				$Duration = $Timestamp;
@@ -177,11 +174,13 @@ class getid3_flv extends getid3_handler {
 									//	read size of the first SequenceParameterSet
 									//$spsSize = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 9, 2));
 									$spsSize = getid3_lib::LittleEndian2Int(substr($FLVvideoHeader, 9, 2));
+
 									//	read the first SequenceParameterSet
 									$sps = $this->fread($spsSize);
 
 									if (strlen($sps) == $spsSize) { //	make sure that whole SequenceParameterSet was red
 										$spsReader = new AVCSequenceParameterSetReader($sps);
+
 										$spsReader->readData();
 										$info['video']['resolution_x'] = $spsReader->getWidth();
 										$info['video']['resolution_y'] = $spsReader->getHeight();
@@ -277,14 +276,16 @@ class getid3_flv extends getid3_handler {
 				case GETID3_FLV_TAG_META:
 					if (!$found_meta) {
 						$found_meta = true;
+
 						$this->fseek(-1, SEEK_CUR);
-						$datachunk                       = $this->fread($DataLength);
-						$AMFstream                       = new AMFStream($datachunk);
-						$reader                          = new AMFReader($AMFstream);
+						$datachunk = $this->fread($DataLength);
+						$AMFstream = new AMFStream($datachunk);
+						$reader    = new AMFReader($AMFstream);
+
 						$eventName                       = $reader->readData();
 						$info['flv']['meta'][$eventName] = $reader->readData();
-						unset($reader);
 
+						unset($reader);
 						$copykeys = array(
 							'framerate'     => 'frame_rate',
 							'width'         => 'resolution_x',
@@ -342,10 +343,9 @@ class getid3_flv extends getid3_handler {
 			$info['audio']['codec']           = self::audioFormatLookup($info['flv']['audio']['audioFormat']);
 			$info['audio']['sample_rate']     = self::audioRateLookup($info['flv']['audio']['audioRate']);
 			$info['audio']['bits_per_sample'] = self::audioBitDepthLookup($info['flv']['audio']['audioSampleSize']);
-
-			$info['audio']['channels']   = $info['flv']['audio']['audioType'] + 1; // 0=mono,1=stereo
-			$info['audio']['lossless']   = ($info['flv']['audio']['audioFormat'] ? false : true); // 0=uncompressed
-			$info['audio']['dataformat'] = 'flv';
+			$info['audio']['channels']        = $info['flv']['audio']['audioType'] + 1; // 0=mono,1=stereo
+			$info['audio']['lossless']        = ($info['flv']['audio']['audioFormat'] ? false : true); // 0=uncompressed
+			$info['audio']['dataformat']      = 'flv';
 		}
 
 		if (!empty($info['flv']['header']['hasVideo'])) {
@@ -643,8 +643,7 @@ class AMFReader {
 	public function readMixedArray() {
 		// Get highest numerical index - ignored
 		$highestIndex = $this->stream->readLong();
-
-		$data = array();
+		$data         = array();
 
 		while ($key = $this->stream->readUTF()) {
 			if (is_numeric($key)) {
@@ -785,10 +784,12 @@ class AVCSequenceParameterSetReader {
 
 	public function expGolombUe() {
 		$significantBits = 0;
-		$bit             = $this->getBit();
+
+		$bit = $this->getBit();
 
 		while ($bit == 0) {
 			$significantBits++;
+
 			$bit = $this->getBit();
 
 			if ($significantBits > 31) {

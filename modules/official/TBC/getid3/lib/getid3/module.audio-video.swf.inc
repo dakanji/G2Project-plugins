@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -17,14 +18,12 @@ class getid3_swf extends getid3_handler {
 	public $ReturnAllTagData = false;
 
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info                        =& $this->getid3->info;
 		$info['fileformat']          = 'swf';
 		$info['video']['dataformat'] = 'swf';
 
 		// http://www.openswf.org/spec/SWFfileformat.html
 		$this->fseek($info['avdataoffset']);
-
 		$SWFfileData                        = $this->fread($info['avdataend'] - $info['avdataoffset']); // 8 + 2 + 2 + max(9) bytes NOT including Frame_Size RECT data
 		$info['swf']['header']['signature'] = substr($SWFfileData, 0, 3);
 
@@ -72,7 +71,8 @@ class getid3_swf extends getid3_handler {
 			$FrameSizeDataString .= str_pad(decbin(ord(substr($SWFfileData, 8 + $i, 1))), 8, '0', STR_PAD_LEFT);
 		}
 
-		list($X1, $X2, $Y1, $Y2)               = explode("\n", wordwrap($FrameSizeDataString, $FrameSizeBitsPerValue, "\n", 1));
+		list($X1, $X2, $Y1, $Y2) = explode("\n", wordwrap($FrameSizeDataString, $FrameSizeBitsPerValue, "\n", 1));
+
 		$info['swf']['header']['frame_width']  = getid3_lib::Bin2Dec($X2);
 		$info['swf']['header']['frame_height'] = getid3_lib::Bin2Dec($Y2);
 
@@ -84,11 +84,10 @@ class getid3_swf extends getid3_handler {
 		// Byte at (8 + $FrameSizeDataLength) is always zero and ignored
 		$info['swf']['header']['frame_rate']  = getid3_lib::LittleEndian2Int(substr($SWFfileData, 9 + $FrameSizeDataLength, 1));
 		$info['swf']['header']['frame_count'] = getid3_lib::LittleEndian2Int(substr($SWFfileData, 10 + $FrameSizeDataLength, 2));
-
-		$info['video']['frame_rate']         = $info['swf']['header']['frame_rate'];
-		$info['video']['resolution_x']       = intval(round($info['swf']['header']['frame_width'] / 20));
-		$info['video']['resolution_y']       = intval(round($info['swf']['header']['frame_height'] / 20));
-		$info['video']['pixel_aspect_ratio'] = (float)1;
+		$info['video']['frame_rate']          = $info['swf']['header']['frame_rate'];
+		$info['video']['resolution_x']        = intval(round($info['swf']['header']['frame_width'] / 20));
+		$info['video']['resolution_y']        = intval(round($info['swf']['header']['frame_height'] / 20));
+		$info['video']['pixel_aspect_ratio']  = (float)1;
 
 		if (($info['swf']['header']['frame_count'] > 0) && ($info['swf']['header']['frame_rate'] > 0)) {
 			$info['playtime_seconds'] = $info['swf']['header']['frame_count'] / $info['swf']['header']['frame_rate'];

@@ -1,4 +1,5 @@
 <?php
+
 // $Id: frame.inc,v 1.1 2004/07/21 01:24:20 mindless Exp $
 $frameData = array(
 	'name'      => $gallery->i18n('PG_Wcrop_42px'),
@@ -11,10 +12,8 @@ $frameData = array(
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
-
 	'imageTT'   => 'TT.gif',
 	'heightTT'  => 42,
-
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
 
@@ -26,20 +25,16 @@ $frameData = array(
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
-
 	'imageLL'   => 'LL.gif',
 	'widthLL'   => 42,
-
 	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
-
 	'imageRR'   => 'RR.gif',
 	'widthRR'   => 42,
-
 	'imageRRB'  => '',
 	'heightRRB' => 0,
 
@@ -51,10 +46,8 @@ $frameData = array(
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
-
 	'imageBB'   => 'BB.gif',
 	'heightBB'  => 42,
-
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
 
@@ -62,5 +55,4 @@ $frameData = array(
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 42,
 	'heightBR'  => 42,
-
 );

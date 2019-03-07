@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -53,14 +54,14 @@ class ExternalView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		GalleryCoreApi::requireOnce('modules/imageblock/classes/ImageBlockHelper.class');
+
 		global $gallery;
 
 		// Force UrlGenerator to not add session id into urls..
 		$session                  =& $gallery->getSession();
 		$session->_isUsingCookies = true;
-
-		$frameIds = array();
-		$params   = array(
+		$frameIds                 = array();
+		$params                   = array(
 			'maxSize'   => null,
 			'exactSize' => null,
 		);
@@ -122,7 +123,8 @@ class ExternalView extends GalleryView {
 		$phpVm = $gallery->getPhpVm();
 
 		if ($template->hasVariable('ImageBlockData')) {
-			$ImageBlockData                 =& $template->getVariableByReference('ImageBlockData');
+			$ImageBlockData =& $template->getVariableByReference('ImageBlockData');
+
 			$ImageBlockData['forceFullUrl'] = 1;
 
 			// Check for rawImage - if requested, send binary image (only one image)
@@ -148,6 +150,7 @@ class ExternalView extends GalleryView {
 			} else {
 				if (!$phpVm->headers_sent()) {
 					$phpVm->header('Content-type: text/html; charset=UTF-8');
+
 					$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
 					$phpVm->header('Cache-Control: no-cache');
 					$phpVm->header('Pragma: no-cache');

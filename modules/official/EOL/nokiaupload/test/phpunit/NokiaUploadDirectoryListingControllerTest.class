@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -58,7 +59,6 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		}
 
 		$this->_markForCleanup($this->_group);
-
 		$ret = GalleryCoreApi::addGroupPermission(
 			$this->_album->getId(),
 			$this->_group->getId(),
@@ -76,7 +76,6 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		}
 
 		$this->_markForCleanup($this->_user);
-
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $this->_group->getId());
 
 		if ($ret) {
@@ -125,10 +124,8 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 
 		// Login our test user
 		$gallery->setActiveUser($this->_user);
-
 		$session =& $gallery->getSession();
 		$session->remove('permissionCache');
-
 		$ret = GalleryCoreApi::assertHasItemPermission($this->_getRootId(), 'core.addAlbumItem');
 
 		if (!$ret) {
@@ -141,7 +138,6 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 			$results['delegate'],
 			'delegate'
 	);
-
 		$this->assertEquals(array(), $results['error'], 'error');
 		$this->assertEquals(NOKIAUPLOAD_ERR_NOERR, $results['status']['success'], 'success');
 		$this->assert(!empty($results['status']['albums']), 'album list');

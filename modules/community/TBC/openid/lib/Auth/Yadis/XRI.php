@@ -9,9 +9,7 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 require_once 'Auth/Yadis/Misc.php';
-
 require_once 'Auth/Yadis/Yadis.php';
-
 require_once 'Auth/OpenID.php';
 
 function Auth_Yadis_getDefaultProxy() {
@@ -30,7 +28,8 @@ function Auth_Yadis_getEscapeRE() {
 		Auth_Yadis_getIPrivateChars()
 	) as $pair) {
 		list($m, $n) = $pair;
-		$parts[]     = sprintf('%s-%s', chr($m), chr($n));
+
+		$parts[] = sprintf('%s-%s', chr($m), chr($n));
 	}
 
 	return sprintf('/[%s]/', implode('', $parts));
@@ -123,7 +122,6 @@ function Auth_Yadis_XRIAppendArgs($url, $args) {
 	}
 
 	// According to XRI Resolution section "QXRI query parameters":
-	//
 	// "If the original QXRI had a null query component (only a
 	//  leading question mark), or a query component consisting of
 	//  only question marks, one additional leading question mark MUST
@@ -202,15 +200,15 @@ function Auth_Yadis_getCanonicalID($iname, $xrds) {
 	}
 
 	$canonicalID = $canonicalID_nodes[0];
-	$canonicalID = Auth_Yadis_XRI($parser->content($canonicalID));
 
-	$childID = $canonicalID;
+	$canonicalID = Auth_Yadis_XRI($parser->content($canonicalID));
+	$childID     = $canonicalID;
 
 	for ($i = 1; $i < count($xrd_list); $i++) {
-		$xrd = $xrd_list[$i];
-
+		$xrd           = $xrd_list[$i];
 		$parent_sought = substr($childID, 0, strrpos($childID, '!'));
-		$parentCID     = $parser->evalXPath('xrd:CanonicalID', $xrd);
+
+		$parentCID = $parser->evalXPath('xrd:CanonicalID', $xrd);
 
 		if (!$parentCID) {
 			return false;

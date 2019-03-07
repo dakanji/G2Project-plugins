@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -37,8 +38,9 @@ class SendDataController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
 
-		$error        = array();
-		$status       = array();
+		$error  = array();
+		$status = array();
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkoutgoogle');
@@ -67,9 +69,8 @@ class SendDataController extends GalleryController {
 				'verify2'       => $verify2,
 				'error'         => 'alreadyPlaced',
 			);
-
-			$results['error']  = $error;
-			$results['status'] = $status;
+			$results['error']    = $error;
+			$results['status']   = $status;
 
 			return array(null, $results);
 		}
@@ -90,7 +91,7 @@ class SendDataController extends GalleryController {
 		$postage  = $transaction->getPostage();
 
 		// Build URLs for altering order, finishing
-		$editURL = $urlGenerator->generateUrl(
+		$editURL     = $urlGenerator->generateUrl(
 			array(
 				'view' => 'checkout.Confirm',
 			),
@@ -98,7 +99,6 @@ class SendDataController extends GalleryController {
 				'forceFullUrl' => true,
 			)
 		);
-
 		$continueURL = $urlGenerator->generateUrl(
 			array(
 				'controller'    => 'checkout.Complete',
@@ -110,8 +110,7 @@ class SendDataController extends GalleryController {
 				'forceFullUrl' => true,
 			)
 		);
-
-		$mainURL = $urlGenerator->generateUrl(
+		$mainURL     = $urlGenerator->generateUrl(
 			array(),
 			array(
 				'forceFullUrl' => true,
@@ -145,7 +144,8 @@ class SendDataController extends GalleryController {
 		if ($discount > 0) {
 			$discountName        = htmlspecialchars($module->translate('Discount'), ENT_NOQUOTES);
 			$discountDescription = htmlspecialchars($transaction->getDiscountDescription(), ENT_NOQUOTES);
-			$googleData         .= '<item>
+
+			$googleData .= '<item>
         		    <item-name>' . $discountName . '</item-name>
         		    <item-description>' . $discountDescription . '</item-description>
         		    <unit-price currency="' . $currency . '">' . - $discount . '</unit-price>
@@ -157,9 +157,11 @@ class SendDataController extends GalleryController {
       		     	</shopping-cart>';
 		$googleData .= '<checkout-flow-support>
     			<merchant-checkout-flow-support>';
+
 		// Postage
 		if ($postage > 0) {
 			$postageType = htmlspecialchars($transaction->getPostageType(), ENT_NOQUOTES);
+
 			$googleData .= '<shipping-methods>
         		    <flat-rate-shipping name="' . $postageType . '">
           		    <price currency="' . $currency . '">' . $postage . '</price>
@@ -191,25 +193,21 @@ class SendDataController extends GalleryController {
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('GoogleCheckout: there was a problem preparing an order when a user tried to use Google Checkout.'),
 			);
-
 			$statusMessage[] = "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('We contacted Google at this url:'),
 			);
-
 			$statusMessage[] = "\n" . $url . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('The content of our message was:'),
 			);
-
 			$statusMessage[] = "\n\n" . $googleData . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('The response code was:'),
 			);
-
 			$statusMessage[] = "\n" . $url . $returnStatus . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',

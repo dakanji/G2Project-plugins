@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -14,19 +15,16 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.id3v2.php', __FILE__, true);
-
 class getid3_dsf extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info                          =& $this->getid3->info;
 		$info['fileformat']            = 'dsf';
 		$info['audio']['dataformat']   = 'dsf';
 		$info['audio']['lossless']     = true;
 		$info['audio']['bitrate_mode'] = 'cbr';
 
 		$this->fseek($info['avdataoffset']);
-		$dsfheader = $this->fread(28 + 12);
-
+		$dsfheader                   = $this->fread(28 + 12);
 		$headeroffset                = 0;
 		$info['dsf']['dsd']['magic'] = substr($dsfheader, $headeroffset, 4);
 		$headeroffset               += 4;
@@ -45,10 +43,9 @@ class getid3_dsf extends getid3_handler {
 		$headeroffset                           += 8;
 		$info['dsf']['dsd']['meta_chunk_offset'] = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 8));
 		$headeroffset                           += 8;
-
-		$info['dsf']['fmt']['magic'] = substr($dsfheader, $headeroffset, 4);
-		$headeroffset               += 4;
-		$magic                       = 'fmt ';
+		$info['dsf']['fmt']['magic']             = substr($dsfheader, $headeroffset, 4);
+		$headeroffset                           += 4;
+		$magic                                   = 'fmt ';
 
 		if ($info['dsf']['fmt']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $headeroffset . ', found "' . getid3_lib::PrintHexBytes($info['dsf']['fmt']['magic']) . '"';
@@ -83,10 +80,9 @@ class getid3_dsf extends getid3_handler {
 		$headeroffset                            += 4;
 		$info['dsf']['fmt']['reserved']           = getid3_lib::LittleEndian2Int(substr($dsfheader, $headeroffset, 4)); // zero-filled
 		$headeroffset                            += 4;
-
-		$info['dsf']['data']['magic'] = substr($dsfheader, $headeroffset, 4);
-		$headeroffset                += 4;
-		$magic                        = 'data';
+		$info['dsf']['data']['magic']             = substr($dsfheader, $headeroffset, 4);
+		$headeroffset                            += 4;
+		$magic                                    = 'data';
 
 		if ($info['dsf']['data']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $headeroffset . ', found "' . getid3_lib::PrintHexBytes($info['dsf']['data']['magic']) . '"';
@@ -103,22 +99,25 @@ class getid3_dsf extends getid3_handler {
 			$getid3_id3v2                 = new getid3_id3v2($this->getid3);
 			$getid3_id3v2->StartingOffset = $info['dsf']['dsd']['meta_chunk_offset'];
 			$getid3_id3v2->Analyze();
+
 			unset($getid3_id3v2);
 		}
 
 		$info['dsf']['fmt']['channel_type'] = $this->DSFchannelTypeLookup($info['dsf']['fmt']['channel_type_id']);
-		$info['audio']['channelmode']       = $info['dsf']['fmt']['channel_type'];
-		$info['audio']['bits_per_sample']   = $info['dsf']['fmt']['bits_per_sample'];
-		$info['audio']['sample_rate']       = $info['dsf']['fmt']['sample_rate'];
-		$info['audio']['channels']          = $info['dsf']['fmt']['channels'];
-		$info['audio']['bitrate']           = $info['audio']['bits_per_sample'] * $info['audio']['sample_rate'] * $info['audio']['channels'];
-		$info['playtime_seconds']           = ($info['dsf']['data']['data_chunk_size'] * 8) / $info['audio']['bitrate'];
+
+		$info['audio']['channelmode']     = $info['dsf']['fmt']['channel_type'];
+		$info['audio']['bits_per_sample'] = $info['dsf']['fmt']['bits_per_sample'];
+		$info['audio']['sample_rate']     = $info['dsf']['fmt']['sample_rate'];
+		$info['audio']['channels']        = $info['dsf']['fmt']['channels'];
+		$info['audio']['bitrate']         = $info['audio']['bits_per_sample'] * $info['audio']['sample_rate'] * $info['audio']['channels'];
+		$info['playtime_seconds']         = ($info['dsf']['data']['data_chunk_size'] * 8) / $info['audio']['bitrate'];
 
 		return true;
 	}
 
 	public static function DSFchannelTypeLookup($channel_type_id) {
 		static $DSFchannelTypeLookup = array(
+
 			// interleaving order:
 			1 => 'mono',      // 1: Mono
 			2 => 'stereo',    // 1: Front-Left; 2: Front-Right

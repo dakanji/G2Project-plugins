@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -38,12 +39,10 @@ class RssModule extends GalleryModule {
 				'RSS'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 	}
@@ -79,6 +78,7 @@ class RssModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId) {
 		GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
+
 		$links = array();
 
 		// check that this type of link is allowed
@@ -102,9 +102,8 @@ class RssModule extends GalleryModule {
 			}
 
 			if ($param['allowSimpleFeed'] == 1) {
-				$disableLink = GalleryUtilities::isA($item, 'GalleryDataItem')
+				$disableLink   = GalleryUtilities::isA($item, 'GalleryDataItem')
 				&& $modulestatus['comment']['active'] != '1';
-
 				$itemTypeNames = array_merge(
 					$item->itemTypeName(),
 					$item->itemTypeName(false)
@@ -175,7 +174,6 @@ class RssModule extends GalleryModule {
 			'pattern' => 'srss/%itemId%',
 			'help'    => $this->translate('Short URL for Simple RSS Feeds'),
 		);
-
 		$rules[] = array(
 			'comment'  => $this->translate('RSS Feed'),
 			'match'    => array(
@@ -251,7 +249,6 @@ class RssModule extends GalleryModule {
 	 * @see GalleryModule::upgrade
 	 */
 	public function upgrade($currentVersion) {
-
 		/**
 		 * @todo add a default to this switch statement and include all historical versions, like
 		 * we do in other modules.
@@ -280,7 +277,6 @@ class RssModule extends GalleryModule {
 					}
 				}
 
-
 				// Fall Through
 			case '1.0.0':
 				foreach (array(
@@ -296,7 +292,6 @@ class RssModule extends GalleryModule {
 					}
 				}
 
-
 				// Fall Through
 			case '1.1.1':
 				foreach (array(
@@ -310,7 +305,6 @@ class RssModule extends GalleryModule {
 						return $ret;
 					}
 				}
-
 
 				// Fall Through
 			case '1.1.2':
@@ -403,7 +397,6 @@ class RssModule extends GalleryModule {
 						return $ret;
 					}
 				}
-
 
 				// Fall Through
 			case '1.1.3':

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GallerySmarty.class');
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
 GalleryCoreApi::requireOnce('modules/imageblock/Callbacks.inc');
@@ -62,7 +62,6 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$this->_markToolkitForCleanup('ImageBlockToolkit');
-
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ImageBlockToolkit',
 			array('image/gif'),
@@ -81,6 +80,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('Gallery::ViewableTreeChange', $listener);
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 		$this->_registerTestEventListener('GalleryEntity::delete', $listener);
@@ -187,7 +187,8 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 			return array($ret, null, null);
 		}
 
-		$items   = array();
+		$items = array();
+
 		$items[] = $photo->getId();
 
 		return array(null, $album, $items);
@@ -218,7 +219,6 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$photo->setTitle('Test Item');
-
 		$ret = $photo->save();
 
 		if ($ret) {
@@ -343,7 +343,6 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$data = $smarty->_tpl_vars;
-
 		$this->assert(1 == count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 	}

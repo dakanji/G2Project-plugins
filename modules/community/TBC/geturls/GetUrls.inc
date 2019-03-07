@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -33,7 +34,6 @@ class GetUrlsView extends GalleryView {
 	 */
 	public function loadTemplate(&$template) {
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
-
 		GalleryCoreApi::requireOnce('modules/geturls/classes/GetUrlsHelper.class');
 
 		list($ret, $data) = GetUrlsHelper::getUrlsByItemId($itemId);

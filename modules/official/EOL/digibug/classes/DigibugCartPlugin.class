@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -62,7 +63,6 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 
 		$session =& $gallery->getSession();
 		$session->put('digibug.cart', $cartItemIds);
-
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnUrl    = $urlGenerator->generateUrl(
 			array(

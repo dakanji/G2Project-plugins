@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
 GalleryCoreApi::requireOnce('modules/slideshow/classes/SlideshowHelper.class');
 
@@ -49,11 +49,9 @@ class SlideshowMediaRssView extends GalleryView {
 	public function renderImmediate($status = null, $error = null) {
 		global $gallery;
 
-		$phpVm = $gallery->getPhpVm();
-
+		$phpVm             = $gallery->getPhpVm();
 		$SlideShowMediaRss = array();
-
-		$itemId = $prevOffset = $nextOffset = $startId = null;
+		$itemId            = $prevOffset            = $nextOffset            = $startId            = null;
 
 		list($itemListString, $startId, $offset) = GalleryUtilities::getRequestVariables('itemList', 'startId', 'offset');
 

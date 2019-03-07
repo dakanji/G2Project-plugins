@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/AdminMaintenance.inc');
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/KeywordAnalysis.class');
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/ItemList.class');
@@ -61,29 +61,24 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 			'',
 			0
 		);
-
-		$items = KeywordAnalysis::get_item_list();
-
-		$result = array();
-
+		$items         = KeywordAnalysis::get_item_list();
+		$result        = array();
 		$i             = 0;
 		$keywordsadded = 0;
 		$itemschanged  = 0;
 		$total         = count($items);
+
 		$gallery->guaranteeTimeLimit(120);
 
 		foreach ($items as $dataitem) {
-			$item = $dataitem['item'];
-
-			$typos = $dataitem['typo'];
-
+			$item            = $dataitem['item'];
+			$typos           = $dataitem['typo'];
 			$missingkeywords = $dataitem['typo'];
 
 			//print '<br>' . $item->getTitle();
 			$itemid = $item->getId();
 
-			$itemchanged = false;
-
+			$itemchanged                = false;
 			$keywordsadded_to_this_item = array();
 
 			foreach ($typos as $sourcekeyword => $changes) {
@@ -132,14 +127,12 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 				'arg1' => $total,
 			)
 		);
-
 		$result[] = $module->translate(
 			array(
 				'text' => '%d items changed',
 				'arg1' => $itemschanged,
 			)
 		);
-
 		$result[] = $module->translate(
 			array(
 				'text' => '%d keywords changed',
@@ -155,16 +148,15 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 
 		$storage         =& $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
-
-		$message = $module->translate(
+		$message         = $module->translate(
 			array(
 				'text' => 'Processing image %d of %d',
 				'arg1' => $i,
 				'arg2' => $total,
 			)
 		);
-
 		$templateAdapter->updateProgressBar($message, '', $i / $total);
+
 		// Release locks (avoid too many open files for flock based locking)
 		$ret = $storage->checkPoint();
 

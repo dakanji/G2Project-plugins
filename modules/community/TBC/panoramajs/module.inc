@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * @package PanoramaJs
  * @author shivaya <shivaya>at<users.sourceforge.net>
  * @author javascript viewer : Henri ASTRE
@@ -33,12 +36,10 @@ class PanoramaJsModule extends GalleryModule {
 				'View wide jpeg/gif images in a javascript panorama viewer'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 	}
@@ -160,7 +161,6 @@ class PanoramaJsModule extends GalleryModule {
 			 * determine if a panorama is even possible.  We'll still also gate on the acting
 			 * user's permissions that we receive.
 			 */
-
 			list($ret, $images) = PanoramaJsHelper::fetchViewableImages($items);
 
 			if ($ret) {
@@ -174,7 +174,8 @@ class PanoramaJsModule extends GalleryModule {
 					continue;
 				}
 
-				$image    = $images[$itemId];
+				$image = $images[$itemId];
+
 				$mimeType = $item->getMimeType();
 				$width    = $image->getWidth();
 
@@ -207,15 +208,12 @@ class PanoramaJsModule extends GalleryModule {
 		$rule  = array();
 
 		$rule['comment'] = $this->translate('View Panorama (Js)');
-
-		$rule['match'] = array(
+		$rule['match']   = array(
 			'view' => 'panoramajs.PanoramaJs',
 		);
 
-		$rule['onLoad'] = array('rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath');
-
-		$rule['pattern'] = 'v/%path%/panoramaJs.html';
-
+		$rule['onLoad']   = array('rewrite', 'RewriteSimpleHelper', 'loadItemIdFromPath');
+		$rule['pattern']  = 'v/%path%/panoramaJs.html';
 		$rule['keywords'] = array(
 			'path' => array(
 				'pattern'  => '([^?]+)',

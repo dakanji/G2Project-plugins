@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -75,7 +76,6 @@ class RssHelper {
 				'forceFullUrl'   => true,
 			)
 		);
-
 		$generator->addProperty('title', $memberData['title']);
 		$generator->addProperty('description', $memberData['description']);
 		$generator->addProperty('link', $albumUrl);
@@ -101,7 +101,6 @@ class RssHelper {
 						'forceFullUrl'   => true,
 					)
 				);
-
 				$generator->addProperty(
 					'image',
 					array(
@@ -140,6 +139,7 @@ class RssHelper {
 		}
 
 		list($ret, $version) = GalleryCoreApi::getPluginParameter('module', 'rss', '_version');
+
 		$generator->addProperty('generator', 'Gallery 2 RSS Module, version ' . $version);
 		$generator->addProperty('ttl', $param['ttl']);
 		$vm = $gallery->getPhpVm();
@@ -334,8 +334,8 @@ class RssHelper {
 		$itemSettings = array();
 
 		if (!empty($param['thumbnails']) && !empty($param['thumbnails'][$item->getId()])) {
-			$thumbnail = $param['thumbnails'][$item->getId()];
-			$imageUrl  = $urlGenerator->generateUrl(
+			$thumbnail                        = $param['thumbnails'][$item->getId()];
+			$imageUrl                         = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbnail->getId(),
@@ -345,13 +345,12 @@ class RssHelper {
 					'forceFullUrl'   => true,
 				)
 			);
-
-			$description = '<a href="' . $url . '"><img border="0" src="' . $imageUrl .
+			$description                      = '<a href="' . $url . '"><img border="0" src="' . $imageUrl .
 			'" width="' . $thumbnail->getWidth() .
 			'" height="' . $thumbnail->getHeight() .
 			'"/></a>' . (!empty($description) ? '<br/>' . $description : $description);
+			$itemSettings['thumbnail']['url'] = $url;
 
-			$itemSettings['thumbnail']['url']    = $url;
 			$itemSettings['thumbnail']['width']  = $thumbnail->getWidth();
 			$itemSettings['thumbnail']['height'] = $thumbnail->getHeight();
 		}
@@ -366,7 +365,7 @@ class RssHelper {
 				return $ret;
 			}
 
-			$url1 = $urlGenerator->generateUrl(
+			$url1         = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.ShowItem',
 					'itemId' => $item->getParentId(),
@@ -376,7 +375,6 @@ class RssHelper {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$description .= '<br/>' . $module->translate(
 				array(
 					'text' => 'In album %s',
@@ -470,7 +468,6 @@ class RssHelper {
 				'forceFullUrl'   => true,
 			)
 		);
-
 		$itemSettings = array(
 			'title'       => $item->getSubject(),
 			'link'        => $url,
@@ -657,8 +654,7 @@ class RssHelper {
 	      $orderBy
 	    ";
 
-		$data = $aclIds;
-
+		$data   = $aclIds;
 		$params = array();
 
 		if (isset($limit)) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -42,11 +43,11 @@ class CheckoutGroupsEventHelper {
 	public function handleTransactionChange(&$event) {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+
 		global $gallery;
 
-		$transaction = $event->getEntity(); // =, or =& ??
-		$data        = $event->getData();
-
+		$transaction   = $event->getEntity(); // =, or =& ??
+		$data          = $event->getData();
 		$transactionId = $transaction->getId();
 		$data          = $event->getData();
 

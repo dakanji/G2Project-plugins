@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/ecard/classes/EcardHelper.class');
 
 /**
@@ -53,8 +53,7 @@ class SendEcardController extends GalleryController {
 		}
 
 		$itemId = $item->getId();
-
-		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'ecard.send');
+		$ret    = GalleryCoreApi::assertHasItemPermission($itemId, 'ecard.send');
 
 		if ($ret) {
 			return array($ret, null);
@@ -163,8 +162,8 @@ class SendEcardController extends GalleryController {
 				return array($ret, null);
 			}
 
-			$urlGenerator =& $gallery->getUrlGenerator();
-			$link         = $canLink ? $urlGenerator->generateUrl(
+			$urlGenerator   =& $gallery->getUrlGenerator();
+			$link           = $canLink ? $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.ShowItem',
 					'itemId' => $itemId,
@@ -174,22 +173,20 @@ class SendEcardController extends GalleryController {
 					'forceSessionId' => false,
 				)
 			) : '';
-
 			$data           = $form;
 			$data['header'] = EcardHelper::replaceKeywords($config['header'], $form);
 			$data['footer'] = EcardHelper::replaceKeywords($config['footer'], $form);
 			$data['image']  = $filename;
 			$data['link']   = $link;
+			$dataPlain      = $data;
 
-			$dataPlain = $data;
 			GalleryUtilities::unsanitizeInputValues($dataPlain, false);
+
 			$dataPlain['image'] = $data['image'];
-
-			$data['header'] = nl2br($data['header']);
-			$data['footer'] = nl2br($data['footer']);
-			$data['text']   = nl2br($data['text']);
-
-			$headers = array(
+			$data['header']     = nl2br($data['header']);
+			$data['footer']     = nl2br($data['footer']);
+			$data['text']       = nl2br($data['text']);
+			$headers            = array(
 				'from'    => $config['from'] ? $config['from'] : $form['fromName'] . ' <' . $form['from'] . '>',
 				'to'      => $form['to'],
 				'subject' => EcardHelper::replaceKeywords($config['subject'], $form),
@@ -201,14 +198,14 @@ class SendEcardController extends GalleryController {
 
 			GalleryUtilities::unsanitizeInputValues($headers, false);
 
-			$mime     = new Mail_mime("\n");
-			$platform =& $gallery->getPlatform();
+			$mime = new Mail_mime("\n");
 
+			$platform     =& $gallery->getPlatform();
 			$messagePlain = $platform->file_get_contents(
 				__DIR__ . '/templates/Message.txt'
 			);
-
 			$messagePlain = EcardHelper::replaceKeywords($messagePlain, $dataPlain);
+
 			$mime->setTXTBody($messagePlain);
 
 			// Either add attachment (plain) or add HTML image (html)
@@ -218,8 +215,8 @@ class SendEcardController extends GalleryController {
 				$messageHtml = $platform->file_get_contents(
 					__DIR__ . '/templates/Message.html'
 				);
-
 				$messageHtml = EcardHelper::replaceKeywords($messageHtml, $data);
+
 				$mime->setHTMLBody($messageHtml);
 
 				if ($resize->canBeViewedInline()) {
@@ -237,8 +234,7 @@ class SendEcardController extends GalleryController {
 					'head_charset'  => 'UTF-8',
 				)
 			);
-
-			$tmp = array(
+			$tmp  = array(
 				'From' => $headers['from'],
 			);
 
@@ -348,6 +344,7 @@ class SendEcardView extends GalleryView {
 			$form['to']       = '';
 			$form['toName']   = '';
 			$form['text']     = '';
+
 			$form['from']     = $session->get('ecard.from');
 			$form['fromName'] = $session->get('ecard.fromName');
 
@@ -372,7 +369,8 @@ class SendEcardView extends GalleryView {
 			}
 		}
 
-		$SendEcard              = array();
+		$SendEcard = array();
+
 		$SendEcard['itemId']    = $item->getId();
 		$SendEcard['item']      = (array)$item;
 		$SendEcard['emailFrom'] = $config['from'] ? $config['from'] : $form['fromName'] . ' &lt;' . $form['from'] . '&gt;';

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -53,9 +54,9 @@ class ResponseView extends GalleryView {
 		}
 
 		// Retrieve the XML sent in the HTTP POST request to the ResponseHandler
-		$xmlResponse = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : file_get_contents('php://input');
-
+		$xmlResponse       = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : file_get_contents('php://input');
 		list($root, $data) = CheckoutGoogleResponseHelper::GetParsedXML($xmlResponse);
+
 		// Record notification
 		$googleOrderNumber = $data[$root]['google-order-number']['VALUE'];
 
@@ -85,7 +86,8 @@ class ResponseView extends GalleryView {
 
 			case 'new-order-notification':
 				// Figure out which URL the order came from and reset the URL generator
-				$mainURL                     = $data[$root]['shopping-cart']['merchant-private-data']['mainURL']['VALUE'];
+				$mainURL = $data[$root]['shopping-cart']['merchant-private-data']['mainURL']['VALUE'];
+
 				$urlGenerator->init($baseUri = $mainURL);
 
 				// Figure out which order
@@ -213,7 +215,6 @@ class ResponseView extends GalleryView {
 						'domain' => 'modules_checkoutgoogle',
 						'data'   => $gallery->i18n('Google Checkout payment state has changed.'),
 					);
-
 					$statusMessage[] = "\n";
 					$statusMessage[] = array(
 						'domain' => 'modules_checkoutgoogle',
@@ -222,7 +223,6 @@ class ResponseView extends GalleryView {
 							'arg1' => $transaction->getAmount(),
 						),
 					);
-
 					$statusMessage[] = "\n";
 					$statusMessage[] = array(
 						'domain' => 'modules_checkoutgoogle',
@@ -240,6 +240,7 @@ class ResponseView extends GalleryView {
 			case 'risk-information-notification':
 			case 'order-state-change-notification':
 				break;
+
 			// More interesting: Alert admin
 			case 'request-received':
 			case 'error':
@@ -278,7 +279,6 @@ class ResponseView extends GalleryView {
 						'arg1' => $root,
 					),
 				);
-
 				$statusMessage[] = "\n\n";
 				$statusMessage[] = array(
 					'domain' => 'modules_checkoutgoogle',

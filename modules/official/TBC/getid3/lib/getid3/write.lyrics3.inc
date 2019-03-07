@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -16,6 +17,7 @@
 class getid3_write_lyrics3 {
 	public $filename;
 	public $tag_data;
+
 	//public $lyrics3_version = 2;       // 1 or 2
 	public $warnings = array(); // any non-critical errors will be stored here
 	public $errors   = array(); // any critical errors will be stored here
@@ -32,14 +34,14 @@ class getid3_write_lyrics3 {
 
 	public function DeleteLyrics3() {
 		// Initialize getID3 engine
-		$getID3       = new getID3();
+		$getID3 = new getID3();
+
 		$ThisFileInfo = $getID3->analyze($this->filename);
 
 		if (isset($ThisFileInfo['lyrics3']['tag_offset_start'], $ThisFileInfo['lyrics3']['tag_offset_end'])) {
 			if (is_readable($this->filename) && is_writable($this->filename) && is_file($this->filename) && ($fp = fopen($this->filename, 'a+b'))) {
 				flock($fp, LOCK_EX);
 				$oldignoreuserabort = ignore_user_abort(true);
-
 				fseek($fp, $ThisFileInfo['lyrics3']['tag_offset_end']);
 				$DataAfterLyrics3 = '';
 

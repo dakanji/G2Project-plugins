@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: DupeDetectRecreateDupInfoTask.class,v $
  *
@@ -62,6 +63,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		global $gallery;
 
 		$templateAdapter =& $gallery->getTemplateAdapter();
+
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
@@ -71,8 +73,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		}
 
 		$message = $module->translate('Processing...');
-
-		$ret = $templateAdapter->updateProgressBar(
+		$ret     = $templateAdapter->updateProgressBar(
 			$module->translate('Create signatures'),
 			$message,
 			''
@@ -94,11 +95,13 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 
 		$i      = $updated      = 0;
 		$allIds = array();
-		$total  = $results->resultCount();
+
+		$total = $results->resultCount();
 
 		while ($result = $results->nextResult()) {
 			// extracting histogram information can take loooooong time
 			$gallery->guaranteeTimeLimit(60);
+
 			// Grab 5 items at a time
 			$ids      = array($result[0]);
 			$allIds[] = $result[0];
@@ -131,8 +134,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 					'arg2' => $total,
 				)
 			);
-
-			$ret = $templateAdapter->updateProgressBar($message, '', $i / $total / 1.1);
+			$ret     = $templateAdapter->updateProgressBar($message, '', $i / $total / 1.1);
 
 			if ($ret->isError()) {
 				return array($ret, null, null);
@@ -144,6 +146,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 
 		foreach ($allIds as $id) {
 			$i++;
+
 			// try to find duplicates for this image, based on its signatures
 			$dupes = array();
 
@@ -169,8 +172,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 					'arg2' => $total,
 				)
 			);
-
-			$ret = $templateAdapter->updateProgressBar(
+			$ret     = $templateAdapter->updateProgressBar(
 				$message,
 				'',
 				0.9 + (($i / $total) * 0.1)
@@ -186,8 +188,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 				'text' => 'Done',
 			)
 		);
-
-		$ret = $templateAdapter->updateProgressBar($message, '', 1);
+		$ret     = $templateAdapter->updateProgressBar($message, '', 1);
 
 		if ($ret->isError()) {
 			return array($ret, null, null);

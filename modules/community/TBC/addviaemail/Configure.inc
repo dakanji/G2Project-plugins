@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -31,6 +32,7 @@ class ConfigureController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/ImageUploadHelper.class');
+
 		global $gallery;
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -263,6 +265,7 @@ class ConfigureView extends GalleryView {
 
 		// Check for required email functions
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailAdminHelper.class');
+
 		$funcsReport = AddviaemailAdminHelper::testRequiredFunctions();
 
 		if (count($funcsReport['fail']) > 0) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -41,7 +42,8 @@ class AdminTranscodeController extends GalleryController {
 		if (isset($form['action']['save'])) {
 			if (isset($form['outputMime'])) {
 				list($ret, $form['outputExtension']) = GalleryCoreApi::convertMimeToExtensions($form['outputMime']);
-				$form['outputExtension']             = $form['outputExtension'][0];
+
+				$form['outputExtension'] = $form['outputExtension'][0];
 			}
 
 			foreach (array(
@@ -74,7 +76,8 @@ class AdminTranscodeController extends GalleryController {
 			}
 
 			list($ret, $mimeTypes) = GalleryCoreApi::getPluginParameter('module', 'transcode', 'movieTypes');
-			$mimeTypes             = explode('|', $mimeTypes);
+
+			$mimeTypes = explode('|', $mimeTypes);
 
 			foreach ($mimeTypes as $key) {
 				if (isset($form[selectedMimeTypes][$key])) {
@@ -147,6 +150,7 @@ class AdminTranscodeView extends GalleryView {
 
 		list($ret, $tests, $mimeTypes, $supportsOffset,
 			  $mimeTypesEncoder, $encoderCodecs, $version) = FfmpegToolkitHelper::testBinary($path);
+
 		/** Its time to trim the fat and lose the non-web friendly mime types */
 		$acceptableEncoders = array('video/x-flv', 'video/mp4', 'video/webm', 'video/ogg');
 		$outputOptions      = array();

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: Callbacks.inc,v $
  *
@@ -33,6 +34,7 @@ class FavouritesCallbacks {
 			case 'getTop10':
 				// return 10 favourite items
 				GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 				$block =& $smarty->_tpl_vars['block'];
 
 				list($ret, $block['favourites']['Top10']) = FavouritesMapHelper::fetchFavourites($gallery->getActiveUserId());

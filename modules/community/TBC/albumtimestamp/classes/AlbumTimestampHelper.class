@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: AlbumTimestampHelper.class,v $
  * $Revision: 1845 $
@@ -155,6 +156,7 @@ class AlbumTimestampHelper {
 		}
 
 		$ret = null;
+
 		AlbumTimestampHelper::log("LEO: setItemParam: $itemId: $name = $value ($currentValue)");
 
 		if ($currentValue != $value) {
@@ -218,6 +220,7 @@ class AlbumTimestampHelper {
 
 		$itemId = $item->getId();
 		$gallery->debug("LEO: autoSetAlbumTimestamps: itemId=$itemId, rec=$recurse, override=" . empty($overrideChild));
+
 		AlbumTimestampHelper::log(
 			"LEO: autoSetAlbumTimestamps: itemId=$itemId, rec=$recurse, override=" . empty($overrideChild)
 			. ", mode=$mode, recurseAll=$recurseAll"
@@ -248,7 +251,6 @@ class AlbumTimestampHelper {
 
 			/* recurse into childalbums before handling this album itself,
 			   to set timestamps on the leaves first */
-
 			list($ret, $childIds) = GalleryCoreApi::fetchChildAlbumItemIds($item);
 
 			/* check if the albumTimestampMode parameter is not set
@@ -327,9 +329,10 @@ class AlbumTimestampHelper {
 		global $gallery;
 
 		$itemId = $item->getId();
-		AlbumTimestampHelper::log("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
-		$gallery->debug("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
 
+		AlbumTimestampHelper::log("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
+
+		$gallery->debug("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
 		$item->setOriginationTimestamp($timestamp);
 
 		if ($item->isModified()) {

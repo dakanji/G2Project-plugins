@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,7 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_avr extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 
 		// http://cui.unige.ch/OSG/info/AudioFormats/ap11.html
 		// http://www.btinternet.com/~AnthonyJ/Atari/programming/avr_format.html
@@ -70,8 +71,7 @@ class getid3_avr extends getid3_handler {
 			return false;
 		}
 
-		$info['avdataoffset'] += 128;
-
+		$info['avdataoffset']             += 128;
 		$info['avr']['sample_name']        = rtrim(substr($AVRheader, 4, 8));
 		$info['avr']['raw']['mono']        = getid3_lib::BigEndian2Int(substr($AVRheader, 12, 2));
 		$info['avr']['bits_per_sample']    = getid3_lib::BigEndian2Int(substr($AVRheader, 14, 2));
@@ -88,12 +88,10 @@ class getid3_avr extends getid3_handler {
 		$info['avr']['reserved']           = getid3_lib::BigEndian2Int(substr($AVRheader, 42, 2));
 		$info['avr']['sample_name_extra']  = rtrim(substr($AVRheader, 44, 20));
 		$info['avr']['comment']            = rtrim(substr($AVRheader, 64, 64));
-
-		$info['avr']['flags']['stereo'] = (($info['avr']['raw']['mono'] == 0) ? false : true);
-		$info['avr']['flags']['signed'] = (($info['avr']['raw']['signed'] == 0) ? false : true);
-		$info['avr']['flags']['loop']   = (($info['avr']['raw']['loop'] == 0) ? false : true);
-
-		$info['avr']['midi_notes'] = array();
+		$info['avr']['flags']['stereo']    = (($info['avr']['raw']['mono'] == 0) ? false : true);
+		$info['avr']['flags']['signed']    = (($info['avr']['raw']['signed'] == 0) ? false : true);
+		$info['avr']['flags']['loop']      = (($info['avr']['raw']['loop'] == 0) ? false : true);
+		$info['avr']['midi_notes']         = array();
 
 		if (($info['avr']['raw']['midi'] & 0xFF00) != 0xFF00) {
 			$info['avr']['midi_notes'][] = ($info['avr']['raw']['midi'] & 0xFF00) >> 8;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: DupeDetectCrc32HelperTest.class,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @version $Revision: 1.4 $ $Date: 2005/07/06 10:54:34 $
  * @package DupeDetect
@@ -35,6 +37,7 @@ GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectCrc32Helper.cl
  * Map class
  */
 GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectSignaturesMap.class');/**
+
  * Test DupeDetect functionality
  *
  * @package DupeDetect
@@ -306,7 +309,6 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 
 		/* first check that no dupes are discovered as there's no
 		 * signature for the new file yet */
-
 		list($ret, $dupes) = DupeDetectCrc32Helper::discoverCrc32Dupes($this->_item->getId());
 
 		if ($ret->isError()) {

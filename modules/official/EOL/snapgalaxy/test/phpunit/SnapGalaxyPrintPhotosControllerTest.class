@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -58,7 +59,6 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		 * that this plugin will print.  Make it an unsupported mime type so that no graphics
 		 * toolkits will get involved.
 		 */
-
 		list($ret, $this->_photo) = $this->_createRandomDataItem(
 			$this->_album->getId(),
 			'test/jpeg',
@@ -90,7 +90,6 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		$derivative->setDerivativeSourceId($this->_photo->getId());
 		$derivative->setDerivativeOperations('thumbnail|150');
 		$derivative->setMimeType('test/file');
-
 		$ret = $derivative->save();
 
 		if ($ret) {
@@ -120,10 +119,8 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		 */
 		$this->_thumbId  = $derivative->getId();
 		$this->_sourceId = $this->_photo->getId();
-
-		$storage =& $gallery->getStorage();
-
-		$ret = $storage->checkPoint();
+		$storage         =& $gallery->getStorage();
+		$ret             = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -166,6 +163,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function &_getTestPlatform($fragment, $requestUrl, $redirectUrl) {
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('fsockopen', array('www.snapgalaxy.com', 80, '', '', 5), 'testFd');
 		$platform->setReply(
 			'fwrite',
@@ -176,7 +174,6 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			100
 		);
-
 		$platform->setReply('fflush', array('testFd'), true);
 		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
 		$platform->setReply('feof', array('testFd'), false);
@@ -188,7 +185,6 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			'requesturl="' .
 			$requestUrl . '" redirecturl="' . $redirectUrl . '"'
 		);
-
 		$platform->setReply('feof', array('testFd'), true);
 		$platform->setReply('fclose', array('testFd'), true);
 
@@ -218,7 +214,6 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$session =& $gallery->getSession();
 		$this->assertEquals('/REQUEST_URL', $session->get('snapgalaxy.cartUrlFragment'));
 	}
@@ -253,7 +248,6 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$this->assertEquals(
 			'/REQUEST_URL2',
 			$session->get('snapgalaxy.cartUrlFragment')
@@ -264,6 +258,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$itemId = $this->_photo->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
 
@@ -296,8 +291,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		// Make sure we don't get any platform calls during test from releasing flock locks
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->checkPoint();
+		$ret     = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -320,7 +314,6 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$session =& $gallery->getSession();
 		$this->assertEquals('/REQUEST_URL', $session->get('snapgalaxy.cartUrlFragment'));
 
@@ -329,14 +322,14 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		$content = urldecode($written[0][1]);
 
 		$sessionVar = $session->getKey();
+
 		preg_match_all(
 			"#_1=view=core.DownloadItem.*?$sessionVar=(.*?)&#",
 			$content,
 			$matches
 		);
 
-		$snapgalaxySessionId = $matches[1][0];
-
+		$snapgalaxySessionId           = $matches[1][0];
 		$_COOKIE[SESSION_ID_PARAMETER] = $snapgalaxySessionId;
 		$snapgalaxySession             = new GallerySession();
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -46,11 +47,16 @@ class AddToCartController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
 
-		$items   = array();
-		$IPQ     = array();
+		$items = array();
+		$IPQ   = array();
+
 		$session =& $gallery->getSession();
 
-		list($ret, $treatAlbumAsCollection) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'treatAlbumAsCollection');
+		list($ret, $treatAlbumAsCollection) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkout',
+			'treatAlbumAsCollection'
+		);
 
 		if ($ret) {
 			return $ret;

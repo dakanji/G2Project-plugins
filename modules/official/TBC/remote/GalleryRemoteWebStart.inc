@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -59,14 +60,15 @@ class GalleryRemoteWebStartView extends GalleryView {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$codebase     = $urlGenerator->getCurrentUrlDir(true);
+
 		/*
 		 * Removed the href attribute in the jnlp element, because it caused WebStart to fail
 		 * caching the application.
 		 */
+
 		/*$jnlpFile = $urlGenerator->generateUrl(
 			array('view' => 'remote.GalleryRemoteWebStart'),
 			array('forceDirect' => true, 'forceFullUrl' => true, 'forceSessionId' => false));*/
-
 		$user = $gallery->getActiveUser();
 
 		if (isset($user)) {

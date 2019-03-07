@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -39,12 +40,10 @@ class GetUrlsModule extends GalleryModule {
 				'Show BBcode/HTML formatted URLs'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews|getItemSummaries');
 	}
@@ -159,13 +158,13 @@ class GetUrlsModule extends GalleryModule {
 
 		/** @todo Improve performance by doing the data acquiration in a batch */
 		$urlsTemplate = new GalleryTemplate(dirname(__FILE__) . '/../..');
+
 		$urlsTemplate->setVariable('l10Domain', 'modules_' . $this->getId());
 		$urlsTemplate->setVariable('isBlock', true);
 		$urlsTemplate->setVariable('width', $param['itemSummariesWidth']);
 		$urlsTemplate->setVariable('showHeadings', 0);
 		$urlsTemplate->setVariable('blockToggle', 1);
-		$tpl = 'gallery:modules/geturls/templates/GetUrls.tpl';
-
+		$tpl       = 'gallery:modules/geturls/templates/GetUrls.tpl';
 		$summaries = array();
 
 		foreach ($items as $item) {

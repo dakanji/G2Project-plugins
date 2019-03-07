@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,7 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_mod extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$fileheader = $this->fread(1088);
 
@@ -41,7 +42,7 @@ class getid3_mod extends getid3_handler {
 	}
 
 	public function getMODheaderFilepointer() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset'] + 1080);
 		$FormatID = $this->fread(4);
 
@@ -59,7 +60,7 @@ class getid3_mod extends getid3_handler {
 	}
 
 	public function getXMheaderFilepointer() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$FormatID = $this->fread(15);
 
@@ -70,14 +71,13 @@ class getid3_mod extends getid3_handler {
 		}
 
 		$info['fileformat'] = 'xm';
-
-		$info['error'][] = 'XM-MOD parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
+		$info['error'][]    = 'XM-MOD parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
 
 		return false;
 	}
 
 	public function getS3MheaderFilepointer() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset'] + 44);
 		$FormatID = $this->fread(4);
 
@@ -95,7 +95,7 @@ class getid3_mod extends getid3_handler {
 	}
 
 	public function getITheaderFilepointer() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$FormatID = $this->fread(4);
 

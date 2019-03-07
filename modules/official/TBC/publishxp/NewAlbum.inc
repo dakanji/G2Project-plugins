@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -85,7 +86,8 @@ class NewAlbumController extends GalleryController {
 				}
 
 				if (empty($error)) {
-					$redirect['view']    = 'publishxp.SelectAlbum';
+					$redirect['view'] = 'publishxp.SelectAlbum';
+
 					$redirect['albumId'] = $newAlbum->getId();
 				}
 			}
@@ -169,8 +171,7 @@ class NewAlbumView extends GalleryView {
 			$parents[$i] = (array)$parents[$i];
 		}
 
-		$parents[] = (array)$parent;
-
+		$parents[]           = (array)$parent;
 		$NewAlbum            = array();
 		$NewAlbum['parents'] = $parents;
 

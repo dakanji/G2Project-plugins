@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -155,10 +156,9 @@ class PrintPhotosView extends GalleryView {
 			}
 
 			if ($needSession) {
-				$sessionParam = array(
+				$sessionParam   = array(
 					$sfSession->getKey() => $sfSession->getId(),
 				);
-
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
@@ -168,7 +168,7 @@ class PrintPhotosView extends GalleryView {
 				'item' => (array)$item,
 			);
 
-			$entry['imageUrl'] = $urlGenerator->generateUrl(
+			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -181,7 +181,6 @@ class PrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
 
@@ -192,7 +191,7 @@ class PrintPhotosView extends GalleryView {
 				$thumbSource = $thumbnails[$itemId];
 			}
 
-			$entry['thumbUrl'] = $urlGenerator->generateUrl(
+			$entry['thumbUrl']    = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbSource->getId(),
@@ -202,7 +201,6 @@ class PrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$entry['thumbWidth']  = $thumbSource->getWidth();
 			$entry['thumbHeight'] = $thumbSource->getHeight();
 
@@ -225,7 +223,6 @@ class PrintPhotosView extends GalleryView {
 			 * sessionid in this session so we can reuse it for multiple print requests (and
 			 * just bump timeout each time).
 			 */
-
 			$ret = $sfSession->save();
 
 			if ($ret) {
@@ -245,7 +242,9 @@ class PrintPhotosView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
 		$template->setVariable('l10Domain', 'modules_shutterfly');
 		$template->setVariable(
 			'PrintPhotos',
@@ -255,7 +254,6 @@ class PrintPhotosView extends GalleryView {
 				'entries'   => $entries,
 			)
 		);
-
 		$template->display('gallery:modules/shutterfly/templates/PrintPhotos.tpl');
 
 		return null;

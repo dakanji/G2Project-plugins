@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -61,6 +62,7 @@ class ImportResultsView extends GalleryView {
 		$ImportResults           = array();
 		$ImportResults['counts'] = $counts;
 		$ImportResults['status'] = $status;
+
 		$template->setVariable('ImportResults', $ImportResults);
 		$template->setVariable('controller', 'picasa.ImportResults');
 

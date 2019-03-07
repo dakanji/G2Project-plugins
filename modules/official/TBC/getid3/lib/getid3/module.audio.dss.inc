@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,8 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_dss extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$DSSheader = $this->fread(1540);
 
@@ -27,20 +27,20 @@ class getid3_dss extends getid3_handler {
 		}
 
 		// some structure information taken from http://cpansearch.perl.org/src/RGIBSON/Audio-DSS-0.02/lib/Audio/DSS.pm
-		$info['encoding'] = 'ISO-8859-1'; // not certain, but assumed
-		$info['dss']      = array();
-
+		$info['encoding']              = 'ISO-8859-1'; // not certain, but assumed
+		$info['dss']                   = array();
 		$info['fileformat']            = 'dss';
 		$info['mime_type']             = 'audio/x-' . substr($DSSheader, 1, 3); // "audio/x-dss" or "audio/x-ds2"
 		$info['audio']['dataformat']   = substr($DSSheader, 1, 3); //         "dss" or         "ds2"
 		$info['audio']['bitrate_mode'] = 'cbr';
+		$info['dss']['version']        = ord(substr($DSSheader, 0, 1));
+		$info['dss']['hardware']       = trim(substr($DSSheader, 12, 16)); // identification string for hardware used to create the file, e.g. "DPM 9600", "DS2400"
+		$info['dss']['unknown1']       = getid3_lib::LittleEndian2Int(substr($DSSheader, 28, 4));
 
-		$info['dss']['version']  = ord(substr($DSSheader, 0, 1));
-		$info['dss']['hardware'] = trim(substr($DSSheader, 12, 16)); // identification string for hardware used to create the file, e.g. "DPM 9600", "DS2400"
-		$info['dss']['unknown1'] = getid3_lib::LittleEndian2Int(substr($DSSheader, 28, 4));
 		// 32-37 = "FE FF FE FF F7 FF" in all the sample files I've seen
-		$info['dss']['date_create']       = $this->DSSdateStringToUnixDate(substr($DSSheader, 38, 12));
-		$info['dss']['date_complete']     = $this->DSSdateStringToUnixDate(substr($DSSheader, 50, 12));
+		$info['dss']['date_create']   = $this->DSSdateStringToUnixDate(substr($DSSheader, 38, 12));
+		$info['dss']['date_complete'] = $this->DSSdateStringToUnixDate(substr($DSSheader, 50, 12));
+
 		$info['dss']['playtime_sec']      = intval((substr($DSSheader, 62, 2) * 3600) + (substr($DSSheader, 64, 2) * 60) + substr($DSSheader, 66, 2)); // approximate file playtime in HHMMSS
 		$info['dss']['playtime_ms']       = getid3_lib::LittleEndian2Int(substr($DSSheader, 512, 4)); // exact file playtime in milliseconds. Has also been observed at offset 530 in one sample file, with something else (unknown) at offset 512
 		$info['dss']['priority']          = ord(substr($DSSheader, 793, 1));
@@ -49,12 +49,12 @@ class getid3_dss extends getid3_handler {
 		$info['audio']['bits_per_sample'] = 16; // maybe, maybe not -- most compressed audio formats don't have a fixed bits-per-sample value, but this is a reasonable approximation
 		$info['audio']['sample_rate']     = $this->DSSsampleRateLookup($info['dss']['sample_rate_index']);
 		$info['audio']['channels']        = 1;
-
-		$info['playtime_seconds'] = $info['dss']['playtime_ms'] / 1000;
+		$info['playtime_seconds']         = $info['dss']['playtime_ms'] / 1000;
 
 		if (floor($info['dss']['playtime_ms'] / 1000) != $info['dss']['playtime_sec']) {
 			// *should* just be playtime_ms / 1000 but at least one sample file has playtime_ms at offset 530 instead of offset 512, so safety check
 			$info['playtime_seconds'] = $info['dss']['playtime_sec'];
+
 			$this->getid3->warning('playtime_ms (' . number_format($info['dss']['playtime_ms'] / 1000, 3) . ') does not match playtime_sec (' . number_format($info['dss']['playtime_sec']) . ') - using playtime_sec value');
 		}
 

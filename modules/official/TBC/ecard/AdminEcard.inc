@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -108,7 +109,6 @@ class AdminEcardView extends GalleryView {
 				'html'  => $module->translate('HTML'),
 			),
 		);
-
 		$template->setVariable('AdminEcard', $AdminEcard);
 		$template->setVariable('controller', 'ecard.AdminEcard');
 

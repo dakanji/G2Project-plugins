@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -126,9 +127,7 @@ class FotokastenSiteAdminView extends GalleryView {
 		}
 
 		$FotokastenSiteAdmin = array();
-
-		$var = ($form['affiliateId'] == FOTOKASTEN_GALLERY_AFFILIATE_ID);
-
+		$var                 = ($form['affiliateId'] == FOTOKASTEN_GALLERY_AFFILIATE_ID);
 		$FotokastenSiteAdmin['usingDefaultGalleryAffiliateId'] = $var;
 
 		$template->setVariable('FotokastenSiteAdmin', $FotokastenSiteAdmin);

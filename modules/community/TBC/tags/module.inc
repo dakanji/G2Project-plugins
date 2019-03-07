@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * Tags Module
  *
  * This adds a Tag Management area as well as features to add all the tags to the pictures and
@@ -37,12 +40,10 @@ class TagsModule extends GalleryModule {
 				'Tag management system'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks(
 			'getSiteAdminViews|registerEventListeners|getItemLinks|getItemSummaries'
@@ -215,8 +216,8 @@ class TagsModule extends GalleryModule {
 		}
 
 		$interfaceAdded = false;
+		$summaries      = array();
 
-		$summaries = array();
 		GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 		foreach ($items as $item) {
@@ -264,9 +265,9 @@ class TagsModule extends GalleryModule {
 
 					/** @todo Improve performance by doing the data acquiration in a batch */
 					$urlsTemplate = new GalleryTemplate(dirname(__FILE__) . '/../..');
-					$urlsTemplate->setVariable('l10Domain', 'modules_' . $this->getId());
-					$tpl = 'gallery:modules/tags/templates/TagsSummaryEdit.tpl';
 
+					$urlsTemplate->setVariable('l10Domain', 'modules_' . $this->getId());
+					$tpl            = 'gallery:modules/tags/templates/TagsSummaryEdit.tpl';
 					$interfaceAdded = true;
 				}
 
@@ -453,7 +454,6 @@ class TagsModule extends GalleryModule {
 
 					while (($oldTag = $oldTagsSearchResults->nextResult()) !== false) {
 						$gallery->guaranteeTimeLimit(30);
-
 						$oldTagId = (int)$oldTag[0];
 						$tagName  = $oldTag[1];
 
@@ -513,7 +513,6 @@ class TagsModule extends GalleryModule {
 					}
 				} while ($oldTagsSearchResults->resultCount() != 0);
 
-
 				// Fall Through
 			case '1.2.0':
 			case '1.2.1':
@@ -521,8 +520,8 @@ class TagsModule extends GalleryModule {
 			case '1.2.3':
 				// Look if an empty tag is in the database and delete it
 				$ret = TagsHelper::removeTag('');
-				// We don't care about errors
 
+				// We don't care about errors
 				// Fall Through
 			case '1.2.4':
 				// Adding the Edit Tag Permission into the system
@@ -537,7 +536,6 @@ class TagsModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '1.3.0':

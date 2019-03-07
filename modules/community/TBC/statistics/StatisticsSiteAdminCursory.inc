@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: StatisticsAdminCursory.inc,v $
  *
@@ -19,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/statistics/StatisticsSiteAdmin.inc');/**
+
  * @version $Revision: 1036 $
  * @package BulkManage
  * @author Aidan Lister <aidan@php.net>
@@ -102,7 +103,6 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$statistics['users'] = $count + 1;
-
 		$template->setVariable(
 			'StatisticsSiteAdmin',
 			array(

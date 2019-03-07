@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/slideshow/classes/SlideshowHelper.class');
 
 /**
@@ -51,11 +51,9 @@ class SlideshowHelperTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($album);
-
 		$optionList = explode(':', $optionListString);
-
-		$info    = array();
-		$itemIds = array();
+		$info       = array();
+		$itemIds    = array();
 
 		foreach ($optionList as $options) {
 			$options    = explode(',', $options);
@@ -183,7 +181,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 			),
 			$result
 		);
-
 		$this->assertEquals(1, $start, 'Should start at second photo');
 	}
 
@@ -217,7 +214,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 			),
 			$result
 		);
-
 		$this->assertEquals(1, $start, 'Should start at second photo');
 	}
 
@@ -235,6 +231,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 		}
 
 		list($ret, $result, $start) = SlideshowHelper::buildAlbumSlideshow($album, $itemIds[0]);
+
 		$this->assertErrorEquals(ERROR_MISSING_OBJECT, $ret);
 	}
 
@@ -254,6 +251,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 		}
 
 		list($ret, $result, $start) = SlideshowHelper::buildAlbumSlideshow($itemInfo[1]['item']);
+
 		$this->assertErrorEquals(ERROR_MISSING_OBJECT, $ret);
 	}
 
@@ -273,6 +271,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 		}
 
 		list($ret, $result, $start) = SlideshowHelper::buildAlbumSlideshow($itemInfo[1]['item']);
+
 		$this->assertErrorEquals(ERROR_MISSING_OBJECT, $ret);
 	}
 
@@ -306,7 +305,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 			),
 			$result
 		);
-
 		$this->assertEquals(1, $start, 'Should start at second photo');
 	}
 
@@ -326,6 +324,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 		}
 
 		list($ret, $result) = SlideshowHelper::buildItemsSlideshow($itemIds);
+
 		$this->assertErrorEquals(ERROR_MISSING_OBJECT, $ret);
 	}
 
@@ -539,7 +538,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$result,
 			'Photo data should match'
 		);
-
 		$this->assertEquals(0, $start, 'Should start at first photo');
 	}
 
@@ -598,7 +596,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$prevOffset,
 			'Previous page offset should match'
 		);
-
 		$this->assertEquals(null, $nextOffset, 'Should be no next page');
 	}
 

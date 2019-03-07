@@ -1,4 +1,5 @@
 <?php
+
 //Fix the description , summary and title HREFs
 $tmp = array();
 
@@ -16,6 +17,7 @@ foreach ($map['mapPoints'] as $point) {
 }
 
 $map['mapPoints'] = $tmp;
+
 //Create the HTML for the window
 $map['Labels'][0]      = 'none';
 $map['extramap']       = '';
@@ -37,7 +39,6 @@ if ($map['showItemDescriptions']) {
 
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><font color=black><b>Location:</b><br>'+lat+','+lon+'</font>'";
-
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><b>Directions To Location:</b><br/>'
         + 'Start address:<form action=\"http://maps.google.com/maps?daddr='+lat+','+lon+'&saddr=\" target=\"gpop\" onsubmit=\"window.open(action+saddr.value, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'

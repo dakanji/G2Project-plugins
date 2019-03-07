@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @version $Revision: 0.9 $ $Date: 2005/07/23 16:33:39 $
  * @package DupeDetect
@@ -92,7 +93,8 @@ class DupeDetectHistogramHelper {
 			return $ret;
 		}
 
-		$histogram                 = array();
+		$histogram = array();
+
 		$histogram['itemId']       = $newEntity->getId();
 		$histogram['red0_63']      = $hist['red'][0];
 		$histogram['red64_127']    = $hist['red'][1];

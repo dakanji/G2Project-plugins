@@ -1,22 +1,16 @@
 <?php
-//
+
 //  FPDI - Version 1.2
-//
 //    Copyright 2004-2007 Setasign - Jan Slabon
-//
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
-//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//
-
 if (!defined('PDF_TYPE_NULL')) {
 	define('PDF_TYPE_NULL', 0);
 }
@@ -62,7 +56,6 @@ if (!defined('PDF_TYPE_STREAM')) {
 }
 
 require_once 'pdf_context.php';
-
 require_once 'wrapper_functions.php';
 
 class pdf_parser {
@@ -103,16 +96,15 @@ class pdf_parser {
 	 */
 	public function __construct($filename) {
 		$this->filename = $filename;
-
-		$this->f = @fopen($this->filename, 'rb');
+		$this->f        = @fopen($this->filename, 'rb');
 
 		if (!$this->f) {
 			$this->error(sprintf('Cannot open %s !', $filename));
 		}
 
 		$this->getPDFVersion();
-
 		$this->c = new pdf_context($this->f);
+
 		// Read xref-Data
 		$this->pdf_read_xref($this->xref, $this->pdf_find_xref());
 
@@ -226,6 +218,7 @@ class pdf_parser {
 						fseek($this->f, $o_pos + strlen($m[1]));
 					} elseif (preg_match('/(x|r|e|f)+/', $data, $m)) { // correct invalid xref-pointer
 						$tmpOffset = $offset - 4 + strlen($m[0]);
+
 						$this->pdf_read_xref($result, $tmpOffset, $start, $end);
 
 						return;
@@ -418,7 +411,8 @@ class pdf_parser {
 					$esc = preg_match('/([\\\\]+)$/', $tmpresult = substr($c->buffer, $c->offset, $match - $c->offset), $m);
 
 					if ($esc === 0 || strlen($m[1]) % 2 == 0) {
-						$result    = $tmpresult;
+						$result = $tmpresult;
+
 						$c->offset = $match + 1;
 
 						return array(PDF_TYPE_STRING, $result);
@@ -431,14 +425,11 @@ class pdf_parser {
 					}
 				}
 
-
 				// Fall Through
 			case 'stream':
-				$o_pos    = ftell($c->file) - strlen($c->buffer);
-				$o_offset = $c->offset;
-
+				$o_pos              = ftell($c->file) - strlen($c->buffer);
+				$o_offset           = $c->offset;
 				$c->reset($startpos = $o_pos + $o_offset);
-
 				$e = 0; // ensure line breaks in front of the stream
 				if ($c->buffer[0] == chr(10) || $c->buffer[0] == chr(13)) {
 					$e++;
@@ -530,7 +521,6 @@ class pdf_parser {
 				// Reposition the file pointer and
 				// load the object header.
 				$c->reset($this->xref['xref'][$obj_spec[1]][$obj_spec[2]]);
-
 				$header = $this->pdf_read_value($c, null, true);
 
 				if ($header[0] != PDF_TYPE_OBJDEC || $header[1] != $obj_spec[1] || $header[2] != $obj_spec[2]) {
@@ -657,8 +647,7 @@ class pdf_parser {
 					$c->increase_length();
 				}
 
-				$result = substr($c->buffer, $c->offset - 1, $pos + 1);
-
+				$result     = substr($c->buffer, $c->offset - 1, $pos + 1);
 				$c->offset += $pos;
 
 				return $result;

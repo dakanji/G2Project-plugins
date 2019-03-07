@@ -1,4 +1,5 @@
 <?php
+
 // $Id: _parse_propfind.php 17189 2007-11-17 08:53:36Z bharat $
 /*
    +----------------------------------------------------------------------+
@@ -104,7 +105,8 @@ class _parse_propfind {
 			$line = fgets($handle);
 
 			if (is_string($line)) {
-				$had_input      = true;
+				$had_input = true;
+
 				$this->success &= xml_parse($parser, $line, false);
 			}
 		}

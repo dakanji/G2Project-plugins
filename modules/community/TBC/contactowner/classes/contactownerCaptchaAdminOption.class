@@ -1,5 +1,4 @@
 <?php
-
 class contactownerCaptchaAdminOption extends CaptchaAdminOption {
 	/**
 	 * @see CaptchaAdminOption::getOptionData

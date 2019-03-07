@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -113,7 +114,6 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		$this->_platform                                          = new HttpAuthModuleTestPlatform();
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_accessAuthorizationResponse;
 		$gallery->setPlatform($this->_platform);
-
 		$ret = $this->_markPluginParametersForCleanup('module', 'httpauth');
 
 		if ($ret) {
@@ -166,14 +166,12 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 	public function testGetRewriteRulesAuthorizationRuleActive() {
 		$this->_activeRules = array('authorization');
-
-		$rules = $this->_module->getRewriteRules();
+		$rules              = $this->_module->getRewriteRules();
 		$this->assertEquals(array('authorization'), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesMissingAuthorization() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
-
 		$rules = $this->_module->getRewriteRules();
 		$this->assertEquals(array('authorization'), array_keys($rules));
 	}
@@ -255,6 +253,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		$activeUser = $gallery->getActiveUser();
 		$event      = GalleryCoreApi::newEvent('Gallery::Logout');
+
 		$event->setEntity($activeUser);
 
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
@@ -271,8 +270,8 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		$activeUser               = $gallery->getActiveUser();
 		$_SERVER['PHP_AUTH_USER'] = $activeUser->getUserName();
+		$event                    = GalleryCoreApi::newEvent('Gallery::Logout');
 
-		$event = GalleryCoreApi::newEvent('Gallery::Logout');
 		$event->setEntity($activeUser);
 
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
@@ -298,8 +297,8 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		$activeUser             = $gallery->getActiveUser();
 		$_SERVER['REMOTE_USER'] = $activeUser->getUserName();
+		$event                  = GalleryCoreApi::newEvent('Gallery::Logout');
 
-		$event = GalleryCoreApi::newEvent('Gallery::Logout');
 		$event->setEntity($activeUser);
 
 		list($ret, $results) = GalleryCoreApi::postEvent($event);

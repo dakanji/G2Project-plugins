@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: StatisticsAdminCursory.inc,v $
  *
@@ -19,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/bulkmanage/classes/BulkManageHelper.class');/**
+
  * Handle all form requests
  *
  * Load the plugin and let it process the form data, then run the progress bar
@@ -85,7 +86,6 @@ class BulkManageController extends GalleryController {
 				// Parameters passed to helper
 					array($itemId, $plugin, $params)
 			);
-
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -176,7 +176,8 @@ class BulkManageView extends GalleryView {
 		$BulkManage               = array();
 		$BulkManage['bulkPlugin'] = $bulkPlugin;
 		$BulkManage['plugins']    = $plugins;
-		$BulkManage['itemId']     = $item->getId();
+
+		$BulkManage['itemId'] = $item->getId();
 
 		// Let the plugin load its template data
 		list($ret, $BulkManage['pluginFile'], $BulkManage['pluginL10Domain']) = $pluginInstances[$bulkPlugin]->loadTemplate($template, $form, $item);

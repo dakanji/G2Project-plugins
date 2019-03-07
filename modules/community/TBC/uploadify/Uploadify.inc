@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -64,8 +65,7 @@ class UploadifyController extends GalleryController {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
-		$ret = GalleryController::assertIsGenuineRequest();
+		$ret     = GalleryController::assertIsGenuineRequest();
 
 		if ($ret) {
 			$gallery->debug('Uploadify User Agent: ' . GalleryUtilities::getServerVar('HTTP_USER_AGENT'));
@@ -81,6 +81,7 @@ class UploadifyController extends GalleryController {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
+
 		$controller = new ItemAddController();
 
 		list($ret, $item) = $controller->getItem();
@@ -90,6 +91,7 @@ class UploadifyController extends GalleryController {
 		}
 
 		$itemId = $item->getId();
+
 		// Make sure we have permission to add to this item
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.addDataItem');
 
@@ -101,8 +103,7 @@ class UploadifyController extends GalleryController {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
 
-		$file = GalleryUtilities::getFile('userfile');
-
+		$file   = GalleryUtilities::getFile('userfile');
 		$status = $error = $results = array();
 
 		switch ($file['error']) {
@@ -206,7 +207,7 @@ class UploadifyController extends GalleryController {
 		 * Don't use uploaded files, because the framework cannot safely copy them.
 		 * Move it to our temporary directory first.
 		 */
-		$platform = &$gallery->getPlatform();
+		$platform =& $gallery->getPlatform();
 
 		if ($platform->is_uploaded_file($file['tmp_name'])) {
 			$tmpFile = $platform->move_uploaded_file($file['tmp_name']);
@@ -313,10 +314,10 @@ class UploadifyController extends GalleryController {
 			return null;
 		}
 
-		$storage = &$gallery->getStorage();
-
+		$storage     =& $gallery->getStorage();
 		$resizePrefs = array();
-		$itemId      = $item->getId();
+
+		$itemId = $item->getId();
 
 		// Load existing resizes -  there should not be any but...
 		list($ret, $resizesSet) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));
@@ -463,7 +464,6 @@ class UploadifyController extends GalleryController {
 			$derivative->setDerivativeSourceId($source->getId());
 			$derivative->setDerivativeOperations($resize[$mimeType]['operations']);
 			$derivative->setMimeType($resize[$mimeType]['outputMimeType']);
-
 			$ret = GalleryCoreApi::estimateDerivativeDimensions($derivative, $source);
 
 			if ($ret) {

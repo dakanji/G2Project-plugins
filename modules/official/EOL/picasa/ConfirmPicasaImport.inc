@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/picasa/classes/Picasa2DataParser.class');
 
 /**
@@ -53,7 +53,6 @@ class ConfirmPicasaImportController extends GalleryController {
 				array($this, 'performImport'),
 				array($form)
 			);
-
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -81,13 +80,11 @@ class ConfirmPicasaImportController extends GalleryController {
 
 		$storage         = $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
+		$platform        =& $gallery->getPlatform();
+		$slash           = $platform->getDirectorySeparator();
 
-		$platform =& $gallery->getPlatform();
-		$slash    = $platform->getDirectorySeparator();
-
-		$finishedAlbums = $albumPosition = array();
-
-		$status = array(
+		$finishedAlbums = $albumPosition  = array();
+		$status         = array(
 			'albumId'              => false,
 			'albumImportFailure'   => array(),
 			'albumImportSuccess'   => array(),
@@ -133,7 +130,6 @@ class ConfirmPicasaImportController extends GalleryController {
 		 * Import the Album (as of now Picasa supports only the export of a
 		 * single album and there is no concept of subalbums)
 		 */
-
 		GalleryCoreApi::requireOnce('modules/picasa/classes/Picasa2DataParser.class');
 		GalleryCoreApi::requireOnce('modules/picasa/classes/PicasaImportHelper.class');
 
@@ -149,21 +145,21 @@ class ConfirmPicasaImportController extends GalleryController {
 			$totalItemsToImport = 1;
 		}
 
-		$i = 0;
-
+		$i                     = 0;
 		$numberOfItemsImported = 0;
+
 		$gallery->guaranteeTimeLimit(30);
 		$newAlbumInstanceId = false;
-
 		$sanitizedAlbumName = $picasaAlbum['albumName'];
+
 		GalleryUtilities::sanitizeInputValues($sanitizedAlbumName);
+
 		// We definitely need notices before each album
 		$templateAdapter->updateProgressBar(
 			$module->translate('Importing albums'),
 			$sanitizedAlbumName,
 			$numberOfItemsImported / $totalItemsToImport
 		);
-
 		$desiredname = $platform->legalizePathComponent($picasaAlbum['albumName']);
 		$k           = 0;
 		$invalidName = true;
@@ -246,7 +242,6 @@ class ConfirmPicasaImportController extends GalleryController {
 						$sourceEncoding
 					)
 				);
-
 				$newAlbumInstance->setSummary(
 					PicasaImportHelper::convertHtml(
 						$markupType,
@@ -257,15 +252,13 @@ class ConfirmPicasaImportController extends GalleryController {
 			}
 
 			$newAlbumInstance->setKeywords('');
-
 			$ret = $newAlbumInstance->save();
 
 			if ($ret) {
 				return $ret;
 			}
 
-			$itemsCreated[] = $newAlbumInstance->getId();
-
+			$itemsCreated[]                                    = $newAlbumInstance->getId();
 			$finishedAlbums[$sanitizedAlbumName]               = $newAlbumInstanceId;
 			$status['albumImportSuccess'][$sanitizedAlbumName] = $newAlbumInstanceId;
 			$status['albumId']                                 = $newAlbumInstanceId;
@@ -275,7 +268,6 @@ class ConfirmPicasaImportController extends GalleryController {
 		 * we can let the parent album (and anything else that we might
 		 * have tied up) be edited by others now
 		 */
-
 		$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 		if ($ret) {
@@ -297,7 +289,9 @@ class ConfirmPicasaImportController extends GalleryController {
 			$gallery->guaranteeTimeLimit(30);
 			$filepath          = $picasaXmlPath . str_replace('/', $slash, $importAlbumItem['path']);
 			$sanitizedFilename = $filename = $importAlbumItem['name'];
+
 			GalleryUtilities::sanitizeInputValues($sanitizedFilename);
+
 			$filecaption = PicasaImportHelper::convertHtml(
 				$markupType,
 				$importAlbumItem['caption'],
@@ -344,13 +338,11 @@ class ConfirmPicasaImportController extends GalleryController {
 
 		$session =& $gallery->getSession();
 		$session->putStatus($status);
-
 		$redirect['view']    = 'core.SiteAdmin';
 		$redirect['subView'] = 'picasa.ImportResults';
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
-
 		$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 		if ($ret) {
@@ -378,9 +370,8 @@ class ConfirmPicasaImportView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$platform          =& $gallery->getPlatform();
-		$illegalAlbumNames = $existingAlbums = $titles = array();
-
+		$platform           =& $gallery->getPlatform();
+		$illegalAlbumNames  = $existingAlbums  = $titles  = array();
 		$picasaXmlPath      = GalleryUtilities::getRequestVariables('picasaXmlPath');
 		$destinationAlbumId = GalleryUtilities::getRequestVariables('destinationAlbumId');
 

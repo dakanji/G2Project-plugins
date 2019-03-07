@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -26,10 +27,8 @@ GalleryCoreApi::requireOnce('modules/mranalysis/classes/ItemList.class');
 GalleryCoreApi::requireOnce('modules/mranalysis/module.inc');
 
 /* TODO:
-
 Advanced Keyword\Tag Analysis
 =============================
-
 * For each item with a specific keyword, check for additional keywords.
 * Look for potential cockups with keyword splitting e.g using :l or ' instead of ;
 * Also things like 'Boat House' and Boathouse'
@@ -38,7 +37,6 @@ Advanced Keyword\Tag Analysis
 * ?? Auto fix missing keywords??
 * ?? Spelling check -> Cathederal - should be Cathedral -> Auto Correct?
 * ?? Duplicate keywords
-
 Keyword			Must Have Additional Keywords
 =============== 	=============================
 Harry			Dog;Border Terrier
@@ -77,13 +75,10 @@ Goldfish		Fish
 Great Crested Grebe	Grebe;Bird
 Fishing Trawler		Boat
 Flamingo		Bird
-
 */
-
 class KeywordAnalysis {
 	public $must_have_keywords;
 	public $commontypos;
-
 	public $split_params;
 	public $keyword_album_module;
 
@@ -114,34 +109,24 @@ class KeywordAnalysis {
 	// Returns an associative array of keywords against a list of keywords they must have.
 	public static function musthavekeywords() {
 		// this function should be stored as a config somewhere
-		$musthave = array();
-
-		$musthave['Harry']   = array('Dog', 'Border Terrier');
-		$musthave['Harriet'] = array('Dog', 'Border Terrier');
-		$musthave['Bob']     = array('Dog', 'Border Terrier');
-		$musthave['Riff']    = array('Dog', 'Jack Russel');
-		$musthave['Meg']     = array('Dog', 'Labrador');
-
-		$musthave['Tiny']    = array('Cat');
-		$musthave['Marmite'] = array('Cat');
-
-		$musthave['Calf'] = array('Cow');
-		$musthave['Bull'] = array('Cow');
-
-		$musthave['River'] = array('River [name]');
-
-		$musthave['Pub'] = array('[name] Pub');
-
-		$musthave['Windmill'] = array('[name] Windmill');
-
-		$musthave['Castle'] = array('[name] Castle');
-
-		$musthave['Lighthouse'] = array('[name] Lighthouse');
-
-		$musthave['Church']    = array('[name] Church');
-		$musthave['Abbey']     = array('Church');
-		$musthave['Cathedral'] = array('Church');
-
+		$musthave                        = array();
+		$musthave['Harry']               = array('Dog', 'Border Terrier');
+		$musthave['Harriet']             = array('Dog', 'Border Terrier');
+		$musthave['Bob']                 = array('Dog', 'Border Terrier');
+		$musthave['Riff']                = array('Dog', 'Jack Russel');
+		$musthave['Meg']                 = array('Dog', 'Labrador');
+		$musthave['Tiny']                = array('Cat');
+		$musthave['Marmite']             = array('Cat');
+		$musthave['Calf']                = array('Cow');
+		$musthave['Bull']                = array('Cow');
+		$musthave['River']               = array('River [name]');
+		$musthave['Pub']                 = array('[name] Pub');
+		$musthave['Windmill']            = array('[name] Windmill');
+		$musthave['Castle']              = array('[name] Castle');
+		$musthave['Lighthouse']          = array('[name] Lighthouse');
+		$musthave['Church']              = array('[name] Church');
+		$musthave['Abbey']               = array('Church');
+		$musthave['Cathedral']           = array('Church');
 		$musthave['Great Crested Grebe'] = array('Grebe', 'Bird');
 		$musthave['Grebe']               = array('[name] Grebe', 'Bird');
 		$musthave['Bald Eagle']          = array('Eagle', 'Bird');
@@ -155,23 +140,17 @@ class KeywordAnalysis {
 		$musthave['Flamingo']            = array('Bird');
 		$musthave['Crested Drake']       = array('Duck', 'Bird');
 		$musthave['Duckling']            = array('Duck', 'Bird');
-
-		$musthave['Fishing Trawler'] = array('Boat');
-		$musthave['Narrowboat']      = array('Boat');
-		$musthave['Barge']           = array('Boat');
-
-		$musthave['Goldfish'] = array('Fish');
-
-		$musthave['Bluebell'] = array('Flower');
-		$musthave['Cactus']   = array('Flower');
-		$musthave['Daffodil'] = array('Flower');
-
-		$musthave['Horse Chestnut'] = array('Tree');
-
-		$musthave['Steam Train']  = array('Train');
-		$musthave['Train Lights'] = array('Train');
-
-		$musthave['Austin 7'] = array('Car');
+		$musthave['Fishing Trawler']     = array('Boat');
+		$musthave['Narrowboat']          = array('Boat');
+		$musthave['Barge']               = array('Boat');
+		$musthave['Goldfish']            = array('Fish');
+		$musthave['Bluebell']            = array('Flower');
+		$musthave['Cactus']              = array('Flower');
+		$musthave['Daffodil']            = array('Flower');
+		$musthave['Horse Chestnut']      = array('Tree');
+		$musthave['Steam Train']         = array('Train');
+		$musthave['Train Lights']        = array('Train');
+		$musthave['Austin 7']            = array('Car');
 
 		return $musthave;
 	}
@@ -187,8 +166,7 @@ class KeywordAnalysis {
 			return $typos;
 		}
 
-		$typos['Cathederal'] = 'Cathedral';
-
+		$typos['Cathederal']       = 'Cathedral';
 		$typos['Actors']           = 'Actor';
 		$typos['Bar-Headed Goose'] = 'Bar-Headed Geese';
 
@@ -239,8 +217,7 @@ class KeywordAnalysis {
 		}
 
 		// filter the keywords by the actual keywords rather than partial name match
-		$itemkeywords = $module->splitKeywords($itemtochange->keywords, $split_params);
-
+		$itemkeywords   = $module->splitKeywords($itemtochange->keywords, $split_params);
 		$itemkeywords[] = $keyword;
 
 		// Ensure keywords are unique
@@ -269,7 +246,6 @@ class KeywordAnalysis {
 		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
 
 		$itemtochange->setKeywords($newkeywords);
-
 		$ret = $itemtochange->save();
 
 		if ($ret) {
@@ -361,7 +337,6 @@ class KeywordAnalysis {
 		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
 
 		$itemtochange->setKeywords($newkeywords);
-
 		$ret = $itemtochange->save();
 
 		if ($ret) {
@@ -431,11 +406,9 @@ class KeywordAnalysis {
 
 	// Has the list of keywords got the specific keyword?
 	public static function has_keyword($keywords, $searchkeyword) {
-
 		// [name] is a special prefix in that it should be replaced with something.
 		// ideally this should not just be a prefix, but be allowed to be a suffix too.
-		$specialword = KeywordAnalysis::special_word();
-
+		$specialword       = KeywordAnalysis::special_word();
 		$specialkeywordpos = stripos($searchkeyword, $specialword);
 
 		if ($specialkeywordpos === false) {
@@ -493,20 +466,17 @@ class KeywordAnalysis {
 	public function has_typos($itemkeywords) {
 		$weirdseparators    = ':@\\"#~<>!$%';
 		$weirdseparatorslen = strlen($weirdseparators);
-
-		$typos = array();
+		$typos              = array();
 
 		foreach ($itemkeywords as $ksrch) {
-			$keywordtypos = array();
-
+			$keywordtypos  = array();
 			$keywordlength = strlen($ksrch);
 
 			if (($keywordlength % 2) == 0) {
 				// look for [Keyword][Keyword]
 				$midpoint = $keywordlength / 2;
-
-				$left  = substr($ksrch, 0, $midpoint);
-				$right = substr($ksrch, $midpoint);
+				$left     = substr($ksrch, 0, $midpoint);
+				$right    = substr($ksrch, $midpoint);
 
 				if (0 == strcasecmp($left, $right)) {
 					$keywordtypos['doublekeyword'] = $left;
@@ -515,12 +485,12 @@ class KeywordAnalysis {
 				// look for [Keyword]?[Keyword]
 				if ($keywordlength > 3) {
 					$midpoint = ($keywordlength - 1) / 2;
-
-					$left  = substr($ksrch, 0, $midpoint);
-					$right = substr($ksrch, $midpoint + 1);
+					$left     = substr($ksrch, 0, $midpoint);
+					$right    = substr($ksrch, $midpoint + 1);
 
 					if (0 == strcasecmp($left, $right)) {
 						$keywordtypos['doublekeyword'] = $left;
+
 						//print '<br>Potential duplicated keyword with non split between' . $ksrch;
 					}
 				}
@@ -529,6 +499,7 @@ class KeywordAnalysis {
 			// look for potential weird separators
 			for ($pos = 0; $pos < $weirdseparatorslen; ++$pos) {
 				$sep = substr($weirdseparators, $pos, 1);
+
 				//print '<br>Weird Separator : ' . $sep;
 				if (!(false === strpos($ksrch, $sep))) {
 					//print '<br>Found Weirdness in ' . $ksrch . ' with separator ' . $sep;
@@ -556,18 +527,14 @@ class KeywordAnalysis {
 
 	// Checks all the rules against the items.
 	public function check($item) {
-
 		// filter the keywords by the actual keywords rather than partial name match
 		$itemkeywords = $this->keyword_album_module->splitKeywords($item->keywords, $this->split_params);
-
-		$ret = array();
+		$ret          = array();
 
 		// look for missing keywords
 		$ret['missing'] = $this->missing_must_have_keywords($itemkeywords);
-
-		$ret['typo'] = $this->has_typos($itemkeywords);
-
-		$errors = 0;
+		$ret['typo']    = $this->has_typos($itemkeywords);
+		$errors         = 0;
 
 		foreach ($ret as $key => $value) {
 			$errors += count($value);
@@ -597,13 +564,11 @@ class KeywordAnalysis {
                 [GalleryItem::keywords] IS NOT NULL
                 AND
                 [GalleryItem::keywords] <> ''
-
                 ORDER BY [GalleryPhotoItem::id]
                 ";
 
 		$tester = new KeywordAnalysis();
-
-		$items = ItemList::readItemsFromQuery($query, array($tester, 'check'));
+		$items  = ItemList::readItemsFromQuery($query, array($tester, 'check'));
 
 		return $items;
 	}

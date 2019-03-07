@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -105,9 +106,10 @@ class CSSView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
-		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
-		$template->setVariable('l10Domain', 'modules_imageframe');
 
+		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
+		$template->setVariable('l10Domain', 'modules_imageframe');
 		$ret = $imageframe->init($template, $frameList);
 
 		if ($ret) {

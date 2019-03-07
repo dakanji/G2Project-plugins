@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -40,6 +41,7 @@ class PicLensHelperTest extends GalleryTestCase {
 		}
 
 		$UnitTestPlatform = new UnitTestPlatform();
+
 		$gallery->setPlatform($UnitTestPlatform);
 		$gallery->setConfig('data.gallery.plugins_data', '/');
 	}
@@ -73,7 +75,6 @@ class PicLensHelperTest extends GalleryTestCase {
 			array('IN', "GET $path HTTP/1.0\r\nHost: $host\r\n\r\n", null),
 			true
 		);
-
 		$platform->setReply('fflush', array('IN'), null);
 		$platform->setReply('fgets', array('IN', 4096), "HTTP/1.1 $responseCode\r\n");
 		$platform->setReply('feof', array('IN'), false);
@@ -106,25 +107,21 @@ class PicLensHelperTest extends GalleryTestCase {
 			'http://gallery.menalto.com/versioncheck/piclens/release',
 			"version=VERSION\njsUrl=http://host/path/js\nswfUrl=http://host/path/swf\n"
 		);
-
 		$this->_setDownload(
 			'http://host/path/js',
 			'JS DATA',
 			'/modules/slideshow/piclens.js.new'
 		);
-
 		$this->_setDownload(
 			'http://host/path/swf',
 			'SWF DATA',
 			'/modules/slideshow/PicLensLite.swf.new'
 		);
-
 		$gallery->_platform->setReply(
 			'rename',
 			array('/modules/slideshow/piclens.js.new', '/modules/slideshow/piclens.js'),
 			true
 		);
-
 		$gallery->_platform->setReply(
 			'rename',
 			array('/modules/slideshow/PicLensLite.swf.new', '/modules/slideshow/PicLensLite.swf'),
@@ -143,6 +140,7 @@ class PicLensHelperTest extends GalleryTestCase {
 		);
 
 		list($ret, $version) = PicLensHelper::install();
+
 		$this->assertErrorEquals(ERROR_MISSING_VALUE, $ret);
 	}
 
@@ -153,6 +151,7 @@ class PicLensHelperTest extends GalleryTestCase {
 		);
 
 		list($ret, $version) = PicLensHelper::install();
+
 		$this->assertErrorEquals(ERROR_MISSING_VALUE, $ret);
 	}
 
@@ -163,6 +162,7 @@ class PicLensHelperTest extends GalleryTestCase {
 		);
 
 		list($ret, $version) = PicLensHelper::install();
+
 		$this->assertErrorEquals(ERROR_MISSING_VALUE, $ret);
 	}
 
@@ -173,6 +173,7 @@ class PicLensHelperTest extends GalleryTestCase {
 		);
 
 		list($ret, $version) = PicLensHelper::install();
+
 		$this->assertErrorEquals(ERROR_PLATFORM_FAILURE, $ret);
 	}
 
@@ -183,13 +184,11 @@ class PicLensHelperTest extends GalleryTestCase {
 			'http://gallery.menalto.com/versioncheck/piclens/release',
 			"version=VERSION\njsUrl=http://host/path/js\nswfUrl=http://host/path/swf\n"
 		);
-
 		$this->_setDownload(
 			'http://host/path/js',
 			'JS DATA',
 			'/modules/slideshow/piclens.js.new'
 		);
-
 		$this->_setDownload(
 			'http://host/path/swf',
 			'SWF DATA',
@@ -204,6 +203,7 @@ class PicLensHelperTest extends GalleryTestCase {
 		);
 
 		list($ret, $version) = PicLensHelper::install();
+
 		$this->assertErrorEquals(ERROR_PLATFORM_FAILURE, $ret);
 	}
 
@@ -214,14 +214,12 @@ class PicLensHelperTest extends GalleryTestCase {
 			'http://gallery.menalto.com/versioncheck/piclens/release',
 			"version=VERSION\njsUrl=http://host/path/js\nswfUrl=http://host/path/swf\n"
 		);
-
 		$this->_setDownload(
 			'http://host/path/js',
 			'JS DATA',
 			'/modules/slideshow/piclens.js.new',
 			'404 Not Found'
 		);
-
 		$this->_setDownload(
 			'http://host/path/swf',
 			'SWF DATA',
@@ -235,13 +233,11 @@ class PicLensHelperTest extends GalleryTestCase {
 			array('/modules/slideshow/piclens.js.new'),
 			false
 		);
-
 		$gallery->_platform->setReply(
 			'file_exists',
 			array('/modules/slideshow/PicLensLite.swf.new'),
 			true
 		);
-
 		$gallery->_platform->setReply(
 			'unlink',
 			array('/modules/slideshow/PicLensLite.swf.new'),
@@ -249,6 +245,7 @@ class PicLensHelperTest extends GalleryTestCase {
 		);
 
 		list($ret, $version) = PicLensHelper::install();
+
 		$this->assertErrorEquals(ERROR_PLATFORM_FAILURE, $ret);
 	}
 
@@ -257,7 +254,6 @@ class PicLensHelperTest extends GalleryTestCase {
 			'http://gallery.menalto.com/versioncheck/piclens/release',
 			"version=VERSION\njsUrl=http://host/path/js\nswfUrl=http://host/path/swf\n"
 		);
-
 		$this->assertEquals(
 			array(
 				'version' => 'VERSION',
@@ -277,7 +273,6 @@ class PicLensHelperTest extends GalleryTestCase {
 			'http://gallery.menalto.com/versioncheck/piclens/release',
 			"version=<evil>\njsUrl=<eviler>\nswfUrl=<evilest>\n"
 		);
-
 		$this->assertEquals(
 			array(
 				'version' => '&lt;evil&gt;',
@@ -295,7 +290,6 @@ class PicLensHelperTest extends GalleryTestCase {
 			null,
 			'404 Not Found'
 		);
-
 		$this->assertEquals(null, PicLensHelper::getLatestPicLensInfo());
 	}
 
@@ -307,19 +301,16 @@ class PicLensHelperTest extends GalleryTestCase {
 			array('/modules/slideshow/piclens.js'),
 			true
 		);
-
 		$gallery->_platform->setReply(
 			'unlink',
 			array('/modules/slideshow/piclens.js'),
 			true
 		);
-
 		$gallery->_platform->setReply(
 			'file_exists',
 			array('/modules/slideshow/PicLensLite.swf'),
 			true
 		);
-
 		$gallery->_platform->setReply(
 			'unlink',
 			array('/modules/slideshow/PicLensLite.swf'),

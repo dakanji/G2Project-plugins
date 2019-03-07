@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Steven N. Severinghaus <sns@severinghaus.org>
@@ -123,6 +125,7 @@ class MapLegendAdminController extends GalleryController {
 					$settings = $deftheme->getSettings(null);
 
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();
+
 					/*
 					 * This block manipulation logic only works for earlier block encoding,
 					 * so skip it for later Theme API versions to avoid corrupting the
@@ -139,8 +142,7 @@ class MapLegendAdminController extends GalleryController {
 									$value             = '[map.Legend] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -150,13 +152,11 @@ class MapLegendAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-
-									$value = str_replace('[map.Legend]', '', $value);
-									$value = '[map.Legend] ' . $value;
+									$value                 = str_replace('[map.Legend]', '', $value);
+									$value                 = '[map.Legend] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -185,6 +185,7 @@ class MapLegendAdminController extends GalleryController {
 					$settings = $deftheme->getSettings(null);
 
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();
+
 					/*
 					 * This block manipulation logic only works for earlier block encoding,
 					 * so skip it for later Theme API versions to avoid corrupting the
@@ -200,8 +201,7 @@ class MapLegendAdminController extends GalleryController {
 									$value             = str_replace('[map.Legend]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -211,12 +211,10 @@ class MapLegendAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-
-									$value = str_replace('[map.Legend]', '', $value);
+									$value                 = str_replace('[map.Legend]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -248,8 +246,7 @@ class MapLegendAdminController extends GalleryController {
 				);
 			}
 
-			$status['saved'] = 1;
-
+			$status['saved']                = 1;
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -270,6 +267,7 @@ class MapLegendAdminView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
+
 		$template->head('modules/map/includes/GoogleMap.css');
 		$form['formName'] = 'MapLegendAdmin';
 
@@ -335,10 +333,12 @@ class MapLegendAdminView extends GalleryView {
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
+			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
+
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 

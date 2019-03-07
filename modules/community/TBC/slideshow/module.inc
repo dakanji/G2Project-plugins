@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -33,12 +34,10 @@ class SlideshowModule extends GalleryModule {
 		$this->setId('slideshow');
 		$this->setName($gallery->i18n('Slideshow'));
 		$this->setDescription($gallery->i18n('Slideshow'));
-
 		$this->setVersion('3.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -96,8 +95,7 @@ class SlideshowModule extends GalleryModule {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
-		$dir = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow';
+		$dir      = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow';
 
 		list($success) = GalleryUtilities::guaranteeDirExists($dir);
 
@@ -195,7 +193,6 @@ class SlideshowModule extends GalleryModule {
 				 * Photo: do slideshow of parent album, start at this photo.
 				 * Show View Slideshow link, only when album has images in it.
 				 */
-
 				$showSlideshowLink = false;
 
 				if ($item->getCanContainChildren()) {
@@ -235,7 +232,7 @@ class SlideshowModule extends GalleryModule {
 
 				if ($showSlideshowLink) {
 					if ($picLensVersion) {
-						$script = sprintf(
+						$script           = sprintf(
 							'var p=PicLensLite;'
 							. 'p.setCallbacks({onNoPlugins:function(){location.href=\'%s\'}});'
 							. 'p.setLiteURLs({swf:\'%s\'});'
@@ -264,7 +261,6 @@ class SlideshowModule extends GalleryModule {
 							),
 							$itemId
 						);
-
 						$links[$itemId][] = array(
 							'text'   => $this->translate('View Slideshow'),
 							'params' => array(
@@ -309,8 +305,8 @@ class SlideshowModule extends GalleryModule {
 	 */
 	public function getRewriteRules() {
 		$rules = array();
+		$rule  = array();
 
-		$rule            = array();
 		$rule['comment'] = $this->translate('View Slideshow');
 		$rule['match']   = array(
 			'view' => 'slideshow.Slideshow',
@@ -336,8 +332,7 @@ class SlideshowModule extends GalleryModule {
 				),
 			),
 		);
-
-		$rules[] = $rule;
+		$rules[]          = $rule;
 
 		return $rules;
 	}
@@ -349,8 +344,7 @@ class SlideshowModule extends GalleryModule {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$data = $event->getData();
+		$data         = $event->getData();
 
 		if ($event->getEventName() == 'Gallery::BeforeDisplay'
 			&& $data['view']->getViewType() == VIEW_TYPE_SHOW_ITEM
@@ -389,7 +383,6 @@ class SlideshowModule extends GalleryModule {
 						),
 					)
 				);
-
 				$template->javascript(
 					$urlGenerator->generateUrl(
 						array(

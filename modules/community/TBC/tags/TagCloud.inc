@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 /**
@@ -36,7 +36,6 @@ class TagCloudView extends GalleryView {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
 		$template->style(
 			$urlGenerator->generateUrl(
 				array(
@@ -44,7 +43,6 @@ class TagCloudView extends GalleryView {
 				)
 			)
 		);
-
 		$template->javascript('modules/tags/js/Tags.js');
 
 		list($ret, $tags) = TagsHelper::getTagListWithTagCount();

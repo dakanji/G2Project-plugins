@@ -50,7 +50,6 @@
  *               purposes, please contact the author: evan@ozhiker.com
  *
  ******************************************************************************/
-
 require_once 'XML.php';
 
 /******************************************************************************
@@ -72,7 +71,6 @@ require_once 'XML.php';
  *                       or if an error occured
  *
  ******************************************************************************/
-
 function get_XMP_text($jpeg_header_data) {
 	//Cycle through the header segments
 	for ($i = 0; $i < count($jpeg_header_data); $i++) {
@@ -132,6 +130,7 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
 	// No pre-existing XMP/RDF found - insert a new one after any pre-existing APP0 or APP1 blocks
 	// Change: changed to initialise $i properly as of revision 1.04
 	$i = 0;
+
 	// Loop until a block is found that isn't an APP0 or APP1
 	while (($jpeg_header_data[$i]['SegName'] == 'APP0') || ($jpeg_header_data[$i]['SegName'] == 'APP1')) {
 		$i++;
@@ -204,8 +203,8 @@ function read_XMP_array_from_text($xmptext) {
 
 function write_XMP_array_to_text($xmparray) {
 	// Add the XMP packet header
-	// The sequence 0xEFBBBF is the UTF-8 encoded version of the Unicode “zero
-	// width non-breaking space character” (U+FEFF), which is used for detecting
+	// The sequence 0xEFBBBF is the UTF-8 encoded version of the Unicode ï¿½zero
+	// width non-breaking space characterï¿½ (U+FEFF), which is used for detecting
 	// whether UTF-16 or UTF-8 is being used.
 	$output_XMP_text = "<?php xpacket begin='\xef\xbb\xbf' id='W5M0MpCehiHzreSzNTczkc9d'?>\n";
 
@@ -252,13 +251,13 @@ function Interpret_XMP_to_HTML($XMP_array) {
 		// Check if there is a rdf:RDF tag at either the first or second level
 		if (($XMP_array[0]['tag'] == 'x:xapmeta') && ($XMP_array[0]['children'][0]['tag'] == 'rdf:RDF')) {
 			// RDF found at second level - Save it's position
-			$RDF_Contents = &$XMP_array[0]['children'][0]['children'];
+			$RDF_Contents =& $XMP_array[0]['children'][0]['children'];
 		} elseif (($XMP_array[0]['tag'] == 'x:xmpmeta') && ($XMP_array[0]['children'][0]['tag'] == 'rdf:RDF')) {
 			// RDF found at second level - Save it's position
-			$RDF_Contents = &$XMP_array[0]['children'][0]['children'];
+			$RDF_Contents =& $XMP_array[0]['children'][0]['children'];
 		} elseif ($XMP_array[0]['tag'] == 'rdf:RDF') {
 			// RDF found at first level - Save it's position
-			$RDF_Contents = &$XMP_array[0]['children'];
+			$RDF_Contents =& $XMP_array[0]['children'];
 		} else {
 			// RDF section not found - abort
 			return '';
@@ -371,6 +370,7 @@ function Interpret_XMP_to_HTML($XMP_array) {
 
 						// Escape the text of the caption for html
 						$tag_caption = HTML_UTF8_Escape($tag_caption);
+
 						// Escape the text of the value for html and turn newlines to <br>
 						$value_str = nl2br(HTML_UTF8_Escape($value_str));
 
@@ -399,7 +399,6 @@ function Interpret_XMP_to_HTML($XMP_array) {
 
 // End of Function:     Interpret_XMP_to_HTML
 // INTERNAL FUNCTIONS
-
 /******************************************************************************
  *
  * Internal Function:     Interpret_RDF_Item
@@ -418,8 +417,7 @@ function Interpret_XMP_to_HTML($XMP_array) {
  ******************************************************************************/
 
 function Interpret_RDF_Item($Item) {
-
-		// TODO: Many RDF items have not been tested - only photoshop 7.0 and CS items
+	// TODO: Many RDF items have not been tested - only photoshop 7.0 and CS items
 	// Create a string to receive the HTML output
 	$value_str = '';
 
@@ -437,6 +435,7 @@ function Interpret_RDF_Item($Item) {
 		case 'photoshop:DateCreated':            // This is in year month day order
 				// Extract the year,month and day
 				list($year, $month, $day) = sscanf($Item['value'], '%d-%d-%d');
+
 				// Make a new date string with Day, Month, Year
 				$value_str = "$day/$month/$year";
 
@@ -489,7 +488,8 @@ function get_RDF_field_html_value($rdf_item) {
 					// Cycle through each, Interpreting them and adding the result to the output text
 					foreach ($rdf_item['children'] as $child) {
 						list($tag_caption, $value_str) = Interpret_RDF_Item($child);
-						$output_str                   .= "$tag_caption  =  $value_str\n";
+
+						$output_str .= "$tag_caption  =  $value_str\n";
 					}
 
 					// The output text will have an extra \n on it - remove it
@@ -534,7 +534,8 @@ function get_RDF_field_html_value($rdf_item) {
 							// Cycle through each, Interpreting them and adding the result to the output text
 							foreach ($child_item['children'] as $child) {
 								list($tag_caption, $value_str) = Interpret_RDF_Item($child);
-								$output_str                   .= "$tag_caption  =  $value_str\n";
+
+								$output_str .= "$tag_caption  =  $value_str\n";
 							}
 
 							// The output text will have an extra \n on it - remove it
@@ -610,7 +611,8 @@ function interpret_RDF_collection($item) {
 								// Cycle through each, Interpreting them and adding the result to the output text
 								foreach ($list_item['children'] as $child) {
 									list($tag_caption, $value_str) = Interpret_RDF_Item($child);
-									$output_str                   .= "$tag_caption  =  $value_str\n";
+
+									$output_str .= "$tag_caption  =  $value_str\n";
 								}
 
 								// The output text will have an extra \n on it - remove it
@@ -644,9 +646,7 @@ function interpret_RDF_collection($item) {
  * Contents:     The Captions of the known XMP fields, indexed by their field name
  *
  ******************************************************************************/
-
 $GLOBALS['XMP_tag_captions'] = array(
-
 	'dc:contributor'                   => 'Other Contributor(s)',
 	'dc:coverage'                      => 'Coverage (scope)',
 	'dc:creator'                       => 'Creator(s) (Authors)',
@@ -662,7 +662,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'dc:subject'                       => 'Subject and Keywords',
 	'dc:title'                         => 'Title',
 	'dc:type'                          => 'Resource Type',
-
 	'xmp:Advisory'                     => 'Externally Editied Properties',
 	'xmp:BaseURL'                      => "Base URL for relative URL's",
 	'xmp:CreateDate'                   => 'Original Creation Date',
@@ -672,7 +671,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xmp:ModifyDate'                   => 'Resource Last Modify Date',
 	'xmp:Nickname'                     => 'Nickname',
 	'xmp:Thumbnails'                   => 'Thumbnails',
-
 	'xmpidq:Scheme'                    => 'Identification Scheme',
 
 	// These are not in spec but Photoshop CS seems to use them
@@ -686,14 +684,12 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xap:Nickname'                     => 'Nickname',
 	'xap:Thumbnails'                   => 'Thumbnails',
 	'xapidq:Scheme'                    => 'Identification Scheme',
-
 	'xapRights:Certificate'            => 'Certificate',
 	'xapRights:Copyright'              => 'Copyright',
 	'xapRights:Marked'                 => 'Marked',
 	'xapRights:Owner'                  => 'Owner',
 	'xapRights:UsageTerms'             => 'Legal Terms of Usage',
 	'xapRights:WebStatement'           => 'Web Page describing rights statement (Owner URL)',
-
 	'xapMM:ContainedResources'         => 'Contained Resources',
 	'xapMM:ContributorResources'       => 'Contributor Resources',
 	'xapMM:DerivedFrom'                => 'Derived From',
@@ -711,16 +707,12 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xapMM:SaveID'                     => 'Save ID',
 	'xapMM:VersionID'                  => 'Version ID',
 	'xapMM:Versions'                   => 'Versions',
-
 	'xapBJ:JobRef'                     => 'Job Reference',
-
 	'xmpTPg:MaxPageSize'               => 'Largest Page Size',
 	'xmpTPg:NPages'                    => 'Number of pages',
-
 	'pdf:Keywords'                     => 'Keywords',
 	'pdf:PDFVersion'                   => 'PDF file version',
 	'pdf:Producer'                     => 'PDF Creation Tool',
-
 	'photoshop:AuthorsPosition'        => 'Authors Position',
 	'photoshop:CaptionWriter'          => 'Caption Writer',
 	'photoshop:Category'               => 'Category',
@@ -736,7 +728,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'photoshop:SupplementalCategories' => 'Supplemental Categories',
 	'photoshop:TransmissionReference'  => 'Technical (Transmission) Reference',
 	'photoshop:Urgency'                => 'Urgency',
-
 	'tiff:ImageWidth'                  => 'Image Width',
 	'tiff:ImageLength'                 => 'Image Length',
 	'tiff:BitsPerSample'               => 'Bits Per Sample',
@@ -762,7 +753,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'tiff:Software'                    => 'Software',
 	'tiff:Artist'                      => 'Artist',
 	'tiff:Copyright'                   => 'Copyright',
-
 	'exif:ExifVersion'                 => 'Exif Version',
 	'exif:FlashpixVersion'             => 'Flash pix Version',
 	'exif:ColorSpace'                  => 'Color Space',
@@ -841,22 +831,18 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'exif:GPSProcessingMethod'         => 'GPS Processing Method',
 	'exif:GPSAreaInformation'          => 'GPS Area Information',
 	'exif:GPSDifferential'             => 'GPS Differential',
-
 	'stDim:w'                          => 'Width',
 	'stDim:h'                          => 'Height',
 	'stDim:unit'                       => 'Units',
-
 	'xapGImg:height'                   => 'Height',
 	'xapGImg:width'                    => 'Width',
 	'xapGImg:format'                   => 'Format',
 	'xapGImg:image'                    => 'Image',
-
 	'stEvt:action'                     => 'Action',
 	'stEvt:instanceID'                 => 'Instance ID',
 	'stEvt:parameters'                 => 'Parameters',
 	'stEvt:softwareAgent'              => 'Software Agent',
 	'stEvt:when'                       => 'When',
-
 	'stRef:instanceID'                 => 'Instance ID',
 	'stRef:documentID'                 => 'Document ID',
 	'stRef:versionID'                  => 'Version ID',
@@ -866,13 +852,11 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'stRef:managerVariant'             => 'Particular Variant of Asset Management System',
 	'stRef:manageTo'                   => 'Manage To',
 	'stRef:manageUI'                   => 'Managed Resource URI',
-
 	'stVer:comments'                   => '',
 	'stVer:event'                      => '',
 	'stVer:modifyDate'                 => '',
 	'stVer:modifier'                   => '',
 	'stVer:version'                    => '',
-
 	'stJob:name'                       => 'Job Name',
 	'stJob:id'                         => 'Unique Job ID',
 	'stJob:url'                        => 'URL for External Job Management File',
@@ -899,7 +883,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'exif:Columns'                     => 'Columns',
 	'exif:Rows'                        => 'Rows',
 	'exif:Settings'                    => 'Settings',
-
 );
 
 // End of Global Variable:     XMP_tag_captions

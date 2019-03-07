@@ -1,8 +1,8 @@
 <?php
+
 // $Id: frame.inc 15342 2006-12-01 21:14:46Z andy_st $
   // Contributed by: KnightScene
 $frameData = array(
-
 	'name'      => $gallery->i18n('Photo Corners'),
 
 	// Top Left
@@ -13,10 +13,8 @@ $frameData = array(
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
-
 	'imageTT'   => 'TT.gif',
 	'heightTT'  => 60,
-
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
 
@@ -28,20 +26,16 @@ $frameData = array(
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
-
 	'imageLL'   => 'LL.gif',
 	'widthLL'   => 60,
-
 	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
-
 	'imageRR'   => 'RR.gif',
 	'widthRR'   => 60,
-
 	'imageRRB'  => '',
 	'heightRRB' => 0,
 
@@ -53,10 +47,8 @@ $frameData = array(
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
-
 	'imageBB'   => 'BB.gif',
 	'heightBB'  => 60,
-
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
 
@@ -64,5 +56,4 @@ $frameData = array(
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 60,
 	'heightBR'  => 60,
-
 );

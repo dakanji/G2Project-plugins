@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,11 +18,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package Imagine
  * @version $Revision: 1633 $
  * @author Bharat Mediratta
- *//**
+ */
+
+/**
  * Imagine
  *
  * Support the Imagine Android app.
@@ -39,12 +43,10 @@ class ImagineModule extends GalleryModule {
 				'Imagine for Android'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('interfaces', $gallery->i18n('Remote Interfaces'));
 	}
 

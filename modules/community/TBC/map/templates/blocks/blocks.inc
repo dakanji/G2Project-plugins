@@ -39,17 +39,21 @@ $blocks = array(
 			),
 			'mapType' => array(
 				'description' => $gallery->i18n('Map type'),
+
 				// array('text' => 'Map type', 'hint' => 'Style of Google map')
 				'type'        => 'choice',
 				'default'     => '3',
 				'choices'     => array(
 					'1' => $gallery->i18n('Map'),
+
 					// array('text' => 'Map', 'hint' => 'Map style')
 					'2' => $gallery->i18n('Satellite'),
+
 					// array('text' => 'Satellite', 'hint' => 'Map style')
 					'3' => $gallery->i18n('Hybrid'),
 				),
 			),
+
 			// array('text' => 'Hybrid', 'hint' => 'Map style')
 			'showControls' => array(
 				'description' => $gallery->i18n('Enable pan and zoom controls'),

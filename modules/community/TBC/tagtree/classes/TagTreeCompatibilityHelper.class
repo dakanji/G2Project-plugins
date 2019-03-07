@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2009 Bharat Mediratta
@@ -56,6 +57,7 @@ class TagTreeCompatibilityHelper {
 
 				if ($isActive) {
 					$providedVersion = explode('.', $tagsModule->getVersion());
+
 					$providedVersion = array_map(create_function('$version', 'return intval($version);'), $providedVersion);
 					$providedVersion = array_slice($providedVersion, 0, 2);
 					$requiredVersion = array(

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 /**
@@ -112,7 +112,6 @@ class TagsItemEditController extends GalleryController {
 					array($this, 'runApplyTags'),
 					array($items, $itemId)
 				);
-
 				$results['delegate']['view'] = 'core.ProgressBar';
 			} else {
 				$results['delegate']['view']   = 'tags.TagsItemEdit';
@@ -147,7 +146,6 @@ class TagsItemEditController extends GalleryController {
 
 		$heading = $module->translate('Applying Album Tags to SubItems');
 		$templateAdapter->updateProgressBar($heading, $module->translate('Preparing...'), 0);
-
 		$total = count($items);
 
 		foreach ($items as $key => $id) {
@@ -159,9 +157,7 @@ class TagsItemEditController extends GalleryController {
 						'arg2' => $total,
 					)
 				);
-
 				$templateAdapter->updateProgressBar($heading, $message, ($key + 1) / $total);
-
 				$ret = TagsHelper::assignTag($id, $tagName);
 
 				if ($ret) {
@@ -228,6 +224,7 @@ class TagsItemEditView extends GalleryView {
 		if ($exifModuleActive) {
 			// Grab the list of fields in 'details'
 			list($ret, $path) = $item->fetchPath();
+
 			GalleryCoreApi::requireOnce('modules/exif/classes/ExifHelper.class');
 
 			list($ret, $exifData) = ExifHelper::getExifData($path, EXIF_DETAILED);
@@ -300,7 +297,6 @@ class TagsItemEditView extends GalleryView {
 		$template->javascript('lib/yui/event-min.js');
 		$template->javascript('lib/yui/connection-min.js');
 		$template->javascript('modules/tags/js/Tags.js');
-
 		$template->setVariable('controller', 'tags.TagsItemEdit');
 		$template->setVariable('tagList', $thisItemTagList);
 		$template->setVariable('popularTags', $tagList);

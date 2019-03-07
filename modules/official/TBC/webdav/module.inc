@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -38,12 +39,10 @@ class WebDavModule extends GalleryModule {
 				'Mount Gallery on your desktop.'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('interfaces', $gallery->i18n('Remote Interfaces'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -125,19 +124,16 @@ class WebDavModule extends GalleryModule {
 				 * Activate essential short URL rules automatically
 				 * Set HTTP response status on all errors
 				 */
-
 			case '0.3.0':
 				/*
 				 * Eliminate WebDavUrlGenerator, WebDavInitEventListener and WebDavSiteAdmin
 				 * Register WebDavActivatePluginEventListener
 				 */
-
 			case '0.4.0':
 				/*
 				 * Move parsePath from WebDavHelper to WebDavRewriteHelper, to avoid loading
 				 * WebDavHelper just to generate URLs
 				 */
-
 			case '0.4.1':
 				// Add GalleryView::isControllerLike to WebDAV view
 			case '0.4.2':
@@ -150,14 +146,12 @@ class WebDavModule extends GalleryModule {
 					return $ret;
 				}
 
-
 				// Fall Through
 			case '0.6.1':
 				/*
 				 * Add dependency on latest changes in GalleryModule::getRewriteRules and on
 				 * GalleryUrlGenerator::generateUrl's protocol option.
 				 */
-
 			case '0.6.2':
 				// Add configuration checks
 			case '0.7.0':
@@ -177,7 +171,6 @@ class WebDavModule extends GalleryModule {
 				if ($ret && !($ret->getErrorCode() & ERROR_CONFIGURATION_REQUIRED)) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '1.0.0.1':
@@ -296,8 +289,7 @@ class WebDavModule extends GalleryModule {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$rules = array();
+		$rules        = array();
 
 		// Use short URL because most WebDAV clients don't support query strings
 		$rules['connect'] = array(
@@ -346,7 +338,6 @@ class WebDavModule extends GalleryModule {
 		 * Only define the rule to redirect OPTIONS requests so we can set DAV headers if it is
 		 * already active, or if OPTIONS responses are missing DAV headers
 		 */
-
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 
 		if ($ret) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Steven N. Severinghaus <sns@severinghaus.org>
@@ -57,15 +59,14 @@ class MapGroupAdminController extends GalleryController {
 		}
 
 		if (isset($form['action']['edit'])) {
-			$id = substr($form['action']['edit'], 11);
-
+			$id        = substr($form['action']['edit'], 11);
 			$tmp       = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 			$AllGroups = explode('|', $tmp[1]);
-
 			$newgroups = '';
 
 			foreach ($AllGroups as $group) {
 				$temp = explode('`', $group);
+
 				// Warning: if you have duplicate IDs (in the old code), this will erase them.
 				if ($temp[0] != $id) {
 					$newgroups = ($newgroups == '') ? $group : $newgroups . '|' . $group;
@@ -86,8 +87,7 @@ class MapGroupAdminController extends GalleryController {
 	    ';
 
 			list($ret, $result) = $gallery->search($query, array(), array());
-
-			$params = '';
+			$params             = '';
 
 			while ($param = $result->nextResult()) {
 				$params .= ($params != '') ? '|' : '';
@@ -126,7 +126,6 @@ class MapGroupAdminController extends GalleryController {
 			$GroupSumm = $_POST['GroupSumm'];
 			$GroupDate = strtotime($_POST['GroupDate']);
 			$Groupfile = $form['name'][3];
-
 			$oldgroups = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 
 			if ($oldgroups[1] != '') {
@@ -155,6 +154,7 @@ class MapGroupAdminController extends GalleryController {
 
 						// Move the dupe to the (currently-known) end
 						$maxGroupId = $maxGroupId + 1;
+
 						// reassign group ID to highest ID + 1
 						$tempgroups[$groupKey][0] = $maxGroupId;
 					}
@@ -264,12 +264,10 @@ class MapGroupAdminController extends GalleryController {
 		}
 
 		if (isset($form['action']['delete'])) {
-			$id = substr($form['action']['delete'], 13);
-
+			$id            = substr($form['action']['delete'], 13);
 			$tmp           = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 			$currentgroups = explode('|', $tmp[1]);
-
-			$newgroups = '';
+			$newgroups     = '';
 
 			foreach ($currentgroups as $group) {
 				$temp = explode('`', $group);
@@ -295,8 +293,7 @@ class MapGroupAdminController extends GalleryController {
 				return $ret;
 			}
 
-			$status['groupdeleted'] = 1;
-
+			$status['groupdeleted']         = 1;
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -310,7 +307,6 @@ class MapGroupAdminController extends GalleryController {
 			$GroupSumm = $_POST['GroupSumm'];
 			$GroupDate = strtotime($_POST['GroupDate']);
 			$Groupfile = basename($_POST['pic']);
-
 			$oldgroups = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 
 			if ($oldgroups[1] != '') {
@@ -339,6 +335,7 @@ class MapGroupAdminController extends GalleryController {
 
 						// Move the dupe to the (currently-known) end
 						$maxGroupId = $maxGroupId + 1;
+
 						// reassign group ID to highest ID + 1
 						$tempgroups[$groupKey][0] = $maxGroupId;
 					}
@@ -466,7 +463,6 @@ class MapGroupAdminController extends GalleryController {
 			$GroupSumm = $_POST['GroupSumm'];
 			$GroupDate = strtotime($_POST['GroupDate']);
 			$Groupfile = basename($_POST['pic']);
-
 			$oldgroups = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 
 			if ($oldgroups[1] != '') {
@@ -495,6 +491,7 @@ class MapGroupAdminController extends GalleryController {
 
 						// Move the dupe to the (currently-known) end
 						$maxGroupId = $maxGroupId + 1;
+
 						// reassign group ID to highest ID + 1
 						$tempgroups[$groupKey][0] = $maxGroupId;
 					}
@@ -619,19 +616,19 @@ class MapGroupAdminView extends GalleryView {
 	public function loadTemplate(&$template, &$form) {
 		$template->head('modules/map/templates/AdminHeader.tpl');
 		$template->head('modules/map/includes/GoogleMap.css');
-
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
+
 		$form['formName'] = 'MapGroupAdmin';
 
 		// Get the date/time format and today's date
 		list($ret, $coreParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
-		$dateFormat             = $coreParams['format.date'];
-		$form['now']            = strftime($dateFormat, strtotime('now'));
+
+		$dateFormat  = $coreParams['format.date'];
+		$form['now'] = strftime($dateFormat, strtotime('now'));
 
 		// Select items that have GPS coordinates filled out
 		$storage =& $gallery->getStorage();
-
-		$query = '
+		$query   = '
 	SELECT
 	  [mapMap::itemId],
 	  [mapMap::value]
@@ -659,14 +656,12 @@ class MapGroupAdminView extends GalleryView {
 			$pointHash = array();
 
 			while ($result = $results->nextResult()) {
-				$id = $result[0];
-
+				$id                    = $result[0];
 				$ids[]                 = $id;
 				$pointHash[$id]        = array();
 				$pointHash[$id]['id']  = $id;
 				$pointHash[$id]['gps'] = $result[1];
-
-				$tmp = array();
+				$tmp                   = array();
 
 				if (substr($id, 0, 1) == 'G') {
 					if ((array_key_exists('EditGroup', $form) and $form['EditGroup'] != '')
@@ -684,7 +679,8 @@ class MapGroupAdminView extends GalleryView {
 						$groupid                = substr($id, 1);
 
 						list($ret, $tmpparam) = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
-						$groups               = explode('|', $tmpparam);
+
+						$groups = explode('|', $tmpparam);
 
 						foreach ($groups as $group) {
 							if (!empty($group)) {
@@ -727,6 +723,7 @@ class MapGroupAdminView extends GalleryView {
 			}
 
 			$ids = array_values($ids);
+
 			// Retrieve data for each entity
 			list($ret, $entities) = $storage->loadEntities($ids);
 
@@ -748,8 +745,7 @@ class MapGroupAdminView extends GalleryView {
 						'serialNumber' => $thumbs[$entity->getId()]->getSerialNumber(),
 					)
 				);
-
-				$pointHash[$entity->getId()]['date'] = strftime($dateFormat, $entity->getCreationTimestamp());
+				$pointHash[$entity->getId()]['date']        = strftime($dateFormat, $entity->getCreationTimestamp());
 			}
 
 			$GPSItem = array();
@@ -832,10 +828,12 @@ class MapGroupAdminView extends GalleryView {
 		}
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
+			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
+
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 

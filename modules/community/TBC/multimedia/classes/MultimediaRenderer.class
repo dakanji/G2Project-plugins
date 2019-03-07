@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2012 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
 
 /**
@@ -54,7 +54,7 @@ class MultimediaRenderer extends GalleryRenderer {
 			return null;
 		}
 
-		$urlGenerator = &$gallery->getUrlGenerator();
+		$urlGenerator =& $gallery->getUrlGenerator();
 
 		// Including modernizr modernizr.com/
 		$modernizrUrl = $urlGenerator->generateUrl(
@@ -67,7 +67,7 @@ class MultimediaRenderer extends GalleryRenderer {
 		);
 
 		// Using flowplayer
-		$playerJsUrl = $urlGenerator->generateUrl(
+		$playerJsUrl     = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.min.js',
 			),
@@ -75,8 +75,7 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-
-		$playerUrl = $urlGenerator->generateUrl(
+		$playerUrl       = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer-3.2.7.swf',
 			),
@@ -84,7 +83,6 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-
 		$pseudoPluginUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.pseudostreaming-3.2.7.swf',
@@ -93,8 +91,7 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-
-		$audioPluginUrl = $urlGenerator->generateUrl(
+		$audioPluginUrl  = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.audio-3.2.2.swf',
 			),
@@ -102,10 +99,9 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-
-		$itemId     = $item->getId();
-		$thumbUrl   = '';
-		$thumbWidth = $thumbHeight = 200;
+		$itemId          = $item->getId();
+		$thumbUrl        = '';
+		$thumbWidth      = $thumbHeight = 200;
 
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
@@ -143,8 +139,7 @@ class MultimediaRenderer extends GalleryRenderer {
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
 
 		$title = smarty_modifier_markup($item->getTitle(), 'strip');
-
-		$src = $urlGenerator->generateUrl(
+		$src   = $urlGenerator->generateUrl(
 			array(
 				'view'         => 'multimedia.DownloadItem',
 				'itemId'       => $entity->getId(),
@@ -178,7 +173,6 @@ class MultimediaRenderer extends GalleryRenderer {
 					case 'video/x-ms-asf':
 					case 'video/x-ms-asx':
 						$classId = isset($classId) ? $classId : 'CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95';
-
 						$display = sprintf(
 							'<object classid="%s" width="%s" height="%s" id="multimedia-%s"> '
 							. '<param name="ShowDisplay" value="0"/> '
@@ -222,6 +216,7 @@ class MultimediaRenderer extends GalleryRenderer {
                     'ogg' : 'ogg',
                     'webm' : 'webm'
                 };
+
                 // Safari can play quicktime as html5.video.h264(it is a mp4 after all)
                 if(navigator.userAgent.toLowerCase().indexOf('safari') && navigator.userAgent.toLowerCase().indexOf('android') == -1 && navigator.userAgent.toLowerCase().indexOf('chrome') == -1){
                     types.quicktime = 'h264';
@@ -249,7 +244,6 @@ class MultimediaRenderer extends GalleryRenderer {
                                 })
                             )
                         );
-
                 } else if (jQuery.inArray(ext, ['x-flv', 'f4v', 'mp4', 'm4v', 'm4a', 'quicktime']) != -1) {
                     // Lets try flash
                     jQuery('#multimedia-%s').empty().css({'width':%s,'height': %s});
@@ -269,13 +263,11 @@ class MultimediaRenderer extends GalleryRenderer {
                                     autoHide: 'always',
                                     hideDelay: 2000
                                 }
-
                             },
                             clip: {
                                 url: '%s',
                                 scaling: 'fit'
                             }
-
                         }
 
                     )
@@ -355,7 +347,6 @@ class MultimediaRenderer extends GalleryRenderer {
                                     })
                                 )
                             );
-
                     } else if (jQuery.inArray(ext, ['mp4', 'mpeg']) != -1) {
                         // Lets try flash
                         jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s'});
@@ -374,15 +365,12 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
-
                                 },
                                 clip: {
                                     url: '%s',
                                     provider: 'audio',
-
                                     coverImage: { url: '%s', scaling: 'orig' }
                                 }
-
                             }
 
                         )
@@ -444,7 +432,6 @@ class MultimediaRenderer extends GalleryRenderer {
                                     })
                                 )
                             );
-
                     } else {
                         // Lets try flash
                         jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s','position':'relative'});
@@ -464,12 +451,10 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
-
                                 },
                                 clip: {
                                     url: '%s'
                                 }
-
                             }
 
                         )

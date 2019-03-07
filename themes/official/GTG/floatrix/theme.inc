@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -36,11 +37,9 @@ class FloatrixTheme extends GalleryTheme {
 				'Variable column theme based on Matrix'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'perPage'         => 12,

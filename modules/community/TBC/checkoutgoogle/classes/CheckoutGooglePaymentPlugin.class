@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -18,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -50,25 +50,41 @@ class CheckoutGooglePaymentPlugin extends CheckoutPaymentInterface_1_3 {
 			return array($ret, null);
 		}
 
-		list($ret, $active) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'active');
+		list($ret, $active) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkoutgoogle',
+			'active'
+		);
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-		list($ret, $gcLocation) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcLocation');
+		list($ret, $gcLocation) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkoutgoogle',
+			'gcLocation'
+		);
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-		list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMerchantId');
+		list($ret, $gcMerchantId) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkoutgoogle',
+			'gcMerchantId'
+		);
 
 		if ($ret) {
 			return array($ret, null);
 		}
 
-		list($ret, $gcMode) = GalleryCoreApi::getPluginParameter('module', 'checkoutgoogle', 'gcMode');
+		list($ret, $gcMode) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'checkoutgoogle',
+			'gcMode'
+		);
 
 		if ($ret) {
 			return array($ret, null);

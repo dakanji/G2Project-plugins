@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * Static helper methods for use by NokiaUpload views and controllers.
  * @package NokiaUpload
@@ -101,14 +103,15 @@ class ImageUploadHelper {
 			);
 
 			list($ret, $ignored) = GalleryCoreApi::postEvent($event);
+
 			// ignore errors, we're erroring out anyway
 			return $status;
 		}
 
 		$gallery->debug('Username and password correct.');
 		$gallery->setActiveUser($user);
-
 		$event = GalleryCoreApi::newEvent('Gallery::Login');
+
 		$event->setEntity($user);
 
 		list($ret, $ignored) = GalleryCoreApi::postEvent($event);
@@ -193,8 +196,7 @@ class ImageUploadHelper {
 		$gallery->debug('Active userId is ' . $gallery->getActiveUserId());
 
 		// Generate URLs for all supported API calls.  Specification requires URLs to end in '&'
-		$urlGen =& $gallery->getUrlGenerator();
-
+		$urlGen       =& $gallery->getUrlGenerator();
 		$createDirUrl = $urlGen->generateUrl(
 			array(
 				'controller' => 'nokiaupload.NewDirectory',
@@ -205,8 +207,7 @@ class ImageUploadHelper {
 				'forceSessionId' => false,
 			)
 		);
-
-		$uploadUrl = $urlGen->generateUrl(
+		$uploadUrl    = $urlGen->generateUrl(
 			array(
 				'controller' => 'nokiaupload.Upload',
 			),
@@ -216,7 +217,6 @@ class ImageUploadHelper {
 				'forceSessionId' => false,
 			)
 		);
-
 		$albumListUrl = $urlGen->generateUrl(
 			array(
 				'controller' => 'nokiaupload.DirectoryListing',
@@ -227,10 +227,9 @@ class ImageUploadHelper {
 				'forceSessionId' => false,
 			)
 		);
-
-		$create  = 'CreateDirURL=' . $createDirUrl . "&\r\n";
-		$upload  = 'UploadURL=' . $uploadUrl . "&\r\n";
-		$dirList = 'DirListURL=' . $albumListUrl . "&\r\n";
+		$create       = 'CreateDirURL=' . $createDirUrl . "&\r\n";
+		$upload       = 'UploadURL=' . $uploadUrl . "&\r\n";
+		$dirList      = 'DirListURL=' . $albumListUrl . "&\r\n";
 
 		return array($create, $upload, $dirList);
 	}
@@ -365,7 +364,6 @@ class ImageUploadHelper {
 		 * We don't allow other (mobile) users to add anything to our personal album.  If we get an
 		 * error here it doesn't really matter so we don't check for errors.
 		 */
-
 		list($ret, $groupId) = GalleryCoreApi::getPluginParameter('module', 'nokiaupload', 'id.mobileGroup');
 
 		if (!$ret) {
@@ -375,7 +373,6 @@ class ImageUploadHelper {
 				'core.addDataItem',
 				false
 			);
-
 			$ret = GalleryCoreApi::removeGroupPermission(
 				$instance->getId(),
 				$groupId,
@@ -392,8 +389,8 @@ class ImageUploadHelper {
 
 		// Album has been created succesfully
 		$status['success'] = NOKIAUPLOAD_ERR_NOERR;
-		$status['id']      = $instance->getId();
 
+		$status['id'] = $instance->getId();
 		$gallery->debug("Created album $albumName (id " . $status['id'] . ').');
 
 		return $status;
@@ -566,6 +563,7 @@ class ImageUploadHelper {
 			}
 
 			GalleryUtilities::unsanitizeInputValues($name, false);
+
 			$albumData[] = array(
 				'id'       => $id,
 				'parentid' => $parentId,
@@ -658,8 +656,7 @@ class ImageUploadHelper {
 
 		// Choose a name for the album. Hopefully it's unique
 		$albumName = $module->translate('nokia-image-upload-album');
-
-		$ret = $album->create($parentId, $albumName);
+		$ret       = $album->create($parentId, $albumName);
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockId);
@@ -668,8 +665,8 @@ class ImageUploadHelper {
 		}
 
 		// Set the album info and save it
-		$urlGen =& $gallery->getUrlGenerator();
-		$url    = $urlGen->generateUrl(
+		$urlGen      =& $gallery->getUrlGenerator();
+		$url         = $urlGen->generateUrl(
 			array(
 				'controller' => 'nokiaupload.Login',
 			),
@@ -679,23 +676,19 @@ class ImageUploadHelper {
 				'useAuthToken'   => false,
 			)
 		);
-
-		$summary = $module->translate(
+		$summary     = $module->translate(
 			'To upload to this album you need Image Uploader enabled mobile phone '
 			. '(e.g. Nokia 3650 and 6600). See album description for more details.'
 		);
-
 		$description = $module->translate(
 			'You can upload images to this album from your Image Uploader enabled mobile phone '
 			. '(eg. Nokia 3650 and 6600) using the phone\'s built-in Image Uploader.  '
 			. 'New albums will be created under this folder.  Web address is '
 		) . "$url\n"
 		. $module->translate('Username and Password are your Gallery 2 username and password.');
-
 		$album->setTitle($title);
 		$album->setSummary($summary);
 		$album->setDescription($description);
-
 		$ret = $album->save();
 
 		if ($ret) {

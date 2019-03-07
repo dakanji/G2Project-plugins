@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -29,8 +30,9 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 	 * @see ItemEditPlugin::handleRequest
 	 */
 	public function handleRequest($form, &$item, &$preferred) {
-		$status  = 0;
-		$error   = array();
+		$status = 0;
+		$error  = array();
+
 		$albumId = $item->getId();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'simpleviewersource');
@@ -122,7 +124,6 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 
 			// and escape the & to %26
 			$XMLurl = ereg_replace('&', '%26', $XMLurl);
-
 			GalleryCoreApi::requireOnce(
 				'modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class'
 			);

@@ -99,38 +99,33 @@ class Auth_OpenID_Parse {
 	 * Starts with the tag name at a word boundary, where the tag name
 	 * is not a namespace
 	 */
-	public $_tag_expr = "<%s\b(?!:)([^>]*?)(?:\/>|>(.*?)(?:<\/?%s\s*>|\Z))";
-
+	public $_tag_expr       = "<%s\b(?!:)([^>]*?)(?:\/>|>(.*?)(?:<\/?%s\s*>|\Z))";
 	public $_attr_find      = '\b(\w+)=("[^"]*"|\'[^\']*\'|[^\'"\s\/<>]+)';
 	public $_open_tag_expr  = "<%s\b";
 	public $_close_tag_expr = "<((\/%s\b)|(%s[^>\/]*\/))>";
 
 	public function __construct() {
-		$this->_link_find = sprintf(
+		$this->_link_find           = sprintf(
 			"/<link\b(?!:)([^>]*)(?!<)>/%s",
 			$this->_re_flags
 		);
-
 		$this->_entity_replacements = array(
 			'amp'  => '&',
 			'lt'   => '<',
 			'gt'   => '>',
 			'quot' => '"',
 		);
-
-		$this->_attr_find = sprintf(
+		$this->_attr_find           = sprintf(
 			'/%s/%s',
 			$this->_attr_find,
 			$this->_re_flags
 		);
-
-		$this->_removed_re = sprintf(
+		$this->_removed_re          = sprintf(
 			'/%s/%s',
 			$this->_removed_re,
 			$this->_re_flags
 		);
-
-		$this->_ent_replace = sprintf(
+		$this->_ent_replace         = sprintf(
 			'&(%s);',
 			implode(
 				'|',
@@ -241,12 +236,11 @@ class Auth_OpenID_Parse {
 	 * link tag
 	 */
 	public function parseLinkAttrs($html) {
-		$stripped = preg_replace(
+		$stripped   = preg_replace(
 			$this->_removed_re,
 			'',
 			$html
 		);
-
 		$html_begin = $this->htmlBegin($stripped);
 		$html_end   = $this->htmlEnd($stripped);
 
@@ -290,11 +284,10 @@ class Auth_OpenID_Parse {
 			$link_attrs = array();
 
 			foreach ($attr_matches[0] as $index => $full_match) {
-				$name  = $attr_matches[1][$index];
-				$value = $this->replaceEntities(
+				$name                          = $attr_matches[1][$index];
+				$value                         = $this->replaceEntities(
 					$this->removeQuotes($attr_matches[2][$index])
 				);
-
 				$link_attrs[strtolower($name)] = $value;
 			}
 
@@ -373,7 +366,6 @@ function Auth_OpenID_legacy_discover(
 	$p = new Auth_OpenID_Parse();
 
 	$link_attrs = $p->parseLinkAttrs($html_text);
-
 	$server_url = $p->findFirstHref(
 		$link_attrs,
 		$server_rel

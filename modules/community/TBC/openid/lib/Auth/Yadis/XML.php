@@ -330,9 +330,8 @@ function &Auth_Yadis_getXMLParser() {
 		return $__Auth_Yadis_defaultParser;
 	}
 
-	$p         = null;
-	$classname = null;
-
+	$p          = null;
+	$classname  = null;
 	$extensions = Auth_Yadis_getSupportedExtensions();
 
 	// Return a wrapper for the resident implementation, if any.

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * A helper class for the Getid3 module.
  * @package Getid3
@@ -117,7 +119,8 @@ class Getid3Helper {
 			return;
 		}
 
-		$getID3        = new getID3();
+		$getID3 = new getID3();
+
 		$rawGetid3Data = $getID3->analyze($path);
 	}
 
@@ -384,6 +387,7 @@ class Getid3Helper {
 	public static function getTimeInt($value) {
 		if (preg_match('/^\d+$/', $value)) {
 			$time = intval($value);
+
 			// Adjust time by time zone offset
 			// Get difference to UTC in seconds, then add to time
 			$utcdiff = date('Z', $time);
@@ -615,7 +619,6 @@ class Getid3Helper {
 	 */
 	public static function getGetid3Keys() {
 		global $gallery;
-
 		static $data;
 
 		if (!empty($data)) {
@@ -623,7 +626,7 @@ class Getid3Helper {
 		}
 
 		// Must haves
-		$data['Album'] = array(
+		$data['Album']            = array(
 			$gallery->i18n('Album'),
 			'tags.vorbiscomment.album.0',
 			'tags.id3v1.album.0',
@@ -631,8 +634,7 @@ class Getid3Helper {
 			'id3v1.comments.album.0',
 			'tags_html.id3v1.album.0',
 		);
-
-		$data['Artist'] = array(
+		$data['Artist']           = array(
 			$gallery->i18n('Artist'),
 			'tags.vorbiscomment.artist.0',
 			'comments.artist.0',
@@ -641,61 +643,52 @@ class Getid3Helper {
 			'id3v1.comments.artist.0',
 			'tags_html.id3v1.artist.0',
 		);
-
-		$data['AudioBitRate'] = array(
+		$data['AudioBitRate']     = array(
 			$gallery->i18n('Audio Bit Rate'),
 			'audio.bitrate',
 			'audio.streams.0.bitrate',
 			'mpeg.audio.bitrate',
 			'bitrate',
 		);
-
 		$data['AudioBitRateMode'] = array(
 			$gallery->i18n('Audio Bit Rate Mode'),
 			'audio.bitrate_mode',
 			'audio.streams.0.bitrate_mode',
 			'mpeg.audio.bitrate_mode',
 		);
-
-		$data['AudioChannels'] = array(
+		$data['AudioChannels']    = array(
 			$gallery->i18n('Audio Channels'),
 			'audio.channels',
 			'audio.streams.0.channels',
 			'mpeg.audio.channels',
 		);
-
-		$data['AudioCodec'] = array(
+		$data['AudioCodec']       = array(
 			$gallery->i18n('Audio Codec'),
 			'audio.codec',
 		);
-
-		$data['ChannelMode'] = array(
+		$data['ChannelMode']      = array(
 			$gallery->i18n('Channel Mode'),
 			'mpeg.audio.channelmode',
 			'audio.channelmode',
 			'audio.streams.0.channelmode',
 		);
-
-		$data['AudioSampleRate'] = array(
+		$data['AudioSampleRate']  = array(
 			$gallery->i18n('Audio Sample Rate'),
 			'audio.sample_rate',
 		);
-
-		$data['Copyright'] = array(
+		$data['Copyright']        = array(
 			$gallery->i18n('Copyright'),
 			'comments.copyright',
 			'tags.quicktime.copyright',
 		);
-
-		$data['DateTime'] = array(
+		$data['DateTime']         = array(
 			$gallery->i18n('Date/Time'),
 			'riff.AVI .hdrl.IDIT.0.data',
 			'riff.AVI .INFO.IDIT.0.data',
 			'quicktime.moov.subatoms.0.creation_time_unix',
 			'quicktime.moov.subatoms.0.subatoms.1.subatoms.0.subatoms.0.creation_time_unix',
 		);
-
-		$data['Genre'] = array(
+		$data['Genre']            = array(
 			$gallery->i18n('Genre'),
 			'tags.vorbiscomment.genre.0',
 			'comments.genre.0',
@@ -704,18 +697,15 @@ class Getid3Helper {
 			'id3v1.comments.genre',
 			'tags_html.id3v1.genre.0',
 		);
-
-		$data['PlaytimeSeconds'] = array(
+		$data['PlaytimeSeconds']  = array(
 			$gallery->i18n('Playtime (Seconds)'),
 			'playtime_seconds',
 		);
-
-		$data['PlaytimeString'] = array(
+		$data['PlaytimeString']   = array(
 			$gallery->i18n('Playtime'),
 			'playtime_string',
 		);
-
-		$data['Title'] = array(
+		$data['Title']            = array(
 			$gallery->i18n('Title'),
 			'tags.vorbiscomment.title.0',
 			'comments.title.0',
@@ -726,58 +716,48 @@ class Getid3Helper {
 			'comments.title.0',
 			'tags.quicktime.title',
 		);
-
-		$data['Track'] = array(
+		$data['Track']            = array(
 			$gallery->i18n('Track'),
 			'tags.id3v1.track.0',
 			'id3v1.track',
 			'id3v1.comments.track.0',
 			'tags_html.id3v1.track.0',
 		);
-
-		$data['VideoBitRate'] = array(
+		$data['VideoBitRate']     = array(
 			$gallery->i18n('Video Bit Rate'),
 			'video.bitrate',
 		);
-
 		$data['VideoBitRateMode'] = array(
 			$gallery->i18n('Video Bit Rate Mode'),
 			'video.bitrate_mode',
 		);
-
-		$data['VideoCodec'] = array(
+		$data['VideoCodec']       = array(
 			$gallery->i18n('Video Codec'),
 			'video.codec',
 			'quicktime.video.codec',
 			'riff.video.0.codec',
 		);
-
-		$data['VideoDataFormat'] = array(
+		$data['VideoDataFormat']  = array(
 			$gallery->i18n('Video Data Format'),
 			'video.dataformat',
 		);
-
-		$data['VideoFrameRate'] = array(
+		$data['VideoFrameRate']   = array(
 			$gallery->i18n('Video Frame Rate'),
 			'video.frame_rate',
 		);
-
 		$data['VideoResolutionX'] = array(
 			$gallery->i18n('Video Resolution X'),
 			'video.resolution_x',
 		);
-
 		$data['VideoResolutionY'] = array(
 			$gallery->i18n('Video Resolution Y'),
 			'video.resolution_y',
 		);
-
-		$data['VideoSoftware'] = array(
+		$data['VideoSoftware']    = array(
 			$gallery->i18n('Video Software'),
 			'riff.AVI .INFO.ISFT.0.data',
 		);
-
-		$data['Year'] = array(
+		$data['Year']             = array(
 			$gallery->i18n('Year'),
 			'tags.id3v1.year.0',
 			'id3v1.year',

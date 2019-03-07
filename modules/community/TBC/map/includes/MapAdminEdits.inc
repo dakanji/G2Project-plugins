@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -53,8 +54,10 @@ if (array_key_exists('EditRoute', $param) and $param['EditRoute'] != '') {
 		}
 
 		GalleryCoreApi::setPluginParameter('module', 'map', 'Routes', $newroutes);
+
 		$tmp             = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
 		$param['Routes'] = $tmp[1];
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'EditRoute', '');
 	}
 }
@@ -73,8 +76,10 @@ if (array_key_exists('EditFilter', $form) and $form['EditFilter'] != '') {
 		}
 
 		GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $newfilters);
+
 		$tmp              = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 		$param['Filters'] = $tmp[1];
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'EditFilter', '');
 	}
 }
@@ -113,8 +118,10 @@ if (array_key_exists('EditGroup', $form) and $form['EditGroup'] != '') {
 		}
 
 		GalleryCoreApi::setPluginParameter('module', 'map', 'MapGroups', $newgroups);
+
 		$tmp                = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 		$param['MapGroups'] = $tmp[1];
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'EditGroup', '');
 	}
 }

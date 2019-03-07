@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/members/classes/GalleryMembersHelper.class');
 
 /**
@@ -56,7 +56,6 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
-
 		$ret = $this->_markPluginParametersForCleanup('module', 'members');
 
 		if ($ret) {
@@ -159,7 +158,6 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(false, $result);
-
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $adminGroupId);
 
 		if ($ret) {
@@ -295,8 +293,8 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$sevenDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 7, date('Y')));
-		$this->_user->setCreationTimestamp($sevenDays);
 
+		$this->_user->setCreationTimestamp($sevenDays);
 		$ret = $this->_user->save();
 
 		if ($ret) {
@@ -324,8 +322,8 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$sixDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 6, date('Y')));
-		$this->_user->setCreationTimestamp($sixDays);
 
+		$this->_user->setCreationTimestamp($sixDays);
 		$ret = $this->_user->save();
 
 		if ($ret) {

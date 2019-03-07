@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHelper.class');
 GalleryCoreApi::requireOnce('modules/notification/classes/GalleryCoreEventNotifications.class');
 
@@ -41,12 +41,10 @@ class NotificationModule extends GalleryModule {
 				'Allow users to be notified of events by subscription.'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews|getItemLinks|getItemAdminViews');
 	}
@@ -235,6 +233,7 @@ class NotificationModule extends GalleryModule {
 
 		// Get a list of events that we need to subscribe to
 		list($ret, $hints) = NotificationHelper::getActiveSubscriptionsEvents();
+
 		$this->setParameter('_activeListeners', serialize($hints));
 
 		if ($ret) {
@@ -383,10 +382,8 @@ class NotificationModule extends GalleryModule {
 					return $ret;
 				}
 
-				$count = $results->nextResult();
-
-				$select = array('eventClass', 'userId', 'methodClass', 'filter');
-
+				$count      = $results->nextResult();
+				$select     = array('eventClass', 'userId', 'methodClass', 'filter');
 				$offset     = 0;
 				$blockCount = 200;
 				$options    = array(
@@ -431,11 +428,10 @@ class NotificationModule extends GalleryModule {
 					}
 
 					while ($row = $results->nextResult()) {
-						$newRow = array(
+						$newRow                     = array(
 							'userId'      => $row[1],
 							'handlerName' => 'NotificationMethodEmail',
 						);
-
 						$notificationName           = $row[0] == 'NotificationEventItemAdd' ? 'ItemAddedNotification' : 'CommentAddNotification';
 						$newRow['notificationName'] = $notificationName;
 						$newRow['itemId']           = (int)substr($row[3], 2);

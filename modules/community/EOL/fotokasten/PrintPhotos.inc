@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/fotokasten/lib/nusoap.inc');
 
 /**
@@ -48,8 +48,7 @@ class PrintPhotosController extends GalleryController {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$itemId = GalleryUtilities::getRequestVariables('itemId');
+		$itemId       = GalleryUtilities::getRequestVariables('itemId');
 
 		if (!empty($itemId)) {
 			$cartItemIds = array(
@@ -112,7 +111,11 @@ class PrintPhotosController extends GalleryController {
 			return array($ret, null);
 		}
 
-		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds, $anonymousUserId, false);
+		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems(
+			$itemIds,
+			$anonymousUserId,
+			false
+		);
 
 		if ($ret) {
 			return array($ret, null);
@@ -150,10 +153,9 @@ class PrintPhotosController extends GalleryController {
 			}
 
 			if ($needSession) {
-				$sessionParam = array(
+				$sessionParam   = array(
 					$foSession->getKey() => $foSession->getId(),
 				);
-
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
@@ -204,8 +206,7 @@ class PrintPhotosController extends GalleryController {
 					'htmlEntities'   => false,
 				)
 			);
-
-			$basket['item' . ++$i] = $basket_item;
+			$basket['item' . ++$i]        = $basket_item;
 		}
 
 		if (isset($foSession)) {
@@ -218,7 +219,6 @@ class PrintPhotosController extends GalleryController {
 			 * sessionid in this session so we can reuse it for multiple print requests (and
 			 * just bump timeout each time).
 			 */
-
 			$ret = $foSession->save();
 
 			if ($ret) {

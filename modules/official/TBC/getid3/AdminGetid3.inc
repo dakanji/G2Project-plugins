@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
 
 /**
@@ -446,7 +446,6 @@ class AdminGetid3View extends GalleryView {
 		}
 
 		asort($availableList);
-
 		$AdminGetid3                  = array();
 		$AdminGetid3['availableList'] = $availableList;
 		$AdminGetid3['summaryList']   = $summaryList;

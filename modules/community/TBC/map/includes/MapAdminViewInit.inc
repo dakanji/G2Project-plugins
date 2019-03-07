@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @version $Revision: 1253 $
@@ -63,7 +65,6 @@ foreach ($param as $key => $value) {
 	);
 
 	fclose($handle);
-
 	$handle = fopen(
 		$basegallerydir . 'modules/map/images/markers/' . $param['useAlbumMarkerSet']
 				. '/colorlist',

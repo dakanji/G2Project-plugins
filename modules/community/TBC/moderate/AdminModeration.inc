@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -54,6 +55,7 @@ class AdminModerationController extends GalleryController {
 				//Approve Item
 				foreach ($form['approved'] as $itemtoapprove) {
 					$itemtoapprove_int = intval($itemtoapprove);
+
 					//Remove Item Permissions
 					$ret = GalleryCoreApi::removeItemPermissions($itemtoapprove_int);
 
@@ -73,6 +75,7 @@ class AdminModerationController extends GalleryController {
 					//          switch ($module['view']) {
 					//              case 'everybody':
 					$groupId = $core['id.everybodyGroup'];
+
 					//                  break;
 					/*              case 'allusers':
 					$groupId = $core['id.allUserGroup'];
@@ -112,7 +115,6 @@ class AdminModerationController extends GalleryController {
 					}
 
 					if ($rootEntity->getId() == $rootId) { */
-
 					$ret = GalleryCoreApi::addGroupPermission($parentEntity->getId(), $groupId, $permission);
 
 					if ($ret) {
@@ -191,11 +193,13 @@ class AdminModerationController extends GalleryController {
 					$itemtodelete = intval($itemtodelete);
 
 					$ret = GalleryCoreApi::deleteEntityById($itemtodelete);
+
 					/*		if ($ret) {
 					return array($ret, null);
 					}
 
 					 */
+
 					//remove from ToApprove table in database
 					$ret = GalleryCoreApi::removeMapEntry(
 						'ModerateMap',

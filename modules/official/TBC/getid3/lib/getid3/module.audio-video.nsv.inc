@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,8 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_nsv extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$NSVheader = $this->fread(4);
 
@@ -39,6 +39,7 @@ class getid3_nsv extends getid3_handler {
 					$info['video']['dataformat'] = 'nsv';
 					$info['audio']['lossless']   = false;
 					$info['video']['lossless']   = false;
+
 					$this->getNSVsHeaderFilepointer($info['nsv']['NSVf']['header_length']);
 				}
 
@@ -60,11 +61,10 @@ class getid3_nsv extends getid3_handler {
 	}
 
 	public function getNSVsHeaderFilepointer($fileoffset) {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 		$this->fseek($fileoffset);
-		$NSVsheader = $this->fread(28);
-		$offset     = 0;
-
+		$NSVsheader                        = $this->fread(28);
+		$offset                            = 0;
 		$info['nsv']['NSVs']['identifier'] = substr($NSVsheader, $offset, 4);
 		$offset                           += 4;
 
@@ -75,31 +75,36 @@ class getid3_nsv extends getid3_handler {
 			return false;
 		}
 
-		$info['nsv']['NSVs']['offset'] = $fileoffset;
-
-		$info['nsv']['NSVs']['video_codec']  = substr($NSVsheader, $offset, 4);
-		$offset                             += 4;
-		$info['nsv']['NSVs']['audio_codec']  = substr($NSVsheader, $offset, 4);
-		$offset                             += 4;
-		$info['nsv']['NSVs']['resolution_x'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
-		$offset                             += 2;
-		$info['nsv']['NSVs']['resolution_y'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
-		$offset                             += 2;
-
+		$info['nsv']['NSVs']['offset']          = $fileoffset;
+		$info['nsv']['NSVs']['video_codec']     = substr($NSVsheader, $offset, 4);
+		$offset                                += 4;
+		$info['nsv']['NSVs']['audio_codec']     = substr($NSVsheader, $offset, 4);
+		$offset                                += 4;
+		$info['nsv']['NSVs']['resolution_x']    = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
+		$offset                                += 2;
+		$info['nsv']['NSVs']['resolution_y']    = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
+		$offset                                += 2;
 		$info['nsv']['NSVs']['framerate_index'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset                                += 1;
+
 		//$info['nsv']['NSVs']['unknown1b'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
+
 		//$info['nsv']['NSVs']['unknown1c'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
+
 		//$info['nsv']['NSVs']['unknown1d'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
+
 		//$info['nsv']['NSVs']['unknown2a'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
+
 		//$info['nsv']['NSVs']['unknown2b'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
+
 		//$info['nsv']['NSVs']['unknown2c'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
+
 		//$info['nsv']['NSVs']['unknown2d'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
 
@@ -111,8 +116,7 @@ class getid3_nsv extends getid3_handler {
 				$offset                             += 1;
 				$info['nsv']['NSVs']['sample_rate']  = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
 				$offset                             += 2;
-
-				$info['audio']['sample_rate'] = $info['nsv']['NSVs']['sample_rate'];
+				$info['audio']['sample_rate']        = $info['nsv']['NSVs']['sample_rate'];
 
 				break;
 
@@ -125,8 +129,9 @@ class getid3_nsv extends getid3_handler {
 				break;
 		}
 
-		$info['video']['resolution_x']       = $info['nsv']['NSVs']['resolution_x'];
-		$info['video']['resolution_y']       = $info['nsv']['NSVs']['resolution_y'];
+		$info['video']['resolution_x'] = $info['nsv']['NSVs']['resolution_x'];
+		$info['video']['resolution_y'] = $info['nsv']['NSVs']['resolution_y'];
+
 		$info['nsv']['NSVs']['frame_rate']   = $this->NSVframerateLookup($info['nsv']['NSVs']['framerate_index']);
 		$info['video']['frame_rate']         = $info['nsv']['NSVs']['frame_rate'];
 		$info['video']['bits_per_sample']    = 24;
@@ -136,11 +141,11 @@ class getid3_nsv extends getid3_handler {
 	}
 
 	public function getNSVfHeaderFilepointer($fileoffset, $getTOCoffsets = false) {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 		$this->fseek($fileoffset);
 		$NSVfheader = $this->fread(28);
-		$offset     = 0;
 
+		$offset                            = 0;
 		$info['nsv']['NSVf']['identifier'] = substr($NSVfheader, $offset, 4);
 		$offset                           += 4;
 
@@ -151,8 +156,7 @@ class getid3_nsv extends getid3_handler {
 			return false;
 		}
 
-		$info['nsv']['NSVs']['offset'] = $fileoffset;
-
+		$info['nsv']['NSVs']['offset']        = $fileoffset;
 		$info['nsv']['NSVf']['header_length'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
 		$offset                              += 4;
 		$info['nsv']['NSVf']['file_size']     = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
@@ -177,7 +181,8 @@ class getid3_nsv extends getid3_handler {
 			return false;
 		}
 
-		$NSVfheader                     .= $this->fread($info['nsv']['NSVf']['meta_size'] + (4 * $info['nsv']['NSVf']['TOC_entries_1']) + (4 * $info['nsv']['NSVf']['TOC_entries_2']));
+		$NSVfheader .= $this->fread($info['nsv']['NSVf']['meta_size'] + (4 * $info['nsv']['NSVf']['TOC_entries_1']) + (4 * $info['nsv']['NSVf']['TOC_entries_2']));
+
 		$NSVfheaderlength                = strlen($NSVfheader);
 		$info['nsv']['NSVf']['metadata'] = substr($NSVfheader, $offset, $info['nsv']['NSVf']['meta_size']);
 		$offset                         += $info['nsv']['NSVf']['meta_size'];
@@ -200,7 +205,8 @@ class getid3_nsv extends getid3_handler {
 
 			foreach ($CommentPairArray as $CommentPair) {
 				if (strstr($CommentPair, '=' . "\x01")) {
-					list($key, $value)                           = explode('=' . "\x01", $CommentPair, 2);
+					list($key, $value) = explode('=' . "\x01", $CommentPair, 2);
+
 					$info['nsv']['comments'][strtolower($key)][] = trim(str_replace("\x01", '', $value));
 				}
 			}

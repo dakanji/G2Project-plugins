@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -78,7 +79,6 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$this->assertEquals('frameA|frameB', GalleryUtilities::getRequestVariables('frames'));
 	}
 
@@ -96,13 +96,11 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$this->assertEquals('frameFromRequest', GalleryUtilities::getRequestVariables('frames'));
 	}
 
 	public function testExternalCSSWithoutImageFrameModule() {
 		$this->_unregisterFactoryImplementationForTest('ImageFrameInterface_1_1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -141,6 +139,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSDoesNotRequireAuthToken() {
 		$controller = new ExternalCSSController();
+
 		$this->assert($controller->omitAuthTokenCheck());
 	}
 }

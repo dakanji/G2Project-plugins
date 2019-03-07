@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2009 Bharat Mediratta
@@ -39,7 +40,6 @@ class VirtualAlbumView extends GalleryView {
 	 */
 	public function loadThemeAndParameters() {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
 
 		list($ret, $item) = GalleryCoreApi::newFactoryInstance('GalleryDynamicAlbum');
@@ -73,7 +73,6 @@ class VirtualAlbumView extends GalleryView {
 				'itemId' => $albumId,
 			)
 		);
-
 		$albumLink = sprintf('<a href="%s">%s</a>', $albumUrl, $albumTitle);
 
 		if (empty($tags)) {
@@ -93,20 +92,18 @@ class VirtualAlbumView extends GalleryView {
 					return array($ret, null);
 				}
 
-				$tagUrl = $generator->generateUrl(
+				$tagUrl  = $generator->generateUrl(
 					array(
 						'view'    => 'tags.VirtualAlbum',
 						'tagName' => $tagName,
 					)
 				);
-
 				$tagLink = sprintf('<a href="%s">%s</a>', $tagUrl, $tagName);
 				array_push($tagLinks, $tagLink);
 			}
 
 			$tagSummary = implode(',', $tagLinks);
-
-			$title = $module->translate(
+			$title      = $module->translate(
 				array(
 					'text' => 'Tagged %s within %s',
 					'arg1' => $tagSummary,
@@ -138,14 +135,15 @@ class VirtualAlbumView extends GalleryView {
 
 			// Provide parent, parent URL and get-children function to Theme API
 			$rawTagName = $tagName;
+
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
-			$item->urlParams = array(
+
+			$item->urlParams           = array(
 				'view'        => 'tagtree.VirtualAlbum',
 				'tags'        => $tags,
 				'albumId'     => $albumId,
 				'highlightId' => $itemId,
 			);
-
 			$item->getChildrenFunction = array('VirtualAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -171,11 +169,9 @@ class VirtualAlbumView extends GalleryView {
 	 * @see GalleryView::loadTemplate
 	 */
 	public function loadTemplate(&$template, &$form) {
-		$theme =& $template->getVariableByReference('theme');
-
-		$tags    = GalleryUtilities::getRequestVariables('tags');
-		$albumId = GalleryUtilities::getRequestVariables('albumId');
-
+		$theme            =& $template->getVariableByReference('theme');
+		$tags             = GalleryUtilities::getRequestVariables('tags');
+		$albumId          = GalleryUtilities::getRequestVariables('albumId');
 		$theme['pageUrl'] = array(
 			'view'    => 'tagtree.VirtualAlbum',
 			'tags'    => $tags,

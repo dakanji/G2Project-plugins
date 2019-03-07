@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Steven N. Severinghaus <sns@severinghaus.org>
@@ -159,8 +161,7 @@ class MapSiteAdminController extends GalleryController {
 		}
 
 		if (isset($form['action']['editKey'])) {
-			$url = $form['mapKeys'];
-
+			$url                 = $form['mapKeys'];
 			$results['status']   = '';
 			$results['error']    = '';
 			$results['redirect'] = array(
@@ -188,10 +189,9 @@ class MapSiteAdminController extends GalleryController {
 			list($ret, $success) = mapHelper::deleteKeyProfile($url);
 
 			$status['profileDeleted'] = $success;
-
-			$results['status']   = $status;
-			$results['error']    = array();
-			$results['redirect'] = array(
+			$results['status']        = $status;
+			$results['error']         = array();
+			$results['redirect']      = array(
 				'view'    => 'core.SiteAdmin',
 				'subView' => 'map.MapSiteAdmin',
 				'mode'    => 'General',
@@ -319,7 +319,9 @@ class mapSiteAdminView extends GalleryView {
 		}
 
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
+
 		$form['formName'] = 'mapSiteAdmin';
+
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
 
@@ -431,10 +433,12 @@ class mapSiteAdminView extends GalleryView {
 		$form['editProfile'] = $profile;
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
+			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
+
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 

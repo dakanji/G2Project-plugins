@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * Photo printing at photoworks.com
  *
  * @package PhotoAccess
@@ -34,12 +37,10 @@ class PhotoAccessModule extends GalleryModule {
 				'PhotoWorks Photo Printing Module'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -78,7 +79,6 @@ class PhotoAccessModule extends GalleryModule {
 
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
-
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -104,7 +104,6 @@ class PhotoAccessModule extends GalleryModule {
 				}
 
 				$gallery->guaranteeTimeLimit(300);
-
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -115,7 +114,6 @@ class PhotoAccessModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '1.0.1':

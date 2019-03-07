@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -24,7 +25,9 @@
  * @package RandomizeOnce
  * @author Alec Myers <alec@alecmyers.com>
  * @version $Revision: 1529 $
- *//**
+ */
+
+/**
  * Add links to the header menu.
  *
  */
@@ -39,12 +42,10 @@ class RandomizeOnceModule extends GalleryModule {
 				'Randomize Sort Order'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getItemAdminViews');
 	}

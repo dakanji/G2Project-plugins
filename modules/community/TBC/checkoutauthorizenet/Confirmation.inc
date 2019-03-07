@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -113,6 +114,7 @@ class ConfirmationView extends GalleryView {
 			'custZip'           => $form['custZip'],
 			'custCountry'       => $form['custCountry'],
 			'custComments'      => $form['custComments'],
+
 						/*
 						'custAbaCode' => $form['custAbaCode'],
 						'custAccountNumber' => $form['custAccountNumber']
@@ -145,10 +147,9 @@ class ConfirmationView extends GalleryView {
 
 		foreach ($toAddresses as $toAddress) {
 			$email['boundary'] = uniqid('checkoutauthorizenet');
-
-			$headers  = "MIME-Version: 1.0\n";
-			$headers .= "Content-Type: multipart/alternative;\n";
-			$headers .= '   boundary = "' . $email['boundary'] . '"';
+			$headers           = "MIME-Version: 1.0\n";
+			$headers          .= "Content-Type: multipart/alternative;\n";
+			$headers          .= '   boundary = "' . $email['boundary'] . '"';
 
 			// This is where we actually send the email
 			$ret = GalleryCoreApi::sendTemplatedEmail(

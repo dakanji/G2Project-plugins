@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -34,12 +35,10 @@ class WebCamModule extends GalleryModule {
 				'Support periodically updated images like a webcam'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -92,8 +91,7 @@ class WebCamModule extends GalleryModule {
 				case '0.8.5':
 					// Changed from GalleryLiveImage entity type to onLoadHandler
 					$storage = $gallery->getStorage();
-
-					$query = "
+					$query   = "
 						UPDATE
 							[GalleryEntity]
 		    			SET
@@ -252,9 +250,12 @@ class WebCamModule extends GalleryModule {
 	 * Check age and refresh from external source if needed..
 	 */
 	public function onLoad(&$item, $duringUpgrade) {
-		$old  = false;
-		$id   = $item->getId();
+		$old = false;
+
+		$id = $item->getId();
+
 		$loop = GalleryDataCache::containsKey("webcam:load-$id");
+
 		// We don't want to refresh the external source during an upgrade
 		if ($duringUpgrade) {
 			return null;
@@ -317,7 +318,8 @@ class WebCamModule extends GalleryModule {
 					$urlComponents['path'] = $urlComponents['host'];
 				}
 
-				$tmpFile            = $urlComponents['path'];
+				$tmpFile = $urlComponents['path'];
+
 				$successfullyCopied = $platform->file_exists($tmpFile);
 			} else {
 				$tmpFile = $platform->tempnam($tmpDir, 'webcam');
@@ -366,7 +368,6 @@ class WebCamModule extends GalleryModule {
 					$platform->copy($backupFile, $path);
 				} else {
 					$item->setOriginationTimestamp(time());
-
 					$ret = $item->save();
 
 					if ($ret) {

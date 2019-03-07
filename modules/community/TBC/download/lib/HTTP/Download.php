@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * HTTP::Download
@@ -24,6 +25,7 @@ require_once 'PEAR.php';
  * Requires HTTP_Header
  */
 require_once 'HTTP/Header.php';
+
 // }}}
 // {{{ constants
 // #@+ Use with HTTP_Download::setContentDisposition()
@@ -31,28 +33,34 @@ require_once 'HTTP/Header.php';
  * Send data as attachment
  */
 define('HTTP_DOWNLOAD_ATTACHMENT', 'attachment');
+
 /**
  * Send data inline
  */
 define('HTTP_DOWNLOAD_INLINE', 'inline');
+
 // #@-
 // #@+ Use with HTTP_Download::sendArchive()
 /**
  * Send as uncompressed tar archive
  */
 define('HTTP_DOWNLOAD_TAR', 'TAR');
+
 /**
  * Send as gzipped tar archive
  */
 define('HTTP_DOWNLOAD_TGZ', 'TGZ');
+
 /**
  * Send as bzip2 compressed tar archive
  */
 define('HTTP_DOWNLOAD_BZ2', 'BZ2');
+
 /**
  * Send as zip archive
  */
 define('HTTP_DOWNLOAD_ZIP', 'ZIP');
+
 // #@-
 /**#@+
  * Error constants
@@ -66,6 +74,7 @@ define('HTTP_DOWNLOAD_E_INVALID_RESOURCE', -6);
 define('HTTP_DOWNLOAD_E_INVALID_REQUEST', -7);
 define('HTTP_DOWNLOAD_E_INVALID_CONTENT_TYPE', -8);
 define('HTTP_DOWNLOAD_E_INVALID_ARCHIVE_TYPE', -9);
+
 // #@-
 // }}}
 /**
@@ -197,6 +206,7 @@ class HTTP_Download {
 	 * @var     int
 	 */
 	public $sentBytes = 0;
+
 	// }}}
 	// {{{ constructor
 
@@ -342,7 +352,8 @@ class HTTP_Download {
 		if (is_resource($handle)) {
 			$this->handle = $handle;
 			$filestats    = fstat($handle);
-			$this->size   = $filestats['size'];
+
+			$this->size = $filestats['size'];
 
 			return true;
 		}
@@ -711,6 +722,7 @@ class HTTP_Download {
 	 */
 	public function staticSend($params, $guess = false) {
 		$d = new HTTP_Download();
+
 		$e = $d->setParams($params);
 
 		if (PEAR::isError($e)) {
@@ -808,9 +820,11 @@ class HTTP_Download {
 			return $this->sendChunk(current($chunks));
 		}
 
-		$bound                         = uniqid('HTTP_DOWNLOAD-', true);
+		$bound = uniqid('HTTP_DOWNLOAD-', true);
+
 		$cType                         = $this->headers['Content-Type'];
 		$this->headers['Content-Type'] = 'multipart/byteranges; boundary=' . $bound;
+
 		$this->sendHeaders();
 
 		foreach ($chunks as $chunk) {
@@ -834,7 +848,8 @@ class HTTP_Download {
 	 */
 	public function sendChunk($chunk, $cType = null, $bound = null) {
 		list($offset, $lastbyte) = $chunk;
-		$length                  = ($lastbyte - $offset) + 1;
+
+		$length = ($lastbyte - $offset) + 1;
 
 		if ($length < 1) {
 			return PEAR::raiseError(
@@ -959,6 +974,7 @@ class HTTP_Download {
 				)
 			)) ||
 			(isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
+
 			$this->compareAsterisk('HTTP_IF_NONE_MATCH', $this->etag));
 	}
 
@@ -1031,6 +1047,7 @@ class HTTP_Download {
 		}
 
 		$this->HTTP->sendHeaders();
+
 		// NSAPI won't output anything if we did this
 		if (strncasecmp(PHP_SAPI, 'nsapi', 5)) {
 			ob_flush();
@@ -1048,6 +1065,7 @@ class HTTP_Download {
 	public function flush($data = '') {
 		if ($dlen = strlen($data)) {
 			$this->sentBytes += $dlen;
+
 			echo $data;
 		}
 

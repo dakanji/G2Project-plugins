@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -18,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
 
 /**
@@ -165,7 +165,6 @@ class CheckoutTransactionEventHelper {
 	 * @return object GalleryStatus a status code
 	 */
 	public function handleTransactionUpdate($transaction, $data) {
-
 		// for payment plugin to insert name and delivery info etc
 		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
 
@@ -262,7 +261,6 @@ class CheckoutTransactionEventHelper {
 	 * @return object GalleryStatus a status code
 	 */
 	public function handleSetPaymentPlugin($transaction, $pluginName) {
-
 		// for payment plugin to insert its name
 		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
 
@@ -277,6 +275,7 @@ class CheckoutTransactionEventHelper {
 		}
 
 		$transaction->setPaymentPlugin($pluginName);
+
 		// Save the modified transaction
 		$ret = $transaction->save();
 
@@ -292,6 +291,7 @@ class CheckoutTransactionEventHelper {
 		}
 
 		return null;
+
 		// job done
 	}
 
@@ -311,6 +311,7 @@ class CheckoutTransactionEventHelper {
 		$transactionId           = $transaction->getId();
 		$translator              =& $gallery->getTranslator();
 		$transactionLanguageCode = $transaction->getLanguageCode();
+
 		//$existingLanguageCode = $translator->getActiveLanguageCode();
 		$existingLanguageCode = $translator->_languageCode;
 
@@ -337,6 +338,7 @@ class CheckoutTransactionEventHelper {
 				}
 
 				$toAddress = $transaction->getEmail();
+
 				/* If email address from transaction is blank, then the plugin hasn't updated the customer details
 				in time. We will send an admin notification (unless the offending email is already an admin
 				notification - to avoid loops. Let's hope this code is re-entrant, hey?    */
@@ -451,6 +453,7 @@ class CheckoutTransactionEventHelper {
 			}
 
 			$email['additionalText'] = $lText;
+
 			// This is where we actually send the email
 			$ret = GalleryCoreApi::sendTemplatedEmail(
 				'modules/checkout/templates/email/' . $templateName . '.tpl',
@@ -489,7 +492,6 @@ class CheckoutTransactionEventHelper {
 	 * @return object GalleryStatus a status code
 	 */
 	public function _setTransactionFlag(&$transaction, $state, $flags) {
-
 		// If true, store the time, else zero
 		if ($state) {
 			$flagValue = time();

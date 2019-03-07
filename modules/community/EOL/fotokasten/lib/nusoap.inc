@@ -1,34 +1,25 @@
 <?php
 
 /*
-
 NuSOAP - Web Services Toolkit for PHP
-
 Copyright (c) 2002 NuSphere Corporation
-
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version.
-
 This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 Lesser General Public License for more details.
-
 You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
 If you have any questions or comments, please email:
-
 Dietrich Ayala
 dietrich@ganx4.com
 http://dietrich.ganx4.com/nusoap
-
 NuSphere Corporation
 http://www.nusphere.com
-
 */
 
 // make errors handle properly in windows (thx, thong@xmethods.com)
@@ -65,6 +56,7 @@ class nusoap_base {
 	public $version   = '0.6.3';
 	public $error_str = false;
 	public $debug_str = '';
+
 	// toggles automatic encoding of special characters
 	public $charencoding = true;
 
@@ -75,13 +67,13 @@ class nusoap_base {
 	 * @access   public
 	 */
 	public $XMLSchemaVersion = 'http://www.w3.org/2001/XMLSchema';
-
 	/**
 	 *  set default encoding
 	 *
 	 * @var      soap_defencoding
 	 * @access   public
 	 */
+
 	//var $soap_defencoding = 'UTF-8';
 	public $soap_defencoding = 'ISO-8859-1';
 
@@ -124,6 +116,7 @@ class nusoap_base {
 			'gMonth'             => '',
 			'hexBinary'          => 'string',
 			'base64Binary'       => 'string',
+
 			// derived datatypes
 			'normalizedString'   => 'string',
 			'token'              => 'string',
@@ -234,8 +227,10 @@ class nusoap_base {
 		}
 
 		$this->debug("in serialize_val: $val, $name, $type, $name_ns, $type_ns");
+
 		// if no name, use item
 		$name = (!$name || is_numeric($name)) ? 'soapVal' : $name;
+
 		// if name has ns, add ns prefix to name
 		$xmlns = '';
 
@@ -330,8 +325,10 @@ class nusoap_base {
 						}
 
 						$array_types[$tt] = 1;
-						$xml             .= $this->serialize_val($v, 'item');
-						$i                = 0;
+
+						$xml .= $this->serialize_val($v, 'item');
+
+						$i = 0;
 
 						if (is_array($v) && is_numeric(key($v))) {
 							$i += sizeof($v);
@@ -468,7 +465,6 @@ class nusoap_base {
 
 // XML Schema Datatype Helper Functions
 //xsd:dateTime helpers
-
 /**
  * convert unix timestamp to ISO 8601 compliant date string
  *
@@ -595,7 +591,6 @@ class soap_fault extends nusoap_base {
 }
 
 ?>
-
 <?php
 
 /**
@@ -613,10 +608,13 @@ class XMLSchema extends nusoap_base {
 	// files
 	public $schema = '';
 	public $xml    = '';
+
 	// define internal arrays of bindings, ports, operations, messages, etc.
 	public $complexTypes = array();
+
 	// target namespace
 	public $schemaTargetNamespace = '';
+
 	// parser vars
 	public $parser;
 	public $position;
@@ -632,6 +630,7 @@ class XMLSchema extends nusoap_base {
 	 */
 	public function __construct($schema = '', $xml = '') {
 		$this->debug('xmlschema class instantiated, inside constructor');
+
 		// files
 		$this->schema = $schema;
 		$this->xml    = $xml;
@@ -686,6 +685,7 @@ class XMLSchema extends nusoap_base {
 		if ($xml != '') {
 			// Create an XML parser.
 			$this->parser = xml_parser_create();
+
 			// Set the options for parsing the XML data.
 			xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, 0);
 
@@ -709,7 +709,6 @@ class XMLSchema extends nusoap_base {
 					xml_get_current_line_number($this->parser),
 					xml_error_string(xml_get_error_code($this->parser))
 				);
-
 				$this->debug('XML parse error: ' . $errstr);
 				$this->setError('Parser error: ' . $errstr);
 			}
@@ -730,10 +729,10 @@ class XMLSchema extends nusoap_base {
 	 * @access   private
 	 */
 	public function schemaStartElement($parser, $name, $attrs) {
-
 		// position in the total number of elements, starting from 0
 		$pos   = $this->position++;
 		$depth = $this->depth++;
+
 		// set self as current value for this depth
 		$this->depth_array[$depth] = $pos;
 
@@ -793,7 +792,8 @@ class XMLSchema extends nusoap_base {
 					$this->attributes[$attrs['name']] = $attrs;
 					$aname                            = $attrs['name'];
 				} elseif ($attrs['ref']) {
-					$aname                           = $attrs['ref'];
+					$aname = $attrs['ref'];
+
 					$this->attributes[$attrs['ref']] = $attrs;
 				}
 
@@ -913,6 +913,7 @@ class XMLSchema extends nusoap_base {
 
 		// bring depth down a notch
 		$this->depth--;
+
 		// move on...
 		if ($name == 'complexType') {
 			$this->currentComplexType = false;
@@ -944,9 +945,11 @@ class XMLSchema extends nusoap_base {
 	public function serializeSchema() {
 		$schemaPrefix = $this->getPrefixFromNamespace($this->XMLSchemaVersion);
 		$xml          = '';
+
 		// complex types
 		foreach ($this->complexTypes as $typeName => $attrs) {
 			$contentStr = '';
+
 			// serialize child elements
 			if (count($attrs['elements']) > 0) {
 				foreach ($attrs['elements'] as $element => $eParts) {
@@ -1032,6 +1035,7 @@ class XMLSchema extends nusoap_base {
 		if (strpos($qname, ':') && !ereg('^http://', $qname)) {
 			// get unqualified name
 			$name = substr(strstr($qname, ':'), 1);
+
 			// get ns prefix
 			$prefix = substr($qname, 0, strpos($qname, ':'));
 
@@ -1237,6 +1241,7 @@ class XMLSchema extends nusoap_base {
 				}
 
 				$buffer .= '</table>';
+
 			// if array
 			} elseif ($typeDef['phpType'] == 'array') {
 				$buffer .= '<table>';
@@ -1248,6 +1253,7 @@ class XMLSchema extends nusoap_base {
 				}
 
 				$buffer .= '</table>';
+
 			// if scalar
 			} else {
 				$buffer .= "<input type='text' name='parameters[$name]'>";
@@ -1314,7 +1320,6 @@ class XMLSchema extends nusoap_base {
 }
 
 ?>
-
 <?php
 
 /**
@@ -1365,7 +1370,6 @@ class soapval extends nusoap_base {
 }
 
 ?>
-
 <?php
 
 /**
@@ -1451,6 +1455,7 @@ class soap_transport_http extends nusoap_base {
 	 */
 	public function send($data, $timeout = 0) {
 		$this->debug('entered send() with data of length: ' . strlen($data));
+
 		// proxy
 		if ($this->proxyhost != '' && $this->proxyport != '') {
 			$host = $this->proxyhost;
@@ -1482,6 +1487,7 @@ class soap_transport_http extends nusoap_base {
 		}
 
 		$this->debug('socket connected');
+
 		// http auth
 		$credentials = '';
 
@@ -1508,6 +1514,7 @@ class soap_transport_http extends nusoap_base {
 
 		// make payload
 		$this->outgoing_payload .= "User-Agent: $this->title/$this->version\r\n" .
+
 			//"User-Agent: Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)\r\n".
 			'Host: ' . $this->host . "\r\n" .
 			$credentials .
@@ -1526,9 +1533,11 @@ class soap_transport_http extends nusoap_base {
 
 		// get response
 		$this->incoming_payload = '';
+
 		//$strlen = 0;
 		while ($data = fread($fp, 32768)) {
 			$this->incoming_payload .= $data;
+
 			//$strlen += strlen($data);
 		}
 
@@ -1536,6 +1545,7 @@ class soap_transport_http extends nusoap_base {
 
 		// close filepointer
 		fclose($fp);
+
 		$this->debug('closed socket');
 
 		// connection was closed unexpectedly
@@ -1571,8 +1581,10 @@ class soap_transport_http extends nusoap_base {
 		$header_data  = trim(substr($data, 0, $pos));
 		$header_array = explode($lb, $header_data);
 		$data         = ltrim(substr($data, $pos));
+
 		$this->debug('found proper separation of headers and document');
 		$this->debug('cleaned data, stringlen: ' . strlen($data));
+
 		// clean headers
 		foreach ($header_array as $header_line) {
 			$arr = explode(':', $header_line);
@@ -1643,9 +1655,12 @@ class soap_transport_http extends nusoap_base {
 
 		$t->setMarker('inside sendHTTPS()');
 		$this->debug('entered sendHTTPS() with data of length: ' . strlen($data));
+
 		// init CURL
 		$ch = curl_init();
+
 		$t->setMarker('got curl handle');
+
 		// set proxy
 		if ($this->proxyhost && $this->proxyport) {
 			$host = $this->proxyhost;
@@ -1659,10 +1674,13 @@ class soap_transport_http extends nusoap_base {
 		$hostURL = ($port != '') ? "https://$host:$port" : "https://$host";
 		// add path
 		$hostURL .= $this->path;
+
 		curl_setopt($ch, CURLOPT_URL, $hostURL);
+
 		// set other options
 		curl_setopt($ch, CURLOPT_HEADER, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
 		// encode
 		if (function_exists('gzinflate')) {
 			curl_setopt($ch, CURLOPT_ENCODING, 'deflate');
@@ -1704,11 +1722,11 @@ class soap_transport_http extends nusoap_base {
 		// set payload
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->outgoing_payload);
 		$t->setMarker('set curl options, executing...');
+
 		// send and receive
 		$this->incoming_payload = curl_exec($ch);
 		$t->setMarker('executed transfer');
 		$data = $this->incoming_payload;
-
 		$cErr = curl_error($ch);
 
 		if ($cErr != '') {
@@ -1719,6 +1737,7 @@ class soap_transport_http extends nusoap_base {
 			}
 
 			$this->setError($err);
+
 			curl_close($ch);
 
 			return false;
@@ -1730,6 +1749,7 @@ class soap_transport_http extends nusoap_base {
 
 		// close curl
 		curl_close($ch);
+
 		$t->setMarker('closed curl');
 
 		// remove 100 header
@@ -1755,8 +1775,10 @@ class soap_transport_http extends nusoap_base {
 		$header_data  = trim(substr($data, 0, $pos));
 		$header_array = explode($lb, $header_data);
 		$data         = ltrim(substr($data, $pos));
+
 		$this->debug('found proper separation of headers and document');
 		$this->debug('cleaned data, stringlen: ' . strlen($data));
+
 		// clean headers
 		foreach ($header_array as $header_line) {
 			$arr                    = explode(':', $header_line);
@@ -1829,6 +1851,7 @@ class soap_transport_http extends nusoap_base {
 		$temp       = substr($buffer, 0, $chunkend);
 		$chunk_size = hexdec(trim($temp));
 		$chunkstart = $chunkend;
+
 		// while (chunk-size > 0) {
 		while ($chunk_size > 0) {
 			$chunkend = strpos($buffer, "\r\n", $chunkstart + $chunk_size);
@@ -1836,6 +1859,7 @@ class soap_transport_http extends nusoap_base {
 			// Just in case we got a broken connection
 			if ($chunkend == false) {
 				$chunk = substr($buffer, $chunkstart);
+
 				// append chunk-data to entity-body
 				$new    .= $chunk;
 				$length += strlen($chunk);
@@ -1845,14 +1869,16 @@ class soap_transport_http extends nusoap_base {
 
 			// read chunk-data and CRLF
 			$chunk = substr($buffer, $chunkstart, $chunkend - $chunkstart);
+
 			// append chunk-data to entity-body
 			$new .= $chunk;
+
 			// length := length + chunk-size
 			$length += strlen($chunk);
-			// read chunk-size and CRLF
-			$chunkstart = $chunkend + 2;
 
-			$chunkend = strpos($buffer, "\r\n", $chunkstart) + 2;
+			// read chunk-size and CRLF
+			$chunkstart = $chunkend                            + 2;
+			$chunkend   = strpos($buffer, "\r\n", $chunkstart) + 2;
 
 			if ($chunkend == false) {
 				break; //Just in case we got a broken connection
@@ -1871,7 +1897,6 @@ class soap_transport_http extends nusoap_base {
 }
 
 ?>
-
 <?php
 
 /**
@@ -1906,7 +1931,6 @@ class soap_server extends nusoap_base {
 	 * @access   public
 	 */
 	public function __construct($wsdl = false) {
-
 		// turn on debugging?
 		global $debug;
 
@@ -1945,6 +1969,7 @@ class soap_server extends nusoap_base {
 		if (isset($qs) && ereg('wsdl', $qs)) {
 			header("Content-Type: text/xml\r\n");
 			echo $this->wsdl->serialize();
+
 		// print web interface
 		} elseif ($data == '' && $this->wsdl) {
 			echo $this->webDescription();
@@ -1953,6 +1978,7 @@ class soap_server extends nusoap_base {
 			$response = $this->parse_request($data);
 			$this->debug('server sending...');
 			$payload = $response;
+
 			// add debug data if in debug mode
 			if (isset($this->debug_flag) && $this->debug_flag == 1) {
 				$payload .= "<!--\n" . str_replace('--', '- -', $this->debug_str) . "\n-->";
@@ -1966,6 +1992,7 @@ class soap_server extends nusoap_base {
 			}
 
 			$header[] = "Server: $this->title Server v$this->version\r\n";
+
 			$header[] = "Connection: Close\r\n";
 			$header[] = "Content-Type: text/xml; charset=$this->charset_encoding\r\n";
 			$header[] = 'Content-Length: ' . strlen($payload) . "\r\n\r\n";
@@ -1976,6 +2003,7 @@ class soap_server extends nusoap_base {
 			}
 
 			$this->response = join("\r\n", $header) . $payload;
+
 			echo $payload;
 		}
 	}
@@ -1992,6 +2020,7 @@ class soap_server extends nusoap_base {
 
 		$this->debug('entering parseRequest() on ' . date('H:i Y-m-d'));
 		$dump = '';
+
 		// get headers
 		if (function_exists('getallheaders')) {
 			$this->headers = getallheaders();
@@ -2024,22 +2053,27 @@ class soap_server extends nusoap_base {
 		}
 
 		$this->request = $dump . "\r\n\r\n" . $data;
+
 		// parse response, get soap parser obj
 		$parser = new soap_parser($data, $this->charset_encoding);
+
 		// if fault occurred during message parsing
 		if ($err = $parser->getError()) {
 			// parser debug
 			$this->debug("parser debug: \n" . $parser->debug_str);
 			$this->result = 'fault: error in msg parsing: ' . $err;
 			$this->fault('Server', "error in msg parsing:\n" . $err);
+
 			// return soapresp
 			return $this->fault->serialize();
+
 			// else successfully parsed request into soapval object
 		}
 
 		// get/set methodname
 		$this->methodname = $parser->root_struct_name;
 		$this->debug('method name: ' . $this->methodname);
+
 		// does method exist?
 		if (!function_exists($this->methodname)) {
 			// "method not found" fault here
@@ -2060,11 +2094,14 @@ class soap_server extends nusoap_base {
 		}
 
 		$this->debug("method '$this->methodname' exists");
+
 		// evaluate message, getting back parameters
 		$this->debug('calling parser->get_response()');
 		$request_data = $parser->get_response();
+
 		// parser debug
 		$this->debug("parser debug: \n" . $parser->debug_str);
+
 		// verify that request parameters match the method's signature
 		if ($this->verify_method($this->methodname, $request_data)) {
 			// if there are parameters to pass
@@ -2082,7 +2119,9 @@ class soap_server extends nusoap_base {
 					}
 
 					$funcCall = substr($funcCall, 0, -1) . ')';
+
 					$this->debug('function call:<br>' . $funcCall);
+
 					@$gallery->runEval("\$method_response = $funcCall;");
 				} else {
 					$this->debug('calling method using call_user_func_array()');
@@ -2098,6 +2137,7 @@ class soap_server extends nusoap_base {
 			}
 
 			$this->debug("done calling method: $this->methodname, received $method_response of type" . gettype($method_response));
+
 			// if we got nothing back. this might be ok (echoVoid)
 			if (isset($method_response) && $method_response != '' || is_bool($method_response)) {
 				// if fault
@@ -2106,12 +2146,14 @@ class soap_server extends nusoap_base {
 					$this->fault = $method_response;
 
 					return $method_response->serialize();
+
 					// if return val is soapval object
 				}
 
 				if (get_class($method_response) == 'soapval') {
 					$this->debug('got a soapval object from method');
 					$return_val = $method_response->serialize();
+
 				// returned other
 				} else {
 					$this->debug('got a(n) ' . gettype($method_response) . ' from method');
@@ -2133,6 +2175,7 @@ class soap_server extends nusoap_base {
 				$this->debug('return val:' . $this->varDump($return_val));
 			} else {
 				$return_val = '';
+
 				$this->debug('got no response from method');
 			}
 
@@ -2143,6 +2186,7 @@ class soap_server extends nusoap_base {
 			if ($this->wsdl) {
 				//if($this->debug_flag){
 				$this->debug("WSDL debug data:\n" . $this->wsdl->debug_str);
+
 				//	}
 				// Added: In case we use a WSDL, return a serialized env. WITH the usedNamespaces.
 				return $this->serializeEnvelope($payload, $this->responseHeaders, $this->wsdl->usedNamespaces);
@@ -2154,6 +2198,7 @@ class soap_server extends nusoap_base {
 		// debug
 		$this->debug('ERROR: request not verified against method signature');
 		$this->result = 'fault: request failed validation against method signature';
+
 		// return fault
 		$this->fault('Server', "Operation '$this->methodname' not defined in service.");
 
@@ -2287,6 +2332,7 @@ class soap_server extends nusoap_base {
 	</style>
 	<script language="JavaScript" type="text/javascript">
 	<!--
+
 	// POP-UP CAPTIONS...
 	function lib_bwcheck(){ //Browsercheck (needed)
 	    this.ver=navigator.appVersion
@@ -2305,6 +2351,7 @@ class soap_server extends nusoap_base {
 	}
 
 	var bw = new lib_bwcheck()
+
 	//Makes crossbrowser object.
 	function makeObj(obj){
 	    this.evnt=bw.dom? document.getElementById(obj):bw.ie4?document.all[obj]:bw.ns4?document.layers[obj]:0;
@@ -2328,7 +2375,6 @@ class soap_server extends nusoap_base {
 	    if(oDesc = new makeObj(divid)){
 		oDesc.css.visibility = "visible"
 	    }
-
 	}
 
 	function popout(){ // Hides message
@@ -2349,6 +2395,7 @@ class soap_server extends nusoap_base {
 
 		foreach ($this->wsdl->getOperations() as $op => $data) {
 			$b .= "<li><a href='#' onclick=\"popup('$op')\">$op</a></li>";
+
 			// create hidden div
 			$b .= "<div id='$op' class='hidden'>
 	    <a href='#' onclick='popout()'><font color='#ffffff'>Close</font></a><br><br>";
@@ -2411,8 +2458,7 @@ class soap_server extends nusoap_base {
 			'transport' => $transport,
 			'portType'  => $serviceName . 'PortType',
 		);
-
-		$this->wsdl->ports[$serviceName . 'Port'] = array(
+		$this->wsdl->ports[$serviceName . 'Port']       = array(
 			'binding'     => $serviceName . 'Binding',
 			'location'    => $endpoint,
 			'bindingType' => 'http://schemas.xmlsoap.org/wsdl/soap/',
@@ -2421,7 +2467,6 @@ class soap_server extends nusoap_base {
 }
 
 ?>
-
 <?php
 
 /**
@@ -2433,6 +2478,7 @@ class soap_server extends nusoap_base {
  */
 class wsdl extends XMLSchema {
 	public $wsdl;
+
 	// define internal arrays of bindings, ports, operations, messages, etc.
 	public $message      = array();
 	public $complexTypes = array();
@@ -2449,8 +2495,10 @@ class wsdl extends XMLSchema {
 	public $status        = '';
 	public $documentation = false;
 	public $endpoint      = '';
+
 	// array of wsdl docs to import
 	public $import = array();
+
 	// parser vars
 	public $parser;
 	public $position       = 0;
@@ -2466,6 +2514,7 @@ class wsdl extends XMLSchema {
 	 */
 	public function __construct($wsdl = '') {
 		$this->wsdl = $wsdl;
+
 		// parse wsdl file
 		if ($wsdl != '') {
 			$this->debug('initial wsdl file: ' . $wsdl);
@@ -2496,6 +2545,7 @@ class wsdl extends XMLSchema {
 		}
 
 		$this->debug('getting ' . $wsdl);
+
 		/**
 		 * old
 		 * if ($fp =         *
@@ -2510,6 +2560,7 @@ class wsdl extends XMLSchema {
 		 * return false;
 		 * }
 		 */
+
 		// start new code added
 		// props go to robert tuttle for the wsdl-grabbing code
 		// parse $wsdl for url format
@@ -2518,6 +2569,7 @@ class wsdl extends XMLSchema {
 		if (isset($wsdl_props['host'])) {
 			// $wsdl seems to be a valid url, not a file path, do an fsockopen/HTTP GET
 			$fsockopen_timeout = 30;
+
 			// check if a port value is supplied in url
 			if (isset($wsdl_props['port'])) {
 				// yes
@@ -2556,7 +2608,6 @@ class wsdl extends XMLSchema {
 				}
 
 				$sHeader .= 'Host: ' . $wsdl_props['host'] . "\r\n\r\n";
-
 				fputs($fp, $sHeader);
 
 				while (fgets($fp, 1024) != "\r\n") {
@@ -2598,14 +2649,18 @@ class wsdl extends XMLSchema {
 		// end new code added
 		// Create an XML parser.
 		$this->parser = xml_parser_create();
+
 		// Set the options for parsing the XML data.
 		// xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
 		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, 0);
+
 		// Set the object for the parser.
 		xml_set_object($this->parser, $this);
+
 		// Set the element handlers for the parser.
 		xml_set_element_handler($this->parser, 'start_element', 'end_element');
 		xml_set_character_data_handler($this->parser, 'character_data');
+
 		// Parse the XML file.
 		if (!xml_parse($this->parser, $wsdl_string, true)) {
 			// Display an error message.
@@ -2614,7 +2669,6 @@ class wsdl extends XMLSchema {
 				xml_get_current_line_number($this->parser),
 				xml_error_string(xml_get_error_code($this->parser))
 			);
-
 			$this->debug('XML parse error: ' . $errstr);
 			$this->setError('Parser error: ' . $errstr);
 
@@ -2623,6 +2677,7 @@ class wsdl extends XMLSchema {
 
 		// free the parser
 		xml_parser_free($this->parser);
+
 		// catch wsdl parse errors
 		if ($this->getError()) {
 			return false;
@@ -2675,6 +2730,7 @@ class wsdl extends XMLSchema {
 			// position in the total number of elements, starting from 0
 			$pos   = $this->position++;
 			$depth = $this->depth++;
+
 			// set self as current value for this depth
 			$this->depth_array[$depth] = $pos;
 			$this->message[$pos]       = array(
@@ -2685,8 +2741,10 @@ class wsdl extends XMLSchema {
 			if (ereg(':', $name)) {
 				// get ns prefix
 				$prefix = substr($name, 0, strpos($name, ':'));
+
 				// get ns
 				$namespace = isset($this->namespaces[$prefix]) ? $this->namespaces[$prefix] : '';
+
 				// get unqualified name
 				$name = substr(strstr($name, ':'), 1);
 			}
@@ -2705,7 +2763,8 @@ class wsdl extends XMLSchema {
 							$this->XMLSchemaVersion  = $v;
 							$this->namespaces['xsi'] = $v . '-instance';
 						}
-					} //
+					}
+
 					// expand each attribute
 					$k = strpos($k, ':') ? $this->expandQname($k) : $k;
 
@@ -2753,6 +2812,7 @@ class wsdl extends XMLSchema {
 							$this->documentation = true;
 
 							break;
+
 						// merge input/output data
 						default:
 							$m = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
@@ -3034,6 +3094,7 @@ class wsdl extends XMLSchema {
 		}
 
 		$xml .= '>';
+
 		// imports
 		if (sizeof($this->import) > 0) {
 			foreach ($this->import as $ns => $url) {
@@ -3159,6 +3220,7 @@ class wsdl extends XMLSchema {
 		}
 
 		$this->debug($this->varDump($opData));
+
 		// set input params
 		$xml = '';
 
@@ -3194,6 +3256,7 @@ class wsdl extends XMLSchema {
 		if (strpos($type, ':')) {
 			$uqType = substr($type, strrpos($type, ':') + 1);
 			$ns     = substr($type, 0, strrpos($type, ':'));
+
 			$this->debug("got a prefixed type: $uqType, $ns");
 
 			if ($ns == $this->XMLSchemaVersion
@@ -3226,7 +3289,9 @@ class wsdl extends XMLSchema {
 		//$this->debug("typedef, $k: $v");
 		//}
 		$phpType = $typeDef['phpType'];
+
 		$this->debug("serializeType: uqType: $uqType, ns: $ns, phptype: $phpType, arrayType: " . (isset($typeDef['arrayType']) ? $typeDef['arrayType'] : ''));
+
 		// if php type == struct, map value to the <all> element names
 		if ($phpType == 'struct') {
 			$xml = "<$name xsi:type=\"" . $this->getPrefixFromNamespace($ns) . ":$uqType\">\n";
@@ -3366,7 +3431,6 @@ class wsdl extends XMLSchema {
 }
 
 ?>
-
 <?php
 
 /**
@@ -3385,6 +3449,7 @@ class soap_parser extends nusoap_base {
 	public $root_struct_name = '';
 	public $root_header      = '';
 	public $document         = '';
+
 	// determines where in the message we are (envelope,header,body,method)
 	public $status            = '';
 	public $position          = 0;
@@ -3401,9 +3466,11 @@ class soap_parser extends nusoap_base {
 	public $debug_flag        = true;
 	public $soapresponse;
 	public $responseHeaders = '';
+
 	// for multiref parsing:
 	// array of id => pos
 	public $ids = array();
+
 	// array of id => hrefs => pos
 	public $multirefs = array();
 
@@ -3422,13 +3489,17 @@ class soap_parser extends nusoap_base {
 		// Check whether content has been read.
 		if (!empty($xml)) {
 			$this->debug('Entering soap_parser()');
+
 			// Create an XML parser.
 			$this->parser = xml_parser_create($this->xml_encoding);
+
 			// Set the options for parsing the XML data.
 			//xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
 			xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, 0);
+
 			// Set the object for the parser.
 			xml_set_object($this->parser, $this);
+
 			// Set the element handlers for the parser.
 			xml_set_element_handler($this->parser, 'start_element', 'end_element');
 			xml_set_character_data_handler($this->parser, 'character_data');
@@ -3441,13 +3512,14 @@ class soap_parser extends nusoap_base {
 					xml_get_current_line_number($this->parser),
 					xml_error_string(xml_get_error_code($this->parser))
 				);
-
 				$this->debug('parse error: ' . $err);
 				$this->errstr = $err;
 			} else {
 				$this->debug('parsed successfully, found root struct: ' . $this->root_struct . ' of name ' . $this->root_struct_name);
+
 				// get final value
 				$this->soapresponse = $this->message[$this->root_struct]['result'];
+
 				// get header value
 				if ($this->root_header != '') {
 					$this->responseHeaders = $this->message[$this->root_header]['result'];
@@ -3473,6 +3545,7 @@ class soap_parser extends nusoap_base {
 		// position in a total number of elements, starting from 0
 		// update class level pos
 		$pos = $this->position++;
+
 		// and set mine
 		$this->message[$pos] = array(
 			'pos'      => $pos,
@@ -3491,14 +3564,18 @@ class soap_parser extends nusoap_base {
 
 		// set my parent
 		$this->message[$pos]['parent'] = $this->parent;
+
 		// set self as current parent
 		$this->parent = $pos;
+
 		// set self as current value for this depth
 		$this->depth_array[$this->depth] = $pos;
+
 		// get element prefix
 		if (strpos($name, ':')) {
 			// get ns prefix
 			$prefix = substr($name, 0, strpos($name, ':'));
+
 			// get unqualified name
 			$name = substr(strstr($name, ':'), 1);
 		}
@@ -3512,6 +3589,7 @@ class soap_parser extends nusoap_base {
 		} elseif ($name == 'Body') {
 			$this->status        = 'body';
 			$this->body_position = $pos;
+
 		// set method
 		} elseif ($this->status == 'body' && $pos == ($this->body_position + 1)) {
 			$this->status                = 'method';
@@ -3523,8 +3601,10 @@ class soap_parser extends nusoap_base {
 
 		// set my status
 		$this->message[$pos]['status'] = $this->status;
+
 		// set name
 		$this->message[$pos]['name'] = htmlspecialchars($name);
+
 		// set attrs
 		$this->message[$pos]['attrs'] = $attrs;
 
@@ -3534,6 +3614,7 @@ class soap_parser extends nusoap_base {
 		foreach ($attrs as $key => $value) {
 			$key_prefix    = $this->getPrefix($key);
 			$key_localpart = $this->getLocalPart($key);
+
 			// if ns declarations, add to class level array of valid namespaces
 			if ($key_prefix == 'xmlns') {
 				if (ereg('^http://www.w3.org/[0-9]{4}/XMLSchema$', $value)) {
@@ -3543,6 +3624,7 @@ class soap_parser extends nusoap_base {
 				}
 
 				$this->namespaces[$key_localpart] = $value;
+
 				// set method namespace
 				if ($name == $this->root_struct_name) {
 					$this->methodNamespace = $value;
@@ -3562,6 +3644,7 @@ class soap_parser extends nusoap_base {
 				// should do something here with the namespace of specified type?
 			} elseif ($key_localpart == 'arrayType') {
 				$this->message[$pos]['type'] = 'array';
+
 				/* do arrayType ereg here
 				[1]    arrayTypeValue    ::=    atype asize
 				[2]    atype    ::=    QName rank*
@@ -3626,6 +3709,7 @@ class soap_parser extends nusoap_base {
 		if (strpos($name, ':')) {
 			// get ns prefix
 			$prefix = substr($name, 0, strpos($name, ':'));
+
 			// get unqualified name
 			$name = substr(strstr($name, ':'), 1);
 		}
@@ -3636,10 +3720,13 @@ class soap_parser extends nusoap_base {
 			if (isset($this->message[$pos]['attrs']['href'])) {
 				// get id
 				$id = substr($this->message[$pos]['attrs']['href'], 1);
+
 				// add placeholder to href array
 				$this->multirefs[$id][$pos] = 'placeholder';
+
 				// add set a reference to it as the result value
 				$this->message[$pos]['result'] =& $this->multirefs[$id][$pos];
+
 			// build complex values
 			} elseif ($this->message[$pos]['children'] != '') {
 				$this->message[$pos]['result'] = $this->buildVal($pos);
@@ -3681,6 +3768,7 @@ class soap_parser extends nusoap_base {
 
 		// set parent back to my parent
 		$this->parent = $this->message[$pos]['parent'];
+
 		// for doclit
 		if ($this->status == 'header') {
 			$this->responseHeaders .= "</$name>";
@@ -3699,6 +3787,7 @@ class soap_parser extends nusoap_base {
 	public function character_data($parser, $data) {
 		$pos                           = $this->depth_array[$this->depth];
 		$this->message[$pos]['cdata'] .= $data;
+
 		// for doclit
 		if ($this->status == 'header') {
 			$this->responseHeaders .= $data;
@@ -3752,9 +3841,11 @@ class soap_parser extends nusoap_base {
 		}
 
 		$this->debug('inside buildVal() for ' . $this->message[$pos]['name'] . "(pos $pos) of type " . $this->message[$pos]['type']);
+
 		// if there are children...
 		if ($this->message[$pos]['children'] != '') {
 			$children = explode('|', $this->message[$pos]['children']);
+
 			array_shift($children); // knock off empty
 			// md array
 			if (isset($this->message[$pos]['arrayCols']) && $this->message[$pos]['arrayCols'] != '') {
@@ -3841,6 +3932,7 @@ class nusoapclient extends nusoap_base {
 	public $http_encoding = false;
 	public $timeout       = 0;
 	public $endpointType  = '';
+
 	/**
 	 * fault related variables
 	 *
@@ -3874,6 +3966,7 @@ class nusoapclient extends nusoap_base {
 			$this->debug('instantiating wsdl class with doc: ' . $endpoint);
 			$this->wsdl = new wsdl($this->wsdlFile);
 			$this->debug("wsdl debug: \n" . $this->wsdl->debug_str);
+
 			// catch errors
 			if ($errstr = $this->wsdl->getError()) {
 				$this->debug('got wsdl error: ' . $errstr);
@@ -3905,13 +3998,16 @@ class nusoapclient extends nusoap_base {
 		$this->faultstring = '';
 		$this->faultcode   = '';
 		$this->opData      = array();
+
 		// if wsdl, get operation data and process parameters
 		if ($this->endpointType == 'wsdl' && $opData = $this->getOperationData($operation)) {
-			$this->opData   = $opData;
-			$soapAction     = $opData['soapAction'];
+			$this->opData = $opData;
+			$soapAction   = $opData['soapAction'];
+
 			$this->endpoint = $opData['endpoint'];
 			$namespace      = isset($opData['input']['namespace']) ? $opData['input']['namespace'] : 'http://testuri.org';
 			$style          = $opData['style'];
+
 			// add ns to ns array
 			if ($namespace != '' && !isset($this->wsdl->namespaces[$namespace])) {
 				$this->wsdl->namespaces['nu'] = $namespace;
@@ -3939,6 +4035,7 @@ class nusoapclient extends nusoap_base {
 			$this->debug("wsdl debug: \n" . $this->wsdl->debug_str);
 
 			return false;
+
 		// no wsdl
 		} else {
 			// make message
@@ -3959,10 +4056,12 @@ class nusoapclient extends nusoap_base {
 			}
 
 			$payload = "<ns1:$operation xmlns:ns1=\"$namespace\">\n" . $payload . "</ns1:$operation>\n";
+
 			$soapmsg = $this->serializeEnvelope($payload, $this->requestHeaders);
 		}
 
 		$this->debug("endpoint: $this->endpoint, soapAction: $soapAction, namespace: $namespace");
+
 		// send
 		$this->debug('sending msg (len: ' . strlen($soapmsg) . ") w/ soapaction '$soapAction'...");
 		$return = $this->send($soapmsg, $soapAction, $this->timeout);
@@ -3999,6 +4098,7 @@ class nusoapclient extends nusoap_base {
 
 			// single 'out' parameter
 			return array_shift($return);
+
 			// nothing returned (ie, echoVoid)
 		}
 
@@ -4112,9 +4212,11 @@ class nusoapclient extends nusoap_base {
 	public function parseResponse($data) {
 		$this->debug('Entering parseResponse(), about to create soap_parser instance');
 		$parser = new soap_parser($data, $this->xml_encoding, $this->operation);
+
 		// if parse errors
 		if ($errstr = $parser->getError()) {
 			$this->setError($errstr);
+
 			// destroy the parser object
 			unset($parser);
 
@@ -4123,14 +4225,19 @@ class nusoapclient extends nusoap_base {
 
 		// get SOAP headers
 		$this->responseHeaders = $parser->getHeaders();
+
 		// get decoded message
 		$return = $parser->get_response();
+
 		// add parser debug data to our debug
 		$this->debug($parser->debug_str);
+
 		// add document for doclit support
 		$this->document = $parser->document;
+
 		// destroy the parser object
 		unset($parser);
+
 		// return decode message
 		return $return;
 	}
@@ -4223,11 +4330,14 @@ class nusoapclient extends nusoap_base {
 		$evalStr = 'class soap_proxy extends nusoapclient {
 				' . $evalStr . '
 			}';
+
 		//print "proxy class:<pre>$evalStr</pre>";
 		// eval the class
 		$gallery->runEval($evalStr);
+
 		// instantiate proxy object
 		$proxy = new soap_proxy('');
+
 		// transfer current wsdl data to the proxy thereby avoiding parsing the wsdl twice
 		$proxy->endpointType = 'wsdl';
 		$proxy->wsdlFile     = $this->wsdlFile;

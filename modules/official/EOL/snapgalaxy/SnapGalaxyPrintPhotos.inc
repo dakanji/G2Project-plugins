@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -49,7 +50,6 @@ class SnapGalaxyPrintPhotosController extends GalleryController {
 		}
 
 		$returnUrl = GalleryUtilities::htmlEntityDecode($returnUrl);
-
 		GalleryCoreApi::requireOnce('modules/snapgalaxy/classes/SnapGalaxyHelper.class');
 
 		list($ret, $cartUrl) = SnapGalaxyHelper::printPhotos(

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -71,6 +72,7 @@
 
 		if (empty($targetUserId) || $ret) {
 			$targetUserId = $gallery->getActiveUserId();
+
 			GalleryUtilities::putRequestVariable('targetUserId', $targetUserId);
 		}
 
@@ -125,12 +127,11 @@
 			}
 
 			// Provide parent, parent URL and get-children function to Theme API
-			$item->urlParams = array(
+			$item->urlParams           = array(
 				'view'         => 'favourites.FavouritesAlbum',
 				'targetUserId' => $targetUserId,
 				'highlightId'  => $itemId,
 			);
-
 			$item->getChildrenFunction = array('FavouritesAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;

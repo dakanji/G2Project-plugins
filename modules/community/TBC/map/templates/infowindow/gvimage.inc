@@ -1,4 +1,5 @@
 <?php
+
 //Fix the description , summary and title HREFs
 $tmp = array();
 
@@ -6,13 +7,12 @@ foreach ($map['mapPoints'] as $point) {
 	$point['description'] = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['description']);
 	$point['description'] = str_replace('[/url]', '</a>', $point['description']);
 	$point['description'] = str_replace(']', '>', $point['description']);
-
-	$point['title']   = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['title']);
-	$point['title']   = str_replace('[/url]', '</a>', $point['title']);
-	$point['title']   = str_replace(']', '>', $point['title']);
-	$point['summary'] = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['summary']);
-	$point['summary'] = str_replace('[/url]', '</a>', $point['summary']);
-	$point['summary'] = str_replace(']', '>', $point['summary']);
+	$point['title']       = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['title']);
+	$point['title']       = str_replace('[/url]', '</a>', $point['title']);
+	$point['title']       = str_replace(']', '>', $point['title']);
+	$point['summary']     = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['summary']);
+	$point['summary']     = str_replace('[/url]', '</a>', $point['summary']);
+	$point['summary']     = str_replace(']', '>', $point['summary']);
 
 	if ($point['type'] == 'GalleryMovieItem') {
 		$point['itemLink'] = '<div style=\";margin-top:10px;width:250px;height:180px;overflow:auto;\"><center><embed src=\"' . $gurl->generateUrl(
@@ -42,10 +42,10 @@ foreach ($map['mapPoints'] as $point) {
 }
 
 $map['mapPoints'] = $tmp;
-//Create the HTML for the window
-$map['Labels'][0] = 'none';
-$map['extramap']  = '';
 
+//Create the HTML for the window
+$map['Labels'][0]      = 'none';
+$map['extramap']       = '';
 $map['infowindows'][0] = "''
 	+' '+itemLink+' '
 	+'<br/><font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font>'";

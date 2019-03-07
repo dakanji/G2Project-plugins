@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -30,7 +31,6 @@
  */
 class ICalendarHelper {
 	public function updateStorage($resourceItem) {
-
 		// Delete existing events for this resource
 		$query = '
 	    SELECT
@@ -127,15 +127,12 @@ class ICalendarHelper {
 					$comp->properties['DTSTART'][0]->value
 				)
 			);
-
 			$newEntity->setEnd(
 				ICalendarParser::datetime_to_timestamp(
 					$comp->properties['DTEND'][0]->value
 				)
 			);
-
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
-
 			$ret = $newEntity->save();
 
 			if ($ret) {
@@ -147,7 +144,6 @@ class ICalendarHelper {
 			if ($ret) {
 			return $ret;
 			}*/
-
 			$ret = GalleryCoreApi::addMapEntry(
 				'ICalendarResourceMap',
 				array(
@@ -235,7 +231,6 @@ class ICalendarHelper {
 			}
 
 			$newItem->setFoo();
-
 			$ret = $newItem->save();
 
 			if ($ret) {
@@ -295,15 +290,14 @@ class ICalendarHelper {
 		}
 
 		$properties = ICalendarHelper::getPropertiesFromEntity($entity);
+
 		/*while () {
 		if (isset($properties[$line[0]])) {
-
 		// FIXME Overwrite line
 		}
 
 		unset($properties[$line[0]]);
 		}*/
-
 		foreach ($properties as $property) {
 			// Insert $property->serialize
 		}

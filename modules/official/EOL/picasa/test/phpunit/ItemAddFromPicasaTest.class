@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/picasa/test/phpunit/MockLockSystem.class');
 
 /**
@@ -51,10 +51,8 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			'modules/picasa/test/phpunit/ItemAddFromPicasaTest.class',
 			'picasaTest'
 		);
-
 		$this->_markFactoryForCleanup();
 		$this->_markToolkitForCleanup('ItemAddFromPicasaTestToolkit');
-
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ItemAddFromPicasaTestToolkit',
 			array('application/zip'),
@@ -104,7 +102,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		}
 
 		$this->assert($this->_platform->isComplete(), $this->_platform->getRemaining());
-
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -184,7 +181,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			),
 			'/tmp'
 		);
-
 		$this->_platform->setReply('mkdir', array('/tmp.dir', 755), true);
 		$this->_platform->setReply(
 			'exec',
@@ -198,7 +194,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			),
 			array(true)
 		);
-
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
 		$this->_platform->setReply('file_exists', array('/tmp.dir/index.xml'), true);
 		$this->_platform->setReply('is_readable', array('/tmp.dir/index.xml'), true);
@@ -211,19 +206,16 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			array('GalleryTest 2<script>evil', false),
 			'GalleryTest 2_script_evil'
 		);
-
 		$this->_platform->setReply(
 			'isLegalPathComponent',
 			array('GalleryTest 2_script_evil', false),
 			true
 		);
-
 		$this->_platform->setReply(
 			'legalizePathComponent',
 			array('GalleryTest 2_script_evil', true),
 			'GalleryTest 2_script_evil'
 		);
-
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
 		$this->_platform->setReply(
 			'file_exists',
@@ -232,7 +224,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			),
 			false
 		);
-
 		$this->_platform->setReply(
 			'mkdir',
 			array(
@@ -251,13 +242,11 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 				array('/tmp.dir/images/' . $testImage . ''),
 				true
 			);
-
 			$this->_platform->setReply(
 				'legalizePathComponent',
 				array($testImage, false),
 				$testImage
 			);
-
 			$this->_platform->setReply('getDirectorySeparator', array(), '/');
 			$this->_platform->setReply(
 				'copy',
@@ -267,7 +256,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 				),
 				true
 			);
-
 			$this->_platform->setReply(
 				'filesize',
 				array(
@@ -299,12 +287,12 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			$this->assertEquals(htmlentities($file), $status['addedFiles'][$i]['fileName']);
 			$this->assert(isset($status['addedFiles'][$i]['id']));
 			$ids[] = $status['addedFiles'][$i]['id'];
+
 			$this->assertEquals(array(), $status['addedFiles'][$i]['warnings']);
 			$i++;
 		}
 
 		$this->assertEquals(3, $i, 'count of imported items');
-
 		$this->assertEquals(array(), $error);
 
 		// Verify item attributes (like order weight)
@@ -331,7 +319,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 
 		// There should have been one album imported
 		$this->assertEquals(3, count($itemIds), 'child count');
-
 		$seenWeights = array();
 
 		foreach ($ids as $id) {
@@ -377,8 +364,11 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			);
 
 			list($base, $extension) = GalleryUtilities::getFileNameComponents($testImages[$i]);
-			$sanitizedBase          = $base;
+
+			$sanitizedBase = $base;
+
 			GalleryUtilities::sanitizeInputValues($sanitizedBase);
+
 			$this->assertEquals($sanitizedBase, $item->getTitle(), "title $i");
 
 			if ($i == 2) {
@@ -397,7 +387,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 	 * Test what happens if an unknown file type is uploaded
 	 */
 	public function testImportFromPicasaFailed_unknowntype() {
-
 		// Use valid inputs
 		GalleryUtilities::putRequestVariable('form[action][addFromPicasa]', 1);
 		GalleryUtilities::putRequestVariable('form[name][picasaZipPath]', 'C:\picasaimport.foo');
@@ -420,7 +409,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 	 * Test what happens if no file input is given
 	 */
 	public function testImportFromPicasaFailed_emptypath() {
-
 		// Use valid inputs
 		GalleryUtilities::putRequestVariable('form[action][addFromPicasa]', 1);
 		GalleryUtilities::putRequestVariable('form[set][title]', 'filename');

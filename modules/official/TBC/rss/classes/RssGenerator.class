@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -211,7 +212,7 @@ class RssGenerator {
 			$data = '<rss version="2.0">';
 		}
 
-		$data .= $lf . '<channel>' . $lf .
+		$data   .= $lf . '<channel>' . $lf .
 		'<title>' . $this->cdata(GalleryUtilities::markup($this->_properties['title'])) .
 		'</title>' . $lf .
 		'<link>' . $this->_properties['link'] . '</link>' . $lf .
@@ -239,7 +240,6 @@ class RssGenerator {
 		   $this->cdata(GalleryUtilities::markup($this->_properties['image']['title'])) .
 		'</title>' . $lf .
 		' <link>' . $this->_properties['image']['link'] . '</link></image>' . $lf : '');
-
 		$userMap = array();
 
 		foreach ($this->_items as $item) {

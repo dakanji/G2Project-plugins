@@ -28,7 +28,6 @@ $__Auth_OpenID_PEAR_AVAILABLE = @require_once 'DB.php';
  * @access private
  */
 require_once 'Auth/OpenID/Interface.php';
-
 require_once 'Auth/OpenID/Nonce.php';
 
 /**
@@ -228,7 +227,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 				$this->associations_table_name
 			)
 		);
-
 		$this->connection->query(
 			sprintf(
 				'DELETE FROM %s',
@@ -241,9 +239,8 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	 * @access private
 	 */
 	public function _verifySQL() {
-		$missing = array();
-		$empty   = array();
-
+		$missing           = array();
+		$empty             = array();
 		$required_sql_keys = array(
 			'nonce_table',
 			'assoc_table',
@@ -448,8 +445,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
 	public function getAssociation($server_url, $handle = null) {
 		if ($handle !== null) {
-			$assoc = $this->_get_assoc($server_url, $handle);
-
+			$assoc  = $this->_get_assoc($server_url, $handle);
 			$assocs = array();
 
 			if ($assoc) {
@@ -619,7 +615,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 			$this->sql['clean_assoc'],
 			array(time())
 		);
-
 		$num = $this->connection->affectedRows();
 		$this->connection->commit();
 

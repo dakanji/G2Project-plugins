@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -95,12 +96,11 @@
 			}
 
 			// Provide parent, parent URL and get-children function to Theme API
-			$item->urlParams = array(
+			$item->urlParams           = array(
 				'view'        => $this->_view,
 				'chars'       => $chars,
 				'highlightId' => $itemId,
 			);
-
 			$item->getChildrenFunction = array(get_class($this), 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -138,7 +138,8 @@
 		$theme =& $template->getVariableByReference('theme');
 
 		list($chars, $itemId) = GalleryUtilities::getRequestVariables('chars', 'itemId');
-		$theme['pageUrl']     = array(
+
+		$theme['pageUrl'] = array(
 			'view'  => $this->_view,
 			'chars' => $chars,
 		);
@@ -208,7 +209,7 @@
 		$results = array();
 		$chars  .= '%';
 
-		$query        = 'SELECT 
+		$query = 'SELECT 
 		[GalleryItem::id]
 		FROM [GalleryItem]
 		WHERE
@@ -216,6 +217,7 @@
 		LIKE ?
 		ORDER BY [GalleryItem::title]
 		';
+
 		$queryOptions = array($chars);
 
 		list($ret, $searchResults) = $gallery->search($query, $queryOptions);

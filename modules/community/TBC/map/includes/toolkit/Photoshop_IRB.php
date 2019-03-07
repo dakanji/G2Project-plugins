@@ -72,7 +72,6 @@ if (!isset($GLOBALS['HIDE_UNKNOWN_TAGS'])) {
 }
 
 require_once 'IPTC.php';
-
 require_once 'Unicode.php';
 
 // TODO: Many Photoshop IRB resources not interpeted
@@ -231,8 +230,7 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
  ******************************************************************************/
 
 function get_Photoshop_IPTC($Photoshop_IRB_data) {
-
-		// Change: Initialise array correctly, as of revision 1.10
+	// Change: Initialise array correctly, as of revision 1.10
 	$IPTC_Data_Out = array();
 
 	//Cycle through the Photoshop 8BIM records looking for the IPTC-NAA record
@@ -401,7 +399,6 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						$output_str .= 'Version = ' . hexdec(bin2hex(substr($IRB_Resource['ResData'], 0, 4))) . "\n";
 						$output_str .= 'Has Real Merged Data = ' . ord($IRB_Resource['ResData'][4]) . "\n";
 						$writer_size = hexdec(bin2hex(substr($IRB_Resource['ResData'], 5, 4))) * 2;
-
 						$output_str .= 'Writer Name = ' . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], 9, $writer_size), true) . "\n";
 						$reader_size = hexdec(bin2hex(substr($IRB_Resource['ResData'], 9 + $writer_size, 4))) * 2;
 						$output_str .= 'Reader Name = ' . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], 13 + $writer_size, $reader_size), true) . "\n";
@@ -465,6 +462,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						// Unpack the length of a Unicode String
 						$Targetlen = hexdec(bin2hex(substr($IRB_Resource['ResData'], $Slicepos, 4)));
 						$Slicepos += 4;
+
 						// Extract a Unicode String
 						$output_str .= "Target = '" . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], $Slicepos, $Targetlen * 2), true) . "'<br>\n";
 						$Slicepos   += $Targetlen * 2;
@@ -472,6 +470,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						// Unpack the length of a Unicode String
 						$Messagelen = hexdec(bin2hex(substr($IRB_Resource['ResData'], $Slicepos, 4)));
 						$Slicepos  += 4;
+
 						// Extract a Unicode String
 						$output_str .= "Message = '" . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], $Slicepos, $Messagelen * 2), true) . "'<br>\n";
 						$Slicepos   += $Messagelen * 2;
@@ -479,6 +478,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						// Unpack the length of a Unicode String
 						$AltTaglen = hexdec(bin2hex(substr($IRB_Resource['ResData'], $Slicepos, 4)));
 						$Slicepos += 4;
+
 						// Extract a Unicode String
 						$output_str .= "Alt Tag = '" . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], $Slicepos, $AltTaglen * 2), true) . "'<br>\n";
 						$Slicepos   += $AltTaglen * 2;
@@ -495,6 +495,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						// Unpack the length of a Unicode String
 						$CellTextlen = hexdec(bin2hex(substr($IRB_Resource['ResData'], $Slicepos, 4)));
 						$Slicepos   += 4;
+
 						// Extract a Unicode String
 						$output_str .= "Cell Text = '" . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], $Slicepos, $CellTextlen * 2), true) . "'<br>\n";
 						$Slicepos   += $CellTextlen * 2;
@@ -680,7 +681,6 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 
 						// Add thumbnail link to html
 						$output_str .= "Thumbnail Data:</pre><a class=\"Photoshop_Thumbnail_Link\" href=\"$link_str\"><img class=\"Photoshop_Thumbnail_Link\" src=\"$link_str\"></a>\n";
-
 						$output_str .= "</td></tr>\n";
 
 					break;
@@ -695,6 +695,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\">\n";
 						$output_str .= "$URL_count URL's in list<br>\n";
 						$urlstr      = substr($IRB_Resource['ResData'], 4);
+
 						// TODO: Check if URL List in Photoshop IRB works
 					for ($i = 0; $i < $URL_count; $i++) {
 						$url_data    = unpack('NLong/NID/NURLSize', $urlstr);
@@ -880,7 +881,6 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 
 // End of Function:     Interpret_IRB_to_HTML
 // INTERNAL FUNCTIONS
-
 /******************************************************************************
  *
  * Function:     unpack_Photoshop_IRB_Data
@@ -914,7 +914,6 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 		// Change: Fixed processing of embedded resource names, as of revision 1.10
 		// NOTE: Photoshop does not process resource names according to the standard :
 		// "Adobe Photoshop 6.0 File Formats Specification, Version 6.0, Release 2, November 2000"
-		//
 		// The resource name is actually formatted as follows:
 		// One byte name length, followed by the null terminated ascii name string.
 		// The field is then padded with a Null character if required, to ensure that the
@@ -940,8 +939,7 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 
 		// The record is stored padded with 0x00 characters to make the size even, so we need to calculate the stored size
 		$storedsize = $datasize + ($datasize % 2);
-
-		$resdata = substr($IRB_Data, $pos, $datasize);
+		$resdata    = substr($IRB_Data, $pos, $datasize);
 
 		// Get the description for this resource
 		// Check if this is a Path information Resource, since they have a range of ID's
@@ -1012,7 +1010,6 @@ function pack_Photoshop_IRB_Data($IRB_data) {
 		// Change: Fixed processing of embedded resource names, as of revision 1.10
 		// NOTE: Photoshop does not process resource names according to the standard :
 		// "Adobe Photoshop 6.0 File Formats Specification, Version 6.0, Release 2, November 2000"
-		//
 		// The resource name is actually formatted as follows:
 		// One byte name length, followed by the null terminated ascii name string.
 		// The field is then padded with a Null character if required, to ensure that the
@@ -1066,7 +1063,6 @@ function pack_Photoshop_IRB_Data($IRB_data) {
 function Interpret_Transfer_Function($Transfer_Function_Binary) {
 	// Unpack the Transfer function information
 	$Trans_vals = unpack('n13Curve/nOverride', $Transfer_Function_Binary);
-
 	$output_str = 'Transfer Function Points: ';
 
 	// Cycle through each of the Transfer function array values
@@ -1179,7 +1175,6 @@ function Interpret_Halftone($Halftone_Binary) {
  *               resource number
  *
  ******************************************************************************/
-
 $GLOBALS['Photoshop_ID_Names'] = array(
 	0x03E8 => 'Number of channels, rows, columns, depth, and mode. (Obsolete)',
 	0x03E9 => 'Macintosh print manager info ',
@@ -1245,7 +1240,6 @@ $GLOBALS['Photoshop_ID_Names'] = array(
  *               resource number
  *
  ******************************************************************************/
-
 $GLOBALS['Photoshop_ID_Descriptions'] = array(
 	0x03E8 => 'Obsolete—Photoshop 2.0 only. number of channels, rows, columns, depth, and mode.',
 	0x03E9 => 'Optional. Macintosh print manager print info record.',

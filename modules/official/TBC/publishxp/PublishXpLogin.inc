@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -67,8 +68,8 @@ class PublishXpLoginController extends GalleryController {
 
 				if (isset($user) && $user->isCorrectPassword($form['password'])) {
 					$gallery->setActiveUser($user);
-
 					$event = GalleryCoreApi::newEvent('Gallery::Login');
+
 					$event->setEntity($user);
 
 					list($ret, $ignoreTheRedirect) = GalleryCoreApi::postEvent($event);

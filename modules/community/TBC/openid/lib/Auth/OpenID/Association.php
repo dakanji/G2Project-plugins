@@ -224,7 +224,6 @@ class Auth_OpenID_Association {
 
 		$class_vars       = get_class_vars($class_name);
 		$class_assoc_keys = $class_vars['assoc_keys'];
-
 		sort($keys);
 		sort($class_assoc_keys);
 
@@ -311,7 +310,6 @@ class Auth_OpenID_Association {
 			'assoc_handle',
 			$this->handle
 		);
-
 		$message_keys  = array_keys($signed_message->toPostArgs());
 		$signed_list   = array();
 		$signed_prefix = 'openid.';
@@ -324,13 +322,11 @@ class Auth_OpenID_Association {
 
 		$signed_list[] = 'signed';
 		sort($signed_list);
-
 		$signed_message->setArg(
 			Auth_OpenID_OPENID_NS,
 			'signed',
 			implode(',', $signed_list)
 		);
-
 		$sig = $this->getMessageSignature($signed_message);
 		$signed_message->setArg(Auth_OpenID_OPENID_NS, 'sig', $sig);
 
@@ -354,7 +350,8 @@ class Auth_OpenID_Association {
 
 		$signed_list = explode(',', $signed);
 		$pairs       = array();
-		$data        = $message->toPostArgs();
+
+		$data = $message->toPostArgs();
 
 		foreach ($signed_list as $field) {
 			$pairs[] = array(
@@ -617,8 +614,7 @@ class Auth_OpenID_SessionNegotiator {
 			array($assoc_type, $session_type),
 			$this->allowed_types
 		);
-
-		$matches = in_array(
+		$matches    = in_array(
 			$session_type,
 			Auth_OpenID_getSessionTypes($assoc_type)
 		);

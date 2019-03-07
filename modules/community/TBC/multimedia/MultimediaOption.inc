@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2012 Bharat Mediratta
@@ -39,7 +40,7 @@ class MultimediaOption extends ItemAddOption {
 	public function handleRequestAfterAdd($form, $items) {
 		global $gallery;
 
-		$storage = &$gallery->getStorage();
+		$storage =& $gallery->getStorage();
 		$errors  = $multimediaItems  = array();
 
 		foreach ($items as $item) {
@@ -72,7 +73,6 @@ class MultimediaOption extends ItemAddOption {
 				}
 
 				$item->setRenderer('MultimediaRenderer');
-
 				$ret = $item->save();
 
 				if ($ret) {

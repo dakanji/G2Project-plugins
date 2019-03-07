@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,8 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_amr extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$AMRheader = $this->fread(6);
 
@@ -29,9 +29,8 @@ class getid3_amr extends getid3_handler {
 		}
 
 		// shortcut
-		$info['amr']  = array();
-		$thisfile_amr = &$info['amr'];
-
+		$info['amr']                      = array();
+		$thisfile_amr                     =& $info['amr'];
 		$info['fileformat']               = 'amr';
 		$info['audio']['dataformat']      = 'amr';
 		$info['audio']['bitrate_mode']    = 'vbr';   // within a small predefined range: 4.75kbps to 12.2kbps
@@ -65,9 +64,9 @@ class getid3_amr extends getid3_handler {
 			}
 
 			$thisfile_amr['frame_mode_count'][$codec_mode_request]++;
+
 			$buffer = substr($buffer, $this->amr_mode_bytes_per_frame($codec_mode_request));
 		} while (strlen($buffer) > 0);
-
 		$info['playtime_seconds'] = array_sum($thisfile_amr['frame_mode_count']) * 0.020; // each frame contain 160 samples and is 20 milliseconds long
 		$info['audio']['bitrate'] = (8 * ($info['avdataend'] - $info['avdataoffset'])) / $info['playtime_seconds']; // bitrate could be calculated from average bitrate by distributation of frame types. That would give effective audio bitrate, this gives overall file bitrate which will be a little bit higher since every frame will waste 8 bits for header, plus a few bits for octet padding
 		$info['bitrate']          = $info['audio']['bitrate'];

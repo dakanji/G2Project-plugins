@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -36,11 +37,9 @@ class AjaxianTheme extends GalleryTheme {
 				'DHTML-enabled Slideshow theme'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'rows'            => 3,
@@ -110,7 +109,6 @@ class AjaxianTheme extends GalleryTheme {
 		$theme =& $template->getVariableByReference('theme');
 
 		// From slider
-
 		list($ret, $imageWidths, $imageHeights) = $this->_buildItemList(
 			$childIds,
 			$theme['children']
@@ -286,6 +284,7 @@ class AjaxianTheme extends GalleryTheme {
 
 		foreach ($childItems as $child) {
 			$i++;
+
 			$childId = $child->getId();
 
 			if (!GalleryUtilities::isA($child, 'GalleryDataItem')) {
@@ -334,6 +333,7 @@ class AjaxianTheme extends GalleryTheme {
 
 			if (!empty($images)) {
 				$image = $images[0];
+
 				// Rebuild derivative if needed so width/height known
 				if (GalleryUtilities::isA($image, 'GalleryDerivativeImage')
 					&& !($image->getWidth()

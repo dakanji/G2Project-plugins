@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -34,12 +35,10 @@ class SlideshowAppletModule extends GalleryModule {
 				'Fullscreen slideshow using a Java applet'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -186,8 +185,8 @@ class SlideshowAppletModule extends GalleryModule {
 	 */
 	public function getRewriteRules() {
 		$rules = array();
+		$rule  = array();
 
-		$rule            = array();
 		$rule['comment'] = $this->translate('View Slideshow (Fullscreen)');
 		$rule['match']   = array(
 			'view' => 'slideshowapplet.SlideshowApplet',
@@ -202,8 +201,7 @@ class SlideshowAppletModule extends GalleryModule {
 				'help'     => $this->translate('Path to an item (eg, /album/image.jpg.html)'),
 			),
 		);
-
-		$rules[] = $rule;
+		$rules[]          = $rule;
 
 		return $rules;
 	}

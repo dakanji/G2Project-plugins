@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -114,6 +115,7 @@ class ShowTreeView extends GalleryView {
 		$ShowTree['entityId']    = $entityId;
 		$ShowTree['entityTable'] = $entityTable;
 		$ShowTree['isItem']      = $isItemTable;
+
 		$template->setVariable('ShowTree', $ShowTree);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'debug');

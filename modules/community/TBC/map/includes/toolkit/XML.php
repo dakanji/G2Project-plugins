@@ -43,7 +43,6 @@
  *               purposes, please contact the author: evan@ozhiker.com
  *
  ******************************************************************************/
-
 require_once 'Unicode.php';          // Unicode is required as XML is always Unicode encoded
 /******************************************************************************
  *
@@ -202,7 +201,6 @@ function write_xml_array_to_text($xmlarray, $indentlevel) {
 
 // End of Function:     write_xml_array_to_text
 // INTERNAL FUNCTIONS
-
 /******************************************************************************
  *
  * Internal Function:     xml_get_children
@@ -224,14 +222,13 @@ function write_xml_array_to_text($xmlarray, $indentlevel) {
  ******************************************************************************/
 
 function xml_get_children(&$input_xml_array, &$item_num) {
-
-		// Make an array to receive the output XML tree structure
+	// Make an array to receive the output XML tree structure
 	$children = array();
 
 	// Cycle through all the elements of the input XML array
 	while ($item_num < count($input_xml_array)) {
 		// Retrieve the current array element
-		$v = &$input_xml_array[$item_num++];
+		$v =& $input_xml_array[$item_num++];
 
 		// Check what type of XML array element this is, and process accordingly
 		switch ($v['type']) {

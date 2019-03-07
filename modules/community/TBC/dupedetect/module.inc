@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @version $Revision: 0.9 $ $Date: 2005/07/23 22:24:00 $
  * @package DupeDetect
@@ -41,14 +43,12 @@ class DupeDetectModule extends GalleryModule {
 				'DupeDetect'
 			)
 		);
-
 		$this->setVersion('1.0.0');
 
 		// Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $this->translate('Gallery'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews');
 	}
@@ -71,7 +71,9 @@ class DupeDetectModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
+
 		$listener = new DupeDetectHelper();
+
 		GalleryCoreApi::registerEventListener('GalleryEntity::save', $listener, true);
 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $listener, true);
 	}

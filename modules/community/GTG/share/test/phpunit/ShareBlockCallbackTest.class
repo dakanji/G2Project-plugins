@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,10 +18,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GallerySmarty.class');
 GalleryCoreApi::requireOnce('modules/share/Callbacks.inc');
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 //GalleryCoreApi::requireOnce('modules/core/classes/GalleryToolkit.class');
 /**
  * Test Share Block functionality
@@ -71,7 +72,6 @@ class ShareBlockCallbackTest extends GalleryTestCase {
 
 		$this->assertTrue(array_key_exists('onlyWhenLoggedIn', $block), 'Missing param onlyWhenLoggedIn');
 		$this->assertTrue(array_key_exists('addThisAccountId', $block), 'Missing param addThisAccountId');
-
 		$this->assertTrue($block['onlyWhenLoggedIn'], 'Bad param onlyWhenLoggedIn');
 		$this->assertEquals('accountID', $block['addThisAccountId'], 'Bad param addThisAccountId');
 	}

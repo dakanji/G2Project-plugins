@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 /**
@@ -133,9 +133,8 @@ class AdminSettingsTagsController extends GalleryController {
 				}
 			}
 
-			$method          = empty($error) ? 'redirect' : 'delegate';
-			$status['saved'] = empty($error);
-
+			$method                           = empty($error) ? 'redirect' : 'delegate';
+			$status['saved']                  = empty($error);
 			$results[$method]['view']         = 'core.SiteAdmin';
 			$results[$method]['subView']      = 'tags.AdminSettingsTags';
 			$results[$method]['tagAdminMode'] = $form['tagAdminMode'];
@@ -179,9 +178,8 @@ class AdminSettingsTagsView extends GalleryView {
 		}
 
 		$Settings['tagCssClass'] = $tagCssClass;
-
-		$tagAdminMode = GalleryUtilities::getRequestVariables('tagAdminMode');
-		$tagAdminMode = empty($tagAdminMode) ? 'General' : $tagAdminMode;
+		$tagAdminMode            = GalleryUtilities::getRequestVariables('tagAdminMode');
+		$tagAdminMode            = empty($tagAdminMode) ? 'General' : $tagAdminMode;
 
 		$template->javascript('lib/yui/yahoo-min.js');
 		$template->javascript('lib/yui/event-min.js');
@@ -191,7 +189,6 @@ class AdminSettingsTagsView extends GalleryView {
 		$template->javascript('lib/yui/color.js');
 		$template->javascript('lib/yui/slider-min.js');
 		$template->javascript('lib/javascript/ColorChooser.js');
-
 		$template->javascript('modules/tags/js/AdminTags.js');
 		$template->setVariable('controller', 'tags.AdminSettingsTags');
 		$template->setVariable('tagAdminMode', $tagAdminMode);

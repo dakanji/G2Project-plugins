@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/picasa/classes/Picasa2DataParser.class');
 GalleryCoreApi::requireOnce('modules/picasa/test/phpunit/MockLockSystem.class');
 
@@ -35,6 +35,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 	 * @access protected
 	 */
 	public $_temporaryAlbumId;
+
 	/**
 	 * The mock platform
 	 * @access protected
@@ -69,8 +70,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 
 		$this->_markForCleanup($this->_temporaryAlbum);
 		$this->_temporaryAlbumId = $this->_temporaryAlbum->getId();
-
-		$this->_platform = new UnitTestPlatform();
+		$this->_platform         = new UnitTestPlatform();
 		$gallery->setPlatform($this->_platform);
 		$gallery->_lockSystem = new MockLockSystem();
 	}
@@ -79,7 +79,6 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$this->assert($this->_platform->isComplete(), $this->_platform->getRemaining());
-
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -90,12 +89,13 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 	public function _runBackgroundTask($expectedProgressBarDump) {
 		global $gallery;
 
-		$mockAdapter               = new MockTemplateAdapter();
+		$mockAdapter = new MockTemplateAdapter();
+
 		$gallery->_templateAdapter =& $mockAdapter;
 		$mockGenerator             = new ConfirmPicasaImportControllerTestUrlGenerator();
-		$gallery->_urlGenerator    =& $mockGenerator;
 
-		$results = $this->handleRequest();
+		$gallery->_urlGenerator =& $mockGenerator;
+		$results                = $this->handleRequest();
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -106,9 +106,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$this->assertEquals(1, $mockAdapter->getCallbackCount());
-
 		$ret = $mockAdapter->runCallbacks();
 
 		if ($ret) {
@@ -119,7 +117,8 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 			$this->assertEquals($expectedProgressBarDump, $mockAdapter->getProgressBarDump());
 		} else {
 			$pattern = '/^' . $expectedProgressBarDump . '$/';
-			$dump    = join(' ', $mockAdapter->getProgressBarDump());
+
+			$dump = join(' ', $mockAdapter->getProgressBarDump());
 			$this->assert(
 				preg_match($pattern, $dump),
 				'Dump [' . $dump . '] did not match pattern [' . $pattern . ']'
@@ -221,19 +220,16 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 			array('GalleryTest 2<script>evil', false),
 			'GalleryTest 2_script_evil'
 		);
-
 		$this->_platform->setReply(
 			'isLegalPathComponent',
 			array('GalleryTest 2_script_evil', false),
 			true
 		);
-
 		$this->_platform->setReply(
 			'legalizePathComponent',
 			array('GalleryTest 2_script_evil', true),
 			'GalleryTest 2_script_evil'
 		);
-
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
 		$this->_platform->setReply(
 			'file_exists',
@@ -242,7 +238,6 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 			),
 			false
 		);
-
 		$this->_platform->setReply(
 			'mkdir',
 			array(
@@ -261,13 +256,11 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 				array('/images/' . $testImage . ''),
 				true
 			);
-
 			$this->_platform->setReply(
 				'legalizePathComponent',
 				array($testImage, false),
 				$testImage
 			);
-
 			$this->_platform->setReply('getDirectorySeparator', array(), '/');
 			$this->_platform->setReply(
 				'copy',
@@ -277,7 +270,6 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 				),
 				true
 			);
-
 			$this->_platform->setReply(
 				'filesize',
 				array(

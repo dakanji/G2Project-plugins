@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Eric Daniel <ehdaniel@gmail.com>
@@ -84,6 +86,7 @@ class MapGZoomAdminView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
+
 		$form['formName'] = 'MapGZoomAdmin';
 
 		$template->head('modules/map/includes/GoogleMap.css');
@@ -108,10 +111,12 @@ class MapGZoomAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
+			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
+
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 

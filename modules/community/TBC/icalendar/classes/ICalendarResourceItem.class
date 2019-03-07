@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryDataItem.class');
 
 // Being developed as part of CalDAV server library for now
@@ -80,8 +80,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
-		$ret = parent::rescan();
+		$ret      = parent::rescan();
 
 		if ($ret) {
 			return $ret;
@@ -183,15 +182,12 @@ class ICalendarResourceItem extends GalleryDataItem {
 					$comp->properties['DTSTART'][0]->value
 				)
 			);
-
 			$newEntity->setEnd(
 				ICalendarParser::datetime_to_timestamp(
 					$comp->properties['DTEND'][0]->value
 				)
 			);
-
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
-
 			$ret = $newEntity->save();
 
 			if ($ret) {
@@ -206,7 +202,6 @@ class ICalendarResourceItem extends GalleryDataItem {
 
 			/* save is usually called after rescan, so the resourceSerialNumber will always be
 			   out-of-date */
-
 			$ret = GalleryCoreApi::addMapEntry(
 				'ICalendarResourceMap',
 				array(

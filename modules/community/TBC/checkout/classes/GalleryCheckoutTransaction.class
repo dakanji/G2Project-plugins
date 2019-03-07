@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -177,6 +178,7 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 	 * @access public
 	 */
 	public $discountDescription;
+
 	/**
 	 * Total purchase amount
 	 *
@@ -606,6 +608,7 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 
 		while ($result = $searchResults->nextResult()) {
 			$ret = GalleryCoreApi::deleteEntityById($result[0], 'GalleryChildEntity');
+
 			/*
 			 * Deletes can cascade in interesting ways.  For example, deleting a derivative will
 			 * get rid of any other derivatives that are sourced to it, so it's possible that

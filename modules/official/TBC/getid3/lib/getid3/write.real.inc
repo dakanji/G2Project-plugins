@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -34,6 +35,7 @@ class getid3_write_real {
 
 			if (empty($OldThisFileInfo['real']['chunks']) && !empty($OldThisFileInfo['real']['old_ra_header'])) {
 				$this->errors[] = 'Cannot write Real tags on old-style file format';
+
 				fclose($fp_source);
 
 				return false;
@@ -41,6 +43,7 @@ class getid3_write_real {
 
 			if (empty($OldThisFileInfo['real']['chunks'])) {
 				$this->errors[] = 'Cannot write Real tags because cannot find DATA chunk in file';
+
 				fclose($fp_source);
 
 				return false;
@@ -63,6 +66,7 @@ class getid3_write_real {
 				fwrite($fp_source, $new__RMF_tag_data);
 			} else {
 				$this->errors[] = 'new .RMF tag (' . strlen($new__RMF_tag_data) . ' bytes) different length than old .RMF tag (' . $oldChunkInfo['.RMF']['length'] . ' bytes)';
+
 				fclose($fp_source);
 
 				return false;
@@ -73,6 +77,7 @@ class getid3_write_real {
 				fwrite($fp_source, $new_PROP_tag_data);
 			} else {
 				$this->errors[] = 'new PROP tag (' . strlen($new_PROP_tag_data) . ' bytes) different length than old PROP tag (' . $oldChunkInfo['PROP']['length'] . ' bytes)';
+
 				fclose($fp_source);
 
 				return false;
@@ -118,6 +123,7 @@ class getid3_write_real {
 					}
 
 					unlink($tempfilename);
+
 					$this->errors[] = 'FAILED: copy(' . $tempfilename . ', ' . $this->filename . ')';
 				} else {
 					$this->errors[] = 'Could not fopen("' . $tempfilename . '", "wb")';
@@ -146,12 +152,10 @@ class getid3_write_real {
 		}
 
 		$newHeadersCount = $chunks[$chunkNameKeys['.RMF']]['headers_count'] + ($oldCONTexists ? 0 : 1);
-
-		$RMFchunk  = "\x00\x00"; // object version
-		$RMFchunk .= getid3_lib::BigEndian2String($chunks[$chunkNameKeys['.RMF']]['file_version'], 4);
-		$RMFchunk .= getid3_lib::BigEndian2String($newHeadersCount, 4);
-
-		$RMFchunk = '.RMF' . getid3_lib::BigEndian2String(strlen($RMFchunk) + 8, 4) . $RMFchunk; // .RMF chunk identifier + chunk length
+		$RMFchunk        = "\x00\x00"; // object version
+		$RMFchunk       .= getid3_lib::BigEndian2String($chunks[$chunkNameKeys['.RMF']]['file_version'], 4);
+		$RMFchunk       .= getid3_lib::BigEndian2String($newHeadersCount, 4);
+		$RMFchunk        = '.RMF' . getid3_lib::BigEndian2String(strlen($RMFchunk) + 8, 4) . $RMFchunk; // .RMF chunk identifier + chunk length
 		return $RMFchunk;
 	}
 
@@ -176,8 +180,7 @@ class getid3_write_real {
 			}
 		}
 
-		$CONTdelta = strlen($new_CONT_tag_data) - $old_CONT_length;
-
+		$CONTdelta  = strlen($new_CONT_tag_data) - $old_CONT_length;
 		$PROPchunk  = "\x00\x00"; // object version
 		$PROPchunk .= getid3_lib::BigEndian2String($chunks[$chunkNameKeys['PROP']]['max_bit_rate'], 4);
 		$PROPchunk .= getid3_lib::BigEndian2String($chunks[$chunkNameKeys['PROP']]['avg_bit_rate'], 4);
@@ -190,8 +193,7 @@ class getid3_write_real {
 		$PROPchunk .= getid3_lib::BigEndian2String(max(0, $old_DATA_offset + $CONTdelta), 4);
 		$PROPchunk .= getid3_lib::BigEndian2String($chunks[$chunkNameKeys['PROP']]['num_streams'], 2);
 		$PROPchunk .= getid3_lib::BigEndian2String($chunks[$chunkNameKeys['PROP']]['flags_raw'], 2);
-
-		$PROPchunk = 'PROP' . getid3_lib::BigEndian2String(strlen($PROPchunk) + 8, 4) . $PROPchunk; // PROP chunk identifier + chunk length
+		$PROPchunk  = 'PROP' . getid3_lib::BigEndian2String(strlen($PROPchunk) + 8, 4) . $PROPchunk; // PROP chunk identifier + chunk length
 		return $PROPchunk;
 	}
 
@@ -204,13 +206,10 @@ class getid3_write_real {
 		$CONTchunk  = "\x00\x00"; // object version
 		$CONTchunk .= getid3_lib::BigEndian2String((!empty($this->tag_data['title']) ? strlen($this->tag_data['title']) : 0), 2);
 		$CONTchunk .= (!empty($this->tag_data['title']) ? strlen($this->tag_data['title']) : '');
-
 		$CONTchunk .= getid3_lib::BigEndian2String((!empty($this->tag_data['artist']) ? strlen($this->tag_data['artist']) : 0), 2);
 		$CONTchunk .= (!empty($this->tag_data['artist']) ? strlen($this->tag_data['artist']) : '');
-
 		$CONTchunk .= getid3_lib::BigEndian2String((!empty($this->tag_data['copyright']) ? strlen($this->tag_data['copyright']) : 0), 2);
 		$CONTchunk .= (!empty($this->tag_data['copyright']) ? strlen($this->tag_data['copyright']) : '');
-
 		$CONTchunk .= getid3_lib::BigEndian2String((!empty($this->tag_data['comment']) ? strlen($this->tag_data['comment']) : 0), 2);
 		$CONTchunk .= (!empty($this->tag_data['comment']) ? strlen($this->tag_data['comment']) : '');
 
@@ -231,6 +230,7 @@ class getid3_write_real {
 
 			if (empty($OldThisFileInfo['real']['chunks']) && !empty($OldThisFileInfo['real']['old_ra_header'])) {
 				$this->errors[] = 'Cannot remove Real tags from old-style file format';
+
 				fclose($fp_source);
 
 				return false;
@@ -238,6 +238,7 @@ class getid3_write_real {
 
 			if (empty($OldThisFileInfo['real']['chunks'])) {
 				$this->errors[] = 'Cannot remove Real tags because cannot find DATA chunk in file';
+
 				fclose($fp_source);
 
 				return false;
@@ -277,6 +278,7 @@ class getid3_write_real {
 					}
 
 					unlink($tempfilename);
+
 					$this->errors[] = 'FAILED: copy(' . $tempfilename . ', ' . $this->filename . ')';
 				} else {
 					$this->errors[] = 'Could not fopen("' . $tempfilename . '", "wb")';

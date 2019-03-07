@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: Send.inc,v $
  *
@@ -48,13 +49,12 @@ class SendController extends GalleryController {
 			$form['custEmail']   = GalleryUtilities::htmlSafe($form['custEmail'], true);
 			$form['custSubject'] = GalleryUtilities::htmlSafe($form['custSubject'], true);
 			$form['custMessage'] = GalleryUtilities::htmlSafe($form['custMessage'], true);
-
-			$resubmit   = false;
-			$badname    = false;
-			$bademail   = false;
-			$badsubject = false;
-			$badmessage = false;
-			$emailsent  = false;
+			$resubmit            = false;
+			$badname             = false;
+			$bademail            = false;
+			$badsubject          = false;
+			$badmessage          = false;
+			$emailsent           = false;
 
 			if (strlen($form['custName']) < 1) {
 				$resubmit = true;
@@ -130,10 +130,9 @@ class SendController extends GalleryController {
 					);
 
 					$email['boundary'] = uniqid('contactowner');
-
-					$headers  = "MIME-Version: 1.0\n";
-					$headers .= "Content-Type: multipart/alternative;\n";
-					$headers .= '	boundary = "' . $email['boundary'] . '"';
+					$headers           = "MIME-Version: 1.0\n";
+					$headers          .= "Content-Type: multipart/alternative;\n";
+					$headers          .= '	boundary = "' . $email['boundary'] . '"';
 
 					// This is where we actually send the email
 					$ret = GalleryCoreApi::sendTemplatedEmail(
@@ -152,6 +151,7 @@ class SendController extends GalleryController {
 					$emailsent           = true;
 					$form['custSubject'] = '';
 					$form['custMessage'] = '';
+
 					$session->put('contactowner.custsubject', serialize($form['custSubject']));
 					$session->put('contactowner.custmessage', serialize($form['custMessage']));
 					$session->put('contactowner.emailcount', serialize($emailCount));
@@ -182,11 +182,10 @@ class SendController extends GalleryController {
 		$session->put('contactowner.emailsent', serialize($emailsent));
 
 		// not really sure how to deal with these variables... but they're needed
-		$error   = array();
-		$isError = false;
-		$status  = array();
-		$results = array();
-
+		$error                          = array();
+		$isError                        = false;
+		$status                         = array();
+		$results                        = array();
 		$results['redirect']['subView'] = $nextView;
 		$results['redirect']['view']    = 'core.UserAdmin';
 		$results['status']              = $status;

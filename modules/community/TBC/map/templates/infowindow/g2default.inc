@@ -1,4 +1,5 @@
 <?php
+
 //Fix the description , summary and title HREFs
 $tmp = array();
 
@@ -16,10 +17,10 @@ foreach ($map['mapPoints'] as $point) {
 }
 
 $map['mapPoints'] = $tmp;
-//Create the HTML for the window
-$map['Labels'][0] = 'none';
-$map['extramap']  = '';
 
+//Create the HTML for the window
+$map['Labels'][0]      = 'none';
+$map['extramap']       = '';
 $map['infowindows'][0] = "''
 	+'<div style=\";margin-top:10px;width:250px;height:150px;overflow:auto;\">'
 	+'<a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'+title+'</a><br/>'
@@ -38,15 +39,12 @@ if ($map['showItemDescriptions']) {
 
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><font color=black><b>Location:</b><br>'+lat+','+lon+'</font>'";
-
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><a href=\"http://terraserver.microsoft.com/image.aspx?t=1&s=10&lon='+lon+'&lat='+lat+'&w=1\" target=\'gpop\''
         +' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'
         +'View location at Terraserver</a><br/>(Unfortunately, USA only)'";
-
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><a href=\"http://topozone.com/map.asp?lat='+lat+'&lon='+lon+'&s=50&size=m&datum=nad83&layer=DRG25\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">View Localtion at TopoZone</a><br/>(Unfortunately, USA only)'";
-
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><a href=\"http://www.weatherbonk.com/weather/index.jsp?query='+lat+','+lon+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">WeatherBonk.com this location</a>'";
 

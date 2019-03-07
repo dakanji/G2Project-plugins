@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -34,8 +35,7 @@ class TagsPreloads {
 		if ($preload == 'TagLinks') {
 			global $gallery;
 
-			$urlGenerator =& $gallery->getUrlGenerator();
-
+			$urlGenerator     =& $gallery->getUrlGenerator();
 			$loaded[$preload] = 1;
 			$template->style(
 				$urlGenerator->generateUrl(

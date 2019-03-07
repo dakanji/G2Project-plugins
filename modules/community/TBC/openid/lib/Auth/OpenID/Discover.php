@@ -4,18 +4,13 @@
  * The OpenID and Yadis discovery implementation for OpenID 1.2.
  */
 require_once 'Auth/OpenID.php';
-
 require_once 'Auth/OpenID/Parse.php';
-
 require_once 'Auth/OpenID/Message.php';
-
 require_once 'Auth/Yadis/XRIRes.php';
-
 require_once 'Auth/Yadis/Yadis.php';
 
 // XML namespace value
 define('Auth_OpenID_XMLNS_1_0', 'http://openid.net/xmlns/1.0');
-
 // Yadis service types
 define('Auth_OpenID_TYPE_1_2', 'http://openid.net/signon/1.2');
 define('Auth_OpenID_TYPE_1_1', 'http://openid.net/signon/1.1');
@@ -117,6 +112,7 @@ class Auth_OpenID_ServiceEndpoint {
 		// Does this endpoint support this type?
 		return (in_array($type_uri, $this->type_uris)) ||
 		(($type_uri == Auth_OpenID_TYPE_2_0) &&
+
 		$this->isOPIdentifier());
 	}
 
@@ -131,7 +127,8 @@ class Auth_OpenID_ServiceEndpoint {
 	public function fromOPEndpointURL($op_endpoint_url) {
 		// Construct an OP-Identifier OpenIDServiceEndpoint object for
 		// a given OP Endpoint URL
-		$obj             = new Auth_OpenID_ServiceEndpoint();
+		$obj = new Auth_OpenID_ServiceEndpoint();
+
 		$obj->server_url = $op_endpoint_url;
 		$obj->type_uris  = array(Auth_OpenID_TYPE_2_0_IDP);
 
@@ -245,13 +242,13 @@ class Auth_OpenID_ServiceEndpoint {
 
 			list($delegate_url, $server_url) = $urls;
 
-			$service             = new Auth_OpenID_ServiceEndpoint();
+			$service = new Auth_OpenID_ServiceEndpoint();
+
 			$service->claimed_id = $uri;
 			$service->local_id   = $delegate_url;
 			$service->server_url = $server_url;
 			$service->type_uris  = array($type_uri);
-
-			$services[] = $service;
+			$services[]          = $service;
 		}
 
 		return $services;
@@ -279,14 +276,11 @@ class Auth_OpenID_ServiceEndpoint {
 			'openid',
 			Auth_OpenID_XMLNS_1_0
 		);
-
 		$service->parser->registerNamespace(
 			'xrd',
 			Auth_Yadis_XMLNS_XRD_2_0
 		);
-
-		$parser =& $service->parser;
-
+		$parser         =& $service->parser;
 		$permitted_tags = array();
 
 		if (in_array(Auth_OpenID_TYPE_1_1, $type_uris)
@@ -333,7 +327,6 @@ class Auth_OpenID_ServiceEndpoint {
 	public function Auth_OpenID_bestMatchingService($service, $preferred_types) {
 		// Return the index of the first matching type, or something
 		// higher if no type matches.
-		//
 		// This provides an ordering in which service elements that
 		// contain a type that comes earlier in the preferred types list
 		// come before service elements that come later. If a service
@@ -379,9 +372,7 @@ class Auth_OpenID_ServiceEndpoint {
 	// Extract OP Identifier services.  If none found, return the rest,
 	// sorted with most preferred first according to
 	// OpenIDServiceEndpoint.openid_type_uris.
-	//
 	// openid_services is a list of OpenIDServiceEndpoint objects.
-	//
 	// Returns a list of OpenIDServiceEndpoint objects."""
 	public function Auth_OpenID_getOPOrUserServices($openid_services) {
 		$op_services = Auth_OpenID_arrangeByType(
@@ -453,8 +444,7 @@ class Auth_OpenID_ServiceEndpoint {
 		}
 
 		$openid_services = array();
-
-		$response = call_user_func_array(
+		$response        = call_user_func_array(
 			$discover_function,
 			array($uri, &$fetcher)
 		);
@@ -528,8 +518,7 @@ class Auth_OpenID_ServiceEndpoint {
 			Auth_OpenID_getOpenIDTypeURIs(),
 			array('filter_MatchesAnyOpenIDType')
 		);
-
-		$openid_services = Auth_OpenID_makeOpenIDEndpoints(
+		$openid_services                    = Auth_OpenID_makeOpenIDEndpoints(
 			$iname,
 			$yadis_services
 		);

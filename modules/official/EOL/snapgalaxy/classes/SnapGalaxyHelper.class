@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -105,7 +106,8 @@ class SnapGalaxyHelper {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-			$entry  = array();
+
+			$entry = array();
 
 			if (!isset($permissions[$itemId]['snapgalaxy.print'])) {
 				// Skip any cart items for which we don't have print permission
@@ -132,17 +134,16 @@ class SnapGalaxyHelper {
 			}
 
 			if ($needSession) {
-				$sessionParam = array(
+				$sessionParam   = array(
 					$pwSession->getKey() => $pwSession->getId(),
 				);
-
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
 			}
 
-			$entry['id']       = $source->getId();
-			$entry['imageUrl'] = $urlGenerator->generateUrl(
+			$entry['id']          = $source->getId();
+			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -155,7 +156,6 @@ class SnapGalaxyHelper {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
 
@@ -170,7 +170,7 @@ class SnapGalaxyHelper {
 				}
 			}
 
-			$entry['thumbUrl'] = $urlGenerator->generateUrl(
+			$entry['thumbUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -183,7 +183,6 @@ class SnapGalaxyHelper {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$entry['thumbWidth']  = $thumbSource->getWidth();
 			$entry['thumbHeight'] = $thumbSource->getHeight();
 			$entry['quantity']    = $cartItemIds[$itemId];
@@ -261,6 +260,7 @@ class SnapGalaxyHelper {
 		)
 		) {
 			$cartUrlFragment = $matches[1];
+
 			/*
 			 * Store requesturl in session variable.
 			 * The user can come back to Gallery (by selecting "Add more print" on

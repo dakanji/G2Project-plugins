@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -115,6 +116,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 		$tmpDirs  = array();
 		$tmpFiles = array();
 		$cmd      = array($zip, $zipFile);
+
 		$albumDir = $gallery->getConfig('data.gallery.albums');
 		$i        = 0;
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
 
 /**
@@ -62,7 +62,7 @@ class PanoramaRenderer extends GalleryRenderer {
 
 		switch ($format) {
 			case 'HTML':
-				$src = $urlGenerator->generateUrl(
+				$src         = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $entity->getId(),
@@ -73,8 +73,7 @@ class PanoramaRenderer extends GalleryRenderer {
 						'forceSessionId' => true,
 					)
 				);
-
-				$jarUrl = $urlGenerator->generateUrl(
+				$jarUrl      = $urlGenerator->generateUrl(
 					array(
 						'href' => 'modules/panorama/java/Metamorphose.jar',
 					),
@@ -82,7 +81,6 @@ class PanoramaRenderer extends GalleryRenderer {
 						'forceFullUrl' => true,
 					)
 				);
-
 				$scrollerUrl = $urlGenerator->generateUrl(
 					array(
 						'href' => 'modules/panorama/images/slider.png',
@@ -93,9 +91,8 @@ class PanoramaRenderer extends GalleryRenderer {
 				);
 
 				list($width, $height) = array($entity->getWidth(), $entity->getHeight());
-
-				$downloadText = $module->translate('Downloading the Panorama Applet');
-				$noAppletText = $module->translate('Your browser does not support Java applets');
+				$downloadText         = $module->translate('Downloading the Panorama Applet');
+				$noAppletText         = $module->translate('Your browser does not support Java applets');
 
 				return sprintf(
 					'
@@ -115,7 +112,6 @@ class PanoramaRenderer extends GalleryRenderer {
 		<param name="ScrollerThumb" value="%s"/>
 		<param name="PanoramaTile" value="%s"/>
 		<param name="PanoramaSize" value="%d,%d"/>
-
 		<comment>
 		<embed width="%d" height="%d" code="Metamorphose" archive="%s"
 		 type="application/x-java-applet;version=1.4"

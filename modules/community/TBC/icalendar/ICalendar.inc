@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -173,6 +174,7 @@ class ICalendarController extends GalleryController {
 				}
 
 				$error = array_merge($error, $optionErrors);
+
 				// for each item, put the items warnings into our status array
 				for ($j = 0; $j < count($optionWarnings); $j++) {
 					$status['addedFiles'][$j]['warnings'] = array_merge($status['addedFiles'][$j]['warnings'], $optionWarnings[$j]);
@@ -215,12 +217,12 @@ class ICalendarView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		/*global $gallery;
-
 		list ($itemId, $addPlugin) = GalleryUtilities::getRequestVariables('itemId', 'addPlugin');
 
 		/* Make sure we have permission to add to this item
 
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.addDataItem');
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -237,7 +239,9 @@ class ICalendarView extends GalleryView {
 
 		/* Get all the add plugins
 		list ($ret, $allPluginIds) =
+
 		GalleryCoreApi::getAllFactoryImplementationIds('ItemAddPlugin');
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -245,7 +249,9 @@ class ICalendarView extends GalleryView {
 		$pluginInstances = array();
 		foreach (array_keys($allPluginIds) as $pluginId) {
 		list ($ret, $plugin) =
+
 		GalleryCoreApi::newFactoryInstanceById('ItemAddPlugin', $pluginId);
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -258,7 +264,6 @@ class ICalendarView extends GalleryView {
 		if ($isAppropriate) {
 		$pluginInstances[$pluginId] = $plugin;
 		}
-
 		}
 
 		/* Get all the add options
@@ -271,15 +276,16 @@ class ICalendarView extends GalleryView {
 		* If the plugin is empty get it from the session.  If it's empty there,
 		* default to the first plugin we find.  Either way, save the user's
 		* preference in the session.
+
 		$session =& $gallery->getSession();
 		$addPluginSessionKey = 'core.view.ItemAdd.addPlugin.' . get_class($item);
 		if (empty($addPlugin) || !isset($pluginInstances[$addPlugin])) {
 		$addPlugin = $session->get($addPluginSessionKey);
+
 		if (empty($addPlugin) || !isset($pluginInstances[$addPlugin])) {
 		$ids = array_keys($pluginInstances);
 		$addPlugin = $ids[0];
 		}
-
 		}
 
 		$session->put($addPluginSessionKey, $addPlugin);
@@ -304,7 +310,9 @@ class ICalendarView extends GalleryView {
 
 		/* Let the plugin load its template data
 		list ($ret, $ItemAdd['pluginFile'], $ItemAdd['pluginL10Domain']) =
+
 		$pluginInstances[$addPlugin]->loadTemplate($template, $form, $item);
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -313,7 +321,9 @@ class ICalendarView extends GalleryView {
 		$ItemAdd['options'] = array();
 		foreach ($optionInstances as $option) {
 		list ($ret, $entry['file'], $entry['l10Domain']) =
+
 		$option->loadTemplate($template, $form, $item);
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -321,7 +331,6 @@ class ICalendarView extends GalleryView {
 		if (!empty($entry['file'])) {
 		$ItemAdd['options'][] = $entry;
 		}
-
 		}
 
 		/* Make sure that we've got some toolkits
@@ -336,16 +345,14 @@ class ICalendarView extends GalleryView {
 		$ItemAdd['hasToolkit'] = true;
 		break;
 		}
-
 		}
 
 		$template->setVariable('ItemAdd', $ItemAdd);
 		$template->setVariable('controller', 'core.ItemAdd');
+
 		return array(null,
 			 array('body' => 'modules/core/templates/ItemAdd.tpl'));*/
-
-		$weekStartDate = time() - (3 * 86400);
-
+		$weekStartDate               = time() - (3 * 86400);
 		$CalendarMonth               = array();
 		$CalendarMonth['monthDates'] = array();
 		$today                       = getdate();
@@ -369,14 +376,11 @@ class ICalendarView extends GalleryView {
 		$CalendarMonth['eventsPerDay'] = 4;
 
 		$template->setVariable('CalendarMonth', $CalendarMonth);
-
 		$template->javascript('modules/calendar/lib/javascript-logging/js/logging.js');
 		$template->javascript('modules/calendar/lib/javascript-logging/js/class.js');
 		$template->style('modules/calendar/lib/javascript-logging/css/logging.css');
-
 		$template->javascript('modules/calendar/lib/DataRequestor.js');
 		$template->javascript('modules/calendar/lib/domdrag/dom-drag.js');
-
 		$template->javascript('modules/calendar/javascript/calendar.js');
 		$template->javascript('modules/calendar/javascript/util.js');
 		$template->style('modules/calendar/css/calendar.css');

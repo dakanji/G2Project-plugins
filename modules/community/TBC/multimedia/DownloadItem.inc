@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2012 Bharat Mediratta
@@ -145,6 +146,7 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$ret = GalleryCoreApi::createFastDownloadFile($item);
+
 		// Ignore failures since the file has already been sent
 		return null;
 	}
@@ -167,6 +169,7 @@ class DownloadItemView extends GalleryView {
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
+
 		$stats = $platform->stat($data['derivativePath']);
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
@@ -204,6 +207,7 @@ class DownloadItemView extends GalleryView {
 					}
 
 					echo $bits;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 
@@ -229,8 +233,7 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
-		$fp = $platform->fopen($data['derivativePath'], 'rb');
-
+		$fp     = $platform->fopen($data['derivativePath'], 'rb');
 		$size   = $platform->filesize($data['derivativePath']); // File size
 		$length = $size;           // Content length
 		$start  = 0;               // Start byte
@@ -248,14 +251,17 @@ class DownloadItemView extends GalleryView {
 		 * as well as a boundry header to indicate the various chunks of data.
 		 */
 		$phpVm->header("Accept-Ranges: 0-$length");
+
 		// $phpVm->header('Accept-Ranges: bytes');
 		// multipart/byteranges
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.2
 		if (isset($_SERVER['HTTP_RANGE'])) {
 			$c_start = $start;
 			$c_end   = $end;
+
 			// Extract the range string
 			list(, $range) = explode('=', GalleryUtilities::getServerVar('HTTP_RANGE'), 2);
+
 			// Make sure the client hasn't sent us a multibyte range
 			if (strpos($range, ',') !== false) {
 				// (?) Shoud this be issued here, or should the first
@@ -263,6 +269,7 @@ class DownloadItemView extends GalleryView {
 				// we output the whole content?
 				$phpVm->header('HTTP/1.1 416 Requested Range Not Satisfiable');
 				$phpVm->header("Content-Range: bytes $start-$end/$size");
+
 				// (?) Echo some info to the client?
 				return GalleryCoreApi::error(ERROR_BAD_REQUEST);
 			}
@@ -282,12 +289,15 @@ class DownloadItemView extends GalleryView {
 			/* Check the range and make sure it's treated according to the specs.
 			 * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
 			 */
+
 			// End bytes can not be larger than $end.
 			$c_end = ($c_end > $end) ? $end : $c_end;
+
 			// Validate the requested range and return an error if it's not correct.
 			if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size) {
 				$phpVm->header('HTTP/1.1 416 Requested Range Not Satisfiable');
 				$phpVm->header("Content-Range: bytes $start-$end/$size");
+
 				// (?) Echo some info to the client?
 				return GalleryCoreApi::error(ERROR_BAD_REQUEST);
 			}
@@ -332,8 +342,7 @@ class DownloadItemView extends GalleryView {
 	public function _assertPermissions($item, $derivativeType) {
 		global $gallery;
 
-		$session =& $gallery->getSession();
-
+		$session             =& $gallery->getSession();
 		$itemIdForPermission = $item->getId();
 
 		if (!empty($derivativeType)) {

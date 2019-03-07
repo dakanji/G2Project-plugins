@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 /**
@@ -90,9 +90,16 @@ class AdminTagsController extends GalleryController {
 			}
 		}
 
-		$results['status']                                = $status;
-		$results['error']                                 = $error;
-		$results[empty($error) ? 'redirect' : 'delegate'] = $target;
+		$results['status'] = $status;
+		$results['error']  = $error;
+
+		if (empty($error)) {
+			$route = 'redirect';
+		} else {
+			$route = 'delegate';
+		}
+
+		$results[$route] = $target;
 
 		return array(null, $results);
 	}

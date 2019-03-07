@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * OpenID Module.  Login and register with an actually distributed identity system.
  * @package OpenId
  * @author Jack Bates <ms419@freezone.co.uk>
@@ -33,12 +36,10 @@ class OpenIdModule extends GalleryModule {
 				'Login with a distributed identity system (unfinished module)'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));
 		$this->setCallbacks('getSystemLinks|getSiteAdminViews|registerEventListeners');
 	}
@@ -217,8 +218,7 @@ class OpenIdModule extends GalleryModule {
 
 					// Remove corresponding OpenIDs
 					$galleryIds[] = $entity->getId();
-
-					$ret = GalleryCoreApi::removeMapEntry(
+					$ret          = GalleryCoreApi::removeMapEntry(
 						'OpenIdMap',
 						array(
 							'galleryId' => $galleryIds,

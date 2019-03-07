@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -32,7 +33,6 @@
 <title><?php echo $_GET['ip']; ?></title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-
 <body>
 <p class="pageTitle"><?php echo $_GET['ip']; ?></p>
 <p class="copyText"><?php echo gethostbyaddr($_GET['ip']); ?></p>

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -18,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -45,7 +45,6 @@ class CompleteController extends GalleryController {
 		/* note: errors returned here should NOT affect order record
 		   it just means the customer baulked at payment - not that there was a processing error
 		   besides it's easily spoofed */
-
 		list($error, $transactionId) = GalleryUtilities::getRequestVariables('error', 'transactionId');
 
 		if (empty($transactionId)) {

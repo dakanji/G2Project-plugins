@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/publishxp/DownloadRegistryFile.inc');
 
 /**
@@ -64,13 +64,11 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 
 	public function testGetCharsetFromRequestDefault() {
 		$this->assertEquals('CP1252', $this->view->_getCharsetFromRequest(), 'default');
-
 		$this->_setActiveLanguageCode('en_US');
 		$this->assertEquals('CP1252', $this->view->_getCharsetFromRequest(), 'default 2');
-
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'ja';
-		$this->assertEquals('CP932', $this->view->_getCharsetFromRequest(), 'HTTP override');
 
+		$this->assertEquals('CP932', $this->view->_getCharsetFromRequest(), 'HTTP override');
 		$this->_setActiveLanguageCode('ru_RU');
 		$this->assertEquals(
 			'CP1251',
@@ -88,23 +86,29 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 		}
 
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'ja';
+
 		$this->assertEquals('CP932', $this->view->_getCharsetFromRequest(), 'HTTP override');
 	}
 
 	public function testGetCharsetFromRequestChinese() {
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh';
+
 		$this->assertEquals('CP950', $this->view->_getCharsetFromRequest(), 'default');
 
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-cn';
+
 		$this->assertEquals('CP936', $this->view->_getCharsetFromRequest(), 'Simplified 1');
 
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-tw';
+
 		$this->assertEquals('CP950', $this->view->_getCharsetFromRequest(), 'Traditional 1');
 
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-hans_HK';
+
 		$this->assertEquals('CP936', $this->view->_getCharsetFromRequest(), 'Simplified 2');
 
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-Hant';
+
 		$this->assertEquals('CP950', $this->view->_getCharsetFromRequest(), 'Traditional 2');
 	}
 

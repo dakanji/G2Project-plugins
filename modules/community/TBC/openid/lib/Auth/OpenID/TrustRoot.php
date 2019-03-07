@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions for dealing with OpenID trust roots
  *
@@ -140,9 +141,8 @@ class Auth_OpenID_TrustRoot {
 		}
 
 		$parts['scheme'] = $scheme;
-
-		$host      = strtolower($parts['host']);
-		$hostparts = explode('*', $host);
+		$host            = strtolower($parts['host']);
+		$hostparts       = explode('*', $host);
 
 		switch (count($hostparts)) {
 			case 1:

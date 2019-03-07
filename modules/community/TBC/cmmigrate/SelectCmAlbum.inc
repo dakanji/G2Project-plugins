@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/cmmigrate/classes/CmMigrateHelper.class');
 
 /**
@@ -48,7 +48,8 @@ class SelectCmAlbumController extends GalleryController {
 			} else {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
-				$tmp      = trim($form['copperminePath']);
+
+				$tmp = trim($form['copperminePath']);
 
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
@@ -77,7 +78,6 @@ class SelectCmAlbumController extends GalleryController {
 				}
 
 				$session->put('cmmigrate.view.SelectCmAlbum.recentPaths', $recentPaths);
-
 				$redirect['view']           = 'core.SiteAdmin';
 				$redirect['subView']        = 'cmmigrate.ChooseCmObjects';
 				$redirect['copperminePath'] = $form['copperminePath'];

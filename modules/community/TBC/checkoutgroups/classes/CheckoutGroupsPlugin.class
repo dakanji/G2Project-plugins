@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -66,6 +67,7 @@ class CheckoutGroupsPlugin extends CheckoutCustomPageInterface_1_0 {
 	public function handleRequest($form, &$item, &$preferred) {
 		foreach ($form['checkoutGroups'] as $productId => $productParameters) {
 			$itemId = $item->getId();
+
 			// annoying that there's no return value from unticked checkbox
 			if (!isset($productParameters['groupHideAnonymous'])) {
 				$productParameters['groupHideAnonymous'] = '';

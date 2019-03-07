@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: ExtensionsInTitles.inc,v $
  * $Revision: 1848 $
@@ -20,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  *
  * @package MRAnalysis
@@ -48,8 +50,7 @@ class ExtensionsInTitlesView extends GalleryView {
 
 		foreach ($extensions as $ext) {
 			$search = '.' . $ext;
-
-			$pos = stripos($title, $search);
+			$pos    = stripos($title, $search);
 
 			if ($pos !== false) {
 				if ($pos + strlen($search) == $titlelength) {
@@ -70,7 +71,6 @@ class ExtensionsInTitlesView extends GalleryView {
 		$form['formName'] = 'AdminExtensionsInTitles';
 
 		$gallery->guaranteeTimeLimit(120);
-
 		$query = "
             SELECT
                 [GalleryPhotoItem::id]

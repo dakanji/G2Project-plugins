@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHelper.class');
 
 /**
@@ -36,8 +36,7 @@ class NotificationSiteAdminController extends GalleryController {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
-		$error = $status = array();
+		$error   = $status   = array();
 
 		// Check if logged in and is admin
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -96,7 +95,6 @@ class NotificationSiteAdminController extends GalleryController {
 						|| $notificationMap['currentHandler'] != $handlerId
 					) {
 						$this->_removeHandlerEntry($notifications, $notificationMap);
-
 						$ret = $this->_addHandlerEntry($notifications, $notificationMap);
 
 						if ($ret) {
@@ -184,7 +182,6 @@ class NotificationSiteAdminController extends GalleryController {
 	public function _removeHandlerEntry(&$notifications, $notificationMap) {
 		$notificationName = $notificationMap['currentName'];
 		$handlerId        = $notificationMap['currentHandler'];
-
 		unset($notifications[$notificationName][$handlerId]);
 
 		if (empty($notifications[$notificationName])) {
@@ -204,7 +201,6 @@ class NotificationSiteAdminView extends GalleryView {
 		global $gallery;
 
 		$template->style('modules/notification/data/grids.css');
-
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {

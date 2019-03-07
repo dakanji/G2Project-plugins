@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/picasa/classes/Picasa2DataParser.class');
 
 /**
@@ -50,13 +50,15 @@ class SelectPicasaExportPathController extends GalleryController {
 			} else {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
-				$tmp      = trim($form['picasaXmlPath']);
+
+				$tmp = trim($form['picasaXmlPath']);
 
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
 				}
 
 				GalleryUtilities::unsanitizeInputValues($tmp, false);
+
 				$form['picasaXmlPath'] = trim($tmp);
 
 				if (!Picasa2DataParser::isValidPicasaXmlPath($form['picasaXmlPath'])) {
@@ -160,8 +162,7 @@ class SelectPicasaExportPathView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$albumTree = GalleryUtilities::createAlbumTree($albums);
-
+		$albumTree                             = GalleryUtilities::createAlbumTree($albums);
 		$SelectPicasaExportPath                = array();
 		$SelectPicasaExportPath['recentPaths'] = $recentPaths;
 		$SelectPicasaExportPath['hasToolkit']  = $hasToolkit;

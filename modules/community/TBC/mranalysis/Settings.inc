@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: AlbumMissingMapLocation.inc,v $
  * $Revision: 1848 $
@@ -20,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  *
  * @package MRAnalysis
@@ -108,8 +110,7 @@ class SettingsView extends GalleryView {
 		global $gallery;
 
 		if ($form['formName'] != 'mranalysis.Settings') {
-			$form['formName'] = 'mranalysis.Settings';
-
+			$form['formName']                            = 'mranalysis.Settings';
 			$form['TreatZeroSizedDerivativesAsBroken']   = SettingsAccess::GetValueWithDefault('TreatZeroSizedDerivativesAsBroken', SettingsConstants::DefaultTreatZeroSizedDerivativesAsBroken());
 			$form['CheckForDuplicateTitlesAcrossAlbums'] = SettingsAccess::GetValueWithDefault('CheckForDuplicateTitlesAcrossAlbums', SettingsConstants::DefaultCheckForDuplicateTitlesAcrossAlbums());
 		}

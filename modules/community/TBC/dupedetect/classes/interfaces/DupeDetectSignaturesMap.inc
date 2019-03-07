@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: ClassCode.xsl,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @package ImageBlock
  * @subpackage ClassInterfaces
@@ -97,8 +99,7 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->addMapEntry('DupeDetectSignaturesMap', $data);
+		$ret     = $storage->addMapEntry('DupeDetectSignaturesMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -122,8 +123,7 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->removeMapEntry('DupeDetectSignaturesMap', $data);
+		$ret     = $storage->removeMapEntry('DupeDetectSignaturesMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -142,8 +142,7 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->removeAllMapEntries('DupeDetectSignaturesMap');
+		$ret     = $storage->removeAllMapEntries('DupeDetectSignaturesMap');
 
 		if ($ret->isError()) {
 			return $ret;
@@ -168,8 +167,7 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->updateMapEntry('DupeDetectSignaturesMap', $match, $change);
+		$ret     = $storage->updateMapEntry('DupeDetectSignaturesMap', $match, $change);
 
 		if ($ret->isError()) {
 			return $ret;

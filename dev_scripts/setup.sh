@@ -4,6 +4,7 @@
 ABSPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 HOOKSPATH=$ABSPATH/hooks
 MAINPATH=$ABSPATH/..
+CSCACHEPATH=$MAINPATH/.php_cs_cache
 
 if [ ! -L $MAINPATH/.git/hooks ]
 then
@@ -43,8 +44,12 @@ then
 
 
 
+	# Delete php_cs_cache
+	rm -f $CSCACHEPATH
+
+
 	# Add Upstream Remote
-	if [ ! -d "$MAINPATH/.git/refs/upstream" ]
+	if [ ! -d "$MAINPATH/.git/refs/remotes/upstream" ]
 	then
     	git remote add upstream https://github.com/dakanji/G2Project-plugins
 	fi

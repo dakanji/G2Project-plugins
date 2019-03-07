@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  *
@@ -18,7 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * The implementation of the moderation-module
  * @package Moderation
  * @author Emanuele Pedrona <e.pedrona@edronsoft.com>
@@ -35,12 +38,10 @@ class ModerateModule extends GalleryModule {
 				'User/Moderation'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews');
 	}
@@ -147,7 +148,6 @@ class ModerateModule extends GalleryModule {
 						}
 
 						*/
-
 						$ret = GalleryCoreApi::removeGroupPermission(
 							$parentEntity->getId(),
 							$core['id.everybodyGroup'],

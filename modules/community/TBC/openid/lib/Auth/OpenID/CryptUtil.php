@@ -38,7 +38,8 @@ class Auth_OpenID_CryptUtil {
 	 */
 	public function getBytes($num_bytes) {
 		static $f = null;
-		$bytes    = '';
+
+		$bytes = '';
 
 		if ($f === null) {
 			if (Auth_OpenID_RAND_SOURCE === null) {
@@ -92,14 +93,12 @@ class Auth_OpenID_CryptUtil {
 		}
 
 		$duplicate = 256 % $popsize;
-
-		$str = '';
+		$str       = '';
 
 		for ($i = 0; $i < $length; $i++) {
 			do {
 				$n = ord(Auth_OpenID_CryptUtil::getBytes(1));
 			} while ($n < $duplicate);
-
 			$n   %= $popsize;
 			$str .= $population[$n];
 		}

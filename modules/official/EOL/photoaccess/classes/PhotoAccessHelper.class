@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -105,7 +106,8 @@ class PhotoAccessHelper {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-			$entry  = array();
+
+			$entry = array();
 
 			if (!isset($permissions[$itemId]['photoaccess.print'])) {
 				// Skip any cart items for which we don't have print permission
@@ -132,17 +134,16 @@ class PhotoAccessHelper {
 			}
 
 			if ($needSession) {
-				$sessionParam = array(
+				$sessionParam   = array(
 					$pwSession->getKey() => $pwSession->getId(),
 				);
-
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
 			}
 
-			$entry['id']       = $source->getId();
-			$entry['imageUrl'] = $urlGenerator->generateUrl(
+			$entry['id']          = $source->getId();
+			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -155,7 +156,6 @@ class PhotoAccessHelper {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
 
@@ -183,8 +183,8 @@ class PhotoAccessHelper {
 					'forceFullUrl'   => true,
 				)
 			);
+			$entries[]         = $entry;
 
-			$entries[] = $entry;
 			// We should scan the results for a "200 OK" result
 		}
 
@@ -240,8 +240,7 @@ class PhotoAccessHelper {
 			);
 		}
 
-		$lines[] = '</add-cart-request>';
-
+		$lines[]                 = '</add-cart-request>';
 		$postData                = array();
 		$postData['cb']          = 'CB_GP';
 		$postData['xml_request'] = join('', $lines);
@@ -284,6 +283,7 @@ class PhotoAccessHelper {
 		)
 		) {
 			$cartUrlFragment = str_replace('&#38;', '&', $matches[1]);
+
 			$session->put('photoaccess.cartUrlFragment', $cartUrlFragment);
 			$redirectUrl = 'http://' . $photoAccessServer . str_replace('&#38;', '&', $matches[2]);
 		} else {

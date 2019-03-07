@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -32,8 +33,7 @@ class AddviaemailpageController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
 
-		$itemId = GalleryUtilities::getRequestVariables('itemId');
-
+		$itemId   = GalleryUtilities::getRequestVariables('itemId');
 		$redirect = $status = $error = array();
 
 		list($ret, $moduleParams) = GalleryCoreApi::fetchAllPluginParameters(
@@ -45,12 +45,10 @@ class AddviaemailpageController extends GalleryController {
 			return $ret;
 		}
 
-		$block =& $smarty->_tpl_vars['block'];
-
-		$redirect['view']   = 'addviaemail.Addviaemailpage';
-		$redirect['itemId'] = (int)$itemId;
-		$status['added']    = 1;
-
+		$block               =& $smarty->_tpl_vars['block'];
+		$redirect['view']    = 'addviaemail.Addviaemailpage';
+		$redirect['itemId']  = (int)$itemId;
+		$status['added']     = 1;
 		$results['status']   = $status;
 		$results['error']    = $error;
 		$results['redirect'] = $redirect;
@@ -76,13 +74,16 @@ class AddviaemailpageView extends GalleryView {
 
 		$Addviaemail         = array();
 		$Addviaemail['item'] = (array)$item;
+
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailHelper.class');
+
 		// list ($ret, $Addviaemail['value']) = AddviaemailHelper::getItemValue($item->getId());
 		list($ret, $Addviaemail) = AddviaemailHelper::processEmails();
 
 		if ($ret) {
 			$template->setVariable('failure', '1');
 			$template->setVariable('failureMsg', $ret->getErrorMessage());
+
 			//return array($ret, null);
 		}
 

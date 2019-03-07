@@ -1,24 +1,21 @@
 <?php
+
 // --------------------------------------------------------------------------------
 // PhpConcept Library (PCL) Trace 2.0-beta1
 // --------------------------------------------------------------------------------
 // License GNU/GPL - Vincent Blavet - August 2003
 // http://www.phpconcept.net
 // --------------------------------------------------------------------------------
-//
 //   The PCL Trace library description is not available yet.
 //   This library was first released only with PclZip library.
 //   An independant release will be soon available on http://www.phpconcept.net
-//
 // --------------------------------------------------------------------------------
-//
 // Warning :
 //   This library and the associated files are non commercial, non professional
 //   work.
 //   It should not have unexpected results. However if any damage is caused by
 //   this software the author can not be responsible.
 //   The use of this software is at the risk of the user.
-//
 // --------------------------------------------------------------------------------
   // ----- Version
   $g_pcltrace_version = '2.0-beta1';
@@ -31,6 +28,7 @@
   $g_pcl_trace_index    = 0;
   $g_pcl_trace_level    = 1;
   $g_pcl_trace_suspend  = false;
+
   //$g_pcl_trace_entries = array();
   // ----- For compatibility reason
   define('PCLTRACE_LIB', 1);
@@ -52,9 +50,7 @@ function PclTraceOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt')
 
 function TrOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt') {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend;
 
 	// ----- Enable trace mode
@@ -75,8 +71,7 @@ function TrOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt') {
 
 	// ----- Memorize filename
 	$g_pcl_trace_filename = $p_filename;
-
-	$g_pcl_trace_suspend = false;
+	$g_pcl_trace_suspend  = false;
 }
 
   // --------------------------------------------------------------------------------
@@ -108,7 +103,6 @@ function PclTraceOff() {
 
 function TrOff() {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index;
 
 	// ----- Clean
@@ -158,9 +152,7 @@ function PclTraceFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message =
 
 function TrFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message = '') {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
@@ -218,9 +210,7 @@ function PclTraceFctEnd($p_file, $p_line, $p_return = 1, $p_message = '') {
 
 function TrFctEnd($p_file, $p_line, $p_return = 1, $p_message = '') {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
@@ -278,9 +268,7 @@ function PclTraceFctMessage($p_file, $p_line, $p_level, $p_message = '') {
 
 function TrFctMessage($p_file, $p_line, $p_level, $p_message = '') {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
@@ -313,9 +301,7 @@ function PclTraceMessage($p_file, $p_line, $p_level, $p_message = '') {
 
 function TrMessage($p_file, $p_line, $p_level, $p_message = '') {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
@@ -348,9 +334,7 @@ function PclTraceDisplay() {
 
 function TrDisplay() {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
@@ -399,7 +383,6 @@ function TrDisplay() {
 
 		//echo "<td>&nbsp</td>";
 		echo '</tr></table></td>';
-
 		echo '<td width=2></td>';
 
 		switch ($g_pcl_trace_entries[$i]['type']) {
@@ -457,16 +440,13 @@ function TrDisplay() {
   // --------------------------------------------------------------------------------
 function PclTraceDisplayNew() {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
 	if (($g_pcl_trace_level <= 0) || ($g_pcl_trace_mode != 'memory') || ($g_pcl_trace_suspend)) {
 		return;
 	} ?>
-
 <script language="javascript">
 function PclTraceToggleView(element) {
 	if (element.style.visibility == 'visible') {
@@ -474,7 +454,6 @@ function PclTraceToggleView(element) {
 	} else {
 		PclTraceShow(element);
 	}
-
 }
 
 function PclTraceShow(element) {
@@ -541,7 +520,6 @@ function PclTraceHide(element) {
 	<td bgcolor="#0000CC">&nbsp;</td>
   </tr>
 </table>
-
 <script language="javascript">
 function PclTraceShowAll() {
 	<?php
@@ -568,7 +546,6 @@ function PclTraceHideAll() {
 <input type='button' value='Hide All' onclick="PclTraceHideAll();"></input>
 </p>
 </form>
-
 	<?php
 }
 
@@ -580,9 +557,7 @@ function PclTraceHideAll() {
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemStart($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend; ?>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
@@ -610,9 +585,7 @@ function PclTraceDisplayItemStart($p_id) {
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemStop($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend; ?>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
@@ -621,11 +594,9 @@ function PclTraceDisplayItemStop($p_id) {
 			  </font></b></font></td>
 		</tr>
 	  </table>
-
 		  </td>
 		</tr>
 	  </table>
-
 	<?php
 }
 
@@ -637,26 +608,21 @@ function PclTraceDisplayItemStop($p_id) {
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemMsg($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
 	global $g_pcl_trace_suspend; ?>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td width="10"><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2"><center>.</center></font></b></font></td>
 		  <td style="width:2px;"></td>
 		  <td><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2">
-
 			<?php echo $g_pcl_trace_entries[$p_id]['message']; ?>
 			  </font></b></font></td>
-
 	  <td width=5></td>
 	  <td><font size=1 face="Verdana, Arial, Helvetica, sans-serif"><?php echo basename($g_pcl_trace_entries[$p_id]['file']); ?></font></td>
 	  <td width=5></td>
 	  <td><font size=1 face="Verdana, Arial, Helvetica, sans-serif"><?php echo $g_pcl_trace_entries[$p_id]['line']; ?></font></td>
 		</tr>
 	  </table>
-
 	<?php
 }
 
@@ -668,7 +634,6 @@ function PclTraceDisplayItemMsg($p_id) {
   // --------------------------------------------------------------------------------
 function PclTraceAction($p_entry) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
 
 	if ($g_pcl_trace_mode == 'normal') {

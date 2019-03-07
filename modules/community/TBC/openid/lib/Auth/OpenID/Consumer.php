@@ -161,27 +161,16 @@
  * Require utility classes and functions for the consumer.
  */
 require_once 'Auth/OpenID.php';
-
 require_once 'Auth/OpenID/Message.php';
-
 require_once 'Auth/OpenID/HMAC.php';
-
 require_once 'Auth/OpenID/Association.php';
-
 require_once 'Auth/OpenID/CryptUtil.php';
-
 require_once 'Auth/OpenID/DiffieHellman.php';
-
 require_once 'Auth/OpenID/KVForm.php';
-
 require_once 'Auth/OpenID/Nonce.php';
-
 require_once 'Auth/OpenID/Discover.php';
-
 require_once 'Auth/OpenID/URINorm.php';
-
 require_once 'Auth/Yadis/Manager.php';
-
 require_once 'Auth/Yadis/XRI.php';
 
 /**
@@ -317,8 +306,7 @@ class Auth_OpenID_Consumer {
 	 */
 	public function begin($user_url, $anonymous = false) {
 		$openid_url = $user_url;
-
-		$disco = $this->getDiscoveryObject(
+		$disco      = $this->getDiscoveryObject(
 			$this->session,
 			$openid_url,
 			$this->session_key_prefix
@@ -373,7 +361,8 @@ class Auth_OpenID_Consumer {
 	 * authentication request object.
 	 */
 	public function &beginWithoutDiscovery($endpoint, $anonymous = false) {
-		$loader   = new Auth_OpenID_ServiceEndpointLoader();
+		$loader = new Auth_OpenID_ServiceEndpointLoader();
+
 		$auth_req = $this->consumer->begin($endpoint);
 		$this->session->set(
 			$this->_token_key,
@@ -427,11 +416,12 @@ class Auth_OpenID_Consumer {
 			$query = Auth_OpenID::getQuery();
 		}
 
-		$loader        = new Auth_OpenID_ServiceEndpointLoader();
+		$loader = new Auth_OpenID_ServiceEndpointLoader();
+
 		$endpoint_data = $this->session->get($this->_token_key);
 		$endpoint      = $loader->fromSession($endpoint_data);
+		$message       = Auth_OpenID_Message::fromPostArgs($query);
 
-		$message  = Auth_OpenID_Message::fromPostArgs($query);
 		$response = $this->consumer->complete($message, $endpoint, $current_url);
 		$this->session->del($this->_token_key);
 
@@ -442,7 +432,6 @@ class Auth_OpenID_Consumer {
 					$response->identity_url,
 					$this->session_key_prefix
 				);
-
 				$disco->cleanup(true);
 			}
 		}
@@ -474,7 +463,6 @@ class Auth_OpenID_DiffieHellmanSHA1ConsumerSession {
 		$math = Auth_OpenID_getMathLib();
 
 		$cpub = $math->longToBase64($this->dh->public);
-
 		$args = array(
 			'dh_consumer_public' => $cpub,
 		);
@@ -608,12 +596,10 @@ class Auth_OpenID_GenericConsumer {
 	 *
 	 */
 	public function __construct(&$store) {
-		$this->store       = $store;
-		$this->negotiator  = Auth_OpenID_getDefaultNegotiator();
-		$this->_use_assocs = ($this->store ? true : false);
-
-		$this->fetcher = Auth_Yadis_Yadis::getHTTPFetcher();
-
+		$this->store         = $store;
+		$this->negotiator    = Auth_OpenID_getDefaultNegotiator();
+		$this->_use_assocs   = ($this->store ? true : false);
+		$this->fetcher       = Auth_Yadis_Yadis::getHTTPFetcher();
 		$this->session_types = Auth_OpenID_getAvailableSessionTypes();
 	}
 
@@ -626,6 +612,7 @@ class Auth_OpenID_GenericConsumer {
 	public function begin($service_endpoint) {
 		$assoc = $this->_getAssociation($service_endpoint);
 		$r     = new Auth_OpenID_AuthRequest($service_endpoint, $assoc);
+
 		$r->return_to_args[$this->openid1_nonce_query_arg_name] = Auth_OpenID_mkNonce();
 
 		if ($r->message->isOpenID1()) {
@@ -643,8 +630,7 @@ class Auth_OpenID_GenericConsumer {
 	 * @access private
 	 */
 	public function complete($message, $endpoint, $return_to) {
-		$mode = $message->getArg(Auth_OpenID_OPENID_NS, 'mode', '<no mode set>');
-
+		$mode         = $message->getArg(Auth_OpenID_OPENID_NS, 'mode', '<no mode set>');
 		$mode_methods = array(
 			'cancel'       => '_complete_cancel',
 			'error'        => '_complete_error',
@@ -793,8 +779,7 @@ class Auth_OpenID_GenericConsumer {
 			return $signed_list_str;
 		}
 
-		$signed_list = explode(',', $signed_list_str);
-
+		$signed_list   = explode(',', $signed_list_str);
 		$signed_fields = Auth_OpenID::addPrefix($signed_list, 'openid.');
 
 		return new Auth_OpenID_SuccessResponse($endpoint, $message, $signed_fields);
@@ -873,7 +858,8 @@ class Auth_OpenID_GenericConsumer {
 	public function _verifyReturnToArgs($query) {
 		// Verify that the arguments in the return_to URL are present in this
 		// response.
-		$message   = Auth_OpenID_Message::fromPostArgs($query);
+		$message = Auth_OpenID_Message::fromPostArgs($query);
+
 		$return_to = $message->getArg(Auth_OpenID_OPENID_NS, 'return_to');
 
 		if (Auth_OpenID::isFailure($return_to)) {
@@ -886,8 +872,7 @@ class Auth_OpenID_GenericConsumer {
 		}
 
 		$parsed_url = parse_url($return_to);
-
-		$q = array();
+		$q          = array();
 
 		if (array_key_exists('query', $parsed_url)) {
 			$rt_query = $parsed_url['query'];
@@ -1015,7 +1000,8 @@ class Auth_OpenID_GenericConsumer {
 			$claimed_id = $endpoint->claimed_id;
 		}
 
-		$to_match            = new Auth_OpenID_ServiceEndpoint();
+		$to_match = new Auth_OpenID_ServiceEndpoint();
+
 		$to_match->type_uris = array(Auth_OpenID_TYPE_1_1);
 		$to_match->local_id  = $message->getArg(Auth_OpenID_OPENID1_NS, 'identity');
 
@@ -1125,12 +1111,11 @@ class Auth_OpenID_GenericConsumer {
 	 * @access private
 	 */
 	public function _verifyDiscoveryResultsOpenID2($message, $endpoint) {
-		$to_match             = new Auth_OpenID_ServiceEndpoint();
+		$to_match = new Auth_OpenID_ServiceEndpoint();
+
 		$to_match->type_uris  = array(Auth_OpenID_TYPE_2_0);
 		$to_match->claimed_id = $message->getArg(Auth_OpenID_OPENID2_NS, 'claimed_id');
-
-		$to_match->local_id = $message->getArg(Auth_OpenID_OPENID2_NS, 'identity');
-
+		$to_match->local_id   = $message->getArg(Auth_OpenID_OPENID2_NS, 'identity');
 		$to_match->server_url = $message->getArg(Auth_OpenID_OPENID2_NS, 'op_endpoint');
 
 		if ($to_match->server_url === null) {
@@ -1270,11 +1255,10 @@ class Auth_OpenID_GenericConsumer {
 			$nonce      = $this->_idResGetNonceOpenID1($message, $endpoint);
 			$server_url = '';
 		} else {
-			$nonce = $message->getArg(
+			$nonce      = $message->getArg(
 				Auth_OpenID_OPENID2_NS,
 				'response_nonce'
 			);
-
 			$server_url = $endpoint->server_url;
 		}
 
@@ -1312,8 +1296,7 @@ class Auth_OpenID_GenericConsumer {
 	public function _idResCheckForFields($message) {
 		$basic_fields     = array('return_to', 'assoc_handle', 'sig', 'signed');
 		$basic_sig_fields = array('return_to', 'identity');
-
-		$require_fields = array(
+		$require_fields   = array(
 			Auth_OpenID_OPENID2_NS => array_merge(
 				$basic_fields,
 				array('op_endpoint')
@@ -1426,8 +1409,7 @@ class Auth_OpenID_GenericConsumer {
 	 * @access private
 	 */
 	public function _processCheckAuthResponse($response, $server_url) {
-		$is_valid = $response->getArg(Auth_OpenID_OPENID_NS, 'is_valid', 'false');
-
+		$is_valid          = $response->getArg(Auth_OpenID_OPENID_NS, 'is_valid', 'false');
 		$invalidate_handle = $response->getArg(Auth_OpenID_OPENID_NS, 'invalidate_handle');
 
 		if ($invalidate_handle !== null) {
@@ -1529,8 +1511,7 @@ class Auth_OpenID_GenericConsumer {
 		// to handle it.
 		// Extract the session_type and assoc_type from the error
 		// message
-		$assoc_type = $server_error->message->getArg(Auth_OpenID_OPENID_NS, 'assoc_type');
-
+		$assoc_type   = $server_error->message->getArg(Auth_OpenID_OPENID_NS, 'assoc_type');
 		$session_type = $server_error->message->getArg(Auth_OpenID_OPENID_NS, 'session_type');
 
 		if (($assoc_type === null) || ($session_type === null)) {
@@ -1550,8 +1531,7 @@ class Auth_OpenID_GenericConsumer {
 	public function _negotiateAssociation($endpoint) {
 		// Get our preferred session/association type from the negotiatior.
 		list($assoc_type, $session_type) = $this->negotiator->getAllowedType();
-
-		$assoc = $this->_requestAssociation(
+		$assoc                           = $this->_requestAssociation(
 			$endpoint,
 			$assoc_type,
 			$session_type
@@ -1562,8 +1542,7 @@ class Auth_OpenID_GenericConsumer {
 		}
 
 		if (is_a($assoc, 'Auth_OpenID_ServerErrorContainer')) {
-			$why = $assoc;
-
+			$why            = $assoc;
 			$supportedTypes = $this->_extractSupportedAssociationType(
 				$why,
 				$endpoint,
@@ -1610,8 +1589,7 @@ class Auth_OpenID_GenericConsumer {
 			$assoc_type,
 			$session_type
 		);
-
-		$response_message = $this->_makeKVPost($args, $endpoint->server_url);
+		$response_message           = $this->_makeKVPost($args, $endpoint->server_url);
 
 		if ($response_message === null) {
 			// oidutil.log('openid.associate request failed: %s' % (why[0],))
@@ -1765,7 +1743,8 @@ class Auth_OpenID_GenericConsumer {
 			$args['session_type'] = $assoc_session->session_type;
 		}
 
-		$args    = array_merge($args, $assoc_session->getRequest());
+		$args = array_merge($args, $assoc_session->getRequest());
+
 		$message = Auth_OpenID_Message::fromOpenIDArgs($args);
 
 		return array($assoc_session, $message);
@@ -1830,8 +1809,7 @@ class Auth_OpenID_AuthRequest {
 		$this->message        = new Auth_OpenID_Message(
 			$endpoint->preferredNamespace()
 		);
-
-		$this->_anonymous = false;
+		$this->_anonymous     = false;
 	}
 
 	/**
@@ -2236,7 +2214,6 @@ class Auth_OpenID_ServerErrorContainer {
 			'error',
 			'<no error message supplied>'
 		);
-
 		$error_code = $message->getArg(Auth_OpenID_OPENID_NS, 'error_code');
 
 		return new Auth_OpenID_ServerErrorContainer($error_text, $error_code, $message);

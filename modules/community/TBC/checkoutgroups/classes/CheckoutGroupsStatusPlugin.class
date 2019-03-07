@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -113,6 +114,7 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 		$checkoutgroups['isGuest']   = $anon;
 		$checkoutgroups['hasGroups'] = $hasGroup;
 		$checkoutgroups['groupInfo'] = $groupInfo;
+
 		$template->setvariable('checkoutgroups', $checkoutgroups);
 
 		return array(null, 'modules/checkoutgroups/templates/GroupStatus.tpl', 'modules_checkoutgroups');

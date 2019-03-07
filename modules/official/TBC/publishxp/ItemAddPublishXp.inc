@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -33,8 +34,7 @@ class ItemAddPublishXp extends ItemAddPlugin {
 	 * @see ItemAddPlugin::loadTemplate
 	 */
 	public function loadTemplate(&$template, &$form, $item) {
-		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-
+		$httpUserAgent  = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
 		$isWindowsVista = strpos($httpUserAgent, 'Windows NT 6') !== false;
 		$template->setVariable(
 			'ItemAddPublishXp',

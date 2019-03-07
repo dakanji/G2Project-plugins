@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -47,7 +48,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 		$this->_markForCleanup($this->_parent);
 		$this->_controller->setOptionInstances(array());
-
 		$ret = GalleryCoreApi::addMimeType('phpunit_ext', 'test/file', false);
 
 		if ($ret) {
@@ -71,8 +71,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		}
 
 		$gallery->_session = $this->_saveSession;
-
-		$ret = parent::tearDown();
+		$ret               = parent::tearDown();
 
 		if ($ret) {
 			$this->failWithStatus($ret);
@@ -97,9 +96,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
+		$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
@@ -119,6 +118,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
 		GalleryUtilities::putRequestVariable('form[setCaptions]', 1);
+
 		$_FILES['userFile']['type']     = 'test/file';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo<script>Bar.dat';
@@ -134,9 +134,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
+		$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
@@ -146,6 +146,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals($this->_parent->getId(), $entity->getParentId());
 		$this->assertEquals('test/file', $entity->getMimeType());
+
 		/** @todo: this is not optimal.. the path should be 'Foo_script_Bar_dat' */
 		$this->assertEquals('Foo_lt_script_gt_Bar_dat', $entity->getPathComponent());
 		$this->assertEquals('Foo&lt;script&gt;Bar.dat', $entity->getTitle(), 'title');
@@ -156,6 +157,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 	public function testUploadItemsPermissionDenied() {
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', 0);
+
 		$_FILES['userFile']['type']     = 'application/unknown';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.dat';
@@ -190,9 +192,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
+		$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
@@ -212,6 +214,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
 		GalleryUtilities::putRequestVariable('form[setCaptions]', 1);
 		GalleryUtilities::putRequestVariable('form[stripExtensions]', 1);
+
 		$_FILES['userFile']['type']     = 'test/file';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.dat';
@@ -227,9 +230,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
+		$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
@@ -262,13 +265,11 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		$_FILES['userFile']['type']     = 'test/file';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.dat';
-
 		$this->_controller->setOptionInstances(
 			array(
 				'instance' => new UploadItemsControllerTestAddOption(),
 			)
 		);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -280,9 +281,9 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$id            = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+
+		$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
 
 		list($ret, $entity) = GalleryCoreApi::loadEntitiesById($id, 'GalleryUnknownItem');
 
@@ -295,7 +296,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 			array($entity->getId(), 'myOptionValue'),
 			UploadItemsControllerTestAddOption::getRequestData()
 		);
-
 		$this->assertEquals($this->_parent->getId(), $entity->getParentId());
 		$this->assertEquals('test/file', $entity->getMimeType());
 		$this->assertEquals('Foo.dat', $entity->getTitle());
@@ -307,15 +307,19 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		$controller = new UploadItemsController();
 
 		GalleryUtilities::putRequestVariable('lcid', 1033, false);
+
 		$this->assertEquals('CP1252', $controller->_getCharsetFromRequest(), 'English');
 
 		GalleryUtilities::putRequestVariable('lcid', 1031, false);
+
 		$this->assertEquals('CP1252', $controller->_getCharsetFromRequest(), 'German');
 
 		GalleryUtilities::putRequestVariable('lcid', 1025, false);
+
 		$this->assertEquals('CP1256', $controller->_getCharsetFromRequest(), 'Arabic');
 
 		GalleryUtilities::removeRequestVariable('lcid', false);
+
 		$this->assertEquals('CP1252', $controller->_getCharsetFromRequest(), 'Default');
 	}
 }

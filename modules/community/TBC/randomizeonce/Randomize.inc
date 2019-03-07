@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -65,10 +66,9 @@ class RandomizeController extends GalleryController {
 		$redirect['subView']  = 'randomizeonce.Randomize';
 		$redirect['itemId']   = $itemId;
 		$status['randomized'] = 1;
-
-		$results['redirect'] = $redirect;
-		$results['status']   = $status;
-		$results['error']    = $error;
+		$results['redirect']  = $redirect;
+		$results['status']    = $status;
+		$results['error']     = $error;
 
 		return array(null, $results);
 	}
@@ -83,6 +83,7 @@ class RandomizeView extends GalleryView {
 
 		// collect album id
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
+
 		// Check permissions
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.edit');
 

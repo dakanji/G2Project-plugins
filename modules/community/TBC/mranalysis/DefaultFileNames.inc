@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: DefaultFileNames.inc,v $
  * $Revision: 1848 $
@@ -20,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  *
  * @package MRAnalysis
@@ -51,7 +53,6 @@ class DefaultFileNamesView extends GalleryView {
 		$form['formName'] = 'AdminDefaultFileNames';
 
 		$gallery->guaranteeTimeLimit(120);
-
 		$prefixes    = Classification::DefaultFileNamePrefixes();
 		$firstprefix = true;
 
@@ -82,8 +83,7 @@ class DefaultFileNamesView extends GalleryView {
 		}
 
 		$query .= ' ORDER BY [GalleryPhotoItem::id]';
-
-		$items = ItemList::readItemsFromQuery(
+		$items  = ItemList::readItemsFromQuery(
 			$query,
 			array('DefaultFileNamesView', 'IsDefaultFileName')
 		);

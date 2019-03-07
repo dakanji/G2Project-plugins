@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2012 Bharat Mediratta
@@ -35,12 +36,10 @@ class MultimediaModule extends GalleryModule {
 				'Enable inline display of audio/video files'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -97,7 +96,7 @@ class MultimediaModule extends GalleryModule {
 	public function activate($postActivationEvent = true) {
 		global $gallery;
 
-		$storage = &$gallery->getStorage();
+		$storage =& $gallery->getStorage();
 
 		// Add renderer our renderer to the mime types that need it
 		$query = "
@@ -155,7 +154,6 @@ class MultimediaModule extends GalleryModule {
 					}
 
 					$item->setRenderer('MultimediaRenderer');
-
 					$ret = $item->save();
 
 					if ($ret) {
@@ -191,6 +189,7 @@ class MultimediaModule extends GalleryModule {
 	/**
 	 * @see GalleryModule::getSiteAdminViews
 	 */
+
 	/*
 	 *public function getSiteAdminViews() {
 	 *    return array(

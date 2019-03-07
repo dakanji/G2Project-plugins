@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -12,6 +13,7 @@
 // module for analyzing CUEsheet files                         //
 // dependencies: NONE                                          //
 //                                                             //
+
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written [2009-Mar-25] by                  //
@@ -34,9 +36,9 @@ class getid3_cue extends getid3_handler {
 	public $cuesheet = array();
 
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'cue';
+
 		$this->readCueSheetFilename($info['filenamepath']);
 		$info['cue'] = $this->cuesheet;
 
@@ -114,6 +116,7 @@ class getid3_cue extends getid3_handler {
 
 				case 'track':
 					$track_on++;
+
 					$this->parseTrack($file[$i], $track_on);
 
 					if (isset($currentFile)) { // if there's a file
@@ -313,8 +316,7 @@ class getid3_cue extends getid3_handler {
 		$track = ltrim(substr($line, 0, strpos($line, ' ')), '0');
 
 		//find the data type.
-		$datatype = strtolower(substr($line, strpos($line, ' ') + 1));
-
+		$datatype                            = strtolower(substr($line, strpos($line, ' ') + 1));
 		$this->cuesheet['tracks'][$track_on] = array(
 			'track_number' => $track,
 			'datatype'     => $datatype,

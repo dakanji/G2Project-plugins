@@ -1,4 +1,5 @@
 <?php
+
 // Google map control sizes and locations
   // Contributed by: floridave
   // GxMagnifier image placement at bottom

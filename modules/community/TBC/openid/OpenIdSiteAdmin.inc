@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -20,6 +21,7 @@
 
 // TODO: Make library includes absolute
 ini_set('include_path', dirname(__FILE__) . '/lib:' . ini_get('include_path'));
+
 GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/CryptUtil.php');
 GalleryCoreApi::requireOnce('modules/openid/lib/Auth/Yadis/Yadis.php');
 
@@ -90,8 +92,7 @@ class OpenIdSiteAdminView extends GalleryView {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
-		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
+		$ret      = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
 			return array($ret, null);
@@ -103,33 +104,31 @@ class OpenIdSiteAdminView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$OpenIdSiteAdmin = array();
-
+		$OpenIdSiteAdmin               = array();
 		$OpenIdSiteAdmin['randSource'] = Auth_OpenID_RAND_SOURCE;
+
 		$OpenIdSiteAdmin['randHandle'] = @$platform->fopen($OpenIdSiteAdmin['randSource'], 'r');
 
 		if ($OpenIdSiteAdmin['randHandle'] !== false) {
 			$OpenIdSiteAdmin['expectedSize'] = 6;
-			$OpenIdSiteAdmin['randData']     = $platform->fread($OpenIdSiteAdmin['randHandle'], $OpenIdSiteAdmin['expectedSize']);
-			$stat                            = fstat($OpenIdSiteAdmin['randHandle']);
-			$OpenIdSiteAdmin['randSize']     = $stat['size'];
+
+			$OpenIdSiteAdmin['randData'] = $platform->fread($OpenIdSiteAdmin['randHandle'], $OpenIdSiteAdmin['expectedSize']);
+			$stat                        = fstat($OpenIdSiteAdmin['randHandle']);
+			$OpenIdSiteAdmin['randSize'] = $stat['size'];
+
 			$platform->fclose($OpenIdSiteAdmin['randHandle']);
 		}
 
-		$OpenIdSiteAdmin['uname'] = php_uname();
-
+		$OpenIdSiteAdmin['uname']        = php_uname();
 		$OpenIdSiteAdmin['xmlExtension'] = Auth_Yadis_getXMLParser();
-
 		global $__Services_Yadis_xml_extensions;
 
 		$OpenIdSiteAdmin['xmlExtensions'] = $__Services_Yadis_xml_extensions;
-
-		$OpenIdSiteAdmin['curlPresent'] = Auth_Yadis_Yadis::curlPresent();
-
-		$fetcher                        = Auth_Yadis_Yadis::getHTTPFetcher();
-		$OpenIdSiteAdmin['fetchUrl']    = 'http://www.openidenabled.com/resources/php-fetch-test';
-		$OpenIdSiteAdmin['fetchResult'] = $fetcher->get($OpenIdSiteAdmin['fetchUrl']);
-		$OpenIdSiteAdmin['expectedUrl'] = $OpenIdSiteAdmin['fetchUrl'] . '.txt';
+		$OpenIdSiteAdmin['curlPresent']   = Auth_Yadis_Yadis::curlPresent();
+		$fetcher                          = Auth_Yadis_Yadis::getHTTPFetcher();
+		$OpenIdSiteAdmin['fetchUrl']      = 'http://www.openidenabled.com/resources/php-fetch-test';
+		$OpenIdSiteAdmin['fetchResult']   = $fetcher->get($OpenIdSiteAdmin['fetchUrl']);
+		$OpenIdSiteAdmin['expectedUrl']   = $OpenIdSiteAdmin['fetchUrl'] . '.txt';
 
 		// Load our default values if we didn't just come from this form
 		if ($form['formName'] != 'OpenIdSiteAdmin') {

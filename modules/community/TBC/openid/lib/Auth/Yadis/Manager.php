@@ -289,8 +289,7 @@ class Auth_Yadis_Manager {
 		$this->yadis_url = $yadis_url;
 
 		// List of service elements
-		$this->services = $services;
-
+		$this->services    = $services;
 		$this->session_key = $session_key;
 
 		// Reference to the current service object
@@ -411,12 +410,12 @@ class Auth_Yadis_Discovery {
 				$this->url,
 				$fetcher
 			);
-
-			$manager = $this->createManager($services, $yadis_url);
+			$manager                    = $this->createManager($services, $yadis_url);
 		}
 
 		if ($manager) {
-			$loader  = new Auth_Yadis_ManagerLoader();
+			$loader = new Auth_Yadis_ManagerLoader();
+
 			$service = $manager->nextService();
 			$this->session->set(
 				$this->session_key,
@@ -471,7 +470,8 @@ class Auth_Yadis_Discovery {
 		$manager     = null;
 
 		if ($manager_str !== null) {
-			$loader  = new Auth_Yadis_ManagerLoader();
+			$loader = new Auth_Yadis_ManagerLoader();
+
 			$manager = $loader->fromSession(unserialize($manager_str));
 		}
 
@@ -502,7 +502,6 @@ class Auth_Yadis_Discovery {
 				$services,
 				$key
 			);
-
 			$this->session->set(
 				$this->session_key,
 				serialize($loader->toSession($manager))

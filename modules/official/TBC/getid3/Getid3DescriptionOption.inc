@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -44,6 +45,7 @@ class Getid3DescriptionOption extends ItemAddOption {
 	 */
 	public function handleRequestAfterAdd($form, $items) {
 		$errors = $warnings = array();
+
 		GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Extractor.class');
 		GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
 
@@ -55,6 +57,7 @@ class Getid3DescriptionOption extends ItemAddOption {
 
 		// Copy the array because we will change it with do / while / array_splice
 		$itemsInBatches = $items;
+
 		/*
 		 * Batch size should be <= ulimit max open files, as long as we don't query this value,
 		 * assume a value of 100 which is fairly low

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * Simplified/Minimalist Theme
  * @package Themes
  * @subpackage Simplified
@@ -34,11 +37,9 @@ class SimplifiedTheme extends GalleryTheme {
 				'Simple, uncluttered look'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'rows'           => 3,
@@ -133,10 +134,9 @@ class SimplifiedTheme extends GalleryTheme {
 		}
 
 		$theme['params']['albumThumbnailSize'] = $albumThumbnailSize;
-
-		$childrenInRowCount = 0;
-		$currentRow         = 1;
-		$maxRowSizes        = array();
+		$childrenInRowCount                    = 0;
+		$currentRow                            = 1;
+		$maxRowSizes                           = array();
 
 		foreach ($theme['children'] as $index => $childItem) {
 			if (!isset($maxRowSizes[$currentRow])) {

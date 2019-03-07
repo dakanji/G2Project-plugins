@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -115,16 +116,13 @@ class getID3 {
 	// Protected variables
 	protected $startup_error   = '';
 	protected $startup_warning = '';
-
-	const VERSION           = '1.9.12-201602240818';
-	const FREAD_BUFFER_SIZE = 32768;
-
-	const ATTACHMENTS_NONE   = false;
-	const ATTACHMENTS_INLINE = true;
+	const VERSION              = '1.9.12-201602240818';
+	const FREAD_BUFFER_SIZE    = 32768;
+	const ATTACHMENTS_NONE     = false;
+	const ATTACHMENTS_INLINE   = true;
 
 	// public: constructor
 	public function __construct() {
-
 		// Check for PHP version
 		$required_php_version = '5.3.0';
 
@@ -310,9 +308,11 @@ class getID3 {
 			}
 
 			$this->info['filesize'] = (!is_null($filesize) ? $filesize : filesize($filename));
+
 			// set redundant parameters - might be needed in some include file
 			// filenames / filepaths in getID3 are always expressed with forward slashes (unix-style) for both Windows and other to try and minimize confusion
-			$filename                   = str_replace('\\', '/', $filename);
+			$filename = str_replace('\\', '/', $filename);
+
 			$this->info['filepath']     = str_replace('\\', '/', realpath(dirname($filename)));
 			$this->info['filename']     = getid3_lib::mb_basename($filename);
 			$this->info['filenamepath'] = $this->info['filepath'] . '/' . $this->info['filename'];
@@ -390,6 +390,7 @@ class getID3 {
 					try {
 						$tag_class = 'getid3_' . $tag_name;
 						$tag       = new $tag_class($this);
+
 						$tag->Analyze();
 					} catch (getid3_exception $e) {
 						throw $e;
@@ -499,7 +500,9 @@ class getID3 {
 			}
 
 			$class = new $class_name($this);
+
 			$class->Analyze();
+
 			unset($class);
 
 			// close file
@@ -564,7 +567,6 @@ class getID3 {
 
 	// private: CleanUp
 	private function CleanUp() {
-
 		// remove possible empty keys
 		$AVpossibleEmptyKeys = array('dataformat', 'bits_per_sample', 'encoder_options', 'streams', 'bitrate');
 
@@ -639,22 +641,23 @@ class getID3 {
 				),
 
 				/*
-					// AA   - audio       - Audible Audiobook
-					'aa' => array(
-								'pattern' => '^.{4}\x57\x90\x75\x36',
-								'group' => 'audio',
-								'module' => 'aa',
-								'mime_type' => 'audio/audible',
-							),
-				*/
-					// AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
-					'adts' => array(
-						'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
-						'group'     => 'audio',
-						'module'    => 'aac',
-						'mime_type' => 'application/octet-stream',
-						'fail_ape'  => 'WARNING',
-					),
+																				  // AA   - audio       - Audible Audiobook
+												  'aa' => array(
+															  'pattern' => '^.{4}\x57\x90\x75\x36',
+															  'group' => 'audio',
+															  'module' => 'aa',
+															  'mime_type' => 'audio/audible',
+														  ),
+											  */
+
+												  // AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
+												  'adts' => array(
+													  'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
+													  'group'     => 'audio',
+													  'module'    => 'aac',
+													  'mime_type' => 'application/octet-stream',
+													  'fail_ape'  => 'WARNING',
+												  ),
 
 				// AU   - audio       - NeXT/Sun AUdio (AU)
 				'au' => array(
@@ -766,6 +769,7 @@ class getID3 {
 						'pattern'   => '^IMPM',
 						'group'     => 'audio',
 						'module'    => 'mod',
+
 						//'option' => 'it',
 						'mime_type' => 'audio/it',
 					),
@@ -775,6 +779,7 @@ class getID3 {
 					'pattern'   => '^Extended Module',
 					'group'     => 'audio',
 					'module'    => 'mod',
+
 					//'option' => 'xm',
 					'mime_type' => 'audio/xm',
 				),
@@ -784,6 +789,7 @@ class getID3 {
 					'pattern'   => '^.{44}SCRM',
 					'group'     => 'audio',
 					'module'    => 'mod',
+
 					//'option' => 's3m',
 					'mime_type' => 'audio/s3m',
 				),
@@ -1144,7 +1150,6 @@ class getID3 {
 					'module'    => 'cue',
 					'mime_type' => 'application/octet-stream',
 				),
-
 			);
 		}
 
@@ -1193,7 +1198,6 @@ class getID3 {
 
 	// converts array to $encoding charset from $this->encoding
 	public function CharConvert(&$array, $encoding) {
-
 		// identical encoding - end here
 		if ($encoding == $this->encoding) {
 			return;
@@ -1214,7 +1218,6 @@ class getID3 {
 	}
 
 	public function HandleAllTags() {
-
 		// key name => array (tag name, character encoding)
 		static $tags;
 
@@ -1412,6 +1415,7 @@ class getID3 {
 
 				// Use vorbiscomment to make temp file without comments
 				$temp = tempnam(GETID3_TEMP_DIR, 'getID3');
+
 				$file = $this->info['filenamepath'];
 
 				if (GETID3_OS_ISWINDOWS) {
@@ -1476,7 +1480,6 @@ class getID3 {
 	}
 
 	public function ChannelsBitratePlaytimeCalculations() {
-
 		// set channelmode on audio
 		if (!empty($this->info['audio']['channelmode']) || !isset($this->info['audio']['channels'])) {
 			// ignore
@@ -1487,7 +1490,8 @@ class getID3 {
 		}
 
 		// Calculate combined bitrate - audio + video
-		$CombinedBitrate  = 0;
+		$CombinedBitrate = 0;
+
 		$CombinedBitrate += (isset($this->info['audio']['bitrate']) ? $this->info['audio']['bitrate'] : 0);
 		$CombinedBitrate += (isset($this->info['video']['bitrate']) ? $this->info['video']['bitrate'] : 0);
 
@@ -1561,8 +1565,9 @@ class getID3 {
 			case 'jpg':
 			case 'png':
 			case 'tiff':
-				$FrameRate         = 1;
-				$PlaytimeSeconds   = 1;
+				$FrameRate       = 1;
+				$PlaytimeSeconds = 1;
+
 				$BitrateCompressed = $this->info['filesize'] * 8;
 
 				break;
@@ -1589,8 +1594,7 @@ class getID3 {
 				break;
 		}
 
-		$BitrateUncompressed = $this->info['video']['resolution_x'] * $this->info['video']['resolution_y'] * $this->info['video']['bits_per_sample'] * $FrameRate;
-
+		$BitrateUncompressed                      = $this->info['video']['resolution_x'] * $this->info['video']['resolution_y'] * $this->info['video']['bits_per_sample'] * $FrameRate;
 		$this->info['video']['compression_ratio'] = $BitrateCompressed / $BitrateUncompressed;
 
 		return true;
@@ -1864,6 +1868,7 @@ abstract class getid3_handler {
 
 			// do not set any is case of error
 			$attachment = null;
+
 			$this->warning('Failed to extract attachment ' . $name . ': ' . $e->getMessage());
 		}
 

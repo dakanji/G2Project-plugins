@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -62,8 +63,7 @@ class ImagineView extends GalleryView {
                [GalleryItem::title] NOT LIKE "IMG%"
             '
 			);
-
-			$stopWords = array_flip(
+			$stopWords           = array_flip(
 				array(
 					'and',
 					'on',
@@ -152,7 +152,6 @@ class ImagineView extends GalleryView {
 
 				echo $url;
 				echo ' ';
-
 				$bigger = $thumb;
 
 				while (GalleryUtilities::isA($bigger, 'GalleryDerivative')) {

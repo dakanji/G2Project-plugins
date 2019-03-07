@@ -89,7 +89,8 @@ class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension {
 	 * OpenID message
 	 */
 	public function fromOpenIDRequest($request) {
-		$obj  = new Auth_OpenID_PAPE_Request();
+		$obj = new Auth_OpenID_PAPE_Request();
+
 		$args = $request->message->getArgs(Auth_OpenID_PAPE_NS_URI);
 
 		if ($args === null || $args === array()) {
@@ -111,8 +112,7 @@ class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension {
 		// preferred_auth_policies is a space-separated list of policy
 		// URIs
 		$this->preferred_auth_policies = array();
-
-		$policies_str = Auth_OpenID::arrayGet($args, 'preferred_auth_policies');
+		$policies_str                  = Auth_OpenID::arrayGet($args, 'preferred_auth_policies');
 
 		if ($policies_str) {
 			foreach (explode(' ', $policies_str) as $uri) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -55,9 +56,9 @@ class CheckoutHelper {
 	public function storeReturnURL() {
 		global $gallery;
 
-		$session =& $gallery->getSession();
-
+		$session   =& $gallery->getSession();
 		$returnURL = GalleryUtilities::getRequestVariables('return');
+
 		// don't store urls back into checkout
 		$matchstring = '/' . preg_quote('=checkout.') . '/';
 
@@ -129,7 +130,6 @@ class CheckoutHelper {
 	 * @static
 	 */
 	public function fetchCheckoutItems($items = null) {
-
 		// either send in the raw items from someone else's session
 		// or load them from this session
 		if (is_null($items)) {
@@ -168,6 +168,7 @@ class CheckoutHelper {
 					$checkoutItems['accessories'] = $item;
 
 					break;
+
 				// other line items
 				default:
 					list($ret, $fullItem) = GalleryCoreApi::loadEntitiesById($itemId);
@@ -184,8 +185,8 @@ class CheckoutHelper {
 					}
 
 					/* BUILD hierarchy of albums for parentTitle field
-					/* get item's parent ids in a list... */
 
+					/* get item's parent ids in a list... */
 					list($ret, $itemIdTree) = GalleryCoreApi::fetchParentSequence($itemId);
 
 					if ($ret) {
@@ -228,6 +229,7 @@ class CheckoutHelper {
 	 */
 	public function updateCart($form) {
 		$items = CheckoutHelper::parseForm($form);
+
 		// call plugins here
 		$ret = CheckoutInterfaceHelper::doProductListPluginsAdjustCart($form, $items);
 
@@ -263,6 +265,7 @@ class CheckoutHelper {
 			}
 
 			$items[$itemId]['id'] = $itemId;
+
 			//table view
 			//we leave the quantity record set, but blank - for zeros
 			if (isset($itemDetails['quant'])) {

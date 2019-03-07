@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package Puzzle
  * @version $Revision: 1481 $ $Date: 2006/07/03 08:04:11 $

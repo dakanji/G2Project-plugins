@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -82,7 +83,6 @@ class MP3AudioRendererTest extends GalleryTestCase {
 
 		$item->setMimeType('audio/mpeg');
 		$this->assert($this->_renderer->canBeViewedInline($item), 'mp3');
-
 		$this->assert($this->_renderer->canBeViewedInline($this->_item), 'mp3 item');
 	}
 
@@ -95,7 +95,6 @@ class MP3AudioRendererTest extends GalleryTestCase {
 				'fallback' => 'FALLBACK',
 			)
 		);
-
 		$this->assert(strpos($html, '<div id="soContent"') !== false, 'flash <div> placeholder');
 		$this->assert(strpos($html, '.swf'), '.swf');
 		$this->assert(strpos($html, 'http'), 'http');

@@ -1,4 +1,5 @@
 <?php
+
 /******************************************************************************
  *
  * Filename:     pjmt_utils.php
@@ -57,7 +58,6 @@
  * Returns:      output - the relative path
  *
  ******************************************************************************/
-
 function get_relative_path($target, $fromdir) {
 	// Check that the fromdir has a trailing slash, otherwise realpath will
 	// strip the last directory name off
@@ -87,6 +87,7 @@ function get_relative_path($target, $fromdir) {
 
 	$path   = '../';
 	$posval = 0;
+
 	// Step through the paths until a difference is found (ignore slash, backslash differences
 	// or the end of one is found
 	while ((($from[$posval] == $to[$posval]) ||

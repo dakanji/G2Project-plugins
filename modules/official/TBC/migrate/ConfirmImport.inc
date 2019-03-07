@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -71,7 +72,6 @@ class ConfirmImportController extends GalleryController {
 				array($this, 'performImport'),
 				array($form, $albumsPath)
 			);
-
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -100,13 +100,10 @@ class ConfirmImportController extends GalleryController {
 
 		$storage         = $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
-
-		$platform =& $gallery->getPlatform();
-		$slash    = $platform->getDirectorySeparator();
-
-		$finishedAlbums = $albumPosition = $hiddenAlbums = array();
-
-		$status = array(
+		$platform        =& $gallery->getPlatform();
+		$slash           = $platform->getDirectorySeparator();
+		$finishedAlbums  = $albumPosition  = $hiddenAlbums  = array();
+		$status          = array(
 			'userImportFailure'  => array(),
 			'userImportSuccess'  => array(),
 			'albumImportFailure' => array(),
@@ -164,7 +161,6 @@ class ConfirmImportController extends GalleryController {
 		 * canCreateSubAlbum => core.addAlbumItem
 		 *
 		 */
-
 		$permissionTranslation = array(
 			'canRead'           => array(
 				'core.view',
@@ -219,8 +215,7 @@ class ConfirmImportController extends GalleryController {
 
 		$importUsersMessage  = $module->translate('Importing Users');
 		$importPhotosMessage = $module->translate('Importing Photos');
-
-		$sourceEncoding = $form['sourceEncoding'];
+		$sourceEncoding      = $form['sourceEncoding'];
 
 		list($ret, $markupType) = GalleryCoreApi::getPluginParameter('module', 'core', 'misc.markup');
 
@@ -293,7 +288,6 @@ class ConfirmImportController extends GalleryController {
 			 * This is where the user is actually created, everything
 			 * before this was simply building the framework.
 			 */
-
 			$ret = $user->create($userName);
 
 			if ($ret) {
@@ -317,12 +311,14 @@ class ConfirmImportController extends GalleryController {
 				);
 
 				$fullName = (!empty($fullName)) ? $fullName : $userName;
+
 				$user->setFullName($fullName);
 
 				/*
 				 * $fields['canCreateAlbums'] if they have that perm, give them
 				 * "core.addAlbumItem" permission on the root album
 				 */
+
 				// Save this user to the database
 				$ret = $user->save();
 
@@ -389,6 +385,7 @@ class ConfirmImportController extends GalleryController {
 
 		// Convert the form variable into a local temporary variable
 		$destinationAlbumID = $form['destinationAlbumID'];
+
 		// Go through the list of selected gallery1 albums to import
 		$totalItemsToImport = 0;
 		$albumfields        = $albumHighlight        = array();
@@ -598,7 +595,6 @@ class ConfirmImportController extends GalleryController {
 						$album['description'],
 						$sourceEncoding
 					);
-
 					$newAlbumInstance->setSummary($sourceData['summary']);
 				}
 
@@ -1033,7 +1029,6 @@ class ConfirmImportController extends GalleryController {
 			 * we can let the parent album (and anything else that we might
 			 * have tied up) be edited by others now
 			 */
-
 			$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 			if ($ret) {
@@ -1041,7 +1036,6 @@ class ConfirmImportController extends GalleryController {
 			}
 
 			$importLockIds = array();
-
 			unset($photos);
 
 			list($ret, $photos) = Gallery1DataParser::getme()->getPhotos($albumsPath . $album['name']);
@@ -1105,10 +1099,10 @@ class ConfirmImportController extends GalleryController {
 
 					$importAlbumItem = null;
 				} else {
-					$dir      = $albumsPath . $album['name'] . $slash;
+					$dir = $albumsPath . $album['name'] . $slash;
+
 					$filename = $importAlbumItem->image->name . '.' . $importAlbumItem->image->type;
 					$filepath = $dir . $filename;
-
 					$templateAdapter->updateProgressBar(
 						$importPhotosMessage,
 						$album['name'] . ' ' . $filename,
@@ -1130,8 +1124,7 @@ class ConfirmImportController extends GalleryController {
 						$importAlbumItem->caption,
 						$sourceEncoding
 					);
-
-					$data = array(
+					$data             = array(
 						'title'       => '',
 						'summary'     => '',
 						'description' => '',
@@ -1306,23 +1299,20 @@ class ConfirmImportController extends GalleryController {
 								return $ret;
 							}
 
-							$width  = $importAlbumItem->image->raw_width;
-							$height = $importAlbumItem->image->raw_height;
-							$xPerc  = GalleryUtilities::roundToString(
+							$width      = $importAlbumItem->image->raw_width;
+							$height     = $importAlbumItem->image->raw_height;
+							$xPerc      = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_x * 100 / $width,
 								3
 							);
-
-							$yPerc = GalleryUtilities::roundToString(
+							$yPerc      = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_y * 100 / $height,
 								3
 							);
-
-							$widthPerc = GalleryUtilities::roundToString(
+							$widthPerc  = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_width * 100 / $width,
 								3
 							);
-
 							$heightPerc = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_height * 100 / $height,
 								3
@@ -1348,10 +1338,8 @@ class ConfirmImportController extends GalleryController {
 							}
 
 							$thumbnail->setDerivativeOperations($operations);
-
 							$thumbnail->setWidth(0);
 							$thumbnail->setHeight(0);
-
 							$ret = $thumbnail->save();
 
 							if ($ret) {
@@ -1372,7 +1360,6 @@ class ConfirmImportController extends GalleryController {
 							 * Changing the crop size causes our derivative dimensions to change,
 							 * which affects all our dependent derivatives also.
 							 */
-
 							$ret = GalleryCoreApi::invalidateDerivativeDimensionsBySourceIds(
 								array($thumbnail->getId())
 							);
@@ -1402,7 +1389,8 @@ class ConfirmImportController extends GalleryController {
 
 							if ($validItemUID) {
 								$defaultToAlbumUID = false;
-								$itemUID           = $importAlbumItem->owner;
+
+								$itemUID = $importAlbumItem->owner;
 							}
 						}
 					}
@@ -1485,6 +1473,7 @@ class ConfirmImportController extends GalleryController {
 						foreach ($importAlbumItem->comments as $importCommentId => $importComment) {
 							// Default the comment owner to the guest user.
 							$commenterId = $guestUserId;
+
 							// Try to set the correct comment owner.
 							if (strcmp($importComment->UID, 'everybody')) {
 								// It is not the guest user. Get the corresponding G2 userId
@@ -1492,8 +1481,7 @@ class ConfirmImportController extends GalleryController {
 									$albumsPath,
 									$importComment->UID
 								);
-
-								$g1CommenterId = $importComment->UID;
+								$g1CommenterId   = $importComment->UID;
 
 								if (!$validCommentUid) {
 									// Fallback to the album owner.
@@ -1501,8 +1489,7 @@ class ConfirmImportController extends GalleryController {
 										$albumsPath,
 										$album['owner']
 									);
-
-									$g1CommenterId = $album['owner'];
+									$g1CommenterId   = $album['owner'];
 								}
 
 								if ($validCommentUid) {
@@ -1588,9 +1575,7 @@ class ConfirmImportController extends GalleryController {
 									$sourceEncoding
 								)
 							);
-
 							$comment->setDate($importComment->datePosted);
-
 							$ret = $comment->save();
 
 							if ($ret) {
@@ -1720,6 +1705,7 @@ class ConfirmImportController extends GalleryController {
 			}
 
 			$album = null;
+
 			// $i keeps track of how many passes we make over the data
 			$i++;
 		}
@@ -1862,7 +1848,6 @@ class ConfirmImportController extends GalleryController {
 
 		$session =& $gallery->getSession();
 		$session->putStatus($status);
-
 		$redirect['view']    = 'core.SiteAdmin';
 		$redirect['subView'] = 'migrate.ImportResults';
 

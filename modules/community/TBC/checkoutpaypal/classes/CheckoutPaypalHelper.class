@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -18,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -101,6 +101,7 @@ class CheckoutPaypalHelper {
 					$ppItem[$key]['amount'] = 0;
 				} else {
 					$perItemDiscount = round($discount / $ppItem[$key]['quantity'], 2);
+
 					// add an extra penny if necessary
 					if (($perItemDiscount * $ppItem[$key]['quantity']) < $discount) {
 						$perItemDiscount += 0.01;
@@ -109,6 +110,7 @@ class CheckoutPaypalHelper {
 					$ppItem[$key]['amount'] -= $perItemDiscount;
 					$discount               -= $ppItem[$key]['quantity'] * $perItemDiscount;
 					$discount                = round($discount, 2);
+
 					// can be left with pennies
 					if ($discount != 0) {
 						$ppItems++;
@@ -138,15 +140,15 @@ class CheckoutPaypalHelper {
 		$ppItem[$ppItems]['ppquantity'] = 'quantity_' . $ppItems;
 		$ppItem[$ppItems]['quantity']   = '1';
 		$ppItem[$ppItems]['ppamount']   = 'amount_' . $ppItems;
-		$ppItem[$ppItems]['amount']     = $transaction->getPostage();
 
+		$ppItem[$ppItems]['amount']                     = $transaction->getPostage();
 		$ppItem[$ppItems]['options']['on0_' . $ppItems] = 'Category';
-		$ppItem[$ppItems]['options']['os0_' . $ppItems] = $transaction->getPostageType();
 
-		$ppItem[$ppItems]['ppnumber']   = 'item_number_' . $ppItems;
-		$ppItem[$ppItems]['number']     = '';
-		$ppItem[$ppItems]['ppshipping'] = 'shipping_' . $ppItems;
-		$ppItem[$ppItems]['shipping']   = 0;
+		$ppItem[$ppItems]['options']['os0_' . $ppItems] = $transaction->getPostageType();
+		$ppItem[$ppItems]['ppnumber']                   = 'item_number_' . $ppItems;
+		$ppItem[$ppItems]['number']                     = '';
+		$ppItem[$ppItems]['ppshipping']                 = 'shipping_' . $ppItems;
+		$ppItem[$ppItems]['shipping']                   = 0;
 
 		$verify[1] = $transaction->getDate();
 		$verify[2] = $transaction->getSecurity();

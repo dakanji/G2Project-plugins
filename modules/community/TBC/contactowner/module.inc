@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  *
@@ -24,7 +25,9 @@
  *
  * @package ContactOwner
  * @author Darren Guiden <g2@pengs.co.uk>
- *//**
+ */
+
+/**
  * Contact the owner by filling in a PHP form
  *
  * @package ContactOwner
@@ -40,12 +43,10 @@ class ContactOwnerModule extends GalleryModule {
 				'Contact gallery owner by email'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSystemLinks|getSiteAdminViews');
 	}

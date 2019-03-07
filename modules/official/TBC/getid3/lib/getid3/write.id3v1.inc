@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -14,7 +15,6 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.id3v1.php', __FILE__, true);
-
 class getid3_write_id3v1 {
 	public $filename;
 	public $filesize;
@@ -47,8 +47,7 @@ class getid3_write_id3v1 {
 				}
 
 				$this->tag_data['track'] = (isset($this->tag_data['track']) ? $this->tag_data['track'] : (isset($this->tag_data['track_number']) ? $this->tag_data['track_number'] : (isset($this->tag_data['tracknumber']) ? $this->tag_data['tracknumber'] : '')));
-
-				$new_id3v1_tag_data = getid3_id3v1::GenerateID3v1Tag(
+				$new_id3v1_tag_data      = getid3_id3v1::GenerateID3v1Tag(
 					(isset($this->tag_data['title']) ? $this->tag_data['title'] : ''),
 					(isset($this->tag_data['artist']) ? $this->tag_data['artist'] : ''),
 					(isset($this->tag_data['album']) ? $this->tag_data['album'] : ''),
@@ -78,7 +77,8 @@ class getid3_write_id3v1 {
 		// ID3v1 data is supposed to be padded with NULL characters, but some taggers incorrectly use spaces
 		// This function rewrites the ID3v1 tag with correct padding
 		// Initialize getID3 engine
-		$getID3                    = new getID3();
+		$getID3 = new getID3();
+
 		$getID3->option_tag_id3v2  = false;
 		$getID3->option_tag_apetag = false;
 		$getID3->option_tags_html  = false;
@@ -140,7 +140,8 @@ class getid3_write_id3v1 {
 
 		// 32-bit PHP will not return correct values for filesize() if file is >=2GB
 		// but getID3->analyze() has workarounds to get actual filesize
-		$getID3                    = new getID3();
+		$getID3 = new getID3();
+
 		$getID3->option_tag_id3v1  = false;
 		$getID3->option_tag_id3v2  = false;
 		$getID3->option_tag_apetag = false;

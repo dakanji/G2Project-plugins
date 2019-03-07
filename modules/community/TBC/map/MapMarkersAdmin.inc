@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Steven N. Severinghaus <sns@severinghaus.org>
@@ -74,7 +76,8 @@ class MapMarkersAdminController extends GalleryController {
 				}
 
 				// make sure the 'Color' CustomField is inline with the marker set selected
-				list($ret, $param)  = mapHelper::loadParameters(0, false);
+				list($ret, $param) = mapHelper::loadParameters(0, false);
+
 				$newparam['common'] = $param['common'];
 
 				if (isset($form['useMarkerSet'])) {
@@ -96,7 +99,6 @@ class MapMarkersAdminController extends GalleryController {
 					);
 
 					fclose($handle);
-
 					$newparam['photo']   = array();
 					$newparam['photo'][] = array(
 						'field'   => 'Color',
@@ -125,7 +127,6 @@ class MapMarkersAdminController extends GalleryController {
 					);
 
 					fclose($handle);
-
 					$newparam['album']   = array();
 					$newparam['album'][] = array(
 						'field'   => 'Color',
@@ -327,7 +328,6 @@ class MapMarkersAdminController extends GalleryController {
 				}
 
 				fclose($handle);
-
 				$statusexec = 0;
 
 				list($ret, $magicpath) = GalleryCoreApi::getPluginParameter('module', 'imagemagick', 'path');
@@ -348,11 +348,13 @@ class MapMarkersAdminController extends GalleryController {
 						$command[] = $resize;
 					}
 
-					$command[]   = $basegallerydir . 'map/images/basemarkers/' . $basemarkername
+					$command[] = $basegallerydir . 'map/images/basemarkers/' . $basemarkername
 					. '.png';
-					$command[]   = $basegallerydir . 'map/images/markers/' . $setname
+					$command[] = $basegallerydir . 'map/images/markers/' . $setname
 					. '/marker_' . $color . '.png';
+
 					$returnstuff = $platform->exec(array($command));
+
 					/*
 					 * if the marker created does not exist, then something went wrong,
 					 * break out and display an error message
@@ -386,8 +388,7 @@ class MapMarkersAdminController extends GalleryController {
 		// Deleting a markerSet
 		if (isset($form['action']['delete'])) {
 			$status['deleted'] = 0;
-
-			$dir = $basegallerydir . 'map/images/markers/' . $form['deleteMarkerSet'];
+			$dir               = $basegallerydir . 'map/images/markers/' . $form['deleteMarkerSet'];
 
 			// Delete all file in the folder and then delete the folder
 			$status['deleted'] = $platform->recursiveRmdir($dir);
@@ -484,10 +485,11 @@ class MapMarkersAdminView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
+
 		$form['formName'] = 'MapMarkersAdmin';
+
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
-
 		$basepngdir = $basegallerydir . 'modules/map/images/basemarkers/';
 		$pngdir     = $base . 'modules/map/images/basemarkers/';
 
@@ -627,10 +629,12 @@ class MapMarkersAdminView extends GalleryView {
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
+			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
+
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 

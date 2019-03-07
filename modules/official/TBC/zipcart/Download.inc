@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -40,8 +41,7 @@ class DownloadView extends GalleryView {
 
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
-
-		$file = GalleryUtilities::getRequestVariables('file');
+		$file     = GalleryUtilities::getRequestVariables('file');
 
 		if (!empty($file)) {
 			$file = $gallery->getConfig('data.gallery.tmp') . basename($file) . '.zip';
@@ -49,6 +49,7 @@ class DownloadView extends GalleryView {
 
 		if ($platform->is_readable($file)) {
 			$size = $platform->filesize($file);
+
 			/**
 			 * Try to prevent Apache's mod_deflate from gzipping the output a 2nd time since
 			 * broken versions of mod_deflate sometimes get the byte count wrong.
@@ -96,6 +97,7 @@ class DownloadView extends GalleryView {
 					}
 
 					echo $data;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 

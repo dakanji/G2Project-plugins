@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -18,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
  GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -80,7 +80,8 @@ class DetailsController extends GalleryController {
 		}
 
 		if (!isset($results['delegate'])) {
-			$results['redirect']['controller']    = 'checkout.Complete';
+			$results['redirect']['controller'] = 'checkout.Complete';
+
 			$results['redirect']['transactionId'] = $transaction->getId();
 			$results['redirect']['verify1']       = $transaction->getDate();
 			$results['redirect']['verify2']       = $transaction->getSecurity();
@@ -106,6 +107,7 @@ class DetailsView extends GalleryView {
 		if ($form['formName'] != 'Details') {
 			// First time to this page
 			$form['formName'] = 'Details';
+
 			// Populate the form if a user is logged in
 			list($ret, $anonymous) = GalleryCoreApi::isAnonymousUser();
 
@@ -119,14 +121,12 @@ class DetailsView extends GalleryView {
 				list(
 					$form['custFirstName'],
 					$form['custLastName']
-				) = explode(' ', $user->getFullName(), 2);
-
+				)                  = explode(' ', $user->getFullName(), 2);
 				$form['custEmail'] = $user->getEmail();
 			}
 		}
 
-		$status = $template->getVariable('status');
-
+		$status             = $template->getVariable('status');
 		$form['controller'] = 'checkoutemail.Details';
 
 		list($ret, $busname) = GalleryCoreApi::getPluginParameter(
@@ -146,7 +146,6 @@ class DetailsView extends GalleryView {
 		}
 
 		$template->title($busname . ' ' . $module->translate('Customer Details'));
-
 		$template->setVariable('form', $form);
 
 		return array(

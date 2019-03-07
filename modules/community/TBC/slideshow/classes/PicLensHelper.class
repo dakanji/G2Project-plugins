@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -37,8 +38,7 @@ class PicLensHelper {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
-		$info = PicLensHelper::getLatestPicLensInfo();
+		$info     = PicLensHelper::getLatestPicLensInfo();
 
 		if (empty($info)) {
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null);
@@ -84,8 +84,7 @@ class PicLensHelper {
 	 * @static
 	 */
 	public static function getLatestPicLensInfo() {
-		$url = 'http://gallery.menalto.com/versioncheck/piclens/release';
-
+		$url                  = 'http://gallery.menalto.com/versioncheck/piclens/release';
 		list($success, $body) = GalleryCoreApi::fetchWebPage($url);
 
 		if (!$success) {
@@ -96,6 +95,7 @@ class PicLensHelper {
 
 		foreach (explode("\n", $body) as $line) {
 			$pair = explode('=', $line, 2);
+
 			GalleryUtilities::sanitizeInputValues($pair);
 
 			if (count($pair) == 2) {
@@ -113,8 +113,7 @@ class PicLensHelper {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
-		$codeDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow/';
+		$codeDir  = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow/';
 
 		foreach (array('piclens.js', 'PicLensLite.swf') as $file) {
 			$path = "{$codeDir}$file";

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -40,6 +41,7 @@ class NotificationItemsAddedOption extends ItemAddOption {
 	public function handleRequestAfterAdd($form, $items) {
 		// Tell the world we were successful
 		$itemAddEvent = GalleryCoreApi::newEvent('Gallery::ItemAdded');
+
 		$itemAddEvent->setData($items);
 
 		list($ret) = GalleryCoreApi::postEvent($itemAddEvent);

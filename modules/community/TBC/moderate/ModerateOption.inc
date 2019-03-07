@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -79,22 +80,23 @@ class ModerateOption extends ItemAddOption {
 			}
 
 			/*	if (!$childCounts) {
-
 			$ret = GalleryCoreApi::removeItemPermissions($items[$j]->getParentId());
+
 			if ($ret) {
 			return array($ret, null, null);
 			}
 
 			$ret = GalleryCoreApi::addGroupPermission($items[$j]->getParentId(), $core['id.adminGroup'], 'core.all');
+
 			if ($ret) {
 			return array($ret, null, null);
 			}
 
 			$ret = GalleryCoreApi::addUserPermission($items[$j]->getParentId(), $items[$j]->getOwnerId(), 'core.all');
+
 			if ($ret) {
 			return array($ret, null, null);
 			}
-
 			}
 
 			 */

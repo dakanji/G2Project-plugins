@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  *
@@ -19,12 +20,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package Puzzle
  * @version $Revision: 1660 $ $Date: 2006/07/03 08:04:11 $
  * @author J. Mike Rollins <rollins@CamoTruck.Net>
  * @contrib azn_oohwee
- *//**
+ */
+
+/**
  * CamoTruck.Net Puzzle Module
  *
  * This module provides support for adding puzzles to items
@@ -42,12 +46,10 @@ class puzzleModule extends GalleryModule {
 				'CamoTruck.Net: Puzzle Module'
 			)
 		);
-
 		$this->setVersion('3.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $this->translate('Display'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -78,10 +80,10 @@ class puzzleModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/puzzle/classes/PuzzleHelper.class');
 
 		$links = array();
+
 		// use item to find the album
 		// list ($ret, $enabled) = GalleryCoreApi::getPluginParameter('module','puzzle','enabled',$item->getId());
 		foreach ($items as $item) {
@@ -117,7 +119,6 @@ class puzzleModule extends GalleryModule {
 						$gallery->debug(
 							'<br>(modules:puzzle) getItemLinks: Creating puzzle link.'
 						);
-
 						$params['view']          = 'puzzle.MakePuzzle';
 						$params['itemId']        = $itemId;
 						$params['return']        = 1;
@@ -138,7 +139,6 @@ class puzzleModule extends GalleryModule {
 		global $gallery;
 
 		$found = false;
-
 		$count = 0; // just being paranoid
 		// The parent of any photo should be the album, but we traverse the tree to make sure
 		while (true) {

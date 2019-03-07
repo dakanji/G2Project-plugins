@@ -28,8 +28,7 @@ class Auth_OpenID_KVForm {
 	 */
 	public function toArray($kvs, $strict = false) {
 		$lines = explode("\n", $kvs);
-
-		$last = array_pop($lines);
+		$last  = array_pop($lines);
 
 		if ($last !== '') {
 			array_push($lines, $last);
@@ -89,7 +88,6 @@ class Auth_OpenID_KVForm {
 		}
 
 		ksort($values);
-
 		$serialized = '';
 
 		foreach ($values as $key => $value) {

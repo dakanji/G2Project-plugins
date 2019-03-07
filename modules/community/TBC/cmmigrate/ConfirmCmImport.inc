@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/cmmigrate/classes/CmDatabaseTools.class');
 
 /**
@@ -47,6 +47,7 @@ class ConfirmCmImportController extends GalleryController {
 		}
 
 		$copperminePath = GalleryUtilities::getRequestVariables('copperminePath');
+
 		$this->_openDatabase($copperminePath);
 
 		if ($ret) {
@@ -66,7 +67,6 @@ class ConfirmCmImportController extends GalleryController {
 				array($this, 'performCmImport'),
 				array($form, $copperminePath)
 			);
-
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -95,13 +95,10 @@ class ConfirmCmImportController extends GalleryController {
 
 		$storage         = $gallery->getStorage();
 		$templateAdapter =& $gallery->getTemplateAdapter();
-
-		$platform =& $gallery->getPlatform();
-		$slash    = $platform->getDirectorySeparator();
-
-		$finishedAlbums = $albumPosition = $hiddenAlbums = array();
-
-		$status = array(
+		$platform        =& $gallery->getPlatform();
+		$slash           = $platform->getDirectorySeparator();
+		$finishedAlbums  = $albumPosition  = $hiddenAlbums  = array();
+		$status          = array(
 			'abumImportFailure'  => array(),
 			'albumImportSuccess' => array(),
 		);
@@ -121,7 +118,6 @@ class ConfirmCmImportController extends GalleryController {
 		 * canCreateSubAlbum => core.addAlbumItem
 		 *
 		 */
-
 		$permissionTranslation = array(
 			'canRead'           => array(
 				'core.view',
@@ -346,7 +342,6 @@ class ConfirmCmImportController extends GalleryController {
 								$album->description,
 								$sourceEncoding
 							);
-
 							$newAlbumInstance->setSummary($sourceData['summary']);
 						}
 
@@ -431,7 +426,6 @@ class ConfirmCmImportController extends GalleryController {
 					 * we can let the parent album (and anything else that we might
 					 * have tied up) be edited by others now
 					 */
-
 					$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 					if ($ret) {
@@ -472,9 +466,9 @@ class ConfirmCmImportController extends GalleryController {
 
 					foreach ($photos as $j => $importAlbumItem) {
 						$gallery->guaranteeTimeLimit(30);
-
 						$dir      = $this->_cmdb->getAlbumPath() . $importAlbumItem->filepath;
 						$filename = $importAlbumItem->filename;
+
 						$filepath = $dir . $filename;
 
 						$ret = $templateAdapter->
@@ -585,8 +579,7 @@ class ConfirmCmImportController extends GalleryController {
 							return $ret;
 						}
 
-						$itemLockIds = array();
-
+						$itemLockIds                    = array();
 						$status['addFromLocalServer'][] = array(
 							'fileName' => $filename,
 							'id'       => $newItem->getId(),
@@ -605,6 +598,7 @@ class ConfirmCmImportController extends GalleryController {
 				}
 
 				$album = null;
+
 				// $i keeps track of how many passes we make over the data
 				$i++;
 			}
@@ -722,13 +716,12 @@ class ConfirmCmImportController extends GalleryController {
 			return $ret;
 		}
 
-		$session =& $gallery->getSession();
+		$session             =& $gallery->getSession();
+		$redirect['view']    = 'core.SiteAdmin';
+		$redirect['subView'] = 'cmmigrate.ImportCmResults';
 
-		$redirect['view']     = 'core.SiteAdmin';
-		$redirect['subView']  = 'cmmigrate.ImportCmResults';
 		$redirect['statusId'] = $session->putStatus($status);
-
-		$urlGenerator =& $gallery->getUrlGenerator();
+		$urlGenerator         =& $gallery->getUrlGenerator();
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 
 		return null;
@@ -860,8 +853,7 @@ class ConfirmCmImportController extends GalleryController {
 	 */
 	public function _openDatabase($copperminePath) {
 		$this->_cmdb = new CmDatabaseTools($copperminePath);
-
-		$ret = $this->_cmdb->openDatabase();
+		$ret         = $this->_cmdb->openDatabase();
 
 		return $ret;
 	}
@@ -935,8 +927,9 @@ class ConfirmCmImportView extends GalleryView {
 		while ($albumFields) {
 			$existingAlbumId = false;
 			$album           = array_shift($albumFields);
-			$albumId         = $album->GetAlbumId();
-			$albumName       = $album->name;
+
+			$albumId   = $album->GetAlbumId();
+			$albumName = $album->name;
 
 			if (!in_array($album->getParent(), $form['sourceAlbums'])) {
 				list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent($destinationAlbumID, $albumName);
@@ -977,6 +970,7 @@ class ConfirmCmImportView extends GalleryView {
 
 	public function _getAlbums($copperminePath) {
 		$cmdb = new CmDatabaseTools($copperminePath);
+
 		$cmdb->openDatabase();
 
 		list($ret, $albums) = $cmdb->getAlbums();

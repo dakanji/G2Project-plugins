@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
 
 /**
@@ -49,7 +49,6 @@ class HttpAuthSiteAdminController extends GalleryController {
 
 			$status['authtypeRegexMessage'] = ob_get_contents();
 			ob_clean();
-
 			ob_start();
 
 			if (preg_match($form['usernamePattern'], '') === false) {

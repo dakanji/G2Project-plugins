@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -74,7 +75,6 @@ class FlashVideoOption extends ItemAddOption {
 				}
 
 				$item->setRenderer('FlashVideoRenderer');
-
 				$ret = $item->save();
 
 				if ($ret) {

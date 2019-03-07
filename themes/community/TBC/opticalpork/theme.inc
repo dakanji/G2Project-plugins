@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * Theme based on Siriux
  * @package Themes
  * @subpackage Opticalpork
@@ -34,11 +37,9 @@ class OpticalporkTheme extends GalleryTheme {
 				'Opticalpork.com Gallery theme'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'perPage'        => 9,
@@ -265,7 +266,6 @@ class OpticalporkTheme extends GalleryTheme {
 			),
 			'value'      => $params['contentWidth'],
 		);
-
 		$settings[] = array(
 			'key'   => 'groupByYear',
 			'name'  => $this->translate(
@@ -274,7 +274,6 @@ class OpticalporkTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['groupByYear'],
 		);
-
 		$settings[] = array(
 			'key'   => 'enableImageMap',
 			'name'  => $this->translate(

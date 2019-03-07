@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,7 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_id3v1 extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 
 		if (!getid3_lib::intValueSupported($info['filesize'])) {
 			$info['warning'][] = 'Unable to check for ID3v1 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
@@ -30,10 +31,11 @@ class getid3_id3v1 extends getid3_handler {
 		if (substr($id3v1tag, 0, 3) == 'TAG') {
 			$info['avdataend'] = $info['filesize'] - 128;
 
-			$ParsedID3v1['title']   = $this->cutfield(substr($id3v1tag, 3, 30));
-			$ParsedID3v1['artist']  = $this->cutfield(substr($id3v1tag, 33, 30));
-			$ParsedID3v1['album']   = $this->cutfield(substr($id3v1tag, 63, 30));
-			$ParsedID3v1['year']    = $this->cutfield(substr($id3v1tag, 93, 4));
+			$ParsedID3v1['title']  = $this->cutfield(substr($id3v1tag, 3, 30));
+			$ParsedID3v1['artist'] = $this->cutfield(substr($id3v1tag, 33, 30));
+			$ParsedID3v1['album']  = $this->cutfield(substr($id3v1tag, 63, 30));
+			$ParsedID3v1['year']   = $this->cutfield(substr($id3v1tag, 93, 4));
+
 			$ParsedID3v1['comment'] = substr($id3v1tag, 97, 30);  // can't remove nulls yet, track detection depends on them
 			$ParsedID3v1['genreid'] = ord(substr($id3v1tag, 127, 1));
 
@@ -45,8 +47,7 @@ class getid3_id3v1 extends getid3_handler {
 			}
 
 			$ParsedID3v1['comment'] = $this->cutfield($ParsedID3v1['comment']);
-
-			$ParsedID3v1['genre'] = $this->LookupGenreName($ParsedID3v1['genreid']);
+			$ParsedID3v1['genre']   = $this->LookupGenreName($ParsedID3v1['genreid']);
 
 			if (!empty($ParsedID3v1['genre'])) {
 				unset($ParsedID3v1['genreid']);
@@ -80,8 +81,7 @@ class getid3_id3v1 extends getid3_handler {
 
 			$ParsedID3v1['tag_offset_end']   = $info['filesize'];
 			$ParsedID3v1['tag_offset_start'] = $ParsedID3v1['tag_offset_end'] - 128;
-
-			$info['id3v1'] = $ParsedID3v1;
+			$info['id3v1']                   = $ParsedID3v1;
 		}
 
 		if (substr($preid3v1, 0, 3) == 'TAG') {
@@ -109,7 +109,7 @@ class getid3_id3v1 extends getid3_handler {
 	}
 
 	public static function ArrayOfGenres($allowSCMPXextended = false) {
-		static $GenreLookup = array(
+		static $GenreLookup      = array(
 			0    => 'Blues',
 			1    => 'Classic Rock',
 			2    => 'Country',
@@ -258,17 +258,15 @@ class getid3_id3v1 extends getid3_handler {
 			145  => 'Anime',
 			146  => 'JPop',
 			147  => 'Synthpop',
-
 			255  => 'Unknown',
-
 			'CR' => 'Cover',
 			'RX' => 'Remix',
 		);
-
 		static $GenreLookupSCMPX = array();
 
 		if ($allowSCMPXextended && empty($GenreLookupSCMPX)) {
 			$GenreLookupSCMPX = $GenreLookup;
+
 			// http://www.geocities.co.jp/SiliconValley-Oakland/3664/alittle.html#GenreExtended
 			// Extended ID3v1 genres invented by SCMPX
 			// Note that 255 "Japanese Anime" conflicts with standard "Unknown"
@@ -287,6 +285,7 @@ class getid3_id3v1 extends getid3_handler {
 			$GenreLookupSCMPX[252] = 'Japanese Ambient Techno';
 			$GenreLookupSCMPX[253] = 'Japanese Moemoe';
 			$GenreLookupSCMPX[254] = 'Japanese Tokusatsu';
+
 			//$GenreLookupSCMPX[255] = 'Japanese Anime';
 		}
 

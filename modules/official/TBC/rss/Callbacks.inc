@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * @package Rss
  * @author Pierre-Luc Paour
  * @version $Revision: 17580 $
@@ -58,7 +61,8 @@ class RssCallbacks {
 					}
 				}
 
-				$block                    =& $smarty->_tpl_vars['block'];
+				$block =& $smarty->_tpl_vars['block'];
+
 				$block['rss']['feeds']    = $feeds;
 				$block['rss']['showMore'] = !empty($feeds);
 

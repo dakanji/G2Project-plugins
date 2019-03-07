@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
 
 /**
@@ -34,7 +34,8 @@ class mapCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;
 
-		$platform        = $gallery->getPlatform();
+		$platform = $gallery->getPlatform();
+
 		static $blockNum = 0;
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
@@ -87,7 +88,8 @@ class mapCallbacks {
 						// we have some routes, check if there is a need to create a filter for them
 						$routearray = explode('|', $routes);
 						$i          = 0;
-						$routeword  = $module->translate('Route') . ':';
+
+						$routeword = $module->translate('Route') . ':';
 
 						foreach ($routearray as $route) {
 							$routeinfos = explode('`', $route);
@@ -131,7 +133,8 @@ class mapCallbacks {
 						if (!empty($albumlist)) {
 							$i            = 0;
 							$listofalbums = explode('`', $albumlist);
-							$albumword    = $module->translate('Album') . ':';
+
+							$albumword = $module->translate('Album') . ':';
 
 							foreach ($listofalbums as $album) {
 								$albumfilters[$i]['name']   = $albumword . ' ' . $album;
@@ -177,6 +180,7 @@ class mapCallbacks {
 						$filteroptions[0]['name']   = '&laquo;' . $module->translate('No Filters')
 						. '&raquo;';
 						$filteroptions[0]['params'] = '';
+
 						$filteroptions[1]['name']   = $module->translate('Define...');
 						$filteroptions[1]['params'] = array(
 							'view'    => 'core.SiteAdmin',
@@ -198,9 +202,10 @@ class mapCallbacks {
 						}
 					}
 
-					$filter                                  = GalleryUtilities::getRequestVariables('filter');
-					$album                                   = GalleryUtilities::getRequestVariables('album');
-					$filterOn                                = ($filter == '' or empty($filter)) ? $albumword . ' ' . $album : $filter;
+					$filter   = GalleryUtilities::getRequestVariables('filter');
+					$album    = GalleryUtilities::getRequestVariables('album');
+					$filterOn = ($filter == '' or empty($filter)) ? $albumword . ' ' . $album : $filter;
+
 					$block                                   =& $smarty->_tpl_vars['block'];
 					$block['map']['LoadFilters']['filters']  = $filteroptions;
 					$block['map']['LoadFilters']['filterOn'] = $filterOn;
@@ -241,21 +246,18 @@ class mapCallbacks {
 							'hint' => 'North abbreviation',
 						)
 					);
-
 					$dir['S'] = $module->translate(
 						array(
 							'text' => 'S',
 							'hint' => 'South abbreviation',
 						)
 					);
-
 					$dir['E'] = $module->translate(
 						array(
 							'text' => 'E',
 							'hint' => 'East abbreviation',
 						)
 					);
-
 					$dir['W'] = $module->translate(
 						array(
 							'text' => 'W',
@@ -299,8 +301,7 @@ class mapCallbacks {
 					}
 
 					// Send variable to the template for processing
-					$block =& $smarty->_tpl_vars['block'];
-
+					$block                                  =& $smarty->_tpl_vars['block'];
 					$block['map']['ItemCoords']['ItemType'] = $ItemType;
 					$block['map']['ItemCoords']['lat']      = $lat;
 					$block['map']['ItemCoords']['lng']      = $lng;
@@ -411,6 +412,7 @@ class mapCallbacks {
 					$markerItemIds[] = $params['itemId'];
 
 					/** @todo Add a mapHelper function for this */
+
 					// Get the Item data
 					$query = '
 		SELECT
@@ -427,6 +429,7 @@ class mapCallbacks {
 		';
 
 					list($ret, $results) = $gallery->search($query, $markerItemIds, array());
+
 					// $results is a series of rows with columns: itemId, field, value
 					if ($ret) {
 						return $ret;
@@ -438,6 +441,7 @@ class mapCallbacks {
 					// Convert rows to array tree keyed by itemId
 					while ($myResults = $results->nextResult()) {
 						$markerParams[$myResults[0]][$myResults[1]] = $myResults[2];
+
 						// extract the map center and zoom if we encounter them
 						if ($myResults[0] == $params['itemId']) {
 							if ($myResults[1] == 'GPS') {
@@ -478,7 +482,7 @@ class mapCallbacks {
 					}
 
 					// Get the gallery URL generator to properly create links to images
-					$gurl = &$gallery->getUrlGenerator();
+					$gurl =& $gallery->getUrlGenerator();
 
 					// The smarty markup modifier is required to strip out markup code in titles
 					GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
@@ -515,12 +519,12 @@ class mapCallbacks {
 							);
 
 							/** @todo Figure out error handling if image file doesn't exist */
+
 							// Get the Marker Size
-							$imageSizes = $platform->getimagesize(
+							$imageSizes                                          = $platform->getimagesize(
 								$mapModBaseDir . 'images/markers/'
 								. $ItemMarker . '/marker_' . $ItemColor . '.png'
 							);
-
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]['width']  = $imageSizes[0];
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]['height'] = $imageSizes[1];
 						}

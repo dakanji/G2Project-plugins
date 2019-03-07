@@ -18,7 +18,6 @@
  * presence or absence of CURL.
  */
 require_once 'Auth/Yadis/PlainHTTPFetcher.php';
-
 require_once 'Auth/Yadis/ParanoidHTTPFetcher.php';
 
 /**
@@ -56,7 +55,6 @@ class Auth_Yadis_DiscoveryResult {
 	// The URI from which the response text was returned (set to
 	// None if there was no XRDS document found)
 	public $xrds_uri;
-
 	public $xrds;
 
 	// The content-type returned with the response_text
@@ -106,6 +104,7 @@ class Auth_Yadis_DiscoveryResult {
 	public function isXRDS() {
 		// Is the response text supposed to be an XRDS document?
 		return $this->usedYadisLocation() ||
+
 				$this->content_type == Auth_Yadis_CONTENT_TYPE;
 	}
 }
@@ -321,8 +320,7 @@ class Auth_Yadis_Yadis {
 		$extra_ns_map = null,
 		$timeout = 20
 	) {
-		$result = new Auth_Yadis_DiscoveryResult($uri);
-
+		$result      = new Auth_Yadis_DiscoveryResult($uri);
 		$request_uri = $uri;
 		$headers     = array(
 			'Accept: ' . Auth_Yadis_CONTENT_TYPE .
@@ -360,14 +358,14 @@ class Auth_Yadis_Yadis {
 			);
 
 			if (!$yadis_location) {
-				$parser         = new Auth_Yadis_ParseHTML();
+				$parser = new Auth_Yadis_ParseHTML();
+
 				$yadis_location = $parser->getHTTPEquiv($response->body);
 			}
 
 			if ($yadis_location) {
 				$result->xrds_uri = $yadis_location;
-
-				$response = $fetcher->get($yadis_location);
+				$response         = $fetcher->get($yadis_location);
 
 				if ((!$response) || ($response->status != 200
 					and $response->status != 206)

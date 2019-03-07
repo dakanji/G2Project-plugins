@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/slideshow/classes/SlideshowHelper.class');
 
 /**
@@ -35,8 +35,7 @@ class SlideshowView extends GalleryView {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$Slideshow = array();
+		$Slideshow    = array();
 
 		list($itemListString, $startId, $offset) = GalleryUtilities::getRequestVariables('itemList', 'startId', 'offset');
 
@@ -104,7 +103,6 @@ class SlideshowView extends GalleryView {
 
 		if ($picLensVersion) {
 			$Slideshow['piclensVersion'] = $picLensVersion;
-
 			$template->javascript(
 				$urlGenerator->generateUrl(
 					array(
@@ -118,7 +116,6 @@ class SlideshowView extends GalleryView {
 					)
 				)
 			);
-
 			$jsUrlParams = array(
 				'forJavascript' => true,
 				'forceFullUrl'  => true,
@@ -187,8 +184,8 @@ class SlideshowView extends GalleryView {
 		$Slideshow['items'] = $items;
 		$Slideshow['count'] = count($items);
 		$Slideshow['start'] = $start;
-		$template->setVariable('Slideshow', $Slideshow);
 
+		$template->setVariable('Slideshow', $Slideshow);
 		$template->javascript('lib/yui/yahoo-dom-event.js');
 		$template->javascript('modules/slideshow/data/lytebox.js');
 		$template->link(

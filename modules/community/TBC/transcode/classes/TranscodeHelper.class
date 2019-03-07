@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -57,70 +58,74 @@ class TranscodeHelper {
 		$width = $height = -1;
 
 		list($ret, $toolkit1) = GalleryCoreApi::getToolkitByProperty($item->getMimeType(), 'dimensions');
-		if (!$ret && isset($toolkit1)) {
 
+		if (!$ret && isset($toolkit1)) {
 			list($ret, $result) = $toolkit1->getProperty($item->getMimeType(), 'dimensions', $path);
+
 			if (!$ret) {
 				$width = $result[0];
 				$height = $result[1];
 			}
-
 		}
 
 		/* Get video-framerate (frames per second) */
+
 		/*
 		$fps = 0;
 
 		list($ret, $toolkit2) = GalleryCoreApi::getToolkitByProperty($item->getMimeType(), 'video-framerate');
-		if (!$ret && isset($toolkit2)) {
 
+		if (!$ret && isset($toolkit2)) {
 			list($ret, $result) = $toolkit2->getProperty($item->getMimeType(), 'video-framerate', $path);
+
 			if (!$ret) {
 				$fps = $result[0];
 			}
-
 		}
 
 		/* Get audio-samplerate (samples per second, Hz) */
+
 		/*
 		$asr = 0;
 
 		list($ret, $toolkit3) = GalleryCoreApi::getToolkitByProperty($item->getMimeType(), 'audio-samplerate');
-		if (!$ret && isset($toolkit3)) {
 
+		if (!$ret && isset($toolkit3)) {
 			list($ret, $result) = $toolkit3->getProperty($item->getMimeType(), 'audio-samplerate', $path);
+
 			if (!$ret) {
 				$asr = $result[0];
 			}
-
 		}
 
 		/* Get audio-channels */
+
 		/*
 		$chans = 0;
 
 		list($ret, $toolkit4) = GalleryCoreApi::getToolkitByProperty($item->getMimeType(), 'audio-channels');
-		if (!$ret && isset($toolkit4)) {
 
+		if (!$ret && isset($toolkit4)) {
 			list($ret, $result) = $toolkit4->getProperty($item->getMimeType(), 'audio-channels', $path);
+
 			if (!$ret) {
 				$chans = $result[0];
 			}
-
 		}
 
 		/* Get video-bitrate (kb/s) */
+
 		/*
 		$vbr = 0;
 
 		list($ret, $toolkit5) = GalleryCoreApi::getToolkitByProperty($item->getMimeType(), 'video-bitrate');
-		if (!$ret && isset($toolkit5)) {
 
+		if (!$ret && isset($toolkit5)) {
 			list($ret, $result) = $toolkit5->getProperty($item->getMimeType(), 'video-bitrate', $path);
+
 			if (!$ret) {
 				$vbr = $result[0];
 			}
-
 		}
 
 		*/

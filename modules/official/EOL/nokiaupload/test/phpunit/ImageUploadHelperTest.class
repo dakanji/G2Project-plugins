@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/nokiaupload/classes/ImageUploadHelper.class');
 
 /**
@@ -45,7 +45,6 @@ class ImageUploadHelperTest extends GalleryTestCase {
 		}
 
 		$gallery->setUrlGenerator(new ImageUploadHelperUrlGenerator());
-
 		$this->_markForCleanup($this->_user);
 	}
 
@@ -100,7 +99,6 @@ class ImageUploadHelperTest extends GalleryTestCase {
 		}
 
 		$status = ImageUploadHelper::doLogin();
-
 		$this->assertEventFired(
 			'Gallery::FailedLogin',
 			null,
@@ -108,7 +106,6 @@ class ImageUploadHelperTest extends GalleryTestCase {
 				'userName' => $this->_user->getUserName(),
 			)
 		);
-
 		$this->assertEquals(
 			array(
 				'success' => '2',

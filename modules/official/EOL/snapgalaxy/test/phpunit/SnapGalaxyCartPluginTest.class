@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -52,7 +53,6 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
-
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
 
 		if ($ret) {
@@ -75,7 +75,6 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			 * type that this plugin will print.  Make it an unsupported mime type so that no
 			 * graphics toolkits will get involved.
 			 */
-
 			list($ret, $this->_items[$i]) = $this->_createRandomDataItem(
 				$this->_album->getId(),
 				'test/jpeg',
@@ -156,8 +155,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		}
 
 		$storage =& $gallery->getStorage();
-
-		$ret = $storage->checkPoint();
+		$ret     = $storage->checkPoint();
 
 		if ($ret) {
 			return $ret;
@@ -202,6 +200,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		global $gallery;
 
 		$session =& $gallery->getSession();
+
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce(
 			'modules/snapgalaxy/classes/SnapGalaxyCartPlugin.class'
@@ -215,6 +214,7 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		}
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('fsockopen', array('www.snapgalaxy.com', 80, '', '', 5), 'testFd');
 		$platform->setReply(
 			'fwrite',
@@ -225,7 +225,6 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			),
 			100
 		);
-
 		$platform->setReply('fflush', array('testFd'), true);
 		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
 		$platform->setReply('feof', array('testFd'), false);
@@ -236,11 +235,9 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 			array('testFd', 4096),
 			'requesturl="/REQUEST_URL" redirecturl="/REDIRECT_URL"'
 		);
-
 		$platform->setReply('feof', array('testFd'), true);
 		$platform->setReply('fclose', array('testFd'), true);
 		$gallery->setPlatform($platform);
-
 		$cartPlugin = new SnapGalaxyCartPlugin();
 
 		list($ret, $urlParams) = $cartPlugin->fulfillCart($cartItemIds);

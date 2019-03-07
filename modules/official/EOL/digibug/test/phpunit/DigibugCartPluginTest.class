@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -48,7 +49,6 @@ class DigibugCartPluginTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
-
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
 
 		if ($ret) {
@@ -131,8 +131,7 @@ class DigibugCartPluginTest extends GalleryTestCase {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$session      =& $gallery->getSession();
-
-		$cartItemIds = array();
+		$cartItemIds  = array();
 
 		for ($i = 0; $i < count($this->_items); $i++) {
 			$cartItemIds[$this->_items[$i]->getId()] = $i + 1;
@@ -140,6 +139,7 @@ class DigibugCartPluginTest extends GalleryTestCase {
 
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce('modules/digibug/classes/DigibugCartPlugin.class');
+
 		$cartPlugin = new DigibugCartPlugin();
 
 		list($ret, $urlParams) = $cartPlugin->fulfillCart($cartItemIds);
@@ -156,7 +156,6 @@ class DigibugCartPluginTest extends GalleryTestCase {
 				'forceFullUrl' => true,
 			)
 		);
-
 		$this->assertEquals(
 			array(
 				'view'      => 'digibug.DigibugPrintPhotos',
@@ -165,7 +164,6 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			),
 			$urlParams
 		);
-
 		$printCart = $session->get('digibug.cart');
 		$this->assertEquals($cartItemIds, $printCart, 'cart');
 
@@ -177,6 +175,7 @@ class DigibugCartPluginTest extends GalleryTestCase {
 		}
 
 		GalleryUtilities::putRequestVariable('returnUrl', $returnUrl);
+
 		ob_start();
 
 		$ret  = $view->renderImmediate(array(), array());
@@ -191,13 +190,11 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			strpos($form, '"return_url" value="' . $returnUrl . '"'),
 			'return url'
 		);
-
 		$this->assert(
 			strpos($form, '"num_images" value="4"'),
 			'form should include 4 photos: qty 1 of item 0, none of item 1 ' .
 			'(no print permission), qty 3 of item 2'
 		);
-
 		$this->assert(
 			preg_match(
 				'{"image_1" value="http://[^"]*'
@@ -209,12 +206,10 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			),
 			'URL for first image should include a session id'
 		);
-
 		$this->assert(
 			$matches[1] != $session->getId(),
 			'session id in URL for first image should be a new id, not my session'
 		);
-
 		$this->assert(
 			preg_match(
 				'{"thumb_1" value="http://[^"]*'
@@ -227,13 +222,11 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			'URL for first thumbnail should include a session id'
 			. ' and use itemId not thumbId due to watermark'
 		);
-
 		$this->assertEquals(
 			$session->getId(),
 			$matches[1],
 			'session id in URL for first thumbnail should be my session'
 		);
-
 		$this->assert(
 			preg_match(
 				'{"image_4" value="http://[^"]*'
@@ -244,7 +237,6 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			),
 			'URL for second image should not include a session id'
 		);
-
 		$this->assert(
 			preg_match(
 				'{"thumb_4" value="http://[^"]*'
@@ -255,7 +247,6 @@ class DigibugCartPluginTest extends GalleryTestCase {
 			),
 			'URL for second thumbnail should not include a session id'
 		);
-
 		$printCart = $session->get('digibug.cart');
 		$this->assertEquals(null, $printCart, 'cart');
 

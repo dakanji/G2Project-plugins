@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -50,6 +51,7 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 		} else {
 			$session      =& $gallery->getSession();
 			$urlGenerator =& $gallery->getUrlGenerator();
+
 			/*
 			 * Force the use of the G2 base for the url and the cookie path as the applet will
 			 * communicate to G2 directly, even when G2 is embedded
@@ -69,14 +71,16 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 			}
 
 			$ItemAddUploadApplet['NoProtocolError'] = 0;
-			$ItemAddUploadApplet['cookieName']      = $session->getKey();
-			$ItemAddUploadApplet['cookieValue']     = $session->getId();
-			$ItemAddUploadApplet['cookieDomain']    = $cookieDomain;
-			$ItemAddUploadApplet['cookiePath']      = $cookiePath;
-			$ItemAddUploadApplet['album']           = $item->getId();
-			$ItemAddUploadApplet['userAgent']       = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-			$ItemAddUploadApplet['galleryVersion']  = 2;
-			$ItemAddUploadApplet['code']            = 'com.gallery.GalleryRemote.ItemAddUploadAppletMini';
+
+			$ItemAddUploadApplet['cookieName']   = $session->getKey();
+			$ItemAddUploadApplet['cookieValue']  = $session->getId();
+			$ItemAddUploadApplet['cookieDomain'] = $cookieDomain;
+			$ItemAddUploadApplet['cookiePath']   = $cookiePath;
+
+			$ItemAddUploadApplet['album']          = $item->getId();
+			$ItemAddUploadApplet['userAgent']      = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+			$ItemAddUploadApplet['galleryVersion'] = 2;
+			$ItemAddUploadApplet['code']           = 'com.gallery.GalleryRemote.ItemAddUploadAppletMini';
 
 			list($ret, $locale) = $gallery->getActiveLanguageCode();
 
@@ -99,7 +103,8 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 					$variablesArray = explode('|', $params['upload' . $type . 'Variables']);
 
 					foreach ($variablesArray as $variable) {
-						list($name, $value)                = explode('=', $variable);
+						list($name, $value) = explode('=', $variable);
+
 						$ItemAddUploadApplet[$type][$name] = $value;
 					}
 				}

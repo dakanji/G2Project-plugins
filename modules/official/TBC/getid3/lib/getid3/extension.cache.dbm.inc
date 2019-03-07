@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -9,6 +10,7 @@
 // extension.cache.dbm.php - part of getID3()                  //
 // Please see readme.txt for more information                  //
 //                                                            ///
+
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // This extension written by Allan Hansen <ahØartemis*dk>      //
@@ -69,7 +71,6 @@
 class getID3_cached_dbm extends getID3 {
 	// public: constructor - see top of this file for cache type and cache_options
 	public function __construct($cache_type, $dbm_filename, $lock_filename) {
-
 		// Check for dba extension
 		if (!extension_loaded('dba')) {
 			throw new Exception('PHP is not compiled with dba support, required to use DBM style cache.');
@@ -136,7 +137,6 @@ class getID3_cached_dbm extends getID3 {
 
 	// public: destructor
 	public function __destruct() {
-
 		// Close dbm file
 		dba_close($this->dba);
 
@@ -149,7 +149,6 @@ class getID3_cached_dbm extends getID3 {
 
 	// public: clear cache
 	public function clear_cache() {
-
 		// Close dbm file
 		dba_close($this->dba);
 

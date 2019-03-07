@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: StatisticsAdminCursory.inc,v $
  *

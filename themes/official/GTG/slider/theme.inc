@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -41,7 +42,6 @@ class SliderTheme extends GalleryTheme {
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'colorpack'      => '',
@@ -124,7 +124,6 @@ class SliderTheme extends GalleryTheme {
 
 		if (!empty($renderId)) {
 			// Render this item
-
 			list($ret, $image) = GalleryCoreApi::loadEntitiesById(
 				$renderId,
 				array('GalleryDataItem', 'GalleryDerivative')
@@ -153,7 +152,6 @@ class SliderTheme extends GalleryTheme {
 		}
 
 		// Otherwise, load the parent with initial view of this item
-
 		list($ret, $parent) = GalleryCoreApi::loadEntitiesById(
 			$item->getParentId(),
 			'GalleryItem'
@@ -303,6 +301,7 @@ class SliderTheme extends GalleryTheme {
 
 		foreach ($childItems as $child) {
 			$i++;
+
 			$childId = $child->getId();
 
 			if (!GalleryUtilities::isA($child, 'GalleryDataItem')) {
@@ -382,8 +381,7 @@ class SliderTheme extends GalleryTheme {
 				} else {
 					// Item must render itself
 					$children[$i]['renderItem'] = 1;
-
-					$imageWidths[] = $imageHeights[] = -1;
+					$imageWidths[]              = $imageHeights[]              = -1;
 				}
 			}
 		}

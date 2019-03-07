@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -73,7 +74,6 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$target = empty($orig) ? 'name=value' : $orig . '|name=value';
 
 		foreach (array(
@@ -90,6 +90,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		// now test replacing
 		GalleryUtilities::putRequestVariable('form[default][value]', 'value1');
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -102,7 +103,6 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$target = empty($orig) ? 'name=value1' : $orig . '|name=value1';
 
 		foreach (array(
@@ -146,7 +146,6 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$target = empty($orig) ? 'name=value' : $orig . '|name=value';
 
 		foreach (array(
@@ -190,7 +189,6 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
-
 		$target = empty($orig) ? 'name=value' : $orig . '|name=value';
 
 		foreach (array(
@@ -211,6 +209,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::removeRequestVariable('form[default][value]');
 		GalleryUtilities::putRequestVariable('form[action][delete]', '1');
 		GalleryUtilities::putRequestVariable('form[delete][variable]', 'name');
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

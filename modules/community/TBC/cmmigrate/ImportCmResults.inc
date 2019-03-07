@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -49,6 +50,7 @@ class ImportCmResultsView extends GalleryView {
 		$ImportResults           = array();
 		$ImportResults['counts'] = $counts;
 		$ImportResults['status'] = $status;
+
 		$template->setVariable('ImportResults', $ImportResults);
 		$template->setVariable('controller', 'cmmigrate.ImportCmResults');
 

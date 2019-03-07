@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -155,10 +156,9 @@ class DigibugPrintPhotosView extends GalleryView {
 			}
 
 			if ($needSession) {
-				$sessionParam = array(
+				$sessionParam   = array(
 					$dgSession->getKey() => $dgSession->getId(),
 				);
-
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
@@ -168,7 +168,7 @@ class DigibugPrintPhotosView extends GalleryView {
 				'item' => (array)$item,
 			);
 
-			$entry['imageUrl'] = $urlGenerator->generateUrl(
+			$entry['imageUrl']    = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -181,7 +181,6 @@ class DigibugPrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
 
@@ -192,7 +191,7 @@ class DigibugPrintPhotosView extends GalleryView {
 				$thumbSource = $thumbnails[$itemId];
 			}
 
-			$entry['thumbUrl'] = $urlGenerator->generateUrl(
+			$entry['thumbUrl']    = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbSource->getId(),
@@ -202,7 +201,6 @@ class DigibugPrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
-
 			$entry['thumbWidth']  = $thumbSource->getWidth();
 			$entry['thumbHeight'] = $thumbSource->getHeight();
 
@@ -225,7 +223,6 @@ class DigibugPrintPhotosView extends GalleryView {
 			 * sessionid in this session so we can reuse it for multiple print requests (and
 			 * just bump timeout each time).
 			 */
-
 			$ret = $dgSession->save();
 
 			if ($ret) {
@@ -251,7 +248,9 @@ class DigibugPrintPhotosView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
 		$template->setVariable('l10Domain', 'modules_digibug');
 		$template->setVariable(
 			'DigibugPrintPhotos',
@@ -262,7 +261,6 @@ class DigibugPrintPhotosView extends GalleryView {
 				'params'    => $params,
 			)
 		);
-
 		$template->display('gallery:modules/digibug/templates/DigibugPrintPhotos.tpl');
 
 		return null;

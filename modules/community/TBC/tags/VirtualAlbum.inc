@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
 
 /**
@@ -88,13 +88,14 @@ class VirtualAlbumView extends GalleryView {
 
 			// Provide parent, parent URL and get-children function to Theme API
 			$rawTagName = $tagName;
+
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
-			$item->urlParams = array(
+
+			$item->urlParams           = array(
 				'view'        => 'tags.VirtualAlbum',
 				'tagName'     => $rawTagName,
 				'highlightId' => $itemId,
 			);
-
 			$item->getChildrenFunction = array('VirtualAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -120,11 +121,10 @@ class VirtualAlbumView extends GalleryView {
 	 * @see GalleryView::loadTemplate
 	 */
 	public function loadTemplate(&$template, &$form) {
-		$theme =& $template->getVariableByReference('theme');
-
+		$theme      =& $template->getVariableByReference('theme');
 		$rawTagName = $tagName = GalleryUtilities::getRequestVariables('tagName');
-
 		GalleryUtilities::unsanitizeInputValues($rawTagName, false);
+
 		$theme['pageUrl'] = array(
 			'view'    => 'tags.VirtualAlbum',
 			'tagName' => $rawTagName,

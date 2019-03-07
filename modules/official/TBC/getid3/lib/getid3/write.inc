@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -28,7 +29,6 @@ if (!include_once GETID3_INCLUDEPATH . 'getid3.lib.php') {
 }
 
 // NOTES:
-//
 // You should pass data here with standard field names as follows:
 // * TITLE
 // * ARTIST
@@ -38,7 +38,6 @@ if (!include_once GETID3_INCLUDEPATH . 'getid3.lib.php') {
 // * GENRE
 // * YEAR
 // * ATTACHED_PICTURE (ID3v2 only)
-//
 // http://www.personal.uni-jena.de/~pfk/mpp/sv8/apekey.html
 // The APEv2 Tag Items Keys definition says "TRACK" is correct but foobar2000 uses "TRACKNUMBER" instead
 // Pass data here as "TRACKNUMBER" for compatability with all formats
@@ -88,10 +87,10 @@ class getid3_writetags {
 			$this->ThisFileInfo = array(
 				'fileformat' => '',
 			);
-
-			$AllowedTagFormats = array('id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3');
+			$AllowedTagFormats  = array('id3v1', 'id3v2.2', 'id3v2.3', 'id3v2.4', 'ape', 'lyrics3');
 		} else {
-			$getID3             = new getID3();
+			$getID3 = new getID3();
+
 			$getID3->encoding   = $this->tag_encoding;
 			$this->ThisFileInfo = $getID3->analyze($this->filename);
 
@@ -153,9 +152,10 @@ class getid3_writetags {
 
 			foreach ($this->tagformats as $requested_tag_format) {
 				if (!in_array($requested_tag_format, $AllowedTagFormats)) {
-					$errormessage   = 'Tag format "' . $requested_tag_format . '" is not allowed on "' . (isset($this->ThisFileInfo['fileformat']) ? $this->ThisFileInfo['fileformat'] : '');
-					$errormessage  .= (isset($this->ThisFileInfo['audio']['dataformat']) ? '.' . $this->ThisFileInfo['audio']['dataformat'] : '');
-					$errormessage  .= '" files';
+					$errormessage  = 'Tag format "' . $requested_tag_format . '" is not allowed on "' . (isset($this->ThisFileInfo['fileformat']) ? $this->ThisFileInfo['fileformat'] : '');
+					$errormessage .= (isset($this->ThisFileInfo['audio']['dataformat']) ? '.' . $this->ThisFileInfo['audio']['dataformat'] : '');
+					$errormessage .= '" files';
+
 					$this->errors[] = $errormessage;
 
 					return false;
@@ -192,7 +192,8 @@ class getid3_writetags {
 		foreach ($WritingFilesToInclude as $tagformat) {
 			switch ($tagformat) {
 				case 'ape':
-					$GETID3_ERRORARRAY = &$this->errors;
+					$GETID3_ERRORARRAY =& $this->errors;
+
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'write.apetag.php', __FILE__, true);
 
 					break;
@@ -202,7 +203,8 @@ class getid3_writetags {
 				case 'vorbiscomment':
 				case 'metaflac':
 				case 'real':
-					$GETID3_ERRORARRAY = &$this->errors;
+					$GETID3_ERRORARRAY =& $this->errors;
+
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'write.' . $tagformat . '.php', __FILE__, true);
 
 					break;
@@ -211,7 +213,8 @@ class getid3_writetags {
 				case 'id3v2.3':
 				case 'id3v2.4':
 				case 'id3v2':
-					$GETID3_ERRORARRAY = &$this->errors;
+					$GETID3_ERRORARRAY =& $this->errors;
+
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'write.id3v2.php', __FILE__, true);
 
 					break;
@@ -236,6 +239,7 @@ class getid3_writetags {
 		foreach ($this->tag_data as $tag_key => $tag_array) {
 			if (strtoupper($tag_key) !== $tag_key) {
 				$this->tag_data[strtoupper($tag_key)] = $this->tag_data[$tag_key];
+
 				unset($this->tag_data[$tag_key]);
 			}
 		}
@@ -246,6 +250,7 @@ class getid3_writetags {
 				foreach ($tag_data_array as $tag_key => $tag_array) {
 					if (strtoupper($tag_key) !== $tag_key) {
 						$this->ThisFileInfo['tags'][$tag_format][strtoupper($tag_key)] = $this->ThisFileInfo['tags'][$tag_format][$tag_key];
+
 						unset($this->ThisFileInfo['tags'][$tag_format][$tag_key]);
 					}
 				}
@@ -255,6 +260,7 @@ class getid3_writetags {
 		// Convert "TRACK" to "TRACKNUMBER" (if needed) for compatability with all formats
 		if (isset($this->tag_data['TRACK']) && !isset($this->tag_data['TRACKNUMBER'])) {
 			$this->tag_data['TRACKNUMBER'] = $this->tag_data['TRACK'];
+
 			unset($this->tag_data['TRACK']);
 		}
 
@@ -300,7 +306,8 @@ class getid3_writetags {
 				case 'id3v2.2':
 				case 'id3v2.3':
 				case 'id3v2.4':
-					$id3v2_writer               = new getid3_write_id3v2();
+					$id3v2_writer = new getid3_write_id3v2();
+
 					$id3v2_writer->majorversion = intval(substr($tagformat, -1));
 					$id3v2_writer->paddedlength = $this->id3v2_paddedlength;
 
@@ -382,7 +389,8 @@ class getid3_writetags {
 			$success = false; // overridden if tag deletion is successful
 			switch ($DeleteTagFormat) {
 				case 'id3v1':
-					$id3v1_writer           = new getid3_write_id3v1();
+					$id3v1_writer = new getid3_write_id3v1();
+
 					$id3v1_writer->filename = $this->filename;
 
 					if (($success = $id3v1_writer->RemoveID3v1()) === false) {
@@ -392,7 +400,8 @@ class getid3_writetags {
 					break;
 
 				case 'id3v2':
-					$id3v2_writer           = new getid3_write_id3v2();
+					$id3v2_writer = new getid3_write_id3v2();
+
 					$id3v2_writer->filename = $this->filename;
 
 					if (($success = $id3v2_writer->RemoveID3v2()) === false) {
@@ -402,7 +411,8 @@ class getid3_writetags {
 					break;
 
 				case 'ape':
-					$ape_writer           = new getid3_write_apetag();
+					$ape_writer = new getid3_write_apetag();
+
 					$ape_writer->filename = $this->filename;
 
 					if (($success = $ape_writer->DeleteAPEtag()) === false) {
@@ -412,7 +422,8 @@ class getid3_writetags {
 					break;
 
 				case 'vorbiscomment':
-					$vorbiscomment_writer           = new getid3_write_vorbiscomment();
+					$vorbiscomment_writer = new getid3_write_vorbiscomment();
+
 					$vorbiscomment_writer->filename = $this->filename;
 
 					if (($success = $vorbiscomment_writer->DeleteVorbisComment()) === false) {
@@ -422,7 +433,8 @@ class getid3_writetags {
 					break;
 
 				case 'metaflac':
-					$metaflac_writer           = new getid3_write_metaflac();
+					$metaflac_writer = new getid3_write_metaflac();
+
 					$metaflac_writer->filename = $this->filename;
 
 					if (($success = $metaflac_writer->DeleteMetaFLAC()) === false) {
@@ -432,7 +444,8 @@ class getid3_writetags {
 					break;
 
 				case 'lyrics3':
-					$lyrics3_writer           = new getid3_write_lyrics3();
+					$lyrics3_writer = new getid3_write_lyrics3();
+
 					$lyrics3_writer->filename = $this->filename;
 
 					if (($success = $lyrics3_writer->DeleteLyrics3()) === false) {
@@ -442,7 +455,8 @@ class getid3_writetags {
 					break;
 
 				case 'real':
-					$real_writer           = new getid3_write_real();
+					$real_writer = new getid3_write_real();
+
 					$real_writer->filename = $this->filename;
 
 					if (($success = $real_writer->RemoveReal()) === false) {
@@ -501,6 +515,7 @@ class getid3_writetags {
 							$ape_tag_data[$tag_key][$key] = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-8', $value);
 						} else {
 							$this->warnings[] = '$data[' . $tag_key . '][' . $key . '] is not a string value - all of $data[' . $tag_key . '] NOT written to APE tag';
+
 							unset($ape_tag_data[$tag_key]);
 
 							break;
@@ -546,8 +561,7 @@ class getid3_writetags {
 	}
 
 	public function FormatDataForID3v2($id3v2_majorversion) {
-		$tag_data_id3v2 = array();
-
+		$tag_data_id3v2                = array();
 		$ID3v2_text_encoding_lookup[2] = array(
 			'ISO-8859-1' => 0,
 			'UTF-16'     => 1,
@@ -585,6 +599,7 @@ class getid3_writetags {
 
 				case '':
 					$this->errors[] = 'ID3v2: Skipping "' . $tag_key . '" because cannot match it to a known ID3v2 frame type';
+
 					// some other data type, don't know how to handle it, ignore it
 					break;
 
@@ -594,7 +609,8 @@ class getid3_writetags {
 						if (isset($ID3v2_text_encoding_lookup[$id3v2_majorversion][$this->tag_encoding])) {
 							// source encoding is valid in ID3v2 - use it with no conversion
 							$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = $ID3v2_text_encoding_lookup[$id3v2_majorversion][$this->tag_encoding];
-							$tag_data_id3v2[$ID3v2_framename][$key]['data']       = $value;
+
+							$tag_data_id3v2[$ID3v2_framename][$key]['data'] = $value;
 						} else {
 							// source encoding is NOT valid in ID3v2 - convert it to an ID3v2-valid encoding first
 							if ($id3v2_majorversion < 4) {
@@ -627,6 +643,7 @@ class getid3_writetags {
 
 								if (!$ID3v2_tag_data_converted) {
 									$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 1;
+
 									//$tag_data_id3v2[$ID3v2_framename][$key]['data'] = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-16', $value); // output is UTF-16LE+BOM or UTF-16BE+BOM depending on system architecture
 									$tag_data_id3v2[$ID3v2_framename][$key]['data'] = "\xFF\xFE" . getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-16LE', $value); // force LittleEndian order version of UTF-16
 									$ID3v2_tag_data_converted                       = true;
@@ -634,13 +651,15 @@ class getid3_writetags {
 							} else {
 								// convert data from other encoding to UTF-8
 								$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 3;
-								$tag_data_id3v2[$ID3v2_framename][$key]['data']       = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-8', $value);
+
+								$tag_data_id3v2[$ID3v2_framename][$key]['data'] = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-8', $value);
 							}
 						}
 
 						// These values are not needed for all frame types, but if they're not used no matter
 						$tag_data_id3v2[$ID3v2_framename][$key]['description'] = '';
-						$tag_data_id3v2[$ID3v2_framename][$key]['language']    = $this->id3v2_tag_language;
+
+						$tag_data_id3v2[$ID3v2_framename][$key]['language'] = $this->id3v2_tag_language;
 					}
 
 					break;
@@ -674,6 +693,7 @@ class getid3_writetags {
 					$tag_data_vorbiscomment[$tag_key][$key] = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-8', $value);
 				} else {
 					$this->warnings[] = '$data[' . $tag_key . '][' . $key . '] is not a string value - all of $data[' . $tag_key . '] NOT written to VorbisComment tag';
+
 					unset($tag_data_vorbiscomment[$tag_key]);
 
 					break;
@@ -697,7 +717,6 @@ class getid3_writetags {
 		$tag_data_real['artist']    = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['ARTIST']) ? $this->tag_data['ARTIST'] : array())));
 		$tag_data_real['copyright'] = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['COPYRIGHT']) ? $this->tag_data['COPYRIGHT'] : array())));
 		$tag_data_real['comment']   = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['COMMENT']) ? $this->tag_data['COMMENT'] : array())));
-
 		$this->MergeExistingTagData('real', $tag_data_real);
 
 		return $tag_data_real;

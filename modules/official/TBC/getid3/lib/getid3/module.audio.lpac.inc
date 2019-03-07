@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -14,11 +15,9 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
-
 class getid3_lpac extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$LPACheader = $this->fread(14);
 
@@ -28,18 +27,15 @@ class getid3_lpac extends getid3_handler {
 			return false;
 		}
 
-		$info['avdataoffset'] += 14;
-
-		$info['fileformat']            = 'lpac';
-		$info['audio']['dataformat']   = 'lpac';
-		$info['audio']['lossless']     = true;
-		$info['audio']['bitrate_mode'] = 'vbr';
-
-		$info['lpac']['file_version']  = getid3_lib::BigEndian2Int(substr($LPACheader, 4, 1));
-		$flags['audio_type']           = getid3_lib::BigEndian2Int(substr($LPACheader, 5, 1));
-		$info['lpac']['total_samples'] = getid3_lib::BigEndian2Int(substr($LPACheader, 6, 4));
-		$flags['parameters']           = getid3_lib::BigEndian2Int(substr($LPACheader, 10, 4));
-
+		$info['avdataoffset']            += 14;
+		$info['fileformat']               = 'lpac';
+		$info['audio']['dataformat']      = 'lpac';
+		$info['audio']['lossless']        = true;
+		$info['audio']['bitrate_mode']    = 'vbr';
+		$info['lpac']['file_version']     = getid3_lib::BigEndian2Int(substr($LPACheader, 4, 1));
+		$flags['audio_type']              = getid3_lib::BigEndian2Int(substr($LPACheader, 5, 1));
+		$info['lpac']['total_samples']    = getid3_lib::BigEndian2Int(substr($LPACheader, 6, 4));
+		$flags['parameters']              = getid3_lib::BigEndian2Int(substr($LPACheader, 10, 4));
 		$info['lpac']['flags']['is_wave'] = (bool)($flags['audio_type'] & 0x40);
 		$info['lpac']['flags']['stereo']  = (bool)($flags['audio_type'] & 0x04);
 		$info['lpac']['flags']['24_bit']  = (bool)($flags['audio_type'] & 0x02);
@@ -80,9 +76,11 @@ class getid3_lpac extends getid3_handler {
 		}
 
 		$getid3_temp = new getID3();
+
 		$getid3_temp->openfile($this->getid3->filename);
 		$getid3_temp->info = $info;
 		$getid3_riff       = new getid3_riff($getid3_temp);
+
 		$getid3_riff->Analyze();
 		$info['avdataoffset']                = $getid3_temp->info['avdataoffset'];
 		$info['riff']                        = $getid3_temp->info['riff'];
@@ -90,8 +88,8 @@ class getid3_lpac extends getid3_handler {
 		$info['warning']                     = $getid3_temp->info['warning'];
 		$info['lpac']['comments']['comment'] = $getid3_temp->info['comments'];
 		$info['audio']['sample_rate']        = $getid3_temp->info['audio']['sample_rate'];
-		unset($getid3_temp, $getid3_riff);
 
+		unset($getid3_temp, $getid3_riff);
 		$info['audio']['channels'] = ($info['lpac']['flags']['stereo'] ? 2 : 1);
 
 		if ($info['lpac']['flags']['24_bit']) {

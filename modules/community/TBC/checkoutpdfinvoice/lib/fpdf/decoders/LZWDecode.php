@@ -1,22 +1,16 @@
 <?php
-//
+
 //  FPDI - Version 1.2
-//
 //    Copyright 2004-2007 Setasign - Jan Slabon
-//
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
-//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//
-
 class LZWDecode {
 	public $sTable = array();
 	public $data;
@@ -43,20 +37,16 @@ class LZWDecode {
 		}
 
 		$this->initsTable();
-
 		$this->data =& $data;
 
 		// Initialize pointers
 		$this->bytePointer = 0;
 		$this->bitPointer  = 0;
-
-		$this->nextData = 0;
-		$this->nextBits = 0;
-
-		$oldCode = 0;
-
-		$string     = '';
-		$uncompData = '';
+		$this->nextData    = 0;
+		$this->nextBits    = 0;
+		$oldCode           = 0;
+		$string            = '';
+		$uncompData        = '';
 
 		while (($code = $this->getNextCode()) != 257) {
 			if ($code == 256) {

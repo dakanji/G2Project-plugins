@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -106,6 +107,7 @@ class OrderStatusView extends GalleryView {
 
 		if ($form['formName'] != 'OrderStatus') {
 			$form['formName'] = 'OrderStatus';
+
 			// Figure out which item we're talking about
 			$form['transactionId'] = $transactionId;
 		}

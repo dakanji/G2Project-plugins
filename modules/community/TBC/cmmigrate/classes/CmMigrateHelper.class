@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('lib/adodb/adodb.inc.php');
 
 /**
@@ -40,7 +40,8 @@ class CmMigrateHelper {
 
 		$platform =& $gallery->getPlatform();
 		$slash    = $platform->getDirectorySeparator();
-		$tmp      = trim($baseDir);
+
+		$tmp = trim($baseDir);
 
 		if ($tmp[strlen($tmp) - 1] != $slash) {
 			$tmp .= $slash;

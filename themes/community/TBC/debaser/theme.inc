@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -40,11 +41,9 @@ class DebaserTheme extends GalleryTheme {
 				'Something different, something lower'
 			)
 		);
-
 		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'rows'                => 3,
@@ -161,7 +160,6 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showThumbTitles'],
 		);
-
 		$settings[] = array(
 			'key'   => 'specialEffects',
 			'name'  => $this->translate(
@@ -170,7 +168,6 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['specialEffects'],
 		);
-
 		$settings[] = array(
 			'key'   => 'roundedCorners',
 			'name'  => $this->translate(
@@ -179,7 +176,6 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['roundedCorners'],
 		);
-
 		$settings[] = array(
 			'key'   => 'htmlHeaderBlock',
 			'name'  => $this->translate(
@@ -188,7 +184,6 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'textarea',
 			'value' => $params['htmlHeaderBlock'],
 		);
-
 		$settings[] = array(
 			'key'   => 'htmlFooterBlock',
 			'name'  => $this->translate(
@@ -197,7 +192,6 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'textarea',
 			'value' => $params['htmlFooterBlock'],
 		);
-
 		$settings[] = array(
 			'key'        => 'backgroundImage',
 			'name'       => $this->translate(
@@ -209,7 +203,6 @@ class DebaserTheme extends GalleryTheme {
 			),
 			'value'      => $params['backgroundImage'],
 		);
-
 		$settings[] = array(
 			'key'        => 'backgroundItemImage',
 			'name'       => $this->translate(

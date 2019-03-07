@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: IPN.inc,v $
  *
@@ -55,7 +56,6 @@ class IPNView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/checkoutpaypal/classes/GalleryCheckoutPaypalIPNHelper.class');
 
 		list($ret, $ppurl) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'ppurl');
@@ -140,7 +140,6 @@ class IPNView extends GalleryView {
 						'arg2' => $paypalname,
 					),
 				);
-
 				$IPNReason[] = "\n";
 				$notes      .= 'Wrong Business Name: ' . $IPNpost[16] . ' and ours is ' . $paypalname;
 
@@ -155,9 +154,9 @@ class IPNView extends GalleryView {
 							'arg2' => $transaction->getamount(),
 						),
 					);
+					$IPNReason[]       = "\n";
 
-					$IPNReason[] = "\n";
-					$notes      .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
+					$notes .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
 				} else {
 					$IPNAmountVerified = true;
 				}
@@ -176,6 +175,7 @@ class IPNView extends GalleryView {
 					/* at the moment that condition always succeeds because the GalleryCheckoutPaypalIPN entity
 					has the wrong parent type.
 					*/
+
 					// Set Payment Plugin for this transaction
 					$ret = GalleryCheckoutApi::setPaymentPlugin($transaction, 'checkoutpaypal');
 
@@ -246,7 +246,6 @@ class IPNView extends GalleryView {
 							'domain' => 'checkoutpaypal',
 							'data'   => $gallery->i18n('Unhandled Paypal State:'),
 						);
-
 						$IPNReason[] = "\n";
 						$IPNReason[] = $IPNpost[2];
 						$IPNReason[] = "\n";
@@ -257,7 +256,6 @@ class IPNView extends GalleryView {
 			/* Post an administrative notification
 			so the admin can take up events not handled automatically
 			*/
-
 			$ret = GalleryCheckoutApi::SendAdminNotification($transaction, $IPNReason);
 
 			if ($ret) {
@@ -285,8 +283,10 @@ class IPNView extends GalleryView {
 			$ppTransaction->setppStatus($IPNpost[2]);
 			$ppTransaction->setppDate($IPNpost[3]);
 			$ppTransaction->setppSign($IPNpost[4]);
+
 			$notes .= time() . ' PayPal IPN postback received';
 			$notes .= ' - PayPal notes: ' . $IPNpost[15];
+
 			$ppTransaction->setnotes($notes);
 			$ppTransaction->save();
 

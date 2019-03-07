@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -39,12 +40,10 @@ class JpegtranModule extends GalleryModule {
 				'Graphics toolkit for lossless JPEG transformations'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('toolkits', $gallery->i18n('Graphics Toolkits'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -145,7 +144,6 @@ class JpegtranModule extends GalleryModule {
 		 * so that any event handlers triggered by the deactivation will see the world as it will
 		 * be after the deactivation is done.
 		 */
-
 		$ret = GalleryCoreApi::unregisterToolkit($this->getId());
 
 		if ($ret) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: KeywordAnalysis.inc,v $
  * $Revision: 1845 $
@@ -20,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  *
  * @package MRAnalysis
@@ -123,8 +125,7 @@ class KeywordAnalysisView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'mranalysis.KeywordAnalysis';
-
-		$items = KeywordAnalysis::get_item_list();
+		$items            = KeywordAnalysis::get_item_list();
 
 		$template->setVariable('controller', 'mranalysis.KeywordAnalysis');
 		$template->setVariable('baditems', $items);

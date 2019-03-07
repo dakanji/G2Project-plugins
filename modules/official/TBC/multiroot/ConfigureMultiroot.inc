@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -75,8 +76,7 @@ class ConfigureMultirootView extends GalleryView {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
+		$ret          = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
 			return array($ret, null);
@@ -201,7 +201,6 @@ class ConfigureMultirootView extends GalleryView {
 		}
 
 		$user->setHashedPassword('nopasswd');
-
 		$ret = $user->save();
 
 		if ($ret) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: CheckoutPaypalPlugin.class,v $
  *
@@ -63,8 +64,7 @@ class CheckoutPaypalPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		}
 
 		$transactionId = $transaction->getId();
-
-		$orderTotal = $transaction->getAmount();
+		$orderTotal    = $transaction->getAmount();
 
 		list($ret, $active) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'active');
 
@@ -115,11 +115,14 @@ class CheckoutPaypalPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		}
 
 		$translator = $gallery->getTranslator();
+
 		//$languageCode = $translator->getActiveLanguageCode();
 		$languageCode = $translator->_languageCode;
+
 		// Paypal wants just the country code
 		list($language, $country) = preg_split('/[-_]/', "${languageCode}_");
-		$langCountry              = GalleryUtilities::strToUpper($country);
+
+		$langCountry = GalleryUtilities::strToUpper($country);
 
 		return array(
 			null,

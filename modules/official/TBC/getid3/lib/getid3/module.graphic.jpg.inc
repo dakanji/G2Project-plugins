@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -16,8 +17,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_jpg extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info                                =& $this->getid3->info;
 		$info['fileformat']                  = 'jpg';
 		$info['video']['dataformat']         = 'jpg';
 		$info['video']['lossless']           = false;
@@ -25,8 +25,8 @@ class getid3_jpg extends getid3_handler {
 		$info['video']['pixel_aspect_ratio'] = (float)1;
 
 		$this->fseek($info['avdataoffset']);
-
 		$imageinfo = array();
+
 		//list($width, $height, $type) = getid3_lib::GetDataImageSize($this->fread($info['filesize']), $imageinfo);
 		list($width, $height, $type) = getimagesize($info['filenamepath'], $imageinfo); // http://www.getid3.org/phpBB3/viewtopic.php?t=1474
 		if (isset($imageinfo['APP13'])) {
@@ -37,7 +37,8 @@ class getid3_jpg extends getid3_handler {
 			if (is_array($iptc_parsed)) {
 				foreach ($iptc_parsed as $iptc_key_raw => $iptc_values) {
 					list($iptc_record, $iptc_tagkey) = explode('#', $iptc_key_raw);
-					$iptc_tagkey                     = intval(ltrim($iptc_tagkey, '0'));
+
+					$iptc_tagkey = intval(ltrim($iptc_tagkey, '0'));
 
 					foreach ($iptc_values as $key => $value) {
 						$IPTCrecordName    = $this->IPTCrecordName($iptc_record);
@@ -106,8 +107,7 @@ class getid3_jpg extends getid3_handler {
 				$computed_time[5]     = (isset($explodedGPSDateStamp[0]) ? $explodedGPSDateStamp[0] : '');
 				$computed_time[3]     = (isset($explodedGPSDateStamp[1]) ? $explodedGPSDateStamp[1] : '');
 				$computed_time[4]     = (isset($explodedGPSDateStamp[2]) ? $explodedGPSDateStamp[2] : '');
-
-				$computed_time = array(
+				$computed_time        = array(
 					0 => 0,
 					1 => 0,
 					2 => 0,
@@ -159,11 +159,13 @@ class getid3_jpg extends getid3_handler {
 
 		if (isset($info['filenamepath'])) {
 			$image_xmp = new Image_XMP($info['filenamepath']);
-			$xmp_raw   = $image_xmp->getAllTags();
+
+			$xmp_raw = $image_xmp->getAllTags();
 
 			foreach ($xmp_raw as $key => $value) {
 				if (strpos($key, ':')) {
-					list($subsection, $tagname)         = explode(':', $key);
+					list($subsection, $tagname) = explode(':', $key);
+
 					$info['xmp'][$subsection][$tagname] = $this->CastAsAppropriate($value);
 				} else {
 					$info['warning'][] = 'XMP: expecting "<subsection>:<tagname>", found "' . $key . '"';

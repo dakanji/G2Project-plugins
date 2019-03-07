@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/jpegtran/classes/JpegtranToolkitHelper.class');
 
 /**
@@ -68,6 +68,7 @@ class AdminJpegtranController extends GalleryController {
 						if ($platform->file_exists($path)) {
 							// Got a match
 							$form['path'] = $path;
+
 							GalleryUtilities::putRequestVariable('form[path]', $path);
 						}
 					}
@@ -175,8 +176,7 @@ class AdminJpegtranView extends GalleryView {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
-		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
+		$ret      = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
 			return array($ret, null);
@@ -210,8 +210,7 @@ class AdminJpegtranView extends GalleryView {
 				list(
 					$ret,
 					$testResults
-				) = JpegtranToolkitHelper::testBinary($platform->realpath($form['path']));
-
+				)             = JpegtranToolkitHelper::testBinary($platform->realpath($form['path']));
 				$debugSnippet = $gallery->stopRecordingDebugSnippet();
 
 				if ($ret) {

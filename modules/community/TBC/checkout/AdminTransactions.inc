@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -108,7 +109,12 @@ class AdminTransactionsView extends GalleryView {
 			return array($ret, null);
 		}
 
-		list($page, $sortBy, $order, $showDelete) = GalleryUtilities::getRequestVariables('page', 'sortBy', 'order', 'showDelete');
+		list($page, $sortBy, $order, $showDelete) = GalleryUtilities::getRequestVariables(
+			'page',
+			'sortBy',
+			'order',
+			'showDelete'
+		);
 
 		if (!isset($page) || $page < 1) {
 			$page = 1;
@@ -147,8 +153,8 @@ class AdminTransactionsView extends GalleryView {
 
 		$results = array();
 
-		$query = "SELECT 
-		[GalleryCheckoutTransaction::date], 			
+		$query = "SELECT
+		[GalleryCheckoutTransaction::date],
 		[GalleryCheckoutTransaction::id],
 		[GalleryUser::fullName],
 		[GalleryUser::userName],
@@ -156,7 +162,7 @@ class AdminTransactionsView extends GalleryView {
 		[GalleryCheckoutTransaction::host],
 		[GalleryCheckoutTransaction::paymentPlugin],
 		[GalleryCheckoutTransaction::amount],
-		[GalleryCheckoutTransaction::timePaid],		
+		[GalleryCheckoutTransaction::timePaid],
 		[GalleryCheckoutTransaction::timeCleared],
 		[GalleryCheckoutTransaction::timeFulfil],
 		[GalleryCheckoutTransaction::timeFulfilled],
@@ -195,12 +201,15 @@ class AdminTransactionsView extends GalleryView {
 
 		$pageDetails['count']    = $countOrders;
 		$pageDetails['pageSize'] = $countOrders > $perPage ? $perPage : $countOrders;
+
 		// Figure out our max pages, make sure our current page fits in it
 		$pageDetails['maxPages'] = ceil($countOrders / $perPage);
 		$pageDetails['page']     = min($pageDetails['maxPages'], $page);
+
 		// Calculate the next/back pages
 		$pageDetails['nextPage'] = min($pageDetails['page'] + 1, $pageDetails['maxPages']);
 		$pageDetails['backPage'] = max(1, $pageDetails['page'] - 1);
+
 		// Calculate which names to show
 		$pageDetails['start'] = ($pageDetails['page'] - 1) * $perPage;
 

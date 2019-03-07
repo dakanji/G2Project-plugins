@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA 02110-1301, USA.
- *//**
+ */
+
+/**
  * Standard gallery theme
  * @package Themes
  * @subpackage ShadowMatrix
@@ -35,11 +38,9 @@ class ShadowMatrixTheme extends GalleryTheme {
 				'Matrix Theme with Shadowbox'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'rows'            => 3,
@@ -114,7 +115,7 @@ class ShadowMatrixTheme extends GalleryTheme {
 		}
 
 		// Add in our extra stuff
-		$theme                   = &$template->getVariableByReference('theme');
+		$theme                   =& $template->getVariableByReference('theme');
 		$theme['columnWidthPct'] = floor(100 / $params['columns']);
 
 		// Add resizeId for shadowbox urls
@@ -174,8 +175,9 @@ class ShadowMatrixTheme extends GalleryTheme {
 						return array($ret, null);
 					}
 
-					$tmp[$i]['id']          = $itemId;
-					$tmp[$i]['resizeId']    = $id;
+					$tmp[$i]['id']       = $itemId;
+					$tmp[$i]['resizeId'] = $id;
+
 					$tmp[$i]['entityType']  = $item->getEntityType();
 					$tmp[$i]['title']       = $item->getTitle();
 					$tmp[$i]['summary']     = $item->getSummary();
@@ -294,17 +296,14 @@ class ShadowMatrixTheme extends GalleryTheme {
 	public function getBestImageId($masterId) {
 		global $gallery;
 
-		$maxImageHeight = $maxImageWidth = 600;
-
+		$maxImageHeight  = $maxImageWidth  = 600;
 		$potentialImages = array();
 
 		//how about the original?
-
 		$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'core.viewSource');
 
 		if (!$ret) {
 			//is there a preferred derivative of the original?
-
 			list($ret, $preferred) = GalleryCoreApi::fetchPreferredsByItemIds(
 				array($masterId)
 			);
@@ -317,7 +316,6 @@ class ShadowMatrixTheme extends GalleryTheme {
 				$potentialImages[] = $preferred[$masterId];
 			} else {
 				//if no preferred, use the original original
-
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($masterId);
 
 				if ($ret) {
@@ -333,7 +331,6 @@ class ShadowMatrixTheme extends GalleryTheme {
 		}
 
 		// If the user can see resized versions consider those too
-
 		$ret = GalleryCoreApi::assertHasItemPermission($masterId, 'core.viewResizes');
 
 		if (!$ret) {
@@ -351,7 +348,6 @@ class ShadowMatrixTheme extends GalleryTheme {
 		}
 
 		//can always use the thumbnail
-
 		list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($masterId));
 
 		if ($ret) {
@@ -359,14 +355,14 @@ class ShadowMatrixTheme extends GalleryTheme {
 		}
 
 		$potentialImages[] = $thumbs[$masterId];
-
 		usort($potentialImages, array($this, 'bySize'));
-		//print_r($potentialImages);exit;
 
+		//print_r($potentialImages);exit;
 		// find the closest match
 		$closest   = $potentialImages[0];
 		$requested = $maxImageHeight * $maxImageWidth;
-		$delta     = ($potentialImages[0]->height * $potentialImages[0]->width) - $requested;
+
+		$delta = ($potentialImages[0]->height * $potentialImages[0]->width) - $requested;
 
 		if ($delta < 0) {
 			$delta *= -1;

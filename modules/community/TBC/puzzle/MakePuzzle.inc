@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: AddComment.inc,v $
  *
@@ -240,8 +241,7 @@ class MakePuzzleView extends GalleryView {
 
 		// Adjust for Aspect Ratio
 		// find the width and height we should use for the applet
-		$widthRatio = $this->WIDTH / $appletItem->getWidth();
-
+		$widthRatio   = $this->WIDTH / $appletItem->getWidth();
 		$puzzleWidth  = $this->WIDTH; // $puzzleWidth  = $widthRatio * $appletItem->getWidth();
 		$puzzleHeight = $widthRatio * $appletItem->getHeight();
 
@@ -253,7 +253,6 @@ class MakePuzzleView extends GalleryView {
 
 		$puzzleHeight = intval(round($puzzleHeight));
 		$puzzleWidth  = intval(round($puzzleWidth));
-
 		$gallery->debug(
 			'<br>(modules:puzzle) loadTemplate: item ' . $appletItem->getId() . ' rescaled from ' .
 						'(' . $appletItem->getWidth() . 'x' . $appletItem->getHeight() . ')' . ' to ' .
@@ -261,20 +260,19 @@ class MakePuzzleView extends GalleryView {
 		);
 
 		// set the variables for the template
-		$MakePuzzle                 = array();
+		$MakePuzzle = array();
+
 		$MakePuzzle['itemId']       = $item->getId();
 		$MakePuzzle['serialNumber'] = $item->getSerialNumber();
 
 		// get the session information for the Java applet
-		$session                 =& $gallery->getSession();
-		$MakePuzzle['sessionId'] = urlencode($session->getId());
-
+		$session                          =& $gallery->getSession();
+		$MakePuzzle['sessionId']          = urlencode($session->getId());
 		$MakePuzzle['puzzleItemId']       = $appletItem->getId();
 		$MakePuzzle['puzzleSerialNumber'] = $appletItem->getSerialNumber();
 		$MakePuzzle['puzzleWidth']        = $puzzleWidth;
 		$MakePuzzle['puzzleHeight']       = $puzzleHeight;
-
-		$MakePuzzle['puzzleType'] = 1;
+		$MakePuzzle['puzzleType']         = 1;
 
 		if (!empty($form['puzzleType'])) {
 			if ($form['puzzleType'] == 'slide') {

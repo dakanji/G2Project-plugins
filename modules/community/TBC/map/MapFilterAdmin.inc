@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Steven N. Severinghaus <sns@severinghaus.org>
@@ -59,12 +61,10 @@ class MapFilterAdminController extends GalleryController {
 		}
 
 		if (isset($form['action']['delete'])) {
-			$id = $form['filter'];
-
+			$id             = $form['filter'];
 			$tmp            = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 			$currentfilters = explode('|', $tmp[1]);
-
-			$newfilter = '';
+			$newfilter      = '';
 
 			foreach ($currentfilters as $filter) {
 				$temp = explode('`', $filter);
@@ -80,8 +80,7 @@ class MapFilterAdminController extends GalleryController {
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $newfilter);
 
-			$status['filterdeleted'] = 1;
-
+			$status['filterdeleted']        = 1;
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -90,12 +89,10 @@ class MapFilterAdminController extends GalleryController {
 		}
 
 		if (isset($form['action']['edit'])) {
-			$id = $form['filter'];
-
+			$id             = $form['filter'];
 			$tmp            = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 			$currentfilters = explode('|', $tmp[1]);
-
-			$newfilter = '';
+			$newfilter      = '';
 
 			foreach ($currentfilters as $filter) {
 				$temp = explode('`', $filter);
@@ -138,8 +135,7 @@ class MapFilterAdminController extends GalleryController {
 			) {
 				$error[] = 'form[error][filtercenter]';
 			} else {
-				$oldfilter = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
-
+				$oldfilter    = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 				$FilterName   = $_POST['FilterName'];
 				$FilterZoom   = $_POST['FilterZoom'];
 				$FilterCenter = $_POST['FilterCenter'];
@@ -213,6 +209,7 @@ class MapFilterAdminController extends GalleryController {
 					$settings = $deftheme->getSettings(null);
 
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();
+
 					/*
 					 * This block manipulation logic only works for earlier block encoding,
 					 * so skip it for later Theme API versions to avoid corrupting the
@@ -229,8 +226,7 @@ class MapFilterAdminController extends GalleryController {
 									$value             = '[map.map] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -240,13 +236,11 @@ class MapFilterAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-
-									$value = str_replace('[map.map]', '', $value);
-									$value = '[map.map] ' . $value;
+									$value                 = str_replace('[map.map]', '', $value);
+									$value                 = '[map.map] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -275,6 +269,7 @@ class MapFilterAdminController extends GalleryController {
 					$settings = $deftheme->getSettings(null);
 
 					list($thememajor, $thememinor) = $deftheme->getApiVersion();
+
 					/*
 					 * This block manipulation logic only works for earlier block encoding,
 					 * so skip it for later Theme API versions to avoid corrupting the
@@ -290,8 +285,7 @@ class MapFilterAdminController extends GalleryController {
 									$value             = str_replace('[map.map]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -301,12 +295,10 @@ class MapFilterAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-
-									$value = str_replace('[map.map]', '', $value);
+									$value                 = str_replace('[map.map]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-
-									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
+									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -326,8 +318,7 @@ class MapFilterAdminController extends GalleryController {
 				);
 			}
 
-			$status['saved'] = 1;
-
+			$status['saved']                = 1;
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -359,8 +350,8 @@ class MapFilterAdminView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
-		$template->head('modules/map/includes/GoogleMap.css');
 
+		$template->head('modules/map/includes/GoogleMap.css');
 		$form['formName'] = 'MapFilterAdmin';
 
 		// Set default values for undefined plugin parameters
@@ -398,10 +389,12 @@ class MapFilterAdminView extends GalleryView {
 		}
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
+			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
+
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 

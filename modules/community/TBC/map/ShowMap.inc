@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -160,8 +161,7 @@ class ShowMapController extends GalleryController {
 		    ';
 
 					list($ret, $result) = $gallery->search($query, array(), array());
-
-					$params = '';
+					$params             = '';
 
 					while ($param = $result->nextResult()) {
 						if ($params != '') {
@@ -196,7 +196,6 @@ class ShowMapController extends GalleryController {
 					'centerLongLat',
 					$form['coord']
 				);
-
 				GalleryCoreApi::setPluginParameter('module', 'map', 'zoomLevel', $form['zoom']);
 
 				// return to the page "AdminPanel"
@@ -221,10 +220,9 @@ class ShowMapController extends GalleryController {
 				$oldeditfilter = GalleryCoreApi::getPluginParameter('module', 'map', 'EditFilter');
 
 				if (!empty($oldeditfilter[1])) {
-					$oldfilter    = explode('`', $oldeditfilter[1]);
-					$oldfilter[2] = $form['zoom'];
-					$oldfilter[3] = $form['coord'];
-
+					$oldfilter     = explode('`', $oldeditfilter[1]);
+					$oldfilter[2]  = $form['zoom'];
+					$oldfilter[3]  = $form['coord'];
 					$neweditfilter = implode('`', $oldfilter);
 				} else {
 					$oldfilters = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
@@ -276,6 +274,7 @@ class ShowMapView extends GalleryView {
 
 		// Get the real path for the map module installation
 		/** @todo for gallery 2.3 and later change this to use getCodeBasePath() */
+
 		// $mapModBaseDir = GalleryCoreApi::getPluginBaseDir('module', 'map') . 'modules/map/';
 		$mapModBaseDir = dirname(__FILE__) . '/';
 
@@ -351,18 +350,16 @@ class ShowMapView extends GalleryView {
 		$map['mapWidth']     = isset($param['mapWidth']) ? $param['mapWidth'] : '600';
 		$map['mapHeight']    = isset($param['mapHeight']) ? $param['mapHeight'] : '400';
 		$map['mapType']      = isset($param['mapType']) ? $param['mapType'] : 'G_SATELLITE_TYPE';
-
-		$map['mode'] = GalleryUtilities::getRequestVariables('Mode');
-		$fullScreen  = GalleryUtilities::getRequestVariables('fullScreen');
+		$map['mode']         = GalleryUtilities::getRequestVariables('Mode');
+		$fullScreen          = GalleryUtilities::getRequestVariables('fullScreen');
 
 		if (empty($map['mode'])) {
 			$map['mode'] = 'Normal';
 		}
 
 		// "Normal" Mode to display the map
-		$storage =& $gallery->getStorage();
-		$gurl    =& $gallery->getUrlGenerator();
-
+		$storage            =& $gallery->getStorage();
+		$gurl               =& $gallery->getUrlGenerator();
 		$map['gallerybase'] = $gurl->generateUrl(
 			array(
 				'href' => '',
@@ -376,8 +373,7 @@ class ShowMapView extends GalleryView {
 
 		if ($map['mode'] == 'Normal') {
 			$map['EnableRouteNumber'] = isset($param['EnableRouteNumber']) ? $param['EnableRouteNumber'] : 0;
-
-			$color = mapHelper::getItemColor(177);
+			$color                    = mapHelper::getItemColor(177);
 
 			// Get the items with GPS coordinates
 			list($ret, $gpsitems) = mapHelper::getGPSItems();
@@ -410,11 +406,11 @@ class ShowMapView extends GalleryView {
 				// make the point Hash array
 				$pointHash = $gpsitems + $groups;
 				$ids       = array_keys($gpsitems);
-
-				$isgroup = GalleryUtilities::getRequestVariables('Group');
+				$isgroup   = GalleryUtilities::getRequestVariables('Group');
 
 				if (!empty($isgroup)) {
 					/** todo add this to the function that gets items */
+
 					// We're dealing with a group display, removing all item not in the group
 					// Get the group
 					if (array_key_exists('MapGroups', $param) and $param['MapGroups'] != '') {
@@ -481,6 +477,7 @@ class ShowMapView extends GalleryView {
 					$listofalbums = implode('`', array_unique($temp));
 					$temp         = explode('`', $listofalbums);
 					$listofalbums = implode('`', array_unique($temp));
+
 					GalleryCoreApi::setPluginParameter('module', 'map', 'albumlist', $listofalbums);
 
 					// Trim the list if the "Album" filter is ON
@@ -587,8 +584,7 @@ class ShowMapView extends GalleryView {
 							$groupItemDists = array();
 							$groupDists     = array();
 							$nbpoints       = count($mapPoints);
-
-							$DEBUG_REGROUP = false; // set true to output ugly regroup feature debug info instead of a nice map
+							$DEBUG_REGROUP  = false; // set true to output ugly regroup feature debug info instead of a nice map
 							for ($z = 19; $z >= 0; $z--) {
 								if ($DEBUG_REGROUP) {
 									echo " -------------- ZOOMLEVEL $z -----------------\n";
@@ -655,6 +651,7 @@ class ShowMapView extends GalleryView {
 													$mapPoints[$id]['group']           = $groupId;
 													$mapPoints[$id]['display']         = false;
 													$mapPoints[$id]['regroupShowHigh'] = $z + 1;
+
 													// group item only into one group!
 													continue 1;
 												}
@@ -751,12 +748,11 @@ class ShowMapView extends GalleryView {
 														$mapPoints[$id2]['posy']
 													);
 
-													$groups[$nbgroups]['group']       = -1;
-													$groups[$nbgroups]['groups']      = 0;
-													$groups[$nbgroups]['display']     = true;
-													$groups[$nbgroups]['items']       = 2;
-													$groups[$nbgroups]['directItems'] = 2;
-
+													$groups[$nbgroups]['group']         = -1;
+													$groups[$nbgroups]['groups']        = 0;
+													$groups[$nbgroups]['display']       = true;
+													$groups[$nbgroups]['items']         = 2;
+													$groups[$nbgroups]['directItems']   = 2;
 													$mapPoints[$id1]['group']           = $nbgroups;
 													$mapPoints[$id2]['group']           = $nbgroups;
 													$mapPoints[$id1]['regroupShowHigh'] = $z + 1;
@@ -792,7 +788,6 @@ class ShowMapView extends GalleryView {
 
 													$groups[$g2]['items']++;
 													$groups[$g2]['directItems']++;
-
 													$mapPoints[$id1]['group']           = $g2;
 													$mapPoints[$id1]['regroupShowHigh'] = $z + 1;
 													$mapPoints[$id1]['display']         = false;
@@ -840,7 +835,6 @@ class ShowMapView extends GalleryView {
 
 													$groups[$g1]['items']++;
 													$groups[$g1]['directItems']++;
-
 													$mapPoints[$id2]['group']           = $g1;
 													$mapPoints[$id2]['regroupShowHigh'] = $z + 1;
 													$mapPoints[$id2]['display']         = false;
@@ -887,7 +881,6 @@ class ShowMapView extends GalleryView {
 
 																	$groups[$g1]['items']++;
 																	$groups[$g1]['directItems']++;
-
 																	$mapPoints[$id3]['group']           = $g1;
 																	$mapPoints[$id3]['regroupShowHigh'] = $z - 1;
 																	$mapPoints[$id3]['display']         = false;
@@ -984,7 +977,6 @@ class ShowMapView extends GalleryView {
 													$groups[$nbgroups]['display']     = true;
 													$groups[$nbgroups]['items']       = $groups[$gid1]['items'] + $groups[$gid2]['items'];
 													$groups[$nbgroups]['directItems'] = 0;
-
 													$groups[$gid1]['group']           = $nbgroups;
 													$groups[$gid2]['group']           = $nbgroups;
 													$groups[$gid1]['regroupShowHigh'] = $z + 1;
@@ -1019,8 +1011,7 @@ class ShowMapView extends GalleryView {
 													);
 
 													$groups[$g2]['groups']++;
-													$groups[$g2]['items'] += $groups[$gid1]['items'];
-
+													$groups[$g2]['items']            += $groups[$gid1]['items'];
 													$groups[$gid1]['group']           = $g2;
 													$groups[$gid1]['regroupShowHigh'] = $z + 1;
 													$groups[$gid1]['display']         = false;
@@ -1046,7 +1037,6 @@ class ShowMapView extends GalleryView {
 													 * if old group2 was already in a new group,
 													 * this will be merged afterwards
 													 */
-
 													$groups[$g1]['maxx'] = max(
 														$groups[$g1]['maxx'],
 														$groups[$gid2]['maxx']
@@ -1068,8 +1058,7 @@ class ShowMapView extends GalleryView {
 													);
 
 													$groups[$g1]['groups']++;
-													$groups[$g1]['items'] += $groups[$gid2]['items'];
-
+													$groups[$g1]['items']            += $groups[$gid2]['items'];
 													$groups[$gid2]['group']           = $g1;
 													$groups[$gid2]['regroupShowHigh'] = $z + 1;
 													$groups[$gid2]['display']         = false;
@@ -1115,8 +1104,7 @@ class ShowMapView extends GalleryView {
 																	);
 
 																	$groups[$g1]['groups']++;
-																	$groups[$g1]['items'] += $groups[$gid3]['items'];
-
+																	$groups[$g1]['items']            += $groups[$gid3]['items'];
 																	$groups[$gid3]['group']           = $g1;
 																	$groups[$gid3]['regroupShowHigh'] = $z + 1;
 																	$groups[$gid3]['display']         = false;
@@ -1267,8 +1255,7 @@ class ShowMapView extends GalleryView {
 			$map['defaultphotocolor']    = (array_key_exists('defaultphotocolor', $param)) ? $param['defaultphotocolor'] : '';
 			$map['defaultgroupcolor']    = (array_key_exists('defaultgroupcolor', $param)) ? $param['defaultgroupcolor'] : '';
 			$map['GoogleOverview']       = (array_key_exists('GoogleOverview', $param)) ? $param['GoogleOverview'] : false;
-
-			$map['GZoom'] = (array_key_exists('GZoom', $param)) ? $param['GZoom'] : false;
+			$map['GZoom']                = (array_key_exists('GZoom', $param)) ? $param['GZoom'] : false;
 
 			if ($map['GZoom']) {
 				$map['GZPos']     = $param['GZPos'];
@@ -1290,8 +1277,10 @@ class ShowMapView extends GalleryView {
 
 			// Preload Photo Icons
 			list($Sizes, $map['preload']) = GoogleMapUtilities::setPreloadFromFolder($map['preload'], $map['useMarkerSet']);
+
 			// Preload Album Icons
 			list($SizesA, $map['preload']) = GoogleMapUtilities::setPreloadFromFolder($map['preload'], $map['useAlbumMarkerSet']);
+
 			// Preload Group Icons
 			list($SizesG, $map['preload']) = GoogleMapUtilities::setPreloadFromFolder($map['preload'], $map['useGroupMarkerSet']);
 
@@ -1302,8 +1291,7 @@ class ShowMapView extends GalleryView {
 			$map['GroupMarkerSizeX'] = $SizesG[0];
 			$map['GroupMarkerSizeY'] = $SizesG[1];
 			$map['routeitem']        = array();
-
-			$MarkerSets = array(
+			$MarkerSets              = array(
 				'GalleryPhotoItem' => $map['useMarkerSet'],
 				'GalleryAlbumItem' => $map['useAlbumMarkerSet'],
 				'GoogleMapGroup'   => $map['useGroupMarkerSet'],
@@ -1337,9 +1325,9 @@ class ShowMapView extends GalleryView {
 			 * @todo replace this with a nice function to get the background color and check
 			 * for existence of a sidebar
 			 */
-			// Test for the existance of a sidebar on the google map view
-			$map['sidebar'] = 1;
 
+			// Test for the existance of a sidebar on the google map view
+			$map['sidebar']     = 1;
 			$absolutegallerydir = substr(dirname(__FILE__), 0, -11);
 
 			// Grab the Default theme value (used for the google map)
@@ -1356,7 +1344,8 @@ class ShowMapView extends GalleryView {
 				return array($ret, null);
 			}
 
-			$settings  = $deftheme->getSettings(null);
+			$settings = $deftheme->getSettings(null);
+
 			$bodycolor = '';
 
 			if (is_array($settings[1])) {
@@ -1448,7 +1437,8 @@ class ShowMapView extends GalleryView {
 		if ($map['mode'] == 'Pick') {
 			// Get the itemId to be able later to populate the coordinated picked out.
 			list($form['id'], $map['plugin']) = GalleryUtilities::getRequestVariables('itemId', 'plugin');
-			$form['formName']                 = 'ShowMap';
+
+			$form['formName'] = 'ShowMap';
 
 			// Get the thumb to display
 			list($ret, $thumb) = GalleryCoreApi::fetchThumbnailsByItemIds(array($form['id']));
@@ -1506,8 +1496,9 @@ class ShowMapView extends GalleryView {
 
 				if ($map['plugin'] != 'GroupCoord') {
 					list($ret, $item) = $this->_getItem();
-					$set              = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'album' : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 'photo' : 'common');
-					$map['type']      = $set;
+
+					$set         = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'album' : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 'photo' : 'common');
+					$map['type'] = $set;
 				}
 			}
 
@@ -1526,9 +1517,8 @@ class ShowMapView extends GalleryView {
 
 			if ($map['plugin'] == 'Filters') {
 				$map['filter'] = true;
-
-				$center = GalleryUtilities::getRequestVariables('center');
-				$zoom   = GalleryUtilities::getRequestVariables('zoom');
+				$center        = GalleryUtilities::getRequestVariables('center');
+				$zoom          = GalleryUtilities::getRequestVariables('zoom');
 
 				if (!empty($center)) {
 					$map['coordinates'] = $center;

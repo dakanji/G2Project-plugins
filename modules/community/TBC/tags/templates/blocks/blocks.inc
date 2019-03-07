@@ -1,13 +1,11 @@
 <?php
-$blocks['TagsLink'] = array(
+$blocks['TagsLink']  = array(
 	'description' => $gallery->i18n('Remove Me'),
 );
-
 $blocks['ImageTags'] = array(
 	'description' => $gallery->i18n('Item Tags'),
 );
-
-$blocks['TagLinks'] = array(
+$blocks['TagLinks']  = array(
 	'description' => $gallery->i18n('Tag cloud'),
 	'vars'        => array(
 		'sizeLimit' => array(

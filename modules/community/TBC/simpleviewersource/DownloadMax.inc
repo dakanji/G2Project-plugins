@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: Admin.inc,v $
  *
@@ -19,7 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/helpers/GalleryDerivativeHelper_simple.class');
 GalleryCoreApi::requireOnce('modules/core/DownloadItem.inc');
 
@@ -62,6 +62,7 @@ class DownloadMaxView extends DownloadItemView {
 		}
 
 		/*
+
 		$urlgen =& $gallery->getUrlGenerator();
 		$mainUrl = $urlgen->generateUrl( array ( 'view' => 'core.DownloadItem',
 						 'itemId' => $itemId ),
@@ -69,7 +70,6 @@ class DownloadMaxView extends DownloadItemView {
 						  'forceServerRelativeUrl' => true,
 						  'htmlEntities' => false,
 						  'urlEncode' => false ));
-
 		header("Location:$mainUrl", TRUE, 307 );
 		*/
 		GalleryUtilities::putRequestVariable('itemId', $itemId);

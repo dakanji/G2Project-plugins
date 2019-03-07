@@ -1,4 +1,5 @@
 <?php
+
 // --------------------------------------------------------------------------------
 // PhpConcept Library (PCL) Error 1.0
 // --------------------------------------------------------------------------------
@@ -8,11 +9,8 @@
 //   The PCL Error 1.0 library description is not available yet. This library is
 //   released only with PhpConcept application and libraries.
 //   An independant release will be soon available on http://www.phpconcept.net
-//
 // --------------------------------------------------------------------------------
-//
 //   * Avertissement :
-//
 //   Cette librairie a �t� cr��e de fa�on non professionnelle.
 //   Son usage est au risque et p�ril de celui qui l'utilise, en aucun cas l'auteur
 //   de ce code ne pourra �tre tenu pour responsable des �ventuels d�gats qu'il pourrait
@@ -20,12 +18,9 @@
 //   Il est entendu cependant que l'auteur a r�alis� ce code par plaisir et n'y a
 //   cach� aucun virus, ni malveillance.
 //   Cette libairie est distribu�e sous la license GNU/GPL (http://www.gnu.org)
-//
 //   * Auteur :
-//
 //   Ce code a �t� �crit par Vincent Blavet (vincent@blavet.net) sur son temps
 //   de loisir.
-//
 // --------------------------------------------------------------------------------
 // ----- Look for double include
 if (!defined('PCLERROR_LIB')) {

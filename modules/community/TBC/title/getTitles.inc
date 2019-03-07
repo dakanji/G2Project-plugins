@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -67,7 +68,7 @@ class GetTitlesView extends GalleryView {
 
 		$results = array();
 
-		$query        = 'SELECT 
+		$query = 'SELECT 
 		[GalleryItem::title]
 		FROM [GalleryItem]
 		WHERE
@@ -75,6 +76,7 @@ class GetTitlesView extends GalleryView {
 		LIKE ?
 		ORDER BY [GalleryItem::title]
 		';
+
 		$queryOptions = array($chars);
 
 		list($ret, $searchResults) = $gallery->search($query, $queryOptions);

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -56,11 +57,12 @@ class TagCloudCssView extends GalleryView {
 		$platform =& $gallery->getPlatform();
 
 		// Get the file timestamp
-		$slash  = $platform->getDirectorySeparator();
-		$cssDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+		$slash   = $platform->getDirectorySeparator();
+		$cssDir  = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+		$cssFile = $cssDir . $slash . 'tags.css';
 
-		$cssFile              = $cssDir . $slash . 'tags.css';
-		$cssFileStat          = $platform->stat($cssFile);
+		$cssFileStat = $platform->stat($cssFile);
+
 		$fileLastModifiedDate = $cssFileStat[9];
 
 		if (function_exists('getallheaders')) {
@@ -83,8 +85,7 @@ class TagCloudCssView extends GalleryView {
 
 		// Send the CSS
 		$cssFileRelative = 'plugins_data' . $slash . 'modules' . $slash . 'tags' . $slash . 'tags.css';
-
-		$success = $gallery->fastDownload(
+		$success         = $gallery->fastDownload(
 			$cssFileRelative,
 			'tags.css',
 			$fileLastModifiedDate,

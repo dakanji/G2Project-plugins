@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -195,13 +196,10 @@ class UserinfoSetupView extends GalleryView {
 			}
 
 			for ($i = 1; $i <= count($UserinfoSetup['data']['result']); $i++) {
-				$form['uiPerPage'] = $UserinfoSetup['data']['result']['uiPerPage'];
-
+				$form['uiPerPage']           = $UserinfoSetup['data']['result']['uiPerPage'];
 				$form['uiDefaultSortColumn'] = $UserinfoSetup['data']['result']['uiDefaultSortColumn'];
-
-				$form['uiDefaultSortOrder'] = $UserinfoSetup['data']['result']['uiDefaultSortOrder'];
-
-				$form['uiDateFormat'] = $UserinfoSetup['data']['result']['uiDateFormat'];
+				$form['uiDefaultSortOrder']  = $UserinfoSetup['data']['result']['uiDefaultSortOrder'];
+				$form['uiDateFormat']        = $UserinfoSetup['data']['result']['uiDateFormat'];
 			}
 
 			$mapName = 'UserinfoMap';
@@ -252,10 +250,8 @@ class UserinfoSetupView extends GalleryView {
 				}
 			}
 
-			$UserinfoSetup['uiPerPageList'] = array('10', '25', '50', '100', '150', '200', '250');
-
-			$UserinfoSetup['uiDefaultSortColumnList'] = (array_keys($mapInfo));
-
+			$UserinfoSetup['uiPerPageList']            = array('10', '25', '50', '100', '150', '200', '250');
+			$UserinfoSetup['uiDefaultSortColumnList']  = (array_keys($mapInfo));
 			$UserinfoSetup['uiDefaultSortColumnList2'] = array(
 				$column1,
 				$column2,
@@ -265,11 +261,9 @@ class UserinfoSetupView extends GalleryView {
 				$column6,
 			);
 
-			$UserinfoSetup['uiDefaultSortOrderList'] = array('ASC', 'DES');
-
+			$UserinfoSetup['uiDefaultSortOrderList']  = array('ASC', 'DES');
 			$UserinfoSetup['uiDefaultSortOrderList2'] = array('Ascending', 'Descending');
-
-			$form['formName'] = 'UserInfoTab';
+			$form['formName']                         = 'UserInfoTab';
 		}
 
 		$template->setVariable('controller', 'userinfo.UserinfoSetup');

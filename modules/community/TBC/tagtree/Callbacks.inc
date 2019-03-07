@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2009 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
- *//**
+ */
+
+/**
  * @package TagTree
  * @author Chad Parry <spam@chad.parry.org>
  * @author Alan Harder <alan.harder@sun.com>
@@ -52,11 +55,10 @@ class TagTreeCallbacks {
 				}
 
 				$rootAlbumTitle = $rootAlbum->getTitle() ? $rootAlbum->getTitle() : $rootAlbum->getPathComponent();
+				$translator     =& $gallery->getTranslator();
+				$params['rtl']  = $translator->isRightToLeft() ? '_rtl' : '';
+				$blockId        = 'tagtree' . $idCount++;
 
-				$translator    =& $gallery->getTranslator();
-				$params['rtl'] = $translator->isRightToLeft() ? '_rtl' : '';
-
-				$blockId                           = 'tagtree' . $idCount++;
 				$block                             =& $smarty->_tpl_vars['block'];
 				$block['tagtree']['LoadAlbumData'] = array(
 					'blockId'        => $blockId,

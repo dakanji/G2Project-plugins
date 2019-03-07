@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -81,13 +82,15 @@ class DownloadRegistryFileView extends GalleryView {
 		header('Content-Disposition: filename=install_registry.reg');
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
-		$template = new GalleryTemplate(__DIR__ . '/../..');
-		$template->setVariable('l10Domain', 'modules_publishxp');
 
+		$template = new GalleryTemplate(__DIR__ . '/../..');
+
+		$template->setVariable('l10Domain', 'modules_publishxp');
 		$vistaVersion                         = GalleryUtilities::getRequestVariables('vistaVersion');
 		$DownloadRegistryFile['vistaVersion'] = !empty($vistaVersion);
 		$DownloadRegistryFile['title']        = $title;
 		$DownloadRegistryFile['domain']       = $domain;
+
 		$template->setVariable('DownloadRegistryFile', $DownloadRegistryFile);
 
 		list($ret, $registryFileContents) = $template->fetch('gallery:modules/publishxp/templates/DownloadRegistryFile.tpl');
@@ -101,6 +104,7 @@ class DownloadRegistryFileView extends GalleryView {
 
 		// Convert the text to the Windows character set corresponding to the requested locale
 		$clientWindowsLocale = $this->_getCharsetFromRequest();
+
 		echo GalleryCoreApi::convertFromUtf8($registryFileContents, $clientWindowsLocale);
 
 		return null;

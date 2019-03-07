@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2010 Bharat Mediratta
@@ -36,10 +37,8 @@ class ItemAddUploadify extends ItemAddPlugin {
 			return array($ret, null, null);
 		}
 
-		$urlGenerator = &$gallery->getUrlGenerator();
-
-		$session = &$gallery->getSession();
-
+		$urlGenerator =& $gallery->getUrlGenerator();
+		$session      =& $gallery->getSession();
 		$session->save();
 
 		if ($form['formName'] != 'ItemAddUploadify') {

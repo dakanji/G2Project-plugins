@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
 
 /**
@@ -63,7 +63,9 @@ class FlashVideoRenderer extends GalleryRenderer {
 		);
 
 		list($width, $height, $title) = array($entity->getWidth(), $entity->getHeight(), $item->getTitle());
+
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
+
 		$title = smarty_modifier_markup($title, 'strip');
 
 		// Default player: G2flv.swf
@@ -71,7 +73,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		 * Including SWFObject<http://blog.deconcept.com/swfobject/> to defeat the
 		 * "Click to activate..." in IE
 		 */
-		$SWFObjectUrl = $urlGenerator->generateUrl(
+		$SWFObjectUrl      = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/swfobject.js',
 			),
@@ -79,7 +81,6 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-
 		$expressInstallUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/expressinstall.swf',
@@ -88,8 +89,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-
-		$playerUrl = $urlGenerator->generateUrl(
+		$playerUrl         = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/G2flv.swf',
 			),
@@ -97,10 +97,9 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-
-		$flashVars = 'flvUrl=' . urlencode($src) . '&Width=' . $width . '&Height=' . $height
+		$flashVars         = 'flvUrl=' . urlencode($src) . '&Width=' . $width . '&Height=' . $height
 		   . '&title=' . urlencode($title);
-		$extraAttr = '';
+		$extraAttr         = '';
 
 		// Uncomment the next line to allow download button. Default: false
 		//$flashVars .= '&allowDownload=true';
@@ -110,6 +109,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		 * Uncomment the next line to allow the share button also the swfUrl below.
 		 * Default: false
 		 */
+
 		//$flashVars .= '&share=true';
 		// To allow for sharing we must also pass the playerUrl
 		//$flashVars .= '&swfUrl=' . urlencode($playerUrl);
@@ -118,7 +118,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if (!$ret && !empty($thumbnail)) {
-			$thumbUrl = $urlGenerator->generateUrl(
+			$thumbUrl   = $urlGenerator->generateUrl(
 				array(
 					'view'         => 'core.DownloadItem',
 					'itemId'       => $thumbnail[$itemId]->getId(),
@@ -130,7 +130,6 @@ class FlashVideoRenderer extends GalleryRenderer {
 					'htmlEntities'   => false,
 				)
 			);
-
 			$flashVars .= '&thumbUrl=' . urlencode($thumbUrl);
 		}
 
@@ -161,6 +160,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		 * To use FlowPlayer ( http://flowplayer.sourceforge.net )
 		 * place FlowPlayer.swf in the flashvideo/lib directory and uncomment the lines below:
 		 */
+
 		/*
 		$playerUrl = $urlGenerator->generateUrl(
 			array('href' => 'modules/flashvideo/lib/FlowPlayer.swf'),
@@ -175,6 +175,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		 * get this version of the player: http://gallery.menalto.com/files/flvplayer.zip
 		 * unzip in the flashvideo/lib directory and uncomment the lines below:
 		 */
+
 		/*
 		$playerUrl = $urlGenerator->generateUrl(
 			array('href' => 'modules/flashvideo/lib/flvplayer.swf'),
@@ -184,10 +185,10 @@ class FlashVideoRenderer extends GalleryRenderer {
 		$flashVars = sprintf('streamName=%s&skinName=%s&autoPlay=true&autoRewind=false',
 					 urlencode($src), urlencode($skinUrl));
 		*/
-
 		return sprintf(
 			'<script type="text/javascript" src="%s"></script>
 	     <script type="text/javascript">
+
 	     // <![CDATA[
 	     function divResize(id, nw, nh) {
 		var obj = document.getElementById(id);
@@ -201,6 +202,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 	     <div id="soContent" style="width: 100%%; height: 100%%">%s</div>
 	     </div>
 	     <script type="text/javascript">
+
 	     // <![CDATA[
 	     var so = new SWFObject("%s", "%s", "100%%", "100%%", "9.0.28.0", "ffffff");
 	     so.addParam("flashVars","%s");
@@ -208,6 +210,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 	     so.addParam("allowScriptAccess","always");
 	     so.addParam("allowFullScreen","true");
 	     so.write("soContent");
+
 	     // ]]>
 	     </script>',
 			$SWFObjectUrl,

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -178,7 +179,6 @@ class TitleSiteAdminView extends GalleryView {
 				'themeList' => $themeList,
 			)
 		);
-
 		$template->setVariable('controller', 'title.TitleSiteAdmin');
 
 		return array(

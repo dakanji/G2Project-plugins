@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/cmmigrate/classes/CmDatabaseTools.class');
 
 /**
@@ -77,9 +77,8 @@ class ChooseCmObjectsView extends GalleryView {
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
 
-		$platform =& $gallery->getPlatform();
-		$slash    = $platform->getDirectorySeparator();
-
+		$platform       =& $gallery->getPlatform();
+		$slash          = $platform->getDirectorySeparator();
 		$copperminePath = GalleryUtilities::getRequestVariables('copperminePath');
 
 		if ($copperminePath == null) {
@@ -119,8 +118,7 @@ class ChooseCmObjectsView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$g2AlbumTree = GalleryUtilities::createAlbumTree($albums);
-
+		$g2AlbumTree     = GalleryUtilities::createAlbumTree($albums);
 		$ChooseCmObjects = array(
 			'copperminePath' => $copperminePath,
 			'cmAlbumTree'    => $cmAlbumTree,
@@ -144,6 +142,7 @@ class ChooseCmObjectsView extends GalleryView {
 	 */
 	public function _createCmAlbumTree($copperminePath) {
 		$cmdb = new CmDatabaseTools($copperminePath);
+
 		$cmdb->openDatabase();
 
 		return $cmdb->getAlbumsSorted();

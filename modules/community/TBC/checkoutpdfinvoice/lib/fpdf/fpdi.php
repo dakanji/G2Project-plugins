@@ -1,27 +1,19 @@
 <?php
-//
+
 //  FPDI - Version 1.2
-//
 //    Copyright 2004-2007 Setasign - Jan Slabon
-//
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
-//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//
-
 define('FPDI_VERSION', '1.2');
-
 ini_set('auto_detect_line_endings', 1); // Strongly required!
 require_once 'fpdf_tpl.php';
-
 require_once 'fpdi_pdf_parser.php';
 
 class FPDI extends FPDF_TPL {
@@ -111,17 +103,16 @@ class FPDI extends FPDF_TPL {
 			return $this->error('Please import the desired pages before creating a new template.');
 		}
 
-		$fn =& $this->current_filename;
-
+		$fn     =& $this->current_filename;
 		$parser =& $this->parsers[$fn];
 		$parser->setPageno($pageno);
-
 		$this->tpl++;
 		$this->tpls[$this->tpl] = array();
 		$tpl                    =& $this->tpls[$this->tpl];
 		$tpl['parser']          =& $parser;
-		$tpl['resources']       = $parser->getPageResources();
-		$tpl['buffer']          = $parser->getContent();
+
+		$tpl['resources'] = $parser->getPageResources();
+		$tpl['buffer']    = $parser->getContent();
 
 		if (!in_array($boxName, $parser->availableBoxes)) {
 			return $this->Error(sprintf('Unknown box: %s', $boxName));
@@ -149,12 +140,12 @@ class FPDI extends FPDF_TPL {
 		}
 
 		$this->lastUsedPageBox = $boxName;
-
-		$box        = $pageboxes[$boxName];
-		$tpl['box'] = $box;
+		$box                   = $pageboxes[$boxName];
+		$tpl['box']            = $box;
 
 		// To build an array that can be used by PDF_TPL::useTemplate()
 		$this->tpls[$this->tpl] = array_merge($this->tpls[$this->tpl], $box);
+
 		// An imported page will start at 0,0 everytime. Translation will be set in _putformxobjects()
 		$tpl['x'] = 0;
 		$tpl['y'] = 0;
@@ -165,8 +156,7 @@ class FPDI extends FPDF_TPL {
 		$rotation = $parser->getPageRotation($pageno);
 
 		if (isset($rotation[1]) && ($angle = $rotation[1] % 360) != 0) {
-			$steps = $angle / 90;
-
+			$steps    = $angle / 90;
 			$_w       = $tpl['w'];
 			$_h       = $tpl['h'];
 			$tpl['w'] = $steps % 2 == 0 ? $_w : $_h;
@@ -182,12 +172,10 @@ class FPDI extends FPDF_TPL {
 			$cx = ($x / 2 + $tpl['box']['x']) * $this->k;
 			$cy = ($y / 2 + $tpl['box']['y']) * $this->k;
 
-			$angle *= -1;
-
-			$angle *= M_PI / 180;
-			$c      = cos($angle);
-			$s      = sin($angle);
-
+			$angle        *= -1;
+			$angle        *= M_PI / 180;
+			$c             = cos($angle);
+			$s             = sin($angle);
 			$tpl['buffer'] = sprintf('q %.5f %.5f %.5f %.5f %.2f %.2f cm 1 0 0 1 %.2f %.2f cm %s Q', $c, $s, -$s, $c, $cx, $cy, -$cx, -$cy, $tpl['buffer']);
 		}
 
@@ -201,6 +189,7 @@ class FPDI extends FPDF_TPL {
 	public function useTemplate($tplidx, $_x = null, $_y = null, $_w = 0, $_h = 0) {
 		$this->_out('q 0 J 1 w 0 j 0 G'); // reset standard values
 		$s = parent::useTemplate($tplidx, $_x, $_y, $_w, $_h);
+
 		$this->_out('Q');
 
 		return $s;
@@ -217,7 +206,6 @@ class FPDI extends FPDF_TPL {
 				if (is_array($this->_obj_stack[$filename])) {
 					while ($n = key($this->_obj_stack[$filename])) {
 						$nObj = $this->current_parser->pdf_resolve_object($this->current_parser->c, $this->_obj_stack[$filename][$n][1]);
-
 						$this->_newobj($this->_obj_stack[$filename][$n][0]);
 
 						if ($nObj[0] == PDF_TYPE_STREAM) {
@@ -251,6 +239,7 @@ class FPDI extends FPDF_TPL {
 		$this->_putimages();
 		$this->_putformxobjects();
 		$this->_putimportedobjects();
+
 		//Resource dictionary
 		$this->offsets[2] = strlen($this->buffer);
 		$this->_out('2 0 obj');
@@ -265,6 +254,7 @@ class FPDI extends FPDF_TPL {
 	 */
 	public function _putformxobjects() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
+
 		reset($this->tpls);
 
 		foreach ($this->tpls as $tplidx => $tpl) {
@@ -274,7 +264,6 @@ class FPDI extends FPDF_TPL {
 			$this->_out('<<' . $filter . '/Type /XObject');
 			$this->_out('/Subtype /Form');
 			$this->_out('/FormType 1');
-
 			$this->_out(
 				sprintf(
 					'/BBox [%.2f %.2f %.2f %.2f]',
@@ -408,7 +397,6 @@ class FPDI extends FPDF_TPL {
 				}
 
 				$objid = $this->_don_obj_stack[$cpfn][$value[1]][0];
-
 				$this->_out("{$objid} 0 R"); //{$value[2]}
 				break;
 
@@ -464,6 +452,7 @@ class FPDI extends FPDF_TPL {
 	 */
 	public function _enddoc() {
 		parent::_enddoc();
+
 		$this->_closeParsers();
 	}
 
@@ -475,6 +464,7 @@ class FPDI extends FPDF_TPL {
 			foreach ($this->parsers as $k => $_) {
 				$this->parsers[$k]->closeFile();
 				$this->parsers[$k] = null;
+
 				unset($this->parsers[$k]);
 			}
 

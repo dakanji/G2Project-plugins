@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -12,6 +13,7 @@
 // module for analyzing XMP metadata (e.g. in JPEG files)      //
 // dependencies: NONE                                          //
 //                                                             //
+
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written [2009-Mar-26] by                  //
@@ -168,6 +170,7 @@ class Image_XMP {
 
 		// Close File
 		fclose($filehnd);
+
 		// Alow the user to abort from now on
 		ignore_user_abort(false);
 
@@ -286,13 +289,11 @@ class Image_XMP {
 								}
 							}
 
-
 							// Fall Through
 						case 'cdata':
 						case 'close':
 							break;
 					}
-
 
 					// Fall Through
 				case 'rdf:ID':
@@ -403,8 +404,10 @@ class Image_XMP {
  * The Property names of all known XMP fields.
  * Note: this is a full list with unrequired properties commented out.
  */
+
 /*
 $GLOBALS['XMP_tag_captions'] = array(
+
 // IPTC Core
 	'Iptc4xmpCore:CiAdrCity',
 	'Iptc4xmpCore:CiAdrCtry',
@@ -420,6 +423,7 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'Iptc4xmpCore:Location',
 	'Iptc4xmpCore:Scene',
 	'Iptc4xmpCore:SubjectCode',
+
 // Dublin Core Schema
 	'dc:contributor',
 	'dc:coverage',
@@ -436,6 +440,7 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'dc:subject',
 	'dc:title',
 	'dc:type',
+
 // XMP Basic Schema
 	'xmp:Advisory',
 	'xmp:BaseURL',
@@ -449,12 +454,14 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xmp:Rating',
 	'xmp:Thumbnails',
 	'xmpidq:Scheme',
+
 // XMP Rights Management Schema
 	'xmpRights:Certificate',
 	'xmpRights:Marked',
 	'xmpRights:Owner',
 	'xmpRights:UsageTerms',
 	'xmpRights:WebStatement',
+
 // These are not in spec but Photoshop CS seems to use them
 	'xap:Advisory',
 	'xap:BaseURL',
@@ -473,6 +480,7 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xapRights:Owner',
 	'xapRights:UsageTerms',
 	'xapRights:WebStatement',
+
 // XMP Media Management Schema
 	'xapMM:DerivedFrom',
 	'xapMM:DocumentID',
@@ -490,18 +498,22 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xapMM:LastURL',
 	'xapMM:RenditionOf',
 	'xapMM:SaveID',
+
 // XMP Basic Job Ticket Schema
 	'xapBJ:JobRef',
+
 // XMP Paged-Text Schema
 	'xmpTPg:MaxPageSize',
 	'xmpTPg:NPages',
 	'xmpTPg:Fonts',
 	'xmpTPg:Colorants',
 	'xmpTPg:PlateNames',
+
 // Adobe PDF Schema
 	'pdf:Keywords',
 	'pdf:PDFVersion',
 	'pdf:Producer',
+
 // Photoshop Schema
 	'photoshop:AuthorsPosition',
 	'photoshop:CaptionWriter',
@@ -512,6 +524,7 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'photoshop:DateCreated',
 	'photoshop:Headline',
 	'photoshop:History',
+
 // Not in XMP spec
 	'photoshop:Instructions',
 	'photoshop:Source',
@@ -519,6 +532,7 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'photoshop:SupplementalCategories',
 	'photoshop:TransmissionReference',
 	'photoshop:Urgency',
+
 // EXIF Schemas
 	'tiff:ImageWidth',
 	'tiff:ImageLength',
@@ -652,21 +666,25 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'stJob:name',
 	'stJob:id',
 	'stJob:url',
+
 // Exif Flash
 	'exif:Fired',
 	'exif:Return',
 	'exif:Mode',
 	'exif:Function',
 	'exif:RedEyeMode',
+
 // Exif OECF/SFR
 	'exif:Columns',
 	'exif:Rows',
 	'exif:Names',
 	'exif:Values',
+
 // Exif CFAPattern
 	'exif:Columns',
 	'exif:Rows',
 	'exif:Values',
+
 // Exif DeviceSettings
 	'exif:Columns',
 	'exif:Rows',

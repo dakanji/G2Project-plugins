@@ -24,10 +24,8 @@ function Auth_OpenID_getEncodedPattern() {
 }
 
 // gen-delims  = ":" / "/" / "?" / "#" / "[" / "]" / "@"
-//
 // sub-delims  = "!" / "$" / "&" / "'" / "(" / ")"
 // / "*" / "+" / "," / ";" / "="
-//
 // unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
 function Auth_OpenID_getURLIllegalCharRE() {
 	return "/([^-A-Za-z0-9:\/\?#\[\]@\!\$&'\(\)\*\+,;=\._~\%])/";
@@ -68,7 +66,8 @@ function Auth_OpenID_getEscapeRE() {
 		Auth_Yadis_getIPrivateChars()
 	) as $pair) {
 		list($m, $n) = $pair;
-		$parts[]     = sprintf('%s-%s', chr($m), chr($n));
+
+		$parts[] = sprintf('%s-%s', chr($m), chr($n));
 	}
 
 	return sprintf('[%s]', implode('', $parts));
@@ -76,8 +75,7 @@ function Auth_OpenID_getEscapeRE() {
 
 function Auth_OpenID_pct_encoded_replace_unreserved($mo) {
 	$_unreserved = Auth_OpenID_getUnreserved();
-
-	$i = intval($mo[1], 16);
+	$i           = intval($mo[1], 16);
 
 	if ($_unreserved[$i]) {
 		return chr($i);
@@ -239,9 +237,8 @@ function Auth_OpenID_urinorm($uri) {
 	}
 
 	$authority = $userinfo . $host . $port;
-
-	$path = $uri_matches[5];
-	$path = preg_replace_callback(
+	$path      = $uri_matches[5];
+	$path      = preg_replace_callback(
 		Auth_OpenID_getEncodedPattern(),
 		'Auth_OpenID_pct_encoded_replace_unreserved',
 		$path

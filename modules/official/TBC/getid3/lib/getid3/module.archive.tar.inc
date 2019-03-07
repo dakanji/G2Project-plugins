@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -12,6 +13,7 @@
 // module for analyzing TAR files                              //
 // dependencies: NONE                                          //
 //                                                            ///
+
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written by                                //
@@ -20,13 +22,12 @@
 /////////////////////////////////////////////////////////////////
 class getid3_tar extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 
 		$info['fileformat']   = 'tar';
 		$info['tar']['files'] = array();
-
-		$unpack_header = 'a100fname/a8mode/a8uid/a8gid/a12size/a12mtime/a8chksum/a1typflag/a100lnkname/a6magic/a2ver/a32uname/a32gname/a8devmaj/a8devmin/a155prefix';
-		$null_512k     = str_repeat("\x00", 512); // end-of-file marker
+		$unpack_header        = 'a100fname/a8mode/a8uid/a8gid/a12size/a12mtime/a8chksum/a1typflag/a100lnkname/a6magic/a2ver/a32uname/a32gname/a8devmaj/a8devmin/a155prefix';
+		$null_512k            = str_repeat("\x00", 512); // end-of-file marker
 		$this->fseek(0);
 
 		while (!feof($this->getid3->fp)) {
@@ -89,7 +90,6 @@ class getid3_tar extends getid3_handler {
 
 			// Read to the next chunk
 			$this->fseek($size, SEEK_CUR);
-
 			$diff = $size % 512;
 
 			if ($diff != 0) {

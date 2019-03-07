@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
 
 /**
@@ -91,7 +91,7 @@ class PanoramaJsRenderer extends GalleryRenderer {
 
 		switch ($format) {
 			case 'HTML':
-				$src = $urlGenerator->generateUrl(
+				$src     = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $entity->getId(),
@@ -102,7 +102,6 @@ class PanoramaJsRenderer extends GalleryRenderer {
 						'forceSessionId' => true,
 					)
 				);
-
 				$id_Pano = $entity->getId();
 
 				list($width, $height) = array($entity->getWidth(), $entity->getHeight());
@@ -110,7 +109,6 @@ class PanoramaJsRenderer extends GalleryRenderer {
 				return sprintf(
 					'
 		<div id="myPano%s" class="myPano" style="float: left; width: %dpx; height: %dpx; background-image: url(\'%s\'); background-position: %dpx 0px;"></div>
-			
 		<script type="text/javascript">
 		var myPano%s = new YajevLE(\'myPano%s\');		
 			myPano%s.setAutoRotate(%s);

@@ -56,38 +56,28 @@
  *               It is indexed by the IFD Type, then the Tag number
  *
  ******************************************************************************/
-
 $GLOBALS['IFD_Tag_Definitions'] = array(
 
-	//
-	//
 	// TIFF Tags
-	//
-	//
-
 	'TIFF' => array(
-
 		256 => array(
 			'Name'        => 'Image Width',
 			'Description' => 'Width of image in pixels (number of columns)',
 			'Type'        => 'Numeric',
 			'Units'       => 'pixels',
 		),
-
 		257 => array(
 			'Name'        => 'Image Length',
 			'Description' => 'Height of image in pixels (number of rows)',
 			'Type'        => 'Numeric',
 			'Units'       => 'pixels',
 		),
-
 		258 => array(
 			'Name'        => 'Bits Per Sample',
 			'Description' => 'Number of bits recorded per sample (a sample is usually one colour (Red, Green or Blue) of one pixel)',
 			'Type'        => 'Numeric',
 			'Units'       => 'bits ( for each colour component )',
 		),
-
 		259 => array(
 			'Name'        => 'Compression',
 			'Description' => 'Specifies what type of compression is used 1 = uncompressed, 6 = JPEG compression (thumbnails only), Other = reserved',
@@ -105,7 +95,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			2             => 'RGB (Red Green Blue)',
 			6             => 'YCbCr (Luminance, Chroma minus Blue, and Chroma minus Red)',
 		),
-
 		274 => array(
 			'Name'        => 'Orientation',
 			'Description' => "Specifies the orientation of the image.\n
@@ -133,7 +122,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Type'        => 'Numeric',
 			'Units'       => 'Components (colours)',
 		),
-
 		284 => array(
 			'Name'        => 'Planar Configuration',
 			'Description' => 'Specifies whether pixel components are recorded in chunky or planar format - 1 = Chunky, 2 = Planar',
@@ -141,13 +129,11 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1             => 'Chunky Format',
 			2             => 'Planar Format',
 		),
-
 		530 => array(
 			'Name'        => 'YCbCr Sub-Sampling',
 			'Description' => 'Specifies ratio of chrominance to luminance components - [2, 1] = YCbCr4:2:2,  [2, 2] = YCbCr4:2:0',
 			'Type'        => 'Special',
 		),
-
 		531 => array(
 			'Name'        => 'YCbCr Positioning',
 			'Description' => 'Specifies location of chrominance and luminance components - 1 = centered, 2 = co-sited',
@@ -155,21 +141,18 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1             => 'Chrominance components Centred in relation to luminance components',
 			2             => 'Chrominance and luminance components Co-Sited',
 		),
-
 		282 => array(
 			'Name'        => 'X Resolution',
 			'Description' => "Number of columns (pixels) per \'ResolutionUnit\'",
 			'Type'        => 'Numeric',
 			'Units'       => "pixels per 'Resolution Unit' ",
 		),
-
 		283 => array(
 			'Name'        => 'Y Resolution',
 			'Description' => "Number of rows (pixels) per \'ResolutionUnit\'",
 			'Type'        => 'Numeric',
 			'Units'       => "pixels per 'Resolution Unit' ",
 		),
-
 		296 => array(
 			'Name'        => 'Resolution Unit',
 			'Description' => 'Units for measuring XResolution and YResolution - 1 = No units, 2 = Inches, 3 = Centimetres',
@@ -177,143 +160,114 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			2             => 'Inches',
 			3             => 'Centimetres',
 		),
-
 		273 => array(
 			'Name'  => 'Strip Offsets',
 			'Type'  => 'Numeric',
 			'Units' => 'bytes offset',
 		),
-
 		278 => array(
 			'Name'  => 'Rows Per Strip',
 			'Type'  => 'Numeric',
 			'Units' => 'rows',
 		),
-
 		279 => array(
 			'Name'  => 'Strip Byte Counts',
 			'Type'  => 'Numeric',
 			'Units' => 'bytes',
 		),
-
 		513 => array(
 			'Name' => 'Exif Thumbnail (JPEG Interchange Format)',
 			'Type' => 'Special',
 		),
-
 		514 => array(
 			'Name'  => 'Exif Thumbnail Length (JPEG Interchange Format Length)',
 			'Type'  => 'Numeric',
 			'Units' => 'bytes',
 		),
-
 		301 => array(
 			'Name'  => 'Transfer Function',
 			'Type'  => 'Numeric',
 			'Units' => '',
 		),
-
 		318 => array(
 			'Name'  => 'White Point Chromaticity',
 			'Type'  => 'Numeric',
 			'Units' => '(x,y coordinates on a 1931 CIE xy chromaticity diagram)',
 		),
-
 		319 => array(
 			'Name'  => 'Primary Chromaticities',
 			'Type'  => 'Numeric',
 			'Units' => '(Red x,y, Green x,y, Blue x,y coordinates on a 1931 CIE xy chromaticity diagram)',
 		),
-
 		529 => array(
 			'Name'        => 'YCbCr Coefficients',
 			'Description' => 'Transform Coefficients for transformation from RGB to YCbCr',
 			'Type'        => 'Numeric',
 			'Units'       => '(LumaRed, LumaGreen, LumaBlue [proportions of red, green, and blue in luminance])',
 		),
-
 		532 => array(
 			'Name'  => 'Reference Black point and White point',
 			'Type'  => 'Numeric',
 			'Units' => '(R or Y White Headroom, R or Y Black Footroom, G or Cb White Headroom, G or Cb Black Footroom, B or Cr White Headroom, B or Cr Black Footroom)',
 		),
-
 		306 => array(
 			'Name'  => 'Date and Time',
 			'Type'  => 'Numeric',
 			'Units' => ' (Format: YYYY:MM:DD HH:mm:SS)',
 		),
-
 		270 => array(
 			'Name' => 'Image Description',
 			'Type' => 'String',
 		),
-
 		271 => array(
 			'Name' => 'Make (Manufacturer)',
 			'Type' => 'String',
 		),
-
 		272 => array(
 			'Name' => 'Model',
 			'Type' => 'String',
 		),
-
 		305 => array(
 			'Name' => 'Software or Firmware',
 			'Type' => 'String',
 		),
-
 		315 => array(
 			'Name' => 'Artist Name',
 			'Type' => 'String',
 		),
-
 		700 => array(
 			'Name' => 'Embedded XMP Block',        // Change: Added embedded XMP as of version 1.11
 			'Type' => 'XMP',
 		),
-
 		33432 => array(
 			'Name' => 'Copyright Information',
 			'Type' => 'String',
 		),
-
 		34665 => array(
 			'Name'      => 'EXIF Image File Directory (IFD)',
 			'Type'      => 'SubIFD',
 			'Tags Name' => 'EXIF',
 		),
-
 		33723 => array(
 			'Name' => 'IPTC Records',
 			'Type' => 'IPTC',
 		),
-
 		34377 => array(
 			'Name' => 'Embedded Photoshop IRB',    // Change: Added embedded IRB as of version 1.11
 			'Type' => 'IRB',
 		),
-
 		34853 => array(
 			'Name'      => 'GPS Info Image File Directory (IFD)',        // Change: Moved GPS IFD tag to correct location as of version 1.11
 			'Type'      => 'SubIFD',
 			'Tags Name' => 'GPS',
 		),
-
 		50341 => array(
 			'Name' => 'Print Image Matching Info',
 			'Type' => 'PIM',
 		),
-
 	),
 
-	//
-	//
 	// EXIF Tags
-	//
-	//
-
 	'EXIF' => array(
 
 		// Exif IFD
@@ -321,7 +275,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Name' => 'Exif Version',
 			'Type' => 'String',
 		),
-
 		40965 => array(
 			'Name'      => 'Interoperability Image File Directory (IFD)',
 			'Type'      => 'SubIFD',
@@ -333,122 +286,100 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Name' => 'FlashPix Version',
 			'Type' => 'String',
 		),
-
 		40961 => array(
 			'Name' => 'Colour Space',
 			'Type' => 'Lookup',
 			1      => 'sRGB',
 			0xFFFF => 'Uncalibrated',
 		),
-
 		40962 => array(
 			'Name'  => 'Pixel X Dimension',
 			'Type'  => 'Numeric',
 			'Units' => 'pixels',
 		),
-
 		40963 => array(
 			'Name'  => 'Pixel Y Dimension',
 			'Type'  => 'Numeric',
 			'Units' => 'pixels',
 		),
-
 		37121 => array(
 			'Name' => 'Components Configuration',
 			'Type' => 'Special',
 		),
-
 		37122 => array(
 			'Name'  => 'Compressed Bits Per Pixel',
 			'Type'  => 'Numeric',
 			'Units' => 'bits',
 		),
-
 		37500 => array(
 			'Name' => 'Maker Note',
 			'Type' => 'Maker Note',
 		),
-
 		37510 => array(
 			'Name' => 'User Comment',
 			'Type' => 'Character Coded String',
 		),
-
 		40964 => array(
 			'Name' => 'Related Sound File',
 			'Type' => 'String',
 		),
-
 		36867 => array(
 			'Name'  => 'Date and Time of Original',
 			'Type'  => 'String',
 			'Units' => ' (Format: YYYY:MM:DD HH:mm:SS)',
 		),
-
 		36868 => array(
 			'Name'  => 'Date and Time when Digitized',
 			'Type'  => 'String',
 			'Units' => ' (Format: YYYY:MM:DD HH:mm:SS)',
 		),
-
 		37520 => array(
 			'Name' => 'Sub Second Time',
 			'Type' => 'String',
 		),
-
 		37521 => array(
 			'Name' => 'Sub Second Time of Original',
 			'Type' => 'String',
 		),
-
 		37522 => array(
 			'Name' => 'Sub Second Time when Digitized',
 			'Type' => 'String',
 		),
-
 		33434 => array(
 			'Name'  => 'Exposure Time',
 			'Type'  => 'Numeric',
 			'Units' => 'seconds',
 		),
-
 		37377 => array(
 			'Name' => 'APEX Shutter Speed Value (Tv)',
 			'Type' => 'Numeric',
 		),
-
 		37378 => array(
 			'Name' => 'APEX Aperture Value (Av)',
 			'Type' => 'Numeric',
 		),
-
 		37379 => array(
 			'Name' => 'APEX Brightness Value (Bv)',
 			'Type' => 'Numeric',
 		),
-
 		37380 => array(
 			'Name'  => 'APEX Exposure Bias Value (Exposure Compensation)',
 			'Type'  => 'Numeric',
 			'Units' => 'EV',
 		),
-
 		42240 => array(
 			'Name' => 'Gamma Compensation for Playback',
 			'Type' => 'Numeric',
 		),
-
 		37381 => array(
 			'Name' => 'APEX Maximum Aperture Value',
 			'Type' => 'Numeric',
 		),
-
 		37382 => array(
 			'Name'  => 'Subject Distance',
 			'Type'  => 'Numeric',
 			'Units' => 'metres',
 		),
-
 		37383 => array(
 			'Name' => 'Metering Mode',
 			'Type' => 'Lookup',
@@ -461,7 +392,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			6      => 'Partial',
 			255    => 'Other',
 		),
-
 		37384 => array(
 			'Name' => 'Light Source',
 			'Type' => 'Lookup',
@@ -487,7 +417,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			24     => 'ISO studio tungsten',
 			255    => 'Other',
 		),
-
 		37385 => array(
 			'Name' => 'Flash',
 			'Type' => 'Lookup',
@@ -514,24 +443,20 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			93     => 'Flash fired, auto mode, return light not detected, red-eye reduction mode',
 			95     => 'Flash fired, auto mode, return light detected, red-eye reduction mode',
 		),
-
 		37386 => array(
 			'Name'  => 'FocalLength',
 			'Type'  => 'Numeric',
 			'Units' => 'mm',
 		),
-
 		37396 => array(
 			'Name'  => 'Subject Area',
 			'Type'  => 'Numeric',
 			'Units' => '( Two Values: x,y coordinates,  Three Values: x,y coordinates, diameter,  Four Values: center x,y coordinates, width, height)',
 		),
-
 		33437 => array(
 			'Name' => 'Aperture F Number',
 			'Type' => 'Numeric',
 		),
-
 		34850 => array(
 			'Name' => 'Exposure Program',
 			'Type' => 'Lookup',
@@ -545,63 +470,52 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			7      => 'Portrait mode (for closeup photos with the background out of focus)',
 			8      => 'Landscape mode (for landscape photos with the background in focus)',
 		),
-
 		34852 => array(
 			'Name' => 'Spectral Sensitivity',
 			'Type' => 'String',
 		),
-
 		34855 => array(
 			'Name' => 'ISO Speed Ratings',
 			'Type' => 'Numeric',
 		),
-
 		34856 => array(
 			'Name' => 'Opto-Electronic Conversion Function',
 			'Type' => 'Unknown',
 		),
-
 		41483 => array(
 			'Name'  => 'Flash Energy',
 			'Type'  => 'Numeric',
 			'Units' => 'Beam Candle Power Seconds (BCPS)',
 		),
-
 		41484 => array(
 			'Name' => 'Spatial Frequency Response',
 			'Type' => 'Unknown',
 		),
-
 		41486 => array(
 			'Name'  => 'Focal Plane X Resolution',
 			'Type'  => 'Numeric',
 			'Units' => "pixels per 'Focal Plane Resolution Unit'",
 		),
-
 		41487 => array(
 			'Name'  => 'Focal Plane Y Resolution',
 			'Type'  => 'Numeric',
 			'Units' => "pixels per 'Focal Plane Resolution Unit'",
 		),
-
 		41488 => array(
 			'Name' => 'Focal Plane Resolution Unit',
 			'Type' => 'Lookup',
 			2      => 'Inches',
 			3      => 'Centimetres',
 		),
-
 		41492 => array(
 			'Name'  => 'Subject Location',
 			'Type'  => 'Numeric',
 			'Units' => '(x,y pixel coordinates of subject)',
 		),
-
 		41493 => array(
 			'Name' => 'Exposure Index',
 			'Type' => 'Numeric',
 		),
-
 		41495 => array(
 			'Name' => 'Sensing Method',
 			'Type' => 'Lookup',
@@ -613,31 +527,26 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			7      => 'Trilinear sensor',
 			8      => 'Colour sequential linear sensor',
 		),
-
 		41728 => array(
 			'Name' => 'File Source',
 			'Type' => 'Lookup',
 			3      => 'Digital Still Camera',
 		),
-
 		41729 => array(
 			'Name' => 'Scene Type',
 			'Type' => 'Lookup',
 			1      => 'A directly photographed image',
 		),
-
 		41730 => array(
 			'Name' => 'Colour Filter Array Pattern',
 			'Type' => 'Special',
 		),
-
 		41985 => array(
 			'Name' => 'Special Processing (Custom Rendered)',
 			'Type' => 'Lookup',
 			0      => 'Normal process',
 			1      => 'Custom process',
 		),
-
 		41986 => array(
 			'Name' => 'Exposure Mode',
 			'Type' => 'Lookup',
@@ -645,26 +554,22 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1      => 'Manual exposure',
 			2      => 'Auto bracket',
 		),
-
 		41987 => array(
 			'Name' => 'White Balance',
 			'Type' => 'Lookup',
 			0      => 'Auto white balance',
 			1      => 'Manual white balance',
 		),
-
 		41988 => array(
 			'Name'  => 'Digital Zoom Ratio',
 			'Type'  => 'Numeric',
 			'Units' => ' ( Zero = Digital Zoom Not Used )',
 		),
-
 		41989 => array(
 			'Name'  => 'Equivalent Focal Length In 35mm Film',
 			'Type'  => 'Numeric',
 			'Units' => 'mm',
 		),
-
 		41990 => array(
 			'Name' => 'Scene Capture Type',
 			'Type' => 'Lookup',
@@ -673,7 +578,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			2      => 'Portrait',
 			3      => 'Night scene',
 		),
-
 		41991 => array(
 			'Name' => 'Gain Control',
 			'Type' => 'Lookup',
@@ -683,7 +587,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			3      => 'Low gain down',
 			4      => 'High gain down',
 		),
-
 		41992 => array(
 			'Name' => 'Contrast',
 			'Type' => 'Lookup',
@@ -691,7 +594,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1      => 'Soft',
 			2      => 'Hard',
 		),
-
 		41993 => array(
 			'Name' => 'Saturation',
 			'Type' => 'Lookup',
@@ -699,7 +601,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1      => 'Low saturation',
 			2      => 'High saturation',
 		),
-
 		41994 => array(
 			'Name' => 'Sharpness',
 			'Type' => 'Lookup',
@@ -707,12 +608,10 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1      => 'Soft',
 			2      => 'Hard',
 		),
-
 		41995 => array(
 			'Name' => 'Device Setting Description',
 			'Type' => 'Unknown',
 		),
-
 		41996 => array(
 			'Name' => 'Subject Distance Range',
 			'Type' => 'Lookup',
@@ -721,7 +620,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			2      => 'Close view',
 			3      => 'Distant view',
 		),
-
 		42016 => array(
 			'Name' => 'Image Unique ID',
 			'Type' => 'String',
@@ -731,123 +629,94 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 	//  255 => "NewSubfileType"
 	),
 
-	//
-	//
 	// Interoperability Tags
-	//
-	//
-
 	'Interoperability' => array(
-
 		1 => array(
 			'Name' => 'Interoperability Index',
 			'Type' => 'String',
 		),
-
 		2 => array(
 			'Name' => 'Interoperability Version',
 			'Type' => 'String',
 		),
-
 		4096 => array(
 			'Name' => 'Related Image File Format',
 			'Type' => 'String',
 		),
-
 		4097 => array(
 			'Name'  => 'Related Image File Width',
 			'Type'  => 'Numeric',
 			'Units' => 'pixels',
 		),
-
 		4098 => array(
 			'Name'  => 'Related Image File Length',
 			'Type'  => 'Numeric',
 			'Units' => 'pixels ',
 		),
-
 	),
 
-	//
-	//
 	// GPS Tags
-	//
-	//
-
 	'GPS' => array(
-
 		0 => array(
 			'Name'  => 'GPS Tag Version',
 			'Type'  => 'Numeric',
 			'Units' => '(e.g.: 2.2.0.0 = Version 2.2 )',
 		),
-
 		1 => array(
 			'Name' => 'North or South Latitude',
 			'Type' => 'String',
 		),
-
 		2 => array(
 			'Name'  => 'Latitude',
 			'Type'  => 'Numeric',
 			'Units' => '(Degrees Minutes Seconds North or South)',
 		),
-
 		3 => array(
 			'Name' => 'East or West Longitude',
 			'Type' => 'String',
 		),
-
 		4 => array(
 			'Name'  => 'Longitude',
 			'Type'  => 'Numeric',
 			'Units' => '(Degrees Minutes Seconds East or West)',
 		),
-
 		5 => array(
 			'Name' => 'Altitude Reference',
 			'Type' => 'Lookup',
 			0      => 'Sea Level',
 			1      => 'Sea level reference (negative value)',
 		),
-
 		6 => array(
 			'Name'  => 'Altitude',
 			'Type'  => 'Numeric',
 			'Units' => 'Metres with respect to Altitude Reference',
 		),
-
 		7 => array(
 			'Name'  => 'GPS Time (atomic clock)',
 			'Type'  => 'Numeric',
 			'Units' => '(Hours Minutes Seconds)',
 		),
-
 		8 => array(
 			'Name' => 'GPS Satellites used for Measurement',
 			'Type' => 'String',
 		),
-
 		9 => array(
 			'Name' => 'GPS Receiver Status',
 			'Type' => 'Lookup',
 			'A'    => 'Measurement in progress',          // Change: Fixed tag values as of version 1.11
 			'V'    => 'Measurement Interoperability',
 		),
-
 		10 => array(
 			'Name' => 'GPS Measurement Mode',
 			'Type' => 'Lookup',
 			2      => '2-dimensional measurement',         // Change: Fixed tag values as of version 1.11
 			3      => '3-dimensional measurement',
 		),
-
 		11 => array(
 			'Name'  => 'Measurement Precision',
 			'Type'  => 'Numeric',
 			'Units' => '(Data Degree of Precision, Horizontal for 2D, Position for 3D)',
 		),
-
 		12 => array(
 			'Name' => 'Speed Unit',
 			'Type' => 'Lookup',
@@ -855,79 +724,66 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'M'    => 'Miles per Hour',
 			'N'    => 'Knots',
 		),
-
 		13 => array(
 			'Name'  => 'Speed of GPS receiver',
 			'Type'  => 'Numeric',
 			'Units' => 'Speed Units',
 		),
-
 		14 => array(
 			'Name' => 'Reference for direction of Movement',
 			'Type' => 'Lookup',                     // Change: Fixed tag values as of version 1.11
 			'T'    => 'True North',
 			'M'    => 'Magnetic North',
 		),
-
 		15 => array(
 			'Name'  => 'Direction of Movement',
 			'Type'  => 'Numeric',
 			'Units' => 'Degrees relative to Movement Direction Reference',
 		),
-
 		16 => array(
 			'Name' => 'Reference for Direction of Image',
 			'Type' => 'Lookup',
 			'T'    => 'True North',                    // Change: Fixed tag values as of version 1.11
 			'M'    => 'Magnetic North',
 		),
-
 		17 => array(
 			'Name'  => 'Direction of Image',
 			'Type'  => 'Numeric',
 			'Units' => 'Degrees relative to Image Direction Reference',
 		),
-
 		18 => array(
 			'Name' => 'Geodetic Survey Datum Used',
 			'Type' => 'String',
 		),
-
 		19 => array(
 			'Name' => 'Destination - North or South Latitude',
 			'Type' => 'String',
 		),
-
 		20 => array(
 			'Name'  => 'Latitude of Destination',
 			'Type'  => 'Numeric',
 			'Units' => '(Degrees Minutes Seconds North or South)',
 		),
-
 		21 => array(
 			'Name' => 'Destination - East or West Longitude',
 			'Type' => 'String',
 		),
-
 		22 => array(
 			'Name'  => 'Longitude of Destination',
 			'Type'  => 'Numeric',
 			'Units' => '(Degrees Minutes Seconds East or West)',
 		),
-
 		23 => array(
 			'Name' => 'Reference for Bearing of Destination',
 			'Type' => 'Lookup',
 			'T'    => 'True North',                    // Change: Fixed tag values as of version 1.11
 			'M'    => 'Magnetic North',
 		),
-
 		24 => array(
 			'Name'  => 'Bearing of Destination',
 			'Type'  => 'Numeric',
 			'Units' => 'Degrees relative to Destination Bearing Reference',
 		),
-
 		25 => array(
 			'Name' => 'Units for Distance to Destination',
 			'Type' => 'Lookup',
@@ -935,288 +791,220 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'M'    => 'Miles',
 			'N'    => 'Nautical Miles',
 		),
-
 		26 => array(
 			'Name'  => 'Distance to Destination',
 			'Type'  => 'Numeric',
 			'Units' => 'Destination Distance Units',
 		),
-
 		27 => array(
 			'Name' => 'Name of GPS Processing Method',
 			'Type' => 'Character Coded String',
 		),
-
 		28 => array(
 			'Name' => 'Name of GPS Area',
 			'Type' => 'Character Coded String',
 		),
-
 		29 => array(
 			'Name'  => 'GPS Date',
 			'Type'  => 'Numeric',
 			'Units' => ' (Format: YYYY:MM:DD HH:mm:SS)',
 		),
-
 		30 => array(
 			'Name' => 'GPS Differential Correction',
 			'Type' => 'Lookup',
 			0      => 'Measurement without differential correction',
 			1      => 'Differential correction applied',
 		),
-
 	),
 
-	//
-	//
 	// META (App3) Tags
-	//
-	//
-
 	'Meta' => array(
-
 		50000 => array(
 			'Name' => 'CaptureDevice.FilmProductCode',
 			'Type' => 'Unknown',
 		),
-
 		50001 => array(
 			'Name' => 'DigitalProcess.ImageSourceEK',
 			'Type' => 'Unknown',
 		),
-
 		50002 => array(
 			'Name' => 'CaptureConditions.PAR',
 			'Type' => 'Unknown',
 		),
-
 		50003 => array(
 			'Name' => 'CaptureDevice.CameraOwner.EK',
 			'Type' => 'Character Coded String',
 		),
-
 		50004 => array(
 			'Name' => 'CaptureDevice.SerialNumber.Camera',
 			'Type' => 'Unknown',
 		),
-
 		50005 => array(
 			'Name' => 'SceneContent.GroupCaption.UserSelectGroupTitle',
 			'Type' => 'Unknown',
 		),
-
 		50006 => array(
 			'Name' => 'OutputOrder.Information.DealerIDNumber',
 			'Type' => 'Unknown',
 		),
-
 		50007 => array(
 			'Name' => 'CaptureDevice.FID',
 			'Type' => 'Unknown',
 		),
-
 		50008 => array(
 			'Name' => 'OutputOrder.Information.EnvelopeNumber',
 			'Type' => 'Unknown',
 		),
-
 		50009 => array(
 			'Name' => 'OutputOrder.SimpleRenderInst.FrameNumber',
 			'Type' => 'Unknown',
 		),
-
 		50010 => array(
 			'Name' => 'CaptureDevice.FilmCategory',
 			'Type' => 'Unknown',
 		),
-
 		50011 => array(
 			'Name' => 'CaptureDevice.FilmGencode',
 			'Type' => 'Unknown',
 		),
-
 		50012 => array(
 			'Name' => 'CaptureDevice.Scanner.ModelAndVersion',
 			'Type' => 'Unknown',
 		),
-
 		50013 => array(
 			'Name' => 'CaptureDevice.FilmSize',
 			'Type' => 'Unknown',
 		),
-
 		50014 => array(
 			'Name' => 'DigitalProcess.History.SBARGBShifts',
 			'Type' => 'Unknown',
 		),
-
 		50015 => array(
 			'Name' => 'DigitalProcess.History.SBAInputImageColourspace',
 			'Type' => 'Unknown',
 		),
-
 		50016 => array(
 			'Name' => 'DigitalProcess.History.SBAInputImageBitDepth',
 			'Type' => 'Unknown',
 		),
-
 		50017 => array(
 			'Name' => 'DigitalProcess.History.SBAExposureRecord',
 			'Type' => 'Unknown',
 		),
-
 		50018 => array(
 			'Name' => 'DigitalProcess.History.UserAdjSBARGBShifts',
 			'Type' => 'Unknown',
 		),
-
 		50019 => array(
 			'Name' => 'DigitalProcess.ImageRotationStatus',
 			'Type' => 'Unknown',
 		),
-
 		50020 => array(
 			'Name' => 'DigitalProcess.RollGuid.Elements',
 			'Type' => 'Unknown',
 		),
-
 		50021 => array(
 			'Name' => 'ImageContainer.MetadataNumber',
 			'Type' => 'String',
 		),
-
 		50022 => array(
 			'Name' => 'DigitalProcess.History.EditTagArray',
 			'Type' => 'Unknown',
 		),
-
 		50023 => array(
 			'Name' => 'CaptureConditions.Magnification',
 			'Type' => 'Unknown',
 		),
-
 		50028 => array(
 			'Name' => 'CaptureDevice.NativePhysicalXResolution',
 			'Type' => 'Unknown',
 		),
-
 		50029 => array(
 			'Name' => 'CaptureDevice.NativePhysicalYResolution',
 			'Type' => 'Unknown',
 		),
-
 		50030 => array(
 			'Name'      => 'Kodak Special Effects IFD',
 			'Type'      => 'SubIFD',
 			'Tags Name' => 'KodakSpecialEffects',
 		),
-
 		50031 => array(
 			'Name'      => 'Kodak Borders IFD',
 			'Type'      => 'SubIFD',
 			'Tags Name' => 'KodakBorders',
 		),
-
 		50042 => array(
 			'Name' => 'CaptureDevice.NativePhysicalResolutionUnit',
 			'Type' => 'Unknown',
 		),
-
 		50200 => array(
 			'Name' => 'ImageContainer.SourceImageDirectory',
 			'Type' => 'Unknown',
 		),
-
 		50201 => array(
 			'Name' => 'ImageContainer.SourceImageFileName',
 			'Type' => 'Unknown',
 		),
-
 		50202 => array(
 			'Name' => 'ImageContainer.SourceImageVolumeName',
 			'Type' => 'Unknown',
 		),
-
 		50284 => array(
 			'Name' => 'CaptureConditions.PrintQuantity',
 			'Type' => 'Unknown',
 		),
-
 		50286 => array(
 			'Name' => 'DigitalProcess.ImagePrintStatus',
 			'Type' => 'Unknown',
 		),
-
 	),
 
-	//
-	//
 	// Kodak Special Effects IFD Tags
-	//
-	//
-
 	'KodakSpecialEffects' => array(
-
 		0 => array(
 			'Name' => 'Digital Effects Version',
 			'Type' => 'Numeric',
 		),
-
 		1 => array(
 			'Name' => 'Digital Effects Name',
 			'Type' => 'Character Coded String',
 		),
-
 		2 => array(
 			'Name' => 'Digital Effects Type',
 			'Type' => 'Lookup',
 			0      => 'None Applied',
 		),
-
 	),
 
-	//
-	//
 	// Kodak Borders IFD Tags
-	//
-	//
-
 	'KodakBorders' => array(
-
 		0 => array(
 			'Name' => 'Borders Version',
 			'Type' => 'Numeric',
 		),
-
 		1 => array(
 			'Name' => 'Border Name',
 			'Type' => 'Character Coded String',
 		),
-
 		2 => array(
 			'Name' => 'Border ID',
 			'Type' => 'Numeric',
 		),
-
 		3 => array(
 			'Name' => 'Border Location',
 			'Type' => 'Lookup',
 		),
-
 		4 => array(
 			'Name' => 'Border Type',
 			'Type' => 'Lookup',
 			0      => 'None',
 		),
-
 		8 => array(
 			'Name' => 'Watermark Type',
 			'Type' => 'Lookup',
 			0      => 'None',
 		),
-
 	),
-
 );
 
 // End of Global Variable:     IFD_Tag_Definitions

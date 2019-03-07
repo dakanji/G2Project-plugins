@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  * $Revision: 1845 $
@@ -37,12 +38,10 @@ class MRAnalysisModule extends GalleryModule {
 				'Analysis and diagnostics'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('analysis', $gallery->i18n('Analysis'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -89,43 +88,35 @@ class MRAnalysisModule extends GalleryModule {
 	 * @see GalleryModule::getSiteAdminViews
 	 */
 	public function getSiteAdminViews() {
-		$views = array();
-
+		$views   = array();
 		$views[] = array(
 			'name' => $this->translate('Settings'),
 			'view' => 'mranalysis.Settings',
 		);
-
 		$views[] = array(
 			'name' => $this->translate('Broken Images'),
 			'view' => 'mranalysis.BrokenImages',
 		);
-
 		$views[] = array(
 			'name' => $this->translate('Missing Keywords'),
 			'view' => 'mranalysis.MissingKeywords',
 		);
-
 		$views[] = array(
 			'name' => $this->translate('Default Filenames'),
 			'view' => 'mranalysis.DefaultFileNames',
 		);
-
 		$views[] = array(
 			'name' => $this->translate('Missing Titles'),
 			'view' => 'mranalysis.MissingTitles',
 		);
-
 		$views[] = array(
 			'name' => $this->translate('Duplicate Titles'),
 			'view' => 'mranalysis.DuplicateTitles',
 		);
-
 		$views[] = array(
 			'name' => $this->translate('File Extensions In Titles'),
 			'view' => 'mranalysis.ExtensionsInTitles',
 		);
-
 		$views[] = array(
 			'name' => $this->translate('No File Extension'),
 			'view' => 'mranalysis.NoExtensionsInFileNames',

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -22,7 +23,9 @@
  * @package User Info
  * @author Charles Knowlton charles2007@users.sourceforge.net
  * @version $Revision$
- *//**
+ */
+
+/**
  * User Info
  *
  * Logs Login, Logout, and Failed Login Attempts
@@ -41,12 +44,10 @@ class UserinfoModule extends GalleryModule {
 				'Displays User Information'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 	}
@@ -119,7 +120,6 @@ class UserinfoModule extends GalleryModule {
 					return array($ret, null);
 				}
 
-
 				// Fall Through
 			case '1.0.3':
 			case '1.0.4':
@@ -149,6 +149,7 @@ class UserinfoModule extends GalleryModule {
 	 * @see GalleryModule::registerEventListeners
 	 * Only works on 2.2 and below
 	 */
+
 	/*
 	 *   function registerEventListeners() {
 	 *   GalleryCoreApi::requireOnce('modules/userinfo/classes/MyEventHandlerClass.class');

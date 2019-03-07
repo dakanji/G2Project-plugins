@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -36,11 +37,9 @@ class TileTheme extends GalleryTheme {
 				'Tile view of background image and image thumbnails'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'colorpack'     => '',
@@ -79,7 +78,6 @@ class TileTheme extends GalleryTheme {
 	 */
 	public function showAlbumPage(&$template, $item, $params, $childIds, $showHead = true) {
 		$this->_setDefaultParameters($params);
-
 		$ret = $this->loadCommonTemplateData(
 			$template,
 			$item,
@@ -96,7 +94,6 @@ class TileTheme extends GalleryTheme {
 
 		if (!empty($params['backgroundId'])) {
 			// XXX: Use an interface for images instead of 'GalleryEntity'
-
 			list($ret, $bgImage) = GalleryCoreApi::loadEntitiesById(
 				$params['backgroundId'],
 				'GalleryEntity'
@@ -167,7 +164,6 @@ class TileTheme extends GalleryTheme {
 
 		if (!empty($renderId)) {
 			// Render this item
-
 			list($ret, $image) = GalleryCoreApi::loadEntitiesById(
 				$renderId,
 				array('GalleryDataItem', 'GalleryDerivative')
@@ -194,7 +190,6 @@ class TileTheme extends GalleryTheme {
 		}
 
 		// Otherwise, load the parent with initial view of this item
-
 		list($ret, $parent) = GalleryCoreApi::loadEntitiesById(
 			$item->getParentId(),
 			'GalleryItem'
@@ -222,6 +217,7 @@ class TileTheme extends GalleryTheme {
 			if ($tmp['id'] == $item->getId()) {
 				if (isset($tmp['imageIndex'])) {
 					$theme['viewIndex'] = $tmp['imageIndex'];
+
 					// Set cookie to popup image just once
 					setcookie('G2_tile_view', '1');
 				}
@@ -342,6 +338,7 @@ class TileTheme extends GalleryTheme {
 
 		foreach ($childItems as $child) {
 			$i++;
+
 			$childId = $child->getId();
 
 			if (isset($thumbnails[$childId])) {
@@ -419,8 +416,7 @@ class TileTheme extends GalleryTheme {
 				} else {
 					// Item must render itself
 					$children[$i]['renderItem'] = 1;
-
-					$imageWidths[] = $imageHeights[] = -1;
+					$imageWidths[]              = $imageHeights[]              = -1;
 				}
 			}
 		}
@@ -462,7 +458,6 @@ class TileTheme extends GalleryTheme {
 		 * Our settings template needs everything that an album render requires
 		 * so load enough information to call showAlbumPage.
 		 */
-
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
 		if ($ret) {
@@ -481,9 +476,9 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$this->_setDefaultParameters($params);
+		$theme          =& $template->getVariableByReference('theme');
+		$theme['param'] = $params;
 
-		$theme                 =& $template->getVariableByReference('theme');
-		$theme['param']        = $params;
 		$theme['actingUserId'] = $gallery->getActiveUserId();
 
 		list($ret, $childIds) = GalleryCoreApi::fetchChildItemIds($item);

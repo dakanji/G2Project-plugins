@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -41,7 +42,8 @@ class GetUrlsCallbacks {
 					return $ret;
 				}
 
-				$block                        =& $smarty->_tpl_vars['block'];
+				$block =& $smarty->_tpl_vars['block'];
+
 				$block['geturls']['LoadUrls'] = $data;
 
 				return null;

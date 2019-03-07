@@ -26,7 +26,6 @@ define(
 global $Auth_OpenID_SKEW;
 
 $Auth_OpenID_SKEW = 60 * 60 * 5;
-
 define(
 	'Auth_OpenID_Nonce_REGEX',
 	'/(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)Z(.*)/'
@@ -53,8 +52,7 @@ function Auth_OpenID_splitNonce($nonce_string) {
 		 $tm_min,
 		 $tm_sec,
 		 $uniquifier) = $matches;
-
-	$timestamp = @gmmktime($tm_hour, $tm_min, $tm_sec, $tm_mon, $tm_mday, $tm_year);
+	$timestamp        = @gmmktime($tm_hour, $tm_min, $tm_sec, $tm_mon, $tm_mday, $tm_year);
 
 	if ($timestamp === false || $timestamp < 0) {
 		return null;

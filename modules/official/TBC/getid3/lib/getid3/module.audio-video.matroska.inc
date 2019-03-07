@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -221,7 +222,7 @@ class getid3_matroska extends getid3_handler {
 	private $unuseful_elements = array(EBML_ID_CRC32, EBML_ID_VOID);
 
 	public function Analyze() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 
 		// parse container
 		try {
@@ -295,7 +296,6 @@ class getid3_matroska extends getid3_handler {
 						switch ($trackarray['CodecID']) {
 							case 'V_MS/VFW/FOURCC':
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
-
 								$parsed              = getid3_riff::ParseBITMAPINFOHEADER($trackarray['CodecPrivate']);
 								$track_info['codec'] = getid3_riff::fourccLookup($parsed['fourcc']);
 								$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $parsed;
@@ -443,7 +443,6 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								$vorbis_offset -= 1;
-
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio.ogg.php', __FILE__, true);
 
 								// create temp instance
@@ -452,6 +451,7 @@ class getid3_matroska extends getid3_handler {
 								// analyze
 								$getid3_ogg                = new getid3_ogg($getid3_temp);
 								$oggpageinfo['page_seqno'] = 0;
+
 								$getid3_ogg->ParseVorbisPageHeader($trackarray['CodecPrivate'], $vorbis_offset, $oggpageinfo);
 
 								if (!empty($getid3_temp->info['ogg'])) {
@@ -487,7 +487,6 @@ class getid3_matroska extends getid3_handler {
 
 							case 'A_MS/ACM':
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
-
 								$parsed = getid3_riff::parseWAVEFORMATex($trackarray['CodecPrivate']);
 
 								foreach ($parsed as $key => $value) {
@@ -1094,16 +1093,14 @@ class getid3_matroska extends getid3_handler {
 														break;
 
 													case EBML_ID_FILEDATA:
-														$attachedfile_entry['data_offset'] = $this->current_offset;
-														$attachedfile_entry['data_length'] = $sub_subelement['length'];
-
+														$attachedfile_entry['data_offset']              = $this->current_offset;
+														$attachedfile_entry['data_length']              = $sub_subelement['length'];
 														$attachedfile_entry[$sub_subelement['id_name']] = $this->saveAttachment(
 															$attachedfile_entry['FileName'],
 															$attachedfile_entry['data_offset'],
 															$attachedfile_entry['data_length']
 														);
-
-														$this->current_offset = $sub_subelement['end'];
+														$this->current_offset                           = $sub_subelement['end'];
 
 														break;
 
@@ -1539,13 +1536,15 @@ class getid3_matroska extends getid3_handler {
 	private function HandleEMBLClusterBlock($element, $block_type, &$info) {
 		// http://www.matroska.org/technical/specs/index.html#block_structure
 		// http://www.matroska.org/technical/specs/index.html#simpleblock_structure
-		$block_data                = array();
+		$block_data = array();
+
 		$block_data['tracknumber'] = $this->readEBMLint();
 		$block_data['timecode']    = getid3_lib::BigEndian2Int($this->readEBMLelementData(2), false, true);
 		$block_data['flags_raw']   = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
 
 		if ($block_type == EBML_ID_CLUSTERSIMPLEBLOCK) {
 			$block_data['flags']['keyframe'] = (($block_data['flags_raw'] & 0x80) >> 7);
+
 			//$block_data['flags']['reserved1'] = (($block_data['flags_raw'] & 0x70) >> 4);
 		}
 
@@ -1570,7 +1569,8 @@ class getid3_matroska extends getid3_handler {
 						$block_data['lace_frames_size'][$i] = 0;
 
 						do {
-							$size                                = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
+							$size = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
+
 							$block_data['lace_frames_size'][$i] += $size;
 						} while ($size == 255);
 					}
@@ -1584,7 +1584,9 @@ class getid3_matroska extends getid3_handler {
 
 		if (!isset($info['matroska']['track_data_offsets'][$block_data['tracknumber']])) {
 			$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['offset'] = $this->current_offset;
+
 			$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['length'] = $element['end'] - $this->current_offset;
+
 			//$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['total_length'] = 0;
 		}
 

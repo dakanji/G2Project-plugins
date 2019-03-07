@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -54,6 +55,7 @@ class RedirectController extends GalleryController {
 		global $gallery;
 
 		$phpVm = $gallery->getPhpVm();
+
 		GalleryCoreApi::requireOnce('modules/migrate/classes/G1MigrateHelper.class');
 
 		$path = GalleryUtilities::getRequestVariables('path');
@@ -71,7 +73,6 @@ class RedirectController extends GalleryController {
 					} elseif ($file[1] == 'thumb') {
 						$derivative = DERIVATIVE_TYPE_IMAGE_THUMBNAIL;
 					}
-
 
 					// Fall Through
 				case 2:
@@ -227,7 +228,9 @@ class RedirectView extends GalleryView {
 		header('Content-type: text/plain');
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
 		$template->setVariable('l10Domain', 'modules_migrate');
 		$template->display('gallery:modules/migrate/templates/Htaccess.tpl');
 

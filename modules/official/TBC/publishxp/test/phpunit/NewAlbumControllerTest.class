@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -55,7 +56,6 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 			'form[pathComponent]',
 			$this->_pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
-
 		GalleryUtilities::putRequestVariable('form[title]', 'test title');
 		GalleryUtilities::putRequestVariable('form[summary]', 'test summary');
 		GalleryUtilities::putRequestVariable('form[description]', 'test description');
@@ -112,10 +112,10 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$results = $this->handleRequest();
-
+		$results       = $this->handleRequest();
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$albumId       = $entityCounter->getRecentEntityId('GalleryAlbumItem');
+
+		$albumId = $entityCounter->getRecentEntityId('GalleryAlbumItem');
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -139,6 +139,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('test title', $album->getTitle());
 		$this->assertEquals('test summary', $album->getSummary());
 		$this->assertEquals('test description', $album->getDescription());
+
 		// For Oracle, null is replaced with '' when loading data from the database
 		$this->assert(in_array($album->getKeywords(), array(null, '')), 'keywords should be empty');
 	}
@@ -149,7 +150,6 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 			'form[pathComponent]',
 			$pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
-
 		GalleryUtilities::putRequestVariable('form[title]', 'test<script>evil</script> title');
 		GalleryUtilities::putRequestVariable('form[summary]', 'test<script>evil</script> summary');
 		GalleryUtilities::putRequestVariable('form[description]', 'test<script>evil</script> desc');
@@ -157,7 +157,8 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 
 		$results       = $this->handleRequest();
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-		$albumId       = $entityCounter->getRecentEntityId('GalleryAlbumItem');
+
+		$albumId = $entityCounter->getRecentEntityId('GalleryAlbumItem');
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -181,7 +182,6 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; title', $album->getTitle());
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; summary', $album->getSummary());
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; desc', $album->getDescription());
-
 		$ret = GalleryCoreApi::deleteEntityById($albumId, 'GalleryAlbumItem');
 
 		if ($ret) {

@@ -1,4 +1,5 @@
 <?php
+
 // $Id: frame.inc 921 2007-03-03 00:09:36Z pgilberto $
 $frameData = array(
 	'name'      => $gallery->i18n('X_Brown_White Shadow - 14px (gif)'),
@@ -11,10 +12,8 @@ $frameData = array(
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
-
 	'imageTT'   => 'TT.gif',
 	'heightTT'  => 43,
-
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
 
@@ -26,20 +25,16 @@ $frameData = array(
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
-
 	'imageLL'   => 'LL.gif',
 	'widthLL'   => 43,
-
 	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
-
 	'imageRR'   => 'RR.gif',
 	'widthRR'   => 43,
-
 	'imageRRB'  => '',
 	'heightRRB' => 0,
 
@@ -51,10 +46,8 @@ $frameData = array(
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
-
 	'imageBB'   => 'BB.gif',
 	'heightBB'  => 43,
-
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
 
@@ -62,5 +55,4 @@ $frameData = array(
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 43,
 	'heightBR'  => 43,
-
 );

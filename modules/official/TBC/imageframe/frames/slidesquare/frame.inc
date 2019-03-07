@@ -1,8 +1,8 @@
 <?php
+
 // $Id: frame.inc 15342 2006-12-01 21:14:46Z andy_st $
   // Contributed by: xlerb
 $frameData = array(
-
 	'name'      => $gallery->i18n('Slide (square)'),
 	'square'    => true,
 
@@ -18,10 +18,8 @@ $frameData = array(
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
-
 	'imageTT'   => 'TT.gif',
 	'heightTT'  => 11,
-
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
 
@@ -33,20 +31,16 @@ $frameData = array(
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
-
 	'imageLL'   => 'LL.gif',
 	'widthLL'   => 11,
-
 	'imageLLB'  => '',
 	'heightLLB' => 0,
 
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
-
 	'imageRR'   => 'RR.gif',
 	'widthRR'   => 11,
-
 	'imageRRB'  => '',
 	'heightRRB' => 0,
 
@@ -58,10 +52,8 @@ $frameData = array(
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
-
 	'imageBB'   => 'BB.gif',
 	'heightBB'  => 11,
-
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
 
@@ -69,5 +61,4 @@ $frameData = array(
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 11,
 	'heightBR'  => 11,
-
 );

@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,7 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_vqf extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
+		$info =& $this->getid3->info;
 
 		// based loosely on code from TTwinVQ by Jurgen Faul <jfaulØgmx*de>
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
@@ -26,12 +27,11 @@ class getid3_vqf extends getid3_handler {
 
 		// shortcut
 		$info['vqf']['raw'] = array();
-		$thisfile_vqf       = &$info['vqf'];
-		$thisfile_vqf_raw   = &$thisfile_vqf['raw'];
+		$thisfile_vqf       =& $info['vqf'];
+		$thisfile_vqf_raw   =& $thisfile_vqf['raw'];
 
 		$this->fseek($info['avdataoffset']);
-		$VQFheaderData = $this->fread(16);
-
+		$VQFheaderData                  = $this->fread(16);
 		$offset                         = 0;
 		$thisfile_vqf_raw['header_tag'] = substr($VQFheaderData, $offset, 4);
 		$magic                          = 'TWIN';
@@ -52,8 +52,10 @@ class getid3_vqf extends getid3_handler {
 		while ($this->ftell() < $info['avdataend']) {
 			$ChunkBaseOffset = $this->ftell();
 			$chunkoffset     = 0;
-			$ChunkData       = $this->fread(8);
-			$ChunkName       = substr($ChunkData, $chunkoffset, 4);
+
+			$ChunkData = $this->fread(8);
+
+			$ChunkName = substr($ChunkData, $chunkoffset, 4);
 
 			if ($ChunkName == 'DATA') {
 				$info['avdataoffset'] = $ChunkBaseOffset;
@@ -78,9 +80,8 @@ class getid3_vqf extends getid3_handler {
 			switch ($ChunkName) {
 				case 'COMM':
 					// shortcut
-					$thisfile_vqf['COMM'] = array();
-					$thisfile_vqf_COMM    = &$thisfile_vqf['COMM'];
-
+					$thisfile_vqf['COMM']                = array();
+					$thisfile_vqf_COMM                   =& $thisfile_vqf['COMM'];
 					$thisfile_vqf_COMM['channel_mode']   = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
 					$chunkoffset                        += 4;
 					$thisfile_vqf_COMM['bitrate']        = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
@@ -89,8 +90,8 @@ class getid3_vqf extends getid3_handler {
 					$chunkoffset                        += 4;
 					$thisfile_vqf_COMM['security_level'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
 					$chunkoffset                        += 4;
+					$info['audio']['channels']           = $thisfile_vqf_COMM['channel_mode'] + 1;
 
-					$info['audio']['channels']        = $thisfile_vqf_COMM['channel_mode'] + 1;
 					$info['audio']['sample_rate']     = $this->VQFchannelFrequencyLookup($thisfile_vqf_COMM['sample_rate']);
 					$info['audio']['bitrate']         = $thisfile_vqf_COMM['bitrate'] * 1000;
 					$info['audio']['encoder_options'] = 'CBR' . ceil($info['audio']['bitrate'] / 1000);

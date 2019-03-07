@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,8 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_rkau extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$RKAUHeader = $this->fread(20);
 		$magic      = 'RKA';
@@ -27,15 +27,15 @@ class getid3_rkau extends getid3_handler {
 			return false;
 		}
 
-		$info['fileformat']            = 'rkau';
-		$info['audio']['dataformat']   = 'rkau';
-		$info['audio']['bitrate_mode'] = 'vbr';
-
+		$info['fileformat']             = 'rkau';
+		$info['audio']['dataformat']    = 'rkau';
+		$info['audio']['bitrate_mode']  = 'vbr';
 		$info['rkau']['raw']['version'] = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 3, 1));
 		$info['rkau']['version']        = '1.' . str_pad($info['rkau']['raw']['version'] & 0x0F, 2, '0', STR_PAD_LEFT);
 
 		if (($info['rkau']['version'] > 1.07) || ($info['rkau']['version'] < 1.06)) {
 			$info['error'][] = 'This version of getID3() [' . $this->getid3->version() . '] can only parse RKAU files v1.06 and 1.07 (this file is v' . $info['rkau']['version'] . ')';
+
 			unset($info['rkau']);
 
 			return false;
@@ -45,8 +45,8 @@ class getid3_rkau extends getid3_handler {
 		$info['rkau']['sample_rate']     = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 8, 4));
 		$info['rkau']['channels']        = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 12, 1));
 		$info['rkau']['bits_per_sample'] = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 13, 1));
+		$info['rkau']['raw']['quality']  = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 14, 1));
 
-		$info['rkau']['raw']['quality'] = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 14, 1));
 		$this->RKAUqualityLookup($info['rkau']);
 
 		$info['rkau']['raw']['flags']            = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 15, 1));
@@ -68,17 +68,15 @@ class getid3_rkau extends getid3_handler {
 		$info['audio']['channels']        = $info['rkau']['channels'];
 		$info['audio']['bits_per_sample'] = $info['rkau']['bits_per_sample'];
 		$info['audio']['sample_rate']     = $info['rkau']['sample_rate'];
-
-		$info['playtime_seconds'] = $info['rkau']['source_bytes']           / ($info['rkau']['sample_rate'] * $info['rkau']['channels'] * ($info['rkau']['bits_per_sample'] / 8));
-		$info['audio']['bitrate'] = ($info['rkau']['compressed_bytes'] * 8) / $info['playtime_seconds'];
+		$info['playtime_seconds']         = $info['rkau']['source_bytes']           / ($info['rkau']['sample_rate'] * $info['rkau']['channels'] * ($info['rkau']['bits_per_sample'] / 8));
+		$info['audio']['bitrate']         = ($info['rkau']['compressed_bytes'] * 8) / $info['playtime_seconds'];
 
 		return true;
 	}
 
 	public function RKAUqualityLookup(&$RKAUdata) {
-		$level   = ($RKAUdata['raw']['quality'] & 0xF0) >> 4;
-		$quality = $RKAUdata['raw']['quality'] & 0x0F;
-
+		$level                         = ($RKAUdata['raw']['quality'] & 0xF0) >> 4;
+		$quality                       = $RKAUdata['raw']['quality'] & 0x0F;
 		$RKAUdata['lossless']          = (($quality == 0) ? true : false);
 		$RKAUdata['compression_level'] = $level + 1;
 

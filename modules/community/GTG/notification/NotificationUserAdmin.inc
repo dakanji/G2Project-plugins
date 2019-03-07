@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHelper.class');
 
 /**
@@ -213,8 +213,7 @@ class NotificationUserAdminView extends GalleryView {
 	public function _initializeForm(&$form, $isAdminGroup, $userId) {
 		global $gallery;
 
-		$urlGenerator =& $gallery->getUrlGenerator();
-
+		$urlGenerator     =& $gallery->getUrlGenerator();
 		$form['formName'] = 'NotificationUserAdmin';
 
 		list($ret, $notifications) = NotificationHelper::getEnabledNotifications();
@@ -300,6 +299,7 @@ class NotificationUserAdminView extends GalleryView {
 					);
 
 					$itemIds = array();
+
 					// Do the global subscriptions first
 					foreach ($subscriptions[$notificationName] as $itemId) {
 						if (empty($itemId)) {
@@ -347,13 +347,12 @@ class NotificationUserAdminView extends GalleryView {
 							$j = 0;
 
 							foreach ($items as $item) {
-								$itemUrl = $urlGenerator->generateUrl(
+								$itemUrl                                  = $urlGenerator->generateUrl(
 									array(
 										'view'   => 'core.ShowItem',
 										'itemId' => $item->getId(),
 									)
 								);
-
 								$form['notifications'][$i]['items'][++$j] = array(
 									'itemId'     => $item->getId(),
 									'subscribed' => true,

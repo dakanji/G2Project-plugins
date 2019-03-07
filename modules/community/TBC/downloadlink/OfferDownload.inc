@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,8 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/DownloadItem.inc');/**
+
  * Provides downloading of binary items as files
  * @version $Revision: 1654 $
  * @package DownloadLink
@@ -44,6 +45,7 @@ class OfferDownloadView extends DownloadItemView {
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: attachment; filename="' . $data['pseudoFileName'] . '"');
+
 		$stats = $platform->stat($data['derivativePath']);
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
@@ -81,6 +83,7 @@ class OfferDownloadView extends DownloadItemView {
 					}
 
 					echo $bits;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 
@@ -100,8 +103,7 @@ class OfferDownloadView extends DownloadItemView {
 	public function _assertPermissions($item, $derivativeType) {
 		global $gallery;
 
-		$session =& $gallery->getSession();
-
+		$session             =& $gallery->getSession();
 		$itemIdForPermission = $item->getId();
 
 		if (!empty($derivativeType)) {
@@ -121,6 +123,7 @@ class OfferDownloadView extends DownloadItemView {
 				$permission = 'downloadlink.resizes';
 
 				break;
+
 			// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource
 		}
 

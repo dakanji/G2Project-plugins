@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -43,11 +44,9 @@ class NZDITheme extends GalleryTheme {
 				'NZ Digital Images theme'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'rows'               => 3,
@@ -56,6 +55,7 @@ class NZDITheme extends GalleryTheme {
 				'showAlbumOwner'     => 0,
 				'showSummaries'      => 0,
 				'colorpack'          => '',
+
 				// 'showMicroThumbs' => 0,
 				'enableImageMap'     => 1,
 				'fullsizepopup'      => 1,
@@ -247,28 +247,24 @@ class NZDITheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GalleryBreadcrumbs'],
 		);
-
 		$settings[] = array(
 			'key'   => 'enableImageMap',
 			'name'  => $this->translate('Prev/Next on image hover'),
 			'type'  => 'checkbox',
 			'value' => $params['enableImageMap'],
 		);
-
 		$settings[] = array(
 			'key'   => 'fullsizepopup',
 			'name'  => $this->translate('Full size image in popup window'),
 			'type'  => 'checkbox',
 			'value' => $params['fullsizepopup'],
 		);
-
 		$settings[] = array(
 			'key'   => 'LatestImagesAlbum',
 			'name'  => $this->translate('Show thumbnail preview on photo pages'),
 			'type'  => 'checkbox',
 			'value' => $params['LatestImagesAlbum'],
 		);
-
 		$settings[] = array(
 			'key'        => 'maxThumbnails',
 			'name'       => $this->translate('Maximum number of thumbnails to show'),
@@ -278,7 +274,6 @@ class NZDITheme extends GalleryTheme {
 			),
 			'value'      => $params['maxThumbnails'],
 		);
-
 		$settings[] = array(
 			'key'        => 'sizeThumbnails',
 			'name'       => $this->translate('Size of thumbnails in pixels'),
@@ -288,35 +283,30 @@ class NZDITheme extends GalleryTheme {
 			),
 			'value'      => $params['sizeThumbnails'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showSummaries',
 			'name'  => $this->translate('Show summary data with thumbnails'),
 			'type'  => 'checkbox',
 			'value' => $params['showSummaries'],
 		);
-
 		$settings[] = array(
 			'key'   => 'ItemViewCount',
 			'name'  => $this->translate('Show item view count'),
 			'type'  => 'checkbox',
 			'value' => $params['ItemViewCount'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showCorePager',
 			'name'  => $this->translate('Show pager links on album pages'),
 			'type'  => 'checkbox',
 			'value' => $params['showCorePager'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showFooter',
 			'name'  => $this->translate('Support gallery - Show gallery footer'),
 			'type'  => 'checkbox',
 			'value' => $params['showFooter'],
 		);
-
 		$settings[] = array(
 			'key'        => 'nzdiFooter',
 			'name'       => $this->translate('Custom footer below gallery'),

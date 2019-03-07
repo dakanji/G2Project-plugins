@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: DupeDetectHistogramHelperTest.class,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @version $Revision: 1.4 $ $Date: 2005/07/06 10:54:34 $
  * @package DupeDetect
@@ -35,6 +37,7 @@ GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramHelpe
  * Map class
  */
 GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramsMap.class');/**
+
  * Test DupeDetectHistogramHelper class functionality
  *
  * @package DupeDetect
@@ -174,7 +177,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			count($signatures[$this->_item->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
 		);
-
 		$this->assert(
 			count($signatures[$this->_dupItem->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
@@ -334,7 +336,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		/* first check that no dupes are discovered as there's no
 		 * signature for the new file yet */
-
 		list($ret, $dupes) = DupeDetectHistogramHelper::discoverHistogramDupes($this->_item->getId());
 
 		if ($ret->isError()) {

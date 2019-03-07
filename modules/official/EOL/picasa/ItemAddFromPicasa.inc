@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -34,6 +35,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		GalleryCoreApi::requireOnce('modules/picasa/classes/Picasa2DataParser.class');
 		GalleryCoreApi::requireOnce('modules/picasa/classes/PicasaImportHelper.class');
+
 		$platform =& $gallery->getPlatform();
 		$status   = $error   = array();
 
@@ -149,13 +151,12 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 	public function performImport($picasaXmlPath, $destinationAlbumId, $form) {
 		global $gallery;
 
-		$storage = $gallery->getStorage();
+		$storage  = $gallery->getStorage();
+		$platform =& $gallery->getPlatform();
+		$slash    = $platform->getDirectorySeparator();
 
-		$platform       =& $gallery->getPlatform();
-		$slash          = $platform->getDirectorySeparator();
 		$finishedAlbums = $albumPosition = array();
-
-		$status = array(
+		$status         = array(
 			'albumId'              => false,
 			'albumImportFailure'   => array(),
 			'albumImportSuccess'   => array(),
@@ -191,7 +192,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		 * Import the Album (as of now Picasa supports only the export of a
 		 * single album and there is no concept of subalbums)
 		 */
-
 		list($ret, $picasaAlbum) = Picasa2DataParser::getAlbum($picasaXmlPath);
 
 		if ($ret) {
@@ -204,9 +204,9 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			$totalItemsToImport = 1;
 		}
 
-		$i = 0;
-
+		$i                     = 0;
 		$numberOfItemsImported = 0;
+
 		$gallery->guaranteeTimeLimit(30);
 		$newAlbumInstanceId = false;
 
@@ -292,7 +292,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 						$sourceEncoding
 					)
 				);
-
 				$newAlbumInstance->setSummary(
 					PicasaImportHelper::convertHtml(
 						$markupType,
@@ -303,15 +302,13 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			}
 
 			$newAlbumInstance->setKeywords('');
-
 			$ret = $newAlbumInstance->save();
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			$itemsCreated[] = $newAlbumInstance->getId();
-
+			$itemsCreated[]                                          = $newAlbumInstance->getId();
 			$finishedAlbums[$picasaAlbum['albumName']]               = $newAlbumInstanceId;
 			$status['albumImportSuccess'][$picasaAlbum['albumName']] = $newAlbumInstanceId;
 			$status['albumId']                                       = $newAlbumInstanceId;
@@ -321,7 +318,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		 * we can let the parent album (and anything else that we might
 		 * have tied up) be edited by others now
 		 */
-
 		$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 		if ($ret) {
@@ -343,10 +339,12 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			$gallery->guaranteeTimeLimit(30);
 			$filepath          = $picasaXmlPath . str_replace('/', $slash, $importAlbumItem['path']);
 			$sanitizedFilename = $filename = $importAlbumItem['name'];
+
 			GalleryUtilities::sanitizeInputValues($sanitizedFilename);
 
 			list($base, $extension) = GalleryUtilities::getFileNameComponents($sanitizedFilename);
-			$filecaption            = PicasaImportHelper::convertHtml(
+
+			$filecaption = PicasaImportHelper::convertHtml(
 				$markupType,
 				$importAlbumItem['caption'],
 				$sourceEncoding
@@ -457,7 +455,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			'caption'  => $module->translate('Picasa Caption'),
 			''         => $module->translate('Blank'),
 		);
-
 		$template->setVariable(
 			'ItemAddFromPicasa',
 			array(
@@ -470,10 +467,12 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		// Set the ItemAdmin form's encoding type specially since we're uploading binary files
 		if ($template->hasVariable('ItemAdmin')) {
-			$ItemAdmin            =& $template->getVariableByReference('ItemAdmin');
+			$ItemAdmin =& $template->getVariableByReference('ItemAdmin');
+
 			$ItemAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$ItemAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('ItemAdmin', $ItemAdmin);
 		}
 

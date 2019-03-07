@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHelper.class');
 GalleryCoreApi::requireOnce('modules/notification/classes/GalleryCoreEventNotifications.class');
 
@@ -53,7 +53,6 @@ class NotificationHelperTest extends GalleryTestCase {
 
 		$this->_unregisterFactoryImplementationForTest('NotificationEvent_1_0');
 		$this->_unregisterFactoryImplementationForTest('NotificationHandler_1_0');
-
 		$ret = $this->_registerFactoryImplementationForTest(
 			'GalleryEventListener',
 			'NotificationHelperTestEventHandler',
@@ -186,7 +185,6 @@ class NotificationHelperTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_user2);
-
 		$ret = GalleryCoreApi::addUserPermission(
 			$this->_album->getId(),
 			$this->_user2->getId(),
@@ -254,9 +252,8 @@ class NotificationHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->_storageSet = true;
-		$gallery->_storage = new UnitTestStorage();
-
+		$this->_storageSet     = true;
+		$gallery->_storage     = new UnitTestStorage();
 		$this->_saveLockSystem = $gallery->_lockSystem;
 		$gallery->_lockSystem  = null;
 	}
@@ -264,8 +261,7 @@ class NotificationHelperTest extends GalleryTestCase {
 	public function tearDown() {
 		global $gallery;
 
-		$storage =& $gallery->getStorage();
-
+		$storage              =& $gallery->getStorage();
 		$gallery->_lockSystem =& $this->_saveLockSystem;
 
 		if (!empty($this->_storageSet)) {
@@ -300,7 +296,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				'description' => $this->_module->translate('NotificationHelperTestGlobalEvent Description'),
 			),
 		);
-
 		$this->assertEquals($expected, $events, 'Display');
 
 		list($ret, $events) = NotificationHelper::getDefinedEvents();
@@ -323,7 +318,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				'description' => $this->_module->translate('NotificationEventTest Description'),
 			),
 		);
-
 		$this->assertEquals($expected, $events, 'Non Display');
 	}
 
@@ -343,7 +337,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				'NotificationHelperTestNotificationHandler Description'
 			),
 		);
-
 		$this->assertEquals($expected, $handlers, 'Display');
 
 		list($ret, $handlers) = NotificationHelper::getDefinedHandlers();
@@ -360,7 +353,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				'NotificationHelperTestNotificationHandler Description'
 			),
 		);
-
 		$this->assertEquals($expected, $handlers, 'Non Display');
 	}
 
@@ -368,9 +360,7 @@ class NotificationHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
-		$userId = $gallery->getActiveUserId();
-
+		$userId  = $gallery->getActiveUserId();
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -406,7 +396,6 @@ class NotificationHelperTest extends GalleryTestCase {
 			$events,
 			'UserId search'
 		);
-
 		$dummyItemId = 6;
 		$storage->setReply(
 			'getMapEntry',
@@ -450,7 +439,6 @@ class NotificationHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$storage->setReply(
 			'search',
 			array(
@@ -488,9 +476,7 @@ class NotificationHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
-		$userId = $gallery->getActiveUserId();
-
+		$userId  = $gallery->getActiveUserId();
 		$storage->setReply(
 			'search',
 			array(
@@ -525,8 +511,7 @@ class NotificationHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$storage =& $gallery->getStorage();
-
+		$storage     =& $gallery->getStorage();
 		$userId      = $gallery->getActiveUserId();
 		$itemId      = $this->_album->getId();
 		$eventId     = 'Test::Event';
@@ -556,7 +541,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				),
 			)
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply(
@@ -577,10 +561,10 @@ class NotificationHelperTest extends GalleryTestCase {
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
+
 		// The fetchChildItemIds() query
 		$storage->setReply('search', '*', array(null, new UnitTestStorageSearchResults(array())));
 		$storage->setReply('checkPoint', array(), null);
-
 		$ret = NotificationHelper::subscribe(
 			$userId,
 			$this->_album,
@@ -607,8 +591,7 @@ class NotificationHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$storage =& $gallery->getStorage();
-
+		$storage     =& $gallery->getStorage();
 		$userId      = $gallery->getActiveUserId();
 		$itemId      = $this->_album->getId();
 		$eventId     = 'Test::Event';
@@ -638,7 +621,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				),
 			)
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply(
@@ -655,9 +637,7 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('checkPoint', array(), null);
-
 		$ret = NotificationHelper::subscribe(
 			$userId,
 			$this->_album,
@@ -693,14 +673,12 @@ class NotificationHelperTest extends GalleryTestCase {
 		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']       = 'notification';
 		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
 
-		$storage =& $gallery->getStorage();
-
+		$storage          =& $gallery->getStorage();
 		$userId           = $gallery->getActiveUserId();
 		$itemId           = $this->_album->getId();
 		$notificationName = 'Test::Event';
 		$handlerName      = 'Test::Handler';
-
-		$getHints = serialize(null);
+		$getHints         = serialize(null);
 		$storage->setReply(
 			'removeMapEntry',
 			array(
@@ -718,6 +696,7 @@ class NotificationHelperTest extends GalleryTestCase {
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
+
 		// The fetchChildItemIds() query
 		$storage->setReply('search', '*', array(null, new UnitTestStorageSearchResults(array())));
 
@@ -745,7 +724,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				),
 			)
 		);
-
 		$storage->setReply(
 			'search',
 			array(
@@ -756,7 +734,6 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(array(0))))
 		);
-
 		$storage->setReply(
 			'updateMapEntry',
 			array(
@@ -772,11 +749,9 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
-
 		$ret = NotificationHelper::unsubscribe(
 			$userId,
 			$itemId,
@@ -812,14 +787,12 @@ class NotificationHelperTest extends GalleryTestCase {
 		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']       = 'notification';
 		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
 
-		$storage =& $gallery->getStorage();
-
+		$storage          =& $gallery->getStorage();
 		$userId           = $gallery->getActiveUserId();
 		$itemId           = $this->_album->getId();
 		$notificationName = 'Test::Event';
 		$handlerName      = 'Test::Handler';
-
-		$getHints = serialize(null);
+		$getHints         = serialize(null);
 		$storage->setReply(
 			'removeMapEntry',
 			array(
@@ -858,7 +831,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				),
 			)
 		);
-
 		$storage->setReply(
 			'search',
 			array(
@@ -869,7 +841,6 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(array(0))))
 		);
-
 		$storage->setReply(
 			'updateMapEntry',
 			array(
@@ -885,11 +856,9 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			null
 		);
-
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
-
 		$ret = NotificationHelper::unsubscribe(
 			$userId,
 			$itemId,
@@ -919,8 +888,7 @@ class NotificationHelperTest extends GalleryTestCase {
 		}
 
 		$expected = $module->translate('Event Handler is required');
-
-		$url = $urlGenerator->generateUrl(
+		$url      = $urlGenerator->generateUrl(
 			array(
 				'view'   => 'core.ShowItem',
 				'itemId' => $this->_album->getId(),
@@ -931,11 +899,11 @@ class NotificationHelperTest extends GalleryTestCase {
 				'htmlEntities'   => false,
 			)
 		);
+		$event    = GalleryCoreApi::newEvent('Gallery::ItemAdded');
 
-		$event = GalleryCoreApi::newEvent('Gallery::ItemAdded');
 		$event->setData(array($this->_album));
-
 		$notifier = new ItemAddedNotification();
+
 		$notifier->setEvent($event);
 
 		list($ret, $testMsg) = $notifier->getNotificationMessage();
@@ -946,27 +914,23 @@ class NotificationHelperTest extends GalleryTestCase {
 
 		$itemTypeName = $this->_album->itemTypeName();
 		$itemTypeName = $itemTypeName[1];
-
-		$msg = $module->translate(
+		$msg          = $module->translate(
 			array(
 				'arg1' => $itemTypeName,
 				'arg2' => $url,
 				'text' => "A new %s has been added. To view it, click here: \n%s",
 			)
 		);
-
 		$this->assertEquals($msg, $testMsg, 'Single item not formatted propery');
-
 		$event = GalleryCoreApi::newEvent('Gallery::ItemAdded');
+
 		$event->setData(array($this->_item1, $this->_item2));
-
 		$notifier = new ItemAddedNotification();
-		$notifier->setEvent($event);
 
+		$notifier->setEvent($event);
 		$itemTypeName = $this->_item1->itemTypeName();
 		$itemTypeName = $itemTypeName[1];
-
-		$msg = $module->translate(
+		$msg          = $module->translate(
 			array(
 				'arg1' => $itemTypeName,
 				'arg2' => $url,
@@ -987,11 +951,9 @@ class NotificationHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$userId  = $gallery->getActiveUserId();
 		$itemId  = $this->_album->getId();
 		$eventId = 'Test::Event';
-
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -1013,9 +975,9 @@ class NotificationHelperTest extends GalleryTestCase {
 				),
 			)
 		);
-
 		$notification = new NotificationHelperTestEvent();
 		$event        = new GalleryEvent();
+
 		$event->setEventName('Test::Event');
 		$event->setData($itemId);
 		$notification->setEvent($event);
@@ -1035,11 +997,9 @@ class NotificationHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		$userId  = $gallery->getActiveUserId();
 		$itemId  = $this->_album->getId();
 		$eventId = 'Test::GlobalEvent';
-
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -1061,7 +1021,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				),
 			)
 		);
-
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -1079,7 +1038,6 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array()))
 		);
-
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -1097,9 +1055,9 @@ class NotificationHelperTest extends GalleryTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(array($this->_user2->getId()))))
 		);
-
 		$notification = new NotificationHelperTestGlobalEvent();
 		$event        = new GalleryEvent();
+
 		$event->setEventName('Test::GlobalEvent');
 		$event->setData($itemId);
 		$notification->setEvent($event);
@@ -1117,8 +1075,7 @@ class NotificationHelperTest extends GalleryTestCase {
 	public function testGetSubscriberByItemId() {
 		global $gallery;
 
-		$storage =& $gallery->getStorage();
-
+		$storage          =& $gallery->getStorage();
 		$userId           = $gallery->getActiveUserId();
 		$itemId           = 7;
 		$notificationName = 'Test::Event';
@@ -1128,7 +1085,6 @@ class NotificationHelperTest extends GalleryTestCase {
 				array($userId, 'Test::EventHandler'),
 			),
 		);
-
 		$storage->setReply(
 			'getMapEntry',
 			array(

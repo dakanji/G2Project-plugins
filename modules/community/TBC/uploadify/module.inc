@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2010 Bharat Mediratta
@@ -33,12 +34,10 @@ class UploadifyModule extends GalleryModule {
 				'Easy to use jQuery uploader for media'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('import', $gallery->i18n('Import'));
 	}
 
@@ -81,8 +80,7 @@ class UploadifyModule extends GalleryModule {
 		$ret = GalleryCoreApi::registerFactoryImplementation(
 			'ItemAddPlugin',
 			'ItemAddUploadify',
-			'
-			ItemAddUploadify',
+			'ItemAddUploadify',
 			'modules/uploadify/ItemAddUploadify.inc',
 			'uploadify',
 			null

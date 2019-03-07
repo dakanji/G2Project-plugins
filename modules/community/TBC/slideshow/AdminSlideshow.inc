@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/slideshow/classes/PicLensHelper.class');
 
 /**
@@ -153,7 +153,8 @@ class AdminSlideshowView extends GalleryView {
 		}
 
 		$picLensHelper = new PicLensHelper();
-		$info          = $picLensHelper->getLatestPicLensInfo();
+
+		$info = $picLensHelper->getLatestPicLensInfo();
 
 		if (empty($info)) {
 			$update = null;

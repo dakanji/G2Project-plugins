@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2009 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeNode.class');
 
 /**
@@ -66,7 +66,8 @@ class TagTreeHelper {
 	public function fetchTagTree($tags, $albumId, $onlyAlbums, $userId) {
 		global $gallery;
 
-		$tree         = new TagTreeNode();
+		$tree = new TagTreeNode();
+
 		$tree->tags   = $tags;
 		$tree->itemId = $albumId;
 
@@ -81,6 +82,7 @@ class TagTreeHelper {
 
 	public function fetchMatchingRootHierarchies($tags, $albumId, $onlyAlbums, $aclIds) {
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/HierarchyTagFilter.class');
+
 		global $gallery;
 
 		list($ret, $parentHierarchy) = TagTreeHelper::fetchHierarchy($albumId);
@@ -214,8 +216,7 @@ class TagTreeHelper {
 		}
 
 		$dominantTags = TagTreeHelper::getDominantTags($descendantTags, $promotedTags);
-
-		$children = array();
+		$children     = array();
 
 		foreach (array_keys($dominantTags) as $tagId) {
 			list($ret, $childNode) = TagTreeHelper::getChildTagNode($node, $tagId);
@@ -365,6 +366,7 @@ class TagTreeHelper {
 		foreach ($hierarchies as $hierarchy) {
 			for ($i = 0; $i < count($otherHierarchies); $i++) {
 				$compareHierarchies = $otherHierarchies[$i];
+
 				// Advance the compared hierarchy until it matches the target hierarchy.
 				while (count($compareHierarchies) > $otherIndices[$i] &&
 				HierarchyTagFilter::compareHierarchies(
@@ -445,7 +447,8 @@ class TagTreeHelper {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 
-			$isAlbum         = $result[0];
+			$isAlbum = $result[0];
+
 			$childNode->type = $isAlbum ? 'album' : 'item';
 		}
 
@@ -462,7 +465,8 @@ class TagTreeHelper {
 	}
 
 	public function getChildTagNode($parentNode, $tagId) {
-		$childNode         = new TagTreeNode();
+		$childNode = new TagTreeNode();
+
 		$childNode->type   = 'tag';
 		$childNode->itemId = $parentNode->itemId;
 		$childNode->tags   = $parentNode->tags;

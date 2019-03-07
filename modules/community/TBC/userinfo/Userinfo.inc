@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -23,7 +24,9 @@
  * @subpackage UserInterface
  * @author Charles Knowlton charles2007@users.sourceforge.net
  * @version $Revision$
- *//**
+ */
+
+/**
  * Handle input from our sample page
  *
  * @package Userinfo
@@ -157,10 +160,9 @@ class UserinfoView extends GalleryView {
 			}
 		}
 
-		$tableName = 'UserinfoMap';
-		$select    = array('id', 'userId', 'userName', 'ipAddress', 'timeStamp', 'action');
-		$match     = array();
-
+		$tableName        = 'UserinfoMap';
+		$select           = array('id', 'userId', 'userName', 'ipAddress', 'timeStamp', 'action');
+		$match            = array();
 		$Userinfo['data'] = array();
 
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
@@ -192,16 +194,14 @@ class UserinfoView extends GalleryView {
 
 		// Counting # of records in the array
 		$rowsCount = count($numRows);
+
 		// Setting the # of records into an array for the .tpl page
 		$Userinfo['numRowsCount'] = $rowsCount;
-
 		$Userinfo['uiDateFormat'] = $data['result']['uiDateFormat'];
-
-		$myView         = 'core.SiteAdmin';
-		$mySubView      = 'userinfo.Userinfo';
-		$myTotalRecords = $rowsCount;
-
-		$pagination = numPages($myView, $mySubView, $count, $myTotalRecords);
+		$myView                   = 'core.SiteAdmin';
+		$mySubView                = 'userinfo.Userinfo';
+		$myTotalRecords           = $rowsCount;
+		$pagination               = numPages($myView, $mySubView, $count, $myTotalRecords);
 
 		$template->setVariable('pagination', $pagination);
 		$template->setVariable('controller', 'userinfo.Userinfo');

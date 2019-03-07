@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,10 +16,8 @@
 /////////////////////////////////////////////////////////////////
 class getid3_shorten extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
-
 		$ShortenHeader = $this->fread(8);
 		$magic         = 'ajkg';
 
@@ -32,16 +31,17 @@ class getid3_shorten extends getid3_handler {
 		$info['audio']['dataformat']   = 'shn';
 		$info['audio']['lossless']     = true;
 		$info['audio']['bitrate_mode'] = 'vbr';
-
-		$info['shn']['version'] = getid3_lib::LittleEndian2Int(substr($ShortenHeader, 4, 1));
+		$info['shn']['version']        = getid3_lib::LittleEndian2Int(substr($ShortenHeader, 4, 1));
 
 		$this->fseek($info['avdataend'] - 12);
-		$SeekTableSignatureTest              = $this->fread(12);
+		$SeekTableSignatureTest = $this->fread(12);
+
 		$info['shn']['seektable']['present'] = (bool)(substr($SeekTableSignatureTest, 4, 8) == 'SHNAMPSK');
 
 		if ($info['shn']['seektable']['present']) {
 			$info['shn']['seektable']['length'] = getid3_lib::LittleEndian2Int(substr($SeekTableSignatureTest, 0, 4));
 			$info['shn']['seektable']['offset'] = $info['avdataend'] - $info['shn']['seektable']['length'];
+
 			$this->fseek($info['shn']['seektable']['offset']);
 			$SeekTableMagic = $this->fread(4);
 			$magic          = 'SEEK';
@@ -67,8 +67,10 @@ class getid3_shorten extends getid3_handler {
 			//   long Offset0[4];
 			//   long Offset1[4];
 			// }TSeekEntry;
-			$SeekTableData                           = $this->fread($info['shn']['seektable']['length'] - 16);
+			$SeekTableData = $this->fread($info['shn']['seektable']['length'] - 16);
+
 			$info['shn']['seektable']['entry_count'] = floor(strlen($SeekTableData) / 80);
+
 			//$info['shn']['seektable']['entries'] = array();
 				//$SeekTableOffset = 0;
 				//for ($i = 0; $i < $info['shn']['seektable']['entry_count']; $i++) {
@@ -104,7 +106,6 @@ class getid3_shorten extends getid3_handler {
 				//		$SeekTableEntry['offset1'][$j] = getid3_lib::LittleEndian2Int(substr($SeekTableData, $SeekTableOffset, 4));
 				//		$SeekTableOffset += 4;
 				//	}
-				//
 				//	$info['shn']['seektable']['entries'][] = $SeekTableEntry;
 				//}
 		}
@@ -148,7 +149,6 @@ class getid3_shorten extends getid3_handler {
 
 		if (!empty($output) && (substr($output, 12, 4) == 'fmt ')) {
 			getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
-
 			$fmt_size                         = getid3_lib::LittleEndian2Int(substr($output, 16, 4));
 			$DecodedWAVFORMATEX               = getid3_riff::parseWAVEFORMATex(substr($output, 20, $fmt_size));
 			$info['audio']['channels']        = $DecodedWAVFORMATEX['channels'];

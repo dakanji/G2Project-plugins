@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/imageframe/classes/ImageFrameInterface_1_1.class');
 
 /**
@@ -41,7 +41,6 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		 * it's possible that this is getting called during the core upgrade, when we won't be
 		 * able to properly deal with deactivated plugins.
 		 */
-
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe', true);
 
 		if ($ret) {
@@ -51,8 +50,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		$frames = array(
 			'solid' => $module->translate('Solid'),
 		);
-
-		$dir = __DIR__ . '/../frames';
+		$dir    = __DIR__ . '/../frames';
 
 		if ($platform->is_dir($dir) && $platform->is_readable($dir)
 			&& $fd = $platform->opendir($dir)
@@ -90,10 +88,11 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
+
 		static $simpleFrames;
 
 		if (!$template->hasVariable('ImageFrameData')) {
-			$simpleFrames = array(
+			$simpleFrames    = array(
 				'none' => array(
 					'type'  => 'style',
 					'style' => 'border-style: none',
@@ -103,7 +102,6 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 					'style' => 'border: 1px solid black !important',
 				),
 			);
-
 			$templateAdapter =& $gallery->getTemplateAdapter();
 			$template->setVariable(
 				'ImageFrameData',

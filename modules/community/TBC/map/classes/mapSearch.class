@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -25,6 +26,7 @@
  *
  * based on a code from Alan Harder <alan.harder@sun.com>
  */
+
 // Required classes
 GalleryCoreApi::requireOnce('modules/search/classes/GallerySearchInterface_1_0.class');
 
@@ -87,7 +89,6 @@ class mapSearch extends GallerySearchInterface_1_0 {
 		}
 
 		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
-
 		$countQuery = sprintf(
 			'
 	SELECT

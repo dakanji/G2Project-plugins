@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,8 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_szip extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$SZIPHeader = $this->fread(6);
 
@@ -29,7 +29,8 @@ class getid3_szip extends getid3_handler {
 		$info['fileformat']            = 'szip';
 		$info['szip']['major_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 4, 1));
 		$info['szip']['minor_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 5, 1));
-		$info['error'][]               = 'SZIP parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
+
+		$info['error'][] = 'SZIP parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
 
 		return false;
 
@@ -46,8 +47,9 @@ class getid3_szip extends getid3_handler {
 					break;
 
 				case 'BH':
-					$BHheaderbytes  = getid3_lib::BigEndian2Int($this->fread(3));
-					$BHheaderdata   = $this->fread($BHheaderbytes);
+					$BHheaderbytes = getid3_lib::BigEndian2Int($this->fread(3));
+					$BHheaderdata  = $this->fread($BHheaderbytes);
+
 					$BHheaderoffset = 0;
 
 					while (strpos($BHheaderdata, "\x00", $BHheaderoffset) > 0) {
@@ -59,31 +61,23 @@ class getid3_szip extends getid3_handler {
 						//4 byte creation time (like in unix)
 						//4 byte modification time (like in unix)
 						//4 byte access time (like in unix)
-						$BHdataArray['filename'] = substr($BHheaderdata, $BHheaderoffset, strcspn($BHheaderdata, "\x00"));
-						$BHheaderoffset         += (strlen($BHdataArray['filename']) + 1);
-
-						$BHdataArray['owner'] = substr($BHheaderdata, $BHheaderoffset, strcspn($BHheaderdata, "\x00"));
-						$BHheaderoffset      += (strlen($BHdataArray['owner']) + 1);
-
-						$BHdataArray['group'] = substr($BHheaderdata, $BHheaderoffset, strcspn($BHheaderdata, "\x00"));
-						$BHheaderoffset      += (strlen($BHdataArray['group']) + 1);
-
-						$BHdataArray['filelength'] = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 3));
-						$BHheaderoffset           += 3;
-
-						$BHdataArray['access_flags'] = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 2));
-						$BHheaderoffset             += 2;
-
-						$BHdataArray['creation_time'] = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 4));
-						$BHheaderoffset              += 4;
-
+						$BHdataArray['filename']          = substr($BHheaderdata, $BHheaderoffset, strcspn($BHheaderdata, "\x00"));
+						$BHheaderoffset                  += (strlen($BHdataArray['filename']) + 1);
+						$BHdataArray['owner']             = substr($BHheaderdata, $BHheaderoffset, strcspn($BHheaderdata, "\x00"));
+						$BHheaderoffset                  += (strlen($BHdataArray['owner']) + 1);
+						$BHdataArray['group']             = substr($BHheaderdata, $BHheaderoffset, strcspn($BHheaderdata, "\x00"));
+						$BHheaderoffset                  += (strlen($BHdataArray['group']) + 1);
+						$BHdataArray['filelength']        = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 3));
+						$BHheaderoffset                  += 3;
+						$BHdataArray['access_flags']      = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 2));
+						$BHheaderoffset                  += 2;
+						$BHdataArray['creation_time']     = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 4));
+						$BHheaderoffset                  += 4;
 						$BHdataArray['modification_time'] = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 4));
 						$BHheaderoffset                  += 4;
-
-						$BHdataArray['access_time'] = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 4));
-						$BHheaderoffset            += 4;
-
-						$info['szip']['BH'][] = $BHdataArray;
+						$BHdataArray['access_time']       = getid3_lib::BigEndian2Int(substr($BHheaderdata, $BHheaderoffset, 4));
+						$BHheaderoffset                  += 4;
+						$info['szip']['BH'][]             = $BHdataArray;
 					}
 
 					break;

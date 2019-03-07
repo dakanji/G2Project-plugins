@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -196,13 +197,13 @@ class Gallery1DataParser {
 			}
 
 			if (empty($parentName) || $parentName == '.root') {
-				$hierarchy[$myName] = &$tempAlbums[$myName];
+				$hierarchy[$myName] =& $tempAlbums[$myName];
 			} else {
 				if (!isset($tempAlbums[$parentName])) {
 					$tempAlbums[$parentName] = array();
 				}
 
-				$tempAlbums[$parentName][$myName] = &$tempAlbums[$myName];
+				$tempAlbums[$parentName][$myName] =& $tempAlbums[$myName];
 			}
 		}
 
@@ -492,26 +493,32 @@ class Gallery1DataParser {
  * A stub class into which various G1 objects can be unserialized.
  */
 class AlbumDB {}
+
 /**
  * A stub class into which various G1 objects can be unserialized.
  */
 class Album {}
+
 /**
  * A stub class into which various G1 objects can be unserialized.
  */
 class Gallery_UserDB {}
+
 /**
  * A stub class into which various G1 objects can be unserialized.
  */
 class Gallery_User {}
+
 /**
  * A stub class into which various G1 objects can be unserialized.
  */
 class AlbumItem {}
+
 /**
  * A stub class into which various G1 objects can be unserialized.
  */
 class Image {}
+
 /**
  * A stub class into which various G1 objects can be unserialized.
  */

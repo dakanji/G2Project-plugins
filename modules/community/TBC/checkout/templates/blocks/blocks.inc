@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: Done.inc,v $
  *
@@ -32,5 +33,4 @@ $blocks = array(
 	'ItemPrices' => array(
 		'description' => $gallery->i18n('Product Price Info'),
 	),
-
 );

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHandler_1_0.class');
 
 /**
@@ -45,8 +45,7 @@ class NotificationMethodEmail extends NotificationHandler_1_0 {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
-		$event = $notification->getEvent();
+		$event        = $notification->getEvent();
 
 		list($ret, $users) = GalleryCoreApi::loadEntitiesById($subscribers, 'GalleryUser');
 
@@ -123,19 +122,16 @@ class NotificationMethodEmail extends NotificationHandler_1_0 {
 				return $ret;
 			}
 
-			$body = wordwrap($body, 70);
-
+			$body                = wordwrap($body, 70);
 			$redirect['view']    = 'core.UserAdmin';
 			$redirect['subView'] = 'notification.NotificationUserAdmin';
-
-			$unsubscribeUrl = $urlGenerator->generateUrl(
+			$unsubscribeUrl      = $urlGenerator->generateUrl(
 				$redirect,
 				array(
 					'forceFullUrl' => true,
 				)
 			);
-
-			$ret = GalleryCoreApi::sendTemplatedEmail(
+			$ret                 = GalleryCoreApi::sendTemplatedEmail(
 				'modules/notification/templates/NotificationEmail.tpl',
 				array(
 					'body'           => $body,

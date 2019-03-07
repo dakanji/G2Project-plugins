@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -18,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -57,8 +57,7 @@ class EmailController extends GalleryController {
 					return array($ret, null);
 				}
 
-				$transactionId = $transaction->getId();
-
+				$transactionId             = $transaction->getId();
 				$form['custRecipientName'] = trim($form['custRecipientName']);
 
 				if (empty($form['custRecipientName'])) {
@@ -81,8 +80,9 @@ class EmailController extends GalleryController {
 
 				$results['redirect']['controller']    = 'checkout.OrderComplete';
 				$results['redirect']['transactionId'] = $transactionId;
-				$results['redirect']['verify1']       = $transaction->getDate();
-				$results['redirect']['verify2']       = $transaction->getSecurity();
+
+				$results['redirect']['verify1'] = $transaction->getDate();
+				$results['redirect']['verify2'] = $transaction->getSecurity();
 			} else {
 				$error[]                     = 'form[error][badEmail]'; // badly formed email address
 				$results['delegate']['view'] = 'checkoutemail.Details';

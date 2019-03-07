@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -16,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA 02110-1301, USA.
- *//**
+ */
+
+/**
  * PedroGilberto.net gallery theme
  * @package Themes
  * @subpackage x_treme
@@ -34,11 +37,9 @@ class x_tremeTheme extends GalleryTheme {
 				'X-Treme Theme for Gallery2 by PedroGilberto.net'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
-
 		$this->setStandardSettings(
 			array(
 				'rows'                    => 4,
@@ -109,11 +110,9 @@ class x_tremeTheme extends GalleryTheme {
 				'RightClick'              => 'sidebarrc',
 				'topNavPics'              => 'right',
 				'icons'                   => 'none',
-
 				'NavAlbum'                => 'bottom',
 				'enterAlbumDirect'        => 'none',
 				'enterAlbumTopNav'        => '',
-
 				'Gcolumns'                => 4,
 				'GTitle'                  => '',
 				'GDescription'            => '',
@@ -129,7 +128,6 @@ class x_tremeTheme extends GalleryTheme {
 				'GComments'               => '',
 				'GStaticComments'         => '',
 				'GBlocksBtn'              => '',
-
 				'showInfoMsg'             => '1stleftG',
 				'InfoMsgurl'              => '',
 				'InfoMsgLink1'            => '',
@@ -137,7 +135,6 @@ class x_tremeTheme extends GalleryTheme {
 				'InfoMsgLink2'            => '',
 				'InfoMsgLink2url'         => '',
 				'authorEmail'             => 'left',
-
 				'ATitle'                  => 'topL',
 				'ADescription'            => 'topL',
 				'ADate'                   => '',
@@ -151,7 +148,6 @@ class x_tremeTheme extends GalleryTheme {
 				'AComments'               => 1,
 				'AStaticComments'         => '',
 				'ABlocksBtn'              => 1,
-
 				'opacityT'                => 1,
 				'opacityTover'            => '0.6',
 				'Tborder'                 => '',
@@ -174,7 +170,6 @@ class x_tremeTheme extends GalleryTheme {
 				'IExif'                   => '',
 				'IeCard'                  => '',
 				'IAddComment'             => 0,
-
 				'SIborder'                => 1,
 				'SIborderColor'           => '#000',
 				'NavPhoto'                => 'bottom',
@@ -194,7 +189,6 @@ class x_tremeTheme extends GalleryTheme {
 				'PViewCount'              => '',
 				'InfoSize'                => 'show',
 				'PopSize'                 => 'even',
-
 				'PInfo'                   => 'rightB',
 				'PRating'                 => 'rightB',
 				'PAddCart'                => 'topNav',
@@ -207,7 +201,6 @@ class x_tremeTheme extends GalleryTheme {
 				'PeCard'                  => 1,
 				'PBlocksBtn'              => 1,
 				'imageFadin'              => '',
-
 				'MTposition'              => 'right',
 				'columnsMT'               => 4,
 				'peerWindowSize'          => 20,
@@ -222,7 +215,6 @@ class x_tremeTheme extends GalleryTheme {
 				'MTnavigator'             => 'FPpPL',
 				'MTpageinfo'              => '',
 				'MTinfo'                  => '',
-
 				'Showslideshow'           => 1,
 				'ss'                      => 1,
 				'ssTitle'                 => 1,
@@ -236,7 +228,6 @@ class x_tremeTheme extends GalleryTheme {
 				'ssDelay'                 => 10,
 				'ssDirection'             => 0,
 				'ssSize'                  => 2,
-
 				'g2btn'                   => 1,
 				'x_btn'                   => 1,
 				'x_cpbtn'                 => 1,
@@ -246,7 +237,6 @@ class x_tremeTheme extends GalleryTheme {
 				'copyrightDateText'       => '2007',
 				'showCopyrightEmail'      => '',
 				'copyrightEmail'          => '',
-
 				'bgcolor'                 => '',
 				'bg'                      => '',
 				'bg1color'                => '',
@@ -271,7 +261,6 @@ class x_tremeTheme extends GalleryTheme {
 				'GIfontsize'              => '',
 				'GIfontcolor'             => '',
 				'GNcolor'                 => '',
-
 				'interactiveframe'        => '',
 				'setiframe'               => '',
 				'frameColor'              => '',
@@ -343,22 +332,20 @@ class x_tremeTheme extends GalleryTheme {
 			. '<td colspan="2" class="admin_theme_settingsS"> :::::::::::::::::::: ';
 		$ititledivstart = '</td><td></td></tr><tr><td colspan="2"></td></tr><tr>'
 			. '<td colspan="2" class="admin_theme_settingsI"> :::::::::::::::::::: ';
-
-		$titlediv   = ' ::::::::::::::::::::</b><br/><span class="admin_theme_applied">';
-		$titlespeed = '</span></td></tr><tr><td colspan="2" '
+		$titlediv       = ' ::::::::::::::::::::</b><br/><span class="admin_theme_applied">';
+		$titlespeed     = '</span></td></tr><tr><td colspan="2" '
 			. 'style="text-align:right"><span class="speed">'
 			. $this->translate(
 				'NOTE: Selecting too many "Show" options can dramatically reduce speed!'
 			)
 			. '</span>';
-
-		$titledivend = '</td></tr><tr><td colspan="2">';
-		$att1        = '<a class="tLink-att_admin" style="cursor:pointer;" title="';
-		$att2        = '"><img src="themes/x_treme/images/blank.gif"></a>';
-		$help1       = '<span style="cursor:help; border-bottom: dashed 1px #f4560f; '
+		$titledivend    = '</td></tr><tr><td colspan="2">';
+		$att1           = '<a class="tLink-att_admin" style="cursor:pointer;" title="';
+		$att2           = '"><img src="themes/x_treme/images/blank.gif"></a>';
+		$help1          = '<span style="cursor:help; border-bottom: dashed 1px #f4560f; '
 			. 'font-weight:bold" title="';
-		$help2       = '">';
-		$help3       = '</span>';
+		$help2          = '">';
+		$help3          = '</span>';
 
 		/**
 		 ***************** GLOBAL settings ****************
@@ -384,7 +371,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'   => 'pngfix',
 			'name'  => $help1
@@ -400,7 +386,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['pngfix'],
 		);
-
 		$settings[] = array(
 			'key'         => 'site',
 			'name'        => $help1
@@ -418,7 +403,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['site'],
 		);
-
 		$settings[] = array(
 			'key'     => 'logo',
 			'name'    => $help1
@@ -439,7 +423,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['logo'],
 		);
-
 		$settings[] = array(
 			'key'         => 'logoout',
 			'name'        => $help1
@@ -457,7 +440,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['logoout'],
 		);
-
 		$settings[] = array(
 			'key'         => 'logoon',
 			'name'        => $help1
@@ -477,7 +459,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['logoon'],
 		);
-
 		$settings[] = array(
 			'key'         => 'logoWidth',
 			'name'        => $help1
@@ -495,7 +476,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['logoWidth'],
 		);
-
 		$settings[] = array(
 			'key'         => 'logoHeight',
 			'name'        => $help1
@@ -513,7 +493,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['logoHeight'],
 		);
-
 		$settings[] = array(
 			'key'   => 'bannerTop',
 			'name'  => $help1
@@ -528,7 +507,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['bannerTop'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bannerTopurl',
 			'name'        => $help1
@@ -546,7 +524,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bannerTopurl'],
 		);
-
 		$settings[] = array(
 			'key'   => 'bannerFooter',
 			'name'  => $help1
@@ -561,7 +538,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['bannerFooter'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bannerFooterurl',
 			'name'        => $help1
@@ -579,7 +555,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bannerFooterurl'],
 		);
-
 		$settings[] = array(
 			'key'     => 'sidebar',
 			'name'    => $help1
@@ -599,7 +574,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['sidebar'],
 		);
-
 		$settings[] = array(
 			'key'   => 'BreadCrumb',
 			'name'  => $this->translate('GLOBAL')
@@ -610,7 +584,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['BreadCrumb'],
 		);
-
 		$settings[] = array(
 			'key'         => 'separator',
 			'name'        => $help1
@@ -628,7 +601,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['separator'],
 		);
-
 		$settings[] = array(
 			'key'         => 'link1',
 			'name'        => $help1
@@ -646,7 +618,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['link1'],
 		);
-
 		$settings[] = array(
 			'key'         => 'link1url',
 			'name'        => $help1
@@ -664,7 +635,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['link1url'],
 		);
-
 		$settings[] = array(
 			'key'         => 'link2',
 			'name'        => $this->translate('GLOBAL')
@@ -678,7 +648,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['link2'],
 		);
-
 		$settings[] = array(
 			'key'         => 'link2url',
 			'name'        => $this->translate('GLOBAL')
@@ -692,7 +661,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['link2url'],
 		);
-
 		$settings[] = array(
 			'key'         => 'link3',
 			'name'        => $this->translate('GLOBAL')
@@ -706,7 +674,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['link3'],
 		);
-
 		$settings[] = array(
 			'key'         => 'link3url',
 			'name'        => $this->translate('GLOBAL')
@@ -720,7 +687,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['link3url'],
 		);
-
 		$settings[] = array(
 			'key'   => 'externallinks',
 			'name'  => $help1
@@ -735,7 +701,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['externallinks'],
 		);
-
 		$settings[] = array(
 			'key'     => 'BlocksAlign',
 			'name'    => $this->translate('GLOBAL')
@@ -754,7 +719,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['BlocksAlign'],
 		);
-
 		$settings[] = array(
 			'key'     => 'BlocksInAlign',
 			'name'    => $this->translate('GLOBAL')
@@ -771,7 +735,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['BlocksInAlign'],
 		);
-
 		$settings[] = array(
 			'key'     => 'CartSelect',
 			'name'    => $this->translate('GLOBAL')
@@ -788,7 +751,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['CartSelect'],
 		);
-
 		$settings[] = array(
 			'key'     => 'dynamicLinks',
 			'name'    => $this->translate('GLOBAL')
@@ -804,7 +766,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['dynamicLinks'],
 		);
-
 		$settings[] = array(
 			'key'     => 'RightClick',
 			'name'    => $help1
@@ -843,7 +804,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['RightClick'],
 		);
-
 		$settings[] = array(
 			'key'     => 'topNavPics',
 			'name'    => $this->translate('GLOBAL')
@@ -873,7 +833,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['topNavPics'],
 		);
-
 		$settings[] = array(
 			'key'     => 'icons',
 			'name'    => $this->translate('GLOBAL')
@@ -933,7 +892,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'     => 'NavAlbum',
 			'name'    => $this->translate('ALBUM')
@@ -950,7 +908,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['NavAlbum'],
 		);
-
 		$settings[] = array(
 			'key'        => 'albumSideBlocks',
 			'name'       => $this->translate('ALBUM')
@@ -967,7 +924,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'      => $params['albumSideBlocks'],
 		);
-
 		$settings[] = array(
 			'key'     => 'enterAlbumDirect',
 			'name'    => $this->translate('ALBUM')
@@ -995,7 +951,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['enterAlbumDirect'],
 		);
-
 		$settings[] = array(
 			'key'   => 'enterAlbumTopNav',
 			'name'  => $this->translate('ALBUM')
@@ -1030,7 +985,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'         => 'Gcolumns',
 			'name'        => $this->translate('ALBUM')
@@ -1044,7 +998,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['Gcolumns'],
 		);
-
 		$settings[] = array(
 			'key'     => 'GTitle',
 			'name'    => $this->translate('ALBUM')
@@ -1063,7 +1016,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['GTitle'],
 		);
-
 		$settings[] = array(
 			'key'     => 'GDescription',
 			'name'    => $this->translate('ALBUM')
@@ -1082,7 +1034,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['GDescription'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showGalleryOwner',
 			'name'  => $this->translate('ALBUM')
@@ -1093,7 +1044,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showGalleryOwner'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GDate',
 			'name'  => $this->translate('ALBUM')
@@ -1104,7 +1054,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GDate'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GSize',
 			'name'  => $this->translate('ALBUM')
@@ -1115,7 +1064,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GSize'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GViewCount',
 			'name'  => $this->translate('ALBUM')
@@ -1126,7 +1074,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GViewCount'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GRating',
 			'name'  => $this->translate('ALBUM') . $this->translate(' - ')
@@ -1139,7 +1086,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GRating'],
 		);
-
 		$settings[] = array(
 			'key'     => 'GInfo',
 			'name'    => $this->translate('ALBUM') . $this->translate(' - ')
@@ -1157,7 +1103,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['GInfo'],
 		);
-
 		$settings[] = array(
 			'key'     => 'GBlocksSide',
 			'name'    => $this->translate('ALBUM')
@@ -1175,7 +1120,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['GBlocksSide'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GAddCart',
 			'name'  => $this->translate('ALBUM')
@@ -1189,7 +1133,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GAddCart'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GViewCart',
 			'name'  => $help1
@@ -1209,7 +1152,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GViewCart'],
 		);
-
 		$settings[] = array(
 			'key'     => 'GAddComment',
 			'name'    => $help1
@@ -1235,7 +1177,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['GAddComment'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GComments',
 			'name'  => $this->translate('ALBUM')
@@ -1253,7 +1194,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GComments'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GStaticComments',
 			'name'  => $help1
@@ -1278,7 +1218,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GStaticComments'],
 		);
-
 		$settings[] = array(
 			'key'   => 'GBlocksBtn',
 			'name'  => $this->translate('ALBUM') . $this->translate(' - ')
@@ -1315,7 +1254,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'     => 'showInfoMsg',
 			'name'    => $this->translate('ALBUM') . $this->translate(' - ')
@@ -1336,7 +1274,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['showInfoMsg'],
 		);
-
 		$settings[] = array(
 			'key'         => 'InfoMsgurl',
 			'name'        => $help1
@@ -1354,7 +1291,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['InfoMsgurl'],
 		);
-
 		$settings[] = array(
 			'key'         => 'InfoMsgLink1',
 			'name'        => $help1
@@ -1372,7 +1308,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['InfoMsgLink1'],
 		);
-
 		$settings[] = array(
 			'key'         => 'InfoMsgLink1url',
 			'name'        => $help1
@@ -1390,7 +1325,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['InfoMsgLink1url'],
 		);
-
 		$settings[] = array(
 			'key'         => 'InfoMsgLink2',
 			'name'        => $help1
@@ -1408,7 +1342,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['InfoMsgLink2'],
 		);
-
 		$settings[] = array(
 			'key'         => 'InfoMsgLink2url',
 			'name'        => $help1
@@ -1426,7 +1359,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['InfoMsgLink2url'],
 		);
-
 		$settings[] = array(
 			'key'     => 'authorEmail',
 			'name'    => $this->translate('ALBUM')
@@ -1463,7 +1395,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'     => 'ATitle',
 			'name'    => $this->translate('ALBUM')
@@ -1478,7 +1409,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ATitle'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ADescription',
 			'name'    => $this->translate('ALBUM')
@@ -1493,7 +1423,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ADescription'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showAlbumOwner',
 			'name'  => $this->translate('ALBUM')
@@ -1502,7 +1431,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showAlbumOwner'],
 		);
-
 		$settings[] = array(
 			'key'   => 'ADate',
 			'name'  => $this->translate('ALBUM')
@@ -1511,7 +1439,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['ADate'],
 		);
-
 		$settings[] = array(
 			'key'   => 'ASize',
 			'name'  => $this->translate('ALBUM')
@@ -1520,7 +1447,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['ASize'],
 		);
-
 		$settings[] = array(
 			'key'   => 'AViewCount',
 			'name'  => $this->translate('ALBUM')
@@ -1529,7 +1455,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['AViewCount'],
 		);
-
 		$settings[] = array(
 			'key'   => 'ARating',
 			'name'  => $this->translate('ALBUM')
@@ -1538,7 +1463,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['ARating'],
 		);
-
 		$settings[] = array(
 			'key'     => 'AInfo',
 			'name'    => $this->translate('ALBUM')
@@ -1554,7 +1478,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['AInfo'],
 		);
-
 		$settings[] = array(
 			'key'   => 'AAddCart',
 			'name'  => $help1
@@ -1567,7 +1490,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['AAddCart'],
 		);
-
 		$settings[] = array(
 			'key'   => 'AViewCart',
 			'name'  => $help1
@@ -1580,7 +1502,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['AViewCart'],
 		);
-
 		$settings[] = array(
 			'key'     => 'AAddComment',
 			'name'    => $help1
@@ -1598,7 +1519,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['AAddComment'],
 		);
-
 		$settings[] = array(
 			'key'   => 'AComments',
 			'name'  => $help1
@@ -1614,7 +1534,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['AComments'],
 		);
-
 		$settings[] = array(
 			'key'   => 'AStaticComments',
 			'name'  => $help1
@@ -1634,7 +1553,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['AStaticComments'],
 		);
-
 		$settings[] = array(
 			'key'   => 'ABlocksBtn',
 			'name'  => $this->translate('ALBUM')
@@ -1673,7 +1591,6 @@ class x_tremeTheme extends GalleryTheme {
 		);
 
 		// ImageFrame settings, if available
-
 		list($ret, $imageframe) = GalleryCoreApi::newFactoryInstance('ImageFrameInterface_1_1');
 
 		if ($ret) {
@@ -1693,9 +1610,8 @@ class x_tremeTheme extends GalleryTheme {
 				return array($ret, null, null);
 			}
 
-			$sample = ' (<a href="' . $sampleUrl . '">'
+			$sample     = ' (<a href="' . $sampleUrl . '">'
 			. $this->translate('View Samples') . '</a>)';
-
 			$settings[] = array(
 				'key'     => 'albumFrame',
 				'name'    => $this->translate('ALBUM')
@@ -1708,7 +1624,6 @@ class x_tremeTheme extends GalleryTheme {
 				'choices' => $list,
 				'value'   => $params['albumFrame'],
 			);
-
 			$settings[] = array(
 				'key'     => 'itemFrame',
 				'name'    => $this->translate('ALBUM')
@@ -1745,7 +1660,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['opacityT'],
 		);
-
 		$settings[] = array(
 			'key'     => 'opacityTover',
 			'name'    => $this->translate('ALBUM')
@@ -1768,7 +1682,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['opacityTover'],
 		);
-
 		$settings[] = array(
 			'key'         => 'Tborder',
 			'name'        => $help1
@@ -1786,7 +1699,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['Tborder'],
 		);
-
 		$settings[] = array(
 			'key'         => 'TborderColor',
 			'name'        => $help1
@@ -1804,7 +1716,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['TborderColor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'TspaceH',
 			'name'        => $help1
@@ -1822,7 +1733,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['TspaceH'],
 		);
-
 		$settings[] = array(
 			'key'         => 'TspaceV',
 			'name'        => $help1
@@ -1840,7 +1750,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['TspaceV'],
 		);
-
 		$settings[] = array(
 			'key'   => 'Iinfo',
 			'name'  => $this->translate('ALBUM')
@@ -1851,7 +1760,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['Iinfo'],
 		);
-
 		$settings[] = array(
 			'key'   => 'IinfoLink',
 			'name'  => $this->translate('ALBUM')
@@ -1862,7 +1770,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['IinfoLink'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ITitle',
 			'name'    => $this->translate('ALBUM')
@@ -1882,7 +1789,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ITitle'],
 		);
-
 		$settings[] = array(
 			'key'     => 'IDesc',
 			'name'    => $this->translate('ALBUM')
@@ -1902,7 +1808,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['IDesc'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ISum',
 			'name'    => $this->translate('ALBUM')
@@ -1922,7 +1827,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ISum'],
 		);
-
 		$settings[] = array(
 			'key'     => 'IDate',
 			'name'    => $this->translate('ALBUM')
@@ -1939,7 +1843,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['IDate'],
 		);
-
 		$settings[] = array(
 			'key'     => 'showItemsOwner',
 			'name'    => $this->translate('ALBUM')
@@ -1958,7 +1861,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['showItemsOwner'],
 		);
-
 		$settings[] = array(
 			'key'   => 'ISize',
 			'name'  => $this->translate('ALBUM')
@@ -1969,7 +1871,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['ISize'],
 		);
-
 		$settings[] = array(
 			'key'     => 'IViewCount',
 			'name'    => $this->translate('ALBUM')
@@ -1986,7 +1887,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['IViewCount'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ISummaries',
 			'name'    => $help1
@@ -2007,7 +1907,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ISummaries'],
 		);
-
 		$settings[] = array(
 			'key'     => 'IRating',
 			'name'    => $help1
@@ -2035,7 +1934,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['IRating'],
 		);
-
 		$settings[] = array(
 			'key'   => 'IViewCart',
 			'name'  => $help1
@@ -2050,7 +1948,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['IViewCart'],
 		);
-
 		$settings[] = array(
 			'key'     => 'IAddComment',
 			'name'    => $help1
@@ -2072,7 +1969,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['IAddComment'],
 		);
-
 		$settings[] = array(
 			'key'   => 'IComments',
 			'name'  => $help1 . $this->translate('must set permissions')
@@ -2089,7 +1985,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['IComments'],
 		);
-
 		$settings[] = array(
 			'key'   => 'IExif',
 			'name'  => $this->translate('ALBUM')
@@ -2103,7 +1998,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['IExif'],
 		);
-
 		$settings[] = array(
 			'key'   => 'IeCard',
 			'name'  => $help1
@@ -2141,7 +2035,6 @@ class x_tremeTheme extends GalleryTheme {
 		);
 
 		// ImageFrame settings, if available
-
 		list($ret, $imageframe) = GalleryCoreApi::newFactoryInstance('ImageFrameInterface_1_1');
 
 		if ($ret) {
@@ -2161,9 +2054,8 @@ class x_tremeTheme extends GalleryTheme {
 				return array($ret, null, null);
 			}
 
-			$sample = ' (<a href="' . $sampleUrl . '">'
+			$sample     = ' (<a href="' . $sampleUrl . '">'
 				. $this->translate('View Samples') . '</a>)';
-
 			$settings[] = array(
 				'key'     => 'photoFrame',
 				'name'    => $this->translate('PHOTO')
@@ -2191,7 +2083,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['SIborder'],
 		);
-
 		$settings[] = array(
 			'key'         => 'SIborderColor',
 			'name'        => $help1
@@ -2207,7 +2098,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['SIborderColor'],
 		);
-
 		$settings[] = array(
 			'key'     => 'NavPhoto',
 			'name'    => $this->translate('PHOTO')
@@ -2222,7 +2112,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['NavPhoto'],
 		);
-
 		$settings[] = array(
 			'key'     => 'NavPop',
 			'name'    => $this->translate('PHOTO')
@@ -2236,7 +2125,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['NavPop'],
 		);
-
 		$settings[] = array(
 			'key'     => 'NavOver',
 			'name'    => $this->translate('PHOTO')
@@ -2253,7 +2141,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['NavOver'],
 		);
-
 		$settings[] = array(
 			'key'     => 'NavOverLink',
 			'name'    => $help1
@@ -2275,7 +2162,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['NavOverLink'],
 		);
-
 		$settings[] = array(
 			'key'     => 'NavOverPop',
 			'name'    => $this->translate('PHOTO')
@@ -2291,7 +2177,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['NavOverPop'],
 		);
-
 		$settings[] = array(
 			'key'         => 'NavPicWidth',
 			'name'        => $help1 . $this->translate('(e.g.: 80)')
@@ -2308,7 +2193,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['NavPicWidth'],
 		);
-
 		$settings[] = array(
 			'key'         => 'NavLinkMargin',
 			'name'        => $help1 . $this->translate('(e.g.: 6)')
@@ -2325,7 +2209,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['NavLinkMargin'],
 		);
-
 		$settings[] = array(
 			'key'         => 'NavLinkBackground',
 			'name'        => $help1
@@ -2343,7 +2226,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['NavLinkBackground'],
 		);
-
 		$settings[] = array(
 			'key'         => 'NavLinkBorder',
 			'name'        => $help1
@@ -2361,7 +2243,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['NavLinkBorder'],
 		);
-
 		$settings[] = array(
 			'key'         => 'NavLinkBorderColor',
 			'name'        => $help1
@@ -2379,7 +2260,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['NavLinkBorderColor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'NavLinkBorderColorHover',
 			'name'        => $help1
@@ -2397,7 +2277,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['NavLinkBorderColorHover'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PTitle',
 			'name'    => $this->translate('PHOTO')
@@ -2415,7 +2294,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PTitle'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PDescription',
 			'name'    => $this->translate('PHOTO')
@@ -2433,7 +2311,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PDescription'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showImageOwner',
 			'name'  => $this->translate('PHOTO')
@@ -2442,7 +2319,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showImageOwner'],
 		);
-
 		$settings[] = array(
 			'key'   => 'PDate',
 			'name'  => $this->translate('PHOTO')
@@ -2451,7 +2327,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['PDate'],
 		);
-
 		$settings[] = array(
 			'key'   => 'PViewCount',
 			'name'  => $this->translate('PHOTO')
@@ -2460,7 +2335,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['PViewCount'],
 		);
-
 		$settings[] = array(
 			'key'     => 'InfoSize',
 			'name'    => $this->translate('PHOTO')
@@ -2476,7 +2350,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['InfoSize'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PopSize',
 			'name'    => $this->translate('PHOTO')
@@ -2492,7 +2365,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PopSize'],
 		);
-
 		$settings[] = array(
 			'key'        => 'photoSideBlocks',
 			'name'       => $this->translate('PHOTO')
@@ -2504,7 +2376,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'      => $params['photoSideBlocks'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PInfo',
 			'name'    => $this->translate('PHOTO')
@@ -2523,7 +2394,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PInfo'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PRating',
 			'name'    => $help1
@@ -2548,7 +2418,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PRating'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PAddCart',
 			'name'    => $help1
@@ -2569,7 +2438,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PAddCart'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PViewCart',
 			'name'    => $help1
@@ -2587,7 +2455,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PViewCart'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PActionsPos',
 			'name'    => $this->translate('PHOTO')
@@ -2602,7 +2469,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PActionsPos'],
 		);
-
 		$settings[] = array(
 			'key'     => 'PAddComment',
 			'name'    => $help1
@@ -2630,7 +2496,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['PAddComment'],
 		);
-
 		$settings[] = array(
 			'key'   => 'PComments',
 			'name'  => $help1
@@ -2652,7 +2517,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['PComments'],
 		);
-
 		$settings[] = array(
 			'key'   => 'PStaticComments',
 			'name'  => $help1
@@ -2673,7 +2537,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['PStaticComments'],
 		);
-
 		$settings[] = array(
 			'key'   => 'PExif',
 			'name'  => $this->translate('PHOTO') . ' :: '
@@ -2684,7 +2547,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['PExif'],
 		);
-
 		$settings[] = array(
 			'key'   => 'PeCard',
 			'name'  => $help1
@@ -2697,7 +2559,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['PeCard'],
 		);
-
 		$settings[] = array(
 			'key'   => 'PBlocksBtn',
 			'name'  => $help1
@@ -2716,7 +2577,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['PBlocksBtn'],
 		);
-
 		$settings[] = array(
 			'key'   => 'imageFadin',
 			'name'  => $help1
@@ -2747,7 +2607,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'     => 'MTposition',
 			'name'    => 'MICROTHUMBS'
@@ -2782,7 +2641,6 @@ class x_tremeTheme extends GalleryTheme {
 			'none'    => $this->translate('Do not show'),
 			'value'   => $params['MTposition'],
 		);
-
 		$settings[] = array(
 			'key'         => 'columnsMT',
 			'name'        => $help1
@@ -2798,7 +2656,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['columnsMT'],
 		);
-
 		$settings[] = array(
 			'key'         => 'peerWindowSize',
 			'name'        => $help1
@@ -2814,7 +2671,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['peerWindowSize'],
 		);
-
 		$settings[] = array(
 			'key'   => 'MTends',
 			'name'  => $help1
@@ -2827,7 +2683,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['MTends'],
 		);
-
 		$settings[] = array(
 			'key'         => 'sizeMT',
 			'name'        => $help1
@@ -2843,7 +2698,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['sizeMT'],
 		);
-
 		$settings[] = array(
 			'key'     => 'opacityMT',
 			'name'    => 'MICROTHUMBS'
@@ -2851,7 +2705,6 @@ class x_tremeTheme extends GalleryTheme {
 				. $this->translate('Set opacity for MicroThumbs'),
 			'type'    => 'single-select',
 			'choices' => array(
-
 				'0.1' => $this->translate('10%'),
 				'0.2' => $this->translate('20%'),
 				'0.3' => $this->translate('30%'),
@@ -2865,7 +2718,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['opacityMT'],
 		);
-
 		$settings[] = array(
 			'key'     => 'opacityMTover',
 			'name'    => 'MICROTHUMBS'
@@ -2886,7 +2738,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['opacityMTover'],
 		);
-
 		$settings[] = array(
 			'key'         => 'MTborder',
 			'name'        => $help1
@@ -2902,7 +2753,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['MTborder'],
 		);
-
 		$settings[] = array(
 			'key'         => 'MTborderColor',
 			'name'        => $help1
@@ -2918,7 +2768,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['MTborderColor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'MTpadding',
 			'name'        => $help1
@@ -2934,7 +2783,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['MTpadding'],
 		);
-
 		$settings[] = array(
 			'key'         => 'MTmargin',
 			'name'        => $help1
@@ -2950,7 +2798,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['MTmargin'],
 		);
-
 		$settings[] = array(
 			'key'     => 'MTnavigator',
 			'name'    => 'MICROTHUMBS'
@@ -2991,7 +2838,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['MTnavigator'],
 		);
-
 		$settings[] = array(
 			'key'   => 'MTpageinfo',
 			'name'  => 'MICROTHUMBS'
@@ -3002,7 +2848,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['MTpageinfo'],
 		);
-
 		$settings[] = array(
 			'key'   => 'MTinfo',
 			'name'  => 'MICROTHUMBS'
@@ -3031,7 +2876,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'   => 'Showslideshow',
 			'name'  => 'SLIDESHOW'
@@ -3040,7 +2884,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['Showslideshow'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ss',
 			'name'        => 'SLIDESHOW'
@@ -3052,7 +2895,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ss'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ssTitle',
 			'name'        => 'SLIDESHOW'
@@ -3064,7 +2906,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ssTitle'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ssSummary',
 			'name'        => 'SLIDESHOW'
@@ -3076,7 +2917,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ssSummary'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ssDescription',
 			'name'        => 'SLIDESHOW'
@@ -3088,7 +2928,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ssDescription'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ssDate',
 			'name'        => 'SLIDESHOW'
@@ -3100,7 +2939,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ssDate'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ssMoreInfo',
 			'name'    => 'SLIDESHOW'
@@ -3116,7 +2954,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ssMoreInfo'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ssBack',
 			'name'        => 'SLIDESHOW'
@@ -3128,7 +2965,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ssBack'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ssNext',
 			'name'        => 'SLIDESHOW'
@@ -3140,7 +2976,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ssNext'],
 		);
-
 		$settings[] = array(
 			'key'         => 'ssMoreOptions',
 			'name'        => $help1
@@ -3156,7 +2991,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['ssMoreOptions'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ssDelay',
 			'name'    => 'SLIDESHOW'
@@ -3173,7 +3007,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ssDelay'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ssDirection',
 			'name'    => 'SLIDESHOW'
@@ -3187,7 +3020,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['ssDirection'],
 		);
-
 		$settings[] = array(
 			'key'     => 'ssSize',
 			'name'    => 'SLIDESHOW'
@@ -3222,7 +3054,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'         => 'g2btn',
 			'name'        => $this->translate('FOOTER')
@@ -3234,7 +3065,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['g2btn'],
 		);
-
 		$settings[] = array(
 			'key'         => 'x_btn',
 			'name'        => $this->translate('FOOTER')
@@ -3246,7 +3076,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['x_btn'],
 		);
-
 		$settings[] = array(
 			'key'         => 'x_cpbtn',
 			'name'        => $this->translate('FOOTER')
@@ -3258,7 +3087,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['x_cpbtn'],
 		);
-
 		$settings[] = array(
 			'key'   => 'copyright',
 			'name'  => $this->translate('FOOTER')
@@ -3267,7 +3095,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['copyright'],
 		);
-
 		$settings[] = array(
 			'key'         => 'copyrightName',
 			'name'        => $help1
@@ -3286,7 +3113,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['copyrightName'],
 		);
-
 		$settings[] = array(
 			'key'   => 'copyrightDate',
 			'name'  => $this->translate('FOOTER')
@@ -3295,7 +3121,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['copyrightDate'],
 		);
-
 		$settings[] = array(
 			'key'         => 'copyrightDateText',
 			'name'        => $help1
@@ -3314,7 +3139,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['copyrightDateText'],
 		);
-
 		$settings[] = array(
 			'key'   => 'showCopyrightEmail',
 			'name'  => $help1
@@ -3331,7 +3155,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showCopyrightEmail'],
 		);
-
 		$settings[] = array(
 			'key'         => 'copyrightEmail',
 			'name'        => $help1
@@ -3370,7 +3193,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'         => 'bg',
 			'name'        => $help1
@@ -3390,7 +3212,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bg'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bgcolor',
 			'name'        => $help1
@@ -3406,7 +3227,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bgcolor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bg1',
 			'name'        => $help1
@@ -3426,7 +3246,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bg1'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bg1color',
 			'name'        => $help1
@@ -3446,7 +3265,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bg1color'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bg2',
 			'name'        => $help1
@@ -3466,7 +3284,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bg2'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bg2color',
 			'name'        => $help1
@@ -3484,7 +3301,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bg2color'],
 		);
-
 		$settings[] = array(
 			'key'         => 'border1color',
 			'name'        => $help1
@@ -3500,7 +3316,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['border1color'],
 		);
-
 		$settings[] = array(
 			'key'         => 'border1size',
 			'name'        => $help1
@@ -3516,7 +3331,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['border1size'],
 		);
-
 		$settings[] = array(
 			'key'         => 'border2color',
 			'name'        => $help1
@@ -3532,7 +3346,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['border2color'],
 		);
-
 		$settings[] = array(
 			'key'         => 'border2size',
 			'name'        => $help1
@@ -3548,7 +3361,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['border2size'],
 		);
-
 		$settings[] = array(
 			'key'         => 'Gfontfamily',
 			'name'        => $help1
@@ -3564,7 +3376,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['Gfontfamily'],
 		);
-
 		$settings[] = array(
 			'key'         => 'Gfontsize',
 			'name'        => $help1
@@ -3580,7 +3391,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['Gfontsize'],
 		);
-
 		$settings[] = array(
 			'key'         => 'Gfontcolor',
 			'name'        => $help1
@@ -3596,7 +3406,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['Gfontcolor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'linkcolor',
 			'name'        => $help1
@@ -3612,7 +3421,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['linkcolor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'linkhovercolor',
 			'name'        => $help1
@@ -3628,7 +3436,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['linkhovercolor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'linkactivecolor',
 			'name'        => $help1
@@ -3644,7 +3451,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['linkactivecolor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'BreadCrumbfontsize',
 			'name'        => $help1
@@ -3660,7 +3466,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['BreadCrumbfontsize'],
 		);
-
 		$settings[] = array(
 			'key'         => 'SystemLinksfontsize',
 			'name'        => $help1
@@ -3676,7 +3481,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['SystemLinksfontsize'],
 		);
-
 		$settings[] = array(
 			'key'         => 'GTfontfamily',
 			'name'        => $help1
@@ -3692,7 +3496,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['GTfontfamily'],
 		);
-
 		$settings[] = array(
 			'key'         => 'GTfontsize',
 			'name'        => $help1
@@ -3708,7 +3511,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['GTfontsize'],
 		);
-
 		$settings[] = array(
 			'key'         => 'GTfontcolor',
 			'name'        => $help1
@@ -3724,7 +3526,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['GTfontcolor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'GIfontsize',
 			'name'        => $help1
@@ -3740,7 +3541,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['GIfontsize'],
 		);
-
 		$settings[] = array(
 			'key'         => 'GIfontcolor',
 			'name'        => $help1
@@ -3756,7 +3556,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['GIfontcolor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'GNcolor',
 			'name'        => $help1
@@ -3793,7 +3592,6 @@ class x_tremeTheme extends GalleryTheme {
 			'value' => '',
 			'type'  => 'pseudo-title',
 		);
-
 		$settings[] = array(
 			'key'   => 'interactiveframe',
 			'name'  => $help1
@@ -3810,7 +3608,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['interactiveframe'],
 		);
-
 		$settings[] = array(
 			'key'     => 'setiframe',
 			'name'    => $help1
@@ -3829,7 +3626,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['setiframe'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameColor',
 			'name'        => $help1
@@ -3845,7 +3641,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameColor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameTheight',
 			'name'        => $help1
@@ -3861,7 +3656,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameTheight'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameLwidth',
 			'name'        => $help1
@@ -3877,7 +3671,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameLwidth'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameRwidth',
 			'name'        => $help1
@@ -3893,7 +3686,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameRwidth'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameBheight',
 			'name'        => $help1
@@ -3911,7 +3703,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameBheight'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bgIframe',
 			'name'        => $help1
@@ -3931,7 +3722,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bgIframe'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFont',
 			'name'        => $help1
@@ -3947,7 +3737,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFont'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontColor',
 			'name'        => $help1
@@ -3961,7 +3750,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontColor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontSize',
 			'name'        => $help1
@@ -3993,7 +3781,6 @@ class x_tremeTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['framePP'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPColor',
 			'name'        => $help1
@@ -4007,7 +3794,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPColor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPTheight',
 			'name'        => $help1
@@ -4023,7 +3809,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPTheight'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPLwidth',
 			'name'        => $help1
@@ -4039,7 +3824,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPLwidth'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPRwidth',
 			'name'        => $help1
@@ -4057,7 +3841,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPRwidth'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPBheight',
 			'name'        => $help1
@@ -4076,7 +3859,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPBheight'],
 		);
-
 		$settings[] = array(
 			'key'         => 'bgPP',
 			'name'        => $help1
@@ -4094,7 +3876,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['bgPP'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPFont',
 			'name'        => $help1
@@ -4110,7 +3891,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPFont'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPFontColor',
 			'name'        => $help1
@@ -4126,7 +3906,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPFontColor'],
 		);
-
 		$settings[] = array(
 			'key'         => 'framePPFontSize',
 			'name'        => $help1
@@ -4142,7 +3921,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['framePPFontSize'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameParentTitle',
 			'name'    => $help1
@@ -4162,7 +3940,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameParentTitle'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameParentPS',
 			'name'        => $help1
@@ -4180,7 +3957,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameParentPS'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontParent',
 			'name'        => $help1
@@ -4196,7 +3972,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontParent'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontColorParent',
 			'name'        => $help1
@@ -4212,7 +3987,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontColorParent'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontSizeParent',
 			'name'        => $help1
@@ -4228,7 +4002,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontSizeParent'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontSpacingParent',
 			'name'        => $help1
@@ -4244,7 +4017,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontSpacingParent'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameParentAlign',
 			'name'    => $help1
@@ -4263,7 +4035,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameParentAlign'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameStyleParent',
 			'name'        => $help1
@@ -4284,7 +4055,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameStyleParent'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameItemTitle',
 			'name'    => $help1
@@ -4304,7 +4074,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameItemTitle'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameTitlePS',
 			'name'        => $help1
@@ -4322,7 +4091,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameTitlePS'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontTitle',
 			'name'        => $help1
@@ -4338,7 +4106,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontTitle'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontColorTitle',
 			'name'        => $help1
@@ -4354,7 +4121,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontColorTitle'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontSizeTitle',
 			'name'        => $help1
@@ -4370,7 +4136,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontSizeTitle'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFontSpacingTitle',
 			'name'        => $help1
@@ -4386,7 +4151,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFontSpacingTitle'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameTitleAlign',
 			'name'    => $help1
@@ -4405,7 +4169,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameTitleAlign'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameStyleTitle',
 			'name'        => $help1
@@ -4421,7 +4184,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameStyleTitle'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameItemDescription',
 			'name'    => $help1
@@ -4445,7 +4207,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameItemDescription'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameDescriptionAlign',
 			'name'    => $help1
@@ -4464,7 +4225,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameDescriptionAlign'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameDescriptionStyle',
 			'name'        => $help1
@@ -4480,7 +4240,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameDescriptionStyle'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameCopyright',
 			'name'    => $help1
@@ -4498,7 +4257,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameCopyright'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameCopyrightStyle',
 			'name'        => $help1
@@ -4514,7 +4272,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameCopyrightStyle'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFreeText1',
 			'name'        => $help1
@@ -4530,7 +4287,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFreeText1'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFreeText1Style',
 			'name'        => $help1
@@ -4546,7 +4302,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFreeText1Style'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameFreeText1pos',
 			'name'    => $help1
@@ -4586,7 +4341,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'   => $params['frameFreeText1pos'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFreeText2',
 			'name'        => $help1
@@ -4607,7 +4361,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFreeText2'],
 		);
-
 		$settings[] = array(
 			'key'         => 'frameFreeText2Style',
 			'name'        => $help1
@@ -4623,7 +4376,6 @@ class x_tremeTheme extends GalleryTheme {
 			),
 			'value'       => $params['frameFreeText2Style'],
 		);
-
 		$settings[] = array(
 			'key'     => 'frameFreeText2pos',
 			'name'    => $help1
@@ -4661,7 +4413,6 @@ class x_tremeTheme extends GalleryTheme {
 					'On BOTTOM of Passepartout after Title and Description'
 				),
 			),
-
 			'value'   => $params['frameFreeText2pos'],
 		);
 
@@ -4710,7 +4461,6 @@ class x_tremeTheme extends GalleryTheme {
 	 * @see GalleryTheme::showAlbumPage
 	 */
 	public function showAlbumPage(&$template, $item, $params, $childIds) {
-
 		// NGD addition to redirect to photo page when album only contains photos.
 		if (!empty($childIds) && ($params['enterAlbumDirect'] != 'none')) {
 			$enterAlbum = 0;
@@ -4755,7 +4505,6 @@ class x_tremeTheme extends GalleryTheme {
 		}
 
 		// End addition
-
 		$dataTypes = array('imageViews');
 
 		$ret = $this->loadCommonTemplateData(
@@ -4786,8 +4535,7 @@ class x_tremeTheme extends GalleryTheme {
 		}
 
 		// Add in our extra stuff
-		$theme =& $template->getVariableByReference('theme');
-
+		$theme                   =& $template->getVariableByReference('theme');
 		$theme['columnWidthPct'] = floor(100 / $params['columns']);
 
 		list($ret, $pluginStatus) = GalleryCoreApi::fetchPluginStatus('module');

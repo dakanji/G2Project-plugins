@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: module.inc,v $
  *
@@ -35,12 +36,10 @@ class AddInTheHeadModule extends GalleryModule {
 				'Add in the Head'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSystemLinks');
 	}
@@ -95,14 +94,13 @@ class AddInTheHeadModule extends GalleryModule {
 			list($ret, $hasAddAlbumPermission) = GalleryCoreApi::hasItemPermission($itemId, 'core.addAlbumItem');
 
 			if (!$ret && $hasAddAlbumPermission) {
-				$url = $urlGenerator->generateUrl(
+				$url               = $urlGenerator->generateUrl(
 					array(
 						'view'    => 'core.ItemAdmin',
 						'subView' => 'core.ItemAddAlbum',
 						'itemId'  => $itemId,
 					)
 				);
-
 				$links['AddImage'] = array(
 					'text'   => 'Add Album',
 					'params' => array(
@@ -114,14 +112,13 @@ class AddInTheHeadModule extends GalleryModule {
 			list($ret, $hasAddAlbumPermission) = GalleryCoreApi::hasItemPermission($itemId, 'core.addDataItem');
 
 			if (!$ret && $hasAddAlbumPermission) {
-				$url = $urlGenerator->generateUrl(
+				$url               = $urlGenerator->generateUrl(
 					array(
 						'view'    => 'core.ItemAdmin',
 						'subView' => 'core.ItemAdd',
 						'itemId'  => $itemId,
 					)
 				);
-
 				$links['AddAlbum'] = array(
 					'text'   => 'Add Photo',
 					'params' => array(

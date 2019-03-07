@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -131,7 +132,6 @@ class WebCamSiteAdminView extends GalleryView {
 				'off'   => $module->translate('Disabled'),
 			),
 		);
-
 		$template->setVariable('WebCamSiteAdmin', $WebCamSiteAdmin);
 		$template->setVariable('controller', 'webcam.WebCamSiteAdmin');
 

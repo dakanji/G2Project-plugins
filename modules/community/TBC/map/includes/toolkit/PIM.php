@@ -42,7 +42,6 @@
  *               purposes, please contact the author: evan@ozhiker.com
  *
  ******************************************************************************/
-
 require_once 'EXIF.php';
 
 // TODO Find out definitions of Print Image Matching Info tags
@@ -64,8 +63,7 @@ require_once 'EXIF.php';
  ******************************************************************************/
 
 function Decode_PIM($tag, $Tag_Definitions_Name) {
-
-		// Create a new EXIF tag for the output
+	// Create a new EXIF tag for the output
 	$newtag = $tag;
 
 	// Check that this tag is for Print Image Matching Info
@@ -83,6 +81,7 @@ function Decode_PIM($tag, $Tag_Definitions_Name) {
 
 			// Extract the PrintIM version
 			$newtag['Data']['Version'] = substr($tag['Data'], 8, $ver_pos - 8);
+
 			// Skip the position over the version
 			$count_pos = $ver_pos + 2;
 
@@ -138,8 +137,7 @@ function Decode_PIM($tag, $Tag_Definitions_Name) {
  ******************************************************************************/
 
 function Encode_PIM($tag, $Byte_Align) {
-
-		// Create a string to receive the packed data
+	// Create a string to receive the packed data
 	$packed_data = '';
 
 	// Check that this tag is for Print Image Matching Info
@@ -204,8 +202,7 @@ function Encode_PIM($tag, $Byte_Align) {
  ******************************************************************************/
 
 function get_PIM_Text_Value($Tag, $Tag_Definitions_Name) {
-
-		// Create a string to receive the output
+	// Create a string to receive the output
 	$output_str = '';
 
 	// Check if the PIM tag has been decoded

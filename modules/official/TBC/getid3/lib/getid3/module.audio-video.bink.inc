@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,10 +16,8 @@
 /////////////////////////////////////////////////////////////////
 class getid3_bink extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info            =& $this->getid3->info;
 		$info['error'][] = 'Bink / Smacker files not properly processed by this version of getID3() [' . $this->getid3->version() . ']';
-
 		$this->fseek($info['avdataoffset']);
 		$fileTypeID = $this->fread(3);
 
@@ -45,7 +44,7 @@ class getid3_bink extends getid3_handler {
 	}
 
 	public function ParseBink() {
-		$info                        = &$this->getid3->info;
+		$info                        =& $this->getid3->info;
 		$info['fileformat']          = 'bink';
 		$info['video']['dataformat'] = 'bink';
 
@@ -62,7 +61,8 @@ class getid3_bink extends getid3_handler {
 	}
 
 	public function ParseSmacker() {
-		$info                        = &$this->getid3->info;
+		$info =& $this->getid3->info;
+
 		$info['fileformat']          = 'smacker';
 		$info['video']['dataformat'] = 'smacker';
 

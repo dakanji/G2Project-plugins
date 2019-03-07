@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: DupeDetectHelper.class,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @version $Revision: 0.9 $ $Date: 2005/07/23 16:33:39 $
  * @package DupeDetect
@@ -145,7 +147,6 @@ class DupeDetectHelper {
 				 * 1. create signatures and save them in the map,
 				 * 2. discover potential duplicates for it
 				 */
-
 				$entity = $event->getEntity();
 
 				/*
@@ -238,6 +239,7 @@ class DupeDetectHelper {
 	 *               bool Flag for all data items
 	 * @static
 	 */
+
 	/*    function getHasSignature($itemId) {
 	global $gallery;
 
@@ -252,6 +254,7 @@ class DupeDetectHelper {
 			WHERE
 				[DupeDetectSignaturesMap::itemId] = ?
 			  ';
+
 		list ($ret, $searchResults) = $gallery->search($query, array($itemId));
 		if ($ret->isError()) {
 			return array($ret, null);
@@ -295,8 +298,7 @@ class DupeDetectHelper {
 		}
 
 		$aclMarkers = GalleryUtilities::makeMarkers($aclIds);
-
-		$data = array();
+		$data       = array();
 
 		$query = sprintf(
 			'
@@ -356,9 +358,8 @@ class DupeDetectHelper {
 				'dupType'    => $result[2],
 				'userStatus' => $result[3],
 			);
-
-			$ids[] = $result[0];
-			$ids[] = $result[1];
+			$ids[]  = $result[0];
+			$ids[]  = $result[1];
 		}
 
 		// Fetch entities for the src and dup ids
@@ -420,14 +421,15 @@ class DupeDetectHelper {
 
 			$query .= 'AND
                       ';
+
 			$data[] = $srcId;
 			$data[] = $dupId;
 		} else {
 			/* if we have only one ID, we return all the pairs that has this ID
 			 * either in the srcId OR dupId fields */
-
 			$query .= 'OR
                       ';
+
 			$data[] = $id1;
 			$data[] = $id1;
 		}
@@ -578,7 +580,6 @@ class DupeDetectHelper {
 	 * @static
 	 */
 	public function linkItems($itemId, $dupId) {
-
 		// Load the dupItem so we can read its parentId
 		list($ret, $dupItem) = GalleryCoreApi::loadEntitiesById($dupId);
 
@@ -647,7 +648,6 @@ class DupeDetectHelper {
 		 * Lock everything up and start linkin'.  We need to read lock
 		 * the source ids, source hierarchy and destination hierarchy.
 		 */
-
 		list($ret, $locks[]) = GalleryCoreApi::acquireReadLock(
 			array($itemId, $destinationId)
 		);
@@ -679,8 +679,7 @@ class DupeDetectHelper {
 		// If we're linking to an item that's already a link, then link to its source instead
 		if ($item->isLinked()) {
 			$linkedEntity = $item->getLinkedEntity();
-
-			$ret = $linkedItem->createLink($linkedEntity, $destinationId);
+			$ret          = $linkedItem->createLink($linkedEntity, $destinationId);
 		} else {
 			$ret = $linkedItem->createLink($item, $destinationId);
 		}
@@ -736,7 +735,6 @@ class DupeDetectHelper {
 		// always treat the lower id as the srcId
 		$srcId = min($id1, $id2);
 		$dupId = max($id1, $id2);
-
 		$match = array(
 			'srcItemId' => $srcId,
 			'dupItemId' => $dupId,

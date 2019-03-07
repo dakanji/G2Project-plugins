@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -201,6 +202,7 @@ class FavouritesSiteAdminView extends GalleryView {
 		$totalUserCount           = count($form['list']['users']);
 		$form['list']['count']    = $totalUserCount;
 		$form['list']['pageSize'] = $totalUserCount > $perPage ? $perPage : $totalUserCount;
+
 		// Figure out our max pages, make sure our current page fits in it
 		$form['list']['maxPages'] = ceil($totalUserCount / $perPage);
 		$form['list']['page']     = min($form['list']['maxPages'], $form['list']['page']);
@@ -271,7 +273,6 @@ class FavouritesSiteAdminView extends GalleryView {
 				'defaultList' => $defaultList,
 			)
 		);
-
 		$template->setVariable('controller', 'favourites.FavouritesSiteAdmin');
 
 		return array(

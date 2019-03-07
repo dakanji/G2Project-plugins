@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -27,6 +28,7 @@
  * @author Alec Myers <alec@alecmyers.com>
  */
 GalleryCoreApi::requireOnce('modules/checkoutdownload/classes/CheckoutDownloadHelper.class');/**
+
  * This view sends the zip file and deletes the temp file.
  *
  * @package Checkout
@@ -44,8 +46,7 @@ class BuildDownloadController extends GalleryController {
 		$error           = array();
 		$status          = array();
 		$results         = array();
-
-		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
+		$transactionId   = GalleryUtilities::getRequestVariables('transactionId');
 
 		if (empty($transactionId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
@@ -84,6 +85,7 @@ class BuildDownloadController extends GalleryController {
 
 		if ($permissionResult == 'permit') {
 			$templateAdapter->registerTrailerCallback(array($this, 'BuildDownload'), array($transactionId, $verify1, $verify2));
+
 			// Delegate to the progress bar view which will then call our callback function.
 			$results['delegate']['view'] = 'core.ProgressBar';
 		} else {
@@ -149,15 +151,16 @@ class BuildDownloadController extends GalleryController {
 			return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 		}
 
-		$albumDir = $gallery->getConfig('data.gallery.albums');
-
+		$albumDir  = $gallery->getConfig('data.gallery.albums');
 		$stripPath = $zipDir;
+
 		// see http://www.phpconcept.net/pclzip/index.en.php#faq05 regarding windows drive letters
 		if (substr($stripPath, 1, 1) == ':') {
 			$stripPath = substr($stripPath, 2);
 		}
 
 		define('PCLZIP_TEMPORARY_DIR', $gallery->getConfig('data.gallery.tmp'));
+
 		GalleryCoreApi::requireOnce('modules/checkoutdownload/lib/pclzip.lib.php');
 
 		$archive = new PclZip($zipFile);
@@ -166,6 +169,7 @@ class BuildDownloadController extends GalleryController {
 		foreach ($itemIdsAndOperations as $itemRecord) {
 			$gallery->guaranteeTimeLimit(60);
 			$i++;
+
 			// Update Progress Bar
 			$message = $module->translate(
 				array(
@@ -174,7 +178,6 @@ class BuildDownloadController extends GalleryController {
 					'arg2' => $count,
 				)
 			);
-
 			$templateAdapter->updateProgressBar($heading, $message, $i / $count);
 			$itemId = $itemRecord['id'];
 
@@ -186,8 +189,10 @@ class BuildDownloadController extends GalleryController {
 
 			// Set the scaleToFit to products' data
 			$scaleToFit = $itemRecord['downloadSize'];
+
 			// OperationString not used at present
 			$OperationString = $itemRecord['downloadOperation'];
+
 			// Sort out paths
 			list($ret, $originalPath) = $item->fetchPath();
 
@@ -202,6 +207,7 @@ class BuildDownloadController extends GalleryController {
 			}
 
 			$destination = $zipDir . $slash . $relativePath;
+
 			// Insert file-size into name
 			if ($scaleToFit != '') {
 				$pathParts   = pathinfo($destination);
@@ -222,11 +228,13 @@ class BuildDownloadController extends GalleryController {
 			} else {
 				// assemble operations to scale to scaleToFit
 				$operation = 'scale|' . $scaleToFit . ',' . $scaleToFit;
+
 				// split the operation up
 				list($operationName, $operationArgs) = explode('|', $operation);
-				$context                             = array();
-				$context['width']                    = $scaleToFit;
-				$context['height']                   = $scaleToFit;
+
+				$context           = array();
+				$context['width']  = $scaleToFit;
+				$context['height'] = $scaleToFit;
 
 				if ($context['width'] == 0 && $context['height'] == 0) {
 					// Don't put unknown size into context
@@ -285,14 +293,15 @@ class BuildDownloadController extends GalleryController {
 				'text' => 'Finishing off...',
 			)
 		);
-
 		$templateAdapter->updateProgressBar($heading, $message, 1);
 		$finalFile = $gallery->getConfig('data.gallery.tmp') . $transactionId . '.zip';
+
 		@$platform->unlink($finalFile);
 		@$platform->rename($zipFile, $finalFile);
 		@$platform->unlink($zipFile);
 		@$platform->unlink($zipBase);
 		@$platform->rmdir($zipDir);
+
 		// Update download count etc
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 
@@ -306,13 +315,11 @@ class BuildDownloadController extends GalleryController {
 				'text' => 'Hit Continue to download your file.',
 			)
 		);
-
 		$message = $module->translate(
 			array(
 				'text' => 'Done.',
 			)
 		);
-
 		$templateAdapter->updateProgressBar($heading, $message, 1);
 		$redirect = array(
 			'view'          => 'checkoutdownload.FetchDownload',

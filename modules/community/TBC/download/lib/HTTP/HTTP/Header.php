@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * HTTP::Header
@@ -28,6 +29,7 @@ define('HTTP_HEADER_STATUS_100', '100 Continue');
 define('HTTP_HEADER_STATUS_101', '101 Switching Protocols');
 define('HTTP_HEADER_STATUS_102', '102 Processing');
 define('HTTP_HEADER_STATUS_INFORMATIONAL', 1);
+
 // #@-
 /**#+
  * Success Codes
@@ -41,6 +43,7 @@ define('HTTP_HEADER_STATUS_205', '205 Reset Content');
 define('HTTP_HEADER_STATUS_206', '206 Partial Content');
 define('HTTP_HEADER_STATUS_207', '207 Multi-Status');
 define('HTTP_HEADER_STATUS_SUCCESSFUL', 2);
+
 // #@-
 /**#@+
  * Redirection Codes
@@ -54,6 +57,7 @@ define('HTTP_HEADER_STATUS_305', '305 Use Proxy');
 define('HTTP_HEADER_STATUS_306', '306 (Unused)');
 define('HTTP_HEADER_STATUS_307', '307 Temporary Redirect');
 define('HTTP_HEADER_STATUS_REDIRECT', 3);
+
 // #@-
 /**#@+
  * Error Codes
@@ -80,6 +84,7 @@ define('HTTP_HEADER_STATUS_422', '422 Unprocessable Entity');
 define('HTTP_HEADER_STATUS_423', '423 Locked');
 define('HTTP_HEADER_STATUS_424', '424 Failed Dependency');
 define('HTTP_HEADER_STATUS_CLIENT_ERROR', 4);
+
 // #@-
 /**#@+
  * Server Errors
@@ -92,6 +97,7 @@ define('HTTP_HEADER_STATUS_504', '504 Gateway Time-out');
 define('HTTP_HEADER_STATUS_505', '505 HTTP Version not supported');
 define('HTTP_HEADER_STATUS_507', '507 Insufficient Storage');
 define('HTTP_HEADER_STATUS_SERVER_ERROR', 5);
+
 // #@-
 /**
  * HTTP_Header

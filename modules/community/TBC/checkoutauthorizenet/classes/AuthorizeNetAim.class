@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -53,7 +54,6 @@ class AuthorizeNetAim {
 	 * @var string $_delimChar
 	 */
 	public $_delimChar;
-
 	public $_firstName;
 	public $_lastName;
 	public $_email;
@@ -64,7 +64,6 @@ class AuthorizeNetAim {
 	 * @var bool $_emailCustomer
 	 */
 	public $_emailCustomer;
-
 	public $_phone;
 	public $_address;
 	public $_city;
@@ -87,6 +86,7 @@ class AuthorizeNetAim {
 		$this->_aimVersion = '3.1';
 		$this->setLoginId($loginId);
 		$this->setTranKey($tranKey);
+
 		// Should always be false, I think
 		$this->_relayResponse = 'FALSE';
 		$this->setType('AUTH_CAPTURE');
@@ -140,12 +140,14 @@ class AuthorizeNetAim {
 
 	public function getUrlData() {
 		$data = 'x_version=' . $this->_aimVersion .
+
 		// The login ID
 		'&x_login=' . $this->_loginId .
 		'&x_tran_key=' . $this->_tranKey .
 		'&x_relay_response=' . $this->_relayResponse .
 		'&x_type=' . $this->_type .
 		'&x_delim_data=' . $this->_delimData .
+
 		// The character to delimit with
 		'&x_delim_char=' . $this->_delimChar .
 		'&x_first_name=' . $this->_firstName .
@@ -205,7 +207,6 @@ class AuthorizeNetAim {
 
 	/* Each field must be urlencoded to send with a post.  DO NOT set the variables without using
 	 * these functions, as you will most likely run into errors */
-
 	public function setLoginId($loginId) {
 		$this->_loginId = urlencode($loginId);
 	}

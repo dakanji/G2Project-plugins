@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -39,12 +40,10 @@ class PanoramaModule extends GalleryModule {
 				'View wide jpeg/gif images in a java applet viewer'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 	}
@@ -167,7 +166,6 @@ class PanoramaModule extends GalleryModule {
 			 * This is ok as it is only used to determine if a panorama is  possible.
 			 * We will still also gate on the acting user permissions received.
 			 */
-
 			list($ret, $images) = PanoramaHelper::fetchViewableImages($items);
 
 			if ($ret) {
@@ -181,9 +179,11 @@ class PanoramaModule extends GalleryModule {
 					continue;
 				}
 
-				$image    = $images[$itemId];
+				$image = $images[$itemId];
+
 				$mimeType = $item->getMimeType();
 				$width    = $image->getWidth();
+
 				// Applet supports jpeg and gif images
 				if (GalleryUtilities::isA($item, 'GalleryPhotoItem')
 					&& $item->getRenderer() != 'PanoramaRenderer'

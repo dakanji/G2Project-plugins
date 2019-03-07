@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/notification/classes/NotificationEvent_1_0.class');
 
 /**
@@ -463,6 +463,7 @@ class RemovePermissionNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		$data = $this->_event->getData();
+
 		/** @todo: Fix the below message for i18n (%d instead of %s, plural form). */
 		return $this->_translateText(
 			'notification',
@@ -752,6 +753,7 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		$items = $this->_event->getData();
+
 		// How should we handle what type it is and where to link?
 		$parentId  = $items[0]->getParentId();
 		$itemCount = count($items);
@@ -760,7 +762,8 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 			// One item, call it what it is and link to it directly
 			$itemTypeName = $items[0]->itemTypeName();
 			$itemTypeName = $itemTypeName[1];
-			$itemId       = $items[0]->getId();
+
+			$itemId = $items[0]->getId();
 		} else {
 			// Many items, link to the parent
 			$itemId    = $parentId;

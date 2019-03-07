@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -83,6 +84,7 @@ class SlideshowAppletView extends GalleryView {
 		} else {
 			$urlGenerator =& $gallery->getUrlGenerator();
 			$session      =& $gallery->getSession();
+
 			/*
 			 * Force the use of the G2 base for the url and the cookie path as the applet will
 			 * communicate to G2 directly, even when G2 is embedded
@@ -102,14 +104,16 @@ class SlideshowAppletView extends GalleryView {
 			}
 
 			$SlideshowApplet['NoProtocolError'] = 0;
-			$SlideshowApplet['cookieName']      = $session->getKey();
-			$SlideshowApplet['cookieValue']     = $session->getId();
-			$SlideshowApplet['cookieDomain']    = $cookieDomain;
-			$SlideshowApplet['cookiePath']      = $cookiePath;
-			$SlideshowApplet['album']           = $item->getId();
-			$SlideshowApplet['userAgent']       = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-			$SlideshowApplet['galleryVersion']  = 2;
-			$SlideshowApplet['code']            = 'com.gallery.GalleryRemote.GRAppletSlideshow';
+
+			$SlideshowApplet['cookieName']   = $session->getKey();
+			$SlideshowApplet['cookieValue']  = $session->getId();
+			$SlideshowApplet['cookieDomain'] = $cookieDomain;
+			$SlideshowApplet['cookiePath']   = $cookiePath;
+
+			$SlideshowApplet['album']          = $item->getId();
+			$SlideshowApplet['userAgent']      = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+			$SlideshowApplet['galleryVersion'] = 2;
+			$SlideshowApplet['code']           = 'com.gallery.GalleryRemote.GRAppletSlideshow';
 
 			list($ret, $locale) = $gallery->getActiveLanguageCode();
 
@@ -137,7 +141,8 @@ class SlideshowAppletView extends GalleryView {
 					$variablesArray = explode('|', $params['slideshow' . $type . 'Variables']);
 
 					foreach ($variablesArray as $variable) {
-						list($name, $value)            = explode('=', $variable);
+						list($name, $value) = explode('=', $variable);
+
 						$SlideshowApplet[$type][$name] = $value;
 					}
 				}
@@ -145,6 +150,7 @@ class SlideshowAppletView extends GalleryView {
 		}
 
 		$form['formName'] = '';
+
 		$template->setVariable('controller', '');
 		$template->setVariable('SlideshowApplet', $SlideshowApplet);
 

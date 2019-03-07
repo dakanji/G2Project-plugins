@@ -93,23 +93,14 @@
  * Required imports
  */
 require_once 'Auth/OpenID.php';
-
 require_once 'Auth/OpenID/Association.php';
-
 require_once 'Auth/OpenID/CryptUtil.php';
-
 require_once 'Auth/OpenID/BigMath.php';
-
 require_once 'Auth/OpenID/DiffieHellman.php';
-
 require_once 'Auth/OpenID/KVForm.php';
-
 require_once 'Auth/OpenID/TrustRoot.php';
-
 require_once 'Auth/OpenID/ServerRequest.php';
-
 require_once 'Auth/OpenID/Message.php';
-
 require_once 'Auth/OpenID/Nonce.php';
 
 define('AUTH_OPENID_HTTP_OK', 200);
@@ -239,6 +230,7 @@ class Auth_OpenID_ServerError {
 		// after encoding.
 		$namespace = $this->message->getOpenIDNamespace();
 		$reply     = new Auth_OpenID_Message($namespace);
+
 		$reply->setArg(Auth_OpenID_OPENID_NS, 'mode', 'error');
 		$reply->setArg(Auth_OpenID_OPENID_NS, 'error', $this->toString());
 
@@ -332,6 +324,7 @@ class Auth_OpenID_NoReturnToError extends Auth_OpenID_ServerError {
 class Auth_OpenID_MalformedReturnURL extends Auth_OpenID_ServerError {
 	public function __construct($message, $return_to) {
 		$this->return_to = $return_to;
+
 		parent::__construct($message, 'malformed return_to URL');
 	}
 }
@@ -400,17 +393,16 @@ class Auth_OpenID_CheckAuthRequest extends Auth_OpenID_Request {
 
 		$assoc_handle = $message->getArg(Auth_OpenID_OPENID_NS, 'assoc_handle');
 		$sig          = $message->getArg(Auth_OpenID_OPENID_NS, 'sig');
-
-		$signed_list = $message->getArg(Auth_OpenID_OPENID_NS, 'signed');
-		$signed_list = explode(',', $signed_list);
-
-		$signed = $message;
+		$signed_list  = $message->getArg(Auth_OpenID_OPENID_NS, 'signed');
+		$signed_list  = explode(',', $signed_list);
+		$signed       = $message;
 
 		if ($signed->hasKey(Auth_OpenID_OPENID_NS, 'mode')) {
 			$signed->setArg(Auth_OpenID_OPENID_NS, 'mode', 'id_res');
 		}
 
-		$result                    = new Auth_OpenID_CheckAuthRequest($assoc_handle, $signed);
+		$result = new Auth_OpenID_CheckAuthRequest($assoc_handle, $signed);
+
 		$result->message           = $message;
 		$result->sig               = $sig;
 		$result->invalidate_handle = $message->getArg(
@@ -428,7 +420,6 @@ class Auth_OpenID_CheckAuthRequest extends Auth_OpenID_Request {
 		// message cannot be replayed.
 		$signatory->invalidate($this->assoc_handle, true);
 		$response = new Auth_OpenID_ServerResponse($this);
-
 		$response->fields->setArg(
 			Auth_OpenID_OPENID_NS,
 			'is_valid',
@@ -704,7 +695,8 @@ class Auth_OpenID_AssociateRequest extends Auth_OpenID_Request {
 			);
 		}
 
-		$obj            = new Auth_OpenID_AssociateRequest($session, $assoc_type);
+		$obj = new Auth_OpenID_AssociateRequest($session, $assoc_type);
+
 		$obj->message   = $message;
 		$obj->namespace = $message->getOpenIDNamespace();
 
@@ -721,7 +713,6 @@ class Auth_OpenID_AssociateRequest extends Auth_OpenID_Request {
 				'assoc_handle' => $assoc->handle,
 			)
 		);
-
 		$response->fields->updateArgs(
 			Auth_OpenID_OPENID_NS,
 			$this->session->answer($assoc->secret)
@@ -755,7 +746,6 @@ class Auth_OpenID_AssociateRequest extends Auth_OpenID_Request {
 			'error_code',
 			'unsupported-type'
 		);
-
 		$response->fields->setArg(
 			Auth_OpenID_OPENID_NS,
 			'error',
@@ -940,11 +930,10 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 			return new Auth_OpenID_ServerError($message, $fmt);
 		}
 
-		$identity = $message->getArg(
+		$identity   = $message->getArg(
 			Auth_OpenID_OPENID_NS,
 			'identity'
 		);
-
 		$claimed_id = $message->getArg(Auth_OpenID_OPENID_NS, 'claimed_id');
 
 		if ($message->isOpenID1()) {
@@ -1001,8 +990,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 			Auth_OpenID_OPENID_NS,
 			'assoc_handle'
 		);
-
-		$obj = Auth_OpenID_CheckIDRequest::make(
+		$obj          = Auth_OpenID_CheckIDRequest::make(
 			$message,
 			$identity,
 			$return_to,
@@ -1251,7 +1239,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 					);
 				}
 
-				$setup_request = new Auth_OpenID_CheckIDRequest(
+				$setup_request          = new Auth_OpenID_CheckIDRequest(
 					$this->identity,
 					$this->return_to,
 					$this->trust_root,
@@ -1259,10 +1247,8 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 					$this->assoc_handle,
 					$this->server
 				);
-
 				$setup_request->message = $this->message;
-
-				$setup_url = $setup_request->encodeToURL($server_url);
+				$setup_url              = $setup_request->encodeToURL($server_url);
 
 				if ($setup_url === null) {
 					return new Auth_OpenID_NoReturnToError();
@@ -1310,7 +1296,6 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		$response = new Auth_OpenID_Message(
 			$this->message->getOpenIDNamespace()
 		);
-
 		$response->updateArgs(Auth_OpenID_OPENID_NS, $q);
 
 		return $response->toURL($server_url);
@@ -1333,7 +1318,6 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		$response = new Auth_OpenID_Message(
 			$this->message->getOpenIDNamespace()
 		);
-
 		$response->setArg(Auth_OpenID_OPENID_NS, 'mode', 'cancel');
 
 		return $response->toURL($this->return_to);
@@ -1495,7 +1479,8 @@ class Auth_OpenID_Signatory {
 	 */
 	public function sign($response) {
 		$signed_response = $response;
-		$assoc_handle    = $response->request->assoc_handle;
+
+		$assoc_handle = $response->request->assoc_handle;
 
 		if ($assoc_handle) {
 			// normal mode
@@ -1508,7 +1493,6 @@ class Auth_OpenID_Signatory {
 					'invalidate_handle',
 					$assoc_handle
 				);
-
 				$assoc_type = ($assoc ? $assoc->assoc_type : 'HMAC-SHA1');
 
 				if ($assoc && ($assoc->getExpiresIn() <= 0)) {
@@ -1539,8 +1523,7 @@ class Auth_OpenID_Signatory {
 
 		$uniq   = base64_encode(Auth_OpenID_CryptUtil::getBytes(4));
 		$handle = sprintf('{%s}{%x}{%s}', $assoc_type, intval(time()), $uniq);
-
-		$assoc = Auth_OpenID_Association::fromExpiresIn(
+		$assoc  = Auth_OpenID_Association::fromExpiresIn(
 			$this->SECRET_LIFETIME,
 			$handle,
 			$secret,
@@ -1616,8 +1599,7 @@ class Auth_OpenID_Encoder {
 	 * {@link Auth_OpenID_WebResponse}.
 	 */
 	public function encode(&$response) {
-		$cls = $this->responseFactory;
-
+		$cls       = $this->responseFactory;
 		$encode_as = $response->whichEncoding();
 
 		if ($encode_as == Auth_OpenID_ENCODE_KVFORM) {
@@ -1693,8 +1675,7 @@ class Auth_OpenID_SigningEncoder extends Auth_OpenID_Encoder {
  */
 class Auth_OpenID_Decoder {
 	public function __construct(&$server) {
-		$this->server = $server;
-
+		$this->server   = $server;
 		$this->handlers = array(
 			'checkid_setup'        => 'Auth_OpenID_CheckIDRequest',
 			'checkid_immediate'    => 'Auth_OpenID_CheckIDRequest',
@@ -1722,8 +1703,7 @@ class Auth_OpenID_Decoder {
 			 * lies, but the parts that aren't lies are more useful
 			 * than a 'None'.
 			 */
-			$old_ns = $query['openid.ns'];
-
+			$old_ns             = $query['openid.ns'];
 			$query['openid.ns'] = Auth_OpenID_OPENID2_NS;
 			$message            = Auth_OpenID_Message::fromPostArgs($query);
 
@@ -1811,6 +1791,7 @@ class Auth_OpenID_AlreadySigned extends Auth_OpenID_EncodingError {
 class Auth_OpenID_UntrustedReturnURL extends Auth_OpenID_ServerError {
 	public function __construct($message, $return_to, $trust_root) {
 		parent::__construct($message, 'Untrusted return_to URL');
+
 		$this->return_to  = $return_to;
 		$this->trust_root = $trust_root;
 	}

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/migrate/classes/Gallery1DataParser.class');
 
 /**
@@ -170,9 +170,8 @@ class ChooseObjectsView extends GalleryView {
 			}
 		}
 
-		$platform =& $gallery->getPlatform();
-		$slash    = $platform->getDirectorySeparator();
-
+		$platform   =& $gallery->getPlatform();
+		$slash      = $platform->getDirectorySeparator();
 		$albumsPath = GalleryUtilities::getRequestVariables('albumsPath');
 
 		if ($albumsPath == null) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -22,7 +23,9 @@
  * @package map
  * @author Steven N. Severinghaus <sns@severinghaus.org>
  * @version $Revision: 1592 $
- *//**
+ */
+
+/**
  * Map
  *
  * This module provides Google Map for Gallery items.
@@ -40,12 +43,10 @@ class mapModule extends GalleryModule {
 				'Show items on a dynamic Google Map'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks(
 			'registerEventListeners|getSiteAdminViews|getItemSummaries|getItemLinks'
@@ -76,6 +77,7 @@ class mapModule extends GalleryModule {
 
 	public function needsConfiguration() {
 		GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
+
 		// This module requires a Google Map API key.
 		list($ret, $profiles) = mapHelper::getAllKeyProfiles();
 
@@ -268,8 +270,7 @@ class mapModule extends GalleryModule {
 	public function getRewriteRules() {
 		global $gallery;
 
-		$rules = array();
-
+		$rules           = array();
 		$rule            = array();
 		$rule['comment'] = 'View Google Map Group';
 		$rule['match']   = array(
@@ -285,8 +286,7 @@ class mapModule extends GalleryModule {
 				),
 			),
 		);
-
-		$rules[0] = $rule;
+		$rules[0]         = $rule;
 
 		return $rules;
 	}
@@ -371,6 +371,7 @@ class mapModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
+
 		$links = array();
 
 		list($ret, $linktype) = GalleryCoreApi::getPluginParameter('module', 'map', 'linktype');
@@ -393,8 +394,8 @@ class mapModule extends GalleryModule {
 				}
 
 				list($ret, $item) = GalleryCoreApi::loadEntitiesById($NitemId);
-				$name             = $item->getTitle();
 
+				$name      = $item->getTitle();
 				$goodalbum = false;
 
 				if ($linktype == 2) {
@@ -442,7 +443,6 @@ class mapModule extends GalleryModule {
 						 * The current album (or parent of the current photo) does not have any
 						 * GPS item, check from the root
 						 */
-
 						list($ret, $count) = mapHelper::getCountItemWithCoords();
 
 						if ($ret) {
@@ -557,7 +557,6 @@ class mapModule extends GalleryModule {
 					}
 				}
 
-
 				// Fall Through
 			case '0.4.0':
 			case '0.4.1':
@@ -594,6 +593,7 @@ class mapModule extends GalleryModule {
 
 					if ($newroutes != '1') {
 						$theroutes = implode('|', $newroutes);
+
 						// Set the new routes in the database
 						GalleryCoreApi::setPluginParameter('module', 'map', 'Routes', $theroutes);
 					}
@@ -605,11 +605,13 @@ class mapModule extends GalleryModule {
 				 * GalleryCoreApi::getPluginBaseDir() for now, then getCodeBasePath() for Gallery 2.3+
 				 */
 				$basegallerydir = substr(dirname(__FILE__), 0, -11);
+
 				/**
 				 * @todo This is the only place CopyDir is used. If we can move that functionality
 				 * here, we can eliminate filecopy.class altogether.
 				 */
 				GalleryCoreApi::requireOnce('modules/map/classes/filecopy.class');
+
 				@CopyDir(
 					$basegallerydir . '../images/map',
 					$basegallerydir . 'map/images/markers',
@@ -622,7 +624,8 @@ class mapModule extends GalleryModule {
 				// Upgrade routes to be pointing to Item instead of coordinates of items
 				// Get current routes
 				list($ret, $routes) = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
-				$newroutes          = '';
+
+				$newroutes = '';
 
 				if (!empty($routes)) { // there is some route, fix them :-)
 					$allroutes = explode('|', $routes);
@@ -665,7 +668,6 @@ class mapModule extends GalleryModule {
 					GalleryCoreApi::setPluginParameter('module', 'map', 'Routes', $newroutes);
 				}
 
-
 				// Fall Through
 			case '0.4.5':
 			case '0.4.5c':
@@ -688,7 +690,6 @@ class mapModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '0.4.8':
@@ -714,7 +715,6 @@ class mapModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '0.5.0':
@@ -1063,6 +1063,7 @@ class mapModule extends GalleryModule {
 							foreach ($filterarray as $key => $filterinfos) {
 								$infos      = explode('`', $filterinfos);
 								$tempcenter = explode(',', $infos[3]);
+
 								// invert the coordinates for this filter
 								$infos[3] = $tempcenter[1] . ',' . $tempcenter[0];
 								$infos[2] = 17 - $infos[2];  // change the zoom for this filter
@@ -1097,7 +1098,6 @@ class mapModule extends GalleryModule {
 				}
 
 				// End updating the Manual Filter Information
-
 				// Fall Through
 			case '0.5.1':
 			case '0.5.1a':
@@ -1125,7 +1125,6 @@ class mapModule extends GalleryModule {
 					return $ret;
 				}
 
-
 				// Fall Through
 			case '0.5.3':
 			case '0.5.4':
@@ -1135,6 +1134,7 @@ class mapModule extends GalleryModule {
 				$newKeys = array();
 
 				list($ret, $mapKeys) = GalleryCoreApi::getPluginParameter('module', 'map', 'MapKeys');
+
 				/* Format of old keys as serialized in the database:
 				 * 1`P1Name`P1Host`P1Port`P1ApiKey|2`P2Name`P2Host`P2Port`P2ApiKey
 				 * Format of new keys serialized in the database:
@@ -1182,7 +1182,6 @@ class mapModule extends GalleryModule {
 
 					GalleryCoreApi::removePluginParameter('module', 'map', 'EditKey');
 				}
-
 
 				// Fall Through
 			case 'end of upgrade path':

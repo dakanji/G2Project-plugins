@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -99,7 +100,6 @@ class CheckoutProductMapHelper {
 	 *
 	 */
 	public function fetchAccessoryData($itemId) {
-
 		// Get display priority
 		list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
 			'CheckoutProductMap',
@@ -171,6 +171,7 @@ class CheckoutProductMapHelper {
 		}
 
 		$accessories = array();
+
 		// Sort into products etc
 		while ($result = $searchResults->nextResult()) {
 			if ($result[0] == 0) {
@@ -206,6 +207,7 @@ class CheckoutProductMapHelper {
 
 			// make the ItemId a parameter
 			$accessories[$itemId]['id'] = $itemId;
+
 			// make sure it has a position to sort by
 			if (!isset($item['position'])) {
 				$accessories[$itemId]['position'] = 0;
@@ -380,7 +382,6 @@ class CheckoutProductMapHelper {
 
 		/* Need to read lock this section?
 		Delete the parameter if it already exists */
-
 		$ret = GalleryCoreApi::removeMapEntry(
 			'CheckoutProductMap',
 			array(

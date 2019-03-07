@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -36,12 +37,10 @@ class DigibugModule extends GalleryModule {
 				'Digibug Photo Printing Module'
 			)
 		);
-
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 		$this->setRequiredCoreApi(array(7, 43));
@@ -92,7 +91,6 @@ class DigibugModule extends GalleryModule {
 
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
-
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -134,7 +132,6 @@ class DigibugModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
-
 
 				// Fall Through
 			case '1.0.7':
@@ -190,8 +187,7 @@ class DigibugModule extends GalleryModule {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
-		$links = array();
+		$links   = array();
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();

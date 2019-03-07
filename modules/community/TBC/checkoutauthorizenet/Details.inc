@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -117,6 +118,7 @@ class DetailsController extends GalleryController {
 							+ substr($abaCode, 8, 1))
 						% 10;
 			*/
+
 			// Note that this is only valid for US checks
 			/*
 			if (empty($abaCode) || !is_numeric($abaCode) || strlen($abaCode) != 9
@@ -137,14 +139,12 @@ class DetailsController extends GalleryController {
 					GalleryCoreApi::requireOnce(
 						'modules/checkoutauthorizenet/classes/GalleryAuthorizeNet.class'
 					);
-
 					$auth = new GalleryAuthorizeNet();
 				} else {
 					$auth =& $this->_authorizeNet;
 				}
 
 				$auth->init();
-
 				$auth->setFirstName($form['custFirstName']);
 				$auth->setLastName($form['custLastName']);
 				$auth->setEmail($form['custEmail']);
@@ -168,6 +168,7 @@ class DetailsController extends GalleryController {
 				// If Authorize.Net returned an error, save for output
 				if (!empty($errorMsg)) {
 					$error[] = 'form[error][authorizeNet][fail]';
+
 					GalleryUtilities::putRequestVariable('authorizeNetError', $errorMsg);
 				} else {
 					// Write the customer information back into the original transaction
@@ -214,6 +215,7 @@ class DetailsController extends GalleryController {
 					$transaction->setCustNotes($form['custComments']);
 					$transaction->setPaymentPlugin('checkoutauthorizenet');
 					$transaction->setFlagPaid(true);
+
 					// Save the modified transaction
 					$ret = $transaction->save();
 
@@ -267,6 +269,7 @@ class DetailsView extends GalleryView {
 
 			// Get the current user information
 			$user = $gallery->getActiveUser();
+
 			// Populate the form if a user is logged in
 			if ($user->getUserName() != 'guest') {
 				list($form['custFirstName'], $form['custLastName']) = explode(' ', $user->getFullName(), 2);
@@ -280,6 +283,7 @@ class DetailsView extends GalleryView {
 		}
 
 		$year = date('Y');
+
 		// Do credit cards really last this long?
 		for ($x = 0; $x < 20; $x++) {
 			$Details['ccYears'][] = $year + $x;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -71,7 +72,6 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 			"Hi %toName% (%to%)!\r\n"
 			. '%fromName% (%from%) has sent you an eCard.'
 		);
-
 		GalleryUtilities::putRequestVariable('form[footer]', 'Sent via G2 Ecard tester');
 		GalleryUtilities::putRequestVariable('form[format]', 'html');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');

@@ -18,11 +18,8 @@
  * Require base class for creating a new interface.
  */
 require_once 'Auth/OpenID.php';
-
 require_once 'Auth/OpenID/Interface.php';
-
 require_once 'Auth/OpenID/HMAC.php';
-
 require_once 'Auth/OpenID/Nonce.php';
 
 /**
@@ -58,17 +55,14 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
 		$directory = realpath($directory);
 
-		$this->directory = $directory;
-		$this->active    = true;
-
-		$this->nonce_dir = $directory . DIRECTORY_SEPARATOR . 'nonces';
-
+		$this->directory       = $directory;
+		$this->active          = true;
+		$this->nonce_dir       = $directory . DIRECTORY_SEPARATOR . 'nonces';
 		$this->association_dir = $directory . DIRECTORY_SEPARATOR . 'associations';
 
 		// Temp dir must be on the same filesystem as the assciations
 		// $directory.
-		$this->temp_dir = $directory . DIRECTORY_SEPARATOR . 'temp';
-
+		$this->temp_dir      = $directory . DIRECTORY_SEPARATOR . 'temp';
 		$this->max_nonce_age = 6 * 60 * 60; // Six hours, in seconds
 		if (!$this->_setup()) {
 			trigger_error(
@@ -122,9 +116,10 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		global $Auth_OpenID_SKEW;
 
 		$nonces = Auth_OpenID_FileStore::_listdir($this->nonce_dir);
-		$now    = time();
 
+		$now     = time();
 		$removed = 0;
+
 		// Check all nonces for expiry
 		foreach ($nonces as $nonce_fname) {
 			$base      = basename($nonce_fname);
@@ -216,9 +211,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		}
 
 		fwrite($tmp_file, $association_s);
-
 		fflush($tmp_file);
-
 		fclose($tmp_file);
 
 		if (@rename($tmp, $filename)) {
@@ -282,6 +275,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		}
 
 		$matching_associations = array();
+
 		// read the matching files and sort by time issued
 		foreach ($matching_files as $full_name) {
 			$association = $this->_getAssociation($full_name);
@@ -412,7 +406,8 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 			$rest  = '';
 		}
 
-		$parts     = explode('/', $rest, 2);
+		$parts = explode('/', $rest, 2);
+
 		$domain    = $this->_filenameEscape($parts[0]);
 		$url_hash  = $this->_safe64($server_url);
 		$salt_hash = $this->_safe64($salt);
@@ -427,8 +422,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		);
 
 		$filename = $this->nonce_dir . DIRECTORY_SEPARATOR . $filename;
-
-		$result = @fopen($filename, 'x');
+		$result   = @fopen($filename, 'x');
 
 		if ($result === false) {
 			return false;
@@ -499,6 +493,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		foreach ($nonces as $nonce) {
 			if (!Auth_OpenID_checkTimestamp($nonce, $now)) {
 				$filename = $this->nonce_dir . DIRECTORY_SEPARATOR . $nonce;
+
 				Auth_OpenID_FileStore::_removeIfPresent($filename);
 			}
 		}
@@ -658,6 +653,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
 			if ($assoc->getExpiresIn() == 0) {
 				$this->_removeIfPresent($assoc_filename);
+
 				$removed += 1;
 			}
 		}

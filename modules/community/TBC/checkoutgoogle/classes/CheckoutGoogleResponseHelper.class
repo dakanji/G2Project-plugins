@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -37,11 +38,11 @@ class CheckoutGoogleResponseHelper {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
+
 		/*
 		 * Use the Basic auth-type for tests. PHP does not define auth variables for arbitrary
 		 * auth-types.
 		 */
-
 		list($status, $headers, $body) = GalleryCoreApi::requestWebPage(
 			$urlGenerator->generateUrl(
 				array(
@@ -141,9 +142,11 @@ class CheckoutGoogleResponseHelper {
 
 		if (!is_null($request)) {
 			GalleryCoreApi::requireOnce('modules/checkoutgoogle/lib/gc_xmlparser.php');
+
 			$xml_parser = new gc_xmlparser($request);
-			$root       = $xml_parser->GetRoot();
-			$data       = $xml_parser->GetData();
+
+			$root = $xml_parser->GetRoot();
+			$data = $xml_parser->GetData();
 		}
 
 		return array($root, $data);
@@ -274,7 +277,6 @@ class CheckoutGoogleResponseHelper {
 
 			list($returnStatus, $headers, $body) = GalleryCoreApi::requestWebPage($url, 'POST', $googleHeaders, $data);
 		} while ($depth < 5 && isset($headers['Location']));
-
 		$success = preg_match('/^HTTP\/\d+\.\d+\s2\d{2}/', $returnStatus);
 
 		return array($success, $body, $url, $returnStatus);

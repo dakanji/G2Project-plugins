@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -63,6 +64,7 @@ class ZipCartAdminController extends GalleryController {
 				// Try zipping something
 				$zipBase = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'zip_');
 				$zipFile = $zipBase . '.zip';
+
 				$gallery->guaranteeTimeLimit(30);
 				$gallery->startRecordingDebugSnippet();
 
@@ -74,6 +76,7 @@ class ZipCartAdminController extends GalleryController {
 
 				if (!$success || !$platform->file_exists($zipFile)) {
 					$error[] = 'form[error][path][badZip]';
+
 					GalleryUtilities::putRequestVariable('debugSnippet', $debugSnippet);
 				}
 
@@ -182,6 +185,7 @@ class ZipCartAdminView extends GalleryView {
 
 		if (isset($form['error']['path']['badZip']) > 0) {
 			$ZipCartAdmin['debugSnippet'] = GalleryUtilities::getRequestVariables('debugSnippet');
+
 			$template->javascript('lib/javascript/BlockToggle.js');
 		}
 

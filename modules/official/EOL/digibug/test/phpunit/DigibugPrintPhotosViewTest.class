@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/digibug/DigibugPrintPhotos.inc');
 
 /**
@@ -93,6 +93,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		global $gallery;
 
 		$itemId = $this->_item->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
 
@@ -136,9 +137,9 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		// Grab session we provide for the raw image
 		$session    =& $gallery->getSession();
 		$sessionVar = GalleryUtilities::prefixFormVariable($session->getKey());
-		preg_match_all("/image_1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
-		$digibugSessionId = $matches[1][0];
 
+		preg_match_all("/image_1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
+		$digibugSessionId              = $matches[1][0];
 		$_COOKIE[SESSION_ID_PARAMETER] = $digibugSessionId;
 		$digibugSession                = new GallerySession();
 
@@ -159,11 +160,12 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		// See bug 1706657
 		global $gallery;
 
-		$session =& $gallery->getSession();
-
+		$session      =& $gallery->getSession();
 		$itemId       = $this->_item->getId();
 		$publicItemId = $this->_publicItem->getId();
+
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
+
 		$session->put(
 			'digibug.cart',
 			array(
@@ -180,8 +182,8 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 
 		// Give the active user view permissions through session-basd permissions
 		$sessionPermissionEntityId = $itemId;
-		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($sessionPermissionEntityId));
 
+		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($sessionPermissionEntityId));
 		$ret = GalleryCoreApi::addEntityPermission(
 			$itemId,
 			$sessionPermissionEntityId,
@@ -221,13 +223,13 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		// Grab session we provide for the raw image
 		$session    =& $gallery->getSession();
 		$sessionVar = GalleryUtilities::prefixFormVariable($session->getKey());
-		$matched    = preg_match_all("/image_1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
+
+		$matched = preg_match_all("/image_1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
 
 		if (!$matched) {
 			$this->fail('No digibug session found in generated HTML');
 		} else {
-			$digibugSessionId = $matches[1][0];
-
+			$digibugSessionId              = $matches[1][0];
 			$_COOKIE[SESSION_ID_PARAMETER] = $digibugSessionId;
 			$digibugSession                = new GallerySession();
 

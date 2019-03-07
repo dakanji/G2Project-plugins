@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,8 +16,7 @@
 /////////////////////////////////////////////////////////////////
 class getid3_tiff extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$TIFFheader = $this->fread(4);
 
@@ -44,8 +44,7 @@ class getid3_tiff extends getid3_handler {
 		$info['video']['lossless']   = true;
 		$info['tiff']['ifd']         = array();
 		$CurrentIFD                  = array();
-
-		$FieldTypeByteLength = array(
+		$FieldTypeByteLength         = array(
 			1 => 1,
 			2 => 1,
 			3 => 2,
@@ -111,7 +110,8 @@ class getid3_tiff extends getid3_handler {
 
 			$info['tiff']['ifd'][] = $CurrentIFD;
 			$CurrentIFD            = array();
-			$nextIFDoffset         = $this->TIFFendian2Int($this->fread(4), $info['tiff']['byte_order']);
+
+			$nextIFDoffset = $this->TIFFendian2Int($this->fread(4), $info['tiff']['byte_order']);
 		}
 
 		foreach ($info['tiff']['ifd'] as $IFDid => $IFDarray) {

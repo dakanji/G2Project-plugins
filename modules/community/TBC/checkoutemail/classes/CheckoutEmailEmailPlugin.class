@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -41,7 +42,6 @@ class CheckoutEmailEmailPlugin extends CheckoutEmailInterface_1_0 {
 	 * @see CheckoutEmailInterface_1_0::getEmailTemplateAndVariables()
 	 */
 	public function getEmailTemplateAndVariables($transactionId, $templateName) {
-
 		// check here to see if a checkoutemail transaction
 		list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($transactionId);
 

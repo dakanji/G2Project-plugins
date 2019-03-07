@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -63,6 +64,7 @@ class mapItemEdit extends ItemEditPlugin {
 					. '[0-9](\.[0-9]{0,20})?)|(\.[0-9]{1,19}))';
 			$tiltregex    = '((90(\.0*)?)|([0-8]?[0-9](\.[0-9]{0,20})?)|(\.[0-9]{1,19}))?';
 			$rangeregex   = '([0-9]{0,8})';
+
 			// latitude can be +/- 90 degrees, longitude can be +/- 180 degrees
 			$latregex = '[-+]?' . $tiltregex;
 			$lonregex = $headingregex;
@@ -146,7 +148,8 @@ class mapItemEdit extends ItemEditPlugin {
 	public function loadTemplate(&$template, &$form, $item, $thumbnail) {
 		if ($form['formName'] != 'mapItemEdit') {
 			$form['formName'] = 'mapItemEdit';
-			$form['itemId']   = $item->getId();
+
+			$form['itemId'] = $item->getId();
 		}
 
 		list($ret, $form['exif']) = GoogleMapUtilities::getGPSCoordsFromExif($item);
@@ -204,13 +207,15 @@ class mapItemEdit extends ItemEditPlugin {
 		}
 
 		$tpl = 'modules/map/templates/mapItemEdit.tpl';
+
 		$template->setVariable('controller', 'map.mapItemEdit');
 
 		// Add stuff for the help system
 		$form['picbase'] = GalleryUtilities::convertPathToUrl(substr(dirname(__FILE__), 0, -11)) . 'modules/map/images/';
 
 		list($ret, $form['UserHelp']) = GalleryCoreApi::getPluginParameter('module', 'map', 'UserHelp');
-		$msie                         = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
+
+		$msie = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
 
 		if (!isset($_SERVER['HTTP_USER_AGENT']) || !preg_match($msie, $_SERVER['HTTP_USER_AGENT'])
 			|| preg_match('/opera/i', $_SERVER['HTTP_USER_AGENT'])
@@ -227,7 +232,6 @@ class mapItemEdit extends ItemEditPlugin {
 	 * @see ItemEditPlugin::isSupported
 	 */
 	public function isSupported($item, $thumbnail) {
-
 		// Make sure we have permission do edit the google map option of this item
 		$ret = GalleryCoreApi::assertHasItemPermission($item->getId(), 'map.EditMap');
 

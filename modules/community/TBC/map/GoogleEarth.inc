@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 // Written by Nic Roets. Placed in the public domain.
 /* Changelog:
  Changed from map module 0.5.1d (Karl Newman, 2006-12-22):
@@ -113,10 +115,13 @@ class GoogleEarthView extends GalleryView {
 			. '<Pair><key>normal</key><styleUrl>#PhotoIconNormal</styleUrl></Pair>' . "\n"
 			. '<Pair><key>highlight</key><styleUrl>#PhotoIconHighlight</styleUrl></Pair></StyleMap>'
 			. "\n" . $placemarks . "</Document>\n</kml>\n";
+
 			$phpVm->header('Content-Type: application/vnd.google-earth.kml+xml');
 			$phpVm->header('Content-Description: View Gallery items in Google Earth');
 			$phpVm->header("Content-Disposition: inline; filename=GalleryGE-{$itemId}.kml");
+
 			$phpVm->header('Content-Length: ' . strlen($outstring));
+
 			echo $outstring;
 		}
 
@@ -158,6 +163,7 @@ class GoogleEarthView extends GalleryView {
 				if (!array_search($item->getId(), $ancestors)) {
 					// Add ourselves to the ancestors array
 					$ancestors[] = $item->getId();
+
 					// Load the children
 					list($ret, $childItems) = GalleryCoreApi::loadEntitiesById($childIds);
 
@@ -227,6 +233,7 @@ class GoogleEarthView extends GalleryView {
 
 		// Get the item title if not blank, else use the file/directory name (path component)
 		$title = $item->getTitle() ? $item->getTitle() : $item->getPathComponent();
+
 		// Use the item summary for the Snippet, otherwise use the item description
 		$summstring = $item->getSummary() ? GalleryUtilities::markup($item->getSummary(), 'strip') : smarty_modifier_entitytruncate(
 			GalleryUtilities::markup($item->getDescription(), 'strip'),
@@ -270,6 +277,7 @@ class GoogleEarthView extends GalleryView {
 
 		if ($goodcoords) {
 			$coord = sprintf('%s,%s', $posxy[1], $posxy[0]);
+
 			// This spot is one of the weird ones that wants longitude listed first
 			$point = "<Point><altitudeMode>clampToGround</altitudeMode>\n<coordinates>"
 			 . $coord . ",0</coordinates>\n</Point>\n";
@@ -319,11 +327,11 @@ class GoogleEarthView extends GalleryView {
 		 * commas in the float values. Limit decimal places for range, tilt, heading. If %F is
 		 * not supported (PHP 4.3.9 or 5.0.2 or earlier), fall back to the raw string.
 		 */
-
 		if ($goodcoords) {
 			// Parse the 'GELookAt' field
 			if (!empty($LookAtstring)) {
 				$lookat = explode(',', $LookAtstring);
+
 				/*
 				 * If at least one parameter, then #1 is the heading in degrees.
 				 * Must be between 0 and 360 degrees
@@ -386,12 +394,13 @@ class GoogleEarthView extends GalleryView {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnstring = '';
-		$theid        = $item->getId();
+
+		$theid = $item->getId();
+
 		// Get the thumbnail item ID for the item
 		list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($theid));
 
-		$thumbId = $thumbs[$theid]->getId();
-
+		$thumbId    = $thumbs[$theid]->getId();
 		$dthumbLink = $urlGenerator->generateUrl(
 			array(
 				'view'   => 'core.DownloadItem',
@@ -402,7 +411,6 @@ class GoogleEarthView extends GalleryView {
 				'htmlEntities' => false,
 			)
 		);
-
 		$hsitemLink = $urlGenerator->generateUrl(
 			array(
 				'view'   => 'core.ShowItem',

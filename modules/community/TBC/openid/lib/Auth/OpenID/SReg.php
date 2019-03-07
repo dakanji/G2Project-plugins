@@ -43,7 +43,6 @@
  * Import message and extension internals.
  */
 require_once 'Auth/OpenID/Message.php';
-
 require_once 'Auth/OpenID/Extension.php';
 
 // The data fields that are listed in the sreg spec
@@ -78,16 +77,13 @@ function Auth_OpenID_checkFieldName($field_name) {
 // URI used in the wild for Yadis documents advertising simple
 // registration support
 define('Auth_OpenID_SREG_NS_URI_1_0', 'http://openid.net/sreg/1.0');
-
 // URI in the draft specification for simple registration 1.1
 // <http://openid.net/specs/openid-simple-registration-extension-1_1-01.html>
 define('Auth_OpenID_SREG_NS_URI_1_1', 'http://openid.net/extensions/sreg/1.1');
-
 // This attribute will always hold the preferred URI to use when
 // adding sreg support to an XRDS file or in an OpenID namespace
 // declaration.
 define('Auth_OpenID_SREG_NS_URI', Auth_OpenID_SREG_NS_URI_1_1);
-
 Auth_OpenID_registerNamespaceAlias(Auth_OpenID_SREG_NS_URI_1_1, 'sreg');
 
 /**
@@ -99,6 +95,7 @@ Auth_OpenID_registerNamespaceAlias(Auth_OpenID_SREG_NS_URI_1_1, 'sreg');
  */
 function Auth_OpenID_supportsSReg(&$endpoint) {
 	return $endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_1) ||
+
 			$endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_0);
 }
 
@@ -231,8 +228,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 
 		// Since we're going to mess with namespace URI mapping, don't
 		// mutate the object that was passed in.
-		$m = $request->message;
-
+		$m           = $request->message;
 		$obj->ns_uri = $obj->_getSRegNS($m);
 		$args        = $m->getArgs($obj->ns_uri);
 
@@ -454,7 +450,8 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
 	 * stored under the key 'nickname'.
 	 */
 	public function extractResponse($request, $data) {
-		$obj         = new Auth_OpenID_SRegResponse();
+		$obj = new Auth_OpenID_SRegResponse();
+
 		$obj->ns_uri = $request->ns_uri;
 
 		foreach ($request->allRequestedFields() as $field) {
@@ -485,7 +482,8 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
 	public function fromSuccessResponse(&$success_response, $signed_only = true) {
 		global $Auth_OpenID_sreg_data_fields;
 
-		$obj         = new Auth_OpenID_SRegResponse();
+		$obj = new Auth_OpenID_SRegResponse();
+
 		$obj->ns_uri = $obj->_getSRegNS($success_response->message);
 
 		if ($signed_only) {

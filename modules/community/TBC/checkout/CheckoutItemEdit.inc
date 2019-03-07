@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
 
@@ -34,8 +34,9 @@ class CheckoutItemEdit extends ItemEditPlugin {
 	public function handleRequest($form, &$item, &$preferred) {
 		global $gallery;
 
-		$status  = 0;
-		$error   = array();
+		$status = 0;
+		$error  = array();
+
 		$itemId  = $item->getId();
 		$storage =& $gallery->getStorage();
 
@@ -146,6 +147,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 			$thisId = $item->getId();
 
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($thisId, true, false);
+
 			// must be using custom parameters, but don't pass via external plugins
 			if ($ret) {
 				return array($ret, null);
@@ -164,12 +166,14 @@ class CheckoutItemEdit extends ItemEditPlugin {
 			}
 
 			$form['products'] = array();
+
 			// display *global* Name and productId, but *local* price and visible fields if they exist
 			foreach ($products as $productIndex => $product) {
 				$productId = $product['productId'];
 
 				if (key_exists($productId, $localProdParams)) {
-					$form['products'][$productIndex]                = $localProdParams[$productId]; // start with all local params
+					// start with all local params
+					$form['products'][$productIndex]                = $localProdParams[$productId];
 					$form['products'][$productIndex]['offerRemove'] = 'true';
 				} else {
 					$form['products'][$productIndex]['offerRemove'] = 'false';

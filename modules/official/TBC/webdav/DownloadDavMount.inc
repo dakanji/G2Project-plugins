@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -50,7 +51,6 @@ class DownloadDavMountView extends GalleryView {
 		);
 
 		echo "<dm:mount xmlns:dm=\"http://purl.org/NET/webdav/mount\">\n";
-
 		/*
 		 * I guess URL shouldn't include session id because a query string may break some clients
 		 * and reusing session id by another browser may be considdered session hijacking
@@ -95,6 +95,7 @@ class DownloadDavMountView extends GalleryView {
 
 		if (!$isAnonymous) {
 			$user = $gallery->getActiveUser();
+
 			echo '  <dm:username>' . $user->getUserName() . "</dm:username>\n";
 		}
 

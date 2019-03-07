@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @version $Revision: 13704 $ $Date: 2006-05-21 10:08:02 -0700 (Sun, 21 May 2006) $
  * @package ItemAdd
@@ -119,7 +121,6 @@ class ItemAddBulk extends ItemAddPlugin {
 							}
 
 							$newItem->setKeywords($line['keywords']);
-
 							$ret = $newItem->save();
 
 							if ($ret) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -31,7 +32,6 @@ class MembersListView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
-
 		GalleryCoreApi::requireOnce('modules/members/classes/GalleryMembersHelper.class');
 
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());

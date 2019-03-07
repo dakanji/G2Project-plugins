@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 /**
  * @package map
  * @author Steven N. Severinghaus <sns@severinghaus.org>
@@ -123,7 +125,9 @@ class MapThemeAdminView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
+
 		$form['formName'] = 'MapThemeAdmin';
+
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
 
@@ -203,6 +207,7 @@ class MapThemeAdminView extends GalleryView {
 		// setup the list of InfoWindow templates
 		$mydir              = dir($basegallerydir . 'modules/map/templates/infowindow/');
 		$form['windowlist'] = '';
+
 		// Loop through all file and folder in the directory
 		while ($file = $mydir->read()) {
 			// if we have a file then proceed with it
@@ -224,6 +229,7 @@ class MapThemeAdminView extends GalleryView {
 		}
 
 		$mydir->close();
+
 		/*
 		 * Just make sure anything got created, if, not return an error that there is no control
 		 * available
@@ -233,10 +239,12 @@ class MapThemeAdminView extends GalleryView {
 		}
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
+			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
+
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 

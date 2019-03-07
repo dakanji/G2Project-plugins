@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: DupeDetectShowDupesControllerTest.class,v $
  *
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  * @version $Revision: 0.9 $ $Date: 2005/08/21 05:46:22 $
  * @package DupeDetect
@@ -30,6 +32,7 @@
  * Load required classes
  */
 GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');/**
+
  * DupeDetectShowDupes Controller tests
  *
  * @package DupeDetect
@@ -55,7 +58,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -77,7 +79,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -117,7 +118,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'leaveAsIs');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -140,7 +140,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 			$results,
 			'wrong results on Submit of empty form'
 		);
-
 		$ret = $this->_cleanTestPair($pair);
 
 		if ($ret->isError()) {
@@ -163,7 +162,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'ignore');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -223,7 +221,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'deleteSrc');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -267,13 +264,11 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		GalleryUtilities::removeFormVariables('form');
-
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'deleteDup');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -327,7 +322,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'linkToSrc');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -381,13 +375,11 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		// now test 'linkToDup'
 		GalleryUtilities::removeFormVariables('form');
-
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'linkToDup');
 
 		$results = $this->handleRequest();
-
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -497,8 +489,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		// create a list of dupe pairs
-		$pairsList               = array();
-		$dupRecord               = array();
+		$pairsList = array();
+		$dupRecord = array();
+
 		$dupRecord['srcItemId']  = $this->_item1->getId();
 		$dupRecord['dupItemId']  = $this->_item2->getId();
 		$dupRecord['dupType']    = DUPEDETECT_HISTOGRAM_ALGORITHM;
@@ -514,7 +507,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assert(count($entities) == 2, 'didn\'t get 2 entities');
-
 		$dupRecord['srcItem'] = $entities[0];
 		$dupRecord['dupItem'] = $entities[1];
 
@@ -526,6 +518,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		$dupRecord['srcItemData'] = $dupRecord['srcItem']->getMemberData();
+
 		// attach thumbnail
 		if (isset($thumbnails[$dupRecord['srcItemId']])) {
 			$thumbnail = $thumbnails[$dupRecord['srcItemId']];
@@ -540,6 +533,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		$dupRecord['dupItemData'] = $dupRecord['dupItem']->getMemberData();
+
 		// attach thumbnail
 		if (isset($thumbnails[$dupRecord['dupItemId']])) {
 			$thumbnail = $thumbnails[$dupRecord['dupItemId']];
@@ -584,7 +578,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
-
 		$ret = DupeDetectHelper::deleteDupes($pair['srcItemId']);
 
 		if ($ret->isError()) {

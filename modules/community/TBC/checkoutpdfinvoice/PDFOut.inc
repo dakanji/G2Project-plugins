@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -40,9 +41,9 @@ class PDFOutView extends GalleryView {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 		GalleryCoreApi::requireOnce('modules/core/classes/helpers/GalleryDerivativeHelper_simple.class');
-
 		GalleryCoreApi::requireOnce('modules/checkoutpdfinvoice/lib/fpdf/fpdf.php');
 		GalleryCoreApi::requireOnce('modules/checkoutpdfinvoice/lib/fpdf/fpdi.php');
+
 		global $gallery;
 
 		// Make sure user is adminstrator
@@ -124,14 +125,15 @@ class PDFOutView extends GalleryView {
 
 		// initiate FPDI
 		$pdf = new FPDI();
+
 		// add a page
 		$pdf->AliasNbPages();
 
 		// set the sourcefile
 		$pdf->setSourceFile('modules/checkoutpdfinvoice/templates/pdf/invoice_master.pdf');
+
 		// import page 1
 		$tplIdx = $pdf->importPage(1);
-
 		$pdf->SetFont('Arial');
 		$pdf->SetTextColor(0, 0, 0);
 		$pdf->SetFontSize(9.5);
@@ -143,7 +145,9 @@ class PDFOutView extends GalleryView {
 			// start a new page
 			$pdf->AddPage();
 			$pdf->useTemplate($tplIdx, 0, 0);
+
 			PDFOutView::writeHeader($transaction, $pdf);
+
 			$pdf->SetY($firstItemY);
 
 			// items
@@ -182,21 +186,16 @@ class PDFOutView extends GalleryView {
 				$pdf->SetXY($col2X, $curY);
 				$itemName = PDFOutView::fString($transactionItem->getItemName());
 				$pdf->MultiCell($col2Width, $lineHeight, $itemName, 0, 'L');
-
 				$pdf->SetXY($col3X, $curY);
 				$productName = PDFOutView::fString($transactionItem->getProductName());
 				$notes       = PDFOutView::fString($transactionItem->getNotes());
 				$pdf->MultiCell($col3Width, $lineHeight, $productName . "\n" . $notes, 0, 'L');
-
 				$pdf->SetXY($col4X, $curY);
 				$pdf->MultiCell($col4Width, $lineHeight, 'Qty: ' . $transactionItem->getQty(), 0, 'L');
-
 				$pdf->SetXY($col5XRight - $col5Width, $curY);
 				$pdf->MultiCell($col5Width, $lineHeight, '@ ' . sprintf($cformat, $transactionItem->getPriceEach()), 0, 'R');
-
 				$pdf->SetXY($col6XRight - $col6Width, $curY);
 				$pdf->MultiCell($col6Width, $lineHeight, $csymbol . sprintf($cformat, $transactionItem->getPriceTotal()), 0, 'R');
-
 				$pdf->SetY($curY + $itemYinc);
 			}
 		}
@@ -207,7 +206,9 @@ class PDFOutView extends GalleryView {
 		if (count($itemGroups[0]) + 1 >= $itemsPerPage) {
 			$pdf->AddPage();
 			$pdf->useTemplate($tplIdx, 0, 0);
+
 			PDFOutView::writeHeader($transaction, $pdf);
+
 			$pdf->SetY($firstItemY);
 		}
 
@@ -267,6 +268,7 @@ class PDFOutView extends GalleryView {
 		$pdf->SetX($leftMargin);
 		$commentText = preg_replace('/\s\s+/', ' ', $transaction->getCustNotes() . $transaction->getCustComments());
 		$commentText = PDFOutView::fString($commentText);
+
 		$pdf->Write($lineHeight, $commentText);
 
 		// send the output
@@ -280,15 +282,20 @@ class PDFOutView extends GalleryView {
 		global $gallery;
 
 		$lineHeight = 3.5;
+
 		// put the date
 		$pdf->Text(156, 49, strftime('%d %b %Y', $transaction->getDate()));
+
 		// order reference
 		$pdf->Text(156, 73, $transaction->getId());
+
 		// order placed by
 		$placedBy = PDFOutView::fString($transaction->getFirstName() . ' ' . $transaction->getLastName());
 		$pdf->Text(156, 80, $placedBy);
+
 		// page
 		$pdf->Text(156, 87, $pdf->PageNo() . ' / {nb}');
+
 		// addressee
 		$line1 = PDFOutView::fString($transaction->getRecipientName());
 
@@ -310,6 +317,7 @@ class PDFOutView extends GalleryView {
 		}
 
 		$addressblock = PDFOutView::fString($addressblock);
+
 		$pdf->SetLeftMargin(40);
 		$pdf->SetXY(40, 55);
 		$pdf->Write($lineHeight, $addressblock);

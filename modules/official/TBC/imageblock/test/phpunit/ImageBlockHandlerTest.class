@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -123,7 +124,6 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		}
 
 		$this->assert($disabledFlag, 'Add eventHandler failed');
-
 		$ret = GalleryCoreApi::deleteEntityById($this->_handlerItem->getId(), 'GalleryDataItem');
 
 		if ($ret) {
@@ -151,6 +151,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -175,6 +176,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -199,6 +201,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -223,6 +226,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -239,6 +243,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -259,6 +264,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -288,6 +294,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -296,6 +303,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
+
 		$this->_verifyDisabledFlagForItems($checkItems, true);
 	}
 
@@ -315,6 +323,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -323,6 +332,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
+
 		$this->_verifyDisabledFlagForItems($checkItems, false);
 	}
 
@@ -342,6 +352,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -350,6 +361,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
+
 		$this->_verifyDisabledFlagForItems($checkItems, true);
 	}
 
@@ -369,6 +381,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -377,6 +390,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
+
 		$this->_verifyDisabledFlagForItems($checkItems, false);
 	}
 
@@ -387,6 +401,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -407,6 +422,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -424,6 +440,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 	public function testImageBlockSaveEventHandlerShouldIgnoreNonGalleryItemEntities() {
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
+
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Just make sure the test runs without errors
@@ -435,7 +452,6 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($user);
-
 		$user->setFullName('new name to trigger new save');
 
 		list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($user->getId());

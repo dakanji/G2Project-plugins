@@ -72,7 +72,6 @@
 // TODO : Implement EXIF decoding of SubjectArea field
 // TODO : Add a put_EXIF_TIFF function
 // Initialisation
-
 if (!isset($GLOBALS['HIDE_UNKNOWN_TAGS'])) {
 	$GLOBALS['HIDE_UNKNOWN_TAGS'] = false;
 }
@@ -86,15 +85,12 @@ if (!isset($GLOBALS['SHOW_BINARY_DATA_TEXT'])) {
 }
 
 require_once 'EXIF_Tags.php';
+
 //include_once 'EXIF_Makernote.php';
 require_once 'PIM.php';
-
 require_once 'Unicode.php';
-
 require_once 'JPEG.php';
-
 require_once 'IPTC.php';
-
 require_once 'Photoshop_IRB.php';       // Change: as of version 1.11  - Required for TIFF with embedded IRB
 require_once 'XMP.php';                 // Change: as of version 1.11  - Required for TIFF with embedded XMP
 require_once 'pjmt_utils.php';          // Change: as of version 1.11  - Required for directory portability
@@ -541,7 +537,6 @@ function Interpret_EXIF_to_HTML($Exif_array, $filename) {
 
 // End of Function:     Interpret_EXIF_to_HTML
 // INTERNAL FUNCTIONS
-
 /******************************************************************************
  *
  * Internal Function:     get_TIFF_Packed_Data
@@ -657,9 +652,8 @@ function get_IFD_Array_Packed_Data($ifd_data, $Zero_IFD_offset, $Byte_Align) {
  ******************************************************************************/
 
 function get_IFD_Packed_Data($ifd_data, $IFD_offset, $Byte_Align, $Another_IFD) {
-	$ifd_body_str = '';
-	$ifd_data_str = '';
-
+	$ifd_body_str          = '';
+	$ifd_data_str          = '';
 	@$Tag_Definitions_Name = $ifd_data['Tags Name'];
 
 	// Count the Tags in this IFD
@@ -746,6 +740,7 @@ function get_IFD_Packed_Data($ifd_data, $IFD_offset, $Byte_Align, $Another_IFD) 
 				// This is a Sub-IFD
 				// Calculate the offset to the start of the Sub-IFD
 				$data_offset = $IFD_offset + $IFD_len + strlen($ifd_data_str);
+
 				// Get the packed data for the IFD chain as the data for this tag
 				$data = get_IFD_Array_Packed_Data($tag['Data'], $data_offset, $Byte_Align);
 			} else {
@@ -787,8 +782,7 @@ function get_IFD_Packed_Data($ifd_data, $IFD_offset, $Byte_Align, $Another_IFD) 
 					// This is the makernote - It will have already been stored
 					// at its original offset to help preserve it
 					// all we need to do is add the Offset to the IFD packed data
-					$data_offset = $tag['Offset'];
-
+					$data_offset   = $tag['Offset'];
 					$ifd_body_str .= put_IFD_Data_Type($data_offset, 4, $Byte_Align);
 				} else {
 					// This is NOT the makernote
@@ -852,8 +846,7 @@ function get_IFD_Packed_Data($ifd_data, $IFD_offset, $Byte_Align, $Another_IFD) 
  ******************************************************************************/
 
 function process_TIFF_Header($filehnd, $Tag_Definitions_Name) {
-
-		// Save the file position where the TIFF header starts, as offsets are relative to this position
+	// Save the file position where the TIFF header starts, as offsets are relative to this position
 	$Tiff_start_pos = ftell($filehnd);
 
 	// Read the eight bytes of the TIFF header
@@ -865,6 +858,7 @@ function process_TIFF_Header($filehnd, $Tag_Definitions_Name) {
 	}
 
 	$pos = 0;
+
 	// First two bytes indicate the byte alignment - should be 'II' or 'MM'
 	// II = Intel (LSB first, MSB last - Little Endian)
 	// MM = Motorola (MSB first, LSB last - Big Endian)
@@ -1080,8 +1074,7 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 
 		// Total Data size is the Data Count multiplied by the size of the Data Type
 		$Total_Data_Size = $GLOBALS['IFD_Data_Sizes'][$Data_Type] * $Data_Count;
-
-		$Data_Start_pos = -1;
+		$Data_Start_pos  = -1;
 
 		// If the total data size is larger than 4 bytes, then the data part is the offset to the real data
 		if ($Total_Data_Size > 4) {
@@ -1216,7 +1209,7 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 			$OutputArray[$Tag_No]['ByteAlign']   = $Byte_Align;
 
 			// Save a pointer to this entry for Maker note processing later
-			$GLOBALS['Maker_Note_Tag'] = & $OutputArray[$Tag_No];
+			$GLOBALS['Maker_Note_Tag'] =& $OutputArray[$Tag_No];
 		}
 
 		// Check if this is a IPTC/NAA Record within the EXIF IFD
@@ -2274,7 +2267,6 @@ function get_IFD_value_as_text($Exif_Tag) {
  *               their datatype number
  *
  ******************************************************************************/
-
 $GLOBALS['IFD_Data_Sizes'] = array(
 	1  => 1,         // Unsigned Byte
 	2  => 1,         // ASCII String

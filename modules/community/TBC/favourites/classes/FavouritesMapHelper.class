@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -102,18 +103,18 @@ class FavouritesMapHelper {
 
 		$results = array();
 
-		$query        = 'SELECT 
+		$query = 'SELECT 
 		[GalleryUser::id],
 		COUNT([GalleryUser::id]), 
 		[GalleryUser::fullName],
 		[GalleryUser::userName]
-		
 		FROM [GalleryUser]
 		INNER JOIN [GalleryFavouritesMap]
 		ON [GalleryUser::id] = [GalleryFavouritesMap::userId]
 		GROUP BY [GalleryUser::id],[GalleryUser::fullName],[GalleryUser::userName]
 		ORDER BY [GalleryUser::fullName]
 		';
+
 		$queryOptions = array();
 
 		list($ret, $searchResults) = $gallery->search($query, $queryOptions);

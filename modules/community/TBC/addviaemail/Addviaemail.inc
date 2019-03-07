@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -32,8 +33,7 @@ class AddviaemailController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
 
-		$itemId = GalleryUtilities::getRequestVariables('itemId');
-
+		$itemId   = GalleryUtilities::getRequestVariables('itemId');
 		$redirect = $status = $error = array();
 
 		if (isset($form['action']['save'])) {
@@ -91,7 +91,9 @@ class AddviaemailView extends GalleryView {
 
 		$Addviaemail         = array();
 		$Addviaemail['item'] = (array)$item;
+
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailHelper.class');
+
 		// list ($ret, $Addviaemail['value']) = AddviaemailHelper::getItemValue($item->getId());
 		list($ret, $Addviaemail, $newItems) = AddviaemailHelper::showDevPage();
 

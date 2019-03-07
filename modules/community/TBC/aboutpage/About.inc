@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: About.inc,v $
  *
@@ -73,8 +74,7 @@ class AboutView extends GalleryView {
 
 		$template->setVariable('form', $form);
 		$template->title(
-			$gallery->i18n('Contact') . '::' .
-						 $gallery->i18n('About')
+			$gallery->i18n('Contact') . '::' . $gallery->i18n('About')
 		);
 
 		return array(

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
 
 /**
@@ -44,6 +44,7 @@ class AdminSessionController extends GalleryController {
 			|| isset($form['action']['addmine'])
 		) {
 			GalleryCoreApi::requireOnce('modules/core/classes/GallerySession.class');
+
 			$mySession = new GallerySession();
 
 			list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
@@ -83,6 +84,7 @@ class AdminSessionController extends GalleryController {
 
 				if (isset($form['action']['addmine'])) {
 					list($ret, $myItems) = CheckoutHelper::loadCheckoutItemsFromSession();
+
 					// Why no sensible array merge for arrays with numeric indices?
 					foreach ($myItems as $myKey => $myItem) {
 						$items[$myKey] = $myItem;
@@ -146,6 +148,7 @@ class AdminSessionView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GallerySession.class');
+
 		$mySession = new GallerySession();
 
 		list($ret, $results) = GalleryCoreApi::getMapEntry(
@@ -169,8 +172,8 @@ class AdminSessionView extends GalleryView {
 
 		$userNames = array();
 		$pSession  = array();
-		$pSession  = $results->nextResult();
 
+		$pSession                      = $results->nextResult();
 		$mySession->_userId            = (int)$pSession[1];
 		$mySession->_remoteIdentifier  = unserialize($pSession[2]);
 		$mySession->_creationTime      = (int)$pSession[3];
@@ -179,8 +182,7 @@ class AdminSessionView extends GalleryView {
 		$mySession->_loadedSessionData = $mySession->_getSerializedSession();
 		$hostName                      = gethostbyaddr($mySession->_remoteIdentifier[0]);
 		$host                          = $hostName ? $hostName : $mySession->_remoteIdentifier[0];
-
-		$transactionId = $mySession->get('checkout.transactionId');
+		$transactionId                 = $mySession->get('checkout.transactionId');
 
 		if (ereg(';', $transactionId)) {
 			$transactionId = unserialize($transactionId);
@@ -281,7 +283,9 @@ class AdminSessionView extends GalleryView {
 			$comboCount = 0;
 
 			foreach ($itemProducts[$item['id']] as $thisProduct) {
-				if (!isset($item[$thisProduct['productId']]['quant']) && $thisProduct['dropdown'] == 'true') {
+				if (!isset($item[$thisProduct['productId']]['quant'])
+					&& $thisProduct['dropdown'] == 'true'
+				) {
 					$comboCount++;
 				}
 
@@ -355,6 +359,7 @@ class AdminSessionView extends GalleryView {
 		}
 
 		$tpl['itemCount'] = count($items);
+
 		$template->setVariable('tpl', $tpl);
 		$template->setVariable('session', $session);
 		$template->setVariable('controller', 'checkout.AdminSession');

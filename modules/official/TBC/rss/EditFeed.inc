@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
 GalleryCoreApi::requireOnce('modules/rss/classes/RssHelper.class');
 
@@ -38,7 +38,6 @@ class EditFeedController extends GalleryController {
 		global $gallery;
 
 		$status = $results = $error = array();
-
 		$mode   = empty($form['mode']) ? '' : $form['mode'];
 		$itemId = !empty($form['itemId']) ? (int)$form['itemId'] : (int)GalleryUtilities::getRequestVariables('itemId');
 
@@ -191,7 +190,6 @@ class EditFeedController extends GalleryController {
 			 * Delete button was pressed, delete feed, return to feedlist.
 			 * We might want to provide an 'are you sure' here in the future.
 			 */
-
 			$ret = RssMapHelper::deleteFeed($form['action']['delete']);
 
 			if ($ret) {
@@ -249,7 +247,8 @@ class EditFeedView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$EditFeed           = array();
+		$EditFeed = array();
+
 		$EditFeed['itemId'] = $item->getId();
 
 		// Fetch all feed definitions
@@ -362,7 +361,6 @@ class EditFeedView extends GalleryView {
 			 * Retieving all the feeds for this 'itemId'
 			 * Fetch all feed definitions
 			 */
-
 			list($ret, $feeds) = RssMapHelper::fetchFeedsForItem($EditFeed['itemId']);
 
 			if ($ret) {
@@ -379,6 +377,7 @@ class EditFeedView extends GalleryView {
 		}
 
 		$EditFeed['rssVersionList'] = array('0.91', '2.0');
+
 		$template->setVariable('EditFeed', $EditFeed);
 		$template->setVariable('param', $param);
 		$template->setVariable('controller', 'rss.EditFeed');

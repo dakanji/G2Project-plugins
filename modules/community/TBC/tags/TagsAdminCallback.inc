@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -80,7 +81,6 @@ class TagsAdminCallbackView extends GalleryView {
 		 $module->translate('Update') . '</a>
 	     </td>
 	     </tr>';
-
 		$passedCss = explode('&&', html_entity_decode($tagClassValues));
 
 		for ($i = 0; $i < $classNumber; $i++) {

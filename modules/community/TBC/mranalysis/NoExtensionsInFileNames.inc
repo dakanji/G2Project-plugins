@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: NoExtensionsInFileNames.inc,v $
  * $Revision: 1848 $
@@ -20,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  *
  * @package MRAnalysis
@@ -44,7 +46,6 @@ class NoExtensionsInFileNamesView extends GalleryView {
 		$form['formName'] = 'AdminNoExtensionsInFileNames';
 
 		$gallery->guaranteeTimeLimit(120);
-
 		$query = "
             SELECT
                 [GalleryPhotoItem::id]

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -205,6 +206,7 @@ class UploadItemsController extends GalleryController {
 	 */
 	public function _getCharsetFromRequest() {
 		$lcid = (int)GalleryUtilities::getRequestVariablesNoPrefix('lcid');
+
 		/*
 		 * Lookup table: Locale ID to Code Page. Source:
 		 * http://www.microsoft.com/globaldev/reference/oslocversion.mspx

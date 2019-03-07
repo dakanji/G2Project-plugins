@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -50,6 +51,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function getPaymentPlugins($loadPlugins = true) {
 		$pluginInterface = 'CheckoutPaymentInterface_1_3';
+
 		// Find all our payment plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -95,6 +97,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function getCustomPagePlugins(&$template, &$form, $item, $thumbnail) {
 		$pluginInterface = 'CheckoutCustomPageInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -132,6 +135,7 @@ class CheckoutInterfaceHelper {
 
 	public function saveCustomPagePlugins($form, &$item, &$preferred) {
 		$pluginInterface = 'CheckoutCustomPageInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -171,6 +175,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function getStatusPagePlugins(&$template, &$form) {
 		$pluginInterface = 'CheckoutStatusPageInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -215,6 +220,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function handleStatusPagePlugins(&$form) {
 		$pluginInterface = 'CheckoutStatusPageInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -259,6 +265,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function doItemListPlugins(&$items) {
 		$pluginInterface = 'CheckoutProductListInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -296,6 +303,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function doProductListPlugins(&$products, $itemId = null) {
 		$pluginInterface = 'CheckoutProductListInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -332,6 +340,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function doProductListPluginsAdjustCart($form, &$items) {
 		$pluginInterface = 'CheckoutProductListInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -368,6 +377,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function doTransactionDetailsPlugins(&$items, &$itemProducts, &$paper, &$posts, &$discounts) {
 		$pluginInterface = 'CheckoutTransactionDetailsInterface_1_1';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 
@@ -404,6 +414,7 @@ class CheckoutInterfaceHelper {
 	 */
 	public function getEmailPlugins($transactionId, $templateName) {
 		$pluginInterface = 'CheckoutEmailInterface_1_0';
+
 		// Find all our plugins
 		GalleryCoreApi::requireOnce('modules/checkout/classes/' . $pluginInterface . '.class');
 

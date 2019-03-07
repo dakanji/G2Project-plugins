@@ -120,7 +120,6 @@
  * Returns:      output - the well formed UTF-8 version of the string
  *
  ******************************************************************************/
-
 function UTF8_fix($utf8_text) {
 	// Initialise the current position in the string
 	$pos = 0;
@@ -485,8 +484,7 @@ function UTF16_to_unicode_array($utf16_text, $MSB_first) {
  ******************************************************************************/
 
 function unicode_array_to_UTF8($unicode_array) {
-
-		// Create a string to receive the UTF-8 output
+	// Create a string to receive the UTF-8 output
 	$output = '';
 
 	// Cycle through each Unicode character number
@@ -551,8 +549,7 @@ function unicode_array_to_UTF8($unicode_array) {
  ******************************************************************************/
 
 function unicode_array_to_UTF16($unicode_array, $MSB_first) {
-
-		// Create a string to receive the UTF-16 output
+	// Create a string to receive the UTF-16 output
 	$output = '';
 
 	// Cycle through each Unicode character number
@@ -756,8 +753,7 @@ function xml_UTF16_clean($UTF16_text, $MSB_first) {
  ******************************************************************************/
 
 function HTML_UTF8_Escape($UTF8_text) {
-
-		// Ensure that the Unicode UTF8 encoding is valid.
+	// Ensure that the Unicode UTF8 encoding is valid.
 	$UTF8_text = UTF8_fix($UTF8_text);
 
 	// Change: changed to use smart_htmlspecialchars, so that characters which were already escaped would remain intact, as of revision 1.10
@@ -843,8 +839,7 @@ function HTML_UTF8_UnEscape($HTML_text) {
  ******************************************************************************/
 
 function HTML_UTF16_Escape($UTF16_text, $MSB_first) {
-
-		// Ensure that the Unicode UTF16 encoding is valid.
+	// Ensure that the Unicode UTF16 encoding is valid.
 	$UTF16_text = UTF16_fix($UTF16_text, $MSB_first);
 
 	// Change: changed to use smart_htmlspecialchars, so that characters which were already escaped would remain intact, as of revision 1.10

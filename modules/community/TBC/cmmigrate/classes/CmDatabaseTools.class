@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/cmmigrate/classes/CmMigrateHelper.class');
 GalleryCoreApi::requireOnce('lib/adodb/adodb.inc.php');
 
@@ -70,6 +70,7 @@ class CmDatabaseTools {
 		$incpath = CmMigrateHelper::configPath($baseDir);
 
 		include $incpath;
+
 		$this->_coppermineConfig = $CONFIG;
 	}
 
@@ -168,14 +169,15 @@ class CmDatabaseTools {
 
 			foreach ($albums as $i => $a) {
 				if ($a->getParent() == $parent) {
-					$entry = array(
+					$entry    = array(
 						'depth' => $depth++,
 						'data'  => $a,
 					);
-
 					$result[] = $entry;
 					array_push($stack, $parent);
-					$parent    = $a->getAlbumId($a);
+
+					$parent = $a->getAlbumId($a);
+
 					$descended = true;
 					unset($albums[$i]);
 
@@ -312,8 +314,7 @@ class CmDatabase {
 			'SELECT name, value FROM ' .
 			$this->config['TABLE_PREFIX'] . 'config'
 		);
-
-		$ret = $this->RestoreG2Database();
+		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -342,8 +343,7 @@ class CmDatabase {
 			'SELECT user_id, user_name FROM ' .
 			$this->config['TABLE_PREFIX'] . 'users'
 		);
-
-		$ret = $this->RestoreG2Database();
+		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -381,8 +381,7 @@ class CmDatabase {
 			'SELECT cid, name, description, parent FROM ' .
 			$this->config['TABLE_PREFIX'] . 'categories'
 		);
-
-		$ret = $this->RestoreG2Database();
+		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -422,8 +421,7 @@ class CmDatabase {
 			'SELECT aid, title, description, category FROM ' .
 			$this->config['TABLE_PREFIX'] . 'albums'
 		);
-
-		$ret = $this->RestoreG2Database();
+		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -464,8 +462,7 @@ class CmDatabase {
 					'keywords, hits FROM ' . $this->config['TABLE_PREFIX'] .
 			'pictures WHERE aid = ' . $albumid
 		);
-
-		$ret = $this->RestoreG2Database();
+		$ret    = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);

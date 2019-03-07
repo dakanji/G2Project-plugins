@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -43,8 +44,7 @@ class AdminDigibugController extends GalleryController {
 		$apiVersion   = GalleryCoreApi::getApiVersion();
 		$adminPlugins = 'core.Admin'
 		. ($apiVersion[0] > 7 || $apiVersion[1] >= 7 ? 'Plugins' : 'Modules');
-
-		$status = $error = array();
+		$status       = $error = array();
 
 		if (isset($form['action']['save'])) {
 			if ($form['digibugIdChoice'] == 'owner') {
@@ -181,7 +181,6 @@ class AdminDigibugView extends GalleryView {
 				'isConfigure' => !$isActive,
 			)
 		);
-
 		$template->setVariable('controller', 'digibug.AdminDigibug');
 
 		return array(

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2009 Bharat Mediratta
@@ -17,8 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');/**
+
  * @package TagTree
  * @author Chad Parry <spam@chad.parry.org>
  * @version $Revision: 1733 $
@@ -49,7 +50,6 @@ class HierarchyTagFilter {
 
 		while (count(array_filter($streams, array('HierarchyTagFilter', 'hierarchyStreamIsEmpty'))) == 0) {
 			usort($streams, array('HierarchyTagFilter', 'compareStreams'));
-
 			$isMatch       = true;
 			$lastHierarchy = null;
 
@@ -237,7 +237,8 @@ class AlbumChildHierarchyStream extends HierarchyStream {
 		$result = $this->searchResults->nextResult();
 
 		if ($result) {
-			$itemId      = $result[0];
+			$itemId = $result[0];
+
 			$this->front = array_merge($this->parentHierarchy, array($itemId));
 		} else {
 			$this->isEmpty = true;
@@ -272,7 +273,8 @@ class ParentSequenceHierarchyStream extends HierarchyStream {
 			if ($result) {
 				$parentSequence = $result[0];
 				$albumId        = $result[1];
-				$this->front    = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
+
+				$this->front = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
 			} else {
 				$this->isEmpty = true;
 			}

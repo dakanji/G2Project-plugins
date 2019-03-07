@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Gallery - a web based photo album viewer and editor
@@ -59,7 +60,6 @@ class SelectView extends GalleryView {
 		//$this->setCacheControl($template, 'no-cache'); RESTORE for 2.3
 		// entry point for checkout
 		CheckoutHelper::StoreReturnURL();
-
 		$form['formName'] = 'Select';
 
 		// General options

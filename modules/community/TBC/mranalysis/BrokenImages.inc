@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: BrokenImages.inc,v $
  * $Revision: 1848 $
@@ -20,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 /**
  *
  * @package MRAnalysis
@@ -45,7 +47,6 @@ class BrokenImagesView extends GalleryView {
 		$form['formName'] = 'AdminBrokenImages';
 
 		$gallery->guaranteeTimeLimit(120);
-
 		$query = '
             SELECT DISTINCT
                 [GalleryPhotoItem::id]
@@ -80,8 +81,7 @@ class BrokenImagesView extends GalleryView {
 		}
 
 		$query .= ' ORDER BY [GalleryPhotoItem::id]';
-
-		$items = ItemList::readItemsFromQuery($query);
+		$items  = ItemList::readItemsFromQuery($query);
 
 		$template->setVariable('controller', 'mranalysis.BrokenImages');
 		$template->setVariable('baditems', $items);

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -45,6 +46,7 @@ class AdminSessionsView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GallerySession.class');
+
 		$mySession = new GallerySession();
 
 		list($ret, $results) = GalleryCoreApi::getMapEntry(
@@ -70,8 +72,7 @@ class AdminSessionsView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$badHosts = array('search.msn.com', 'crawl.yahoo.net', '^65.55');
-
+		$badHosts  = array('search.msn.com', 'crawl.yahoo.net', '^65.55');
 		$userNames = array();
 
 		while ($pSession = $results->nextResult()) {
@@ -81,6 +82,7 @@ class AdminSessionsView extends GalleryView {
 			$mySession->_modificationTime  = (int)$pSession[4];
 			$mySession->_sessionData       = unserialize($pSession[5]);
 			$mySession->_loadedSessionData = $mySession->_getSerializedSession();
+
 			//$hostName = gethostbyaddr($mySession->_remoteIdentifier[0]);
 			// Remove obvious searchbots
 			$host = $mySession->_remoteIdentifier[0];
@@ -92,13 +94,13 @@ class AdminSessionsView extends GalleryView {
 			}
 
 			$items = $mySession->get('checkout.items');
+
 			/* Remove empty carts
 			if (empty($items)) {
 			continue;
 			}
 
 			*/
-
 			$transactionId = $mySession->get('checkout.transactionId');
 
 			if (ereg(';', $transactionId)) {

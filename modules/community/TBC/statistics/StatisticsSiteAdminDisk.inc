@@ -1,4 +1,5 @@
 <?php
+
 /*
  * $RCSfile: StatisticsAdminCursory.inc,v $
  *
@@ -19,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/statistics/StatisticsSiteAdmin.inc');/**
+
  * @version $Revision: 1036 $
  * @package Statistics
  * @author Aidan Lister <aidan@php.net>
@@ -37,20 +38,18 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		// Safety check for when blank cache
 		if (is_array($cache)) {
-			$statistics['gallery'] = $this->_sizeReadable($cache['base']);
-			$statistics['albums']  = $this->_sizeReadable($cache['albums']);
-			$statistics['galbums'] = $this->_sizeReadable($cache['galbums']);
-
+			$statistics['gallery']      = $this->_sizeReadable($cache['base']);
+			$statistics['albums']       = $this->_sizeReadable($cache['albums']);
+			$statistics['galbums']      = $this->_sizeReadable($cache['galbums']);
 			$statistics['derivatives']  = $this->_sizeReadable($cache['derivative']);
 			$statistics['gderivatives'] = $this->_sizeReadable($cache['gderivative']);
+			$statistics['database']     = $this->_sizeReadable($cache['database']);
+			$statistics['total']        = $this->_sizeReadable($cache['base'] + $cache['database']);
+			$statistics['used']         = $this->_sizeReadable($cache['used']);
+			$statistics['capacity']     = $this->_sizeReadable($cache['capacity']);
+			$statistics['free']         = $this->_sizeReadable($cache['capacity'] - $cache['used']);
 
-			$statistics['database'] = $this->_sizeReadable($cache['database']);
-			$statistics['total']    = $this->_sizeReadable($cache['base'] + $cache['database']);
-
-			$statistics['used']     = $this->_sizeReadable($cache['used']);
-			$statistics['capacity'] = $this->_sizeReadable($cache['capacity']);
-			$statistics['free']     = $this->_sizeReadable($cache['capacity'] - $cache['used']);
-			$statistics['percent']  = round((($cache['capacity'] - $cache['used']) / $cache['capacity']) * 100);
+			$statistics['percent'] = round((($cache['capacity'] - $cache['used']) / $cache['capacity']) * 100);
 		}
 
 		$template->setVariable(
@@ -160,13 +159,13 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		// Paths
 		$progress = 0.1;
+
 		$minitask = $module->translate('Scanning root directory');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
 			$progress
 		);
-
 		$base       = $gallery->getConfig('data.gallery.base');
 		$derivative = $gallery->getConfig('data.gallery.cache') . 'derivative/';
 		$albums     = $gallery->getConfig('data.gallery.albums');
@@ -175,25 +174,23 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		$statistics['used']     = disk_total_space($base) - disk_free_space($base);
 
 		$statistics['base'] = $this->_dirSize($base, $taskname, $minitask, $progress, $module, $templateAdapter);
+		$progress           = 0.5;
 
-		$progress = 0.5;
 		$minitask = $module->translate('Scanning derivative folder');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
 			$progress
 		);
-
 		$statistics['derivative'] = $this->_dirSize($derivative, $minitask, $taskname, $progress, $module, $templateAdapter);
+		$progress                 = 0.8;
 
-		$progress = 0.8;
 		$minitask = $module->translate('Scanning album folder');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
 			$progress
 		);
-
 		$statistics['albums'] = $this->_dirSize($albums, $taskname, $minitask, $progress, $module, $templateAdapter);
 
 		// Put to disk
@@ -263,6 +260,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		while ($i < $queue_count) {
 			$current = $queue[$i++];
+
 			// Open directory
 			if ($dh = opendir($current)) {
 				while (false !== ($entry = readdir($dh))) {

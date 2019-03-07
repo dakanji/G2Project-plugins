@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -15,9 +16,9 @@
 /////////////////////////////////////////////////////////////////
 class getid3_voc extends getid3_handler {
 	public function Analyze() {
-		$info = &$this->getid3->info;
-
+		$info                 =& $this->getid3->info;
 		$OriginalAVdataOffset = $info['avdataoffset'];
+
 		$this->fseek($info['avdataoffset']);
 		$VOCheader = $this->fread(26);
 
@@ -30,10 +31,9 @@ class getid3_voc extends getid3_handler {
 		}
 
 		// shortcuts
-		$thisfile_audio = &$info['audio'];
-		$info['voc']    = array();
-		$thisfile_voc   = &$info['voc'];
-
+		$thisfile_audio                    =& $info['audio'];
+		$info['voc']                       = array();
+		$thisfile_voc                      =& $info['voc'];
 		$info['fileformat']                = 'voc';
 		$thisfile_audio['dataformat']      = 'voc';
 		$thisfile_audio['bitrate_mode']    = 'cbr';
@@ -57,7 +57,6 @@ class getid3_voc extends getid3_handler {
 			$BlockType   = ord($BlockData[0]);
 			$BlockSize   = getid3_lib::LittleEndian2Int(substr($BlockData, 1, 3));
 			$ThisBlock   = array();
-
 			getid3_lib::safe_inc($thisfile_voc['blocktypes'][$BlockType], 1);
 
 			switch ($BlockType) {
@@ -73,7 +72,6 @@ class getid3_voc extends getid3_handler {
 					}
 
 					$this->fseek($BlockSize - 2, SEEK_CUR);
-
 					$ThisBlock['sample_rate_id']   = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 1));
 					$ThisBlock['compression_type'] = getid3_lib::LittleEndian2Int(substr($BlockData, 5, 1));
 
@@ -107,10 +105,9 @@ class getid3_voc extends getid3_handler {
 					//00-01  Time Constant:
 					//   Mono: 65536 - (256000000 / sample_rate)
 					// Stereo: 65536 - (256000000 / (sample_rate * 2))
-					$ThisBlock['time_constant'] = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 2));
-					$ThisBlock['pack_method']   = getid3_lib::LittleEndian2Int(substr($BlockData, 6, 1));
-					$ThisBlock['stereo']        = (bool)getid3_lib::LittleEndian2Int(substr($BlockData, 7, 1));
-
+					$ThisBlock['time_constant']    = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 2));
+					$ThisBlock['pack_method']      = getid3_lib::LittleEndian2Int(substr($BlockData, 6, 1));
+					$ThisBlock['stereo']           = (bool)getid3_lib::LittleEndian2Int(substr($BlockData, 7, 1));
 					$thisfile_audio['channels']    = ($ThisBlock['stereo'] ? 2 : 1);
 					$thisfile_audio['sample_rate'] = getid3_lib::trunc((256000000 / (65536 - $ThisBlock['time_constant'])) / $thisfile_audio['channels']);
 
@@ -124,7 +121,6 @@ class getid3_voc extends getid3_handler {
 					}
 
 					$this->fseek($BlockSize - 12, SEEK_CUR);
-
 					$ThisBlock['sample_rate']     = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 4));
 					$ThisBlock['bits_per_sample'] = getid3_lib::LittleEndian2Int(substr($BlockData, 8, 1));
 					$ThisBlock['channels']        = getid3_lib::LittleEndian2Int(substr($BlockData, 9, 1));
@@ -144,6 +140,7 @@ class getid3_voc extends getid3_handler {
 
 				default:
 					$info['warning'][] = 'Unhandled block type "' . $BlockType . '" at offset ' . $BlockOffset;
+
 					$this->fseek($BlockSize, SEEK_CUR);
 
 					break;

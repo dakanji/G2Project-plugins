@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2006 Bharat Mediratta
@@ -26,6 +27,7 @@
  */
 GalleryCoreApi::requireOnce('modules/core/DownloadItem.inc');
 GalleryCoreApi::requireOnce('modules/download/lib/HTTP/Download.php');/**
+
  * Support HTTP compression, partial downloads & resuming using PEAR HTTP_Download package
  *
  * This enables MP3 players like Winamp to skip back & forward without buffering an entire file -

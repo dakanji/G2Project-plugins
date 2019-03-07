@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -142,10 +143,9 @@ class GalleryMembersHelper {
 			$aclMarkers
 		);
 
-		$data   = array();
-		$data[] = (int)$userId;
-		$data   = array_merge($data, $aclIds);
-
+		$data             = array();
+		$data[]           = (int)$userId;
+		$data             = array_merge($data, $aclIds);
 		$options          = array();
 		$options['limit'] = array(
 			'count'  => (int)$count,
@@ -215,6 +215,7 @@ class GalleryMembersHelper {
 	 */
 	public static function canViewProfileEmail($userId) {
 		$result = false;
+
 		// Can the user view email addresses in the member profile?
 		list($ret, $resultOne) = GalleryCoreApi::getPluginParameter(
 			'module',
@@ -272,9 +273,11 @@ class GalleryMembersHelper {
 		 * The difference in the day of creationTimestamp and todays date,
 		 * divided by the number of seconds in a day, gives us a result in days
 		 */
-		$todayStamp    = strtotime(date('F j, Y', time()));
+		$todayStamp = strtotime(date('F j, Y', time()));
+
 		$creationStamp = strtotime(date('F j, Y', $user->getCreationTimestamp()));
-		$age           = (int)round(($todayStamp - $creationStamp) / (24 * 60 * 60));
+
+		$age = (int)round(($todayStamp - $creationStamp) / (24 * 60 * 60));
 
 		return array(null, $age);
 	}

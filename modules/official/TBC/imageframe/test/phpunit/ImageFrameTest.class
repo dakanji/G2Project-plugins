@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
 
 /**
@@ -67,6 +67,7 @@ class ImageFrameTest extends GalleryTestCase {
 
 		while (smarty_function_counter($params, $smarty) > 1) {}
 		$params['direction'] = 'up';
+
 		$this->assertEquals(0, smarty_function_counter($params, $smarty));
 	}
 
@@ -101,18 +102,15 @@ class ImageFrameTest extends GalleryTestCase {
 			$data['data']['none'],
 			'None'
 		);
-
 		$this->assertEquals('style', $data['data']['dots']['type'], 'Dots type');
 		$this->assert(
 			preg_match('/border.*dashed.*padding/', $data['data']['dots']['style']),
 			'Dots style'
 		);
-
 		$this->assert(
 			count($data['data']['wood']) > 20 && isset($data['data']['wood']['name']),
 			'Wood'
 		);
-
 		$this->assert(strpos($data['data']['wood']['imageTL'], 'frames/wood'), 'Wood image');
 		$this->assert(isset($template->data['head']), 'head data');
 		$this->assertEquals(
@@ -160,7 +158,6 @@ class ImageFrameTest extends GalleryTestCase {
 		 * (in case it changes in a future version of smarty).
 		 */
 		$this->_resetIFCounter();
-
 		$template1 = new GalleryTemplate(dirname(__DIR__), true, true);
 		$template2 = new GalleryTemplate(dirname(__DIR__), true, true);
 
@@ -172,9 +169,11 @@ class ImageFrameTest extends GalleryTestCase {
 		// Verify {counter} works across smarty instances
 		$result    = $template1->fetch('gallery:data/counter.tpl');
 		$result[1] = trim($result[1]);
+
 		$this->assertEquals(array(null, '1'), $result);
 		$result    = $template2->fetch('gallery:data/counter.tpl');
 		$result[1] = trim($result[1]);
+
 		$this->assertEquals(array(null, '2'), $result);
 	}
 }

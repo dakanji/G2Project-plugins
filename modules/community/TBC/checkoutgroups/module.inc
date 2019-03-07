@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2007 Bharat Mediratta
@@ -36,12 +37,10 @@ class CheckoutGroupsModule extends GalleryModule {
 				'Adds purchasers to configured groups'
 			)
 		);
-
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners');
 	}
@@ -132,6 +131,7 @@ class CheckoutGroupsModule extends GalleryModule {
 
 	public function registerEventListeners() {
 		$myListener = new CheckoutGroupsModule();
+
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener);
 	}

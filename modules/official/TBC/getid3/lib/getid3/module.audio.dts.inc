@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////////////////////
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
@@ -20,8 +21,7 @@ class getid3_dts extends getid3_handler {
 	/**
 	 * Default DTS syncword used in native .cpt or .dts formats
 	 */
-	const syncword = "\x7F\xFE\x80\x01";
-
+	const syncword             = "\x7F\xFE\x80\x01";
 	private $readBinDataOffset = 0;
 
 	/**
@@ -36,7 +36,7 @@ class getid3_dts extends getid3_handler {
 
 	// 14-bit little-endian
 	public function Analyze() {
-		$info               = &$this->getid3->info;
+		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'dts';
 
 		$this->fseek($info['avdataoffset']);
@@ -46,7 +46,8 @@ class getid3_dts extends getid3_handler {
 
 		if (($encoding = array_search($sync, self::$syncwords)) !== false) {
 			$info['dts']['raw']['magic'] = $sync;
-			$this->readBinDataOffset     = 32;
+
+			$this->readBinDataOffset = 32;
 		} elseif ($this->isDependencyFor('matroska')) {
 			// Matroska contains DTS without syncword encoded as raw big-endian format
 			$encoding                = 0;
@@ -124,14 +125,13 @@ class getid3_dts extends getid3_handler {
 		$info['dts']['bitrate_mode']         = (($info['dts']['raw']['bitrate'] == 30) ? 'vbr' : 'cbr');
 		$info['dts']['channels']             = self::numChannelsLookup($info['dts']['raw']['channel_arrangement']);
 		$info['dts']['channel_arrangement']  = self::channelArrangementLookup($info['dts']['raw']['channel_arrangement']);
-
-		$info['audio']['dataformat']      = 'dts';
-		$info['audio']['lossless']        = $info['dts']['flags']['lossless'];
-		$info['audio']['bitrate_mode']    = $info['dts']['bitrate_mode'];
-		$info['audio']['bits_per_sample'] = $info['dts']['bits_per_sample'];
-		$info['audio']['sample_rate']     = $info['dts']['sample_rate'];
-		$info['audio']['channels']        = $info['dts']['channels'];
-		$info['audio']['bitrate']         = $info['dts']['bitrate'];
+		$info['audio']['dataformat']         = 'dts';
+		$info['audio']['lossless']           = $info['dts']['flags']['lossless'];
+		$info['audio']['bitrate_mode']       = $info['dts']['bitrate_mode'];
+		$info['audio']['bits_per_sample']    = $info['dts']['bits_per_sample'];
+		$info['audio']['sample_rate']        = $info['dts']['sample_rate'];
+		$info['audio']['channels']           = $info['dts']['channels'];
+		$info['audio']['bitrate']            = $info['dts']['bitrate'];
 
 		if (isset($info['avdataend']) && !empty($info['dts']['bitrate']) && is_numeric($info['dts']['bitrate'])) {
 			$info['playtime_seconds'] = ($info['avdataend'] - $info['avdataoffset']) / ($info['dts']['bitrate'] / 8);

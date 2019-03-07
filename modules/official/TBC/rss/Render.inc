@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -17,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 GalleryCoreApi::requireOnce('modules/rss/classes/RssHelper.class');
 GalleryCoreApi::requireOnce('modules/rss/classes/RssGenerator.class');
 GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
@@ -188,6 +188,7 @@ class RenderView extends GalleryView {
 
 		if (!$phpVm->headers_sent()) {
 			$phpVm->header('Content-type: text/xml; charset=UTF-8');
+
 			$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
 			$phpVm->header('Cache-Control: no-cache');
 			$phpVm->header('Pragma: no-cache');

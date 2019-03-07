@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2008 Bharat Mediratta
@@ -148,7 +149,8 @@ class JpegtranToolkitHelper {
 		// To test the binary we'll try to rotate a small jpeg file.
 		$tmpDir      = $gallery->getConfig('data.gallery.tmp');
 		$tmpFilename = $platform->tempnam($tmpDir, 'jpgt_');
-		$command     = array(
+
+		$command = array(
 			$jpegtranPath,
 			'-verbose',
 			'-copy',
@@ -161,8 +163,7 @@ class JpegtranToolkitHelper {
 		);
 
 		list($success, $stdout, $stderr) = $platform->exec(array($command));
-
-		$testArray = array();
+		$testArray                       = array();
 
 		if (!$success) {
 			$message     = $module->translate('Incorrect exit status for jpegtran command.');
@@ -211,7 +212,8 @@ class JpegtranToolkitHelper {
 					'messages' => array(),
 				);
 			} else {
-				$message     = $module->translate('Unexpected results.');
+				$message = $module->translate('Unexpected results.');
+
 				$testArray[] = array(
 					'name'    => 'rotate',
 					'success' => false,
