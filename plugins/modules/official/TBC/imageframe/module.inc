@@ -51,13 +51,13 @@ class ImageFrameModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ImageFrameModule();
+		if (!isset($instance)) {
+			$instance = new ImageFrameModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

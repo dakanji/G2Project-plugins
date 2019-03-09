@@ -49,13 +49,13 @@ class UploadAppletModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new UploadAppletModule();
+		if (!isset($instance)) {
+			$instance = new UploadAppletModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

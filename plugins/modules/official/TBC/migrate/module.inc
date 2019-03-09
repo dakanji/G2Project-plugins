@@ -55,13 +55,13 @@ class MigrateModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new MigrateModule();
+		if (!isset($instance)) {
+			$instance = new MigrateModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -54,13 +54,13 @@ class PanoramaModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new PanoramaModule();
+		if (!isset($instance)) {
+			$instance = new PanoramaModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

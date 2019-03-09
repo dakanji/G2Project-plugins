@@ -53,13 +53,13 @@ class HttpAuthModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new HttpAuthModule();
+		if (!isset($instance)) {
+			$instance = new HttpAuthModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

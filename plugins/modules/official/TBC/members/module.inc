@@ -50,13 +50,13 @@ class MembersModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new MembersModule();
+		if (!isset($instance)) {
+			$instance = new MembersModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

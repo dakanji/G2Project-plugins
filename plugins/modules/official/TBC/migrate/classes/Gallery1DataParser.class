@@ -32,13 +32,13 @@ class Gallery1DataParser {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new Gallery1DataParser();
+		if (!isset($instance)) {
+			$instance = new Gallery1DataParser();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

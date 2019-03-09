@@ -51,13 +51,13 @@ class FlashVideoModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new FlashVideoModule();
+		if (!isset($instance)) {
+			$instance = new FlashVideoModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

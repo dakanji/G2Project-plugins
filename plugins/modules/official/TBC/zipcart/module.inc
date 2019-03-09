@@ -51,13 +51,13 @@ class ZipCartModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ZipCartModule();
+		if (!isset($instance)) {
+			$instance = new ZipCartModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

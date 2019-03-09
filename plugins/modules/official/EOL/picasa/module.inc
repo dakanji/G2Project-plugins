@@ -50,13 +50,13 @@ class PicasaModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new PicasaModule();
+		if (!isset($instance)) {
+			$instance = new PicasaModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

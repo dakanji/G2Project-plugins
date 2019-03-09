@@ -32,13 +32,13 @@ class G1MigrateHelper {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new G1MigrateHelper();
+		if (!isset($instance)) {
+			$instance = new G1MigrateHelper();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

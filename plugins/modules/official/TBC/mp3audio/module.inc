@@ -51,13 +51,13 @@ class MP3AudioModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new MP3AudioModule();
+		if (!isset($instance)) {
+			$instance = new MP3AudioModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

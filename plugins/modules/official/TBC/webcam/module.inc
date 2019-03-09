@@ -49,13 +49,13 @@ class WebCamModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new WebCamModule();
+		if (!isset($instance)) {
+			$instance = new WebCamModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -31,13 +31,13 @@ class ImportResultsView extends GalleryView {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ImportResultsView();
+		if (!isset($instance)) {
+			$instance = new ImportResultsView();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

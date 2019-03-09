@@ -53,13 +53,13 @@ class WebDavModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new WebDavModule();
+		if (!isset($instance)) {
+			$instance = new WebDavModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

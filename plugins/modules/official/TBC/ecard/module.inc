@@ -52,13 +52,13 @@ class EcardModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new EcardModule();
+		if (!isset($instance)) {
+			$instance = new EcardModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

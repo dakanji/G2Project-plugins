@@ -2267,13 +2267,13 @@ class WebDavServer extends HTTP_WebDAV_Server {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new WebDavServer();
+		if (!isset($instance)) {
+			$instance = new WebDavServer();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

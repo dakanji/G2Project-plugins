@@ -49,13 +49,13 @@ class Getid3Module extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new Getid3Module();
+		if (!isset($instance)) {
+			$instance = new Getid3Module();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

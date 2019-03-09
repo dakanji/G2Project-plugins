@@ -55,13 +55,13 @@ class PublishXpModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new PublishXpModule();
+		if (!isset($instance)) {
+			$instance = new PublishXpModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

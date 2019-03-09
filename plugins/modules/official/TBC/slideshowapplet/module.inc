@@ -49,13 +49,13 @@ class SlideshowAppletModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new SlideshowAppletModule();
+		if (!isset($instance)) {
+			$instance = new SlideshowAppletModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

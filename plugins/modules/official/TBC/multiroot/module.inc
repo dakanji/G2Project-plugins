@@ -52,13 +52,13 @@ class MultirootModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new MultirootModule();
+		if (!isset($instance)) {
+			$instance = new MultirootModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

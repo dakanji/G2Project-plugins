@@ -53,13 +53,13 @@ class DebugModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new DebugModule();
+		if (!isset($instance)) {
+			$instance = new DebugModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -31,13 +31,13 @@ class ConfirmImportController extends GalleryController {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ConfirmImportController();
+		if (!isset($instance)) {
+			$instance = new ConfirmImportController();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**
@@ -1987,13 +1987,13 @@ class ConfirmImportView extends GalleryView {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new ConfirmImportView();
+		if (!isset($instance)) {
+			$instance = new ConfirmImportView();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**

@@ -49,13 +49,13 @@ class RemoteModule extends GalleryModule {
 	 * Class Loader
 	 */
 	public static function getme() {
-		static $singleton;
+		static $instance;
 
-		if (!isset($singleton)) {
-			$singleton = new RemoteModule();
+		if (!isset($instance)) {
+			$instance = new RemoteModule();
 		}
 
-		return $singleton;
+		return $instance;
 	}
 
 	/**
