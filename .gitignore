@@ -63,6 +63,7 @@ composer.phar
 # G2 Modules Official EOL #
 ###########################
 plugins/modules/official/EOL/*
+!plugins/modules/official/EOL/README.md
 !plugins/modules/official/EOL/digibug
 !plugins/modules/official/EOL/nokiaupload
 !plugins/modules/official/EOL/photoaccess
@@ -74,11 +75,13 @@ plugins/modules/official/EOL/*
 # G2 Modules Official GTG #
 ############################
 plugins/modules/official/GTG/*
+!plugins/modules/official/GTG/README.md
 
 
 # G2 Modules Official TBC #
 ###########################
-modules/official/TBC/*
+plugins/modules/official/TBC/*
+!plugins/modules/official/TBC/README.md
 !plugins/modules/official/TBC/debug
 !plugins/modules/official/TBC/ecard
 !plugins/modules/official/TBC/flashvideo
@@ -107,12 +110,14 @@ modules/official/TBC/*
 # G2 Modules Community EOL #
 ############################
 plugins/modules/community/EOL/*
+!plugins/modules/community/EOL/README.md
 !plugins/modules/community/EOL/fotokasten
 
 
 # G2 Modules Community GTG #
 ############################
 plugins/modules/community/GTG/*
+!plugins/modules/community/GTG/README.md
 !plugins/modules/community/GTG/jpegtran
 !plugins/modules/community/GTG/integrity
 !plugins/modules/community/GTG/linksinthehead
@@ -200,11 +205,13 @@ plugins/modules/community/GTG/*
 # G2 Themes Official EOL #
 ############################
 plugins/themes/official/EOL/*
+!plugins/themes/official/EOL/README.md
 
 
 # G2 Themes Official GTG #
 ############################
 plugins/themes/official/GTG/*
+!plugins/themes/official/GTG/README.md
 !plugins/themes/official/GTG/ajaxian
 !plugins/themes/official/GTG/carbon
 !plugins/themes/official/GTG/classic
@@ -218,16 +225,19 @@ plugins/themes/official/GTG/*
 # G2 Themes Official TBC #
 ############################
 plugins/themes/official/TBC/*
+!plugins/themes/official/TBC/README.md
 
 
 # G2 Themes Community EOL #
 ############################
 plugins/themes/community/EOL/*
+!plugins/themes/community/EOL/README.md
 
 
 # G2 Themes Community GTG #
 ############################
 plugins/themes/community/GTG/*
+!plugins/themes/community/GTG/README.md
 
 
 # G2 Themes Community TBC #
