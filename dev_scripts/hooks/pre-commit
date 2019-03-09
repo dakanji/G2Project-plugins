@@ -102,12 +102,9 @@ else
 			# 16. Separate multiline comment blocks
 			RET=$(perl -i -pe 's/(\s*)\*\/\/\*/$1\*\/\n\n\/\*/' $FILE)
 			RET=$(perl -i -0pe 's/(\s*)\*\/(\n\s*)\/\*/$1\*\/\n\n$2\/\*/gs' $FILE)
-			RET=$(perl -i -0pe 's/(\s*)\*\/(\n\s*)\/\*/$1\*\/\n\n$2\/\*/gs' $FILE)
 			# 17. Remove blank lines after switch case
 			RET=$(perl -i -0pe 's/([^:]+:)(\s*\n\s*){1,}(\n\s*)([^\n]+\n)/$1$3$4/gs' $FILE)
-			RET=$(perl -i -0pe 's/([^:]+:)(\s*\n\s*){1,}(\n\s*)([^\n]+\n)/$1$3$4/gs' $FILE)
 			# 18. Remove excess blank lines
-			RET=$(perl -i -0pe 's/(\n\s*){2,}(\n\s*)/\n$2/gs' $FILE)
 			RET=$(perl -i -0pe 's/(\n\s*){2,}(\n\s*)/\n$2/gs' $FILE)
 
 
