@@ -82,7 +82,6 @@ plugins/modules/official/GTG/*
 ###########################
 plugins/modules/official/TBC/*
 !plugins/modules/official/TBC/README.md
-!plugins/modules/official/TBC/debug
 !plugins/modules/official/TBC/ecard
 !plugins/modules/official/TBC/flashvideo
 !plugins/modules/official/TBC/getid3
