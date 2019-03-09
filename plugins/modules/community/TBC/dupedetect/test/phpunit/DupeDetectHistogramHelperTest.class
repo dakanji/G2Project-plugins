@@ -37,7 +37,6 @@ GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramHelpe
  * Map class
  */
 GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramsMap.class');/**
-
  * Test DupeDetectHistogramHelper class functionality
  *
  * @package DupeDetect
@@ -84,6 +83,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -132,7 +132,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(empty($signatures), 'Somehow there\'s already a signature for the new item');
+		$this->assertTrue(empty($signatures), 'Somehow there\'s already a signature for the new item');
 
 		// create two signatures
 		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($this->_item);
@@ -155,21 +155,22 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 				$this->_dupItem->getId(),
 			)
 		);
+
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
 			return $this->failWithStatus($ret);
 		}
 
 		// signature fetched
-		$this->assert(count($signatures) == 2, 'didn\'t get 2 signatures as expected');
+		$this->assertTrue(count($signatures) == 2, 'didn\'t get 2 signatures as expected');
 
 		// check signatures
-		$this->assert(
+		$this->assertTrue(
 			count($signatures[$this->_item->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			count($signatures[$this->_dupItem->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
 		);
@@ -207,7 +208,8 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 		}
 
 		// signature exists
-		$this->assert(!empty($signatures), 'can\'t find CRC32 for item');
+		$this->assertFalse(empty($signatures), 'can\'t find CRC32 for item');
+
 		// and correct
 		$this->assertEquals(
 			$signatures[$this->_item->getId()],
@@ -250,7 +252,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
+		$this->assertTrue(empty($signatures), 'CRC32 exist and shouldn\'t');
 
 		// create a dummy signature
 		$ret = DupeDetectHistogramsMap::addMapEntry(
@@ -284,7 +286,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(!empty($signatures), 'can\'t find CRC32 for item');
+		$this->assertFalse(empty($signatures), 'can\'t find CRC32 for item');
 
 		// try to remove the signature
 		$ret = DupeDetectHistogramHelper::removeHistogramDupeSignatures($this->_item->getId());
@@ -302,7 +304,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
+		$this->assertTrue(empty($signatures), 'CRC32 exist and shouldn\'t');
 	}
 
 	public function testDiscoverDupes() {
@@ -324,7 +326,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 		}
 
 		// check that no dupes are detected
-		$this->assert(empty($dupes), 'got dupes when shouldn\'t');
+		$this->assertTrue(empty($dupes), 'got dupes when shouldn\'t');
 
 		// create a signature for it
 		$ret = DupeDetectHistogramHelper::createHistogramDupeSignatures($this->_dupItem);
@@ -343,7 +345,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 		}
 
 		// check that a dupe exists and only one
-		$this->assert(count($dupes) == 1, 'didn\'t get 1 dupe entry as expected');
+		$this->assertTrue(count($dupes) == 1, 'didn\'t get 1 dupe entry as expected');
 
 		// check that the duplicate is the one we expect
 		$this->assertEquals((int)$dupes[0][0], $this->_dupItem->getId());

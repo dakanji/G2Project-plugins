@@ -184,7 +184,6 @@ class ZipCartPluginTest extends GalleryTestCase {
 		}
 
 		$this->_savePlatform =& $gallery->getPlatform();
-
 		$gallery->setPlatform(new ZipCartPluginTestPlatform($this->_savePlatform));
 	}
 
@@ -259,9 +258,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 		$derivative->setDerivativeSourceId($item->getId());
 		$derivative->setMimeType($item->getMimeType());
-
 		$operation = empty($operation) ? 'testoperation|0' : $operation;
-
 		$derivative->setDerivativeOperations($operation);
 
 		$ret = $derivative->save();
@@ -293,7 +290,6 @@ class ZipCartPluginTest extends GalleryTestCase {
 
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce('modules/zipcart/classes/ZipCartPlugin.class');
-
 		$cartPlugin = new ZipCartPlugin();
 
 		list($ret, $urlParams) = $cartPlugin->fulfillCart($cartItemIds);
@@ -311,9 +307,7 @@ class ZipCartPluginTest extends GalleryTestCase {
 		);
 
 		$platform =& $gallery->getPlatform();
-
 		@$platform->unlink($gallery->_zipCartTempnam);
-
 		$slash = $platform->getDirectorySeparator();
 		$path  = $this->_album->getPathComponent();
 
@@ -329,25 +323,25 @@ class ZipCartPluginTest extends GalleryTestCase {
 			$gallery->_zipCartFiles,
 			'zip files'
 		);
+
 		// Check that derivatives were used appropriately..
 		$this->assertEquals(5, count($gallery->_zipCartSources), '5 sources');
-		$this->assert(
-
+		$this->assertTrue(
 			strpos($gallery->_zipCartSources[0], "${slash}albums${slash}") !== false,
 			'first item from original (' . $gallery->_zipCartSources[0] . ')'
 		);
-		$this->assert(
 
+		$this->assertTrue(
 			strpos($gallery->_zipCartSources[1], "${slash}derivative/") !== false,
 			'second item from derivative (' . $gallery->_zipCartSources[1] . ')'
 		);
-		$this->assert(
 
+		$this->assertTrue(
 			strpos($gallery->_zipCartSources[2], "${slash}derivative/") !== false,
 			'third item from derivative (' . $gallery->_zipCartSources[2] . ')'
 		);
-		$this->assert(
 
+		$this->assertTrue(
 			strpos($gallery->_zipCartSources[3], "${slash}albums${slash}") !== false,
 			'fourth item from original (' . $gallery->_zipCartSources[3] . ')'
 		);

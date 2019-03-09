@@ -57,10 +57,8 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		$this->_parserType  = 'preGallery';
 		$this->_activeRules =& HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule('httpauth');
 		$this->_activeRules = array('authorization');
-
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
-
 			'RewriteApi',
 			'HttpAuthHelperTestRewriteApi',
 			'HttpAuthHelperTestRewriteApi',
@@ -115,7 +113,6 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		// Use HttpAuthHelperTestPlatform
 		$this->_platform                                          = new HttpAuthHelperTestPlatform();
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_accessAuthorizationResponse;
-
 		$gallery->setPlatform($this->_platform);
 
 		$ret = $this->_markPluginParametersForCleanup('module', 'httpauth');
@@ -157,7 +154,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(isset($this->_authInterface), 'Could not instantiate auth interface.');
+		$this->assertTrue(isset($this->_authInterface), 'Could not instantiate auth interface.');
 
 		// Use HttpAuthModuleTestPhpVm
 		$this->_phpVm    = new HttpAuthHelperTestPhpVm();
@@ -168,9 +165,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		$this->_headers       = array();
 		$this->_saveSession   = $gallery->_session;
 		$_SERVER['AUTH_TYPE'] = $_SERVER['PHP_AUTH_USER'] = $_SERVER['PHP_AUTH_PW'] = null;
-
 		GalleryUtilities::removeRequestVariable('authorization');
-
 		$_SERVER['HTTP_AUTHORIZATION'] = null;
 	}
 
@@ -178,7 +173,6 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		GalleryDataCache::reset();
-
 		$gallery->_session = $this->_saveSession;
 
 		$ret = parent::tearDown();
@@ -230,7 +224,6 @@ class HttpAuthHelperTest extends GalleryTestCase {
 	public function testCheckConfigurationRewriteModuleDisabled() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
 		$moduleStatus                                             = array();
-
 		GalleryDataCache::put('GalleryPluginHelper::fetchPluginList(module)', $moduleStatus);
 
 		list($ret, $code) = HttpAuthHelper::checkConfiguration();
@@ -282,9 +275,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckConfigurationHttpAuthWorksIgnoresCauses() {
 		$moduleStatus = array();
-
 		GalleryDataCache::put('GalleryPluginHelper::fetchPluginList(module)', $moduleStatus);
-
 		$this->_parserType  = 'bogus';
 		$this->_activeRules = array();
 
@@ -294,7 +285,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$code);
+		$this->assertFalse($code);
 	}
 
 	public function testCheckHttpAuth() {
@@ -304,7 +295,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert($success);
+		$this->assertTrue($success);
 	}
 
 	public function testCheckHttpAuthMissingAuthorization() {
@@ -316,7 +307,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$success);
+		$this->assertFalse($success);
 	}
 
 	public function testCheckHttpAuthPluginDisabled() {
@@ -334,7 +325,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert($success);
+		$this->assertTrue($success);
 	}
 
 	public function testGetHttpAuth() {
@@ -595,9 +586,9 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!(bool)$params['httpAuthPlugin'], 'wrong httpAuthPlugin value');
-		$this->assert((bool)$params['serverAuthPlugin'], 'wrong serverAuthPlugin value');
-		$this->assert(!(bool)$params['useGlobally'], 'wrong useGlobally value');
+		$this->assertFalse((bool)$params['httpAuthPlugin'], 'wrong httpAuthPlugin value');
+		$this->assertTrue((bool)$params['serverAuthPlugin'], 'wrong serverAuthPlugin value');
+		$this->assertFalse((bool)$params['useGlobally'], 'wrong useGlobally value');
 
 		list($ret, $authPlugins) = GalleryCoreApi::getAllFactoryImplementationIds('GalleryAuthPlugin');
 
@@ -605,8 +596,8 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!isset($authPlugins['HttpAuthPlugin']), 'HttpAuthPlugin still registerd');
-		$this->assert(isset($authPlugins['ServerAuthPlugin']), 'ServerAuthPlugin not registered');
+		$this->assertFalse(isset($authPlugins['HttpAuthPlugin']), 'HttpAuthPlugin still registerd');
+		$this->assertTrue(isset($authPlugins['ServerAuthPlugin']), 'ServerAuthPlugin not registered');
 	}
 
 	public function testSetConfigurationDefaults() {
@@ -624,9 +615,9 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert((bool)$params['httpAuthPlugin'], 'wrong httpAuthPlugin value');
-		$this->assert(!(bool)$params['serverAuthPlugin'], 'wrong serverAuthPlugin value');
-		$this->assert(!(bool)$params['useGlobally'], 'wrong useGlobally value');
+		$this->assertTrue((bool)$params['httpAuthPlugin'], 'wrong httpAuthPlugin value');
+		$this->assertFalse((bool)$params['serverAuthPlugin'], 'wrong serverAuthPlugin value');
+		$this->assertFalse((bool)$params['useGlobally'], 'wrong useGlobally value');
 	}
 
 	public function testRequestAuthentication() {
@@ -717,7 +708,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert($gallery->_session->regenerateWasCalled());
+		$this->assertTrue($gallery->_session->regenerateWasCalled());
 	}
 
 	public function testRegenerateSessionIfNecessarySameUserAsFromSession() {
@@ -731,7 +722,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$gallery->_session->regenerateWasCalled());
+		$this->assertFalse($gallery->_session->regenerateWasCalled());
 	}
 
 	public function testRegenerateSessionIfNecessaryOtherUserThanFromSession() {
@@ -745,7 +736,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert($gallery->_session->regenerateWasCalled());
+		$this->assertTrue($gallery->_session->regenerateWasCalled());
 	}
 
 	public function testRegenerateSessionIfNecessaryNoAuthenticatedUser() {
@@ -759,7 +750,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$gallery->_session->regenerateWasCalled());
+		$this->assertFalse($gallery->_session->regenerateWasCalled());
 	}
 }
 

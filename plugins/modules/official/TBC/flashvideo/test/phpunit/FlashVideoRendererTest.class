@@ -71,7 +71,7 @@ class FlashVideoRendererTest extends GalleryTestCase {
 		$item->setMimeType('image/jpeg');
 		$item->setWidth(100);
 		$item->setHeight(100);
-		$this->assert(!$this->_renderer->canBeViewedInline($item), 'jpeg');
+		$this->assertFalse($this->_renderer->canBeViewedInline($item), 'jpeg');
 
 		list($ret, $item) = GalleryCoreApi::newItemByMimeType('video/mpeg');
 
@@ -82,7 +82,7 @@ class FlashVideoRendererTest extends GalleryTestCase {
 		$item->setMimeType('video/mpeg');
 		$item->setWidth(100);
 		$item->setHeight(100);
-		$this->assert(!$this->_renderer->canBeViewedInline($item), 'mpeg');
+		$this->assertFalse($this->_renderer->canBeViewedInline($item), 'mpeg');
 
 		list($ret, $item) = GalleryCoreApi::newItemByMimeType('video/x-flv');
 
@@ -91,8 +91,8 @@ class FlashVideoRendererTest extends GalleryTestCase {
 		}
 
 		$item->setMimeType('video/x-flv');
-		$this->assert($this->_renderer->canBeViewedInline($item), 'flv no size');
-		$this->assert($this->_renderer->canBeViewedInline($this->_item), 'flv item');
+		$this->assertTrue($this->_renderer->canBeViewedInline($item), 'flv no size');
+		$this->assertTrue($this->_renderer->canBeViewedInline($this->_item), 'flv item');
 	}
 
 	public function testRender() {
@@ -105,10 +105,9 @@ class FlashVideoRendererTest extends GalleryTestCase {
 			)
 		);
 
-		$this->assert(strpos($html, '<div id="flashvideo"') !== false, 'flash <div> placeholder');
-
-		$this->assert(strpos($html, '.swf'), '.swf');
-		$this->assert(strpos($html, 'http'), 'http');
-		$this->assert(strpos($html, (string)$this->_item->getId()), 'itemId');
+		$this->assertTrue(strpos($html, '<div id="flashvideo"') !== false, 'flash <div> placeholder');
+		$this->assertTrue(strpos($html, '.swf'), '.swf');
+		$this->assertTrue(strpos($html, 'http'), 'http');
+		$this->assertTrue(strpos($html, (string)$this->_item->getId()), 'itemId');
 	}
 }

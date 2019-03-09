@@ -77,7 +77,6 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('Gallery::ViewableTreeChange', $listener);
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 		$this->_registerTestEventListener('GalleryEntity::delete', $listener);
@@ -283,7 +282,6 @@ class ImageBlockTest extends GalleryTestCase {
 		$derivative->setDerivativeSourceId($src->getId());
 		$derivative->setMimeType($src->getMimeType());
 		$derivative->setDerivativeOperations('testoperation|0');
-
 		if ($size) {
 			// Set scaled size:
 			$w = $src->getWidth();
@@ -297,7 +295,6 @@ class ImageBlockTest extends GalleryTestCase {
 				$derivative->setHeight($h);
 			} elseif ($w >= $h) {
 				$derivative->setWidth($size);
-
 				$derivative->setHeight((int)($size*$h/$w));
 			} else {
 				$derivative->setHeight($size);
@@ -319,35 +316,31 @@ class ImageBlockTest extends GalleryTestCase {
 	}
 
 	public function assertBlock($block, $msg=1, $hasTitle=true) {
-		$this->assert(isset($block['id']), $msg . ': Missing id');
-		$this->assert(isset($block['viewCount']), $msg . ': Missing viewCount');
+		$this->assertTrue(isset($block['id']), $msg . ': Missing id');
+		$this->assertTrue(isset($block['viewCount']), $msg . ': Missing viewCount');
 		$this->assertEquals(
 			$hasTitle,
 			isset($block['title']),
 			$msg . ': Title/heading should ' . ($hasTitle ? '' : 'not ') . 'be present'
 	);
-		$this->assert(isset($block['item']), $msg . ': Missing item');
-		$this->assert(isset($block['thumb']), $msg . ': Missing thumb');
 
+		$this->assertTrue(isset($block['item']), $msg . ': Missing item');
+		$this->assertTrue(isset($block['thumb']), $msg . ': Missing thumb');
 		return $block['id'];
 	}
 
 	public function testImageBlock() {
 		$data = $this->_doImageBlockCallback();
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'Default block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 'default');
-
 		$data = $this->_doImageBlockCallback(
 			'randomImage|recentImage|viewedImage|viewedAlbum|recentAlbum|randomAlbum'
 	);
 
 		$this->assertEquals(6, count($data['ImageBlockData']['blocks']), 'Many blocks');
-
 		$gotAlbum = $gotPhoto = 0;
 		foreach ($data['ImageBlockData']['blocks'] as $i => $block) {
 			$this->assertBlock($block, $i);
-
 			if ($block['id'] == $this->_album->getId()) {
 				$gotAlbum = 1;
 			}
@@ -379,15 +372,12 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$data = $smarty->_tpl_vars['ImageBlockData'];
-
 		$this->assertEquals(3, count($data['blocks']), 'Number of blocks');
-
 		$data = $data['blocks'];
-		$this->assert($data[0]['id'] != $data[1]['id'], 'Different images');
-
-		$this->assert(!empty($data[0]['title']), 'First has heading');
-		$this->assert(empty($data[1]['title']), 'Second has no heading');
-		$this->assert(empty($data[2]['title']), 'Third has no heading');
+		$this->assertTrue($data[0]['id'] != $data[1]['id'], 'Different images');
+		$this->assertFalse(empty($data[0]['title']), 'First has heading');
+		$this->assertTrue(empty($data[1]['title']), 'Second has no heading');
+		$this->assertTrue(empty($data[2]['title']), 'Third has no heading');
 	}
 
 	public function testExternalImageBlock() {
@@ -401,13 +391,10 @@ class ImageBlockTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('blocks', 'randomImage');
 		GalleryUtilities::putRequestVariable('show', 'none');
-
 		$gallery->_phpVm = new UnitTestPhpVm();
-
 		$gallery->_phpVm->setReply('rand', '*', 260300);
 		$gallery->_phpVm->setReply('headers_sent', array(), false);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Content-type: text/html; charset=UTF-8', ''),
 			true
@@ -417,14 +404,12 @@ class ImageBlockTest extends GalleryTestCase {
 		$gallery->_phpVm->setReply('header', array('Cache-Control: no-cache', ''), true);
 		$gallery->_phpVm->setReply('header', array('Pragma: no-cache', ''), true);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Expires: Sun, 09 Mar 2008 21:00:00 GMT', ''),
 			true
 	);
 
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -439,17 +424,15 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 'A1', false);
-		$this->assert($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
+		$this->assertTrue($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
+
 		// Select more than one recentImage.. should be multiple recent items, not repeats
 		GalleryUtilities::putRequestVariable('blocks', 'recentImage|recentImage|recentImage');
 		GalleryUtilities::putRequestVariable('show', 'heading');
-
 		$gallery->_phpVm->setReply('headers_sent', array(), false);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Content-type: text/html; charset=UTF-8', ''),
 			true
@@ -459,14 +442,12 @@ class ImageBlockTest extends GalleryTestCase {
 		$gallery->_phpVm->setReply('header', array('Cache-Control: no-cache', ''), true);
 		$gallery->_phpVm->setReply('header', array('Pragma: no-cache', ''), true);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Expires: Sun, 09 Mar 2008 21:00:00 GMT', ''),
 			true
 	);
 
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -481,11 +462,8 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(3, count($data['ImageBlockData']['blocks']), 'Three blocks');
-
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 'B1');
-
 		$this->assertBlock($data['ImageBlockData']['blocks'][1], 'B2', false);
 		$this->assertBlock($data['ImageBlockData']['blocks'][2], 'B3', false);
 		$this->assertEquals(
@@ -493,28 +471,28 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['id'],
 			'Most recent id'
 	);
+
 		$this->assertEquals(
 			$this->_photo2->getId(),
 			$data['ImageBlockData']['blocks'][1]['id'],
 			'2nd most recent id'
 	);
+
 		// Imageblock now uses all DataItems instead of just PhotoItems; expect movie not photo3
 		$this->assertEquals(
 			$this->_movie->getId(),
-
 			$data['ImageBlockData']['blocks'][2]['id'],
 			'3rd most recent=movie'
 	);
 
-		$this->assert($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
+		$this->assertTrue($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
+
 		// Select only from subtree..
 		GalleryUtilities::putRequestVariable('blocks', 'recentImage|viewedAlbum');
 		GalleryUtilities::putRequestVariable('show', 'title');
 		GalleryUtilities::putRequestVariable('itemId', $this->_album->getId());
-
 		$gallery->_phpVm->setReply('headers_sent', array(), false);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Content-type: text/html; charset=UTF-8', ''),
 			true
@@ -524,14 +502,12 @@ class ImageBlockTest extends GalleryTestCase {
 		$gallery->_phpVm->setReply('header', array('Cache-Control: no-cache', ''), true);
 		$gallery->_phpVm->setReply('header', array('Pragma: no-cache', ''), true);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Expires: Sun, 09 Mar 2008 21:00:00 GMT', ''),
 			true
 	);
 
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -546,29 +522,25 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 'C1', false);
-
 		$this->assertEquals(
 			$this->_photo->getId(),
 			$data['ImageBlockData']['blocks'][0]['id'],
 			'Photo id'
 	);
-		$this->assert($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
+
+		$this->assertTrue($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
+
 		// Select specific item, scaled full size with link and link target..
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('show', 'heading|title|views|fullSize');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo->getId());
 		GalleryUtilities::putRequestVariable('link', 'http://example.com/');
 		GalleryUtilities::putRequestVariable('linkTarget', '_blank');
-
 		GalleryUtilities::putRequestVariable('maxSize', '500');
-
 		$gallery->_phpVm->setReply('headers_sent', array(), false);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Content-type: text/html; charset=UTF-8', ''),
 			true
@@ -578,14 +550,12 @@ class ImageBlockTest extends GalleryTestCase {
 		$gallery->_phpVm->setReply('header', array('Cache-Control: no-cache', ''), true);
 		$gallery->_phpVm->setReply('header', array('Pragma: no-cache', ''), true);
 		$gallery->_phpVm->setReply(
-
 			'header',
 			array('Expires: Sun, 09 Mar 2008 21:00:00 GMT', ''),
 			true
 	);
 
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -600,7 +570,6 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 'D1');
 		$this->assertEquals(
@@ -608,7 +577,8 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['id'],
 			'Photo id'
 	);
-		$this->assert($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
+
+		$this->assertTrue($gallery->_phpVm->isComplete(), $gallery->_phpVm->getRemaining());
 	}
 
 	public function testExternalImageBlockMaxSize() {
@@ -624,6 +594,7 @@ class ImageBlockTest extends GalleryTestCase {
 			DERIVATIVE_TYPE_IMAGE_RESIZE,
 			250
 	);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -632,9 +603,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo3->getId());
 		GalleryUtilities::putRequestVariable('maxSize', '250');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -649,7 +618,6 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 1);
 		$this->assertEquals(
@@ -657,13 +625,12 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match resized image'
 	);
+
 		// Select specific item, with max size 300.. should match full size
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo3->getId());
 		GalleryUtilities::putRequestVariable('maxSize', '300');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -678,7 +645,6 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 2);
 		$this->assertEquals(
@@ -686,13 +652,12 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match full size image'
 	);
+
 		// Select specific item, with max size 175.. should match thumb
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo3->getId());
 		GalleryUtilities::putRequestVariable('maxSize', '175');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -707,12 +672,10 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0], 3);
 		$this->assertEquals(
 			$this->_photo3Thumb->getId(),
-
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match thumbnail'
 	);
@@ -731,6 +694,7 @@ class ImageBlockTest extends GalleryTestCase {
 			DERIVATIVE_TYPE_IMAGE_RESIZE,
 			250
 	);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -739,9 +703,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo3->getId());
 		GalleryUtilities::putRequestVariable('exactSize', '175');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -756,12 +718,10 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 		$this->assertEquals(
 			$resized->getId(),
-
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match resized'
 	);
@@ -817,9 +777,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $albumId);
 		GalleryUtilities::putRequestVariable('exactSize', '198');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -834,12 +792,10 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 		$this->assertEquals(
 			$resized->getId(),
-
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match resized'
 	);
@@ -869,6 +825,7 @@ class ImageBlockTest extends GalleryTestCase {
 			DERIVATIVE_TYPE_IMAGE_PREFERRED,
 			500
 	);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -877,9 +834,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo3->getId());
 		GalleryUtilities::putRequestVariable('exactSize', '400');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -894,12 +849,10 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 		$this->assertEquals(
 			$preferred->getId(),
-
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match preferred'
 	);
@@ -929,6 +882,7 @@ class ImageBlockTest extends GalleryTestCase {
 			DERIVATIVE_TYPE_IMAGE_PREFERRED,
 			500
 	);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -937,9 +891,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo3->getId());
 		GalleryUtilities::putRequestVariable('exactSize', '200');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -954,12 +906,10 @@ class ImageBlockTest extends GalleryTestCase {
 	);
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 		$this->assertEquals(
 			$resized->getId(),
-
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Failed to choose resize'
 	);
@@ -994,35 +944,27 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$data = $this->_doImageBlockCallback('specificItem', null, $this->_photo->getId());
-
-		$this->assert(empty($data['ImageBlockData']['blocks']), 'Should be no blocks');
-
+		$this->assertTrue(empty($data['ImageBlockData']['blocks']), 'Should be no blocks');
 		$data = $this->_doImageBlockCallback(
 			'specificItem',
 			$testUser->getId(),
 			$this->_photo->getId()
 	);
+
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$itemId = $this->assertBlock($data['ImageBlockData']['blocks'][0]);
-
 		$this->assertEquals($this->_photo->getId(), $itemId, 'specific item');
 	}
 
 	public function testPeriodicBlocks() {
 		$data = $this->_doImageBlockCallback('dailyImage');
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$itemId = $this->assertBlock($data['ImageBlockData']['blocks'][0], 1);
 
 		// Next call should return same id
 		$data = $this->_doImageBlockCallback('dailyImage');
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$nextItemId = $this->assertBlock($data['ImageBlockData']['blocks'][0], 2);
-
 		$this->assertEquals($itemId, $nextItemId, 'keep same id');
 
 		// Set invalid id in property to force picking new id
@@ -1035,20 +977,14 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$data = $this->_doImageBlockCallback('monthlyAlbum');
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$itemId = $this->assertBlock($data['ImageBlockData']['blocks'][0], 3);
-
-		$this->assert($itemId > 0, 'valid id');
+		$this->assertTrue($itemId > 0, 'valid id');
 
 		// Next call should return same id
 		$data = $this->_doImageBlockCallback('monthlyAlbum');
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$nextItemId = $this->assertBlock($data['ImageBlockData']['blocks'][0], 4);
-
 		$this->assertEquals($itemId, $nextItemId, 'keep same album id');
 	}
 
@@ -1110,9 +1046,7 @@ class ImageBlockTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('blocks', 'monthlyAlbum');
 		GalleryUtilities::putRequestVariable('itemId', $this->_album->getId());
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -1132,12 +1066,14 @@ class ImageBlockTest extends GalleryTestCase {
 			count($data['ImageBlockData']['blocks']),
 			'One block'
 	);
+
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 		$this->assertEquals(
 			$goodAlbum->getId(),
 			$data['ImageBlockData']['blocks'][0]['id'],
 			'Album id'
 	);
+
 		$this->assertEquals('modules_imageblock', $data['l10Domain']);
 
 		// Ensure periodic blocks only pick from publically visible items
@@ -1183,9 +1119,7 @@ class ImageBlockTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('blocks', 'weeklyImage');
 		GalleryUtilities::putRequestVariable('itemId', $this->_album->getId());
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -1209,9 +1143,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_album->getId());
 		GalleryUtilities::putRequestVariable('show', 'fullSize');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -1221,18 +1153,16 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$itemId = $this->assertBlock($data['ImageBlockData']['blocks'][0], 1, false);
-
 		$this->assertEquals($this->_album->getId(), $itemId, 'block is for album');
 		$this->assertEquals(
 			$this->_photo->getId(),
 			$data['ImageBlockData']['blocks'][0]['thumb']['id'],
 			'image source is photo'
 	);
-		$this->assert(isset($data['ImageBlockData']['blocks'][0]['forceItem']), 'forceItem flag');
+
+		$this->assertTrue(isset($data['ImageBlockData']['blocks'][0]['forceItem']), 'forceItem flag');
 	}
 
 	public function testAlbumFullsizePreferred() {
@@ -1264,9 +1194,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_album->getId());
 		GalleryUtilities::putRequestVariable('show', 'fullSize|heading');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -1276,18 +1204,16 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$itemId = $this->assertBlock($data['ImageBlockData']['blocks'][0]);
-
 		$this->assertEquals($this->_album->getId(), $itemId, 'block is for album');
 		$this->assertEquals(
 			$preferred->getId(),
 			$data['ImageBlockData']['blocks'][0]['thumb']['id'],
 			'image source is preferred deriv'
 	);
-		$this->assert(!isset($data['ImageBlockData']['blocks'][0]['forceItem']), 'forceItem flag');
+
+		$this->assertFalse(isset($data['ImageBlockData']['blocks'][0]['forceItem']), 'forceItem flag');
 	}
 
 	public function testPhotoFullsizePreferred() {
@@ -1319,9 +1245,7 @@ class ImageBlockTest extends GalleryTestCase {
 		GalleryUtilities::putRequestVariable('blocks', 'specificItem');
 		GalleryUtilities::putRequestVariable('itemId', $this->_photo->getId());
 		GalleryUtilities::putRequestVariable('show', 'fullSize');
-
 		$template = new ImageBlockDummyGalleryTemplate();
-
 		$external->setTemplate($template);
 
 		$ret = $external->renderImmediate(array(), array());
@@ -1331,18 +1255,16 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$data = $template->_data;
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'One block');
-
 		$itemId = $this->assertBlock($data['ImageBlockData']['blocks'][0], 1, false);
-
 		$this->assertEquals($this->_photo->getId(), $itemId, 'block is for photo');
 		$this->assertEquals(
 			$preferred->getId(),
 			$data['ImageBlockData']['blocks'][0]['thumb']['id'],
 			'image source is preferred deriv'
 	);
-		$this->assert(!isset($data['ImageBlockData']['blocks'][0]['forceItem']), 'forceItem flag');
+
+		$this->assertFalse(isset($data['ImageBlockData']['blocks'][0]['forceItem']), 'forceItem flag');
 	}
 
 	public function testImageBlockDefaultsParentIdToDefaultAlbumId() {
@@ -1372,7 +1294,6 @@ class ImageBlockTest extends GalleryTestCase {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockId);
-
 			return $ret;
 		}
 
@@ -1398,14 +1319,10 @@ class ImageBlockTest extends GalleryTestCase {
 		// Finally the feature under test
 		$gallery->setConfig('defaultAlbumId', $subAlbum->getId());
 		$gallery->setConfig('breadcrumbRootId', $subAlbum->getId());
-
 		$data = $this->_doImageBlockCallback('viewedImage');
-
 		$this->assertEquals(1, count($data['ImageBlockData']['blocks']), 'missing block');
-
 		if (count($data['ImageBlockData']['blocks'])) {
 			$block = array_shift($data['ImageBlockData']['blocks']);
-
 			$this->assertEquals(5, $block['viewCount'], 'view count of item under default album');
 			$this->assertEquals($subPhoto->getId(), $block['id'], 'id of item under default album');
 		}
@@ -1418,7 +1335,6 @@ class ImageBlockTest extends GalleryTestCase {
 		 */
 		$blockTpl = "modules/imageblock/templates/blocks/ImageBlock.tpl";
 		$template = new GalleryTemplate(GalleryCoreApi::getCodeBasePath());
-
 		$template->setVariable('l10Domain', 'modules_imageblock');
 
 		// Default theme variables
@@ -1440,7 +1356,6 @@ class ImageBlockTest extends GalleryTestCase {
 
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
-
 			'ImageFrameInterface_1_1',
 			'ImageBlockTestFrame',
 			'ImageBlockTestFrame',
@@ -1460,23 +1375,16 @@ class ImageBlockTest extends GalleryTestCase {
 		}
 
 		$imageBlockData = $template->getVariable('ImageBlockData');
-
 		$this->assertEquals(2, count($imageBlockData['blocks']), 'two blocks');
-
 		$this->assertBlock($imageBlockData['blocks'][0], 'first block', true);
-
 		$this->assertBlock($imageBlockData['blocks'][1], 'second block', true);
-
-		$this->assert(!empty($imageBlockData['blocks'][0]['title']), 'show heading for block 1');
-
-		$this->assert(!empty($imageBlockData['blocks'][0]['title']), 'show heading for block 2');
-
-		$this->assert(isset($imageBlockData['show']['owner']), 'show owner');
-		$this->assert(!isset($imageBlockData['show']['title']), 'do not show title');
-		$this->assert(!isset($imageBlockData['show']['views']), 'do not show view count');
-		$this->assert(!isset($imageBlockData['show']['date']), 'do not show date');
+		$this->assertFalse(empty($imageBlockData['blocks'][0]['title']), 'show heading for block 1');
+		$this->assertFalse(empty($imageBlockData['blocks'][0]['title']), 'show heading for block 2');
+		$this->assertTrue(isset($imageBlockData['show']['owner']), 'show owner');
+		$this->assertFalse(isset($imageBlockData['show']['title']), 'do not show title');
+		$this->assertFalse(isset($imageBlockData['show']['views']), 'do not show view count');
+		$this->assertFalse(isset($imageBlockData['show']['date']), 'do not show date');
 		$this->assertEquals(
-
 			array('testAlbumFrame', 'testItemFrame'),
 			$_REQUEST['ImageBlockTestFrame']
 	);

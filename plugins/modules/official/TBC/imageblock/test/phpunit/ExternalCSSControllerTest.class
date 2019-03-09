@@ -59,7 +59,6 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 		// Ensure there's a image frame implementation
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
-
 			'ImageFrameInterface_1_1',
 			'ExternalCSSControllerTestImageFrame',
 			'testImplId',
@@ -86,7 +85,6 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSWithSpecifiedImageFrames() {
 		GalleryUtilities::putRequestVariable('frames', 'frameFromRequest');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -104,7 +102,6 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSWithoutImageFrameModule() {
 		$this->_unregisterFactoryImplementationForTest('ImageFrameInterface_1_1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -143,8 +140,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSDoesNotRequireAuthToken() {
 		$controller = new ExternalCSSController();
-
-		$this->assert($controller->omitAuthTokenCheck());
+		$this->assertTrue($controller->omitAuthTokenCheck());
 	}
 }
 

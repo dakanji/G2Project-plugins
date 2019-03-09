@@ -64,7 +64,7 @@ class MP3AudioRendererTest extends GalleryTestCase {
 		$item->setMimeType('image/jpeg');
 		$item->setWidth(100);
 		$item->setHeight(100);
-		$this->assert(!$this->_renderer->canBeViewedInline($item), 'jpeg');
+		$this->assertFalse($this->_renderer->canBeViewedInline($item), 'jpeg');
 
 		list($ret, $item) = GalleryCoreApi::newItemByMimeType('audio/wav');
 
@@ -73,7 +73,7 @@ class MP3AudioRendererTest extends GalleryTestCase {
 		}
 
 		$item->setMimeType('audio/wav');
-		$this->assert(!$this->_renderer->canBeViewedInline($item), 'wav');
+		$this->assertFalse($this->_renderer->canBeViewedInline($item), 'wav');
 
 		list($ret, $item) = GalleryCoreApi::newItemByMimeType('audio/mpeg');
 
@@ -82,8 +82,8 @@ class MP3AudioRendererTest extends GalleryTestCase {
 		}
 
 		$item->setMimeType('audio/mpeg');
-		$this->assert($this->_renderer->canBeViewedInline($item), 'mp3');
-		$this->assert($this->_renderer->canBeViewedInline($this->_item), 'mp3 item');
+		$this->assertTrue($this->_renderer->canBeViewedInline($item), 'mp3');
+		$this->assertTrue($this->_renderer->canBeViewedInline($this->_item), 'mp3 item');
 	}
 
 	public function testRender() {
@@ -96,10 +96,9 @@ class MP3AudioRendererTest extends GalleryTestCase {
 			)
 		);
 
-		$this->assert(strpos($html, '<div id="soContent"') !== false, 'flash <div> placeholder');
-
-		$this->assert(strpos($html, '.swf'), '.swf');
-		$this->assert(strpos($html, 'http'), 'http');
-		$this->assert(strpos($html, (string)$this->_item->getId()), 'itemId');
+		$this->assertTrue(strpos($html, '<div id="soContent"') !== false, 'flash <div> placeholder');
+		$this->assertTrue(strpos($html, '.swf'), '.swf');
+		$this->assertTrue(strpos($html, 'http'), 'http');
+		$this->assertTrue(strpos($html, (string)$this->_item->getId()), 'itemId');
 	}
 }

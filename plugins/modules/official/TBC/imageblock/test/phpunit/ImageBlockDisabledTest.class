@@ -81,7 +81,6 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('Gallery::ViewableTreeChange', $listener);
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 		$this->_registerTestEventListener('GalleryEntity::delete', $listener);
@@ -260,7 +259,6 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		$derivative->setDerivativeSourceId($src->getId());
 		$derivative->setMimeType($src->getMimeType());
 		$derivative->setDerivativeOperations('testoperation|0');
-
 		if ($size) {
 			// Set scaled size:
 			$w = $src->getWidth();
@@ -270,7 +268,6 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 				$derivative->setHeight($h);
 			} elseif ($w >= $h) {
 				$derivative->setWidth($size);
-
 				$derivative->setHeight((int)($size * $h / $w));
 			} else {
 				$derivative->setHeight($size);
@@ -292,11 +289,11 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 	}
 
 	public function assertBlock($block) {
-		$this->assert(isset($block['id']), 'Missing id');
-		$this->assert(isset($block['viewCount']), 'Missing viewCount');
-		$this->assert(isset($block['title']), 'Missing title');
-		$this->assert(isset($block['item']), 'Missing item');
-		$this->assert(isset($block['thumb']), 'Missing thumb');
+		$this->assertTrue(isset($block['id']), 'Missing id');
+		$this->assertTrue(isset($block['viewCount']), 'Missing viewCount');
+		$this->assertTrue(isset($block['title']), 'Missing title');
+		$this->assertTrue(isset($block['item']), 'Missing item');
+		$this->assertTrue(isset($block['thumb']), 'Missing thumb');
 	}
 
 	public function testImageBlockDisabledNoItemsReturned() {
@@ -316,8 +313,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$data = $smarty->_tpl_vars;
-
-		$this->assert(!isset($data['ImageBlockData']['blocks']), 'Block should not exist');
+		$this->assertFalse(isset($data['ImageBlockData']['blocks']), 'Block should not exist');
 	}
 
 	public function testImageBlockDisabledOneItemReturned() {
@@ -344,8 +340,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$data = $smarty->_tpl_vars;
-		$this->assert(1 == count($data['ImageBlockData']['blocks']), 'One block');
-
+		$this->assertTrue(1 == count($data['ImageBlockData']['blocks']), 'One block');
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 	}
 }

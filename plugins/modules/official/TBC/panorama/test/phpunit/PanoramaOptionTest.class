@@ -110,7 +110,6 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 	public function testPanoramaOn() {
 		$form['PanoramaOption']['isPanorama'] = 1;
 		$result                               = $this->_handleRequestAfterEdit($form, $this->_item);
-
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $item) = $this->_item->refresh();
@@ -130,7 +129,6 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterEdit(array(), $this->_item);
-
 		$this->assertEquals(array(array(), array()), $result, 'controller results');
 
 		list($ret, $item) = $this->_item->refresh();
@@ -140,7 +138,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		}
 
 		// For Oracle, null is replaced with '' when loading data from the database
-		$this->assert(in_array($item->getRenderer(), array(null, '')), 'renderer not empty');
+		$this->assertTrue(in_array($item->getRenderer(), array(null, '')), 'renderer not empty');
 	}
 
 	public function testHelper() {
@@ -150,7 +148,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert(isset($images[$this->_item->getId()]), 'Missing result');
+		$this->assertTrue(isset($images[$this->_item->getId()]), 'Missing result');
 		$this->assertEquals(
 			$this->_derivative->getId(),
 			$images[$this->_item->getId()]->getId(),
@@ -167,17 +165,17 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$html = $this->_renderer->render('HTML', $this->_item, $this->_item, array());
-		$this->assert(
+		$this->assertTrue(
 			preg_match('{<param name="archive" value="http}', $html),
 			'item: jar full url: ' . htmlentities($html)
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			preg_match('{<param[^>]*name="ScrollerThumb"[^>]*value="http}', $html),
 			'item: slider full url: ' . htmlentities($html)
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			preg_match(
 				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
 				. SESSION_ID_PARAMETER . '}',
@@ -187,17 +185,17 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		);
 
 		$html = $this->_renderer->render('HTML', $this->_derivative, $this->_item, array());
-		$this->assert(
+		$this->assertTrue(
 			preg_match('{<param name="archive" value="http}', $html),
 			'deriv: jar full url: ' . htmlentities($html)
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			preg_match('{<param[^>]*name="ScrollerThumb"[^>]*value="http}', $html),
 			'deriv: slider full url: ' . htmlentities($html)
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			preg_match(
 				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
 				. SESSION_ID_PARAMETER . '}',
@@ -217,7 +215,6 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		);
 
 		$this->assertEquals(null, $html, 'item: raw image');
-
 		$html = $this->_renderer->render(
 			'HTML',
 			$this->_derivative,

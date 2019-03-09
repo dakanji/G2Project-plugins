@@ -65,10 +65,9 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
-
 		$this->_password = 'password';
 		if (!$this->_user->isCorrectPassword($this->_password)) {
-			return $this->assert(false, "test user wasn't created with expected password");
+			return $this->assertTrue(false, "test user wasn't created with expected password");
 		}
 
 		$this->_saveUser = $gallery->getActiveUser();
@@ -110,7 +109,6 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		// Invalid username
 		GalleryUtilities::putRequestVariable('Username', 'this is an invalid username', false);
 		GalleryUtilities::putRequestVariable('Password', 'x', false);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -127,10 +125,10 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals($this->_saveUser, $gallery->getActiveUser(), 'active user 1');
+
 		// Invalid password
 		GalleryUtilities::putRequestVariable('Username', $this->_user->getUserName(), false);
 		GalleryUtilities::putRequestVariable('Password', 'wrong password', false);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -147,10 +145,10 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals($this->_saveUser, $gallery->getActiveUser(), 'active user 2');
+
 		// Valid credentials
 		GalleryUtilities::putRequestVariable('Username', $this->_user->getUserName(), false);
 		GalleryUtilities::putRequestVariable('Password', $this->_password, false);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -162,7 +160,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals(array(), $results['error'], 'error');
 		$this->assertEquals(NOKIAUPLOAD_ERR_NOERR, $results['status']['success'], 'success');
-		$this->assert(!empty($results['status']['rsurl']), 'rsurl');
+		$this->assertFalse(empty($results['status']['rsurl']), 'rsurl');
 		$this->assertEquals(3, count($results['status']['capabilities']), 'capabilities');
 		$this->assertEquals($this->_user, $gallery->getActiveUser(), 'active user 3');
 

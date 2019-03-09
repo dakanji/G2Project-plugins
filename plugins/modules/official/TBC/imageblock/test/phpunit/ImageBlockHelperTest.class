@@ -40,7 +40,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($album);
-
 		return array(null, $album);
 	}
 
@@ -100,7 +99,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
 
-		$this->assert($disabledFlag, 'getDisabledFlag returned false');
+		$this->assertTrue($disabledFlag, 'getDisabledFlag returned false');
 
 		$ret = GalleryCoreApi::removeMapEntry(
 			'ImageBlockDisabledMap',
@@ -115,7 +114,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
 
-		$this->assert(!$disabledFlag, 'getDisabledFlag returned true');
+		$this->assertFalse($disabledFlag, 'getDisabledFlag returned true');
 	}
 
 	public function testImageBlockHelperSetDisabledFlag() {
@@ -160,7 +159,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 		sort($itemIds);
 		sort($dbItemIds);
-
 		$this->assertEquals($itemIds, $dbItemIds, 'Items not added to the DisableMap');
 
 		$ret = ImageBlockHelper::setDisabledFlag($this->_topAlbum, false, false);
@@ -228,7 +226,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		sort($dbItemIds);
-
 		$this->assertEquals($itemIds, $dbItemIds, 'Items not added to the DisableMap');
 
 		$ret = ImageBlockHelper::setDisabledFlag($this->_topAlbum, true, false);
@@ -339,7 +336,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 		sort($dbItemIds);
 		sort($itemIds);
-
 		$this->assertEquals($itemIds, $dbItemIds, 'Not all items have been flagged as disabled');
 	}
 
@@ -351,7 +347,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('Gallery::ViewableTreeChange', $listener);
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 		$this->_registerTestEventListener('GalleryEntity::delete', $listener);
@@ -409,6 +404,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			null,
 			200 // maxSize
 		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -420,7 +416,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('Gallery::ViewableTreeChange', $listener);
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 		$this->_registerTestEventListener('GalleryEntity::delete', $listener);
@@ -500,6 +495,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			null,
 			130 // maxSize
 		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -517,30 +513,29 @@ class ImageBlockHelperTest extends GalleryTestCase {
 	}
 
 	public function testGetRandomKeyReturnsPositiveInteger() {
-		$this->assert(is_int($a = ImageBlockHelper::getRandomKey()), "$a must be integer");
+		$this->assertTrue(is_int($a = ImageBlockHelper::getRandomKey()), "$a must be integer");
 	}
 
 	public function testGetRandomKeyInDefaultRange() {
 		$a = ImageBlockHelper::getRandomKey();
-		$this->assert(0 <= $a, "$a must be >= 0");
+		$this->assertTrue(0 <= $a, "$a must be >= 0");
 		$b = ImageBlockHelper::getRandomKey();
-		$this->assert(2147483647 >= $b, "$a must be >= 2147483647");
+		$this->assertTrue(2147483647 >= $b, "$a must be >= 2147483647");
 	}
 
 	public function testGetRandomKeyWithRange() {
 		$a = ImageBlockHelper::getRandomKey(17, 30);
-		$this->assert($a <= 30 && $a >= 17, "$a is not in specified range");
+		$this->assertTrue($a <= 30 && $a >= 17, "$a is not in specified range");
 	}
 
 	public function testGetRandomKeyWithMinimalRange() {
 		$a = ImageBlockHelper::getRandomKey(17, 17);
-
 		$this->assertEquals(17, $a);
 	}
 
 	public function testGetRandomKeyWithSmallRange() {
 		$a = ImageBlockHelper::getRandomKey(25, 26);
-		$this->assert($a == 25 || $a == 26, "$a is outside of specified range");
+		$this->assertTrue($a == 25 || $a == 26, "$a is outside of specified range");
 	}
 
 	public function testFetchViewableDataForRandomImageWithCache() {
@@ -571,6 +566,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			array($query, array($userId, 1), array()),
 			array(null, new UnitTestStorageSearchResults(array(array(5, 9))))
 		);
+
 		$phpVm->setReply('rand', array(5, 9), 7);
 
 		$query = 'SELECT [ImageBlockCacheMap::itemId] FROM [ImageBlockCacheMap] '
@@ -584,8 +580,8 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			array('LIMIT', array(2, $query)),
 			array(null, $query . ' LIMIT 2')
 		);
-		$storage->setReply(
 
+		$storage->setReply(
 			'search',
 			array($query . ' LIMIT 2', array($userId, 1, 6), array()),
 			array(null, new UnitTestStorageSearchResults(array(array(15, 4), array(19, 99))))
@@ -611,7 +607,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			$results
 		);
 
-		$this->assert($storage->isComplete(), $storage->getRemaining());
+		$this->assertTrue($storage->isComplete(), $storage->getRemaining());
 	}
 
 	/**
@@ -654,7 +650,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		// Ensure that wrap around must be used by rigging the random key
 		$gallery->_phpVm = new UnitTestPhpVm();
 		$phpVm           = $gallery->getPhpVm();
-
 		$phpVm->setReply('rand', '*', $max);
 
 		list($ret, $randItems) = ImageBlockHelper::fetchViewableData('Image', 'random', count($items), $album->getId());
@@ -699,6 +694,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(array(5, 9), $range);
-		$this->assert($storage->isComplete(), $storage->getRemaining());
+		$this->assertTrue($storage->isComplete(), $storage->getRemaining());
 	}
 }

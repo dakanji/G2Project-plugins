@@ -122,7 +122,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert($disabledFlag, 'Add eventHandler failed');
+		$this->assertTrue($disabledFlag, 'Add eventHandler failed');
 
 		$ret = GalleryCoreApi::deleteEntityById($this->_handlerItem->getId(), 'GalleryDataItem');
 
@@ -136,7 +136,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$disabledFlag, 'Delete eventHandler failed');
+		$this->assertFalse($disabledFlag, 'Delete eventHandler failed');
 	}
 
 	public function testImageBlockDisabledMapHandlerMoveDisabledItemToDisabledAlbum() {
@@ -145,15 +145,17 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Add the item / it's parent album to the disabled map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, true);
+
 		// Add new parent to disabled map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, true);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($item, $this->_topAlbum, $this->_subAlbum);
+
 		// Verification: Is it in the disabled list?
 		$this->_verifyDisabledFlagForItems(array($item), true);
 	}
@@ -167,15 +169,17 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the item / it's parent album are not in disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, false);
+
 		// Add new parent to disabled map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, true);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($item, $this->_topAlbum, $this->_subAlbum);
+
 		// Verification: Is it in the disabled list?
 		$this->_verifyDisabledFlagForItems(array($item), true);
 	}
@@ -189,15 +193,17 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the item / it's parent album are in disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, true);
+
 		// Make sure it's new parent album is not in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, false);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($item, $this->_topAlbum, $this->_subAlbum);
+
 		// Verification: Is it in the disabled list?
 		$this->_verifyDisabledFlagForItems(array($item), false);
 	}
@@ -211,15 +217,17 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the item / it's parent album are not in disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, false);
+
 		// Make sure it's new parent album is not in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, false);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($item, $this->_topAlbum, $this->_subAlbum);
+
 		// Verification: Is it in the disabled list?
 		$this->_verifyDisabledFlagForItems(array($item), false);
 	}
@@ -231,7 +239,6 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -252,7 +259,6 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -276,20 +282,20 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Add the album to the disabled map
 		$this->_setAndAssertDisabledFlag($albumItem, true);
+
 		// Add new parent to disabled map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, true);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($albumItem, $this->_topAlbum, $this->_subAlbum);
 
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
-
 		$this->_verifyDisabledFlagForItems($checkItems, true);
 	}
 
@@ -303,20 +309,20 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the album is not in the disabled map
 		$this->_setAndAssertDisabledFlag($albumItem, false);
+
 		// Add new parent to disabled map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, true);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($albumItem, $this->_topAlbum, $this->_subAlbum);
 
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
-
 		$this->_verifyDisabledFlagForItems($checkItems, false);
 	}
 
@@ -330,20 +336,20 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the album is in the disabled map
 		$this->_setAndAssertDisabledFlag($albumItem, true);
+
 		// Make sure the new parent album is not in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, false);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($albumItem, $this->_topAlbum, $this->_subAlbum);
 
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
-
 		$this->_verifyDisabledFlagForItems($checkItems, true);
 	}
 
@@ -357,20 +363,20 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the album is not in the disabled map
 		$this->_setAndAssertDisabledFlag($albumItem, false);
+
 		// Make sure the new parent album is not in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, false);
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
+
 		// Execute the test
 		$this->_moveItem($albumItem, $this->_topAlbum, $this->_subAlbum);
 
 		// Verification: Is it in the disabled list?
 		$checkItems   = $this->_subItems2;
 		$checkItems[] = $albumItem;
-
 		$this->_verifyDisabledFlagForItems($checkItems, false);
 	}
 
@@ -381,7 +387,6 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -402,7 +407,6 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Execute the test
@@ -420,7 +424,6 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 	public function testImageBlockSaveEventHandlerShouldIgnoreNonGalleryItemEntities() {
 		// Make sure the event handler is registered
 		$listener = new ImageBlockHelper();
-
 		$this->_registerTestEventListener('GalleryEntity::save', $listener);
 
 		// Just make sure the test runs without errors

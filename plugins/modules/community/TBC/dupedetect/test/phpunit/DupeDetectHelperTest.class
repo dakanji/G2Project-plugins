@@ -85,6 +85,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -103,6 +104,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -161,8 +163,8 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert($crcSign, 'crc32 signature wasn\'t created');
-		$this->assert($histSign, 'histogram signature wasn\'t created');
+		$this->assertTrue($crcSign, 'crc32 signature wasn\'t created');
+		$this->assertTrue($histSign, 'histogram signature wasn\'t created');
 
 		// test removal of signatures
 		$ret = DupeDetectHelper::removeDupeSignatures($this->_item->getId());
@@ -178,8 +180,8 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(!$crcSign, 'crc32 signature wasn\'t removed');
-		$this->assert(!$histSign, 'histogram signature wasn\'t removed');
+		$this->assertFalse($crcSign, 'crc32 signature wasn\'t removed');
+		$this->assertFalse($histSign, 'histogram signature wasn\'t removed');
 	}
 
 	/**
@@ -211,6 +213,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -231,6 +234,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -245,6 +249,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			0
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -280,11 +285,12 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			0
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert($exist != false);
+		$this->assertTrue($exist != false);
 		$exist = false;
 
 		list($ret, $exist) = DupeDetectHelper::getDupePairs(
@@ -292,11 +298,12 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem2->getId(),
 			1
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert($exist != false);
+		$this->assertTrue($exist != false);
 
 		// test getDupePairs() - get non existing pair (difference is in the dupType)
 		$exist = true;
@@ -306,6 +313,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			1
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -362,6 +370,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -382,6 +391,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -398,7 +408,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($count, 1);
-
 		$dupeList = array(array($dupItem1->getId(), 0));
 
 		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), $dupeList);
@@ -424,12 +433,12 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			1
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
 
 		$this->assertEquals($exist, false);
-
 		$exist = true;
 
 		list($ret, $exist) = DupeDetectHelper::getDupePairs(
@@ -437,6 +446,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			0
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -452,7 +462,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		// call handleEvent()
 		$eventName = 'GalleryEntity::save';
 		$event     = GalleryCoreApi::newEvent($eventName);
-
 		$event->setEntity($this->_item);
 
 		list($ret, $result) = DupeDetectHelper::handleEvent($event);
@@ -468,8 +477,8 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert($crcSign, 'crc32 signature wasn\'t created in ::save event');
-		$this->assert($histSign, 'histogram signature wasn\'t created in ::save event');
+		$this->assertTrue($crcSign, 'crc32 signature wasn\'t created in ::save event');
+		$this->assertTrue($histSign, 'histogram signature wasn\'t created in ::save event');
 
 		// clean up
 		$ret = DupeDetectHelper::removeDupeSignatures($this->_item->getId());
@@ -500,7 +509,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		// call handleEvent()
 		$eventName = 'GalleryEntity::delete';
 		$event     = GalleryCoreApi::newEvent($eventName);
-
 		$event->setEntity($this->_item);
 
 		list($ret, $result) = DupeDetectHelper::handleEvent($event);
@@ -516,8 +524,8 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(!$crcSign, 'crc32 signature wasn\'t deleted');
-		$this->assert(!$histSign, 'histogram signature wasn\'t deleted');
+		$this->assertFalse($crcSign, 'crc32 signature wasn\'t deleted');
+		$this->assertFalse($histSign, 'histogram signature wasn\'t deleted');
 	}
 
 	/**
@@ -531,7 +539,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(empty($dupes), 'should have returned an empty array of dupes');
+		$this->assertTrue(empty($dupes), 'should have returned an empty array of dupes');
 
 		// create signature for first item
 		$ret = DupeDetectHelper::createDupeSignatures($this->_item);
@@ -566,7 +574,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($existingDupes + 1, count($dupes));
-
 		$existingDupes = count($dupes);
 
 		/* now add another dup image, that is exact dupe of $this->_item. two more dupe
@@ -587,6 +594,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -634,7 +642,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		// test that fails when asked to mark a pair that doesn't exist
 		$ret = DupeDetectHelper::MarkAsIgnoredDuplicate($this->_item, $this->_item2);
 
-		$this->assert($ret->isError(), '');
+		$this->assertTrue($ret->isError(), '');
 
 		// add 2 dupe pair records
 		$dupeList = array(
@@ -655,6 +663,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			$this->_item2->getId()
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -663,6 +672,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			$this->_item2->getId()
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -683,6 +693,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			$this->_item2->getId()
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -727,6 +738,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album2->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -743,7 +755,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		// check that $dupItem has been deleted
 		$ret = $this->_verifyMissing($dupId);
 
-		$this->assert(!$ret->isError());
+		$this->assertFalse($ret->isError());
 
 		// check that new item is linked to _item
 		list($ret, $linkedItems) = GalleryCoreApi::fetchEntitiesLinkedTo($this->_item->getId());
@@ -752,10 +764,11 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(
+		$this->assertTrue(
 			in_array($newItem->getId(), $linkedItems),
 			"newly created item not found in original item's linked items list"
 		);
+
 		// check that new item was created in _item's album
 		$this->assertEquals($newItem->getParentId(), $this->_album2->getId());
 

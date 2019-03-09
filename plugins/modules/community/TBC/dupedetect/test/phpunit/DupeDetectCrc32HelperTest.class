@@ -37,7 +37,6 @@ GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectCrc32Helper.cl
  * Map class
  */
 GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectSignaturesMap.class');/**
-
  * Test DupeDetect functionality
  *
  * @package DupeDetect
@@ -84,6 +83,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
+
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -130,13 +130,13 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 				$this->_item->getId(),
 			)
 		);
+
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
 			return $this->failWithStatus($ret);
 		}
 
 		$this->assertTrue(
-
 			empty($signatures),
 			'Somehow there is already a signature for the new item'
 		);
@@ -162,13 +162,14 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 				$this->_dupItem->getId(),
 			)
 		);
+
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
 			return $this->failWithStatus($ret);
 		}
 
 		// signature fetched
-		$this->assert(count($signatures) == 2, 'didn\'t get 2 signatures as expected');
+		$this->assertTrue(count($signatures) == 2, 'did not get 2 signatures as expected');
 
 		// clean the signatures created
 		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_item->getId());
@@ -203,7 +204,8 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 		}
 
 		// signature exists
-		$this->assert(!empty($signatures), 'Cannot find CRC32 for item');
+		$this->assertFalse(empty($signatures), 'Cannot find CRC32 for item');
+
 		// and correct
 		$this->assertEquals($signatures[$this->_item->getId()], '-1742438075');
 
@@ -229,7 +231,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(empty($signatures), 'CRC32 exist and shouldn\'t');
+		$this->assertTrue(empty($signatures), 'CRC32 exist and shouldn\'t');
 
 		// create a signature
 		$ret = DupeDetectSignaturesMap::addMapEntry(
@@ -250,12 +252,13 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 				$this->_item->getId(),
 			)
 		);
+
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(!empty($signatures), 'Cannot find CRC32 for item');
+		$this->assertFalse(empty($signatures), 'Cannot find CRC32 for item');
 
 		// try to remove the signature
 		$ret = DupeDetectCrc32Helper::removeCrc32DupeSignatures($this->_item->getId());
@@ -273,7 +276,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		$this->assert(empty($signatures), 'CRC32 exist and should not');
+		$this->assertTrue(empty($signatures), 'CRC32 exist and should not');
 	}
 
 	public function testDiscoverDupes() {
@@ -295,7 +298,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 		}
 
 		// check that no dupes are detected
-		$this->assert(empty($dupes), 'got dupes when should not');
+		$this->assertTrue(empty($dupes), 'got dupes when should not');
 
 		// create a signature for it
 		$ret = DupeDetectCrc32Helper::createCrc32DupeSignatures($this->_dupItem);
@@ -314,7 +317,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 		}
 
 		// check that a dupe exists and only one
-		$this->assert(count($dupes) == 1, 'did not get one (1) dupe entry as expected');
+		$this->assertTrue(count($dupes) == 1, 'did not get one (1) dupe entry as expected');
 
 		// check that the duplicate is the one we expect
 		$this->assertTrue(

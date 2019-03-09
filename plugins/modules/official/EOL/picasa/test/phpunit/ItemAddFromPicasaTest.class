@@ -51,6 +51,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			'modules/picasa/test/phpunit/ItemAddFromPicasaTest.class',
 			'picasaTest'
 		);
+
 		$this->_markFactoryForCleanup();
 		$this->_markToolkitForCleanup('ItemAddFromPicasaTestToolkit');
 
@@ -92,7 +93,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		}
 
 		$this->_platform = new UnitTestPlatform();
-
 		$gallery->setPlatform($this->_platform);
 	}
 
@@ -103,7 +103,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			return $ret;
 		}
 
-		$this->assert($this->_platform->isComplete(), $this->_platform->getRemaining());
+		$this->assertTrue($this->_platform->isComplete(), $this->_platform->getRemaining());
 
 		$ret = parent::tearDown();
 
@@ -170,7 +170,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[type][picasaZipPath]', 'application/zip');
 		GalleryUtilities::putRequestVariable('form[tmp_name][picasaZipPath]', '/picasaimport.tmp');
 		GalleryUtilities::putRequestVariable('form[size][picasaZipPath]', 10000);
-
 		GalleryUtilities::putRequestVariable('form[error][picasaZipPath]', 0);
 		GalleryUtilities::putRequestVariable('form[set][title]', 'filename');
 		GalleryUtilities::putRequestVariable('form[set][summary]', 1);
@@ -188,7 +187,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 
 		$this->_platform->setReply('mkdir', array('/tmp.dir', 755), true);
 		$this->_platform->setReply(
-
 			'exec',
 			array(
 				array(
@@ -202,37 +200,32 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		);
 
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-
 		$this->_platform->setReply('file_exists', array('/tmp.dir/index.xml'), true);
-
 		$this->_platform->setReply('is_readable', array('/tmp.dir/index.xml'), true);
-
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
-
 		$this->_platform->setReply('file_exists', array('/tmp.dir/index.xml'), true);
-
 		$this->_platform->setReply('is_readable', array('/tmp.dir/index.xml'), true);
-
 		$this->_platform->setReply('file', array('/tmp.dir/index.xml', ''), $testXmlData);
-
 		$this->_platform->setReply(
 			'legalizePathComponent',
 			array('GalleryTest 2<script>evil', false),
 			'GalleryTest 2_script_evil'
 		);
+
 		$this->_platform->setReply(
 			'isLegalPathComponent',
 			array('GalleryTest 2_script_evil', false),
 			true
 		);
+
 		$this->_platform->setReply(
 			'legalizePathComponent',
 			array('GalleryTest 2_script_evil', true),
 			'GalleryTest 2_script_evil'
 		);
+
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
 		$this->_platform->setReply(
-
 			'file_exists',
 			array(
 				'fuzzy' => '{.*GalleryTest 2}',
@@ -257,14 +250,15 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 				array('/tmp.dir/images/' . $testImage . ''),
 				true
 			);
+
 			$this->_platform->setReply(
 				'legalizePathComponent',
 				array($testImage, false),
 				$testImage
 			);
+
 			$this->_platform->setReply('getDirectorySeparator', array(), '/');
 			$this->_platform->setReply(
-
 				'copy',
 				array(
 					'/tmp.dir/images/' . $testImage . '',
@@ -292,7 +286,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			list($error, $status) = $results;
 		} else {
 			$this->fail('unexpected results: ' . print_r($results, true));
-
 			return;
 		}
 
@@ -301,10 +294,8 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		// We don't know the ids, but we can verify everything else
 		foreach ($testImages as $file) {
 			$this->assertEquals(htmlentities($file), $status['addedFiles'][$i]['fileName']);
-			$this->assert(isset($status['addedFiles'][$i]['id']));
-
+			$this->assertTrue(isset($status['addedFiles'][$i]['id']));
 			$ids[] = $status['addedFiles'][$i]['id'];
-
 			$this->assertEquals(array(), $status['addedFiles'][$i]['warnings']);
 			$i++;
 		}
@@ -336,7 +327,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 
 		// There should have been one album imported
 		$this->assertEquals(3, count($itemIds), 'child count');
-
 		$seenWeights = array();
 		foreach ($ids as $id) {
 			list($ret, $viewCount) = GalleryCoreApi::fetchItemViewCount($id);
@@ -353,8 +343,7 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 				return $ret;
 			}
 
-			$this->assert(!isset($seenWeights[$orderWeight]), 'Seen this weight before');
-
+			$this->assertFalse(isset($seenWeights[$orderWeight]), 'Seen this weight before');
 			$seenWeights[$orderWeight] = 1;
 		}
 
@@ -383,11 +372,8 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			list($base, $extension) = GalleryUtilities::getFileNameComponents($testImages[$i]);
 
 			$sanitizedBase = $base;
-
 			GalleryUtilities::sanitizeInputValues($sanitizedBase);
-
 			$this->assertEquals($sanitizedBase, $item->getTitle(), "title $i");
-
 			if ($i == 2) {
 				$this->assertEquals('Test&lt;script&gt;picture', $item->getSummary(), "summary $i");
 				$this->assertEquals('Test&lt;script&gt;picture', $item->getDescription(), "dsc $i");
@@ -410,7 +396,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[type][picasaZipPath]', 'application/unknown');
 		GalleryUtilities::putRequestVariable('form[tmp_name][picasaZipPath]', '/picasaimport.tmp');
 		GalleryUtilities::putRequestVariable('form[size][picasaZipPath]', 10000);
-
 		GalleryUtilities::putRequestVariable('form[set][title]', 'filename');
 		GalleryUtilities::putRequestVariable('form[set][summary]', 1);
 		GalleryUtilities::putRequestVariable('form[set][description]', 0);
@@ -419,7 +404,6 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 		list($error, $status) = $this->handleRequest($this->_temporaryAlbum);
 
 		$i = 0;
-
 		$this->assertEquals(array(), $status, 'count of imported items');
 		$this->assertEquals(array('form[error][picasaZipPath][notsupported]'), $error);
 	}
@@ -440,12 +424,10 @@ class ItemAddFromPicasaTest extends ItemAddPluginTestCase {
 			list($error, $status) = $results;
 		} else {
 			$this->fail('unexpected results: ' . print_r($results, true));
-
 			return;
 		}
 
 		$i = 0;
-
 		$this->assertEquals(array(), $status, 'count of imported items');
 		$this->assertEquals(array('form[error][picasaZipPath][missing]'), $error);
 	}

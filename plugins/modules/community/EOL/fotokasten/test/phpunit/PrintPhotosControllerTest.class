@@ -116,7 +116,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		$session             =& $gallery->getSession();
 		$this->_saveEndpoint = $session->get('fotokasten.endpoint');
 		$this->_sessionKey   = GalleryUtilities::prefixFormVariable($session->getKey());
-
 		$session->remove('fotokasten.endpoint');
 	}
 
@@ -135,7 +134,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		if (isset($this->_printSID)) {
 			$testSession             = new GallerySession();
 			$testSession->_sessionId = $this->_printSID;
-
 			$testSession->reset();
 		}
 
@@ -148,7 +146,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function testPrintSingle() {
 		GalleryUtilities::putRequestVariable('itemId', $this->_items[2]->getId());
-
 		$result = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -162,18 +159,16 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
-		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
-
+		$this->assertTrue(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
-
 		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
-		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
-		$this->assert(
+		$this->assertTrue(isset($basket['item1']['photo_url']), 'photo url');
+		$this->assertTrue(
 			!strpos($basket['item1']['photo_url'], $this->_sessionKey),
 			'should be no session param in photo url for public photo'
 		);
-		$this->assert(
 
+		$this->assertTrue(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
 		);
@@ -183,7 +178,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$itemId = $this->_items[2]->getId();
-
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 
 		// We only have permission to print and view the thumbnail
@@ -226,18 +220,16 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
-		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
-
+		$this->assertTrue(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
-
 		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
-		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
-		$this->assert(
+		$this->assertTrue(isset($basket['item1']['photo_url']), 'photo url');
+		$this->assertTrue(
 			strpos($basket['item1']['photo_url'], $this->_sessionKey),
 			'should be a session param in photo url for private photo'
 		);
-		$this->assert(
 
+		$this->assertTrue(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
 		);
@@ -289,16 +281,12 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		);
 
 		$printCart = $session->get('fotokasten.cart');
-
 		$this->assertEquals(null, $printCart, 'cart');
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
-		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
-
+		$this->assertTrue(isset($this->_basketParams['request']['basket']), 'basket');
 		$basket = $this->_basketParams['request']['basket'];
-
 		$this->assertEquals(array('item1', 'item2'), array_keys($basket), 'item keys');
-		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
-
+		$this->assertTrue(isset($basket['item1']['photo_url']), 'photo url');
 		preg_match(
 			'/' . $this->_sessionKey . '=([A-Za-z0-9]+)/',
 			$basket['item1']['photo_url'],
@@ -308,20 +296,20 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		if (!empty($matches[1])) {
 			$this->_printSID = $matches[1];
 		} else {
-			$this->assert(false, 'missing sessionid: ' . $basket['item1']['photo_url']);
+			$this->assertTrue(false, 'missing sessionid: ' . $basket['item1']['photo_url']);
 		}
 
-		$this->assert(
+		$this->assertTrue(
 			!strpos($basket['item2']['photo_url'], $this->_sessionKey),
 			'should be no session param in photo url for public photo'
 		);
-		$this->assert(
 
+		$this->assertTrue(
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[0]->getId()),
 			'item id 1'
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			strpos($basket['item2']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id 2'
 		);

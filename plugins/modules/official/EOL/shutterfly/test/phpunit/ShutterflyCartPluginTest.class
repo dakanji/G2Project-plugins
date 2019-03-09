@@ -139,7 +139,6 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce(
-
 			'modules/shutterfly/classes/ShutterflyCartPlugin.class'
 		);
 
@@ -171,7 +170,6 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 
 		$session   =& $gallery->getSession();
 		$printCart = $session->get('shutterfly.cart');
-
 		$this->assertEquals($cartItemIds, $printCart, 'cart');
 
 		// Render PrintPhotos view to test processing of cart items
@@ -182,7 +180,6 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 		}
 
 		GalleryUtilities::putRequestVariable('returnUrl', $returnUrl);
-
 		ob_start();
 
 		$ret = $view->renderImmediate(array(), array());
@@ -193,14 +190,14 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(strpos($form, '"returl" value="' . $returnUrl . '"'), 'return url');
-		$this->assert(
+		$this->assertTrue(strpos($form, '"returl" value="' . $returnUrl . '"'), 'return url');
+		$this->assertTrue(
 			strpos($form, '"imnum" value="4"'),
 			'form should include 4 photos: qty 1 of item 0, none of item 1 ' .
 			'(no print permission), qty 3 of item 2'
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			preg_match(
 				'{"imraw-1" value="http://[^"]*'
 				. $this->_items[0]->getId() . '[^"]*'
@@ -212,12 +209,12 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 			'URL for first image should include a session id'
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			$matches[1] != $session->getId(),
 			'session id in URL for first image should be a new id, not my session'
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			preg_match(
 				'{"imthumb-1" value="http://[^"]*'
 				. $this->_items[0]->getId() . '[^"]*'
@@ -235,8 +232,8 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 			$matches[1],
 			'session id in URL for first thumbnail should be my session'
 		);
-		$this->assert(
 
+		$this->assertTrue(
 			preg_match(
 				'{"imraw-4" value="http://[^"]*'
 				. $this->_items[2]->getId() . '(?![^"]*'
@@ -247,7 +244,7 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 			'URL for second image should not include a session id'
 		);
 
-		$this->assert(
+		$this->assertTrue(
 			preg_match(
 				'{"imthumb-4" value="http://[^"]*'
 				. $this->_thumbs[2]->getId() . '(?![^"]*'
@@ -259,15 +256,13 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 		);
 
 		$printCart = $session->get('shutterfly.cart');
-
 		$this->assertEquals(null, $printCart, 'cart');
+
 		// Clean up
 		$session->remove('shutterfly.cart');
-
 		if (!empty($matches[1]) && $matches[1][0] != $session->getId()) {
 			$testSession             = new GallerySession();
 			$testSession->_sessionId = $matches[1][0];
-
 			$testSession->reset();
 		}
 	}

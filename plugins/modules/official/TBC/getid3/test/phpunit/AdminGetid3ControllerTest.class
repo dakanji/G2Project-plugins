@@ -93,7 +93,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[available][0]', 'Genre');
 		GalleryUtilities::putRequestVariable('form[available][1]', 'Year');
 		GalleryUtilities::putRequestVariable('form[action][availableToSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -118,15 +117,14 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(in_array('Genre', $properties));
-		$this->assert(in_array('Year', $properties));
+		$this->assertTrue(in_array('Genre', $properties));
+		$this->assertTrue(in_array('Year', $properties));
 	}
 
 	public function testRemoveFromSummary() {
 		GalleryUtilities::putRequestVariable('form[summary][0]', 'Artist');
 		GalleryUtilities::putRequestVariable('form[summary][1]', 'Title');
 		GalleryUtilities::putRequestVariable('form[action][removeFromSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -151,13 +149,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(!in_array('Artist', $properties));
-		$this->assert(!in_array('Title', $properties));
+		$this->assertFalse(in_array('Artist', $properties));
+		$this->assertFalse(in_array('Title', $properties));
 	}
 
 	public function testRemoveFromSummaryMissing() {
 		GalleryUtilities::putRequestVariable('form[action][removeFromSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -176,7 +173,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[summary][0]', 'Album');
 		GalleryUtilities::putRequestVariable('form[summary][1]', 'Track');
 		GalleryUtilities::putRequestVariable('form[action][moveUpSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -209,7 +205,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 
 	public function testMoveUpSummaryMissing() {
 		GalleryUtilities::putRequestVariable('form[action][moveUpSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -228,7 +223,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[summary][0]', 'Album');
 		GalleryUtilities::putRequestVariable('form[summary][1]', 'Track');
 		GalleryUtilities::putRequestVariable('form[action][moveDownSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -261,7 +255,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 
 	public function testMoveDownSummaryMissing() {
 		GalleryUtilities::putRequestVariable('form[action][moveDownSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -285,7 +278,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		}
 
 		GalleryUtilities::putRequestVariable('form[action][resetSummary]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -320,7 +312,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[available][0]', 'Playtime (Seconds)');
 		GalleryUtilities::putRequestVariable('form[available][1]', 'Playtime');
 		GalleryUtilities::putRequestVariable('form[action][availableToDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -345,15 +336,14 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(in_array('Playtime (Seconds)', $properties));
-		$this->assert(in_array('Playtime', $properties));
+		$this->assertTrue(in_array('Playtime (Seconds)', $properties));
+		$this->assertTrue(in_array('Playtime', $properties));
 	}
 
 	public function testRemoveFromDetailed() {
 		GalleryUtilities::putRequestVariable('form[detailed][0]', 'Artist');
 		GalleryUtilities::putRequestVariable('form[detailed][1]', 'Album');
 		GalleryUtilities::putRequestVariable('form[action][removeFromDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -378,13 +368,12 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(!in_array('Artist', $properties));
-		$this->assert(!in_array('Album', $properties));
+		$this->assertFalse(in_array('Artist', $properties));
+		$this->assertFalse(in_array('Album', $properties));
 	}
 
 	public function testRemoveFromDetailedMissing() {
 		GalleryUtilities::putRequestVariable('form[action][removeFromDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -404,7 +393,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[detailed][1]', 'Genre');
 		GalleryUtilities::putRequestVariable('form[detailed][2]', 'ChannelMode');
 		GalleryUtilities::putRequestVariable('form[action][moveUpDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -436,7 +424,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 
 	public function testMoveUpDetailedMissing() {
 		GalleryUtilities::putRequestVariable('form[action][moveUpDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -456,7 +443,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[detailed][1]', 'Year');
 		GalleryUtilities::putRequestVariable('form[detailed][2]', 'AudioChannels');
 		GalleryUtilities::putRequestVariable('form[action][moveDownDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -488,7 +474,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 
 	public function testMoveDownDetailedMissing() {
 		GalleryUtilities::putRequestVariable('form[action][moveDownDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -512,7 +497,6 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 		}
 
 		GalleryUtilities::putRequestVariable('form[action][resetDetailed]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

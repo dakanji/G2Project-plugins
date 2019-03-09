@@ -73,7 +73,6 @@ class WebDavHelperTest extends GalleryTestCase {
 		$this->_parserType  = 'preGallery';
 		$this->_activeRules =& WebDavHelperTestRewriteApi::_fetchActiveRulesForModule('webdav');
 		$this->_activeRules = array('connect', 'davmount', 'options');
-
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'RewriteApi',
@@ -82,8 +81,8 @@ class WebDavHelperTest extends GalleryTestCase {
 			'modules/webdav/test/phpunit/WebDavHelperTest.class',
 			'test'
 		);
-		$this->_registerFactoryImplementationForTest(
 
+		$this->_registerFactoryImplementationForTest(
 			'HttpAuthInterface_1_0',
 			'WebDavHelperTestHttpAuthInterface',
 			'WebDavHelperTestHttpAuthInterface',
@@ -230,7 +229,6 @@ class WebDavHelperTest extends GalleryTestCase {
 
 		$this->_platform->_messages[$this->_optionsRequest]        = $this->_includesDavHeadersResponse;
 		$this->_platform->_messages[$this->_alternativeUrlRequest] = $this->_includesDavHeadersResponse;
-
 		$gallery->setPlatform($this->_platform);
 	}
 
@@ -401,20 +399,18 @@ class WebDavHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$code);
+		$this->assertFalse($code);
 	}
 
 	public function testCheckRequestMethod() {
 		$success = WebDavHelper::checkRequestMethod('PROPFIND');
-
-		$this->assert($success);
+		$this->assertTrue($success);
 	}
 
 	public function testCheckRequestMethodNotHandled() {
 		$this->_platform->_messages[$this->_requests['PROPFIND']] = $this->_methodNotHandledResponse;
 		$success = WebDavHelper::checkRequestMethod('PROPFIND');
-
-		$this->assert(!$success);
+		$this->assertFalse($success);
 	}
 
 	public function testCheckDavHeaders() {
@@ -430,7 +426,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			)
 		);
 
-		$this->assert($success);
+		$this->assertTrue($success);
 	}
 
 	public function testCheckMissingDavHeaders() {
@@ -447,7 +443,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			)
 		);
 
-		$this->assert(!$success);
+		$this->assertFalse($success);
 	}
 
 	public function testPropfindFilesRespectsExternalAccessRulesAndDoesNotRepeatProperties() {
@@ -548,7 +544,6 @@ class WebDavHelperTest extends GalleryTestCase {
 		$item->setModificationTimestamp(20000000);
 		$item->setSize(300);
 		$item->setTitle($itemTitle);
-
 		if ($addObjectAndArrayData) {
 			$item->summary     = array(1, 2, 3);
 			$item->description = new stdClass();
@@ -669,7 +664,6 @@ class WebDavHelperTest extends GalleryTestCase {
 		$item->setTitle('old title');
 		$item->setSummary('old summary');
 		$item->setCreationTimestamp(10000000);
-
 		$props = array(
 			0 => array(
 				'ns'     => WEBDAV_GALLERY_NAMESPACE,
@@ -716,21 +710,18 @@ class WebDavHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals('new title', $item->getTitle(), 'title');
-
 		$this->assertEquals('new summary', $item->getSummary(), 'summary');
-
 		$this->assertEquals(20000000, $item->getCreationTimestamp(), 'creation timestamp');
-
 		$this->assertEquals('GalleryUnknownItem', $item->getEntityType(), 'entity type changed');
 
 		// Verify the status of the props
 		$this->assertEquals(null, $props[0]['status'], 'summary is writable');
-
 		$this->assertEquals(
 			'403 Forbidden',
 			$props[1]['status'],
 			'entityType is not writable'
 		);
+
 		$this->assertEquals(null, $props[2]['status'], 'creation timestamp is writable');
 		$this->assertEquals(null, $props[3]['status'], 'DAV:displayname is writable');
 		$this->assertEquals(
@@ -738,6 +729,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			$props[4]['status'],
 			'DAV:foo is not writable'
 		);
+
 		$this->assertEquals('403 Forbidden', $props[5]['status'], 'invalid namespace');
 	}
 
@@ -833,6 +825,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		list($ret, $parentId) = WebDavHelper::getParentItemIdByPath(
 			'/' . $album->getPathComponent() . '/foo'
 		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -860,6 +853,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			__FILE__,
 			'GalleryPhotoItem'
 		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -873,26 +867,21 @@ class WebDavHelperTest extends GalleryTestCase {
 			__FILE__,
 			'GalleryPhotoItem'
 		);
+
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->_markForCleanup($targetEntity);
-
 		$expectedItemId        = $sourceEntity->getId();
 		$targetItemIdBackup    = $targetEntity->getId();
 		$expectedPathComponent = $sourceEntity->getPathComponent();
 		$expectedTitle         = 'Test title';
-
 		$sourceEntity->setTitle($expectedTitle);
-
 		$expectedDescription = 'Test description';
-
 		$sourceEntity->setDescription($expectedDescription);
 		$targetEntity->setDescription('New description');
-
 		$expectedRenderer = 'New renderer';
-
 		$sourceEntity->setRenderer('Test renderer');
 		$targetEntity->setRenderer($expectedRenderer);
 
@@ -903,7 +892,6 @@ class WebDavHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($expectedItemId, $mirrorEntity->getId());
-
 		$this->assertEquals($expectedPathComponent, $mirrorEntity->getPathComponent());
 		$this->assertEquals($expectedTitle, $mirrorEntity->getTitle());
 		$this->assertEquals($expectedDescription, $mirrorEntity->getDescription());

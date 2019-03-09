@@ -49,7 +49,6 @@ class ServerAuthPluginTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
-
 		$_SERVER['AUTH_TYPE'] = 'Test';
 		$this->_plugin        = new ServerAuthPlugin();
 		$this->_saveSession   = $gallery->_session;
@@ -87,7 +86,7 @@ class ServerAuthPluginTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($this->_user, $user);
-		$this->assert($session->regenerateWasCalled(), 'Session has not been regenerated!');
+		$this->assertTrue($session->regenerateWasCalled(), 'Session has not been regenerated!');
 	}
 
 	public function testInvalidUser() {

@@ -123,7 +123,6 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		$form['ImageBlockOption']['setRecursive'] = 'off';
 		$form['ImageBlockOption']['setDisabled']  = 'on';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
-
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -132,7 +131,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert($disabledFlag, 'Album not set disabled');
+		$this->assertTrue($disabledFlag, 'Album not set disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
 
@@ -140,13 +139,12 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$disabledFlag, 'SubAlbum set disabled 1');
+		$this->assertFalse($disabledFlag, 'SubAlbum set disabled 1');
 
 		// Disable the Option
 		$form['ImageBlockOption']['setRecursive'] = 'off';
 		$form['ImageBlockOption']['setDisabled']  = 'off';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
-
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -155,7 +153,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$disabledFlag, 'Album set disabled');
+		$this->assertFalse($disabledFlag, 'Album set disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
 
@@ -163,7 +161,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$disabledFlag, 'SubAlbum set disabled 2');
+		$this->assertFalse($disabledFlag, 'SubAlbum set disabled 2');
 	}
 
 	public function testImageBlockOptionRecursive() {
@@ -176,7 +174,6 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		$form['ImageBlockOption']['setRecursive'] = 'on';
 		$form['ImageBlockOption']['setDisabled']  = 'on';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
-
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -185,7 +182,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert($disabledFlag, 'Album not set disabled');
+		$this->assertTrue($disabledFlag, 'Album not set disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
 
@@ -193,13 +190,12 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert($disabledFlag, 'SubAlbum not set disabled');
+		$this->assertTrue($disabledFlag, 'SubAlbum not set disabled');
 
 		// Disable the Option recursively
 		$form['ImageBlockOption']['setRecursive'] = 'on';
 		$form['ImageBlockOption']['setDisabled']  = 'off';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
-
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -208,7 +204,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$disabledFlag, 'Album still disabled');
+		$this->assertFalse($disabledFlag, 'Album still disabled');
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_subAlbum->getId());
 
@@ -216,6 +212,6 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 			return $ret;
 		}
 
-		$this->assert(!$disabledFlag, 'SubAlbum still disabled');
+		$this->assertFalse($disabledFlag, 'SubAlbum still disabled');
 	}
 }

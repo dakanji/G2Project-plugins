@@ -74,7 +74,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 
 	public function testCancel() {
 		GalleryUtilities::putRequestVariable('form[action][cancel]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array('redirect' => array('view' => 'core.SiteAdmin',
@@ -87,7 +86,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 	public function testMissingData() {
 		GalleryUtilities::putRequestVariable('form[group]', '');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -121,7 +119,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[group]', $group->getGroupName());
 		GalleryUtilities::putRequestVariable('form[album]', 'Nokia Test');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -141,7 +138,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[album]', 'NokiaAlbum ' . mt_rand(1000, 100000));
 		GalleryUtilities::putRequestVariable('form[parent]', (string)$this->_album->getId());
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -177,9 +173,8 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		$this->assert(!empty($params['id.mobileGroup']), 'group param');
-		$this->assert(!empty($params['id.uploadAlbum']), 'album param');
-
+		$this->assertFalse(empty($params['id.mobileGroup']), 'group param');
+		$this->assertFalse(empty($params['id.uploadAlbum']), 'album param');
 		$this->_groupId = $params['id.mobileGroup'];
 
 		list($ret, $perms) = GalleryCoreApi::fetchAllPermissionsForItem(
@@ -201,7 +196,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 			}
 		}
 
-		$this->assert($hasDataItem, 'missing addDataItem permission');
+		$this->assertTrue($hasDataItem, 'missing addDataItem permission');
 	}
 }
 
