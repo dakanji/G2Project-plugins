@@ -67,6 +67,7 @@ composer.phar
 /modules/core
 /modules/customfield
 /modules/dcraw
+/modules/debug
 /modules/dynamicalbum
 /modules/exif
 /modules/ffmpeg
