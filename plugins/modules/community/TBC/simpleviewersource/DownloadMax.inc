@@ -79,7 +79,6 @@ class DownloadMaxView extends DownloadItemView {
 		}
 
 		return $view->renderImmediate(null, null);
-
 		return null;
 	}
 

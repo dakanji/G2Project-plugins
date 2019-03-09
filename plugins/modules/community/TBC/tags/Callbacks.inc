@@ -29,7 +29,6 @@ class TagsCallbacks {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/tags/classes/TagsHelper.class');
-
 		switch ($callback) {
 			case 'TagsLink':
 				$tags = array();

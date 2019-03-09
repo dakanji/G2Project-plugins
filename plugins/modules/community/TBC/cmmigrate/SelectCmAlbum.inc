@@ -73,7 +73,6 @@ class SelectCmAlbumController extends GalleryController {
 				}
 
 				$session->put('cmmigrate.view.SelectCmAlbum.recentPaths', $recentPaths);
-
 				$redirect['view']           = 'core.SiteAdmin';
 				$redirect['subView']        = 'cmmigrate.ChooseCmObjects';
 				$redirect['copperminePath'] = $form['copperminePath'];
@@ -132,10 +131,8 @@ class SelectCmAlbumView extends GalleryView {
 		$SelectCmAlbum                = array();
 		$SelectCmAlbum['recentPaths'] = $recentPaths;
 		$SelectCmAlbum['hasToolkit']  = $hasToolkit;
-
 		$template->setVariable('controller', 'cmmigrate.SelectCmAlbum');
 		$template->setVariable('SelectCmAlbum', $SelectCmAlbum);
-
 		return array(
 			null,
 			array(

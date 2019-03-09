@@ -40,9 +40,7 @@ class Getid3DetailModeController extends GalleryController {
 
 		// Store the new mode in the session
 		$session =& $gallery->getSession();
-
 		$session->put('getid3.module.LoadGetid3Info.mode', $mode);
-
 		$results['return']           = 1;
 		$results['redirect']['view'] = 'core.ShowItem';
 		$results['status']           = array();

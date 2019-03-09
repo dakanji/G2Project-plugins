@@ -45,7 +45,6 @@ class Getid3DescriptionOption extends ItemAddOption {
 	 */
 	public function handleRequestAfterAdd($form, $items) {
 		$errors = $warnings = array();
-
 		GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Extractor.class');
 		GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
 
@@ -82,7 +81,6 @@ class Getid3DescriptionOption extends ItemAddOption {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return array($ret, null, null);
 					}
 
@@ -92,7 +90,6 @@ class Getid3DescriptionOption extends ItemAddOption {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return array($ret, null, null);
 					}
 
@@ -100,7 +97,6 @@ class Getid3DescriptionOption extends ItemAddOption {
 					if (!empty($getid3Data[$itemId]['Title']['value'])) {
 						if ($addOption & GETID3_MP3_TITLE) {
 							$currentItems[$i]->setTitle($getid3Data[$itemId]['Title']['value']);
-
 							$mustSave = true;
 						}
 					}
@@ -110,7 +106,6 @@ class Getid3DescriptionOption extends ItemAddOption {
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
-
 							return array($ret, null, null);
 						}
 					}

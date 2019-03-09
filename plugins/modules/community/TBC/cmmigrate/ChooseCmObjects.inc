@@ -125,7 +125,6 @@ class ChooseCmObjectsView extends GalleryView {
 
 		$template->setVariable('ChooseCmObjects', $ChooseCmObjects);
 		$template->setVariable('controller', 'cmmigrate.ChooseCmObjects');
-
 		return array(
 			null,
 			array(
@@ -140,7 +139,6 @@ class ChooseCmObjectsView extends GalleryView {
 	 */
 	public function _createCmAlbumTree($copperminePath) {
 		$cmdb = new CmDatabaseTools($copperminePath);
-
 		$cmdb->openDatabase();
 		return $cmdb->getAlbumsSorted();
 	}

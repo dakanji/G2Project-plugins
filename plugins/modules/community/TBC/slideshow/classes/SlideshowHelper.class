@@ -21,7 +21,6 @@
 
 /** MediaRSS paging items per page */
 define('SLIDESHOW_MEDIARSS_ITEMS_PER_PAGE', 25);
-
 GalleryCoreApi::requireOnce('modules/slideshow/classes/SlideshowInterface_1_0.class');
 
 /**

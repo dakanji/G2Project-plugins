@@ -68,9 +68,7 @@ class AddMissingKeywordsTask extends MaintenanceTask {
 		$keywordsadded = 0;
 		$itemschanged  = 0;
 		$total         = count($items);
-
 		$gallery->guaranteeTimeLimit(120);
-
 		foreach ($items as $dataitem) {
 			$item            = $dataitem['item'];
 			$typos           = $dataitem['typo'];
@@ -166,7 +164,6 @@ class AddMissingKeywordsTask extends MaintenanceTask {
 		}
 
 		$gallery->guaranteeTimeLimit(120);
-
 		return null;
 	}
 

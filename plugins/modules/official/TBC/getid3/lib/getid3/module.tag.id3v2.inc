@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 ///                                                            //
 // module.tag.id3v2.php                                        //
 // module for analyzing ID3v2 tags                             //
@@ -45,9 +46,7 @@ class getid3_id3v2 extends getid3_handler {
 		$thisfile_id3v2          =& $info['id3v2'];
 		$thisfile_id3v2['flags'] = array();
 		$thisfile_id3v2_flags    =& $thisfile_id3v2['flags'];
-
 		$this->fseek($this->StartingOffset);
-
 		$header = $this->fread(10);
 		if (substr($header, 0, 3) == 'ID3' && strlen($header) == 10) {
 			$thisfile_id3v2['majorversion'] = ord($header[3]);
@@ -297,9 +296,7 @@ class getid3_id3v2 extends getid3_handler {
 					$parsedFrame['data']            = substr($framedata, 0, $frame_size);
 					$parsedFrame['datalength']      = getid3_lib::CastAsInt($frame_size);
 					$parsedFrame['dataoffset']      = $framedataoffset;
-
 					$this->ParseID3v2Frame($parsedFrame);
-
 					$thisfile_id3v2[$frame_name][] = $parsedFrame;
 					$framedata                     = substr($framedata, $frame_size);
 				} else { // invalid frame length or FrameID

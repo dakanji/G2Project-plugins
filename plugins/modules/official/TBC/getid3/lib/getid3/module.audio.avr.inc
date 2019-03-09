@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.avr.php                                        //
 // module for analyzing AVR Audio files                        //
@@ -57,9 +58,7 @@ class getid3_avr extends getid3_handler {
 		// 8-bit data between signed/unsigned just add 127 to the sample values.
 		// Simularly for 16-bit data you should add 32769
 		$info['fileformat'] = 'avr';
-
 		$this->fseek($info['avdataoffset']);
-
 		$AVRheader                   = $this->fread(128);
 		$info['avr']['raw']['magic'] = substr($AVRheader, 0, 4);
 		$magic                       = '2BIT';

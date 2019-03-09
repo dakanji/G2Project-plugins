@@ -151,11 +151,8 @@ class JpegtranToolkit extends GalleryToolkit {
 		}
 
 		$cmd = array_merge($cmd, array('-outfile', $tmpFilename, $sourceFilename));
-
 		$gallery->guaranteeTimeLimit(90);
-
 		$oldCwd = $platform->getcwd();
-
 		$platform->chdir($tmpDir);
 
 		list($success, $output) = $platform->exec(array($cmd));
@@ -167,7 +164,6 @@ class JpegtranToolkit extends GalleryToolkit {
 		}
 
 		$platform->chdir($oldCwd);
-
 		$success = $platform->rename($tmpFilename, $destFilename);
 		if (!$success) {
 			@$platform->unlink($tmpFilename);
@@ -184,7 +180,6 @@ class JpegtranToolkit extends GalleryToolkit {
 		}
 
 		$platform->chmod($destFilename);
-
 		if (isset($width)) {
 			$context['width']  = $width;
 			$context['height'] = $height;
@@ -234,16 +229,13 @@ class JpegtranToolkit extends GalleryToolkit {
 		}
 
 		$oldCwd = $platform->getcwd();
-
 		$platform->chdir($tmpDir);
-
 		$cmd = array($jpegtran, '-verbose', '-outfile', $tmpFilename, $filename);
 
 		list($success, $ignored, $output) = $platform->exec(array($cmd));
 
 		@$platform->unlink($tmpFilename);
 		$platform->chdir($oldCwd);
-
 		if (!$success) {
 			return array(GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE), null, null);
 		}

@@ -171,7 +171,6 @@ class LinksInTheHeadSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'linksinthehead.LinksInTheHeadSiteAdmin');
-
 		return array(
 			null,
 			array(

@@ -31,7 +31,6 @@
 // Required Files\Classes
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsAccess.class');
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsConstants.class');
-
 class SettingsController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -113,7 +112,6 @@ class SettingsView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'mranalysis.Settings');
-
 		return array(
 			null,
 			array(

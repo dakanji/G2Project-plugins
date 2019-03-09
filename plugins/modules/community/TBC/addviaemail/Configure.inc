@@ -32,7 +32,6 @@ class ConfigureController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/ImageUploadHelper.class');
-
 		global $gallery;
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -75,6 +74,7 @@ class ConfigureController extends GalleryController {
 				if ($ret) {
 					$error[] = 'form[error][owner][bad]';
 				}
+
 			}
 
 			if (empty($error)) {
@@ -92,8 +92,11 @@ class ConfigureController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 				}
+
 			}
+
 		}
 
 		if (isset($form['action']['save']) && empty($error)) {
@@ -126,6 +129,7 @@ class ConfigureController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 			}
 
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -169,6 +173,7 @@ class ConfigureController extends GalleryController {
 				$redirectSubview      = 'core.AdminPlugins';
 				$status['configured'] = 'addviaemail';
 			}
+
 		} elseif (isset($form['action']['cancel'])) {
 			$redirectSubview = 'core.AdminPlugins';
 		} elseif (isset($form['action']['reset'])) {
@@ -180,17 +185,20 @@ class ConfigureController extends GalleryController {
 				'view'    => 'core.SiteAdmin',
 				'subView' => $redirectSubview,
 			);
+
 		} else {
 			$results['delegate'] = array(
 				'view'    => 'core.SiteAdmin',
 				'subView' => 'addviaemail.Configure',
 			);
+
 		}
 
 		$results['status'] = $status;
 		$results['error']  = $error;
 		return array(null, $results);
 	}
+
 }
 
 /**
@@ -241,6 +249,7 @@ class ConfigureView extends GalleryView {
 
 						$form['owner'] = $user->getUserName();
 					}
+
 				} else {
 					$form[$key] = '';
 					if ($key == 'tmpLocation') {
@@ -252,8 +261,11 @@ class ConfigureView extends GalleryView {
 						// handle first time config - to preload the tmpDir variable
 						$form['pollFloor'] = 5;
 					}
+
 				}
+
 			}
+
 		}
 
 		$form['passWord'] = '';
@@ -261,7 +273,6 @@ class ConfigureView extends GalleryView {
 
 		// Check for required email functions
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailAdminHelper.class');
-
 		$funcsReport = AddviaemailAdminHelper::testRequiredFunctions();
 		if (count($funcsReport['fail']) > 0) {
 			$configure['funcsReport'] = $funcsReport;
@@ -295,15 +306,16 @@ class ConfigureView extends GalleryView {
 		}
 
 		$configure['isConfigure'] = !$isActive;
-
 		$template->setVariable('AddviaEmailConfigure', $configure);
 		$template->setVariable('controller', 'addviaemail.Configure');
-
 		return array(
 			null,
 			array(
 				'body' => 'modules/addviaemail/templates/Configure.tpl',
 			),
 		);
+
 	}
+
 }
+

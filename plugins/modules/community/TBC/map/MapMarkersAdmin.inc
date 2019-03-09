@@ -480,10 +480,8 @@ class MapMarkersAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$form['formName'] = 'MapMarkersAdmin';
-
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
-
 		$basepngdir = $basegallerydir . 'modules/map/images/basemarkers/';
 		$pngdir     = $base . 'modules/map/images/basemarkers/';
 
@@ -616,7 +614,6 @@ class MapMarkersAdminView extends GalleryView {
 			$basegallerydir . 'modules/map/images/markers/' . $form['useAlbumMarkerSet'],
 			$form['defaultalbumcolor']
 		);
-
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
@@ -625,12 +622,10 @@ class MapMarkersAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
-
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapMarkersAdmin');
-
 		return array(
 			null,
 			array(

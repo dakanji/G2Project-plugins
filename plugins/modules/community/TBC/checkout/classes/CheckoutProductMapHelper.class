@@ -27,7 +27,6 @@
  * @static
  */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
-
 class CheckoutProductMapHelper {
 	/**
 	 * Return the product parameters owned by a given album or photo

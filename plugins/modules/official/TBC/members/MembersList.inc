@@ -113,7 +113,6 @@ class MembersListView extends GalleryView {
 		}
 
 		$form['list']['totalUserCount'] = $totalUserCount;
-
 		$template->setVariable('MembersList', $MembersList);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'members');
@@ -123,7 +122,6 @@ class MembersListView extends GalleryView {
 		}
 
 		$template->title($module->translate('Members List'));
-
 		return array(
 			null,
 			array(

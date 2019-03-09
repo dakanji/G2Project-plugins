@@ -120,7 +120,6 @@ class TagTreeSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'tagtree.TagTreeSiteAdmin');
-
 		return array(
 			null,
 			array(

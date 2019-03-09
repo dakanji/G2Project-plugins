@@ -131,9 +131,7 @@ class AdminView extends GalleryView {
 			}
 
 			$form['formName'] = 'AdminAboutPage';
-
 			$template->setVariable('controller', 'aboutpage.Admin');
-
 			return array(
 				null,
 				array(

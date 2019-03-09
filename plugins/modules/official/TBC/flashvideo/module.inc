@@ -37,12 +37,11 @@ class FlashVideoModule extends GalleryModule {
 				'Enable display of Flash video files'
 			)
 		);
+
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('');
 	}
@@ -148,7 +147,6 @@ class FlashVideoModule extends GalleryModule {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return array($ret, null);
 					}
 
@@ -158,7 +156,6 @@ class FlashVideoModule extends GalleryModule {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return array($ret, null);
 					}
 

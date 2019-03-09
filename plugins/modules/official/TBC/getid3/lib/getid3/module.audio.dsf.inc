@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.dsf.php                                        //
 // module for analyzing dsf/DSF Audio files                    //
@@ -22,9 +23,7 @@ class getid3_dsf extends getid3_handler {
 		$info['audio']['dataformat']   = 'dsf';
 		$info['audio']['lossless']     = true;
 		$info['audio']['bitrate_mode'] = 'cbr';
-
 		$this->fseek($info['avdataoffset']);
-
 		$dsfheader                   = $this->fread(28 + 12);
 		$headeroffset                = 0;
 		$info['dsf']['dsd']['magic'] = substr($dsfheader, $headeroffset, 4);
@@ -91,9 +90,7 @@ class getid3_dsf extends getid3_handler {
 		if ($info['dsf']['dsd']['meta_chunk_offset'] > 0) {
 			$getid3_id3v2                 = new getid3_id3v2($this->getid3);
 			$getid3_id3v2->StartingOffset = $info['dsf']['dsd']['meta_chunk_offset'];
-
 			$getid3_id3v2->Analyze();
-
 			unset($getid3_id3v2);
 		}
 

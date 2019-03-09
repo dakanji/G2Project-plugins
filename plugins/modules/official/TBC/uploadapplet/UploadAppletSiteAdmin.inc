@@ -184,7 +184,6 @@ class UploadAppletSiteAdminView extends GalleryView {
 
 		$template->setVariable('AdminUploadApplet', $AdminUploadApplet);
 		$template->setVariable('controller', 'uploadapplet.UploadAppletSiteAdmin');
-
 		return array(
 			null,
 			array(

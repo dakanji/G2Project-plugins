@@ -46,7 +46,6 @@ class AdminSessionsView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GallerySession.class');
-
 		$mySession = new GallerySession();
 
 		list($ret, $results) = GalleryCoreApi::getMapEntry(
@@ -132,7 +131,6 @@ class AdminSessionsView extends GalleryView {
 		$template->setVariable('sessions', $sessions);
 		$template->setVariable('userNames', $userNames);
 		$template->setVariable('controller', 'checkout.AdminTransactions');
-
 		return array(
 			null,
 			array(

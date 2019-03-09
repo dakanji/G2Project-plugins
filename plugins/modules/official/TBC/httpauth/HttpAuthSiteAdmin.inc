@@ -179,7 +179,6 @@ class HttpAuthSiteAdminView extends GalleryView {
 		$template->setVariable('HttpAuthSiteAdmin', $HttpAuthSiteAdmin);
 		$template->setVariable('controller', 'httpauth.HttpAuthSiteAdmin');
 		$template->javascript('lib/javascript/BlockToggle.js');
-
 		return array(
 			null,
 			array(

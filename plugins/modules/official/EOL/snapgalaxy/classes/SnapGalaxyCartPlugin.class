@@ -77,5 +77,6 @@ class SnapGalaxyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 
 		return array(null, array('href' => $cartUrl));
 	}
+
 }
 

@@ -26,7 +26,6 @@
  */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
-
 class CheckoutCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;
@@ -35,7 +34,6 @@ class CheckoutCallbacks {
 			case 'countCheckoutItems':
 				$itemCount  = 0;
 				$thumbnails = array();
-
 				GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
 
 				// full details of all items in cart including product/quantity and paper info

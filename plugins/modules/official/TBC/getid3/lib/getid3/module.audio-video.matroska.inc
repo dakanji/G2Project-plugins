@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.matriska.php                             //
 // module for analyzing Matroska containers                    //
@@ -351,7 +352,6 @@ class getid3_matroska extends getid3_handler {
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio.' . ($track_info['dataformat'] == 'mp2' ? 'mp3' : $track_info['dataformat']) . '.php', __FILE__, true);
 								if (!isset($info['matroska']['track_data_offsets'][$trackarray['TrackNumber']])) {
 									$this->warning('Unable to parse audio data [' . basename(__FILE__) . ':' . __LINE__ . '] because $info[matroska][track_data_offsets][' . $trackarray['TrackNumber'] . '] not set');
-
 									break;
 								}
 
@@ -412,14 +412,12 @@ class getid3_matroska extends getid3_handler {
 							case 'A_VORBIS':
 								if (!isset($trackarray['CodecPrivate'])) {
 									$this->warning('Unable to parse audio data [' . basename(__FILE__) . ':' . __LINE__ . '] because CodecPrivate data not set');
-
 									break;
 								}
 
 								$vorbis_offset = strpos($trackarray['CodecPrivate'], 'vorbis', 1);
 								if ($vorbis_offset === false) {
 									$this->warning('Unable to parse audio data [' . basename(__FILE__) . ':' . __LINE__ . '] because CodecPrivate data does not contain "vorbis" keyword');
-
 									break;
 								}
 
@@ -432,7 +430,6 @@ class getid3_matroska extends getid3_handler {
 								// analyze
 								$getid3_ogg                = new getid3_ogg($getid3_temp);
 								$oggpageinfo['page_seqno'] = 0;
-
 								$getid3_ogg->ParseVorbisPageHeader($trackarray['CodecPrivate'], $vorbis_offset, $oggpageinfo);
 								if (!empty($getid3_temp->info['ogg'])) {
 									$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $getid3_temp->info['ogg'];
@@ -475,7 +472,6 @@ class getid3_matroska extends getid3_handler {
 								break;
 							default:
 								$this->warning('Unhandled audio type "' . (isset($trackarray['CodecID']) ? $trackarray['CodecID'] : '') . '"');
-
 								break;
 						}
 
@@ -543,7 +539,6 @@ class getid3_matroska extends getid3_handler {
 								break;
 							default:
 								$this->unhandledElement('header', __LINE__, $element_data);
-
 								break;
 						}
 
@@ -588,7 +583,6 @@ class getid3_matroska extends getid3_handler {
 											break;
 										default:
 											$this->unhandledElement('seekhead', __LINE__, $seek_entry);
-
 											break;
 									}
 								}
@@ -746,7 +740,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('track', __LINE__, $subelement);
-
 														break;
 												}
 											}
@@ -755,7 +748,6 @@ class getid3_matroska extends getid3_handler {
 											break;
 										default:
 											$this->unhandledElement('tracks', __LINE__, $track_entry);
-
 											break;
 									}
 								}
@@ -807,7 +799,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('info.chaptertranslate', __LINE__, $sub_subelement);
-
 														break;
 												}
 											}
@@ -816,7 +807,6 @@ class getid3_matroska extends getid3_handler {
 											break;
 										default:
 											$this->unhandledElement('info', __LINE__, $subelement);
-
 											break;
 									}
 								}
@@ -848,7 +838,6 @@ class getid3_matroska extends getid3_handler {
 																	break;
 																default:
 																	$this->unhandledElement('cues.cuepoint.cuetrackpositions', __LINE__, $sub_sub_subelement);
-
 																	break;
 															}
 														}
@@ -860,7 +849,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('cues.cuepoint', __LINE__, $sub_subelement);
-
 														break;
 												}
 											}
@@ -869,7 +857,6 @@ class getid3_matroska extends getid3_handler {
 											break;
 										default:
 											$this->unhandledElement('cues', __LINE__, $subelement);
-
 											break;
 									}
 								}
@@ -903,7 +890,6 @@ class getid3_matroska extends getid3_handler {
 																	break;
 																default:
 																	$this->unhandledElement('tags.tag.targets', __LINE__, $sub_sub_subelement);
-
 																	break;
 															}
 														}
@@ -915,7 +901,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('tags.tag', __LINE__, $sub_subelement);
-
 														break;
 												}
 											}
@@ -924,7 +909,6 @@ class getid3_matroska extends getid3_handler {
 											break;
 										default:
 											$this->unhandledElement('tags', __LINE__, $subelement);
-
 											break;
 									}
 								}
@@ -959,7 +943,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('attachments.attachedfile', __LINE__, $sub_subelement);
-
 														break;
 												}
 											}
@@ -1014,7 +997,6 @@ class getid3_matroska extends getid3_handler {
 																				break;
 																			default:
 																				$this->unhandledElement('chapters.editionentry.chapteratom.chaptertrack', __LINE__, $sub_sub_sub_subelement);
-
 																				break;
 																		}
 																	}
@@ -1032,7 +1014,6 @@ class getid3_matroska extends getid3_handler {
 																				break;
 																			default:
 																				$this->unhandledElement('chapters.editionentry.chapteratom.chapterdisplay', __LINE__, $sub_sub_sub_subelement);
-
 																				break;
 																		}
 																	}
@@ -1041,7 +1022,6 @@ class getid3_matroska extends getid3_handler {
 																	break;
 																default:
 																	$this->unhandledElement('chapters.editionentry.chapteratom', __LINE__, $sub_sub_subelement);
-
 																	break;
 															}
 														}
@@ -1050,7 +1030,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('chapters.editionentry', __LINE__, $sub_subelement);
-
 														break;
 												}
 											}
@@ -1059,7 +1038,6 @@ class getid3_matroska extends getid3_handler {
 											break;
 										default:
 											$this->unhandledElement('chapters', __LINE__, $subelement);
-
 											break;
 									}
 								}
@@ -1083,7 +1061,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('cluster.silenttracks', __LINE__, $sub_subelement);
-
 														break;
 												}
 											}
@@ -1112,7 +1089,6 @@ class getid3_matroska extends getid3_handler {
 														break;
 													default:
 														$this->unhandledElement('clusters.blockgroup', __LINE__, $sub_subelement);
-
 														break;
 												}
 											}
@@ -1124,7 +1100,6 @@ class getid3_matroska extends getid3_handler {
 											break;
 										default:
 											$this->unhandledElement('cluster', __LINE__, $subelement);
-
 											break;
 									}
 
@@ -1156,7 +1131,6 @@ class getid3_matroska extends getid3_handler {
 					break;
 				default:
 					$this->unhandledElement('root', __LINE__, $top_element);
-
 					break;
 			}
 		}
@@ -1167,13 +1141,11 @@ class getid3_matroska extends getid3_handler {
 			$read_bytes = max($min_data, $this->getid3->fread_buffer_size());
 			try {
 				$this->fseek($this->current_offset);
-
 				$this->EBMLbuffer_offset = $this->current_offset;
 				$this->EBMLbuffer        = $this->fread($read_bytes);
 				$this->EBMLbuffer_length = strlen($this->EBMLbuffer);
 			} catch (getid3_exception $e) {
 				$this->warning('EBML parser: ' . $e->getMessage());
-
 				return false;
 			}
 
@@ -1308,7 +1280,6 @@ class getid3_matroska extends getid3_handler {
 					break;
 				default:
 					$this->unhandledElement('tag.simpletag', __LINE__, $element);
-
 					break;
 			}
 		}

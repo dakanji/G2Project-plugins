@@ -38,7 +38,6 @@ class FulfillmentErrorView extends GalleryView {
 		}
 
 		$template->title($module->translate('PhotoWorks Fulfillment Error'));
-
 		return array(
 			null,
 			array(

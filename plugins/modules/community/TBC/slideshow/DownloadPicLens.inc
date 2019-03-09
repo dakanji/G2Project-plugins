@@ -112,11 +112,8 @@ class DownloadPicLensView extends GalleryView {
 		}
 
 		$stats = $platform->stat($data['path']);
-
 		$phpVm->header('Content-type: ' . $data['mimeType']);
-
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
-
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
 		$phpVm->header('Cache-Control: public');
@@ -142,7 +139,6 @@ class DownloadPicLensView extends GalleryView {
 					}
 
 					echo $bytes;
-
 					$gallery->guaranteeTimeLimit(30);
 				}
 

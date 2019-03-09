@@ -36,7 +36,6 @@ class ItemAddGalleryRemote extends ItemAddPlugin {
 		}
 
 		$template->setVariable('ItemAddGalleryRemote', array());
-
 		return array(null, 'modules/remote/templates/ItemAddGalleryRemote.tpl', 'modules_remote');
 	}
 

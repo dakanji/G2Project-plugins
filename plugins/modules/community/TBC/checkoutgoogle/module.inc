@@ -38,12 +38,11 @@ class CheckoutGoogleModule extends GalleryModule {
 				'Complete checkout by Google Checkout'
 			)
 		);
+
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 	}
@@ -91,12 +90,10 @@ class CheckoutGoogleModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		GalleryCoreApi::requireOnce('modules/checkoutgoogle/classes/CheckoutGoogleEventHelper.class');
-
 		$myListener = new CheckoutGoogleEventHelper();
 
 		// 2.2.x event registrations
 		/*  GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
-
 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener); */
 	}
 

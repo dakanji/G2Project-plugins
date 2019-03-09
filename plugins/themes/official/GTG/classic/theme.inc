@@ -32,19 +32,17 @@ class ClassicTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('classic');
-
 		$this->setName($gallery->i18n('Classic'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'Classic Gallery2 root album look and feel'
 			)
 		);
+
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'rows'            => 10,
 				'columns'         => 1,
@@ -339,7 +337,6 @@ class ClassicTheme extends GalleryTheme {
 				}
 
 				$treeList[$id] = array();
-
 				$this->_parseTree($tree, $treeList[$id], $treeIds);
 			}
 		}

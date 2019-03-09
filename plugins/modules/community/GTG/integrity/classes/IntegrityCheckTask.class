@@ -52,9 +52,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		$templateAdapter =& $gallery->getTemplateAdapter();
 		$platform        =& $gallery->getPlatform();
 		$slash           = $platform->getDirectorySeparator();
-
 		GalleryDataCache::setFileCachingEnabled(false);
-
 		$baseDir = dirname(dirname(dirname(dirname(__FILE__))));
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'integrity');
@@ -68,7 +66,6 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		// Load all entities
 		$message = $module->translate('Loading all entities');
-
 		$templateAdapter->updateProgressBar($title, $message, 0);
 
 		$query = '
@@ -441,7 +438,6 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		// Check FileSystem - verify dirs/files in sync with path components in db
 		$message = $module->translate('Checking file system');
-
 		$templateAdapter->updateProgressBar($message, '', 0);
 
 		$query = '
@@ -546,7 +542,6 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		$templateAdapter->updateProgressBar($message, '', 1);
-
 		return array(null, true, $output);
 	}
 

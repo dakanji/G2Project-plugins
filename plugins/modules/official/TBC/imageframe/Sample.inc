@@ -91,7 +91,6 @@ class SampleView extends GalleryView {
 
 		$template->setVariable('ImageFrameSample', $ImageFrameSample);
 		$template->title($module->translate('Image Frame Samples'));
-
 		return array(
 			null,
 			array(

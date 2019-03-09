@@ -32,7 +32,6 @@ class SliderTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('slider');
-
 		$this->setName($gallery->i18n('Slider'));
 		$this->setDescription(
 			$gallery->i18n(
@@ -44,7 +43,6 @@ class SliderTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'colorpack'      => '',
 				'sidebarBlocks'  => serialize(
@@ -112,9 +110,7 @@ class SliderTheme extends GalleryTheme {
 		$theme['imageWidths']  = implode(',', $imageWidths);
 		$theme['imageHeights'] = implode(',', $imageHeights);
 		$theme['imageCount']   = count($imageWidths);
-
 		$template->head('themes/slider/templates/header.tpl');
-
 		return array(null, 'theme.tpl');
 	}
 

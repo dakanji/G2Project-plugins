@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.graphic.bmp.php                                      //
 // module for analyzing BMP Image files                        //
@@ -35,7 +36,6 @@ class getid3_bmp extends getid3_handler {
 		// WORD    bfReserved2;
 		// DWORD   bfOffBits;
 		$this->fseek($info['avdataoffset']);
-
 		$offset                                = 0;
 		$BMPheader                             = $this->fread(14 + 40);
 		$thisfile_bmp_header_raw['identifier'] = substr($BMPheader, $offset, 2);
@@ -294,7 +294,6 @@ class getid3_bmp extends getid3_handler {
 
 		if ($this->ExtractData) {
 			$this->fseek($thisfile_bmp_header_raw['data_offset']);
-
 			$RowByteLength                          = ceil(($thisfile_bmp_header_raw['width'] * ($thisfile_bmp_header_raw['bits_per_pixel'] / 8)) / 4) * 4; // round up to nearest DWORD boundry
 			$BMPpixelData                           = $this->fread($thisfile_bmp_header_raw['height'] * $RowByteLength);
 			$pixeldataoffset                        = 0;

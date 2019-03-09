@@ -317,7 +317,8 @@ class Auth_OpenID_TrustRoot {
 		} else {
 			$base_query = $trust_root_parsed['query'];
 
-			$query  = @$url_parsed['query'];
+			$query = @$url_parsed['query'];
+
 			$qplus  = substr($query, 0, strlen($base_query) + 1);
 			$bqplus = $base_query . '&';
 			if ($base_path != $path

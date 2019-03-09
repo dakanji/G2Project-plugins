@@ -48,7 +48,6 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testPanoramaSiteAdminControllerUndo() {
 		GalleryUtilities::putRequestVariable('form[action][undo]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -67,7 +66,6 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[itemLink]', '1');
 		GalleryUtilities::putRequestVariable('form[width]', '1000');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -87,7 +85,6 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testPanoramaSiteAdminControllerSaveNoWidth() {
 		GalleryUtilities::putRequestVariable('form[itemType]', '1');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -105,7 +102,6 @@ class PanoramaSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testPanoramaSiteAdminControllerSaveBadWidth() {
 		GalleryUtilities::putRequestVariable('form[width]', 'abc5000');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

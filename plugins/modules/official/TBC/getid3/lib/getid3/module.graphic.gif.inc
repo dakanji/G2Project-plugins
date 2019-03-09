@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.graphic.gif.php                                      //
 // module for analyzing GIF Image files                        //
@@ -21,9 +22,7 @@ class getid3_gif extends getid3_handler {
 		$info['video']['dataformat']         = 'gif';
 		$info['video']['lossless']           = true;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
-
 		$this->fseek($info['avdataoffset']);
-
 		$GIFheader                                  = $this->fread(13);
 		$offset                                     = 0;
 		$info['gif']['header']['raw']['identifier'] = substr($GIFheader, $offset, 3);
@@ -82,6 +81,7 @@ class getid3_gif extends getid3_handler {
 		//              $blue = getid3_lib::LittleEndian2Int(substr($GIFcolorTable, $offset++, 1));
 		//              $info['gif']['global_color_table'][$i] = (($red << 16) | ($green << 8) | ($blue));
 		//          }
+
 		//      }
 		//      // Image Descriptor
 		//      while (!feof($this->getid3->fp)) {

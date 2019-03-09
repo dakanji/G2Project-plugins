@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.bink.php                                       //
 // module for analyzing Bink or Smacker audio-video files      //
@@ -18,9 +19,7 @@ class getid3_bink extends getid3_handler {
 	public function Analyze() {
 		$info            =& $this->getid3->info;
 		$info['error'][] = 'Bink / Smacker files not properly processed by this version of getID3() [' . $this->getid3->version() . ']';
-
 		$this->fseek($info['avdataoffset']);
-
 		$fileTypeID = $this->fread(3);
 		switch ($fileTypeID) {
 			case 'BIK':
@@ -28,7 +27,6 @@ class getid3_bink extends getid3_handler {
 				break;
 			case 'SMK':
 				return $this->ParseSmacker();
-
 				break;
 			default:
 				$info['error'][] = 'Expecting "BIK" or "SMK" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($fileTypeID) . '"';

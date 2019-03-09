@@ -96,7 +96,6 @@ class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension {
 		}
 
 		$obj->parseExtensionArgs($args);
-
 		return $obj;
 	}
 

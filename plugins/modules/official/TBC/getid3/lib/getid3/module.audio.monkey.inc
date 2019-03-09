@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.monkey.php                                     //
 // module for analyzing Monkey's Audio files                   //
@@ -27,9 +28,7 @@ class getid3_monkey extends getid3_handler {
 		$info['monkeys_audio']['raw']  = array();
 		$thisfile_monkeysaudio         =& $info['monkeys_audio'];
 		$thisfile_monkeysaudio_raw     =& $thisfile_monkeysaudio['raw'];
-
 		$this->fseek($info['avdataoffset']);
-
 		$MACheaderData                      = $this->fread(74);
 		$thisfile_monkeysaudio_raw['magic'] = substr($MACheaderData, 0, 4);
 		$magic                              = 'MAC ';

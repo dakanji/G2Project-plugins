@@ -32,19 +32,17 @@ class TranscodeModule extends GalleryModule {
 		global $gallery;
 
 		$this->setId('transcode');
-
 		$this->setName($gallery->i18n('Transcode'));
 		$this->setDescription(
 			$gallery->i18n(
 				'Transcode video files'
 			)
 		);
+
 		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 	}

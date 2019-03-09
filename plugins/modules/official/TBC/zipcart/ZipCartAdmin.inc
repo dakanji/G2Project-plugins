@@ -61,10 +61,8 @@ class ZipCartAdminController extends GalleryController {
 				// Try zipping something
 				$zipBase = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'zip_');
 				$zipFile = $zipBase . '.zip';
-
 				$gallery->guaranteeTimeLimit(30);
 				$gallery->startRecordingDebugSnippet();
-
 				if ($success = $platform->copy(__FILE__, $zipBase)) {
 					list($success) = $platform->exec(array(array($form['path'], $zipFile, $zipBase)));
 				}
@@ -72,7 +70,6 @@ class ZipCartAdminController extends GalleryController {
 				$debugSnippet = $gallery->stopRecordingDebugSnippet();
 				if (!$success || !$platform->file_exists($zipFile)) {
 					$error[] = 'form[error][path][badZip]';
-
 					GalleryUtilities::putRequestVariable('debugSnippet', $debugSnippet);
 				}
 
@@ -179,13 +176,11 @@ class ZipCartAdminView extends GalleryView {
 
 		if (isset($form['error']['path']['badZip']) > 0) {
 			$ZipCartAdmin['debugSnippet'] = GalleryUtilities::getRequestVariables('debugSnippet');
-
 			$template->javascript('lib/javascript/BlockToggle.js');
 		}
 
 		$template->setVariable('ZipCartAdmin', $ZipCartAdmin);
 		$template->setVariable('controller', 'zipcart.ZipCartAdmin');
-
 		return array(
 			null,
 			array(

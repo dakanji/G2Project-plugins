@@ -41,7 +41,6 @@
 	 */
 	public function fetchFullTransactionItems($transactionId) {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
-
 		return CheckoutTransactionHelper::fetchFullTransactionItems($transactionId);
 	}
 
@@ -85,7 +84,6 @@
 		}
 
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::adminNotify');
-
 		$event->setEntity($transaction);
 		$event->setData($statusMessage);
 
@@ -110,7 +108,6 @@
 		}
 
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionUpdate');
-
 		$event->setEntity($transaction);
 		$event->setData($custDetails);
 
@@ -135,7 +132,6 @@
 		}
 
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionSetPaymentPlugin');
-
 		$event->setEntity($transaction);
 		$event->setData($pluginName);
 
@@ -161,10 +157,8 @@
 		}
 
 		$event = GalleryCoreApi::newEvent('GalleryCheckout::transactionChange');
-
 		$event->setEntity($transaction);
 		$event->setData(
-
 			array(
 				'type'    => $type,
 				'message' => $message,
@@ -184,7 +178,6 @@
 	 */
 	public function emptyCart() {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
-
 		return CheckoutHelper::emptyCart();
 	}
 }

@@ -33,7 +33,6 @@ class MP3AudioRenderer extends GalleryRenderer {
 	 */
 	public function canBeViewedInline($item) {
 		return GalleryUtilities::isA($item, 'GalleryDataItem')
-
 		&& $item->getMimeType() == 'audio/mpeg';
 	}
 
@@ -96,7 +95,6 @@ class MP3AudioRenderer extends GalleryRenderer {
 		);
 
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
-
 		$title      = smarty_modifier_markup($item->getTitle(), 'strip');
 		$flashVars .= '&title=' . urlencode($title);
 

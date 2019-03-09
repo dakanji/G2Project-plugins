@@ -56,9 +56,7 @@ class MissingTitlesView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminMissingTitles';
-
 		$gallery->guaranteeTimeLimit(120);
-
 		$prefixes = Classification::DefaultFileNamePrefixes();
 
 		$query = "
@@ -81,14 +79,14 @@ class MissingTitlesView extends GalleryView {
 		}
 
 		$query .= ' ORDER BY [GalleryPhotoItem::id]';
-		$items  = ItemList::readItemsFromQuery(
+
+		$items = ItemList::readItemsFromQuery(
 			$query,
 			array('MissingTitlesView', 'IsBlankOrDefaultFileName')
 		);
 
 		$template->setVariable('controller', 'mranalysis.MissingTitles');
 		$template->setVariable('baditems', $items);
-
 		return array(
 			null,
 			array(

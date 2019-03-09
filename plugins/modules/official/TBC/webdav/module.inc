@@ -39,12 +39,11 @@ class WebDavModule extends GalleryModule {
 				'Mount Gallery on your desktop.'
 			)
 		);
+
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('interfaces', $gallery->i18n('Remote Interfaces'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -378,10 +377,8 @@ class WebDavModule extends GalleryModule {
 		if (!in_array('options', $activeRules)) {
 			// Check that OPTIONS responses include the DAV headers
 			GalleryCoreApi::requireOnce('modules/webdav/classes/WebDavHelper.class');
-
 			if (WebDavHelper::checkDavHeaders(
 				$urlGenerator->generateUrl(
-
 					array(
 						'controller' => 'webdav.WebDav',
 					),

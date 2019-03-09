@@ -33,7 +33,6 @@
  */
 GalleryCoreApi::requireOnce('modules/map/includes/toolkit/JPEG.php');
 GalleryCoreApi::requireOnce('modules/map/includes/toolkit/EXIF.php');
-
 class GoogleMapUtilities {
 	/**
 	 * Written by Jcampbel1
@@ -216,7 +215,6 @@ class GoogleMapUtilities {
 		}
 
 		$mydir->close();
-
 		if ($list == '') {
 			$list = false;
 		}
@@ -270,7 +268,6 @@ class GoogleMapUtilities {
 		}
 
 		$mydir->close();
-
 		return $filenames;
 	}
 
@@ -319,7 +316,6 @@ class GoogleMapUtilities {
 				}
 
 				$mydir2->close();
-
 				sort($imagearray, SORT_STRING);
 				$allimagesarray = array();
 				foreach ($imagearray as $images) {
@@ -346,7 +342,6 @@ class GoogleMapUtilities {
 		}
 
 		$mydir->close();
-
 		ksort($filenamearray, SORT_STRING);
 		foreach ($filenamearray as $filenames => $allimagesarray) {
 			$allmarkers[] = array(

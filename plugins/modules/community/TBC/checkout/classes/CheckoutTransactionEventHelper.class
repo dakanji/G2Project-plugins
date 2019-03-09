@@ -522,15 +522,12 @@ class CheckoutTransactionEventHelper {
 			switch ($flag) {
 				case 'confirmed':
 					$transaction->setTimeConfirmed($flagValue);
-
 					break;
 				case 'paid':
 					$transaction->setTimePaid($flagValue);
-
 					break;
 				case 'cleared':
 					$transaction->setTimeCleared($flagValue);
-
 					break;
 				case 'fulfil':
 					$transaction->setTimeFulfil($flagValue);
@@ -546,7 +543,6 @@ class CheckoutTransactionEventHelper {
 					break;
 				case 'problem':
 					$transaction->setTimeProblem($flagValue);
-
 					break;
 			}
 		}

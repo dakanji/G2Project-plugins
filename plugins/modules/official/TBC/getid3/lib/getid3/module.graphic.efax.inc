@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.archive.efax.php                                     //
 // module for analyzing eFax files                             //
@@ -17,9 +18,7 @@
 class getid3_efax extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$efaxheader                      = $this->fread(1024);
 		$info['efax']['header']['magic'] = substr($efaxheader, 0, 2);
 		if ($info['efax']['header']['magic'] != "\xDC\xFE") {

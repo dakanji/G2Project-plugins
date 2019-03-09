@@ -217,7 +217,6 @@ class _parse_proppatch {
 		if ($this->depth == 3) {
 			if (isset($this->current)) {
 				$this->props[] = $this->current;
-
 				unset($this->current);
 			}
 		}

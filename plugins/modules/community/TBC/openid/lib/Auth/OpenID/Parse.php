@@ -152,19 +152,16 @@ class Auth_OpenID_Parse {
 		}
 
 		$expr = sprintf($expr, $tag_name, $closer);
-
 		return sprintf('/%s/%s', $expr, $this->_re_flags);
 	}
 
 	public function openTag($tag_name) {
 		$expr = sprintf($this->_open_tag_expr, $tag_name);
-
 		return sprintf('/%s/%s', $expr, $this->_re_flags);
 	}
 
 	public function closeTag($tag_name) {
 		$expr = sprintf($this->_close_tag_expr, $tag_name, $tag_name);
-
 		return sprintf('/%s/%s', $expr, $this->_re_flags);
 	}
 
@@ -280,9 +277,7 @@ class Auth_OpenID_Parse {
 
 		foreach ($link_matches[0] as $link) {
 			$attr_matches = array();
-
 			preg_match_all($this->_attr_find, $link, $attr_matches);
-
 			$link_attrs = array();
 			foreach ($attr_matches[0] as $index => $full_match) {
 				$name  = $attr_matches[1][$index];

@@ -190,7 +190,6 @@ class NotificationUserAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'notification.NotificationUserAdmin');
-
 		return array(
 			null,
 			array(

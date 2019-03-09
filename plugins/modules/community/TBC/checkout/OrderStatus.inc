@@ -38,7 +38,6 @@
  * Required classes
  */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
-
 class OrderStatusController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -132,7 +131,6 @@ class OrderStatusView extends GalleryView {
 		$tpl['isAdmin']    = $isAdmin;
 		$tpl['id']         = $transactionId;
 		$tpl['controller'] = 'checkout.OrderStatus';
-
 		$template->setVariable('statusPlugins', $plugins);
 		$template->setVariable('tpl', $tpl);
 
@@ -143,7 +141,6 @@ class OrderStatusView extends GalleryView {
 		}
 
 		$template->title($tpl['busname'] . ' ' . $module->translate('Order Status'));
-
 		return array(
 			null,
 			array(

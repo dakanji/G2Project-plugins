@@ -131,7 +131,6 @@ class AdminMembersView extends GalleryView {
 
 		$template->setVariable('Members', $members);
 		$template->setVariable('controller', 'members.AdminMembers');
-
 		return array(
 			null,
 			array(

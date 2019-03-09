@@ -76,7 +76,6 @@
 		}
 
 		$template->setVariable('PuzzleOptions', $PuzzleOptions);
-
 		return array(
 			null,
 			'modules/puzzle/templates/PuzzleOptionsTemplate.tpl',

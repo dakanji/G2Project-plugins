@@ -145,23 +145,14 @@ class DetailsController extends GalleryController {
 				}
 
 				$auth->init();
-
 				$auth->setFirstName($form['custFirstName']);
-
 				$auth->setLastName($form['custLastName']);
-
 				$auth->setEmail($form['custEmail']);
-
 				$auth->setEmailCustomer('FALSE');
-
 				$auth->setPhone($form['custPhone']);
-
 				$auth->setCardNum($form['custCcNumber']);
-
 				$auth->setExpDate($form['custCcMonth'] . '/' . $form['custCcYear']);
-
 				$auth->setAddress($form['custAddress']);
-
 				$auth->setCity($form['custCity']);
 				$auth->setState($form['custState']);
 				$auth->setZip($form['custCcZip']);
@@ -177,7 +168,6 @@ class DetailsController extends GalleryController {
 				// If Authorize.Net returned an error, save for output
 				if (!empty($errorMsg)) {
 					$error[] = 'form[error][authorizeNet][fail]';
-
 					GalleryUtilities::putRequestVariable('authorizeNetError', $errorMsg);
 				} else {
 					// Write the customer information back into the original transaction
@@ -212,19 +202,12 @@ class DetailsController extends GalleryController {
 
 					// Set the customer information into the original transaction
 					$transaction->setFirstName($form['custFirstName']);
-
 					$transaction->setLastName($form['custLastName']);
-
 					$transaction->setEmail($form['custEmail']);
-
 					$transaction->setRecipientName($form['custRecipientName']);
-
 					$transaction->setAddress1($form['custAddress']);
-
 					$transaction->setAddress4($form['custState']);
-
 					$transaction->setAddress5($form['custCity']);
-
 					$transaction->setAddressZip($form['custCcZip']);
 					$transaction->setAddressCountry($form['custCcCountry']);
 					$transaction->setCustNotes($form['custComments']);
@@ -305,7 +288,6 @@ class DetailsView extends GalleryView {
 		}
 
 		$template->setVariable('Details', $Details);
-
 		$form['controller'] = 'checkoutauthorizenet.Details';
 		$template->title(
 			$gallery->i18n('Checkout') . '::' .

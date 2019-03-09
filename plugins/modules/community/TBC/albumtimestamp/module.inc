@@ -45,12 +45,11 @@ class AlbumTimestampModule extends GalleryModule {
 				'Automatically set album timestamps based on child item times'
 			)
 		);
+
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $this->translate('Gallery'));
 	}
 
@@ -108,7 +107,6 @@ class AlbumTimestampModule extends GalleryModule {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/albumtimestamp/classes/AlbumTimestampHelper.class');
-
 		if (!AlbumTimestampHelper::eventHandlerEnabled()) {
 			// temporarily disabled
 			AlbumTimestampHelper::log('LEO: handleEvent: handler disabled');

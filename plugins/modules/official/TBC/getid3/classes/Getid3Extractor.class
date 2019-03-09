@@ -60,9 +60,7 @@ class Getid3Extractor extends Getid3Interface_1_0 {
 			}
 
 			$data[$itemId] = array();
-
 			GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
-
 			Getid3Helper::_fetchRawGetid3Data($path, $rawGetid3Data);
 			foreach (Getid3Helper::getGetid3Keys() as $property => $keyData) {
 				if (!empty($properties) && !in_array($property, $properties)) {

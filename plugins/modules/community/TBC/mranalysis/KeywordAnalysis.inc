@@ -30,7 +30,6 @@
 
 // Required Files\Classes
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/KeywordAnalysis.class');
-
 class KeywordAnalysisController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -122,10 +121,8 @@ class KeywordAnalysisView extends GalleryView {
 
 		$form['formName'] = 'mranalysis.KeywordAnalysis';
 		$items            = KeywordAnalysis::get_item_list();
-
 		$template->setVariable('controller', 'mranalysis.KeywordAnalysis');
 		$template->setVariable('baditems', $items);
-
 		return array(
 			null,
 			array(

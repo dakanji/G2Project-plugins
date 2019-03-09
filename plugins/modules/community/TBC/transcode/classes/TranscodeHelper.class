@@ -66,6 +66,7 @@ class TranscodeHelper {
 				$width = $result[0];
 				$height = $result[1];
 			}
+
 		}
 
 		/* Get video-framerate (frames per second) */
@@ -81,6 +82,7 @@ class TranscodeHelper {
 			if (!$ret) {
 				$fps = $result[0];
 			}
+
 		}
 
 		/* Get audio-samplerate (samples per second, Hz) */
@@ -96,6 +98,7 @@ class TranscodeHelper {
 			if (!$ret) {
 				$asr = $result[0];
 			}
+
 		}
 
 		/* Get audio-channels */
@@ -111,6 +114,7 @@ class TranscodeHelper {
 			if (!$ret) {
 				$chans = $result[0];
 			}
+
 		}
 
 		/* Get video-bitrate (kb/s) */
@@ -126,6 +130,7 @@ class TranscodeHelper {
 			if (!$ret) {
 				$vbr = $result[0];
 			}
+
 		}
 
 		*/

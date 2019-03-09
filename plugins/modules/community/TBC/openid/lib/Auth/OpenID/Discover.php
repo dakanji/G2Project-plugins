@@ -4,7 +4,9 @@
  * The OpenID and Yadis discovery implementation for OpenID 1.2.
  */
 require_once 'Auth/OpenID.php';
+
 require_once 'Auth/OpenID/Parse.php';
+
 require_once 'Auth/OpenID/Message.php';
 require_once 'Auth/Yadis/XRIRes.php';
 require_once 'Auth/Yadis/Yadis.php';
@@ -61,7 +63,8 @@ class Auth_OpenID_ServiceEndpoint {
 		$host   = $parsed['host'];
 		$path   = $parsed['path'];
 		if (array_key_exists('query', $parsed)) {
-			$query   = $parsed['query'];
+			$query = $parsed['query'];
+
 			$no_frag = "$scheme://$host$path?$query";
 		} else {
 			$no_frag = "$scheme://$host$path";
@@ -94,7 +97,6 @@ class Auth_OpenID_ServiceEndpoint {
 	 *
 	 * @return all types that are in both in type_uris and
 	 * $this->type_uris
-
 	 */
 	public function matchTypes($type_uris) {
 		$result = array();
@@ -111,7 +113,6 @@ class Auth_OpenID_ServiceEndpoint {
 		// Does this endpoint support this type?
 		return (in_array($type_uri, $this->type_uris)) ||
 		(($type_uri == Auth_OpenID_TYPE_2_0) &&
-
 		$this->isOPIdentifier());
 	}
 
@@ -266,8 +267,8 @@ class Auth_OpenID_ServiceEndpoint {
 			'openid',
 			Auth_OpenID_XMLNS_1_0
 		);
-		$service->parser->registerNamespace(
 
+		$service->parser->registerNamespace(
 			'xrd',
 			Auth_Yadis_XMLNS_XRD_2_0
 		);
@@ -443,6 +444,7 @@ class Auth_OpenID_ServiceEndpoint {
 			$yadis_url,
 			$response->response_text
 		);
+
 		if (!$openid_services) {
 			if ($response->isXRDS()) {
 				return Auth_OpenID_discoverWithoutYadis(

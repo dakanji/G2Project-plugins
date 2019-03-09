@@ -45,6 +45,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}
+
 			}
 
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -65,6 +66,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}
+
 			}
 
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -84,6 +86,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}
+
 			}
 
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -114,6 +117,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 			}
 
 			if (isset($form['itemSummariesWidth']) &&
@@ -128,6 +132,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 			}
 
 			$status['saved'] = 1;
@@ -139,6 +144,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 		$results['error']               = array();
 		return array(null, $results);
 	}
+
 }
 
 /**
@@ -168,9 +174,7 @@ class GetUrlsSiteAdminView extends GalleryView {
 			$form['formName'] = 'GetUrlsSiteAdmin';
 
 			list($ret, $param) =
-
 		GalleryCoreApi::fetchAllPluginParameters('module', 'geturls');
-
 			if ($ret) {
 				return array($ret, null);
 			}
@@ -195,9 +199,9 @@ class GetUrlsSiteAdminView extends GalleryView {
 
 		$template->setVariable('controller', 'geturls.GetUrlsSiteAdmin');
 		$template->setVariable('GetUrlsAdmin', $getUrlsAdmin);
-
 		return array(null,
 			 array('body' => 'modules/geturls/templates/GetUrlsSiteAdmin.tpl'), );
 	}
+
 }
 

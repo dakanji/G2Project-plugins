@@ -237,7 +237,6 @@ class KeywordAnalysis {
 
 		// Trim trailing split param and spaces
 		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
-
 		$itemtochange->setKeywords($newkeywords);
 
 		$ret = $itemtochange->save();
@@ -325,7 +324,6 @@ class KeywordAnalysis {
 
 		// Trim trailing split param and spaces
 		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
-
 		$itemtochange->setKeywords($newkeywords);
 
 		$ret = $itemtochange->save();

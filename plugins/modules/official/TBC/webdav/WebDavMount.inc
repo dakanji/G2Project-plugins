@@ -50,7 +50,6 @@ class WebDavMountView extends GalleryView {
 
 		$template->setVariable('item', (array)$item);
 		$template->setVariable('isView', true);
-
 		return array(
 			null,
 			array(

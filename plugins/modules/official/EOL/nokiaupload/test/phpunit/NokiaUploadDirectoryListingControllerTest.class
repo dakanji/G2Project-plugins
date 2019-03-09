@@ -152,9 +152,11 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 				$foundIt = 1;
 				break;
 			}
+
 		}
 
 		$this->assertTrue(isset($foundIt), 'upload album');
 	}
+
 }
 

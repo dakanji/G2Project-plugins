@@ -144,10 +144,8 @@ class SlideshowAppletView extends GalleryView {
 		}
 
 		$form['formName'] = '';
-
 		$template->setVariable('controller', '');
 		$template->setVariable('SlideshowApplet', $SlideshowApplet);
-
 		return array(
 			null,
 			array(

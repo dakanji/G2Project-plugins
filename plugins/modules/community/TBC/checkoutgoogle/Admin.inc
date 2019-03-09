@@ -31,7 +31,6 @@
   * Required classes
   */
 GalleryCoreApi::requireOnce('modules/checkoutgoogle/classes/CheckoutGoogleResponseHelper.class');
-
 class AdminController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -235,7 +234,6 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'checkoutgoogle.Admin');
-
 		return array(
 			null,
 			array(

@@ -73,7 +73,6 @@ class AddviaemailpageView extends GalleryView {
 
 		$Addviaemail         = array();
 		$Addviaemail['item'] = (array)$item;
-
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailHelper.class');
 
 		// list ($ret, $Addviaemail['value']) = AddviaemailHelper::getItemValue($item->getId());
@@ -82,12 +81,12 @@ class AddviaemailpageView extends GalleryView {
 		if ($ret) {
 			$template->setVariable('failure', '1');
 			$template->setVariable('failureMsg', $ret->getErrorMessage());
+
 			//return array($ret, null);
 		}
 
 		$template->setVariable('Addviaemail', $Addviaemail);
 		$template->setVariable('newItems', count($Addviaemail['newItems']));
-
 		return array(
 			null,
 			array(

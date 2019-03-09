@@ -178,7 +178,6 @@ class AdminSlideshowView extends GalleryView {
 
 		$template->setVariable('AdminSlideshow', $AdminSlideshow);
 		$template->setVariable('controller', 'slideshow.AdminSlideshow');
-
 		return array(
 			null,
 			array(

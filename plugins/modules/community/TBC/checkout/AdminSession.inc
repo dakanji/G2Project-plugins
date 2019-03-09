@@ -43,7 +43,6 @@ class AdminSessionController extends GalleryController {
 			|| isset($form['action']['addmine'])
 		) {
 			GalleryCoreApi::requireOnce('modules/core/classes/GallerySession.class');
-
 			$mySession = new GallerySession();
 
 			list($ret, $searchResults) = GalleryCoreApi::getMapEntry(
@@ -94,18 +93,15 @@ class AdminSessionController extends GalleryController {
 				}
 
 				$mySession->put('checkout.items', $items);
-
 				$status['saved'] = 1;
 			}
 
 			if (isset($form['action']['emptycart'])) {
 				$mySession->remove('checkout.items');
-
 				$status['cleared'] = 1;
 			}
 
 			$mySession->save(true);
-
 			$results['redirect']['view']    = 'core.SiteAdmin';
 			$results['redirect']['subView'] = 'checkout.AdminSession';
 			$results['redirect']['sessId']  = $form['sessId'];
@@ -147,7 +143,6 @@ class AdminSessionView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GallerySession.class');
-
 		$mySession = new GallerySession();
 
 		list($ret, $results) = GalleryCoreApi::getMapEntry(
@@ -350,11 +345,9 @@ class AdminSessionView extends GalleryView {
 		}
 
 		$tpl['itemCount'] = count($items);
-
 		$template->setVariable('tpl', $tpl);
 		$template->setVariable('session', $session);
 		$template->setVariable('controller', 'checkout.AdminSession');
-
 		return array(
 			null,
 			array(

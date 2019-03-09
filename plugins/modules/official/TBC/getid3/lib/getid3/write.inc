@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 ///                                                            //
 // write.php                                                   //
 // module for writing tags (APEv2, ID3v1, ID3v2)               //
@@ -202,7 +203,6 @@ class getid3_writetags {
 		foreach ($this->tag_data as $tag_key => $tag_array) {
 			if (strtoupper($tag_key) !== $tag_key) {
 				$this->tag_data[strtoupper($tag_key)] = $this->tag_data[$tag_key];
-
 				unset($this->tag_data[$tag_key]);
 			}
 		}
@@ -213,7 +213,6 @@ class getid3_writetags {
 				foreach ($tag_data_array as $tag_key => $tag_array) {
 					if (strtoupper($tag_key) !== $tag_key) {
 						$this->ThisFileInfo['tags'][$tag_format][strtoupper($tag_key)] = $this->ThisFileInfo['tags'][$tag_format][$tag_key];
-
 						unset($this->ThisFileInfo['tags'][$tag_format][$tag_key]);
 					}
 				}
@@ -223,7 +222,6 @@ class getid3_writetags {
 		// Convert "TRACK" to "TRACKNUMBER" (if needed) for compatability with all formats
 		if (isset($this->tag_data['TRACK']) && !isset($this->tag_data['TRACKNUMBER'])) {
 			$this->tag_data['TRACKNUMBER'] = $this->tag_data['TRACK'];
-
 			unset($this->tag_data['TRACK']);
 		}
 
@@ -440,7 +438,6 @@ class getid3_writetags {
 		}
 
 		$this->MergeExistingTagData('ape', $ape_tag_data);
-
 		return $ape_tag_data;
 	}
 
@@ -466,7 +463,6 @@ class getid3_writetags {
 		}
 
 		$this->MergeExistingTagData('id3v1', $tag_data_id3v1);
-
 		return $tag_data_id3v1;
 	}
 
@@ -569,7 +565,6 @@ class getid3_writetags {
 		}
 
 		$this->MergeExistingTagData('id3v2', $tag_data_id3v2);
-
 		return $tag_data_id3v2;
 	}
 
@@ -614,9 +609,7 @@ class getid3_writetags {
 		$tag_data_real['artist']    = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['ARTIST']) ? $this->tag_data['ARTIST'] : array())));
 		$tag_data_real['copyright'] = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['COPYRIGHT']) ? $this->tag_data['COPYRIGHT'] : array())));
 		$tag_data_real['comment']   = getid3_lib::iconv_fallback($this->tag_encoding, 'ISO-8859-1', implode(' ', (isset($this->tag_data['COMMENT']) ? $this->tag_data['COMMENT'] : array())));
-
 		$this->MergeExistingTagData('real', $tag_data_real);
-
 		return $tag_data_real;
 	}
 }

@@ -106,7 +106,6 @@ class AlbumTimestampItemOption extends ItemEditOption {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/albumtimestamp/classes/AlbumTimestampHelper.class');
-
 		$itemId = $item->getId();
 
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.changePermissions');

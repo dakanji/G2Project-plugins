@@ -80,18 +80,13 @@ class DownloadRegistryFileView extends GalleryView {
 		header('Cache-control: private');
 		header('Content-Type: application/octet-stream');
 		header('Content-Disposition: filename=install_registry.reg');
-
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
-
 		$template = new GalleryTemplate(__DIR__ . '/../..');
-
 		$template->setVariable('l10Domain', 'modules_publishxp');
-
 		$vistaVersion                         = GalleryUtilities::getRequestVariables('vistaVersion');
 		$DownloadRegistryFile['vistaVersion'] = !empty($vistaVersion);
 		$DownloadRegistryFile['title']        = $title;
 		$DownloadRegistryFile['domain']       = $domain;
-
 		$template->setVariable('DownloadRegistryFile', $DownloadRegistryFile);
 
 		list($ret, $registryFileContents) = $template->fetch('gallery:modules/publishxp/templates/DownloadRegistryFile.tpl');

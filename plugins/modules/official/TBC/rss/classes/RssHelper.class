@@ -80,7 +80,6 @@ class RssHelper {
 		$generator->addProperty('title', $memberData['title']);
 		$generator->addProperty('description', $memberData['description']);
 		$generator->addProperty('link', $albumUrl);
-
 		if ($param['useImage']) {
 			// retrieve gallery thumbnail
 			list($ret, $thumbArrayl) = GalleryCoreApi::fetchThumbnailsByItemIds(array($id));
@@ -144,13 +143,11 @@ class RssHelper {
 
 		$generator->addProperty('generator', 'Gallery 2 RSS Module, version ' . $version);
 		$generator->addProperty('ttl', $param['ttl']);
-
 		$vm = $gallery->getPhpVm();
-
 		$generator->addProperty('lastBuildDate', date('r', $vm->time()));
+
 		// language tag
 		$generator->addProperty('language', $param['language']);
-
 		$items   = array();
 		$newOnly = ($param['feedDate'] == 'new');
 		switch ($param['feedType']) {
@@ -434,7 +431,6 @@ class RssHelper {
 		}
 
 		$generator->addItem($itemSettings, $item->getId());
-
 		return null;
 	}
 
@@ -479,7 +475,6 @@ class RssHelper {
 		}
 
 		$generator->addItem($itemSettings, $item->getId());
-
 		return null;
 	}
 

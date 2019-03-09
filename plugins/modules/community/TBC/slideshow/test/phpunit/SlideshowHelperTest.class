@@ -51,7 +51,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($album);
-
 		$optionList = explode(':', $optionListString);
 		$info       = array();
 		$itemIds    = array();
@@ -562,7 +561,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 
 		$this->assertEquals(null, $prevOffset, 'Should not be a previous page');
 		$this->assertEquals(
-
 			SLIDESHOW_MEDIARSS_ITEMS_PER_PAGE,
 			$nextOffset,
 			'Next page offset should match'
@@ -586,6 +584,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$album->getId(),
 			SLIDESHOW_MEDIARSS_ITEMS_PER_PAGE * 3 + 1
 		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -595,6 +594,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$prevOffset,
 			'Previous page offset should match'
 		);
+
 		$this->assertEquals(null, $nextOffset, 'Should be no next page');
 	}
 
@@ -615,13 +615,13 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$album->getId(),
 			SLIDESHOW_MEDIARSS_ITEMS_PER_PAGE
 		);
+
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->assertEquals(0, $prevOffset, 'Previous page offset should match');
 		$this->assertEquals(
-
 			SLIDESHOW_MEDIARSS_ITEMS_PER_PAGE * 2,
 			$nextOffset,
 			'Next page offset should match'

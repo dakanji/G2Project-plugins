@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.la.php                                         //
 // module for analyzing LA (LosslessAudio) audio files         //
@@ -19,9 +20,7 @@ class getid3_la extends getid3_handler {
 	public function Analyze() {
 		$info   =& $this->getid3->info;
 		$offset = 0;
-
 		$this->fseek($info['avdataoffset']);
-
 		$rawdata = $this->fread($this->getid3->fread_buffer_size());
 		switch (substr($rawdata, $offset, 4)) {
 			case 'LA02':
@@ -151,7 +150,6 @@ class getid3_la extends getid3_handler {
 
 							if ($info['la']['footerstart'] < $info['avdataend']) {
 								$this->fseek($info['la']['footerstart']);
-
 								$RIFFdata .= $this->fread($info['avdataend'] - $info['la']['footerstart']);
 							}
 
@@ -159,11 +157,8 @@ class getid3_la extends getid3_handler {
 							fwrite($RIFF_fp, $RIFFdata, strlen($RIFFdata));
 							fclose($RIFF_fp);
 							$getid3_temp = new getID3();
-
 							$getid3_temp->openfile($RIFFtempfilename);
-
 							$getid3_riff = new getid3_riff($getid3_temp);
-
 							$getid3_riff->Analyze();
 							if (empty($getid3_temp->info['error'])) {
 								$info['riff'] = $getid3_temp->info['riff'];

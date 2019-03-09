@@ -31,19 +31,17 @@ class HybridTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('hybrid');
-
 		$this->setName($gallery->i18n('Hybrid'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'Combined album/image/slideshow dynamic view'
 			)
 		);
+
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'rows'             => 30,
 				'columns'          => 2,
@@ -242,7 +240,6 @@ class HybridTheme extends GalleryTheme {
 		}
 
 		$template->head('themes/hybrid/templates/header.tpl');
-
 		return array(null, 'theme.tpl');
 	}
 
@@ -305,7 +302,6 @@ class HybridTheme extends GalleryTheme {
 			}
 
 			$template->style('themes/hybrid/theme.css');
-
 			return array(null, 'detail.tpl');
 		}
 

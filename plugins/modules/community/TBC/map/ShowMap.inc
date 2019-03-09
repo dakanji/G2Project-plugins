@@ -30,7 +30,6 @@
  */
 GalleryCoreApi::requireOnce('modules/map/classes/GoogleMapUtilities.class');
 GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
-
 class ShowMapController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
@@ -194,6 +193,7 @@ class ShowMapController extends GalleryController {
 					'centerLongLat',
 					$form['coord']
 				);
+
 				GalleryCoreApi::setPluginParameter('module', 'map', 'zoomLevel', $form['zoom']);
 
 				// return to the page "AdminPanel"
@@ -462,7 +462,6 @@ class ShowMapView extends GalleryView {
 					$listofalbums = implode('`', array_unique($temp));
 					$temp         = explode('`', $listofalbums);
 					$listofalbums = implode('`', array_unique($temp));
-
 					GalleryCoreApi::setPluginParameter('module', 'map', 'albumlist', $listofalbums);
 
 					// Trim the list if the "Album" filter is ON
@@ -1158,7 +1157,6 @@ class ShowMapView extends GalleryView {
 			if (!array_key_exists('MapWindowType', $map) or $map['MapWindowType'] == '') {
 				$map['MapWindowType'] = 'default';
 			}
-
 			include $mapModBaseDir . 'templates/infowindow/' . $map['MapWindowType'] . '.inc';
 
 			$filter = GalleryUtilities::getRequestVariables('filter');
@@ -1519,7 +1517,6 @@ class ShowMapView extends GalleryView {
 		}
 
 		$map['fullScreen'] = $fullScreen;
-
 		$template->setVariable('map', $map);
 
 		// Render the actual template with the map display

@@ -31,19 +31,17 @@ class x_tremeTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('x_treme');
-
 		$this->setName($gallery->i18n('X_treme'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'X-Treme Theme for Gallery2 by PedroGilberto.net'
 			)
 		);
+
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'rows'                    => 4,
 				'columns'                 => 4,
@@ -1682,10 +1680,8 @@ class x_tremeTheme extends GalleryTheme {
 				return array($ret, null, null);
 			}
 
-			$sample = ' (<a href="' . $sampleUrl . '">'
-
+			$sample     = ' (<a href="' . $sampleUrl . '">'
 			. $this->translate('View Samples') . '</a>)';
-
 			$settings[] = array(
 				'key'     => 'albumFrame',
 				'name'    => $this->translate('ALBUM')
@@ -2150,10 +2146,8 @@ class x_tremeTheme extends GalleryTheme {
 				return array($ret, null, null);
 			}
 
-			$sample = ' (<a href="' . $sampleUrl . '">'
-
+			$sample     = ' (<a href="' . $sampleUrl . '">'
 				. $this->translate('View Samples') . '</a>)';
-
 			$settings[] = array(
 				'key'     => 'photoFrame',
 				'name'    => $this->translate('PHOTO')

@@ -163,7 +163,7 @@ class OpenIdHelper {
 }
 
 class OpenIdSession // implements Auth_Yadis_PHPSession
-{
+ {
 	public $_session;
 
 	/**
@@ -184,7 +184,6 @@ class OpenIdSession // implements Auth_Yadis_PHPSession
 
 	public function get($key, $default = null) {
 		$key = 'openid.' . $key;
-
 		return $this->_session->exists($key) ? $this->_session->get($key) : $default;
 	}
 
@@ -200,4 +199,3 @@ class OpenIdSession // implements Auth_Yadis_PHPSession
 		return null;
 	}
 }
-

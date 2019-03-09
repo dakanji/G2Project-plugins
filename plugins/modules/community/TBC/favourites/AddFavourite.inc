@@ -49,7 +49,6 @@ class AddFavouriteController extends GalleryController {
 
 		if (!$isAnonymousUser) {
 			GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
-
 			if ($command == 'remove') {
 				$ret = FavouritesMapHelper::removeFavourite($userId, $itemId);
 

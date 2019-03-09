@@ -431,7 +431,6 @@ class Auth_Yadis_Discovery {
 		$manager = $this->getManager($force);
 		if ($manager) {
 			$service = $manager->current();
-
 			$this->destroyManager($force);
 		} else {
 			$service = null;
@@ -489,6 +488,7 @@ class Auth_Yadis_Discovery {
 				$services,
 				$key
 			);
+
 			$this->session->set(
 				$this->session_key,
 				serialize($loader->toSession($manager))
@@ -511,7 +511,6 @@ class Auth_Yadis_Discovery {
 	public function destroyManager($force = false) {
 		if ($this->getManager($force) !== null) {
 			$key = $this->getSessionKey();
-
 			$this->session->del($key);
 		}
 	}

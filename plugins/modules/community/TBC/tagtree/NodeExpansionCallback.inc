@@ -45,7 +45,6 @@ class NodeExpansionCallbackView extends GalleryView {
 
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeNode.class');
-
 		$userId = $gallery->getActiveUserId();
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'tagtree');
@@ -213,6 +212,7 @@ class NodeExpansionCallbackView extends GalleryView {
 				$nodeAction,
 				$icons
 			);
+
 			if (isset($subTree) && !empty($subTree->children)) {
 				echo ">\n";
 

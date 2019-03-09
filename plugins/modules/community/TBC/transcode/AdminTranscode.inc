@@ -174,10 +174,10 @@ class AdminTranscodeView extends GalleryView {
 		}
 
 		$template->setVariable('selectedMimeTypes', $selectedMimeTypes);
+
 		//$template->setVariable('selectedMimeTypes', explode('|', $mimeTypes));
 		//$template->setVariable('AdminTranscode', array());
 		$template->setVariable('controller', 'transcode:AdminTranscode');
-
 		return array(
 			null,
 			array(

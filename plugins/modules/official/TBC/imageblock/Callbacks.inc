@@ -27,7 +27,6 @@
 class ImageBlockCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		GalleryCoreApi::requireOnce('modules/imageblock/classes/ImageBlockHelper.class');
-
 		switch ($callback) {
 			case 'LoadImageBlock':
 				// Pick up our overrides

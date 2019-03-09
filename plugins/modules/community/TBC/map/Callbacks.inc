@@ -468,7 +468,6 @@ class mapCallbacks {
 
 					// The smarty markup modifier is required to strip out markup code in titles
 					GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
-
 					$markerIcons = array();
 					foreach ($markerItems as $markerItem) {
 						// First make sure it has coordinates and that they're valid
@@ -476,7 +475,6 @@ class mapCallbacks {
 						if (!(array_key_exists('GPS', $markerParams[$markerItem->getId()]) && true)) {
 							// No coordinates; don't show this marker.
 							unset($markerParams[$markerItem->getId()]);
-
 							continue;
 						}
 
@@ -511,8 +509,7 @@ class mapCallbacks {
 						}
 
 						// Now associate the marker icon to the marker itself (allows for sharing)
-						$markerParams[$markerItem->getId()]['icon'] = "{$ItemMarker}_{$ItemColor}";
-
+						$markerParams[$markerItem->getId()]['icon']  = "{$ItemMarker}_{$ItemColor}";
 						$markerParams[$markerItem->getId()]['title'] = html_entity_decode(
 							smarty_modifier_markup($markerItem->getTitle(), 'strip')
 						);

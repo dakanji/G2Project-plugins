@@ -101,7 +101,6 @@ class RemoteSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'remote.RemoteSiteAdmin');
-
 		return array(
 			null,
 			array(

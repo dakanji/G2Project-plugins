@@ -39,9 +39,7 @@ class ItemAddUploadify extends ItemAddPlugin {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$session      =& $gallery->getSession();
-
 		$session->save();
-
 		if ($form['formName'] != 'ItemAddUploadify') {
 			$form['formName'] = 'ItemAddUploadify';
 		}
@@ -71,17 +69,13 @@ class ItemAddUploadify extends ItemAddPlugin {
 
 		// this is needed for flash
 		$ItemAddUploadify['submitUrl'] = urlencode($ItemAddUploadify['submitUrl']);
-
 		$template->style('modules/uploadify/lib/uploadify.css');
-
 		$template->style('modules/uploadify/lib/uploadify.jGrowl.css');
-
 		$template->javascript('modules/uploadify/lib/jquery140.min.js');
 		$template->javascript('modules/uploadify/lib/swfobject.js');
 		$template->javascript('modules/uploadify/lib/jquery.uploadify.v2.1.0.min.js');
 		$template->javascript('modules/uploadify/lib/jquery.jgrowl_minimized.js');
 		$template->setVariable('ItemAddUploadify', $ItemAddUploadify);
-
 		return array(
 			null,
 			'modules/uploadify/templates/ItemAddUploadify.tpl',

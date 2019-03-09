@@ -91,6 +91,7 @@ class G1MigrateHelper {
 		$data = array($g1album);
 		if (isset($g1item)) {
 			$query .= '=?';
+
 			$data[] = $g1item;
 		} else {
 			$query .= ' IS NULL';

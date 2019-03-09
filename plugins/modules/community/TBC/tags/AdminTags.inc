@@ -118,11 +118,9 @@ class AdminTagsView extends GalleryView {
 		}
 
 		$TagNameEdit = GalleryUtilities::getRequestVariables('TagEdit');
-
 		$template->setVariable('Tags', $tags);
 		$template->setVariable('TagNameEdit', $TagNameEdit);
 		$template->javascript('modules/tags/js/AdminTags.js');
-
 		return array(
 			null,
 			array(

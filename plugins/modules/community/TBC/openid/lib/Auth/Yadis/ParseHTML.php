@@ -141,7 +141,6 @@ class Auth_Yadis_ParseHTML {
 		}
 
 		$expr = sprintf($this->_tag_expr, $close, $tag_names, $self_close);
-
 		return sprintf('/%s/%s', $expr, $this->_re_flags);
 	}
 
@@ -155,7 +154,6 @@ class Auth_Yadis_ParseHTML {
 	 * @param string $html_string An HTMl document string
 	 * @return array $tag_list Array of tags; each tag is an array of
 	 * attribute -> value.
-
 	 */
 	public function getMetaTags($html_string) {
 		$html_string = preg_replace(
@@ -242,9 +240,7 @@ class Auth_Yadis_ParseHTML {
 
 		foreach ($link_matches[0] as $link) {
 			$attr_matches = array();
-
 			preg_match_all($this->_attr_find, $link, $attr_matches);
-
 			$link_attrs = array();
 			foreach ($attr_matches[0] as $index => $full_match) {
 				$name  = $attr_matches[1][$index];

@@ -221,12 +221,10 @@ class AdminOrderView extends GalleryView {
 		}
 
 		$tpl['id'] = $form['transactionId'];
-
 		$template->setVariable('statusPlugins', $plugins);
 		$template->title($tpl['busname'] . '::' . $gallery->i18n('Checkout'));
 		$template->setVariable('tpl', $tpl);
 		$template->setVariable('controller', 'checkout.AdminOrder');
-
 		return array(
 			null,
 			array(

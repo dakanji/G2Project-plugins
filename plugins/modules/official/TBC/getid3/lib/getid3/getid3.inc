@@ -6,6 +6,7 @@
 //            or http://www.getid3.org                         //
 //          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // Please see readme.txt for more information                  //
 //                                                            ///
@@ -324,12 +325,10 @@ class getID3 {
 					if (getid3_lib::intValueSupported($real_filesize)) {
 						unset($this->info['filesize']);
 						fclose($this->fp);
-
 						throw new getid3_exception('PHP seems to think the file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB, but filesystem reports it as ' . number_format($real_filesize, 3) . 'GB, please report to info@getid3.org');
 					}
 
 					$this->info['filesize'] = $real_filesize;
-
 					$this->warning('File is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB (filesystem reports it as ' . number_format($real_filesize, 3) . 'GB) and is not properly supported by PHP.');
 				}
 			}
@@ -370,11 +369,9 @@ class getID3 {
 				$option_tag = 'option_tag_' . $tag_name;
 				if ($this->$option_tag) {
 					$this->include_module('tag.' . $tag_name);
-
 					try {
 						$tag_class = 'getid3_' . $tag_name;
 						$tag       = new $tag_class($this);
-
 						$tag->Analyze();
 					} catch (getid3_exception $e) {
 						throw $e;
@@ -399,7 +396,6 @@ class getID3 {
 			// ID3v2 detection (NOT parsing), even if ($this->option_tag_id3v2 == false) done to make fileformat easier
 			if (!$this->option_tag_id3v2) {
 				fseek($this->fp, 0);
-
 				$header = fread($this->fp, 10);
 				if ((substr($header, 0, 3) == 'ID3') && (strlen($header) == 10)) {
 					$this->info['id3v2']['header']       = true;
@@ -411,7 +407,6 @@ class getID3 {
 
 			// read 32 kb file data
 			fseek($this->fp, $this->info['avdataoffset']);
-
 			$formattest = fread($this->fp, 32774);
 
 			// determine format
@@ -479,9 +474,7 @@ class getID3 {
 			}
 
 			$class = new $class_name($this);
-
 			$class->Analyze();
-
 			unset($class);
 
 			// close file
@@ -495,13 +488,9 @@ class getID3 {
 			// perform more calculations
 			if ($this->option_extra_info) {
 				$this->ChannelsBitratePlaytimeCalculations();
-
 				$this->CalculateCompressionRatioVideo();
-
 				$this->CalculateCompressionRatioAudio();
-
 				$this->CalculateReplayGain();
-
 				$this->ProcessAudioStreams();
 			}
 
@@ -590,7 +579,6 @@ class getID3 {
 
 		// remove "global variable" type keys
 		unset($this->info['php_memory_limit']);
-
 		return true;
 	}
 
@@ -620,23 +608,23 @@ class getID3 {
 				),
 
 				/*
-																																				// AA   - audio       - Audible Audiobook
-																				'aa' => array(
-																							'pattern' => '^.{4}\x57\x90\x75\x36',
-																							'group' => 'audio',
-																							'module' => 'aa',
-																							'mime_type' => 'audio/audible',
-																						),
-																			*/
+																																											   // AA   - audio       - Audible Audiobook
+																							   'aa' => array(
+																										   'pattern' => '^.{4}\x57\x90\x75\x36',
+																										   'group' => 'audio',
+																										   'module' => 'aa',
+																										   'mime_type' => 'audio/audible',
+																									   ),
+																						   */
 
-																				// AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
-																				'adts' => array(
-																					'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
-																					'group'     => 'audio',
-																					'module'    => 'aac',
-																					'mime_type' => 'application/octet-stream',
-																					'fail_ape'  => 'WARNING',
-																				),
+																							   // AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
+																							   'adts' => array(
+																								   'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
+																								   'group'     => 'audio',
+																								   'module'    => 'aac',
+																								   'mime_type' => 'application/octet-stream',
+																								   'fail_ape'  => 'WARNING',
+																							   ),
 
 				// AU   - audio       - NeXT/Sun AUdio (AU)
 				'au' => array(
@@ -1353,7 +1341,6 @@ class getID3 {
 				break;
 			default:
 				return $this->error('bad algorithm "' . $algorithm . '" in getHashdata()');
-
 				break;
 		}
 
@@ -1376,7 +1363,6 @@ class getID3 {
 			// currently vorbiscomment only works on OggVorbis files.
 			if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 				$this->warning('Failed making system call to vorbiscomment.exe - ' . $algorithm . '_data is incorrect - error returned: PHP running in Safe Mode (backtick operator not available)');
-
 				$this->info[$algorithm . '_data'] = false;
 			} else {
 				// Prevent user from aborting script
@@ -1622,11 +1608,9 @@ class getID3 {
 
 	public function include_module($name) {
 		//if (!file_exists($this->include_path.'module.'.$name.'.php')) {
-
 		if (!file_exists(GETID3_INCLUDEPATH . 'module.' . $name . '.php')) {
 			throw new getid3_exception('Required module.' . $name . '.php is missing.');
 		}
-
 		include_once GETID3_INCLUDEPATH . 'module.' . $name . '.php';
 
 		return true;
@@ -1696,7 +1680,6 @@ abstract class getid3_handler {
 	protected function fread($bytes) {
 		if ($this->data_string_flag) {
 			$this->data_string_position += $bytes;
-
 			return substr($this->data_string, $this->data_string_position - $bytes, $bytes);
 		}
 
@@ -1772,7 +1755,6 @@ abstract class getid3_handler {
 				// extract to return array
 			} elseif ($this->getid3->option_save_attachments === getID3::ATTACHMENTS_INLINE) {
 				$this->fseek($offset);
-
 				$attachment = $this->fread($length); // get whole data in one pass, till it is anyway stored in memory
 				if ($attachment === false || strlen($attachment) != $length) {
 					throw new Exception('failed to read attachment data');
@@ -1795,7 +1777,6 @@ abstract class getid3_handler {
 
 				// copy data
 				$this->fseek($offset);
-
 				$buffersize = ($this->data_string_flag ? $length : $this->getid3->fread_buffer_size());
 				$bytesleft  = $length;
 				while ($bytesleft > 0) {
@@ -1818,13 +1799,11 @@ abstract class getid3_handler {
 
 			// do not set any is case of error
 			$attachment = null;
-
 			$this->warning('Failed to extract attachment ' . $name . ': ' . $e->getMessage());
 		}
 
 		// seek to the end of attachment
 		$this->fseek($offset + $length);
-
 		return $attachment;
 	}
 }

@@ -100,7 +100,6 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			}
 
 			stream_set_timeout($sock, $this->timeout);
-
 			fputs($sock, implode("\r\n", $headers) . "\r\n\r\n");
 			$data      = '';
 			$kilobytes = 0;

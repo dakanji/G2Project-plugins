@@ -81,7 +81,6 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		$redir = true;
 		while ($redir && ($off > 0)) {
 			$this->reset();
-
 			$c = curl_init();
 			if ($c === false) {
 				Auth_OpenID::log(
@@ -199,7 +198,6 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		}
 
 		$this->reset();
-
 		$c = curl_init();
 		if (defined('CURLOPT_NOSIGNAL')) {
 			curl_setopt($c, CURLOPT_NOSIGNAL, true);
@@ -207,9 +205,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 
 		curl_setopt($c, CURLOPT_POST, true);
 		curl_setopt($c, CURLOPT_POSTFIELDS, $body);
-
 		curl_setopt($c, CURLOPT_TIMEOUT, $this->timeout);
-
 		curl_setopt($c, CURLOPT_URL, $url);
 		curl_setopt(
 			$c,

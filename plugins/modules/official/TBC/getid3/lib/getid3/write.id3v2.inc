@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 ///                                                            //
 // write.id3v2.php                                             //
 // module for writing ID3v2 tags                               //
@@ -88,9 +89,7 @@ class getid3_write_id3v2 {
 
 								fclose($fp_temp);
 								fclose($fp_source);
-
 								copy($tempfilename, $this->filename);
-
 								unlink($tempfilename);
 								return true;
 							}

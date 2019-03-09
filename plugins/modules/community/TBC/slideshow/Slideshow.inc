@@ -185,12 +185,10 @@ class SlideshowView extends GalleryView {
 		$Slideshow['items'] = $items;
 		$Slideshow['count'] = count($items);
 		$Slideshow['start'] = $start;
-
 		$template->setVariable('Slideshow', $Slideshow);
 		$template->javascript('lib/yui/yahoo-dom-event.js');
 		$template->javascript('modules/slideshow/data/lytebox.js');
 		$template->link(
-
 			array(
 				'rel'   => 'stylesheet',
 				'href'  => 'modules/slideshow/data/lytebox.css',

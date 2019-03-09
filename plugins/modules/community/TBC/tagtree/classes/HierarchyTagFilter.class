@@ -19,7 +19,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');/**
-
  * @package TagTree
  * @author Chad Parry <spam@chad.parry.org>
  * @version $Revision: 1733 $
@@ -212,7 +211,6 @@ class AlbumChildHierarchyStream extends HierarchyStream {
 	public function __construct($searchResults, $parentHierarchy) {
 		$this->searchResults   = $searchResults;
 		$this->parentHierarchy = $parentHierarchy;
-
 		$this->advance();
 	}
 
@@ -242,7 +240,6 @@ class ParentSequenceHierarchyStream extends HierarchyStream {
 
 	public function __construct($searchResults) {
 		$this->searchResults = $searchResults;
-
 		$this->advance();
 	}
 

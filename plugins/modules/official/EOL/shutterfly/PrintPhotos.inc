@@ -58,7 +58,6 @@ class PrintPhotosView extends GalleryView {
 		} else {
 			$session     =& $gallery->getSession();
 			$cartItemIds = $session->get('shutterfly.cart');
-
 			$session->remove('shutterfly.cart');
 		}
 
@@ -242,12 +241,9 @@ class PrintPhotosView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
-
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
-
 		$template->setVariable('l10Domain', 'modules_shutterfly');
 		$template->setVariable(
-
 			'PrintPhotos',
 			array(
 				'returnUrl' => $returnUrl,
@@ -257,7 +253,6 @@ class PrintPhotosView extends GalleryView {
 		);
 
 		$template->display('gallery:modules/shutterfly/templates/PrintPhotos.tpl');
-
 		return null;
 	}
 }

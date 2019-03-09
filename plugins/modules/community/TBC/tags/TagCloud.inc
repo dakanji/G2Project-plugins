@@ -53,9 +53,7 @@ class TagCloudView extends GalleryView {
 		}
 
 		$tagCloud = TagsHelper::createTagCloudFromlist($tags);
-
 		$template->setVariable('tagCloud', $tagCloud);
-
 		return array(
 			null,
 			array(

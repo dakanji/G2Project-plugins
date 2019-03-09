@@ -181,7 +181,6 @@ class NewAlbumView extends GalleryView {
 		$template->setVariable('NewAlbum', $NewAlbum);
 		$template->setVariable('controller', 'publishxp.NewAlbum');
 		$template->head('modules/publishxp/templates/Head.tpl');
-
 		return array(
 			null,
 			array(

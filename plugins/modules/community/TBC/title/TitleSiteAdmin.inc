@@ -180,7 +180,6 @@ class TitleSiteAdminView extends GalleryView {
 		);
 
 		$template->setVariable('controller', 'title.TitleSiteAdmin');
-
 		return array(
 			null,
 			array(

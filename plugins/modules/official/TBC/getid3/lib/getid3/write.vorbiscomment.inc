@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // write.vorbiscomment.php                                     //
 // module for writing VorbisComment tags                       //
@@ -86,7 +87,6 @@ class getid3_write_vorbiscomment {
 
 	public function DeleteVorbisComment() {
 		$this->tag_data = array(array());
-
 		return $this->WriteVorbisComment();
 	}
 

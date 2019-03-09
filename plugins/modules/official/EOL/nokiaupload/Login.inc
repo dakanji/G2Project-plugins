@@ -75,9 +75,7 @@ class LoginView extends GalleryView {
 		global $gallery;
 
 		$gallery->debug("##### LoginView #####\n\$status = ");
-
 		$gallery->debug_r($status);
-
 		$reply   = array($status['success'] . "\r\n");
 		$reply[] = 'Version=' . NOKIAUPLOAD_PROTOCOLVERSION . "\r\n";
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR) {
@@ -103,9 +101,7 @@ class LoginView extends GalleryView {
 		}
 
 		$reply = implode('', $reply);
-
 		$gallery->debug("Sending:\n$reply");
-
 		header('Content-type: text/plain; charset=UTF-8');
 		header('Content-Length: ' . strlen($reply));
 		echo $reply;

@@ -6,11 +6,14 @@
 //            or http://www.getid3.org                         //
 //          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // extension.cache.mysql.php - part of getID3()                //
 // Please see readme.txt for more information                  //
 //                                                            ///
+
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // This extension written by Allan Hansen <ahØartemis*dk>      //
 // Table name mod by Carlo Capocasa <calroØcarlocapocasa*com>  //
@@ -171,7 +174,6 @@ class getID3_cached_mysql extends getID3 {
 		$SQLquery    .= ', `value` LONGTEXT NOT NULL';
 		$SQLquery    .= ', PRIMARY KEY (`filename`, `filesize`, `filetime`)) ENGINE=MyISAM';
 		$this->cursor = mysql_query($SQLquery, $this->connection);
-
 		echo mysql_error($this->connection);
 	}
 }

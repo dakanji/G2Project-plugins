@@ -114,14 +114,10 @@ class GoogleEarthView extends GalleryView {
 			. '<Pair><key>normal</key><styleUrl>#PhotoIconNormal</styleUrl></Pair>' . "\n"
 			. '<Pair><key>highlight</key><styleUrl>#PhotoIconHighlight</styleUrl></Pair></StyleMap>'
 			. "\n" . $placemarks . "</Document>\n</kml>\n";
-
 			$phpVm->header('Content-Type: application/vnd.google-earth.kml+xml');
 			$phpVm->header('Content-Description: View Gallery items in Google Earth');
-
 			$phpVm->header("Content-Disposition: inline; filename=GalleryGE-{$itemId}.kml");
-
 			$phpVm->header('Content-Length: ' . strlen($outstring));
-
 			echo $outstring;
 		}
 
@@ -142,7 +138,6 @@ class GoogleEarthView extends GalleryView {
 	 */
 	public function _createGETree($item, $data, $ancestors) {
 		GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
-
 		$returnstring = ''; // start with a blank string
 		if (empty($data)) { // workaround for first call if no field data passed
 			list($ret, $data) = mapHelper::fetchFieldValues(array($item));
@@ -228,7 +223,6 @@ class GoogleEarthView extends GalleryView {
 	 */
 	public function _createTextElements($item) {
 		$returnstring = '';
-
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.entitytruncate.php');
 
 		// Get the item title if not blank, else use the file/directory name (path component)

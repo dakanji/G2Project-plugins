@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.shorten.php                                    //
 // module for analyzing Shorten Audio files                    //
@@ -17,9 +18,7 @@
 class getid3_shorten extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$ShortenHeader = $this->fread(8);
 		$magic         = 'ajkg';
 		if (substr($ShortenHeader, 0, 4) != $magic) {
@@ -32,17 +31,13 @@ class getid3_shorten extends getid3_handler {
 		$info['audio']['lossless']     = true;
 		$info['audio']['bitrate_mode'] = 'vbr';
 		$info['shn']['version']        = getid3_lib::LittleEndian2Int(substr($ShortenHeader, 4, 1));
-
 		$this->fseek($info['avdataend'] - 12);
-
 		$SeekTableSignatureTest              = $this->fread(12);
 		$info['shn']['seektable']['present'] = (bool)(substr($SeekTableSignatureTest, 4, 8) == 'SHNAMPSK');
 		if ($info['shn']['seektable']['present']) {
 			$info['shn']['seektable']['length'] = getid3_lib::LittleEndian2Int(substr($SeekTableSignatureTest, 0, 4));
 			$info['shn']['seektable']['offset'] = $info['avdataend'] - $info['shn']['seektable']['length'];
-
 			$this->fseek($info['shn']['seektable']['offset']);
-
 			$SeekTableMagic = $this->fread(4);
 			$magic          = 'SEEK';
 			if ($SeekTableMagic != $magic) {

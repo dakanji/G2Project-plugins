@@ -184,7 +184,6 @@ class AlbumTimestampHelper {
 		global $gallery;
 
 		$itemId = $item->getId();
-
 		$gallery->debug('LEO: setAlbumTimestampMode: ' . $itemId . ', ' . $value);
 
 		list($ret, $oldValue) = AlbumTimestampHelper::setItemParam(
@@ -326,7 +325,6 @@ class AlbumTimestampHelper {
 		$itemId = $item->getId();
 		AlbumTimestampHelper::log("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
 		$gallery->debug("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
-
 		$item->setOriginationTimestamp($timestamp);
 		if ($item->isModified()) {
 			// $itemId = $item->getId();
@@ -350,7 +348,6 @@ class AlbumTimestampHelper {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
-
 					return $ret;
 				}
 
@@ -412,7 +409,6 @@ class AlbumTimestampHelper {
 			}
 
 			$gallery->debug('LEO: findNewAlbumTimestamp: func: ' . $func);
-
 			if (!isset($func)) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}

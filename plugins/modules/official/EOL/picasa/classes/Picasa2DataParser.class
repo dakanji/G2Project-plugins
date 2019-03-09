@@ -201,14 +201,12 @@ class Picasa2DataParser {
 				if (isset($xmlElem['value'])) {
 					$phpStmtMain = $phpStmt . '[$xTag]' . $add .
 					'[\'content\'] = $xmlElem[\'value\'];';
-
 					$gallery->runEval($phpStmtMain);
 				}
 
 				foreach ($xmlElem['attributes'] as $key => $value) {
 					$phpStmtAtt = $phpStmt . '[$xTag]' . $add .
 					'[\'attributes\'][$key] = $value;';
-
 					$gallery->runEval($phpStmtAtt);
 				}
 			}

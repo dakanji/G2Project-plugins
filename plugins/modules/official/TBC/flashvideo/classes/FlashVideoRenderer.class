@@ -33,7 +33,6 @@ class FlashVideoRenderer extends GalleryRenderer {
 	 */
 	public function canBeViewedInline($item) {
 		return GalleryUtilities::isA($item, 'GalleryMovieItem')
-
 		&& $item->getMimeType() == 'video/x-flv';
 	}
 
@@ -65,7 +64,6 @@ class FlashVideoRenderer extends GalleryRenderer {
 		list($width, $height, $title) = array($entity->getWidth(), $entity->getHeight(), $item->getTitle());
 
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
-
 		$title = smarty_modifier_markup($title, 'strip');
 
 		// Default player: G2flv.swf

@@ -27,7 +27,6 @@
   */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 GalleryCoreApi::requireOnce('modules/checkoutdownload/classes/CheckoutDownloadHelper.class');
-
 class CheckoutdownloadCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;

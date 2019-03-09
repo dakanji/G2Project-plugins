@@ -41,7 +41,6 @@ class TagTreePreloads {
 				$template->javascript('modules/tagtree/lib/xloadtree/xtree.js');
 				$template->javascript('modules/tagtree/lib/xloadtree/xmlextras.js');
 				$template->javascript('modules/tagtree/lib/xloadtree/xloadtree.js');
-
 				return null;
 		}
 

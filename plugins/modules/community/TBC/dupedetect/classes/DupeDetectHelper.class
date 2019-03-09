@@ -320,11 +320,13 @@ class DupeDetectHelper {
 		$data = $aclIds;
 		if (isset($type)) {
 			$query .= 'AND [DupeDetectDupesListMap::dupType] = ?';
+
 			$data[] = $type;
 		}
 
 		if (isset($dupStatus)) {
 			$query .= 'AND [DupeDetectDupesListMap::userStatus] = ?';
+
 			$data[] = $dupStatus;
 		}
 
@@ -432,8 +434,10 @@ class DupeDetectHelper {
 		}
 
 		$query .= '[DupeDetectDupesListMap::dupItemId] = ?)';
+
 		if ($type != null) {
 			$query .= 'AND [DupeDetectDupesListMap::dupType] = ?';
+
 			$data[] = $type;
 		}
 
@@ -654,7 +658,6 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
-
 			return array($ret, null);
 		}
 
@@ -662,7 +665,6 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
-
 			return array($ret, null);
 		}
 
@@ -681,7 +683,6 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
-
 			return array($ret, null);
 		}
 
@@ -689,7 +690,6 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
-
 			return array($ret, null);
 		}
 
@@ -697,7 +697,6 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
-
 			return array($ret, null);
 		}
 

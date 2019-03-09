@@ -144,12 +144,9 @@ class ConfirmPicasaImportController extends GalleryController {
 
 		$i                     = 0;
 		$numberOfItemsImported = 0;
-
 		$gallery->guaranteeTimeLimit(30);
-
 		$newAlbumInstanceId = false;
 		$sanitizedAlbumName = $picasaAlbum['albumName'];
-
 		GalleryUtilities::sanitizeInputValues($sanitizedAlbumName);
 
 		// We definitely need notices before each album
@@ -240,6 +237,7 @@ class ConfirmPicasaImportController extends GalleryController {
 						$sourceEncoding
 					)
 				);
+
 				$newAlbumInstance->setSummary(
 					PicasaImportHelper::convertHtml(
 						$markupType,
@@ -285,12 +283,9 @@ class ConfirmPicasaImportController extends GalleryController {
 		$numberOfItemsImported = 1;
 		foreach ($photos as $j => $importAlbumItem) {
 			$gallery->guaranteeTimeLimit(30);
-
 			$filepath          = $picasaXmlPath . str_replace('/', $slash, $importAlbumItem['path']);
 			$sanitizedFilename = $filename = $importAlbumItem['name'];
-
 			GalleryUtilities::sanitizeInputValues($sanitizedFilename);
-
 			$filecaption = PicasaImportHelper::convertHtml(
 				$markupType,
 				$importAlbumItem['caption'],
@@ -335,13 +330,10 @@ class ConfirmPicasaImportController extends GalleryController {
 		}
 
 		$session =& $gallery->getSession();
-
 		$session->putStatus($status);
-
 		$redirect['view']    = 'core.SiteAdmin';
 		$redirect['subView'] = 'picasa.ImportResults';
 		$urlGenerator        =& $gallery->getUrlGenerator();
-
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 
 		$ret = GalleryCoreApi::releaseLocks($importLockIds);
@@ -394,6 +386,7 @@ class ConfirmPicasaImportView extends GalleryView {
 			$destinationAlbumId,
 			$platform->legalizePathComponent($albumName)
 		);
+
 		if ($ret) {
 			if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
 				return array($ret, null);
@@ -413,10 +406,8 @@ class ConfirmPicasaImportView extends GalleryView {
 		$ConfirmPicasaImport['illegalAlbumNames']  = $illegalAlbumNames;
 		$ConfirmPicasaImport['destinationAlbumId'] = $destinationAlbumId;
 		$ConfirmPicasaImport['targetAlbum']        = (array)$targetAlbum;
-
 		$template->setVariable('ConfirmPicasaImport', $ConfirmPicasaImport);
 		$template->setVariable('controller', 'picasa.ConfirmPicasaImport');
-
 		return array(
 			null,
 			array(

@@ -62,9 +62,7 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
 		$session->put('digibug.cart', $cartItemIds);
-
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnUrl    = $urlGenerator->generateUrl(
 			array(
@@ -82,6 +80,8 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 				'returnUrl' => $returnUrl,
 			),
 		);
+
 	}
+
 }
 

@@ -109,7 +109,6 @@ class BulkManageHelper {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
-
 				return $ret;
 			}
 
@@ -126,6 +125,7 @@ class BulkManageHelper {
 					);
 
 					$templateAdapter->updateProgressBar($title, $message, $i / $total);
+
 					// Prevent PHP timeouts
 					$gallery->guaranteeTimeLimit(60);
 				}
@@ -135,7 +135,6 @@ class BulkManageHelper {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
-
 					return $ret;
 				}
 
@@ -186,7 +185,6 @@ class BulkManageHelper {
 
 		$templateAdapter->updateProgressBar($title, $module->translate('Finished'), 1);
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
-
 		return array(null, true);
 	}
 

@@ -92,10 +92,10 @@ class NotificationRouter // extends GalleryEventListener
 			&& !$entity->testPersistentFlag($specs['persistentFlag'])) {
 					continue;
 				}
+
 			}
 
 			$notification->setEvent($event);
-
 			foreach ($handlers as $handlerId) {
 				if (empty($notifications[$notificationName][$handlerId])
 			|| empty($notifications[$notificationName][$handlerId]['enabled'])) {
@@ -107,7 +107,9 @@ class NotificationRouter // extends GalleryEventListener
 				if ($ret) {
 					return array($ret, null);
 				}
+
 			}
+
 		}
 
 		return array(null, null);
@@ -138,9 +140,11 @@ class NotificationRouter // extends GalleryEventListener
 			if ($ret) {
 				return $ret;
 			}
+
 		}
 
 		return null;
 	}
+
 }
 

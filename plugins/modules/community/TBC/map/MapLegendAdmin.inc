@@ -270,7 +270,6 @@ class MapLegendAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$template->head('modules/map/includes/GoogleMap.css');
-
 		$form['formName'] = 'MapLegendAdmin';
 
 		// Set default values for undefined plugin parameters
@@ -329,7 +328,6 @@ class MapLegendAdminView extends GalleryView {
 			$grouplegends         = explode('|', $form['GroupLegends']);
 			$form['GroupLegends'] = $grouplegends;
 		}
-
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
@@ -338,12 +336,10 @@ class MapLegendAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
-
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapLegendAdmin');
-
 		return array(
 			null,
 			array(

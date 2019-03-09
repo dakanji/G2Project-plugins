@@ -85,7 +85,6 @@ class OpenIdOption extends GalleryOption {
 
 		// Render the HTML body
 		$template->style('modules/openid/data/openid.css');
-
 		return array(null, 'modules/openid/templates/OpenIdOption.tpl', 'modules_openid');
 	}
 

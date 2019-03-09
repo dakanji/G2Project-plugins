@@ -252,9 +252,7 @@ class FinishLoginController extends GalleryController {
 		 */
 		if (empty($error) && GalleryUtilities::isA($user, 'GalleryUser')) {
 			$gallery->setActiveUser($user);
-
 			$event = GalleryCoreApi::newEvent('Gallery::Login');
-
 			$event->setEntity($user);
 
 			list($ret, $redirect) = GalleryCoreApi::postEvent($event);

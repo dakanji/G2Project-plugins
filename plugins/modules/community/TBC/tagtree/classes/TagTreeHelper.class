@@ -80,7 +80,6 @@ class TagTreeHelper {
 
 	public function fetchMatchingRootHierarchies($tags, $albumId, $onlyAlbums, $aclIds) {
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/HierarchyTagFilter.class');
-
 		global $gallery;
 
 		list($ret, $parentHierarchy) = TagTreeHelper::fetchHierarchy($albumId);

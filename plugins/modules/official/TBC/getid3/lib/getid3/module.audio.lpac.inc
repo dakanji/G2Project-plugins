@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.lpac.php                                       //
 // module for analyzing LPAC Audio files                       //
@@ -18,9 +19,7 @@ getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php'
 class getid3_lpac extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$LPACheader = $this->fread(14);
 		if (substr($LPACheader, 0, 4) != 'LPAC') {
 			$info['error'][] = 'Expected "LPAC" at offset ' . $info['avdataoffset'] . ', found "' . $StreamMarker . '"';
@@ -73,14 +72,10 @@ class getid3_lpac extends getid3_handler {
 		}
 
 		$getid3_temp = new getID3();
-
 		$getid3_temp->openfile($this->getid3->filename);
-
 		$getid3_temp->info = $info;
 		$getid3_riff       = new getid3_riff($getid3_temp);
-
 		$getid3_riff->Analyze();
-
 		$info['avdataoffset']                = $getid3_temp->info['avdataoffset'];
 		$info['riff']                        = $getid3_temp->info['riff'];
 		$info['error']                       = $getid3_temp->info['error'];

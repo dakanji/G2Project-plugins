@@ -808,7 +808,6 @@ class AdminView extends GalleryView {
 		$template->setVariable('languageList', $languageList);
 		$template->setVariable('canTranslate', $canTranslate);
 		$template->setVariable('controller', 'checkout.Admin');
-
 		return array(
 			null,
 			array(

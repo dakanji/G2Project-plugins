@@ -27,7 +27,7 @@
  * @version $Revision: 17580 $
  */
 class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterface_1_1
-{
+ {
 	/**
 	 * @see CartPluginInterface_1_0::getSupportedItemTypes
 	 */
@@ -128,8 +128,7 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 				return array($ret, null);
 			}
 
-			$relativePath = (strpos($path, $albumDir) === 0) ?
-				substr($path, strlen($albumDir)) : basename($path);
+			$relativePath = (strpos($path, $albumDir) === 0) ? substr($path, strlen($albumDir)) : basename($path);
 			$itemId       = $item->getId();
 			$itemMimeType = $item->getMimeType();
 			if (isset($permissions[$itemId]['core.viewSource'])) {
@@ -137,7 +136,8 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 					$item = $preferreds[$itemId];
 				}
 			} elseif (isset($permissions[$itemId]['core.viewResizes'])
-			&& !empty($resizes[$itemId])) {
+				&& !empty($resizes[$itemId])
+			) {
 				$maxSize = null;
 				foreach ($resizes[$itemId] as $resize) {
 					$size = $resize->getDerivativeSize();
@@ -192,14 +192,18 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 			list($success, $created) = GalleryUtilities::guaranteeDirExists(dirname($target));
 
 			if (!$success) {
-				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE),
-				 null, );
+				return array(
+					GalleryCoreApi::error(ERROR_PLATFORM_FAILURE),
+					null,
+				);
 			}
 
 			$tmpDirs = array_merge($tmpDirs, $created);
 			if (!$platform->copy($path, $target)) {
-				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE),
-				 null, );
+				return array(
+					GalleryCoreApi::error(ERROR_PLATFORM_FAILURE),
+					null,
+				);
 			}
 
 			$tmpFiles[] = $target;
@@ -234,9 +238,12 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 		}
 
 		$platform->chmod($zipFile);
-
-		return array(null,
-			 array('view' => 'zipcart.Download', 'file' => basename($zipBase)), );
+		return array(
+			null,
+			array(
+				'view' => 'zipcart.Download',
+				'file' => basename($zipBase),
+			),
+		);
 	}
 }
-

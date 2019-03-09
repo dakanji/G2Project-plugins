@@ -27,6 +27,7 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 			'view' => $view,
 			'subView' => $subView
 		);
+
 	}
 
 	/* If we care about pagination, then figure out the current page and total pages */

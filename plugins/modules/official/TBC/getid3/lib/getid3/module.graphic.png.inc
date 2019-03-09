@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.graphic.png.php                                      //
 // module for analyzing PNG Image files                        //
@@ -25,9 +26,7 @@ class getid3_png extends getid3_handler {
 		$info['fileformat']          = 'png';
 		$info['video']['dataformat'] = 'png';
 		$info['video']['lossless']   = false;
-
 		$this->fseek($info['avdataoffset']);
-
 		$PNGfiledata   = $this->fread($this->getid3->fread_buffer_size());
 		$offset        = 0;
 		$PNGidentifier = substr($PNGfiledata, $offset, 8); // $89 $50 $4E $47 $0D $0A $1A $0A

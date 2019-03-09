@@ -98,7 +98,6 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$MembersProfile['canViewProfileEmail'] = $canViewProfileEmail;
-
 		$template->setVariable('MembersProfile', $MembersProfile);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'members');
@@ -108,7 +107,6 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$template->title($module->translate('Members Profile'));
-
 		return array(
 			null,
 			array(

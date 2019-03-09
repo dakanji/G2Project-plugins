@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.au.php                                         //
 // module for analyzing AU files                               //
@@ -17,9 +18,7 @@
 class getid3_au extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$AUheader = $this->fread(8);
 		$magic    = '.snd';
 		if (substr($AUheader, 0, 4) != $magic) {

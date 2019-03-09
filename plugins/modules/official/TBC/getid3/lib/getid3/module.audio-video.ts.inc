@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.ts.php                                   //
 // module for analyzing MPEG Transport Stream (.ts) files      //
@@ -17,9 +18,7 @@
 class getid3_ts extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$TSheader = $this->fread(19);
 		$magic    = "\x47";
 		if (substr($TSheader, 0, 1) != $magic) {

@@ -41,12 +41,11 @@ class NotificationModule extends GalleryModule {
 				'Allow users to be notified of events by subscription.'
 			)
 		);
+
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews|getItemLinks|getItemAdminViews');
 	}
@@ -237,7 +236,6 @@ class NotificationModule extends GalleryModule {
 		list($ret, $hints) = NotificationHelper::getActiveSubscriptionsEvents();
 
 		$this->setParameter('_activeListeners', serialize($hints));
-
 		if ($ret) {
 			return $ret;
 		}
@@ -408,7 +406,6 @@ class NotificationModule extends GalleryModule {
 
 				while ($rowsRead < $count) {
 					$gallery->guaranteeTimeLimit(30);
-
 					$options['limit']['offset'] = $offset;
 
 					list($ret, $results) = GalleryCoreApi::getMapEntry(

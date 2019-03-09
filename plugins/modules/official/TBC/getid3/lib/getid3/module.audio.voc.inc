@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.voc.php                                        //
 // module for analyzing Creative VOC Audio files               //
@@ -18,9 +19,7 @@ class getid3_voc extends getid3_handler {
 	public function Analyze() {
 		$info                 =& $this->getid3->info;
 		$OriginalAVdataOffset = $info['avdataoffset'];
-
 		$this->fseek($info['avdataoffset']);
-
 		$VOCheader = $this->fread(26);
 		$magic     = 'Creative Voice File';
 		if (substr($VOCheader, 0, 19) != $magic) {
@@ -66,7 +65,6 @@ class getid3_voc extends getid3_handler {
 					}
 
 					$this->fseek($BlockSize - 2, SEEK_CUR);
-
 					$ThisBlock['sample_rate_id']   = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 1));
 					$ThisBlock['compression_type'] = getid3_lib::LittleEndian2Int(substr($BlockData, 5, 1));
 					$ThisBlock['compression_name'] = $this->VOCcompressionTypeLookup($ThisBlock['compression_type']);
@@ -88,7 +86,6 @@ class getid3_voc extends getid3_handler {
 				case 7:  // End repeat
 					// nothing useful, just skip
 					$this->fseek($BlockSize, SEEK_CUR);
-
 					break;
 				case 8:  // Extended
 					$BlockData .= $this->fread(4);
@@ -109,7 +106,6 @@ class getid3_voc extends getid3_handler {
 					}
 
 					$this->fseek($BlockSize - 12, SEEK_CUR);
-
 					$ThisBlock['sample_rate']      = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 4));
 					$ThisBlock['bits_per_sample']  = getid3_lib::LittleEndian2Int(substr($BlockData, 8, 1));
 					$ThisBlock['channels']         = getid3_lib::LittleEndian2Int(substr($BlockData, 9, 1));
@@ -125,9 +121,7 @@ class getid3_voc extends getid3_handler {
 					break;
 				default:
 					$info['warning'][] = 'Unhandled block type "' . $BlockType . '" at offset ' . $BlockOffset;
-
 					$this->fseek($BlockSize, SEEK_CUR);
-
 					break;
 			}
 
@@ -141,7 +135,6 @@ class getid3_voc extends getid3_handler {
 
 		// Terminator block doesn't have size field, so seek back 3 spaces
 		$this->fseek(-3, SEEK_CUR);
-
 		ksort($thisfile_voc['blocktypes']);
 		if (!empty($thisfile_voc['compressed_bits_per_sample'])) {
 			$info['playtime_seconds']  = (($info['avdataend'] - $info['avdataoffset']) * 8) / ($thisfile_voc['compressed_bits_per_sample'] * $thisfile_audio['channels'] * $thisfile_audio['sample_rate']);

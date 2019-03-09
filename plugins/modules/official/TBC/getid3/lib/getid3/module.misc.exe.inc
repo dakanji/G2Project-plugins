@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.misc.exe.php                                         //
 // module for analyzing EXE files                              //
@@ -17,9 +18,7 @@
 class getid3_exe extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$EXEheader = $this->fread(28);
 		$magic     = 'MZ';
 		if (substr($EXEheader, 0, 2) != $magic) {

@@ -295,9 +295,7 @@ class TagsHelper {
 		$tagList = array();
 		while (($result = $searchResults->nextResult()) !== false) {
 			$tagName = $rawTagName = $result[1];
-
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
-
 			$tagList[$rawTagName] = $tagName;
 		}
 
@@ -504,7 +502,6 @@ class TagsHelper {
 	 */
 	public function splitTags($tagSplit) {
 		$tagList = array();
-
 		GalleryUtilities::unsanitizeInputValues($tagSplit, false);
 
 		list($ret, $split) = GalleryCoreApi::getPluginParameter(
@@ -525,7 +522,6 @@ class TagsHelper {
 			$tag = $rawTag = trim($tag);
 			if (!empty($tag)) {
 				GalleryUtilities::sanitizeInputValues($tag, false);
-
 				$tagList[$rawTag] = $tag;
 			}
 		}
@@ -563,9 +559,7 @@ class TagsHelper {
 		foreach ($tagList as $tagName => $tagCount) {
 			$tagWeight  = ceil(($tagCount - $minCount) / $delta) + 1;
 			$rawTagName = $tagName;
-
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
-
 			$tagCloud[$rawTagName] = array(
 				'count'    => $tagWeight,
 				'name'     => $tagName,

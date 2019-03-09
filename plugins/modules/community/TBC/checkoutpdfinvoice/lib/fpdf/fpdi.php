@@ -87,7 +87,6 @@ class FPDI extends FPDF_TPL {
 		}
 
 		$this->current_parser =& $this->parsers[$fn];
-
 		return $this->parsers[$fn]->getPageCount();
 	}
 
@@ -104,10 +103,8 @@ class FPDI extends FPDF_TPL {
 
 		$fn     =& $this->current_filename;
 		$parser =& $this->parsers[$fn];
-
 		$parser->setPageno($pageno);
 		$this->tpl++;
-
 		$this->tpls[$this->tpl] = array();
 		$tpl                    =& $this->tpls[$this->tpl];
 		$tpl['parser']          =& $parser;
@@ -184,7 +181,6 @@ class FPDI extends FPDF_TPL {
 	public function useTemplate($tplidx, $_x = null, $_y = null, $_w = 0, $_h = 0) {
 		$this->_out('q 0 J 1 w 0 j 0 G'); // reset standard values
 		$s = parent::useTemplate($tplidx, $_x, $_y, $_w, $_h);
-
 		$this->_out('Q');
 		return $s;
 	}
@@ -199,9 +195,7 @@ class FPDI extends FPDF_TPL {
 				if (is_array($this->_obj_stack[$filename])) {
 					while ($n = key($this->_obj_stack[$filename])) {
 						$nObj = $this->current_parser->pdf_resolve_object($this->current_parser->c, $this->_obj_stack[$filename][$n][1]);
-
 						$this->_newobj($this->_obj_stack[$filename][$n][0]);
-
 						if ($nObj[0] == PDF_TYPE_STREAM) {
 							$this->pdf_write_value($nObj);
 						} else {
@@ -209,7 +203,6 @@ class FPDI extends FPDF_TPL {
 						}
 
 						$this->_out('endobj');
-
 						$this->_obj_stack[$filename][$n] = null; // free memory
 						unset($this->_obj_stack[$filename][$n]);
 						reset($this->_obj_stack[$filename]);
@@ -237,7 +230,6 @@ class FPDI extends FPDF_TPL {
 
 		//Resource dictionary
 		$this->offsets[2] = strlen($this->buffer);
-
 		$this->_out('2 0 obj');
 		$this->_out('<<');
 		$this->_putresourcedict();
@@ -250,18 +242,12 @@ class FPDI extends FPDF_TPL {
 	 */
 	public function _putformxobjects() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
-
 		reset($this->tpls);
-
 		foreach ($this->tpls as $tplidx => $tpl) {
 			$p = ($this->compress) ? gzcompress($tpl['buffer']) : $tpl['buffer'];
-
 			$this->_newobj();
-
 			$this->tpls[$tplidx]['n'] = $this->n;
-
 			$this->_out('<<' . $filter . '/Type /XObject');
-
 			$this->_out('/Subtype /Form');
 			$this->_out('/FormType 1');
 			$this->_out(
@@ -273,22 +259,19 @@ class FPDI extends FPDF_TPL {
 					($tpl['h'] + (isset($tpl['box']['y']) ? $tpl['box']['y'] : 0) - $tpl['y'] - $tpl['h']) * $this->k
 				)
 			);
+
 			if (isset($tpl['box'])) {
 				$this->_out(sprintf('/Matrix [1 0 0 1 %.5f %.5f]', -$tpl['box']['x'] * $this->k, -$tpl['box']['y'] * $this->k));
 			}
 
 			$this->_out('/Resources ');
-
 			if (isset($tpl['resources'])) {
 				$this->current_parser =& $tpl['parser'];
-
 				$this->pdf_write_value($tpl['resources']);
 			} else {
 				$this->_out('<</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
-
 				if (isset($this->_res['tpl'][$tplidx]['fonts']) && count($this->_res['tpl'][$tplidx]['fonts'])) {
 					$this->_out('/Font <<');
-
 					foreach ($this->_res['tpl'][$tplidx]['fonts'] as $font) {
 						$this->_out('/F' . $font['i'] . ' ' . $font['n'] . ' 0 R');
 					}
@@ -335,9 +318,7 @@ class FPDI extends FPDF_TPL {
 		//Begin a new object
 		if (!$onlynewobj) {
 			$this->offsets[$obj_id] = strlen($this->buffer);
-
 			$this->_out($obj_id . ' 0 obj');
-
 			$this->_current_obj_id = $obj_id; // for later use with encryption
 		}
 	}
@@ -360,7 +341,6 @@ class FPDI extends FPDF_TPL {
 				// An array. Output the proper
 				// structure and move on.
 				$this->_out('[', false);
-
 				for ($i = 0; $i < count($value[1]); $i++) {
 					$this->pdf_write_value($value[1][$i]);
 				}
@@ -370,7 +350,6 @@ class FPDI extends FPDF_TPL {
 			case PDF_TYPE_DICTIONARY:
 				// A dictionary.
 				$this->_out('<<', false);
-
 				reset($value[1]);
 				while (list($k, $v) = each($value[1])) {
 					$this->_out($k . ' ', false);
@@ -378,7 +357,6 @@ class FPDI extends FPDF_TPL {
 				}
 
 				$this->_out('>>');
-
 				break;
 			case PDF_TYPE_OBJREF:
 				// An indirect object reference
@@ -386,26 +364,22 @@ class FPDI extends FPDF_TPL {
 				$cpfn =& $this->current_parser->filename;
 				if (!isset($this->_don_obj_stack[$cpfn][$value[1]])) {
 					$this->_newobj(false, true);
-
 					$this->_obj_stack[$cpfn][$value[1]]     = array($this->n, $value);
 					$this->_don_obj_stack[$cpfn][$value[1]] = array($this->n, $value);
 				}
 
 				$objid = $this->_don_obj_stack[$cpfn][$value[1]][0];
-
 				$this->_out("{$objid} 0 R"); //{$value[2]}
 				break;
 			case PDF_TYPE_STRING:
 				// A string.
 				$this->_out('(' . $value[1] . ')');
-
 				break;
 			case PDF_TYPE_STREAM:
 				// A stream. First, output the
 				// stream dictionary, then the
 				// stream data itself.
 				$this->pdf_write_value($value[1]);
-
 				$this->_out('stream');
 				$this->_out($value[2][1]);
 				$this->_out('endstream');
@@ -416,7 +390,6 @@ class FPDI extends FPDF_TPL {
 			case PDF_TYPE_NULL:
 				// The null object.
 				$this->_out('null');
-
 				break;
 		}
 	}
@@ -443,7 +416,6 @@ class FPDI extends FPDF_TPL {
 	 */
 	public function _enddoc() {
 		parent::_enddoc();
-
 		$this->_closeParsers();
 	}
 
@@ -454,9 +426,7 @@ class FPDI extends FPDF_TPL {
 		if ($this->state > 2 && count($this->parsers) > 0) {
 			foreach ($this->parsers as $k => $_) {
 				$this->parsers[$k]->closeFile();
-
 				$this->parsers[$k] = null;
-
 				unset($this->parsers[$k]);
 			}
 

@@ -51,6 +51,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 			__FILE__,
 			'GalleryPhotoItem'
 		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -64,6 +65,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 			__FILE__,
 			'GalleryPhotoItem'
 		);
+
 		if ($ret) {
 			return $ret;
 		}
@@ -91,7 +93,6 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		global $gallery;
 
 		$itemId = $this->_item->getId();
-
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
 
@@ -160,9 +161,7 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 		$session      =& $gallery->getSession();
 		$itemId       = $this->_item->getId();
 		$publicItemId = $this->_publicItem->getId();
-
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
-
 		$session->put(
 			'digibug.cart',
 			array(
@@ -179,7 +178,6 @@ class DigibugPrintPhotosViewTest extends GalleryTestCase {
 
 		// Give the active user view permissions through session-basd permissions
 		$sessionPermissionEntityId = $itemId;
-
 		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($sessionPermissionEntityId));
 
 		$ret = GalleryCoreApi::addEntityPermission(

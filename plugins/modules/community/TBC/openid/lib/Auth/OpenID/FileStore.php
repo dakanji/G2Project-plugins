@@ -18,6 +18,7 @@
  * Require base class for creating a new interface.
  */
 require_once 'Auth/OpenID.php';
+
 require_once 'Auth/OpenID/Interface.php';
 require_once 'Auth/OpenID/HMAC.php';
 require_once 'Auth/OpenID/Nonce.php';
@@ -73,7 +74,6 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
 	public function destroy() {
 		Auth_OpenID_FileStore::_rmtree($this->directory);
-
 		$this->active = false;
 	}
 
@@ -86,14 +86,12 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 	public function _setup() {
 		return Auth_OpenID::ensureDir($this->nonce_dir) &&
 				Auth_OpenID::ensureDir($this->association_dir) &&
-
 				Auth_OpenID::ensureDir($this->temp_dir);
 	}
 
 	/**
 	 * Create a temporary file on the same filesystem as
 	 * $this->association_dir.
-
 	 *
 	 * The temporary directory should not be cleaned if there are any
 	 * processes using the store. If there is no active process using
@@ -614,7 +612,6 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
 			if ($assoc->getExpiresIn() == 0) {
 				$this->_removeIfPresent($assoc_filename);
-
 				$removed += 1;
 			}
 		}

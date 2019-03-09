@@ -31,19 +31,17 @@ class OpticalporkTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('opticalpork');
-
 		$this->setName($gallery->i18n('Opticalpork'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'Opticalpork.com Gallery theme'
 			)
 		);
+
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'perPage'        => 9,
 				'contentWidth'   => 700,

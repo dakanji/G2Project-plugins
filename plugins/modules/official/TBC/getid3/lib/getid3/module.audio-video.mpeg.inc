@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.mpeg.php                                 //
 // module for analyzing MPEG files                             //
@@ -29,9 +30,7 @@ class getid3_mpeg extends getid3_handler {
 	public function Analyze() {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'mpeg';
-
 		$this->fseek($info['avdataoffset']);
-
 		$MPEGstreamData       = $this->fread($this->getid3->option_fread_buffer_size);
 		$MPEGstreamBaseOffset = 0; // how far are we from the beginning of the file data ($info['avdataoffset'])
 		$MPEGstreamDataOffset = 0; // how far are we from the beginning of the buffer data (~32kB)
@@ -231,7 +230,6 @@ class getid3_mpeg extends getid3_handler {
 							break;
 						default:
 							$this->warning('Unexpected $info[mpeg][video][raw][extension_start_code_identifier] value of ' . $info['mpeg']['video']['raw']['extension_start_code_identifier']);
-
 							break;
 					}
 
@@ -355,9 +353,7 @@ class getid3_mpeg extends getid3_handler {
 					$info['mpeg']['packed_elementary_streams'][$PackedElementaryStream['stream_type']][$PackedElementaryStream['stream_id']][] = $PackedElementaryStream;
 					*/
 					$getid3_temp = new getID3();
-
 					$getid3_temp->openfile($this->getid3->filename);
-
 					$getid3_temp->info = $info;
 					$getid3_mp3        = new getid3_mp3($getid3_temp);
 					for ($i = 0; $i <= 7; $i++) {
@@ -453,7 +449,9 @@ class getid3_mpeg extends getid3_handler {
 					$byte_prev = $byte_this;
 					$vbr_bitrates[] = $this_bitrate;
 				}
+
 			}
+
 		}
 
 		echo 'average_File_bitrate = '.number_format(array_sum($vbr_bitrates) / count($vbr_bitrates), 1).'<br>';

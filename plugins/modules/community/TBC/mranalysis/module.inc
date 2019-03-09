@@ -38,12 +38,11 @@ class MRAnalysisModule extends GalleryModule {
 				'Analysis and diagnostics'
 			)
 		);
+
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('analysis', $gallery->i18n('Analysis'));
 		$this->setCallbacks('getSiteAdminViews');
 	}

@@ -29,7 +29,6 @@ class TagTreeCallbacks {
 	public function callback($callbackParams, &$smarty, $callback, $userId) {
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeNode.class');
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
-
 		global $gallery;
 
 		static $idCount = '';

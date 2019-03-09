@@ -48,7 +48,6 @@ class FeedListView extends GalleryView {
 		);
 
 		$template->setVariable('view', 'rss.FeedList');
-
 		return array(
 			null,
 			array(

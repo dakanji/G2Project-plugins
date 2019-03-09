@@ -269,7 +269,6 @@ class Auth_OpenID_Association {
 
 		// Invalid association types should be caught at constructor
 		$callback = $this->_macs[$this->assoc_type];
-
 		return call_user_func_array($callback, array($this->secret, $kv));
 	}
 
@@ -322,9 +321,7 @@ class Auth_OpenID_Association {
 		);
 
 		$sig = $this->getMessageSignature($signed_message);
-
 		$signed_message->setArg(Auth_OpenID_OPENID_NS, 'sig', $sig);
-
 		return $signed_message;
 	}
 
@@ -368,7 +365,6 @@ class Auth_OpenID_Association {
 	 */
 	public function getMessageSignature(&$message) {
 		$pairs = $this->_makePairs($message);
-
 		return base64_encode($this->sign($pairs));
 	}
 
@@ -538,7 +534,6 @@ function &Auth_OpenID_getEncryptedNegotiator() {
 class Auth_OpenID_SessionNegotiator {
 	public function __construct($allowed_types) {
 		$this->allowed_types = array();
-
 		$this->setAllowedTypes($allowed_types);
 	}
 

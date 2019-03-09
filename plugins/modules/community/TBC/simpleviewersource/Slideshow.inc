@@ -68,7 +68,6 @@ class SlideshowView extends GalleryView {
 		$template->setVariable('backgroundColor', $parameters['backgroundColor']);
 		$template->setVariable('preloaderColor', $parameters['preloaderColor']);
 		$template->setVariable('XMLurl', $XMLurl);
-
 		return array(
 			null,
 			array(

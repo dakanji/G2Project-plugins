@@ -31,19 +31,17 @@ class AjaxianTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('ajaxian');
-
 		$this->setName($gallery->i18n('Ajaxian'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'DHTML-enabled Slideshow theme'
 			)
 		);
+
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'rows'            => 3,
 				'columns'         => 8,

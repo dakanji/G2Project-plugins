@@ -101,7 +101,6 @@ class ShareSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'share.ShareSiteAdmin');
-
 		return array(
 			null,
 			array(

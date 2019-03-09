@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.aa.php                                         //
 // module for analyzing Audible Audiobook files                //
@@ -17,9 +18,7 @@
 class getid3_aa extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$AAheader = $this->fread(8);
 		$magic    = "\x57\x90\x75\x36";
 		if (substr($AAheader, 4, 4) != $magic) {

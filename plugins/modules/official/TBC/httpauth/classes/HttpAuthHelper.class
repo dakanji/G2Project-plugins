@@ -372,7 +372,6 @@ class HttpAuthHelper {
 
 		GalleryUtilities::setResponseHeader('HTTP/1.0 401 Unauthorized', false);
 		GalleryUtilities::setResponseHeader(
-
 			"WWW-Authenticate: Basic realm='$params[authName]'",
 			false
 		);

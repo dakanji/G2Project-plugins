@@ -228,7 +228,6 @@ class SnapGalaxyHelper {
 		}
 
 		$gallery->guaranteeTimeLimit(30);
-
 		$cartUrl = 'http://' . $snapgalaxyServer . $cartUrlFragment;
 		if ($gallery->getDebug()) {
 			$gallery->debug('Post data:');
@@ -265,7 +264,6 @@ class SnapGalaxyHelper {
 			 * So we are storing requesturl in session variable.
 			 */
 			$session->put('snapgalaxy.cartUrlFragment', $cartUrlFragment);
-
 			$redirectUrl = 'http://' . $snapgalaxyServer . $matches[2];
 		} else {
 			$redirectUrl = $urlGenerator->generateUrl(

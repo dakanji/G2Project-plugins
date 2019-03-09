@@ -60,9 +60,7 @@ class ImageUploadHelperTest extends GalleryTestCase {
 		}
 
 		$status = ImageUploadHelper::doLogin();
-
 		$this->assertEventFired('Gallery::Login', $this->_user);
-
 		$suffix = "&\r\n";
 		$this->assertEquals(
 			array(

@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.tag.id3v1.php                                        //
 // module for analyzing ID3v1 tags                             //
@@ -23,7 +24,6 @@ class getid3_id3v1 extends getid3_handler {
 		}
 
 		$this->fseek(-256, SEEK_END);
-
 		$preid3v1 = $this->fread(128);
 		$id3v1tag = $this->fread(128);
 		if (substr($id3v1tag, 0, 3) == 'TAG') {
@@ -103,7 +103,7 @@ class getid3_id3v1 extends getid3_handler {
 	}
 
 	public static function ArrayOfGenres($allowSCMPXextended = false) {
-		static $GenreLookup      = array(
+		static $GenreLookup = array(
 			0    => 'Blues',
 			1    => 'Classic Rock',
 			2    => 'Country',
@@ -256,6 +256,7 @@ class getid3_id3v1 extends getid3_handler {
 			'CR' => 'Cover',
 			'RX' => 'Remix',
 		);
+
 		static $GenreLookupSCMPX = array();
 
 		if ($allowSCMPXextended && empty($GenreLookupSCMPX)) {

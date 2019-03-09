@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.dss.php                                        //
 // module for analyzing Digital Speech Standard (DSS) files    //
@@ -17,9 +18,7 @@
 class getid3_dss extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$DSSheader = $this->fread(1540);
 		if (!preg_match('#^(\x02|\x03)ds[s2]#', $DSSheader)) {
 			$info['error'][] = 'Expecting "[02-03] 64 73 [73|32]" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($DSSheader, 0, 4)) . '"';
@@ -52,7 +51,6 @@ class getid3_dss extends getid3_handler {
 		if (floor($info['dss']['playtime_ms'] / 1000) != $info['dss']['playtime_sec']) {
 			// *should* just be playtime_ms / 1000 but at least one sample file has playtime_ms at offset 530 instead of offset 512, so safety check
 			$info['playtime_seconds'] = $info['dss']['playtime_sec'];
-
 			$this->getid3->warning('playtime_ms (' . number_format($info['dss']['playtime_ms'] / 1000, 3) . ') does not match playtime_sec (' . number_format($info['dss']['playtime_sec']) . ') - using playtime_sec value');
 		}
 
@@ -81,7 +79,6 @@ class getid3_dss extends getid3_handler {
 
 		if (!array_key_exists($sample_rate_index, $dssSampleRateLookup)) {
 			$this->getid3->warning('unknown sample_rate_index: ' . $sample_rate_index);
-
 			return false;
 		}
 

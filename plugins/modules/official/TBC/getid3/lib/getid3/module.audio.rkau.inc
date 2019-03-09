@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.shorten.php                                    //
 // module for analyzing Shorten Audio files                    //
@@ -17,9 +18,7 @@
 class getid3_rkau extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$RKAUHeader = $this->fread(20);
 		$magic      = 'RKA';
 		if (substr($RKAUHeader, 0, 3) != $magic) {
@@ -43,9 +42,7 @@ class getid3_rkau extends getid3_handler {
 		$info['rkau']['channels']        = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 12, 1));
 		$info['rkau']['bits_per_sample'] = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 13, 1));
 		$info['rkau']['raw']['quality']  = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 14, 1));
-
 		$this->RKAUqualityLookup($info['rkau']);
-
 		$info['rkau']['raw']['flags']            = getid3_lib::LittleEndian2Int(substr($RKAUHeader, 15, 1));
 		$info['rkau']['flags']['joint_stereo']   = (bool)(!($info['rkau']['raw']['flags'] & 0x01));
 		$info['rkau']['flags']['streaming']      = (bool)($info['rkau']['raw']['flags'] & 0x02);

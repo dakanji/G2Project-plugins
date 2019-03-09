@@ -99,7 +99,6 @@ class TranscodeOnUploadOption extends ItemAddOption {
 						}
 
 						GalleryCoreApi::releaseLocks($lockId);
-
 						$itemId = $currentItems[$i]->getId();
 
 						// Create a new preferred since one doesn't exist
@@ -192,6 +191,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								$setAudioSampleRate . $setAudioChannels .
 								$setVideoBitrate . $setVideoDimensions . 'convert-to-' . $params['outputMime']
 							);
+
 							$derivative->setDerivativeSourceId($source->getId());
 
 							$ret = $derivative->save();
@@ -212,7 +212,6 @@ class TranscodeOnUploadOption extends ItemAddOption {
 
 								if ($ret) {
 									GalleryCoreApi::releaseLocks($lockId);
-
 									return array($ret, null);
 								}
 
@@ -222,7 +221,6 @@ class TranscodeOnUploadOption extends ItemAddOption {
 
 								if ($ret) {
 									GalleryCoreApi::releaseLocks($lockId);
-
 									return array($ret, null);
 								}
 
@@ -273,7 +271,6 @@ class TranscodeOnUploadOption extends ItemAddOption {
 		$template->setVariable('outputMime', $params['outputMime']);
 		$template->setVariable('selectedMimeTypes', $selectedMimeTypes);
 		$template->setVariable('onUpload', $params['onUpload']);
-
 		return array(null, 'modules/transcode/templates/TranscodeOnUploadOption.tpl', 'modules_transcode');
 	}
 }

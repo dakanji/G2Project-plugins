@@ -55,7 +55,6 @@ class SelectPicasaExportPathController extends GalleryController {
 				}
 
 				GalleryUtilities::unsanitizeInputValues($tmp, false);
-
 				$form['picasaXmlPath'] = trim($tmp);
 				if (!Picasa2DataParser::isValidPicasaXmlPath($form['picasaXmlPath'])) {
 					$error[] = 'form[error][picasaXmlPath][invalid]';
@@ -76,7 +75,6 @@ class SelectPicasaExportPathController extends GalleryController {
 				}
 
 				$session->put('picasa.view.SelectPicasaExportPath.recentPaths', $recentPaths);
-
 				$redirect['view']               = 'core.SiteAdmin';
 				$redirect['subView']            = 'picasa.ConfirmPicasaImport';
 				$redirect['picasaXmlPath']      = $form['picasaXmlPath'];
@@ -159,10 +157,8 @@ class SelectPicasaExportPathView extends GalleryView {
 		$SelectPicasaExportPath['recentPaths'] = $recentPaths;
 		$SelectPicasaExportPath['hasToolkit']  = $hasToolkit;
 		$SelectPicasaExportPath['g2AlbumTree'] = $albumTree;
-
 		$template->setVariable('controller', 'picasa.SelectPicasaExportPath');
 		$template->setVariable('SelectPicasaExportPath', $SelectPicasaExportPath);
-
 		return array(
 			null,
 			array(

@@ -10,6 +10,7 @@
  * Import tools needed to deal with messages.
  */
 require_once 'Auth/OpenID.php';
+
 require_once 'Auth/OpenID/KVForm.php';
 require_once 'Auth/Yadis/XML.php';
 require_once 'Auth/OpenID/Consumer.php'; // For Auth_OpenID_FailureResponse
@@ -263,7 +264,6 @@ class Auth_OpenID_Mapping {
 		if ($index !== false) {
 			unset($this->keys[$index], $this->values[$index]);
 			$this->_reflow();
-
 			return true;
 		}
 
@@ -436,7 +436,6 @@ class Auth_OpenID_Message {
 			$this->_openid_ns_uri = null;
 		} else {
 			$implicit = Auth_OpenID_isOpenID1($openid_namespace);
-
 			$this->setOpenIDNamespace($openid_namespace, $implicit);
 		}
 	}
@@ -868,7 +867,6 @@ class Auth_OpenID_Message {
 		}
 
 		$this->args->set(array($namespace, $key), $value);
-
 		if ($namespace !== Auth_OpenID_BARE_NS) {
 			$this->namespaces->add($namespace);
 		}

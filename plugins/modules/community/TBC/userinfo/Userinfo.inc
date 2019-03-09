@@ -52,7 +52,6 @@ class UserinfoView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		GalleryCoreApi::requireOnce('modules/userinfo/functions.inc');
-
 		$tableName3 = 'UserinfoSetupMap';
 		$select3    = array(
 			'uiPerPage',
@@ -200,11 +199,9 @@ class UserinfoView extends GalleryView {
 		$mySubView                = 'userinfo.Userinfo';
 		$myTotalRecords           = $rowsCount;
 		$pagination               = numPages($myView, $mySubView, $count, $myTotalRecords);
-
 		$template->setVariable('pagination', $pagination);
 		$template->setVariable('controller', 'userinfo.Userinfo');
 		$template->setVariable('Userinfo', $Userinfo);
-
 		return array(
 			null,
 			array(

@@ -114,7 +114,6 @@ class PanoramaSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'panorama.PanoramaSiteAdmin');
-
 		return array(
 			null,
 			array(

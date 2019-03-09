@@ -10,10 +10,12 @@
 //                                                             //
 //  * version 0.1 (26 June 2005)                               //
 //                                                             //
+
 //                                                             //
 //  * version 0.1.1 (15 July 2005)                             //
 //  minor modifications by James Heinrich <info@getid3.org>    //
 //                                                             //
+
 //  * version 0.2 (22 February 2006)                           //
 //  Support for On2 VP6 codec and meta information             //
 //    by Steve Webster <steve.websterØfeaturecreep*com>        //
@@ -27,6 +29,7 @@
 //    and incorrect parsing of onMetaTag                       //
 //    by Evgeny Moysevich <moysevichØgmail*com>                //
 //                                                             //
+
 //  * version 0.5 (21 May 2009)                                //
 //  Fixed parsing of audio tags and added additional codec     //
 //    details. The duration is now read from onMetaTag (if     //
@@ -40,12 +43,15 @@
 //  * version 0.6.1 (30 May 2011)                              //
 //    prevent infinite loops in expGolombUe()                  //
 //                                                             //
+
 //  * version 0.7.0 (16 Jul 2013)                              //
 //  handle GETID3_FLV_VIDEO_VP6FLV_ALPHA                       //
 //  improved AVCSequenceParameterSetReader::readData()         //
 //    by Xander Schouwerwou <schouwerwouØgmail*com>            //
 //                                                             //
+
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.flv.php                                  //
 // module for analyzing Shockwave Flash Video files            //
@@ -75,9 +81,7 @@ class getid3_flv extends getid3_handler {
 	public $max_frames = 100000; // break out of the loop if too many frames have been scanned; only scan this many if meta frame does not contain useful duration
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$FLVdataLength                      = $info['avdataend'] - $info['avdataoffset'];
 		$FLVheader                          = $this->fread(5);
 		$info['fileformat']                 = 'flv';
@@ -162,9 +166,7 @@ class getid3_flv extends getid3_handler {
 									$sps = $this->fread($spsSize);
 									if (strlen($sps) == $spsSize) { //	make sure that whole SequenceParameterSet was red
 										$spsReader = new AVCSequenceParameterSetReader($sps);
-
 										$spsReader->readData();
-
 										$info['video']['resolution_x'] = $spsReader->getWidth();
 										$info['video']['resolution_y'] = $spsReader->getHeight();
 									}
@@ -243,9 +245,7 @@ class getid3_flv extends getid3_handler {
 				case GETID3_FLV_TAG_META:
 					if (!$found_meta) {
 						$found_meta = true;
-
 						$this->fseek(-1, SEEK_CUR);
-
 						$datachunk                       = $this->fread($DataLength);
 						$AMFstream                       = new AMFStream($datachunk);
 						$reader                          = new AMFReader($AMFstream);
@@ -414,13 +414,11 @@ class AMFStream {
 
 	public function readUTF() {
 		$length = $this->readInt();
-
 		return $this->read($length);
 	}
 
 	public function readLongUTF() {
 		$length = $this->readLong();
-
 		return $this->read($length);
 	}
 
@@ -624,7 +622,6 @@ class AMFReader {
 
 	public function readTypedObject() {
 		$className = $this->stream->readUTF();
-
 		return $this->readObject();
 	}
 }
@@ -644,11 +641,9 @@ class AVCSequenceParameterSetReader {
 	public function readData() {
 		$this->skipBits(8);
 		$this->skipBits(8);
-
 		$profile = $this->getBits(8);                               // read profile
 		if ($profile > 0) {
 			$this->skipBits(8);
-
 			$level_idc = $this->getBits(8);                         // level_idc
 			$this->expGolombUe();                                   // seq_parameter_set_id // sps
 			$this->expGolombUe();                                   // log2_max_frame_num_minus4
@@ -702,9 +697,7 @@ class AVCSequenceParameterSetReader {
 
 	public function getBit() {
 		$result = (getid3_lib::BigEndian2Int(substr($this->sps, $this->currentBytes, 1)) >> (7 - $this->currentBits)) & 0x01;
-
 		$this->skipBits(1);
-
 		return $result;
 	}
 

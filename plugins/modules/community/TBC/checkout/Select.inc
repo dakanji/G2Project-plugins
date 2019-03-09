@@ -200,8 +200,8 @@ class SelectView extends GalleryView {
 
 		$template->title($tpl['busname'] . ' ' . $module->translate('Checkout'));
 		$template->setVariable('tpl', $tpl);
-		// $template->setVariable('status', $status);
 
+		// $template->setVariable('status', $status);
 		return array(
 			null,
 			array(

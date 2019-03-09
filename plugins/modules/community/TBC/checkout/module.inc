@@ -49,12 +49,11 @@ class CheckoutModule extends GalleryModule {
 				'Shopping cart module supporting different products and payment'
 			)
 		);
+
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews|getItemLinks|getSystemLinks');
 	}
@@ -126,13 +125,11 @@ class CheckoutModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		$myListener = new CheckoutModule();
-
 		GalleryCoreApi::registerEventListener('GalleryCheckout::emptyCart', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::purchaseComplete', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionUpdate', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionSetPaymentPlugin', $myListener);
-
 		GalleryCoreApi::registerEventListener('GalleryCheckout::adminNotify', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener);
 	}
@@ -171,6 +168,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 					}
 
 					// Do the schema upgrade
@@ -257,6 +255,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 					}
 
 					// For all other transactions, set paymentPlugin=checkoutemail
@@ -396,6 +395,7 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
+
 						}
 
 						foreach (array('product', 'price', 'restrict', 'downloadable', 'prodref') as $oldParamName) {
@@ -404,6 +404,7 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
+
 						}
 
 						$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numProducts');
@@ -411,6 +412,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 					}
 
 					// Fall Through
@@ -690,6 +692,7 @@ class CheckoutModule extends GalleryModule {
 
 							$defaultqty = false;
 						}
+
 					}
 
 					// register new purchase album permission
@@ -700,6 +703,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 					}
 
 					// Fall Through
@@ -750,6 +754,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 					}
 
 					// Remove old columns
@@ -783,6 +788,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 					}
 
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numPostages');
@@ -807,6 +813,7 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
+
 					}
 
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numPapers');
@@ -832,6 +839,7 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
+
 						}
 
 						foreach (array('showCustomer', 'showLinks', 'showContents', 'showThumbs', 'isAdmin') as $paramName) {
@@ -842,7 +850,9 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
+
 						}
+
 					}
 
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numAddresses');
@@ -872,6 +882,7 @@ class CheckoutModule extends GalleryModule {
 						$papers[$key] = array(
 							1 => $type,
 						);
+
 					}
 
 					foreach ($postages as $key => $details) {
@@ -879,6 +890,7 @@ class CheckoutModule extends GalleryModule {
 							1 => $details['price'],
 							2 => '',
 						);
+
 					}
 
 					$query = '
@@ -979,6 +991,7 @@ class CheckoutModule extends GalleryModule {
 				default:
 					return GalleryCoreApi::error(ERROR_BAD_PLUGIN, sprintf('Unknown module version %s', $currentVersion));
 			}
+
 		}
 
 		if (!isset($currentVersion)) {
@@ -991,6 +1004,7 @@ class CheckoutModule extends GalleryModule {
 				if ($ret) {
 					return $ret;
 				}
+
 			}
 
 			// Set current user's email address to receive order notifications
@@ -1071,6 +1085,7 @@ class CheckoutModule extends GalleryModule {
 			if ($ret) {
 				return $ret;
 			}
+
 		}
 
 		return null;
@@ -1121,6 +1136,7 @@ class CheckoutModule extends GalleryModule {
 				),
 			),
 		);
+
 	}
 
 	/**
@@ -1160,8 +1176,11 @@ class CheckoutModule extends GalleryModule {
 							'return'     => 1,
 						),
 					);
+
 				}
+
 			}
+
 		}
 
 		return array(null, $links);
@@ -1195,6 +1214,7 @@ class CheckoutModule extends GalleryModule {
 					'return'  => 1,
 				),
 			);
+
 		}
 
 		return array(null, $links);
@@ -1215,6 +1235,7 @@ class CheckoutModule extends GalleryModule {
 				if ($ret) {
 					return array($ret, null);
 				}
+
 			}
 
 			return array(null, null);
@@ -1222,4 +1243,6 @@ class CheckoutModule extends GalleryModule {
 
 		return array(null, $result);
 	}
+
 }
+

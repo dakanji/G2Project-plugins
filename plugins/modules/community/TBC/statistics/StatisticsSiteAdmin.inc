@@ -140,7 +140,6 @@ class StatisticsSiteAdminView extends GalleryView {
 
 		$template->setVariable('Statistics', $Statistics);
 		$template->setVariable('controller', 'statistics.StatisticsSiteAdmin');
-
 		return array(
 			null,
 			array(

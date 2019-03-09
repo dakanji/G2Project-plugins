@@ -75,9 +75,7 @@ class DirectoryListingView extends GalleryView {
 		global $gallery;
 
 		$gallery->debug("##### DirectoryListingView #####\n\$status = ");
-
 		$gallery->debug_r($status);
-
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR && !isset($status['albums'])) {
 			$status['success'] = NOKIAUPLOAD_ERR_UNKNOWN;
 		}
@@ -103,9 +101,7 @@ class DirectoryListingView extends GalleryView {
 		}
 
 		$reply = implode('', $reply);
-
 		$gallery->debug("Sending:\n$reply");
-
 		header('Content-type: text/plain; charset=UTF-8');
 		header('Content-Length: ' . strlen($reply));
 		echo $reply;

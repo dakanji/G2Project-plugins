@@ -112,7 +112,6 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		}
 
 		$template->head('modules/imageframe/templates/ImageFrameHead.tpl');
-
 		$data =& $template->getVariableByReference('ImageFrameData');
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe');

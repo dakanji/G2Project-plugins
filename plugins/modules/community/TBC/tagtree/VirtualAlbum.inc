@@ -136,9 +136,7 @@ class VirtualAlbumView extends GalleryView {
 
 			// Provide parent, parent URL and get-children function to Theme API
 			$rawTagName = $tagName;
-
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
-
 			$item->urlParams = array(
 				'view'        => 'tagtree.VirtualAlbum',
 				'tags'        => $tags,

@@ -49,7 +49,6 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$this->_platform = new JpegtranToolkitTestPlatform($this, $this->_jpegtranPath);
-
 		$gallery->setPlatform($this->_platform);
 
 		// Get a toolkit to work with
@@ -199,7 +198,6 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$expectedMimeTypes = array('image/jpeg', 'image/pjpeg');
-
 		$this->assertEquals(array(), $results['operations'], 'operations');
 	}
 
@@ -338,7 +336,6 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(array('IGNORE'), $context, 'context altered');
-
 		$this->assertEquals('image/pjpeg', $mimeType, 'output mimetype != input mimetype');
 	}
 
@@ -391,7 +388,6 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 		// Crop triggers 2 jpegtran calls and thus 4 chdir calls
 		$this->assertEquals('image/jpeg', $mimeType, 'output mimetype != input mimetype');
-
 		$this->assertEquals(4, $this->_platform->getChdirCount(), 'crop should trigger 4 changes');
 	}
 
@@ -542,7 +538,6 @@ class JpegtranToolkitTestPlatform {
 				);
 
 				$stderr['rotateOnly'] = $stderr['normal'];
-
 				return array(1, array(), $stderr[$this->_envId]);
 			case serialize(
 				array(
@@ -575,7 +570,6 @@ class JpegtranToolkitTestPlatform {
 				// The null operation to determine the dimensions for crop
 				return array(
 					in_array($this->_envId, array('nonStandard', 'normal')),
-
 					array(),
 					array('Start Of Frame 0xc0: width=100, height=800, components=3'),
 				);
@@ -620,11 +614,11 @@ class JpegtranToolkitTestPlatform {
 					array(),
 					array(),
 				);
+
 			case serialize(
 				array(
 					array(
 						$this->_jpegtranPath,
-
 						'-verbose',
 						'-copy',
 						'all',

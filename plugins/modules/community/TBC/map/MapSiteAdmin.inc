@@ -316,11 +316,9 @@ class mapSiteAdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
-
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$form['formName'] = 'mapSiteAdmin';
-
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
 
@@ -408,7 +406,6 @@ class mapSiteAdminView extends GalleryView {
 		if (!array_key_exists('linktype', $form)) {
 			$form['linktype'] = 0; // Default link
 		}
-
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		// Supply the current URL to the form to fill in default key profile values
@@ -435,12 +432,10 @@ class mapSiteAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
-
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapSiteAdmin');
-
 		return array(
 			null,
 			array(

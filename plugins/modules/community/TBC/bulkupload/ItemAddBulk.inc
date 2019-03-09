@@ -74,7 +74,6 @@ class ItemAddBulk extends ItemAddPlugin {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return array($ret, null, null);
 					}
 
@@ -97,7 +96,6 @@ class ItemAddBulk extends ItemAddPlugin {
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
-
 							return array($ret, null, null);
 						}
 

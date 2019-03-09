@@ -109,7 +109,6 @@ class AdminEcardView extends GalleryView {
 
 		$template->setVariable('AdminEcard', $AdminEcard);
 		$template->setVariable('controller', 'ecard.AdminEcard');
-
 		return array(
 			null,
 			array(

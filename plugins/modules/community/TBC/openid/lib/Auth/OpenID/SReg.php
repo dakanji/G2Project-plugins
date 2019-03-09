@@ -13,9 +13,7 @@
  * checkid request to the OpenID provider:
  *
  *   $sreg_req = Auth_OpenID_SRegRequest::build(array('email'));
-
  *   $auth_request->addExtension($sreg_req);
-
  *
  * 2. The OpenID provider extracts the simple registration request
  * from the OpenID request using {@link
@@ -29,9 +27,7 @@
  *   //   the fields in sreg_response were requested ]
  *   $sreg_resp = Auth_OpenID_SRegResponse::extractResponse(
  *                                  $sreg_req, $user_data);
-
  *   $sreg_resp->toMessage($openid_response->fields);
-
  *
  * 3. The relying party uses {@link
  * Auth_OpenID_SRegResponse::fromSuccessResponse} to extract the data
@@ -99,7 +95,6 @@ Auth_OpenID_registerNamespaceAlias(Auth_OpenID_SREG_NS_URI_1_1, 'sreg');
  */
 function Auth_OpenID_supportsSReg(&$endpoint) {
 	return $endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_1) ||
-
 			$endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_0);
 }
 
@@ -235,7 +230,6 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		}
 
 		$obj->parseExtensionArgs($args);
-
 		return $obj;
 	}
 
@@ -255,9 +249,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 	 * parsed than that method provides.
 	 *
 	 * $args == $message->getArgs($ns_uri);
-
 	 * $request->parseExtensionArgs($args);
-
 	 *
 	 * $args: The unqualified simple registration arguments
 	 *
@@ -304,7 +296,6 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 	 */
 	public function contains($field_name) {
 		return in_array($field_name, $this->required) ||
-
 				in_array($field_name, $this->optional);
 	}
 

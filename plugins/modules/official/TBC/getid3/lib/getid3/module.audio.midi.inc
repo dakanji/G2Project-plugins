@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.midi.php                                       //
 // module for Midi Audio files                                 //
@@ -28,9 +29,7 @@ class getid3_midi extends getid3_handler {
 		$thisfile_midi_raw           =& $thisfile_midi['raw'];
 		$info['fileformat']          = 'midi';
 		$info['audio']['dataformat'] = 'midi';
-
 		$this->fseek($info['avdataoffset']);
-
 		$MIDIdata     = $this->fread($this->getid3->fread_buffer_size());
 		$offset       = 0;
 		$MIDIheaderID = substr($MIDIdata, $offset, 4); // 'MThd'

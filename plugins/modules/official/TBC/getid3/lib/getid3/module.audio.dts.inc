@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.dts.php                                        //
 // module for analyzing DTS Audio files                        //
@@ -38,9 +39,7 @@ class getid3_dts extends getid3_handler {
 	public function Analyze() {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'dts';
-
 		$this->fseek($info['avdataoffset']);
-
 		$DTSheader = $this->fread(20); // we only need 2 words magic + 6 words frame header, but these words may be normal 16-bit words OR 14-bit words with 2 highest bits set to zero, so 8 words can be either 8*16/8 = 16 bytes OR 8*16*(16/14)/8 = 18.3 bytes
 		// check syncword
 		$sync = substr($DTSheader, 0, 4);
@@ -53,7 +52,6 @@ class getid3_dts extends getid3_handler {
 			$this->readBinDataOffset = 0;
 		} else {
 			unset($info['fileformat']);
-
 			return $this->error('Expecting "' . implode('| ', array_map('getid3_lib::PrintHexBytes', self::$syncwords)) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($sync) . '"');
 		}
 

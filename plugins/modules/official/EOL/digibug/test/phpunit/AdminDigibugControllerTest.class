@@ -48,7 +48,6 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 
 	public function testAdminDigibugControllerReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -68,7 +67,6 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[digibugCustomerId]', '1234');
 		GalleryUtilities::putRequestVariable('form[digibugPricelistId]', '4321');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -111,7 +109,6 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 	public function testAdminDigibugControllerSaveWithDefaultCredentials() {
 		GalleryUtilities::putRequestVariable('form[digibugIdChoice]', 'gallery');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -154,7 +151,6 @@ class AdminDigibugControllerTest extends GalleryControllerTestCase {
 	public function testAdminDigibugControllerSaveMissingValues() {
 		GalleryUtilities::putRequestVariable('form[digibugIdChoice]', 'owner');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

@@ -117,7 +117,6 @@ class AdminMultimediaView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'multimedia.AdminMultimedia');
-
 		return array(
 			null,
 			array(

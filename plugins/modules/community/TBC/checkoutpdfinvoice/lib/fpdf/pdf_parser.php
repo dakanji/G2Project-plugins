@@ -54,7 +54,6 @@ if (!defined('PDF_TYPE_OBJECT')) {
 if (!defined('PDF_TYPE_STREAM')) {
 	define('PDF_TYPE_STREAM', 10);
 }
-
 require_once 'pdf_context.php';
 require_once 'wrapper_functions.php';
 
@@ -102,7 +101,6 @@ class pdf_parser {
 		}
 
 		$this->getPDFVersion();
-
 		$this->c = new pdf_context($this->f);
 
 		// Read xref-Data
@@ -110,6 +108,7 @@ class pdf_parser {
 
 		// Check for Encryption
 		$this->getEncryption();
+
 		// Read root
 		$this->pdf_read_root();
 	}
@@ -171,7 +170,6 @@ class pdf_parser {
 	public function getPDFVersion() {
 		fseek($this->f, 0);
 		preg_match('/\d\.\d/', fread($this->f, 16), $m);
-
 		$this->pdfVersion = $m[0];
 	}
 
@@ -180,7 +178,6 @@ class pdf_parser {
 	 */
 	public function pdf_find_xref() {
 		fseek($this->f, -min(filesize($this->filename), 1500), SEEK_END);
-
 		$data = fread($this->f, 1500);
 		$pos  = strlen($data) - strpos(strrev($data), strrev('startxref'));
 		$data = substr($data, $pos);
@@ -209,14 +206,12 @@ class pdf_parser {
 
 			if ($data !== 'xref') {
 				fseek($this->f, $o_pos);
-
 				$data = trim(_fgets($this->f, true));
 				if ($data !== 'xref') {
 					if (preg_match('/(.*xref)(.*)/m', $data, $m)) { // xref 0 128 - in one line
 						fseek($this->f, $o_pos + strlen($m[1]));
 					} elseif (preg_match('/(x|r|e|f)+/', $data, $m)) { // correct invalid xref-pointer
 						$tmpOffset = $offset - 4 + strlen($m[0]);
-
 						$this->pdf_read_xref($result, $tmpOffset, $start, $end);
 						return;
 					} else {
@@ -229,12 +224,10 @@ class pdf_parser {
 			$data  = explode(' ', trim(fgets($this->f, 1024)));
 			if (count($data) != 2) {
 				fseek($this->f, $o_pos);
-
 				$data = explode(' ', trim(_fgets($this->f, true)));
 				if (count($data) != 2) {
 					if (count($data) > 2) { // no lineending
 						$n_pos = $o_pos + strlen($data[0]) + strlen($data[1]) + 2;
-
 						fseek($this->f, $n_pos);
 					} else {
 						$this->error('Unexpected header in xref table');
@@ -278,7 +271,6 @@ class pdf_parser {
 			$trailer = $this->pdf_read_value($c);
 			if (isset($trailer[1]['/Prev'])) {
 				$this->pdf_read_xref($result, $trailer[1]['/Prev'][1]);
-
 				$result['trailer'][1] = array_merge($result['trailer'][1], $trailer[1]);
 			} else {
 				$result['trailer'] = $trailer;
@@ -287,7 +279,6 @@ class pdf_parser {
 			$data = explode(' ', trim($data));
 			if (count($data) != 2) {
 				fseek($this->f, $o_pos);
-
 				$data = explode(' ', trim(_fgets($this->f, true)));
 				if (count($data) != 2) {
 					$this->error('Unexpected data in xref table');
@@ -433,7 +424,6 @@ class pdf_parser {
 
 				if ($length > 0) {
 					$c->reset($startpos + $e, $length);
-
 					$v = $c->buffer;
 				} else {
 					$v = '';
@@ -504,7 +494,6 @@ class pdf_parser {
 				// Reposition the file pointer and
 				// load the object header.
 				$c->reset($this->xref['xref'][$obj_spec[1]][$obj_spec[2]]);
-
 				$header = $this->pdf_read_value($c, null, true);
 				if ($header[0] != PDF_TYPE_OBJDEC || $header[1] != $obj_spec[1] || $header[2] != $obj_spec[2]) {
 					$this->error("Unable to find object ({$obj_spec[1]}, {$obj_spec[2]}) at expected location");
@@ -541,7 +530,6 @@ class pdf_parser {
 				}
 
 				$c->reset($old_pos);
-
 				if (isset($result[2][0]) && $result[2][0] == PDF_TYPE_STREAM) {
 					$result[0] = PDF_TYPE_STREAM;
 				}

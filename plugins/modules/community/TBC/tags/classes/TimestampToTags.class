@@ -95,7 +95,6 @@ class TimestampToTags extends MaintenanceTask {
 
 		while (!empty($ids)) {
 			$idSet = array_splice($ids, 0, 100);
-
 			$gallery->guaranteeTimeLimit(30);
 
 			list($ret, $items) = GalleryCoreApi::loadEntitiesById($idSet);

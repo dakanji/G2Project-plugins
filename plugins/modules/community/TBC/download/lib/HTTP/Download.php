@@ -244,7 +244,6 @@ class HTTP_Download {
 	 */
 	public function __construct($params = array()) {
 		$this->HTTP = new HTTP_Header();
-
 		$this->setParams($params);
 	}
 
@@ -308,7 +307,6 @@ class HTTP_Download {
 		}
 
 		$this->setLastModified(filemtime($file));
-
 		$this->file = $file;
 		$this->size = filesize($file);
 		return true;
@@ -669,11 +667,9 @@ class HTTP_Download {
 		$this->sentBytes = 0;
 		if ($this->isRangeRequest()) {
 			$this->HTTP->sendStatusCode(206);
-
 			$chunks = $this->getChunks();
 		} else {
 			$this->HTTP->sendStatusCode(200);
-
 			$chunks = array(array(0, $this->size));
 			if (!$this->gzip && count(ob_list_handlers()) < 2) {
 				$this->headers['Content-Length'] = $this->size;
@@ -682,9 +678,7 @@ class HTTP_Download {
 
 		if (PEAR::isError($e = $this->sendChunks($chunks))) {
 			ob_end_clean();
-
 			$this->HTTP->sendStatusCode(416);
-
 			return $e;
 		}
 
@@ -806,9 +800,7 @@ class HTTP_Download {
 		$bound                         = uniqid('HTTP_DOWNLOAD-', true);
 		$cType                         = $this->headers['Content-Type'];
 		$this->headers['Content-Type'] = 'multipart/byteranges; boundary=' . $bound;
-
 		$this->sendHeaders();
-
 		foreach ($chunks as $chunk) {
 			if (PEAR::isError($e = $this->sendChunk($chunk, $cType, $bound))) {
 				return $e;
@@ -856,7 +848,6 @@ class HTTP_Download {
 			while (($length -= $this->bufferSize) > 0) {
 				$this->flush(substr($this->data, $offset, $this->bufferSize));
 				$this->throttleDelay and $this->sleep();
-
 				$offset += $this->bufferSize;
 			}
 
@@ -869,7 +860,6 @@ class HTTP_Download {
 			}
 
 			fseek($this->handle, $offset);
-
 			while (($length -= $this->bufferSize) > 0) {
 				$this->flush(fread($this->handle, $this->bufferSize));
 				$this->throttleDelay and $this->sleep();
@@ -954,7 +944,6 @@ class HTTP_Download {
 				)
 			)) ||
 			(isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
-
 			$this->compareAsterisk('HTTP_IF_NONE_MATCH', $this->etag));
 	}
 

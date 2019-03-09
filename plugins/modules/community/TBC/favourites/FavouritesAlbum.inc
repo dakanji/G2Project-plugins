@@ -72,7 +72,6 @@
 
 		if (empty($targetUserId) || $ret) {
 			$targetUserId = $gallery->getActiveUserId();
-
 			GalleryUtilities::putRequestVariable('targetUserId', $targetUserId);
 		}
 
@@ -220,7 +219,6 @@
 		}
 
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
-
 		return FavouritesMapHelper::fetchFavourites($targetUserId);
 	}
 

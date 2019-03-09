@@ -41,12 +41,11 @@ class ICalendarModule extends GalleryModule {
 				'FIXME iCalendar format'
 			)
 		);
+
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('misc', $gallery->i18n('Miscellaneous'));
 		$this->setCallbacks('getSiteAdminViews');
 	}

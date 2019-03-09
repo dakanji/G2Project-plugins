@@ -227,6 +227,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 				$this->associations_table_name
 			)
 		);
+
 		$this->connection->query(
 			sprintf(
 				'DELETE FROM %s',
@@ -315,10 +316,8 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
 	public function createTables() {
 		$this->connection->autoCommit(true);
-
 		$n = $this->create_nonce_table();
 		$a = $this->create_assoc_table();
-
 		$this->connection->autoCommit(false);
 		if ($n && $a) {
 			return true;
@@ -330,7 +329,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	public function create_nonce_table() {
 		if (!$this->tableExists($this->nonces_table_name)) {
 			$r = $this->connection->query($this->sql['nonce_table']);
-
 			return $this->resultToBool($r);
 		}
 
@@ -340,7 +338,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	public function create_assoc_table() {
 		if (!$this->tableExists($this->associations_table_name)) {
 			$r = $this->connection->query($this->sql['assoc_table']);
-
 			return $this->resultToBool($r);
 		}
 
@@ -399,6 +396,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 			$this->sql['get_assoc'],
 			array($server_url, $handle)
 		);
+
 		if ($this->isError($result)) {
 			return null;
 		}
@@ -414,6 +412,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 			$this->sql['get_assocs'],
 			array($server_url)
 		);
+
 		if ($this->isError($result)) {
 			return array();
 		}
@@ -592,11 +591,8 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		global $Auth_OpenID_SKEW;
 
 		$v = time() - $Auth_OpenID_SKEW;
-
 		$this->connection->query($this->sql['clean_nonce'], array($v));
-
 		$num = $this->connection->affectedRows();
-
 		$this->connection->commit();
 		return $num;
 	}
@@ -608,9 +604,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		);
 
 		$num = $this->connection->affectedRows();
-
 		$this->connection->commit();
-
 		return $num;
 	}
 }

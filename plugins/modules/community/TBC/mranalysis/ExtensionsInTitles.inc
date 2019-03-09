@@ -67,7 +67,6 @@ class ExtensionsInTitlesView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminExtensionsInTitles';
-
 		$gallery->guaranteeTimeLimit(120);
 
 		$query = "
@@ -94,7 +93,6 @@ class ExtensionsInTitlesView extends GalleryView {
 
 		$template->setVariable('controller', 'mranalysis.ExtensionsInTitles');
 		$template->setVariable('baditems', $items);
-
 		return array(
 			null,
 			array(

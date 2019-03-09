@@ -53,6 +53,7 @@ class DupeDetectCrc32Helper {
 		list($ret, $hasSignature) = DupeDetectCrc32Helper::getCrc32Signature(
 			array($newEntity->getId())
 		);
+
 		if ($ret->isError()) {
 			return $ret;
 		}

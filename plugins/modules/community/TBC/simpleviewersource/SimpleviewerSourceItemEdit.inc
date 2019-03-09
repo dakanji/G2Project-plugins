@@ -221,7 +221,6 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 
 		$template->setVariable('XMLurl', $XMLurl);
 		$template->setVariable('controller', 'simpleviewersource.SimpleviewerSourceItemEdit');
-
 		return array(
 			null,
 			'modules/simpleviewersource/templates/SimpleviewerSourceItemEdit.tpl',

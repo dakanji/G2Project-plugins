@@ -181,9 +181,7 @@ class SendEcardController extends GalleryController {
 			$data['image']  = $filename;
 			$data['link']   = $link;
 			$dataPlain      = $data;
-
 			GalleryUtilities::unsanitizeInputValues($dataPlain, false);
-
 			$dataPlain['image'] = $data['image'];
 			$data['header']     = nl2br($data['header']);
 			$data['footer']     = nl2br($data['footer']);
@@ -199,7 +197,6 @@ class SendEcardController extends GalleryController {
 			}
 
 			GalleryUtilities::unsanitizeInputValues($headers, false);
-
 			$mime         = new Mail_mime("\n");
 			$platform     =& $gallery->getPlatform();
 			$messagePlain = $platform->file_get_contents(
@@ -207,7 +204,6 @@ class SendEcardController extends GalleryController {
 			);
 
 			$messagePlain = EcardHelper::replaceKeywords($messagePlain, $dataPlain);
-
 			$mime->setTXTBody($messagePlain);
 
 			// Either add attachment (plain) or add HTML image (html)
@@ -219,7 +215,6 @@ class SendEcardController extends GalleryController {
 				);
 
 				$messageHtml = EcardHelper::replaceKeywords($messageHtml, $data);
-
 				$mime->setHTMLBody($messageHtml);
 				if ($resize->canBeViewedInline()) {
 					$mime->addHTMLImage($path, $resize->getMimeType(), $filename);
@@ -423,7 +418,6 @@ class SendEcardView extends GalleryView {
 		}
 
 		$SendEcard['plugins'] = $plugins;
-
 		$template->setVariable('SendEcard', $SendEcard);
 		$template->setVariable('controller', 'ecard.SendEcard');
 
@@ -434,7 +428,6 @@ class SendEcardView extends GalleryView {
 		}
 
 		$template->title($module->translate('Send eCard'));
-
 		return array(
 			null,
 			array(

@@ -144,7 +144,6 @@ class DetailsView extends GalleryView {
 
 		$template->title($busname . ' ' . $module->translate('Customer Details'));
 		$template->setVariable('form', $form);
-
 		return array(
 			null,
 			array(

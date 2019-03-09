@@ -152,7 +152,6 @@ class ContactController extends GalleryController {
 					}
 
 					$emailsent = true;
-
 					$session->remove('contactowner.custsubject');
 					$session->remove('contactowner.custmessage');
 					$session->put('contactowner.emailcount', $emailCount);
@@ -163,7 +162,6 @@ class ContactController extends GalleryController {
 		}
 
 		$session->put('contactowner.emailsent', $emailsent);
-
 		$returnType                      = empty($error) ? 'redirect' : 'delegate';
 		$results[$returnType]['view']    = 'core.UserAdmin';
 		$results[$returnType]['subView'] = $nextView;
@@ -231,7 +229,6 @@ class ContactView extends GalleryView {
 		}
 
 		$template->setVariable('validationPlugins', $plugins);
-
 		$maxEmailsPerSession = $parameters['maxEmailsPerSession'];
 		if ($session->exists('contactowner.emailcount')) {
 			$emailCount = $session->get('contactowner.emailcount');
@@ -265,9 +262,7 @@ class ContactView extends GalleryView {
 			}
 
 			$contactOwner['title'] = $module->translate('Contact::Enter Your Details');
-
 			$template->setVariable('controller', 'contactowner.Contact');
-
 			$body = 'modules/contactowner/templates/Contact.tpl';
 		} else {
 			$contactOwner['emailsent'] = false;
@@ -276,7 +271,6 @@ class ContactView extends GalleryView {
 		}
 
 		$template->setVariable('ContactOwner', $contactOwner);
-
 		return array(
 			null,
 			array(

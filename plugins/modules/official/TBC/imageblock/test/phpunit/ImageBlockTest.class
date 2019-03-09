@@ -210,6 +210,7 @@ class ImageBlockTest extends GalleryTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 	}
 
 	public function _addItem($parentId, $imagePath, $class, $mimeType, $timestampOffset) {
@@ -225,6 +226,7 @@ class ImageBlockTest extends GalleryTestCase {
 			if ($ret) {
 				return array($ret, null, null);
 			}
+
 		}
 
 		$ret = $item->create(
@@ -300,6 +302,7 @@ class ImageBlockTest extends GalleryTestCase {
 				$derivative->setHeight($size);
 				$derivative->setWidth((int)($size*$w/$h));
 			}
+
 		} else {
 			// Set rotated size (swap wd/ht):
 			$derivative->setWidth($src->getHeight());
@@ -348,6 +351,7 @@ class ImageBlockTest extends GalleryTestCase {
 			if ($block['id'] == $this->_photo->getId()) {
 				$gotPhoto = 1;
 			}
+
 		}
 
 		$this->assertEquals(1, $gotAlbum, 'Test album not in "newest album" block');
@@ -679,6 +683,7 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match thumbnail'
 	);
+
 	}
 
 	public function testExternalImageBlockExactSize() {
@@ -725,6 +730,7 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match resized'
 	);
+
 	}
 
 	public function testExternalImageBlockExactSizeForAlbumItem() {
@@ -799,6 +805,7 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match resized'
 	);
+
 	}
 
 	public function testExternalImageBlockExactSizeUsePreferredNotOriginal() {
@@ -856,6 +863,7 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Derivative did not match preferred'
 	);
+
 	}
 
 	public function testExternalImageBlockExactSizeChooseResizeOfItemWithPreferred() {
@@ -913,6 +921,7 @@ class ImageBlockTest extends GalleryTestCase {
 			$data['ImageBlockData']['blocks'][0]['deriv']['id'],
 			'Failed to choose resize'
 	);
+
 	}
 
 	public function testOverrideUserId() {
@@ -1326,6 +1335,7 @@ class ImageBlockTest extends GalleryTestCase {
 			$this->assertEquals(5, $block['viewCount'], 'view count of item under default album');
 			$this->assertEquals($subPhoto->getId(), $block['id'], 'id of item under default album');
 		}
+
 	}
 
 	public function testEmbedImageBlock() {
@@ -1388,6 +1398,7 @@ class ImageBlockTest extends GalleryTestCase {
 			array('testAlbumFrame', 'testItemFrame'),
 			$_REQUEST['ImageBlockTestFrame']
 	);
+
 	}
 
 	public function _doImageBlockCallback($blocks=null, $userId=null, $itemId=null) {
@@ -1414,6 +1425,7 @@ class ImageBlockTest extends GalleryTestCase {
 
 		return $result;
 	}
+
 }
 
 /**
@@ -1437,10 +1449,12 @@ class ImageBlockToolkit extends GalleryToolkit {
 				return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE),
 				 null, null, );
 			}
+
 		}
 
 		return array(null, 'test/image', $context);
 	}
+
 }
 
 /**

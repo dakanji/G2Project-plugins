@@ -166,7 +166,6 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'checkoutemail.Admin');
-
 		return array(
 			null,
 			array(

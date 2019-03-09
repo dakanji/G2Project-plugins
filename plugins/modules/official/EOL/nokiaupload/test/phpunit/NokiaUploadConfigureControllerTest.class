@@ -63,6 +63,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
+
 		}
 
 		$ret = parent::tearDown();
@@ -70,6 +71,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			$this->failWithStatus($ret);
 		}
+
 	}
 
 	public function testCancel() {
@@ -81,6 +83,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 				  'status' => array(), 'error' => array(), ),
 			$results
 	);
+
 	}
 
 	public function testMissingData() {
@@ -97,6 +100,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		'error'  => array('form[error][group][missing]', 'form[error][album][missing]'), ),
 			$results
 	);
+
 	}
 
 	public function testGroupCollision() {
@@ -131,6 +135,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		),
 			$results
 	);
+
 	}
 
 	public function testConfigure() {
@@ -194,9 +199,11 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 			)) {
 				$hasDataItem = true;
 			}
+
 		}
 
 		$this->assertTrue($hasDataItem, 'missing addDataItem permission');
 	}
+
 }
 

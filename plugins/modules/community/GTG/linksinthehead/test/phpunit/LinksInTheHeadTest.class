@@ -50,7 +50,6 @@ class LinksInTheHeadTest extends GalleryControllerTestCase {
 
 	public function testLinksInTheHeadSiteAdminControllerReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -71,7 +70,6 @@ class LinksInTheHeadTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[linkname][1]', 'auto');
 		GalleryUtilities::putRequestVariable('form[url][1]', '15');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -97,7 +95,6 @@ class LinksInTheHeadTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals(count($links_in_the_head), 2);
-
 		return array(null, null);
 	}
 }

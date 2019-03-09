@@ -28,7 +28,6 @@
  * @author Alec Myers <alec@alecmyers.com>
  */
 GalleryCoreApi::requireOnce('modules/checkoutdownload/classes/CheckoutDownloadHelper.class');/**
-
  * This view sends the zip file and deletes the temp file.
  *
  * @package Checkout
@@ -112,7 +111,6 @@ class BuildDownloadController extends GalleryController {
 		}
 
 		$heading = $module->translate('Preparing your download...');
-
 		$templateAdapter->updateProgressBar($heading, $module->translate('Preparing...'), 0);
 
 		list($ret, $itemList) = CheckoutTransactionHelper::fetchTransactionItems($transactionId);
@@ -157,14 +155,11 @@ class BuildDownloadController extends GalleryController {
 		}
 
 		define('PCLZIP_TEMPORARY_DIR', $gallery->getConfig('data.gallery.tmp'));
-
 		GalleryCoreApi::requireOnce('modules/checkoutdownload/lib/pclzip.lib.php');
-
 		$archive = new PclZip($zipFile);
 		$i       = 0;
 		foreach ($itemIdsAndOperations as $itemRecord) {
 			$gallery->guaranteeTimeLimit(60);
-
 			$i++;
 
 			// Update Progress Bar
@@ -177,7 +172,6 @@ class BuildDownloadController extends GalleryController {
 			);
 
 			$templateAdapter->updateProgressBar($heading, $message, $i / $count);
-
 			$itemId = $itemRecord['id'];
 
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
@@ -270,7 +264,6 @@ class BuildDownloadController extends GalleryController {
 			// save new file names for addition to zip
 			if ($archive->add($destination, PCLZIP_OPT_REMOVE_PATH, $stripPath) == 0) {
 				@$platform->unlink($zipFile);
-
 				@$platform->unlink($zipBase);
 				@$platform->rmdir($zipDir);
 				return GalleryCoreApi::error(
@@ -293,9 +286,7 @@ class BuildDownloadController extends GalleryController {
 		);
 
 		$templateAdapter->updateProgressBar($heading, $message, 1);
-
 		$finalFile = $gallery->getConfig('data.gallery.tmp') . $transactionId . '.zip';
-
 		@$platform->unlink($finalFile);
 		@$platform->rename($zipFile, $finalFile);
 		@$platform->unlink($zipFile);
@@ -323,7 +314,6 @@ class BuildDownloadController extends GalleryController {
 		);
 
 		$templateAdapter->updateProgressBar($heading, $message, 1);
-
 		$redirect = array(
 			'view'          => 'checkoutdownload.FetchDownload',
 			'transactionId' => $transactionId,
@@ -332,9 +322,7 @@ class BuildDownloadController extends GalleryController {
 		);
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
-
 		return null;
 	}
 }

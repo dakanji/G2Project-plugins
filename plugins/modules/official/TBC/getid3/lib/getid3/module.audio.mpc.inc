@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.mpc.php                                        //
 // module for analyzing Musepack/MPEG+ Audio files             //
@@ -24,9 +25,7 @@ class getid3_mpc extends getid3_handler {
 		$info['audio']['bitrate_mode'] = 'vbr';
 		$info['audio']['channels']     = 2;  // up to SV7 the format appears to have been hardcoded for stereo only
 		$info['audio']['lossless']     = false;
-
 		$this->fseek($info['avdataoffset']);
-
 		$MPCheaderData                     = $this->fread(4);
 		$info['mpc']['header']['preamble'] = substr($MPCheaderData, 0, 4); // should be 'MPCK' (SV8) or 'MP+' (SV7), otherwise possible stream data (SV4-SV6)
 		if (preg_match('#^MPCK#', $info['mpc']['header']['preamble'])) {
@@ -310,9 +309,7 @@ class getid3_mpc extends getid3_handler {
 		$thisfile_mpc_header         =& $info['mpc']['header'];
 		$offset                      = 0;
 		$thisfile_mpc_header['size'] = 8;
-
 		$this->fseek($info['avdataoffset']);
-
 		$MPCheaderData = $this->fread($thisfile_mpc_header['size']);
 
 		// add size of file header to avdataoffset - calc bitrate correctly + MD5 data

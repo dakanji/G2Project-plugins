@@ -90,6 +90,7 @@ class FotokastenSiteAdminController extends GalleryController {
 		$results[$method]['subView'] = 'fotokasten.FotokastenSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;
+
 		return array(null, $results);
 	}
 }
@@ -126,7 +127,6 @@ class FotokastenSiteAdminView extends GalleryView {
 		$FotokastenSiteAdmin = array();
 		$var                 = ($form['affiliateId'] == FOTOKASTEN_GALLERY_AFFILIATE_ID);
 		$FotokastenSiteAdmin['usingDefaultGalleryAffiliateId'] = $var;
-
 		$template->setVariable('FotokastenSiteAdmin', $FotokastenSiteAdmin);
 		$template->setVariable('controller', 'fotokasten.FotokastenSiteAdmin');
 

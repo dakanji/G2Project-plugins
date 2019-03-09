@@ -62,6 +62,7 @@ class Auth_Yadis_HTTPFetcher {
 				'HTTPS URL unsupported fetching %s',
 				$url
 			);
+
 			return false;
 		}
 
@@ -70,6 +71,7 @@ class Auth_Yadis_HTTPFetcher {
 				"URL fetching not allowed for '%s'",
 				$url
 			);
+
 			return false;
 		}
 

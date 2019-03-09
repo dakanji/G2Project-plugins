@@ -182,7 +182,6 @@ class SlideshowAppletSiteAdminView extends GalleryView {
 
 		$template->setVariable('AdminSlideshowApplet', array());
 		$template->setVariable('controller', 'slideshowapplet.SlideshowAppletSiteAdmin');
-
 		return array(
 			null,
 			array(

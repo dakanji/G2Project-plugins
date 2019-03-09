@@ -110,6 +110,7 @@ class GalleryRemoteWebStartView extends GalleryView {
 	<argument><?php echo $username; ?></argument>
 			<?php
 		}
+
 		?>
   </application-desc>
 </jnlp>

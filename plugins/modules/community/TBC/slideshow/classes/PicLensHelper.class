@@ -93,9 +93,7 @@ class PicLensHelper {
 		$info = array();
 		foreach (explode("\n", $body) as $line) {
 			$pair = explode('=', $line, 2);
-
 			GalleryUtilities::sanitizeInputValues($pair);
-
 			if (count($pair) == 2) {
 				$info[$pair[0]] = $pair[1];
 			}

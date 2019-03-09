@@ -167,7 +167,6 @@ class gc_xmlparser {
 		}
 
 		$this->_del_p($mnary);
-
 		return $mnary;
 	}
 

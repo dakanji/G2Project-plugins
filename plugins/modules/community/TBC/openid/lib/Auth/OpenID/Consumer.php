@@ -161,14 +161,23 @@
  * Require utility classes and functions for the consumer.
  */
 require_once 'Auth/OpenID.php';
+
 require_once 'Auth/OpenID/Message.php';
+
 require_once 'Auth/OpenID/HMAC.php';
+
 require_once 'Auth/OpenID/Association.php';
+
 require_once 'Auth/OpenID/CryptUtil.php';
+
 require_once 'Auth/OpenID/DiffieHellman.php';
+
 require_once 'Auth/OpenID/KVForm.php';
+
 require_once 'Auth/OpenID/Nonce.php';
+
 require_once 'Auth/OpenID/Discover.php';
+
 require_once 'Auth/OpenID/URINorm.php';
 require_once 'Auth/Yadis/Manager.php';
 require_once 'Auth/Yadis/XRI.php';
@@ -321,7 +330,6 @@ class Auth_OpenID_Consumer {
 				$disco->destroyManager();
 			} else {
 				$m->stale = true;
-
 				$disco->session->set($disco->session_key, serialize($loader->toSession($m)));
 			}
 		}
@@ -332,7 +340,6 @@ class Auth_OpenID_Consumer {
 		$m = $disco->getManager();
 		if ($m) {
 			$m->stale = false;
-
 			$disco->session->set($disco->session_key, serialize($loader->toSession($m)));
 		}
 
@@ -366,6 +373,7 @@ class Auth_OpenID_Consumer {
 			$this->_token_key,
 			$loader->toSession($auth_req->endpoint)
 		);
+
 		if (!$auth_req->setAnonymous($anonymous)) {
 			return new Auth_OpenID_FailureResponse(
 				null,
@@ -418,7 +426,6 @@ class Auth_OpenID_Consumer {
 		$endpoint      = $loader->fromSession($endpoint_data);
 		$message       = Auth_OpenID_Message::fromPostArgs($query);
 		$response      = $this->consumer->complete($message, $endpoint, $current_url);
-
 		$this->session->del($this->_token_key);
 		if (in_array($response->status, array(Auth_OpenID_SUCCESS, Auth_OpenID_CANCEL))) {
 			if ($response->identity_url !== null) {
@@ -427,6 +434,7 @@ class Auth_OpenID_Consumer {
 					$response->identity_url,
 					$this->session_key_prefix
 				);
+
 				$disco->cleanup(true);
 			}
 		}
@@ -486,7 +494,6 @@ class Auth_OpenID_DiffieHellmanSHA1ConsumerSession {
 		$math        = Auth_OpenID_getMathLib();
 		$spub        = $math->base64ToLong($response->getArg(Auth_OpenID_OPENID_NS, 'dh_server_public'));
 		$enc_mac_key = base64_decode($response->getArg(Auth_OpenID_OPENID_NS, 'enc_mac_key'));
-
 		return $this->dh->xorSecret($spub, $enc_mac_key, $this->hash_func);
 	}
 }
@@ -1154,6 +1161,7 @@ class Auth_OpenID_GenericConsumer {
 			$claimed_id,
 			$this->fetcher
 		);
+
 		if (!$services) {
 			return new Auth_OpenID_FailureResponse(
 				null,
@@ -2117,7 +2125,6 @@ class Auth_OpenID_FailureResponse extends Auth_OpenID_ConsumerResponse {
 		$reference = null
 	) {
 		$this->setEndpoint($endpoint);
-
 		$this->message   = $message;
 		$this->contact   = $contact;
 		$this->reference = $reference;
@@ -2201,7 +2208,6 @@ class Auth_OpenID_SetupNeededResponse extends Auth_OpenID_ConsumerResponse {
 
 	public function __construct($endpoint, $setup_url = null) {
 		$this->setEndpoint($endpoint);
-
 		$this->setup_url = $setup_url;
 	}
 }

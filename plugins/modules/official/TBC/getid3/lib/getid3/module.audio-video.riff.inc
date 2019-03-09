@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.riff.php                                 //
 // module for analyzing RIFF files                             //
@@ -46,9 +47,7 @@ class getid3_riff extends getid3_handler {
 		$thisfile_riff_video       =& $thisfile_riff['video'];
 		$Original['avdataoffset']  = $info['avdataoffset'];
 		$Original['avdataend']     = $info['avdataend'];
-
 		$this->fseek($info['avdataoffset']);
-
 		$RIFFheader  = $this->fread(12);
 		$offset      = $this->ftell();
 		$RIFFtype    = substr($RIFFheader, 0, 4);
@@ -94,7 +93,6 @@ class getid3_riff extends getid3_handler {
 							//$this->warning('RIFF parser: '.$e->getMessage());
 							$this->error('AVI extends beyond ' . round(PHP_INT_MAX / 1073741824) . 'GB and PHP filesystem functions cannot read that far, playtime may be wrong');
 							$this->warning('[avdataend] value may be incorrect, multiple AVIX chunks may be present');
-
 							break;
 						}
 
@@ -142,14 +140,12 @@ class getid3_riff extends getid3_handler {
 								if (substr($DIVXTAG, -7) == 'DIVXTAG') {
 									// DIVXTAG is supposed to be inside an IDVX chunk in a LIST chunk, but some bad encoders just slap it on the end of a file
 									$this->warning('Found wrongly-structured DIVXTAG at offset ' . ($this->ftell() - 128) . ', parsing anyway');
-
 									$info['divxtag']['comments'] = self::ParseDIVXTAG($DIVXTAG);
 									break 2;
 								}
 							}
 
 							$this->warning('Expecting "RIFF|JUNK|IDVX" at ' . $nextRIFFoffset . ', found "' . $nextRIFFheaderID . '" (' . getid3_lib::PrintHexBytes($nextRIFFheaderID) . ') - skipping rest of file');
-
 							break 2;
 					}
 				}
@@ -452,17 +448,13 @@ class getid3_riff extends getid3_handler {
 					// Reset to the way it was - RIFF parsing will have messed this up
 					$info['avdataend']         = $Original['avdataend'];
 					$thisfile_audio['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
-
 					$this->fseek($info['avdataoffset'] - 44);
-
 					$RIFFdata              = $this->fread(44);
 					$OrignalRIFFheaderSize = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4)) + 8;
 					$OrignalRIFFdataSize   = getid3_lib::LittleEndian2Int(substr($RIFFdata, 40, 4)) + 44;
 					if ($OrignalRIFFheaderSize > $OrignalRIFFdataSize) {
 						$info['avdataend'] -= ($OrignalRIFFheaderSize - $OrignalRIFFdataSize);
-
 						$this->fseek($info['avdataend']);
-
 						$RIFFdata .= $this->fread($OrignalRIFFheaderSize - $OrignalRIFFdataSize);
 					}
 
@@ -471,9 +463,7 @@ class getid3_riff extends getid3_handler {
 					// to skip over the data chunk
 					$RIFFdata    = substr($RIFFdata, 0, 36) . substr($RIFFdata, 44) . substr($RIFFdata, 36, 8);
 					$getid3_riff = new getid3_riff($this->getid3);
-
 					$getid3_riff->ParseRIFFdata($RIFFdata);
-
 					unset($getid3_riff);
 				}
 
@@ -1033,9 +1023,7 @@ class getid3_riff extends getid3_handler {
 				if (isset($thisfile_riff[$RIFFsubtype]['ID3 '])) {
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.id3v2.php', __FILE__, true);
 					$getid3_temp = new getID3();
-
 					$getid3_temp->openfile($this->getid3->filename);
-
 					$getid3_id3v2 = new getid3_id3v2($getid3_temp);
 					$getid3_id3v2->StartingOffset = $thisfile_riff[$RIFFsubtype]['ID3 '][0]['offset'] + 8;
 					if ($thisfile_riff[$RIFFsubtype]['ID3 '][0]['valid'] = $getid3_id3v2->Analyze()) {
@@ -1133,11 +1121,8 @@ class getid3_riff extends getid3_handler {
 				if (!empty($thisfile_riff['CDXA']['data'][0]['size'])) {
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.mpeg.php', __FILE__, true);
 					$getid3_temp = new getID3();
-
 					$getid3_temp->openfile($this->getid3->filename);
-
 					$getid3_mpeg = new getid3_mpeg($getid3_temp);
-
 					$getid3_mpeg->Analyze();
 					if (empty($getid3_temp->info['error'])) {
 						$info['audio']   = $getid3_temp->info['audio'];
@@ -1178,9 +1163,7 @@ class getid3_riff extends getid3_handler {
 				if (isset($thisfile_riff[$RIFFsubtype]['id3 '])) {
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.id3v2.php', __FILE__, true);
 					$getid3_temp = new getID3();
-
 					$getid3_temp->openfile($this->getid3->filename);
-
 					$getid3_id3v2                 = new getid3_id3v2($getid3_temp);
 					$getid3_id3v2->StartingOffset = $thisfile_riff[$RIFFsubtype]['id3 '][0]['offset'] + 8;
 					if ($thisfile_riff[$RIFFsubtype]['id3 '][0]['valid'] = $getid3_id3v2->Analyze()) {
@@ -1328,7 +1311,6 @@ class getid3_riff extends getid3_handler {
 		$RIFFchunk = false;
 		try {
 			$this->fseek($startoffset);
-
 			$maxoffset = min($maxoffset, $info['avdataend']);
 			$AMVheader = $this->fread(284);
 			if (substr($AMVheader, 0, 8) != 'hdrlamvh') {
@@ -1417,7 +1399,6 @@ class getid3_riff extends getid3_handler {
 		$FoundAllChunksWeNeed = false;
 		try {
 			$this->fseek($startoffset);
-
 			$maxoffset = min($maxoffset, $info['avdataend']);
 			while ($this->ftell() < $maxoffset) {
 				$chunknamesize = $this->fread(8);
@@ -1429,13 +1410,11 @@ class getid3_riff extends getid3_handler {
 				//if (strlen(trim($chunkname, "\x00")) < 4) {
 				if (strlen($chunkname) < 4) {
 					$this->error('Expecting chunk name at offset ' . ($this->ftell() - 8) . ' but found nothing. Aborting RIFF parsing.');
-
 					break;
 				}
 
 				if (($chunksize == 0) && ($chunkname != 'JUNK')) {
 					$this->warning('Chunk (' . $chunkname . ') size at offset ' . ($this->ftell() - 4) . ' is zero. Aborting RIFF parsing.');
-
 					break;
 				}
 
@@ -1462,13 +1441,10 @@ class getid3_riff extends getid3_handler {
 										// MP3
 										if (getid3_mp3::MPEGaudioHeaderBytesValid($FirstFourBytes)) {
 											$getid3_temp = new getID3();
-
 											$getid3_temp->openfile($this->getid3->filename);
-
 											$getid3_temp->info['avdataoffset'] = $this->ftell() - 4;
 											$getid3_temp->info['avdataend']    = $this->ftell() + $AudioChunkSize;
 											$getid3_mp3                        = new getid3_mp3($getid3_temp, __CLASS__);
-
 											$getid3_mp3->getOnlyMPEGaudioInfo($getid3_temp->info['avdataoffset'], false);
 											if (isset($getid3_temp->info['mpeg']['audio'])) {
 												$info['mpeg']['audio']         = $getid3_temp->info['mpeg']['audio'];
@@ -1487,13 +1463,10 @@ class getid3_riff extends getid3_handler {
 									} elseif (strpos($FirstFourBytes, getid3_ac3::syncword) === 0) {
 										// AC3
 										$getid3_temp = new getID3();
-
 										$getid3_temp->openfile($this->getid3->filename);
-
 										$getid3_temp->info['avdataoffset'] = $this->ftell() - 4;
 										$getid3_temp->info['avdataend']    = $this->ftell() + $AudioChunkSize;
 										$getid3_ac3                        = new getid3_ac3($getid3_temp);
-
 										$getid3_ac3->Analyze();
 										if (empty($getid3_temp->info['error'])) {
 											$info['audio'] = $getid3_temp->info['audio'];
@@ -1510,7 +1483,6 @@ class getid3_riff extends getid3_handler {
 								}
 
 								$FoundAllChunksWeNeed = true;
-
 								$this->fseek($WhereWeWere);
 							}
 
@@ -1531,7 +1503,6 @@ class getid3_riff extends getid3_handler {
 					default:
 						if (preg_match('#^[0-9]{2}(wb|pc|dc|db)$#', $chunkname)) {
 							$this->fseek($chunksize, SEEK_CUR);
-
 							break;
 						}
 
@@ -1555,13 +1526,10 @@ class getid3_riff extends getid3_handler {
 									// Probably is MP3 data
 									if (getid3_mp3::MPEGaudioHeaderBytesValid(substr($testData, 0, 4))) {
 										$getid3_temp = new getID3();
-
 										$getid3_temp->openfile($this->getid3->filename);
-
 										$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 										$getid3_temp->info['avdataend']    = $info['avdataend'];
 										$getid3_mp3                        = new getid3_mp3($getid3_temp, __CLASS__);
-
 										$getid3_mp3->getOnlyMPEGaudioInfo($info['avdataoffset'], false);
 										if (empty($getid3_temp->info['error'])) {
 											$info['audio'] = $getid3_temp->info['audio'];
@@ -1575,7 +1543,6 @@ class getid3_riff extends getid3_handler {
 									$getid3_temp = new getID3();
 									if ($isRegularAC3) {
 										$getid3_temp->openfile($this->getid3->filename);
-
 										$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 										$getid3_temp->info['avdataend']    = $info['avdataend'];
 									}
@@ -1610,12 +1577,9 @@ class getid3_riff extends getid3_handler {
 								} elseif (preg_match('/^(' . implode('|', array_map('preg_quote', getid3_dts::$syncwords)) . ')/', $testData)) {
 									// This is probably DTS data
 									$getid3_temp = new getID3();
-
 									$getid3_temp->openfile($this->getid3->filename);
-
 									$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 									$getid3_dts                        = new getid3_dts($getid3_temp);
-
 									$getid3_dts->Analyze();
 									if (empty($getid3_temp->info['error'])) {
 										$info['audio']            = $getid3_temp->info['audio'];
@@ -1633,16 +1597,13 @@ class getid3_riff extends getid3_handler {
 									// This is WavPack data
 									$info['wavpack']['offset'] = $info['avdataoffset'];
 									$info['wavpack']['size']   = getid3_lib::LittleEndian2Int(substr($testData, 4, 4));
-
 									$this->parseWavPackHeader(substr($testData, 8, 28));
 								}
 
 									// This is some other kind of data (quite possibly just PCM)
 									// do nothing special, just skip it
 								$nextoffset = $info['avdataend'];
-
 								$this->fseek($nextoffset);
-
 								break;
 							case 'iXML':
 							case 'bext':
@@ -1733,9 +1694,7 @@ class getid3_riff extends getid3_handler {
 			fwrite($fp_temp, $RIFFdata);
 			fclose($fp_temp);
 			$getid3_temp = new getID3();
-
 			$getid3_temp->openfile($tempfile);
-
 			$getid3_temp->info['filesize']     = $RIFFdataLength;
 			$getid3_temp->info['filenamepath'] = $info['filenamepath'];
 			$getid3_temp->info['tags']         = $info['tags'];
@@ -1745,9 +1704,7 @@ class getid3_riff extends getid3_handler {
 			$getid3_temp->info['audio']        = (isset($info['audio']) ? $info['audio'] : array());
 			$getid3_temp->info['video']        = (isset($info['video']) ? $info['video'] : array());
 			$getid3_riff                       = new getid3_riff($getid3_temp);
-
 			$getid3_riff->Analyze();
-
 			$info['riff']     = $getid3_temp->info['riff'];
 			$info['warning']  = $getid3_temp->info['warning'];
 			$info['error']    = $getid3_temp->info['error'];

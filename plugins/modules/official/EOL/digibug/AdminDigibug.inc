@@ -175,7 +175,6 @@ class AdminDigibugView extends GalleryView {
 
 		$template->style('modules/digibug/digibug.css');
 		$template->setVariable(
-
 			'AdminDigibug',
 			array(
 				'isConfigure' => !$isActive,
@@ -183,7 +182,6 @@ class AdminDigibugView extends GalleryView {
 		);
 
 		$template->setVariable('controller', 'digibug.AdminDigibug');
-
 		return array(
 			null,
 			array(

@@ -137,9 +137,7 @@ class MultimediaRenderer extends GalleryRenderer {
 		}
 
 		$jsWarning = $module->translate('JavaScript required to view this content.');
-
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
-
 		$title = smarty_modifier_markup($item->getTitle(), 'strip');
 		$src   = $urlGenerator->generateUrl(
 			array(
@@ -245,6 +243,7 @@ class MultimediaRenderer extends GalleryRenderer {
                                 })
                             )
                         );
+
                 } else if (jQuery.inArray(ext, ['x-flv', 'f4v', 'mp4', 'm4v', 'm4a', 'quicktime']) != -1) {
                     // Lets try flash
                     jQuery('#multimedia-%s').empty().css({'width':%s,'height': %s});
@@ -264,11 +263,13 @@ class MultimediaRenderer extends GalleryRenderer {
                                     autoHide: 'always',
                                     hideDelay: 2000
                                 }
+
                             },
                             clip: {
                                 url: '%s',
                                 scaling: 'fit'
                             }
+
                         }
 
                     )
@@ -346,6 +347,7 @@ class MultimediaRenderer extends GalleryRenderer {
                                     })
                                 )
                             );
+
                     } else if (jQuery.inArray(ext, ['mp4', 'mpeg']) != -1) {
                         // Lets try flash
                         jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s'});
@@ -364,12 +366,14 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
+
                                 },
                                 clip: {
                                     url: '%s',
                                     provider: 'audio',
                                     coverImage: { url: '%s', scaling: 'orig' }
                                 }
+
                             }
 
                         )
@@ -431,6 +435,7 @@ class MultimediaRenderer extends GalleryRenderer {
                                     })
                                 )
                             );
+
                     } else {
                         // Lets try flash
                         jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s','position':'relative'});
@@ -450,10 +455,12 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
+
                                 },
                                 clip: {
                                     url: '%s'
                                 }
+
                             }
 
                         )

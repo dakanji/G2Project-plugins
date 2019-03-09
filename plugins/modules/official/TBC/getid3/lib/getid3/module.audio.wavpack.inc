@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.wavpack.php                                    //
 // module for analyzing WavPack v4.0+ Audio files              //
@@ -17,9 +18,7 @@
 class getid3_wavpack extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		while (true) {
 			$wavpackheader = $this->fread(32);
 			if ($this->ftell() >= $info['avdataend']) {
@@ -193,13 +192,10 @@ class getid3_wavpack extends getid3_handler {
 						case 0x0C: // ID_WVX_BITSTREAM
 						case 0x0D: // ID_CHANNEL_INFO
 							$this->fseek($metablock['offset'] + ($metablock['large_block'] ? 4 : 2) + $metablock['size']);
-
 							break;
 						default:
 							$info['warning'][] = 'Unexpected metablock type "0x' . str_pad(dechex($metablock['function_id']), 2, '0', STR_PAD_LEFT) . '" at offset ' . $metablock['offset'];
-
 							$this->fseek($metablock['offset'] + ($metablock['large_block'] ? 4 : 2) + $metablock['size']);
-
 							break;
 					}
 
@@ -208,13 +204,9 @@ class getid3_wavpack extends getid3_handler {
 							getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 							$original_wav_filesize = getid3_lib::LittleEndian2Int(substr($metablock['data'], 4, 4));
 							$getid3_temp           = new getID3();
-
 							$getid3_temp->openfile($this->getid3->filename);
-
 							$getid3_riff = new getid3_riff($getid3_temp);
-
 							$getid3_riff->ParseRIFFdata($metablock['data']);
-
 							$metablock['riff']            = $getid3_temp->info['riff'];
 							$info['audio']['sample_rate'] = $getid3_temp->info['riff']['raw']['fmt ']['nSamplesPerSec'];
 							unset($getid3_riff, $getid3_temp);
@@ -230,9 +222,7 @@ class getid3_wavpack extends getid3_handler {
 							getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 							$startoffset = $metablock['offset'] + ($metablock['large_block'] ? 4 : 2);
 							$getid3_temp = new getID3();
-
 							$getid3_temp->openfile($this->getid3->filename);
-
 							$getid3_temp->info['avdataend'] = $info['avdataend'];
 
 							//$getid3_temp->info['fileformat'] = 'riff';

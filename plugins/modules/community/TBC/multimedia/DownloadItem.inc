@@ -163,14 +163,12 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
-
 		$phpVm->header('Content-type: ' . $data['mimeType']);
-
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
 		$stats = $platform->stat($data['derivativePath']);
-
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
+
 		/**
 		 * If the file is publicly visible we could set this cache control to public (as we
 		 * do for fast download) but that would require us to do some extra calculations here that
@@ -203,7 +201,6 @@ class DownloadItemView extends GalleryView {
 					}
 
 					echo $bits;
-
 					$gallery->guaranteeTimeLimit(30);
 				}
 
@@ -229,7 +226,6 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
-
 		$fp     = $platform->fopen($data['derivativePath'], 'rb');
 		$size   = $platform->filesize($data['derivativePath']); // File size
 		$length = $size;           // Content length
@@ -242,15 +238,14 @@ class DownloadItemView extends GalleryView {
 		 *
 		 * Multirange support annouces itself with:
 		 * $phpVm->header('Accept-Ranges: bytes');
-
 		 *
 		 * Multirange content must be sent with multipart/byteranges mediatype,
 		 * (mediatype = mimetype)
 		 * as well as a boundry header to indicate the various chunks of data.
 		 */
 		$phpVm->header("Accept-Ranges: 0-$length");
-		// $phpVm->header('Accept-Ranges: bytes');
 
+		// $phpVm->header('Accept-Ranges: bytes');
 		// multipart/byteranges
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.2
 		if (isset($_SERVER['HTTP_RANGE'])) {
@@ -326,7 +321,6 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$platform->fclose($fp);
-
 		return null;
 	}
 
@@ -378,7 +372,6 @@ class DownloadItemView extends GalleryView {
 
 				if ($permission == 'core.view' || empty($hasPermission)) {
 					$ret->addErrorCode(ERROR_MISSING_OBJECT);
-
 					return $ret;
 				}
 			}

@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.flac.php                                       //
 // module for analyzing FLAC and OggFLAC audio files           //
@@ -24,9 +25,7 @@ class getid3_flac extends getid3_handler {
 
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$StreamMarker = $this->fread(4);
 		if ($StreamMarker != self::syncword) {
 			return $this->error('Expecting "' . getid3_lib::PrintHexBytes(self::syncword) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($StreamMarker) . '"');
@@ -58,7 +57,6 @@ class getid3_flac extends getid3_handler {
 
 			if ($BlockLength < 1) {
 				$this->error('METADATA_BLOCK_HEADER.BLOCK_LENGTH (' . $BlockLength . ') at offset ' . $BlockOffset . ' is invalid');
-
 				break;
 			}
 
@@ -270,7 +268,6 @@ class getid3_flac extends getid3_handler {
 		}
 
 		$getid3_ogg->ParseVorbisComments();
-
 		if (isset($info['ogg'])) {
 			unset($info['ogg']['comments_raw']);
 			$info['flac']['VORBIS_COMMENT'] = $info['ogg'];

@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.quicktime.php                            //
 // module for analyzing Quicktime and MP3-in-MP4 files         //
@@ -27,7 +28,6 @@ class getid3_quicktime extends getid3_handler {
 		$info['quicktime']['hinting']    = false;
 		$info['quicktime']['controller'] = 'standard'; // may be overridden if 'ctyp' atom is present
 		$this->fseek($info['avdataoffset']);
-
 		$offset                     = 0;
 		$atomcounter                = 0;
 		$atom_data_read_buffer_size = ($info['php_memory_limit'] ? round($info['php_memory_limit'] / 2) : $this->getid3->option_fread_buffer_size * 1024); // allow [default: 32MB] if PHP configured with no memory_limit
@@ -38,7 +38,6 @@ class getid3_quicktime extends getid3_handler {
 			}
 
 			$this->fseek($offset);
-
 			$AtomHeader = $this->fread(8);
 			$atomsize   = getid3_lib::BigEndian2Int(substr($AtomHeader, 0, 4));
 			$atomname   = substr($AtomHeader, 4, 4);
@@ -545,7 +544,6 @@ class getid3_quicktime extends getid3_handler {
 				}
 
 				$this->CopyToAppropriateCommentsSection($atomname, $atom_structure['data'], $atom_structure['name']);
-
 				break;
 			case 'play': // auto-PLAY atom
 				$atom_structure['autoplay']    = (bool)getid3_lib::BigEndian2Int(substr($atom_data, 0, 1));
@@ -1286,9 +1284,7 @@ class getid3_quicktime extends getid3_handler {
 					$OldAVDataEnd         = $info['avdataend'];
 					$info['avdataend']    = $atom_structure['offset'] + $atom_structure['size']; // $info['quicktime'][$atomname]['offset'] + $info['quicktime'][$atomname]['size'];
 					$getid3_temp          = new getID3();
-
 					$getid3_temp->openfile($this->getid3->filename);
-
 					$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
 					$getid3_temp->info['avdataend']    = $info['avdataend'];
 					$getid3_mp3                        = new getid3_mp3($getid3_temp);
@@ -1441,7 +1437,8 @@ class getid3_quicktime extends getid3_handler {
 				$atom_structure['subatoms']  = $this->QuicktimeParseContainerAtom($atom_data, $baseoffset + 8, $atomHierarchy, $ParseAllPossibleAtoms);
 				break;
 			case 'data': // metaDATA atom
-				static $metaDATAkey = 1; // real ugly, but so is the QuickTime structure that stores keys and values in different multinested locations that are hard to relate to each other
+				static $metaDATAkey = 1;
+
 				// seems to be 2 bytes language code (ASCII), 2 bytes unknown (set to 0x10B5 in sample I have), remainder is useful data
 				$atom_structure['language'] = substr($atom_data, 4 + 0, 2);
 				$atom_structure['unknown']  = getid3_lib::BigEndian2Int(substr($atom_data, 4 + 2, 2));
@@ -2424,19 +2421,13 @@ class getid3_quicktime extends getid3_handler {
 
 	public function quicktime_time_to_sample_table($info) {
 		$res = array();
-
 		$this->search_tag_by_pair($info['quicktime']['moov'], 'name', 'stbl', 'quicktime/moov', $res);
-
 		foreach ($res as $value) {
 			$stbl_res = array();
-
 			$this->search_tag_by_pair($value[1], 'data_format', 'text', $value[0], $stbl_res);
-
 			if (count($stbl_res) > 0) {
 				$stts_res = array();
-
 				$this->search_tag_by_key($value[1], 'time_to_sample_table', $value[0], $stts_res);
-
 				if (count($stts_res) > 0) {
 					return $stts_res[0][1]['time_to_sample_table'];
 				}
@@ -2450,19 +2441,13 @@ class getid3_quicktime extends getid3_handler {
 		$time_scale    = '';
 		$ts_prefix_len = 0;
 		$res           = array();
-
 		$this->search_tag_by_pair($info['quicktime']['moov'], 'name', 'stbl', 'quicktime/moov', $res);
-
 		foreach ($res as $value) {
 			$stbl_res = array();
-
 			$this->search_tag_by_pair($value[1], 'data_format', 'text', $value[0], $stbl_res);
-
 			if (count($stbl_res) > 0) {
 				$ts_res = array();
-
 				$this->search_tag_by_key($info['quicktime']['moov'], 'time_scale', 'quicktime/moov', $ts_res);
-
 				foreach ($ts_res as $value) {
 					$prefix = substr($value[0], 0, -12);
 					if ((substr($stbl_res[0][0], 0, strlen($prefix)) === $prefix) && ($ts_prefix_len < strlen($prefix))) {

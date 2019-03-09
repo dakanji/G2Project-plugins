@@ -67,7 +67,6 @@ class DupeDetectShowDupesController extends GalleryController {
 
 			// now let's see what we have to do
 			GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
-
 			if (isset($form['actions'])) {
 				foreach ($form['actions'] as $pairId => $action) {
 					list($srcId, $dupId) = explode(',', $form['pairs'][$pairId]);
@@ -212,7 +211,6 @@ class DupeDetectShowDupesView extends GalleryView {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
-
 		if ($form['formName'] != 'DupeDetectShowDupes') {
 			$form['showIgnored'] = false;
 			$form['formName']    = 'DupeDetectShowDupes';
@@ -255,7 +253,6 @@ class DupeDetectShowDupesView extends GalleryView {
 					unset($dupList[$key]);
 				} else { // $dupRecord is CRC32 duplication, so delete the other one
 					$gallery->debug("***splicing out pair $pairId  - new is CRC32***\n");
-
 					unset($dupList[$pairsIds[$pairId]]);
 					$pairsIds[$pairId] = $key;
 				}
@@ -289,6 +286,7 @@ class DupeDetectShowDupesView extends GalleryView {
 				list($ret, $thumbnail) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent(
 					$thumbnail->getId()
 				);
+
 				if ($ret->isError()) {
 					// Ignore thumbnail errors
 				} else {
@@ -305,6 +303,7 @@ class DupeDetectShowDupesView extends GalleryView {
 				list($ret, $thumbnail) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent(
 					$thumbnail->getId()
 				);
+
 				if ($ret->isError()) {
 					// Ignore thumbnail errors
 				} else {
@@ -329,9 +328,7 @@ class DupeDetectShowDupesView extends GalleryView {
 		);
 
 		$form['dupStatusList'] = $dupStatus;
-
 		$template->setVariable('controller', 'dupedetect.DupeDetectShowDupes');
-
 		return array(
 			GalleryStatus::success(),
 			array(

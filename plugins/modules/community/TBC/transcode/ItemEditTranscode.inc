@@ -320,7 +320,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 								if ($ret) {
 									GalleryCoreApi::releaseLocks($lockId);
-
 									return array($ret, null);
 								}
 
@@ -330,7 +329,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 								if ($ret) {
 									GalleryCoreApi::releaseLocks($lockId);
-
 									return array($ret, null);
 								}
 
@@ -390,7 +388,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
-
 							return array($ret, null);
 						}
 
@@ -400,7 +397,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
-
 							return array($ret, null);
 						}
 
@@ -518,7 +514,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 			$template->setVariable('outputOptions', $outputOptions);
 			$template->setVariable('controller', 'transcode.ItemEditTranscode');
-
 			return array(null, 'modules/transcode/templates/AudioTranscode.tpl', 'modules_transcode');
 		}
 
@@ -539,7 +534,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 		}
 
 		$template->setVariable('aspect', $aspect);
-
 		$derivativeSize = 0;
 		if (($nativeWidth > 0) && ($nativeHeight > 0) && ($nativeFps > 0.0) && ($nativeVbr > 0)) {
 			$form['hasVideo']          = true;
@@ -670,26 +664,21 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 		$template->setVariable('maxWidth', $defaults['maxWidth']);
 		$template->setVariable('widthWarningDisplay', 'none');
-
 		if ($form['encode']['width'] > $defaults['maxWidth']) {
 			$form['encode']['width']  = $defaults['maxWidth'];
 			$form['encode']['height'] = round($form['encode']['width'] / $aspect);
-
 			$template->setVariable('widthWarningDisplay', 'block');
 		}
 
 		$template->setVariable('maxHeight', $defaults['maxHeight']);
 		$template->setVariable('heightWarningDisplay', 'none');
-
 		if ($form['encode']['height'] > $defaults['maxHeight']) {
 			$form['encode']['height'] = $defaults['maxHeight'];
 			$form['encode']['width']  = round($form['encode']['height'] * $aspect);
-
 			$template->setVariable('heightWarningDisplay', 'block');
 		}
 
 		$template->setVariable('outputMime', $defaults['outputMime']);
-
 		$template->setVariable('defaultBitrate', $defaults['defaultBitrate']);
 		$template->setVariable('defaultAudioChannels', $defaults['defaultAudioChannels']);
 		$template->setVariable('defaultAudioSampleRate', $defaults['defaultAudioSampleRate']);
@@ -707,7 +696,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 			//$this->transcodeLog('types: '.print_r(explode('|', $mimeTypes), true));
 			if (!$ret) {
 				$list = explode('|', $mimeTypes);
-
 				return in_array($item->getMimeType(), $list);
 			}
 		}
@@ -737,7 +725,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 		$logentry  = str_replace(array('<?', '?>'), array('(@', '@)'), $logentry);
 		$timestamp = strftime('%c');
-
 		fwrite(fopen($gallery->getConfig('data.gallery.base') . 'plugins_data/modules/ffmpeg/ffmpeg.log', 'a'), $timestamp . ': ' . $logentry . "\n");
 		chmod($gallery->getConfig('data.gallery.base') . 'plugins_data/modules/ffmpeg/ffmpeg.log', 0777);
 	}

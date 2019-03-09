@@ -49,7 +49,6 @@ class PicasaImportHelper {
 		}
 
 		GalleryUtilities::sanitizeInputValues($item, false);
-
 		return $item;
 	}
 

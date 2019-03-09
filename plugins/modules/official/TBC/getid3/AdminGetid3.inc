@@ -439,10 +439,8 @@ class AdminGetid3View extends GalleryView {
 		$AdminGetid3['availableList'] = $availableList;
 		$AdminGetid3['summaryList']   = $summaryList;
 		$AdminGetid3['detailedList']  = $detailedList;
-
 		$template->setVariable('AdminGetid3', $AdminGetid3);
 		$template->setVariable('controller', 'getid3:AdminGetid3');
-
 		return array(
 			null,
 			array(

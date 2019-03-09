@@ -58,7 +58,6 @@ class DigibugPrintPhotosView extends GalleryView {
 		} else {
 			$session     =& $gallery->getSession();
 			$cartItemIds = $session->get('digibug.cart');
-
 			$session->remove('digibug.cart');
 		}
 
@@ -248,12 +247,9 @@ class DigibugPrintPhotosView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
-
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
-
 		$template->setVariable('l10Domain', 'modules_digibug');
 		$template->setVariable(
-
 			'DigibugPrintPhotos',
 			array(
 				'returnUrl' => $returnUrl,
@@ -264,7 +260,6 @@ class DigibugPrintPhotosView extends GalleryView {
 		);
 
 		$template->display('gallery:modules/digibug/templates/DigibugPrintPhotos.tpl');
-
 		return null;
 	}
 }

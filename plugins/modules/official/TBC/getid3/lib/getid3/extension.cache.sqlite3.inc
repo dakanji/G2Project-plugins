@@ -6,11 +6,14 @@
 //            or http://www.getid3.org                                         //
 //          also https://github.com/JamesHeinrich/getID3                       //
 /////////////////////////////////////////////////////////////////////////////////
+
 ///                                                                            //
 // extension.cache.sqlite3.php - part of getID3()                              //
 // Please see readme.txt for more information                                  //
 //                                                                            ///
+
 /////////////////////////////////////////////////////////////////////////////////
+
 ///                                                                            //
 // MySQL extension written by Allan Hansen <ahØartemis*dk>                     //
 // Table name mod by Carlo Capocasa <calroØcarlocapocasa*com>                  //
@@ -105,14 +108,11 @@ class getID3_cached_sqlite3 extends getID3 {
 
 		$this->db = new SQLite3($file);
 		$db       = $this->db;
-
 		$this->create_table();   // Create cache table if not exists
 		$version = '';
 		$sql     = $this->version_check;
 		$stmt    = $db->prepare($sql);
-
 		$stmt->bindValue(':filename', getID3::VERSION, SQLITE3_TEXT);
-
 		$result = $stmt->execute();
 
 		list($version) = $result->fetchArray();
@@ -129,7 +129,6 @@ class getID3_cached_sqlite3 extends getID3 {
 	 */
 	public function __destruct() {
 		$db = $this->db;
-
 		$db->close();
 	}
 
@@ -153,12 +152,9 @@ class getID3_cached_sqlite3 extends getID3 {
 	private function clear_cache() {
 		$db  = $this->db;
 		$sql = $this->delete_cache;
-
 		$db->exec($sql);
-
 		$sql  = $this->set_version;
 		$stmt = $db->prepare($sql);
-
 		$stmt->bindValue(':filename', getID3::VERSION, SQLITE3_TEXT);
 		$stmt->bindValue(':dirname', getID3::VERSION, SQLITE3_TEXT);
 		$stmt->bindValue(':val', getID3::VERSION, SQLITE3_TEXT);
@@ -187,11 +183,9 @@ class getID3_cached_sqlite3 extends getID3 {
 		$db   = $this->db;
 		$sql  = $this->get_id3_data;
 		$stmt = $db->prepare($sql);
-
 		$stmt->bindValue(':filename', $filename, SQLITE3_TEXT);
 		$stmt->bindValue(':filesize', $filesize_real, SQLITE3_INTEGER);
 		$stmt->bindValue(':filetime', $filetime, SQLITE3_INTEGER);
-
 		$res = $stmt->execute();
 
 		list($result) = $res->fetchArray();
@@ -206,15 +200,12 @@ class getID3_cached_sqlite3 extends getID3 {
 		// Save result
 		$sql  = $this->cache_file;
 		$stmt = $db->prepare($sql);
-
 		$stmt->bindValue(':filename', $filename, SQLITE3_TEXT);
-
 		$stmt->bindValue(':dirname', $dirname, SQLITE3_TEXT);
 		$stmt->bindValue(':filesize', $filesize_real, SQLITE3_INTEGER);
 		$stmt->bindValue(':filetime', $filetime, SQLITE3_INTEGER);
 		$stmt->bindValue(':atime', time(), SQLITE3_INTEGER);
 		$stmt->bindValue(':val', base64_encode(serialize($analysis)), SQLITE3_TEXT);
-
 		$res = $stmt->execute();
 		return $analysis;
 	}
@@ -227,7 +218,6 @@ class getID3_cached_sqlite3 extends getID3 {
 	private function create_table() {
 		$db  = $this->db;
 		$sql = $this->make_table;
-
 		return $db->exec($sql);
 	}
 
@@ -246,9 +236,7 @@ class getID3_cached_sqlite3 extends getID3 {
 		$rows = array();
 		$sql  = $this->get_cached_dir;
 		$stmt = $db->prepare($sql);
-
 		$stmt->bindValue(':dirname', $dir, SQLITE3_TEXT);
-
 		$res = $stmt->execute();
 		while ($row = $res->fetchArray()) {
 			$rows[] = unserialize(base64_decode($row));
@@ -272,7 +260,6 @@ class getID3_cached_sqlite3 extends getID3 {
 				break;
 			case 'set_version':
 				return "INSERT INTO $this->table (filename, dirname, filesize, filetime, analyzetime, val) VALUES (:filename, :dirname, -1, -1, -1, :val)";
-
 				break;
 			case 'get_id3_data':
 				return "SELECT val FROM $this->table WHERE filename = :filename AND filesize = :filesize AND filetime = :filetime";
@@ -283,7 +270,6 @@ class getID3_cached_sqlite3 extends getID3 {
 			case 'make_table':
 				//return "CREATE TABLE IF NOT EXISTS $this->table (filename VARCHAR(255) NOT NULL DEFAULT '', dirname VARCHAR(255) NOT NULL DEFAULT '', filesize INT(11) NOT NULL DEFAULT '0', filetime INT(11) NOT NULL DEFAULT '0', analyzetime INT(11) NOT NULL DEFAULT '0', val text not null, PRIMARY KEY (filename, filesize, filetime))";
 				return "CREATE TABLE IF NOT EXISTS $this->table (filename VARCHAR(255) DEFAULT '', dirname VARCHAR(255) DEFAULT '', filesize INT(11) DEFAULT '0', filetime INT(11) DEFAULT '0', analyzetime INT(11) DEFAULT '0', val text, PRIMARY KEY (filename, filesize, filetime))";
-
 				break;
 			case 'get_cached_dir':
 				return "SELECT val FROM $this->table WHERE dirname = :dirname";

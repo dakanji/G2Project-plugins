@@ -127,7 +127,6 @@ class MapThemeAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$form['formName'] = 'MapThemeAdmin';
-
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
 
@@ -201,7 +200,6 @@ class MapThemeAdminView extends GalleryView {
 		if (!array_key_exists('ThumbHeight', $form)) {
 			$form['ThumbHeight'] = 60;
 		}
-
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		// setup the list of InfoWindow templates
@@ -242,12 +240,10 @@ class MapThemeAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
-
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapThemeAdmin');
-
 		return array(
 			null,
 			array(

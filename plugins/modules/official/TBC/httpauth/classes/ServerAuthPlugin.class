@@ -60,9 +60,11 @@ class ServerAuthPlugin // extends GalleryAuthPlugin
 			if ($ret) {
 				return array($ret, null);
 			}
+
 		}
 
 		return array(null, $user);
 	}
+
 }
 

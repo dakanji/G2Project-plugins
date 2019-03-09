@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // write.id3v1.php                                             //
 // module for writing ID3v1 tags                               //
@@ -29,7 +30,6 @@ class getid3_write_id3v1 {
 		// File MUST be writeable - CHMOD(646) at least
 		if (!empty($this->filename) && is_readable($this->filename) && is_writable($this->filename) && is_file($this->filename)) {
 			$this->setRealFileSize();
-
 			if (($this->filesize <= 0) || !getid3_lib::intValueSupported($this->filesize)) {
 				$this->errors[] = 'Unable to WriteID3v1(' . $this->filename . ') because filesize (' . $this->filesize . ') is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
 				return false;
@@ -84,7 +84,6 @@ class getid3_write_id3v1 {
 			}
 
 			$this->tag_data = $id3v1data;
-
 			return $this->WriteID3v1();
 		}
 
@@ -95,7 +94,6 @@ class getid3_write_id3v1 {
 		// File MUST be writeable - CHMOD(646) at least
 		if (!empty($this->filename) && is_readable($this->filename) && is_writable($this->filename) && is_file($this->filename)) {
 			$this->setRealFileSize();
-
 			if (($this->filesize <= 0) || !getid3_lib::intValueSupported($this->filesize)) {
 				$this->errors[] = 'Unable to RemoveID3v1(' . $this->filename . ') because filesize (' . $this->filesize . ') is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
 				return false;

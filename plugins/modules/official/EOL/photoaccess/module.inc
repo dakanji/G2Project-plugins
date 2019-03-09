@@ -37,12 +37,11 @@ class PhotoAccessModule extends GalleryModule {
 				'PhotoWorks Photo Printing Module'
 			)
 		);
+
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -74,6 +73,7 @@ class PhotoAccessModule extends GalleryModule {
 					'photoaccess.print',
 					$gallery->i18n('[photoworks] Print')
 				);
+
 				if ($ret) {
 					return $ret;
 				}
@@ -99,6 +99,7 @@ class PhotoAccessModule extends GalleryModule {
 					'photoaccess.print',
 					$gallery->i18n('[photoworks] Print')
 				);
+
 				if ($ret) {
 					return $ret;
 				}

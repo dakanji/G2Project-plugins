@@ -35,12 +35,11 @@ class WebCamModule extends GalleryModule {
 				'Support periodically updated images like a webcam'
 			)
 		);
+
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -285,7 +284,6 @@ class WebCamModule extends GalleryModule {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
-
 				return $ret;
 			}
 
@@ -305,7 +303,6 @@ class WebCamModule extends GalleryModule {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
-
 				return $ret;
 			}
 
@@ -331,7 +328,6 @@ class WebCamModule extends GalleryModule {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
-
 					return $ret;
 				}
 
@@ -340,7 +336,6 @@ class WebCamModule extends GalleryModule {
 
 				if (!$ret) {
 					GalleryCoreApi::releaseLocks($lockId);
-
 					return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 				}
 
@@ -348,7 +343,6 @@ class WebCamModule extends GalleryModule {
 
 				if (!$ret) {
 					GalleryCoreApi::releaseLocks($lockId);
-
 					return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 				}
 
@@ -369,7 +363,6 @@ class WebCamModule extends GalleryModule {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return $ret;
 					}
 
@@ -377,7 +370,6 @@ class WebCamModule extends GalleryModule {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return $ret;
 					}
 				}

@@ -166,7 +166,6 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		// Empty out the plugin session id
 		$session                    =& $gallery->getSession();
 		$this->_saveCartUrlFragment = $session->get('snapgalaxy.cartUrlFragment');
-
 		$session->remove('snapgalaxy.cartUrlFragment');
 
 		// Make sure translate calls during test won't generate any platform calls
@@ -202,10 +201,8 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce(
-
 			'modules/snapgalaxy/classes/SnapGalaxyCartPlugin.class'
 		);
 
@@ -216,10 +213,8 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		}
 
 		$platform = new UnitTestPlatform();
-
 		$platform->setReply('fsockopen', array('www.snapgalaxy.com', 80, '', '', 5), 'testFd');
 		$platform->setReply(
-
 			'fwrite',
 			array(
 				'testFd',
@@ -230,13 +225,11 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		);
 
 		$platform->setReply('fflush', array('testFd'), true);
-
 		$platform->setReply('fgets', array('testFd', 4096), 'HTTP/1.1 200 OK');
 		$platform->setReply('feof', array('testFd'), false);
 		$platform->setReply('fgets', array('testFd', 4096), '');
 		$platform->setReply('feof', array('testFd'), false);
 		$platform->setReply(
-
 			'fread',
 			array('testFd', 4096),
 			'requesturl="/REQUEST_URL" redirecturl="/REDIRECT_URL"'
@@ -245,7 +238,6 @@ class SnapGalaxyCartPluginTest extends GalleryTestCase {
 		$platform->setReply('feof', array('testFd'), true);
 		$platform->setReply('fclose', array('testFd'), true);
 		$gallery->setPlatform($platform);
-
 		$cartPlugin = new SnapGalaxyCartPlugin();
 
 		list($ret, $urlParams) = $cartPlugin->fulfillCart($cartItemIds);

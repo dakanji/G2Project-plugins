@@ -33,7 +33,6 @@ class RssPreloads {
 		switch ($preload) {
 			case 'RssBlock':
 				$template->head('modules/rss/templates/RssBlockHead.tpl');
-
 				return null;
 		}
 

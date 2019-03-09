@@ -260,11 +260,9 @@ class AdminModerationView extends GalleryView {
 		}
 
 		$imagesCont = 0;
-
 		$template->setVariable('images', $images);
 		$template->setVariable('imagesCont', $imagesCont);
 		$template->setVariable('controller', 'moderate.AdminModeration');
-
 		return array(
 			null,
 			array(

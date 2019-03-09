@@ -36,7 +36,6 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		parent::setUp();
-
 		$this->_unregisterFactoryImplementationForTest('NotificationEvent_1_0');
 		$this->_unregisterFactoryImplementationForTest('NotificationHandler_1_0');
 
@@ -91,7 +90,6 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$parms['_enabledMap'] = serialize($enabledMap);
-
 		GalleryDataCache::put($cacheKey, $parms);
 
 		list($ret, $this->_testAlbum) = $this->_createRandomAlbum($this->_getRootId());
@@ -215,12 +213,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$itemId = (string)$this->_testAlbum->getId();
-
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
-
 			'form[notifications][1]',
 			array(
 				'name'          => 'Test::Event',
@@ -228,8 +224,8 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				'oldSubscribed' => '',
 			)
 		);
-		GalleryUtilities::putRequestVariable(
 
+		GalleryUtilities::putRequestVariable(
 			'form[eventMap][2]',
 			array(
 				'name'          => 'Test::Event2',
@@ -353,12 +349,10 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
-
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
-
 			'form[notifications][1]',
 			array(
 				'name'          => 'Test::Event',
@@ -440,7 +434,6 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply(
-
 			'addMapEntry',
 			array(
 				'SubscriptionMap',
@@ -463,13 +456,14 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				)
 			),
 		);
+
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
+
 		// The fetchChildItemIds() query
 		$storage->setReply('search', '*', $results);
 		$storage->setReply(
-
 			'getMapEntry',
 			array(
 				'SubscriptionMap',
@@ -504,19 +498,19 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
+
 		// The fetchChildItemIds() query
 		$storage->setReply(
 			'search',
 			'*',
 			array(null, new UnitTestStorageSearchResults(array(array()), 8))
 		);
-		$storage->setReply('checkPoint', array(), null);
 
+		$storage->setReply('checkPoint', array(), null);
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
-
 			'form[notifications][1]',
 			array(
 				'name'          => 'Test::Event',

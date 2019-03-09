@@ -306,7 +306,6 @@ class AdminView extends GalleryView {
 
 		$template->setVariable('AdminCheckout', $AdminCheckout);
 		$template->setVariable('controller', 'checkoutauthorizenet.Admin');
-
 		return array(
 			null,
 			array(

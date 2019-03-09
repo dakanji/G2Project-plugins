@@ -125,7 +125,6 @@ class PanoramaJsSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'panoramajs.PanoramaJsSiteAdmin');
-
 		return array(
 			null,
 			array(

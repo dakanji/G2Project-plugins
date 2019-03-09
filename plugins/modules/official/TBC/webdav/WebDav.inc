@@ -104,7 +104,6 @@ class WebDavController extends GalleryController {
 		 * @todo Refactor towards a cleaner approach, e.g. using a map for public paths.
 		 */
 		GalleryUtilities::putRequestVariable('originalPath', $path);
-
 		$pathComponent = basename($path);
 
 		// Special case to suppress Mac '._' and '.DS_Store files.  Ignore but return success.
@@ -125,14 +124,11 @@ class WebDavController extends GalleryController {
 		$pathComponents = preg_split('/\//', $path, -1, PREG_SPLIT_NO_EMPTY);
 		foreach ($pathComponents as $key => $pathComponent) {
 			GalleryUtilities::unsanitizeInputValues($pathComponent);
-
 			$pathComponents[$key] = $platform->legalizePathComponent($pathComponent);
 		}
 
 		$path = implode('/', $pathComponents);
-
 		GalleryUtilities::putRequestVariable('path', $path);
-
 		$requestMethod = GalleryUtilities::strToLower(
 			GalleryUtilities::getServerVar('REQUEST_METHOD')
 		);
@@ -160,7 +156,6 @@ class WebDavController extends GalleryController {
 
 			// Until there's a better way to delegate to Show/DownloadItem
 			GalleryUtilities::putRequestVariable('itemId', $itemId);
-
 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 				return array(
 					null,

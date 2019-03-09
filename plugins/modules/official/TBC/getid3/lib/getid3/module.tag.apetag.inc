@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.tag.apetag.php                                       //
 // module for analyzing APE tags                               //
@@ -30,7 +31,6 @@ class getid3_apetag extends getid3_handler {
 		$lyrics3tagsize   = 10;
 		if ($this->overrideendoffset == 0) {
 			$this->fseek(0 - $id3v1tagsize - $apetagheadersize - $lyrics3tagsize, SEEK_END);
-
 			$APEfooterID3v1 = $this->fread($id3v1tagsize + $apetagheadersize + $lyrics3tagsize);
 
 			//if (preg_match('/APETAGEX.{24}TAG.{125}$/i', $APEfooterID3v1)) {
@@ -44,7 +44,6 @@ class getid3_apetag extends getid3_handler {
 			}
 		} else {
 			$this->fseek($this->overrideendoffset - $apetagheadersize);
-
 			if ($this->fread(8) == 'APETAGEX') {
 				$info['ape']['tag_offset_end'] = $this->overrideendoffset;
 			}
@@ -58,9 +57,7 @@ class getid3_apetag extends getid3_handler {
 
 		// shortcut
 		$thisfile_ape =& $info['ape'];
-
 		$this->fseek($thisfile_ape['tag_offset_end'] - $apetagheadersize);
-
 		$APEfooterData = $this->fread(32);
 		if (!($thisfile_ape['footer'] = $this->parseAPEheaderFooter($APEfooterData))) {
 			$info['error'][] = 'Error parsing APE footer at offset ' . $thisfile_ape['tag_offset_end'];
@@ -69,14 +66,11 @@ class getid3_apetag extends getid3_handler {
 
 		if (isset($thisfile_ape['footer']['flags']['header']) && $thisfile_ape['footer']['flags']['header']) {
 			$this->fseek($thisfile_ape['tag_offset_end'] - $thisfile_ape['footer']['raw']['tagsize'] - $apetagheadersize);
-
 			$thisfile_ape['tag_offset_start'] = $this->ftell();
 			$APEtagData                       = $this->fread($thisfile_ape['footer']['raw']['tagsize'] + $apetagheadersize);
 		} else {
 			$thisfile_ape['tag_offset_start'] = $thisfile_ape['tag_offset_end'] - $thisfile_ape['footer']['raw']['tagsize'];
-
 			$this->fseek($thisfile_ape['tag_offset_start']);
-
 			$APEtagData = $this->fread($thisfile_ape['footer']['raw']['tagsize']);
 		}
 

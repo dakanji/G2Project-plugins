@@ -48,7 +48,6 @@ class WebDavSiteAdminView extends GalleryView {
 
 		// Render HTML body
 		$template->setVariable('WebDavSiteAdmin', $WebDavSiteAdmin);
-
 		return array(
 			null,
 			array(

@@ -93,7 +93,6 @@ class PanoramaOption extends ItemEditOption {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
-
 				return array($ret, null, null);
 			}
 

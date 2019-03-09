@@ -144,9 +144,7 @@ class TagsItemEditController extends GalleryController {
 		}
 
 		$heading = $module->translate('Applying Album Tags to SubItems');
-
 		$templateAdapter->updateProgressBar($heading, $module->translate('Preparing...'), 0);
-
 		$total = count($items);
 		foreach ($items as $key => $id) {
 			foreach ($tags as $rawTagName => $tagName) {
@@ -174,9 +172,7 @@ class TagsItemEditController extends GalleryController {
 		);
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
-
 		return null;
 	}
 }
@@ -294,25 +290,17 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		$template->javascript('lib/yui/yahoo-min.js');
-
 		$template->javascript('lib/yui/event-min.js');
-
 		$template->javascript('lib/yui/connection-min.js');
-
 		$template->javascript('modules/tags/js/Tags.js');
-
 		$template->setVariable('controller', 'tags.TagsItemEdit');
-
 		$template->setVariable('tagList', $thisItemTagList);
-
 		$template->setVariable('popularTags', $tagList);
-
 		$template->setVariable('tagItem', $tagItem);
 		$template->setVariable('tagMode', $tagMode);
 		$template->setVariable('tagExifInfo', $tagExifInfo);
 		$template->setVariable('itemId', $itemId);
 		$template->setVariable('popLimit', $popLimit);
-
 		return array(
 			null,
 			array(

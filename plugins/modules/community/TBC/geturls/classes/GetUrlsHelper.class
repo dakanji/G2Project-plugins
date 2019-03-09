@@ -117,9 +117,7 @@ class GetUrlsHelper {
 		$data['guestMode'] = 0;
 		if ($param['guestMode']) {
 			list($ret, $guestUserId) =
-
 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
-
 			if ($ret) {
 				return array($ret, null);
 			}
@@ -132,17 +130,13 @@ class GetUrlsHelper {
 		}
 
 		list($ret, $hasViewSourcePermission) =
-
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewSource', $userId);
-
 		if ($ret) {
 			return array($ret, null);
 		}
 
 		list($ret, $hasViewResizesPermission) =
-
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewResizes', $userId);
-
 		if ($ret) {
 			return array($ret, null);
 		}
@@ -171,8 +165,11 @@ class GetUrlsHelper {
 					foreach ($resizes as $resize) {
 						$data['resizeId'] = $resize->getId();
 					}
+
 				}
+
 			}
+
 		} else {
 			$data['isPhoto'] = 0;
 		}
@@ -188,5 +185,6 @@ class GetUrlsHelper {
 		$data['itemTitle']   = $item->getTitle();
 		return  array(null, $data);
 	}
+
 }
 

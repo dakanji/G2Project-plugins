@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.asf.php                                  //
 // module for analyzing ASF, WMA and WMV files                 //
@@ -59,15 +60,12 @@ class getid3_asf extends getid3_handler {
 		// Reserved1                    BYTE         8               // hardcoded: 0x01
 		// Reserved2                    BYTE         8               // hardcoded: 0x02
 		$info['fileformat'] = 'asf';
-
 		$this->fseek($info['avdataoffset']);
-
 		$HeaderObjectData                           = $this->fread(30);
 		$thisfile_asf_headerobject['objectid']      = substr($HeaderObjectData, 0, 16);
 		$thisfile_asf_headerobject['objectid_guid'] = $this->BytestringToGUID($thisfile_asf_headerobject['objectid']);
 		if ($thisfile_asf_headerobject['objectid'] != GETID3_ASF_Header_Object) {
 			unset($info['fileformat'], $info['asf']);
-
 			return $this->error('ASF header GUID {' . $this->BytestringToGUID($thisfile_asf_headerobject['objectid']) . '} does not match expected "GETID3_ASF_Header_Object" GUID {' . $this->BytestringToGUID(GETID3_ASF_Header_Object) . '}');
 		}
 
@@ -768,11 +766,8 @@ class getid3_asf extends getid3_handler {
 								break;
 							case 'id3':
 								$this->getid3->include_module('tag.id3v2');
-
 								$getid3_id3v2 = new getid3_id3v2($this->getid3);
-
 								$getid3_id3v2->AnalyzeString($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']);
-
 								unset($getid3_id3v2);
 								if ($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value_length'] > 1024) {
 									$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value'] = '<value too large to display>';
@@ -1118,7 +1113,6 @@ class getid3_asf extends getid3_handler {
 					// * * Error Correction Present     bits         1               // If set, use Opaque Data Packet structure, else use Payload structure
 					// * Error Correction Data
 					$info['avdataoffset'] = $this->ftell();
-
 					$this->fseek(($thisfile_asf_dataobject['objectsize'] - 50), SEEK_CUR); // skip actual audio/video data
 					$info['avdataend'] = $this->ftell();
 					break;
@@ -1232,7 +1226,6 @@ class getid3_asf extends getid3_handler {
 					}
 
 					$this->fseek(($NextObjectSize - 16 - 8), SEEK_CUR);
-
 					break;
 			}
 		}

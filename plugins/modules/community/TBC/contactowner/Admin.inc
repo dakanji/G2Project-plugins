@@ -179,7 +179,6 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'contactowner.Admin');
-
 		return array(
 			null,
 			array(

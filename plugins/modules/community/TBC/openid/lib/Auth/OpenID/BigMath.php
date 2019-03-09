@@ -57,7 +57,6 @@ class Auth_OpenID_MathLibrary {
 		$bytes = array();
 		while ($this->cmp($long, 0) > 0) {
 			array_unshift($bytes, $this->mod($long, 256));
-
 			$long = $this->div($long, 2 ** 8);
 		}
 

@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.archive.szip.php                                     //
 // module for analyzing SZIP compressed files                  //
@@ -17,9 +18,7 @@
 class getid3_szip extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$SZIPHeader = $this->fread(6);
 		if (substr($SZIPHeader, 0, 4) != "SZ\x0A\x04") {
 			$info['error'][] = 'Expecting "53 5A 0A 04" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($SZIPHeader, 0, 4)) . '"';
@@ -39,7 +38,6 @@ class getid3_szip extends getid3_handler {
 					// concatenating the files. this also means that global header blocks
 					// might be present between directory/data blocks.
 					$this->fseek(4, SEEK_CUR);
-
 					break;
 				case 'BH':
 					$BHheaderbytes  = getid3_lib::BigEndian2Int($this->fread(3));

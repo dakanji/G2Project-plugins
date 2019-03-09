@@ -69,7 +69,6 @@ class ShareBlockCallbackTest extends GalleryTestCase {
 	public function testShareBlockCallback() {
 		$data  = $this->_doShareBlockCallback();
 		$block = $data['block']['share'];
-
 		$this->assertTrue(array_key_exists('onlyWhenLoggedIn', $block), 'Missing param onlyWhenLoggedIn');
 		$this->assertTrue(array_key_exists('addThisAccountId', $block), 'Missing param addThisAccountId');
 		$this->assertTrue($block['onlyWhenLoggedIn'], 'Bad param onlyWhenLoggedIn');

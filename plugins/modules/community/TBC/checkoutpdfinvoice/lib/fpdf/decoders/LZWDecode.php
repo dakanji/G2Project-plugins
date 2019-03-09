@@ -37,7 +37,6 @@ class LZWDecode {
 		}
 
 		$this->initsTable();
-
 		$this->data =& $data;
 
 		// Initialize pointers
@@ -51,7 +50,6 @@ class LZWDecode {
 		while (($code = $this->getNextCode()) != 257) {
 			if ($code == 256) {
 				$this->initsTable();
-
 				$code = $this->getNextCode();
 				if ($code == 257) {
 					break;
@@ -63,17 +61,13 @@ class LZWDecode {
 				if ($code < $this->tIdx) {
 					$string      = $this->sTable[$code];
 					$uncompData .= $string;
-
 					$this->addStringToTable($this->sTable[$oldCode], $string[0]);
-
 					$oldCode = $code;
 				} else {
 					$string      = $this->sTable[$oldCode];
 					$string      = $string . $string[0];
 					$uncompData .= $string;
-
 					$this->addStringToTable($string);
-
 					$oldCode = $code;
 				}
 			}

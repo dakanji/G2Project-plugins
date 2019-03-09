@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.graphic.jpg.php                                      //
 // module for analyzing JPEG Image files                       //
@@ -23,9 +24,7 @@ class getid3_jpg extends getid3_handler {
 		$info['video']['lossless']           = false;
 		$info['video']['bits_per_sample']    = 24;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
-
 		$this->fseek($info['avdataoffset']);
-
 		$imageinfo = array();
 
 		//list($width, $height, $type) = getid3_lib::GetDataImageSize($this->fread($info['filesize']), $imageinfo);

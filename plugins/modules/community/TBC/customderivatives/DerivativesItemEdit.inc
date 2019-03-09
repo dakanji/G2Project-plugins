@@ -190,7 +190,6 @@ class DerivativesItemEdit extends ItemEditPlugin {
 		}
 
 		$template->setVariable('id', $itemId);
-
 		return array(null, 'modules/customderivatives/templates/DerivativesItemEdit.tpl', 'modules_customderivatives');
 	}
 

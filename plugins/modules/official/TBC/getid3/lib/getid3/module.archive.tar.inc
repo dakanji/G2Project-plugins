@@ -8,12 +8,15 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.archive.tar.php                                      //
 // module for analyzing TAR files                              //
 // dependencies: NONE                                          //
 //                                                            ///
+
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // Module originally written by                                //
 //      Mike Mozolin <teddybearØmail*ru>                       //
@@ -84,7 +87,6 @@ class getid3_tar extends getid3_handler {
 
 			// Read to the next chunk
 			$this->fseek($size, SEEK_CUR);
-
 			$diff = $size % 512;
 			if ($diff != 0) {
 				// Padding, throw away

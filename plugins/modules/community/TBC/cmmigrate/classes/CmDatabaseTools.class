@@ -53,9 +53,7 @@ class CmDatabaseTools {
 	 */
 	public function __construct($baseDir, $dbImpl = null) {
 		$this->_baseDir = $baseDir;
-
 		$this->_readParams($baseDir);
-
 		if (isset($dbImpl)) {
 			$this->_dbImpl = $dbImpl;
 		} else {
@@ -69,7 +67,6 @@ class CmDatabaseTools {
 	 */
 	public function _readParams($baseDir) {
 		$incpath = CmMigrateHelper::configPath($baseDir);
-
 		include $incpath;
 
 		$this->_coppermineConfig = $CONFIG;

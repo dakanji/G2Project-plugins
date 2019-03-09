@@ -70,7 +70,6 @@
 if (!isset($GLOBALS['HIDE_UNKNOWN_TAGS'])) {
 	$GLOBALS['HIDE_UNKNOWN_TAGS'] = false;
 }
-
 require_once 'IPTC.php';
 require_once 'Unicode.php';
 

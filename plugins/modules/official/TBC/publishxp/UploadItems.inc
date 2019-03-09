@@ -89,7 +89,6 @@ class UploadItemsController extends GalleryController {
 
 			if (empty($file['name'])) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
 
@@ -131,7 +130,6 @@ class UploadItemsController extends GalleryController {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array($ret, null);
 			}
 
@@ -317,7 +315,6 @@ class UploadItemsView extends GalleryView {
 		$template->title($module->translate('Windows Publishing Wizard'));
 		$template->setVariable('UploadItems', $UploadItems);
 		$template->head('modules/publishxp/templates/Head.tpl');
-
 		return array(
 			null,
 			array(

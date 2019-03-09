@@ -182,11 +182,13 @@ class ICalendarResourceItem extends GalleryDataItem {
 					$comp->properties['DTSTART'][0]->value
 				)
 			);
+
 			$newEntity->setEnd(
 				ICalendarParser::datetime_to_timestamp(
 					$comp->properties['DTEND'][0]->value
 				)
 			);
+
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
 
 			$ret = $newEntity->save();

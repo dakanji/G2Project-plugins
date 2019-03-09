@@ -241,7 +241,6 @@ class CheckoutItemEdit extends ItemEditPlugin {
 		$template->setVariable('isRootAlbum', $isRootAlbum);
 		$template->setVariable('customPlugins', $plugins);
 		$template->setVariable('controller', 'checkout.CheckoutItemEdit');
-
 		return array(null, 'modules/checkout/templates/CheckoutItemEdit.tpl', 'modules_checkout');
 	}
 

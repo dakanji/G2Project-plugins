@@ -109,7 +109,6 @@ class FetchDownloadView extends GalleryView {
 
 			// send event about download attempt
 			$event = GalleryCoreApi::newEvent('GalleryCheckoutDownload::downloadNotify');
-
 			$event->setEntity($transaction);
 			$event->setData('permitted');
 
@@ -180,7 +179,6 @@ class FetchDownloadView extends GalleryView {
 			// Disable output compression (if necessary) since IE seems to have problems with it
 			@$phpVm->ini_set('zlib.output_compression', 0);
 			$phpVm->header('Content-Type: application/octet-stream');
-
 			$phpVm->header('Content-Disposition: attachment; filename="' . $zipName . '"');
 			if ($size > 0) {
 				$phpVm->header("Content-Length: $size");
@@ -194,7 +192,6 @@ class FetchDownloadView extends GalleryView {
 					}
 
 					echo $data;
-
 					$gallery->guaranteeTimeLimit(30);
 				}
 

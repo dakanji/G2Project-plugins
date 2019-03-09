@@ -36,12 +36,11 @@ class OpenIdModule extends GalleryModule {
 				'Login with a distributed identity system (unfinished module)'
 			)
 		);
+
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));
 		$this->setCallbacks('getSystemLinks|getSiteAdminViews|registerEventListeners');
 	}

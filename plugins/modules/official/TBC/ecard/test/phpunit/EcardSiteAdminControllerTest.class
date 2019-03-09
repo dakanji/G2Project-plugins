@@ -44,11 +44,11 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			return $ret;
 		}
+
 	}
 
 	public function testEcardSiteAdminControllerReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -61,6 +61,7 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
+
 	}
 
 	public function testEcardSiteAdminControllerSave() {
@@ -68,16 +69,14 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[subject]', 'An eCard has been sent to you');
 		GalleryUtilities::putRequestVariable('form[bcc]', 'nobody2@nobody.org');
 		GalleryUtilities::putRequestVariable(
-
 			'form[header]',
 			"Hi %toName% (%to%)!\r\n"
 			. '%fromName% (%from%) has sent you an eCard.'
 		);
-		GalleryUtilities::putRequestVariable('form[footer]', 'Sent via G2 Ecard tester');
 
+		GalleryUtilities::putRequestVariable('form[footer]', 'Sent via G2 Ecard tester');
 		GalleryUtilities::putRequestVariable('form[format]', 'html');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -110,5 +109,8 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 
 			$this->assertEquals($expectedValue, $value, $key);
 		}
+
 	}
+
 }
+

@@ -410,7 +410,6 @@ class CheckoutHelper {
 		}
 
 		$session->put('checkout.cartLastModified', $phpVm->time());
-
 		return null;
 	}
 

@@ -35,7 +35,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		GalleryCoreApi::requireOnce('modules/picasa/classes/Picasa2DataParser.class');
 		GalleryCoreApi::requireOnce('modules/picasa/classes/PicasaImportHelper.class');
-
 		$platform =& $gallery->getPlatform();
 		$status   = $error   = array();
 		if (empty($form['name']['picasaZipPath'])) {
@@ -93,7 +92,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 					if ($ret) {
 						@$platform->recursiveRmdir($tmpDir);
 						@$platform->unlink($base);
-
 						return array($ret, null, null);
 					}
 
@@ -103,7 +101,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 						// The archive does not contain valid Picasa data
 						@$platform->recursiveRmdir($tmpDir);
 						@$platform->unlink($base);
-
 						$error[] = 'form[error][picasaZipPath][invalid]';
 					} else {
 						list($ret, $importStatus) = $this->performImport(
@@ -111,10 +108,10 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 							$item->getId(),
 							$form
 						);
+
 						if ($ret) {
 							@$platform->recursiveRmdir($tmpDir);
 							@$platform->unlink($base);
-
 							return array($ret, null, null);
 						}
 
@@ -201,9 +198,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		$i                     = 0;
 		$numberOfItemsImported = 0;
-
 		$gallery->guaranteeTimeLimit(30);
-
 		$newAlbumInstanceId = false;
 		$desiredname        = $platform->legalizePathComponent($picasaAlbum['albumName']);
 		$k                  = 0;
@@ -286,6 +281,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 						$sourceEncoding
 					)
 				);
+
 				$newAlbumInstance->setSummary(
 					PicasaImportHelper::convertHtml(
 						$markupType,
@@ -331,10 +327,8 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		$numberOfItemsImported = 1;
 		foreach ($photos as $j => $importAlbumItem) {
 			$gallery->guaranteeTimeLimit(30);
-
 			$filepath          = $picasaXmlPath . str_replace('/', $slash, $importAlbumItem['path']);
 			$sanitizedFilename = $filename = $importAlbumItem['name'];
-
 			GalleryUtilities::sanitizeInputValues($sanitizedFilename);
 
 			list($base, $extension) = GalleryUtilities::getFileNameComponents($sanitizedFilename);
@@ -464,7 +458,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			$ItemAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$ItemAdmin['enctype'] = 'multipart/form-data';
-
 			$template->setVariable('ItemAdmin', $ItemAdmin);
 		}
 

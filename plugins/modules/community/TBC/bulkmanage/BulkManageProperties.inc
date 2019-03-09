@@ -67,7 +67,6 @@ class BulkManageProperties extends BulkManagePlugin {
 		// Controller
 		$template->setVariable('controller', 'bulkmanage.BulkManage');
 		$template->style('modules/bulkmanage/bulkmanage.css');
-
 		if ($form['formName'] != 'BulkManageProperties') {
 			$form['formName']                             = 'BulkManageProperties';
 			$form['property']['enumfilename']['pattern']  = '%04d.%s';
@@ -184,7 +183,6 @@ class BulkManageProperties extends BulkManagePlugin {
 		if (isset($params['shifttimestamp'])) {
 			if (!empty($params['shifttimestamp']['shift'])) {
 				$oldtimestamp = $item->getOriginationTimestamp();
-
 				$item->setOriginationTimestamp($oldtimestamp + (int)$params['shifttimestamp']['shift']);
 			}
 		}

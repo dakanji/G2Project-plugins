@@ -142,6 +142,7 @@ class Auth_Yadis_domxml extends Auth_Yadis_XMLParser {
 			DOMXML_LOAD_PARSING,
 			$this->errors
 		);
+
 		if (!$this->doc) {
 			return false;
 		}

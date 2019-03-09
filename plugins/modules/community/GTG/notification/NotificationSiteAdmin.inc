@@ -217,7 +217,6 @@ class NotificationSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('eventHandlers', $handlers);
-
 		if ($form['formName'] != 'NotificationSiteAdmin') {
 			$ret = $this->_initializeForm($form, $definedEvents, $handlers);
 
@@ -227,7 +226,6 @@ class NotificationSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'notification.NotificationSiteAdmin');
-
 		return array(
 			null,
 			array(

@@ -19,7 +19,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/core/DownloadItem.inc');/**
-
  * Provides downloading of binary items as files
  * @version $Revision: 1654 $
  * @package DownloadLink
@@ -42,14 +41,12 @@ class OfferDownloadView extends DownloadItemView {
 		}
 
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
-
 		$phpVm->header('Content-type: ' . $data['mimeType']);
-
 		$phpVm->header('Content-Disposition: attachment; filename="' . $data['pseudoFileName'] . '"');
 		$stats = $platform->stat($data['derivativePath']);
-
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
+
 		/**
 		 * If the file is publicly visible we could set this cache control to public (as we
 		 * do for fast download) but that would require us to do some extra calculations here that
@@ -82,7 +79,6 @@ class OfferDownloadView extends DownloadItemView {
 					}
 
 					echo $bits;
-
 					$gallery->guaranteeTimeLimit(30);
 				}
 
@@ -136,7 +132,6 @@ class OfferDownloadView extends DownloadItemView {
 
 				if ($permission == 'downloadlink.original' || empty($hasPermission)) {
 					$ret->addErrorCode(ERROR_MISSING_OBJECT);
-
 					return $ret;
 				}
 			}

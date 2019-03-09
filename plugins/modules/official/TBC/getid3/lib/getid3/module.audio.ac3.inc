@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.ac3.php                                        //
 // module for analyzing AC-3 (aka Dolby Digital) audio files   //
@@ -47,7 +48,6 @@ class getid3_ac3 extends getid3_handler {
 		// 	 frmsizecod   6
 		// } /* end of syncinfo */
 		$this->fseek($info['avdataoffset']);
-
 		$this->AC3header['syncinfo'] = $this->fread(5);
 		if (strpos($this->AC3header['syncinfo'], self::syncword) === 0) {
 			$thisfile_ac3_raw['synchinfo']['synchword'] = self::syncword;
@@ -59,7 +59,6 @@ class getid3_ac3 extends getid3_handler {
 			}
 
 			$offset = 0;
-
 			$this->fseek(-2, SEEK_CUR);
 		}
 
@@ -86,7 +85,6 @@ class getid3_ac3 extends getid3_handler {
 			// If this standard is extended by the addition of additional elements or features, a value of bsid greater than 8 will be used.
 			// Decoders built to this version of the standard will not be able to decode versions with bsid greater than 8.
 			$this->error('Bit stream identification is version ' . $thisfile_ac3_raw_bsi['bsid'] . ', but getID3() only understands up to version 8');
-
 			unset($info['ac3']);
 			return false;
 		}

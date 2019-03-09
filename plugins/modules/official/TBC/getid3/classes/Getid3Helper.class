@@ -106,7 +106,6 @@ class Getid3Helper {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/getid3/lib/getid3/getid3.inc');
-
 		$platform =& $gallery->getPlatform();
 		if (!$platform->file_exists($path)) {
 			$rawGetid3Data = null;

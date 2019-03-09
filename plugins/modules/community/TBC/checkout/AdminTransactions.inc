@@ -200,11 +200,9 @@ class AdminTransactionsView extends GalleryView {
 
 		// Calculate which names to show
 		$pageDetails['start'] = ($pageDetails['page'] - 1) * $perPage;
-
 		$template->setVariable('pageDetails', $pageDetails);
 		$template->setVariable('txns', $txns);
 		$template->setVariable('controller', 'checkout.AdminTransactions');
-
 		return array(
 			null,
 			array(

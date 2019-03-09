@@ -95,7 +95,6 @@ class RandomizeView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'randomizeonce.Randomize');
-
 		return array(
 			null,
 			array(

@@ -32,19 +32,17 @@ class PhotographerTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('photographer');
-
 		$this->setName($gallery->i18n('Photographer'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'Responsive theme w/ large thumbs (450x450) great for photogs'
 			)
 		);
+
 		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'rows'            => 3,
 				'columns'         => 3,

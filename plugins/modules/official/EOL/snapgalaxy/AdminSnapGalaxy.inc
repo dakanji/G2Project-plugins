@@ -116,7 +116,6 @@ class AdminSnapGalaxyView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'snapgalaxy.AdminSnapGalaxy');
-
 		return array(
 			null,
 			array(

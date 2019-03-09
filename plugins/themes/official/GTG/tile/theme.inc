@@ -31,19 +31,17 @@ class TileTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('tile');
-
 		$this->setName($gallery->i18n('Tile'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'Tile view of background image and image thumbnails'
 			)
 		);
+
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'colorpack'     => '',
 				'sidebarBlocks' => serialize(
@@ -467,7 +465,6 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$this->_setDefaultParameters($params);
-
 		$theme                 =& $template->getVariableByReference('theme');
 		$theme['param']        = $params;
 		$theme['actingUserId'] = $gallery->getActiveUserId();

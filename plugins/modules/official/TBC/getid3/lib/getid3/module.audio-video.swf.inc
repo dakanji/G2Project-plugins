@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.swf.php                                  //
 // module for analyzing Shockwave Flash files                  //
@@ -24,7 +25,6 @@ class getid3_swf extends getid3_handler {
 
 		// http://www.openswf.org/spec/SWFfileformat.html
 		$this->fseek($info['avdataoffset']);
-
 		$SWFfileData                        = $this->fread($info['avdataend'] - $info['avdataoffset']); // 8 + 2 + 2 + max(9) bytes NOT including Frame_Size RECT data
 		$info['swf']['header']['signature'] = substr($SWFfileData, 0, 3);
 		switch ($info['swf']['header']['signature']) {

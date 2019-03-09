@@ -52,9 +52,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 			$platform =& $gallery->getPlatform();
 			$tmpDir   = $gallery->getConfig('data.gallery.tmp');
 			$url      = $form['imageUrl'];
-
 			GalleryUtilities::unsanitizeInputValues($url, false);
-
 			$urlComponents = parse_url($url);
 
 			list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
@@ -113,7 +111,6 @@ class ItemAddWebCam extends ItemAddPlugin {
 				}
 
 				$title = $basename;
-
 				GalleryUtilities::sanitizeInputValues($title);
 
 				list($ret, $newItem) = GalleryCoreApi::addItemToAlbum(
@@ -147,7 +144,6 @@ class ItemAddWebCam extends ItemAddPlugin {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return array($ret, null, null);
 					}
 
@@ -161,7 +157,6 @@ class ItemAddWebCam extends ItemAddPlugin {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return array($ret, null, null);
 					}
 

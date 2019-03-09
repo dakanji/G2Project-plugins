@@ -70,7 +70,6 @@ class UploadifyController extends GalleryController {
 
 		if ($ret) {
 			$gallery->debug('Uploadify User Agent: ' . GalleryUtilities::getServerVar('HTTP_USER_AGENT'));
-
 			$user = $gallery->getActiveUser();
 			if (isset($user)) {
 				$gallery->debug('Uploadify User: ', $user->getuserName());
@@ -82,7 +81,6 @@ class UploadifyController extends GalleryController {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
-
 		$controller = new ItemAddController();
 
 		list($ret, $item) = $controller->getItem();
@@ -284,6 +282,7 @@ class UploadifyController extends GalleryController {
 			fopen($gallery->getConfig('data.gallery.base') . 'tmp/uploadify.log', 'a'),
 			$timestamp . ': ' . $logentry . "\n"
 		);
+
 		chmod($gallery->getConfig('data.gallery.base') . 'tmp/uploadify.log', 0777);
 	}
 

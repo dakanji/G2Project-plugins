@@ -116,7 +116,6 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 					case 'video/webm':
 					case 'video/ogg':
 						GalleryCoreApi::requireOnce('modules/flashvideo/classes/FlashVideoRenderer.class');
-
 						return FlashVideoRenderer::render($format, $entity, $item, $params);
 					return sprintf(
 						'<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"

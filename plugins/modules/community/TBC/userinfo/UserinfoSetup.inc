@@ -264,7 +264,6 @@ class UserinfoSetupView extends GalleryView {
 
 		$template->setVariable('controller', 'userinfo.UserinfoSetup');
 		$template->setVariable('UserinfoSetup', $UserinfoSetup);
-
 		return array(
 			null,
 			array(

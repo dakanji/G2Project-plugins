@@ -76,7 +76,6 @@ class PanoramaView extends GalleryView {
 		}
 
 		$template->title($module->translate('Panorama'));
-
 		return array(
 			null,
 			array(

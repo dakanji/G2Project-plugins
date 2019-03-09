@@ -107,7 +107,6 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 		}
 
 		$template->setVariable('ItemAddUploadApplet', $ItemAddUploadApplet);
-
 		return array(
 			null,
 			'modules/uploadapplet/templates/ItemAddUploadApplet.tpl',

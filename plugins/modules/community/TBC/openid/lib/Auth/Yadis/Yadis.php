@@ -334,7 +334,6 @@ class Auth_Yadis_Yadis {
 			and $response->status != 206)
 		) {
 			$result->fail();
-
 			return $result;
 		}
 
@@ -343,6 +342,7 @@ class Auth_Yadis_Yadis {
 			$response->headers,
 			array('content-type')
 		);
+
 		if ($result->content_type
 			&& (Auth_Yadis_Yadis::_getContentType($result->content_type) == Auth_Yadis_CONTENT_TYPE)
 		) {
@@ -365,7 +365,6 @@ class Auth_Yadis_Yadis {
 					and $response->status != 206)
 				) {
 					$result->fail();
-
 					return $result;
 				}
 

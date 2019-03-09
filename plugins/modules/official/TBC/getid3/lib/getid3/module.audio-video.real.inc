@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio-video.real.php                                 //
 // module for analyzing Real Audio/Video files                 //
@@ -21,9 +22,7 @@ class getid3_real extends getid3_handler {
 		$info['fileformat']       = 'real';
 		$info['bitrate']          = 0;
 		$info['playtime_seconds'] = 0;
-
 		$this->fseek($info['avdataoffset']);
-
 		$ChunkCounter = 0;
 		while ($this->ftell() < $info['avdataend']) {
 			$ChunkData = $this->fread(8);
@@ -67,7 +66,6 @@ class getid3_real extends getid3_handler {
 
 			if ($ChunkSize > ($this->getid3->fread_buffer_size() + 8)) {
 				$ChunkData .= $this->fread($this->getid3->fread_buffer_size() - 8);
-
 				$this->fseek($thisfile_real_chunks_currentchunk['offset'] + $ChunkSize);
 			} elseif (($ChunkSize - 8) > 0) {
 				$ChunkData .= $this->fread($ChunkSize - 8);
@@ -198,7 +196,6 @@ class getid3_real extends getid3_handler {
 							case 'audio/x-pn-realaudio':
 							case 'audio/x-pn-multirate-realaudio':
 								$this->ParseOldRAheader($thisfile_real_chunks_currentchunk_typespecificdata, $thisfile_real_chunks_currentchunk['parsed_audio_data']);
-
 								$info['audio']['sample_rate']     = $thisfile_real_chunks_currentchunk['parsed_audio_data']['sample_rate'];
 								$info['audio']['bits_per_sample'] = $thisfile_real_chunks_currentchunk['parsed_audio_data']['bits_per_sample'];
 								$info['audio']['channels']        = $thisfile_real_chunks_currentchunk['parsed_audio_data']['channels'];

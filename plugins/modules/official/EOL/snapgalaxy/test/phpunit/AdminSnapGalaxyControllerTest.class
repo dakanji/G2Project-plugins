@@ -48,7 +48,6 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 
 	public function testAdminSnapGalaxyControllerReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -66,7 +65,6 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 	public function testAdminSnapGalaxyControllerSave() {
 		GalleryUtilities::putRequestVariable('form[snapgalaxyPartnerId]', '1234_a-X');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -106,7 +104,6 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 
 	public function testAdminSnapGalaxyControllerSaveMissingValues() {
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -124,7 +121,6 @@ class AdminSnapGalaxyControllerTest extends GalleryControllerTestCase {
 	public function testAdminSnapGalaxyControllerSaveInvalidValues() {
 		GalleryUtilities::putRequestVariable('form[snapgalaxyPartnerId]', 'ç&%/1234');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

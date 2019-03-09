@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.vqf.php                                        //
 // module for analyzing VQF audio files                        //
@@ -29,9 +30,7 @@ class getid3_vqf extends getid3_handler {
 		$info['vqf']['raw'] = array();
 		$thisfile_vqf       =& $info['vqf'];
 		$thisfile_vqf_raw   =& $thisfile_vqf['raw'];
-
 		$this->fseek($info['avdataoffset']);
-
 		$VQFheaderData                  = $this->fread(16);
 		$offset                         = 0;
 		$thisfile_vqf_raw['header_tag'] = substr($VQFheaderData, $offset, 4);
@@ -99,7 +98,6 @@ class getid3_vqf extends getid3_handler {
 				case 'COMT':
 				case 'ALBM':
 					$thisfile_vqf['comments'][$this->VQFcommentNiceNameLookup($ChunkName)][] = trim(substr($ChunkData, 8));
-
 					break;
 				case 'DSIZ':
 					$thisfile_vqf['DSIZ'] = getid3_lib::BigEndian2Int(substr($ChunkData, 8, 4));

@@ -21,7 +21,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/bulkmanage/classes/BulkManageHelper.class');/**
-
  * Handle all form requests
  *
  * Load the plugin and let it process the form data, then run the progress bar
@@ -184,7 +183,6 @@ class BulkManageView extends GalleryView {
 
 		$template->setVariable('BulkManage', $BulkManage);
 		$template->setVariable('controller', 'bulkmanage.BulkManage');
-
 		return array(
 			null,
 			array(

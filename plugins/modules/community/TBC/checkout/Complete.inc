@@ -82,7 +82,6 @@ class CompleteController extends GalleryController {
 		} elseif ($error == 'alreadyPlaced') {
 			// Empty out the shopping cart
 			GalleryCheckoutApi::emptyCart();
-
 			$results['redirect']['view']          = 'checkout.OrderStatus';
 			$results['redirect']['transactionId'] = $transactionId;
 			$results['redirect']['verify1']       = $verify1;

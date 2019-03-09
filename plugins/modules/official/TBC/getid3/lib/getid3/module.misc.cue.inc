@@ -8,12 +8,15 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.misc.cue.php                                         //
 // module for analyzing CUEsheet files                         //
 // dependencies: NONE                                          //
 //                                                             //
+
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // Module originally written [2009-Mar-25] by                  //
 //      Nigel Barnes <ngbarnesØhotmail*com>                    //
@@ -37,16 +40,13 @@ class getid3_cue extends getid3_handler {
 	public function Analyze() {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'cue';
-
 		$this->readCueSheetFilename($info['filenamepath']);
-
 		$info['cue'] = $this->cuesheet;
 		return true;
 	}
 
 	public function readCueSheetFilename($filename) {
 		$filedata = file_get_contents($filename);
-
 		return $this->readCueSheet($filedata);
 	}
 
@@ -85,7 +85,6 @@ class getid3_cue extends getid3_handler {
 				case 'songwriter':
 				case 'title':
 					$this->parseString($file[$i], $track_on);
-
 					break;
 				case 'file':
 					$currentFile = $this->parseFile($file[$i]);
@@ -103,9 +102,7 @@ class getid3_cue extends getid3_handler {
 					break;
 				case 'track':
 					$track_on++;
-
 					$this->parseTrack($file[$i], $track_on);
-
 					if (isset($currentFile)) { // if there's a file
 						$this->cuesheet['tracks'][$track_on]['datafile'] = $currentFile;
 					}
@@ -114,7 +111,6 @@ class getid3_cue extends getid3_handler {
 				default:
 					//save discarded junk and place string[] with track it was found in
 					$this->parseGarbage($file[$i], $track_on);
-
 					break;
 			}
 		}

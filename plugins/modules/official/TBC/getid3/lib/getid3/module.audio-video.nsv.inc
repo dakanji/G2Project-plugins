@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.nsv.php                                        //
 // module for analyzing Nullsoft NSV files                     //
@@ -17,9 +18,7 @@
 class getid3_nsv extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$NSVheader = $this->fread(4);
 		switch ($NSVheader) {
 			case 'NSVs':
@@ -39,7 +38,6 @@ class getid3_nsv extends getid3_handler {
 					$info['video']['dataformat'] = 'nsv';
 					$info['audio']['lossless']   = false;
 					$info['video']['lossless']   = false;
-
 					$this->getNSVsHeaderFilepointer($info['nsv']['NSVf']['header_length']);
 				}
 
@@ -59,9 +57,7 @@ class getid3_nsv extends getid3_handler {
 
 	public function getNSVsHeaderFilepointer($fileoffset) {
 		$info =& $this->getid3->info;
-
 		$this->fseek($fileoffset);
-
 		$NSVsheader                        = $this->fread(28);
 		$offset                            = 0;
 		$info['nsv']['NSVs']['identifier'] = substr($NSVsheader, $offset, 4);
@@ -133,9 +129,7 @@ class getid3_nsv extends getid3_handler {
 
 	public function getNSVfHeaderFilepointer($fileoffset, $getTOCoffsets = false) {
 		$info =& $this->getid3->info;
-
 		$this->fseek($fileoffset);
-
 		$NSVfheader                        = $this->fread(28);
 		$offset                            = 0;
 		$info['nsv']['NSVf']['identifier'] = substr($NSVfheader, $offset, 4);

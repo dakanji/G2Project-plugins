@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.archive.tiff.php                                     //
 // module for analyzing TIFF files                             //
@@ -17,9 +18,7 @@
 class getid3_tiff extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		$TIFFheader = $this->fread(4);
 		switch (substr($TIFFheader, 0, 2)) {
 			case 'II':
@@ -50,9 +49,7 @@ class getid3_tiff extends getid3_handler {
 		$nextIFDoffset = $this->TIFFendian2Int($this->fread(4), $info['tiff']['byte_order']);
 		while ($nextIFDoffset > 0) {
 			$CurrentIFD['offset'] = $nextIFDoffset;
-
 			$this->fseek($info['avdataoffset'] + $nextIFDoffset);
-
 			$CurrentIFD['fieldcount'] = $this->TIFFendian2Int($this->fread(2), $info['tiff']['byte_order']);
 			for ($i = 0; $i < $CurrentIFD['fieldcount']; $i++) {
 				$CurrentIFD['fields'][$i]['raw']['tag']    = $this->TIFFendian2Int($this->fread(2), $info['tiff']['byte_order']);
@@ -111,7 +108,6 @@ class getid3_tiff extends getid3_handler {
 					case 259: // Compression
 						if (!isset($fieldarray['value'])) {
 							$this->fseek($fieldarray['offset']);
-
 							$info['tiff']['ifd'][$IFDid]['fields'][$key]['raw']['data'] = $this->fread($fieldarray['raw']['length'] * $FieldTypeByteLength[$fieldarray['raw']['type']]);
 						}
 
@@ -127,7 +123,6 @@ class getid3_tiff extends getid3_handler {
 							$info['tiff']['ifd'][$IFDid]['fields'][$key]['raw']['data'] = $fieldarray['value'];
 						} else {
 							$this->fseek($fieldarray['offset']);
-
 							$info['tiff']['ifd'][$IFDid]['fields'][$key]['raw']['data'] = $this->fread($fieldarray['raw']['length'] * $FieldTypeByteLength[$fieldarray['raw']['type']]);
 						}
 

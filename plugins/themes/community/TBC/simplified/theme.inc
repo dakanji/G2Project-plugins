@@ -31,19 +31,17 @@ class SimplifiedTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('simplified');
-
 		$this->setName($gallery->i18n('Simplified'));
-
 		$this->setDescription(
 			$gallery->i18n(
 				'Simple, uncluttered look'
 			)
 		);
+
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
-
 			array(
 				'rows'           => 3,
 				'columns'        => 5,

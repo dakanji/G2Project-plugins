@@ -66,7 +66,6 @@ class MultimediaOption extends ItemAddOption {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
-
 					return array($ret, null, null);
 				}
 
@@ -76,7 +75,6 @@ class MultimediaOption extends ItemAddOption {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
-
 					return array($ret, null, null);
 				}
 			}

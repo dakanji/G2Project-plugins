@@ -130,7 +130,6 @@ class MembersItemsView extends GalleryView {
 		}
 
 		$template->title($module->translate('Member Items'));
-
 		return array(
 			null,
 			array(

@@ -59,7 +59,6 @@ class TryLogoutView extends GalleryView {
 
 		// Render HTML body
 		$template->setVariable('TryLogout', $TryLogout);
-
 		return array(
 			null,
 			array(

@@ -32,7 +32,6 @@ class ConfigureController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		GalleryCoreApi::requireOnce('modules/nokiaupload/classes/ImageUploadHelper.class');
-
 		global $gallery;
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -150,7 +149,6 @@ class ConfigureView extends GalleryView {
 		);
 
 		$template->setVariable('controller', 'nokiaupload.Configure');
-
 		return array(
 			null,
 			array(

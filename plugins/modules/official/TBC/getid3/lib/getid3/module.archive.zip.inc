@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.archive.zip.php                                      //
 // module for analyzing pkZip files                            //
@@ -32,17 +33,12 @@ class getid3_zip extends getid3_handler {
 		$EOCDsearchCounter = 0;
 		while ($EOCDsearchCounter++ < 512) {
 			$this->fseek(-128 * $EOCDsearchCounter, SEEK_END);
-
 			$EOCDsearchData = $this->fread(128) . $EOCDsearchData;
 			if (strstr($EOCDsearchData, 'PK' . "\x05\x06")) {
 				$EOCDposition = strpos($EOCDsearchData, 'PK' . "\x05\x06");
-
 				$this->fseek((-128 * $EOCDsearchCounter) + $EOCDposition, SEEK_END);
-
 				$info['zip']['end_central_directory'] = $this->ZIPparseEndOfCentralDirectory();
-
 				$this->fseek($info['zip']['end_central_directory']['directory_offset']);
-
 				$info['zip']['entries_count'] = 0;
 				while ($centraldirectoryentry = $this->ZIPparseCentralDirectory($this->getid3->fp)) {
 					$info['zip']['central_directory'][] = $centraldirectoryentry;
@@ -81,7 +77,6 @@ class getid3_zip extends getid3_handler {
 				// Local File Header entry will
 				foreach ($info['zip']['central_directory'] as $central_directory_entry) {
 					$this->fseek($central_directory_entry['entry_offset']);
-
 					if ($fileentry = $this->ZIPparseLocalFileHeader()) {
 						$info['zip']['entries'][] = $fileentry;
 					} else {
@@ -136,9 +131,7 @@ class getid3_zip extends getid3_handler {
 		$info['zip']['compressed_size']   = 0;
 		$info['zip']['uncompressed_size'] = 0;
 		$info['zip']['entries_count']     = 0;
-
 		rewind($this->getid3->fp);
-
 		while ($fileentry = $this->ZIPparseLocalFileHeader()) {
 			$info['zip']['entries'][] = $fileentry;
 			$info['zip']['entries_count']++;
@@ -181,9 +174,7 @@ class getid3_zip extends getid3_handler {
 		$info['zip']['compressed_size']   = 0;
 		$info['zip']['uncompressed_size'] = 0;
 		$info['zip']['entries_count']     = 0;
-
 		rewind($this->getid3->fp);
-
 		while ($fileentry = $this->ZIPparseLocalFileHeader()) {
 			$info['zip']['entries'][] = $fileentry;
 			$info['zip']['entries_count']++;
@@ -257,14 +248,12 @@ class getid3_zip extends getid3_handler {
 		}
 
 		$LocalFileHeader['data_offset'] = $this->ftell();
-
 		$this->fseek($LocalFileHeader['compressed_size'], SEEK_CUR); // this should (but may not) match value in $LocalFileHeader['raw']['compressed_size'] -- $LocalFileHeader['compressed_size'] could have been overwritten above with value from Central Directory
 		if ($LocalFileHeader['flags']['data_descriptor_used']) {
 			$DataDescriptor                                  = $this->fread(16);
 			$LocalFileHeader['data_descriptor']['signature'] = getid3_lib::LittleEndian2Int(substr($DataDescriptor, 0, 4));
 			if ($LocalFileHeader['data_descriptor']['signature'] != 0x08074B50) { // "PK\x07\x08"
 				$this->getid3->warning[] = 'invalid Local File Header Data Descriptor Signature at offset ' . ($this->ftell() - 16) . ' - expecting 08 07 4B 50, found ' . getid3_lib::PrintHexBytes($LocalFileHeader['data_descriptor']['signature']);
-
 				$this->fseek($LocalFileHeader['offset']); // seek back to where filepointer originally was so it can be handled properly
 				return false;
 			}

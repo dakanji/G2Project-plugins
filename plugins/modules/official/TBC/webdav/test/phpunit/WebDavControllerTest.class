@@ -35,7 +35,6 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 	public function testRequireAuthForAllRequestsByWindowsWebfolders() {
 		// See bug 1645834
 		$this->_becomeGuestUser();
-
 		foreach (array(
 			'Microsoft Data Access Internet Publishing Provider DAV foo bar',
 			'Microsoft-WebDAV-MiniRedir/5.1.2600',
@@ -84,9 +83,7 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 	public function testNoAuthRequiredForOtherClients() {
 		$_SERVER['REQUEST_METHOD']  = 'propfind';
 		$_SERVER['HTTP_USER_AGENT'] = 'SOME USER AGENT STRING';
-
 		$this->_becomeGuestUser();
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -103,9 +100,7 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 	public function testSpecialCharactersInFileName() {
 		$_SERVER['REQUEST_METHOD']  = 'propfind';
 		$_SERVER['HTTP_USER_AGENT'] = 'SOME USER AGENT STRING';
-
 		GalleryUtilities::putRequestVariable('path', '@dir/Black&White');
-
 		$results      = $this->handleRequest();
 		$originalPath = GalleryUtilities::getRequestVariables('originalPath');
 		$path         = GalleryUtilities::getRequestVariables('path');
@@ -121,7 +116,6 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals('@dir/Black&amp;White', $originalPath, 'Unexpected Original Path');
-
 		$this->assertEquals('_dir/Black_White', $path, 'Unexpected New Path');
 	}
 }

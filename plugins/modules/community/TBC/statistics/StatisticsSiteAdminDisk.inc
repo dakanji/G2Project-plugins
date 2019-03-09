@@ -21,7 +21,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/statistics/StatisticsSiteAdmin.inc');/**
-
  * @version $Revision: 1036 $
  * @package Statistics
  * @author Aidan Lister <aidan@php.net>
@@ -60,7 +59,6 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		// Controller
 		$template->setVariable('controller', 'statistics.StatisticsSiteAdmin');
-
 		return array(null, 'modules/statistics/templates/StatisticsSiteAdminDisk.tpl', 'modules_statistics');
 	}
 
@@ -166,25 +164,48 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		$albums                 = $gallery->getConfig('data.gallery.albums');
 		$statistics['capacity'] = disk_total_space($base);
 		$statistics['used']     = disk_total_space($base) - disk_free_space($base);
-		$statistics['base']     = $this->_dirSize($base, $taskname, $minitask, $progress, $module, $templateAdapter);
-		$progress               = 0.5;
-		$minitask               = $module->translate('Scanning derivative folder');
+		$statistics['base']     = $this->_dirSize(
+			$base,
+			$taskname,
+			$minitask,
+			$progress,
+			$module,
+			$templateAdapter
+		);
+
+		$progress = 0.5;
+		$minitask = $module->translate('Scanning derivative folder');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
 			$progress
 		);
 
-		$statistics['derivative'] = $this->_dirSize($derivative, $minitask, $taskname, $progress, $module, $templateAdapter);
-		$progress                 = 0.8;
-		$minitask                 = $module->translate('Scanning album folder');
+		$statistics['derivative'] = $this->_dirSize(
+			$derivative,
+			$minitask,
+			$taskname,
+			$progress,
+			$module,
+			$templateAdapter
+		);
+
+		$progress = 0.8;
+		$minitask = $module->translate('Scanning album folder');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
 			$progress
 		);
 
-		$statistics['albums'] = $this->_dirSize($albums, $taskname, $minitask, $progress, $module, $templateAdapter);
+		$statistics['albums'] = $this->_dirSize(
+			$albums,
+			$taskname,
+			$minitask,
+			$progress,
+			$module,
+			$templateAdapter
+		);
 
 		// Put to disk
 		$cacheParams = array(

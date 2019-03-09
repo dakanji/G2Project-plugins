@@ -154,7 +154,6 @@ class SelectAlbumView extends GalleryView {
 		$template->setVariable('SelectAlbum', $SelectAlbum);
 		$template->setVariable('controller', 'publishxp.SelectAlbum');
 		$template->head('modules/publishxp/templates/Head.tpl');
-
 		return array(
 			null,
 			array(

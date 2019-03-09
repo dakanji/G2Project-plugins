@@ -64,21 +64,24 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[b]bold[/b]',
 			PicasaImportHelper::convertHtmlToBbcode('<strong>bold</strong>')
 		);
+
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br>')
 		);
+
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br/>')
 		);
+
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br />')
 		);
+
 		// Image HTML with edge cases
 		$this->assertEquals(
-
 			'[img]foo.jpg[/img]',
 			PicasaImportHelper::convertHtmlToBbcode('<img src=\'foo.jpg\'>')
 		);
@@ -115,17 +118,19 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[list][/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul></ul>')
 		);
+
 		$this->assertEquals(
 			'[list][*]foo[/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul><li>foo</li></ul>')
 		);
+
 		$this->assertEquals(
 			'[list][*]foo[/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul><li>foo</ul>')
 		);
+
 		// URL HTML with edge cases
 		$this->assertEquals(
-
 			'[url=http://google.com]Google[/url]',
 			PicasaImportHelper::convertHtmlToBbcode('<a href="http://google.com">Google</a>')
 		);
@@ -201,9 +206,9 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[i][b]interleaved[/i][/b]',
 			PicasaImportHelper::convertHtmlToBbcode('<i><b>interleaved</i></b>')
 		);
+
 		// Non-supported HTML is stripped completely
 		$this->assertEquals(
-
 			'foo',
 			PicasaImportHelper::convertHtmlToBbcode('<hr><h1 title="foo">foo</h1>')
 		);

@@ -66,7 +66,6 @@ class MakePuzzleView extends GalleryView {
 
 		// DEBUG Information
 		$gallery->debug('<hr>');
-
 		if (!empty($permissions)) {
 			foreach (array_keys($permissions) as $key) {
 				$gallery->debug("<br>(modules:puzzle) findAppletItemId: permissions[$key] = " . $permissions[$key]);
@@ -222,7 +221,6 @@ class MakePuzzleView extends GalleryView {
 			}
 
 			$template->title($module->translate('Make a puzzle'));
-
 			return array(
 				null,
 				array(
@@ -304,7 +302,6 @@ class MakePuzzleView extends GalleryView {
 		}
 
 		$template->title($module->translate('Make a puzzle'));
-
 		return array(
 			null,
 			array(

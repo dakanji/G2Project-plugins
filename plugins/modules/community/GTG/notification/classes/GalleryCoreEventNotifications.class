@@ -44,7 +44,6 @@ class ActivatePluginNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		return $this->_translateText(
-
 			'notification',
 			array(
 				'arg1' => $this->getPluginType(),
@@ -185,7 +184,6 @@ class ErrorNotification extends NotificationEvent_1_0 {
 	 */
 	public function getNotificationMessage() {
 		$error = $this->getError();
-
 		return array(null, $error->getAsText());
 	}
 
@@ -634,7 +632,6 @@ class SaveNotification extends NotificationEvent_1_0 {
 	 */
 	public function getItemId() {
 		$entity = $this->_event->getEntity();
-
 		return $entity->getId();
 	}
 
@@ -694,7 +691,6 @@ class DeleteNotification extends NotificationEvent_1_0 {
 	 */
 	public function getItemId() {
 		$entity = $this->_event->getEntity();
-
 		return $entity->getId();
 	}
 

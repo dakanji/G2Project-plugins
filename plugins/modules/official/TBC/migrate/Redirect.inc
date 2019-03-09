@@ -55,9 +55,7 @@ class RedirectController extends GalleryController {
 		global $gallery;
 
 		$phpVm = $gallery->getPhpVm();
-
 		GalleryCoreApi::requireOnce('modules/migrate/classes/G1MigrateHelper.class');
-
 		$path = GalleryUtilities::getRequestVariables('path');
 		$path = preg_split('|/|', $path, -1, PREG_SPLIT_NO_EMPTY);
 		$view = 'core.ShowItem';
@@ -150,7 +148,6 @@ class RedirectController extends GalleryController {
 
 		// Redirect browser
 		$phpVm->header('HTTP/1.0 301 Moved Permanently');
-
 		$results = array(
 			'redirect' => array(
 				'view'   => $view,
@@ -219,14 +216,10 @@ class RedirectView extends GalleryView {
 		}
 
 		header('Content-type: text/plain');
-
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
-
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
-
 		$template->setVariable('l10Domain', 'modules_migrate');
 		$template->display('gallery:modules/migrate/templates/Htaccess.tpl');
-
 		return null;
 	}
 }

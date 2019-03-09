@@ -60,28 +60,24 @@ class SendController extends GalleryController {
 			}
 
 			$session->put('contactowner.badname', serialize($badname));
-
 			if (!preg_match('(^[-\w\.]+@([-a-z0-9]+\.)+[a-z]{2,4}$)i', $form['custEmail'])) {
 				$resubmit = true;
 				$bademail = true;
 			}
 
 			$session->put('contactowner.bademail', serialize($bademail));
-
 			if (strlen($form['custSubject']) < 1) {
 				$resubmit   = true;
 				$badsubject = true;
 			}
 
 			$session->put('contactowner.badsubject', serialize($badsubject));
-
 			if (strlen($form['custMessage']) < 1) {
 				$resubmit   = true;
 				$badmessage = true;
 			}
 
 			$session->put('contactowner.badmessage', serialize($badmessage));
-
 			if ($resubmit == false) {
 				$nextView = 'contactowner.Sent';
 
@@ -147,7 +143,6 @@ class SendController extends GalleryController {
 					$emailsent           = true;
 					$form['custSubject'] = '';
 					$form['custMessage'] = '';
-
 					$session->put('contactowner.custsubject', serialize($form['custSubject']));
 					$session->put('contactowner.custmessage', serialize($form['custMessage']));
 					$session->put('contactowner.emailcount', serialize($emailCount));

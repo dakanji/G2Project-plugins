@@ -78,7 +78,6 @@ class DownloadView extends GalleryView {
 				// Poor IE6 doesn't know multipart.. just send zip
 				// Safari doesn't get filename in multipart and may even crash
 				$phpVm->header('Content-Type: application/zip');
-
 				$phpVm->header('Content-Disposition: inline; filename="G2cart.zip"');
 				if ($size > 0) {
 					$phpVm->header("Content-Length: $size");
@@ -93,7 +92,6 @@ class DownloadView extends GalleryView {
 					}
 
 					echo $data;
-
 					$gallery->guaranteeTimeLimit(30);
 				}
 
@@ -102,7 +100,6 @@ class DownloadView extends GalleryView {
 
 			@$platform->unlink($file);
 			@$platform->unlink(substr($file, 0, -4));   // Remove file created by tempnam() too
-
 			if ($sendMultipart) {
 				echo "\n--G2ZipCart\nContent-Type: text/html\nPragma: No-cache\n\n";
 				echo "<html><body onload=\"location.reload()\"></body></html>\n\n";

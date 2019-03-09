@@ -56,7 +56,6 @@ class PrintPhotosController extends GalleryController {
 		} else {
 			$session     =& $gallery->getSession();
 			$cartItemIds = $session->get('fotokasten.cart');
-
 			$session->remove('fotokasten.cart');
 		}
 
@@ -330,7 +329,6 @@ class PrintPhotosController extends GalleryController {
 
 			// this endpoint has to be used for all further requests
 			$session->put(
-
 				'fotokasten.endpoint',
 				$this->server['endpoint'] = $return['endpoint']
 			);
@@ -384,7 +382,6 @@ class PrintPhotosController extends GalleryController {
 			if ($return['error_code'] != 0) {
 				$gallery->debug_r($soap->request);
 				$gallery->debug_r($return);
-
 				return array(
 					GalleryCoreApi::error(
 						ERROR_UNKNOWN,

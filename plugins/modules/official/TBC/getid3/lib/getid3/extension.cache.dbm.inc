@@ -6,11 +6,14 @@
 //            or http://www.getid3.org                         //
 //          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // extension.cache.dbm.php - part of getID3()                  //
 // Please see readme.txt for more information                  //
 //                                                            ///
+
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // This extension written by Allan Hansen <ahØartemis*dk>      //
 //                                                            ///
@@ -136,8 +139,10 @@ class getID3_cached_dbm extends getID3 {
 	public function __destruct() {
 		// Close dbm file
 		dba_close($this->dba);
+
 		// Release exclusive lock
 		flock($this->lock, LOCK_UN);
+
 		// Close lock file
 		fclose($this->lock);
 	}

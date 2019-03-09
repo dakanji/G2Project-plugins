@@ -52,7 +52,6 @@ class MapFilterAdminController extends GalleryController {
 
 		if (isset($form['action']['add'])) {
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditFilter', '');
-
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -77,7 +76,6 @@ class MapFilterAdminController extends GalleryController {
 			}
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $newfilter);
-
 			$status['filterdeleted']        = 1;
 			$results['status']              = $status;
 			$results['error']               = array();
@@ -106,7 +104,6 @@ class MapFilterAdminController extends GalleryController {
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $newfilter);
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditFilter', $editfilter);
-
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -157,12 +154,10 @@ class MapFilterAdminController extends GalleryController {
 				}
 
 				GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $form['Filters']);
-
 				$status['filtersaved'] = 1;
 			}
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditFilter', '');
-
 			$method                      = empty($error) ? 'redirect' : 'delegate';
 			$mode                        = empty($error) ? 'Filter' : 'AddFilter';
 			$results['status']           = $status;
@@ -350,7 +345,6 @@ class MapFilterAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$template->head('modules/map/includes/GoogleMap.css');
-
 		$form['formName'] = 'MapFilterAdmin';
 
 		// Set default values for undefined plugin parameters
@@ -369,7 +363,6 @@ class MapFilterAdminView extends GalleryView {
 		if (!array_key_exists('LevelFilterRoot', $form)) {
 			$form['LevelFilterRoot'] = false;
 		}
-
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		// Create the filter array
@@ -391,12 +384,10 @@ class MapFilterAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
-
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapFilterAdmin');
-
 		return array(
 			null,
 			array(

@@ -205,7 +205,7 @@ class RssGenerator {
 			$data = '<rss version="2.0">';
 		}
 
-		$data .= $lf . '<channel>' . $lf .
+		$data   .= $lf . '<channel>' . $lf .
 		'<title>' . $this->cdata(GalleryUtilities::markup($this->_properties['title'])) .
 		'</title>' . $lf .
 		'<link>' . $this->_properties['link'] . '</link>' . $lf .
@@ -232,9 +232,7 @@ class RssGenerator {
 		   ' <title>' .
 		   $this->cdata(GalleryUtilities::markup($this->_properties['image']['title'])) .
 		'</title>' . $lf .
-
 		' <link>' . $this->_properties['image']['link'] . '</link></image>' . $lf : '');
-
 		$userMap = array();
 		foreach ($this->_items as $item) {
 			if (isset($item['title'], $item['link'], $item['description'])) {

@@ -83,7 +83,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 	public function testUploadItems() {
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
-
 		$_FILES['userFile']['type']     = 'test/file';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.dat';
@@ -109,9 +108,7 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals($this->_parent->getId(), $entity->getParentId());
-
 		$this->assertEquals('Foo_dat', $entity->getPathComponent());
-
 		$this->assertEquals('test/file', $entity->getMimeType());
 		$this->assertEquals('Foo.dat', $entity->getTitle());
 		$this->assertEquals('', $entity->getSummary(), 'summary');
@@ -122,7 +119,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
 		GalleryUtilities::putRequestVariable('form[setCaptions]', 1);
-
 		$_FILES['userFile']['type']     = 'test/file';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo<script>Bar.dat';
@@ -148,8 +144,8 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals($this->_parent->getId(), $entity->getParentId());
-
 		$this->assertEquals('test/file', $entity->getMimeType());
+
 		/** @todo: this is not optimal.. the path should be 'Foo_script_Bar_dat' */
 		$this->assertEquals('Foo_lt_script_gt_Bar_dat', $entity->getPathComponent());
 		$this->assertEquals('Foo&lt;script&gt;Bar.dat', $entity->getTitle(), 'title');
@@ -160,7 +156,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 	public function testUploadItemsPermissionDenied() {
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', 0);
-
 		$_FILES['userFile']['type']     = 'application/unknown';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.dat';
@@ -170,7 +165,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 	public function testUploadItemsMissingFileName() {
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
-
 		$_FILES['userFile']['type']     = 'application/unknown';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$results                        = $this->handleRequest(ERROR_BAD_PARAMETER);
@@ -179,7 +173,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 	public function testUploadItemsMissingMimeType() {
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
-
 		$_FILES['userFile']['type']     = '';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.csh';
@@ -205,7 +198,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals($this->_parent->getId(), $entity->getParentId());
-
 		$this->assertEquals('application/x-csh', $entity->getMimeType());
 		$this->assertEquals('Foo.csh', $entity->getTitle());
 		$this->assertEquals('', $entity->getSummary(), 'summary');
@@ -217,7 +209,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
 		GalleryUtilities::putRequestVariable('form[setCaptions]', 1);
 		GalleryUtilities::putRequestVariable('form[stripExtensions]', 1);
-
 		$_FILES['userFile']['type']     = 'test/file';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.dat';
@@ -264,7 +255,6 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 		GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
-
 		$_FILES['userFile']['type']     = 'test/file';
 		$_FILES['userFile']['tmp_name'] = __FILE__;
 		$_FILES['userFile']['name']     = 'Foo.dat';
@@ -310,18 +300,13 @@ class UploadItemsControllerTest extends GalleryControllerTestCase {
 
 	public function testGetCharsetFromRequest() {
 		$controller = new UploadItemsController();
-
 		GalleryUtilities::putRequestVariable('lcid', 1033, false);
-
 		$this->assertEquals('CP1252', $controller->_getCharsetFromRequest(), 'English');
 		GalleryUtilities::putRequestVariable('lcid', 1031, false);
-
 		$this->assertEquals('CP1252', $controller->_getCharsetFromRequest(), 'German');
 		GalleryUtilities::putRequestVariable('lcid', 1025, false);
-
 		$this->assertEquals('CP1256', $controller->_getCharsetFromRequest(), 'Arabic');
 		GalleryUtilities::removeRequestVariable('lcid', false);
-
 		$this->assertEquals('CP1252', $controller->_getCharsetFromRequest(), 'Default');
 	}
 }

@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 ///                                                            //
 // module.tag.lyrics3.php                                      //
 // module for analyzing Lyrics3 tags                           //
@@ -54,7 +55,6 @@ class getid3_lyrics3 extends getid3_handler {
 		} else {
 			if (isset($info['ape']['tag_offset_start']) && ($info['ape']['tag_offset_start'] > 15)) {
 				$this->fseek($info['ape']['tag_offset_start'] - 15);
-
 				$lyrics3lsz = $this->fread(6);
 				$lyrics3end = $this->fread(9);
 				if ($lyrics3end == 'LYRICSEND') {
@@ -76,20 +76,15 @@ class getid3_lyrics3 extends getid3_handler {
 
 		if (isset($lyrics3offset)) {
 			$info['avdataend'] = $lyrics3offset;
-
 			$this->getLyrics3Data($lyrics3offset, $lyrics3version, $lyrics3size);
-
 			if (!isset($info['ape'])) {
 				if (isset($info['lyrics3']['tag_offset_start'])) {
 					$GETID3_ERRORARRAY =& $info['warning'];
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.apetag.php', __FILE__, true);
 					$getid3_temp = new getID3();
-
 					$getid3_temp->openfile($this->getid3->filename);
-
 					$getid3_apetag                    = new getid3_apetag($getid3_temp);
 					$getid3_apetag->overrideendoffset = $info['lyrics3']['tag_offset_start'];
-
 					$getid3_apetag->Analyze();
 					if (!empty($getid3_temp->info['ape'])) {
 						$info['ape'] = $getid3_temp->info['ape'];
@@ -118,7 +113,6 @@ class getid3_lyrics3 extends getid3_handler {
 		}
 
 		$this->fseek($endoffset);
-
 		if ($length <= 0) {
 			return false;
 		}
@@ -146,7 +140,6 @@ class getid3_lyrics3 extends getid3_handler {
 			case 1:
 				if (substr($rawdata, strlen($rawdata) - 9, 9) == 'LYRICSEND') {
 					$ParsedLyrics3['raw']['LYR'] = trim(substr($rawdata, 11, strlen($rawdata) - 11 - 9));
-
 					$this->Lyrics3LyricsTimestampParse($ParsedLyrics3);
 				} else {
 					$info['error'][] = '"LYRICSEND" expected at ' . ($this->ftell() - 11 + $length - 9) . ' but found "' . substr($rawdata, strlen($rawdata) - 9, 9) . '" instead';

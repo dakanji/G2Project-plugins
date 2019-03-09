@@ -75,7 +75,6 @@ class SelectGalleryController extends GalleryController {
 				}
 
 				$session->put('migrate.view.SelectGallery.recentPaths', $recentPaths);
-
 				$redirect['view']       = 'core.SiteAdmin';
 				$redirect['subView']    = 'migrate.ChooseObjects';
 				$redirect['albumsPath'] = $form['albumsPath'];
@@ -157,10 +156,8 @@ class SelectGalleryView extends GalleryView {
 		$SelectGallery['recentPaths'] = $recentPaths;
 		$SelectGallery['hasToolkit']  = $hasToolkit;
 		$SelectGallery['mapCount']    = $mapCount;
-
 		$template->setVariable('SelectGallery', $SelectGallery);
 		$template->setVariable('controller', 'migrate.SelectGallery');
-
 		return array(
 			null,
 			array(

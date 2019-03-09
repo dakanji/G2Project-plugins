@@ -92,9 +92,7 @@ class ConfigureView extends GalleryView {
 		}
 
 		$status['configured'] = 1;
-
 		$template->setVariable('status', $status);
-
 		return array(
 			null,
 			array(

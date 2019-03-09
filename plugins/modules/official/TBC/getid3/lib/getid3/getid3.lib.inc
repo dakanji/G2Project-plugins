@@ -6,6 +6,7 @@
 //            or http://www.getid3.org                         //
 //          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // getid3.lib.php - part of getID3()                           //
 // See readme.txt for more details                             //

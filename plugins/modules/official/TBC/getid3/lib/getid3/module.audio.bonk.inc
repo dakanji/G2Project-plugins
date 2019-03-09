@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.la.php                                         //
 // module for analyzing BONK audio files                       //
@@ -28,13 +29,10 @@ class getid3_bonk extends getid3_handler {
 		} else {
 			// scan-from-end method, for v0.6 and higher
 			$this->fseek($thisfile_bonk['dataend'] - 8);
-
 			$PossibleBonkTag = $this->fread(8);
 			while ($this->BonkIsValidTagName(substr($PossibleBonkTag, 4, 4), true)) {
 				$BonkTagSize = getid3_lib::LittleEndian2Int(substr($PossibleBonkTag, 0, 4));
-
 				$this->fseek(0 - $BonkTagSize, SEEK_CUR);
-
 				$BonkTagOffset = $this->ftell();
 				$TagHeaderTest = $this->fread(5);
 				if (($TagHeaderTest[0] != "\x00") || (substr($PossibleBonkTag, 4, 4) != strtolower(substr($PossibleBonkTag, 4, 4)))) {
@@ -45,9 +43,7 @@ class getid3_bonk extends getid3_handler {
 				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
 				$thisfile_bonk[$BonkTagName]['size']   = $BonkTagSize;
 				$thisfile_bonk[$BonkTagName]['offset'] = $BonkTagOffset;
-
 				$this->HandleBonkTags($BonkTagName);
-
 				$NextTagEndOffset = $BonkTagOffset - 8;
 				if ($NextTagEndOffset < $thisfile_bonk['dataoffset']) {
 					if (empty($info['audio']['encoder'])) {
@@ -58,7 +54,6 @@ class getid3_bonk extends getid3_handler {
 				}
 
 				$this->fseek($NextTagEndOffset);
-
 				$PossibleBonkTag = $this->fread(8);
 			}
 		}
@@ -66,7 +61,6 @@ class getid3_bonk extends getid3_handler {
 		// seek-from-beginning method for v0.4 and v0.5
 		if (empty($thisfile_bonk['BONK'])) {
 			$this->fseek($thisfile_bonk['dataoffset']);
-
 			do {
 				$TagHeaderTest = $this->fread(5);
 				switch ($TagHeaderTest) {
@@ -86,7 +80,6 @@ class getid3_bonk extends getid3_handler {
 				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
 				$thisfile_bonk[$BonkTagName]['size']   = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
 				$thisfile_bonk[$BonkTagName]['offset'] = $thisfile_bonk['dataoffset'];
-
 				$this->HandleBonkTags($BonkTagName);
 			} while (true);
 		}
@@ -94,14 +87,12 @@ class getid3_bonk extends getid3_handler {
 		// parse META block for v0.6 - v0.8
 		if (empty($thisfile_bonk['INFO']) && isset($thisfile_bonk['META']['tags']['info'])) {
 			$this->fseek($thisfile_bonk['META']['tags']['info']);
-
 			$TagHeaderTest = $this->fread(5);
 			if ($TagHeaderTest == "\x00" . 'INFO') {
 				$info['audio']['encoder']              = 'Extended BONK v0.6 - v0.8';
 				$BonkTagName                           = substr($TagHeaderTest, 1, 4);
 				$thisfile_bonk[$BonkTagName]['size']   = $thisfile_bonk['dataend'] - $thisfile_bonk['dataoffset'];
 				$thisfile_bonk[$BonkTagName]['offset'] = $thisfile_bonk['dataoffset'];
-
 				$this->HandleBonkTags($BonkTagName);
 			}
 		}
@@ -163,7 +154,6 @@ class getid3_bonk extends getid3_handler {
 						$NextInfoDataPair = $this->fread(5);
 						if ($this->BonkIsValidTagName(substr($NextInfoDataPair, 1, 4))) {
 							$this->fseek(-5, SEEK_CUR);
-
 							break;
 						}
 
@@ -192,9 +182,7 @@ class getid3_bonk extends getid3_handler {
 				// ID3v2 checking is optional
 				if (class_exists('getid3_id3v2')) {
 					$getid3_temp = new getID3();
-
 					$getid3_temp->openfile($this->getid3->filename);
-
 					$getid3_id3v2                  = new getid3_id3v2($getid3_temp);
 					$getid3_id3v2->StartingOffset  = $info['bonk'][' ID3']['offset'] + 2;
 					$info['bonk'][' ID3']['valid'] = $getid3_id3v2->Analyze();

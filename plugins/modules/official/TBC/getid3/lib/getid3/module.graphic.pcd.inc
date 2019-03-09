@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.graphic.pcd.php                                      //
 // module for analyzing PhotoCD (PCD) Image files              //
@@ -22,9 +23,7 @@ class getid3_pcd extends getid3_handler {
 		$info['fileformat']          = 'pcd';
 		$info['video']['dataformat'] = 'pcd';
 		$info['video']['lossless']   = false;
-
 		$this->fseek($info['avdataoffset'] + 72);
-
 		$PCDflags      = $this->fread(1);
 		$PCDisVertical = ((ord($PCDflags) & 0x01) ? true : false);
 		if ($PCDisVertical) {
@@ -47,7 +46,6 @@ class getid3_pcd extends getid3_handler {
 			list($PCD_width, $PCD_height, $PCD_dataOffset) = $PCD_levels[3];
 
 			$this->fseek($info['avdataoffset'] + $PCD_dataOffset);
-
 			for ($y = 0; $y < $PCD_height; $y += 2) {
 				// The image-data of these subtypes start at the respective offsets of 02000h, 0b800h and 30000h.
 				// To decode the YcbYr to the more usual RGB-code, three lines of data have to be read, each

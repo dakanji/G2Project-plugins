@@ -31,6 +31,7 @@ class Auth_Yadis_ProxyResolver {
 		}
 
 		$query = Auth_Yadis_XRIAppendArgs($hxri, $args);
+
 		return $query;
 	}
 

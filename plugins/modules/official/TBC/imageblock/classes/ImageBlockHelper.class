@@ -257,7 +257,6 @@ class ImageBlockHelper {
 
 			$ImageBlockData['blocks']       = $blocks;
 			$ImageBlockData['forceFullUrl'] = 0;
-
 			$template->setVariable('ImageBlockData', $ImageBlockData);
 		}
 
@@ -1121,7 +1120,6 @@ class ImageBlockHelper {
 
 			$message         = $module->translate('Image Block');
 			$templateAdapter =& $gallery->getTemplateAdapter();
-
 			$templateAdapter->updateProgressBar($message, '', 0);
 		}
 
@@ -1177,7 +1175,6 @@ class ImageBlockHelper {
 		$total = count($childIds);
 		foreach ($childIds as $itemId) {
 			$gallery->guaranteeTimeLimit(30);
-
 			if ($disabled) {
 				$ret = GalleryCoreApi::addMapEntry(
 					'ImageBlockDisabledMap',

@@ -36,7 +36,6 @@ GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutDiscountMapHelper.class');
-
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -191,22 +190,16 @@ class ConfirmController extends GalleryController {
 
 					// store the txnItem Id in the cart for other modules to use
 					$items[$itemId][$product['productId']]['txnItemId'] = $txnItem->getId();
-
 					$txnItem->setItem($itemId);
-
 					$txnItem->setTransaction($transaction->getId());
-
 					$txnItem->setItemName($item['fullItemDetails']['pathComponent']);
 					$txnItem->setItemText($item['parentTitle']);
 					$txnItem->setProduct($product['productId']);
 					$txnItem->setProductName($product['name']);
 					$txnItem->setQty($item[$product['productId']]['quant']);
-
 					$productCount += $item[$product['productId']]['quant'];
-
 					$txnItem->setPriceEach($product['price']);
 					$txnItem->setPriceTotal(
-
 						number_format($item[$product['productId']]['quant'] * $product['price'], 2, '.', '')
 					);
 
@@ -267,22 +260,16 @@ class ConfirmController extends GalleryController {
 
 						// store the txnItem Id in the cart for other modules to use
 						$items['accessories'][$optionId]['txnItemId'] = $txnItem->getId();
-
 						$txnItem->setItem($accessoryDetails['id']);
-
 						$txnItem->setTransaction($transaction->getId());
-
 						$txnItem->setItemName($accessoryDetails['fullItemDetails']['title']);
 						$txnItem->setItemText($accessoryDetails['fullItemDetails']['summary']);
 						$txnItem->setProduct($optionId);
 						$txnItem->setProductName($option['name']);
 						$txnItem->setQty($items['accessories'][$optionId]['quant']);
-
 						$productCount += $items['accessories'][$optionId]['quant'];
-
 						$txnItem->setPriceEach($option['price']);
 						$txnItem->setPriceTotal(number_format($items['accessories'][$optionId]['quant'] * $option['price'], 2, '.', ''));
-
 						$subtotal                                   += ($items['accessories'][$optionId]['quant'] * $option['price']);
 						$items['accessories'][$optionId]['subtotal'] = number_format($subtotal, 2, '.', '');
 
@@ -335,10 +322,8 @@ class ConfirmController extends GalleryController {
 				$discountAmount  = $total * $myDiscount['discountPercent'] / 100;
 				$discountAmount += $myDiscount['discountFixed'];
 				$discountAmount  = number_format($discountAmount, 2, '.', '');
-
 				$transaction->setDiscount($discountAmount);
 				$transaction->setDiscountDescription($myDiscount['description']);
-
 				$total -= $discountAmount;
 			}
 
@@ -358,7 +343,6 @@ class ConfirmController extends GalleryController {
 
 				$transaction->setPostageType($posts[$items['postage']]['type']);
 				$transaction->setPostage($postage);
-
 				$total += $postage;
 			}
 
@@ -375,7 +359,6 @@ class ConfirmController extends GalleryController {
 
 			// Set and save the data
 			$transaction->sethost(GalleryUtilities::getRemoteHostAddress());
-
 			$translator =& $gallery->getTranslator();
 
 			list($ret, $languageCode) = $translator->getDefaultLanguageCode();
@@ -389,7 +372,6 @@ class ConfirmController extends GalleryController {
 
 			// Because the G2 storage API only handles INTEGER numeric storage, store as string
 			$total = number_format($total, 2, '.', '');
-
 			$transaction->setamount($total);
 
 			$ret = $transaction->save();
@@ -400,7 +382,6 @@ class ConfirmController extends GalleryController {
 
 			// call an event for other modules to know a new transaction has been stored
 			$event = GalleryCoreApi::newEvent('GalleryCheckout::newTransaction');
-
 			$event->setEntity($transaction);
 			$event->setData($items);
 
@@ -418,7 +399,6 @@ class ConfirmController extends GalleryController {
 			}
 
 			$session->put('checkout.transactionId', $transaction->getId());
-
 			if (!$atLeastOneQtySet) {
 				$error[]                     = 'form[error][noQuantity]';
 				$results['delegate']['view'] = 'checkout.Select';
@@ -554,7 +534,6 @@ class ConfirmView extends GalleryView {
 
 		$template->title($tpl['busname'] . ' ' . $module->translate('Checkout'));
 		$template->setVariable('tpl', $tpl);
-
 		return array(
 			null,
 			array(

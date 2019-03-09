@@ -235,6 +235,7 @@ function Auth_OpenID_urinorm($uri) {
 	}
 
 	$query = $uri_matches[6];
+
 	if ($query === null) {
 		$query = '';
 	}

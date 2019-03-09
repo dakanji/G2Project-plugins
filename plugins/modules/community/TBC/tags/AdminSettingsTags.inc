@@ -62,6 +62,7 @@ class AdminSettingsTagsController extends GalleryController {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 					}
 
 					$ret = GalleryCoreApi::setPluginParameter(
@@ -74,7 +75,9 @@ class AdminSettingsTagsController extends GalleryController {
 					if ($ret) {
 						return array($ret, null);
 					}
+
 				}
+
 			}
 
 			if ($form['tagAdminMode'] == 'TagCloud') {
@@ -101,6 +104,7 @@ class AdminSettingsTagsController extends GalleryController {
 								$form['classNumber'] = $i;
 								break;
 							}
+
 						}
 
 						$form['tagCssClass'] = substr($tagCssClass, 0, -2);
@@ -116,6 +120,7 @@ class AdminSettingsTagsController extends GalleryController {
 							if ($ret) {
 								return array($ret, null);
 							}
+
 						}
 
 						// Create the css file to use for the Tag Cloud
@@ -124,8 +129,11 @@ class AdminSettingsTagsController extends GalleryController {
 						if ($ret) {
 							return array($ret, null);
 						}
+
 					}
+
 				}
+
 			}
 
 			$method                           = empty($error) ? 'redirect' : 'delegate';
@@ -145,6 +153,7 @@ class AdminSettingsTagsController extends GalleryController {
 		$results['error']  = $error;
 		return array(null, $results);
 	}
+
 }
 
 /**
@@ -174,32 +183,26 @@ class AdminSettingsTagsView extends GalleryView {
 		$Settings['tagCssClass'] = $tagCssClass;
 		$tagAdminMode            = GalleryUtilities::getRequestVariables('tagAdminMode');
 		$tagAdminMode            = empty($tagAdminMode) ? 'General' : $tagAdminMode;
-
 		$template->javascript('lib/yui/yahoo-min.js');
-
 		$template->javascript('lib/yui/event-min.js');
-
 		$template->javascript('lib/yui/dom-min.js');
-
 		$template->javascript('lib/yui/dragdrop-min.js');
-
 		$template->javascript('lib/yui/connection-min.js');
-
 		$template->javascript('lib/yui/color.js');
-
 		$template->javascript('lib/yui/slider-min.js');
-
 		$template->javascript('lib/javascript/ColorChooser.js');
 		$template->javascript('modules/tags/js/AdminTags.js');
 		$template->setVariable('controller', 'tags.AdminSettingsTags');
 		$template->setVariable('tagAdminMode', $tagAdminMode);
 		$template->setVariable('Settings', $Settings);
-
 		return array(
 			null,
 			array(
 				'body' => 'modules/tags/templates/AdminSettingsTags.tpl',
 			),
 		);
+
 	}
+
 }
+

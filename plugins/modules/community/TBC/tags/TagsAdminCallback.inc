@@ -110,9 +110,7 @@ class TagsAdminCallbackView extends GalleryView {
 			echo '" onchange="relateColor(\'colorPicker' . $i . '\', this.value);" />';
 			echo '<a href="javascript:ColorChooserShow(\'colorPicker' . $i . '\');" 
 		id="colorPicker' . $i . '" style="padding:5px">'
-
 			. $module->translate('Select') . '</a>';
-
 			echo '<script language="javascript">relateColor(\'colorPicker' . $i . '\');</script>';
 			echo '</td></tr>';
 		}

@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.audio.aac.php                                        //
 // module for analyzing AAC Audio files                        //
@@ -17,9 +18,7 @@
 class getid3_aac extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		$this->fseek($info['avdataoffset']);
-
 		if ($this->fread(4) == 'ADIF') {
 			$this->getAACADIFheaderFilepointer();
 		} else {
@@ -34,9 +33,7 @@ class getid3_aac extends getid3_handler {
 		$info['fileformat']          = 'aac';
 		$info['audio']['dataformat'] = 'aac';
 		$info['audio']['lossless']   = false;
-
 		$this->fseek($info['avdataoffset']);
-
 		$AACheader = $this->fread(1024);
 		$offset    = 0;
 		if (substr($AACheader, 0, 4) == 'ADIF') {

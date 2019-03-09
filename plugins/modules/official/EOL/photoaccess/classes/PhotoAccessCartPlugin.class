@@ -86,6 +86,8 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 				'href' => $cartUrl,
 			),
 		);
+
 	}
+
 }
 

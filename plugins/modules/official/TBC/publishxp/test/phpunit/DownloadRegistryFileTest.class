@@ -54,7 +54,6 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 		}
 
 		$gallery->setActiveLanguageCode('en_US');
-
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 			unset($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 		}
@@ -66,9 +65,7 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 		$this->assertEquals('CP1252', $this->view->_getCharsetFromRequest(), 'default');
 		$this->_setActiveLanguageCode('en_US');
 		$this->assertEquals('CP1252', $this->view->_getCharsetFromRequest(), 'default 2');
-
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'ja';
-
 		$this->assertEquals('CP932', $this->view->_getCharsetFromRequest(), 'HTTP override');
 		$this->_setActiveLanguageCode('ru_RU');
 		$this->assertEquals(
@@ -87,29 +84,19 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 		}
 
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'ja';
-
 		$this->assertEquals('CP932', $this->view->_getCharsetFromRequest(), 'HTTP override');
 	}
 
 	public function testGetCharsetFromRequestChinese() {
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh';
-
 		$this->assertEquals('CP950', $this->view->_getCharsetFromRequest(), 'default');
-
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-cn';
-
 		$this->assertEquals('CP936', $this->view->_getCharsetFromRequest(), 'Simplified 1');
-
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-tw';
-
 		$this->assertEquals('CP950', $this->view->_getCharsetFromRequest(), 'Traditional 1');
-
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-hans_HK';
-
 		$this->assertEquals('CP936', $this->view->_getCharsetFromRequest(), 'Simplified 2');
-
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'zh-Hant';
-
 		$this->assertEquals('CP950', $this->view->_getCharsetFromRequest(), 'Traditional 2');
 	}
 

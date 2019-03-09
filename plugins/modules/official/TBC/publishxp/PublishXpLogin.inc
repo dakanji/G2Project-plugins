@@ -67,9 +67,7 @@ class PublishXpLoginController extends GalleryController {
 
 				if (isset($user) && $user->isCorrectPassword($form['password'])) {
 					$gallery->setActiveUser($user);
-
 					$event = GalleryCoreApi::newEvent('Gallery::Login');
-
 					$event->setEntity($user);
 
 					list($ret, $ignoreTheRedirect) = GalleryCoreApi::postEvent($event);
@@ -152,7 +150,6 @@ class PublishXpLoginView extends GalleryView {
 		$template->title($module->translate('Windows Publishing Wizard'));
 		$template->setVariable('controller', 'publishxp.PublishXpLogin');
 		$template->head('modules/publishxp/templates/Head.tpl');
-
 		return array(
 			null,
 			array(

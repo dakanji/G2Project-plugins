@@ -8,12 +8,15 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.archive.gzip.php                                     //
 // module for analyzing GZIP files                             //
 // dependencies: NONE                                          //
 //                                                            ///
+
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // Module originally written by                                //
 //      Mike Mozolin <teddybearØmail*ru>                       //
@@ -37,7 +40,6 @@ class getid3_gzip extends getid3_handler {
 		}
 
 		$this->fseek(0);
-
 		$buffer      = $this->fread($info['filesize']);
 		$arr_members = explode("\x1F\x8B\x08", $buffer);
 		while (true) {
@@ -221,13 +223,9 @@ class getid3_gzip extends getid3_handler {
 									fwrite($fp_temp_tar, $inflated);
 									fclose($fp_temp_tar);
 									$getid3_temp = new getID3();
-
 									$getid3_temp->openfile($temp_tar_filename);
-
 									$getid3_tar = new getid3_tar($getid3_temp);
-
 									$getid3_tar->Analyze();
-
 									$info['gzip']['member_header'][$idx]['tar'] = $getid3_temp->info['tar'];
 									unset($getid3_temp, $getid3_tar);
 									unlink($temp_tar_filename);

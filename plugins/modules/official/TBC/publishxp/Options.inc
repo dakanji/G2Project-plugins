@@ -51,7 +51,6 @@ class OptionsController extends GalleryController {
 			 * the form in the session for later.
 			 */
 			$session =& $gallery->getSession();
-
 			$session->put('publishxp.extraOptionsForm', serialize($form));
 		} else {
 			$results['delegate']['view'] = 'publishxp.Options';
@@ -95,7 +94,6 @@ class OptionsView extends GalleryView {
 
 		// Get all the add options
 		GalleryCoreApi::requireOnce('modules/core/ItemAdd.inc');
-
 		if (isset($this->_optionInstances)) {
 			$optionInstances = $this->_optionInstances;
 		} else {
@@ -151,7 +149,6 @@ class OptionsView extends GalleryView {
 		$template->title($module->translate('Windows Publishing Wizard'));
 		$template->setVariable('Options', $Options);
 		$template->head('modules/publishxp/templates/Head.tpl');
-
 		return array(
 			null,
 			array(

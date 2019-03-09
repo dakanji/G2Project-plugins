@@ -21,7 +21,6 @@
 
 // TODO: Make library includes absolute
 ini_set('include_path', dirname(__FILE__) . '/lib:' . ini_get('include_path'));
-
 GalleryCoreApi::requireOnce('modules/openid/lib/Auth/OpenID/CryptUtil.php');
 GalleryCoreApi::requireOnce('modules/openid/lib/Auth/Yadis/Yadis.php');
 
@@ -112,7 +111,6 @@ class OpenIdSiteAdminView extends GalleryView {
 			$OpenIdSiteAdmin['randData']     = $platform->fread($OpenIdSiteAdmin['randHandle'], $OpenIdSiteAdmin['expectedSize']);
 			$stat                            = fstat($OpenIdSiteAdmin['randHandle']);
 			$OpenIdSiteAdmin['randSize']     = $stat['size'];
-
 			$platform->fclose($OpenIdSiteAdmin['randHandle']);
 		}
 
@@ -135,7 +133,6 @@ class OpenIdSiteAdminView extends GalleryView {
 		// Render HTML body
 		$template->setVariable('OpenIdSiteAdmin', $OpenIdSiteAdmin);
 		$template->setVariable('controller', 'openid.OpenIdSiteAdmin');
-
 		return array(
 			null,
 			array(

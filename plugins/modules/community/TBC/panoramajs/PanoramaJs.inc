@@ -90,7 +90,6 @@ class PanoramaJsView extends GalleryView {
 		$template->javascript('modules/panoramajs/lib/env.js');
 		$template->javascript('modules/panoramajs/lib/yajevLE.js');
 		$template->style('modules/panoramajs/panoramaJs.css');
-
 		return array(
 			null,
 			array(

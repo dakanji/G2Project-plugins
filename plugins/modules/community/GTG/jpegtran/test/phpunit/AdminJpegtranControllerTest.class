@@ -48,7 +48,6 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		$this->_savePlatform =& $gallery->getPlatform();
 		$testPlatform        = new AdminJpegtranControllerTestPlatform();
-
 		$gallery->setPlatform($testPlatform);
 	}
 
@@ -85,7 +84,6 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 	public function testReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -102,7 +100,6 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 	public function testCancel() {
 		GalleryUtilities::putRequestVariable('form[action][cancel]', 1);
-
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

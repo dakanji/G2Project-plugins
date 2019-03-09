@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
+
 //                                                             //
 // module.misc.iso.php                                         //
 // module for analyzing ISO files                              //
@@ -20,19 +21,15 @@ class getid3_iso extends getid3_handler {
 		$info['fileformat'] = 'iso';
 		for ($i = 16; $i <= 19; $i++) {
 			$this->fseek(2048 * $i);
-
 			$ISOheader = $this->fread(2048);
 			if (substr($ISOheader, 1, 5) == 'CD001') {
 				switch (ord($ISOheader[0])) {
 					case 1:
 						$info['iso']['primary_volume_descriptor']['offset'] = 2048 * $i;
-
 						$this->ParsePrimaryVolumeDescriptor($ISOheader);
-
 						break;
 					case 2:
 						$info['iso']['supplementary_volume_descriptor']['offset'] = 2048 * $i;
-
 						$this->ParseSupplementaryVolumeDescriptor($ISOheader);
 						break;
 					default:
@@ -43,7 +40,6 @@ class getid3_iso extends getid3_handler {
 		}
 
 		$this->ParsePathTable();
-
 		$info['iso']['files'] = array();
 		foreach ($info['iso']['path_table']['directories'] as $directorynum => $directorydata) {
 			$info['iso']['directories'][$directorynum] = $this->ParseDirectoryRecord($directorydata);
@@ -223,9 +219,7 @@ class getid3_iso extends getid3_handler {
 		}
 
 		$info['iso']['path_table']['offset'] = $PathTableLocation * 2048;
-
 		$this->fseek($info['iso']['path_table']['offset']);
-
 		$info['iso']['path_table']['raw'] = $this->fread($PathTableSize);
 		$offset                           = 0;
 		$pathcounter                      = 1;
@@ -267,7 +261,6 @@ class getid3_iso extends getid3_handler {
 		}
 
 		$this->fseek($directorydata['location_bytes']);
-
 		$DirectoryRecordData = $this->fread(1);
 		while (ord($DirectoryRecordData[0]) > 33) {
 			$DirectoryRecordData                                    .= $this->fread(ord($DirectoryRecordData[0]) - 1);

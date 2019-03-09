@@ -255,7 +255,6 @@ class Auth_Yadis_XRDS {
 		$this->xrdNode     = $xrdNodes[count($xrdNodes) - 1];
 		$this->allXrdNodes = $xrdNodes;
 		$this->serviceList = array();
-
 		$this->_parse();
 	}
 

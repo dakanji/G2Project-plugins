@@ -240,9 +240,7 @@ class PhotoAccessHelper {
 		$postData                = array();
 		$postData['cb']          = 'CB_GP';
 		$postData['xml_request'] = join('', $lines);
-
 		$gallery->guaranteeTimeLimit(30);
-
 		$cartUrl = 'http://' . $photoAccessServer . $cartUrlFragment;
 		if ($gallery->getDebug()) {
 			$gallery->debug('Post data:');
@@ -279,9 +277,7 @@ class PhotoAccessHelper {
 		)
 		) {
 			$cartUrlFragment = str_replace('&#38;', '&', $matches[1]);
-
 			$session->put('photoaccess.cartUrlFragment', $cartUrlFragment);
-
 			$redirectUrl = 'http://' . $photoAccessServer . str_replace('&#38;', '&', $matches[2]);
 		} else {
 			$redirectUrl = $urlGenerator->generateUrl(

@@ -140,7 +140,6 @@ class CheckoutGoogleResponseHelper {
 		$data = '';
 		if (!is_null($request)) {
 			GalleryCoreApi::requireOnce('modules/checkoutgoogle/lib/gc_xmlparser.php');
-
 			$xml_parser = new gc_xmlparser($request);
 			$root       = $xml_parser->GetRoot();
 			$data       = $xml_parser->GetData();

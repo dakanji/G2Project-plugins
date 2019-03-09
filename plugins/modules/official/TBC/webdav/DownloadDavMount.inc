@@ -93,7 +93,6 @@ class DownloadDavMountView extends GalleryView {
 
 		if (!$isAnonymous) {
 			$user = $gallery->getActiveUser();
-
 			echo '  <dm:username>' . $user->getUserName() . "</dm:username>\n";
 		}
 

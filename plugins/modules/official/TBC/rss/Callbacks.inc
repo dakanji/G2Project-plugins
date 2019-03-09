@@ -29,7 +29,6 @@ class RssCallbacks {
 		static $feeds;
 
 		GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
-
 		switch ($callback) {
 			case 'FeedList':
 				if (empty($params['number'])) {

@@ -54,7 +54,6 @@ class ExternalView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		GalleryCoreApi::requireOnce('modules/imageblock/classes/ImageBlockHelper.class');
-
 		global $gallery;
 
 		// Force UrlGenerator to not add session id into urls..
@@ -87,7 +86,6 @@ class ExternalView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
-
 		if (isset($this->_template)) {
 			$template =& $this->_template;
 		} else {
@@ -147,7 +145,6 @@ class ExternalView extends GalleryView {
 				if (!$phpVm->headers_sent()) {
 					$phpVm->header('Content-type: text/html; charset=UTF-8');
 					$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
-
 					$phpVm->header('Cache-Control: no-cache');
 					$phpVm->header('Pragma: no-cache');
 					$phpVm->header('Expires: ' . $expires);

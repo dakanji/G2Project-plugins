@@ -263,15 +263,12 @@ class BulkTagsEditView extends GalleryView {
 		$BulkTagsEdit['page']      = $page;
 		$BulkTagsEdit['itemId']    = $itemId;
 		$BulkTagsEdit['numPages']  = $numPages;
-
 		$template->setVariable('BulkTagsEdit', $BulkTagsEdit);
-
 		$template->setVariable('controller', 'tags.BulkTagsEdit');
 		$template->javascript('lib/yui/yahoo-min.js');
 		$template->javascript('lib/yui/dom-min.js');
 		$template->javascript('lib/yui/event-min.js');
 		$template->javascript('lib/yui/container-min.js');
-
 		return array(
 			null,
 			array(

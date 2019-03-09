@@ -37,12 +37,11 @@ class DigibugModule extends GalleryModule {
 				'Digibug Photo Printing Module'
 			)
 		);
+
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 		$this->setRequiredCoreApi(array(7, 43));
@@ -86,6 +85,7 @@ class DigibugModule extends GalleryModule {
 					'digibug.print',
 					$gallery->i18n('[digibug] Print')
 				);
+
 				if ($ret) {
 					return $ret;
 				}

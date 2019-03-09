@@ -93,12 +93,19 @@
  * Required imports
  */
 require_once 'Auth/OpenID.php';
+
 require_once 'Auth/OpenID/Association.php';
+
 require_once 'Auth/OpenID/CryptUtil.php';
+
 require_once 'Auth/OpenID/BigMath.php';
+
 require_once 'Auth/OpenID/DiffieHellman.php';
+
 require_once 'Auth/OpenID/KVForm.php';
+
 require_once 'Auth/OpenID/TrustRoot.php';
+
 require_once 'Auth/OpenID/ServerRequest.php';
 require_once 'Auth/OpenID/Message.php';
 require_once 'Auth/OpenID/Nonce.php';
@@ -194,7 +201,6 @@ class Auth_OpenID_ServerError {
 		}
 
 		$msg = $this->toMessage();
-
 		return $msg->toURL($this->getReturnTo());
 	}
 
@@ -215,7 +221,6 @@ class Auth_OpenID_ServerError {
 
 	public function toFormMarkup($form_tag_attrs = null) {
 		$msg = $this->toMessage();
-
 		return $msg->toFormMarkup($this->getReturnTo(), $form_tag_attrs);
 	}
 
@@ -230,10 +235,8 @@ class Auth_OpenID_ServerError {
 		// after encoding.
 		$namespace = $this->message->getOpenIDNamespace();
 		$reply     = new Auth_OpenID_Message($namespace);
-
 		$reply->setArg(Auth_OpenID_OPENID_NS, 'mode', 'error');
 		$reply->setArg(Auth_OpenID_OPENID_NS, 'error', $this->toString());
-
 		if ($this->contact !== null) {
 			$reply->setArg(Auth_OpenID_OPENID_NS, 'contact', $this->contact);
 		}
@@ -414,18 +417,19 @@ class Auth_OpenID_CheckAuthRequest extends Auth_OpenID_Request {
 		// Now invalidate that assoc_handle so it this checkAuth
 		// message cannot be replayed.
 		$signatory->invalidate($this->assoc_handle, true);
-
 		$response = new Auth_OpenID_ServerResponse($this);
 		$response->fields->setArg(
 			Auth_OpenID_OPENID_NS,
 			'is_valid',
 			($is_valid ? 'true' : 'false')
 		);
+
 		if ($this->invalidate_handle) {
 			$assoc = $signatory->getAssociation(
 				$this->invalidate_handle,
 				false
 			);
+
 			if (!$assoc) {
 				$response->fields->setArg(
 					Auth_OpenID_OPENID_NS,
@@ -731,11 +735,13 @@ class Auth_OpenID_AssociateRequest extends Auth_OpenID_Request {
 			'error_code',
 			'unsupported-type'
 		);
+
 		$response->fields->setArg(
 			Auth_OpenID_OPENID_NS,
 			'error',
 			$text_message
 		);
+
 		if ($preferred_association_type) {
 			$response->fields->setArg(
 				Auth_OpenID_OPENID_NS,
@@ -746,7 +752,6 @@ class Auth_OpenID_AssociateRequest extends Auth_OpenID_Request {
 
 		if ($preferred_session_type) {
 			$response->fields->setArg(
-
 				Auth_OpenID_OPENID_NS,
 				'session_type',
 				$preferred_session_type
@@ -1187,6 +1192,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 					'identity',
 					$response_identity
 				);
+
 				if ($this->message->isOpenID2()) {
 					$response->fields->setArg(
 						Auth_OpenID_OPENID_NS,
@@ -1201,6 +1207,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 				'mode',
 				$mode
 			);
+
 			if ($this->immediate) {
 				if (($this->message->isOpenID1())
 					&& (!$server_url)
@@ -1269,6 +1276,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		$response = new Auth_OpenID_Message(
 			$this->message->getOpenIDNamespace()
 		);
+
 		$response->updateArgs(Auth_OpenID_OPENID_NS, $q);
 		return $response->toURL($server_url);
 	}
@@ -1290,6 +1298,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 		$response = new Auth_OpenID_Message(
 			$this->message->getOpenIDNamespace()
 		);
+
 		$response->setArg(Auth_OpenID_OPENID_NS, 'mode', 'cancel');
 		return $response->toURL($this->return_to);
 	}
@@ -1362,7 +1371,6 @@ class Auth_OpenID_ServerResponse {
 
 	public function needsSigning() {
 		return $this->fields->getArg(
-
 			Auth_OpenID_OPENID_NS,
 			'mode'
 		) == 'id_res';
@@ -1505,7 +1513,6 @@ class Auth_OpenID_Signatory {
 		}
 
 		$this->store->storeAssociation($key, $assoc);
-
 		return $assoc;
 	}
 
@@ -1531,7 +1538,6 @@ class Auth_OpenID_Signatory {
 		if (($assoc !== null) && ($assoc->getExpiresIn() <= 0)) {
 			if ($check_expiration) {
 				$this->store->removeAssociation($key, $assoc_handle);
-
 				$assoc = null;
 			}
 		}
@@ -1697,6 +1703,7 @@ class Auth_OpenID_Decoder {
 			$mode,
 			$this->defaultDecoder($message)
 		);
+
 		if (!is_a($handlerCls, 'Auth_OpenID_ServerError')) {
 			return call_user_func_array(
 				array($handlerCls, 'fromMessage'),
@@ -1792,7 +1799,6 @@ class Auth_OpenID_UntrustedReturnURL extends Auth_OpenID_ServerError {
  *         $response = $request->answer(false);
  *     } else {
  *         $app->showDecidePage($request);
-
  *         return;
  *     }
  * } else {

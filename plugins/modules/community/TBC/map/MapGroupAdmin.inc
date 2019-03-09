@@ -96,7 +96,6 @@ class MapGroupAdminController extends GalleryController {
 			GalleryCoreApi::setPluginParameter('module', 'map', 'MapGroups', $newgroups);
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditGroup', $editgroup);
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditGroupParam', $params);
-
 			$results['status']              = $status;
 			$results['error']               = $error;
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -188,9 +187,7 @@ class MapGroupAdminController extends GalleryController {
 			 . $Groupfile . '`'
 			 . $GroupDate . '`'
 			 . $GroupItems;
-
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditGroup', $editgroup);
-
 			$id         = 'G' . $num;
 			$coordinate = (isset($_POST['GroupGPS'])) ? $_POST['GroupGPS'] : '';
 			$zoom       = (isset($_POST['GroupZoomlevel'])) ? $_POST['GroupZoomlevel'] : '';
@@ -360,9 +357,7 @@ class MapGroupAdminController extends GalleryController {
 			. $Groupfile . '`'
 			. $GroupDate . '`'
 			. $GroupItems;
-
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditGroup', $newgroup);
-
 			$id         = 'G' . $num;
 			$coordinate = (isset($_POST['GroupGPS'])) ? $_POST['GroupGPS'] : '';
 			$zoom       = (isset($_POST['GroupZoomlevel'])) ? $_POST['GroupZoomlevel'] : '';
@@ -510,9 +505,7 @@ class MapGroupAdminController extends GalleryController {
 			 . $Groupfile . '`'
 			 . $GroupDate . '`'
 			 . $GroupItems;
-
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditGroup', $editgroup);
-
 			$id         = 'G' . $num;
 			$coordinate = (isset($_POST['GroupGPS'])) ? $_POST['GroupGPS'] : '';
 			$zoom       = (isset($_POST['GroupZoomlevel'])) ? $_POST['GroupZoomlevel'] : '';
@@ -707,13 +700,10 @@ class MapGroupAdminView extends GalleryView {
 			 * end up embedded within.
 			 */
 			foreach ($entities as $entity) {
-				$pointHash[$entity->getId()]['type'] = $entity->getEntityType();
-
-				$pointHash[$entity->getId()]['title'] = preg_replace(array('/\n/', '/\r/'), array('', ''), $entity->getTitle());
-
+				$pointHash[$entity->getId()]['type']        = $entity->getEntityType();
+				$pointHash[$entity->getId()]['title']       = preg_replace(array('/\n/', '/\r/'), array('', ''), $entity->getTitle());
 				$pointHash[$entity->getId()]['description'] = preg_replace(array('/\n/', '/\r/'), array('', ''), $entity->getDescription());
-
-				$pointHash[$entity->getId()]['thumb'] = $urlGenerator->generateUrl(
+				$pointHash[$entity->getId()]['thumb']       = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $thumbs[$entity->getId()]->getId(),
@@ -731,7 +721,6 @@ class MapGroupAdminView extends GalleryView {
 
 			$form['items'] = $GPSItem;
 		}
-
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		// Create the option list for Group Color (based on Photo selection)
@@ -804,12 +793,10 @@ class MapGroupAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
-
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapGroupAdmin');
-
 		return array(
 			null,
 			array(

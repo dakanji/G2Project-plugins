@@ -19,7 +19,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/title/Begin.inc');/**
-
  * Dynamic album view of items whose titles contain given chars
  * @package Title
  * @author Alec Myers <alec@alecmyers.com>

@@ -47,6 +47,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 				),
 				null,
 			);
+
 		}
 
 		if ($eventName == 'GalleryEntity::save') {
@@ -69,6 +70,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			if ($ret) {
 				return array($ret, null);
 			}
+
 		} elseif ($eventName == 'GalleryEntity::delete') {
 			$deleteByColumn = GalleryUtilities::isA($entity, 'GalleryUser') ? 'userId' : 'itemId';
 
@@ -82,6 +84,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			if ($ret) {
 				return array($ret, null);
 			}
+
 		}
 
 		return array(null, null);
@@ -146,10 +149,13 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 				if ($ret) {
 					return $ret;
 				}
+
 			}
+
 		}
 
 		return null;
 	}
+
 }
 

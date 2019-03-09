@@ -21,7 +21,6 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/statistics/StatisticsSiteAdmin.inc');/**
-
  * @version $Revision: 1036 $
  * @package BulkManage
  * @author Aidan Lister <aidan@php.net>
@@ -109,7 +108,6 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 
 		// Controller
 		$template->setVariable('controller', 'statistics.StatisticsSiteAdmin');
-
 		return array(null, 'modules/statistics/templates/StatisticsSiteAdminCursory.tpl', 'modules_statistics');
 	}
 

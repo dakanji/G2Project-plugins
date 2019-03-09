@@ -63,7 +63,6 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		global $gallery;
 
 		$templateAdapter =& $gallery->getTemplateAdapter();
-
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
@@ -79,6 +78,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 			$message,
 			''
 		);
+
 		if ($ret->isError()) {
 			return array($ret, null, null);
 		}

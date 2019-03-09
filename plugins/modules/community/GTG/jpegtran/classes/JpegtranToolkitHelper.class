@@ -256,7 +256,6 @@ class JpegtranToolkitHelper {
 		}
 
 		@$platform->unlink($tmpFilename);
-
 		return array(null, $testArray);
 	}
 }

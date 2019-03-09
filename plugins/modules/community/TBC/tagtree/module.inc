@@ -38,12 +38,11 @@ class TagTreeModule extends GalleryModule {
 				'Jump directly to any album using a hierarchical tag view'
 			)
 		);
+
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
-
 		$this->_templateVersion = 1;
-
 		$this->setGroup('blocks', $gallery->i18n('Blocks'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 	}
@@ -66,7 +65,6 @@ class TagTreeModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		$listener = new TagTreeModule();
-
 		GalleryCoreApi::registerEventListener('Gallery::ViewableTreeChange', $listener, true);
 		GalleryCoreApi::registerEventListener('Gallery::ItemOrder', $listener, true);
 		GalleryCoreApi::registerEventListener('GalleryEntity::save', $listener, true);

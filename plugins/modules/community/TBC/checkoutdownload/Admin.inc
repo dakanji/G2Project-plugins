@@ -387,7 +387,6 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'checkoutdownload.Admin');
-
 		return array(
 			null,
 			array(

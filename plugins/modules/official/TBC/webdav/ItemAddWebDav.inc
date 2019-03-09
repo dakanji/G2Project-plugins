@@ -137,7 +137,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 		}
 
 		$platform->fclose($handle);
-
 		$originalPath = GalleryUtilities::getRequestVariables('originalPath');
 		$title        = empty($originalPath) ? basename($path) : basename($originalPath);
 
@@ -150,13 +149,13 @@ class ItemAddWebDav extends ItemAddPlugin {
 			$mimeType,
 			$parentItem->getId()
 		);
+
 		@$platform->unlink($tmpFile);
 		if ($ret) {
 			return array($ret, null, null);
 		}
 
 		WebDavServer::getme()->setResponseStatus('201 Created');
-
 		return array(
 			null,
 			array(),
@@ -202,7 +201,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
@@ -210,7 +208,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
@@ -218,7 +215,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret || $hasLink) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret ? $ret : GalleryCoreApi::error(ERROR_PERMISSION_DENIED), null, null);
 		}
 
@@ -227,13 +223,11 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
 		if (($handle = $platform->fopen($filePath, 'wb')) === false) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 		}
 
@@ -242,7 +236,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
@@ -251,13 +244,11 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
 		if (!isset($newItem)) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array(
 				GalleryCoreApi::error(
 					ERROR_MISSING_OBJECT,
@@ -274,7 +265,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
@@ -283,7 +273,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
@@ -298,7 +287,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 			$gallery->debug(
 				'Error in ItemEditWebDav::handleRequest: ' . $newItem->getClassName()
-
 				. ' doesn\'t support the file content.  Falling back on an unknown item.'
 			);
 
@@ -309,13 +297,11 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array($ret, null, null);
 			}
 
 			if (!isset($newItem)) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array(
 					GalleryCoreApi::error(
 						ERROR_MISSING_OBJECT,
@@ -332,7 +318,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array($ret, null, null);
 			}
 
@@ -341,7 +326,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array($ret, null, null);
 			}
 
@@ -349,7 +333,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array($ret, null, null);
 			}
 		}
@@ -361,7 +344,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 		// Backup the file content
 		if (!$platform->copy($filePath, $tmpFile)) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 		}
 
@@ -370,7 +352,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			@$platform->unlink($tmpFile);
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
@@ -381,7 +362,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if (!$platform->copy($tmpFile, $filePath)) {
 			@$platform->unlink($tmpFile);
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 		}
 
@@ -392,7 +372,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 
@@ -400,7 +379,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
-
 			return array($ret, null, null);
 		}
 

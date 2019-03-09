@@ -294,7 +294,6 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$sevenDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 7, date('Y')));
-
 		$this->_user->setCreationTimestamp($sevenDays);
 
 		$ret = $this->_user->save();
@@ -324,7 +323,6 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$sixDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 6, date('Y')));
-
 		$this->_user->setCreationTimestamp($sixDays);
 
 		$ret = $this->_user->save();

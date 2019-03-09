@@ -53,10 +53,8 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		$this->_activeRules   =& HttpAuthModuleTestRewriteApi::_fetchActiveRulesForModule('httpauth');
 		$this->_activeRules   = array();
 		$this->_activateCalls =& HttpAuthModuleTestRewriteApi::_getActivateCalls();
-
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
-
 			'RewriteApi',
 			'HttpAuthModuleTestRewriteApi',
 			'HttpAuthModuleTestRewriteApi',
@@ -115,7 +113,6 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		// Use HttpAuthModuleTestPlatform
 		$this->_platform                                          = new HttpAuthModuleTestPlatform();
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_accessAuthorizationResponse;
-
 		$gallery->setPlatform($this->_platform);
 
 		$ret = $this->_markPluginParametersForCleanup('module', 'httpauth');
@@ -145,9 +142,7 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		// Reset auth related server and request variables
 		unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $_SERVER['REMOTE_USER']);
-
 		GalleryUtilities::removeRequestVariable('authorization');
-
 		$this->_registerTestEventListener('Gallery::ActivatePlugin', $this->_module);
 		$this->_registerTestEventListener('Gallery::Error', $this->_module);
 		$this->_registerTestEventListener('Gallery::Logout', $this->_module);
@@ -165,21 +160,18 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 	public function testGetRewriteRules() {
 		$rules = $this->_module->getRewriteRules();
-
 		$this->assertEquals(array(), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesAuthorizationRuleActive() {
 		$this->_activeRules = array('authorization');
 		$rules              = $this->_module->getRewriteRules();
-
 		$this->assertEquals(array('authorization'), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesMissingAuthorization() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
 		$rules = $this->_module->getRewriteRules();
-
 		$this->assertEquals(array('authorization'), array_keys($rules));
 	}
 
@@ -260,7 +252,6 @@ class HttpAuthModuleTest extends GalleryTestCase {
 
 		$activeUser = $gallery->getActiveUser();
 		$event      = GalleryCoreApi::newEvent('Gallery::Logout');
-
 		$event->setEntity($activeUser);
 
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
@@ -278,7 +269,6 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		$activeUser               = $gallery->getActiveUser();
 		$_SERVER['PHP_AUTH_USER'] = $activeUser->getUserName();
 		$event                    = GalleryCoreApi::newEvent('Gallery::Logout');
-
 		$event->setEntity($activeUser);
 
 		list($ret, $results) = GalleryCoreApi::postEvent($event);
@@ -305,7 +295,6 @@ class HttpAuthModuleTest extends GalleryTestCase {
 		$activeUser             = $gallery->getActiveUser();
 		$_SERVER['REMOTE_USER'] = $activeUser->getUserName();
 		$event                  = GalleryCoreApi::newEvent('Gallery::Logout');
-
 		$event->setEntity($activeUser);
 
 		list($ret, $results) = GalleryCoreApi::postEvent($event);

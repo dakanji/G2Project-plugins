@@ -178,7 +178,6 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'checkoutpaypal.Admin');
-
 		return array(
 			null,
 			array(

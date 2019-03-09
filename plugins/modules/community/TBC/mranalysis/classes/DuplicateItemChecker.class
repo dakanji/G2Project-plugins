@@ -71,7 +71,6 @@ class DuplicateItemChecker {
 		if ($this->lastitem == null) {
 			// No last item - so this item is not duplicate
 			$this->setLastItem($item, false);
-
 			return false;
 		}
 
@@ -79,7 +78,6 @@ class DuplicateItemChecker {
 			if ($this->lastitem->parentId != $item->parentId) {
 				// Item not in same album, and not checking titles across albums
 				$this->setLastItem($item, false);
-
 				return false;
 			}
 		}
@@ -97,7 +95,6 @@ class DuplicateItemChecker {
 
 		// Not a duplicate
 		$this->setLastItem($item, false);
-
 		return false;
 	}
 }

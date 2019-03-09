@@ -65,7 +65,6 @@ class AdminJpegtranController extends GalleryController {
 						if ($platform->file_exists($path)) {
 							// Got a match
 							$form['path'] = $path;
-
 							GalleryUtilities::putRequestVariable('form[path]', $path);
 						}
 					}
@@ -252,7 +251,6 @@ class AdminJpegtranView extends GalleryView {
 
 		$template->setVariable('AdminJpegtran', $AdminJpegtran);
 		$template->setVariable('controller', 'jpegtran.AdminJpegtran');
-
 		return array(
 			null,
 			array(

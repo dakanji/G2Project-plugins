@@ -23,8 +23,8 @@
 GalleryCoreApi::requireOnce(
 	'modules/core/classes/helpers/GalleryDerivativeHelper_simple.class'
 );
-GalleryCoreApi::requireOnce(
 
+GalleryCoreApi::requireOnce(
 	'modules/core/DownloadItem.inc'
 );
 

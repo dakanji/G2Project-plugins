@@ -74,7 +74,6 @@ class mapItemEdit extends ItemEditPlugin {
 			)
 			) {
 				$status = '<span class="giError">'
-
 				  . $module->translate('Bad coordinates, please verify') . '</span>';
 			} elseif (!preg_match(
 				'/^(' . $headingregex . '((\040)*,(\040)*'
@@ -83,7 +82,6 @@ class mapItemEdit extends ItemEditPlugin {
 			)
 			) {
 				$status = '<span class="giError">'
-
 				. $module->translate('Bad LookAt parameters, please verify') . '</span>';
 			} else {
 				// cleanup the coordinates of any spaces
@@ -205,7 +203,6 @@ class mapItemEdit extends ItemEditPlugin {
 		}
 
 		$tpl = 'modules/map/templates/mapItemEdit.tpl';
-
 		$template->setVariable('controller', 'map.mapItemEdit');
 
 		// Add stuff for the help system

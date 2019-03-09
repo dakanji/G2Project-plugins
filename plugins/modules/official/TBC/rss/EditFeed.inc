@@ -372,11 +372,9 @@ class EditFeedView extends GalleryView {
 		}
 
 		$EditFeed['rssVersionList'] = array('0.91', '2.0');
-
 		$template->setVariable('EditFeed', $EditFeed);
 		$template->setVariable('param', $param);
 		$template->setVariable('controller', 'rss.EditFeed');
-
 		return array(
 			null,
 			array(
