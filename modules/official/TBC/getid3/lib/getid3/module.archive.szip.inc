@@ -29,8 +29,7 @@ class getid3_szip extends getid3_handler {
 		$info['fileformat']            = 'szip';
 		$info['szip']['major_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 4, 1));
 		$info['szip']['minor_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 5, 1));
-
-		$info['error'][] = 'SZIP parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
+		$info['error'][]               = 'SZIP parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
 
 		return false;
 
@@ -47,9 +46,8 @@ class getid3_szip extends getid3_handler {
 					break;
 
 				case 'BH':
-					$BHheaderbytes = getid3_lib::BigEndian2Int($this->fread(3));
-					$BHheaderdata  = $this->fread($BHheaderbytes);
-
+					$BHheaderbytes  = getid3_lib::BigEndian2Int($this->fread(3));
+					$BHheaderdata   = $this->fread($BHheaderbytes);
 					$BHheaderoffset = 0;
 
 					while (strpos($BHheaderdata, "\x00", $BHheaderoffset) > 0) {

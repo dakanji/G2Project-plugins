@@ -10,7 +10,6 @@
 // extension.cache.mysql.php - part of getID3()                //
 // Please see readme.txt for more information                  //
 //                                                            ///
-
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // This extension written by Allan Hansen <ahØartemis*dk>      //
@@ -100,11 +99,9 @@ class getID3_cached_mysql extends getID3 {
 		$this->create_table();
 
 		// Check version number and clear cache if changed
-		$version  = '';
-		$SQLquery = 'SELECT `value`';
-
+		$version   = '';
+		$SQLquery  = 'SELECT `value`';
 		$SQLquery .= ' FROM `' . mysql_real_escape_string($this->table) . '`';
-
 		$SQLquery .= ' WHERE (`filename` = \'' . mysql_real_escape_string(getID3::VERSION) . '\')';
 		$SQLquery .= ' AND (`filesize` = -1)';
 		$SQLquery .= ' AND (`filetime` = -1)';
@@ -135,8 +132,7 @@ class getID3_cached_mysql extends getID3 {
 			$filesize = filesize($filename);
 
 			// Lookup file
-			$SQLquery = 'SELECT `value`';
-
+			$SQLquery  = 'SELECT `value`';
 			$SQLquery .= ' FROM `' . mysql_real_escape_string($this->table) . '`';
 			$SQLquery .= ' WHERE (`filename` = \'' . mysql_real_escape_string($filename) . '\')';
 			$SQLquery .= '   AND (`filesize` = \'' . mysql_real_escape_string($filesize) . '\')';

@@ -42,8 +42,7 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
 	public function getInfo() {
 		global $gallery;
 
-		$info['l10Domain'] = 'modules_map';
-
+		$info['l10Domain']   = 'modules_map';
 		$info['title']       = $gallery->i18n('Write GPS Information onto the EXIF header for the pictures');
 		$info['description'] = $gallery->i18n(
 			'This task will go through all the gallery items and populate the GPS information' .
@@ -94,9 +93,8 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
 			$ids[] = $res[0];
 		}
 
-		$totalitems = count($ids);
-		$current    = 1;
-
+		$totalitems            = count($ids);
+		$current               = 1;
 		$insertEXIFcoordinates = $module->translate('Inserting GPS coordinates into EXIF header');
 		$ret                   = $templateAdapter->updateProgressBar(
 			$insertEXIFcoordinates,

@@ -169,7 +169,6 @@ class DownloadItemView extends GalleryView {
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
-
 		$stats = $platform->stat($data['derivativePath']);
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));

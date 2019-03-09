@@ -82,8 +82,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 					$urlComponents['path'] = $urlComponents['host'];
 				}
 
-				$tmpFile = $urlComponents['path'];
-
+				$tmpFile            = $urlComponents['path'];
 				$successfullyCopied = $platform->file_exists($tmpFile);
 			} else {
 				$error[]            = 'form[error][imageUrl][invalid]';

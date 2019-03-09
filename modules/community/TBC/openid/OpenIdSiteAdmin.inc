@@ -106,15 +106,13 @@ class OpenIdSiteAdminView extends GalleryView {
 
 		$OpenIdSiteAdmin               = array();
 		$OpenIdSiteAdmin['randSource'] = Auth_OpenID_RAND_SOURCE;
-
 		$OpenIdSiteAdmin['randHandle'] = @$platform->fopen($OpenIdSiteAdmin['randSource'], 'r');
 
 		if ($OpenIdSiteAdmin['randHandle'] !== false) {
 			$OpenIdSiteAdmin['expectedSize'] = 6;
-
-			$OpenIdSiteAdmin['randData'] = $platform->fread($OpenIdSiteAdmin['randHandle'], $OpenIdSiteAdmin['expectedSize']);
-			$stat                        = fstat($OpenIdSiteAdmin['randHandle']);
-			$OpenIdSiteAdmin['randSize'] = $stat['size'];
+			$OpenIdSiteAdmin['randData']     = $platform->fread($OpenIdSiteAdmin['randHandle'], $OpenIdSiteAdmin['expectedSize']);
+			$stat                            = fstat($OpenIdSiteAdmin['randHandle']);
+			$OpenIdSiteAdmin['randSize']     = $stat['size'];
 
 			$platform->fclose($OpenIdSiteAdmin['randHandle']);
 		}

@@ -50,8 +50,7 @@ class SelectGalleryController extends GalleryController {
 			} else {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
-
-				$tmp = trim($form['albumsPath']);
+				$tmp      = trim($form['albumsPath']);
 
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;

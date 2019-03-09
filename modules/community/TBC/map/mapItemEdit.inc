@@ -42,8 +42,7 @@ class mapItemEdit extends ItemEditPlugin {
 	public function handleRequest($form, &$item, &$preferred) {
 		global $gallery;
 
-		$gurl =& $gallery->getUrlGenerator();
-
+		$gurl   =& $gallery->getUrlGenerator();
 		$status = null;
 		$error  = array();
 
@@ -148,8 +147,7 @@ class mapItemEdit extends ItemEditPlugin {
 	public function loadTemplate(&$template, &$form, $item, $thumbnail) {
 		if ($form['formName'] != 'mapItemEdit') {
 			$form['formName'] = 'mapItemEdit';
-
-			$form['itemId'] = $item->getId();
+			$form['itemId']   = $item->getId();
 		}
 
 		list($ret, $form['exif']) = GoogleMapUtilities::getGPSCoordsFromExif($item);

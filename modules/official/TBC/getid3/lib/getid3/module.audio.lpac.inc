@@ -88,7 +88,6 @@ class getid3_lpac extends getid3_handler {
 		$info['warning']                     = $getid3_temp->info['warning'];
 		$info['lpac']['comments']['comment'] = $getid3_temp->info['comments'];
 		$info['audio']['sample_rate']        = $getid3_temp->info['audio']['sample_rate'];
-
 		unset($getid3_temp, $getid3_riff);
 		$info['audio']['channels'] = ($info['lpac']['flags']['stereo'] ? 2 : 1);
 

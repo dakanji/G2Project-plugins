@@ -181,7 +181,6 @@ class pdf_parser {
 	public function pdf_find_xref() {
 		fseek($this->f, -min(filesize($this->filename), 1500), SEEK_END);
 		$data = fread($this->f, 1500);
-
 		$pos  = strlen($data) - strpos(strrev($data), strrev('startxref'));
 		$data = substr($data, $pos);
 

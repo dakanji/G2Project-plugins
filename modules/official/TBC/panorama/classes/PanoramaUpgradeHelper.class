@@ -122,7 +122,6 @@ class PanoramaUpgradeHelper {
 		 */
 		$cacheBaseDir = $gallery->getConfig('data.gallery.cache');
 		$platform     =& $gallery->getPlatform();
-
 		@$platform->recursiveRmDir("$cacheBaseDir/entity");
 
 		return null;

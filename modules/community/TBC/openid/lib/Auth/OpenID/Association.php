@@ -350,8 +350,7 @@ class Auth_OpenID_Association {
 
 		$signed_list = explode(',', $signed);
 		$pairs       = array();
-
-		$data = $message->toPostArgs();
+		$data        = $message->toPostArgs();
 
 		foreach ($signed_list as $field) {
 			$pairs[] = array(

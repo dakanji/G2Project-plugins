@@ -189,10 +189,9 @@ function Auth_Yadis_XRI($xri) {
 function Auth_Yadis_getCanonicalID($iname, $xrds) {
 	// Returns false or a canonical ID value.
 	// Now nodes are in reverse order.
-	$xrd_list = array_reverse($xrds->allXrdNodes);
-	$parser   =& $xrds->parser;
-	$node     = $xrd_list[0];
-
+	$xrd_list          = array_reverse($xrds->allXrdNodes);
+	$parser            =& $xrds->parser;
+	$node              = $xrd_list[0];
 	$canonicalID_nodes = $parser->evalXPath('xrd:CanonicalID', $node);
 
 	if (!$canonicalID_nodes) {
@@ -200,15 +199,13 @@ function Auth_Yadis_getCanonicalID($iname, $xrds) {
 	}
 
 	$canonicalID = $canonicalID_nodes[0];
-
 	$canonicalID = Auth_Yadis_XRI($parser->content($canonicalID));
 	$childID     = $canonicalID;
 
 	for ($i = 1; $i < count($xrd_list); $i++) {
 		$xrd           = $xrd_list[$i];
 		$parent_sought = substr($childID, 0, strrpos($childID, '!'));
-
-		$parentCID = $parser->evalXPath('xrd:CanonicalID', $xrd);
+		$parentCID     = $parser->evalXPath('xrd:CanonicalID', $xrd);
 
 		if (!$parentCID) {
 			return false;

@@ -137,7 +137,6 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		// Grab session we provide for the raw image
 		$session    =& $gallery->getSession();
 		$sessionVar = GalleryUtilities::prefixFormVariable($session->getKey());
-
 		preg_match_all("/imraw-1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
 		$shutterflySessionId           = $matches[1][0];
 		$_COOKIE[SESSION_ID_PARAMETER] = $shutterflySessionId;
@@ -223,8 +222,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		// Grab session we provide for the raw image
 		$session    =& $gallery->getSession();
 		$sessionVar = GalleryUtilities::prefixFormVariable($session->getKey());
-
-		$matched = preg_match_all("/imraw-1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
+		$matched    = preg_match_all("/imraw-1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
 
 		if (!$matched) {
 			$this->fail('No shutterfly session found in generated HTML');

@@ -80,9 +80,8 @@ class EmailController extends GalleryController {
 
 				$results['redirect']['controller']    = 'checkout.OrderComplete';
 				$results['redirect']['transactionId'] = $transactionId;
-
-				$results['redirect']['verify1'] = $transaction->getDate();
-				$results['redirect']['verify2'] = $transaction->getSecurity();
+				$results['redirect']['verify1']       = $transaction->getDate();
+				$results['redirect']['verify2']       = $transaction->getSecurity();
 			} else {
 				$error[]                     = 'form[error][badEmail]'; // badly formed email address
 				$results['delegate']['view'] = 'checkoutemail.Details';

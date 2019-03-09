@@ -64,10 +64,9 @@ class getid3_ac3 extends getid3_handler {
 			$this->fseek(-2, SEEK_CUR);
 		}
 
-		$info['audio']['dataformat']   = 'ac3';
-		$info['audio']['bitrate_mode'] = 'cbr';
-		$info['audio']['lossless']     = false;
-
+		$info['audio']['dataformat']                 = 'ac3';
+		$info['audio']['bitrate_mode']               = 'cbr';
+		$info['audio']['lossless']                   = false;
 		$thisfile_ac3_raw['synchinfo']['crc1']       = getid3_lib::LittleEndian2Int(substr($this->AC3header['syncinfo'], $offset, 2));
 		$ac3_synchinfo_fscod_frmsizecod              = getid3_lib::LittleEndian2Int(substr($this->AC3header['syncinfo'], ($offset + 2), 1));
 		$thisfile_ac3_raw['synchinfo']['fscod']      = ($ac3_synchinfo_fscod_frmsizecod & 0xC0) >> 6;
@@ -82,9 +81,8 @@ class getid3_ac3 extends getid3_handler {
 		$thisfile_ac3['bitrate']      = self::bitrateLookup($thisfile_ac3_raw['synchinfo']['frmsizecod']);
 		$info['audio']['bitrate']     = $thisfile_ac3['bitrate'];
 
-		$this->AC3header['bsi'] = getid3_lib::BigEndian2Bin($this->fread(15));
-		$ac3_bsi_offset         = 0;
-
+		$this->AC3header['bsi']       = getid3_lib::BigEndian2Bin($this->fread(15));
+		$ac3_bsi_offset               = 0;
 		$thisfile_ac3_raw_bsi['bsid'] = $this->readHeaderBSI(5);
 
 		if ($thisfile_ac3_raw_bsi['bsid'] > 8) {
@@ -136,8 +134,7 @@ class getid3_ac3 extends getid3_handler {
 
 		if ($thisfile_ac3_raw_bsi['acmod'] & 0x04) {
 			// If the msb of acmod is a 1, surround channels are in use and surmixlev follows in the bit stream.
-			$thisfile_ac3_raw_bsi['surmixlev'] = $this->readHeaderBSI(2);
-
+			$thisfile_ac3_raw_bsi['surmixlev']  = $this->readHeaderBSI(2);
 			$thisfile_ac3['surround_mix_level'] = self::surroundMixLevelLookup($thisfile_ac3_raw_bsi['surmixlev']);
 		}
 
@@ -148,8 +145,7 @@ class getid3_ac3 extends getid3_handler {
 		}
 
 		$thisfile_ac3_raw_bsi['lfeon'] = (bool)$this->readHeaderBSI(1);
-
-		$thisfile_ac3['lfe_enabled'] = $thisfile_ac3_raw_bsi['lfeon'];
+		$thisfile_ac3['lfe_enabled']   = $thisfile_ac3_raw_bsi['lfeon'];
 
 		if ($thisfile_ac3_raw_bsi['lfeon']) {
 			//$info['audio']['channels']++;
@@ -160,11 +156,9 @@ class getid3_ac3 extends getid3_handler {
 
 		// This indicates how far the average dialogue level is below digital 100 percent. Valid values are 1-31.
 		// The value of 0 is reserved. The values of 1 to 31 are interpreted as -1 dB to -31 dB with respect to digital 100 percent.
-		$thisfile_ac3_raw_bsi['dialnorm'] = $this->readHeaderBSI(5);
-
+		$thisfile_ac3_raw_bsi['dialnorm']       = $this->readHeaderBSI(5);
 		$thisfile_ac3['dialogue_normalization'] = '-' . $thisfile_ac3_raw_bsi['dialnorm'] . 'dB';
-
-		$thisfile_ac3_raw_bsi['compre_flag'] = (bool)$this->readHeaderBSI(1);
+		$thisfile_ac3_raw_bsi['compre_flag']    = (bool)$this->readHeaderBSI(1);
 
 		if ($thisfile_ac3_raw_bsi['compre_flag']) {
 			$thisfile_ac3_raw_bsi['compr']     = $this->readHeaderBSI(8);
@@ -182,9 +176,8 @@ class getid3_ac3 extends getid3_handler {
 		if ($thisfile_ac3_raw_bsi['audprodie']) {
 			$thisfile_ac3_raw_bsi['mixlevel'] = $this->readHeaderBSI(5);
 			$thisfile_ac3_raw_bsi['roomtyp']  = $this->readHeaderBSI(2);
-
-			$thisfile_ac3['mixing_level'] = (80 + $thisfile_ac3_raw_bsi['mixlevel']) . 'dB';
-			$thisfile_ac3['room_type']    = self::roomTypeLookup($thisfile_ac3_raw_bsi['roomtyp']);
+			$thisfile_ac3['mixing_level']     = (80 + $thisfile_ac3_raw_bsi['mixlevel']) . 'dB';
+			$thisfile_ac3['room_type']        = self::roomTypeLookup($thisfile_ac3_raw_bsi['roomtyp']);
 		}
 
 		if ($thisfile_ac3_raw_bsi['acmod'] == 0x00) {
@@ -193,11 +186,9 @@ class getid3_ac3 extends getid3_handler {
 			// a number of additional items are present in BSI or audblk to fully describe Ch2.
 			// This indicates how far the average dialogue level is below digital 100 percent. Valid values are 1-31.
 			// The value of 0 is reserved. The values of 1 to 31 are interpreted as -1 dB to -31 dB with respect to digital 100 percent.
-			$thisfile_ac3_raw_bsi['dialnorm2'] = $this->readHeaderBSI(5);
-
+			$thisfile_ac3_raw_bsi['dialnorm2']       = $this->readHeaderBSI(5);
 			$thisfile_ac3['dialogue_normalization2'] = '-' . $thisfile_ac3_raw_bsi['dialnorm2'] . 'dB';
-
-			$thisfile_ac3_raw_bsi['compre_flag2'] = (bool)$this->readHeaderBSI(1);
+			$thisfile_ac3_raw_bsi['compre_flag2']    = (bool)$this->readHeaderBSI(1);
 
 			if ($thisfile_ac3_raw_bsi['compre_flag2']) {
 				$thisfile_ac3_raw_bsi['compr2']     = $this->readHeaderBSI(8);

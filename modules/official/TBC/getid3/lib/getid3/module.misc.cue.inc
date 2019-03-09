@@ -13,7 +13,6 @@
 // module for analyzing CUEsheet files                         //
 // dependencies: NONE                                          //
 //                                                             //
-
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written [2009-Mar-25] by                  //

@@ -95,8 +95,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 
 		$i      = $updated      = 0;
 		$allIds = array();
-
-		$total = $results->resultCount();
+		$total  = $results->resultCount();
 
 		while ($result = $results->nextResult()) {
 			// extracting histogram information can take loooooong time

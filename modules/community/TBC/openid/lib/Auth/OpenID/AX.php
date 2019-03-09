@@ -331,8 +331,7 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 		$aliases      = new Auth_OpenID_NamespaceMap();
 		$required     = array();
 		$if_available = array();
-
-		$ax_args = $this->_newArgs();
+		$ax_args      = $this->_newArgs();
 
 		foreach ($this->requested_attributes as $type_uri => $attribute) {
 			if ($attribute->alias === null) {
@@ -405,9 +404,8 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 	 * successful
 	 */
 	public function &fromOpenIDRequest($request) {
-		$m   = $request->message;
-		$obj = new Auth_OpenID_AX_FetchRequest();
-
+		$m       = $request->message;
+		$obj     = new Auth_OpenID_AX_FetchRequest();
 		$ax_args = $m->getArgs($obj->ns_uri);
 		$result  = $obj->parseExtensionArgs($ax_args);
 
@@ -474,8 +472,7 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 			if (strpos($key, 'type.') === 0) {
 				$alias    = substr($key, 5);
 				$type_uri = $value;
-
-				$alias = $aliases->addAlias($type_uri, $alias);
+				$alias    = $aliases->addAlias($type_uri, $alias);
 
 				if ($alias === null) {
 					return new Auth_OpenID_AX_Error(
@@ -1027,7 +1024,6 @@ class Auth_OpenID_AX_StoreRequest extends Auth_OpenID_AX_KeyValueMessage {
 	public function getExtensionArgs($aliases = null) {
 		$ax_args = $this->_newArgs();
 		$kv_args = $this->_getExtensionKVArgs($aliases);
-
 		Auth_OpenID::update($ax_args, $kv_args);
 
 		return $ax_args;

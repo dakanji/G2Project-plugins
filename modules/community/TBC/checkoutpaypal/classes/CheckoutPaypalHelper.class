@@ -135,23 +135,20 @@ class CheckoutPaypalHelper {
 
 		// postage item
 		$ppItems++;
-		$ppItem[$ppItems]['ppname']     = 'item_name_' . $ppItems;
-		$ppItem[$ppItems]['name']       = 'Shipping';
-		$ppItem[$ppItems]['ppquantity'] = 'quantity_' . $ppItems;
-		$ppItem[$ppItems]['quantity']   = '1';
-		$ppItem[$ppItems]['ppamount']   = 'amount_' . $ppItems;
-
+		$ppItem[$ppItems]['ppname']                     = 'item_name_' . $ppItems;
+		$ppItem[$ppItems]['name']                       = 'Shipping';
+		$ppItem[$ppItems]['ppquantity']                 = 'quantity_' . $ppItems;
+		$ppItem[$ppItems]['quantity']                   = '1';
+		$ppItem[$ppItems]['ppamount']                   = 'amount_' . $ppItems;
 		$ppItem[$ppItems]['amount']                     = $transaction->getPostage();
 		$ppItem[$ppItems]['options']['on0_' . $ppItems] = 'Category';
-
 		$ppItem[$ppItems]['options']['os0_' . $ppItems] = $transaction->getPostageType();
 		$ppItem[$ppItems]['ppnumber']                   = 'item_number_' . $ppItems;
 		$ppItem[$ppItems]['number']                     = '';
 		$ppItem[$ppItems]['ppshipping']                 = 'shipping_' . $ppItems;
 		$ppItem[$ppItems]['shipping']                   = 0;
-
-		$verify[1] = $transaction->getDate();
-		$verify[2] = $transaction->getSecurity();
+		$verify[1]                                      = $transaction->getDate();
+		$verify[2]                                      = $transaction->getSecurity();
 
 		return array(null, $ppItem, $verify);
 	}

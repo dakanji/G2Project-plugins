@@ -110,8 +110,7 @@ class MakePuzzleView extends GalleryView {
 			if (!empty($resizes[$itemId])) {
 				foreach (array_keys($resizes[$itemId]) as $key) {
 					$resizedImage = $resizes[$itemId][$key];
-
-					$size = ($resizedImage->getWidth()) * ($resizedImage->getHeight());
+					$size         = ($resizedImage->getWidth()) * ($resizedImage->getHeight());
 
 					if ($size > 0) {
 						$images[$size] = $resizedImage;
@@ -260,8 +259,7 @@ class MakePuzzleView extends GalleryView {
 		);
 
 		// set the variables for the template
-		$MakePuzzle = array();
-
+		$MakePuzzle                 = array();
 		$MakePuzzle['itemId']       = $item->getId();
 		$MakePuzzle['serialNumber'] = $item->getSerialNumber();
 

@@ -361,8 +361,7 @@ class Auth_OpenID_Consumer {
 	 * authentication request object.
 	 */
 	public function &beginWithoutDiscovery($endpoint, $anonymous = false) {
-		$loader = new Auth_OpenID_ServiceEndpointLoader();
-
+		$loader   = new Auth_OpenID_ServiceEndpointLoader();
 		$auth_req = $this->consumer->begin($endpoint);
 		$this->session->set(
 			$this->_token_key,
@@ -416,13 +415,11 @@ class Auth_OpenID_Consumer {
 			$query = Auth_OpenID::getQuery();
 		}
 
-		$loader = new Auth_OpenID_ServiceEndpointLoader();
-
+		$loader        = new Auth_OpenID_ServiceEndpointLoader();
 		$endpoint_data = $this->session->get($this->_token_key);
 		$endpoint      = $loader->fromSession($endpoint_data);
 		$message       = Auth_OpenID_Message::fromPostArgs($query);
-
-		$response = $this->consumer->complete($message, $endpoint, $current_url);
+		$response      = $this->consumer->complete($message, $endpoint, $current_url);
 		$this->session->del($this->_token_key);
 
 		if (in_array($response->status, array(Auth_OpenID_SUCCESS, Auth_OpenID_CANCEL))) {
@@ -461,7 +458,6 @@ class Auth_OpenID_DiffieHellmanSHA1ConsumerSession {
 
 	public function getRequest() {
 		$math = Auth_OpenID_getMathLib();
-
 		$cpub = $math->longToBase64($this->dh->public);
 		$args = array(
 			'dh_consumer_public' => $cpub,
@@ -489,8 +485,7 @@ class Auth_OpenID_DiffieHellmanSHA1ConsumerSession {
 			return null;
 		}
 
-		$math = Auth_OpenID_getMathLib();
-
+		$math        = Auth_OpenID_getMathLib();
 		$spub        = $math->base64ToLong($response->getArg(Auth_OpenID_OPENID_NS, 'dh_server_public'));
 		$enc_mac_key = base64_decode($response->getArg(Auth_OpenID_OPENID_NS, 'enc_mac_key'));
 
@@ -756,8 +751,7 @@ class Auth_OpenID_GenericConsumer {
 		}
 
 		$endpoint = $result;
-
-		$result = $this->_idResCheckSignature($message, $endpoint->server_url);
+		$result   = $this->_idResCheckSignature($message, $endpoint->server_url);
 
 		if (Auth_OpenID::isFailure($result)) {
 			return $result;
@@ -858,8 +852,7 @@ class Auth_OpenID_GenericConsumer {
 	public function _verifyReturnToArgs($query) {
 		// Verify that the arguments in the return_to URL are present in this
 		// response.
-		$message = Auth_OpenID_Message::fromPostArgs($query);
-
+		$message   = Auth_OpenID_Message::fromPostArgs($query);
 		$return_to = $message->getArg(Auth_OpenID_OPENID_NS, 'return_to');
 
 		if (Auth_OpenID::isFailure($return_to)) {
@@ -1743,8 +1736,7 @@ class Auth_OpenID_GenericConsumer {
 			$args['session_type'] = $assoc_session->session_type;
 		}
 
-		$args = array_merge($args, $assoc_session->getRequest());
-
+		$args    = array_merge($args, $assoc_session->getRequest());
 		$message = Auth_OpenID_Message::fromOpenIDArgs($args);
 
 		return array($assoc_session, $message);
@@ -2122,8 +2114,7 @@ class Auth_OpenID_SuccessResponse extends Auth_OpenID_ConsumerResponse {
 	}
 
 	public function getSignedNS($ns_uri) {
-		$args = array();
-
+		$args     = array();
 		$msg_args = $this->message->getArgs($ns_uri);
 
 		if (Auth_OpenID::isFailure($msg_args)) {

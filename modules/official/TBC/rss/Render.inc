@@ -188,7 +188,6 @@ class RenderView extends GalleryView {
 
 		if (!$phpVm->headers_sent()) {
 			$phpVm->header('Content-type: text/xml; charset=UTF-8');
-
 			$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
 			$phpVm->header('Cache-Control: no-cache');
 			$phpVm->header('Pragma: no-cache');

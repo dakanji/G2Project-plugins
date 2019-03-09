@@ -99,7 +99,7 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 			'footer'  => 'Sent via G2 Ecard tester',
 			'format'  => 'html',
 		)
-		as $key => $expectedValue) {
+ as $key => $expectedValue) {
 			list($ret, $value) = GalleryCoreApi::getPluginParameter('module', 'ecard', $key);
 
 			if ($ret) {

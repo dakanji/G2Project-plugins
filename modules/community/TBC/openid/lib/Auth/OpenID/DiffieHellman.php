@@ -91,9 +91,8 @@ class Auth_OpenID_DiffieHellman {
 	}
 
 	public function xorSecret($composite, $secret, $hash_func) {
-		$dh_shared     = $this->getSharedSecret($composite);
-		$dh_shared_str = $this->lib->longToBinary($dh_shared);
-
+		$dh_shared      = $this->getSharedSecret($composite);
+		$dh_shared_str  = $this->lib->longToBinary($dh_shared);
 		$hash_dh_shared = $hash_func($dh_shared_str);
 		$xsecret        = '';
 

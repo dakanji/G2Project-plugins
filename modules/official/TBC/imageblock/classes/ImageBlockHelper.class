@@ -633,8 +633,7 @@ class ImageBlockHelper {
 					}
 
 					$resizeDifferential = abs($rawDifferential);
-
-					$resizeSize = $imageObject->getHeight() * $imageObject->getWidth();
+					$resizeSize         = $imageObject->getHeight() * $imageObject->getWidth();
 
 					/*
 					 * If this differential is smaller than the last, update the image target and
@@ -1303,8 +1302,7 @@ class ImageBlockHelper {
 	public static function getRandomKey($min = 0, $max = 2147483647) {
 		global $gallery;
 
-		$phpVm = $gallery->getPhpVm();
-
+		$phpVm              = $gallery->getPhpVm();
 		static $initialized = false;
 
 		if (!$initialized) {

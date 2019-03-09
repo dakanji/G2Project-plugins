@@ -93,8 +93,7 @@ class DupeDetectHistogramHelper {
 			return $ret;
 		}
 
-		$histogram = array();
-
+		$histogram                 = array();
 		$histogram['itemId']       = $newEntity->getId();
 		$histogram['red0_63']      = $hist['red'][0];
 		$histogram['red64_127']    = $hist['red'][1];

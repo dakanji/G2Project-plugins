@@ -80,8 +80,7 @@ class DetailsController extends GalleryController {
 		}
 
 		if (!isset($results['delegate'])) {
-			$results['redirect']['controller'] = 'checkout.Complete';
-
+			$results['redirect']['controller']    = 'checkout.Complete';
 			$results['redirect']['transactionId'] = $transaction->getId();
 			$results['redirect']['verify1']       = $transaction->getDate();
 			$results['redirect']['verify2']       = $transaction->getSecurity();

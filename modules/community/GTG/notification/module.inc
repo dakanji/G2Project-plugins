@@ -279,8 +279,7 @@ class NotificationModule extends GalleryModule {
 	 * @see GalleryModule::getUserAdminViews();
 	 */
 	public function getUserAdminViews($user) {
-		$views = array();
-
+		$views  = array();
 		$userId = $user->getId();
 
 		list($ret, $showView) = $this->_showWatch($userId);

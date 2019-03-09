@@ -174,8 +174,7 @@ class PanoramaJsModule extends GalleryModule {
 					continue;
 				}
 
-				$image = $images[$itemId];
-
+				$image    = $images[$itemId];
 				$mimeType = $item->getMimeType();
 				$width    = $image->getWidth();
 
@@ -204,9 +203,8 @@ class PanoramaJsModule extends GalleryModule {
 	 * @see GalleryModule::getRewriteRules
 	 */
 	public function getRewriteRules() {
-		$rules = array();
-		$rule  = array();
-
+		$rules           = array();
+		$rule            = array();
 		$rule['comment'] = $this->translate('View Panorama (Js)');
 		$rule['match']   = array(
 			'view' => 'panoramajs.PanoramaJs',

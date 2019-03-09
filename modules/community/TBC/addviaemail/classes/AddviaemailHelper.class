@@ -466,9 +466,8 @@ class AddviaemailHelper {
 			list($ret, $extension) = GalleryCoreApi::convertMimeToExtensions($mimeType);
 
 			$extension = empty($extension) ? '' : '.' . $extension[0];
-
-			$filename = is_array($struct->parts[$x]->parameters) ? $struct->parts[$x]->parameters[0]->value : 'PictureMail' . $counter++ . $extension;
-			$data     = imap_fetchbody($mbox, $currentMsg, $x + 1); // remember, the body is part #1
+			$filename  = is_array($struct->parts[$x]->parameters) ? $struct->parts[$x]->parameters[0]->value : 'PictureMail' . $counter++ . $extension;
+			$data      = imap_fetchbody($mbox, $currentMsg, $x + 1); // remember, the body is part #1
 			if (!$platform->file_put_contents($pathToSaveFile . $filename, base64_decode($data))) {
 				imap_close($mbox);
 

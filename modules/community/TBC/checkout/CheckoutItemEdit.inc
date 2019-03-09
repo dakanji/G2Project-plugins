@@ -34,9 +34,8 @@ class CheckoutItemEdit extends ItemEditPlugin {
 	public function handleRequest($form, &$item, &$preferred) {
 		global $gallery;
 
-		$status = 0;
-		$error  = array();
-
+		$status  = 0;
+		$error   = array();
 		$itemId  = $item->getId();
 		$storage =& $gallery->getStorage();
 
@@ -143,8 +142,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 
 		if ($form['formName'] != 'CheckoutItemEdit') {
 			$form['formName'] = 'CheckoutItemEdit';
-
-			$thisId = $item->getId();
+			$thisId           = $item->getId();
 
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($thisId, true, false);
 

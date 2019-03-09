@@ -655,8 +655,7 @@ class Auth_OpenID_Message {
 
 			list($ns_uri, $ns_key) = $ns_parts;
 
-			$key = $this->getKey($ns_uri, $ns_key);
-
+			$key        = $this->getKey($ns_uri, $ns_key);
 			$args[$key] = $value;
 		}
 
@@ -667,8 +666,7 @@ class Auth_OpenID_Message {
 		// Return all namespaced arguments, failing if any
 		// non-namespaced arguments exist.
 		$post_args = $this->toPostArgs();
-
-		$kvargs = array();
+		$kvargs    = array();
 
 		foreach ($post_args as $k => $v) {
 			if (strpos($k, 'openid.') !== 0) {
@@ -943,8 +941,7 @@ class Auth_OpenID_Message {
 
 		if ($ns === null) {
 			$key = $aliased_key;
-
-			$ns = $this->getOpenIDNamespace();
+			$ns  = $this->getOpenIDNamespace();
 		}
 
 		return $this->getArg($ns, $key, $default);

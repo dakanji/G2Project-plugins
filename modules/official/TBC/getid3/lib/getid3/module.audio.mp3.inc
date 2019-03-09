@@ -1113,8 +1113,7 @@ class getid3_mp3 extends getid3_handler {
 		$info =& $this->getid3->info;
 		$this->fseek($offset);
 		$MPEGaudioData = $this->fread(32768);
-
-		$SyncPattern1 = substr($MPEGaudioData, 0, 4);
+		$SyncPattern1  = substr($MPEGaudioData, 0, 4);
 
 		// may be different pattern due to padding
 		$SyncPattern2 = $SyncPattern1[0] . $SyncPattern1[1] . chr(ord($SyncPattern1[2]) | 0x02) . $SyncPattern1[3];
@@ -1218,8 +1217,7 @@ class getid3_mp3 extends getid3_handler {
 		$Distribution['layer']        = array();
 		$Distribution['version']      = array();
 		$Distribution['padding']      = array();
-
-		$info =& $this->getid3->info;
+		$info                         =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$max_frames_scan    = 5000;
 		$frames_scanned     = 0;
@@ -1370,7 +1368,6 @@ class getid3_mp3 extends getid3_handler {
 	public function getOnlyMPEGaudioInfo($avdataoffset, $BitrateHistogram = false) {
 		// looks for synch, decodes MPEG audio header
 		$info =& $this->getid3->info;
-
 		static $MPEGaudioVersionLookup;
 		static $MPEGaudioLayerLookup;
 		static $MPEGaudioBitrateLookup;

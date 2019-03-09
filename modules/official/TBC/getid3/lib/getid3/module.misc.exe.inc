@@ -19,8 +19,7 @@ class getid3_exe extends getid3_handler {
 		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$EXEheader = $this->fread(28);
-
-		$magic = 'MZ';
+		$magic     = 'MZ';
 
 		if (substr($EXEheader, 0, 2) != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($EXEheader, 0, 2)) . '"';
@@ -46,8 +45,7 @@ class getid3_exe extends getid3_handler {
 		$info['exe']['mz']['header_size']                    = $info['exe']['mz']['raw']['header_paragraphs']     * 16;
 		$info['exe']['mz']['memory_minimum']                 = $info['exe']['mz']['raw']['min_memory_paragraphs'] * 16;
 		$info['exe']['mz']['memory_recommended']             = $info['exe']['mz']['raw']['max_memory_paragraphs'] * 16;
-
-		$info['error'][] = 'EXE parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
+		$info['error'][]                                     = 'EXE parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
 
 		return false;
 	}

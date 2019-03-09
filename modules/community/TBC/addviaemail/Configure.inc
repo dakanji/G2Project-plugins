@@ -116,7 +116,7 @@ class ConfigureController extends GalleryController {
 				'deleteProcessed',
 				'pollFloor',
 			)
- as $key) {
+			as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'addviaemail',

@@ -193,7 +193,6 @@ class getid3_writetags {
 			switch ($tagformat) {
 				case 'ape':
 					$GETID3_ERRORARRAY =& $this->errors;
-
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'write.apetag.php', __FILE__, true);
 
 					break;
@@ -204,7 +203,6 @@ class getid3_writetags {
 				case 'metaflac':
 				case 'real':
 					$GETID3_ERRORARRAY =& $this->errors;
-
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'write.' . $tagformat . '.php', __FILE__, true);
 
 					break;
@@ -214,7 +212,6 @@ class getid3_writetags {
 				case 'id3v2.4':
 				case 'id3v2':
 					$GETID3_ERRORARRAY =& $this->errors;
-
 					getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'write.id3v2.php', __FILE__, true);
 
 					break;
@@ -609,8 +606,7 @@ class getid3_writetags {
 						if (isset($ID3v2_text_encoding_lookup[$id3v2_majorversion][$this->tag_encoding])) {
 							// source encoding is valid in ID3v2 - use it with no conversion
 							$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = $ID3v2_text_encoding_lookup[$id3v2_majorversion][$this->tag_encoding];
-
-							$tag_data_id3v2[$ID3v2_framename][$key]['data'] = $value;
+							$tag_data_id3v2[$ID3v2_framename][$key]['data']       = $value;
 						} else {
 							// source encoding is NOT valid in ID3v2 - convert it to an ID3v2-valid encoding first
 							if ($id3v2_majorversion < 4) {
@@ -651,15 +647,13 @@ class getid3_writetags {
 							} else {
 								// convert data from other encoding to UTF-8
 								$tag_data_id3v2[$ID3v2_framename][$key]['encodingid'] = 3;
-
-								$tag_data_id3v2[$ID3v2_framename][$key]['data'] = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-8', $value);
+								$tag_data_id3v2[$ID3v2_framename][$key]['data']       = getid3_lib::iconv_fallback($this->tag_encoding, 'UTF-8', $value);
 							}
 						}
 
 						// These values are not needed for all frame types, but if they're not used no matter
 						$tag_data_id3v2[$ID3v2_framename][$key]['description'] = '';
-
-						$tag_data_id3v2[$ID3v2_framename][$key]['language'] = $this->id3v2_tag_language;
+						$tag_data_id3v2[$ID3v2_framename][$key]['language']    = $this->id3v2_tag_language;
 					}
 
 					break;

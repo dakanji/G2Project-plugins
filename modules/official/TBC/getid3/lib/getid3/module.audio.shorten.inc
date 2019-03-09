@@ -34,8 +34,7 @@ class getid3_shorten extends getid3_handler {
 		$info['shn']['version']        = getid3_lib::LittleEndian2Int(substr($ShortenHeader, 4, 1));
 
 		$this->fseek($info['avdataend'] - 12);
-		$SeekTableSignatureTest = $this->fread(12);
-
+		$SeekTableSignatureTest              = $this->fread(12);
 		$info['shn']['seektable']['present'] = (bool)(substr($SeekTableSignatureTest, 4, 8) == 'SHNAMPSK');
 
 		if ($info['shn']['seektable']['present']) {
@@ -67,8 +66,7 @@ class getid3_shorten extends getid3_handler {
 			//   long Offset0[4];
 			//   long Offset1[4];
 			// }TSeekEntry;
-			$SeekTableData = $this->fread($info['shn']['seektable']['length'] - 16);
-
+			$SeekTableData                           = $this->fread($info['shn']['seektable']['length'] - 16);
 			$info['shn']['seektable']['entry_count'] = floor(strlen($SeekTableData) / 80);
 
 			//$info['shn']['seektable']['entries'] = array();

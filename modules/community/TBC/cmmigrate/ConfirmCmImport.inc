@@ -433,8 +433,7 @@ class ConfirmCmImportController extends GalleryController {
 					}
 
 					$importLockIds = array();
-
-					$photos = $picturesToImport[$album->albumId];
+					$photos        = $picturesToImport[$album->albumId];
 
 					if (!isset($photos)) {
 						$photos = array();
@@ -468,7 +467,6 @@ class ConfirmCmImportController extends GalleryController {
 						$gallery->guaranteeTimeLimit(30);
 						$dir      = $this->_cmdb->getAlbumPath() . $importAlbumItem->filepath;
 						$filename = $importAlbumItem->filename;
-
 						$filepath = $dir . $filename;
 
 						$ret = $templateAdapter->
@@ -716,10 +714,9 @@ class ConfirmCmImportController extends GalleryController {
 			return $ret;
 		}
 
-		$session             =& $gallery->getSession();
-		$redirect['view']    = 'core.SiteAdmin';
-		$redirect['subView'] = 'cmmigrate.ImportCmResults';
-
+		$session              =& $gallery->getSession();
+		$redirect['view']     = 'core.SiteAdmin';
+		$redirect['subView']  = 'cmmigrate.ImportCmResults';
 		$redirect['statusId'] = $session->putStatus($status);
 		$urlGenerator         =& $gallery->getUrlGenerator();
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
@@ -927,9 +924,8 @@ class ConfirmCmImportView extends GalleryView {
 		while ($albumFields) {
 			$existingAlbumId = false;
 			$album           = array_shift($albumFields);
-
-			$albumId   = $album->GetAlbumId();
-			$albumName = $album->name;
+			$albumId         = $album->GetAlbumId();
+			$albumName       = $album->name;
 
 			if (!in_array($album->getParent(), $form['sourceAlbums'])) {
 				list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent($destinationAlbumID, $albumName);

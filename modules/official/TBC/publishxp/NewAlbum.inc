@@ -86,8 +86,7 @@ class NewAlbumController extends GalleryController {
 				}
 
 				if (empty($error)) {
-					$redirect['view'] = 'publishxp.SelectAlbum';
-
+					$redirect['view']    = 'publishxp.SelectAlbum';
 					$redirect['albumId'] = $newAlbum->getId();
 				}
 			}

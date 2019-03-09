@@ -39,9 +39,8 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		}
 
 		$redir = true;
-
-		$stop = time() + $this->timeout;
-		$off  = $this->timeout;
+		$stop  = time() + $this->timeout;
+		$off   = $this->timeout;
 
 		while ($redir && ($off > 0)) {
 			$parts        = parse_url($url);
@@ -125,8 +124,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			$code      = $http_code[1];
 
 			if (in_array($code, array('301', '302'))) {
-				$url = $this->_findRedirect($headers);
-
+				$url   = $this->_findRedirect($headers);
 				$redir = true;
 			} else {
 				$redir = false;

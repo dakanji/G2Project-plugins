@@ -36,8 +36,7 @@ class TimestampToTags extends MaintenanceTask {
 	public function getInfo() {
 		global $gallery;
 
-		$info['l10Domain'] = 'modules_tags';
-
+		$info['l10Domain']   = 'modules_tags';
 		$info['title']       = $gallery->i18n('Copy origination date into the tags');
 		$info['description'] = $gallery->i18n(
 			'This task will go throught all the gallery item and copy all of the origination date information' .
@@ -76,9 +75,8 @@ class TimestampToTags extends MaintenanceTask {
 			$ids[] = $res[0];
 		}
 
-		$totalItems = count($ids);
-		$current    = 1;
-
+		$totalItems       = count($ids);
+		$current          = 1;
 		$migrationMessage = $module->translate('Migrating origination date into tags');
 		$ret              = $templateAdapter->updateProgressBar(
 			$migrationMessage,

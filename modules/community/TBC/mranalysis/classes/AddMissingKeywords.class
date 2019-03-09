@@ -76,8 +76,7 @@ class AddMissingKeywordsTask extends MaintenanceTask {
 			$missingkeywords = $dataitem['missing'];
 
 			//print '<br>' . $item->getTitle();
-			$itemid = $item->getId();
-
+			$itemid                     = $item->getId();
 			$itemchanged                = false;
 			$keywordsadded_to_this_item = array();
 

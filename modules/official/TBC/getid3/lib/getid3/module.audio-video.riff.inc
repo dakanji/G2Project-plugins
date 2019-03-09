@@ -114,8 +114,7 @@ class getid3_riff extends getid3_handler {
 						}
 					}
 
-					$nextRIFFheaderID = substr($nextRIFFheader, 0, 4);
-
+					$nextRIFFheaderID    = substr($nextRIFFheader, 0, 4);
 					$nextRIFFsize        = $this->EitherEndian2Int(substr($nextRIFFheader, 4, 4));
 					$nextRIFFtype        = substr($nextRIFFheader, 8, 4);
 					$chunkdata           = array();
@@ -137,7 +136,6 @@ class getid3_riff extends getid3_handler {
 
 						case 'AMV ':
 							unset($info['riff']);
-
 							$info['amv'] = $this->ParseRIFFAMV($chunkdata['offset'] + 4, $nextRIFFoffset);
 
 							break;
@@ -264,11 +262,10 @@ class getid3_riff extends getid3_handler {
 						'album' => array(),
 					);
 
-					$thisfile_riff_raw_rgad                   =& $thisfile_riff_raw['rgad'];
-					$thisfile_riff_raw_rgad_track             =& $thisfile_riff_raw_rgad['track'];
-					$thisfile_riff_raw_rgad_album             =& $thisfile_riff_raw_rgad['album'];
-					$thisfile_riff_raw_rgad['fPeakAmplitude'] = getid3_lib::LittleEndian2Float(substr($rgadData, 0, 4));
-
+					$thisfile_riff_raw_rgad                        =& $thisfile_riff_raw['rgad'];
+					$thisfile_riff_raw_rgad_track                  =& $thisfile_riff_raw_rgad['track'];
+					$thisfile_riff_raw_rgad_album                  =& $thisfile_riff_raw_rgad['album'];
+					$thisfile_riff_raw_rgad['fPeakAmplitude']      = getid3_lib::LittleEndian2Float(substr($rgadData, 0, 4));
 					$thisfile_riff_raw_rgad['nRadioRgAdjust']      = $this->EitherEndian2Int(substr($rgadData, 4, 2));
 					$thisfile_riff_raw_rgad['nAudiophileRgAdjust'] = $this->EitherEndian2Int(substr($rgadData, 6, 2));
 					$nRadioRgAdjustBitstring                       = str_pad(getid3_lib::Dec2Bin($thisfile_riff_raw_rgad['nRadioRgAdjust']), 16, '0', STR_PAD_LEFT);
@@ -495,8 +492,7 @@ class getid3_riff extends getid3_handler {
 					$thisfile_audio['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
 
 					$this->fseek($info['avdataoffset'] - 44);
-					$RIFFdata = $this->fread(44);
-
+					$RIFFdata              = $this->fread(44);
 					$OrignalRIFFheaderSize = getid3_lib::LittleEndian2Int(substr($RIFFdata, 4, 4))  + 8;
 					$OrignalRIFFdataSize   = getid3_lib::LittleEndian2Int(substr($RIFFdata, 40, 4)) + 44;
 
@@ -510,8 +506,7 @@ class getid3_riff extends getid3_handler {
 					// move the data chunk after all other chunks (if any)
 					// so that the RIFF parser doesn't see EOF when trying
 					// to skip over the data chunk
-					$RIFFdata = substr($RIFFdata, 0, 36) . substr($RIFFdata, 44) . substr($RIFFdata, 36, 8);
-
+					$RIFFdata    = substr($RIFFdata, 0, 36) . substr($RIFFdata, 44) . substr($RIFFdata, 36, 8);
 					$getid3_riff = new getid3_riff($this->getid3);
 					$getid3_riff->ParseRIFFdata($RIFFdata);
 
@@ -687,14 +682,12 @@ class getid3_riff extends getid3_handler {
 					//);
 					foreach ($thisfile_riff['AVI ']['hdrl']['strl']['indx'] as $streamnumber => $steamdataarray) {
 						$ahsisd =& $thisfile_riff['AVI ']['hdrl']['strl']['indx'][$streamnumber]['data'];
-
 						$thisfile_riff_raw['indx'][$streamnumber]['wLongsPerEntry'] = $this->EitherEndian2Int(substr($ahsisd, 0, 2));
 						$thisfile_riff_raw['indx'][$streamnumber]['bIndexSubType']  = $this->EitherEndian2Int(substr($ahsisd, 2, 1));
 						$thisfile_riff_raw['indx'][$streamnumber]['bIndexType']     = $this->EitherEndian2Int(substr($ahsisd, 3, 1));
 						$thisfile_riff_raw['indx'][$streamnumber]['nEntriesInUse']  = $this->EitherEndian2Int(substr($ahsisd, 4, 4));
 						$thisfile_riff_raw['indx'][$streamnumber]['dwChunkId']      = substr($ahsisd, 8, 4);
-
-						$thisfile_riff_raw['indx'][$streamnumber]['dwReserved'] = $this->EitherEndian2Int(substr($ahsisd, 12, 4));
+						$thisfile_riff_raw['indx'][$streamnumber]['dwReserved']     = $this->EitherEndian2Int(substr($ahsisd, 12, 4));
 
 						//$thisfile_riff_raw['indx'][$streamnumber]['bIndexType_name'] =    $bIndexType[$thisfile_riff_raw['indx'][$streamnumber]['bIndexType']];
 						//$thisfile_riff_raw['indx'][$streamnumber]['bIndexSubType_name'] = $bIndexSubtype[$thisfile_riff_raw['indx'][$streamnumber]['bIndexType']][$thisfile_riff_raw['indx'][$streamnumber]['bIndexSubType']];
@@ -735,8 +728,7 @@ class getid3_riff extends getid3_handler {
 
 					foreach ($flags as $flag) {
 						$thisfile_riff_raw_avih[$flag] = $this->EitherEndian2Int(substr($avihData, $avih_offset, 4));
-
-						$avih_offset += 4;
+						$avih_offset                  += 4;
 					}
 
 					$flags = array(
@@ -914,8 +906,7 @@ class getid3_riff extends getid3_handler {
 											switch ($strhfccType) {
 												case 'vids':
 													$thisfile_riff_raw_strf_strhfccType_streamindex = self::ParseBITMAPINFOHEADER(substr($strfData, 0, 40), ($this->container == 'riff'));
-
-													$thisfile_video['bits_per_sample'] = $thisfile_riff_raw_strf_strhfccType_streamindex['biBitCount'];
+													$thisfile_video['bits_per_sample']              = $thisfile_riff_raw_strf_strhfccType_streamindex['biBitCount'];
 
 													if ($thisfile_riff_video_current['codec'] == 'DV') {
 														$thisfile_riff_video_current['dv_type'] = 2;
@@ -991,16 +982,14 @@ class getid3_riff extends getid3_handler {
 
 				if (isset($thisfile_riff['CDDA']['fmt '][0]['data'])) {
 					// shortcut
-					$thisfile_riff_CDDA_fmt_0 =& $thisfile_riff['CDDA']['fmt '][0];
-
-					$thisfile_riff_CDDA_fmt_0['unknown1']           = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 0, 2));
-					$thisfile_riff_CDDA_fmt_0['track_num']          = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 2, 2));
-					$thisfile_riff_CDDA_fmt_0['disc_id']            = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 4, 4));
-					$thisfile_riff_CDDA_fmt_0['start_offset_frame'] = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 8, 4));
-					$thisfile_riff_CDDA_fmt_0['playtime_frames']    = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 12, 4));
-					$thisfile_riff_CDDA_fmt_0['unknown6']           = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 16, 4));
-					$thisfile_riff_CDDA_fmt_0['unknown7']           = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 20, 4));
-
+					$thisfile_riff_CDDA_fmt_0                         =& $thisfile_riff['CDDA']['fmt '][0];
+					$thisfile_riff_CDDA_fmt_0['unknown1']             = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 0, 2));
+					$thisfile_riff_CDDA_fmt_0['track_num']            = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 2, 2));
+					$thisfile_riff_CDDA_fmt_0['disc_id']              = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 4, 4));
+					$thisfile_riff_CDDA_fmt_0['start_offset_frame']   = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 8, 4));
+					$thisfile_riff_CDDA_fmt_0['playtime_frames']      = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 12, 4));
+					$thisfile_riff_CDDA_fmt_0['unknown6']             = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 16, 4));
+					$thisfile_riff_CDDA_fmt_0['unknown7']             = $this->EitherEndian2Int(substr($thisfile_riff_CDDA_fmt_0['data'], 20, 4));
 					$thisfile_riff_CDDA_fmt_0['start_offset_seconds'] = (float)$thisfile_riff_CDDA_fmt_0['start_offset_frame'] / 75;
 					$thisfile_riff_CDDA_fmt_0['playtime_seconds']     = (float)$thisfile_riff_CDDA_fmt_0['playtime_frames']    / 75;
 					$info['comments']['track']                        = $thisfile_riff_CDDA_fmt_0['track_num'];
@@ -1413,7 +1402,6 @@ class getid3_riff extends getid3_handler {
 
 			$getid3_mp3                        = new getid3_mp3($this->getid3);
 			$thisfile_audio['encoder_options'] = $getid3_mp3->GuessEncoderOptions();
-
 			unset($getid3_mp3);
 		}
 
@@ -1468,7 +1456,6 @@ class getid3_riff extends getid3_handler {
 		try {
 			$this->fseek($startoffset);
 			$maxoffset = min($maxoffset, $info['avdataend']);
-
 			$AMVheader = $this->fread(284);
 
 			if (substr($AMVheader, 0, 8) != 'hdrlamvh') {
@@ -1594,9 +1581,8 @@ class getid3_riff extends getid3_handler {
 							$RIFFchunk[$listname]['size']   = $chunksize;
 
 							if (!$FoundAllChunksWeNeed) {
-								$WhereWeWere      = $this->ftell();
-								$AudioChunkHeader = $this->fread(12);
-
+								$WhereWeWere          = $this->ftell();
+								$AudioChunkHeader     = $this->fread(12);
 								$AudioChunkStreamNum  = substr($AudioChunkHeader, 0, 2);
 								$AudioChunkStreamType = substr($AudioChunkHeader, 2, 2);
 								$AudioChunkSize       = getid3_lib::LittleEndian2Int(substr($AudioChunkHeader, 4, 4));
@@ -1667,8 +1653,7 @@ class getid3_riff extends getid3_handler {
 								$RIFFchunk[$listname] = array();
 							}
 
-							$LISTchunkParent = $listname;
-
+							$LISTchunkParent    = $listname;
 							$LISTchunkMaxOffset = $this->ftell() - 4 + $chunksize;
 
 							if ($parsedChunk = $this->ParseRIFF($this->ftell(), $LISTchunkMaxOffset)) {
@@ -1698,8 +1683,7 @@ class getid3_riff extends getid3_handler {
 							case 'data':
 								$info['avdataoffset'] = $this->ftell();
 								$info['avdataend']    = $info['avdataoffset'] + $chunksize;
-
-								$testData = $this->fread(36);
+								$testData             = $this->fread(36);
 
 								if ($testData === '') {
 									break;
@@ -1913,7 +1897,6 @@ class getid3_riff extends getid3_handler {
 			$info['error']    = $getid3_temp->info['error'];
 			$info['tags']     = $getid3_temp->info['tags'];
 			$info['comments'] = $getid3_temp->info['comments'];
-
 			unset($getid3_riff, $getid3_temp);
 			unlink($tempfile);
 		}
@@ -2018,8 +2001,7 @@ class getid3_riff extends getid3_handler {
 		//     char extension [4], extra_bc, extras [3];
 		// } WavpackHeader;
 		// shortcut
-		$info =& $this->getid3->info;
-
+		$info                        =& $this->getid3->info;
 		$info['wavpack']             = array();
 		$thisfile_wavpack            =& $info['wavpack'];
 		$thisfile_wavpack['version'] = getid3_lib::LittleEndian2Int(substr($WavPackChunkData, 0, 2));

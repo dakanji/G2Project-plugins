@@ -13,7 +13,6 @@
 // module for analyzing XMP metadata (e.g. in JPEG files)      //
 // dependencies: NONE                                          //
 //                                                             //
-
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written [2009-Mar-26] by                  //

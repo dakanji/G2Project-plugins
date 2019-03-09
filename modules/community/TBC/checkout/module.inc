@@ -388,7 +388,7 @@ class CheckoutModule extends GalleryModule {
 							'chargePostage' => $downloadable == 'on' ? 'false' : 'true',
 							'showPapers'    => 'false',
 						)
-						as $paramName => $paramValue) {
+ as $paramName => $paramValue) {
 							$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $rootAlbumId);
 
 							if ($ret) {

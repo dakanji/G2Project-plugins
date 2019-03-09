@@ -394,8 +394,7 @@ class ClassicTheme extends GalleryTheme {
 			}
 
 			foreach ($subAlbums as $subAlbum) {
-				$id = $subAlbum->getId();
-
+				$id                    = $subAlbum->getId();
 				$treeList[$branchId][] = array(
 					'id'    => $id,
 					'depth' => $depth - 1,

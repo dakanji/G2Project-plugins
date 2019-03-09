@@ -45,7 +45,6 @@
 //  improved AVCSequenceParameterSetReader::readData()         //
 //    by Xander Schouwerwou <schouwerwouØgmail*com>            //
 //                                                             //
-
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // module.audio-video.flv.php                                  //
@@ -79,8 +78,7 @@ class getid3_flv extends getid3_handler {
 		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 
-		$FLVdataLength = $info['avdataend'] - $info['avdataoffset'];
-
+		$FLVdataLength                      = $info['avdataend'] - $info['avdataoffset'];
 		$FLVheader                          = $this->fread(5);
 		$info['fileformat']                 = 'flv';
 		$info['flv']['header']['signature'] = substr($FLVheader, 0, 3);
@@ -96,9 +94,8 @@ class getid3_flv extends getid3_handler {
 
 		$info['flv']['header']['hasAudio'] = (bool)($TypeFlags & 0x04);
 		$info['flv']['header']['hasVideo'] = (bool)($TypeFlags & 0x01);
-
-		$FrameSizeDataLength  = getid3_lib::BigEndian2Int($this->fread(4));
-		$FLVheaderFrameLength = 9;
+		$FrameSizeDataLength               = getid3_lib::BigEndian2Int($this->fread(4));
+		$FLVheaderFrameLength              = 9;
 
 		if ($FrameSizeDataLength > $FLVheaderFrameLength) {
 			$this->fseek($FrameSizeDataLength - $FLVheaderFrameLength, SEEK_CUR);
@@ -125,8 +122,7 @@ class getid3_flv extends getid3_handler {
 			$DataLength        = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 5, 3));
 			$Timestamp         = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 8, 3));
 			$LastHeaderByte    = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 15, 1));
-
-			$NextOffset = $this->ftell() - 1 + $DataLength;
+			$NextOffset        = $this->ftell() - 1 + $DataLength;
 
 			if ($Timestamp > $Duration) {
 				$Duration = $Timestamp;
@@ -154,8 +150,7 @@ class getid3_flv extends getid3_handler {
 					if (!$found_video) {
 						$found_video                        = true;
 						$info['flv']['video']['videoCodec'] = $LastHeaderByte & 0x07;
-
-						$FLVvideoHeader = $this->fread(11);
+						$FLVvideoHeader                     = $this->fread(11);
 
 						if ($info['flv']['video']['videoCodec'] == GETID3_FLV_VIDEO_H264) {
 							// this code block contributed by: moysevichØgmail*com
@@ -278,13 +273,11 @@ class getid3_flv extends getid3_handler {
 						$found_meta = true;
 
 						$this->fseek(-1, SEEK_CUR);
-						$datachunk = $this->fread($DataLength);
-						$AMFstream = new AMFStream($datachunk);
-						$reader    = new AMFReader($AMFstream);
-
+						$datachunk                       = $this->fread($DataLength);
+						$AMFstream                       = new AMFStream($datachunk);
+						$reader                          = new AMFReader($AMFstream);
 						$eventName                       = $reader->readData();
 						$info['flv']['meta'][$eventName] = $reader->readData();
-
 						unset($reader);
 						$copykeys = array(
 							'framerate'     => 'frame_rate',
@@ -530,8 +523,7 @@ class AMFReader {
 
 	public function readData() {
 		$value = null;
-
-		$type = $this->stream->readByte();
+		$type  = $this->stream->readByte();
 
 		switch ($type) {
 			// Double
@@ -784,12 +776,10 @@ class AVCSequenceParameterSetReader {
 
 	public function expGolombUe() {
 		$significantBits = 0;
-
-		$bit = $this->getBit();
+		$bit             = $this->getBit();
 
 		while ($bit == 0) {
 			$significantBits++;
-
 			$bit = $this->getBit();
 
 			if ($significantBits > 31) {

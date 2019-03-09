@@ -348,11 +348,10 @@ class MapMarkersAdminController extends GalleryController {
 						$command[] = $resize;
 					}
 
-					$command[] = $basegallerydir . 'map/images/basemarkers/' . $basemarkername
+					$command[]   = $basegallerydir . 'map/images/basemarkers/' . $basemarkername
 					. '.png';
-					$command[] = $basegallerydir . 'map/images/markers/' . $setname
+					$command[]   = $basegallerydir . 'map/images/markers/' . $setname
 					. '/marker_' . $color . '.png';
-
 					$returnstuff = $platform->exec(array($command));
 
 					/*
@@ -629,8 +628,7 @@ class MapMarkersAdminView extends GalleryView {
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
-
+			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';

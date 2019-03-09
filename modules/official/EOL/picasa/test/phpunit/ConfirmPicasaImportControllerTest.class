@@ -117,8 +117,7 @@ class ConfirmPicasaImportControllerTest extends GalleryControllerTestCase {
 			$this->assertEquals($expectedProgressBarDump, $mockAdapter->getProgressBarDump());
 		} else {
 			$pattern = '/^' . $expectedProgressBarDump . '$/';
-
-			$dump = join(' ', $mockAdapter->getProgressBarDump());
+			$dump    = join(' ', $mockAdapter->getProgressBarDump());
 			$this->assert(
 				preg_match($pattern, $dump),
 				'Dump [' . $dump . '] did not match pattern [' . $pattern . ']'

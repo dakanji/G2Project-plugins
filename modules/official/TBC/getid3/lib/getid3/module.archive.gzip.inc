@@ -13,7 +13,6 @@
 // module for analyzing GZIP files                             //
 // dependencies: NONE                                          //
 //                                                            ///
-
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written by                                //
@@ -25,8 +24,7 @@ class getid3_gzip extends getid3_handler {
 	public $option_gzip_parse_contents = false; // decode gzipped files, if possible, and parse recursively (.tar.gz for example)
 
 	public function Analyze() {
-		$info =& $this->getid3->info;
-
+		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'gzip';
 		$start_length       = 10;
 		$unpack_header      = 'a1id1/a1id2/a1cmethod/a1flags/a4mtime/a1xflags/a1os';
@@ -94,9 +92,8 @@ class getid3_gzip extends getid3_handler {
 			$thisInfo['flags']['extra']    = (bool)($thisInfo['raw']['flags'] & 0x04);
 			$thisInfo['flags']['filename'] = (bool)($thisInfo['raw']['flags'] & 0x08);
 			$thisInfo['flags']['comment']  = (bool)($thisInfo['raw']['flags'] & 0x10);
-
-			$thisInfo['compression'] = $this->get_xflag_type($thisInfo['raw']['xflags']);
-			$thisInfo['os']          = $this->get_os_type($thisInfo['raw']['os']);
+			$thisInfo['compression']       = $this->get_xflag_type($thisInfo['raw']['xflags']);
+			$thisInfo['os']                = $this->get_os_type($thisInfo['raw']['os']);
 
 			if (!$thisInfo['os']) {
 				$info['error'][] = 'Read error on gzip file';
@@ -219,11 +216,9 @@ class getid3_gzip extends getid3_handler {
 					$thisInfo['crc32_valid'] = (bool)(sprintf('%u', crc32($inflated)) == $thisInfo['crc32']);
 
 					// determine format
-					$formattest  = substr($inflated, 0, 32774);
-					$getid3_temp = new getID3();
-
+					$formattest        = substr($inflated, 0, 32774);
+					$getid3_temp       = new getID3();
 					$determined_format = $getid3_temp->GetFileFormat($formattest);
-
 					unset($getid3_temp);
 
 					// file format is determined
@@ -250,7 +245,6 @@ class getid3_gzip extends getid3_handler {
 
 									$getid3_tar->Analyze();
 									$info['gzip']['member_header'][$idx]['tar'] = $getid3_temp->info['tar'];
-
 									unset($getid3_temp, $getid3_tar);
 									unlink($temp_tar_filename);
 								} else {

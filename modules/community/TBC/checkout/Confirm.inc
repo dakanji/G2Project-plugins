@@ -537,10 +537,9 @@ class ConfirmView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$tpl['id']         = $transaction->getId();
-		$tpl['controller'] = 'checkout.Confirm';
-		$tpl['payments']   = $plugins;
-
+		$tpl['id']            = $transaction->getId();
+		$tpl['controller']    = 'checkout.Confirm';
+		$tpl['payments']      = $plugins;
 		$tpl['paymentPlugin'] = $transaction->getPaymentPlugin();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkout');

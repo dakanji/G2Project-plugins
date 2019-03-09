@@ -338,7 +338,6 @@ class TileTheme extends GalleryTheme {
 
 		foreach ($childItems as $child) {
 			$i++;
-
 			$childId = $child->getId();
 
 			if (isset($thumbnails[$childId])) {
@@ -476,9 +475,8 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$this->_setDefaultParameters($params);
-		$theme          =& $template->getVariableByReference('theme');
-		$theme['param'] = $params;
-
+		$theme                 =& $template->getVariableByReference('theme');
+		$theme['param']        = $params;
 		$theme['actingUserId'] = $gallery->getActiveUserId();
 
 		list($ret, $childIds) = GalleryCoreApi::fetchChildItemIds($item);

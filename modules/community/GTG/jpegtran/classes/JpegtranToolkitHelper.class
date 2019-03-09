@@ -149,8 +149,7 @@ class JpegtranToolkitHelper {
 		// To test the binary we'll try to rotate a small jpeg file.
 		$tmpDir      = $gallery->getConfig('data.gallery.tmp');
 		$tmpFilename = $platform->tempnam($tmpDir, 'jpgt_');
-
-		$command = array(
+		$command     = array(
 			$jpegtranPath,
 			'-verbose',
 			'-copy',
@@ -212,8 +211,7 @@ class JpegtranToolkitHelper {
 					'messages' => array(),
 				);
 			} else {
-				$message = $module->translate('Unexpected results.');
-
+				$message     = $module->translate('Unexpected results.');
 				$testArray[] = array(
 					'name'    => 'rotate',
 					'success' => false,

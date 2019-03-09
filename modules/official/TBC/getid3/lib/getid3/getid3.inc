@@ -641,23 +641,23 @@ class getID3 {
 				),
 
 				/*
-																				  // AA   - audio       - Audible Audiobook
-												  'aa' => array(
-															  'pattern' => '^.{4}\x57\x90\x75\x36',
-															  'group' => 'audio',
-															  'module' => 'aa',
-															  'mime_type' => 'audio/audible',
-														  ),
-											  */
+																												 // AA   - audio       - Audible Audiobook
+																 'aa' => array(
+																			 'pattern' => '^.{4}\x57\x90\x75\x36',
+																			 'group' => 'audio',
+																			 'module' => 'aa',
+																			 'mime_type' => 'audio/audible',
+																		 ),
+															 */
 
-												  // AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
-												  'adts' => array(
-													  'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
-													  'group'     => 'audio',
-													  'module'    => 'aac',
-													  'mime_type' => 'application/octet-stream',
-													  'fail_ape'  => 'WARNING',
-												  ),
+																 // AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
+																 'adts' => array(
+																	 'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
+																	 'group'     => 'audio',
+																	 'module'    => 'aac',
+																	 'mime_type' => 'application/octet-stream',
+																	 'fail_ape'  => 'WARNING',
+																 ),
 
 				// AU   - audio       - NeXT/Sun AUdio (AU)
 				'au' => array(
@@ -1415,7 +1415,6 @@ class getID3 {
 
 				// Use vorbiscomment to make temp file without comments
 				$temp = tempnam(GETID3_TEMP_DIR, 'getID3');
-
 				$file = $this->info['filenamepath'];
 
 				if (GETID3_OS_ISWINDOWS) {
@@ -1490,8 +1489,7 @@ class getID3 {
 		}
 
 		// Calculate combined bitrate - audio + video
-		$CombinedBitrate = 0;
-
+		$CombinedBitrate  = 0;
 		$CombinedBitrate += (isset($this->info['audio']['bitrate']) ? $this->info['audio']['bitrate'] : 0);
 		$CombinedBitrate += (isset($this->info['video']['bitrate']) ? $this->info['video']['bitrate'] : 0);
 
@@ -1565,9 +1563,8 @@ class getID3 {
 			case 'jpg':
 			case 'png':
 			case 'tiff':
-				$FrameRate       = 1;
-				$PlaytimeSeconds = 1;
-
+				$FrameRate         = 1;
+				$PlaytimeSeconds   = 1;
 				$BitrateCompressed = $this->info['filesize'] * 8;
 
 				break;

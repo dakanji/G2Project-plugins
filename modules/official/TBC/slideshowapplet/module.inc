@@ -184,9 +184,8 @@ class SlideshowAppletModule extends GalleryModule {
 	 * @see GalleryModule::getRewriteRules
 	 */
 	public function getRewriteRules() {
-		$rules = array();
-		$rule  = array();
-
+		$rules           = array();
+		$rule            = array();
 		$rule['comment'] = $this->translate('View Slideshow (Fullscreen)');
 		$rule['match']   = array(
 			'view' => 'slideshowapplet.SlideshowApplet',

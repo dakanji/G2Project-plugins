@@ -75,7 +75,7 @@ class FavouritesModule extends GalleryModule {
 			'themeId'       => '',
 			'offerToGuests' => 1,
 		)
-		as $key => $value) {
+ as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
 
@@ -239,8 +239,7 @@ class FavouritesModule extends GalleryModule {
 		global $gallery;
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
 
-		$links = array();
-
+		$links  = array();
 		$userId = $gallery->getActiveUserId();
 
 		list($ret, $anonymousUserId) = GalleryCoreApi::getAnonymousUserId();

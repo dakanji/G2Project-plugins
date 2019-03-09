@@ -32,8 +32,7 @@ class getid3_aa extends getid3_handler {
 		$thisfile_aa                 =& $info['aa'];
 		$info['fileformat']          = 'aa';
 		$info['audio']['dataformat'] = 'aa';
-
-		$info['error'][] = 'Audible Audiobook (.aa) parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
+		$info['error'][]             = 'Audible Audiobook (.aa) parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
 
 		return false;
 		$info['audio']['bitrate_mode'] = 'cbr'; // is it?

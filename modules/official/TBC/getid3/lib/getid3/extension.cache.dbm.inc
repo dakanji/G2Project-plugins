@@ -10,7 +10,6 @@
 // extension.cache.dbm.php - part of getID3()                  //
 // Please see readme.txt for more information                  //
 //                                                            ///
-
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // This extension written by Allan Hansen <ahØartemis*dk>      //

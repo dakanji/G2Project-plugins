@@ -89,8 +89,7 @@ class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension {
 	 * OpenID message
 	 */
 	public function fromOpenIDRequest($request) {
-		$obj = new Auth_OpenID_PAPE_Request();
-
+		$obj  = new Auth_OpenID_PAPE_Request();
 		$args = $request->message->getArgs(Auth_OpenID_PAPE_NS_URI);
 
 		if ($args === null || $args === array()) {

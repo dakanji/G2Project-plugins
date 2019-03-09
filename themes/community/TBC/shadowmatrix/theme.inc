@@ -175,9 +175,8 @@ class ShadowMatrixTheme extends GalleryTheme {
 						return array($ret, null);
 					}
 
-					$tmp[$i]['id']       = $itemId;
-					$tmp[$i]['resizeId'] = $id;
-
+					$tmp[$i]['id']          = $itemId;
+					$tmp[$i]['resizeId']    = $id;
 					$tmp[$i]['entityType']  = $item->getEntityType();
 					$tmp[$i]['title']       = $item->getTitle();
 					$tmp[$i]['summary']     = $item->getSummary();
@@ -361,8 +360,7 @@ class ShadowMatrixTheme extends GalleryTheme {
 		// find the closest match
 		$closest   = $potentialImages[0];
 		$requested = $maxImageHeight * $maxImageWidth;
-
-		$delta = ($potentialImages[0]->height * $potentialImages[0]->width) - $requested;
+		$delta     = ($potentialImages[0]->height * $potentialImages[0]->width) - $requested;
 
 		if ($delta < 0) {
 			$delta *= -1;

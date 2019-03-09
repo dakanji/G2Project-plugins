@@ -128,7 +128,6 @@ class getid3_flac extends getid3_handler {
 			}
 
 			unset($info['flac'][$BlockTypeText]['raw']);
-
 			$info['avdataoffset'] = $this->ftell();
 		} while ($LastBlockFlag === false);
 
@@ -353,9 +352,8 @@ class getid3_flac extends getid3_handler {
 		$info                   =& $this->getid3->info;
 		$picture['typeid']      = getid3_lib::BigEndian2Int($this->fread(4));
 		$picture['picturetype'] = self::pictureTypeLookup($picture['typeid']);
-
-		$picture['image_mime'] = $this->fread(getid3_lib::BigEndian2Int($this->fread(4)));
-		$descr_length          = getid3_lib::BigEndian2Int($this->fread(4));
+		$picture['image_mime']  = $this->fread(getid3_lib::BigEndian2Int($this->fread(4)));
+		$descr_length           = getid3_lib::BigEndian2Int($this->fread(4));
 
 		if ($descr_length) {
 			$picture['description'] = $this->fread($descr_length);

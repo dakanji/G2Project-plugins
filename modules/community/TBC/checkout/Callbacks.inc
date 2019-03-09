@@ -145,8 +145,7 @@ class CheckoutCallbacks {
 				$block                        =& $smarty->_tpl_vars['block'];
 				$block['checkout']['csymbol'] = $csymbol;
 				$block['checkout']['cformat'] = $cformat;
-
-				$block['checkout']['total'] = $transaction->getAmount();
+				$block['checkout']['total']   = $transaction->getAmount();
 
 				return null;
 

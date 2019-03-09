@@ -179,8 +179,7 @@ class FetchDownloadView extends GalleryView {
 			}
 
 			$zipName = $filenamebase . $uniqueId . '.' . $extension;
-
-			$size = $platform->filesize($file);
+			$size    = $platform->filesize($file);
 
 			// Disable output compression (if necessary) since IE seems to have problems with it
 			@$phpVm->ini_set('zlib.output_compression', 0);

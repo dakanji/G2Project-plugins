@@ -279,8 +279,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 			$itemId          = (int)$item->getId();
 			$itemIds[]       = $itemId;
 			$result[$itemId] = array();
-
-			$containerId = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? (int)$itemId : (int)$item->getParentId();
+			$containerId     = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? (int)$itemId : (int)$item->getParentId();
 
 			list($ret, $param[$itemId], $isContainer[$itemId]) = mapHelper::loadParameters($containerId);
 
@@ -334,8 +333,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 	 * @static
 	 */
 	public function saveFieldValues(&$item, $fields) {
-		$set = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 1 : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 2 : 0);
-
+		$set         = (GalleryUtilities::isA($item, 'GalleryAlbumItem')) ? 1 : ((GalleryUtilities::isA($item, 'GalleryPhotoItem')) ? 2 : 0);
 		$containerId = ($set == 1) ? $item->getId() : $item->getParentId();
 
 		list($ret, $param) = GalleryCoreApi::fetchAllPluginParameters('module', 'map', $containerId);
@@ -1186,8 +1184,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 
 		$gurl     =& $gallery->getUrlGenerator();
 		$platform =& $gallery->getPlatform();
-
-		$groups = array();
+		$groups   = array();
 
 		// Get the date format
 		list($ret, $dateFormat) = GalleryCoreApi::getPluginParameter('module', 'core', 'format.date');
@@ -1207,8 +1204,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 		foreach ($tmpgroups as $tmpgroup) {
 			$groupinfo = explode('`', $tmpgroup);
 			$thumbpic  = substr(dirname(__FILE__), 0, -7) . 'images/groups/' . $groupinfo[4];
-
-			$Tsizes = $platform->getimagesize($thumbpic);
+			$Tsizes    = $platform->getimagesize($thumbpic);
 
 			if ($Tsizes !== false) {
 				$thumbWidth     = $Tsizes[0];
@@ -1550,8 +1546,7 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 							return array($ret, null);
 						}
 
-						$type = $item->getEntityType();
-
+						$type         = $item->getEntityType();
 						$imagename    = $MarkerSets[$type];
 						$defaultcolor = $DefaultColors[$type];
 						$color        = mapHelper::getItemColor($routeinfo[$i]);
@@ -1560,11 +1555,9 @@ class mapHelper extends mapInterface_1_0 // and GalleryEventListener
 						. '/marker_' . strtoupper($color) . '.png';
 						$destination  = $mapModBaseDir . 'images/routes/' . $routeinfo[1] . '/'
 						. $nb . '-marker_' . strtoupper($color) . '.png';
-
-						$picsize = $platform->getimagesize($sourceimage);
-
-						$xpos = $picsize[0] / 2 - 3;
-						$ypos = $picsize[1] / 2 + 2;
+						$picsize      = $platform->getimagesize($sourceimage);
+						$xpos         = $picsize[0] / 2 - 3;
+						$ypos         = $picsize[1] / 2 + 2;
 
 						/**
 						 * @todo Change this to use ImageMagick's "annotate" instead of

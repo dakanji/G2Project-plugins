@@ -117,19 +117,17 @@ class MyEventHandlerClass // extends GalleryEventListener
 		}
 
 		if ($event->getEventName() == 'Gallery::FailedLogin') {
-			$data      = $event->getData();
-			$userName2 = $data['userName'];
-
+			$data                    = $event->getData();
+			$userName2               = $data['userName'];
 			$currentRemoteIdentifier = $this->getRemoteIdentifier();
 			$this->_remoteIdentifier = $currentRemoteIdentifier;
 			$remoteHost              = $this->_remoteIdentifier[0];
-
-			$id        = $myUniqueID;
-			$userId    = '';
-			$userName  = $userName2;
-			$ipAddress = $remoteHost;
-			$timeStamp = time();
-			$action    = 'Failed Login';
+			$id                      = $myUniqueID;
+			$userId                  = '';
+			$userName                = $userName2;
+			$ipAddress               = $remoteHost;
+			$timeStamp               = time();
+			$action                  = 'Failed Login';
 
 			$ret = GalleryCoreApi::addMapEntry(
 				'UserinfoMap',

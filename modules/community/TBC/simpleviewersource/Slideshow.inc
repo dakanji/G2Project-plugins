@@ -36,8 +36,7 @@ class SlideshowView extends GalleryView {
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
 
-		$itemId = GalleryUtilities::getRequestVariables('itemId');
-
+		$itemId         = GalleryUtilities::getRequestVariables('itemId');
 		$myUrlGenerator =& $gallery->getUrlGenerator();
 		$XMLurl         = $myUrlGenerator->generateUrl(
 			array(

@@ -80,7 +80,6 @@ class DuplicateTitlesView extends GalleryView {
 
 		if (count($tester->duplicateitems) > 0) {
 			$items = array_merge($items, ItemList::LoadSpecificItems($tester->duplicateitems));
-
 			usort($items, array('ItemList', $sortfunction));
 		}
 

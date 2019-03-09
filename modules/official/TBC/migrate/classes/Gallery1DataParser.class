@@ -256,8 +256,7 @@ class Gallery1DataParser {
 
 		$platform =& $gallery->getPlatform();
 		$slash    = $platform->getDirectorySeparator();
-
-		$tmp = trim($path);
+		$tmp      = trim($path);
 
 		if ($tmp[strlen($tmp) - 1] != $slash) {
 			$tmp .= $slash;

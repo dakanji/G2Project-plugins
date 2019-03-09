@@ -116,7 +116,6 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 		$tmpDirs  = array();
 		$tmpFiles = array();
 		$cmd      = array($zip, $zipFile);
-
 		$albumDir = $gallery->getConfig('data.gallery.albums');
 		$i        = 0;
 
@@ -133,7 +132,6 @@ class ZipCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterfac
 
 			$relativePath = (strpos($path, $albumDir) === 0) ?
 				substr($path, strlen($albumDir)) : basename($path);
-
 			$itemId       = $item->getId();
 			$itemMimeType = $item->getMimeType();
 

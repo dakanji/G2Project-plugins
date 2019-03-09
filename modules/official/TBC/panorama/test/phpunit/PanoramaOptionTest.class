@@ -108,8 +108,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 
 	public function testPanoramaOn() {
 		$form['PanoramaOption']['isPanorama'] = 1;
-
-		$result = $this->_handleRequestAfterEdit($form, $this->_item);
+		$result                               = $this->_handleRequestAfterEdit($form, $this->_item);
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $item) = $this->_item->refresh();

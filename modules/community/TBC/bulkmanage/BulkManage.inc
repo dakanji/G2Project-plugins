@@ -176,8 +176,7 @@ class BulkManageView extends GalleryView {
 		$BulkManage               = array();
 		$BulkManage['bulkPlugin'] = $bulkPlugin;
 		$BulkManage['plugins']    = $plugins;
-
-		$BulkManage['itemId'] = $item->getId();
+		$BulkManage['itemId']     = $item->getId();
 
 		// Let the plugin load its template data
 		list($ret, $BulkManage['pluginFile'], $BulkManage['pluginL10Domain']) = $pluginInstances[$bulkPlugin]->loadTemplate($template, $form, $item);

@@ -695,9 +695,7 @@ class getid3_lib {
 			include_once __DIR__ . '/getid3.php';
 
 			$getid3_temp = new getID3();
-
-			$tempdir = $getid3_temp->tempdir;
-
+			$tempdir     = $getid3_temp->tempdir;
 			unset($getid3_temp);
 		}
 
@@ -1512,10 +1510,8 @@ class getid3_lib {
 		if (GETID3_OS_ISWINDOWS) {
 			if (class_exists('COM')) { // From PHP 5.3.15 and 5.4.5, COM and DOTNET is no longer built into the php core.you have to add COM support in php.ini:
 				$filesystem = new COM('Scripting.FileSystemObject');
-
-				$file     = $filesystem->GetFile($path);
-				$filesize = $file->Size();
-
+				$file       = $filesystem->GetFile($path);
+				$filesize   = $file->Size();
 				unset($filesystem, $file);
 			} else {
 				$commandline = 'for %I in (' . escapeshellarg($path) . ') do @echo %~zI';

@@ -170,9 +170,8 @@ class AdminSessionView extends GalleryView {
 			return $ret;
 		}
 
-		$userNames = array();
-		$pSession  = array();
-
+		$userNames                     = array();
+		$pSession                      = array();
 		$pSession                      = $results->nextResult();
 		$mySession->_userId            = (int)$pSession[1];
 		$mySession->_remoteIdentifier  = unserialize($pSession[2]);

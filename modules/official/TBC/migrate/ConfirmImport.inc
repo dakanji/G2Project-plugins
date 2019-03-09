@@ -1099,8 +1099,7 @@ class ConfirmImportController extends GalleryController {
 
 					$importAlbumItem = null;
 				} else {
-					$dir = $albumsPath . $album['name'] . $slash;
-
+					$dir      = $albumsPath . $album['name'] . $slash;
 					$filename = $importAlbumItem->image->name . '.' . $importAlbumItem->image->type;
 					$filepath = $dir . $filename;
 					$templateAdapter->updateProgressBar(
@@ -1389,8 +1388,7 @@ class ConfirmImportController extends GalleryController {
 
 							if ($validItemUID) {
 								$defaultToAlbumUID = false;
-
-								$itemUID = $importAlbumItem->owner;
+								$itemUID           = $importAlbumItem->owner;
 							}
 						}
 					}
@@ -1489,7 +1487,8 @@ class ConfirmImportController extends GalleryController {
 										$albumsPath,
 										$album['owner']
 									);
-									$g1CommenterId   = $album['owner'];
+
+									$g1CommenterId = $album['owner'];
 								}
 
 								if ($validCommentUid) {
@@ -1850,8 +1849,7 @@ class ConfirmImportController extends GalleryController {
 		$session->putStatus($status);
 		$redirect['view']    = 'core.SiteAdmin';
 		$redirect['subView'] = 'migrate.ImportResults';
-
-		$urlGenerator =& $gallery->getUrlGenerator();
+		$urlGenerator        =& $gallery->getUrlGenerator();
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 
 		return null;

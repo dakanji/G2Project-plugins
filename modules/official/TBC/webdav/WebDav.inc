@@ -113,6 +113,7 @@ class WebDavController extends GalleryController {
 			WebDavServer::getme()->setResponseStatus(
 				'200 OK'
 			);
+
 			$handle = WebDavServer::getme()->openRequestBody();
 
 			while (!feof($handle)) {

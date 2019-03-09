@@ -304,8 +304,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			);
 		} else {
 			$pattern = '/^' . $expectedProgressBarDump . '$/';
-
-			$dump = join(' ', $mockAdapter->getProgressBarDump());
+			$dump    = join(' ', $mockAdapter->getProgressBarDump());
 			$this->assertTrue(
 				preg_match($pattern, $dump),
 				"Progress Bar Dump [$dump] did not match pattern [$pattern]"
@@ -320,7 +319,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 	public function testImportUserSuccessful() {
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -369,7 +367,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 	public function testImportMissingUserFullname() {
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -421,7 +418,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 	public function testImportUserFailure() {
 		// Try importing user with username 'admin' which should fail
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -483,7 +479,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 	// Import an album with comments and a user.
 	public function testImportAlbumSuccessful() {
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -1060,7 +1055,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 	public function testImportAlbumAndGenerateThumbnailsNoMarkup() {
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -1210,7 +1204,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 	public function testG1MigrateMap() {
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -1395,7 +1388,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -1626,7 +1618,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 	public function testImportAlbumPermissions2() {
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -1723,7 +1714,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$storage =& $gallery->getStorage();
 		$slash   = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -1861,7 +1851,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$expectedTitle = "Western European (ISO)\r\nHello World \r\nNorwegian Norsk\r\nHallo Verden\r\n" .
 		"Gallery er s\xc3\xa5 utrolig bra at jeg har satt det opp til flere";
-
 		$expectedTitle = $storage->_truncateString($expectedTitle, STORAGE_SIZE_MEDIUM);
 		$this->assertEquals(
 			array(
@@ -1888,7 +1877,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$storage =& $gallery->getStorage();
 		$slash   = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -2020,7 +2008,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$expectedTitle = "CHARSET=8859-1, fr-Fr, Hello World, french, fran\xc3\xa7ais, Bonjour Monde\r\n" .
 		"Voil\xc3\xa0 du texte contenant des caract\xc3\xa8res accentu\xc3\xa9s. " .
 		"\xc3\xa7\xc3\xa0 donne";
-
 		$expectedTitle = $storage->_truncateString($expectedTitle, STORAGE_SIZE_MEDIUM);
 		$this->assertEquals(
 			array(
@@ -2047,7 +2034,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		$storage =& $gallery->getStorage();
 		$slash   = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash
@@ -2534,7 +2520,6 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		// Test stimuli.
 		$slash = $this->_slash;
-
 		GalleryUtilities::putRequestVariable(
 			'albumsPath',
 			__DIR__ . $slash . '..' . $slash . 'data' . $slash . 'albums' . $slash

@@ -47,9 +47,7 @@ class getid3_bink extends getid3_handler {
 		$info                        =& $this->getid3->info;
 		$info['fileformat']          = 'bink';
 		$info['video']['dataformat'] = 'bink';
-
-		$fileData = 'BIK' . $this->fread(13);
-
+		$fileData                    = 'BIK' . $this->fread(13);
 		$info['bink']['data_size']   = getid3_lib::LittleEndian2Int(substr($fileData, 4, 4));
 		$info['bink']['frame_count'] = getid3_lib::LittleEndian2Int(substr($fileData, 8, 2));
 
@@ -61,8 +59,7 @@ class getid3_bink extends getid3_handler {
 	}
 
 	public function ParseSmacker() {
-		$info =& $this->getid3->info;
-
+		$info                        =& $this->getid3->info;
 		$info['fileformat']          = 'smacker';
 		$info['video']['dataformat'] = 'smacker';
 

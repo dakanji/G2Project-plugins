@@ -110,8 +110,7 @@ class getid3_tiff extends getid3_handler {
 
 			$info['tiff']['ifd'][] = $CurrentIFD;
 			$CurrentIFD            = array();
-
-			$nextIFDoffset = $this->TIFFendian2Int($this->fread(4), $info['tiff']['byte_order']);
+			$nextIFDoffset         = $this->TIFFendian2Int($this->fread(4), $info['tiff']['byte_order']);
 		}
 
 		foreach ($info['tiff']['ifd'] as $IFDid => $IFDarray) {

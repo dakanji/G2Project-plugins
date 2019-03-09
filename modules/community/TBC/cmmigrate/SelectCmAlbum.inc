@@ -48,8 +48,7 @@ class SelectCmAlbumController extends GalleryController {
 			} else {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
-
-				$tmp = trim($form['copperminePath']);
+				$tmp      = trim($form['copperminePath']);
 
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;

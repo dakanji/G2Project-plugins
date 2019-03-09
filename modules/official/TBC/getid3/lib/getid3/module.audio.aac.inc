@@ -36,8 +36,7 @@ class getid3_aac extends getid3_handler {
 
 		$this->fseek($info['avdataoffset']);
 		$AACheader = $this->fread(1024);
-
-		$offset = 0;
+		$offset    = 0;
 
 		if (substr($AACheader, 0, 4) == 'ADIF') {
 			// http://faac.sourceforge.net/wiki/index.php?page=ADIF

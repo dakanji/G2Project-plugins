@@ -124,7 +124,6 @@ class AlbumTimestampModule extends GalleryModule {
 		$itemId  = $item->getId();
 		$albumId = $item->getParentId();
 		$isNew   = $item->testPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
-
 		AlbumTimestampHelper::log("LEO: handleEvent: $eventName itemId=$itemId");
 
 		if (GalleryUtilities::isA($item, 'GalleryAlbumItem')

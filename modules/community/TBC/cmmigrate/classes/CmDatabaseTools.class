@@ -175,9 +175,7 @@ class CmDatabaseTools {
 					);
 					$result[] = $entry;
 					array_push($stack, $parent);
-
-					$parent = $a->getAlbumId($a);
-
+					$parent    = $a->getAlbumId($a);
 					$descended = true;
 					unset($albums[$i]);
 

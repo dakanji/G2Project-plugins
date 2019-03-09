@@ -34,8 +34,7 @@ class getid3_write_lyrics3 {
 
 	public function DeleteLyrics3() {
 		// Initialize getID3 engine
-		$getID3 = new getID3();
-
+		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
 
 		if (isset($ThisFileInfo['lyrics3']['tag_offset_start'], $ThisFileInfo['lyrics3']['tag_offset_end'])) {

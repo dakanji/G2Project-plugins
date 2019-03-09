@@ -71,12 +71,10 @@ class CheckoutPDFInvoiceStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 
 			$results['redirect']['view']          = 'checkoutpdfinvoice.PDFOut';
 			$results['redirect']['transactionId'] = $form['checkoutpdfinvoice']['transactionId'];
-
-			$results['redirect']['verify1'] = $transaction->getDate();
-			$results['redirect']['verify2'] = $transaction->getSecurity();
-
-			$results['status'] = '';
-			$results['error']  = '';
+			$results['redirect']['verify1']       = $transaction->getDate();
+			$results['redirect']['verify2']       = $transaction->getSecurity();
+			$results['status']                    = '';
+			$results['error']                     = '';
 
 			return array(null, $results);
 		}

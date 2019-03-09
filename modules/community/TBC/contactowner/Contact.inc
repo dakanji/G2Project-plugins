@@ -277,9 +277,8 @@ class ContactView extends GalleryView {
 			$body = 'modules/contactowner/templates/Contact.tpl';
 		} else {
 			$contactOwner['emailsent'] = false;
-
-			$contactOwner['title'] = $gallery->translate('Contact::Email Failed');
-			$body                  = 'modules/contactowner/templates/Sent.tpl';
+			$contactOwner['title']     = $gallery->translate('Contact::Email Failed');
+			$body                      = 'modules/contactowner/templates/Sent.tpl';
 		}
 
 		$template->setVariable('ContactOwner', $contactOwner);

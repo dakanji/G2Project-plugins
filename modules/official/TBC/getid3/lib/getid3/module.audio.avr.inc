@@ -59,8 +59,7 @@ class getid3_avr extends getid3_handler {
 		$info['fileformat'] = 'avr';
 
 		$this->fseek($info['avdataoffset']);
-		$AVRheader = $this->fread(128);
-
+		$AVRheader                   = $this->fread(128);
 		$info['avr']['raw']['magic'] = substr($AVRheader, 0, 4);
 		$magic                       = '2BIT';
 

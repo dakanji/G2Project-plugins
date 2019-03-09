@@ -489,9 +489,8 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		// create a list of dupe pairs
-		$pairsList = array();
-		$dupRecord = array();
-
+		$pairsList               = array();
+		$dupRecord               = array();
 		$dupRecord['srcItemId']  = $this->_item1->getId();
 		$dupRecord['dupItemId']  = $this->_item2->getId();
 		$dupRecord['dupType']    = DUPEDETECT_HISTOGRAM_ALGORITHM;

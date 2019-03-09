@@ -284,7 +284,6 @@ class AjaxianTheme extends GalleryTheme {
 
 		foreach ($childItems as $child) {
 			$i++;
-
 			$childId = $child->getId();
 
 			if (!GalleryUtilities::isA($child, 'GalleryDataItem')) {

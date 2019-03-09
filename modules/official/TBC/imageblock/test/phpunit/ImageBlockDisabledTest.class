@@ -187,8 +187,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 			return array($ret, null, null);
 		}
 
-		$items = array();
-
+		$items   = array();
 		$items[] = $photo->getId();
 
 		return array(null, $album, $items);

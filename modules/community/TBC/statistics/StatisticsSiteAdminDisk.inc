@@ -48,8 +48,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			$statistics['used']         = $this->_sizeReadable($cache['used']);
 			$statistics['capacity']     = $this->_sizeReadable($cache['capacity']);
 			$statistics['free']         = $this->_sizeReadable($cache['capacity'] - $cache['used']);
-
-			$statistics['percent'] = round((($cache['capacity'] - $cache['used']) / $cache['capacity']) * 100);
+			$statistics['percent']      = round((($cache['capacity'] - $cache['used']) / $cache['capacity']) * 100);
 		}
 
 		$template->setVariable(
@@ -159,24 +158,20 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		// Paths
 		$progress = 0.1;
-
 		$minitask = $module->translate('Scanning root directory');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
 			$progress
 		);
-		$base       = $gallery->getConfig('data.gallery.base');
-		$derivative = $gallery->getConfig('data.gallery.cache') . 'derivative/';
-		$albums     = $gallery->getConfig('data.gallery.albums');
-
+		$base                   = $gallery->getConfig('data.gallery.base');
+		$derivative             = $gallery->getConfig('data.gallery.cache') . 'derivative/';
+		$albums                 = $gallery->getConfig('data.gallery.albums');
 		$statistics['capacity'] = disk_total_space($base);
 		$statistics['used']     = disk_total_space($base) - disk_free_space($base);
-
-		$statistics['base'] = $this->_dirSize($base, $taskname, $minitask, $progress, $module, $templateAdapter);
-		$progress           = 0.5;
-
-		$minitask = $module->translate('Scanning derivative folder');
+		$statistics['base']     = $this->_dirSize($base, $taskname, $minitask, $progress, $module, $templateAdapter);
+		$progress               = 0.5;
+		$minitask               = $module->translate('Scanning derivative folder');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
@@ -184,8 +179,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		);
 		$statistics['derivative'] = $this->_dirSize($derivative, $minitask, $taskname, $progress, $module, $templateAdapter);
 		$progress                 = 0.8;
-
-		$minitask = $module->translate('Scanning album folder');
+		$minitask                 = $module->translate('Scanning album folder');
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,

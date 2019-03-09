@@ -65,8 +65,7 @@ class AddviaemailModule extends GalleryModule {
 		$links = array();
 
 		foreach ($items as $item) {
-			$params['view'] = 'addviaemail.Addviaemail';
-
+			$params['view']          = 'addviaemail.Addviaemail';
 			$params['itemId']        = $item->getId();
 			$links[$item->getId()][] = array(
 				'text'   => $this->translate('Add via Email'),

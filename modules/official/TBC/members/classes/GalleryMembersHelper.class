@@ -273,11 +273,9 @@ class GalleryMembersHelper {
 		 * The difference in the day of creationTimestamp and todays date,
 		 * divided by the number of seconds in a day, gives us a result in days
 		 */
-		$todayStamp = strtotime(date('F j, Y', time()));
-
+		$todayStamp    = strtotime(date('F j, Y', time()));
 		$creationStamp = strtotime(date('F j, Y', $user->getCreationTimestamp()));
-
-		$age = (int)round(($todayStamp - $creationStamp) / (24 * 60 * 60));
+		$age           = (int)round(($todayStamp - $creationStamp) / (24 * 60 * 60));
 
 		return array(null, $age);
 	}

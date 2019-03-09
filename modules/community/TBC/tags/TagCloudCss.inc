@@ -57,12 +57,10 @@ class TagCloudCssView extends GalleryView {
 		$platform =& $gallery->getPlatform();
 
 		// Get the file timestamp
-		$slash   = $platform->getDirectorySeparator();
-		$cssDir  = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
-		$cssFile = $cssDir . $slash . 'tags.css';
-
-		$cssFileStat = $platform->stat($cssFile);
-
+		$slash                = $platform->getDirectorySeparator();
+		$cssDir               = $gallery->getConfig('data.gallery.plugins_data') . 'modules' . $slash . 'tags';
+		$cssFile              = $cssDir . $slash . 'tags.css';
+		$cssFileStat          = $platform->stat($cssFile);
 		$fileLastModifiedDate = $cssFileStat[9];
 
 		if (function_exists('getallheaders')) {

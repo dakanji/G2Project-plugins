@@ -265,9 +265,8 @@ class BulkTagsEditView extends GalleryView {
 			}
 		}
 
-		$urlGenerator =& $gallery->getUrlGenerator();
-		$BulkTagsEdit = array();
-
+		$urlGenerator              =& $gallery->getUrlGenerator();
+		$BulkTagsEdit              = array();
 		$BulkTagsEdit['canCancel'] = $urlGenerator->isNavigationBackPossible();
 		$BulkTagsEdit['page']      = $page;
 		$BulkTagsEdit['itemId']    = $itemId;

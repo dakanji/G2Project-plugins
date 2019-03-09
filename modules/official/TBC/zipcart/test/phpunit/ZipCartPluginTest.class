@@ -307,7 +307,6 @@ class ZipCartPluginTest extends GalleryTestCase {
 			$urlParams
 		);
 		$platform =& $gallery->getPlatform();
-
 		@$platform->unlink($gallery->_zipCartTempnam);
 		$slash = $platform->getDirectorySeparator();
 		$path  = $this->_album->getPathComponent();

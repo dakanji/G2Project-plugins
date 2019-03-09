@@ -67,8 +67,7 @@ class GalleryRemoteController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
 
-		$session =& $gallery->getSession();
-
+		$session       =& $gallery->getSession();
 		$start         = array_sum(explode(' ', microtime()));
 		$status        = $error        = array();
 		$response      = new GalleryRemoteProperties();
@@ -582,7 +581,6 @@ class GalleryRemoteController extends GalleryController {
 			}
 
 			$parentId = $parentItem->getId();
-
 			unset($parentItem);
 		} elseif (!empty($form['set_albumPath'])) {
 			list($ret, $parentId) = GalleryCoreApi::fetchItemIdByPath(urldecode($form['set_albumName']));

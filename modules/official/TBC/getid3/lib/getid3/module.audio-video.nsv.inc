@@ -129,9 +129,8 @@ class getid3_nsv extends getid3_handler {
 				break;
 		}
 
-		$info['video']['resolution_x'] = $info['nsv']['NSVs']['resolution_x'];
-		$info['video']['resolution_y'] = $info['nsv']['NSVs']['resolution_y'];
-
+		$info['video']['resolution_x']       = $info['nsv']['NSVs']['resolution_x'];
+		$info['video']['resolution_y']       = $info['nsv']['NSVs']['resolution_y'];
 		$info['nsv']['NSVs']['frame_rate']   = $this->NSVframerateLookup($info['nsv']['NSVs']['framerate_index']);
 		$info['video']['frame_rate']         = $info['nsv']['NSVs']['frame_rate'];
 		$info['video']['bits_per_sample']    = 24;
@@ -143,8 +142,7 @@ class getid3_nsv extends getid3_handler {
 	public function getNSVfHeaderFilepointer($fileoffset, $getTOCoffsets = false) {
 		$info =& $this->getid3->info;
 		$this->fseek($fileoffset);
-		$NSVfheader = $this->fread(28);
-
+		$NSVfheader                        = $this->fread(28);
 		$offset                            = 0;
 		$info['nsv']['NSVf']['identifier'] = substr($NSVfheader, $offset, 4);
 		$offset                           += 4;
@@ -181,8 +179,7 @@ class getid3_nsv extends getid3_handler {
 			return false;
 		}
 
-		$NSVfheader .= $this->fread($info['nsv']['NSVf']['meta_size'] + (4 * $info['nsv']['NSVf']['TOC_entries_1']) + (4 * $info['nsv']['NSVf']['TOC_entries_2']));
-
+		$NSVfheader                     .= $this->fread($info['nsv']['NSVf']['meta_size'] + (4 * $info['nsv']['NSVf']['TOC_entries_1']) + (4 * $info['nsv']['NSVf']['TOC_entries_2']));
 		$NSVfheaderlength                = strlen($NSVfheader);
 		$info['nsv']['NSVf']['metadata'] = substr($NSVfheader, $offset, $info['nsv']['NSVf']['meta_size']);
 		$offset                         += $info['nsv']['NSVf']['meta_size'];

@@ -275,12 +275,10 @@ class CalendarMonthView extends GalleryView {
 		* If the plugin is empty get it from the session.  If it's empty there,
 		* default to the first plugin we find.  Either way, save the user's
 		* preference in the session.
-
 		$session =& $gallery->getSession();
 		$addPluginSessionKey = 'core.view.ItemAdd.addPlugin.' . get_class($item);
 		if (empty($addPlugin) || !isset($pluginInstances[$addPlugin])) {
 		$addPlugin = $session->get($addPluginSessionKey);
-
 		if (empty($addPlugin) || !isset($pluginInstances[$addPlugin])) {
 		$ids = array_keys($pluginInstances);
 		$addPlugin = $ids[0];

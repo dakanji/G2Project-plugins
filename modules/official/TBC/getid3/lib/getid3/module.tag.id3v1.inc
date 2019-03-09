@@ -29,13 +29,11 @@ class getid3_id3v1 extends getid3_handler {
 		$id3v1tag = $this->fread(128);
 
 		if (substr($id3v1tag, 0, 3) == 'TAG') {
-			$info['avdataend'] = $info['filesize'] - 128;
-
-			$ParsedID3v1['title']  = $this->cutfield(substr($id3v1tag, 3, 30));
-			$ParsedID3v1['artist'] = $this->cutfield(substr($id3v1tag, 33, 30));
-			$ParsedID3v1['album']  = $this->cutfield(substr($id3v1tag, 63, 30));
-			$ParsedID3v1['year']   = $this->cutfield(substr($id3v1tag, 93, 4));
-
+			$info['avdataend']      = $info['filesize'] - 128;
+			$ParsedID3v1['title']   = $this->cutfield(substr($id3v1tag, 3, 30));
+			$ParsedID3v1['artist']  = $this->cutfield(substr($id3v1tag, 33, 30));
+			$ParsedID3v1['album']   = $this->cutfield(substr($id3v1tag, 63, 30));
+			$ParsedID3v1['year']    = $this->cutfield(substr($id3v1tag, 93, 4));
 			$ParsedID3v1['comment'] = substr($id3v1tag, 97, 30);  // can't remove nulls yet, track detection depends on them
 			$ParsedID3v1['genreid'] = ord(substr($id3v1tag, 127, 1));
 

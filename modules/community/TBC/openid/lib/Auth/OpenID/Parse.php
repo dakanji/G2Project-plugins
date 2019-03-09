@@ -363,8 +363,7 @@ function Auth_OpenID_legacy_discover(
 	$server_rel,
 	$delegate_rel
 ) {
-	$p = new Auth_OpenID_Parse();
-
+	$p          = new Auth_OpenID_Parse();
 	$link_attrs = $p->parseLinkAttrs($html_text);
 	$server_url = $p->findFirstHref(
 		$link_attrs,

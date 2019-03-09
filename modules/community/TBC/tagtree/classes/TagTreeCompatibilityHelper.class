@@ -57,7 +57,6 @@ class TagTreeCompatibilityHelper {
 
 				if ($isActive) {
 					$providedVersion = explode('.', $tagsModule->getVersion());
-
 					$providedVersion = array_map(create_function('$version', 'return intval($version);'), $providedVersion);
 					$providedVersion = array_slice($providedVersion, 0, 2);
 					$requiredVersion = array(

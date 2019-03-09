@@ -106,8 +106,7 @@ class PhotoAccessHelper {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
-			$entry = array();
+			$entry  = array();
 
 			if (!isset($permissions[$itemId]['photoaccess.print'])) {
 				// Skip any cart items for which we don't have print permission

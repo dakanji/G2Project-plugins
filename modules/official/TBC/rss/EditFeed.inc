@@ -247,8 +247,7 @@ class EditFeedView extends GalleryView {
 			return array($ret, null);
 		}
 
-		$EditFeed = array();
-
+		$EditFeed           = array();
 		$EditFeed['itemId'] = $item->getId();
 
 		// Fetch all feed definitions

@@ -147,8 +147,7 @@ class RssGenerator {
 
 		$platform =& $gallery->getPlatform();
 		$lf       = $platform->getLineEnding();
-
-		$data = '<?xml version="1.0"?>' . $lf .
+		$data     = '<?xml version="1.0"?>' . $lf .
 		'<!DOCTYPE rss SYSTEM "http://my.netscape.com/publish/formats/rss-0.91.dtd">' . $lf .
 		'<rss version="0.91"><channel>' . $lf .
 		'<title>' . $this->cdata(GalleryUtilities::markup($this->_properties['title'])) .

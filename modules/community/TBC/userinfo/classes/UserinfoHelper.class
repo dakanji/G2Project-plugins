@@ -61,8 +61,7 @@ class UserinfoHelper {
 
 		if ($searchResults->resultCount() != 0) {
 			$result = $searchResults->nextResult();
-
-			$data = $result[0];
+			$data   = $result[0];
 		} else {
 			$data = '';
 		}

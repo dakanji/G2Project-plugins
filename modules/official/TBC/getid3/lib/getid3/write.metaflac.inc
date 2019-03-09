@@ -61,11 +61,9 @@ class getid3_write_metaflac {
 				// On top of that, if error messages are not always captured properly under Windows
 				// To at least see if there was a problem, compare file modification timestamps before and after writing
 				clearstatcache();
-
 				$timestampbeforewriting = filemtime($this->filename);
-
-				$commandline   = GETID3_HELPERAPPSDIR . 'metaflac.exe --no-utf8-convert --remove-all-tags --import-tags-from=' . escapeshellarg($tempcommentsfilename) . ' ' . escapeshellarg($this->filename) . ' 2>&1';
-				$metaflacError = `$commandline`;
+				$commandline            = GETID3_HELPERAPPSDIR . 'metaflac.exe --no-utf8-convert --remove-all-tags --import-tags-from=' . escapeshellarg($tempcommentsfilename) . ' ' . escapeshellarg($this->filename) . ' 2>&1';
+				$metaflacError          = `$commandline`;
 
 				if (empty($metaflacError)) {
 					clearstatcache();
@@ -109,11 +107,9 @@ class getid3_write_metaflac {
 			if (file_exists(GETID3_HELPERAPPSDIR . 'metaflac.exe')) {
 				// To at least see if there was a problem, compare file modification timestamps before and after writing
 				clearstatcache();
-
 				$timestampbeforewriting = filemtime($this->filename);
-
-				$commandline   = GETID3_HELPERAPPSDIR . 'metaflac.exe --remove-all-tags "' . $this->filename . '" 2>&1';
-				$metaflacError = `$commandline`;
+				$commandline            = GETID3_HELPERAPPSDIR . 'metaflac.exe --remove-all-tags "' . $this->filename . '" 2>&1';
+				$metaflacError          = `$commandline`;
 
 				if (empty($metaflacError)) {
 					clearstatcache();

@@ -39,8 +39,7 @@ class getid3_efax extends getid3_handler {
 		$info['efax']['header']['software3']  = rtrim(substr($efaxheader, 90, 32), "\x00");
 		$info['efax']['header']['pages']      = getid3_lib::LittleEndian2Int(substr($efaxheader, 198, 2));
 		$info['efax']['header']['data_bytes'] = getid3_lib::LittleEndian2Int(substr($efaxheader, 202, 4));
-
-		$info['error'][] = 'eFax parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
+		$info['error'][]                      = 'eFax parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
 
 		return false;
 

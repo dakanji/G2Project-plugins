@@ -149,7 +149,6 @@ class XMLOutView extends GalleryView {
 			if (GalleryUtilities::isA($myItem, 'GalleryPhotoItem')) {
 				$myFilename = $myItem->getTitle();
 				$myCaption  = $myItem->getSummary();
-
 				echo "<image><filename>$myItemId</filename><caption>$myFilename</caption></image>\n";
 
 				if (isset($moduleParams['maxItems']) && !(--$moduleParams['maxItems'])) {

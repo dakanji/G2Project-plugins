@@ -38,9 +38,8 @@ class getid3_dss extends getid3_handler {
 		$info['dss']['unknown1']       = getid3_lib::LittleEndian2Int(substr($DSSheader, 28, 4));
 
 		// 32-37 = "FE FF FE FF F7 FF" in all the sample files I've seen
-		$info['dss']['date_create']   = $this->DSSdateStringToUnixDate(substr($DSSheader, 38, 12));
-		$info['dss']['date_complete'] = $this->DSSdateStringToUnixDate(substr($DSSheader, 50, 12));
-
+		$info['dss']['date_create']       = $this->DSSdateStringToUnixDate(substr($DSSheader, 38, 12));
+		$info['dss']['date_complete']     = $this->DSSdateStringToUnixDate(substr($DSSheader, 50, 12));
 		$info['dss']['playtime_sec']      = intval((substr($DSSheader, 62, 2) * 3600) + (substr($DSSheader, 64, 2) * 60) + substr($DSSheader, 66, 2)); // approximate file playtime in HHMMSS
 		$info['dss']['playtime_ms']       = getid3_lib::LittleEndian2Int(substr($DSSheader, 512, 4)); // exact file playtime in milliseconds. Has also been observed at offset 530 in one sample file, with something else (unknown) at offset 512
 		$info['dss']['priority']          = ord(substr($DSSheader, 793, 1));

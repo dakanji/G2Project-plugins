@@ -119,7 +119,6 @@ class getid3_iso extends getid3_handler {
 		$thisfile_iso_primaryVD['copyright_file_identifier']     = trim($thisfile_iso_primaryVD_raw['copyright_file_identifier']);
 		$thisfile_iso_primaryVD['abstract_file_identifier']      = trim($thisfile_iso_primaryVD_raw['abstract_file_identifier']);
 		$thisfile_iso_primaryVD['bibliographic_file_identifier'] = trim($thisfile_iso_primaryVD_raw['bibliographic_file_identifier']);
-
 		$thisfile_iso_primaryVD['volume_creation_date_time']     = $this->ISOtimeText2UNIXtime($thisfile_iso_primaryVD_raw['volume_creation_date_time']);
 		$thisfile_iso_primaryVD['volume_modification_date_time'] = $this->ISOtimeText2UNIXtime($thisfile_iso_primaryVD_raw['volume_modification_date_time']);
 		$thisfile_iso_primaryVD['volume_expiration_date_time']   = $this->ISOtimeText2UNIXtime($thisfile_iso_primaryVD_raw['volume_expiration_date_time']);
@@ -201,7 +200,6 @@ class getid3_iso extends getid3_handler {
 		$thisfile_iso_supplementaryVD['copyright_file_identifier']     = trim($thisfile_iso_supplementaryVD_raw['copyright_file_identifier']);
 		$thisfile_iso_supplementaryVD['abstract_file_identifier']      = trim($thisfile_iso_supplementaryVD_raw['abstract_file_identifier']);
 		$thisfile_iso_supplementaryVD['bibliographic_file_identifier'] = trim($thisfile_iso_supplementaryVD_raw['bibliographic_file_identifier']);
-
 		$thisfile_iso_supplementaryVD['volume_creation_date_time']     = $this->ISOtimeText2UNIXtime($thisfile_iso_supplementaryVD_raw['volume_creation_date_time']);
 		$thisfile_iso_supplementaryVD['volume_modification_date_time'] = $this->ISOtimeText2UNIXtime($thisfile_iso_supplementaryVD_raw['volume_modification_date_time']);
 		$thisfile_iso_supplementaryVD['volume_expiration_date_time']   = $this->ISOtimeText2UNIXtime($thisfile_iso_supplementaryVD_raw['volume_expiration_date_time']);
@@ -308,8 +306,7 @@ class getid3_iso extends getid3_handler {
 			$ThisDirectoryRecord['file_flags']['extended']           = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x08);
 			$ThisDirectoryRecord['file_flags']['permissions']        = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x10);
 			$ThisDirectoryRecord['file_flags']['multiple']           = (bool)($ThisDirectoryRecord['raw']['file_flags'] & 0x80);
-
-			$ThisDirectoryRecord['recording_timestamp'] = $this->ISOtime2UNIXtime($ThisDirectoryRecord['raw']['recording_date_time']);
+			$ThisDirectoryRecord['recording_timestamp']              = $this->ISOtime2UNIXtime($ThisDirectoryRecord['raw']['recording_date_time']);
 
 			if ($ThisDirectoryRecord['file_flags']['directory']) {
 				$ThisDirectoryRecord['filename'] = $directorydata['full_path'];
@@ -318,8 +315,7 @@ class getid3_iso extends getid3_handler {
 				$info['iso']['files']            = getid3_lib::array_merge_clobber($info['iso']['files'], getid3_lib::CreateDeepArray($ThisDirectoryRecord['filename'], '/', $ThisDirectoryRecord['filesize']));
 			}
 
-			$DirectoryRecord[] = $ThisDirectoryRecord;
-
+			$DirectoryRecord[]   = $ThisDirectoryRecord;
 			$DirectoryRecordData = $this->fread(1);
 		}
 
@@ -365,8 +361,7 @@ class getid3_iso extends getid3_handler {
 		$UNIXhour   = ord($ISOtime[3]);
 		$UNIXminute = ord($ISOtime[4]);
 		$UNIXsecond = ord($ISOtime[5]);
-
-		$GMToffset = $this->TwosCompliment2Decimal(ord($ISOtime[5]));
+		$GMToffset  = $this->TwosCompliment2Decimal(ord($ISOtime[5]));
 
 		return gmmktime($UNIXhour, $UNIXminute, $UNIXsecond, $UNIXmonth, $UNIXday, $UNIXyear);
 	}

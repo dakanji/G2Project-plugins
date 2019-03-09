@@ -34,8 +34,7 @@ class mapCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;
 
-		$platform = $gallery->getPlatform();
-
+		$platform        = $gallery->getPlatform();
 		static $blockNum = 0;
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
@@ -88,8 +87,7 @@ class mapCallbacks {
 						// we have some routes, check if there is a need to create a filter for them
 						$routearray = explode('|', $routes);
 						$i          = 0;
-
-						$routeword = $module->translate('Route') . ':';
+						$routeword  = $module->translate('Route') . ':';
 
 						foreach ($routearray as $route) {
 							$routeinfos = explode('`', $route);
@@ -133,8 +131,7 @@ class mapCallbacks {
 						if (!empty($albumlist)) {
 							$i            = 0;
 							$listofalbums = explode('`', $albumlist);
-
-							$albumword = $module->translate('Album') . ':';
+							$albumword    = $module->translate('Album') . ':';
 
 							foreach ($listofalbums as $album) {
 								$albumfilters[$i]['name']   = $albumword . ' ' . $album;
@@ -180,7 +177,6 @@ class mapCallbacks {
 						$filteroptions[0]['name']   = '&laquo;' . $module->translate('No Filters')
 						. '&raquo;';
 						$filteroptions[0]['params'] = '';
-
 						$filteroptions[1]['name']   = $module->translate('Define...');
 						$filteroptions[1]['params'] = array(
 							'view'    => 'core.SiteAdmin',
@@ -202,10 +198,9 @@ class mapCallbacks {
 						}
 					}
 
-					$filter   = GalleryUtilities::getRequestVariables('filter');
-					$album    = GalleryUtilities::getRequestVariables('album');
-					$filterOn = ($filter == '' or empty($filter)) ? $albumword . ' ' . $album : $filter;
-
+					$filter                                  = GalleryUtilities::getRequestVariables('filter');
+					$album                                   = GalleryUtilities::getRequestVariables('album');
+					$filterOn                                = ($filter == '' or empty($filter)) ? $albumword . ' ' . $album : $filter;
 					$block                                   =& $smarty->_tpl_vars['block'];
 					$block['map']['LoadFilters']['filters']  = $filteroptions;
 					$block['map']['LoadFilters']['filterOn'] = $filterOn;

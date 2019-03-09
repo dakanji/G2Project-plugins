@@ -29,8 +29,7 @@ class getid3_monkey extends getid3_handler {
 		$thisfile_monkeysaudio_raw     =& $thisfile_monkeysaudio['raw'];
 
 		$this->fseek($info['avdataoffset']);
-		$MACheaderData = $this->fread(74);
-
+		$MACheaderData                      = $this->fread(74);
 		$thisfile_monkeysaudio_raw['magic'] = substr($MACheaderData, 0, 4);
 		$magic                              = 'MAC ';
 
@@ -101,8 +100,7 @@ class getid3_monkey extends getid3_handler {
 		$thisfile_monkeysaudio['flags']['seek_elements'] = (bool)($thisfile_monkeysaudio_raw['nFormatFlags'] & 0x0010);
 		$thisfile_monkeysaudio['flags']['no_wav_header'] = (bool)($thisfile_monkeysaudio_raw['nFormatFlags'] & 0x0020);
 		$thisfile_monkeysaudio['version']                = $thisfile_monkeysaudio_raw['nVersion'] / 1000;
-
-		$thisfile_monkeysaudio['compression'] = $this->MonkeyCompressionLevelNameLookup($thisfile_monkeysaudio_raw['nCompressionLevel']);
+		$thisfile_monkeysaudio['compression']            = $this->MonkeyCompressionLevelNameLookup($thisfile_monkeysaudio_raw['nCompressionLevel']);
 
 		if ($thisfile_monkeysaudio_raw['nVersion'] < 3980) {
 			$thisfile_monkeysaudio['samples_per_frame'] = $this->MonkeySamplesPerFrame($thisfile_monkeysaudio_raw['nVersion'], $thisfile_monkeysaudio_raw['nCompressionLevel']);

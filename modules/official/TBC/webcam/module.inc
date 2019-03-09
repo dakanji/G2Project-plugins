@@ -250,10 +250,8 @@ class WebCamModule extends GalleryModule {
 	 * Check age and refresh from external source if needed..
 	 */
 	public function onLoad(&$item, $duringUpgrade) {
-		$old = false;
-
-		$id = $item->getId();
-
+		$old  = false;
+		$id   = $item->getId();
 		$loop = GalleryDataCache::containsKey("webcam:load-$id");
 
 		// We don't want to refresh the external source during an upgrade
@@ -318,8 +316,7 @@ class WebCamModule extends GalleryModule {
 					$urlComponents['path'] = $urlComponents['host'];
 				}
 
-				$tmpFile = $urlComponents['path'];
-
+				$tmpFile            = $urlComponents['path'];
 				$successfullyCopied = $platform->file_exists($tmpFile);
 			} else {
 				$tmpFile = $platform->tempnam($tmpDir, 'webcam');

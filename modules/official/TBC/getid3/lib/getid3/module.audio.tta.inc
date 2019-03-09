@@ -23,8 +23,7 @@ class getid3_tta extends getid3_handler {
 		$info['audio']['bitrate_mode'] = 'vbr';
 
 		$this->fseek($info['avdataoffset']);
-		$ttaheader = $this->fread(26);
-
+		$ttaheader            = $this->fread(26);
 		$info['tta']['magic'] = substr($ttaheader, 0, 3);
 		$magic                = 'TTA';
 

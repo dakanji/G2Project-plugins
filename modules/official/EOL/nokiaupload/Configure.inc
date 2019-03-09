@@ -126,10 +126,9 @@ class ConfigureView extends GalleryView {
 		// Load our default values if we didn't just come from this form.
 		if ($form['formName'] != 'NokiaUploadConfigure') {
 			$form['formName'] = 'NokiaUploadConfigure';
-
-			$form['group']  = $module->translate('Mobile Users');
-			$form['album']  = $module->translate('Pictures from mobile phones');
-			$form['parent'] = '';
+			$form['group']    = $module->translate('Mobile Users');
+			$form['album']    = $module->translate('Pictures from mobile phones');
+			$form['parent']   = '';
 		}
 
 		list($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addAlbumItem');

@@ -123,8 +123,7 @@ class ExternalView extends GalleryView {
 		$phpVm = $gallery->getPhpVm();
 
 		if ($template->hasVariable('ImageBlockData')) {
-			$ImageBlockData =& $template->getVariableByReference('ImageBlockData');
-
+			$ImageBlockData                 =& $template->getVariableByReference('ImageBlockData');
 			$ImageBlockData['forceFullUrl'] = 1;
 
 			// Check for rawImage - if requested, send binary image (only one image)
@@ -152,6 +151,7 @@ class ExternalView extends GalleryView {
 					$phpVm->header('Content-type: text/html; charset=UTF-8');
 
 					$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
+
 					$phpVm->header('Cache-Control: no-cache');
 					$phpVm->header('Pragma: no-cache');
 					$phpVm->header('Expires: ' . $expires);

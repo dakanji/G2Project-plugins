@@ -318,11 +318,9 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('/REQUEST_URL', $session->get('snapgalaxy.cartUrlFragment'));
 
 		// Get the session id that we passed to SnapGalaxy
-		$written = $gallery->_platform->getCalled('fwrite');
-		$content = urldecode($written[0][1]);
-
+		$written    = $gallery->_platform->getCalled('fwrite');
+		$content    = urldecode($written[0][1]);
 		$sessionVar = $session->getKey();
-
 		preg_match_all(
 			"#_1=view=core.DownloadItem.*?$sessionVar=(.*?)&#",
 			$content,

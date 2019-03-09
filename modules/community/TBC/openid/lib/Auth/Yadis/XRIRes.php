@@ -19,7 +19,6 @@ class Auth_Yadis_ProxyResolver {
 	public function queryURL($xri, $service_type = null) {
 		// trim off the xri:// prefix
 		$qxri = substr(Auth_Yadis_toURINormal($xri), 6);
-
 		$hxri = $this->proxy_url . $qxri;
 		$args = array(
 			'_xrd_r' => 'application/xrds+xml',
@@ -65,8 +64,7 @@ class Auth_Yadis_ProxyResolver {
 			}
 
 			$some_services = $xrds->services($filters);
-
-			$services = array_merge($services, $some_services);
+			$services      = array_merge($services, $some_services);
 
 			// TODO:
 			//  * If we do get hits for multiple service_types, we're

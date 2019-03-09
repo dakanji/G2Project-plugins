@@ -762,8 +762,7 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 			// One item, call it what it is and link to it directly
 			$itemTypeName = $items[0]->itemTypeName();
 			$itemTypeName = $itemTypeName[1];
-
-			$itemId = $items[0]->getId();
+			$itemId       = $items[0]->getId();
 		} else {
 			// Many items, link to the parent
 			$itemId    = $parentId;

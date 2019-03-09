@@ -358,8 +358,7 @@ class Auth_Yadis_Yadis {
 			);
 
 			if (!$yadis_location) {
-				$parser = new Auth_Yadis_ParseHTML();
-
+				$parser         = new Auth_Yadis_ParseHTML();
 				$yadis_location = $parser->getHTTPEquiv($response->body);
 			}
 

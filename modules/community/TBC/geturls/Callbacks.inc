@@ -42,8 +42,7 @@ class GetUrlsCallbacks {
 					return $ret;
 				}
 
-				$block =& $smarty->_tpl_vars['block'];
-
+				$block                        =& $smarty->_tpl_vars['block'];
 				$block['geturls']['LoadUrls'] = $data;
 
 				return null;

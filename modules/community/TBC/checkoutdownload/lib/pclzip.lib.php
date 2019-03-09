@@ -2267,7 +2267,6 @@ class PclZip {
 
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Read $v_read_size bytes");
 			$v_buffer = fread($this->zip_fd, $v_read_size);
-
 			@fwrite($v_zip_temp_fd, $v_buffer, $v_read_size);
 			$v_size -= $v_read_size;
 		}
@@ -4653,8 +4652,7 @@ class PclZip {
 
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, 'Position after max central position : \''.ftell($this->zip_fd).'\'');
 			// ----- Read byte per byte in order to find the signature
-			$v_pos = ftell($this->zip_fd);
-
+			$v_pos   = ftell($this->zip_fd);
 			$v_bytes = 0x00000000;
 
 			while ($v_pos < $v_size) {
@@ -5289,7 +5287,6 @@ class PclZip {
 
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Read $v_read_size bytes");
 			$v_buffer = fread($this->zip_fd, $v_read_size);
-
 			@fwrite($v_zip_temp_fd, $v_buffer, $v_read_size);
 			$v_size -= $v_read_size;
 		}
@@ -5302,7 +5299,6 @@ class PclZip {
 
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Read $v_read_size bytes");
 			$v_buffer = fread($p_archive_to_add->zip_fd, $v_read_size);
-
 			@fwrite($v_zip_temp_fd, $v_buffer, $v_read_size);
 			$v_size -= $v_read_size;
 		}
@@ -5319,7 +5315,6 @@ class PclZip {
 
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Read $v_read_size bytes");
 			$v_buffer = @fread($this->zip_fd, $v_read_size);
-
 			@fwrite($v_zip_temp_fd, $v_buffer, $v_read_size);
 			$v_size -= $v_read_size;
 		}
@@ -5332,7 +5327,6 @@ class PclZip {
 
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Read $v_read_size bytes");
 			$v_buffer = @fread($p_archive_to_add->zip_fd, $v_read_size);
-
 			@fwrite($v_zip_temp_fd, $v_buffer, $v_read_size);
 			$v_size -= $v_read_size;
 		}

@@ -189,8 +189,7 @@ class GetUrlsHelper {
 		$data['itemId']      = $itemId;
 		$data['options']     = $options;
 		$data['permissions'] = $permissions;
-
-		$data['itemTitle'] = $item->getTitle();
+		$data['itemTitle']   = $item->getTitle();
 
 		return  array(null, $data);
 	}

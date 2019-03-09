@@ -111,8 +111,7 @@ class MapGZoomAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
-
+			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';

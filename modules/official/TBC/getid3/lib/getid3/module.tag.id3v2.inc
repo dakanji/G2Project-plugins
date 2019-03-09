@@ -94,8 +94,7 @@ class getid3_id3v2 extends getid3_handler {
 
 		$thisfile_id3v2['headerlength']     = getid3_lib::BigEndian2Int(substr($header, 6, 4), 1) + 10; // length of ID3v2 tag in 10-byte header doesn't include 10-byte header length
 		$thisfile_id3v2['tag_offset_start'] = $this->StartingOffset;
-
-		$thisfile_id3v2['tag_offset_end'] = $thisfile_id3v2['tag_offset_start'] + $thisfile_id3v2['headerlength'];
+		$thisfile_id3v2['tag_offset_end']   = $thisfile_id3v2['tag_offset_start'] + $thisfile_id3v2['headerlength'];
 
 		// create 'encoding' key - used by getid3::HandleAllTags()
 		// in ID3v2 every field can have it's own encoding type
@@ -491,9 +490,8 @@ class getid3_id3v2 extends getid3_handler {
 
 	public function ParseID3v2Frame(&$parsedFrame) {
 		// shortcuts
-		$info               =& $this->getid3->info;
-		$id3v2_majorversion = $info['id3v2']['majorversion'];
-
+		$info                         =& $this->getid3->info;
+		$id3v2_majorversion           = $info['id3v2']['majorversion'];
 		$parsedFrame['framenamelong'] = $this->FrameNameLongLookup($parsedFrame['frame_name']);
 
 		if (empty($parsedFrame['framenamelong'])) {
@@ -596,9 +594,8 @@ class getid3_id3v2 extends getid3_handler {
 			// Text encoding     $xx
 			// Description       <text string according to encoding> $00 (00)
 			// Value             <text string according to encoding>
-			$frame_offset       = 0;
-			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+			$frame_offset                  = 0;
+			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -619,10 +616,8 @@ class getid3_id3v2 extends getid3_handler {
 				$frame_description = '';
 			}
 
-			$parsedFrame['encodingid'] = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-
+			$parsedFrame['encodingid']  = $frame_textencoding;
+			$parsedFrame['encoding']    = $this->TextEncodingNameLookup($frame_textencoding);
 			$parsedFrame['description'] = trim(getid3_lib::iconv_fallback($parsedFrame['encoding'], $info['id3v2']['encoding'], $frame_description));
 			$parsedFrame['data']        = substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
 
@@ -652,8 +647,7 @@ class getid3_id3v2 extends getid3_handler {
 
 			$parsedFrame['data']       = (string)substr($parsedFrame['data'], $frame_offset);
 			$parsedFrame['encodingid'] = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
+			$parsedFrame['encoding']   = $this->TextEncodingNameLookup($frame_textencoding);
 
 			if (!empty($parsedFrame['framenameshort']) && !empty($parsedFrame['data'])) {
 				// ID3v2.3 specs say that TPE1 (and others) can contain multiple artist values separated with /
@@ -707,9 +701,8 @@ class getid3_id3v2 extends getid3_handler {
 			// Text encoding     $xx
 			// Description       <text string according to encoding> $00 (00)
 			// URL               <text string>
-			$frame_offset       = 0;
-			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+			$frame_offset                  = 0;
+			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -746,10 +739,8 @@ class getid3_id3v2 extends getid3_handler {
 				$frame_urldata = (string)$parsedFrame['data'];
 			}
 
-			$parsedFrame['encodingid'] = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-
+			$parsedFrame['encodingid']  = $frame_textencoding;
+			$parsedFrame['encoding']    = $this->TextEncodingNameLookup($frame_textencoding);
 			$parsedFrame['url']         = $frame_urldata;
 			$parsedFrame['description'] = $frame_description;
 
@@ -787,10 +778,8 @@ class getid3_id3v2 extends getid3_handler {
 			}
 
 			$parsedFrame['encodingid'] = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($parsedFrame['encodingid']);
-
-			$parsedFrame['data_raw'] = (string)substr($parsedFrame['data'], $frame_offset);
+			$parsedFrame['encoding']   = $this->TextEncodingNameLookup($parsedFrame['encodingid']);
+			$parsedFrame['data_raw']   = (string)substr($parsedFrame['data'], $frame_offset);
 
 			// http://www.getid3.org/phpBB3/viewtopic.php?t=1369
 			// "this tag typically contains null terminated strings, which are associated in pairs"
@@ -895,10 +884,8 @@ class getid3_id3v2 extends getid3_handler {
 			$parsedFrame['timestampformat'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 
 			while ($frame_offset < strlen($parsedFrame['data'])) {
-				$parsedFrame['typeid'] = substr($parsedFrame['data'], $frame_offset++, 1);
-
-				$parsedFrame['type'] = $this->ETCOEventLookup($parsedFrame['typeid']);
-
+				$parsedFrame['typeid']    = substr($parsedFrame['data'], $frame_offset++, 1);
+				$parsedFrame['type']      = $this->ETCOEventLookup($parsedFrame['typeid']);
 				$parsedFrame['timestamp'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 				$frame_offset            += 4;
 			}
@@ -976,9 +963,8 @@ class getid3_id3v2 extends getid3_handler {
 			// Language             $xx xx xx
 			// Content descriptor   <text string according to encoding> $00 (00)
 			// Lyrics/text          <full text string according to encoding>
-			$frame_offset       = 0;
-			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+			$frame_offset                  = 0;
+			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -1001,15 +987,12 @@ class getid3_id3v2 extends getid3_handler {
 				$frame_description = '';
 			}
 
-			$parsedFrame['data']       = substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
-			$parsedFrame['encodingid'] = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-			$parsedFrame['language'] = $frame_language;
-
+			$parsedFrame['data']         = substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
+			$parsedFrame['encodingid']   = $frame_textencoding;
+			$parsedFrame['encoding']     = $this->TextEncodingNameLookup($frame_textencoding);
+			$parsedFrame['language']     = $frame_language;
 			$parsedFrame['languagename'] = $this->LanguageLookup($frame_language, false);
-
-			$parsedFrame['description'] = $frame_description;
+			$parsedFrame['description']  = $frame_description;
 
 			if (!empty($parsedFrame['framenameshort']) && !empty($parsedFrame['data'])) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = getid3_lib::iconv_fallback($parsedFrame['encoding'], $info['id3v2']['encoding'], $parsedFrame['data']);
@@ -1032,9 +1015,8 @@ class getid3_id3v2 extends getid3_handler {
 			//   Terminated text to be synced (typically a syllable)
 			//   Sync identifier (terminator to above string)   $00 (00)
 			//   Time stamp                                     $xx (xx ...)
-			$frame_offset       = 0;
-			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+			$frame_offset                  = 0;
+			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -1046,17 +1028,13 @@ class getid3_id3v2 extends getid3_handler {
 			$frame_offset                  += 3;
 			$parsedFrame['timestampformat'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$parsedFrame['contenttypeid']   = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
-			$parsedFrame['contenttype'] = $this->SYTLContentTypeLookup($parsedFrame['contenttypeid']);
-			$parsedFrame['encodingid']  = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-			$parsedFrame['language'] = $frame_language;
-
-			$parsedFrame['languagename'] = $this->LanguageLookup($frame_language, false);
-
-			$timestampindex      = 0;
-			$frame_remainingdata = substr($parsedFrame['data'], $frame_offset);
+			$parsedFrame['contenttype']     = $this->SYTLContentTypeLookup($parsedFrame['contenttypeid']);
+			$parsedFrame['encodingid']      = $frame_textencoding;
+			$parsedFrame['encoding']        = $this->TextEncodingNameLookup($frame_textencoding);
+			$parsedFrame['language']        = $frame_language;
+			$parsedFrame['languagename']    = $this->LanguageLookup($frame_language, false);
+			$timestampindex                 = 0;
+			$frame_remainingdata            = substr($parsedFrame['data'], $frame_offset);
 
 			while (strlen($frame_remainingdata)) {
 				$frame_offset        = 0;
@@ -1097,9 +1075,8 @@ class getid3_id3v2 extends getid3_handler {
 			if (strlen($parsedFrame['data']) < 5) {
 				$info['warning'][] = 'Invalid data (too short) for "' . $parsedFrame['frame_name'] . '" frame at offset ' . $parsedFrame['dataoffset'];
 			} else {
-				$frame_offset       = 0;
-				$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+				$frame_offset                  = 0;
+				$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 				$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 				if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -1122,12 +1099,10 @@ class getid3_id3v2 extends getid3_handler {
 					$frame_description = '';
 				}
 
-				$frame_text                = (string)substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
-				$parsedFrame['encodingid'] = $frame_textencoding;
-
-				$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-				$parsedFrame['language'] = $frame_language;
-
+				$frame_text                  = (string)substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
+				$parsedFrame['encodingid']   = $frame_textencoding;
+				$parsedFrame['encoding']     = $this->TextEncodingNameLookup($frame_textencoding);
+				$parsedFrame['language']     = $frame_language;
 				$parsedFrame['languagename'] = $this->LanguageLookup($frame_language, false);
 				$parsedFrame['description']  = $frame_description;
 				$parsedFrame['data']         = $frame_text;
@@ -1166,12 +1141,10 @@ class getid3_id3v2 extends getid3_handler {
 			$RVA2channelcounter         = 0;
 
 			while (strlen($frame_remainingdata) >= 5) {
-				$frame_offset                                      = 0;
-				$frame_channeltypeid                               = ord(substr($frame_remainingdata, $frame_offset++, 1));
-				$parsedFrame[$RVA2channelcounter]['channeltypeid'] = $frame_channeltypeid;
-
-				$parsedFrame[$RVA2channelcounter]['channeltype'] = $this->RVA2ChannelTypeLookup($frame_channeltypeid);
-
+				$frame_offset                                       = 0;
+				$frame_channeltypeid                                = ord(substr($frame_remainingdata, $frame_offset++, 1));
+				$parsedFrame[$RVA2channelcounter]['channeltypeid']  = $frame_channeltypeid;
+				$parsedFrame[$RVA2channelcounter]['channeltype']    = $this->RVA2ChannelTypeLookup($frame_channeltypeid);
 				$parsedFrame[$RVA2channelcounter]['volumeadjust']   = getid3_lib::BigEndian2Int(substr($frame_remainingdata, $frame_offset, 2), false, true); // 16-bit signed
 				$frame_offset                                      += 2;
 				$parsedFrame[$RVA2channelcounter]['bitspeakvolume'] = ord(substr($frame_remainingdata, $frame_offset++, 1));
@@ -1400,9 +1373,8 @@ class getid3_id3v2 extends getid3_handler {
 			// Picture type       $xx
 			// Description        <text string according to encoding> $00 (00)
 			// Picture data       <binary data>
-			$frame_offset       = 0;
-			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+			$frame_offset                  = 0;
+			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -1465,8 +1437,7 @@ class getid3_id3v2 extends getid3_handler {
 				}
 
 				$parsedFrame['encodingid'] = $frame_textencoding;
-
-				$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
+				$parsedFrame['encoding']   = $this->TextEncodingNameLookup($frame_textencoding);
 
 				if ($id3v2_majorversion == 2) {
 					$parsedFrame['imagetype'] = $frame_imagetype;
@@ -1475,13 +1446,12 @@ class getid3_id3v2 extends getid3_handler {
 				}
 
 				$parsedFrame['picturetypeid'] = $frame_picturetype;
-
-				$parsedFrame['picturetype'] = $this->APICPictureTypeLookup($frame_picturetype);
-				$parsedFrame['description'] = $frame_description;
-				$parsedFrame['data']        = substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
-				$parsedFrame['datalength']  = strlen($parsedFrame['data']);
-				$parsedFrame['image_mime']  = '';
-				$imageinfo                  = array();
+				$parsedFrame['picturetype']   = $this->APICPictureTypeLookup($frame_picturetype);
+				$parsedFrame['description']   = $frame_description;
+				$parsedFrame['data']          = substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator));
+				$parsedFrame['datalength']    = strlen($parsedFrame['data']);
+				$parsedFrame['image_mime']    = '';
+				$imageinfo                    = array();
 
 				if ($imagechunkcheck = getid3_lib::GetDataImageSize($parsedFrame['data'], $imageinfo)) {
 					if (($imagechunkcheck[2] >= 1) && ($imagechunkcheck[2] <= 3)) {
@@ -1572,9 +1542,8 @@ class getid3_id3v2 extends getid3_handler {
 			// Filename               <text string according to encoding> $00 (00)
 			// Content description    <text string according to encoding> $00 (00)
 			// Encapsulated object    <binary data>
-			$frame_offset       = 0;
-			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+			$frame_offset                  = 0;
+			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -1616,12 +1585,10 @@ class getid3_id3v2 extends getid3_handler {
 				$frame_description = '';
 			}
 
-			$frame_offset              = $frame_terminatorpos + strlen($frame_textencoding_terminator);
-			$parsedFrame['objectdata'] = (string)substr($parsedFrame['data'], $frame_offset);
-			$parsedFrame['encodingid'] = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-
+			$frame_offset               = $frame_terminatorpos + strlen($frame_textencoding_terminator);
+			$parsedFrame['objectdata']  = (string)substr($parsedFrame['data'], $frame_offset);
+			$parsedFrame['encodingid']  = $frame_textencoding;
+			$parsedFrame['encoding']    = $this->TextEncodingNameLookup($frame_textencoding);
 			$parsedFrame['mime']        = $frame_mimetype;
 			$parsedFrame['filename']    = $frame_filename;
 			$parsedFrame['description'] = $frame_description;
@@ -1782,16 +1749,13 @@ class getid3_id3v2 extends getid3_handler {
 				$info['warning'][] = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 			}
 
-			$frame_language          = substr($parsedFrame['data'], $frame_offset, 3);
-			$frame_offset           += 3;
-			$parsedFrame['language'] = $frame_language;
-
+			$frame_language              = substr($parsedFrame['data'], $frame_offset, 3);
+			$frame_offset               += 3;
+			$parsedFrame['language']     = $frame_language;
 			$parsedFrame['languagename'] = $this->LanguageLookup($frame_language, false);
 			$parsedFrame['encodingid']   = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-
-			$parsedFrame['data'] = (string)substr($parsedFrame['data'], $frame_offset);
+			$parsedFrame['encoding']     = $this->TextEncodingNameLookup($frame_textencoding);
+			$parsedFrame['data']         = (string)substr($parsedFrame['data'], $frame_offset);
 
 			if (!empty($parsedFrame['framenameshort']) && !empty($parsedFrame['data'])) {
 				$info['id3v2']['comments'][$parsedFrame['framenameshort']][] = getid3_lib::iconv_fallback($parsedFrame['encoding'], $info['id3v2']['encoding'], $parsedFrame['data']);
@@ -1812,18 +1776,15 @@ class getid3_id3v2 extends getid3_handler {
 				$info['warning'][] = 'Invalid text encoding byte (' . $frame_textencoding . ') in frame "' . $parsedFrame['frame_name'] . '" - defaulting to ISO-8859-1 encoding';
 			}
 
-			$parsedFrame['encodingid'] = $frame_textencoding;
-
-			$parsedFrame['encoding'] = $this->TextEncodingNameLookup($frame_textencoding);
-
+			$parsedFrame['encodingid']              = $frame_textencoding;
+			$parsedFrame['encoding']                = $this->TextEncodingNameLookup($frame_textencoding);
 			$frame_terminatorpos                    = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_pricepaid                        = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 			$frame_offset                           = $frame_terminatorpos + strlen("\x00");
 			$parsedFrame['pricepaid']['currencyid'] = substr($frame_pricepaid, 0, 3);
-
-			$parsedFrame['pricepaid']['currency'] = $this->LookupCurrencyUnits($parsedFrame['pricepaid']['currencyid']);
-			$parsedFrame['pricepaid']['value']    = substr($frame_pricepaid, 3);
-			$parsedFrame['purchasedate']          = substr($parsedFrame['data'], $frame_offset, 8);
+			$parsedFrame['pricepaid']['currency']   = $this->LookupCurrencyUnits($parsedFrame['pricepaid']['currencyid']);
+			$parsedFrame['pricepaid']['value']      = substr($frame_pricepaid, 3);
+			$parsedFrame['purchasedate']            = substr($parsedFrame['data'], $frame_offset, 8);
 
 			if (!$this->IsValidDateStampString($parsedFrame['purchasedate'])) {
 				$parsedFrame['purchasedateunix'] = mktime(0, 0, 0, substr($parsedFrame['purchasedate'], 4, 2), substr($parsedFrame['purchasedate'], 6, 2), substr($parsedFrame['purchasedate'], 0, 4));
@@ -1845,9 +1806,8 @@ class getid3_id3v2 extends getid3_handler {
 			// Description        <text string according to encoding> $00 (00)
 			// Picture MIME type  <string> $00
 			// Seller logo        <binary data>
-			$frame_offset       = 0;
-			$frame_textencoding = ord(substr($parsedFrame['data'], $frame_offset++, 1));
-
+			$frame_offset                  = 0;
+			$frame_textencoding            = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_textencoding_terminator = $this->TextEncodingTerminatorLookup($frame_textencoding);
 
 			if ((($id3v2_majorversion <= 3) && ($frame_textencoding > 1)) || (($id3v2_majorversion == 4) && ($frame_textencoding > 3))) {
@@ -1861,11 +1821,9 @@ class getid3_id3v2 extends getid3_handler {
 			$frame_rawpricearray = explode('/', $frame_pricestring);
 
 			foreach ($frame_rawpricearray as $key => $val) {
-				$frame_currencyid = substr($val, 0, 3);
-
+				$frame_currencyid                                    = substr($val, 0, 3);
 				$parsedFrame['price'][$frame_currencyid]['currency'] = $this->LookupCurrencyUnits($frame_currencyid);
-
-				$parsedFrame['price'][$frame_currencyid]['value'] = substr($val, 3);
+				$parsedFrame['price'][$frame_currencyid]['value']    = substr($val, 3);
 			}
 
 			$frame_datestring    = substr($parsedFrame['data'], $frame_offset, 8);
@@ -1900,24 +1858,21 @@ class getid3_id3v2 extends getid3_handler {
 				$frame_description = '';
 			}
 
-			$frame_offset              = $frame_terminatorpos + strlen($frame_textencoding_terminator);
-			$frame_terminatorpos       = strpos($parsedFrame['data'], "\x00", $frame_offset);
-			$frame_mimetype            = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			$frame_offset              = $frame_terminatorpos + strlen("\x00");
-			$frame_sellerlogo          = substr($parsedFrame['data'], $frame_offset);
-			$parsedFrame['encodingid'] = $frame_textencoding;
-
+			$frame_offset                   = $frame_terminatorpos + strlen($frame_textencoding_terminator);
+			$frame_terminatorpos            = strpos($parsedFrame['data'], "\x00", $frame_offset);
+			$frame_mimetype                 = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
+			$frame_offset                   = $frame_terminatorpos + strlen("\x00");
+			$frame_sellerlogo               = substr($parsedFrame['data'], $frame_offset);
+			$parsedFrame['encodingid']      = $frame_textencoding;
 			$parsedFrame['encoding']        = $this->TextEncodingNameLookup($frame_textencoding);
 			$parsedFrame['pricevaliduntil'] = $frame_datestring;
 			$parsedFrame['contacturl']      = $frame_contacturl;
 			$parsedFrame['receivedasid']    = $frame_receivedasid;
-
-			$parsedFrame['receivedas'] = $this->COMRReceivedAsLookup($frame_receivedasid);
-
-			$parsedFrame['sellername']  = $frame_sellername;
-			$parsedFrame['description'] = $frame_description;
-			$parsedFrame['mime']        = $frame_mimetype;
-			$parsedFrame['logo']        = $frame_sellerlogo;
+			$parsedFrame['receivedas']      = $this->COMRReceivedAsLookup($frame_receivedasid);
+			$parsedFrame['sellername']      = $frame_sellername;
+			$parsedFrame['description']     = $frame_description;
+			$parsedFrame['mime']            = $frame_mimetype;
+			$parsedFrame['logo']            = $frame_sellerlogo;
 			unset($parsedFrame['data']);
 		} elseif (($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'ENCR')) { // 4.25  ENCR Encryption method registration (ID3v2.3+ only)
 			//   There may be several 'ENCR' frames in a tag,
@@ -2104,13 +2059,11 @@ class getid3_id3v2 extends getid3_handler {
 						break;
 					}
 
-					$subframe_rawdata       = substr($parsedFrame['data'], $frame_offset, $subframe['size']);
-					$frame_offset          += $subframe['size'];
-					$subframe['encodingid'] = ord(substr($subframe_rawdata, 0, 1));
-					$subframe['text']       = substr($subframe_rawdata, 1);
-
-					$subframe['encoding'] = $this->TextEncodingNameLookup($subframe['encodingid']);
-
+					$subframe_rawdata        = substr($parsedFrame['data'], $frame_offset, $subframe['size']);
+					$frame_offset           += $subframe['size'];
+					$subframe['encodingid']  = ord(substr($subframe_rawdata, 0, 1));
+					$subframe['text']        = substr($subframe_rawdata, 1);
+					$subframe['encoding']    = $this->TextEncodingNameLookup($subframe['encodingid']);
 					$encoding_converted_text = trim(getid3_lib::iconv_fallback($subframe['encoding'], $info['encoding'], $subframe['text']));
 
 					switch (substr($encoding_converted_text, 0, 2)) {
@@ -2212,13 +2165,11 @@ class getid3_id3v2 extends getid3_handler {
 						break;
 					}
 
-					$subframe_rawdata       = substr($parsedFrame['data'], $frame_offset, $subframe['size']);
-					$frame_offset          += $subframe['size'];
-					$subframe['encodingid'] = ord(substr($subframe_rawdata, 0, 1));
-					$subframe['text']       = substr($subframe_rawdata, 1);
-
-					$subframe['encoding'] = $this->TextEncodingNameLookup($subframe['encodingid']);
-
+					$subframe_rawdata        = substr($parsedFrame['data'], $frame_offset, $subframe['size']);
+					$frame_offset           += $subframe['size'];
+					$subframe['encodingid']  = ord(substr($subframe_rawdata, 0, 1));
+					$subframe['text']        = substr($subframe_rawdata, 1);
+					$subframe['encoding']    = $this->TextEncodingNameLookup($subframe['encodingid']);
 					$encoding_converted_text = trim(getid3_lib::iconv_fallback($subframe['encoding'], $info['encoding'], $subframe['text']));
 
 					switch (substr($encoding_converted_text, 0, 2)) {

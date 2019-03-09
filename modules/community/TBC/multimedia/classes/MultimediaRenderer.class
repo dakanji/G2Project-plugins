@@ -47,8 +47,7 @@ class MultimediaRenderer extends GalleryRenderer {
 		global $gallery;
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
-
-		$av = preg_match('/video/', $entity->getMimeType()) ? 'video' : (preg_match('/audio/', $entity->getMimeType()) ? 'audio' : null);
+		$av       = preg_match('/video/', $entity->getMimeType()) ? 'video' : (preg_match('/audio/', $entity->getMimeType()) ? 'audio' : null);
 
 		if ($format != 'HTML' || !$av) {
 			return null;

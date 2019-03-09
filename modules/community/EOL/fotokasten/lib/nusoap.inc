@@ -325,10 +325,8 @@ class nusoap_base {
 						}
 
 						$array_types[$tt] = 1;
-
-						$xml .= $this->serialize_val($v, 'item');
-
-						$i = 0;
+						$xml             .= $this->serialize_val($v, 'item');
+						$i                = 0;
 
 						if (is_array($v) && is_numeric(key($v))) {
 							$i += sizeof($v);
@@ -1674,7 +1672,6 @@ class soap_transport_http extends nusoap_base {
 		$hostURL = ($port != '') ? "https://$host:$port" : "https://$host";
 		// add path
 		$hostURL .= $this->path;
-
 		curl_setopt($ch, CURLOPT_URL, $hostURL);
 
 		// set other options
@@ -1992,7 +1989,6 @@ class soap_server extends nusoap_base {
 			}
 
 			$header[] = "Server: $this->title Server v$this->version\r\n";
-
 			$header[] = "Connection: Close\r\n";
 			$header[] = "Content-Type: text/xml; charset=$this->charset_encoding\r\n";
 			$header[] = 'Content-Length: ' . strlen($payload) . "\r\n\r\n";
@@ -3845,7 +3841,6 @@ class soap_parser extends nusoap_base {
 		// if there are children...
 		if ($this->message[$pos]['children'] != '') {
 			$children = explode('|', $this->message[$pos]['children']);
-
 			array_shift($children); // knock off empty
 			// md array
 			if (isset($this->message[$pos]['arrayCols']) && $this->message[$pos]['arrayCols'] != '') {
@@ -4056,7 +4051,6 @@ class nusoapclient extends nusoap_base {
 			}
 
 			$payload = "<ns1:$operation xmlns:ns1=\"$namespace\">\n" . $payload . "</ns1:$operation>\n";
-
 			$soapmsg = $this->serializeEnvelope($payload, $this->requestHeaders);
 		}
 

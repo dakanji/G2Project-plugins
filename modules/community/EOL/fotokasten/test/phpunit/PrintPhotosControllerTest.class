@@ -235,7 +235,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		// Grab session we provide for the raw image
 		$session    =& $gallery->getSession();
 		$sessionVar = GalleryUtilities::prefixFormVariable($session->getKey());
-
 		preg_match_all("/$sessionVar=([0-9a-f]*)/", $basket['item1']['photo_url'], $matches);
 		$fotokastenSessionId           = $matches[1][0];
 		$_COOKIE[SESSION_ID_PARAMETER] = $fotokastenSessionId;

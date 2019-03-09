@@ -722,7 +722,6 @@ class HTTP_Download {
 	 */
 	public function staticSend($params, $guess = false) {
 		$d = new HTTP_Download();
-
 		$e = $d->setParams($params);
 
 		if (PEAR::isError($e)) {
@@ -820,8 +819,7 @@ class HTTP_Download {
 			return $this->sendChunk(current($chunks));
 		}
 
-		$bound = uniqid('HTTP_DOWNLOAD-', true);
-
+		$bound                         = uniqid('HTTP_DOWNLOAD-', true);
 		$cType                         = $this->headers['Content-Type'];
 		$this->headers['Content-Type'] = 'multipart/byteranges; boundary=' . $bound;
 

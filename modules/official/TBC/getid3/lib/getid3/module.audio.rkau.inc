@@ -35,7 +35,6 @@ class getid3_rkau extends getid3_handler {
 
 		if (($info['rkau']['version'] > 1.07) || ($info['rkau']['version'] < 1.06)) {
 			$info['error'][] = 'This version of getID3() [' . $this->getid3->version() . '] can only parse RKAU files v1.06 and 1.07 (this file is v' . $info['rkau']['version'] . ')';
-
 			unset($info['rkau']);
 
 			return false;

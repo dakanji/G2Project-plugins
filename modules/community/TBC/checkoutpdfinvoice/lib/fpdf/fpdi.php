@@ -110,9 +110,8 @@ class FPDI extends FPDF_TPL {
 		$this->tpls[$this->tpl] = array();
 		$tpl                    =& $this->tpls[$this->tpl];
 		$tpl['parser']          =& $parser;
-
-		$tpl['resources'] = $parser->getPageResources();
-		$tpl['buffer']    = $parser->getContent();
+		$tpl['resources']       = $parser->getPageResources();
+		$tpl['buffer']          = $parser->getContent();
 
 		if (!in_array($boxName, $parser->availableBoxes)) {
 			return $this->Error(sprintf('Unknown box: %s', $boxName));
@@ -149,8 +148,7 @@ class FPDI extends FPDF_TPL {
 		// An imported page will start at 0,0 everytime. Translation will be set in _putformxobjects()
 		$tpl['x'] = 0;
 		$tpl['y'] = 0;
-
-		$page =& $parser->pages[$parser->pageno];
+		$page     =& $parser->pages[$parser->pageno];
 
 		// fix for rotated pages
 		$rotation = $parser->getPageRotation($pageno);
@@ -169,9 +167,8 @@ class FPDI extends FPDF_TPL {
 				$y = $tpl['h'];
 			}
 
-			$cx = ($x / 2 + $tpl['box']['x']) * $this->k;
-			$cy = ($y / 2 + $tpl['box']['y']) * $this->k;
-
+			$cx            = ($x / 2 + $tpl['box']['x']) * $this->k;
+			$cy            = ($y / 2 + $tpl['box']['y']) * $this->k;
 			$angle        *= -1;
 			$angle        *= M_PI / 180;
 			$c             = cos($angle);
@@ -254,7 +251,6 @@ class FPDI extends FPDF_TPL {
 	 */
 	public function _putformxobjects() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
-
 		reset($this->tpls);
 
 		foreach ($this->tpls as $tplidx => $tpl) {

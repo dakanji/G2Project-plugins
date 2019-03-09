@@ -44,7 +44,9 @@ class SendEcardController extends GalleryController {
 		global $gallery;
 
 		$session  =& $gallery->getSession();
-		$redirect = $status = $error = array();
+		$redirect = array();
+		$status   = array();
+		$error    = array();
 
 		list($ret, $item) = $this->getItem();
 
@@ -198,8 +200,7 @@ class SendEcardController extends GalleryController {
 
 			GalleryUtilities::unsanitizeInputValues($headers, false);
 
-			$mime = new Mail_mime("\n");
-
+			$mime         = new Mail_mime("\n");
 			$platform     =& $gallery->getPlatform();
 			$messagePlain = $platform->file_get_contents(
 				__DIR__ . '/templates/Message.txt'
@@ -344,7 +345,6 @@ class SendEcardView extends GalleryView {
 			$form['to']       = '';
 			$form['toName']   = '';
 			$form['text']     = '';
-
 			$form['from']     = $session->get('ecard.from');
 			$form['fromName'] = $session->get('ecard.fromName');
 
@@ -369,8 +369,7 @@ class SendEcardView extends GalleryView {
 			}
 		}
 
-		$SendEcard = array();
-
+		$SendEcard              = array();
 		$SendEcard['itemId']    = $item->getId();
 		$SendEcard['item']      = (array)$item;
 		$SendEcard['emailFrom'] = $config['from'] ? $config['from'] : $form['fromName'] . ' &lt;' . $form['from'] . '&gt;';

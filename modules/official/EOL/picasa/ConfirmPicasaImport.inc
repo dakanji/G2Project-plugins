@@ -82,9 +82,8 @@ class ConfirmPicasaImportController extends GalleryController {
 		$templateAdapter =& $gallery->getTemplateAdapter();
 		$platform        =& $gallery->getPlatform();
 		$slash           = $platform->getDirectorySeparator();
-
-		$finishedAlbums = $albumPosition  = array();
-		$status         = array(
+		$finishedAlbums  = $albumPosition   = array();
+		$status          = array(
 			'albumId'              => false,
 			'albumImportFailure'   => array(),
 			'albumImportSuccess'   => array(),
@@ -340,8 +339,7 @@ class ConfirmPicasaImportController extends GalleryController {
 		$session->putStatus($status);
 		$redirect['view']    = 'core.SiteAdmin';
 		$redirect['subView'] = 'picasa.ImportResults';
-
-		$urlGenerator =& $gallery->getUrlGenerator();
+		$urlGenerator        =& $gallery->getUrlGenerator();
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 		$ret = GalleryCoreApi::releaseLocks($importLockIds);
 

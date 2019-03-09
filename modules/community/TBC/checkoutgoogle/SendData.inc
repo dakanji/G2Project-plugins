@@ -38,9 +38,8 @@ class SendDataController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
 
-		$error  = array();
-		$status = array();
-
+		$error        = array();
+		$status       = array();
 		$urlGenerator =& $gallery->getUrlGenerator();
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'checkoutgoogle');
@@ -144,8 +143,7 @@ class SendDataController extends GalleryController {
 		if ($discount > 0) {
 			$discountName        = htmlspecialchars($module->translate('Discount'), ENT_NOQUOTES);
 			$discountDescription = htmlspecialchars($transaction->getDiscountDescription(), ENT_NOQUOTES);
-
-			$googleData .= '<item>
+			$googleData         .= '<item>
         		    <item-name>' . $discountName . '</item-name>
         		    <item-description>' . $discountDescription . '</item-description>
         		    <unit-price currency="' . $currency . '">' . - $discount . '</unit-price>
@@ -161,7 +159,6 @@ class SendDataController extends GalleryController {
 		// Postage
 		if ($postage > 0) {
 			$postageType = htmlspecialchars($transaction->getPostageType(), ENT_NOQUOTES);
-
 			$googleData .= '<shipping-methods>
         		    <flat-rate-shipping name="' . $postageType . '">
           		    <price currency="' . $currency . '">' . $postage . '</price>

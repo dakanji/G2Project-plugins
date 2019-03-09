@@ -153,8 +153,7 @@ class AdminSlideshowView extends GalleryView {
 		}
 
 		$picLensHelper = new PicLensHelper();
-
-		$info = $picLensHelper->getLatestPicLensInfo();
+		$info          = $picLensHelper->getLatestPicLensInfo();
 
 		if (empty($info)) {
 			$update = null;

@@ -91,8 +91,7 @@ class Auth_OpenID_MathLibrary {
 		// Use array_merge to return a zero-indexed array instead of a
 		// one-indexed array.
 		$bytes = array_merge(unpack('C*', $str));
-
-		$n = $this->init(0);
+		$n     = $this->init(0);
 
 		if ($bytes && ($bytes[0] > 127)) {
 			trigger_error(
@@ -165,8 +164,7 @@ class Auth_OpenID_MathLibrary {
 
 		do {
 			$bytes = "\x00" . Auth_OpenID_CryptUtil::getBytes($nbytes);
-
-			$n = $this->binaryToLong($bytes);
+			$n     = $this->binaryToLong($bytes);
 
 			// Keep looping if this value is in the low duplicated range
 		} while ($this->cmp($n, $duplicate) < 0);

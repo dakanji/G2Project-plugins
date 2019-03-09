@@ -316,8 +316,7 @@ class UploadifyController extends GalleryController {
 
 		$storage     =& $gallery->getStorage();
 		$resizePrefs = array();
-
-		$itemId = $item->getId();
+		$itemId      = $item->getId();
 
 		// Load existing resizes -  there should not be any but...
 		list($ret, $resizesSet) = GalleryCoreApi::fetchResizesByItemIds(array($itemId));

@@ -41,8 +41,7 @@ class getid3_real extends getid3_handler {
 					$info['audio']['channels']        = $info['real']['old_ra_header']['channels'];
 					$info['playtime_seconds']         = 60 * ($info['real']['old_ra_header']['audio_bytes'] / $info['real']['old_ra_header']['bytes_per_minute']);
 					$info['audio']['bitrate']         = 8  * ($info['real']['old_ra_header']['audio_bytes'] / $info['playtime_seconds']);
-
-					$info['audio']['codec'] = $this->RealAudioCodecFourCClookup($info['real']['old_ra_header']['fourcc'], $info['audio']['bitrate']);
+					$info['audio']['codec']           = $this->RealAudioCodecFourCClookup($info['real']['old_ra_header']['fourcc'], $info['audio']['bitrate']);
 
 					foreach ($info['real']['old_ra_header']['comments'] as $key => $valuearray) {
 						if (strlen(trim($valuearray[0])) > 0) {
@@ -60,10 +59,9 @@ class getid3_real extends getid3_handler {
 			}
 
 			// shortcut
-			$info['real']['chunks'][$ChunkCounter]     = array();
-			$thisfile_real_chunks_currentchunk         =& $info['real']['chunks'][$ChunkCounter];
-			$thisfile_real_chunks_currentchunk['name'] = $ChunkName;
-
+			$info['real']['chunks'][$ChunkCounter]       = array();
+			$thisfile_real_chunks_currentchunk           =& $info['real']['chunks'][$ChunkCounter];
+			$thisfile_real_chunks_currentchunk['name']   = $ChunkName;
 			$thisfile_real_chunks_currentchunk['offset'] = $this->ftell() - 8;
 			$thisfile_real_chunks_currentchunk['length'] = $ChunkSize;
 
@@ -264,10 +262,8 @@ class getid3_real extends getid3_handler {
 							switch ($thisfile_real_chunks_currentchunk['mime_type']) {
 								case 'audio/x-pn-realaudio':
 								case 'audio/x-pn-multirate-realaudio':
-									$info['audio']['bitrate'] = (isset($info['audio']['bitrate']) ? $info['audio']['bitrate'] : 0) + $thisfile_real_chunks_currentchunk['avg_bit_rate'];
-
-									$info['audio']['codec'] = $this->RealAudioCodecFourCClookup($thisfile_real_chunks_currentchunk['parsed_audio_data']['fourcc'], $info['audio']['bitrate']);
-
+									$info['audio']['bitrate']    = (isset($info['audio']['bitrate']) ? $info['audio']['bitrate'] : 0) + $thisfile_real_chunks_currentchunk['avg_bit_rate'];
+									$info['audio']['codec']      = $this->RealAudioCodecFourCClookup($thisfile_real_chunks_currentchunk['parsed_audio_data']['fourcc'], $info['audio']['bitrate']);
 									$info['audio']['dataformat'] = 'real';
 									$info['audio']['lossless']   = false;
 

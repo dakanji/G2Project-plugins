@@ -56,8 +56,7 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 				'head',
 			) as $requestMethod) {
 				$_SERVER['REQUEST_METHOD'] = $requestMethod;
-
-				$results = $this->handleRequest(ERROR_PERMISSION_DENIED);
+				$results                   = $this->handleRequest(ERROR_PERMISSION_DENIED);
 				$this->assertEquals(
 					null,
 					$results,
@@ -70,8 +69,7 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 	public function testNoAuthRequestForLoggedInUsersForRequestsByWindowsWebfolders() {
 		$_SERVER['REQUEST_METHOD']  = 'propfind';
 		$_SERVER['HTTP_USER_AGENT'] = 'Microsoft Data Access Internet Publishing Provider DAV foo bar';
-
-		$results = $this->handleRequest();
+		$results                    = $this->handleRequest();
 		$this->assertEquals(
 			array(
 				'delegate' => array(

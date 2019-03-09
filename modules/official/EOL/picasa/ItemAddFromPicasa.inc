@@ -151,10 +151,9 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 	public function performImport($picasaXmlPath, $destinationAlbumId, $form) {
 		global $gallery;
 
-		$storage  = $gallery->getStorage();
-		$platform =& $gallery->getPlatform();
-		$slash    = $platform->getDirectorySeparator();
-
+		$storage        = $gallery->getStorage();
+		$platform       =& $gallery->getPlatform();
+		$slash          = $platform->getDirectorySeparator();
 		$finishedAlbums = $albumPosition = array();
 		$status         = array(
 			'albumId'              => false,
@@ -209,10 +208,9 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		$gallery->guaranteeTimeLimit(30);
 		$newAlbumInstanceId = false;
-
-		$desiredname = $platform->legalizePathComponent($picasaAlbum['albumName']);
-		$k           = 0;
-		$invalidName = true;
+		$desiredname        = $platform->legalizePathComponent($picasaAlbum['albumName']);
+		$k                  = 0;
+		$invalidName        = true;
 
 		while ($invalidName) {
 			list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent($destinationAlbumId, $desiredname);
@@ -467,8 +465,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		// Set the ItemAdmin form's encoding type specially since we're uploading binary files
 		if ($template->hasVariable('ItemAdmin')) {
-			$ItemAdmin =& $template->getVariableByReference('ItemAdmin');
-
+			$ItemAdmin            =& $template->getVariableByReference('ItemAdmin');
 			$ItemAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$ItemAdmin['enctype'] = 'multipart/form-data';

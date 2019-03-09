@@ -47,9 +47,8 @@ class AddToCartController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
 
-		$items = array();
-		$IPQ   = array();
-
+		$items   = array();
+		$IPQ     = array();
 		$session =& $gallery->getSession();
 
 		list($ret, $treatAlbumAsCollection) = GalleryCoreApi::getPluginParameter(

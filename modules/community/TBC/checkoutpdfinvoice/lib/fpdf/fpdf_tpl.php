@@ -221,9 +221,8 @@ class FPDF_TPL extends FPDF {
 		}
 
 		$tpl =& $this->tpls[$tplidx];
-
-		$w = $tpl['w'];
-		$h = $tpl['h'];
+		$w   = $tpl['w'];
+		$h   = $tpl['h'];
 
 		if ($_w == 0 and $_h == 0) {
 			$_w = $w;
@@ -256,7 +255,6 @@ class FPDF_TPL extends FPDF {
 		}
 
 		parent::SetFont($family, $style, $size);
-
 		$fontkey = $this->FontFamily . $this->FontStyle;
 
 		if ($this->_intpl) {
@@ -324,7 +322,6 @@ class FPDF_TPL extends FPDF {
 	 */
 	public function _putformxobjects() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
-
 		reset($this->tpls);
 
 		foreach ($this->tpls as $tplidx => $tpl) {

@@ -50,8 +50,7 @@ class SelectPicasaExportPathController extends GalleryController {
 			} else {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
-
-				$tmp = trim($form['picasaXmlPath']);
+				$tmp      = trim($form['picasaXmlPath']);
 
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;

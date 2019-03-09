@@ -122,8 +122,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 				return $ret;
 			}
 
-			$eventName = $hints[0];
-
+			$eventName          = $hints[0];
 			$requiredPermission = $notification->getPermission();
 
 			foreach ($subscribers as $data) {

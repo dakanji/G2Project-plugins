@@ -342,8 +342,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		 * In this case we currently rely on REQUEST_URI being rewritten to a valid value.
 		 */
 		$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_NAME'] = '/G1/path/myalbum/aaa.jpg';
-
-		$results = $this->handleRequest();
+		$results             = $this->handleRequest();
 		$this->assertEquals(
 			array(
 				'redirect' => array(

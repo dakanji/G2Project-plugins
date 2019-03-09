@@ -64,10 +64,9 @@ class PicLensHelperTest extends GalleryTestCase {
 	public function _setDownload($url, $data, $outputFile = null, $responseCode = '200 OK') {
 		global $gallery;
 
-		$urlInfo = parse_url($url);
-		$host    = $urlInfo['host'];
-		$path    = $urlInfo['path'];
-
+		$urlInfo  = parse_url($url);
+		$host     = $urlInfo['host'];
+		$path     = $urlInfo['path'];
 		$platform =& $gallery->_platform;
 		$platform->setReply('fsockopen', array($host, 80, null, null, 5), 'IN');
 		$platform->setReply(

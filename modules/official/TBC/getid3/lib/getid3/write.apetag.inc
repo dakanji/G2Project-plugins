@@ -28,8 +28,7 @@ class getid3_write_apetag {
 
 	public function WriteAPEtag() {
 		// NOTE: All data passed to this function must be UTF-8 format
-		$getID3 = new getID3();
-
+		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
 
 		if (isset($ThisFileInfo['ape']['tag_offset_start'], $ThisFileInfo['lyrics3']['tag_offset_end'])) {
@@ -100,8 +99,7 @@ class getid3_write_apetag {
 	}
 
 	public function DeleteAPEtag() {
-		$getID3 = new getID3();
-
+		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
 
 		if (isset($ThisFileInfo['ape']['tag_offset_start'], $ThisFileInfo['ape']['tag_offset_end'])) {
@@ -161,7 +159,6 @@ class getid3_write_apetag {
 
 			//$tagitem .= $this->GenerateAPEtagFlags(true, true, false, 0, false);
 			$tagitem .= "\x00\x00\x00\x00";
-
 			$tagitem .= $this->CleanAPEtagItemKey($key) . "\x00";
 			$tagitem .= $valuestring;
 			$items[]  = $tagitem;
@@ -181,9 +178,7 @@ class getid3_write_apetag {
 		$APEheader .= getid3_lib::LittleEndian2String(2000, 4);
 		$APEheader .= getid3_lib::LittleEndian2String(32 + $tagdatalength, 4);
 		$APEheader .= getid3_lib::LittleEndian2String(count($items), 4);
-
 		$APEheader .= $this->GenerateAPEtagFlags(true, true, $isheader, 0, false);
-
 		$APEheader .= str_repeat("\x00", 8);
 
 		return $APEheader;

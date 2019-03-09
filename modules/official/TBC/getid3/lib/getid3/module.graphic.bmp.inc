@@ -35,10 +35,8 @@ class getid3_bmp extends getid3_handler {
 		// WORD    bfReserved2;
 		// DWORD   bfOffBits;
 		$this->fseek($info['avdataoffset']);
-		$offset = 0;
-
-		$BMPheader = $this->fread(14 + 40);
-
+		$offset                                = 0;
+		$BMPheader                             = $this->fread(14 + 40);
 		$thisfile_bmp_header_raw['identifier'] = substr($BMPheader, $offset, 2);
 		$offset                               += 2;
 		$magic                                 = 'BM';
@@ -159,10 +157,8 @@ class getid3_bmp extends getid3_handler {
 				$offset                                     += 4;
 				$thisfile_bmp_header_raw['identifier']       = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 4));
 				$offset                                     += 4;
-
-				$thisfile_bmp_header['compression'] = $this->BMPcompressionOS2Lookup($thisfile_bmp_header_raw['compression']);
-
-				$info['video']['codec'] = $thisfile_bmp_header['compression'] . ' ' . $thisfile_bmp_header_raw['bits_per_pixel'] . '-bit';
+				$thisfile_bmp_header['compression']          = $this->BMPcompressionOS2Lookup($thisfile_bmp_header_raw['compression']);
+				$info['video']['codec']                      = $thisfile_bmp_header['compression'] . ' ' . $thisfile_bmp_header_raw['bits_per_pixel'] . '-bit';
 			}
 		} elseif ($thisfile_bmp['type_os'] == 'Windows') {
 			// Windows-format BMP
@@ -200,13 +196,11 @@ class getid3_bmp extends getid3_handler {
 			$offset                                     += 4;
 			$thisfile_bmp_header_raw['colors_important'] = getid3_lib::LittleEndian2Int(substr($BMPheader, $offset, 4));
 			$offset                                     += 4;
-
-			$thisfile_bmp_header['compression'] = $this->BMPcompressionWindowsLookup($thisfile_bmp_header_raw['compression']);
-
-			$info['video']['resolution_x']    = $thisfile_bmp_header_raw['width'];
-			$info['video']['resolution_y']    = $thisfile_bmp_header_raw['height'];
-			$info['video']['codec']           = $thisfile_bmp_header['compression'] . ' ' . $thisfile_bmp_header_raw['bits_per_pixel'] . '-bit';
-			$info['video']['bits_per_sample'] = $thisfile_bmp_header_raw['bits_per_pixel'];
+			$thisfile_bmp_header['compression']          = $this->BMPcompressionWindowsLookup($thisfile_bmp_header_raw['compression']);
+			$info['video']['resolution_x']               = $thisfile_bmp_header_raw['width'];
+			$info['video']['resolution_y']               = $thisfile_bmp_header_raw['height'];
+			$info['video']['codec']                      = $thisfile_bmp_header['compression'] . ' ' . $thisfile_bmp_header_raw['bits_per_pixel'] . '-bit';
+			$info['video']['bits_per_sample']            = $thisfile_bmp_header_raw['bits_per_pixel'];
 
 			if (($thisfile_bmp['type_version'] >= 4) || ($thisfile_bmp_header_raw['compression'] == 3)) {
 				// should only be v4+, but BMPs with type_version==1 and BI_BITFIELDS compression have been seen
@@ -284,8 +278,7 @@ class getid3_bmp extends getid3_handler {
 			}
 
 			if ($PaletteEntries > 0) {
-				$BMPpalette = $this->fread(4 * $PaletteEntries);
-
+				$BMPpalette    = $this->fread(4 * $PaletteEntries);
 				$paletteoffset = 0;
 
 				for ($i = 0; $i < $PaletteEntries; $i++) {
@@ -311,9 +304,8 @@ class getid3_bmp extends getid3_handler {
 
 		if ($this->ExtractData) {
 			$this->fseek($thisfile_bmp_header_raw['data_offset']);
-			$RowByteLength = ceil(($thisfile_bmp_header_raw['width'] * ($thisfile_bmp_header_raw['bits_per_pixel'] / 8)) / 4) * 4; // round up to nearest DWORD boundry
-			$BMPpixelData  = $this->fread($thisfile_bmp_header_raw['height'] * $RowByteLength);
-
+			$RowByteLength                          = ceil(($thisfile_bmp_header_raw['width'] * ($thisfile_bmp_header_raw['bits_per_pixel'] / 8)) / 4) * 4; // round up to nearest DWORD boundry
+			$BMPpixelData                           = $this->fread($thisfile_bmp_header_raw['height'] * $RowByteLength);
 			$pixeldataoffset                        = 0;
 			$thisfile_bmp_header_raw['compression'] = (isset($thisfile_bmp_header_raw['compression']) ? $thisfile_bmp_header_raw['compression'] : '');
 

@@ -1344,8 +1344,7 @@ class ShowMapView extends GalleryView {
 				return array($ret, null);
 			}
 
-			$settings = $deftheme->getSettings(null);
-
+			$settings  = $deftheme->getSettings(null);
 			$bodycolor = '';
 
 			if (is_array($settings[1])) {

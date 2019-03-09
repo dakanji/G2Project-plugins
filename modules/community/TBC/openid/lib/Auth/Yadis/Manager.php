@@ -414,8 +414,7 @@ class Auth_Yadis_Discovery {
 		}
 
 		if ($manager) {
-			$loader = new Auth_Yadis_ManagerLoader();
-
+			$loader  = new Auth_Yadis_ManagerLoader();
 			$service = $manager->nextService();
 			$this->session->set(
 				$this->session_key,
@@ -470,8 +469,7 @@ class Auth_Yadis_Discovery {
 		$manager     = null;
 
 		if ($manager_str !== null) {
-			$loader = new Auth_Yadis_ManagerLoader();
-
+			$loader  = new Auth_Yadis_ManagerLoader();
 			$manager = $loader->fromSession(unserialize($manager_str));
 		}
 

@@ -55,8 +55,7 @@ class DownloadPicLensView extends GalleryView {
 		global $gallery;
 
 		// Figure out which file we're talking about
-		$file = GalleryUtilities::getRequestVariables('file');
-
+		$file    = GalleryUtilities::getRequestVariables('file');
 		$codeDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow/';
 
 		switch ($file) {

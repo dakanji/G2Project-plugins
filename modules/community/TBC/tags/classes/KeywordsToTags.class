@@ -36,8 +36,7 @@ class KeywordsToTags extends MaintenanceTask {
 	public function getInfo() {
 		global $gallery;
 
-		$info['l10Domain'] = 'modules_tags';
-
+		$info['l10Domain']   = 'modules_tags';
 		$info['title']       = $gallery->i18n('Copy my Keywords into the tags');
 		$info['description'] = $gallery->i18n(
 			'This task will go throught all the gallery item and copy all of the keywords' .
@@ -76,9 +75,8 @@ class KeywordsToTags extends MaintenanceTask {
 			$ids[] = $res[0];
 		}
 
-		$totalItems = count($ids);
-		$current    = 1;
-
+		$totalItems        = count($ids);
+		$current           = 1;
 		$MigratingKeywords = $module->translate('Migrating Keywords into Tags');
 		$ret               = $templateAdapter->updateProgressBar(
 			$MigratingKeywords,

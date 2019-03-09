@@ -115,8 +115,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 	public function cleanupNonces() {
 		global $Auth_OpenID_SKEW;
 
-		$nonces = Auth_OpenID_FileStore::_listdir($this->nonce_dir);
-
+		$nonces  = Auth_OpenID_FileStore::_listdir($this->nonce_dir);
 		$now     = time();
 		$removed = 0;
 
@@ -406,13 +405,11 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 			$rest  = '';
 		}
 
-		$parts = explode('/', $rest, 2);
-
+		$parts     = explode('/', $rest, 2);
 		$domain    = $this->_filenameEscape($parts[0]);
 		$url_hash  = $this->_safe64($server_url);
 		$salt_hash = $this->_safe64($salt);
-
-		$filename = sprintf(
+		$filename  = sprintf(
 			'%08x-%s-%s-%s-%s',
 			$timestamp,
 			$proto,
@@ -440,8 +437,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 	 * @access private
 	 */
 	public function _allAssocs() {
-		$all_associations = array();
-
+		$all_associations      = array();
 		$association_filenames = Auth_OpenID_FileStore::_listdir($this->association_dir);
 
 		foreach ($association_filenames as $association_filename) {
@@ -493,7 +489,6 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 		foreach ($nonces as $nonce) {
 			if (!Auth_OpenID_checkTimestamp($nonce, $now)) {
 				$filename = $this->nonce_dir . DIRECTORY_SEPARATOR . $nonce;
-
 				Auth_OpenID_FileStore::_removeIfPresent($filename);
 			}
 		}

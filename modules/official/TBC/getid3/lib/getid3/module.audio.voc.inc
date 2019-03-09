@@ -21,8 +21,7 @@ class getid3_voc extends getid3_handler {
 
 		$this->fseek($info['avdataoffset']);
 		$VOCheader = $this->fread(26);
-
-		$magic = 'Creative Voice File';
+		$magic     = 'Creative Voice File';
 
 		if (substr($VOCheader, 0, 19) != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($VOCheader, 0, 19)) . '"';
@@ -74,7 +73,6 @@ class getid3_voc extends getid3_handler {
 					$this->fseek($BlockSize - 2, SEEK_CUR);
 					$ThisBlock['sample_rate_id']   = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 1));
 					$ThisBlock['compression_type'] = getid3_lib::LittleEndian2Int(substr($BlockData, 5, 1));
-
 					$ThisBlock['compression_name'] = $this->VOCcompressionTypeLookup($ThisBlock['compression_type']);
 
 					if ($ThisBlock['compression_type'] <= 3) {
@@ -121,11 +119,10 @@ class getid3_voc extends getid3_handler {
 					}
 
 					$this->fseek($BlockSize - 12, SEEK_CUR);
-					$ThisBlock['sample_rate']     = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 4));
-					$ThisBlock['bits_per_sample'] = getid3_lib::LittleEndian2Int(substr($BlockData, 8, 1));
-					$ThisBlock['channels']        = getid3_lib::LittleEndian2Int(substr($BlockData, 9, 1));
-					$ThisBlock['wFormat']         = getid3_lib::LittleEndian2Int(substr($BlockData, 10, 2));
-
+					$ThisBlock['sample_rate']      = getid3_lib::LittleEndian2Int(substr($BlockData, 4, 4));
+					$ThisBlock['bits_per_sample']  = getid3_lib::LittleEndian2Int(substr($BlockData, 8, 1));
+					$ThisBlock['channels']         = getid3_lib::LittleEndian2Int(substr($BlockData, 9, 1));
+					$ThisBlock['wFormat']          = getid3_lib::LittleEndian2Int(substr($BlockData, 10, 2));
 					$ThisBlock['compression_name'] = $this->VOCwFormatLookup($ThisBlock['wFormat']);
 
 					if ($this->VOCwFormatActualBitsPerSampleLookup($ThisBlock['wFormat'])) {

@@ -483,8 +483,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function propfind_request_helper(&$options) {
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 
 		// get depth from header (default is 'infinity')
@@ -547,8 +546,7 @@ class HTTP_WebDAV_Server {
 				// loop over all requested properties
 				foreach ($options['props'] as $reqprop) {
 					$status = '200 OK';
-
-					$prop = $this->getProp($reqprop, $file, $options);
+					$prop   = $this->getProp($reqprop, $file, $options);
 
 					if (!empty($prop['status'])) {
 						$status = $prop['status'];
@@ -646,8 +644,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function proppatch_request_helper(&$options) {
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 		$propinfo        = new _parse_proppatch($this->openRequestBody());
 
@@ -761,8 +758,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function mkcol_wrapper() {
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 		$status          = $this->mkcol($options);
 		$this->setResponseStatus($status);
@@ -779,8 +775,7 @@ class HTTP_WebDAV_Server {
 	 */
 	public function get_request_helper(&$options) {
 		// TODO check for invalid stream
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 		$this->_get_ranges($options);
 
@@ -1173,8 +1168,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function head_wrapper() {
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 
 		// call user handler
@@ -1183,9 +1177,7 @@ class HTTP_WebDAV_Server {
 		} else {
 			// can emulate HEAD using GET
 			ob_start();
-
 			$status = $this->get($options);
-
 			ob_end_clean();
 		}
 
@@ -1203,8 +1195,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function put_request_helper(&$options) {
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 
 		// Content-Length may be zero
@@ -1422,8 +1413,7 @@ class HTTP_WebDAV_Server {
 			return;
 		}
 
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 
 		// call user handler
@@ -1447,8 +1437,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function copymove_request_helper(&$options) {
-		$options = array();
-
+		$options          = array();
 		$options['path']  = $this->path;
 		$options['depth'] = 'infinity';
 
@@ -1482,7 +1471,6 @@ class HTTP_WebDAV_Server {
 
 			$options['dest'] = substr($url['path'], strlen($this->baseUrl['path']));
 			$options['dest'] = $this->_urldecode($options['dest']);
-
 			$options['dest'] = trim($options['dest'], '/');
 
 			// check source and destination are not the same - data could be lost
@@ -1587,8 +1575,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function lock_request_helper(&$options) {
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 
 		// a LOCK request with an If header but without a body is used to
@@ -1759,8 +1746,7 @@ class HTTP_WebDAV_Server {
 	 * @return void
 	 */
 	public function unlock_request_helper(&$options) {
-		$options = array();
-
+		$options         = array();
 		$options['path'] = $this->path;
 
 		if (empty($_SERVER['HTTP_LOCK_TOKEN'])) {
@@ -2033,11 +2019,10 @@ class HTTP_WebDAV_Server {
 	}
 
 	public function getDescendentsLocks($path) {
-		$options          = array();
-		$options['path']  = $path;
-		$options['depth'] = 'infinity';
-		$options['props'] = array();
-
+		$options            = array();
+		$options['path']    = $path;
+		$options['depth']   = 'infinity';
+		$options['props']   = array();
 		$options['props'][] = $this->mkprop('DAV:', 'lockdiscovery', null);
 
 		// call user handler
@@ -2285,8 +2270,7 @@ class HTTP_WebDAV_Server {
 				$not   = '';
 
 				if ($token[0] == 'NOT') {
-					$not = '!';
-
+					$not   = '!';
 					$token = $this->_if_header_lexer($str, $pos);
 				}
 

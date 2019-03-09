@@ -466,8 +466,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 			$derivativeSize            = 0;
 			$form['videoDerivativeId'] = '';
-
-			$itemId = $item->getId();
+			$itemId                    = $item->getId();
 
 			list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds(array($itemId));
 
@@ -494,9 +493,8 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 						if (preg_match('/convert\-to\-audio/', $operation, $regs)) {
 							/** @todo: Support different formats */
-							$format          = $regs[1];
-							$form['enabled'] = true;
-
+							$format                    = $regs[1];
+							$form['enabled']           = true;
 							$form['videoDerivativeId'] = $preferred->getId();
 						}
 
@@ -507,9 +505,8 @@ class ItemEditTranscode extends ItemEditPlugin {
 			}
 
 			// Get original and encoded filesizes
-			$form['native']['mime'] = $item->getMimeType();
-			$form['native']['size'] = $item->getSize();
-
+			$form['native']['mime']  = $item->getMimeType();
+			$form['native']['size']  = $item->getSize();
 			$form['encoded']['size'] = $derivativeSize;
 
 			// Get output options
@@ -594,8 +591,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 			// Assume transcoding is disabled
 			$form['enabled']           = false;
 			$form['videoDerivativeId'] = '';
-
-			$itemId = $item->getId();
+			$itemId                    = $item->getId();
 
 			list($ret, $preferreds) = GalleryCoreApi::fetchPreferredsByItemIds(array($itemId));
 
@@ -635,9 +631,8 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 						if (preg_match('/convert\-to\-video/', $operation, $regs)) {
 							/** @todo: Support different formats */
-							$format          = $regs[1];
-							$form['enabled'] = true;
-
+							$format                    = $regs[1];
+							$form['enabled']           = true;
 							$form['videoDerivativeId'] = $preferred->getId();
 						}
 

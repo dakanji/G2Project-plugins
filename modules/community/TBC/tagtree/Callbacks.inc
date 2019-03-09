@@ -54,11 +54,10 @@ class TagTreeCallbacks {
 					return $ret;
 				}
 
-				$rootAlbumTitle = $rootAlbum->getTitle() ? $rootAlbum->getTitle() : $rootAlbum->getPathComponent();
-				$translator     =& $gallery->getTranslator();
-				$params['rtl']  = $translator->isRightToLeft() ? '_rtl' : '';
-				$blockId        = 'tagtree' . $idCount++;
-
+				$rootAlbumTitle                    = $rootAlbum->getTitle() ? $rootAlbum->getTitle() : $rootAlbum->getPathComponent();
+				$translator                        =& $gallery->getTranslator();
+				$params['rtl']                     = $translator->isRightToLeft() ? '_rtl' : '';
+				$blockId                           = 'tagtree' . $idCount++;
 				$block                             =& $smarty->_tpl_vars['block'];
 				$block['tagtree']['LoadAlbumData'] = array(
 					'blockId'        => $blockId,

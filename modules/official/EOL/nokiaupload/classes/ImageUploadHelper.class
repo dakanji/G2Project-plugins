@@ -389,8 +389,7 @@ class ImageUploadHelper {
 
 		// Album has been created succesfully
 		$status['success'] = NOKIAUPLOAD_ERR_NOERR;
-
-		$status['id'] = $instance->getId();
+		$status['id']      = $instance->getId();
 		$gallery->debug("Created album $albumName (id " . $status['id'] . ').');
 
 		return $status;

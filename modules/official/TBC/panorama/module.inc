@@ -179,8 +179,7 @@ class PanoramaModule extends GalleryModule {
 					continue;
 				}
 
-				$image = $images[$itemId];
-
+				$image    = $images[$itemId];
 				$mimeType = $item->getMimeType();
 				$width    = $image->getWidth();
 

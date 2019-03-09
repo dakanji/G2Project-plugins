@@ -1479,8 +1479,7 @@ class Auth_OpenID_Signatory {
 	 */
 	public function sign($response) {
 		$signed_response = $response;
-
-		$assoc_handle = $response->request->assoc_handle;
+		$assoc_handle    = $response->request->assoc_handle;
 
 		if ($assoc_handle) {
 			// normal mode

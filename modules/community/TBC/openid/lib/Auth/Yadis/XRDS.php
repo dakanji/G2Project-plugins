@@ -401,7 +401,6 @@ class Auth_Yadis_XRDS {
 		$filter_mode = SERVICES_YADIS_MATCH_ANY
 	) {
 		$pri_keys = array_keys($this->serviceList);
-
 		sort($pri_keys, SORT_NUMERIC);
 
 		// If no filters are specified, return the entire service

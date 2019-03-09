@@ -73,8 +73,7 @@ class FinishLoginController extends GalleryController {
 		$results      = $status = $error = array();
 
 		// Complete the authentication using the server's response
-		$consumer =& OpenIdHelper::getConsumer();
-
+		$consumer       =& OpenIdHelper::getConsumer();
 		$response       = $consumer->complete($returnTo);
 		$responseStatus = empty($response->status) || empty($response->identity_url) ? '' : $response->status;
 
@@ -177,9 +176,8 @@ class FinishLoginController extends GalleryController {
 
 				if (empty($error)) {
 					$sregResponse = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
-
-					$sreg = $sregResponse->contents();
-					$data = array();
+					$sreg         = $sregResponse->contents();
+					$data         = array();
 
 					foreach (array(
 						'userName' => 'nickname',

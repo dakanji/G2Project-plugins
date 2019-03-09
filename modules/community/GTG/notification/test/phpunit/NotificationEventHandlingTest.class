@@ -535,9 +535,8 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 
 			list($ret, $currentLanguageCode) = $translator->init($language);
 			$subjects[]                      = 'NotificationRouterTest1 Description';
-
-			$translatedBody2 = $module->translate($body2);
-			$bodies[]        = wordwrap($body1, 70) . "\r\n\r\n" . wordwrap($translatedBody2, 70) .
+			$translatedBody2                 = $module->translate($body2);
+			$bodies[]                        = wordwrap($body1, 70) . "\r\n\r\n" . wordwrap($translatedBody2, 70) .
 			"\r\n\r\n" . $unsubscribeUrl;
 		}
 

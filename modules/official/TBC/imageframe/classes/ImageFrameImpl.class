@@ -88,7 +88,6 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
 		static $simpleFrames;
 
 		if (!$template->hasVariable('ImageFrameData')) {

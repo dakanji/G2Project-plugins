@@ -702,6 +702,7 @@ class WebDavHelper {
 			'displayname',
 			$displayName
 		);
+
 		$file['props'][] = WebDavServer::getme()->mkprop(
 			'getlastmodified',
 			$item->getModificationTimestamp()
@@ -747,10 +748,12 @@ class WebDavHelper {
 				'getcontentlength',
 				0
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'getcontenttype',
 				'httpd/unix-directory'
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'resourcetype',
 				'collection'
@@ -772,10 +775,12 @@ class WebDavHelper {
 				'getcontentlength',
 				$size
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'getcontenttype',
 				$mimeType
 			);
+
 			$file['props'][] = WebDavServer::getme()->mkprop(
 				'resourcetype',
 				null
@@ -1436,8 +1441,7 @@ class WebDavHelper {
 	public static function copyMoveRequestHelper() {
 		global $gallery;
 
-		$platform =& $gallery->getPlatform();
-
+		$platform     =& $gallery->getPlatform();
 		$webDavServer =& WebDavHelper::getWebDavServer();
 
 		// Body parsing not yet supported
@@ -1679,8 +1683,7 @@ class WebDavHelper {
 
 		$pathComponent    = basename($path);
 		$newPathComponent = basename($newPath);
-
-		$oldParentId = $item->getParentId();
+		$oldParentId      = $item->getParentId();
 
 		if ($oldParentId != $newParentId) {
 			list($ret, $error) = WebDavHelper::moveValidateHelper($item, $newParent);

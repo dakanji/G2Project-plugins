@@ -449,7 +449,6 @@ class HybridTheme extends GalleryTheme {
 
 		foreach ($childItems as $child) {
 			$i++;
-
 			$childId = $child->getId();
 
 			if (isset($thumbnails[$childId])) {

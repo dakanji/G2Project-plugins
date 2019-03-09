@@ -45,7 +45,6 @@ class OfferDownloadView extends DownloadItemView {
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: attachment; filename="' . $data['pseudoFileName'] . '"');
-
 		$stats = $platform->stat($data['derivativePath']);
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));

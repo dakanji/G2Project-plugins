@@ -31,8 +31,7 @@ class getid3_mpeg extends getid3_handler {
 		$info['fileformat'] = 'mpeg';
 
 		$this->fseek($info['avdataoffset']);
-		$MPEGstreamData = $this->fread($this->getid3->option_fread_buffer_size);
-
+		$MPEGstreamData       = $this->fread($this->getid3->option_fread_buffer_size);
 		$MPEGstreamBaseOffset = 0; // how far are we from the beginning of the file data ($info['avdataoffset'])
 		$MPEGstreamDataOffset = 0; // how far are we from the beginning of the buffer data (~32kB)
 		$StartCodeValue       = false;
@@ -394,8 +393,7 @@ class getid3_mpeg extends getid3_handler {
 						//echo 'audio at? '.($MPEGstreamBaseOffset + $StartCodeOffset + 4 + 8 + $i).'<br>';
 						if ($getid3_mp3->decodeMPEGaudioHeader($MPEGstreamBaseOffset + $StartCodeOffset + 4 + 8 + $i, $getid3_temp->info, false)) {
 							//echo 'yes!<br>';
-							$info = $getid3_temp->info;
-
+							$info                          = $getid3_temp->info;
 							$info['audio']['bitrate_mode'] = 'cbr';
 							$info['audio']['lossless']     = false;
 

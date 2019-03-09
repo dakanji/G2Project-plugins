@@ -19,8 +19,7 @@ class getid3_amr extends getid3_handler {
 		$info =& $this->getid3->info;
 		$this->fseek($info['avdataoffset']);
 		$AMRheader = $this->fread(6);
-
-		$magic = '#!AMR' . "\x0A";
+		$magic     = '#!AMR' . "\x0A";
 
 		if (substr($AMRheader, 0, 6) != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($AMRheader, 0, 6)) . '"';
@@ -64,7 +63,6 @@ class getid3_amr extends getid3_handler {
 			}
 
 			$thisfile_amr['frame_mode_count'][$codec_mode_request]++;
-
 			$buffer = substr($buffer, $this->amr_mode_bytes_per_frame($codec_mode_request));
 		} while (strlen($buffer) > 0);
 		$info['playtime_seconds'] = array_sum($thisfile_amr['frame_mode_count']) * 0.020; // each frame contain 160 samples and is 20 milliseconds long

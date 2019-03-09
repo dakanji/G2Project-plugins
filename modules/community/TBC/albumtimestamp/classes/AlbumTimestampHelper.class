@@ -329,7 +329,6 @@ class AlbumTimestampHelper {
 		global $gallery;
 
 		$itemId = $item->getId();
-
 		AlbumTimestampHelper::log("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
 
 		$gallery->debug("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");

@@ -30,8 +30,7 @@ class getid3_midi extends getid3_handler {
 		$info['audio']['dataformat'] = 'midi';
 
 		$this->fseek($info['avdataoffset']);
-		$MIDIdata = $this->fread($this->getid3->fread_buffer_size());
-
+		$MIDIdata     = $this->fread($this->getid3->fread_buffer_size());
 		$offset       = 0;
 		$MIDIheaderID = substr($MIDIdata, $offset, 4); // 'MThd'
 		if ($MIDIheaderID != GETID3_MIDI_MAGIC_MTHD) {
@@ -57,8 +56,7 @@ class getid3_midi extends getid3_handler {
 					$MIDIdata .= $buffer;
 				} else {
 					$info['warning'][] = 'only processed ' . ($i - 1) . ' of ' . $thisfile_midi_raw['tracks'] . ' tracks';
-
-					$info['error'][] = 'Unabled to read more file data at ' . $this->ftell() . ' (trying to seek to : ' . $offset . '), was expecting at least 8 more bytes';
+					$info['error'][]   = 'Unabled to read more file data at ' . $this->ftell() . ' (trying to seek to : ' . $offset . '), was expecting at least 8 more bytes';
 
 					return false;
 				}

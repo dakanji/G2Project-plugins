@@ -52,10 +52,8 @@ class getid3_vqf extends getid3_handler {
 		while ($this->ftell() < $info['avdataend']) {
 			$ChunkBaseOffset = $this->ftell();
 			$chunkoffset     = 0;
-
-			$ChunkData = $this->fread(8);
-
-			$ChunkName = substr($ChunkData, $chunkoffset, 4);
+			$ChunkData       = $this->fread(8);
+			$ChunkName       = substr($ChunkData, $chunkoffset, 4);
 
 			if ($ChunkName == 'DATA') {
 				$info['avdataoffset'] = $ChunkBaseOffset;
@@ -91,10 +89,9 @@ class getid3_vqf extends getid3_handler {
 					$thisfile_vqf_COMM['security_level'] = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
 					$chunkoffset                        += 4;
 					$info['audio']['channels']           = $thisfile_vqf_COMM['channel_mode'] + 1;
-
-					$info['audio']['sample_rate']     = $this->VQFchannelFrequencyLookup($thisfile_vqf_COMM['sample_rate']);
-					$info['audio']['bitrate']         = $thisfile_vqf_COMM['bitrate'] * 1000;
-					$info['audio']['encoder_options'] = 'CBR' . ceil($info['audio']['bitrate'] / 1000);
+					$info['audio']['sample_rate']        = $this->VQFchannelFrequencyLookup($thisfile_vqf_COMM['sample_rate']);
+					$info['audio']['bitrate']            = $thisfile_vqf_COMM['bitrate'] * 1000;
+					$info['audio']['encoder_options']    = 'CBR' . ceil($info['audio']['bitrate'] / 1000);
 
 					if ($info['audio']['bitrate'] == 0) {
 						$info['error'][] = 'Corrupt VQF file: bitrate_audio == zero';

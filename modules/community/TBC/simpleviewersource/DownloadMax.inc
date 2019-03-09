@@ -62,7 +62,6 @@ class DownloadMaxView extends DownloadItemView {
 		}
 
 		/*
-
 		$urlgen =& $gallery->getUrlGenerator();
 		$mainUrl = $urlgen->generateUrl( array ( 'view' => 'core.DownloadItem',
 						 'itemId' => $itemId ),
@@ -150,7 +149,6 @@ class DownloadMaxView extends DownloadItemView {
 		 * in which case width is the constraint:
 		 */
 		$widthbound = (!$maxImageHeight || $potentialImages[0]->height * $maxImageWidth < $potentialImages[0]->width * $maxImageHeight) ? 1 : 0;
-
 		usort($potentialImages, array('DownloadMaxView', 'byWidth'));
 
 		if ($maxImageWidth && $widthbound) {

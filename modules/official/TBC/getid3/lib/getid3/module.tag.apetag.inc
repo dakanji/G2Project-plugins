@@ -136,8 +136,7 @@ class getid3_apetag extends getid3_handler {
 			$offset                              += ($ItemKeyLength + 1); // skip 0x00 terminator
 			$thisfile_ape_items_current['data']   = substr($APEtagData, $offset, $value_size);
 			$offset                              += $value_size;
-
-			$thisfile_ape_items_current['flags'] = $this->parseAPEtagFlags($item_flags);
+			$thisfile_ape_items_current['flags']  = $this->parseAPEtagFlags($item_flags);
 
 			switch ($thisfile_ape_items_current['flags']['item_contents_raw']) {
 				case 0: // UTF-8
@@ -315,7 +314,6 @@ class getid3_apetag extends getid3_handler {
 							if (!is_dir($this->inline_attachments) || !is_writable($this->inline_attachments)) {
 								// cannot write, skip
 								$info['warning'][] = 'attachment at ' . $thisfile_ape_items_current['offset'] . ' cannot be saved to "' . $this->inline_attachments . '" (not writable)';
-
 								unset($thisfile_ape_items_current['data']);
 
 								break;
@@ -406,8 +404,7 @@ class getid3_apetag extends getid3_handler {
 		$flags['this_is_header']    = (bool)($rawflagint & 0x20000000);
 		$flags['item_contents_raw'] = ($rawflagint & 0x00000006) >> 1;
 		$flags['read_only']         = (bool)($rawflagint & 0x00000001);
-
-		$flags['item_contents'] = $this->APEcontentTypeFlagLookup($flags['item_contents_raw']);
+		$flags['item_contents']     = $this->APEcontentTypeFlagLookup($flags['item_contents_raw']);
 
 		return $flags;
 	}

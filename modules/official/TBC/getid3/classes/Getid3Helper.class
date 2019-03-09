@@ -119,8 +119,7 @@ class Getid3Helper {
 			return;
 		}
 
-		$getID3 = new getID3();
-
+		$getID3        = new getID3();
 		$rawGetid3Data = $getID3->analyze($path);
 	}
 

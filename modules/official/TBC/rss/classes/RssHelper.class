@@ -334,8 +334,8 @@ class RssHelper {
 		$itemSettings = array();
 
 		if (!empty($param['thumbnails']) && !empty($param['thumbnails'][$item->getId()])) {
-			$thumbnail                        = $param['thumbnails'][$item->getId()];
-			$imageUrl                         = $urlGenerator->generateUrl(
+			$thumbnail                           = $param['thumbnails'][$item->getId()];
+			$imageUrl                            = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbnail->getId(),
@@ -345,12 +345,11 @@ class RssHelper {
 					'forceFullUrl'   => true,
 				)
 			);
-			$description                      = '<a href="' . $url . '"><img border="0" src="' . $imageUrl .
+			$description                         = '<a href="' . $url . '"><img border="0" src="' . $imageUrl .
 			'" width="' . $thumbnail->getWidth() .
 			'" height="' . $thumbnail->getHeight() .
 			'"/></a>' . (!empty($description) ? '<br/>' . $description : $description);
-			$itemSettings['thumbnail']['url'] = $url;
-
+			$itemSettings['thumbnail']['url']    = $url;
 			$itemSettings['thumbnail']['width']  = $thumbnail->getWidth();
 			$itemSettings['thumbnail']['height'] = $thumbnail->getHeight();
 		}

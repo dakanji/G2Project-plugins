@@ -101,7 +101,6 @@ class NodeExpansionCallbackView extends GalleryView {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$children     = $tree->children;
-
 		usort(
 			$children,
 			create_function(

@@ -155,8 +155,7 @@ class IPNView extends GalleryView {
 						),
 					);
 					$IPNReason[]       = "\n";
-
-					$notes .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
+					$notes            .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
 				} else {
 					$IPNAmountVerified = true;
 				}

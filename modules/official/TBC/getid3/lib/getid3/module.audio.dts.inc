@@ -116,22 +116,21 @@ class getid3_dts extends getid3_handler {
 		$info['dts']['flags']['front_sum_diff']      = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['flags']['surround_sum_diff']   = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['raw']['dialog_normalization']  = $this->readBinData($fhBS, 4);
-
-		$info['dts']['bitrate']              = self::bitrateLookup($info['dts']['raw']['bitrate']);
-		$info['dts']['bits_per_sample']      = self::bitPerSampleLookup($info['dts']['raw']['bits_per_sample']);
-		$info['dts']['sample_rate']          = self::sampleRateLookup($info['dts']['raw']['sample_frequency']);
-		$info['dts']['dialog_normalization'] = self::dialogNormalization($info['dts']['raw']['dialog_normalization'], $info['dts']['raw']['encoder_soft_version']);
-		$info['dts']['flags']['lossless']    = (($info['dts']['raw']['bitrate'] == 31) ? true : false);
-		$info['dts']['bitrate_mode']         = (($info['dts']['raw']['bitrate'] == 30) ? 'vbr' : 'cbr');
-		$info['dts']['channels']             = self::numChannelsLookup($info['dts']['raw']['channel_arrangement']);
-		$info['dts']['channel_arrangement']  = self::channelArrangementLookup($info['dts']['raw']['channel_arrangement']);
-		$info['audio']['dataformat']         = 'dts';
-		$info['audio']['lossless']           = $info['dts']['flags']['lossless'];
-		$info['audio']['bitrate_mode']       = $info['dts']['bitrate_mode'];
-		$info['audio']['bits_per_sample']    = $info['dts']['bits_per_sample'];
-		$info['audio']['sample_rate']        = $info['dts']['sample_rate'];
-		$info['audio']['channels']           = $info['dts']['channels'];
-		$info['audio']['bitrate']            = $info['dts']['bitrate'];
+		$info['dts']['bitrate']                      = self::bitrateLookup($info['dts']['raw']['bitrate']);
+		$info['dts']['bits_per_sample']              = self::bitPerSampleLookup($info['dts']['raw']['bits_per_sample']);
+		$info['dts']['sample_rate']                  = self::sampleRateLookup($info['dts']['raw']['sample_frequency']);
+		$info['dts']['dialog_normalization']         = self::dialogNormalization($info['dts']['raw']['dialog_normalization'], $info['dts']['raw']['encoder_soft_version']);
+		$info['dts']['flags']['lossless']            = (($info['dts']['raw']['bitrate'] == 31) ? true : false);
+		$info['dts']['bitrate_mode']                 = (($info['dts']['raw']['bitrate'] == 30) ? 'vbr' : 'cbr');
+		$info['dts']['channels']                     = self::numChannelsLookup($info['dts']['raw']['channel_arrangement']);
+		$info['dts']['channel_arrangement']          = self::channelArrangementLookup($info['dts']['raw']['channel_arrangement']);
+		$info['audio']['dataformat']                 = 'dts';
+		$info['audio']['lossless']                   = $info['dts']['flags']['lossless'];
+		$info['audio']['bitrate_mode']               = $info['dts']['bitrate_mode'];
+		$info['audio']['bits_per_sample']            = $info['dts']['bits_per_sample'];
+		$info['audio']['sample_rate']                = $info['dts']['sample_rate'];
+		$info['audio']['channels']                   = $info['dts']['channels'];
+		$info['audio']['bitrate']                    = $info['dts']['bitrate'];
 
 		if (isset($info['avdataend']) && !empty($info['dts']['bitrate']) && is_numeric($info['dts']['bitrate'])) {
 			$info['playtime_seconds'] = ($info['avdataend'] - $info['avdataoffset']) / ($info['dts']['bitrate'] / 8);

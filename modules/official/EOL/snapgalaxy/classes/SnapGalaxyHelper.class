@@ -106,8 +106,7 @@ class SnapGalaxyHelper {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
-			$entry = array();
+			$entry  = array();
 
 			if (!isset($permissions[$itemId]['snapgalaxy.print'])) {
 				// Skip any cart items for which we don't have print permission

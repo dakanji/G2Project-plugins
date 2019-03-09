@@ -304,9 +304,8 @@ class SlideshowModule extends GalleryModule {
 	 * @see GalleryModule::getRewriteRules
 	 */
 	public function getRewriteRules() {
-		$rules = array();
-		$rule  = array();
-
+		$rules           = array();
+		$rule            = array();
 		$rule['comment'] = $this->translate('View Slideshow');
 		$rule['match']   = array(
 			'view' => 'slideshow.Slideshow',

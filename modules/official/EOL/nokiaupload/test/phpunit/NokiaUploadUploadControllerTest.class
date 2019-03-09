@@ -241,8 +241,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'valid request'
 		);
 		$listener =& GalleryTestCase::getEntityCounter();
-
-		$itemId = $listener->getRecentEntityId('GalleryPhotoItem');
+		$itemId   = $listener->getRecentEntityId('GalleryPhotoItem');
 
 		if ($itemId) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryPhotoItem');

@@ -159,8 +159,7 @@ class getid3_jpg extends getid3_handler {
 
 		if (isset($info['filenamepath'])) {
 			$image_xmp = new Image_XMP($info['filenamepath']);
-
-			$xmp_raw = $image_xmp->getAllTags();
+			$xmp_raw   = $image_xmp->getAllTags();
 
 			foreach ($xmp_raw as $key => $value) {
 				if (strpos($key, ':')) {

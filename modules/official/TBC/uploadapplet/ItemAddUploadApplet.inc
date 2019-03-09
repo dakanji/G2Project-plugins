@@ -71,16 +71,14 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 			}
 
 			$ItemAddUploadApplet['NoProtocolError'] = 0;
-
-			$ItemAddUploadApplet['cookieName']   = $session->getKey();
-			$ItemAddUploadApplet['cookieValue']  = $session->getId();
-			$ItemAddUploadApplet['cookieDomain'] = $cookieDomain;
-			$ItemAddUploadApplet['cookiePath']   = $cookiePath;
-
-			$ItemAddUploadApplet['album']          = $item->getId();
-			$ItemAddUploadApplet['userAgent']      = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-			$ItemAddUploadApplet['galleryVersion'] = 2;
-			$ItemAddUploadApplet['code']           = 'com.gallery.GalleryRemote.ItemAddUploadAppletMini';
+			$ItemAddUploadApplet['cookieName']      = $session->getKey();
+			$ItemAddUploadApplet['cookieValue']     = $session->getId();
+			$ItemAddUploadApplet['cookieDomain']    = $cookieDomain;
+			$ItemAddUploadApplet['cookiePath']      = $cookiePath;
+			$ItemAddUploadApplet['album']           = $item->getId();
+			$ItemAddUploadApplet['userAgent']       = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+			$ItemAddUploadApplet['galleryVersion']  = 2;
+			$ItemAddUploadApplet['code']            = 'com.gallery.GalleryRemote.ItemAddUploadAppletMini';
 
 			list($ret, $locale) = $gallery->getActiveLanguageCode();
 

@@ -672,7 +672,6 @@ class NotificationHelperTest extends GalleryTestCase {
 		$registry['ids']['GalleryEventListener']['NotificationRouter']                = 'TestSubscriptionClass';
 		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']       = 'notification';
 		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
-
 		$storage          =& $gallery->getStorage();
 		$userId           = $gallery->getActiveUserId();
 		$itemId           = $this->_album->getId();
@@ -786,7 +785,6 @@ class NotificationHelperTest extends GalleryTestCase {
 		$registry['ids']['GalleryEventListener']['NotificationRouter']                = 'TestSubscriptionClass';
 		$registry['pluginIds']['GalleryEventListener']['TestSubscriptionClass']       = 'notification';
 		$registry['implementations']['GalleryEventListener']['TestSubscriptionClass'] = 'path';
-
 		$storage          =& $gallery->getStorage();
 		$userId           = $gallery->getActiveUserId();
 		$itemId           = $this->_album->getId();

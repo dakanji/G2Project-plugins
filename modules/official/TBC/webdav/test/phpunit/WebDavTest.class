@@ -1084,8 +1084,7 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$filePath = __DIR__ . '/../../../core/test/data/test1.gif';
-
+		$filePath      = __DIR__ . '/../../../core/test/data/test1.gif';
 		$fileSize      = $this->_platform->filesize($filePath);
 		$pathComponent = basename($filePath);
 		$path         .= $pathComponent;
@@ -1229,8 +1228,7 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$filePath = __DIR__ . '/../../../core/test/data/test1.gif';
-
+		$filePath      = __DIR__ . '/../../../core/test/data/test1.gif';
 		$fileSize      = $this->_platform->filesize($filePath);
 		$pathComponent = basename($filePath);
 		$path         .= $pathComponent;
@@ -1291,8 +1289,7 @@ class WebDavTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('path', $path);
 
-		$filePath = __DIR__ . '/../../../core/test/data/test1.gif';
-
+		$filePath                  = __DIR__ . '/../../../core/test/data/test1.gif';
 		$fileSize                  = $this->_platform->filesize($filePath);
 		$originalItemId            = $this->_item->getId();
 		$originalPathComponent     = $this->_item->getPathComponent();
@@ -1349,8 +1346,7 @@ class WebDavTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('path', $path);
 
-		$filePath = __DIR__ . '/../../../core/test/data/test1.gif';
-
+		$filePath                  = __DIR__ . '/../../../core/test/data/test1.gif';
 		$fileSize                  = $this->_platform->filesize($filePath);
 		$originalItemId            = $this->_item->getId();
 		$originalPathComponent     = $this->_item->getPathComponent();
@@ -1407,8 +1403,7 @@ class WebDavTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('path', $path);
 
-		$filePath = __DIR__ . '/../../../core/test/data/test1.gif';
-
+		$filePath                  = __DIR__ . '/../../../core/test/data/test1.gif';
 		$fileSize                  = $this->_platform->filesize($filePath);
 		$originalItemId            = $linkedEntity->getId();
 		$originalPathComponent     = $linkedEntity->getPathComponent();
@@ -1485,9 +1480,8 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$pathComponent = 'testItem-' . mt_rand();
-		$newPath      .= $pathComponent;
-
+		$pathComponent               = 'testItem-' . mt_rand();
+		$newPath                    .= $pathComponent;
 		$_SERVER['HTTP_DESTINATION'] = 'http://example.com' . $this->_getHref($newPath, false);
 		// Perform the request and verify that we succeeded
 		ob_start();
@@ -1572,9 +1566,8 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$pathComponent = 'testItem-' . mt_rand();
-		$newPath      .= $pathComponent;
-
+		$pathComponent               = 'testItem-' . mt_rand();
+		$newPath                    .= $pathComponent;
 		$_SERVER['HTTP_DESTINATION'] = 'http://example.com' . $this->_getHref($newPath, false);
 		// Perform the request and verify that we failed
 		ob_start();
@@ -1656,9 +1649,8 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$pathComponent = 'testItem-' . mt_rand();
-		$newPath      .= $pathComponent;
-
+		$pathComponent               = 'testItem-' . mt_rand();
+		$newPath                    .= $pathComponent;
 		$_SERVER['HTTP_DESTINATION'] = 'http://example.com' . $this->_getHref($newPath, false);
 		// Perform the request and verify that we failed
 		ob_start();
@@ -1724,8 +1716,7 @@ class WebDavTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('path', $path);
 
-		$newPath = $path . '-renamed';
-
+		$newPath                     = $path . '-renamed';
 		$_SERVER['HTTP_DESTINATION'] = 'http://example.com' . $this->_getHref($newPath, false);
 		// Perform the request and verify that we succeeded
 		ob_start();
@@ -1786,8 +1777,7 @@ class WebDavTest extends GalleryTestCase {
 
 		GalleryUtilities::putRequestVariable('path', $path);
 
-		$newPath = $path . '-renamed';
-
+		$newPath                     = $path . '-renamed';
 		$_SERVER['HTTP_DESTINATION'] = 'http://example.com' . $this->_getHref($newPath, false);
 		// Perform the request and verify that we failed
 		ob_start();
@@ -2224,8 +2214,7 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$filePath = __DIR__ . '/../../../core/test/data/test1.gif';
-
+		$filePath      = __DIR__ . '/../../../core/test/data/test1.gif';
 		$fileSize      = $this->_platform->filesize($filePath);
 		$pathComponent = 'The!Quick$Brown#Fox.gif';
 		$path          = $albumPath . $pathComponent;
@@ -2319,9 +2308,8 @@ class WebDavTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$pathComponent = 'The!Quick$Brown#Fox';
-		$newPath      .= $pathComponent;
-
+		$pathComponent               = 'The!Quick$Brown#Fox';
+		$newPath                    .= $pathComponent;
 		$_SERVER['HTTP_DESTINATION'] = 'http://example.com' . $this->_getHref($newPath, false);
 		// Perform the request and verify that we succeeded
 		ob_start();
@@ -2506,7 +2494,6 @@ class WebDavTestPlatform extends GalleryPlatform {
 		}
 
 		$handle = $this->_streams[$filename];
-
 		unset($this->_streams[$filename]);
 
 		return $handle;
@@ -2536,8 +2523,7 @@ class WebDavTestStream {
 	}
 
 	public function stream_read($count) {
-		$streams = WebDavTestStream::_getStreams();
-
+		$streams          = WebDavTestStream::_getStreams();
 		$buffer           = substr($streams[$this->_filename], $this->_position, $count);
 		$this->_position += strlen($buffer);
 
@@ -2546,8 +2532,7 @@ class WebDavTestStream {
 
 	public function stream_eof() {
 		$streams = WebDavTestStream::_getStreams();
-
-		$eof = $this->_position >= strlen($streams[$this->_filename]);
+		$eof     = $this->_position >= strlen($streams[$this->_filename]);
 
 		// Buggy PHP 5.0.x, see www.php.net/manual/en/function.stream-wrapper-register.php#71057
 		if (version_compare(PHP_VERSION, '5.0', '>=') && version_compare(PHP_VERSION, '5.1', '<')) {

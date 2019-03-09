@@ -104,16 +104,14 @@ class SlideshowAppletView extends GalleryView {
 			}
 
 			$SlideshowApplet['NoProtocolError'] = 0;
-
-			$SlideshowApplet['cookieName']   = $session->getKey();
-			$SlideshowApplet['cookieValue']  = $session->getId();
-			$SlideshowApplet['cookieDomain'] = $cookieDomain;
-			$SlideshowApplet['cookiePath']   = $cookiePath;
-
-			$SlideshowApplet['album']          = $item->getId();
-			$SlideshowApplet['userAgent']      = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-			$SlideshowApplet['galleryVersion'] = 2;
-			$SlideshowApplet['code']           = 'com.gallery.GalleryRemote.GRAppletSlideshow';
+			$SlideshowApplet['cookieName']      = $session->getKey();
+			$SlideshowApplet['cookieValue']     = $session->getId();
+			$SlideshowApplet['cookieDomain']    = $cookieDomain;
+			$SlideshowApplet['cookiePath']      = $cookiePath;
+			$SlideshowApplet['album']           = $item->getId();
+			$SlideshowApplet['userAgent']       = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+			$SlideshowApplet['galleryVersion']  = 2;
+			$SlideshowApplet['code']            = 'com.gallery.GalleryRemote.GRAppletSlideshow';
 
 			list($ret, $locale) = $gallery->getActiveLanguageCode();
 

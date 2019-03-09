@@ -63,8 +63,7 @@ class DownloadThumbView extends DownloadItemView {
 			return $ret;
 		}
 
-		$item = $thumbs[$masterId];
-
+		$item   = $thumbs[$masterId];
 		$itemId = $item->getId();
 
 		/*

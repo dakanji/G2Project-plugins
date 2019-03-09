@@ -104,7 +104,6 @@ class DownloadRegistryFileView extends GalleryView {
 
 		// Convert the text to the Windows character set corresponding to the requested locale
 		$clientWindowsLocale = $this->_getCharsetFromRequest();
-
 		echo GalleryCoreApi::convertFromUtf8($registryFileContents, $clientWindowsLocale);
 
 		return null;

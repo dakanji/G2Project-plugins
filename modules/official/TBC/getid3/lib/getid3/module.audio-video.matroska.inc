@@ -1536,8 +1536,7 @@ class getid3_matroska extends getid3_handler {
 	private function HandleEMBLClusterBlock($element, $block_type, &$info) {
 		// http://www.matroska.org/technical/specs/index.html#block_structure
 		// http://www.matroska.org/technical/specs/index.html#simpleblock_structure
-		$block_data = array();
-
+		$block_data                = array();
 		$block_data['tracknumber'] = $this->readEBMLint();
 		$block_data['timecode']    = getid3_lib::BigEndian2Int($this->readEBMLelementData(2), false, true);
 		$block_data['flags_raw']   = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
@@ -1569,8 +1568,7 @@ class getid3_matroska extends getid3_handler {
 						$block_data['lace_frames_size'][$i] = 0;
 
 						do {
-							$size = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
-
+							$size                                = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
 							$block_data['lace_frames_size'][$i] += $size;
 						} while ($size == 255);
 					}
@@ -1584,7 +1582,6 @@ class getid3_matroska extends getid3_handler {
 
 		if (!isset($info['matroska']['track_data_offsets'][$block_data['tracknumber']])) {
 			$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['offset'] = $this->current_offset;
-
 			$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['length'] = $element['end'] - $this->current_offset;
 
 			//$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['total_length'] = 0;

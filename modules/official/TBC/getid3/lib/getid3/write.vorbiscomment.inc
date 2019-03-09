@@ -61,11 +61,9 @@ class getid3_write_vorbiscomment {
 				// On top of that, if error messages are not always captured properly under Windows
 				// To at least see if there was a problem, compare file modification timestamps before and after writing
 				clearstatcache();
-
 				$timestampbeforewriting = filemtime($this->filename);
-
-				$commandline        = GETID3_HELPERAPPSDIR . 'vorbiscomment.exe -w --raw -c "' . $tempcommentsfilename . '" "' . $this->filename . '" 2>&1';
-				$VorbiscommentError = `$commandline`;
+				$commandline            = GETID3_HELPERAPPSDIR . 'vorbiscomment.exe -w --raw -c "' . $tempcommentsfilename . '" "' . $this->filename . '" 2>&1';
+				$VorbiscommentError     = `$commandline`;
 
 				if (empty($VorbiscommentError)) {
 					clearstatcache();

@@ -123,8 +123,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		// Enable the Option
 		$form['ImageBlockOption']['setRecursive'] = 'off';
 		$form['ImageBlockOption']['setDisabled']  = 'on';
-
-		$result = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -146,8 +145,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		// Disable the Option
 		$form['ImageBlockOption']['setRecursive'] = 'off';
 		$form['ImageBlockOption']['setDisabled']  = 'off';
-
-		$result = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -177,8 +175,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		// Enable the Option recursively
 		$form['ImageBlockOption']['setRecursive'] = 'on';
 		$form['ImageBlockOption']['setDisabled']  = 'on';
-
-		$result = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -200,8 +197,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		// Disable the Option recursively
 		$form['ImageBlockOption']['setRecursive'] = 'on';
 		$form['ImageBlockOption']['setDisabled']  = 'off';
-
-		$result = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());

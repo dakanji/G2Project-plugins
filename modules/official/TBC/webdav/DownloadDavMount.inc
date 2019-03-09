@@ -41,7 +41,6 @@ class DownloadDavMountView extends GalleryView {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
-
 		GalleryUtilities::setResponseHeader(
 			'Content-Type: application/davmount+xml; charset=UTF-8'
 		);
@@ -95,7 +94,6 @@ class DownloadDavMountView extends GalleryView {
 
 		if (!$isAnonymous) {
 			$user = $gallery->getActiveUser();
-
 			echo '  <dm:username>' . $user->getUserName() . "</dm:username>\n";
 		}
 

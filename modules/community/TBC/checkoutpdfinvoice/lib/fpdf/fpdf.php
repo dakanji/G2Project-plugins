@@ -466,8 +466,7 @@ if (!class_exists('FPDF')) {
 
 		public function GetStringWidth($s) {
 			//Get width of a string in the current font
-			$s = (string)$s;
-
+			$s  = (string)$s;
 			$cw =&$this->CurrentFont['cw'];
 			$w  = 0;
 			$l  = strlen($s);
@@ -551,8 +550,7 @@ if (!class_exists('FPDF')) {
 
 			if ($diff) {
 				//Search existing encodings
-				$d = 0;
-
+				$d  = 0;
 				$nb = count($this->diffs);
 
 				for ($i = 1; $i <= $nb; $i++) {
@@ -805,8 +803,7 @@ if (!class_exists('FPDF')) {
 				}
 
 				$txt2 = str_replace(')', '\\)', str_replace('(', '\\(', str_replace('\\', '\\\\', $txt)));
-
-				$s .= sprintf('BT %.2f %.2f Td (%s) Tj ET', ($this->x + $dx) * $k, ($this->h - ($this->y + .5 * $h + .3 * $this->FontSize)) * $k, $txt2);
+				$s   .= sprintf('BT %.2f %.2f Td (%s) Tj ET', ($this->x + $dx) * $k, ($this->h - ($this->y + .5 * $h + .3 * $this->FontSize)) * $k, $txt2);
 
 				if ($this->underline) {
 					$s .= ' ' . $this->_dounderline($this->x + $dx, $this->y + .5 * $h + .3 * $this->FontSize, $txt);
@@ -973,9 +970,8 @@ if (!class_exists('FPDF')) {
 
 		public function Write($h, $txt, $link = '') {
 			//Output text in flowing mode
-			$cw =&$this->CurrentFont['cw'];
-			$w  = $this->w - $this->rMargin - $this->x;
-
+			$cw   =&$this->CurrentFont['cw'];
+			$w    = $this->w - $this->rMargin - $this->x;
 			$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 			$s    = str_replace("\r", '', $txt);
 			$nb   = strlen($s);
@@ -1001,8 +997,7 @@ if (!class_exists('FPDF')) {
 					if ($nl == 1) {
 						$this->x = $this->lMargin;
 						$w       = $this->w - $this->rMargin - $this->x;
-
-						$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+						$wmax    = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 					}
 
 					$nl++;
@@ -1024,8 +1019,7 @@ if (!class_exists('FPDF')) {
 							$this->x  = $this->lMargin;
 							$this->y += $h;
 							$w        = $this->w - $this->rMargin - $this->x;
-
-							$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+							$wmax     = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 							$i++;
 							$nl++;
 
@@ -1050,8 +1044,7 @@ if (!class_exists('FPDF')) {
 					if ($nl == 1) {
 						$this->x = $this->lMargin;
 						$w       = $this->w - $this->rMargin - $this->x;
-
-						$wmax = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
+						$wmax    = ($w - 2 * $this->cMargin) * 1000 / $this->FontSize;
 					}
 
 					$nl++;
@@ -1100,7 +1093,6 @@ if (!class_exists('FPDF')) {
 				}
 
 				set_magic_quotes_runtime($mqr);
-
 				$info['i']           = count($this->images) + 1;
 				$this->images[$file] = $info;
 			} else {
@@ -1332,9 +1324,8 @@ if (!class_exists('FPDF')) {
 						if (is_string($pl[4])) {
 							$annots .= '/A <</S /URI /URI ' . $this->_textstring($pl[4]) . '>>>>';
 						} else {
-							$l = $this->links[$pl[4]];
-							$h = isset($this->OrientationChanges[$l[0]]) ? $wPt : $hPt;
-
+							$l       = $this->links[$pl[4]];
+							$h       = isset($this->OrientationChanges[$l[0]]) ? $wPt : $hPt;
 							$annots .= sprintf('/Dest [%d 0 R /XYZ 0 %.2f null]>>', 1 + 2 * $l[0], $h - $l[1] * $this->k);
 						}
 					}
@@ -1388,8 +1379,7 @@ if (!class_exists('FPDF')) {
 				$this->_newobj();
 				$this->FontFiles[$file]['n'] = $this->n;
 				$font                        = '';
-
-				$f = fopen($this->_getfontpath() . $file, 'rb', 1);
+				$f                           = fopen($this->_getfontpath() . $file, 'rb', 1);
 
 				if (!$f) {
 					$this->Error('Font file not found');
@@ -1518,7 +1508,6 @@ if (!class_exists('FPDF')) {
 
 		public function _putimages() {
 			$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
-
 			reset($this->images);
 
 			while (list($file, $info) = each($this->images)) {

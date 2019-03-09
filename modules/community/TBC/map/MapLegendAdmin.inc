@@ -333,8 +333,7 @@ class MapLegendAdminView extends GalleryView {
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
 
 		if ($template->hasVariable('SiteAdmin')) {
-			$SiteAdmin =& $template->getVariableByReference('SiteAdmin');
-
+			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';

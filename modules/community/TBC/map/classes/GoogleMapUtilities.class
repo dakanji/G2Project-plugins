@@ -299,8 +299,7 @@ class GoogleMapUtilities {
 	public function AllMarkers($imagetype = 'markers') {
 		global $gallery;
 
-		$gurl =& $gallery->getUrlGenerator();
-
+		$gurl           =& $gallery->getUrlGenerator();
 		$basegallerydir = substr(dirname(__FILE__), 0, -19);
 		$base           = $gurl->generateUrl(
 			array(
@@ -700,14 +699,12 @@ class GoogleMapUtilities {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
-		$Sizes = array();
+		$Sizes    = array();
 
 		if ($set != 'none') {
 			$folder = substr(dirname(__FILE__), 0, -7) . 'images/markers/' . $set . '/';
 			$url    = GalleryUtilities::convertPathToUrl($folder);
-
-			$mydir = $platform->opendir($folder);
+			$mydir  = $platform->opendir($folder);
 
 			while (($file = $platform->readdir($mydir)) !== false) {
 				if (($file != 'colorlist') and GoogleMapUtilities::goodFile($folder, $file)) {

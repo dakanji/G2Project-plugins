@@ -557,6 +557,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			'creationdate',
 			10000000
 		);
+
 		$expectedProps[] = WebDavServer::getme()->mkprop(
 			'displayname',
 			empty($itemTitle) ? $item->getPathComponent() : $itemTitle
@@ -565,6 +566,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			'getlastmodified',
 			20000000
 		);
+
 		$expectedProps[] = WebDavServer::getme()->mkprop(
 			'supportedlock',
 			array(
@@ -574,23 +576,28 @@ class WebDavHelperTest extends GalleryTestCase {
 				),
 			)
 		);
+
 		$expectedProps[] = WebDavServer::getme()->mkprop(
 			'lockdiscovery',
 			array()
 		);
+
 		$expectedProps[] = WebDavServer::getme()->mkprop(
 			'getcontentlength',
 			300
 		);
+
 		$expectedProps[] = WebDavServer::getme()->mkprop(
 			'getcontenttype',
 			'application/unknown'
 		);
+
 		$expectedProps[] = WebDavServer::getme()->mkprop(
 			'resourcetype',
 			null
 		);
-		$defaultMembers  = array(
+
+		$defaultMembers = array(
 			'pathComponent',
 			'title',
 			'creationTimestamp',
@@ -722,13 +729,12 @@ class WebDavHelperTest extends GalleryTestCase {
 	public function testGetMountLink() {
 		// The general case
 		$_SERVER['HTTP_USER_AGENT'] = 'Foo Bar';
-
-		$itemId            = $this->_getRootId();
-		$link              = WebDavHelper::getMountLink($itemId);
-		$url               = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
+		$itemId                     = $this->_getRootId();
+		$link                       = WebDavHelper::getMountLink($itemId);
+		$url                        = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
 		. $itemId;
-		$expected['attrs'] = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
-		$expected['href']  = $this->_urlGenerator->generateUrl(
+		$expected['attrs']          = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
+		$expected['href']           = $this->_urlGenerator->generateUrl(
 			array(
 				'view'   => 'webdav.DownloadDavMount',
 				'itemId' => $itemId,
@@ -739,16 +745,15 @@ class WebDavHelperTest extends GalleryTestCase {
 
 	public function testGetMountLinkForInternetExplorer() {
 		$_SERVER['HTTP_USER_AGENT'] = 'MSIE 6';
-
-		$itemId             = $this->_getRootId();
-		$link               = WebDavHelper::getMountLink($itemId);
-		$url                = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
+		$itemId                     = $this->_getRootId();
+		$link                       = WebDavHelper::getMountLink($itemId);
+		$url                        = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
 		. $itemId;
-		$expected['attrs']  = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
-		$scriptUrl          = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&g2_itemId='
+		$expected['attrs']          = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
+		$scriptUrl                  = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&g2_itemId='
 		. $itemId;
-		$expected['script'] = "this.style.behavior = 'url(#default#httpFolder)'; this.navigate('$scriptUrl')";
-		$expected['href']   = $this->_urlGenerator->generateUrl(
+		$expected['script']         = "this.style.behavior = 'url(#default#httpFolder)'; this.navigate('$scriptUrl')";
+		$expected['href']           = $this->_urlGenerator->generateUrl(
 			array(
 				'view'   => 'webdav.DownloadDavMount',
 				'itemId' => $itemId,
@@ -759,13 +764,12 @@ class WebDavHelperTest extends GalleryTestCase {
 
 	public function testGetMountLinkForKonqueror() {
 		$_SERVER['HTTP_USER_AGENT'] = 'Konqueror';
-
-		$itemId            = $this->_getRootId();
-		$link              = WebDavHelper::getMountLink($itemId);
-		$url               = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
+		$itemId                     = $this->_getRootId();
+		$link                       = WebDavHelper::getMountLink($itemId);
+		$url                        = 'http://example.com/gallery2/main.php?g2_controller=webdav.WebDav&amp;g2_itemId='
 		. $itemId;
-		$expected['attrs'] = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
-		$expected['href']  = $this->_urlGenerator->generateUrl(
+		$expected['attrs']          = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
+		$expected['href']           = $this->_urlGenerator->generateUrl(
 			array(
 				'controller' => 'webdav.WebDav',
 				'itemId'     => $itemId,

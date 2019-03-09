@@ -27,10 +27,9 @@ class getid3_lyrics3 extends getid3_handler {
 
 		$this->fseek((0 - 128 - 9 - 6), SEEK_END);          // end - ID3v1 - "LYRICSEND" - [Lyrics3size]
 		$lyrics3_id3v1 = $this->fread(128 + 9 + 6);
-
-		$lyrics3lsz = substr($lyrics3_id3v1, 0, 6); // Lyrics3size
-		$lyrics3end = substr($lyrics3_id3v1, 6, 9); // LYRICSEND or LYRICS200
-		$id3v1tag   = substr($lyrics3_id3v1, 15, 128); // ID3v1
+		$lyrics3lsz    = substr($lyrics3_id3v1, 0, 6); // Lyrics3size
+		$lyrics3end    = substr($lyrics3_id3v1, 6, 9); // LYRICSEND or LYRICS200
+		$id3v1tag      = substr($lyrics3_id3v1, 15, 128); // ID3v1
 		if ($lyrics3end == 'LYRICSEND') {
 			// Lyrics3v1, ID3v1, no APE
 			$lyrics3size    = 5100;
@@ -127,8 +126,7 @@ class getid3_lyrics3 extends getid3_handler {
 			return false;
 		}
 
-		$rawdata = $this->fread($length);
-
+		$rawdata                                = $this->fread($length);
 		$ParsedLyrics3['raw']['lyrics3version'] = $version;
 		$ParsedLyrics3['raw']['lyrics3tagsize'] = $length;
 		$ParsedLyrics3['tag_offset_start']      = $endoffset;
@@ -208,8 +206,7 @@ class getid3_lyrics3 extends getid3_handler {
 								$imagearray                                   = explode('||', $imagestring);
 								$ParsedLyrics3['images'][$key]['filename']    = (isset($imagearray[0]) ? $imagearray[0] : '');
 								$ParsedLyrics3['images'][$key]['description'] = (isset($imagearray[1]) ? $imagearray[1] : '');
-
-								$ParsedLyrics3['images'][$key]['timestamp'] = $this->Lyrics3Timestamp2Seconds(isset($imagearray[2]) ? $imagearray[2] : '');
+								$ParsedLyrics3['images'][$key]['timestamp']   = $this->Lyrics3Timestamp2Seconds(isset($imagearray[2]) ? $imagearray[2] : '');
 							}
 						}
 					}
@@ -269,8 +266,7 @@ class getid3_lyrics3 extends getid3_handler {
 
 			while (preg_match('#^(\\[[0-9]{2}:[0-9]{2}\\])#', $lyricline, $regs)) {
 				$thislinetimestamps[] = $this->Lyrics3Timestamp2Seconds($regs[0]);
-
-				$lyricline = str_replace($regs[0], '', $lyricline);
+				$lyricline            = str_replace($regs[0], '', $lyricline);
 			}
 
 			$notimestamplyricsarray[$key] = $lyricline;

@@ -85,8 +85,7 @@ class GoogleEarthView extends GalleryView {
 	public function renderImmediate($status, $error) {
 		global $gallery;
 
-		$phpVm = $gallery->getPhpVm();
-
+		$phpVm  = $gallery->getPhpVm();
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
@@ -394,8 +393,7 @@ class GoogleEarthView extends GalleryView {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnstring = '';
-
-		$theid = $item->getId();
+		$theid        = $item->getId();
 
 		// Get the thumbnail item ID for the item
 		list($ret, $thumbs) = GalleryCoreApi::fetchThumbnailsByItemIds(array($theid));

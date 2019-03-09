@@ -76,8 +76,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 			$missingkeywords = $dataitem['typo'];
 
 			//print '<br>' . $item->getTitle();
-			$itemid = $item->getId();
-
+			$itemid                     = $item->getId();
 			$itemchanged                = false;
 			$keywordsadded_to_this_item = array();
 

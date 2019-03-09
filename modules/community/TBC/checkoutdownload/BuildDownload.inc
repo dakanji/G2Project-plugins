@@ -295,7 +295,6 @@ class BuildDownloadController extends GalleryController {
 		);
 		$templateAdapter->updateProgressBar($heading, $message, 1);
 		$finalFile = $gallery->getConfig('data.gallery.tmp') . $transactionId . '.zip';
-
 		@$platform->unlink($finalFile);
 		@$platform->rename($zipFile, $finalFile);
 		@$platform->unlink($zipFile);

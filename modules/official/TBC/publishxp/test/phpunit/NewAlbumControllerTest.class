@@ -114,8 +114,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 
 		$results       = $this->handleRequest();
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-
-		$albumId = $entityCounter->getRecentEntityId('GalleryAlbumItem');
+		$albumId       = $entityCounter->getRecentEntityId('GalleryAlbumItem');
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -157,8 +156,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 
 		$results       = $this->handleRequest();
 		$entityCounter =& GalleryTestCase::getEntityCounter();
-
-		$albumId = $entityCounter->getRecentEntityId('GalleryAlbumItem');
+		$albumId       = $entityCounter->getRecentEntityId('GalleryAlbumItem');
 		$this->assertEquals(
 			array(
 				'redirect' => array(

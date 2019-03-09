@@ -54,8 +54,7 @@ class TagsCallbacks {
 				}
 
 				$tagCloud = TagsHelper::createTagCloudFromList($tags);
-
-				$block =& $smarty->_tpl_vars['block'];
+				$block    =& $smarty->_tpl_vars['block'];
 
 				if (isset($params['totalTagCount']) and $params['totalTagCount']) {
 					$totalTagCount = 0;
