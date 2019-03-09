@@ -208,7 +208,6 @@ class EditFeedController extends GalleryController {
 		$results[$method]['subView'] = 'rss.EditFeed';
 		$results[$method]['itemId']  = $itemId;
 		$results[$method]['mode']    = $mode;
-
 		if (empty($error)) {
 			$results[$method]['form'] = $form;
 		}
@@ -258,7 +257,6 @@ class EditFeedView extends GalleryView {
 		}
 
 		$EditFeed['mode'] = GalleryUtilities::getRequestVariables('mode');
-
 		if (empty($EditFeed['mode'])) {
 			// Entering this module, pick the first page
 			if (empty($feeds)) {
@@ -276,7 +274,6 @@ class EditFeedView extends GalleryView {
 			if (empty($form['error'])) {
 				// no error: load default parameters
 				$form['formName'] = 'EditFeed';
-
 				if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 					$EditFeed['type']     = 'album';
 					$EditFeed['feedType'] = 'photos';
@@ -332,7 +329,6 @@ class EditFeedView extends GalleryView {
 				}
 
 				$EditFeed = array_merge($EditFeed, $feed);
-
 				if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 					$EditFeed['type'] = 'album';
 				} elseif (GalleryUtilities::isA($item, 'GalleryDataItem')) {

@@ -72,7 +72,6 @@ function get_jpeg_header_data($filename) {
 	if (!$filehnd) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
-
 		return false;
 	}
 
@@ -83,7 +82,6 @@ function get_jpeg_header_data($filename) {
 	if ($data != "\xFF\xD8") {
 		// No SOI (FF D8) at start of file - This probably isn't a JPEG file - close file and return;
 		fclose($filehnd);
-
 		return false;
 	}
 
@@ -94,7 +92,6 @@ function get_jpeg_header_data($filename) {
 	if ($data[0] != "\xFF") {
 		// NO FF found - close file and return - JPEG is probably corrupted
 		fclose($filehnd);
-
 		return false;
 	}
 
@@ -143,7 +140,6 @@ function get_jpeg_header_data($filename) {
 			if ($data[0] != "\xFF") {
 				// NO FF found - close file and return - JPEG is probably corrupted
 				fclose($filehnd);
-
 				return false;
 			}
 		}
@@ -208,7 +204,6 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 		if (strlen($segment['SegData']) > 0xfffd) {
 			// Could't open the file - exit
 			echo "<p>A Header is too large to fit in JPEG segment</p>\n";
-
 			return false;
 		}
 	}
@@ -221,7 +216,6 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 	if (!$newfilehnd) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $new_filename</p>\n";
-
 		return false;
 	}
 
@@ -251,7 +245,6 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 
 	// Alow the user to abort from now on
 	ignore_user_abort(false);
-
 	return true;
 }
 
@@ -274,7 +267,6 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 function get_jpeg_Comment($jpeg_header_data) {
 	//Cycle through the header segments until COM is found or we run out of segments
 	$i = 0;
-
 	while (($i < count($jpeg_header_data)) && ($jpeg_header_data[$i]['SegName'] != 'COM')) {
 		$i++;
 	}
@@ -314,14 +306,12 @@ function put_jpeg_Comment($jpeg_header_data, $new_Comment) {
 		if (strcmp($jpeg_header_data[$i]['SegName'], 'COM') == 0) {
 			// Found a preexisting Comment block - Replace it with the new one and return.
 			$jpeg_header_data[$i]['SegData'] = $new_Comment;
-
 			return $jpeg_header_data;
 		}
 	}
 
 	// No preexisting Comment block found, find where to put it by searching for the highest app segment
 	$i = 0;
-
 	while (($i < count($jpeg_header_data)) && ($jpeg_header_data[$i]['SegType'] >= 0xE0)) {
 		$i++;
 	}
@@ -398,7 +388,6 @@ function get_jpeg_intrinsic_values($jpeg_header_data) {
 
 	//Cycle through the header segments until Start Of Frame (SOF) is found or we run out of segments
 	$i = 0;
-
 	while (($i < count($jpeg_header_data)) && (substr($jpeg_header_data[$i]['SegName'], 0, 3) != 'SOF')) {
 		$i++;
 	}
@@ -513,7 +502,6 @@ function get_jpeg_image_data($filename) {
 	if ($data != "\xFF\xD8") {
 		// No SOI (FF D8) at start of file - close file and return;
 		fclose($filehnd);
-
 		return false;
 	}
 
@@ -524,7 +512,6 @@ function get_jpeg_image_data($filename) {
 	if ($data[0] != "\xFF") {
 		// NO FF found - close file and return
 		fclose($filehnd);
-
 		return;
 	}
 
@@ -559,7 +546,6 @@ function get_jpeg_image_data($filename) {
 			// how much to read, as it won't work for files being read by http or ftp
 			// So instead read 1Mb at a time till EOF
 			$compressed_data = '';
-
 			do {
 				$compressed_data .= network_safe_fread($filehnd, 1048576);
 			} while (!feof($filehnd));
@@ -575,7 +561,6 @@ function get_jpeg_image_data($filename) {
 			if ($data[0] != "\xFF") {
 				// Problem - NO FF foundclose file and return";
 				fclose($filehnd);
-
 				return;
 			}
 		}

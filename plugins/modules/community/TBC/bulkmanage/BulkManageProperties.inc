@@ -184,6 +184,7 @@ class BulkManageProperties extends BulkManagePlugin {
 		if (isset($params['shifttimestamp'])) {
 			if (!empty($params['shifttimestamp']['shift'])) {
 				$oldtimestamp = $item->getOriginationTimestamp();
+
 				$item->setOriginationTimestamp($oldtimestamp + (int)$params['shifttimestamp']['shift']);
 			}
 		}

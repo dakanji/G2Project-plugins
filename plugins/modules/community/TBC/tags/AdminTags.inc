@@ -92,7 +92,6 @@ class AdminTagsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		if (empty($error)) {
 			$route = 'redirect';
 		} else {
@@ -100,7 +99,6 @@ class AdminTagsController extends GalleryController {
 		}
 
 		$results[$route] = $target;
-
 		return array(null, $results);
 	}
 }

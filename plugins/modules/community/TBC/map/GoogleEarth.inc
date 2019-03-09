@@ -117,6 +117,7 @@ class GoogleEarthView extends GalleryView {
 
 			$phpVm->header('Content-Type: application/vnd.google-earth.kml+xml');
 			$phpVm->header('Content-Description: View Gallery items in Google Earth');
+
 			$phpVm->header("Content-Disposition: inline; filename=GalleryGE-{$itemId}.kml");
 
 			$phpVm->header('Content-Length: ' . strlen($outstring));
@@ -246,7 +247,6 @@ class GoogleEarthView extends GalleryView {
 			. GoogleEarthView::_createThumbnailLink($item)
 			. GalleryUtilities::markup($item->getDescription())
 			. ']]></description><Snippet>' . $summstring . "</Snippet>\n";
-
 		return $returnstring;
 	}
 
@@ -266,7 +266,6 @@ class GoogleEarthView extends GalleryView {
 		// Select items that have GPS coordinates filled out
 		if (!empty($fielddata['GPS'])) {
 			$posxy = explode(',', $fielddata['GPS']);
-
 			if (count($posxy) >= 2) { // changed to >= 2 to accommodate possible elevation field
 				$lat        = (float)$posxy[0];
 				$lon        = (float)$posxy[1];
@@ -310,10 +309,8 @@ class GoogleEarthView extends GalleryView {
 		$returnstring = '';
 		$goodcoords   = false;
 		$posxy        = array();
-
 		if (!empty($GPSstring)) {
 			$posxy = explode(',', $GPSstring);
-
 			if (count($posxy) >= 2) { // changed to >= 2 to accommodate possible elevation field
 				$lat        = (float)$posxy[0];
 				$lon        = (float)$posxy[1];
@@ -409,6 +406,7 @@ class GoogleEarthView extends GalleryView {
 				'htmlEntities' => false,
 			)
 		);
+
 		$hsitemLink = $urlGenerator->generateUrl(
 			array(
 				'view'   => 'core.ShowItem',

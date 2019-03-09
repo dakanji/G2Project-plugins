@@ -21,7 +21,6 @@ class getid3_lyrics3 extends getid3_handler {
 		// http://www.volweb.cz/str/tags.htm
 		if (!getid3_lib::intValueSupported($info['filesize'])) {
 			$info['warning'][] = 'Unable to check for Lyrics3 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
-
 			return false;
 		}
 
@@ -55,9 +54,9 @@ class getid3_lyrics3 extends getid3_handler {
 		} else {
 			if (isset($info['ape']['tag_offset_start']) && ($info['ape']['tag_offset_start'] > 15)) {
 				$this->fseek($info['ape']['tag_offset_start'] - 15);
+
 				$lyrics3lsz = $this->fread(6);
 				$lyrics3end = $this->fread(9);
-
 				if ($lyrics3end == 'LYRICSEND') {
 					// Lyrics3v1, APE, maybe ID3v1
 					$lyrics3size       = 5100;
@@ -87,11 +86,11 @@ class getid3_lyrics3 extends getid3_handler {
 					$getid3_temp = new getID3();
 
 					$getid3_temp->openfile($this->getid3->filename);
-					$getid3_apetag = new getid3_apetag($getid3_temp);
 
+					$getid3_apetag                    = new getid3_apetag($getid3_temp);
 					$getid3_apetag->overrideendoffset = $info['lyrics3']['tag_offset_start'];
-					$getid3_apetag->Analyze();
 
+					$getid3_apetag->Analyze();
 					if (!empty($getid3_temp->info['ape'])) {
 						$info['ape'] = $getid3_temp->info['ape'];
 					}
@@ -113,10 +112,8 @@ class getid3_lyrics3 extends getid3_handler {
 	public function getLyrics3Data($endoffset, $version, $length) {
 		// http://www.volweb.cz/str/tags.htm
 		$info =& $this->getid3->info;
-
 		if (!getid3_lib::intValueSupported($endoffset)) {
 			$info['warning'][] = 'Unable to check for Lyrics3 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
-
 			return false;
 		}
 
@@ -131,7 +128,6 @@ class getid3_lyrics3 extends getid3_handler {
 		$ParsedLyrics3['raw']['lyrics3tagsize'] = $length;
 		$ParsedLyrics3['tag_offset_start']      = $endoffset;
 		$ParsedLyrics3['tag_offset_end']        = $endoffset + $length - 1;
-
 		if (substr($rawdata, 0, 11) != 'LYRICSBEGIN') {
 			if (strpos($rawdata, 'LYRICSBEGIN') !== false) {
 				$info['warning'][]                      = '"LYRICSBEGIN" expected at ' . $endoffset . ' but actually found at ' . ($endoffset + strpos($rawdata, 'LYRICSBEGIN')) . ' - this is invalid for Lyrics3 v' . $version;
@@ -142,7 +138,6 @@ class getid3_lyrics3 extends getid3_handler {
 				$ParsedLyrics3['raw']['lyrics3tagsize'] = $length;
 			} else {
 				$info['error'][] = '"LYRICSBEGIN" expected at ' . $endoffset . ' but found "' . substr($rawdata, 0, 11) . '" instead';
-
 				return false;
 			}
 		}
@@ -155,17 +150,14 @@ class getid3_lyrics3 extends getid3_handler {
 					$this->Lyrics3LyricsTimestampParse($ParsedLyrics3);
 				} else {
 					$info['error'][] = '"LYRICSEND" expected at ' . ($this->ftell() - 11 + $length - 9) . ' but found "' . substr($rawdata, strlen($rawdata) - 9, 9) . '" instead';
-
 					return false;
 				}
 
 				break;
-
 			case 2:
 				if (substr($rawdata, strlen($rawdata) - 9, 9) == 'LYRICS200') {
 					$ParsedLyrics3['raw']['unparsed'] = substr($rawdata, 11, strlen($rawdata) - 11 - 9 - 6); // LYRICSBEGIN + LYRICS200 + LSZ
 					$rawdata                          = $ParsedLyrics3['raw']['unparsed'];
-
 					while (strlen($rawdata) > 0) {
 						$fieldname                        = substr($rawdata, 0, 3);
 						$fieldsize                        = (int)substr($rawdata, 3, 5);
@@ -176,7 +168,6 @@ class getid3_lyrics3 extends getid3_handler {
 					if (isset($ParsedLyrics3['raw']['IND'])) {
 						$i         = 0;
 						$flagnames = array('lyrics', 'timestamps', 'inhibitrandom');
-
 						foreach ($flagnames as $flagname) {
 							if (strlen($ParsedLyrics3['raw']['IND']) > $i++) {
 								$ParsedLyrics3['flags'][$flagname] = $this->IntString2Bool(substr($ParsedLyrics3['raw']['IND'], $i, 1 - 1));
@@ -200,7 +191,6 @@ class getid3_lyrics3 extends getid3_handler {
 
 					if (isset($ParsedLyrics3['raw']['IMG'])) {
 						$imagestrings = explode("\r\n", $ParsedLyrics3['raw']['IMG']);
-
 						foreach ($imagestrings as $key => $imagestring) {
 							if (strpos($imagestring, '||') !== false) {
 								$imagearray                                   = explode('||', $imagestring);
@@ -216,36 +206,29 @@ class getid3_lyrics3 extends getid3_handler {
 					}
 				} else {
 					$info['error'][] = '"LYRICS200" expected at ' . ($this->ftell() - 11 + $length - 9) . ' but found "' . substr($rawdata, strlen($rawdata) - 9, 9) . '" instead';
-
 					return false;
 				}
 
 				break;
-
 			default:
 				$info['error'][] = 'Cannot process Lyrics3 version ' . $version . ' (only v1 and v2)';
-
 				return false;
-
 				break;
 		}
 
 		if (isset($info['id3v1']['tag_offset_start']) && ($info['id3v1']['tag_offset_start'] <= $ParsedLyrics3['tag_offset_end'])) {
 			$info['warning'][] = 'ID3v1 tag information ignored since it appears to be a false synch in Lyrics3 tag data';
 			unset($info['id3v1']);
-
 			foreach ($info['warning'] as $key => $value) {
 				if ($value == 'Some ID3v1 fields do not use NULL characters for padding') {
 					unset($info['warning'][$key]);
 					sort($info['warning']);
-
 					break;
 				}
 			}
 		}
 
 		$info['lyrics3'] = $ParsedLyrics3;
-
 		return true;
 	}
 
@@ -259,21 +242,17 @@ class getid3_lyrics3 extends getid3_handler {
 
 	public function Lyrics3LyricsTimestampParse(&$Lyrics3data) {
 		$lyricsarray = explode("\r\n", $Lyrics3data['raw']['LYR']);
-
 		foreach ($lyricsarray as $key => $lyricline) {
 			$regs = array();
 			unset($thislinetimestamps);
-
 			while (preg_match('#^(\\[[0-9]{2}:[0-9]{2}\\])#', $lyricline, $regs)) {
 				$thislinetimestamps[] = $this->Lyrics3Timestamp2Seconds($regs[0]);
 				$lyricline            = str_replace($regs[0], '', $lyricline);
 			}
 
 			$notimestamplyricsarray[$key] = $lyricline;
-
 			if (isset($thislinetimestamps) && is_array($thislinetimestamps)) {
 				sort($thislinetimestamps);
-
 				foreach ($thislinetimestamps as $timestampkey => $timestamp) {
 					if (isset($Lyrics3data['synchedlyrics'][$timestamp])) {
 						// timestamps only have a 1-second resolution, it's possible that multiple lines
@@ -287,7 +266,6 @@ class getid3_lyrics3 extends getid3_handler {
 		}
 
 		$Lyrics3data['unsynchedlyrics'] = implode("\r\n", $notimestamplyricsarray);
-
 		if (isset($Lyrics3data['synchedlyrics']) && is_array($Lyrics3data['synchedlyrics'])) {
 			ksort($Lyrics3data['synchedlyrics']);
 		}

@@ -43,9 +43,8 @@ class TryLogoutView extends GalleryView {
 
 		// Redirect using random username and password
 		$TryLogout = array();
-
 		foreach (array('scriptUrl', 'hrefUrl') as $key) {
-			$url             = $urlGenerator->generateUrl(
+			$url = $urlGenerator->generateUrl(
 				array(
 					'view' => 'httpauth.FinishLogout',
 				),
@@ -54,6 +53,7 @@ class TryLogoutView extends GalleryView {
 					'htmlEntities' => $key == 'hrefUrl',
 				)
 			);
+
 			$TryLogout[$key] = HttpAuthHelper::addHttpAuthToUrl($url, '__LOGOUT__' . mt_rand(), mt_rand());
 		}
 

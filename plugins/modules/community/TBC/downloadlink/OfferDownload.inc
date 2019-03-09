@@ -44,11 +44,12 @@ class OfferDownloadView extends DownloadItemView {
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
+
 		$phpVm->header('Content-Disposition: attachment; filename="' . $data['pseudoFileName'] . '"');
 		$stats = $platform->stat($data['derivativePath']);
+
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
-
 		/**
 		 * If the file is publicly visible we could set this cache control to public (as we
 		 * do for fast download) but that would require us to do some extra calculations here that
@@ -76,7 +77,6 @@ class OfferDownloadView extends DownloadItemView {
 			if ($fd = $platform->fopen($data['derivativePath'], 'rb')) {
 				while (true) {
 					$bits = $platform->fread($fd, 65535);
-
 					if (strlen($bits) == 0) {
 						break;
 					}
@@ -104,23 +104,18 @@ class OfferDownloadView extends DownloadItemView {
 
 		$session             =& $gallery->getSession();
 		$itemIdForPermission = $item->getId();
-
 		if (!empty($derivativeType)) {
 			$itemIdForPermission = $item->getParentId();
 		}
 
 		// Make sure we have permission
 		$permission = 'downloadlink.original';
-
 		switch ($derivativeType) {
 			case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
 				$permission = 'downloadlink.thumbnail';
-
 				break;
-
 			case DERIVATIVE_TYPE_IMAGE_RESIZE:
 				$permission = 'downloadlink.resizes';
-
 				break;
 
 			// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource

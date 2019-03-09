@@ -67,10 +67,8 @@ class PanoramaJsHelper {
 		}
 
 		$data = array();
-
 		foreach ($items as $item) {
 			$id = $item->getId();
-
 			if (!in_array($id, $ids)) {
 				continue;
 			}
@@ -91,10 +89,8 @@ class PanoramaJsHelper {
 			} elseif (isset($permissions['core.viewResizes'], $resizedImages[$id])
 			) {
 				$max = -1;
-
 				foreach ($resizedImages[$id] as $resize) {
 					$size = $resize->getWidth() + $resize->getHeight();
-
 					if ($size > $max) {
 						$data[$id] = $resize;
 					}

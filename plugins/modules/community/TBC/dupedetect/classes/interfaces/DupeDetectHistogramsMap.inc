@@ -84,7 +84,6 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		$info['members']['blue64_127']   = STORAGE_TYPE_INTEGER;
 		$info['members']['blue128_191']  = STORAGE_TYPE_INTEGER;
 		$info['members']['blue192_255']  = STORAGE_TYPE_INTEGER;
-
 		return $info;
 	}
 
@@ -124,7 +123,8 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->addMapEntry('DupeDetectHistogramsMap', $data);
+
+		$ret = $storage->addMapEntry('DupeDetectHistogramsMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -148,7 +148,8 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->removeMapEntry('DupeDetectHistogramsMap', $data);
+
+		$ret = $storage->removeMapEntry('DupeDetectHistogramsMap', $data);
 
 		if ($ret->isError()) {
 			return $ret;
@@ -167,7 +168,8 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->removeAllMapEntries('DupeDetectHistogramsMap');
+
+		$ret = $storage->removeAllMapEntries('DupeDetectHistogramsMap');
 
 		if ($ret->isError()) {
 			return $ret;
@@ -192,7 +194,8 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		}
 
 		$storage =& $gallery->getStorage();
-		$ret     = $storage->updateMapEntry('DupeDetectHistogramsMap', $match, $change);
+
+		$ret = $storage->updateMapEntry('DupeDetectHistogramsMap', $match, $change);
 
 		if ($ret->isError()) {
 			return $ret;

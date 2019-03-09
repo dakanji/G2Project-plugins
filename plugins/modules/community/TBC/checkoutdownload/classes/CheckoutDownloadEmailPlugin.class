@@ -36,7 +36,6 @@ class CheckoutDownloadEmailPlugin extends CheckoutEmailInterface_1_0 {
 		switch ($templateName) {
 			case 'paid':
 				return array(null, 'modules/checkoutdownload/templates/email/download.tpl', 'modules_checkoutdownload', null);
-
 			break;
 		}
 

@@ -46,16 +46,12 @@ class DownloadView extends DownloadItemView {
 		if (!$session->get('core.isPrintService')) {
 			// Make sure we have permission
 			$permission = 'core.viewSource';
-
 			switch ($data['derivativeType']) {
 				case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
 					$permission = 'core.view';
-
 					break;
-
 				case DERIVATIVE_TYPE_IMAGE_RESIZE:
 					$permission = 'core.viewResizes';
-
 					break;
 
 				// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource

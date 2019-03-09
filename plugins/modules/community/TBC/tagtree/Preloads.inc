@@ -34,7 +34,6 @@ class TagTreePreloads {
 		}
 
 		$loaded[$preload] = 1;
-
 		switch ($preload) {
 			case 'TagTree':
 				$template->style('modules/tagtree/lib/xloadtree/xtree.css');

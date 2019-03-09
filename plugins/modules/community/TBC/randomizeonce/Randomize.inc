@@ -69,7 +69,6 @@ class RandomizeController extends GalleryController {
 		$results['redirect']  = $redirect;
 		$results['status']    = $status;
 		$results['error']     = $error;
-
 		return array(null, $results);
 	}
 }

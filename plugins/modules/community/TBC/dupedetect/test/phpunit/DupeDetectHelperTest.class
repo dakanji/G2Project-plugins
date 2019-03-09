@@ -60,7 +60,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -69,7 +68,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -87,7 +85,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -106,7 +103,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -116,6 +112,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		$this->_markForCleanup($this->_item);
 		$this->_markForCleanup($this->_item2);
 		$this->_markForCleanup($this->_album);
+
 		$ret = GalleryCoreApi::releaseLocks($this->_lockIds);
 
 		if ($ret->isError()) {
@@ -214,7 +211,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -235,7 +231,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -250,7 +245,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			0
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -286,7 +280,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			0
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -299,7 +292,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem2->getId(),
 			1
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -314,7 +306,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			1
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -371,7 +362,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -392,7 +382,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -409,6 +398,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($count, 1);
+
 		$dupeList = array(array($dupItem1->getId(), 0));
 
 		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), $dupeList);
@@ -434,12 +424,12 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			1
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
 
 		$this->assertEquals($exist, false);
+
 		$exist = true;
 
 		list($ret, $exist) = DupeDetectHelper::getDupePairs(
@@ -447,7 +437,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$dupItem1->getId(),
 			0
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -577,6 +566,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($existingDupes + 1, count($dupes));
+
 		$existingDupes = count($dupes);
 
 		/* now add another dup image, that is exact dupe of $this->_item. two more dupe
@@ -597,12 +587,12 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
 
 		$this->_markForCleanup($dupItem2);
+
 		$ret = DupeDetectHelper::createDupeSignatures($dupItem2);
 
 		if ($ret->isError()) {
@@ -643,6 +633,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 	public function testMarkAsIgnoredDuplicate() {
 		// test that fails when asked to mark a pair that doesn't exist
 		$ret = DupeDetectHelper::MarkAsIgnoredDuplicate($this->_item, $this->_item2);
+
 		$this->assert($ret->isError(), '');
 
 		// add 2 dupe pair records
@@ -664,7 +655,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			$this->_item2->getId()
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -673,7 +663,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			$this->_item2->getId()
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -694,7 +683,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_item->getId(),
 			$this->_item2->getId()
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -711,7 +699,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -722,7 +709,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -741,7 +727,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			$this->_album2->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -757,6 +742,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		// check that $dupItem has been deleted
 		$ret = $this->_verifyMissing($dupId);
+
 		$this->assert(!$ret->isError());
 
 		// check that new item is linked to _item
@@ -770,7 +756,6 @@ class DupeDetectHelperTest extends GalleryTestCase {
 			in_array($newItem->getId(), $linkedItems),
 			"newly created item not found in original item's linked items list"
 		);
-
 		// check that new item was created in _item's album
 		$this->assertEquals($newItem->getParentId(), $this->_album2->getId());
 

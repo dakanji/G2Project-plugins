@@ -31,7 +31,9 @@ class AjaxianTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('ajaxian');
+
 		$this->setName($gallery->i18n('Ajaxian'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'DHTML-enabled Slideshow theme'
@@ -41,6 +43,7 @@ class AjaxianTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'rows'            => 3,
 				'columns'         => 8,
@@ -121,7 +124,6 @@ class AjaxianTheme extends GalleryTheme {
 		$theme['imageWidths']  = implode(',', $imageWidths);
 		$theme['imageHeights'] = implode(',', $imageHeights);
 		$theme['imageCount']   = count($imageWidths);
-
 		return array(null, 'theme.tpl');
 	}
 
@@ -244,7 +246,6 @@ class AjaxianTheme extends GalleryTheme {
 	 */
 	public function _buildItemList($childIds, &$children) {
 		$imageWidths = $imageHeights = $childItems = array();
-
 		if (!empty($childIds)) {
 			$ret = GalleryCoreApi::studyPermissions($childIds);
 
@@ -281,11 +282,9 @@ class AjaxianTheme extends GalleryTheme {
 		}
 
 		$i = -1;
-
 		foreach ($childItems as $child) {
 			$i++;
 			$childId = $child->getId();
-
 			if (!GalleryUtilities::isA($child, 'GalleryDataItem')) {
 				continue;
 			}
@@ -296,7 +295,6 @@ class AjaxianTheme extends GalleryTheme {
 						$ret,
 						$thumbnails[$childId]
 					) = GalleryCoreApi::rebuildDerivativeCache($thumbnails[$childId]->getId());
-
 					if ($ret) {
 						return array($ret, null, null);
 					}
@@ -312,7 +310,6 @@ class AjaxianTheme extends GalleryTheme {
 			}
 
 			$images = array();
-
 			if (isset($permissions['core.viewResizes'], $resizedImages[$childId])) {
 				foreach ($resizedImages[$childId] as $resize) {
 					$images[] = $resize;
@@ -349,7 +346,6 @@ class AjaxianTheme extends GalleryTheme {
 			}
 
 			$children[$i]['imageIndex'] = count($imageWidths);
-
 			if (GalleryUtilities::isExactlyA($child, 'GalleryPhotoItem')
 				&& !empty($image)
 				&& $image['width'] > 0

@@ -57,6 +57,7 @@ class SentView extends GalleryView {
 		$template->setVariable('emailsent', $emailsent);
 		$template->title(
 			$gallery->i18n('Contact') . '::' .
+
 						 $temp
 		);
 

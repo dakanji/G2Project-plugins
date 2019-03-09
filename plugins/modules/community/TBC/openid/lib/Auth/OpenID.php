@@ -147,7 +147,6 @@ class Auth_OpenID {
 	 */
 	public function getQuery($query_str = null) {
 		$data = array();
-
 		if ($query_str !== null) {
 			$data = Auth_OpenID::params_from_string($query_str);
 		} elseif (!array_key_exists('REQUEST_METHOD', $_SERVER)) {
@@ -162,10 +161,8 @@ class Auth_OpenID {
 			// by defaulting to GET and overwriting with POST if POST
 			// data is available.
 			$data = Auth_OpenID::params_from_string($_SERVER['QUERY_STRING']);
-
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$str = file_get_contents('php://input');
-
 				if ($str === false) {
 					$post = array();
 				} else {
@@ -182,10 +179,8 @@ class Auth_OpenID {
 	public function params_from_string($str) {
 		$chunks = explode('&', $str);
 		$data   = array();
-
 		foreach ($chunks as $chunk) {
 			$parts = explode('=', $chunk, 2);
-
 			if (count($parts) != 2) {
 				continue;
 			}
@@ -228,7 +223,6 @@ class Auth_OpenID {
 	 */
 	public function addPrefix($values, $prefix) {
 		$new_values = array();
-
 		foreach ($values as $s) {
 			$new_values[] = $prefix . $s;
 		}
@@ -272,10 +266,8 @@ class Auth_OpenID {
 
 		$parts     = explode('&', $query);
 		$new_parts = array();
-
 		for ($i = 0; $i < count($parts); $i++) {
 			$pair = explode('=', $parts[$i]);
-
 			if (count($pair) != 2) {
 				continue;
 			}
@@ -301,7 +293,6 @@ class Auth_OpenID {
 	 */
 	public function httpBuildQuery($data) {
 		$pairs = array();
-
 		foreach ($data as $key => $value) {
 			if (is_array($value)) {
 				$pairs[] = urlencode($value[0]) . '=' . urlencode($value[1]);
@@ -343,7 +334,6 @@ class Auth_OpenID {
 			$keys = array_keys($args);
 			sort($keys);
 			$new_args = array();
-
 			foreach ($keys as $key) {
 				$new_args[] = array($key, $args[$key]);
 			}
@@ -352,7 +342,6 @@ class Auth_OpenID {
 		}
 
 		$sep = '?';
-
 		if (strpos($url, '?') !== false) {
 			$sep = '&';
 		}
@@ -396,13 +385,11 @@ class Auth_OpenID {
 		}
 
 		$result = $scheme . '://' . $host;
-
 		if ($port) {
 			$result .= ':' . $port;
 		}
 
 		$result .= $path;
-
 		if ($query) {
 			$result .= '?' . $query;
 		}
@@ -426,7 +413,6 @@ class Auth_OpenID {
 	 */
 	public function normalizeUrl($url) {
 		@$parsed = parse_url($url);
-
 		if (!$parsed) {
 			return null;
 		}
@@ -434,7 +420,6 @@ class Auth_OpenID {
 		if (isset($parsed['scheme'], $parsed['host'])
 		) {
 			$scheme = strtolower($parsed['scheme']);
-
 			if (!in_array($scheme, array('http', 'https'))) {
 				return null;
 			}
@@ -443,7 +428,6 @@ class Auth_OpenID {
 		}
 
 		$normalized = Auth_OpenID_urinorm($url);
-
 		if ($normalized === null) {
 			return null;
 		}
@@ -460,7 +444,6 @@ class Auth_OpenID {
 	 */
 	public function intval($value) {
 		$re = '/^\\d+$/';
-
 		if (!preg_match($re, $value)) {
 			return false;
 		}
@@ -485,13 +468,11 @@ class Auth_OpenID {
 	 */
 	public function toBytes($str) {
 		$hex = bin2hex($str);
-
 		if (!$hex) {
 			return array();
 		}
 
 		$b = array();
-
 		for ($i = 0; $i < strlen($hex); $i += 2) {
 			$b[] = chr(base_convert(substr($hex, $i, 2), 16, 10));
 		}
@@ -501,7 +482,6 @@ class Auth_OpenID {
 
 	public function urldefrag($url) {
 		$parts = explode('#', $url, 2);
-
 		if (count($parts) == 1) {
 			return array($parts[0], '');
 		}
@@ -511,7 +491,6 @@ class Auth_OpenID {
 
 	public function filter($callback, &$sequence) {
 		$result = array();
-
 		foreach ($sequence as $item) {
 			if (call_user_func_array($callback, array($item))) {
 				$result[] = $item;

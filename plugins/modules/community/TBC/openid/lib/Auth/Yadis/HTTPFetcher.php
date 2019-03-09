@@ -62,7 +62,6 @@ class Auth_Yadis_HTTPFetcher {
 				'HTTPS URL unsupported fetching %s',
 				$url
 			);
-
 			return false;
 		}
 
@@ -71,7 +70,6 @@ class Auth_Yadis_HTTPFetcher {
 				"URL fetching not allowed for '%s'",
 				$url
 			);
-
 			return false;
 		}
 
@@ -124,7 +122,6 @@ class Auth_Yadis_HTTPFetcher {
 		foreach ($headers as $line) {
 			if (strpos(strtolower($line), 'location: ') === 0) {
 				$parts = explode(' ', $line, 2);
-
 				return $parts[1];
 			}
 		}

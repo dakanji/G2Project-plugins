@@ -64,6 +64,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_group);
+
 		$ret = GalleryCoreApi::addGroupPermission(
 			$this->_album->getId(),
 			$this->_group->getId(),
@@ -81,6 +82,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
+
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $this->_group->getId());
 
 		if ($ret) {
@@ -119,6 +121,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 
 		$gallery->setActiveUser($this->_user);
 		$session->remove('permissionCache');
+
 		$ret = GalleryCoreApi::assertHasItemPermission($this->_getRootId(), 'core.addAlbumItem');
 
 		if (!$ret) {
@@ -176,6 +179,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'size'     => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
+
 		GalleryUtilities::putRequestVariable('DirId', 'badId', false);
 
 		$results = $this->handleRequest();
@@ -200,7 +204,9 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'size'     => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
+
 		GalleryUtilities::putRequestVariable('DirId', $this->_subAlbum->getId(), false);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -223,6 +229,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			'size'     => 1966,
 			'tmp_name' => GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg'),
 		);
+
 		GalleryUtilities::putRequestVariable('Desc', 'this is the description', false);
 
 		$results = $this->handleRequest();
@@ -240,9 +247,9 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 			$results,
 			'valid request'
 		);
+
 		$listener =& GalleryTestCase::getEntityCounter();
 		$itemId   = $listener->getRecentEntityId('GalleryPhotoItem');
-
 		if ($itemId) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryPhotoItem');
 

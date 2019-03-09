@@ -47,12 +47,14 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($parentAlbum);
+
 		$this->_parentAlbumId = $parentAlbum->getId();
 		$this->_userId        = $gallery->getActiveUserId();
 
 		GalleryUtilities::putRequestVariable('form[parentId]', $this->_parentAlbumId);
 		GalleryUtilities::putRequestVariable('form[action][newAlbum]', 1);
 		GalleryUtilities::putRequestVariable(
+
 			'form[pathComponent]',
 			$this->_pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
@@ -69,6 +71,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		$results = $this->handleRequest(ERROR_MISSING_OBJECT);
+
 		$this->assertEquals(null, $results, 'attempt without view permission');
 	}
 
@@ -86,6 +89,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		$results = $this->handleRequest(ERROR_PERMISSION_DENIED);
+
 		$this->assertEquals(null, $results, 'attempt without view permission');
 	}
 
@@ -134,11 +138,12 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assertEquals($this->_parentAlbumId, $album->getParentId(), 'id of parent album');
+
 		$this->assertEquals($this->_pathComponent, $album->getPathComponent());
+
 		$this->assertEquals('test title', $album->getTitle());
 		$this->assertEquals('test summary', $album->getSummary());
 		$this->assertEquals('test description', $album->getDescription());
-
 		// For Oracle, null is replaced with '' when loading data from the database
 		$this->assert(in_array($album->getKeywords(), array(null, '')), 'keywords should be empty');
 	}
@@ -146,12 +151,14 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 	public function testNewAlbumWithXss() {
 		GalleryUtilities::putRequestVariable('form[parentId]', $this->_getRootId());
 		GalleryUtilities::putRequestVariable(
+
 			'form[pathComponent]',
 			$pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
 		GalleryUtilities::putRequestVariable('form[title]', 'test<script>evil</script> title');
 		GalleryUtilities::putRequestVariable('form[summary]', 'test<script>evil</script> summary');
 		GalleryUtilities::putRequestVariable('form[description]', 'test<script>evil</script> desc');
+
 		GalleryUtilities::putRequestVariable('form[action][newAlbum]', 1);
 
 		$results       = $this->handleRequest();
@@ -180,6 +187,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; title', $album->getTitle());
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; summary', $album->getSummary());
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; desc', $album->getDescription());
+
 		$ret = GalleryCoreApi::deleteEntityById($albumId, 'GalleryAlbumItem');
 
 		if ($ret) {

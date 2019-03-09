@@ -56,6 +56,7 @@ class NokiaUploadNewDirectoryControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_group);
+
 		$ret = GalleryCoreApi::addGroupPermission(
 			$this->_album->getId(),
 			$this->_group->getId(),
@@ -73,6 +74,7 @@ class NokiaUploadNewDirectoryControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
+
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $this->_group->getId());
 
 		if ($ret) {
@@ -115,8 +117,11 @@ class NokiaUploadNewDirectoryControllerTest extends GalleryControllerTestCase {
 
 		// Login our test user
 		$gallery->setActiveUser($this->_user);
+
 		$session =& $gallery->getSession();
+
 		$session->remove('permissionCache');
+
 		$ret = GalleryCoreApi::assertHasItemPermission($this->_getRootId(), 'core.addAlbumItem');
 
 		if (!$ret) {
@@ -145,6 +150,7 @@ class NokiaUploadNewDirectoryControllerTest extends GalleryControllerTestCase {
 		// Parent with no permission
 		GalleryUtilities::putRequestVariable('DirName', 'test', false);
 		GalleryUtilities::putRequestVariable('Pid', $this->_getRootId(), false);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -173,9 +179,11 @@ class NokiaUploadNewDirectoryControllerTest extends GalleryControllerTestCase {
 			$results['delegate'],
 			'delegate'
 		);
+
 		$this->assertEquals(array(), $results['error'], 'error');
 		$this->assertEquals(NOKIAUPLOAD_ERR_NOERR, $results['status']['success'], 'success');
 		$this->assert($results['status']['id'] > 0, 'new album id');
+
 		$ret = GalleryCoreApi::assertHasItemPermission($results['status']['id'], 'core.all');
 
 		$this->assert(!$ret, 'user should have core.all permission on new album');

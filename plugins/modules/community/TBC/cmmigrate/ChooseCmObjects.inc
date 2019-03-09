@@ -62,7 +62,6 @@ class ChooseCmObjectsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -80,7 +79,6 @@ class ChooseCmObjectsView extends GalleryView {
 		$platform       =& $gallery->getPlatform();
 		$slash          = $platform->getDirectorySeparator();
 		$copperminePath = GalleryUtilities::getRequestVariables('copperminePath');
-
 		if ($copperminePath == null) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__), null);
 		}
@@ -144,7 +142,6 @@ class ChooseCmObjectsView extends GalleryView {
 		$cmdb = new CmDatabaseTools($copperminePath);
 
 		$cmdb->openDatabase();
-
 		return $cmdb->getAlbumsSorted();
 	}
 }

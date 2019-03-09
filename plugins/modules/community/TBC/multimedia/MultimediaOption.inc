@@ -42,7 +42,6 @@ class MultimediaOption extends ItemAddOption {
 
 		$storage =& $gallery->getStorage();
 		$errors  = $multimediaItems  = array();
-
 		foreach ($items as $item) {
 			if (method_exists($item, 'getMimeType') && (preg_match('/video/', $item->getMimeType()) || preg_match('/audio/', $item->getMimeType()))) {
 				$multimediaItems[] = $item;
@@ -52,7 +51,6 @@ class MultimediaOption extends ItemAddOption {
 		while (!empty($multimediaItems)) {
 			$currentItems = array_splice($multimediaItems, 0, 100);
 			$itemIds      = array();
-
 			foreach ($currentItems as $item) {
 				$itemIds[] = $item->getId();
 			}
@@ -73,6 +71,7 @@ class MultimediaOption extends ItemAddOption {
 				}
 
 				$item->setRenderer('MultimediaRenderer');
+
 				$ret = $item->save();
 
 				if ($ret) {

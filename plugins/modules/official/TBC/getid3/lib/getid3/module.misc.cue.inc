@@ -39,8 +39,8 @@ class getid3_cue extends getid3_handler {
 		$info['fileformat'] = 'cue';
 
 		$this->readCueSheetFilename($info['filenamepath']);
-		$info['cue'] = $this->cuesheet;
 
+		$info['cue'] = $this->cuesheet;
 		return true;
 	}
 
@@ -56,7 +56,6 @@ class getid3_cue extends getid3_handler {
 	 */
 	public function readCueSheet(&$filedata) {
 		$cue_lines = array();
-
 		foreach (explode("\n", str_replace("\r", null, $filedata)) as $line) {
 			if ((strlen($line) > 0) && ($line[0] != '#')) {
 				$cue_lines[] = trim($line);
@@ -64,7 +63,6 @@ class getid3_cue extends getid3_handler {
 		}
 
 		$this->parseCueSheet($cue_lines);
-
 		return $this->cuesheet;
 	}
 
@@ -76,7 +74,6 @@ class getid3_cue extends getid3_handler {
 	public function parseCueSheet($file) {
 		//-1 means still global, all others are track specific
 		$track_on = -1;
-
 		for ($i = 0; $i < count($file); $i++) {
 			list($key) = explode(' ', strtolower($file[$i]), 2);
 
@@ -90,29 +87,20 @@ class getid3_cue extends getid3_handler {
 					$this->parseString($file[$i], $track_on);
 
 					break;
-
 				case 'file':
 					$currentFile = $this->parseFile($file[$i]);
-
 					break;
-
 				case 'flags':
 					$this->parseFlags($file[$i], $track_on);
-
 					break;
-
 				case 'index':
 				case 'postgap':
 				case 'pregap':
 					$this->parseIndex($file[$i], $track_on);
-
 					break;
-
 				case 'rem':
 					$this->parseComment($file[$i], $track_on);
-
 					break;
-
 				case 'track':
 					$track_on++;
 
@@ -123,7 +111,6 @@ class getid3_cue extends getid3_handler {
 					}
 
 					break;
-
 				default:
 					//save discarded junk and place string[] with track it was found in
 					$this->parseGarbage($file[$i], $track_on);
@@ -144,11 +131,9 @@ class getid3_cue extends getid3_handler {
 		$comment_REM  = (isset($explodedline[0]) ? $explodedline[0] : '');
 		$comment_type = (isset($explodedline[1]) ? $explodedline[1] : '');
 		$comment_data = (isset($explodedline[2]) ? $explodedline[2] : '');
-
 		if (($comment_REM == 'REM') && $comment_type) {
 			$comment_type  = strtolower($comment_type);
 			$commment_data = trim($comment_data, ' "');
-
 			if ($track_on != -1) {
 				$this->cuesheet['tracks'][$track_on]['comments'][$comment_type][] = $comment_data;
 			} else {
@@ -172,7 +157,6 @@ class getid3_cue extends getid3_handler {
 
 		//if quotes around it, remove them.
 		$line = trim($line, '"');
-
 		return array(
 			'filename' => $line,
 			'type'     => $type,
@@ -200,16 +184,13 @@ class getid3_cue extends getid3_handler {
 						);
 
 						break;
-
 					case 'data':
 					case 'dcp':
 					case '4ch':
 					case 'pre':
 					case 'scms':
 						$this->cuesheet['tracks'][$track_on]['flags'][$type] = true;
-
 						break;
-
 					default:
 						break;
 				}
@@ -242,7 +223,6 @@ class getid3_cue extends getid3_handler {
 	public function parseIndex($line, $track_on) {
 		$type = strtolower(substr($line, 0, strpos($line, ' ')));
 		$line = substr($line, strpos($line, ' ') + 1);
-
 		if ($type == 'index') {
 			//read the index number
 			$number = intval(substr($line, 0, strpos($line, ' ')));
@@ -254,7 +234,6 @@ class getid3_cue extends getid3_handler {
 		$minutes      = (isset($explodedline[0]) ? $explodedline[0] : '');
 		$seconds      = (isset($explodedline[1]) ? $explodedline[1] : '');
 		$frames       = (isset($explodedline[2]) ? $explodedline[2] : '');
-
 		switch ($type) {
 			case 'index':
 				$this->cuesheet['tracks'][$track_on][$type][$number] = array(
@@ -264,7 +243,6 @@ class getid3_cue extends getid3_handler {
 				);
 
 				break;
-
 			case 'pregap':
 			case 'postgap':
 				$this->cuesheet['tracks'][$track_on][$type] = array(
@@ -283,7 +261,6 @@ class getid3_cue extends getid3_handler {
 
 		//get rid of the quotes
 		$line = trim($line, '"');
-
 		switch ($category) {
 			case 'catalog':
 			case 'cdtextfile':
@@ -298,7 +275,6 @@ class getid3_cue extends getid3_handler {
 				}
 
 				break;
-
 			default:
 				break;
 		}

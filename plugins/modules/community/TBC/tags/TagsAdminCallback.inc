@@ -82,10 +82,8 @@ class TagsAdminCallbackView extends GalleryView {
 	     </td>
 	     </tr>';
 		$passedCss = explode('&&', html_entity_decode($tagClassValues));
-
 		for ($i = 0; $i < $classNumber; $i++) {
 			$currentCss = array();
-
 			if (isset($passedCss[$i])) {
 				$currentCss = explode('|', $passedCss[$i]);
 			}
@@ -97,7 +95,6 @@ class TagsAdminCallbackView extends GalleryView {
 			. '" type="text" size="4" name="'
 			. GalleryUtilities::prefixFormVariable('form[tagCssClass][' . $i . '][font]')
 			. '"}" value="';
-
 			if (!empty($currentCss)) {
 				echo $currentCss[0];
 			}
@@ -106,7 +103,6 @@ class TagsAdminCallbackView extends GalleryView {
 			. '<input type="text" size="8" id="colorPicker' . $i . 'field" name="'
 			. GalleryUtilities::prefixFormVariable('form[tagCssClass][' . $i . '][color]')
 			. '"}" value="';
-
 			if (!empty($currentCss)) {
 				echo $currentCss[1];
 			}
@@ -114,7 +110,9 @@ class TagsAdminCallbackView extends GalleryView {
 			echo '" onchange="relateColor(\'colorPicker' . $i . '\', this.value);" />';
 			echo '<a href="javascript:ColorChooserShow(\'colorPicker' . $i . '\');" 
 		id="colorPicker' . $i . '" style="padding:5px">'
+
 			. $module->translate('Select') . '</a>';
+
 			echo '<script language="javascript">relateColor(\'colorPicker' . $i . '\');</script>';
 			echo '</td></tr>';
 		}

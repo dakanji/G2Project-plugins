@@ -31,7 +31,9 @@ class SimplifiedTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('simplified');
+
 		$this->setName($gallery->i18n('Simplified'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'Simple, uncluttered look'
@@ -41,6 +43,7 @@ class SimplifiedTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'rows'           => 3,
 				'columns'        => 5,
@@ -118,7 +121,6 @@ class SimplifiedTheme extends GalleryTheme {
 		// Grab album thumbnail size
 		// default to 120, if we find an album thumb size, this will get overridden
 		$albumThumbnailSize = 120;
-
 		foreach ($preferences as $preference) {
 			if ($preference['derivativeType'] == DERIVATIVE_TYPE_IMAGE_THUMBNAIL) {
 				preg_match(
@@ -137,7 +139,6 @@ class SimplifiedTheme extends GalleryTheme {
 		$childrenInRowCount                    = 0;
 		$currentRow                            = 1;
 		$maxRowSizes                           = array();
-
 		foreach ($theme['children'] as $index => $childItem) {
 			if (!isset($maxRowSizes[$currentRow])) {
 				$maxRowSizes[$currentRow] = 0;
@@ -185,7 +186,6 @@ class SimplifiedTheme extends GalleryTheme {
 		}
 
 		$theme['params']['maxRowSizes'] = $maxRowSizes;
-
 		return array(null, 'theme.tpl');
 	}
 

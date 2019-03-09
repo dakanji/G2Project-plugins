@@ -39,6 +39,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->_unregisterFactoryImplementationForTest('NotificationEvent_1_0');
 		$this->_unregisterFactoryImplementationForTest('NotificationHandler_1_0');
+
 		$ret = $this->_registerFactoryImplementationForTest(
 			'NotificationEvent_1_0',
 			'NotificationItemEventTest',
@@ -180,7 +181,6 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 
 		$storage              =& $gallery->getStorage();
 		$gallery->_lockSystem =& $this->_saveLockSystem;
-
 		if (!empty($this->_storageSet)) {
 			$this->assertTrue($storage->isComplete(), $storage->getRemaining());
 		}
@@ -213,12 +213,14 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				new UnitTestStorageSearchResults(array(array($activeUserId))),
 			)
 		);
+
 		$itemId = (string)$this->_testAlbum->getId();
 
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
+
 			'form[notifications][1]',
 			array(
 				'name'          => 'Test::Event',
@@ -227,6 +229,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			)
 		);
 		GalleryUtilities::putRequestVariable(
+
 			'form[eventMap][2]',
 			array(
 				'name'          => 'Test::Event2',
@@ -280,6 +283,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				new UnitTestStorageSearchResults(array(array($activeUserId))),
 			)
 		);
+
 		$storage->setReply(
 			'removeMapEntry',
 			array(
@@ -318,6 +322,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
+
 		$storage->setReply(
 			'search',
 			array(
@@ -328,6 +333,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			),
 			array(null, new UnitTestStorageSearchResults(array(array(0))))
 		);
+
 		$storage->setReply(
 			'updateMapEntry',
 			array(
@@ -343,6 +349,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
+
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
@@ -351,6 +358,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
+
 			'form[notifications][1]',
 			array(
 				'name'          => 'Test::Event',
@@ -428,9 +436,11 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				),
 			)
 		);
+
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply(
+
 			'addMapEntry',
 			array(
 				'SubscriptionMap',
@@ -444,6 +454,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 			),
 			null
 		);
+
 		$results = array(
 			null,
 			new UnitTestStorageSearchResults(
@@ -452,14 +463,13 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				)
 			),
 		);
-
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
-
 		// The fetchChildItemIds() query
 		$storage->setReply('search', '*', $results);
 		$storage->setReply(
+
 			'getMapEntry',
 			array(
 				'SubscriptionMap',
@@ -475,6 +485,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 				new UnitTestStorageSearchResults(array()),
 			)
 		);
+
 		$storage->setReply(
 			'addMapEntry',
 			array(
@@ -493,7 +504,6 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		// The album might use some presort
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
 		$storage->setReply('getFunctionSql', '*', array(null, ''), true);
-
 		// The fetchChildItemIds() query
 		$storage->setReply(
 			'search',
@@ -506,6 +516,7 @@ class NotificationItemAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
+
 			'form[notifications][1]',
 			array(
 				'name'          => 'Test::Event',

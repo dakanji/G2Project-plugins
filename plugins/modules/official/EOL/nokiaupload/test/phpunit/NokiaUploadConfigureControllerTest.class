@@ -46,6 +46,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
+
 		$ret = $this->_markPluginParametersForCleanup('module', 'nokiaupload');
 
 		if ($ret) {
@@ -178,6 +179,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 
 		$this->assert(!empty($params['id.mobileGroup']), 'group param');
 		$this->assert(!empty($params['id.uploadAlbum']), 'album param');
+
 		$this->_groupId = $params['id.mobileGroup'];
 
 		list($ret, $perms) = GalleryCoreApi::fetchAllPermissionsForItem(
@@ -190,7 +192,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		}
 
 		$hasAddDataItem = false;
-
 		foreach ($perms as $perm) {
 			if ($perm == array(
 				'groupId' => $this->_groupId,
@@ -203,3 +204,4 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		$this->assert($hasDataItem, 'missing addDataItem permission');
 	}
 }
+

@@ -69,9 +69,7 @@ class CheckoutCallbacks {
 				$block['checkout']['items']      = $items;
 				$block['checkout']['thumbnails'] = $thumbnails;
 				$block['checkout']['itemCount']  = $itemCount;
-
 				return null;
-
 			case 'itemPrices':
 				// prices for an individual item
 				$block =& $smarty->_tpl_vars['block'];
@@ -85,7 +83,6 @@ class CheckoutCallbacks {
 
 				if (!$canPurchase) {
 					$block['checkout']['showProducts'] = false;
-
 					return null;
 				}
 
@@ -116,9 +113,7 @@ class CheckoutCallbacks {
 					$block['checkout']['products']     = $products;
 					$block['checkout']['csymbol']      = $csymbol;
 					$block['checkout']['cformat']      = $cformat;
-
 				return null;
-
 			case 'transactionTotal':
 				list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($params['transactionId']);
 
@@ -146,9 +141,7 @@ class CheckoutCallbacks {
 				$block['checkout']['csymbol'] = $csymbol;
 				$block['checkout']['cformat'] = $cformat;
 				$block['checkout']['total']   = $transaction->getAmount();
-
 				return null;
-
 			case 'transactionCustomerDetails':
 				// transaction customer details
 				list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($params['transactionId']);
@@ -189,9 +182,7 @@ class CheckoutCallbacks {
 				}
 
 				$block['checkout']['orderStatusSubject'] = $orderStatusSubject;
-
 				return null;
-
 			case 'transactionFlags':
 				 // transaction status flags
 				 list($ret, $transaction) = GalleryCoreApi::loadEntitiesById($params['transactionId']);
@@ -216,9 +207,7 @@ class CheckoutCallbacks {
 				$block['checkout']['problem']          = $transaction->getTimeProblem();
 				$block['checkout']['downloaded']       = $transaction->getTimeDownloaded();
 				$block['checkout']['downloadAttempts'] = $transaction->getDownloadAttempts();
-
 				return null;
-
 			case 'transactionItems':
 				// get the transaction items for display in a page or email
 				$transactionId = $params['transactionId'];
@@ -293,9 +282,7 @@ class CheckoutCallbacks {
 				}
 
 				$block['checkout']['items'] = $items;
-
 				return null;
-
 			case 'transactionVerifyDetails':
 				//two pieces of information checked before releasing the status of an order
 				//or permitting a download - for security reasons
@@ -312,9 +299,7 @@ class CheckoutCallbacks {
 				$block                        =& $smarty->_tpl_vars['block'];
 				$block['checkout']['verify1'] = $transaction->getDate();
 				$block['checkout']['verify2'] = $transaction->getSecurity();
-
 				return null;
-
 			break;
 		}
 

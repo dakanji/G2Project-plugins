@@ -38,7 +38,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		$platform =& $gallery->getPlatform();
 		$status   = $error   = array();
-
 		if (empty($form['name']['picasaZipPath'])) {
 			// No filename was entered
 			$error[] = 'form[error][picasaZipPath][missing]';
@@ -79,7 +78,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 				} else {
 					$base   = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'tmp_');
 					$tmpDir = $base . '.dir';
-
 					if (!$platform->mkdir($tmpDir)) {
 						return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 					}
@@ -101,11 +99,11 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 					$slash         = $platform->getDirectorySeparator();
 					$picasaXmlPath = trim($tmpDir) . $slash;
-
 					if (!Picasa2DataParser::isValidPicasaXmlPath($picasaXmlPath)) {
 						// The archive does not contain valid Picasa data
 						@$platform->recursiveRmdir($tmpDir);
 						@$platform->unlink($base);
+
 						$error[] = 'form[error][picasaZipPath][invalid]';
 					} else {
 						list($ret, $importStatus) = $this->performImport(
@@ -113,7 +111,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 							$item->getId(),
 							$form
 						);
-
 						if ($ret) {
 							@$platform->recursiveRmdir($tmpDir);
 							@$platform->unlink($base);
@@ -198,7 +195,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		}
 
 		$totalItemsToImport = count($picasaAlbum['images']);
-
 		if (empty($totalItemsToImport)) {
 			$totalItemsToImport = 1;
 		}
@@ -207,11 +203,11 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		$numberOfItemsImported = 0;
 
 		$gallery->guaranteeTimeLimit(30);
+
 		$newAlbumInstanceId = false;
 		$desiredname        = $platform->legalizePathComponent($picasaAlbum['albumName']);
 		$k                  = 0;
 		$invalidName        = true;
-
 		while ($invalidName) {
 			list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent($destinationAlbumId, $desiredname);
 
@@ -300,6 +296,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			}
 
 			$newAlbumInstance->setKeywords('');
+
 			$ret = $newAlbumInstance->save();
 
 			if ($ret) {
@@ -332,9 +329,9 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 		$photos                = $picasaAlbum['images'];
 		$numberOfItemsImported = 1;
-
 		foreach ($photos as $j => $importAlbumItem) {
 			$gallery->guaranteeTimeLimit(30);
+
 			$filepath          = $picasaXmlPath . str_replace('/', $slash, $importAlbumItem['path']);
 			$sanitizedFilename = $filename = $importAlbumItem['name'];
 
@@ -374,7 +371,6 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 
 			$itemsCreated[] = $newItem->getId();
 			$numberOfItemsImported++;
-
 			if ($ret) {
 				return array($ret, null);
 			}
@@ -398,13 +394,11 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 		$matches         = array();
 		$fileUploadsBool = GalleryUtilities::getPhpIniBool('file_uploads');
 		$totalUploadSize = ini_get('post_max_size');
-
 		if (preg_match('/(\d+)M/', $totalUploadSize, $matches)) {
 			$totalUploadSize = $matches[1] * 1024 * 1024;
 		}
 
 		$maxFileSize = ini_get('upload_max_filesize');
-
 		if (preg_match('/(\d+)M/', $maxFileSize, $matches)) {
 			$maxFileSize = $matches[1] * 1024 * 1024;
 		}
@@ -453,6 +447,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			'caption'  => $module->translate('Picasa Caption'),
 			''         => $module->translate('Blank'),
 		);
+
 		$template->setVariable(
 			'ItemAddFromPicasa',
 			array(

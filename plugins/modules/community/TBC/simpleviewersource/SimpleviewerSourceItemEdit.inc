@@ -48,7 +48,6 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 
 			foreach ($params as $myTuple) {
 				trim($myTuple['paramName']);
-
 				if (!isset($myTuple['paramValue'])) {
 					$myTuple['paramValue'] = '';
 				}

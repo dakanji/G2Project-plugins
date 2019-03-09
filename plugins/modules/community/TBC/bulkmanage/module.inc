@@ -52,9 +52,12 @@ class BulkManageModule extends GalleryModule {
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $this->translate('Gallery'));
 		$this->setCallbacks('getItemLinks|getItemAdminViews');
+
 		$this->_bulkManageApiVersion = array(1, 0);
 	}
 
@@ -92,7 +95,6 @@ class BulkManageModule extends GalleryModule {
 	 */
 	public function getItemAdminViews($item) {
 		$views = array();
-
 		if (!$item->getCanContainChildren()) {
 			return array(null, $views);
 		}
@@ -110,7 +112,6 @@ class BulkManageModule extends GalleryModule {
 		}
 
 		$childCount = empty($childCounts[$item->getId()]) ? 0 : $childCounts[$item->getId()];
-
 		if (isset($permissions['core.edit']) && $childCount > 1) {
 			$views[] = array(
 				'name' => $this->translate('Bulk Manage'),
@@ -127,7 +128,6 @@ class BulkManageModule extends GalleryModule {
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		$links   = array();
 		$itemIds = array();
-
 		foreach ($items as $item) {
 			if ($item->getCanContainChildren()) {
 				$itemIds[] = $item->getId();

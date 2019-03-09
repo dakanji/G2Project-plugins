@@ -51,7 +51,6 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 	public function loadTemplate(&$template, &$form) {
 		// Figure out which item we're talking about
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
-
 		if (empty($transactionId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null);
 		}
@@ -71,7 +70,6 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 		$buyerId   = $transaction->getBuyerId();
 		$hasGroup  = false;
 		$groupInfo = array();
-
 		foreach ($items as $item) { //$item.itemId and $item.product are the two things we need
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($item['itemId'], true, true);
 

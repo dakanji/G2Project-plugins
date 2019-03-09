@@ -95,7 +95,6 @@ class ItemAddWebCam extends ItemAddPlugin {
 
 			if (empty($error)) {
 				$basename = basename($urlComponents['path']);
-
 				if (!empty($headers['Content-Type'])) {
 					$mimeType = $headers['Content-Type'];
 				} elseif (!empty($headers['Content-type'])) {
@@ -143,6 +142,7 @@ class ItemAddWebCam extends ItemAddPlugin {
 					}
 
 					$newItem->addOnLoadHandler('WebCam');
+
 					$ret = $newItem->save();
 
 					if ($ret) {
@@ -219,7 +219,6 @@ class ItemAddWebCam extends ItemAddPlugin {
 				$form['error']['imageUrl']['missing'] = 1;
 			} else {
 				$urlComponents = parse_url($form['imageUrl']);
-
 				if (empty($urlComponents['scheme'])
 					|| !in_array($urlComponents['scheme'], array('http', 'file'))
 					|| ($urlComponents['scheme'] == 'file' && !$isAdmin)
@@ -243,7 +242,6 @@ class ItemAddWebCam extends ItemAddPlugin {
 		}
 
 		$isAdmin = false;
-
 		if ($param == 'admin') {
 			list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
 

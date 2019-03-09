@@ -32,7 +32,9 @@ class ClassicTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('classic');
+
 		$this->setName($gallery->i18n('Classic'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'Classic Gallery2 root album look and feel'
@@ -42,6 +44,7 @@ class ClassicTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'rows'            => 10,
 				'columns'         => 1,
@@ -103,6 +106,7 @@ class ClassicTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showSubalbums'],
 		);
+
 		$settings[] = array(
 			'key'        => 'subalbumDepth',
 			'name'       => $this->translate('Depth of subalbums links (0=no limit)'),
@@ -112,6 +116,7 @@ class ClassicTheme extends GalleryTheme {
 			),
 			'value'      => $params['subalbumDepth'],
 		);
+
 		$settings[] = array(
 			'key'   => 'subalbumSort',
 			'name'  => $this->translate(
@@ -129,7 +134,6 @@ class ClassicTheme extends GalleryTheme {
 	 */
 	public function validateSettings($settings) {
 		$error = parent::validateSettings($settings);
-
 		if (!is_numeric($settings['subalbumDepth'])) {
 			$error['subalbumDepth'] = $this->translate('You must enter a number');
 		}
@@ -168,10 +172,8 @@ class ClassicTheme extends GalleryTheme {
 
 		// Add in our extra stuff
 		$theme =& $template->getVariableByReference('theme');
-
 		if ($params['showSubalbums']) {
 			$theme['tree'] = $theme['treeItems'] = array();
-
 			if ($params['subalbumDepth'] > 0) {
 				$subalbumDepth = $params['subalbumDepth'];
 			} else {
@@ -307,7 +309,6 @@ class ClassicTheme extends GalleryTheme {
 		}
 
 		$treeIds = array();
-
 		foreach ($items as $item) {
 			if (!GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 				continue;
@@ -401,7 +402,6 @@ class ClassicTheme extends GalleryTheme {
 				);
 
 				$treeItems[$id] = (array)$subAlbum;
-
 				if (!isset($maxDepth) || $depth < $maxDepth) {
 					$ret = $this->_doBuildTree(
 						$subAlbum,

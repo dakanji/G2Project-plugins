@@ -126,7 +126,6 @@ function get_relative_path($target, $fromdir) {
 	// as some letters in the first different directory names
 	// may have been the same
 	$diffpos--;
-
 	while (($to[$diffpos] != '/') && ($to[$diffpos] != '\\') && $to[$diffpos]) {
 		$diffpos--;
 	}

@@ -40,7 +40,6 @@ class ItemAddBulk extends ItemAddPlugin {
 		global $gallery;
 
 		$status = $error = array();
-
 		if (isset($form['action']['add'])) {
 			if (empty($form['path'])) {
 				$error[] = 'form[error][path]';
@@ -48,7 +47,6 @@ class ItemAddBulk extends ItemAddPlugin {
 
 			if (empty($error)) {
 				$platform =& $gallery->getPlatform();
-
 				if (!$platform->is_readable($form['path'])) {
 					$error[] = 'form[error][path][invalid]';
 				}
@@ -64,10 +62,8 @@ class ItemAddBulk extends ItemAddPlugin {
 				}
 
 				$fields = split("\t", trim(array_shift($data)));
-
 				foreach ($data as $line) {
 					$line = split("\t", trim($line));
-
 					for ($i = 0; $i < count($fields); $i++) {
 						$line[$fields[$i]] = $line[$i];
 					}
@@ -83,7 +79,6 @@ class ItemAddBulk extends ItemAddPlugin {
 					}
 
 					$fileName = $line['filename'];
-
 					if (!($fileName[0] == '/' || $fileName[0] == '\\')) {
 						$fileName = dirname($form['path']) . '/' . $fileName;
 					}
@@ -121,6 +116,7 @@ class ItemAddBulk extends ItemAddPlugin {
 							}
 
 							$newItem->setKeywords($line['keywords']);
+
 							$ret = $newItem->save();
 
 							if ($ret) {

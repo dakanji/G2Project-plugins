@@ -40,6 +40,7 @@ class VirtualAlbumView extends GalleryView {
 	 */
 	public function loadThemeAndParameters() {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
 
 		list($ret, $item) = GalleryCoreApi::newFactoryInstance('GalleryDynamicAlbum');
@@ -73,8 +74,8 @@ class VirtualAlbumView extends GalleryView {
 				'itemId' => $albumId,
 			)
 		);
-		$albumLink = sprintf('<a href="%s">%s</a>', $albumUrl, $albumTitle);
 
+		$albumLink = sprintf('<a href="%s">%s</a>', $albumUrl, $albumTitle);
 		if (empty($tags)) {
 			$title = $module->translate(
 				array(
@@ -84,7 +85,6 @@ class VirtualAlbumView extends GalleryView {
 			);
 		} else {
 			$tagLinks = array();
-
 			foreach ($tags as $tagId) {
 				list($ret, $tagName) = TagTreeHelper::getTagName($tagId);
 
@@ -92,12 +92,13 @@ class VirtualAlbumView extends GalleryView {
 					return array($ret, null);
 				}
 
-				$tagUrl  = $generator->generateUrl(
+				$tagUrl = $generator->generateUrl(
 					array(
 						'view'    => 'tags.VirtualAlbum',
 						'tagName' => $tagName,
 					)
 				);
+
 				$tagLink = sprintf('<a href="%s">%s</a>', $tagUrl, $tagName);
 				array_push($tagLinks, $tagLink);
 			}
@@ -138,12 +139,13 @@ class VirtualAlbumView extends GalleryView {
 
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
 
-			$item->urlParams           = array(
+			$item->urlParams = array(
 				'view'        => 'tagtree.VirtualAlbum',
 				'tags'        => $tags,
 				'albumId'     => $albumId,
 				'highlightId' => $itemId,
 			);
+
 			$item->getChildrenFunction = array('VirtualAlbumView', 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;

@@ -40,17 +40,14 @@ class ZipCartAdminController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['save']) || isset($form['action']['test'])) {
 			$form['path'] = trim($form['path']);
-
 			if (empty($form['path'])) {
 				$error[] = 'form[error][path][missing]';
 			}
 
 			if (empty($error)) {
 				$platform =& $gallery->getPlatform();
-
 				if (!$platform->isRestrictedByOpenBaseDir($form['path'])) {
 					if (!$platform->is_executable($form['path'])) {
 						$error[] = 'form[error][path][badPath]';
@@ -73,7 +70,6 @@ class ZipCartAdminController extends GalleryController {
 				}
 
 				$debugSnippet = $gallery->stopRecordingDebugSnippet();
-
 				if (!$success || !$platform->file_exists($zipFile)) {
 					$error[] = 'form[error][path][badZip]';
 
@@ -105,7 +101,6 @@ class ZipCartAdminController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
-
 			if ($isActive) {
 				$redirect['subView'] = 'zipcart.ZipCartAdmin';
 				$status['saved']     = 1;
@@ -130,7 +125,6 @@ class ZipCartAdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

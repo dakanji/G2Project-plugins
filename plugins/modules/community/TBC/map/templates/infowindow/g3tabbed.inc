@@ -2,7 +2,6 @@
 
 //Fix the description , summary and title HREFs
 $tmp = array();
-
 foreach ($map['mapPoints'] as $point) {
 	$point['description'] = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['description']);
 	$point['description'] = str_replace('[/url]', '</a>', $point['description']);
@@ -30,7 +29,6 @@ $map['infowindows'][1] = "''
 	+'<table border=0 cellpadding=0 style=\"width:90%;height:100%;border-collapse: collapse;\">'
 	+'<tr><td><a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'+title+'</a><br/>'
 	+'<font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font>'";
-
 if ($map['showItemSummaries']) {
 	$map['infowindows'][1] = $map['infowindows'][1] . "
 	+(summary!=\"\"?'<br/><br/><font color=black><b>Summary:</b><br/>'+summary+'</font>':'')";
@@ -49,7 +47,6 @@ $map['infowindows'][1] = $map['infowindows'][1] . "
         + '<input type=\"text\" size=30 maxlength=40 name=\"saddr\" id=\"saddr\" value=\"\" /><br>'
         + '<input type=\"hidden\" name=\"daddr\" value=\"'+lat+','+lon+'\"/>'
         + '<INPUT value=\"Get Directions\" TYPE=\"SUBMIT\"></form>'";
-
 if ($map['showZoomLinks']) {
 	$map['infowindows'][1] = $map['infowindows'][1] . "
         +'<br/><br/><a href=\"#zoominlink\" onclick=\"javascript:map.setCenter(new GLatLng('+lat+','+lon+'), '+zoomlevel+'); return false;\">" . $module->translate('Zoom In') . "</a>'";

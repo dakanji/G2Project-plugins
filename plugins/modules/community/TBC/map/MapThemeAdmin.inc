@@ -217,7 +217,6 @@ class MapThemeAdminView extends GalleryView {
 			)
 			) {
 				$form['windowlist'] .= '<option value="' . substr($file, 0, -4) . '" ';
-
 				if ((array_key_exists('MapWindowType', $form))
 					and ($form['MapWindowType'] == substr($file, 0, -4))
 				) {

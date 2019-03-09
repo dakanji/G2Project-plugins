@@ -66,6 +66,7 @@ class DownloadRegistryFileTest extends GalleryTestCase {
 		$this->assertEquals('CP1252', $this->view->_getCharsetFromRequest(), 'default');
 		$this->_setActiveLanguageCode('en_US');
 		$this->assertEquals('CP1252', $this->view->_getCharsetFromRequest(), 'default 2');
+
 		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'ja';
 
 		$this->assertEquals('CP932', $this->view->_getCharsetFromRequest(), 'HTTP override');

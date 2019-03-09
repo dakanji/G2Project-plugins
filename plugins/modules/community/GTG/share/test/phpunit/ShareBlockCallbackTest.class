@@ -81,7 +81,6 @@ class ShareBlockCallbackTest extends GalleryTestCase {
 		$callbacks             = new ShareCallbacks();
 		$params                = array();
 		$params['useDefaults'] = true;
-
 		if (isset($userId)) {
 			$smarty->_tpl_vars['theme']['actingUserId'] = $userId;
 		}
@@ -91,7 +90,6 @@ class ShareBlockCallbackTest extends GalleryTestCase {
 		}
 
 		$result = $callbacks->callback($params, $smarty, 'ShareBlockParams', $userId);
-
 		if (!$result) {
 			$result = $smarty->_tpl_vars;
 		}

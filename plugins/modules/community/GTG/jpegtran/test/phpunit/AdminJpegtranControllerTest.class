@@ -331,7 +331,6 @@ class AdminJpegtranControllerTestPlatform extends WinNtPlatform {
 				);
 
 			break;
-
 			case '/validPathBadBinary/jpegtran':
 				return array(
 					1,
@@ -343,7 +342,6 @@ class AdminJpegtranControllerTestPlatform extends WinNtPlatform {
 				);
 
 			break;
-
 			default:
 				return array(0, array(), array());
 		}

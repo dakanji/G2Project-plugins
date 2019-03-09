@@ -142,13 +142,11 @@ class Auth_Yadis_domxml extends Auth_Yadis_XMLParser {
 			DOMXML_LOAD_PARSING,
 			$this->errors
 		);
-
 		if (!$this->doc) {
 			return false;
 		}
 
 		$this->xpath = $this->doc->xpath_new_context();
-
 		return true;
 	}
 
@@ -165,13 +163,11 @@ class Auth_Yadis_domxml extends Auth_Yadis_XMLParser {
 
 		if (!$result) {
 			$n = array();
-
 			return $n;
 		}
 
 		if (!$result->nodeset) {
 			$n = array();
-
 			return $n;
 		}
 
@@ -188,7 +184,6 @@ class Auth_Yadis_domxml extends Auth_Yadis_XMLParser {
 		if ($node) {
 			$arr    = $node->attributes();
 			$result = array();
-
 			if ($arr) {
 				foreach ($arr as $attrnode) {
 					$result[$attrnode->name] = $attrnode->value;
@@ -220,7 +215,6 @@ class Auth_Yadis_dom extends Auth_Yadis_XMLParser {
 	public function setXML($xml_string) {
 		$this->xml = $xml_string;
 		$this->doc = new DOMDocument();
-
 		if (!$this->doc) {
 			return false;
 		}
@@ -230,7 +224,6 @@ class Auth_Yadis_dom extends Auth_Yadis_XMLParser {
 		}
 
 		$this->xpath = new DOMXPath($this->doc);
-
 		if ($this->xpath) {
 			return true;
 		}
@@ -250,7 +243,6 @@ class Auth_Yadis_dom extends Auth_Yadis_XMLParser {
 		}
 
 		$n = array();
-
 		if (!$result) {
 			return $n;
 		}
@@ -272,7 +264,6 @@ class Auth_Yadis_dom extends Auth_Yadis_XMLParser {
 		if ($node) {
 			$arr    = $node->attributes;
 			$result = array();
-
 			if ($arr) {
 				for ($i = 0; $i < $arr->length; $i++) {
 					$node                    = $arr->item($i);
@@ -348,7 +339,6 @@ function &Auth_Yadis_getXMLParser() {
 
 		if (isset($classname)) {
 			$p = new $classname();
-
 			return $p;
 		}
 	}

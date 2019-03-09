@@ -37,7 +37,9 @@ class SlideshowModule extends GalleryModule {
 		$this->setVersion('3.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -173,7 +175,6 @@ class SlideshowModule extends GalleryModule {
 		}
 
 		$links = array();
-
 		foreach ($items as $item) {
 			$itemId      = $item->getId();
 			$jsUrlParams = array(
@@ -194,7 +195,6 @@ class SlideshowModule extends GalleryModule {
 				 * Show View Slideshow link, only when album has images in it.
 				 */
 				$showSlideshowLink = false;
-
 				if ($item->getCanContainChildren()) {
 					if (!isset($userId)) {
 						$userId = $gallery->getActiveUserId();
@@ -232,7 +232,7 @@ class SlideshowModule extends GalleryModule {
 
 				if ($showSlideshowLink) {
 					if ($picLensVersion) {
-						$script           = sprintf(
+						$script = sprintf(
 							'var p=PicLensLite;'
 							. 'p.setCallbacks({onNoPlugins:function(){location.href=\'%s\'}});'
 							. 'p.setLiteURLs({swf:\'%s\'});'
@@ -261,6 +261,7 @@ class SlideshowModule extends GalleryModule {
 							),
 							$itemId
 						);
+
 						$links[$itemId][] = array(
 							'text'   => $this->translate('View Slideshow'),
 							'params' => array(
@@ -331,8 +332,8 @@ class SlideshowModule extends GalleryModule {
 				),
 			),
 		);
-		$rules[]          = $rule;
 
+		$rules[] = $rule;
 		return $rules;
 	}
 
@@ -344,7 +345,6 @@ class SlideshowModule extends GalleryModule {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$data         = $event->getData();
-
 		if ($event->getEventName() == 'Gallery::BeforeDisplay'
 			&& $data['view']->getViewType() == VIEW_TYPE_SHOW_ITEM
 		) {
@@ -382,6 +382,7 @@ class SlideshowModule extends GalleryModule {
 						),
 					)
 				);
+
 				$template->javascript(
 					$urlGenerator->generateUrl(
 						array(

@@ -172,7 +172,6 @@ class HttpAuthHelper {
 		$username      = GalleryUtilities::getServerVar('PHP_AUTH_USER');
 		$password      = GalleryUtilities::getServerVar('PHP_AUTH_PW');
 		$authorization = GalleryUtilities::getRequestVariables('authorization');
-
 		if (empty($authorization)) {
 			// IIS ISAPI PHP defines HTTP_AUTHORIZATION
 			$authorization = GalleryUtilities::getServerVar('HTTP_AUTHORIZATION');
@@ -259,7 +258,6 @@ class HttpAuthHelper {
 
 		$session   =& $gallery->getSession();
 		$oldUserId = $session->getUserId();
-
 		if (isset($authenticatedUser) && $oldUserId != $authenticatedUser->getId()) {
 			// This *may* be an initial authentication.  We need to regenerate the session.
 			$ret = $session->regenerate();
@@ -282,7 +280,6 @@ class HttpAuthHelper {
 		$components         = parse_url($url);
 		$components['user'] = $username;
 		$components['pass'] = $password;
-
 		return HttpAuthHelper::_buildUrl($components);
 	}
 
@@ -293,7 +290,6 @@ class HttpAuthHelper {
 	public static function stripHttpAuthFromUrl($url) {
 		$components = parse_url($url);
 		unset($components['user'], $components['pass']);
-
 		return HttpAuthHelper::_buildUrl($components);
 	}
 
@@ -376,6 +372,7 @@ class HttpAuthHelper {
 
 		GalleryUtilities::setResponseHeader('HTTP/1.0 401 Unauthorized', false);
 		GalleryUtilities::setResponseHeader(
+
 			"WWW-Authenticate: Basic realm='$params[authName]'",
 			false
 		);
@@ -390,13 +387,10 @@ class HttpAuthHelper {
 	 */
 	public static function _buildUrl($components) {
 		$url = '';
-
 		if (!empty($components['scheme']) && !empty($components['host'])) {
 			$auth = '';
-
 			if (!empty($components['user'])) {
 				$auth = $components['user'];
-
 				if (!empty($components['pass'])) {
 					$auth .= ':' . $components['pass'];
 				}

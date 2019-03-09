@@ -43,11 +43,9 @@ class JpegtranToolkit extends GalleryToolkit {
 	public static function round_mcu($value, $mcu = 8) {
 		$result = round($value);
 		$modulo = $result % $mcu;
-
 		if ($modulo != 0) {
 			// Move to nearest smaller MCU
 			$result = $result - $modulo;
-
 			if ($result < 0) {
 				$result = 0;
 			}
@@ -78,7 +76,6 @@ class JpegtranToolkit extends GalleryToolkit {
 		$tmpDir      = $gallery->getConfig('data.gallery.tmp');
 		$platform    =& $gallery->getPlatform();
 		$tmpFilename = $platform->tempnam($tmpDir, 'jpgt_');
-
 		if (empty($tmpFilename)) {
 			// This can happen if the $tmpDir path is bad
 			return array(GalleryCoreApi::error(ERROR_BAD_PATH), null, null);
@@ -95,20 +92,14 @@ class JpegtranToolkit extends GalleryToolkit {
 					case -90:
 					case 270:
 						$rotateAmount = '270';
-
 						break;
-
 					case 90:
 						$rotateAmount = '90';
-
 						break;
-
 					case -180:
 					case 180:
 						$rotateAmount = '180';
-
 						break;
-
 					default:
 						return array(
 							GalleryCoreApi::error(
@@ -129,9 +120,7 @@ class JpegtranToolkit extends GalleryToolkit {
 				}
 
 				$cmd = array($jpegtran, '-verbose', '-copy', 'all', '-rotate', $rotateAmount);
-
 				break;
-
 			case 'crop':
 				// Source dimensions are required to convert from percentages to pixels
 				if (!isset($width)) {
@@ -157,7 +146,6 @@ class JpegtranToolkit extends GalleryToolkit {
 				);
 
 				break;
-
 			default:
 				return array(GalleryCoreApi::error(ERROR_UNSUPPORTED_OPERATION), null, null);
 		}
@@ -165,7 +153,9 @@ class JpegtranToolkit extends GalleryToolkit {
 		$cmd = array_merge($cmd, array('-outfile', $tmpFilename, $sourceFilename));
 
 		$gallery->guaranteeTimeLimit(90);
+
 		$oldCwd = $platform->getcwd();
+
 		$platform->chdir($tmpDir);
 
 		list($success, $output) = $platform->exec(array($cmd));
@@ -173,16 +163,14 @@ class JpegtranToolkit extends GalleryToolkit {
 		if (!$success) {
 			@$platform->unlink($tmpFilename);
 			$platform->chdir($oldCwd);
-
 			return array(GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE), null, null);
 		}
 
 		$platform->chdir($oldCwd);
-		$success = $platform->rename($tmpFilename, $destFilename);
 
+		$success = $platform->rename($tmpFilename, $destFilename);
 		if (!$success) {
 			@$platform->unlink($tmpFilename);
-
 			return array(
 				GalleryCoreApi::error(
 					ERROR_PLATFORM_FAILURE,
@@ -225,7 +213,6 @@ class JpegtranToolkit extends GalleryToolkit {
 		 */
 		$platform =& $gallery->getPlatform();
 		$results  = $platform->getimagesize($filename);
-
 		if (($results != false)
 			&& (($results[0] > 1) && ($results[1] > 1))
 		) {
@@ -241,13 +228,13 @@ class JpegtranToolkit extends GalleryToolkit {
 		$tmpDir      = $gallery->getConfig('data.gallery.tmp');
 		$platform    =& $gallery->getPlatform();
 		$tmpFilename = $platform->tempnam($tmpDir, 'jpgt_');
-
 		if (empty($tmpFilename)) {
 			// This can happen if the $tmpDir path is bad
 			return array(GalleryCoreApi::error(ERROR_BAD_PATH), null, null);
 		}
 
 		$oldCwd = $platform->getcwd();
+
 		$platform->chdir($tmpDir);
 
 		$cmd = array($jpegtran, '-verbose', '-outfile', $tmpFilename, $filename);

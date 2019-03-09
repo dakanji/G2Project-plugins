@@ -62,7 +62,6 @@ class CheckoutInterfaceHelper {
 		}
 
 		$plugins = array();
-
 		foreach ($ids as $id => $className) {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
 
@@ -108,7 +107,6 @@ class CheckoutInterfaceHelper {
 		}
 
 		$plugins = array();
-
 		foreach ($ids as $id => $className) {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
 
@@ -147,7 +145,6 @@ class CheckoutInterfaceHelper {
 
 		$pluginStatus = array();
 		$pluginError  = array();
-
 		foreach ($ids as $id => $className) {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
 
@@ -186,7 +183,6 @@ class CheckoutInterfaceHelper {
 		}
 
 		$plugins = array();
-
 		foreach ($ids as $id => $className) {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
 
@@ -231,7 +227,6 @@ class CheckoutInterfaceHelper {
 		}
 
 		$plugins = array();
-
 		foreach ($ids as $id => $className) {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
 
@@ -425,7 +420,6 @@ class CheckoutInterfaceHelper {
 		}
 
 		$plugins = array();
-
 		foreach ($ids as $id => $className) {
 			list($ret, $instances[$id]) = GalleryCoreApi::newFactoryInstance($pluginInterface, $className);
 
@@ -436,7 +430,6 @@ class CheckoutInterfaceHelper {
 			// do the work
 			list($ret, $plugins[$id]['emailTemplate'], $plugins[$id]['l10Domain'], $plugins[$id]['emailVariables'])
 				= $instances[$id]->getEmailTemplateAndVariables($transactionId, $templateName);
-
 			if ($ret) {
 				return array($ret, null);
 			}

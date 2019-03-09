@@ -43,7 +43,6 @@ class ConfigureController extends GalleryController {
 
 		$error  = array();
 		$status = array();
-
 		if (isset($form['action']['save'])) {
 			if (empty($form['group'])) {
 				$error[] = 'form[error][group][missing]';
@@ -96,7 +95,6 @@ class ConfigureController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -150,6 +148,7 @@ class ConfigureView extends GalleryView {
 				'albumTree' => $albumTree,
 			)
 		);
+
 		$template->setVariable('controller', 'nokiaupload.Configure');
 
 		return array(

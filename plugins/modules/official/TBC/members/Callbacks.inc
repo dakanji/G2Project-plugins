@@ -29,7 +29,6 @@ class MembersCallbacks {
 		global $gallery;
 
 		$block =& $smarty->_tpl_vars['block'];
-
 		switch ($callback) {
 			case 'LoadMembers':
 				// The "Members List" link

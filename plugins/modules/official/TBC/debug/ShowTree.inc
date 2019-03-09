@@ -40,7 +40,6 @@ class ShowTreeView extends GalleryView {
 
 		// Get the entity
 		$entityId = GalleryUtilities::getRequestVariables('entityId');
-
 		if (empty($entityId)) {
 			list($ret, $entity) = $this->getItem();
 
@@ -58,7 +57,6 @@ class ShowTreeView extends GalleryView {
 		}
 
 		$parentIds = $childIds = $entityObjects = $isItemTable = $entityTable = array();
-
 		if (GalleryUtilities::isA($entity, 'GalleryChildEntity')) {
 			global $gallery;
 
@@ -103,9 +101,9 @@ class ShowTreeView extends GalleryView {
 		}
 
 		$entityObjects[] = $entity;
-
 		foreach ($entityObjects as $entity) {
 			$isItemTable[$entity->getId()] = GalleryUtilities::isA($entity, 'GalleryItem');
+
 			$entityTable[$entity->getId()] = (array)$entity;
 		}
 

@@ -2,7 +2,6 @@
 
 //Fix the description , summary and title HREFs
 $tmp = array();
-
 foreach ($map['mapPoints'] as $point) {
 	$point['description'] = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['description']);
 	$point['description'] = str_replace('[/url]', '</a>', $point['description']);
@@ -26,7 +25,6 @@ $map['infowindows'][0] = "''
 	+'<center><a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'+title+'</a><br/>'
 	+'<a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\"><img src=\"'+thumbLink+'\" width=\"'+thw+'\" height=\"'+thh+'\" alt=\"'+title+'\" style=\"max-width:200px;max-height:200px;\"/></a>'
 	+'<br/><font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font>'";
-
 if ($map['showItemSummaries']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +(summary!=\"\"?'<br/><br/><font color=black><b>Summary:</b><br/>'+summary+'</font>':'')";
@@ -47,7 +45,6 @@ $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><a href=\"http://topozone.com/map.asp?lat='+lat+'&lon='+lon+'&s=50&size=m&datum=nad83&layer=DRG25\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">View Localtion at TopoZone</a><br/>(Unfortunately, USA only)'";
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><a href=\"http://www.weatherbonk.com/weather/index.jsp?query='+lat+','+lon+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">WeatherBonk.com this location</a>'";
-
 if ($map['showZoomLinks']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><a href=\"#zoominlink\" onclick=\"javascript:map.setCenter(new GLatLng('+lat+','+lon+'), '+zoomlevel+'); return false;\">" . $module->translate('Zoom In') . "</a>'";

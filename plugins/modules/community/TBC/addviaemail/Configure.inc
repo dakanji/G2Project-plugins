@@ -42,7 +42,6 @@ class ConfigureController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['save'])) {
 			if (empty($form['serverAddress'])) {
 				$error[] = 'form[error][serverAddress][missing]';
@@ -116,7 +115,7 @@ class ConfigureController extends GalleryController {
 				'deleteProcessed',
 				'pollFloor',
 			)
-			as $key) {
+ as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'addviaemail',
@@ -190,7 +189,6 @@ class ConfigureController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -233,7 +231,6 @@ class ConfigureView extends GalleryView {
 			) as $key) {
 				if (!empty($params[$key])) {
 					$form[$key] = $params[$key];
-
 					if ($key == 'owner') {
 						// Convert the UserID back into a Username for display
 						list($ret, $user) = GalleryCoreApi::loadEntitiesById($params['owner']);
@@ -246,7 +243,6 @@ class ConfigureView extends GalleryView {
 					}
 				} else {
 					$form[$key] = '';
-
 					if ($key == 'tmpLocation') {
 						// handle first time config - to preload the tmpDir variable
 						$form['tmpLocation'] = $gallery->getConfig('data.gallery.tmp');
@@ -267,7 +263,6 @@ class ConfigureView extends GalleryView {
 		GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailAdminHelper.class');
 
 		$funcsReport = AddviaemailAdminHelper::testRequiredFunctions();
-
 		if (count($funcsReport['fail']) > 0) {
 			$configure['funcsReport'] = $funcsReport;
 		}

@@ -113,19 +113,15 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		}
 
 		$total = 0;
-
 		while ($result = $results->nextResult()) {
 			// Data_length + Index_length
 			switch ($dbversion) {
 				case 4:
 					$total += $result[5] + $result[7];
-
 					break;
-
 				case 3:
 				case 5:
 					$total += $result[6] + $result[8];
-
 					break;
 			}
 		}
@@ -164,6 +160,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			$minitask,
 			$progress
 		);
+
 		$base                   = $gallery->getConfig('data.gallery.base');
 		$derivative             = $gallery->getConfig('data.gallery.cache') . 'derivative/';
 		$albums                 = $gallery->getConfig('data.gallery.albums');
@@ -177,6 +174,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			$minitask,
 			$progress
 		);
+
 		$statistics['derivative'] = $this->_dirSize($derivative, $minitask, $taskname, $progress, $module, $templateAdapter);
 		$progress                 = 0.8;
 		$minitask                 = $module->translate('Scanning album folder');
@@ -185,6 +183,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 			$minitask,
 			$progress
 		);
+
 		$statistics['albums'] = $this->_dirSize($albums, $taskname, $minitask, $progress, $module, $templateAdapter);
 
 		// Put to disk
@@ -214,7 +213,6 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		// Loop
 		$i    = 0;
 		$size = $size / $mod / $mod;
-
 		while ($size >= $mod && $i < $ii) {
 			$size /= $mod;
 			$i++;
@@ -251,7 +249,6 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		$queue       = array($path);
 		$queue_count = 1;
 		$i           = 0;
-
 		while ($i < $queue_count) {
 			$current = $queue[$i++];
 
@@ -265,7 +262,6 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 					// Get list of directories or filesizes
 					$path = $current . $entry;
-
 					if (is_file($path)) {
 						$size += filesize($path);
 					} elseif (is_dir($path)) {

@@ -52,7 +52,6 @@ class AddviaemailpageController extends GalleryController {
 		$results['status']   = $status;
 		$results['error']    = $error;
 		$results['redirect'] = $redirect;
-
 		return array(null, $results);
 	}
 }
@@ -83,7 +82,6 @@ class AddviaemailpageView extends GalleryView {
 		if ($ret) {
 			$template->setVariable('failure', '1');
 			$template->setVariable('failureMsg', $ret->getErrorMessage());
-
 			//return array($ret, null);
 		}
 

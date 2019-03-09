@@ -59,7 +59,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -68,7 +67,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -86,7 +84,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -108,7 +105,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -133,7 +129,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -144,7 +139,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -152,7 +146,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -162,10 +155,8 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 				$this->_dupItem->getId(),
 			)
 		);
-
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -177,6 +168,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 			count($signatures[$this->_item->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
 		);
+
 		$this->assert(
 			count($signatures[$this->_dupItem->getId()]) == 12,
 			'didn\'t get 12 values for the signature as expected'
@@ -187,7 +179,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -195,7 +186,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 	}
@@ -206,7 +196,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -214,13 +203,11 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
 		// signature exists
 		$this->assert(!empty($signatures), 'can\'t find CRC32 for item');
-
 		// and correct
 		$this->assertEquals(
 			$signatures[$this->_item->getId()],
@@ -249,7 +236,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 	}
@@ -261,7 +247,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -288,7 +273,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -297,7 +281,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -308,7 +291,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -317,7 +299,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -330,7 +311,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -340,7 +320,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -352,7 +331,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -361,7 +339,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -376,7 +353,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -384,7 +360,6 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 	}

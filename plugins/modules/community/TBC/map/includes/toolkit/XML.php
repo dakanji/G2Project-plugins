@@ -78,7 +78,6 @@ function read_xml_array_from_text($xmltext) {
 	if (xml_parser_set_option($xml_parser, XML_OPTION_SKIP_WHITE, 0) == false) {
 		// Error setting case folding - destroy the parser and return
 		xml_parser_free($xml_parser);
-
 		return false;
 	}
 
@@ -88,7 +87,6 @@ function read_xml_array_from_text($xmltext) {
 	if (xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, 0) == false) {
 		// Error setting case folding - destroy the parser and return
 		xml_parser_free($xml_parser);
-
 		return false;
 	}
 
@@ -96,7 +94,6 @@ function read_xml_array_from_text($xmltext) {
 	if (xml_parse_into_struct($xml_parser, $xmltext, $vals, $index) == 0) {
 		// Error Parsing XML - destroy the parser and return
 		xml_parser_free($xml_parser);
-
 		return false;
 	}
 
@@ -235,13 +232,10 @@ function xml_get_children(&$input_xml_array, &$item_num) {
 			case 'cdata':     // This is a non parsed Character Data tag
 			case 'complete':  // This is a pair of XML matching tags possibly with text (but no tags) inside
 				$children[] = xml_get_child($v);
-
 				break;
-
 			case 'open':      // This is a single opening tag
 					// Recursively get the children for this opening tag
 					$children[] = xml_get_child($v, xml_get_children($input_xml_array, $item_num));
-
 				break;    // This is a single opening tag
 			case 'close':     // This is a single closing tag
 				break 2;  // leave "while" loop (and the function)

@@ -74,7 +74,6 @@ class UserinfoView extends GalleryView {
 
 		$count  = $data['result']['uiPerPage']; //# to display per page
 		$offset = '0';
-
 		if (isset($_GET['g2_page']) && ($_GET['g2_page'] == '1' || $_GET['g2_page'] == '')) {
 			$offset = '0';
 		} else {
@@ -136,7 +135,6 @@ class UserinfoView extends GalleryView {
 		} else {
 			// Use Defaults
 			$column = $data['result']['uiDefaultSortColumn'];
-
 			if ($data['result']['uiDefaultSortOrder'] == 'DES') {
 				$optional = array(
 					'limit' => array(

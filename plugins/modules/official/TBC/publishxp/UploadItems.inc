@@ -57,7 +57,6 @@ class UploadItemsController extends GalleryController {
 		global $gallery;
 
 		$results = $error = $status = array();
-
 		if (isset($form['action']['uploadItem'])) {
 			if (!isset($form['albumId'])) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
@@ -96,7 +95,6 @@ class UploadItemsController extends GalleryController {
 
 			// The Windows Web Publishing Wizard does not send the file name in UTF-8
 			$sourceEncoding = $this->_getCharsetFromRequest();
-
 			if ($gallery->getDebug()) {
 				$gallery->debug("Source encoding from Windows client: $sourceEncoding");
 			}
@@ -113,7 +111,6 @@ class UploadItemsController extends GalleryController {
 			$title       = basename($file['name']);
 			$caption     = '';
 			$description = '';
-
 			if (!empty($form['stripExtensions'])) {
 				$title = GalleryUtilities::getFileBase($title);
 			}
@@ -158,7 +155,6 @@ class UploadItemsController extends GalleryController {
 
 			// Allow ItemAddOptions to process added item(s)
 			$session =& $gallery->getSession();
-
 			if ($session->exists('publishxp.extraOptionsForm')) {
 				$extraOptionsForm = unserialize($session->get('publishxp.extraOptionsForm'));
 			} else {
@@ -191,7 +187,6 @@ class UploadItemsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 
@@ -214,30 +209,20 @@ class UploadItemsController extends GalleryController {
 		switch ($lcid) {
 			case 1054: // Thai
 				$codePage = 874;
-
 				break;
-
 			case 1041: // Japanese
 				$codePage = 932;
-
 				break;
-
 			case 2052: // Chinese (Simplified)
 				$codePage = 936;
-
 				break;
-
 			case 1042: // Korean
 				$codePage = 949;
-
 				break;
-
 			case 1028: // Chinese (Traditional)
 			case 3076: // Chinese (Hong Kong)
 				$codePage = 950;
-
 				break;
-
 			case 1050: // Croatian
 			case 1029: // Czech
 			case 1038: // Hungarian
@@ -246,15 +231,11 @@ class UploadItemsController extends GalleryController {
 			case 1051: // Slovak
 			case 1060: // Slovenian
 				$codePage = 1250;
-
 				break;
-
 			case 1026: // Bulgarian
 			case 1049: // Russian
 				$codePage = 1251;
-
 				break;
-
 			case 1046: // Brazilian
 			case 1027: // Catalan
 			case 1030: // Danish
@@ -269,36 +250,24 @@ class UploadItemsController extends GalleryController {
 			case 3082: // Spanish
 			case 1053: // Swedish
 				$codePage = 1252;
-
 				break;
-
 			case 1032: // Greek
 				$codePage = 1253;
-
 				break;
-
 			case 1055: // Turkish
 				$codePage = 1254;
-
 				break;
-
 			case 1037: // Hebrew
 				$codePage = 1255;
-
 				break;
-
 			case 1025: // Arabic
 				$codePage = 1256;
-
 				break;
-
 			case 1061: // Estonian
 			case 1062: // Latvian
 			case 1063: // Lithuanian
 				$codePage = 1257;
-
 				break;
-
 			default:
 				$codePage = 1252;
 		}

@@ -53,16 +53,13 @@ class CheckoutdownloadCallbacks {
 					$ret,
 					$block['checkoutDownload']['downloadTest']
 				) = CheckoutDownloadHelper::checkDownloadOffer($params['transactionId']);
-
 				if ($ret) {
 					return $ret;
 				}
 
 				$block['checkoutDownload']['downloaded']       = $transaction->getTimeDownloaded();
 				$block['checkoutDownload']['downloadAttempts'] = $transaction->getDownloadAttempts();
-
 				return null;
-
 			break;
 		}
 

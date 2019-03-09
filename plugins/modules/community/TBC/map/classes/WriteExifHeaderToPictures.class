@@ -88,7 +88,6 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
 		}
 
 		$ids = array();
-
 		while ($res = $result->nextResult()) {
 			$ids[] = $res[0];
 		}
@@ -96,7 +95,8 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
 		$totalitems            = count($ids);
 		$current               = 1;
 		$insertEXIFcoordinates = $module->translate('Inserting GPS coordinates into EXIF header');
-		$ret                   = $templateAdapter->updateProgressBar(
+
+		$ret = $templateAdapter->updateProgressBar(
 			$insertEXIFcoordinates,
 			$module->translate(
 				array(

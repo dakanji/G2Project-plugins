@@ -64,7 +64,6 @@ class Auth_OpenID_TrustRoot {
 	 */
 	public function buildDiscoveryURL($realm) {
 		$parsed = Auth_OpenID_TrustRoot::_parse($realm);
-
 		if ($parsed === false) {
 			return false;
 		}
@@ -76,7 +75,6 @@ class Auth_OpenID_TrustRoot {
 			}
 
 			$www_domain = 'www' . $parsed['host'];
-
 			return sprintf(
 				'%s://%s%s',
 				$parsed['scheme'],
@@ -102,7 +100,6 @@ class Auth_OpenID_TrustRoot {
 	 */
 	public function _parse($trust_root) {
 		$trust_root = Auth_OpenID_urinorm($trust_root);
-
 		if ($trust_root === null) {
 			return false;
 		}
@@ -112,7 +109,6 @@ class Auth_OpenID_TrustRoot {
 		}
 
 		$parts = @parse_url($trust_root);
-
 		if ($parts === false) {
 			return false;
 		}
@@ -120,7 +116,6 @@ class Auth_OpenID_TrustRoot {
 		$required_parts  = array('scheme', 'host');
 		$forbidden_parts = array('user', 'pass', 'fragment');
 		$keys            = array_keys($parts);
-
 		if (array_intersect($keys, $required_parts) != $required_parts) {
 			return false;
 		}
@@ -135,7 +130,6 @@ class Auth_OpenID_TrustRoot {
 
 		$scheme          = strtolower($parts['scheme']);
 		$allowed_schemes = array('http', 'https');
-
 		if (!in_array($scheme, $allowed_schemes)) {
 			return false;
 		}
@@ -143,13 +137,10 @@ class Auth_OpenID_TrustRoot {
 		$parts['scheme'] = $scheme;
 		$host            = strtolower($parts['host']);
 		$hostparts       = explode('*', $host);
-
 		switch (count($hostparts)) {
 			case 1:
 				$parts['wildcard'] = false;
-
 				break;
-
 			case 2:
 				if ($hostparts[0]
 					|| ($hostparts[1] && substr($hostparts[1], 0, 1) != '.')
@@ -159,9 +150,7 @@ class Auth_OpenID_TrustRoot {
 
 				$host              = $hostparts[1];
 				$parts['wildcard'] = true;
-
 				break;
-
 			default:
 				return false;
 		}
@@ -171,10 +160,8 @@ class Auth_OpenID_TrustRoot {
 		}
 
 		$parts['host'] = $host;
-
 		if (isset($parts['path'])) {
 			$path = strtolower($parts['path']);
-
 			if (substr($path, 0, 1) != '/') {
 				return false;
 			}
@@ -183,13 +170,11 @@ class Auth_OpenID_TrustRoot {
 		}
 
 		$parts['path'] = $path;
-
 		if (!isset($parts['port'])) {
 			$parts['port'] = false;
 		}
 
 		$parts['unparsed'] = $trust_root;
-
 		return $parts;
 	}
 
@@ -220,7 +205,6 @@ class Auth_OpenID_TrustRoot {
 	 */
 	public function isSane($trust_root) {
 		$parts = Auth_OpenID_TrustRoot::_parse($trust_root);
-
 		if ($parts === false) {
 			return false;
 		}
@@ -231,7 +215,6 @@ class Auth_OpenID_TrustRoot {
 		}
 
 		$host_parts = explode('.', $parts['host']);
-
 		if ($parts['wildcard']) {
 			// Remove the empty string from the beginning of the array
 			array_shift($host_parts);
@@ -253,13 +236,11 @@ class Auth_OpenID_TrustRoot {
 		// Get the top-level domain of the host. If it is not a valid TLD,
 		// it's not sane.
 		preg_match(Auth_OpenID___TLDs, $parts['host'], $matches);
-
 		if (!$matches) {
 			return false;
 		}
 
 		$tld = $matches[1];
-
 		if (count($host_parts) == 1) {
 			return false;
 		}
@@ -269,7 +250,6 @@ class Auth_OpenID_TrustRoot {
 			// so there needs to be more than two segments specified
 			// (e.g. *.co.uk is insane)
 			$second_level = $host_parts[count($host_parts) - 2];
-
 			if (strlen($tld) == 2 && strlen($second_level) <= 3) {
 				return count($host_parts) > 2;
 			}
@@ -295,7 +275,6 @@ class Auth_OpenID_TrustRoot {
 	public function match($trust_root, $url) {
 		$trust_root_parsed = Auth_OpenID_TrustRoot::_parse($trust_root);
 		$url_parsed        = Auth_OpenID_TrustRoot::_parse($url);
-
 		if (!$trust_root_parsed || !$url_parsed) {
 			return false;
 		}
@@ -308,7 +287,6 @@ class Auth_OpenID_TrustRoot {
 		if ($trust_root_parsed['wildcard']) {
 			$host_tail = $trust_root_parsed['host'];
 			$host      = $url_parsed['host'];
-
 			if ($host_tail
 				&& substr($host, -(strlen($host_tail))) != $host_tail
 				&& substr($host_tail, 1) != $host
@@ -324,7 +302,6 @@ class Auth_OpenID_TrustRoot {
 		// Check path and query matching
 		$base_path = $trust_root_parsed['path'];
 		$path      = $url_parsed['path'];
-
 		if (!isset($trust_root_parsed['query'])) {
 			if ($base_path != $path) {
 				if (substr($path, 0, strlen($base_path)) != $base_path) {
@@ -343,7 +320,6 @@ class Auth_OpenID_TrustRoot {
 			$query  = @$url_parsed['query'];
 			$qplus  = substr($query, 0, strlen($base_query) + 1);
 			$bqplus = $base_query . '&';
-
 			if ($base_path != $path
 				|| ($base_query != $query && $qplus != $bqplus)
 			) {
@@ -383,7 +359,6 @@ function filter_extractReturnURL(&$endpoint) {
 
 function &Auth_OpenID_extractReturnURL(&$endpoint_list) {
 	$result = array();
-
 	foreach ($endpoint_list as $endpoint) {
 		if (filter_extractReturnURL($endpoint)) {
 			$result[] = $endpoint;
@@ -404,7 +379,6 @@ function Auth_OpenID_returnToMatches($allowed_return_to_urls, $return_to) {
 		// parsing it as a realm, and not trying to match it if it has
 		// a wildcard.
 		$return_realm = Auth_OpenID_TrustRoot::_parse($allowed_return_to);
-
 		if (// Parses as a trust root
 			($return_realm !== false)
 			// Does not have a wildcard
@@ -454,7 +428,6 @@ function Auth_OpenID_getAllowedReturnURLs(
 
 	$return_to_urls     = array();
 	$matching_endpoints = Auth_OpenID_extractReturnURL($endpoints);
-
 	foreach ($matching_endpoints as $e) {
 		$return_to_urls[] = $e->server_url;
 	}
@@ -479,7 +452,6 @@ function Auth_OpenID_verifyReturnTo(
 	$_vrfy = 'Auth_OpenID_getAllowedReturnURLs'
 ) {
 	$disco_url = Auth_OpenID_TrustRoot::buildDiscoveryURL($realm_str);
-
 	if ($disco_url === false) {
 		return false;
 	}

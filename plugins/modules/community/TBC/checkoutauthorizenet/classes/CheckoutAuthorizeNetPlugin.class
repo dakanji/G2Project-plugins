@@ -85,6 +85,7 @@ class CheckoutAuthorizeNetPlugin extends CheckoutPluginInterface_1_0 {
 		}
 
 		$session->put('checkoutauthorizenet.items', serialize($items));
+
 		$session->put('checkoutauthorizenet.product', serialize($product));
 		$session->put('checkoutauthorizenet.price', serialize($price));
 		$session->put('checkoutauthorizenet.paper', serialize($paper));

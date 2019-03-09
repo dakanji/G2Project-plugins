@@ -50,7 +50,6 @@ class CheckoutGroupsEventHelper {
 		$data          = $event->getData();
 		$transactionId = $transaction->getId();
 		$data          = $event->getData();
-
 		if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}

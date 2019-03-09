@@ -171,7 +171,6 @@ class SlideshowHelper {
 			}
 
 			$childId = $child->getId();
-
 			if (!isset($permissions[$childId]['core.view'])) {
 				return array(
 					GalleryCoreApi::error(
@@ -208,7 +207,6 @@ class SlideshowHelper {
 			 */
 			if (GalleryUtilities::isA($child, 'GalleryPhotoItem')) {
 				$image = null;
-
 				if (isset($permissions[$childId]['core.viewSource'])) {
 					// Full size; check for preferred copy
 					if (isset($preferredFullImages[$childId])) {
@@ -219,11 +217,9 @@ class SlideshowHelper {
 				} elseif (isset($permissions[$childId]['core.viewResizes'], $resizedImages[$childId])
 				) {
 					$maxSize = 0;
-
 					foreach ($resizedImages[$childId] as $resize) {
 						// Pick the largest resize
 						$tmp = $resize->getWidth() * $resize->getHeight();
-
 						if ($tmp > $maxSize) {
 							$image   = $resize;
 							$maxSize = $tmp;
@@ -266,13 +262,11 @@ class SlideshowHelper {
 
 		$itemCount  = $itemCount[$itemId];
 		$prevOffset = $offset - SLIDESHOW_MEDIARSS_ITEMS_PER_PAGE;
-
 		if ($prevOffset < 0) {
 			$prevOffset = null;
 		}
 
 		$nextOffset = $offset + SLIDESHOW_MEDIARSS_ITEMS_PER_PAGE;
-
 		if ($nextOffset >= $itemCount) {
 			$nextOffset = null;
 		}

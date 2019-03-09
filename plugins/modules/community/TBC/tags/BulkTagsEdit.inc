@@ -37,7 +37,6 @@ class BulkTagsEditController extends GalleryController {
 		list($itemId, $page) = GalleryUtilities::getRequestVariables('itemId', 'page');
 
 		$status = $error = array();
-
 		if (isset($form['action']['save'])) {
 			$ids = array_keys($form['items']);
 
@@ -62,7 +61,6 @@ class BulkTagsEditController extends GalleryController {
 
 			$status['successCount'] = 0;
 			$status['errorCount']   = 0;
-
 			foreach ($items as $item) {
 				// Make sure we have permission to edit this item
 				list($ret, $permissions) = GalleryCoreApi::getPermissions($item->getId());
@@ -72,7 +70,6 @@ class BulkTagsEditController extends GalleryController {
 				}
 
 				$id = $item->getId();
-
 				if (isset($permissions['tags.edit'])) {
 					if ($item->getSerialNumber() == $form['items'][$id]['serialNumber']) {
 						// Save the tags
@@ -120,7 +117,6 @@ class BulkTagsEditController extends GalleryController {
 			 */
 			$redirect['view']   = 'tags.BulkTagsEdit';
 			$redirect['itemId'] = (int)$itemId;
-
 			if (!$status['errorCount'] && isset($form['action']['save']['next'])) {
 				$redirect['page'] = $page + 1;
 			} elseif (!$status['errorCount'] && isset($form['action']['save']['previous'])) {
@@ -144,7 +140,6 @@ class BulkTagsEditController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -183,7 +178,6 @@ class BulkTagsEditView extends GalleryView {
 			$form['childItems'] = array();
 			$numPages           = 1;
 			$numPages           = ceil(sizeof($childIds) / $form['numPerPage']);
-
 			if (empty($page) && !empty($selectedId)) {
 				// No page given.  Determine which page we're on from the selectedId
 				for ($i = 0; $i < count($childIds); $i++) {
@@ -208,7 +202,6 @@ class BulkTagsEditView extends GalleryView {
 				}
 
 				$albumPageSize = $theme->getPageSize($params);
-
 				if (!empty($albumPageSize)) {
 					$page = ceil((($albumPage - 1) * $albumPageSize + 1) / $form['numPerPage']);
 				}
@@ -243,7 +236,6 @@ class BulkTagsEditView extends GalleryView {
 				if (isset($derivatives[$childId])) {
 					foreach ($derivatives[$childId] as $derivative) {
 						$type = $derivative->getDerivativeType();
-
 						if (empty($form['items'][$childId]['resize'])
 							&& $type == DERIVATIVE_TYPE_IMAGE_RESIZE
 						) {
@@ -273,6 +265,7 @@ class BulkTagsEditView extends GalleryView {
 		$BulkTagsEdit['numPages']  = $numPages;
 
 		$template->setVariable('BulkTagsEdit', $BulkTagsEdit);
+
 		$template->setVariable('controller', 'tags.BulkTagsEdit');
 		$template->javascript('lib/yui/yahoo-min.js');
 		$template->javascript('lib/yui/dom-min.js');

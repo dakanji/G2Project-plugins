@@ -73,7 +73,6 @@ class ICalendarHelper {
 		}
 
 		$handle = $platform->fopen($fspath, 'rb');
-
 		if (!handle) {
 			return GalleryCoreApi::error(GALLERY_ERROR);
 		}
@@ -133,6 +132,7 @@ class ICalendarHelper {
 				)
 			);
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
+
 			$ret = $newEntity->save();
 
 			if ($ret) {
@@ -185,7 +185,6 @@ class ICalendarHelper {
 		}
 
 		$ids = array();
-
 		while ($result = $results->nextResult()) {
 			$ids[] = $result[0];
 		}
@@ -197,10 +196,8 @@ class ICalendarHelper {
 		}
 
 		$components = array();
-
 		foreach ($entities as $entity) {
 			$component = ICalendarHelper::getComponentFromEntity($entity);
-
 			if (!is_array($components[$component->name])) {
 				$components[$component->name] = array();
 			}
@@ -231,6 +228,7 @@ class ICalendarHelper {
 			}
 
 			$newItem->setFoo();
+
 			$ret = $newItem->save();
 
 			if ($ret) {
@@ -278,7 +276,6 @@ class ICalendarHelper {
 		}
 
 		$ids = array();
-
 		while ($result = $results->nextResult()) {
 			$ids[] = $result[0];
 		}

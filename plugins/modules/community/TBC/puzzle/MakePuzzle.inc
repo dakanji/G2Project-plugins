@@ -87,7 +87,6 @@ class MakePuzzleView extends GalleryView {
 			}
 
 			$size = ($source->getWidth()) * ($source->getHeight());
-
 			if ($size > 0) {
 				$images[$size] = $source;
 			}
@@ -111,7 +110,6 @@ class MakePuzzleView extends GalleryView {
 				foreach (array_keys($resizes[$itemId]) as $key) {
 					$resizedImage = $resizes[$itemId][$key];
 					$size         = ($resizedImage->getWidth()) * ($resizedImage->getHeight());
-
 					if ($size > 0) {
 						$images[$size] = $resizedImage;
 					}
@@ -243,7 +241,6 @@ class MakePuzzleView extends GalleryView {
 		$widthRatio   = $this->WIDTH / $appletItem->getWidth();
 		$puzzleWidth  = $this->WIDTH; // $puzzleWidth  = $widthRatio * $appletItem->getWidth();
 		$puzzleHeight = $widthRatio * $appletItem->getHeight();
-
 		if ($puzzleHeight > $this->HEIGHT) {
 			$heightRatio  = $this->HEIGHT / $puzzleHeight;
 			$puzzleHeight = $this->HEIGHT; // $puzzleHeight = $heightRatio * $puzzleHeight;
@@ -271,7 +268,6 @@ class MakePuzzleView extends GalleryView {
 		$MakePuzzle['puzzleWidth']        = $puzzleWidth;
 		$MakePuzzle['puzzleHeight']       = $puzzleHeight;
 		$MakePuzzle['puzzleType']         = 1;
-
 		if (!empty($form['puzzleType'])) {
 			if ($form['puzzleType'] == 'slide') {
 				$MakePuzzle['puzzleType'] = 1;
@@ -281,7 +277,6 @@ class MakePuzzleView extends GalleryView {
 		}
 
 		$MakePuzzle['puzzleNum'] = 2;
-
 		if (!empty($form['puzzleLevel'])) {
 			if ($form['puzzleLevel'] == 'easy') {
 				$MakePuzzle['puzzleNum'] = 2;

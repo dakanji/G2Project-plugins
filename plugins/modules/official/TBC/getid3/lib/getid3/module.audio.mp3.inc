@@ -21,14 +21,13 @@
 define('GETID3_MP3_VALID_CHECK_FRAMES', 35);
 class getid3_mp3 extends getid3_handler {
 	public $allow_bruteforce = false; // forces getID3() to scan the file byte-by-byte and log all the valid audio frame headers - extremely slow, unrecommended, but may provide data from otherwise-unusuable files
-
 	public function Analyze() {
 		$info          =& $this->getid3->info;
 		$initialOffset = $info['avdataoffset'];
-
 		if (!$this->getOnlyMPEGaudioInfo($info['avdataoffset'])) {
 			if ($this->allow_bruteforce) {
 				$info['error'][] = 'Rescanning file in BruteForce mode';
+
 				$this->getOnlyMPEGaudioInfoBruteForce($this->getid3->fp, $info);
 			}
 		}
@@ -39,7 +38,6 @@ class getid3_mp3 extends getid3_handler {
 
 		if (((isset($info['id3v2']['headerlength']) && ($info['avdataoffset'] > $info['id3v2']['headerlength'])) || (!isset($info['id3v2']) && ($info['avdataoffset'] > 0) && ($info['avdataoffset'] != $initialOffset)))) {
 			$synchoffsetwarning = 'Unknown data before synch ';
-
 			if (isset($info['id3v2']['headerlength'])) {
 				$synchoffsetwarning .= '(ID3v2 header ends at ' . $info['id3v2']['headerlength'] . ', then ' . ($info['avdataoffset'] - $info['id3v2']['headerlength']) . ' bytes garbage, ';
 			} elseif ($initialOffset > 0) {
@@ -49,7 +47,6 @@ class getid3_mp3 extends getid3_handler {
 			}
 
 			$synchoffsetwarning .= 'synch detected at ' . $info['avdataoffset'] . ')';
-
 			if (isset($info['audio']['bitrate_mode']) && ($info['audio']['bitrate_mode'] == 'cbr')) {
 				if (!empty($info['id3v2']['headerlength']) && (($info['avdataoffset'] - $info['id3v2']['headerlength']) == $info['mpeg']['audio']['framelength'])) {
 					$synchoffsetwarning          .= '. This is a known problem with some versions of LAME (3.90-3.92) DLL in CBR mode.';
@@ -67,7 +64,6 @@ class getid3_mp3 extends getid3_handler {
 
 		if (isset($info['mpeg']['audio']['LAME'])) {
 			$info['audio']['codec'] = 'LAME';
-
 			if (!empty($info['mpeg']['audio']['LAME']['long_version'])) {
 				$info['audio']['encoder'] = rtrim($info['mpeg']['audio']['LAME']['long_version'], "\x00");
 			} elseif (!empty($info['mpeg']['audio']['LAME']['short_version'])) {
@@ -76,7 +72,6 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		$CurrentDataLAMEversionString = (!empty($CurrentDataLAMEversionString) ? $CurrentDataLAMEversionString : (isset($info['audio']['encoder']) ? $info['audio']['encoder'] : ''));
-
 		if (!empty($CurrentDataLAMEversionString) && (substr($CurrentDataLAMEversionString, 0, 6) == 'LAME3.') && !preg_match('[0-9\)]', substr($CurrentDataLAMEversionString, -1))) {
 			// a version number of LAME that does not end with a number like "LAME3.92"
 			// or with a closing parenthesis like "LAME3.88 (alpha)"
@@ -88,15 +83,14 @@ class getid3_mp3 extends getid3_handler {
 			$PossibleLAMEversionStringOffset = $info['avdataend'] - $PossiblyLongerLAMEversion_FrameLength;
 
 			$this->fseek($PossibleLAMEversionStringOffset);
-			$PossiblyLongerLAMEversion_Data = $this->fread($PossiblyLongerLAMEversion_FrameLength);
 
+			$PossiblyLongerLAMEversion_Data = $this->fread($PossiblyLongerLAMEversion_FrameLength);
 			switch (substr($CurrentDataLAMEversionString, -1)) {
 				case 'a':
 				case 'b':
 					// "LAME3.94a" will have a longer version string of "LAME3.94 (alpha)" for example
 					// need to trim off "a" to match longer string
 					$CurrentDataLAMEversionString = substr($CurrentDataLAMEversionString, 0, -1);
-
 					break;
 			}
 
@@ -118,7 +112,6 @@ class getid3_mp3 extends getid3_handler {
 			case 1:
 			case 2:
 				$info['audio']['dataformat'] = 'mp' . $info['mpeg']['audio']['layer'];
-
 				break;
 		}
 
@@ -128,19 +121,15 @@ class getid3_mp3 extends getid3_handler {
 				case 'mp2':
 				case 'mp3':
 					$info['fileformat'] = $info['audio']['dataformat'];
-
 					break;
-
 				default:
 					$info['warning'][] = 'Expecting [audio][dataformat] to be mp1/mp2/mp3 when fileformat == mp3, [audio][dataformat] actually "' . $info['audio']['dataformat'] . '"';
-
 					break;
 			}
 		}
 
 		if (empty($info['fileformat'])) {
 			unset($info['fileformat'], $info['audio']['bitrate_mode'], $info['avdataoffset'], $info['avdataend']);
-
 			return false;
 		}
 
@@ -153,17 +142,14 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		$info['audio']['encoder_options'] = $this->GuessEncoderOptions();
-
 		return true;
 	}
 
 	public function GuessEncoderOptions() {
 		// shortcuts
 		$info =& $this->getid3->info;
-
 		if (!empty($info['mpeg']['audio'])) {
 			$thisfile_mpeg_audio =& $info['mpeg']['audio'];
-
 			if (!empty($thisfile_mpeg_audio['LAME'])) {
 				$thisfile_mpeg_audio_lame =& $thisfile_mpeg_audio['LAME'];
 			}
@@ -240,7 +226,7 @@ class getid3_mp3 extends getid3_handler {
 			} elseif ($info['audio']['bitrate_mode'] == 'vbr') {
 				// http://gabriel.mp3-tech.org/mp3infotag.html
 				// int    Quality = (100 - 10 * gfp->VBR_q - gfp->quality)h
-				$LAME_V_value    = 10  - ceil($thisfile_mpeg_audio_lame['vbr_quality'] / 10);
+				$LAME_V_value    = 10 - ceil($thisfile_mpeg_audio_lame['vbr_quality'] / 10);
 				$LAME_q_value    = 100 - $thisfile_mpeg_audio_lame['vbr_quality'] - ($LAME_V_value * 10);
 				$encoder_options = '-V' . $LAME_V_value . ' -q' . $LAME_q_value;
 			} elseif ($info['audio']['bitrate_mode'] == 'cbr') {
@@ -268,7 +254,6 @@ class getid3_mp3 extends getid3_handler {
 
 		if (!empty($thisfile_mpeg_audio_lame['lowpass_frequency'])) {
 			$ExplodedOptions = explode(' ', $encoder_options, 4);
-
 			if ($ExplodedOptions[0] == '--r3mix') {
 				$ExplodedOptions[1] = 'r3mix';
 			}
@@ -314,7 +299,6 @@ class getid3_mp3 extends getid3_handler {
 							}
 
 							break;
-
 						default:
 							break;
 					}
@@ -333,12 +317,10 @@ class getid3_mp3 extends getid3_handler {
 					case 0: // <= 32000
 						// may or may not be same as source frequency - ignore
 						break;
-
 					case 1: // 44100
 					case 2: // 48000
 					case 3: // 48000+
 						$ExplodedOptions = explode(' ', $encoder_options, 4);
-
 						switch ($ExplodedOptions[0]) {
 							case '--preset':
 							case '--alt-preset':
@@ -350,9 +332,7 @@ class getid3_mp3 extends getid3_handler {
 									case 'extreme':
 									case 'insane':
 										$encoder_options .= ' --resample ' . $thisfile_mpeg_audio['sample_rate'];
-
 										break;
-
 									default:
 										static $ExpectedResampledRate = array(
 											'phon+/lw/mw-eu/sw|16000' => 16000,
@@ -375,11 +355,9 @@ class getid3_mp3 extends getid3_handler {
 								}
 
 								break;
-
 							case '--r3mix':
 							default:
 								$encoder_options .= ' --resample ' . $thisfile_mpeg_audio['sample_rate'];
-
 								break;
 						}
 
@@ -402,6 +380,7 @@ class getid3_mp3 extends getid3_handler {
 		static $MPEGaudioBitrateLookup;
 		static $MPEGaudioFrequencyLookup;
 		static $MPEGaudioChannelModeLookup;
+
 		static $MPEGaudioModeExtensionLookup;
 		static $MPEGaudioEmphasisLookup;
 
@@ -417,7 +396,6 @@ class getid3_mp3 extends getid3_handler {
 
 		if ($this->fseek($offset) != 0) {
 			$info['error'][] = 'decodeMPEGaudioHeader() failed to seek to next offset at ' . $offset;
-
 			return false;
 		}
 
@@ -451,12 +429,10 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		$thisfile_mpeg_audio =& $info['mpeg']['audio'];
-
 		if ($MPEGaudioHeaderValidCache[$head4]) {
 			$thisfile_mpeg_audio['raw'] = $MPEGheaderRawArray;
 		} else {
 			$info['error'][] = 'Invalid MPEG audio header (' . getid3_lib::PrintHexBytes($head4) . ') at offset ' . $offset;
-
 			return false;
 		}
 
@@ -474,7 +450,6 @@ class getid3_mp3 extends getid3_handler {
 			$thisfile_mpeg_audio['emphasis']      = $MPEGaudioEmphasisLookup[$thisfile_mpeg_audio['raw']['emphasis']];
 			$info['audio']['channels']            = $thisfile_mpeg_audio['channels'];
 			$info['audio']['sample_rate']         = $thisfile_mpeg_audio['sample_rate'];
-
 			if ($thisfile_mpeg_audio['protection']) {
 				$thisfile_mpeg_audio['crc'] = getid3_lib::BigEndian2Int(substr($headerstring, 4, 2));
 			}
@@ -488,7 +463,6 @@ class getid3_mp3 extends getid3_handler {
 
 		$thisfile_mpeg_audio['padding'] = (bool)$thisfile_mpeg_audio['raw']['padding'];
 		$thisfile_mpeg_audio['bitrate'] = $MPEGaudioBitrateLookup[$thisfile_mpeg_audio['version']][$thisfile_mpeg_audio['layer']][$thisfile_mpeg_audio['raw']['bitrate']];
-
 		if (($thisfile_mpeg_audio['bitrate'] == 'free') && ($offset == $info['avdataoffset'])) {
 			// only skip multiple frame check if free-format bitstream found at beginning of file
 			// otherwise is quite possibly simply corrupted data
@@ -498,19 +472,16 @@ class getid3_mp3 extends getid3_handler {
 		// For Layer 2 there are some combinations of bitrate and mode which are not allowed.
 		if (!$FastMPEGheaderScan && ($thisfile_mpeg_audio['layer'] == '2')) {
 			$info['audio']['dataformat'] = 'mp2';
-
 			switch ($thisfile_mpeg_audio['channelmode']) {
 				case 'mono':
 					if (($thisfile_mpeg_audio['bitrate'] == 'free') || ($thisfile_mpeg_audio['bitrate'] <= 192000)) {
 						// these are ok
 					} else {
 						$info['error'][] = $thisfile_mpeg_audio['bitrate'] . 'kbps not allowed in Layer 2, ' . $thisfile_mpeg_audio['channelmode'] . '.';
-
 						return false;
 					}
 
 					break;
-
 				case 'stereo':
 				case 'joint stereo':
 				case 'dual channel':
@@ -518,7 +489,6 @@ class getid3_mp3 extends getid3_handler {
 						// these are ok
 					} else {
 						$info['error'][] = intval(round($thisfile_mpeg_audio['bitrate'] / 1000)) . 'kbps not allowed in Layer 2, ' . $thisfile_mpeg_audio['channelmode'] . '.';
-
 						return false;
 					}
 
@@ -531,15 +501,12 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		$nextframetestoffset = $offset + 1;
-
 		if ($thisfile_mpeg_audio['bitrate'] != 'free') {
 			$info['audio']['bitrate'] = $thisfile_mpeg_audio['bitrate'];
-
 			if (isset($thisfile_mpeg_audio['framelength'])) {
 				$nextframetestoffset = $offset + $thisfile_mpeg_audio['framelength'];
 			} else {
 				$info['error'][] = 'Frame at offset(' . $offset . ') is has an invalid frame length.';
-
 				return false;
 			}
 		}
@@ -567,7 +534,6 @@ class getid3_mp3 extends getid3_handler {
 			$thisfile_mpeg_audio['VBR_entry_frames']    = getid3_lib::BigEndian2Int(substr($headerstring, $FraunhoferVBROffset + 24, 2)); // VbriEntryFrames
 			$ExpectedNumberOfAudioBytes                 = $thisfile_mpeg_audio['VBR_bytes'];
 			$previousbyteoffset                         = $offset;
-
 			for ($i = 0; $i < $thisfile_mpeg_audio['VBR_seek_offsets']; $i++) {
 				$Fraunhofer_OffsetN                              = getid3_lib::BigEndian2Int(substr($headerstring, $FraunhoferVBROffset, $thisfile_mpeg_audio['VBR_entry_bytes']));
 				$FraunhoferVBROffset                            += $thisfile_mpeg_audio['VBR_entry_bytes'];
@@ -580,7 +546,6 @@ class getid3_mp3 extends getid3_handler {
 			// depending on MPEG layer and number of channels
 			$VBRidOffset  = self::XingVBRidOffset($thisfile_mpeg_audio['version'], $thisfile_mpeg_audio['channelmode']);
 			$SideInfoData = substr($headerstring, 4 + 2, $VBRidOffset - 4);
-
 			if ((substr($headerstring, $VBRidOffset, strlen('Xing')) == 'Xing') || (substr($headerstring, $VBRidOffset, strlen('Info')) == 'Info')) {
 				// 'Xing' is traditional Xing VBR frame
 				// 'Info' is LAME-encoded CBR (This was done to avoid CBR files to be recognized as traditional Xing VBR files by some decoders.)
@@ -617,7 +582,6 @@ class getid3_mp3 extends getid3_handler {
 				$thisfile_mpeg_audio['xing_flags']['bytes']     = (bool)($thisfile_mpeg_audio['xing_flags_raw'] & 0x00000002);
 				$thisfile_mpeg_audio['xing_flags']['toc']       = (bool)($thisfile_mpeg_audio['xing_flags_raw'] & 0x00000004);
 				$thisfile_mpeg_audio['xing_flags']['vbr_scale'] = (bool)($thisfile_mpeg_audio['xing_flags_raw'] & 0x00000008);
-
 				if ($thisfile_mpeg_audio['xing_flags']['frames']) {
 					$thisfile_mpeg_audio['VBR_frames'] = getid3_lib::BigEndian2Int(substr($headerstring, $VBRidOffset + 8, 4));
 
@@ -632,7 +596,6 @@ class getid3_mp3 extends getid3_handler {
 				//if (!empty($thisfile_mpeg_audio['VBR_frames']) && !empty($thisfile_mpeg_audio['VBR_bytes'])) {
 				if (!empty($thisfile_mpeg_audio['VBR_frames'])) {
 					$used_filesize = 0;
-
 					if (!empty($thisfile_mpeg_audio['VBR_bytes'])) {
 						$used_filesize = $thisfile_mpeg_audio['VBR_bytes'];
 					} elseif (!empty($info['filesize'])) {
@@ -644,7 +607,6 @@ class getid3_mp3 extends getid3_handler {
 					}
 
 					$framelengthfloat = $used_filesize / $thisfile_mpeg_audio['VBR_frames'];
-
 					if ($thisfile_mpeg_audio['layer'] == '1') {
 						// BitRate = (((FrameLengthInBytes / 4) - Padding) * SampleRate) / 12
 						//$info['audio']['bitrate'] = ((($framelengthfloat / 4) - intval($thisfile_mpeg_audio['padding'])) * $thisfile_mpeg_audio['sample_rate']) / 12;
@@ -660,7 +622,6 @@ class getid3_mp3 extends getid3_handler {
 
 				if ($thisfile_mpeg_audio['xing_flags']['toc']) {
 					$LAMEtocData = substr($headerstring, $VBRidOffset + 16, 100);
-
 					for ($i = 0; $i < 100; $i++) {
 						$thisfile_mpeg_audio['toc'][$i] = ord($LAMEtocData[$i]);
 					}
@@ -677,7 +638,6 @@ class getid3_mp3 extends getid3_handler {
 					$thisfile_mpeg_audio_lame                  =& $thisfile_mpeg_audio['LAME'];
 					$thisfile_mpeg_audio_lame['long_version']  = substr($headerstring, $VBRidOffset + 120, 20);
 					$thisfile_mpeg_audio_lame['short_version'] = substr($thisfile_mpeg_audio_lame['long_version'], 0, 9);
-
 					if ($thisfile_mpeg_audio_lame['short_version'] >= 'LAME3.90') {
 						// extra 11 chars are not part of version string when LAMEtag present
 						unset($thisfile_mpeg_audio_lame['long_version']);
@@ -740,7 +700,6 @@ class getid3_mp3 extends getid3_handler {
 
 						$thisfile_mpeg_audio_lame_raw['RGAD_track'] = getid3_lib::BigEndian2Int(substr($headerstring, $LAMEtagOffsetContant + 0xAB, 2));
 						$thisfile_mpeg_audio_lame_raw['RGAD_album'] = getid3_lib::BigEndian2Int(substr($headerstring, $LAMEtagOffsetContant + 0xAD, 2));
-
 						if ($thisfile_mpeg_audio_lame_raw['RGAD_track'] != 0) {
 							$thisfile_mpeg_audio_lame_RGAD_track['raw']['name']        = ($thisfile_mpeg_audio_lame_raw['RGAD_track'] & 0xE000) >> 13;
 							$thisfile_mpeg_audio_lame_RGAD_track['raw']['originator']  = ($thisfile_mpeg_audio_lame_raw['RGAD_track'] & 0x1C00) >> 10;
@@ -749,7 +708,6 @@ class getid3_mp3 extends getid3_handler {
 							$thisfile_mpeg_audio_lame_RGAD_track['name']               = getid3_lib::RGADnameLookup($thisfile_mpeg_audio_lame_RGAD_track['raw']['name']);
 							$thisfile_mpeg_audio_lame_RGAD_track['originator']         = getid3_lib::RGADoriginatorLookup($thisfile_mpeg_audio_lame_RGAD_track['raw']['originator']);
 							$thisfile_mpeg_audio_lame_RGAD_track['gain_db']            = getid3_lib::RGADadjustmentLookup($thisfile_mpeg_audio_lame_RGAD_track['raw']['gain_adjust'], $thisfile_mpeg_audio_lame_RGAD_track['raw']['sign_bit']);
-
 							if (!empty($thisfile_mpeg_audio_lame_RGAD['peak_amplitude'])) {
 								$info['replay_gain']['track']['peak'] = $thisfile_mpeg_audio_lame_RGAD['peak_amplitude'];
 							}
@@ -768,7 +726,6 @@ class getid3_mp3 extends getid3_handler {
 							$thisfile_mpeg_audio_lame_RGAD_album['name']               = getid3_lib::RGADnameLookup($thisfile_mpeg_audio_lame_RGAD_album['raw']['name']);
 							$thisfile_mpeg_audio_lame_RGAD_album['originator']         = getid3_lib::RGADoriginatorLookup($thisfile_mpeg_audio_lame_RGAD_album['raw']['originator']);
 							$thisfile_mpeg_audio_lame_RGAD_album['gain_db']            = getid3_lib::RGADadjustmentLookup($thisfile_mpeg_audio_lame_RGAD_album['raw']['gain_adjust'], $thisfile_mpeg_audio_lame_RGAD_album['raw']['sign_bit']);
-
 							if (!empty($thisfile_mpeg_audio_lame_RGAD['peak_amplitude'])) {
 								$info['replay_gain']['album']['peak'] = $thisfile_mpeg_audio_lame_RGAD['peak_amplitude'];
 							}
@@ -793,7 +750,6 @@ class getid3_mp3 extends getid3_handler {
 
 						// byte $B0  if ABR {specified bitrate} else {minimal bitrate}
 						$thisfile_mpeg_audio_lame['raw']['abrbitrate_minbitrate'] = getid3_lib::BigEndian2Int(substr($headerstring, $LAMEtagOffsetContant + 0xB0, 1));
-
 						if ($thisfile_mpeg_audio_lame_raw['vbr_method'] == 2) { // Average BitRate (ABR)
 							$thisfile_mpeg_audio_lame['bitrate_abr'] = $thisfile_mpeg_audio_lame['raw']['abrbitrate_minbitrate'];
 						} elseif ($thisfile_mpeg_audio_lame_raw['vbr_method'] == 1) { // Constant BitRate (CBR)
@@ -831,7 +787,6 @@ class getid3_mp3 extends getid3_handler {
 						$thisfile_mpeg_audio_lame['surround_info']     = self::LAMEsurroundInfoLookup($thisfile_mpeg_audio_lame_raw['surround_info']);
 						$thisfile_mpeg_audio_lame['preset_used_id']    = ($PresetSurroundBytes & 0x07FF);
 						$thisfile_mpeg_audio_lame['preset_used']       = self::LAMEpresetUsedLookup($thisfile_mpeg_audio_lame);
-
 						if (!empty($thisfile_mpeg_audio_lame['preset_used_id']) && empty($thisfile_mpeg_audio_lame['preset_used'])) {
 							$info['warning'][] = 'Unknown LAME preset used (' . $thisfile_mpeg_audio_lame['preset_used_id'] . ') - please report to info@getid3.org';
 						}
@@ -866,10 +821,8 @@ class getid3_mp3 extends getid3_handler {
 			} else {
 				// not Fraunhofer or Xing VBR methods, most likely CBR (but could be VBR with no header)
 				$thisfile_mpeg_audio['bitrate_mode'] = 'cbr';
-
 				if ($recursivesearch) {
 					$thisfile_mpeg_audio['bitrate_mode'] = 'vbr';
-
 					if ($this->RecursiveFrameScanning($offset, $nextframetestoffset, true)) {
 						$recursivesearch                     = false;
 						$thisfile_mpeg_audio['bitrate_mode'] = 'cbr';
@@ -900,7 +853,7 @@ class getid3_mp3 extends getid3_handler {
 					//	if ($PossibleNullByte === "\x00") {
 					$info['avdataend']--;
 
-				//		$info['warning'][] = 'Extra null byte at end of MP3 data assumed to be RIFF padding and therefore ignored';
+					//		$info['warning'][] = 'Extra null byte at end of MP3 data assumed to be RIFF padding and therefore ignored';
 					//	} else {
 					//		$info['warning'][] = 'Too much data in file: expecting '.$ExpectedNumberOfAudioBytes.' bytes of audio data, found '.($info['avdataend'] - $info['avdataoffset']).' ('.(($info['avdataend'] - $info['avdataoffset']) - $ExpectedNumberOfAudioBytes).' bytes too many)';
 					//	}
@@ -913,10 +866,8 @@ class getid3_mp3 extends getid3_handler {
 		if (($thisfile_mpeg_audio['bitrate'] == 'free') && empty($info['audio']['bitrate'])) {
 			if (($offset == $info['avdataoffset']) && empty($thisfile_mpeg_audio['VBR_frames'])) {
 				$framebytelength = $this->FreeFormatFrameLength($offset, true);
-
 				if ($framebytelength > 0) {
 					$thisfile_mpeg_audio['framelength'] = $framebytelength;
-
 					if ($thisfile_mpeg_audio['layer'] == '1') {
 						// BitRate = (((FrameLengthInBytes / 4) - Padding) * SampleRate) / 12
 						$info['audio']['bitrate'] = ((($framebytelength / 4) - intval($thisfile_mpeg_audio['padding'])) * $thisfile_mpeg_audio['sample_rate']) / 12;
@@ -935,7 +886,6 @@ class getid3_mp3 extends getid3_handler {
 				case 'vbr':
 				case 'abr':
 					$bytes_per_frame = 1152;
-
 					if (($thisfile_mpeg_audio['version'] == '1') && ($thisfile_mpeg_audio['layer'] == 1)) {
 						$bytes_per_frame = 384;
 					} elseif ((($thisfile_mpeg_audio['version'] == '2') || ($thisfile_mpeg_audio['version'] == '2.5')) && ($thisfile_mpeg_audio['layer'] == 3)) {
@@ -943,7 +893,6 @@ class getid3_mp3 extends getid3_handler {
 					}
 
 					$thisfile_mpeg_audio['VBR_bitrate'] = (isset($thisfile_mpeg_audio['VBR_bytes']) ? (($thisfile_mpeg_audio['VBR_bytes'] / $thisfile_mpeg_audio['VBR_frames']) * 8) * ($info['audio']['sample_rate'] / $bytes_per_frame) : 0);
-
 					if ($thisfile_mpeg_audio['VBR_bitrate'] > 0) {
 						$info['audio']['bitrate']       = $thisfile_mpeg_audio['VBR_bitrate'];
 						$thisfile_mpeg_audio['bitrate'] = $thisfile_mpeg_audio['VBR_bitrate']; // to avoid confusion
@@ -1092,7 +1041,6 @@ class getid3_mp3 extends getid3_handler {
 					$nextframetestoffset += $nextframetestarray['mpeg']['audio']['framelength'];
 				} else {
 					$info['error'][] = 'Frame at offset (' . $offset . ') is has an invalid frame length.';
-
 					return false;
 				}
 			} elseif (!empty($firstframetestarray['mpeg']['audio']['framelength']) && (($nextframetestoffset + $firstframetestarray['mpeg']['audio']['framelength']) > $info['avdataend'])) {
@@ -1101,7 +1049,6 @@ class getid3_mp3 extends getid3_handler {
 			} else {
 				// next frame is not valid, note the error and fail, so scanning can contiue for a valid frame sequence
 				$info['warning'][] = 'Frame at offset (' . $offset . ') is valid, but the next one at (' . $nextframetestoffset . ') is not.';
-
 				return false;
 			}
 		}
@@ -1111,13 +1058,14 @@ class getid3_mp3 extends getid3_handler {
 
 	public function FreeFormatFrameLength($offset, $deepscan = false) {
 		$info =& $this->getid3->info;
+
 		$this->fseek($offset);
+
 		$MPEGaudioData = $this->fread(32768);
 		$SyncPattern1  = substr($MPEGaudioData, 0, 4);
 
 		// may be different pattern due to padding
 		$SyncPattern2 = $SyncPattern1[0] . $SyncPattern1[1] . chr(ord($SyncPattern1[2]) | 0x02) . $SyncPattern1[3];
-
 		if ($SyncPattern2 === $SyncPattern1) {
 			$SyncPattern2 = $SyncPattern1[0] . $SyncPattern1[1] . chr(ord($SyncPattern1[2]) & 0xFD) . $SyncPattern1[3];
 		}
@@ -1125,7 +1073,6 @@ class getid3_mp3 extends getid3_handler {
 		$framelength  = false;
 		$framelength1 = strpos($MPEGaudioData, $SyncPattern1, 4);
 		$framelength2 = strpos($MPEGaudioData, $SyncPattern2, 4);
-
 		if ($framelength1 > 4) {
 			$framelength = $framelength1;
 		}
@@ -1138,7 +1085,6 @@ class getid3_mp3 extends getid3_handler {
 			// LAME 3.88 has a different value for modeextension on the first frame vs the rest
 			$framelength1 = strpos($MPEGaudioData, substr($SyncPattern1, 0, 3), 4);
 			$framelength2 = strpos($MPEGaudioData, substr($SyncPattern2, 0, 3), 4);
-
 			if ($framelength1 > 4) {
 				$framelength = $framelength1;
 			}
@@ -1149,7 +1095,6 @@ class getid3_mp3 extends getid3_handler {
 
 			if (!$framelength) {
 				$info['error'][] = 'Cannot find next free-format synch pattern (' . getid3_lib::PrintHexBytes($SyncPattern1) . ' or ' . getid3_lib::PrintHexBytes($SyncPattern2) . ') after offset ' . $offset;
-
 				return false;
 			}
 
@@ -1163,11 +1108,10 @@ class getid3_mp3 extends getid3_handler {
 		if ($deepscan) {
 			$ActualFrameLengthValues = array();
 			$nextoffset              = $offset + $framelength;
-
 			while ($nextoffset < ($info['avdataend'] - 6)) {
 				$this->fseek($nextoffset - 1);
-				$NextSyncPattern = $this->fread(6);
 
+				$NextSyncPattern = $this->fread(6);
 				if ((substr($NextSyncPattern, 1, strlen($SyncPattern1)) == $SyncPattern1) || (substr($NextSyncPattern, 1, strlen($SyncPattern2)) == $SyncPattern2)) {
 					// good - found where expected
 					$ActualFrameLengthValues[] = $framelength;
@@ -1181,7 +1125,6 @@ class getid3_mp3 extends getid3_handler {
 					$nextoffset++;
 				} else {
 					$info['error'][] = 'Did not find expected free-format sync pattern at offset ' . $nextoffset;
-
 					return false;
 				}
 
@@ -1218,15 +1161,15 @@ class getid3_mp3 extends getid3_handler {
 		$Distribution['version']      = array();
 		$Distribution['padding']      = array();
 		$info                         =& $this->getid3->info;
+
 		$this->fseek($info['avdataoffset']);
+
 		$max_frames_scan    = 5000;
 		$frames_scanned     = 0;
 		$previousvalidframe = $info['avdataoffset'];
-
 		while ($this->ftell() < $info['avdataend']) {
 			set_time_limit(30);
 			$head4 = $this->fread(4);
-
 			if (strlen($head4) < 4) {
 				break;
 			}
@@ -1269,9 +1212,10 @@ class getid3_mp3 extends getid3_handler {
 
 				if ($MPEGaudioHeaderLengthCache[$head4] > 4) {
 					$WhereWeWere = $this->ftell();
-					$this->fseek($MPEGaudioHeaderLengthCache[$head4] - 4, SEEK_CUR);
-					$next4 = $this->fread(4);
 
+					$this->fseek($MPEGaudioHeaderLengthCache[$head4] - 4, SEEK_CUR);
+
+					$next4 = $this->fread(4);
 					if ($next4[0] == "\xFF") {
 						if (!isset($MPEGaudioHeaderDecodeCache[$next4])) {
 							$MPEGaudioHeaderDecodeCache[$next4] = self::MPEGaudioHeaderDecode($next4);
@@ -1289,11 +1233,9 @@ class getid3_mp3 extends getid3_handler {
 							getid3_lib::safe_inc($Distribution['version'][$LongMPEGversionLookup[$head4]]);
 							getid3_lib::safe_inc($Distribution['padding'][intval($LongMPEGpaddingLookup[$head4])]);
 							getid3_lib::safe_inc($Distribution['frequency'][$LongMPEGfrequencyLookup[$head4]]);
-
 							if ($max_frames_scan && (++$frames_scanned >= $max_frames_scan)) {
 								$pct_data_scanned  = ($this->ftell() - $info['avdataoffset']) / ($info['avdataend'] - $info['avdataoffset']);
 								$info['warning'][] = 'too many MPEG audio frames to scan, only scanned first ' . $max_frames_scan . ' frames (' . number_format($pct_data_scanned * 100, 1) . '% of file) and extrapolated distribution, playtime and bitrate may be incorrect.';
-
 								foreach ($Distribution as $key1 => $value1) {
 									foreach ($value1 as $key2 => $value2) {
 										$Distribution[$key1][$key2] = round($value2 / $pct_data_scanned);
@@ -1324,7 +1266,6 @@ class getid3_mp3 extends getid3_handler {
 		$info['mpeg']['audio']['layer_distribution']     = $Distribution['layer'];
 		$info['mpeg']['audio']['version_distribution']   = $Distribution['version'];
 		$info['mpeg']['audio']['padding_distribution']   = $Distribution['padding'];
-
 		if (count($Distribution['version']) > 1) {
 			$info['error'][] = 'Corrupt file - more than one MPEG version detected';
 		}
@@ -1338,7 +1279,6 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		$bittotal = 0;
-
 		foreach ($Distribution['bitrate'] as $bitratevalue => $bitratecount) {
 			if ($bitratevalue != 'free') {
 				$bittotal += ($bitratevalue * $bitratecount);
@@ -1346,10 +1286,8 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		$info['mpeg']['audio']['frame_count'] = array_sum($Distribution['bitrate']);
-
 		if ($info['mpeg']['audio']['frame_count'] == 0) {
 			$info['error'][] = 'no MPEG audio frames found';
-
 			return false;
 		}
 
@@ -1361,7 +1299,6 @@ class getid3_mp3 extends getid3_handler {
 		$info['audio']['sample_rate']          = $info['mpeg']['audio']['sample_rate'];
 		$info['audio']['dataformat']           = 'mp' . getid3_lib::array_max($Distribution['layer'], true);
 		$info['fileformat']                    = $info['audio']['dataformat'];
-
 		return true;
 	}
 
@@ -1381,23 +1318,19 @@ class getid3_mp3 extends getid3_handler {
 		$this->fseek($avdataoffset);
 
 		$sync_seek_buffer_size = min(128 * 1024, $info['avdataend'] - $avdataoffset);
-
 		if ($sync_seek_buffer_size <= 0) {
 			$info['error'][] = 'Invalid $sync_seek_buffer_size at offset ' . $avdataoffset;
-
 			return false;
 		}
 
 		$header                = $this->fread($sync_seek_buffer_size);
 		$sync_seek_buffer_size = strlen($header);
 		$SynchSeekOffset       = 0;
-
 		while ($SynchSeekOffset < $sync_seek_buffer_size) {
 			if ((($avdataoffset + $SynchSeekOffset) < $info['avdataend']) && !feof($this->getid3->fp)) {
 				if ($SynchSeekOffset > $sync_seek_buffer_size) {
 					// if a synch's not found within the first 128k bytes, then give up
 					$info['error'][] = 'Could not find valid MPEG audio synch within the first ' . round($sync_seek_buffer_size / 1024) . 'kB';
-
 					if (isset($info['audio']['bitrate'])) {
 						unset($info['audio']['bitrate']);
 					}
@@ -1415,7 +1348,6 @@ class getid3_mp3 extends getid3_handler {
 
 				if (feof($this->getid3->fp)) {
 					$info['error'][] = 'Could not find valid MPEG audio synch before end of file';
-
 					if (isset($info['audio']['bitrate'])) {
 						unset($info['audio']['bitrate']);
 					}
@@ -1434,7 +1366,6 @@ class getid3_mp3 extends getid3_handler {
 
 			if (($SynchSeekOffset + 1) >= strlen($header)) {
 				$info['error'][] = 'Could not find valid MPEG synch before end of file';
-
 				return false;
 			}
 
@@ -1442,7 +1373,6 @@ class getid3_mp3 extends getid3_handler {
 				if (!isset($FirstFrameThisfileInfo) && !isset($info['mpeg']['audio'])) {
 					$FirstFrameThisfileInfo = $info;
 					$FirstFrameAVDataOffset = $avdataoffset + $SynchSeekOffset;
-
 					if (!$this->decodeMPEGaudioHeader($FirstFrameAVDataOffset, $FirstFrameThisfileInfo, false)) {
 						// if this is the first valid MPEG-audio frame, save it in case it's a VBR header frame and there's
 						// garbage between this frame and a valid sequence of MPEG-audio frames, to be restored below
@@ -1454,7 +1384,6 @@ class getid3_mp3 extends getid3_handler {
 				if ($this->decodeMPEGaudioHeader($avdataoffset + $SynchSeekOffset, $dummy, true)) {
 					$info                 = $dummy;
 					$info['avdataoffset'] = $avdataoffset + $SynchSeekOffset;
-
 					switch (isset($info['fileformat']) ? $info['fileformat'] : '') {
 						case '':
 						case 'id3':
@@ -1462,7 +1391,6 @@ class getid3_mp3 extends getid3_handler {
 						case 'mp3':
 							$info['fileformat']          = 'mp3';
 							$info['audio']['dataformat'] = 'mp3';
-
 							break;
 					}
 
@@ -1477,8 +1405,7 @@ class getid3_mp3 extends getid3_handler {
 							$dummy                       = $info;
 							unset($dummy['mpeg']['audio']);
 							$GarbageOffsetStart = $FirstFrameAVDataOffset + $FirstFrameThisfileInfo['mpeg']['audio']['framelength'];
-							$GarbageOffsetEnd   = $avdataoffset           + $SynchSeekOffset;
-
+							$GarbageOffsetEnd   = $avdataoffset + $SynchSeekOffset;
 							if ($this->decodeMPEGaudioHeader($GarbageOffsetEnd, $dummy, true, true)) {
 								$info                 = $dummy;
 								$info['avdataoffset'] = $GarbageOffsetEnd;
@@ -1624,28 +1551,23 @@ class getid3_mp3 extends getid3_handler {
 						$this_scan_segment       = 0;
 						$frames_scan_per_segment = ceil($max_frames_scan / $max_scan_segments);
 						$pct_data_scanned        = 0;
-
 						for ($current_segment = 0; $current_segment < $max_scan_segments; $current_segment++) {
 							$frames_scanned_this_segment = 0;
-
 							if ($this->ftell() >= $info['avdataend']) {
 								break;
 							}
 
 							$scan_start_offset[$current_segment] = max($this->ftell(), $info['avdataoffset'] + round($current_segment * (($info['avdataend'] - $info['avdataoffset']) / $max_scan_segments)));
-
 							if ($current_segment > 0) {
 								$this->fseek($scan_start_offset[$current_segment]);
-								$buffer_4k = $this->fread(4096);
 
+								$buffer_4k = $this->fread(4096);
 								for ($j = 0; $j < (strlen($buffer_4k) - 4); $j++) {
 									if (($buffer_4k[$j] == "\xFF") && ($buffer_4k[($j + 1)] > "\xE0")) { // synch detected
 										if ($this->decodeMPEGaudioHeader($scan_start_offset[$current_segment] + $j, $dummy, false, false, $FastMode)) {
 											$calculated_next_offset = $scan_start_offset[$current_segment] + $j + $dummy['mpeg']['audio']['framelength'];
-
 											if ($this->decodeMPEGaudioHeader($calculated_next_offset, $dummy, false, false, $FastMode)) {
 												$scan_start_offset[$current_segment] += $j;
-
 												break;
 											}
 										}
@@ -1654,11 +1576,9 @@ class getid3_mp3 extends getid3_handler {
 							}
 
 							$synchstartoffset = $scan_start_offset[$current_segment];
-
 							while ($this->decodeMPEGaudioHeader($synchstartoffset, $dummy, false, false, $FastMode)) {
 								$FastMode         = true;
 								$thisframebitrate = $MPEGaudioBitrateLookup[$MPEGaudioVersionLookup[$dummy['mpeg']['audio']['raw']['version']]][$MPEGaudioLayerLookup[$dummy['mpeg']['audio']['raw']['layer']]][$dummy['mpeg']['audio']['raw']['bitrate']];
-
 								if (empty($dummy['mpeg']['audio']['framelength'])) {
 									$SynchErrorsFound++;
 									$synchstartoffset++;
@@ -1670,17 +1590,14 @@ class getid3_mp3 extends getid3_handler {
 								}
 
 								$frames_scanned++;
-
 								if ($frames_scan_per_segment && (++$frames_scanned_this_segment >= $frames_scan_per_segment)) {
 									$this_pct_scanned = ($this->ftell() - $scan_start_offset[$current_segment]) / ($info['avdataend'] - $info['avdataoffset']);
-
 									if (($current_segment == 0) && (($this_pct_scanned * $max_scan_segments) >= 1)) {
 										// file likely contains < $max_frames_scan, just scan as one segment
 										$max_scan_segments       = 1;
 										$frames_scan_per_segment = $max_frames_scan;
 									} else {
 										$pct_data_scanned += $this_pct_scanned;
-
 										break;
 									}
 								}
@@ -1689,7 +1606,6 @@ class getid3_mp3 extends getid3_handler {
 
 						if ($pct_data_scanned > 0) {
 							$info['warning'][] = 'too many MPEG audio frames to scan, only scanned ' . $frames_scanned . ' frames in ' . $max_scan_segments . ' segments (' . number_format($pct_data_scanned * 100, 1) . '% of file) and extrapolated distribution, playtime and bitrate may be incorrect.';
-
 							foreach ($info['mpeg']['audio'] as $key1 => $value1) {
 								if (!preg_match('#_distribution$#i', $key1)) {
 									continue;
@@ -1709,10 +1625,8 @@ class getid3_mp3 extends getid3_handler {
 
 						$bittotal     = 0;
 						$framecounter = 0;
-
 						foreach ($info['mpeg']['audio']['bitrate_distribution'] as $bitratevalue => $bitratecount) {
 							$framecounter += $bitratecount;
-
 							if ($bitratevalue != 'free') {
 								$bittotal += ($bitratevalue * $bitratecount);
 							}
@@ -1720,7 +1634,6 @@ class getid3_mp3 extends getid3_handler {
 
 						if ($framecounter == 0) {
 							$info['error'][] = 'Corrupt MP3 file: framecounter == zero';
-
 							return false;
 						}
 
@@ -1730,7 +1643,6 @@ class getid3_mp3 extends getid3_handler {
 
 						// Definitively set VBR vs CBR, even if the Xing/LAME/VBRI header says differently
 						$distinct_bitrates = 0;
-
 						foreach ($info['mpeg']['audio']['bitrate_distribution'] as $bitrate_value => $bitrate_count) {
 							if ($bitrate_count > 0) {
 								$distinct_bitrates++;
@@ -1751,12 +1663,10 @@ class getid3_mp3 extends getid3_handler {
 			}
 
 			$SynchSeekOffset++;
-
 			if (($avdataoffset + $SynchSeekOffset) >= $info['avdataend']) {
 				// end of file/data
 				if (empty($info['mpeg']['audio'])) {
 					$info['error'][] = 'could not find valid MPEG synch before end of file';
-
 					if (isset($info['audio']['bitrate'])) {
 						unset($info['audio']['bitrate']);
 					}
@@ -1779,7 +1689,6 @@ class getid3_mp3 extends getid3_handler {
 		$info['audio']['channels']    = $info['mpeg']['audio']['channels'];
 		$info['audio']['channelmode'] = $info['mpeg']['audio']['channelmode'];
 		$info['audio']['sample_rate'] = $info['mpeg']['audio']['sample_rate'];
-
 		return true;
 	}
 
@@ -1872,6 +1781,7 @@ class getid3_mp3 extends getid3_handler {
 		static $MPEGaudioBitrateLookup;
 		static $MPEGaudioFrequencyLookup;
 		static $MPEGaudioChannelModeLookup;
+
 		static $MPEGaudioModeExtensionLookup;
 		static $MPEGaudioEmphasisLookup;
 
@@ -1889,7 +1799,6 @@ class getid3_mp3 extends getid3_handler {
 			$decodedVersion = $MPEGaudioVersionLookup[$rawarray['version']];
 		} else {
 			echo $echoerrors ? "\n" . 'invalid Version (' . $rawarray['version'] . ')' : '';
-
 			return false;
 		}
 
@@ -1897,13 +1806,11 @@ class getid3_mp3 extends getid3_handler {
 			$decodedLayer = $MPEGaudioLayerLookup[$rawarray['layer']];
 		} else {
 			echo $echoerrors ? "\n" . 'invalid Layer (' . $rawarray['layer'] . ')' : '';
-
 			return false;
 		}
 
 		if (!isset($MPEGaudioBitrateLookup[$decodedVersion][$decodedLayer][$rawarray['bitrate']])) {
 			echo $echoerrors ? "\n" . 'invalid Bitrate (' . $rawarray['bitrate'] . ')' : '';
-
 			if ($rawarray['bitrate'] == 15) {
 				// known issue in LAME 3.90 - 3.93.1 where free-format has bitrate ID of 15 instead of 0
 				// let it go through here otherwise file will not be identified
@@ -1917,25 +1824,21 @@ class getid3_mp3 extends getid3_handler {
 
 		if (!isset($MPEGaudioFrequencyLookup[$decodedVersion][$rawarray['sample_rate']])) {
 			echo $echoerrors ? "\n" . 'invalid Frequency (' . $rawarray['sample_rate'] . ')' : '';
-
 			return false;
 		}
 
 		if (!isset($MPEGaudioChannelModeLookup[$rawarray['channelmode']])) {
 			echo $echoerrors ? "\n" . 'invalid ChannelMode (' . $rawarray['channelmode'] . ')' : '';
-
 			return false;
 		}
 
 		if (!isset($MPEGaudioModeExtensionLookup[$decodedLayer][$rawarray['modeextension']])) {
 			echo $echoerrors ? "\n" . 'invalid Mode Extension (' . $rawarray['modeextension'] . ')' : '';
-
 			return false;
 		}
 
 		if (!isset($MPEGaudioEmphasisLookup[$rawarray['emphasis']])) {
 			echo $echoerrors ? "\n" . 'invalid Emphasis (' . $rawarray['emphasis'] . ')' : '';
-
 			return false;
 		}
 
@@ -1968,8 +1871,8 @@ class getid3_mp3 extends getid3_handler {
 		}
 
 		$MPEGrawHeader['synch']         = (getid3_lib::BigEndian2Int(substr($Header4Bytes, 0, 2)) & 0xFFE0) >> 4;
-		$MPEGrawHeader['version']       = (ord($Header4Bytes[1]) & 0x18)                                    >> 3; //    BB
-		$MPEGrawHeader['layer']         = (ord($Header4Bytes[1]) & 0x06)                                    >> 1; //      CC
+		$MPEGrawHeader['version']       = (ord($Header4Bytes[1]) & 0x18) >> 3; //    BB
+		$MPEGrawHeader['layer']         = (ord($Header4Bytes[1]) & 0x06) >> 1; //      CC
 		$MPEGrawHeader['protection']    = (ord($Header4Bytes[1]) & 0x01);      //        D
 		$MPEGrawHeader['bitrate']       = (ord($Header4Bytes[2]) & 0xF0) >> 4; // EEEE
 		$MPEGrawHeader['sample_rate']   = (ord($Header4Bytes[2]) & 0x0C) >> 2; //     FF
@@ -1988,7 +1891,6 @@ class getid3_mp3 extends getid3_handler {
 
 		if (!isset($AudioFrameLengthCache[$bitrate][$version][$layer][$padding][$samplerate])) {
 			$AudioFrameLengthCache[$bitrate][$version][$layer][$padding][$samplerate] = false;
-
 			if ($bitrate != 'free') {
 				if ($version == '1') {
 					if ($layer == '1') {
@@ -2035,17 +1937,16 @@ class getid3_mp3 extends getid3_handler {
 	public static function ClosestStandardMP3Bitrate($bit_rate) {
 		static $standard_bit_rates = array(320000, 256000, 224000, 192000, 160000, 128000, 112000, 96000, 80000, 64000, 56000, 48000, 40000, 32000, 24000, 16000, 8000);
 		static $bit_rate_table     = array(
+
 			0 => '-',
 		);
 
 		$round_bit_rate = intval(round($bit_rate, -3));
-
 		if (!isset($bit_rate_table[$round_bit_rate])) {
 			if ($round_bit_rate > max($standard_bit_rates)) {
 				$bit_rate_table[$round_bit_rate] = round($bit_rate, 2 - strlen($bit_rate));
 			} else {
 				$bit_rate_table[$round_bit_rate] = max($standard_bit_rates);
-
 				foreach ($standard_bit_rates as $standard_bit_rate) {
 					if ($round_bit_rate >= $standard_bit_rate + (($bit_rate_table[$round_bit_rate] - $standard_bit_rate) / 2)) {
 						break;
@@ -2156,13 +2057,10 @@ class getid3_mp3 extends getid3_handler {
 			switch ($LAMEtag['vbr_method']) {
 				case 'cbr':
 					$LAMEpresetUsedLookup[$i] = '--alt-preset ' . $LAMEtag['vbr_method'] . ' ' . $i;
-
 					break;
-
 				case 'abr':
 				default: // other VBR modes shouldn't be here(?)
 					$LAMEpresetUsedLookup[$i] = '--alt-preset ' . $i;
-
 					break;
 			}
 		}

@@ -41,9 +41,12 @@ class FavouritesModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks(
+
 			'registerEventListeners|getItemLinks|getSystemLinks|getSiteAdminViews'
 		);
 	}
@@ -75,7 +78,7 @@ class FavouritesModule extends GalleryModule {
 			'themeId'       => '',
 			'offerToGuests' => 1,
 		)
- as $key => $value) {
+		as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
 
@@ -138,6 +141,7 @@ class FavouritesModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
 
 		$userId = $gallery->getActiveUserId();
@@ -160,13 +164,11 @@ class FavouritesModule extends GalleryModule {
 		}
 
 		$viewingFavourites = false;
-
 		if ('favourites.FavouritesAlbum' == $gallery->getCurrentView()) {
 			$viewingFavourites = true;
 		}
 
 		$links = array();
-
 		foreach ($items as $item) {
 			/*no link for album items
 			if ($item->getCanContainChildren()) {
@@ -237,6 +239,7 @@ class FavouritesModule extends GalleryModule {
 	 */
 	public function getSystemLinks() {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
 
 		$links  = array();
@@ -298,10 +301,8 @@ class FavouritesModule extends GalleryModule {
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
 
 		$data = $event->getData();
-
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
-
 			if (GalleryUtilities::isA($entity, 'GalleryItem')) {
 				FavouritesMapHelper::clearFavourites($entity->getId());
 			}

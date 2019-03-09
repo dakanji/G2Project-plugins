@@ -93,7 +93,6 @@ class OpenIdHelper {
 		}
 
 		$openIds = array();
-
 		while (($result = $results->nextResult()) === false) {
 			$openIds[] = (int)$result[0];
 		}
@@ -155,7 +154,6 @@ class OpenIdHelper {
 		}
 
 		$galleryIds = array();
-
 		while (($result = $results->nextResult()) !== false) {
 			$galleryIds[] = (int)$result[0];
 		}
@@ -177,8 +175,7 @@ class OpenIdSession // implements Auth_Yadis_PHPSession
 		if (!isset($session)) {
 			global $gallery;
 
-			$session = new OpenIdSession();
-
+			$session           = new OpenIdSession();
 			$session->_session = $gallery->getSession();
 		}
 
@@ -203,3 +200,4 @@ class OpenIdSession // implements Auth_Yadis_PHPSession
 		return null;
 	}
 }
+

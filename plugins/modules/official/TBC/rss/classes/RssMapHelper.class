@@ -69,10 +69,8 @@ class RssMapHelper {
 		}
 
 		$feeds = $itemIds = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$params = unserialize($result[3]);
-
 			if ($params != false) {
 				$feed = array(
 					'name'    => $result[0],
@@ -127,7 +125,6 @@ class RssMapHelper {
 	';
 
 		$params = array();
-
 		if (isset($limit)) {
 			$params['limit'] = array(
 				'count' => $limit,
@@ -141,7 +138,6 @@ class RssMapHelper {
 		}
 
 		$names = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$names[] = $result[0];
 		}
@@ -169,10 +165,8 @@ class RssMapHelper {
 		}
 
 		$params = array();
-
 		if ($result = $searchResults->nextResult()) {
 			$params = unserialize($result[0]);
-
 			if ($params != false) {
 				if (!empty($params['itemId'])) {
 					list($ret, $canView) = GalleryCoreApi::hasItemPermission($params['itemId'], 'core.view');

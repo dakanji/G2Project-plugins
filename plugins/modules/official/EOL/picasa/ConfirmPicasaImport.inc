@@ -43,7 +43,6 @@ class ConfirmPicasaImportController extends GalleryController {
 
 		// build framework for error and status arrays
 		$error = $status = array();
-
 		if (isset($form['action']['cancel'])) {
 			$redirect['view']    = 'core.SiteAdmin';
 			$redirect['subView'] = 'picasa.SelectPicasaExportPath';
@@ -53,6 +52,7 @@ class ConfirmPicasaImportController extends GalleryController {
 				array($this, 'performImport'),
 				array($form)
 			);
+
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -65,7 +65,6 @@ class ConfirmPicasaImportController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 
@@ -139,7 +138,6 @@ class ConfirmPicasaImportController extends GalleryController {
 		}
 
 		$totalItemsToImport = count($picasaAlbum['images']);
-
 		if (empty($totalItemsToImport)) {
 			$totalItemsToImport = 1;
 		}
@@ -148,6 +146,7 @@ class ConfirmPicasaImportController extends GalleryController {
 		$numberOfItemsImported = 0;
 
 		$gallery->guaranteeTimeLimit(30);
+
 		$newAlbumInstanceId = false;
 		$sanitizedAlbumName = $picasaAlbum['albumName'];
 
@@ -159,10 +158,10 @@ class ConfirmPicasaImportController extends GalleryController {
 			$sanitizedAlbumName,
 			$numberOfItemsImported / $totalItemsToImport
 		);
+
 		$desiredname = $platform->legalizePathComponent($picasaAlbum['albumName']);
 		$k           = 0;
 		$invalidName = true;
-
 		while ($invalidName) {
 			list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent($destinationAlbumId, $desiredname);
 
@@ -251,6 +250,7 @@ class ConfirmPicasaImportController extends GalleryController {
 			}
 
 			$newAlbumInstance->setKeywords('');
+
 			$ret = $newAlbumInstance->save();
 
 			if ($ret) {
@@ -283,9 +283,9 @@ class ConfirmPicasaImportController extends GalleryController {
 
 		$photos                = $picasaAlbum['images'];
 		$numberOfItemsImported = 1;
-
 		foreach ($photos as $j => $importAlbumItem) {
 			$gallery->guaranteeTimeLimit(30);
+
 			$filepath          = $picasaXmlPath . str_replace('/', $slash, $importAlbumItem['path']);
 			$sanitizedFilename = $filename = $importAlbumItem['name'];
 
@@ -327,7 +327,6 @@ class ConfirmPicasaImportController extends GalleryController {
 
 			$itemsCreated[] = $newItem->getId();
 			$numberOfItemsImported++;
-
 			if ($ret) {
 				return $ret;
 			}
@@ -336,11 +335,15 @@ class ConfirmPicasaImportController extends GalleryController {
 		}
 
 		$session =& $gallery->getSession();
+
 		$session->putStatus($status);
+
 		$redirect['view']    = 'core.SiteAdmin';
 		$redirect['subView'] = 'picasa.ImportResults';
 		$urlGenerator        =& $gallery->getUrlGenerator();
+
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
+
 		$ret = GalleryCoreApi::releaseLocks($importLockIds);
 
 		if ($ret) {
@@ -391,7 +394,6 @@ class ConfirmPicasaImportView extends GalleryView {
 			$destinationAlbumId,
 			$platform->legalizePathComponent($albumName)
 		);
-
 		if ($ret) {
 			if (!$ret->getErrorCode() & ERROR_MISSING_OBJECT) {
 				return array($ret, null);

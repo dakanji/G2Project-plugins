@@ -58,6 +58,7 @@ class DigibugPrintPhotosView extends GalleryView {
 		} else {
 			$session     =& $gallery->getSession();
 			$cartItemIds = $session->get('digibug.cart');
+
 			$session->remove('digibug.cart');
 		}
 
@@ -127,10 +128,8 @@ class DigibugPrintPhotosView extends GalleryView {
 		// Assemble all our data
 		$i       = 1;
 		$entries = $protectedIds = array();
-
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
 			if (!isset($permissions[$itemId]['digibug.print'])) {
 				// Skip any cart items for which we don't have print permission
 				continue;
@@ -138,7 +137,6 @@ class DigibugPrintPhotosView extends GalleryView {
 
 			$source      = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
 			$needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
-
 			if ($needSession && !isset($dgSession)) {
 				/*
 				 * Get G2 session for digibug to access non-public images.
@@ -156,9 +154,10 @@ class DigibugPrintPhotosView extends GalleryView {
 			}
 
 			if ($needSession) {
-				$sessionParam   = array(
+				$sessionParam = array(
 					$dgSession->getKey() => $dgSession->getId(),
 				);
+
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
@@ -168,7 +167,7 @@ class DigibugPrintPhotosView extends GalleryView {
 				'item' => (array)$item,
 			);
 
-			$entry['imageUrl']    = $urlGenerator->generateUrl(
+			$entry['imageUrl'] = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -181,9 +180,9 @@ class DigibugPrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
+
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
-
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
 				// Use the source if the thumbnail has a postfilter (like a watermark)
 				$thumbSource = $source;
@@ -191,7 +190,7 @@ class DigibugPrintPhotosView extends GalleryView {
 				$thumbSource = $thumbnails[$itemId];
 			}
 
-			$entry['thumbUrl']    = $urlGenerator->generateUrl(
+			$entry['thumbUrl'] = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbSource->getId(),
@@ -201,6 +200,7 @@ class DigibugPrintPhotosView extends GalleryView {
 					'forceFullUrl'   => true,
 				)
 			);
+
 			$entry['thumbWidth']  = $thumbSource->getWidth();
 			$entry['thumbHeight'] = $thumbSource->getHeight();
 
@@ -253,6 +253,7 @@ class DigibugPrintPhotosView extends GalleryView {
 
 		$template->setVariable('l10Domain', 'modules_digibug');
 		$template->setVariable(
+
 			'DigibugPrintPhotos',
 			array(
 				'returnUrl' => $returnUrl,
@@ -261,6 +262,7 @@ class DigibugPrintPhotosView extends GalleryView {
 				'params'    => $params,
 			)
 		);
+
 		$template->display('gallery:modules/digibug/templates/DigibugPrintPhotos.tpl');
 
 		return null;

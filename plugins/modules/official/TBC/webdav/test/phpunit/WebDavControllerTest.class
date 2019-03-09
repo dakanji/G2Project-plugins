@@ -41,7 +41,6 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 			'Microsoft-WebDAV-MiniRedir/5.1.2600',
 		) as $userAgent) {
 			$_SERVER['HTTP_USER_AGENT'] = $userAgent;
-
 			foreach (array(
 				'options',
 				'propfind',
@@ -87,6 +86,7 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 		$_SERVER['HTTP_USER_AGENT'] = 'SOME USER AGENT STRING';
 
 		$this->_becomeGuestUser();
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -119,6 +119,7 @@ class WebDavControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
+
 		$this->assertEquals('@dir/Black&amp;White', $originalPath, 'Unexpected Original Path');
 
 		$this->assertEquals('_dir/Black_White', $path, 'Unexpected New Path');

@@ -17,9 +17,10 @@
 class getid3_nsv extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-		$this->fseek($info['avdataoffset']);
-		$NSVheader = $this->fread(4);
 
+		$this->fseek($info['avdataoffset']);
+
+		$NSVheader = $this->fread(4);
 		switch ($NSVheader) {
 			case 'NSVs':
 				if ($this->getNSVsHeaderFilepointer(0)) {
@@ -31,7 +32,6 @@ class getid3_nsv extends getid3_handler {
 				}
 
 				break;
-
 			case 'NSVf':
 				if ($this->getNSVfHeaderFilepointer(0)) {
 					$info['fileformat']          = 'nsv';
@@ -44,12 +44,9 @@ class getid3_nsv extends getid3_handler {
 				}
 
 				break;
-
 			default:
 				$info['error'][] = 'Expecting "NSVs" or "NSVf" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($NSVheader) . '"';
-
 				return false;
-
 				break;
 		}
 
@@ -62,16 +59,16 @@ class getid3_nsv extends getid3_handler {
 
 	public function getNSVsHeaderFilepointer($fileoffset) {
 		$info =& $this->getid3->info;
+
 		$this->fseek($fileoffset);
+
 		$NSVsheader                        = $this->fread(28);
 		$offset                            = 0;
 		$info['nsv']['NSVs']['identifier'] = substr($NSVsheader, $offset, 4);
 		$offset                           += 4;
-
 		if ($info['nsv']['NSVs']['identifier'] != 'NSVs') {
 			$info['error'][] = 'expected "NSVs" at offset (' . $fileoffset . '), found "' . $info['nsv']['NSVs']['identifier'] . '" instead';
 			unset($info['nsv']['NSVs']);
-
 			return false;
 		}
 
@@ -107,7 +104,6 @@ class getid3_nsv extends getid3_handler {
 
 		//$info['nsv']['NSVs']['unknown2d'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
 		$offset += 1;
-
 		switch ($info['nsv']['NSVs']['audio_codec']) {
 			case 'PCM ':
 				$info['nsv']['NSVs']['bits_channel'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 1));
@@ -117,15 +113,12 @@ class getid3_nsv extends getid3_handler {
 				$info['nsv']['NSVs']['sample_rate']  = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 2));
 				$offset                             += 2;
 				$info['audio']['sample_rate']        = $info['nsv']['NSVs']['sample_rate'];
-
 				break;
-
 			case 'MP3 ':
 			case 'NONE':
 			default:
 				//$info['nsv']['NSVs']['unknown3'] = getid3_lib::LittleEndian2Int(substr($NSVsheader, $offset, 4));
 				$offset += 4;
-
 				break;
 		}
 
@@ -135,22 +128,21 @@ class getid3_nsv extends getid3_handler {
 		$info['video']['frame_rate']         = $info['nsv']['NSVs']['frame_rate'];
 		$info['video']['bits_per_sample']    = 24;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
-
 		return true;
 	}
 
 	public function getNSVfHeaderFilepointer($fileoffset, $getTOCoffsets = false) {
 		$info =& $this->getid3->info;
+
 		$this->fseek($fileoffset);
+
 		$NSVfheader                        = $this->fread(28);
 		$offset                            = 0;
 		$info['nsv']['NSVf']['identifier'] = substr($NSVfheader, $offset, 4);
 		$offset                           += 4;
-
 		if ($info['nsv']['NSVf']['identifier'] != 'NSVf') {
 			$info['error'][] = 'expected "NSVf" at offset (' . $fileoffset . '), found "' . $info['nsv']['NSVf']['identifier'] . '" instead';
 			unset($info['nsv']['NSVf']);
-
 			return false;
 		}
 
@@ -159,7 +151,6 @@ class getid3_nsv extends getid3_handler {
 		$offset                              += 4;
 		$info['nsv']['NSVf']['file_size']     = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
 		$offset                              += 4;
-
 		if ($info['nsv']['NSVf']['file_size'] > $info['avdataend']) {
 			$info['warning'][] = 'truncated file - NSVf header indicates ' . $info['nsv']['NSVf']['file_size'] . ' bytes, file actually ' . $info['avdataend'] . ' bytes';
 		}
@@ -172,10 +163,8 @@ class getid3_nsv extends getid3_handler {
 		$offset                              += 4;
 		$info['nsv']['NSVf']['TOC_entries_2'] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
 		$offset                              += 4;
-
 		if ($info['nsv']['NSVf']['playtime_ms'] == 0) {
 			$info['error'][] = 'Corrupt NSV file: NSVf.playtime_ms == zero';
-
 			return false;
 		}
 
@@ -183,10 +172,8 @@ class getid3_nsv extends getid3_handler {
 		$NSVfheaderlength                = strlen($NSVfheader);
 		$info['nsv']['NSVf']['metadata'] = substr($NSVfheader, $offset, $info['nsv']['NSVf']['meta_size']);
 		$offset                         += $info['nsv']['NSVf']['meta_size'];
-
 		if ($getTOCoffsets) {
 			$TOCcounter = 0;
-
 			while ($TOCcounter < $info['nsv']['NSVf']['TOC_entries_1']) {
 				if ($TOCcounter < $info['nsv']['NSVf']['TOC_entries_1']) {
 					$info['nsv']['NSVf']['TOC_1'][$TOCcounter] = getid3_lib::LittleEndian2Int(substr($NSVfheader, $offset, 4));
@@ -199,7 +186,6 @@ class getid3_nsv extends getid3_handler {
 		if (trim($info['nsv']['NSVf']['metadata']) != '') {
 			$info['nsv']['NSVf']['metadata'] = str_replace('`', "\x01", $info['nsv']['NSVf']['metadata']);
 			$CommentPairArray                = explode("\x01" . ' ', $info['nsv']['NSVf']['metadata']);
-
 			foreach ($CommentPairArray as $CommentPair) {
 				if (strstr($CommentPair, '=' . "\x01")) {
 					list($key, $value) = explode('=' . "\x01", $CommentPair, 2);
@@ -209,9 +195,8 @@ class getid3_nsv extends getid3_handler {
 			}
 		}
 
-		$info['playtime_seconds'] = $info['nsv']['NSVf']['playtime_ms']     / 1000;
+		$info['playtime_seconds'] = $info['nsv']['NSVf']['playtime_ms'] / 1000;
 		$info['bitrate']          = ($info['nsv']['NSVf']['file_size'] * 8) / $info['playtime_seconds'];
-
 		return true;
 	}
 

@@ -107,7 +107,6 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$items = array();
-
 		for ($i = 0; $i < 5; $i++) {
 			list($ret, $items[$i]) = $this->_createRandomDataItem($album->getId());
 
@@ -124,6 +123,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		$form['ImageBlockOption']['setRecursive'] = 'off';
 		$form['ImageBlockOption']['setDisabled']  = 'on';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -146,6 +146,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		$form['ImageBlockOption']['setRecursive'] = 'off';
 		$form['ImageBlockOption']['setDisabled']  = 'off';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -168,14 +169,14 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 	public function testImageBlockOptionRecursive() {
 		global $gallery;
 
-		$mockAdapter = new MockTemplateAdapter();
-
+		$mockAdapter               = new MockTemplateAdapter();
 		$gallery->_templateAdapter =& $mockAdapter;
 
 		// Enable the Option recursively
 		$form['ImageBlockOption']['setRecursive'] = 'on';
 		$form['ImageBlockOption']['setDisabled']  = 'on';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
@@ -198,6 +199,7 @@ class ImageBlockOptionTest extends ItemEditOptionTestCase {
 		$form['ImageBlockOption']['setRecursive'] = 'on';
 		$form['ImageBlockOption']['setDisabled']  = 'off';
 		$result                                   = $this->_handleRequestAfterEdit($form, $this->_topAlbum);
+
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());

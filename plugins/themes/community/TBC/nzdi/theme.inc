@@ -38,7 +38,9 @@ class NZDITheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('nzdi');
+
 		$this->setName($gallery->i18n('NZDI'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'NZ Digital Images theme'
@@ -48,6 +50,7 @@ class NZDITheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'rows'               => 3,
 				'columns'            => 3,
@@ -201,7 +204,6 @@ class NZDITheme extends GalleryTheme {
 		// Add in our extra stuff
 		$theme                  =& $template->getVariableByReference('theme');
 		$theme['adminTemplate'] = $templateFile;
-
 		return array(null, 'theme.tpl');
 	}
 
@@ -247,24 +249,28 @@ class NZDITheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['GalleryBreadcrumbs'],
 		);
+
 		$settings[] = array(
 			'key'   => 'enableImageMap',
 			'name'  => $this->translate('Prev/Next on image hover'),
 			'type'  => 'checkbox',
 			'value' => $params['enableImageMap'],
 		);
+
 		$settings[] = array(
 			'key'   => 'fullsizepopup',
 			'name'  => $this->translate('Full size image in popup window'),
 			'type'  => 'checkbox',
 			'value' => $params['fullsizepopup'],
 		);
+
 		$settings[] = array(
 			'key'   => 'LatestImagesAlbum',
 			'name'  => $this->translate('Show thumbnail preview on photo pages'),
 			'type'  => 'checkbox',
 			'value' => $params['LatestImagesAlbum'],
 		);
+
 		$settings[] = array(
 			'key'        => 'maxThumbnails',
 			'name'       => $this->translate('Maximum number of thumbnails to show'),
@@ -274,6 +280,7 @@ class NZDITheme extends GalleryTheme {
 			),
 			'value'      => $params['maxThumbnails'],
 		);
+
 		$settings[] = array(
 			'key'        => 'sizeThumbnails',
 			'name'       => $this->translate('Size of thumbnails in pixels'),
@@ -283,30 +290,35 @@ class NZDITheme extends GalleryTheme {
 			),
 			'value'      => $params['sizeThumbnails'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showSummaries',
 			'name'  => $this->translate('Show summary data with thumbnails'),
 			'type'  => 'checkbox',
 			'value' => $params['showSummaries'],
 		);
+
 		$settings[] = array(
 			'key'   => 'ItemViewCount',
 			'name'  => $this->translate('Show item view count'),
 			'type'  => 'checkbox',
 			'value' => $params['ItemViewCount'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showCorePager',
 			'name'  => $this->translate('Show pager links on album pages'),
 			'type'  => 'checkbox',
 			'value' => $params['showCorePager'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showFooter',
 			'name'  => $this->translate('Support gallery - Show gallery footer'),
 			'type'  => 'checkbox',
 			'value' => $params['showFooter'],
 		);
+
 		$settings[] = array(
 			'key'        => 'nzdiFooter',
 			'name'       => $this->translate('Custom footer below gallery'),

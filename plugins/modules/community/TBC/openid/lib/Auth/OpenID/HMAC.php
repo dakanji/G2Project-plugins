@@ -35,7 +35,6 @@ function Auth_OpenID_SHA1($text) {
 		// PHP 4 case: 'sha1' available.
 		$hex = sha1($text);
 		$raw = '';
-
 		for ($i = 0; $i < 40; $i += 2) {
 			$hexcode  = substr($hex, $i, 2);
 			$charcode = (int)base_convert($hexcode, 16, 10);
@@ -67,7 +66,6 @@ function Auth_OpenID_HMACSHA1($key, $text) {
 	$opad  = str_repeat(chr(0x5c), Auth_OpenID_SHA1_BLOCKSIZE);
 	$hash1 = Auth_OpenID_SHA1(($key ^ $ipad) . $text, true);
 	$hmac  = Auth_OpenID_SHA1(($key ^ $opad) . $hash1, true);
-
 	return $hmac;
 }
 
@@ -75,6 +73,7 @@ if (function_exists('hash')
 	&& function_exists('hash_algos')
 	&& (in_array('sha256', hash_algos()))
 ) {
+
 	function Auth_OpenID_SHA256($text) {
 		// PHP 5 case: 'hash' available and 'sha256' algo supported.
 		return hash('sha256', $text, true);
@@ -89,6 +88,7 @@ if (function_exists('hash_hmac')
 	&& function_exists('hash_algos')
 	&& (in_array('sha256', hash_algos()))
 ) {
+
 	function Auth_OpenID_HMACSHA256($key, $text) {
 		// Return raw MAC (not hex string).
 		return hash_hmac('sha256', $text, $key, true);

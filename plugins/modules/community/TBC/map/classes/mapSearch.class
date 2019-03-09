@@ -154,7 +154,6 @@ class mapSearch extends GallerySearchInterface_1_0 {
 		}
 
 		$searchResults = array();
-
 		while ($result = $results->nextResult()) {
 			$searchResults[] = array(
 				'itemId' => (int)$result[0],

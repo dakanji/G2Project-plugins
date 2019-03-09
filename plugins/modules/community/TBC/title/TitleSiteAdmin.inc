@@ -38,7 +38,6 @@ class TitleSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
-
 		if (isset($form['action']['save']) && empty($error)) {
 			list($ret, $themeSettingsId) = GalleryCoreApi::getPluginParameter('module', 'title', 'themeSettingsId');
 
@@ -179,6 +178,7 @@ class TitleSiteAdminView extends GalleryView {
 				'themeList' => $themeList,
 			)
 		);
+
 		$template->setVariable('controller', 'title.TitleSiteAdmin');
 
 		return array(

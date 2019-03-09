@@ -37,14 +37,18 @@ class GalleryRemotePropertiesTest extends GalleryControllerTestCase {
 		$props = new GalleryRemoteProperties();
 
 		$props->setProperty('test.1', 'bar');
+
 		$props->setProperty('test.2', 'baz');
 		$props->setProperty('test.2', 'overwrite baz');
 		$props->setProperty('test.3', "carriage\rreturn");
 		$props->setProperty('test.4', "carriage return\r\nlinefeed");
 		$props->setProperty('test key.5', "linefeed\nlinefeed");
+
 		$props->setProperty('test=key.6', "tab\ttab");
+
 		$props->setProperty('test#key.7', "backslash\\backslash");
 		$this->assertEquals(
+
 			join(
 				"\n",
 				array(

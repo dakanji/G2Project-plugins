@@ -47,11 +47,13 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_platform = new UnitTestPlatform();
+
 		$gallery->setPlatform($this->_platform);
 	}
 
 	public function tearDown() {
 		$this->assert($this->_platform->isComplete(), $this->_platform->getRemaining());
+
 		$ret = parent::tearDown();
 
 		if ($ret) {
@@ -136,6 +138,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 		// Set up our mock platform exactly as we expect the calls will come in
 		$this->_platform->setReply('isRestrictedByOpenBaseDir', array('/invalidPath/zip'), false);
 		$this->_platform->setReply('is_executable', array('/invalidPath/zip'), false);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -157,6 +160,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 		// Set up our mock platform exactly as we expect the calls will come in
 		$this->_platform->setReply('isRestrictedByOpenBaseDir', array('/invalidPath/zip'), false);
 		$this->_platform->setReply('is_executable', array('/invalidPath/zip'), false);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -179,12 +183,15 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 
 		// Set up our mock platform exactly as we expect the calls will come in
 		$this->_platform->setReply('isRestrictedByOpenBaseDir', array('/validPath/zip'), false);
+
 		$this->_platform->setReply('is_executable', array('/validPath/zip'), true);
+
 		$this->_platform->setReply(
 			'tempnam',
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
+
 		$this->_platform->setReply(
 			'copy',
 			array(
@@ -206,6 +213,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 		$this->_platform->setReply('file_exists', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile'), true);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -220,6 +228,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
+
 		$this->assertEquals(
 			array(null, '/validPath/zip'),
 			GalleryCoreApi::getPluginParameter('module', 'zipcart', 'path')
@@ -234,12 +243,15 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 
 		// Set up our mock platform exactly as we expect the calls will come in
 		$this->_platform->setReply('isRestrictedByOpenBaseDir', array('/validPath/zip'), false);
+
 		$this->_platform->setReply('is_executable', array('/validPath/zip'), true);
+
 		$this->_platform->setReply(
 			'tempnam',
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
 			'tempfile'
 		);
+
 		$this->_platform->setReply(
 			'copy',
 			array(
@@ -261,6 +273,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 		$this->_platform->setReply('file_exists', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile'), true);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -283,6 +296,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 
 		// Set up our mock platform exactly as we expect the calls will come in
 		$this->_platform->setReply('isRestrictedByOpenBaseDir', array('/validPath/zip'), true);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -306,7 +320,9 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 
 		// Set up our mock platform exactly as we expect the calls will come in
 		$this->_platform->setReply('isRestrictedByOpenBaseDir', array('/validPath/unzip'), false);
+
 		$this->_platform->setReply('is_executable', array('/validPath/unzip'), true);
+
 		$this->_platform->setReply(
 			'tempnam',
 			array($gallery->getConfig('data.gallery.tmp'), 'zip_'),
@@ -332,6 +348,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 		);
 		$this->_platform->setReply('unlink', array('tempfile.zip'), true);
 		$this->_platform->setReply('unlink', array('tempfile'), true);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -355,6 +372,7 @@ class ZipCartAdminControllerTest extends GalleryControllerTestCase {
 
 		// Set up our mock platform exactly as we expect the calls will come in
 		$this->_platform->setReply('isRestrictedByOpenBaseDir', array('/validPath/unzip'), true);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

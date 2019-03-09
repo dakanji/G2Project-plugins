@@ -53,6 +53,7 @@ class DefaultFileNamesView extends GalleryView {
 		$form['formName'] = 'AdminDefaultFileNames';
 
 		$gallery->guaranteeTimeLimit(120);
+
 		$prefixes    = Classification::DefaultFileNamePrefixes();
 		$firstprefix = true;
 

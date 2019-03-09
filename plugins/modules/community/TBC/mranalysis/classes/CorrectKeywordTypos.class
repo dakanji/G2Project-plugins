@@ -61,6 +61,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 			'',
 			0
 		);
+
 		$items         = KeywordAnalysis::get_item_list();
 		$result        = array();
 		$i             = 0;
@@ -79,7 +80,6 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 			$itemid                     = $item->getId();
 			$itemchanged                = false;
 			$keywordsadded_to_this_item = array();
-
 			foreach ($typos as $sourcekeyword => $changes) {
 				foreach ($changes as $reason => $keyword) {
 					if (!in_array($keyword, $keywordsadded_to_this_item)) {
@@ -126,12 +126,14 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 				'arg1' => $total,
 			)
 		);
+
 		$result[] = $module->translate(
 			array(
 				'text' => '%d items changed',
 				'arg1' => $itemschanged,
 			)
 		);
+
 		$result[] = $module->translate(
 			array(
 				'text' => '%d keywords changed',
@@ -154,6 +156,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 				'arg2' => $total,
 			)
 		);
+
 		$templateAdapter->updateProgressBar($message, '', $i / $total);
 
 		// Release locks (avoid too many open files for flock based locking)

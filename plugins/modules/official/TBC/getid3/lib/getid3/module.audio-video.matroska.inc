@@ -237,7 +237,6 @@ class getid3_matroska extends getid3_handler {
 				if (isset($infoarray['Duration'])) {
 					// TimecodeScale is how many nanoseconds each Duration unit is
 					$info['playtime_seconds'] = $infoarray['Duration'] * ((isset($infoarray['TimecodeScale']) ? $infoarray['TimecodeScale'] : 1000000) / 1000000000);
-
 					break;
 				}
 			}
@@ -256,7 +255,6 @@ class getid3_matroska extends getid3_handler {
 				$track_info               = array();
 				$track_info['dataformat'] = self::CodecIDtoCommonName($trackarray['CodecID']);
 				$track_info['default']    = (isset($trackarray['FlagDefault']) ? $trackarray['FlagDefault'] : true);
-
 				if (isset($trackarray['Name'])) {
 					$track_info['name'] = $trackarray['Name'];
 				}
@@ -268,7 +266,6 @@ class getid3_matroska extends getid3_handler {
 						$track_info['display_unit'] = self::displayUnit(isset($trackarray['DisplayUnit']) ? $trackarray['DisplayUnit'] : 0);
 						$track_info['display_x']    = (isset($trackarray['DisplayWidth']) ? $trackarray['DisplayWidth'] : $trackarray['PixelWidth']);
 						$track_info['display_y']    = (isset($trackarray['DisplayHeight']) ? $trackarray['DisplayHeight'] : $trackarray['PixelHeight']);
-
 						if (isset($trackarray['PixelCropBottom'])) {
 							$track_info['crop_bottom'] = $trackarray['PixelCropBottom'];
 						}
@@ -299,7 +296,6 @@ class getid3_matroska extends getid3_handler {
 								$parsed              = getid3_riff::ParseBITMAPINFOHEADER($trackarray['CodecPrivate']);
 								$track_info['codec'] = getid3_riff::fourccLookup($parsed['fourcc']);
 								$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $parsed;
-
 								break;
 
 							/*case 'V_MPEG4/ISO/AVC':
@@ -329,14 +325,11 @@ class getid3_matroska extends getid3_handler {
 						}
 
 						$info['video']['streams'][] = $track_info;
-
 						break;
-
 					case 2: // Audio
 						$track_info['sample_rate'] = (isset($trackarray['SamplingFrequency']) ? $trackarray['SamplingFrequency'] : 8000.0);
 						$track_info['channels']    = (isset($trackarray['Channels']) ? $trackarray['Channels'] : 1);
 						$track_info['language']    = (isset($trackarray['Language']) ? $trackarray['Language'] : 'eng');
-
 						if (isset($trackarray['BitDepth'])) {
 							$track_info['bits_per_sample'] = $trackarray['BitDepth'];
 						}
@@ -349,16 +342,13 @@ class getid3_matroska extends getid3_handler {
 							case 'A_PCM/INT/LIT':
 							case 'A_PCM/INT/BIG':
 								$track_info['bitrate'] = $trackarray['SamplingFrequency'] * $trackarray['Channels'] * $trackarray['BitDepth'];
-
 								break;
-
 							case 'A_AC3':
 							case 'A_DTS':
 							case 'A_MPEG/L3':
 							case 'A_MPEG/L2':
 							case 'A_FLAC':
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio.' . ($track_info['dataformat'] == 'mp2' ? 'mp3' : $track_info['dataformat']) . '.php', __FILE__, true);
-
 								if (!isset($info['matroska']['track_data_offsets'][$trackarray['TrackNumber']])) {
 									$this->warning('Unable to parse audio data [' . basename(__FILE__) . ':' . __LINE__ . '] because $info[matroska][track_data_offsets][' . $trackarray['TrackNumber'] . '] not set');
 
@@ -367,13 +357,11 @@ class getid3_matroska extends getid3_handler {
 
 								// create temp instance
 								$getid3_temp = new getID3();
-
 								if ($track_info['dataformat'] != 'flac') {
 									$getid3_temp->openfile($this->getid3->filename);
 								}
 
 								$getid3_temp->info['avdataoffset'] = $info['matroska']['track_data_offsets'][$trackarray['TrackNumber']]['offset'];
-
 								if ($track_info['dataformat'][0] == 'm' || $track_info['dataformat'] == 'flac') {
 									$getid3_temp->info['avdataend'] = $info['matroska']['track_data_offsets'][$trackarray['TrackNumber']]['offset'] + $info['matroska']['track_data_offsets'][$trackarray['TrackNumber']]['length'];
 								}
@@ -382,7 +370,6 @@ class getid3_matroska extends getid3_handler {
 								$class           = 'getid3_' . ($track_info['dataformat'] == 'mp2' ? 'mp3' : $track_info['dataformat']);
 								$header_data_key = $track_info['dataformat'][0] == 'm' ? 'mpeg' : $track_info['dataformat'];
 								$getid3_audio    = new $class($getid3_temp, __CLASS__);
-
 								if ($track_info['dataformat'] == 'flac') {
 									$getid3_audio->AnalyzeString($trackarray['CodecPrivate']);
 								} else {
@@ -391,7 +378,6 @@ class getid3_matroska extends getid3_handler {
 
 								if (!empty($getid3_temp->info[$header_data_key])) {
 									$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $getid3_temp->info[$header_data_key];
-
 									if (isset($getid3_temp->info['audio']) && is_array($getid3_temp->info['audio'])) {
 										foreach ($getid3_temp->info['audio'] as $key => $value) {
 											$track_info[$key] = $value;
@@ -415,18 +401,14 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								unset($getid3_temp, $getid3_audio);
-
 								break;
-
 							case 'A_AAC':
 							case 'A_AAC/MPEG2/LC':
 							case 'A_AAC/MPEG2/LC/SBR':
 							case 'A_AAC/MPEG4/LC':
 							case 'A_AAC/MPEG4/LC/SBR':
 								$this->warning($trackarray['CodecID'] . ' audio data contains no header, audio/video bitrates can\'t be calculated');
-
 								break;
-
 							case 'A_VORBIS':
 								if (!isset($trackarray['CodecPrivate'])) {
 									$this->warning('Unable to parse audio data [' . basename(__FILE__) . ':' . __LINE__ . '] because CodecPrivate data not set');
@@ -435,7 +417,6 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								$vorbis_offset = strpos($trackarray['CodecPrivate'], 'vorbis', 1);
-
 								if ($vorbis_offset === false) {
 									$this->warning('Unable to parse audio data [' . basename(__FILE__) . ':' . __LINE__ . '] because CodecPrivate data does not contain "vorbis" keyword');
 
@@ -453,10 +434,8 @@ class getid3_matroska extends getid3_handler {
 								$oggpageinfo['page_seqno'] = 0;
 
 								$getid3_ogg->ParseVorbisPageHeader($trackarray['CodecPrivate'], $vorbis_offset, $oggpageinfo);
-
 								if (!empty($getid3_temp->info['ogg'])) {
 									$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $getid3_temp->info['ogg'];
-
 									if (isset($getid3_temp->info['audio']) && is_array($getid3_temp->info['audio'])) {
 										foreach ($getid3_temp->info['audio'] as $key => $value) {
 											$track_info[$key] = $value;
@@ -482,13 +461,10 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								unset($getid3_temp, $getid3_ogg, $oggpageinfo, $vorbis_offset);
-
 								break;
-
 							case 'A_MS/ACM':
 								getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.audio-video.riff.php', __FILE__, true);
 								$parsed = getid3_riff::parseWAVEFORMATex($trackarray['CodecPrivate']);
-
 								foreach ($parsed as $key => $value) {
 									if ($key != 'raw') {
 										$track_info[$key] = $value;
@@ -496,9 +472,7 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								$info['matroska']['track_codec_parsed'][$trackarray['TrackNumber']] = $parsed;
-
 								break;
-
 							default:
 								$this->warning('Unhandled audio type "' . (isset($trackarray['CodecID']) ? $trackarray['CodecID'] : '') . '"');
 
@@ -506,7 +480,6 @@ class getid3_matroska extends getid3_handler {
 						}
 
 						$info['audio']['streams'][] = $track_info;
-
 						break;
 				}
 			}
@@ -548,13 +521,11 @@ class getid3_matroska extends getid3_handler {
 	private function parseEBML(&$info) {
 		// http://www.matroska.org/technical/specs/index.html#EBMLBasics
 		$this->current_offset = $info['avdataoffset'];
-
 		while ($this->getEBMLelement($top_element, $info['avdataend'])) {
 			switch ($top_element['id']) {
 				case EBML_ID_EBML:
 					$info['matroska']['header']['offset'] = $top_element['offset'];
 					$info['matroska']['header']['length'] = $top_element['length'];
-
 					while ($this->getEBMLelement($element_data, $top_element['end'], true)) {
 						switch ($element_data['id']) {
 							case EBML_ID_EBMLVERSION:
@@ -564,16 +535,12 @@ class getid3_matroska extends getid3_handler {
 							case EBML_ID_DOCTYPEVERSION:
 							case EBML_ID_DOCTYPEREADVERSION:
 								$element_data['data'] = getid3_lib::BigEndian2Int($element_data['data']);
-
 								break;
-
 							case EBML_ID_DOCTYPE:
 								$element_data['data']        = getid3_lib::trimNullByte($element_data['data']);
 								$info['matroska']['doctype'] = $element_data['data'];
 								$info['fileformat']          = $element_data['data'];
-
 								break;
-
 							default:
 								$this->unhandledElement('header', __LINE__, $element_data);
 
@@ -585,11 +552,9 @@ class getid3_matroska extends getid3_handler {
 					}
 
 					break;
-
 				case EBML_ID_SEGMENT:
 					$info['matroska']['segment'][0]['offset'] = $top_element['offset'];
 					$info['matroska']['segment'][0]['length'] = $top_element['length'];
-
 					while ($this->getEBMLelement($element_data, $top_element['end'])) {
 						if ($element_data['id'] != EBML_ID_CLUSTER || !self::$hide_clusters) { // collect clusters only if required
 							$info['matroska']['segments'][] = $element_data;
@@ -605,14 +570,10 @@ class getid3_matroska extends getid3_handler {
 													case EBML_ID_SEEKID:
 														$seek_entry['target_id']   = self::EBML2Int($sub_seek_entry['data']);
 														$seek_entry['target_name'] = self::EBMLidName($seek_entry['target_id']);
-
 														break;
-
 													case EBML_ID_SEEKPOSITION:
 														$seek_entry['target_offset'] = $element_data['offset'] + getid3_lib::BigEndian2Int($sub_seek_entry['data']);
-
 														break;
-
 													default:
 														$this->unhandledElement('seekhead.seek', __LINE__, $sub_seek_entry);
 												}
@@ -625,7 +586,6 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											break;
-
 										default:
 											$this->unhandledElement('seekhead', __LINE__, $seek_entry);
 
@@ -634,10 +594,8 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								break;
-
 							case EBML_ID_TRACKS: // A top-level block of information with many tracks described.
 								$info['matroska']['tracks'] = $element_data;
-
 								while ($this->getEBMLelement($track_entry, $element_data['end'])) {
 									switch ($track_entry['id']) {
 										case EBML_ID_TRACKENTRY:
@@ -651,36 +609,26 @@ class getid3_matroska extends getid3_handler {
 													case EBML_ID_MAXBLOCKADDITIONID:
 													case EBML_ID_DEFAULTDURATION: // nanoseconds per frame
 														$track_entry[$subelement['id_name']] = getid3_lib::BigEndian2Int($subelement['data']);
-
 														break;
-
 													case EBML_ID_TRACKTIMECODESCALE:
 														$track_entry[$subelement['id_name']] = getid3_lib::BigEndian2Float($subelement['data']);
-
 														break;
-
 													case EBML_ID_CODECID:
 													case EBML_ID_LANGUAGE:
 													case EBML_ID_NAME:
 													case EBML_ID_CODECNAME:
 														$track_entry[$subelement['id_name']] = getid3_lib::trimNullByte($subelement['data']);
-
 														break;
-
 													case EBML_ID_CODECPRIVATE:
 														$track_entry[$subelement['id_name']] = $this->readEBMLelementData($subelement['length'], true);
-
 														break;
-
 													case EBML_ID_FLAGENABLED:
 													case EBML_ID_FLAGDEFAULT:
 													case EBML_ID_FLAGFORCED:
 													case EBML_ID_FLAGLACING:
 													case EBML_ID_CODECDECODEALL:
 														$track_entry[$subelement['id_name']] = (bool)getid3_lib::BigEndian2Int($subelement['data']);
-
 														break;
-
 													case EBML_ID_VIDEO:
 														while ($this->getEBMLelement($sub_subelement, $subelement['end'], true)) {
 															switch ($sub_subelement['id']) {
@@ -697,62 +645,44 @@ class getid3_matroska extends getid3_handler {
 																case EBML_ID_STEREOMODE:
 																case EBML_ID_OLDSTEREOMODE:
 																	$track_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 																	break;
-
 																case EBML_ID_FLAGINTERLACED:
 																	$track_entry[$sub_subelement['id_name']] = (bool)getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 																	break;
-
 																case EBML_ID_GAMMAVALUE:
 																	$track_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Float($sub_subelement['data']);
-
 																	break;
-
 																case EBML_ID_COLOURSPACE:
 																	$track_entry[$sub_subelement['id_name']] = getid3_lib::trimNullByte($sub_subelement['data']);
-
 																	break;
-
 																default:
 																	$this->unhandledElement('track.video', __LINE__, $sub_subelement);
-
 																	break;
 															}
 														}
 
 														break;
-
 													case EBML_ID_AUDIO:
 														while ($this->getEBMLelement($sub_subelement, $subelement['end'], true)) {
 															switch ($sub_subelement['id']) {
 																case EBML_ID_CHANNELS:
 																case EBML_ID_BITDEPTH:
 																	$track_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 																	break;
-
 																case EBML_ID_SAMPLINGFREQUENCY:
 																case EBML_ID_OUTPUTSAMPLINGFREQUENCY:
 																	$track_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Float($sub_subelement['data']);
-
 																	break;
-
 																case EBML_ID_CHANNELPOSITIONS:
 																	$track_entry[$sub_subelement['id_name']] = getid3_lib::trimNullByte($sub_subelement['data']);
-
 																	break;
-
 																default:
 																	$this->unhandledElement('track.audio', __LINE__, $sub_subelement);
-
 																	break;
 															}
 														}
 
 														break;
-
 													case EBML_ID_CONTENTENCODINGS:
 														while ($this->getEBMLelement($sub_subelement, $subelement['end'])) {
 															switch ($sub_subelement['id']) {
@@ -763,31 +693,23 @@ class getid3_matroska extends getid3_handler {
 																			case EBML_ID_CONTENTENCODINGSCOPE:
 																			case EBML_ID_CONTENTENCODINGTYPE:
 																				$track_entry[$sub_subelement['id_name']][$sub_sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_sub_subelement['data']);
-
 																				break;
-
 																			case EBML_ID_CONTENTCOMPRESSION:
 																				while ($this->getEBMLelement($sub_sub_sub_subelement, $sub_sub_subelement['end'], true)) {
 																					switch ($sub_sub_sub_subelement['id']) {
 																						case EBML_ID_CONTENTCOMPALGO:
 																							$track_entry[$sub_subelement['id_name']][$sub_sub_subelement['id_name']][$sub_sub_sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_sub_sub_subelement['data']);
-
 																							break;
-
 																						case EBML_ID_CONTENTCOMPSETTINGS:
 																							$track_entry[$sub_subelement['id_name']][$sub_sub_subelement['id_name']][$sub_sub_sub_subelement['id_name']] = $sub_sub_sub_subelement['data'];
-
 																							break;
-
 																						default:
 																							$this->unhandledElement('track.contentencodings.contentencoding.contentcompression', __LINE__, $sub_sub_sub_subelement);
-
 																							break;
 																					}
 																				}
 
 																				break;
-
 																			case EBML_ID_CONTENTENCRYPTION:
 																				while ($this->getEBMLelement($sub_sub_sub_subelement, $sub_sub_subelement['end'], true)) {
 																					switch ($sub_sub_sub_subelement['id']) {
@@ -795,43 +717,33 @@ class getid3_matroska extends getid3_handler {
 																						case EBML_ID_CONTENTSIGALGO:
 																						case EBML_ID_CONTENTSIGHASHALGO:
 																							$track_entry[$sub_subelement['id_name']][$sub_sub_subelement['id_name']][$sub_sub_sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_sub_sub_subelement['data']);
-
 																							break;
-
 																						case EBML_ID_CONTENTENCKEYID:
 																						case EBML_ID_CONTENTSIGNATURE:
 																						case EBML_ID_CONTENTSIGKEYID:
 																							$track_entry[$sub_subelement['id_name']][$sub_sub_subelement['id_name']][$sub_sub_sub_subelement['id_name']] = $sub_sub_sub_subelement['data'];
-
 																							break;
-
 																						default:
 																							$this->unhandledElement('track.contentencodings.contentencoding.contentcompression', __LINE__, $sub_sub_sub_subelement);
-
 																							break;
 																					}
 																				}
 
 																				break;
-
 																			default:
 																				$this->unhandledElement('track.contentencodings.contentencoding', __LINE__, $sub_sub_subelement);
-
 																				break;
 																		}
 																	}
 
 																	break;
-
 																default:
 																	$this->unhandledElement('track.contentencodings', __LINE__, $sub_subelement);
-
 																	break;
 															}
 														}
 
 														break;
-
 													default:
 														$this->unhandledElement('track', __LINE__, $subelement);
 
@@ -840,9 +752,7 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$info['matroska']['tracks']['tracks'][] = $track_entry;
-
 											break;
-
 										default:
 											$this->unhandledElement('tracks', __LINE__, $track_entry);
 
@@ -851,40 +761,28 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								break;
-
 							case EBML_ID_INFO: // Contains miscellaneous general information and statistics on the file.
 								$info_entry = array();
-
 								while ($this->getEBMLelement($subelement, $element_data['end'], true)) {
 									switch ($subelement['id']) {
 										case EBML_ID_TIMECODESCALE:
 											$info_entry[$subelement['id_name']] = getid3_lib::BigEndian2Int($subelement['data']);
-
 											break;
-
 										case EBML_ID_DURATION:
 											$info_entry[$subelement['id_name']] = getid3_lib::BigEndian2Float($subelement['data']);
-
 											break;
-
 										case EBML_ID_DATEUTC:
 											$info_entry[$subelement['id_name']]           = getid3_lib::BigEndian2Int($subelement['data']);
 											$info_entry[$subelement['id_name'] . '_unix'] = self::EBMLdate2unix($info_entry[$subelement['id_name']]);
-
 											break;
-
 										case EBML_ID_SEGMENTUID:
 										case EBML_ID_PREVUID:
 										case EBML_ID_NEXTUID:
 											$info_entry[$subelement['id_name']] = getid3_lib::trimNullByte($subelement['data']);
-
 											break;
-
 										case EBML_ID_SEGMENTFAMILY:
 											$info_entry[$subelement['id_name']][] = getid3_lib::trimNullByte($subelement['data']);
-
 											break;
-
 										case EBML_ID_SEGMENTFILENAME:
 										case EBML_ID_PREVFILENAME:
 										case EBML_ID_NEXTFILENAME:
@@ -893,29 +791,20 @@ class getid3_matroska extends getid3_handler {
 										case EBML_ID_WRITINGAPP:
 											$info_entry[$subelement['id_name']]                                 = getid3_lib::trimNullByte($subelement['data']);
 											$info['matroska']['comments'][strtolower($subelement['id_name'])][] = $info_entry[$subelement['id_name']];
-
 											break;
-
 										case EBML_ID_CHAPTERTRANSLATE:
 											$chaptertranslate_entry = array();
-
 											while ($this->getEBMLelement($sub_subelement, $subelement['end'], true)) {
 												switch ($sub_subelement['id']) {
 													case EBML_ID_CHAPTERTRANSLATEEDITIONUID:
 														$chaptertranslate_entry[$sub_subelement['id_name']][] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													case EBML_ID_CHAPTERTRANSLATECODEC:
 														$chaptertranslate_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													case EBML_ID_CHAPTERTRANSLATEID:
 														$chaptertranslate_entry[$sub_subelement['id_name']] = getid3_lib::trimNullByte($sub_subelement['data']);
-
 														break;
-
 													default:
 														$this->unhandledElement('info.chaptertranslate', __LINE__, $sub_subelement);
 
@@ -924,9 +813,7 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$info_entry[$subelement['id_name']] = $chaptertranslate_entry;
-
 											break;
-
 										default:
 											$this->unhandledElement('info', __LINE__, $subelement);
 
@@ -935,28 +822,22 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								$info['matroska']['info'][] = $info_entry;
-
 								break;
-
 							case EBML_ID_CUES: // A top-level element to speed seeking access. All entries are local to the segment. Should be mandatory for non "live" streams.
 								if (self::$hide_clusters) { // do not parse cues if hide clusters is "ON" till they point to clusters anyway
 									$this->current_offset = $element_data['end'];
-
 									break;
 								}
 
 								$cues_entry = array();
-
 								while ($this->getEBMLelement($subelement, $element_data['end'])) {
 									switch ($subelement['id']) {
 										case EBML_ID_CUEPOINT:
 											$cuepoint_entry = array();
-
 											while ($this->getEBMLelement($sub_subelement, $subelement['end'], array(EBML_ID_CUETRACKPOSITIONS))) {
 												switch ($sub_subelement['id']) {
 													case EBML_ID_CUETRACKPOSITIONS:
 														$cuetrackpositions_entry = array();
-
 														while ($this->getEBMLelement($sub_sub_subelement, $sub_subelement['end'], true)) {
 															switch ($sub_sub_subelement['id']) {
 																case EBML_ID_CUETRACK:
@@ -964,9 +845,7 @@ class getid3_matroska extends getid3_handler {
 																case EBML_ID_CUEBLOCKNUMBER:
 																case EBML_ID_CUECODECSTATE:
 																	$cuetrackpositions_entry[$sub_sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_sub_subelement['data']);
-
 																	break;
-
 																default:
 																	$this->unhandledElement('cues.cuepoint.cuetrackpositions', __LINE__, $sub_sub_subelement);
 
@@ -975,14 +854,10 @@ class getid3_matroska extends getid3_handler {
 														}
 
 														$cuepoint_entry[$sub_subelement['id_name']][] = $cuetrackpositions_entry;
-
 														break;
-
 													case EBML_ID_CUETIME:
 														$cuepoint_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													default:
 														$this->unhandledElement('cues.cuepoint', __LINE__, $sub_subelement);
 
@@ -991,9 +866,7 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$cues_entry[] = $cuepoint_entry;
-
 											break;
-
 										default:
 											$this->unhandledElement('cues', __LINE__, $subelement);
 
@@ -1002,43 +875,32 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								$info['matroska']['cues'] = $cues_entry;
-
 								break;
-
 							case EBML_ID_TAGS: // Element containing elements specific to Tracks/Chapters.
 								$tags_entry = array();
-
 								while ($this->getEBMLelement($subelement, $element_data['end'], false)) {
 									switch ($subelement['id']) {
 										case EBML_ID_TAG:
 											$tag_entry = array();
-
 											while ($this->getEBMLelement($sub_subelement, $subelement['end'], false)) {
 												switch ($sub_subelement['id']) {
 													case EBML_ID_TARGETS:
 														$targets_entry = array();
-
 														while ($this->getEBMLelement($sub_sub_subelement, $sub_subelement['end'], true)) {
 															switch ($sub_sub_subelement['id']) {
 																case EBML_ID_TARGETTYPEVALUE:
 																	$targets_entry[$sub_sub_subelement['id_name']]                       = getid3_lib::BigEndian2Int($sub_sub_subelement['data']);
 																	$targets_entry[strtolower($sub_sub_subelement['id_name']) . '_long'] = self::TargetTypeValue($targets_entry[$sub_sub_subelement['id_name']]);
-
 																	break;
-
 																case EBML_ID_TARGETTYPE:
 																	$targets_entry[$sub_sub_subelement['id_name']] = $sub_sub_subelement['data'];
-
 																	break;
-
 																case EBML_ID_TAGTRACKUID:
 																case EBML_ID_TAGEDITIONUID:
 																case EBML_ID_TAGCHAPTERUID:
 																case EBML_ID_TAGATTACHMENTUID:
 																	$targets_entry[$sub_sub_subelement['id_name']][] = getid3_lib::BigEndian2Int($sub_sub_subelement['data']);
-
 																	break;
-
 																default:
 																	$this->unhandledElement('tags.tag.targets', __LINE__, $sub_sub_subelement);
 
@@ -1047,14 +909,10 @@ class getid3_matroska extends getid3_handler {
 														}
 
 														$tag_entry[$sub_subelement['id_name']] = $targets_entry;
-
 														break;
-
 													case EBML_ID_SIMPLETAG:
 														$tag_entry[$sub_subelement['id_name']][] = $this->HandleEMBLSimpleTag($sub_subelement['end']);
-
 														break;
-
 													default:
 														$this->unhandledElement('tags.tag', __LINE__, $sub_subelement);
 
@@ -1063,9 +921,7 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$tags_entry[] = $tag_entry;
-
 											break;
-
 										default:
 											$this->unhandledElement('tags', __LINE__, $subelement);
 
@@ -1074,24 +930,19 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								$info['matroska']['tags'] = $tags_entry;
-
 								break;
-
 							case EBML_ID_ATTACHMENTS:
 								while ($this->getEBMLelement($subelement, $element_data['end'])) {
 									switch ($subelement['id']) {
 										case EBML_ID_ATTACHEDFILE:
 											$attachedfile_entry = array();
-
 											while ($this->getEBMLelement($sub_subelement, $subelement['end'], array(EBML_ID_FILEDATA))) {
 												switch ($sub_subelement['id']) {
 													case EBML_ID_FILEDESCRIPTION:
 													case EBML_ID_FILENAME:
 													case EBML_ID_FILEMIMETYPE:
 														$attachedfile_entry[$sub_subelement['id_name']] = $sub_subelement['data'];
-
 														break;
-
 													case EBML_ID_FILEDATA:
 														$attachedfile_entry['data_offset']              = $this->current_offset;
 														$attachedfile_entry['data_length']              = $sub_subelement['length'];
@@ -1100,15 +951,12 @@ class getid3_matroska extends getid3_handler {
 															$attachedfile_entry['data_offset'],
 															$attachedfile_entry['data_length']
 														);
-														$this->current_offset                           = $sub_subelement['end'];
 
+														$this->current_offset = $sub_subelement['end'];
 														break;
-
 													case EBML_ID_FILEUID:
 														$attachedfile_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													default:
 														$this->unhandledElement('attachments.attachedfile', __LINE__, $sub_subelement);
 
@@ -1117,72 +965,53 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$info['matroska']['attachments'][] = $attachedfile_entry;
-
 											break;
-
 										default:
 											$this->unhandledElement('attachments', __LINE__, $subelement);
-
 											break;
 									}
 								}
 
 								break;
-
 							case EBML_ID_CHAPTERS:
 								while ($this->getEBMLelement($subelement, $element_data['end'])) {
 									switch ($subelement['id']) {
 										case EBML_ID_EDITIONENTRY:
 											$editionentry_entry = array();
-
 											while ($this->getEBMLelement($sub_subelement, $subelement['end'], array(EBML_ID_CHAPTERATOM))) {
 												switch ($sub_subelement['id']) {
 													case EBML_ID_EDITIONUID:
 														$editionentry_entry[$sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													case EBML_ID_EDITIONFLAGHIDDEN:
 													case EBML_ID_EDITIONFLAGDEFAULT:
 													case EBML_ID_EDITIONFLAGORDERED:
 														$editionentry_entry[$sub_subelement['id_name']] = (bool)getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													case EBML_ID_CHAPTERATOM:
 														$chapteratom_entry = array();
-
 														while ($this->getEBMLelement($sub_sub_subelement, $sub_subelement['end'], array(EBML_ID_CHAPTERTRACK, EBML_ID_CHAPTERDISPLAY))) {
 															switch ($sub_sub_subelement['id']) {
 																case EBML_ID_CHAPTERSEGMENTUID:
 																case EBML_ID_CHAPTERSEGMENTEDITIONUID:
 																	$chapteratom_entry[$sub_sub_subelement['id_name']] = $sub_sub_subelement['data'];
-
 																	break;
-
 																case EBML_ID_CHAPTERFLAGENABLED:
 																case EBML_ID_CHAPTERFLAGHIDDEN:
 																	$chapteratom_entry[$sub_sub_subelement['id_name']] = (bool)getid3_lib::BigEndian2Int($sub_sub_subelement['data']);
-
 																	break;
-
 																case EBML_ID_CHAPTERUID:
 																case EBML_ID_CHAPTERTIMESTART:
 																case EBML_ID_CHAPTERTIMEEND:
 																	$chapteratom_entry[$sub_sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_sub_subelement['data']);
-
 																	break;
-
 																case EBML_ID_CHAPTERTRACK:
 																	$chaptertrack_entry = array();
-
 																	while ($this->getEBMLelement($sub_sub_sub_subelement, $sub_sub_subelement['end'], true)) {
 																		switch ($sub_sub_sub_subelement['id']) {
 																			case EBML_ID_CHAPTERTRACKNUMBER:
 																				$chaptertrack_entry[$sub_sub_sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_sub_sub_subelement['data']);
-
 																				break;
-
 																			default:
 																				$this->unhandledElement('chapters.editionentry.chapteratom.chaptertrack', __LINE__, $sub_sub_sub_subelement);
 
@@ -1191,21 +1020,16 @@ class getid3_matroska extends getid3_handler {
 																	}
 
 																	$chapteratom_entry[$sub_sub_subelement['id_name']][] = $chaptertrack_entry;
-
 																	break;
-
 																case EBML_ID_CHAPTERDISPLAY:
 																	$chapterdisplay_entry = array();
-
 																	while ($this->getEBMLelement($sub_sub_sub_subelement, $sub_sub_subelement['end'], true)) {
 																		switch ($sub_sub_sub_subelement['id']) {
 																			case EBML_ID_CHAPSTRING:
 																			case EBML_ID_CHAPLANGUAGE:
 																			case EBML_ID_CHAPCOUNTRY:
 																				$chapterdisplay_entry[$sub_sub_sub_subelement['id_name']] = $sub_sub_sub_subelement['data'];
-
 																				break;
-
 																			default:
 																				$this->unhandledElement('chapters.editionentry.chapteratom.chapterdisplay', __LINE__, $sub_sub_sub_subelement);
 
@@ -1214,9 +1038,7 @@ class getid3_matroska extends getid3_handler {
 																	}
 
 																	$chapteratom_entry[$sub_sub_subelement['id_name']][] = $chapterdisplay_entry;
-
 																	break;
-
 																default:
 																	$this->unhandledElement('chapters.editionentry.chapteratom', __LINE__, $sub_sub_subelement);
 
@@ -1225,9 +1047,7 @@ class getid3_matroska extends getid3_handler {
 														}
 
 														$editionentry_entry[$sub_subelement['id_name']][] = $chapteratom_entry;
-
 														break;
-
 													default:
 														$this->unhandledElement('chapters.editionentry', __LINE__, $sub_subelement);
 
@@ -1236,9 +1056,7 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$info['matroska']['chapters'][] = $editionentry_entry;
-
 											break;
-
 										default:
 											$this->unhandledElement('chapters', __LINE__, $subelement);
 
@@ -1247,29 +1065,22 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								break;
-
 							case EBML_ID_CLUSTER: // The lower level element containing the (monolithic) Block structure.
 								$cluster_entry = array();
-
 								while ($this->getEBMLelement($subelement, $element_data['end'], array(EBML_ID_CLUSTERSILENTTRACKS, EBML_ID_CLUSTERBLOCKGROUP, EBML_ID_CLUSTERSIMPLEBLOCK))) {
 									switch ($subelement['id']) {
 										case EBML_ID_CLUSTERTIMECODE:
 										case EBML_ID_CLUSTERPOSITION:
 										case EBML_ID_CLUSTERPREVSIZE:
 											$cluster_entry[$subelement['id_name']] = getid3_lib::BigEndian2Int($subelement['data']);
-
 											break;
-
 										case EBML_ID_CLUSTERSILENTTRACKS:
 											$cluster_silent_tracks = array();
-
 											while ($this->getEBMLelement($sub_subelement, $subelement['end'], true)) {
 												switch ($sub_subelement['id']) {
 													case EBML_ID_CLUSTERSILENTTRACKNUMBER:
 														$cluster_silent_tracks[] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													default:
 														$this->unhandledElement('cluster.silenttracks', __LINE__, $sub_subelement);
 
@@ -1278,9 +1089,7 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$cluster_entry[$subelement['id_name']][] = $cluster_silent_tracks;
-
 											break;
-
 										case EBML_ID_CLUSTERBLOCKGROUP:
 											$cluster_block_group = array(
 												'offset' => $this->current_offset,
@@ -1290,25 +1099,17 @@ class getid3_matroska extends getid3_handler {
 												switch ($sub_subelement['id']) {
 													case EBML_ID_CLUSTERBLOCK:
 														$cluster_block_group[$sub_subelement['id_name']] = $this->HandleEMBLClusterBlock($sub_subelement, EBML_ID_CLUSTERBLOCK, $info);
-
 														break;
-
 													case EBML_ID_CLUSTERREFERENCEPRIORITY: // unsigned-int
 													case EBML_ID_CLUSTERBLOCKDURATION:     // unsigned-int
 														$cluster_block_group[$sub_subelement['id_name']] = getid3_lib::BigEndian2Int($sub_subelement['data']);
-
 														break;
-
 													case EBML_ID_CLUSTERREFERENCEBLOCK:    // signed-int
 														$cluster_block_group[$sub_subelement['id_name']][] = getid3_lib::BigEndian2Int($sub_subelement['data'], false, true);
-
 														break;
-
 													case EBML_ID_CLUSTERCODECSTATE:
 														$cluster_block_group[$sub_subelement['id_name']] = getid3_lib::trimNullByte($sub_subelement['data']);
-
 														break;
-
 													default:
 														$this->unhandledElement('clusters.blockgroup', __LINE__, $sub_subelement);
 
@@ -1317,14 +1118,10 @@ class getid3_matroska extends getid3_handler {
 											}
 
 											$cluster_entry[$subelement['id_name']][] = $cluster_block_group;
-
 											break;
-
 										case EBML_ID_CLUSTERSIMPLEBLOCK:
 											$cluster_entry[$subelement['id_name']][] = $this->HandleEMBLClusterBlock($subelement, EBML_ID_CLUSTERSIMPLEBLOCK, $info);
-
 											break;
-
 										default:
 											$this->unhandledElement('cluster', __LINE__, $subelement);
 
@@ -1350,16 +1147,13 @@ class getid3_matroska extends getid3_handler {
 								}
 
 								break;
-
 							default:
 								$this->unhandledElement('segment', __LINE__, $element_data);
-
 								break;
 						}
 					}
 
 					break;
-
 				default:
 					$this->unhandledElement('root', __LINE__, $top_element);
 
@@ -1371,9 +1165,9 @@ class getid3_matroska extends getid3_handler {
 	private function EnsureBufferHasEnoughData($min_data = 1024) {
 		if (($this->current_offset - $this->EBMLbuffer_offset) >= ($this->EBMLbuffer_length - $min_data)) {
 			$read_bytes = max($min_data, $this->getid3->fread_buffer_size());
-
 			try {
 				$this->fseek($this->current_offset);
+
 				$this->EBMLbuffer_offset = $this->current_offset;
 				$this->EBMLbuffer        = $this->fread($read_bytes);
 				$this->EBMLbuffer_length = strlen($this->EBMLbuffer);
@@ -1396,7 +1190,6 @@ class getid3_matroska extends getid3_handler {
 
 		// get length of integer
 		$first_byte_int = ord($this->EBMLbuffer[$actual_offset]);
-
 		if (0x80 & $first_byte_int) {
 			$length = 1;
 		} elseif (0x40 & $first_byte_int) {
@@ -1420,7 +1213,6 @@ class getid3_matroska extends getid3_handler {
 		// read
 		$int_value             = self::EBML2Int(substr($this->EBMLbuffer, $actual_offset, $length));
 		$this->current_offset += $length;
-
 		return $int_value;
 	}
 
@@ -1431,7 +1223,6 @@ class getid3_matroska extends getid3_handler {
 
 		$data                  = substr($this->EBMLbuffer, $this->current_offset - $this->EBMLbuffer_offset, $length);
 		$this->current_offset += $length;
-
 		return $data;
 	}
 
@@ -1464,7 +1255,6 @@ class getid3_matroska extends getid3_handler {
 
 		// get raw data
 		$dont_parse = (in_array($element['id'], $this->unuseful_elements) || $element['id_name'] == dechex($element['id']));
-
 		if (($get_data === true || (is_array($get_data) && !in_array($element['id'], $get_data))) && !$dont_parse) {
 			$element['data'] = $this->readEBMLelementData($element['length'], $element);
 		}
@@ -1502,7 +1292,6 @@ class getid3_matroska extends getid3_handler {
 
 	private function HandleEMBLSimpleTag($parent_end) {
 		$simpletag_entry = array();
-
 		while ($this->getEBMLelement($element, $parent_end, array(EBML_ID_SIMPLETAG))) {
 			switch ($element['id']) {
 				case EBML_ID_TAGNAME:
@@ -1510,19 +1299,13 @@ class getid3_matroska extends getid3_handler {
 				case EBML_ID_TAGSTRING:
 				case EBML_ID_TAGBINARY:
 					$simpletag_entry[$element['id_name']] = $element['data'];
-
 					break;
-
 				case EBML_ID_SIMPLETAG:
 					$simpletag_entry[$element['id_name']][] = $this->HandleEMBLSimpleTag($element['end']);
-
 					break;
-
 				case EBML_ID_TAGDEFAULT:
 					$simpletag_entry[$element['id_name']] = (bool)getid3_lib::BigEndian2Int($element['data']);
-
 					break;
-
 				default:
 					$this->unhandledElement('tag.simpletag', __LINE__, $element);
 
@@ -1540,7 +1323,6 @@ class getid3_matroska extends getid3_handler {
 		$block_data['tracknumber'] = $this->readEBMLint();
 		$block_data['timecode']    = getid3_lib::BigEndian2Int($this->readEBMLelementData(2), false, true);
 		$block_data['flags_raw']   = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
-
 		if ($block_type == EBML_ID_CLUSTERSIMPLEBLOCK) {
 			$block_data['flags']['keyframe'] = (($block_data['flags_raw'] & 0x80) >> 7);
 
@@ -1566,7 +1348,6 @@ class getid3_matroska extends getid3_handler {
 						$block_data['lace_frames_size'][$i] = $this->readEBMLint(); // TODO: read size correctly, calc size for the last frame. For now offsets are deteminded OK with readEBMLint() and that's the most important thing.
 					} else { // Xiph lacing
 						$block_data['lace_frames_size'][$i] = 0;
-
 						do {
 							$size                                = getid3_lib::BigEndian2Int($this->readEBMLelementData(1));
 							$block_data['lace_frames_size'][$i] += $size;
@@ -1591,7 +1372,6 @@ class getid3_matroska extends getid3_handler {
 		//$info['matroska']['track_data_offsets'][$block_data['tracknumber']]['duration'] = $block_data['timecode'] * ((isset($info['matroska']['info'][0]['TimecodeScale']) ? $info['matroska']['info'][0]['TimecodeScale'] : 1000000) / 1000000000);
 		// set offset manually
 		$this->current_offset = $element['end'];
-
 		return $block_data;
 	}
 
@@ -1613,7 +1393,6 @@ class getid3_matroska extends getid3_handler {
 		// 0000 001x  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx            - value 0 to 2^49-2
 		// 0000 0001  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx - value 0 to 2^56-2
 		$first_byte_int = ord($EBMLstring[0]);
-
 		if (0x80 & $first_byte_int) {
 			$EBMLstring[0] = chr($first_byte_int & 0x7F);
 		} elseif (0x40 & $first_byte_int) {
@@ -1928,7 +1707,6 @@ class getid3_matroska extends getid3_handler {
 		}
 
 		$unset = array('default', 'name');
-
 		foreach ($unset as $u) {
 			if (isset($stream[$u])) {
 				unset($stream[$u]);
@@ -1937,7 +1715,6 @@ class getid3_matroska extends getid3_handler {
 
 		$info            = $stream;
 		$info['streams'] = $streams;
-
 		return $info;
 	}
 }

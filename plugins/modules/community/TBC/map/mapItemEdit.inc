@@ -67,7 +67,6 @@ class mapItemEdit extends ItemEditPlugin {
 			// latitude can be +/- 90 degrees, longitude can be +/- 180 degrees
 			$latregex = '[-+]?' . $tiltregex;
 			$lonregex = $headingregex;
-
 			if (!preg_match(
 				'/^(' . $latregex . '(\040)*,(\040)*' . $lonregex
 				. ')?$/',
@@ -75,6 +74,7 @@ class mapItemEdit extends ItemEditPlugin {
 			)
 			) {
 				$status = '<span class="giError">'
+
 				  . $module->translate('Bad coordinates, please verify') . '</span>';
 			} elseif (!preg_match(
 				'/^(' . $headingregex . '((\040)*,(\040)*'
@@ -83,6 +83,7 @@ class mapItemEdit extends ItemEditPlugin {
 			)
 			) {
 				$status = '<span class="giError">'
+
 				. $module->translate('Bad LookAt parameters, please verify') . '</span>';
 			} else {
 				// cleanup the coordinates of any spaces
@@ -188,7 +189,6 @@ class mapItemEdit extends ItemEditPlugin {
 		}
 
 		$form['fields'] = $tmp[$item->getId()];
-
 		foreach (array(
 			'common' => 1,
 			$set     => 1,
@@ -214,7 +214,6 @@ class mapItemEdit extends ItemEditPlugin {
 		list($ret, $form['UserHelp']) = GalleryCoreApi::getPluginParameter('module', 'map', 'UserHelp');
 
 		$msie = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
-
 		if (!isset($_SERVER['HTTP_USER_AGENT']) || !preg_match($msie, $_SERVER['HTTP_USER_AGENT'])
 			|| preg_match('/opera/i', $_SERVER['HTTP_USER_AGENT'])
 		) {

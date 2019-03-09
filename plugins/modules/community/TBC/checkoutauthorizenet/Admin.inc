@@ -43,7 +43,6 @@ class AdminController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['save'])) {
 			if (empty($form['authorizeNetId'])) {
 				$error[] = 'form[error][authorizeNetId][bad]';
@@ -165,7 +164,6 @@ class AdminController extends GalleryController {
 				}
 
 				$redirect['view'] = 'core.SiteAdmin';
-
 				if ($isActive) {
 					$redirect['subView'] = 'checkoutauthorizenet.Admin';
 					$status['saved']     = 1;
@@ -191,7 +189,6 @@ class AdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

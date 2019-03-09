@@ -38,7 +38,6 @@ class AdminMultimediaController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['save'])) {
 			foreach (array(
 				'color1',

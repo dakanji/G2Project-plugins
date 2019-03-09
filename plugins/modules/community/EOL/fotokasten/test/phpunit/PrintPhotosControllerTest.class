@@ -43,7 +43,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		// Use mock soap client
 		$this->_controller->soapclient = 'FotokastenTestSoapClient';
-
 		FotokastenTestSoapClient::setTest($this);
 
 		// Create some random photo items that we can print
@@ -54,6 +53,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
+
 		$ret = GalleryCoreApi::removeItemPermissions($this->_album->getId());
 
 		if ($ret) {
@@ -116,6 +116,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		$session             =& $gallery->getSession();
 		$this->_saveEndpoint = $session->get('fotokasten.endpoint');
 		$this->_sessionKey   = GalleryUtilities::prefixFormVariable($session->getKey());
+
 		$session->remove('fotokasten.endpoint');
 	}
 
@@ -124,7 +125,6 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		// Restore session id
 		$session =& $gallery->getSession();
-
 		if (isset($this->_saveEndpoint)) {
 			$session->put('fotokasten.endpoint', $this->_saveEndpoint);
 		} else {
@@ -135,6 +135,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		if (isset($this->_printSID)) {
 			$testSession             = new GallerySession();
 			$testSession->_sessionId = $this->_printSID;
+
 			$testSession->reset();
 		}
 
@@ -147,6 +148,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function testPrintSingle() {
 		GalleryUtilities::putRequestVariable('itemId', $this->_items[2]->getId());
+
 		$result = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -158,9 +160,12 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$result
 		);
+
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
+
 		$basket = $this->_basketParams['request']['basket'];
+
 		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
 		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
 		$this->assert(
@@ -168,6 +173,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			'should be no session param in photo url for public photo'
 		);
 		$this->assert(
+
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
 		);
@@ -218,9 +224,12 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$result
 		);
+
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
+
 		$basket = $this->_basketParams['request']['basket'];
+
 		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
 		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
 		$this->assert(
@@ -228,6 +237,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			'should be a session param in photo url for private photo'
 		);
 		$this->assert(
+
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id'
 		);
@@ -265,6 +275,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 				$this->_items[2]->getId() => 2,
 			)
 		);
+
 		$result = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -276,11 +287,15 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			),
 			$result
 		);
+
 		$printCart = $session->get('fotokasten.cart');
+
 		$this->assertEquals(null, $printCart, 'cart');
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assert(isset($this->_basketParams['request']['basket']), 'basket');
+
 		$basket = $this->_basketParams['request']['basket'];
+
 		$this->assertEquals(array('item1', 'item2'), array_keys($basket), 'item keys');
 		$this->assert(isset($basket['item1']['photo_url']), 'photo url');
 
@@ -301,9 +316,11 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 			'should be no session param in photo url for public photo'
 		);
 		$this->assert(
+
 			strpos($basket['item1']['photo_url'], 'itemId=' . $this->_items[0]->getId()),
 			'item id 1'
 		);
+
 		$this->assert(
 			strpos($basket['item2']['photo_url'], 'itemId=' . $this->_items[2]->getId()),
 			'item id 2'
@@ -334,7 +351,6 @@ class FotokastenTestSoapClient {
 				$test                          =& $this->getTest();
 				$test['test']->_basketEndpoint = $this->endpoint;
 				$test['test']->_basketParams   = $params;
-
 				return array(
 					'browserlink' => 'TEST_redirect',
 					'error_code'  => 0,
@@ -343,7 +359,6 @@ class FotokastenTestSoapClient {
 			default:
 				$this->faultcode   = 'TEST_error';
 				$this->faultstring = "Unknown method: $method";
-
 				return null;
 		}
 	}

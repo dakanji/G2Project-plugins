@@ -564,12 +564,19 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 		}
 
 		$this->setSecurity(uniqid(mt_rand(), true));
+
 		$this->setdate(time());
+
 		$this->setDownloadAttempts(0);
+
 		$this->setTimeConfirmed(0);
+
 		$this->setTimePaid(0);
+
 		$this->setTimeCleared(0);
+
 		$this->setTimeFulfil(0);
+
 		$this->setTimeFulfilled(0);
 		$this->setTimeCompleted(0);
 		$this->setTimeHold(0);
@@ -605,7 +612,6 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 		}
 
 		$i = 0;
-
 		while ($result = $searchResults->nextResult()) {
 			$ret = GalleryCoreApi::deleteEntityById($result[0], 'GalleryChildEntity');
 

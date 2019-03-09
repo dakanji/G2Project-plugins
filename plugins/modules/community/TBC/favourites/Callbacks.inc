@@ -54,7 +54,6 @@ class FavouritesCallbacks {
 				}
 
 				$block['favourites']['Top10'] = array_slice($block['favourites']['Top10'], 0, 14);
-
 				foreach (array_slice($block['favourites']['Top10'], 0, 5) as $additional) {
 					$block['favourites']['Top10'][] = $additional;
 				}

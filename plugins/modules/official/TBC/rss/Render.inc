@@ -66,7 +66,6 @@ class RenderView extends GalleryView {
 
 		$params   = array_merge($params, $params1);
 		$feedType = $params['feedType'];
-
 		if (($feedType == 'album' && $params['allowAlbums'] != 1)
 			|| ($feedType == 'photos' && $params['allowPhotos'] != 1)
 			|| ($feedType == 'photosRecursive' && $params['allowPhotosRecursive'] != 1)
@@ -107,7 +106,6 @@ class RenderView extends GalleryView {
 
 		// check render type
 		$feedType = $params['feedType'];
-
 		if (!in_array(
 			$feedType,
 			array(
@@ -163,7 +161,6 @@ class RenderView extends GalleryView {
 		// check if count is set, if not, retrieve default values
 		$maxcount = $params['maxCount'];
 		$count    = $params['count'];
-
 		if (empty($count)) {
 			$count = $params['defaultCount'];
 		}
@@ -184,11 +181,12 @@ class RenderView extends GalleryView {
 		}
 
 		$generator->sliceItems($count);
-		$phpVm = $gallery->getPhpVm();
 
+		$phpVm = $gallery->getPhpVm();
 		if (!$phpVm->headers_sent()) {
 			$phpVm->header('Content-type: text/xml; charset=UTF-8');
 			$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
+
 			$phpVm->header('Cache-Control: no-cache');
 			$phpVm->header('Pragma: no-cache');
 			$phpVm->header('Expires: ' . $expires);

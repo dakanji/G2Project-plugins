@@ -67,7 +67,6 @@ class GalleryRemoteProperties {
 	public function listProperties() {
 		$results   = array();
 		$results[] = '#__GR2PROTO__';
-
 		foreach ($this->_map as $key => $value) {
 			$results[] = $key . '=' . $value;
 		}

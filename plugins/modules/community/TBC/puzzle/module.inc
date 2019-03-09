@@ -49,7 +49,9 @@ class puzzleModule extends GalleryModule {
 		$this->setVersion('3.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $this->translate('Display'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -80,6 +82,7 @@ class puzzleModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/puzzle/classes/PuzzleHelper.class');
 
 		$links = array();
@@ -88,7 +91,6 @@ class puzzleModule extends GalleryModule {
 		// list ($ret, $enabled) = GalleryCoreApi::getPluginParameter('module','puzzle','enabled',$item->getId());
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
 			if (isset($wantsDetailedLinks[$itemId])) {
 				if (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 					// find the parent album of this photo item.
@@ -119,6 +121,7 @@ class puzzleModule extends GalleryModule {
 						$gallery->debug(
 							'<br>(modules:puzzle) getItemLinks: Creating puzzle link.'
 						);
+
 						$params['view']          = 'puzzle.MakePuzzle';
 						$params['itemId']        = $itemId;
 						$params['return']        = 1;

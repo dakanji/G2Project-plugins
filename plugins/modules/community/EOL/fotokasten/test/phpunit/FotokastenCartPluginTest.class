@@ -37,6 +37,7 @@ class FotokastenCartPluginTest extends GalleryTestCase {
 
 		GalleryCoreApi::requireOnce('modules/cart/classes/CartPluginInterface_1_0.class');
 		GalleryCoreApi::requireOnce(
+
 			'modules/fotokasten/classes/FotokastenCartPlugin.class'
 		);
 
@@ -60,8 +61,10 @@ class FotokastenCartPluginTest extends GalleryTestCase {
 			),
 			$urlParams
 		);
+
 		$session   =& $gallery->getSession();
 		$printCart = $session->get('fotokasten.cart');
+
 		$this->assertEquals($cartItemIds, $printCart, 'cart');
 	}
 }

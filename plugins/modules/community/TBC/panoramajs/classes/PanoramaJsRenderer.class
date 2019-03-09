@@ -76,7 +76,6 @@ class PanoramaJsRenderer extends GalleryRenderer {
 		);
 
 		$speed = $levier[$speed];
-
 		if ($rotate == 0) {
 			$speed        = 0;
 			$initPosition = 0;
@@ -91,7 +90,7 @@ class PanoramaJsRenderer extends GalleryRenderer {
 
 		switch ($format) {
 			case 'HTML':
-				$src     = $urlGenerator->generateUrl(
+				$src = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $entity->getId(),
@@ -102,6 +101,7 @@ class PanoramaJsRenderer extends GalleryRenderer {
 						'forceSessionId' => true,
 					)
 				);
+
 				$id_Pano = $entity->getId();
 
 				list($width, $height) = array($entity->getWidth(), $entity->getHeight());

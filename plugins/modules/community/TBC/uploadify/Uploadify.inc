@@ -65,12 +65,13 @@ class UploadifyController extends GalleryController {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-		$ret     = GalleryController::assertIsGenuineRequest();
+
+		$ret = GalleryController::assertIsGenuineRequest();
 
 		if ($ret) {
 			$gallery->debug('Uploadify User Agent: ' . GalleryUtilities::getServerVar('HTTP_USER_AGENT'));
-			$user = $gallery->getActiveUser();
 
+			$user = $gallery->getActiveUser();
 			if (isset($user)) {
 				$gallery->debug('Uploadify User: ', $user->getuserName());
 			} else {
@@ -105,50 +106,33 @@ class UploadifyController extends GalleryController {
 
 		$file   = GalleryUtilities::getFile('userfile');
 		$status = $error = $results = array();
-
 		switch ($file['error']) {
 			case 0:
 				   $status['controllerResponse'] = 'Success'; // No Error
 				break;
-
 			case 1:
 				   $results['error'] = 'The file is bigger than this PHP installation allows';
-
 				break;
-
 			case 2:
 				  $results['error'] = 'The file is bigger than this form allows';
-
 				break;
-
 			case 3:
 				 $results['error'] = 'Only part of the file was uploaded';
-
 				break;
-
 			case 4:
 				 $results['error'] = 'No file was uploaded';
-
 				break;
-
 			case 6:
 				 $results['error'] = 'Missing a temporary folder';
-
 				break;
-
 			case 7:
 				 $results['error'] = 'Failed to write file to disk';
-
 				break;
-
 			case 8:
 				 $results['error'] = 'File upload stopped by extension';
-
 				break;
-
 			default:
 				 $results['error'] = 'Unknown error ' . $file['error'];
-
 				break;
 		}
 
@@ -165,7 +149,6 @@ class UploadifyController extends GalleryController {
 		$results['delegate']['view'] = 'uploadify.Uploadify';
 		$results['status']           = $status;
 		$results['error']            = $error;
-
 		return array(null, $results);
 	}
 
@@ -208,10 +191,8 @@ class UploadifyController extends GalleryController {
 		 * Move it to our temporary directory first.
 		 */
 		$platform =& $gallery->getPlatform();
-
 		if ($platform->is_uploaded_file($file['tmp_name'])) {
 			$tmpFile = $platform->move_uploaded_file($file['tmp_name']);
-
 			if (!$tmpFile) {
 				return GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 			}
@@ -303,7 +284,6 @@ class UploadifyController extends GalleryController {
 			fopen($gallery->getConfig('data.gallery.base') . 'tmp/uploadify.log', 'a'),
 			$timestamp . ': ' . $logentry . "\n"
 		);
-
 		chmod($gallery->getConfig('data.gallery.base') . 'tmp/uploadify.log', 0777);
 	}
 
@@ -326,7 +306,6 @@ class UploadifyController extends GalleryController {
 		}
 
 		$resizesTable = array();
-
 		foreach ($resizesSet as $itemId => $resizes) {
 			foreach ($resizes as $resize) {
 				$resizesTable[$itemId][$resize->getDerivativeOperations()] = $resize;
@@ -334,7 +313,6 @@ class UploadifyController extends GalleryController {
 		}
 
 		$albumId = $item->getParentId();
-
 		if (!isset($resizePrefs[$albumId])) {
 			// Keep resizes for albums in memory
 			list($ret, $preferences) = GalleryCoreApi::fetchDerivativePreferencesForItem($albumId);
@@ -344,7 +322,6 @@ class UploadifyController extends GalleryController {
 			}
 
 			$resizePrefs[$albumId] = array();
-
 			foreach ($preferences as $preference) {
 				if ($preference['derivativeType'] == DERIVATIVE_TYPE_IMAGE_RESIZE
 					&& preg_match(
@@ -377,7 +354,6 @@ class UploadifyController extends GalleryController {
 		 * there should not be any.
 		 */
 		$newResizes = array();
-
 		for ($i = 0; $i < count($resizePrefs[$albumId]); $i++) {
 			if (!isset($resizePrefs[$albumId][$i][$mimeType])) {
 				list(
@@ -463,6 +439,7 @@ class UploadifyController extends GalleryController {
 			$derivative->setDerivativeSourceId($source->getId());
 			$derivative->setDerivativeOperations($resize[$mimeType]['operations']);
 			$derivative->setMimeType($resize[$mimeType]['outputMimeType']);
+
 			$ret = GalleryCoreApi::estimateDerivativeDimensions($derivative, $source);
 
 			if ($ret) {

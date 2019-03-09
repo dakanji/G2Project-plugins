@@ -81,7 +81,6 @@ function get_XMP_text($jpeg_header_data) {
 				// Found a XMP/RDF block
 				// Return the XMP text
 				$xmp_data = substr($jpeg_header_data[$i]['SegData'], 29);
-
 				return $xmp_data;
 			}
 		}
@@ -121,7 +120,6 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
 			if (strncmp($jpeg_header_data[$i]['SegData'], "http://ns.adobe.com/xap/1.0/\x00", 29) == 0) {
 				// Found a preexisting XMP/RDF block - Replace it with the new one and return.
 				$jpeg_header_data[$i]['SegData'] = "http://ns.adobe.com/xap/1.0/\x00" . $newXMP;
-
 				return $jpeg_header_data;
 			}
 		}
@@ -283,76 +281,49 @@ function Interpret_XMP_to_HTML($XMP_array) {
 						switch (substr($key, 6)) {
 							case 'photoshop':
 												$output .= "<h3 class=\"XMP_Secondary_Heading\">Photoshop RDF Segment</h3>\n";
-
 								break;
-
 							case 'xapBJ':
 											$output .= "<h3 class=\"XMP_Secondary_Heading\">Basic Job Ticket RDF Segment</h3>\n";
-
 								break;
-
 							case 'xapMM':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Media Management RDF Segment</h3>\n";
-
 								break;
-
 							case 'xapRights':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Rights Management RDF Segment</h3>\n";
-
 								break;
-
 							case 'dc':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Dublin Core Metadata Initiative RDF Segment</h3>\n";
-
 								break;
-
 							case 'xmp':
 							case 'xap':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP Basic Segment</h3>\n";
-
 								break;
-
 							case 'xmpTPg':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP Paged-Text Segment</h3>\n";
-
 								break;
-
 							case 'xmpTPg':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Adobe PDF Segment</h3>\n";
-
 								break;
-
 							case 'tiff':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP - embedded TIFF Segment</h3>\n";
-
 								break;
-
 							case 'exif':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP - embedded EXIF Segment</h3>\n";
-
 								break;
-
 							case 'xapGImg':  // Sub Category - Do nothing
 								break;
-
 							case 'stDim':  // Sub Category - Do nothing
 								break;
-
 							case 'stEvt':  // Sub Category - Do nothing
 								break;
-
 							case 'stRef':  // Sub Category - Do nothing
 								break;
-
 							case 'stVer':  // Sub Category - Do nothing
 								break;
-
 							case 'stJob':  // Sub Category - Do nothing
 								break;
-
 							default:
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Unknown RDF Segment '" . substr($key, 6) . "'</h3>\n";
-
 								break;
 						}
 					}
@@ -438,12 +409,9 @@ function Interpret_RDF_Item($Item) {
 
 				// Make a new date string with Day, Month, Year
 				$value_str = "$day/$month/$year";
-
 			break;
-
 		default:
 				$value_str = get_RDF_field_html_value($Item);
-
 			break;
 	}
 
@@ -511,19 +479,14 @@ function get_RDF_field_html_value($rdf_item) {
 					case 'rdf:Alt':
 						$output_str .= "List of Alternates:\n";
 						$output_str .= interpret_RDF_collection($child_item);
-
 						break;
-
 					case 'rdf:Bag':
 								$output_str .= "Unordered List:\n";
 								$output_str .= interpret_RDF_collection($child_item);
-
 						break;
-
 					case 'rdf:Seq':
 									$output_str .= "Ordered List:\n";
 									$output_str .= interpret_RDF_collection($child_item);
-
 						break;
 
 									// Sub-Resource
@@ -547,7 +510,6 @@ function get_RDF_field_html_value($rdf_item) {
 									// Other
 					default:
 						$output_str .= 'Unknown Sub Item type:' . $child_item['tag'] . "\n";
-
 						break;
 				}
 			} // sub-item Has no tags, look for a value

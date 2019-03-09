@@ -125,6 +125,7 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 			'affiliateId'
 		);
 		$this->assertEquals(
+
 			FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD,
 			$params['affiliateIdPass'],
 			'affiliateIdPass'

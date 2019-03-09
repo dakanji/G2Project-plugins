@@ -53,6 +53,7 @@ class CmDatabaseTools {
 	 */
 	public function __construct($baseDir, $dbImpl = null) {
 		$this->_baseDir = $baseDir;
+
 		$this->_readParams($baseDir);
 
 		if (isset($dbImpl)) {
@@ -92,7 +93,6 @@ class CmDatabaseTools {
 		}
 
 		$this->_coppermineConfig = array_merge($this->_coppermineConfig, $extraConfig);
-
 		return null;
 	}
 
@@ -163,22 +163,20 @@ class CmDatabaseTools {
 
 		$stack = $result = array();
 		$depth = 0;
-
 		while (true) {
 			$descended = false;
-
 			foreach ($albums as $i => $a) {
 				if ($a->getParent() == $parent) {
-					$entry    = array(
+					$entry = array(
 						'depth' => $depth++,
 						'data'  => $a,
 					);
+
 					$result[] = $entry;
 					array_push($stack, $parent);
 					$parent    = $a->getAlbumId($a);
 					$descended = true;
 					unset($albums[$i]);
-
 					break;
 				}
 			}
@@ -236,14 +234,12 @@ class CmDatabase {
 		$this->config      = $config;
 		$this->_conn       =& ADONewConnection('mysql');
 		$this->_sameDbAsG2 = false;
-
 		if ($this->_conn->NConnect($config['dbserver'], $config['dbuser'], $config['dbpass'])) {
 			/*
 			 * If the connection is the same as G2's then we have to change it back,
 			 * this requires internal poking around
 			 */
 			$store = $gallery->getStorage();
-
 			if ($this->_conn->_connectionID === $store->_impl->_db->_connectionID) {
 				$this->_sameDbAsG2 = true;
 				$g2config          = $gallery->getConfig('storage.config');
@@ -252,7 +248,6 @@ class CmDatabase {
 
 			if ($this->_conn->SelectDB($config['dbname'])) {
 				$this->RestoreG2Database();
-
 				return null;
 			}
 		}
@@ -312,7 +307,8 @@ class CmDatabase {
 			'SELECT name, value FROM ' .
 			$this->config['TABLE_PREFIX'] . 'config'
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -341,7 +337,8 @@ class CmDatabase {
 			'SELECT user_id, user_name FROM ' .
 			$this->config['TABLE_PREFIX'] . 'users'
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -379,7 +376,8 @@ class CmDatabase {
 			'SELECT cid, name, description, parent FROM ' .
 			$this->config['TABLE_PREFIX'] . 'categories'
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -419,7 +417,8 @@ class CmDatabase {
 			'SELECT aid, title, description, category FROM ' .
 			$this->config['TABLE_PREFIX'] . 'albums'
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);
@@ -460,7 +459,8 @@ class CmDatabase {
 					'keywords, hits FROM ' . $this->config['TABLE_PREFIX'] .
 			'pictures WHERE aid = ' . $albumid
 		);
-		$ret    = $this->RestoreG2Database();
+
+		$ret = $this->RestoreG2Database();
 
 		if ($ret) {
 			return array($ret, null);

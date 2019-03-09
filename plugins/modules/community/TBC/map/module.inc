@@ -46,9 +46,12 @@ class mapModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks(
+
 			'registerEventListeners|getSiteAdminViews|getItemSummaries|getItemLinks'
 		);
 	}
@@ -107,46 +110,57 @@ class mapModule extends GalleryModule {
 		GalleryCoreApi::setPluginParameter('module', 'map', 'centerLongLat', '0,0');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'zoomLevel', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'zoomInLevel', 5);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'mapType', 'G_NORMAL_MAP');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'showZoomScale', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'showMapType', 1);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'showZoomLinks', 0);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'showItemSummaries', 1);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'showItemDescriptions', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'regroupAlbums', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'regroupItems', 0);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'regroupDist', 15);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'regroupIcon', 'zoom-in-trans');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'useMarkerSet', 'smallpushpins');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'useAlbumMarkerSet', 'smallpushpins');
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'useGroupMarkerSet', 'smallpushpins');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'defaultphotocolor', 'GREEN');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'defaultalbumcolor', 'YELLOW');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'defaultgroupcolor', 'RED');
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'useParentColor', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'GxMagnifier', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'GxMagnifier2', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'MapControlType', 'Small');
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'MapControlPos', '0');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'MapControlPosOffX', '10');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'MapControlPosOffY', '15');
 		GalleryCoreApi::setPluginParameter('module', 'map', 'AutoCenterZoom', 0);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'ShowExportGELink', 1);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'ExpandAlbumLegend', 1);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'ExpandPhotoLegend', 1);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'ShowFilters', 0);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'LegendPos', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'GxMagnifierFeature', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'ThemeFeature', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'MarkerFeature', 0);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'LegendFeature', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'FilterFeature', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'GroupFeature', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'RouteFeature', 0);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'ThumbBarPos', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'ThumbHeight', 60);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'linktype', 0);
 		GalleryCoreApi::setPluginParameter('module', 'map', 'AdminHelp', 1);
+
 		GalleryCoreApi::setPluginParameter('module', 'map', 'UserHelp', 1);
 
 		list($ret, $exifModule) = GalleryCoreApi::loadPlugin('module', 'exif', false);
@@ -251,7 +265,6 @@ class mapModule extends GalleryModule {
 
 		foreach ($data as $itemId => $fields) {
 			$list = array();
-
 			foreach ($fields as $field => $value) {
 				$list[] = $field . ': ' . smarty_modifier_markup($value);
 			}
@@ -286,8 +299,8 @@ class mapModule extends GalleryModule {
 				),
 			),
 		);
-		$rules[0]         = $rule;
 
+		$rules[0] = $rule;
 		return $rules;
 	}
 
@@ -385,7 +398,6 @@ class mapModule extends GalleryModule {
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 			$type   = $item->getEntityType();
-
 			if ($linktype != 3) {
 				if ($type == 'GalleryPhotoItem') {
 					$NitemId = $item->getParentId();
@@ -397,7 +409,6 @@ class mapModule extends GalleryModule {
 
 				$name      = $item->getTitle();
 				$goodalbum = false;
-
 				if ($linktype == 2) {
 					$goodalbum = true; // Always filter on current album
 				}
@@ -507,7 +518,6 @@ class mapModule extends GalleryModule {
 			case '0':
 				// Initial install
 				break;
-
 			case '0.1.0':
 			case '0.1.1':
 			case '0.1.2':
@@ -576,12 +586,10 @@ class mapModule extends GalleryModule {
 				// Update with new parameters set to no
 				if (!empty($routes[1])) {  // There is some routes, upgrading
 					$allroutes = explode('|', $routes[1]);
-
 					foreach ($allroutes as $route) {
 						$usingnewroutes = strpos($route, '`Yes`No') ? 1 : 0 + strpos($route, '`Yes`Yes') ? 1 : 0 + strpos($route, '`No`Yes') ? 1 : 0 + strpos($route, '`No`No') ? 1 : 0;
 						$posyes         = strpos($route, '`Yes');
 						$posno          = strpos($route, '`No');
-
 						if ($posyes and $usingnewroutes == 0) {
 							$newroutes[] = substr($route, 0, $posyes + 4) . '`No'
 							   . substr($route, $posyes + 4) . '<br>';
@@ -626,16 +634,13 @@ class mapModule extends GalleryModule {
 				list($ret, $routes) = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
 
 				$newroutes = '';
-
 				if (!empty($routes)) { // there is some route, fix them :-)
 					$allroutes = explode('|', $routes);
-
 					foreach ($allroutes as $route) { // go through each route
 						$routeinfos = explode('`', $route);
 						$theroute   = $routeinfos[0] . '`' . $routeinfos[1] . '`' . $routeinfos[2]
 							. '`' . $routeinfos[3] . '`' . $routeinfos[4] . '`' . $routeinfos[5]
 							. '`' . $routeinfos[6];
-
 						for ($i = 7; $i < count($routeinfos); $i++) {
 							// Search for the itemid from the coordinate and replace
 							$query = '
@@ -1059,7 +1064,6 @@ class mapModule extends GalleryModule {
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) { // we do have some filters, start the upgrade
 							$filterarray = explode('|', $result[4]);
-
 							foreach ($filterarray as $key => $filterinfos) {
 								$infos      = explode('`', $filterinfos);
 								$tempcenter = explode(',', $infos[3]);
@@ -1149,7 +1153,6 @@ class mapModule extends GalleryModule {
 				 */
 				if (empty($ret)) {
 					$allkeysets = explode('|', $mapKeys);
-
 					foreach ($allkeysets as $keyset) {
 						$temp       = explode('`', $keyset);
 						$protocol   = ($temp[3] == '443') ? 'https://' : 'http://';

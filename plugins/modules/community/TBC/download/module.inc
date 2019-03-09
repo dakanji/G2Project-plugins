@@ -47,7 +47,9 @@ class DownloadModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 	}
 
@@ -82,7 +84,6 @@ class DownloadModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
-
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,

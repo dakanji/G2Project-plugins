@@ -52,7 +52,6 @@ class EcardHelper {
 
 			if (!empty($resizes)) {
 				$currentDimensions = 0;
-
 				foreach ($resizes[$itemId] as $resize) {
 					// Rebuild the derivative if we don't have its dimensions
 					if ($resize->getWidth() == 0 || $resize->getHeight() == 0) {
@@ -64,7 +63,6 @@ class EcardHelper {
 					}
 
 					$dimensions = $resize->getWidth() + $resize->getHeight();
-
 					if (!$currentDimensions || $dimensions < $currentDimensions) {
 						$currentDimensions = $dimensions;
 						$item              = $resize;
@@ -115,7 +113,6 @@ class EcardHelper {
 	 */
 	public static function replaceKeywords($str, $array) {
 		$result = $str;
-
 		foreach (array(
 			'from',
 			'fromName',

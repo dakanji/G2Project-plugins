@@ -35,7 +35,6 @@ class AddviaemailController extends GalleryController {
 
 		$itemId   = GalleryUtilities::getRequestVariables('itemId');
 		$redirect = $status = $error = array();
-
 		if (isset($form['action']['save'])) {
 			$ret = GalleryCoreApi::removeMapEntry(
 				'AddviaemailMap',
@@ -69,7 +68,6 @@ class AddviaemailController extends GalleryController {
 		$results['status']   = $status;
 		$results['error']    = $error;
 		$results['redirect'] = $redirect;
-
 		return array(null, $results);
 	}
 }

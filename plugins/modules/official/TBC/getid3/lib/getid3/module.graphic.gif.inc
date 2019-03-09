@@ -23,16 +23,15 @@ class getid3_gif extends getid3_handler {
 		$info['video']['pixel_aspect_ratio'] = (float)1;
 
 		$this->fseek($info['avdataoffset']);
+
 		$GIFheader                                  = $this->fread(13);
 		$offset                                     = 0;
 		$info['gif']['header']['raw']['identifier'] = substr($GIFheader, $offset, 3);
 		$offset                                    += 3;
 		$magic                                      = 'GIF';
-
 		if ($info['gif']['header']['raw']['identifier'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['gif']['header']['raw']['identifier']) . '"';
 			unset($info['fileformat'], $info['gif']);
-
 			return false;
 		}
 
@@ -52,7 +51,6 @@ class getid3_gif extends getid3_handler {
 		$info['video']['resolution_y']                  = $info['gif']['header']['raw']['height'];
 		$info['gif']['version']                         = $info['gif']['header']['raw']['version'];
 		$info['gif']['header']['flags']['global_color_table'] = (bool)($info['gif']['header']['raw']['flags'] & 0x80);
-
 		if ($info['gif']['header']['raw']['flags'] & 0x80) {
 			// Number of bits per primary color available to the original image, minus 1
 			$info['gif']['header']['bits_per_pixel'] = 3 * ((($info['gif']['header']['raw']['flags'] & 0x70) >> 4) + 1);
@@ -61,7 +59,6 @@ class getid3_gif extends getid3_handler {
 		}
 
 		$info['gif']['header']['flags']['global_color_sorted'] = (bool)($info['gif']['header']['raw']['flags'] & 0x40);
-
 		if ($info['gif']['header']['flags']['global_color_table']) {
 			// the number of bytes contained in the Global Color Table. To determine that
 			// actual size of the color table, raise 2 to [the value of the field + 1]
@@ -157,7 +154,6 @@ class getid3_gif extends getid3_handler {
 
 		$value     = bindec(substr($bitbuffer, 0 - $bits));
 		$bitbuffer = substr($bitbuffer, 0, 0 - $bits);
-
 		return $value;
 	}
 }

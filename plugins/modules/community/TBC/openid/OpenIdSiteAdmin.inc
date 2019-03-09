@@ -44,7 +44,6 @@ class OpenIdSiteAdminController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['addMapping'])) {
 			list($ret, $user) = GalleryCoreApi::fetchUserByUserName($form['username']);
 
@@ -92,7 +91,8 @@ class OpenIdSiteAdminView extends GalleryView {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-		$ret      = GalleryCoreApi::assertUserIsSiteAdministrator();
+
+		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
 			return array($ret, null);
@@ -107,7 +107,6 @@ class OpenIdSiteAdminView extends GalleryView {
 		$OpenIdSiteAdmin               = array();
 		$OpenIdSiteAdmin['randSource'] = Auth_OpenID_RAND_SOURCE;
 		$OpenIdSiteAdmin['randHandle'] = @$platform->fopen($OpenIdSiteAdmin['randSource'], 'r');
-
 		if ($OpenIdSiteAdmin['randHandle'] !== false) {
 			$OpenIdSiteAdmin['expectedSize'] = 6;
 			$OpenIdSiteAdmin['randData']     = $platform->fread($OpenIdSiteAdmin['randHandle'], $OpenIdSiteAdmin['expectedSize']);

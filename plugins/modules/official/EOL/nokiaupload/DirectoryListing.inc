@@ -35,7 +35,6 @@ class DirectoryListingController extends GalleryController {
 
 		// Request forgery protection
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-
 		if (strstr($httpUserAgent, 'Nokia') === false) {
 			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null);
 		}
@@ -46,7 +45,6 @@ class DirectoryListingController extends GalleryController {
 
 		$results['status'] = ImageUploadHelper::getDirectoryListing();
 		$results['error']  = array();
-
 		return array(null, $results);
 	}
 
@@ -77,6 +75,7 @@ class DirectoryListingView extends GalleryView {
 		global $gallery;
 
 		$gallery->debug("##### DirectoryListingView #####\n\$status = ");
+
 		$gallery->debug_r($status);
 
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR && !isset($status['albums'])) {
@@ -84,7 +83,6 @@ class DirectoryListingView extends GalleryView {
 		}
 
 		$reply = array($status['success'] . "\r\n");
-
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR) {
 			$dirNum  = count($status['albums']);
 			$reply[] = $dirNum . "\r\n";
@@ -111,7 +109,6 @@ class DirectoryListingView extends GalleryView {
 		header('Content-type: text/plain; charset=UTF-8');
 		header('Content-Length: ' . strlen($reply));
 		echo $reply;
-
 		return null;
 	}
 }

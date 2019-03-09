@@ -9,13 +9,11 @@ function ReadMap($enc) {
 	//Read a map file
 	$file = dirname(__FILE__) . '/' . strtolower($enc) . '.map';
 	$a    = file($file);
-
 	if (empty($a)) {
 		die('<B>Error:</B> encoding not found: ' . $enc);
 	}
 
 	$cc2gn = array();
-
 	foreach ($a as $l) {
 		if ($l[0] == '!') {
 			$e          = preg_split('/[ \\t]+/', rtrim($l));
@@ -37,7 +35,6 @@ function ReadMap($enc) {
 function ReadAFM($file, &$map) {
 	//Read a font metric file
 	$a = file($file);
-
 	if (empty($a)) {
 		die('File not found');
 	}
@@ -82,20 +79,17 @@ function ReadAFM($file, &$map) {
 
 	foreach ($a as $l) {
 		$e = explode(' ', rtrim($l));
-
 		if (count($e) < 2) {
 			continue;
 		}
 
 		$code  = $e[0];
 		$param = $e[1];
-
 		if ($code == 'C') {
 			//Character metrics
 			$cc = (int)$e[1];
 			$w  = $e[4];
 			$gn = $e[7];
-
 			if (substr($gn, -4) == '20AC') {
 				$gn = 'Euro';
 			}
@@ -114,7 +108,6 @@ function ReadAFM($file, &$map) {
 				$widths[$cc] = $w;
 			} else {
 				$widths[$gn] = $w;
-
 				if ($gn == 'X') {
 					$fm['CapXHeight'] = $e[13];
 				}
@@ -173,7 +166,6 @@ function ReadAFM($file, &$map) {
 	}
 
 	$fm['Widths'] = $widths;
-
 	return $fm;
 }
 
@@ -199,7 +191,6 @@ function MakeFontDescriptor($fm, $symbolic) {
 
 	//Flags
 	$flags = 0;
-
 	if (isset($fm['IsFixedPitch']) and $fm['IsFixedPitch']) {
 		$flags += 1 << 0;
 	}
@@ -248,7 +239,6 @@ function MakeFontDescriptor($fm, $symbolic) {
 	}
 
 	$fd .= ')';
-
 	return $fd;
 }
 
@@ -256,7 +246,6 @@ function MakeWidthArray($fm) {
 	//Make character width array
 	$s  = "array(\n\t";
 	$cw = $fm['Widths'];
-
 	for ($i = 0; $i <= 255; $i++) {
 		if (chr($i) == "'") {
 			$s .= "'\\''";
@@ -269,7 +258,6 @@ function MakeWidthArray($fm) {
 		}
 
 		$s .= '=>' . $fm['Widths'][$i];
-
 		if ($i < 255) {
 			$s .= ',';
 		}
@@ -280,7 +268,6 @@ function MakeWidthArray($fm) {
 	}
 
 	$s .= ')';
-
 	return $s;
 }
 
@@ -289,7 +276,6 @@ function MakeFontEncoding($map) {
 	$ref  = ReadMap('cp1252');
 	$s    = '';
 	$last = 0;
-
 	for ($i = 32; $i <= 255; $i++) {
 		if ($map[$i] != $ref[$i]) {
 			if ($i != $last + 1) {
@@ -306,7 +292,6 @@ function MakeFontEncoding($map) {
 
 function SaveToFile($file, $s, $mode = 't') {
 	$f = fopen($file, 'w' . $mode);
-
 	if (!$f) {
 		die('Can\'t write to file ' . $file);
 	}
@@ -317,20 +302,17 @@ function SaveToFile($file, $s, $mode = 't') {
 
 function ReadShort($f) {
 	$a = unpack('n1n', fread($f, 2));
-
 	return $a['n'];
 }
 
 function ReadLong($f) {
 	$a = unpack('N1N', fread($f, 4));
-
 	return $a['N'];
 }
 
 function CheckTTF($file) {
 	//Check if font license allows embedding
 	$f = fopen($file, 'rb');
-
 	if (!$f) {
 		die('<B>Error:</B> Can\'t open ' . $file);
 	}
@@ -342,11 +324,9 @@ function CheckTTF($file) {
 
 	//Seek OS/2 table
 	$found = false;
-
 	for ($i = 0; $i < $nb; $i++) {
 		if (fread($f, 4) == 'OS/2') {
 			$found = true;
-
 			break;
 		}
 
@@ -355,7 +335,6 @@ function CheckTTF($file) {
 
 	if (!$found) {
 		fclose($f);
-
 		return;
 	}
 
@@ -370,7 +349,6 @@ function CheckTTF($file) {
 	$pp     = ($fsType & 0x04) != 0;
 	$e      = ($fsType & 0x08) != 0;
 	fclose($f);
-
 	if ($rl and !$pp and !$e) {
 		echo '<B>Warning:</B> font license does not allow embedding';
 	}
@@ -387,10 +365,8 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 	//Generate a font definition file
 	set_magic_quotes_runtime(0);
 	ini_set('auto_detect_line_endings', '1');
-
 	if ($enc) {
 		$map = ReadMap($enc);
-
 		foreach ($patch as $cc => $gn) {
 			$map[$cc] = $gn;
 		}
@@ -403,7 +379,6 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 	}
 
 	$fm = ReadAFM($afmfile, $map);
-
 	if ($enc) {
 		$diff = MakeFontEncoding($map);
 	} else {
@@ -415,7 +390,6 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 	//Find font type
 	if ($fontfile) {
 		$ext = strtolower(substr($fontfile, -3));
-
 		if ($ext == 'ttf') {
 			$type = 'TrueType';
 		} elseif ($ext == 'pfb') {
@@ -434,7 +408,6 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 	$s .= '$type=\'' . $type . "';\n";
 	$s .= '$name=\'' . $fm['FontName'] . "';\n";
 	$s .= '$desc=' . $fd . ";\n";
-
 	if (!isset($fm['UnderlinePosition'])) {
 		$fm['UnderlinePosition'] = -100;
 	}
@@ -450,7 +423,6 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 	$s       .= '$enc=\'' . $enc . "';\n";
 	$s       .= '$diff=\'' . $diff . "';\n";
 	$basename = substr(basename($afmfile), 0, -4);
-
 	if ($fontfile) {
 		//Embedded font
 		if (!file_exists($fontfile)) {
@@ -462,38 +434,32 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 		}
 
 		$f = fopen($fontfile, 'rb');
-
 		if (!$f) {
 			die('<B>Error:</B> Can\'t open ' . $fontfile);
 		}
 
 		$file = fread($f, filesize($fontfile));
 		fclose($f);
-
 		if ($type == 'Type1') {
 			//Find first two sections and discard third one
 			$header = (ord($file[0]) == 128);
-
 			if ($header) {
 				//Strip first binary header
 				$file = substr($file, 6);
 			}
 
 			$pos = strpos($file, 'eexec');
-
 			if (!$pos) {
 				die('<B>Error:</B> font file does not seem to be valid Type1');
 			}
 
 			$size1 = $pos + 6;
-
 			if ($header and ord($file[$size1]) == 128) {
 				//Strip second binary header
 				$file = substr($file, 0, $size1) . substr($file, $size1 + 6);
 			}
 
 			$pos = strpos($file, '00000000');
-
 			if (!$pos) {
 				die('<B>Error:</B> font file does not seem to be valid Type1');
 			}

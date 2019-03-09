@@ -43,7 +43,9 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 		$UnitTestPlatform = new UnitTestPlatform();
 
 		$gallery->setPlatform($UnitTestPlatform);
+
 		$gallery->_phpVm = new UnitTestPhpVm();
+
 		$gallery->setConfig('data.gallery.plugins_data', '/');
 		$gallery->setConfig('apacheSetenvBroken', 0);
 	}
@@ -61,6 +63,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 		GalleryUtilities::putRequestVariable('file', 'bogus!');
 
 		list($ret, $results) = $this->_renderImmediate(array(), array());
+
 		$this->assertErrorEquals(ERROR_BAD_PARAMETER, $ret);
 		$this->assertEquals('', $results);
 	}
@@ -88,6 +91,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			null
 		);
 		$gallery->_phpVm->setReply(
+
 			'header',
 			array('Content-Disposition: inline; filename="piclens.js"', null),
 			null
@@ -98,6 +102,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
@@ -119,6 +124,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			true
 		);
 		$gallery->_platform->setReply(
+
 			'stat',
 			array('/modules/slideshow/piclens.js'),
 			array(
@@ -126,6 +132,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 				9 => strtotime('Sun, 23 Sep 2001 08:00:00 GMT'),
 			)
 		);
+
 		$gallery->_platform->setReply(
 			'fopen',
 			array('/modules/slideshow/piclens.js', 'rb', 0),
@@ -142,6 +149,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			null
 		);
 		$gallery->_platform->setReply(
+
 			'fclose',
 			array('FD'),
 			true
@@ -168,6 +176,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			null
 		);
 		$gallery->_phpVm->setReply(
+
 			'header',
 			array('Content-Disposition: inline; filename="piclens.js"', null),
 			null
@@ -178,6 +187,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
@@ -199,6 +209,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			true
 		);
 		$gallery->_platform->setReply(
+
 			'stat',
 			array('/modules/slideshow/piclens.js'),
 			array(
@@ -227,6 +238,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			null
 		);
 		$gallery->_phpVm->setReply(
+
 			'header',
 			array('Content-Disposition: inline; filename="PicLensLite.swf"', null),
 			null
@@ -237,6 +249,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
@@ -258,6 +271,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			true
 		);
 		$gallery->_platform->setReply(
+
 			'stat',
 			array('/modules/slideshow/PicLensLite.swf'),
 			array(
@@ -265,6 +279,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 				9 => strtotime('Sun, 23 Sep 2001 08:00:00 GMT'),
 			)
 		);
+
 		$gallery->_platform->setReply(
 			'fopen',
 			array('/modules/slideshow/PicLensLite.swf', 'rb', 0),
@@ -281,6 +296,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			null
 		);
 		$gallery->_platform->setReply(
+
 			'fclose',
 			array('FD'),
 			true
@@ -307,6 +323,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			null
 		);
 		$gallery->_phpVm->setReply(
+
 			'header',
 			array('Content-Disposition: inline; filename="PicLensLite.swf"', null),
 			null
@@ -317,6 +334,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			array('Last-Modified: Sun, 23 Sep 2001 08:00:00 GMT', null),
 			null
 		);
+
 		$gallery->_phpVm->setReply(
 			'header',
 			array('Expires: Tue, 19 Jan 2038 03:14:07 GMT', null),
@@ -338,6 +356,7 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 			true
 		);
 		$gallery->_platform->setReply(
+
 			'stat',
 			array('/modules/slideshow/PicLensLite.swf'),
 			array(
@@ -361,12 +380,14 @@ class DownloadPicLensViewTest extends GalleryImmediateViewTestCase {
 		GalleryUtilities::putRequestVariable('file', 'js');
 
 		$gallery->_platform->setReply(
+
 			'file_exists',
 			array('/modules/slideshow/piclens.js'),
 			false
 		);
 
 		list($ret, $results) = $this->_renderImmediate(array(), array());
+
 		$this->assertErrorEquals(ERROR_MISSING_OBJECT, $ret);
 		$this->assertEquals('', $results);
 	}

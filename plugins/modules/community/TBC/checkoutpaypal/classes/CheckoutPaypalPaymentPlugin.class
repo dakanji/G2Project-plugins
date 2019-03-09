@@ -123,7 +123,6 @@ class CheckoutPaypalPaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		list($language, $country) = preg_split('/[-_]/', "${languageCode}_");
 
 		$langCountry = GalleryUtilities::strToUpper($country);
-
 		return array(
 			null,
 			array(

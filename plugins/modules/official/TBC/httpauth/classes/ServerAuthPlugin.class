@@ -65,3 +65,4 @@ class ServerAuthPlugin // extends GalleryAuthPlugin
 		return array(null, $user);
 	}
 }
+

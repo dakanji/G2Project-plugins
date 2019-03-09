@@ -46,6 +46,7 @@ class NoExtensionsInFileNamesView extends GalleryView {
 		$form['formName'] = 'AdminNoExtensionsInFileNames';
 
 		$gallery->guaranteeTimeLimit(120);
+
 		$query = "
             SELECT
                 [GalleryPhotoItem::id]

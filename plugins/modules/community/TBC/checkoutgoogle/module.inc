@@ -41,7 +41,9 @@ class CheckoutGoogleModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 	}
@@ -67,12 +69,10 @@ class CheckoutGoogleModule extends GalleryModule {
 
 		if (!empty($currentVersion)) {
 			$storage =& $gallery->getStorage();
-
 			switch ($currentVersion) {
 				case '0.3.3':
 				case 'end of upgrade path':
 					break;
-
 				default:
 					return GalleryCoreApi::error(
 						ERROR_BAD_PLUGIN,
@@ -96,6 +96,7 @@ class CheckoutGoogleModule extends GalleryModule {
 
 		// 2.2.x event registrations
 		/*  GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
+
 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener); */
 	}
 
@@ -218,7 +219,6 @@ class CheckoutGoogleModule extends GalleryModule {
 	public function handleEvent($event) {
 		if ($event->getEventName() == 'Gallery::ActivatePlugin') {
 			$data = $event->getData();
-
 			if ($data['pluginType'] != 'module' || $data['pluginId'] != 'checkoutgoogle') {
 				return array(null, null);
 			}

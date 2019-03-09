@@ -48,6 +48,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		}
 
 		$gallery->_phpVm = new ZipCartDownloadPhpVm($this);
+
 		$gallery->setConfig('data.gallery.tmp', '/data/tmp/');
 	}
 
@@ -57,9 +58,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		$platform = new UnitTestPlatform();
 
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
+
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
+
 		$platform->setReply('fopen', array('/data/tmp/test.zip', 'rb', 0), 'testfd');
+
 		$platform->setReply('fread', array('testfd', 65535), 'zipdata');
+
 		$platform->setReply('fread', array('testfd', 65535), '');
 		$platform->setReply('fclose', array('testfd'), true);
 		$platform->setReply('unlink', array('/data/tmp/test.zip'), true);
@@ -98,9 +103,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		$platform = new UnitTestPlatform();
 
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
+
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
+
 		$platform->setReply('fopen', array('/data/tmp/test.zip', 'rb', 0), 'testfd');
+
 		$platform->setReply('fread', array('testfd', 65535), 'zipdata');
+
 		$platform->setReply('fread', array('testfd', 65535), '');
 		$platform->setReply('fclose', array('testfd'), true);
 		$platform->setReply('unlink', array('/data/tmp/test.zip'), true);
@@ -127,6 +136,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 			'header'
 		);
 		$this->assertEquals(
+
 			"--G2ZipCart\nContent-Type: application/zip\nContent-Disposition: " .
 			"inline; filename=\"G2cart.zip\"\nContent-Length: 123\n\nzipdata\n--G2ZipCart\n" .
 			"Content-Type: text/html\nPragma: No-cache\n\n<html><body onload=\"location" .

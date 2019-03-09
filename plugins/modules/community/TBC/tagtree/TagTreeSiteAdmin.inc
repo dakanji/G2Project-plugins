@@ -39,7 +39,6 @@ class TagTreeSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
-
 		if (isset($form['action']['save'])) {
 			foreach (array(
 				'showItems',

@@ -81,13 +81,10 @@ class ResponseView extends GalleryView {
 				}
 
 				echo 'OK';
-
 				break;
-
 			case 'new-order-notification':
 				// Figure out which URL the order came from and reset the URL generator
-				$mainURL = $data[$root]['shopping-cart']['merchant-private-data']['mainURL']['VALUE'];
-
+				$mainURL                     = $data[$root]['shopping-cart']['merchant-private-data']['mainURL']['VALUE'];
 				$urlGenerator->init($baseUri = $mainURL);
 
 				// Figure out which order
@@ -173,7 +170,6 @@ class ResponseView extends GalleryView {
 				);
 
 				break;
-
 			case 'charge-amount-notification':
 				// Find transactionId and load transaction
 				$googleOrderNumber = $data[$root]['google-order-number']['VALUE'];
@@ -215,6 +211,7 @@ class ResponseView extends GalleryView {
 						'domain' => 'modules_checkoutgoogle',
 						'data'   => $gallery->i18n('Google Checkout payment state has changed.'),
 					);
+
 					$statusMessage[] = "\n";
 					$statusMessage[] = array(
 						'domain' => 'modules_checkoutgoogle',
@@ -223,6 +220,7 @@ class ResponseView extends GalleryView {
 							'arg1' => $transaction->getAmount(),
 						),
 					);
+
 					$statusMessage[] = "\n";
 					$statusMessage[] = array(
 						'domain' => 'modules_checkoutgoogle',
@@ -279,6 +277,7 @@ class ResponseView extends GalleryView {
 						'arg1' => $root,
 					),
 				);
+
 				$statusMessage[] = "\n\n";
 				$statusMessage[] = array(
 					'domain' => 'modules_checkoutgoogle',

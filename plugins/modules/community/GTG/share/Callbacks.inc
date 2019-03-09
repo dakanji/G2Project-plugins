@@ -35,7 +35,6 @@ class ShareCallbacks {
 				}
 
 				$block =& $smarty->_tpl_vars['block'];
-
 				foreach ($param as $key => $value) {
 					$block['share'][$key] = $value;
 				}

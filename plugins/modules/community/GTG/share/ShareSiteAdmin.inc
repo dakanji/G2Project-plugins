@@ -41,7 +41,6 @@ class ShareSiteAdminController extends GalleryController {
 		}
 
 		$status = $results = $error = array();
-
 		if (isset($form['action']['save'])) {
 			// save parameters
 			foreach (array('onlyWhenLoggedIn', 'addThisAccountId') as $setting) {
@@ -70,7 +69,6 @@ class ShareSiteAdminController extends GalleryController {
 		$results['error']            = $error;
 		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'share.ShareSiteAdmin';
-
 		return array(null, $results);
 	}
 }

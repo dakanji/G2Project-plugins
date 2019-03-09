@@ -47,7 +47,6 @@ class SettingsController extends GalleryController {
 
 		$error  = array();
 		$status = array();
-
 		if (isset($form['action']['save'])) {
 			$ret = SettingsAccess::SetValue('TreatZeroSizedDerivativesAsBroken', $form['TreatZeroSizedDerivativesAsBroken']);
 
@@ -74,7 +73,6 @@ class SettingsController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
-
 			if ($isActive) {
 				$redirect['subView'] = 'mranalysis.Settings';
 				$status['saved']     = 1;
@@ -93,7 +91,6 @@ class SettingsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

@@ -39,7 +39,6 @@ class AdminSessionController extends GalleryController {
 		$error   = array();
 		$status  = array();
 		$results = array();
-
 		if (isset($form['action']['savechanges']) || isset($form['action']['emptycart'])
 			|| isset($form['action']['addmine'])
 		) {
@@ -77,7 +76,6 @@ class AdminSessionController extends GalleryController {
 			// Save or Clear
 			if (isset($form['action']['savechanges']) || isset($form['action']['addmine'])) {
 				$items = CheckoutHelper::parseForm($form);
-
 				if ($ret) {
 					return array($ret, null);
 				}
@@ -96,15 +94,18 @@ class AdminSessionController extends GalleryController {
 				}
 
 				$mySession->put('checkout.items', $items);
+
 				$status['saved'] = 1;
 			}
 
 			if (isset($form['action']['emptycart'])) {
 				$mySession->remove('checkout.items');
+
 				$status['cleared'] = 1;
 			}
 
 			$mySession->save(true);
+
 			$results['redirect']['view']    = 'core.SiteAdmin';
 			$results['redirect']['subView'] = 'checkout.AdminSession';
 			$results['redirect']['sessId']  = $form['sessId'];
@@ -120,7 +121,6 @@ class AdminSessionController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -141,7 +141,6 @@ class AdminSessionView extends GalleryView {
 		if ($form['formName'] != 'Session') {
 			$form['formName'] = 'Session';
 			$form['sessId']   = GalleryUtilities::getRequestVariables('sessId');
-
 			if (empty($form['sessId'])) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
@@ -182,7 +181,6 @@ class AdminSessionView extends GalleryView {
 		$hostName                      = gethostbyaddr($mySession->_remoteIdentifier[0]);
 		$host                          = $hostName ? $hostName : $mySession->_remoteIdentifier[0];
 		$transactionId                 = $mySession->get('checkout.transactionId');
-
 		if (ereg(';', $transactionId)) {
 			$transactionId = unserialize($transactionId);
 		}
@@ -218,7 +216,6 @@ class AdminSessionView extends GalleryView {
 
 		// get the items from the required session
 		$rawItems = $mySession->get('checkout.items');
-
 		if (is_null($rawItems)) {
 			$rawItems = array();
 		}
@@ -267,7 +264,6 @@ class AdminSessionView extends GalleryView {
 
 		// build table of available products for each item in the cart
 		$itemProducts = array();
-
 		foreach ($items as $item) {
 			list($ret, $thisItemsProducts) = CheckoutProductMapHelper::fetchVisibleProducts($item['id'], true);
 
@@ -280,7 +276,6 @@ class AdminSessionView extends GalleryView {
 			/* count how many products with unset quantities there are
 			(if two or more then use combo if requested) */
 			$comboCount = 0;
-
 			foreach ($itemProducts[$item['id']] as $thisProduct) {
 				if (!isset($item[$thisProduct['productId']]['quant'])
 					&& $thisProduct['dropdown'] == 'true'
@@ -295,7 +290,6 @@ class AdminSessionView extends GalleryView {
 		// decide whether to include postage options in the template
 		$offerPostage          = false;
 		$tpl['postageOptions'] = array();
-
 		foreach ($items as $item) {
 			foreach ($itemProducts[$item['id']] as $product) {
 				if (isset($item[$product['productId']]['quant'])
@@ -317,7 +311,6 @@ class AdminSessionView extends GalleryView {
 
 		// Get the thumbnails
 		$thumbnailIdList = array_keys($items);
-
 		foreach ($tpl['accessories'] as $accessory) {
 			$thumbnailIdList[] = $accessory['id'];
 		}
@@ -329,7 +322,6 @@ class AdminSessionView extends GalleryView {
 		}
 
 		$thumbnails = array();
-
 		foreach ($thumbnailList as $thumbnail) {
 			$thumbnails[$thumbnail->getParentId()] = (array)$thumbnail;
 		}

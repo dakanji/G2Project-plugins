@@ -52,7 +52,9 @@ class CheckoutModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews|getItemLinks|getSystemLinks');
 	}
@@ -124,11 +126,13 @@ class CheckoutModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		$myListener = new CheckoutModule();
+
 		GalleryCoreApi::registerEventListener('GalleryCheckout::emptyCart', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::purchaseComplete', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionUpdate', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionSetPaymentPlugin', $myListener);
+
 		GalleryCoreApi::registerEventListener('GalleryCheckout::adminNotify', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener);
 	}
@@ -147,7 +151,6 @@ class CheckoutModule extends GalleryModule {
 			//    $platform->recursiveRmdir($templateCacheDir);
 			// }
 			$storage =& $gallery->getStorage();
-
 			switch ($currentVersion) {
 				case '0.1.1':
 				case '0.1.2':
@@ -156,7 +159,6 @@ class CheckoutModule extends GalleryModule {
 				case '0.1.5':
 					// First standalone version.  Register our permissions
 					$permissions[] = array('purchase', $gallery->i18n('[checkout] Purchase item'), 0, array());
-
 					foreach ($permissions as $p) {
 						$ret = GalleryCoreApi::registerPermission(
 							$this->getId(),
@@ -388,7 +390,7 @@ class CheckoutModule extends GalleryModule {
 							'chargePostage' => $downloadable == 'on' ? 'false' : 'true',
 							'showPapers'    => 'false',
 						)
- as $paramName => $paramValue) {
+						as $paramName => $paramValue) {
 							$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $rootAlbumId);
 
 							if ($ret) {
@@ -692,7 +694,6 @@ class CheckoutModule extends GalleryModule {
 
 					// register new purchase album permission
 					$permissions[] = array('purchaseAlbum', $gallery->i18n('[checkout] Purchase album'), 0, array());
-
 					foreach ($permissions as $p) {
 						$ret = GalleryCoreApi::registerPermission($this->getId(), 'checkout.' . $p[0], $p[1], $p[2], $p[3]);
 
@@ -743,6 +744,7 @@ class CheckoutModule extends GalleryModule {
 						$query = "UPDATE [GalleryCheckoutTransaction] SET [::time$title] = 1 WHERE [::flag$title] = 1;";
 
 						$gallery->debug("Monster query: $query");
+
 						$ret = $storage->execute($query);
 
 						if ($ret) {
@@ -766,7 +768,6 @@ class CheckoutModule extends GalleryModule {
 
 					// Postage settings
 					$posts = array();
-
 					for ($i = 0; $i < $mp['numPostages']; $i++) {
 						$posts[$i]['type']  = $mp['postType' . $i];
 						$posts[$i]['price'] = $mp['postPrice' . $i];
@@ -798,7 +799,6 @@ class CheckoutModule extends GalleryModule {
 
 					// Papers
 					$papers = array();
-
 					for ($i = 0; $i < $mp['numPapers']; $i++) {
 						$papers[$i] = $mp['paper' . $i];
 
@@ -823,7 +823,6 @@ class CheckoutModule extends GalleryModule {
 
 					// Emails
 					$emails = array();
-
 					for ($i = 0; $i < $mp['numAddresses']; $i++) {
 						foreach (array('toAddress', 'emailLanguage') as $paramName) {
 							$emails[$i][$paramName] = $mp[$paramName . $i];
@@ -869,7 +868,6 @@ class CheckoutModule extends GalleryModule {
 
 					$papers   = unserialize($mp['papers']);
 					$postages = unserialize($mp['postages']);
-
 					foreach ($papers as $key => $type) {
 						$papers[$key] = array(
 							1 => $type,
@@ -978,7 +976,6 @@ class CheckoutModule extends GalleryModule {
 					// Fall Through
 				case 'end of upgrade path':
 					break;
-
 				default:
 					return GalleryCoreApi::error(ERROR_BAD_PLUGIN, sprintf('Unknown module version %s', $currentVersion));
 			}
@@ -988,7 +985,6 @@ class CheckoutModule extends GalleryModule {
 			// Initial install.  Register our permissions
 			$permissions[] = array('purchase', $gallery->i18n('[checkout] Purchase item'), 0, array());
 			$permissions[] = array('purchaseAlbum', $gallery->i18n('[checkout] Purchase album'), 0, array());
-
 			foreach ($permissions as $p) {
 				$ret = GalleryCoreApi::registerPermission($this->getId(), 'checkout.' . $p[0], $p[1], $p[2], $p[3]);
 
@@ -1024,7 +1020,8 @@ class CheckoutModule extends GalleryModule {
 				'isAdmin'       => '1',
 				'emailLanguage' => 'transaction_language',
 			);
-			$ret       = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
+
+			$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
 
 			if ($ret) {
 				return $ret;
@@ -1068,6 +1065,7 @@ class CheckoutModule extends GalleryModule {
 			}
 
 			$gallery->guaranteeTimeLimit(300);
+
 			$ret = GalleryCoreApi::addGroupPermission($coreParams['id.rootAlbum'], $coreParams['id.everybodyGroup'], 'checkout.purchase', true);
 
 			if ($ret) {
@@ -1143,7 +1141,6 @@ class CheckoutModule extends GalleryModule {
 		}
 
 		$links = array();
-
 		foreach ($items as $item) {
 			if (isset($wantsDetailedLinks[$item->getId()]) || $alwaysShow) {
 				if (($item->getCanContainChildren() && isset($permissions[$item->getId()]['checkout.purchaseAlbum']))
@@ -1210,10 +1207,8 @@ class CheckoutModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		$result = null;
-
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
-
 			if (GalleryUtilities::isA($entity, 'GalleryItem')) {
 				$ret = CheckoutProductMapHelper::deleteItemParameters($entity->getId());
 

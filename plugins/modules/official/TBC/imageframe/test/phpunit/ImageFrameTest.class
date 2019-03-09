@@ -48,7 +48,6 @@ class ImageFrameTest extends GalleryTestCase {
 
 		if (!isset($this->_imageframe)) {
 			echo 'Missing ImageFrameImpl';
-
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
 	}
@@ -91,10 +90,13 @@ class ImageFrameTest extends GalleryTestCase {
 		}
 
 		$this->assert(isset($template->data['ImageFrameData']), 'template data');
+
 		$data = $template->data['ImageFrameData'];
+
 		$this->assertEquals(array('idList', 'data'), array_keys($data), 'Data keys');
 		$this->assertEquals('none|dots|wood', $data['idList'], 'Id list');
 		$this->assertEquals(
+
 			array(
 				'type'  => 'style',
 				'style' => 'border-style: none',
@@ -102,7 +104,9 @@ class ImageFrameTest extends GalleryTestCase {
 			$data['data']['none'],
 			'None'
 		);
+
 		$this->assertEquals('style', $data['data']['dots']['type'], 'Dots type');
+
 		$this->assert(
 			preg_match('/border.*dashed.*padding/', $data['data']['dots']['style']),
 			'Dots style'
@@ -127,6 +131,7 @@ class ImageFrameTest extends GalleryTestCase {
 		}
 
 		$data = $template->data['ImageFrameData'];
+
 		$this->assertEquals('none|dots|wood|solid', $data['idList'], 'Id list 2');
 	}
 
@@ -158,6 +163,7 @@ class ImageFrameTest extends GalleryTestCase {
 		 * (in case it changes in a future version of smarty).
 		 */
 		$this->_resetIFCounter();
+
 		$template1 = new GalleryTemplate(dirname(__DIR__), true, true);
 		$template2 = new GalleryTemplate(dirname(__DIR__), true, true);
 
@@ -171,6 +177,7 @@ class ImageFrameTest extends GalleryTestCase {
 		$result[1] = trim($result[1]);
 
 		$this->assertEquals(array(null, '1'), $result);
+
 		$result    = $template2->fetch('gallery:data/counter.tpl');
 		$result[1] = trim($result[1]);
 

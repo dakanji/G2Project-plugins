@@ -29,21 +29,17 @@ class Auth_OpenID_KVForm {
 	public function toArray($kvs, $strict = false) {
 		$lines = explode("\n", $kvs);
 		$last  = array_pop($lines);
-
 		if ($last !== '') {
 			array_push($lines, $last);
-
 			if ($strict) {
 				return false;
 			}
 		}
 
 		$values = array();
-
 		for ($lineno = 0; $lineno < count($lines); $lineno++) {
 			$line = $lines[$lineno];
 			$kv   = explode(':', $line, 2);
-
 			if (count($kv) != 2) {
 				if ($strict) {
 					return false;
@@ -54,7 +50,6 @@ class Auth_OpenID_KVForm {
 
 			$key  = $kv[0];
 			$tkey = trim($key);
-
 			if ($tkey != $key) {
 				if ($strict) {
 					return false;
@@ -63,7 +58,6 @@ class Auth_OpenID_KVForm {
 
 			$value = $kv[1];
 			$tval  = trim($value);
-
 			if ($tval != $value) {
 				if ($strict) {
 					return false;
@@ -89,7 +83,6 @@ class Auth_OpenID_KVForm {
 
 		ksort($values);
 		$serialized = '';
-
 		foreach ($values as $key => $value) {
 			if (is_array($value)) {
 				list($key, $value) = array($value[0], $value[1]);

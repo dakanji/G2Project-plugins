@@ -56,7 +56,6 @@ class TagsItemEditController extends GalleryController {
 				// Figure out what to extend it to
 				/** todo move this to the callback and add permission check on the first 2 functions */
 				$items = array();
-
 				if (!empty($form['AlbumItems']) && !empty($form['AllAlbumItems'])) {
 					list($ret, $tmpItems) = GalleryCoreApi::fetchChildDataItemIds($item);
 
@@ -112,6 +111,7 @@ class TagsItemEditController extends GalleryController {
 					array($this, 'runApplyTags'),
 					array($items, $itemId)
 				);
+
 				$results['delegate']['view'] = 'core.ProgressBar';
 			} else {
 				$results['delegate']['view']   = 'tags.TagsItemEdit';
@@ -122,7 +122,6 @@ class TagsItemEditController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 
@@ -145,9 +144,10 @@ class TagsItemEditController extends GalleryController {
 		}
 
 		$heading = $module->translate('Applying Album Tags to SubItems');
-		$templateAdapter->updateProgressBar($heading, $module->translate('Preparing...'), 0);
-		$total = count($items);
 
+		$templateAdapter->updateProgressBar($heading, $module->translate('Preparing...'), 0);
+
+		$total = count($items);
 		foreach ($items as $key => $id) {
 			foreach ($tags as $rawTagName => $tagName) {
 				$message = $module->translate(
@@ -157,7 +157,9 @@ class TagsItemEditController extends GalleryController {
 						'arg2' => $total,
 					)
 				);
+
 				$templateAdapter->updateProgressBar($heading, $message, ($key + 1) / $total);
+
 				$ret = TagsHelper::assignTag($id, $tagName);
 
 				if ($ret) {
@@ -172,6 +174,7 @@ class TagsItemEditController extends GalleryController {
 		);
 
 		$urlGenerator =& $gallery->getUrlGenerator();
+
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 
 		return null;
@@ -220,7 +223,6 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		$tagExifInfo = array();
-
 		if ($exifModuleActive) {
 			// Grab the list of fields in 'details'
 			list($ret, $path) = $item->fetchPath();
@@ -243,7 +245,6 @@ class TagsItemEditView extends GalleryView {
 
 		$tagItem = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'Album' : 'Other';
 		$tagMode = ($tagMode == '') ? 'Existing' : $tagMode;
-
 		if ($form['formName'] != 'TagsItemEdit') {
 			$form['formName'] = 'TagsItemEdit';
 			$form['itemId']   = $itemId;
@@ -262,7 +263,6 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		$tempArray = array();
-
 		foreach ($thisItemTagList as $tagId => $tagName) {
 			$tempArray[$tagName] = $tagId;
 		}
@@ -294,12 +294,19 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		$template->javascript('lib/yui/yahoo-min.js');
+
 		$template->javascript('lib/yui/event-min.js');
+
 		$template->javascript('lib/yui/connection-min.js');
+
 		$template->javascript('modules/tags/js/Tags.js');
+
 		$template->setVariable('controller', 'tags.TagsItemEdit');
+
 		$template->setVariable('tagList', $thisItemTagList);
+
 		$template->setVariable('popularTags', $tagList);
+
 		$template->setVariable('tagItem', $tagItem);
 		$template->setVariable('tagMode', $tagMode);
 		$template->setVariable('tagExifInfo', $tagExifInfo);

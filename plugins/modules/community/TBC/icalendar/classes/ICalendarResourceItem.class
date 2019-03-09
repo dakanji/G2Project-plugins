@@ -80,7 +80,8 @@ class ICalendarResourceItem extends GalleryDataItem {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-		$ret      = parent::rescan();
+
+		$ret = parent::rescan();
 
 		if ($ret) {
 			return $ret;
@@ -128,7 +129,6 @@ class ICalendarResourceItem extends GalleryDataItem {
 		}
 
 		$handle = $platform->fopen($fspath, 'rb');
-
 		if (!$handle) {
 			return GalleryCoreApi::error(GALLERY_ERROR);
 		}
@@ -188,6 +188,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 				)
 			);
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
+
 			$ret = $newEntity->save();
 
 			if ($ret) {

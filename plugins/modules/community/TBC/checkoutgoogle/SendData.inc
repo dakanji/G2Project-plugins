@@ -68,9 +68,9 @@ class SendDataController extends GalleryController {
 				'verify2'       => $verify2,
 				'error'         => 'alreadyPlaced',
 			);
-			$results['error']    = $error;
-			$results['status']   = $status;
 
+			$results['error']  = $error;
+			$results['status'] = $status;
 			return array(null, $results);
 		}
 
@@ -90,7 +90,7 @@ class SendDataController extends GalleryController {
 		$postage  = $transaction->getPostage();
 
 		// Build URLs for altering order, finishing
-		$editURL     = $urlGenerator->generateUrl(
+		$editURL = $urlGenerator->generateUrl(
 			array(
 				'view' => 'checkout.Confirm',
 			),
@@ -98,6 +98,7 @@ class SendDataController extends GalleryController {
 				'forceFullUrl' => true,
 			)
 		);
+
 		$continueURL = $urlGenerator->generateUrl(
 			array(
 				'controller'    => 'checkout.Complete',
@@ -109,7 +110,8 @@ class SendDataController extends GalleryController {
 				'forceFullUrl' => true,
 			)
 		);
-		$mainURL     = $urlGenerator->generateUrl(
+
+		$mainURL = $urlGenerator->generateUrl(
 			array(),
 			array(
 				'forceFullUrl' => true,
@@ -125,7 +127,6 @@ class SendDataController extends GalleryController {
 		 	<mainURL>' . $mainURL . '</mainURL>
 		 	</merchant-private-data>';
 		$googleData .= '<items>';
-
 		foreach ($items as $item) {
 			$name        = htmlspecialchars($item['itemName'], ENT_NOQUOTES);
 			$description = htmlspecialchars($item['productName'] . $item['notes'], ENT_NOQUOTES);
@@ -190,21 +191,25 @@ class SendDataController extends GalleryController {
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('GoogleCheckout: there was a problem preparing an order when a user tried to use Google Checkout.'),
 			);
+
 			$statusMessage[] = "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('We contacted Google at this url:'),
 			);
+
 			$statusMessage[] = "\n" . $url . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('The content of our message was:'),
 			);
+
 			$statusMessage[] = "\n\n" . $googleData . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
 				'data'   => $gallery->i18n('The response code was:'),
 			);
+
 			$statusMessage[] = "\n" . $url . $returnStatus . "\n\n";
 			$statusMessage[] = array(
 				'domain' => 'modules_checkoutgoogle',
@@ -231,7 +236,6 @@ class SendDataController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

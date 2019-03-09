@@ -56,6 +56,7 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
+
 		$ret = $this->_markPluginParametersForCleanup('module', 'members');
 
 		if ($ret) {
@@ -78,7 +79,6 @@ class MembersTest extends GalleryTestCase {
 		 * Set the timestamp to bogus (but well known) values and set the owner to our test user.
 		 */
 		$numItems = 4;
-
 		for ($i = 0; $i < $numItems; $i++) {
 			list($ret, $originalItems[$i]) = $this->_createRandomDataItem(
 				$this->_album->getId(),
@@ -158,6 +158,7 @@ class MembersTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(false, $result);
+
 		$ret = GalleryCoreApi::addUserToGroup($this->_user->getId(), $adminGroupId);
 
 		if ($ret) {
@@ -295,6 +296,7 @@ class MembersTest extends GalleryTestCase {
 		$sevenDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 7, date('Y')));
 
 		$this->_user->setCreationTimestamp($sevenDays);
+
 		$ret = $this->_user->save();
 
 		if ($ret) {
@@ -324,6 +326,7 @@ class MembersTest extends GalleryTestCase {
 		$sixDays = date('U', mktime(0, 0, 0, date('m'), date('d') - 6, date('Y')));
 
 		$this->_user->setCreationTimestamp($sixDays);
+
 		$ret = $this->_user->save();
 
 		if ($ret) {

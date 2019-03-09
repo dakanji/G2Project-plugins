@@ -61,6 +61,7 @@ class AddMissingKeywordsTask extends MaintenanceTask {
 			'',
 			0
 		);
+
 		$items         = KeywordAnalysis::get_item_list();
 		$result        = array();
 		$i             = 0;
@@ -79,7 +80,6 @@ class AddMissingKeywordsTask extends MaintenanceTask {
 			$itemid                     = $item->getId();
 			$itemchanged                = false;
 			$keywordsadded_to_this_item = array();
-
 			foreach ($missingkeywords as $sourcekeyword => $changes) {
 				foreach ($changes as $keyword => $canset) {
 					if ($canset && !in_array($keyword, $keywordsadded_to_this_item)) {
@@ -125,12 +125,14 @@ class AddMissingKeywordsTask extends MaintenanceTask {
 				'arg1' => $total,
 			)
 		);
+
 		$result[] = $module->translate(
 			array(
 				'text' => '%d items changed',
 				'arg1' => $itemschanged,
 			)
 		);
+
 		$result[] = $module->translate(
 			array(
 				'text' => '%d keywords added',
@@ -153,6 +155,7 @@ class AddMissingKeywordsTask extends MaintenanceTask {
 				'arg2' => $total,
 			)
 		);
+
 		$templateAdapter->updateProgressBar($message, '', $i / $total);
 
 		// Release locks (avoid too many open files for flock based locking)

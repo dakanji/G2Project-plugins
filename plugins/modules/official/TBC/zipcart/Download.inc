@@ -42,7 +42,6 @@ class DownloadView extends GalleryView {
 		$platform =& $gallery->getPlatform();
 		$phpVm    = $gallery->getPhpVm();
 		$file     = GalleryUtilities::getRequestVariables('file');
-
 		if (!empty($file)) {
 			$file = $gallery->getConfig('data.gallery.tmp') . basename($file) . '.zip';
 		}
@@ -55,7 +54,6 @@ class DownloadView extends GalleryView {
 			 * broken versions of mod_deflate sometimes get the byte count wrong.
 			 */
 			@$phpVm->ini_set('zlib.output_compression', 0);
-
 			if (function_exists('apache_setenv') && !@$gallery->getConfig('apacheSetenvBroken')) {
 				@apache_setenv('no-gzip', '1');
 			}
@@ -71,7 +69,6 @@ class DownloadView extends GalleryView {
 				$phpVm->header('Content-Type: multipart/mixed; boundary=G2ZipCart');
 				echo "--G2ZipCart\nContent-Type: application/zip\n";
 				echo "Content-Disposition: inline; filename=\"G2cart.zip\"\n";
-
 				if ($size > 0) {
 					echo 'Content-Length: ' . $size . "\n";
 				}
@@ -81,8 +78,8 @@ class DownloadView extends GalleryView {
 				// Poor IE6 doesn't know multipart.. just send zip
 				// Safari doesn't get filename in multipart and may even crash
 				$phpVm->header('Content-Type: application/zip');
-				$phpVm->header('Content-Disposition: inline; filename="G2cart.zip"');
 
+				$phpVm->header('Content-Disposition: inline; filename="G2cart.zip"');
 				if ($size > 0) {
 					$phpVm->header("Content-Length: $size");
 				}
@@ -91,7 +88,6 @@ class DownloadView extends GalleryView {
 			if ($fd = $platform->fopen($file, 'rb')) {
 				while (true) {
 					$data = $platform->fread($fd, 65535);
-
 					if (strlen($data) == 0) {
 						break;
 					}
@@ -106,6 +102,7 @@ class DownloadView extends GalleryView {
 
 			@$platform->unlink($file);
 			@$platform->unlink(substr($file, 0, -4));   // Remove file created by tempnam() too
+
 			if ($sendMultipart) {
 				echo "\n--G2ZipCart\nContent-Type: text/html\nPragma: No-cache\n\n";
 				echo "<html><body onload=\"location.reload()\"></body></html>\n\n";

@@ -38,9 +38,7 @@ class Getid3Toolkit extends GalleryToolkit {
 
 				$timestamp = Getid3Helper::getOriginationTimestamp($sourceFilename);
 				$results   = array($timestamp);
-
 				break;
-
 			default:
 				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 		}

@@ -24,9 +24,10 @@ class getid3_flac extends getid3_handler {
 
 	public function Analyze() {
 		$info =& $this->getid3->info;
-		$this->fseek($info['avdataoffset']);
-		$StreamMarker = $this->fread(4);
 
+		$this->fseek($info['avdataoffset']);
+
+		$StreamMarker = $this->fread(4);
 		if ($StreamMarker != self::syncword) {
 			return $this->error('Expecting "' . getid3_lib::PrintHexBytes(self::syncword) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($StreamMarker) . '"');
 		}
@@ -42,7 +43,6 @@ class getid3_flac extends getid3_handler {
 
 	public function parseMETAdata() {
 		$info =& $this->getid3->info;
-
 		do {
 			$BlockOffset   = $this->ftell();
 			$BlockHeader   = $this->fread(4);
@@ -51,10 +51,8 @@ class getid3_flac extends getid3_handler {
 			$BlockType     = ($LBFBT & 0x7F);
 			$BlockLength   = getid3_lib::BigEndian2Int(substr($BlockHeader, 1, 3));
 			$BlockTypeText = self::metaBlockTypeLookup($BlockType);
-
 			if (($BlockOffset + 4 + $BlockLength) > $info['avdataend']) {
 				$this->error('METADATA_BLOCK_HEADER.BLOCK_TYPE (' . $BlockTypeText . ') at offset ' . $BlockOffset . ' extends beyond end of file');
-
 				break;
 			}
 
@@ -71,7 +69,6 @@ class getid3_flac extends getid3_handler {
 			$BlockTypeText_raw['block_type']      = $BlockType;
 			$BlockTypeText_raw['block_type_text'] = $BlockTypeText;
 			$BlockTypeText_raw['block_length']    = $BlockLength;
-
 			if ($BlockTypeText_raw['block_type'] != 0x06) { // do not read attachment data automatically
 				$BlockTypeText_raw['block_data'] = $this->fread($BlockLength);
 			}
@@ -83,46 +80,39 @@ class getid3_flac extends getid3_handler {
 					}
 
 					break;
-
 				case 'PADDING':        // 0x01
 					unset($info['flac']['PADDING']); // ignore
 					break;
-
 				case 'APPLICATION':    // 0x02
 					if (!$this->parseAPPLICATION($BlockTypeText_raw['block_data'])) {
 						return false;
 					}
 
 					break;
-
 				case 'SEEKTABLE':      // 0x03
 					if (!$this->parseSEEKTABLE($BlockTypeText_raw['block_data'])) {
 						return false;
 					}
 
 					break;
-
 				case 'VORBIS_COMMENT': // 0x04
 					if (!$this->parseVORBIS_COMMENT($BlockTypeText_raw['block_data'])) {
 						return false;
 					}
 
 					break;
-
 				case 'CUESHEET':       // 0x05
 					if (!$this->parseCUESHEET($BlockTypeText_raw['block_data'])) {
 						return false;
 					}
 
 					break;
-
 				case 'PICTURE':        // 0x06
 					if (!$this->parsePICTURE()) {
 						return false;
 					}
 
 					break;
-
 				default:
 					$this->warning('Unhandled METADATA_BLOCK_HEADER.BLOCK_TYPE (' . $BlockType . ') at offset ' . $BlockOffset);
 			}
@@ -149,7 +139,6 @@ class getid3_flac extends getid3_handler {
 					}
 
 					$comments_picture_data = array();
-
 					foreach (array('data', 'image_mime', 'image_width', 'image_height', 'imagetype', 'picturetype', 'description', 'datalength') as $picture_key) {
 						if (isset($entry[$picture_key])) {
 							$comments_picture_data[$picture_key] = $entry[$picture_key];
@@ -168,7 +157,6 @@ class getid3_flac extends getid3_handler {
 			}
 
 			$info['flac']['uncompressed_audio_bytes'] = $info['flac']['STREAMINFO']['samples_stream'] * $info['flac']['STREAMINFO']['channels'] * ($info['flac']['STREAMINFO']['bits_per_sample'] / 8);
-
 			if ($info['flac']['uncompressed_audio_bytes'] == 0) {
 				return $this->error('Corrupt FLAC file: uncompressed_audio_bytes == zero');
 			}
@@ -185,7 +173,6 @@ class getid3_flac extends getid3_handler {
 			} else {
 				$info['md5_data_source'] = '';
 				$md5                     = $info['flac']['STREAMINFO']['audio_signature'];
-
 				for ($i = 0; $i < strlen($md5); $i++) {
 					$info['md5_data_source'] .= str_pad(dechex(ord($md5[$i])), 2, '00', STR_PAD_LEFT);
 				}
@@ -198,7 +185,6 @@ class getid3_flac extends getid3_handler {
 
 		if (isset($info['flac']['STREAMINFO']['bits_per_sample'])) {
 			$info['audio']['bits_per_sample'] = $info['flac']['STREAMINFO']['bits_per_sample'];
-
 			if ($info['audio']['bits_per_sample'] == 8) {
 				// special case
 				// must invert sign bit on all data bytes before MD5'ing to match FLAC's calculated value
@@ -224,14 +210,12 @@ class getid3_flac extends getid3_handler {
 		$streaminfo['bits_per_sample'] = getid3_lib::Bin2Dec(substr($SRCSBSS, 23, 5)) + 1;
 		$streaminfo['samples_stream']  = getid3_lib::Bin2Dec(substr($SRCSBSS, 28, 36));
 		$streaminfo['audio_signature'] = substr($BlockData, 18, 16);
-
 		if (!empty($streaminfo['sample_rate'])) {
 			$info['audio']['bitrate_mode']    = 'vbr';
 			$info['audio']['sample_rate']     = $streaminfo['sample_rate'];
 			$info['audio']['channels']        = $streaminfo['channels'];
 			$info['audio']['bits_per_sample'] = $streaminfo['bits_per_sample'];
 			$info['playtime_seconds']         = $streaminfo['samples_stream'] / $streaminfo['sample_rate'];
-
 			if ($info['playtime_seconds'] > 0) {
 				if (!$this->isDependencyFor('matroska')) {
 					$info['audio']['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
@@ -251,7 +235,6 @@ class getid3_flac extends getid3_handler {
 		$ApplicationID = getid3_lib::BigEndian2Int(substr($BlockData, 0, 4));
 		$info['flac']['APPLICATION'][$ApplicationID]['name'] = self::applicationIDLookup($ApplicationID);
 		$info['flac']['APPLICATION'][$ApplicationID]['data'] = substr($BlockData, 4);
-
 		return true;
 	}
 
@@ -260,11 +243,9 @@ class getid3_flac extends getid3_handler {
 		$offset             = 0;
 		$BlockLength        = strlen($BlockData);
 		$placeholderpattern = str_repeat("\xFF", 8);
-
 		while ($offset < $BlockLength) {
 			$SampleNumberString = substr($BlockData, $offset, 8);
 			$offset            += 8;
-
 			if ($SampleNumberString == $placeholderpattern) {
 				// placeholder point
 				getid3_lib::safe_inc($info['flac']['SEEKTABLE']['placeholders'], 1);
@@ -284,7 +265,6 @@ class getid3_flac extends getid3_handler {
 	private function parseVORBIS_COMMENT($BlockData) {
 		$info       =& $this->getid3->info;
 		$getid3_ogg = new getid3_ogg($this->getid3);
-
 		if ($this->isDependencyFor('matroska')) {
 			$getid3_ogg->setStringMode($this->data_string);
 		}
@@ -298,7 +278,6 @@ class getid3_flac extends getid3_handler {
 		}
 
 		unset($getid3_ogg);
-
 		return true;
 	}
 
@@ -314,7 +293,6 @@ class getid3_flac extends getid3_handler {
 		$offset                                          += 258; // reserved
 		$info['flac']['CUESHEET']['number_tracks']        = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1));
 		$offset                                          += 1;
-
 		for ($track = 0; $track < $info['flac']['CUESHEET']['number_tracks']; $track++) {
 			$TrackSampleOffset = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
 			$offset           += 8;
@@ -330,7 +308,6 @@ class getid3_flac extends getid3_handler {
 			$offset += 13; // reserved
 			$info['flac']['CUESHEET']['tracks'][$TrackNumber]['index_points'] = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 1));
 			$offset += 1;
-
 			for ($index = 0; $index < $info['flac']['CUESHEET']['tracks'][$TrackNumber]['index_points']; $index++) {
 				$IndexSampleOffset = getid3_lib::BigEndian2Int(substr($BlockData, $offset, 8));
 				$offset           += 8;
@@ -354,7 +331,6 @@ class getid3_flac extends getid3_handler {
 		$picture['picturetype'] = self::pictureTypeLookup($picture['typeid']);
 		$picture['image_mime']  = $this->fread(getid3_lib::BigEndian2Int($this->fread(4)));
 		$descr_length           = getid3_lib::BigEndian2Int($this->fread(4));
-
 		if ($descr_length) {
 			$picture['description'] = $this->fread($descr_length);
 		}
@@ -364,7 +340,6 @@ class getid3_flac extends getid3_handler {
 		$picture['color_depth']    = getid3_lib::BigEndian2Int($this->fread(4));
 		$picture['colors_indexed'] = getid3_lib::BigEndian2Int($this->fread(4));
 		$picture['datalength']     = getid3_lib::BigEndian2Int($this->fread(4));
-
 		if ($picture['image_mime'] == '-->') {
 			$picture['data'] = $this->fread($picture['datalength']);
 		} else {
@@ -377,7 +352,6 @@ class getid3_flac extends getid3_handler {
 		}
 
 		$info['flac']['PICTURE'][] = $picture;
-
 		return true;
 	}
 

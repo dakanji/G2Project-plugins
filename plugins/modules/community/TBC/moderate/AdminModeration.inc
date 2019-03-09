@@ -49,7 +49,6 @@ class AdminModerationController extends GalleryController {
 		}
 
 		$userid = $gallery->getActiveUserId();
-
 		if (isset($form)) {
 			if (isset($form['approved'])) {
 				//Approve Item
@@ -224,7 +223,6 @@ class AdminModerationController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

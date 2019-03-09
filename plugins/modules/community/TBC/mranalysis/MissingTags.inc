@@ -45,6 +45,7 @@ class MissingTagsView extends GalleryView {
 		$form['formName'] = 'AdminMissingTags';
 
 		$gallery->guaranteeTimeLimit(120);
+
 		$query = '
             SELECT DISTINCT
                 [GalleryPhotoItem::id]

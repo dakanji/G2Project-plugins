@@ -43,7 +43,6 @@ class RemoteStorageCapabilitiesView extends GalleryView {
 
 		ImageUploadHelper::logRequest('RemoteStorageCapabilitiesView');
 		$capabilities = ImageUploadHelper::getRSCapabilities();
-
 		if (empty($capabilities)) {
 			$reply = NOKIAUPLOAD_ERR_UNKNOWN . "\r\n";
 
@@ -63,7 +62,6 @@ class RemoteStorageCapabilitiesView extends GalleryView {
 		header('Content-type: text/plain; charset=UTF-8');
 		header('Content-Length: ' . strlen($reply));
 		echo $reply;
-
 		return null;
 	}
 }

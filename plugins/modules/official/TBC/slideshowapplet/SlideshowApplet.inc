@@ -78,7 +78,6 @@ class SlideshowAppletView extends GalleryView {
 
 		$SlideshowApplet          = array();
 		$SlideshowApplet['extra'] = array();
-
 		if (!isset($modules['remote']['active']) || !$modules['remote']['active']) {
 			$SlideshowApplet['NoProtocolError'] = 1;
 		} else {
@@ -120,7 +119,6 @@ class SlideshowAppletView extends GalleryView {
 			}
 
 			$SlideshowApplet['locale'] = $locale;
-
 			if (isset($startId)) {
 				// format the start_from as album_picture, that's what GR expects
 				$SlideshowApplet['extra']['gr_slideshow_start_from'] = $item->getId() . '_' . $startId;
@@ -134,10 +132,8 @@ class SlideshowAppletView extends GalleryView {
 
 			foreach (array('default', 'override') as $type) {
 				$SlideshowApplet[$type] = array();
-
 				if (!empty($params['slideshow' . $type . 'Variables'])) {
 					$variablesArray = explode('|', $params['slideshow' . $type . 'Variables']);
-
 					foreach ($variablesArray as $variable) {
 						list($name, $value) = explode('=', $variable);
 

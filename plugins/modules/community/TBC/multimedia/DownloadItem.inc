@@ -60,7 +60,6 @@ class DownloadItemView extends GalleryView {
 	public function renderImmediate($status, $error) {
 		// Figure out which item we're talking about
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
-
 		if (empty($itemId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -78,7 +77,6 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$derivativeType = null;
-
 		if (GalleryUtilities::isA($item, 'GalleryDerivative')) {
 			$derivativeType = $item->getDerivativeType();
 		}
@@ -98,7 +96,6 @@ class DownloadItemView extends GalleryView {
 
 		// Don't allow malicious URLs
 		$fileName = GalleryUtilities::getRequestVariables('fileName');
-
 		if (!empty($fileName) && $fileName != $pseudoFileName) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__, 'malicious url');
 		}
@@ -168,11 +165,12 @@ class DownloadItemView extends GalleryView {
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
+
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
 		$stats = $platform->stat($data['derivativePath']);
+
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
-
 		/**
 		 * If the file is publicly visible we could set this cache control to public (as we
 		 * do for fast download) but that would require us to do some extra calculations here that
@@ -200,7 +198,6 @@ class DownloadItemView extends GalleryView {
 			if ($fd = $platform->fopen($data['derivativePath'], 'rb')) {
 				while (true) {
 					$bits = $platform->fread($fd, 65535);
-
 					if (strlen($bits) == 0) {
 						break;
 					}
@@ -232,6 +229,7 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
+
 		$fp     = $platform->fopen($data['derivativePath'], 'rb');
 		$size   = $platform->filesize($data['derivativePath']); // File size
 		$length = $size;           // Content length
@@ -244,14 +242,15 @@ class DownloadItemView extends GalleryView {
 		 *
 		 * Multirange support annouces itself with:
 		 * $phpVm->header('Accept-Ranges: bytes');
+
 		 *
 		 * Multirange content must be sent with multipart/byteranges mediatype,
 		 * (mediatype = mimetype)
 		 * as well as a boundry header to indicate the various chunks of data.
 		 */
 		$phpVm->header("Accept-Ranges: 0-$length");
-
 		// $phpVm->header('Accept-Ranges: bytes');
+
 		// multipart/byteranges
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.2
 		if (isset($_SERVER['HTTP_RANGE'])) {
@@ -314,7 +313,6 @@ class DownloadItemView extends GalleryView {
 
 		// Start buffered download
 		$buffer = 1024 * 8;
-
 		while (!$platform->feof($fp) && ($p = ftell($fp)) <= $end) {
 			if ($p + $buffer > $end) {
 				// In case we're only outputtin a chunk, make sure we don't
@@ -343,7 +341,6 @@ class DownloadItemView extends GalleryView {
 
 		$session             =& $gallery->getSession();
 		$itemIdForPermission = $item->getId();
-
 		if (!empty($derivativeType)) {
 			$itemIdForPermission = $item->getParentId();
 		}
@@ -354,16 +351,12 @@ class DownloadItemView extends GalleryView {
 			$permission = 'core.view';
 		} else {
 			$permission = 'core.viewSource';
-
 			switch ($derivativeType) {
 				case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
 					$permission = 'core.view';
-
 					break;
-
 				case DERIVATIVE_TYPE_IMAGE_RESIZE:
 					$permission = 'core.viewResizes';
-
 					break;
 
 				// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource

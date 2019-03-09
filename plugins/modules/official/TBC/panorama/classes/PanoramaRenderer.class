@@ -62,7 +62,7 @@ class PanoramaRenderer extends GalleryRenderer {
 
 		switch ($format) {
 			case 'HTML':
-				$src         = $urlGenerator->generateUrl(
+				$src = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $entity->getId(),
@@ -73,7 +73,8 @@ class PanoramaRenderer extends GalleryRenderer {
 						'forceSessionId' => true,
 					)
 				);
-				$jarUrl      = $urlGenerator->generateUrl(
+
+				$jarUrl = $urlGenerator->generateUrl(
 					array(
 						'href' => 'modules/panorama/java/Metamorphose.jar',
 					),
@@ -81,6 +82,7 @@ class PanoramaRenderer extends GalleryRenderer {
 						'forceFullUrl' => true,
 					)
 				);
+
 				$scrollerUrl = $urlGenerator->generateUrl(
 					array(
 						'href' => 'modules/panorama/images/slider.png',
@@ -91,9 +93,9 @@ class PanoramaRenderer extends GalleryRenderer {
 				);
 
 				list($width, $height) = array($entity->getWidth(), $entity->getHeight());
-				$downloadText         = $module->translate('Downloading the Panorama Applet');
-				$noAppletText         = $module->translate('Your browser does not support Java applets');
 
+				$downloadText = $module->translate('Downloading the Panorama Applet');
+				$noAppletText = $module->translate('Your browser does not support Java applets');
 				return sprintf(
 					'
 	    <object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"

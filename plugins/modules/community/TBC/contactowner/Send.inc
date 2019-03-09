@@ -43,7 +43,6 @@ class SendController extends GalleryController {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
 		if (isset($form['action']['send'])) {
 			$form['custName']    = GalleryUtilities::htmlSafe($form['custName'], true);
 			$form['custEmail']   = GalleryUtilities::htmlSafe($form['custEmail'], true);
@@ -55,7 +54,6 @@ class SendController extends GalleryController {
 			$badsubject          = false;
 			$badmessage          = false;
 			$emailsent           = false;
-
 			if (strlen($form['custName']) < 1) {
 				$resubmit = true;
 				$badname  = true;
@@ -107,10 +105,8 @@ class SendController extends GalleryController {
 				}
 
 				$temp = $session->get('contactowner.emailcount');
-
 				if (isset($temp)) {
 					$emailCount = unserialize($temp);
-
 					if ($emailCount < 1 || $emailCount > 999) {
 						$emailCount = 1;
 					} else {
@@ -158,7 +154,6 @@ class SendController extends GalleryController {
 				}
 			} else {
 				$nextView = 'contactowner.Contact';
-
 				if (isset($form['custName'])) {
 					$session->put('contactowner.custname', serialize($form['custName']));
 				}
@@ -192,7 +187,6 @@ class SendController extends GalleryController {
 		$results['error']               = $error;
 		$results['isError']             = $isError;
 		$errorView                      = '';
-
 		return array(null, $results);
 	}
 }

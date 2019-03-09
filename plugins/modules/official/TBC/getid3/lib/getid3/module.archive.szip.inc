@@ -17,12 +17,12 @@
 class getid3_szip extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-		$this->fseek($info['avdataoffset']);
-		$SZIPHeader = $this->fread(6);
 
+		$this->fseek($info['avdataoffset']);
+
+		$SZIPHeader = $this->fread(6);
 		if (substr($SZIPHeader, 0, 4) != "SZ\x0A\x04") {
 			$info['error'][] = 'Expecting "53 5A 0A 04" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($SZIPHeader, 0, 4)) . '"';
-
 			return false;
 		}
 
@@ -30,12 +30,9 @@ class getid3_szip extends getid3_handler {
 		$info['szip']['major_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 4, 1));
 		$info['szip']['minor_version'] = getid3_lib::BigEndian2Int(substr($SZIPHeader, 5, 1));
 		$info['error'][]               = 'SZIP parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
-
 		return false;
-
 		while (!$this->feof()) {
 			$NextBlockID = $this->fread(2);
-
 			switch ($NextBlockID) {
 				case 'SZ':
 					// Note that szip files can be concatenated, this has the same effect as
@@ -44,12 +41,10 @@ class getid3_szip extends getid3_handler {
 					$this->fseek(4, SEEK_CUR);
 
 					break;
-
 				case 'BH':
 					$BHheaderbytes  = getid3_lib::BigEndian2Int($this->fread(3));
 					$BHheaderdata   = $this->fread($BHheaderbytes);
 					$BHheaderoffset = 0;
-
 					while (strpos($BHheaderdata, "\x00", $BHheaderoffset) > 0) {
 						//filename as \0 terminated string  (empty string indicates end)
 						//owner as \0 terminated string (empty is same as last file)
@@ -79,7 +74,6 @@ class getid3_szip extends getid3_handler {
 					}
 
 					break;
-
 				default:
 					break 2;
 			}

@@ -39,7 +39,6 @@ class AdminTransactionsController extends GalleryController {
 
 		$error  = array();
 		$status = array();
-
 		if (isset($form['action']['showDelete'])) {
 			$results['delegate']['showDelete'] = 1;
 		}
@@ -59,7 +58,6 @@ class AdminTransactionsController extends GalleryController {
 			$results['redirect']['page']    = $form['page'];
 			$results['status']              = $status;
 			$results['error']               = $error;
-
 			return array(null, $results);
 		}
 
@@ -68,7 +66,6 @@ class AdminTransactionsController extends GalleryController {
 			$results['redirect']['subView'] = 'checkout.AdminSessions';
 			$results['status']              = $status;
 			$results['error']               = $error;
-
 			return array(null, $results);
 		}
 
@@ -77,7 +74,6 @@ class AdminTransactionsController extends GalleryController {
 		$results['delegate']['page']    = $form['page'];
 		$results['status']              = $status;
 		$results['error']               = $error;
-
 		return array(null, $results);
 	}
 }
@@ -128,20 +124,14 @@ class AdminTransactionsView extends GalleryView {
 			case 'paymentPlugin':
 			case 'amount':
 				$SQLsortBy = "[GalleryCheckoutTransaction::$sortBy]";
-
 				break;
-
 			case 'fullName':
 			case 'userName':
 				$SQLsortBy = "[GalleryUser::$sortBy]";
-
 				break;
-
 			case 'userId':
 				$SQLsortBy = '[GalleryUser::id]';
-
 				break;
-
 			default:
 				$sortBy    = 'date';
 				$SQLsortBy = '[GalleryCheckoutTransaction::date]';
@@ -184,7 +174,6 @@ class AdminTransactionsView extends GalleryView {
 		}
 
 		$txns = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$txns[] = $result;
 		}
@@ -194,7 +183,6 @@ class AdminTransactionsView extends GalleryView {
 		$pageDetails['showDelete'] = $showDelete;
 		$perPage                   = 50;
 		$countOrders               = 0;
-
 		if (isset($txns)) {
 			$countOrders = count($txns);
 		}

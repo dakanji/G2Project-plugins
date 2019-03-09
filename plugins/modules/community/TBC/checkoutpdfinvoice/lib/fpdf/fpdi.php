@@ -82,7 +82,6 @@ class FPDI extends FPDF_TPL {
 	public function setSourceFile($filename) {
 		$this->current_filename = $filename;
 		$fn                     =& $this->current_filename;
-
 		if (!isset($this->parsers[$fn])) {
 			$this->parsers[$fn] = new fpdi_pdf_parser($fn, $this);
 		}
@@ -105,14 +104,15 @@ class FPDI extends FPDF_TPL {
 
 		$fn     =& $this->current_filename;
 		$parser =& $this->parsers[$fn];
+
 		$parser->setPageno($pageno);
 		$this->tpl++;
+
 		$this->tpls[$this->tpl] = array();
 		$tpl                    =& $this->tpls[$this->tpl];
 		$tpl['parser']          =& $parser;
 		$tpl['resources']       = $parser->getPageResources();
 		$tpl['buffer']          = $parser->getContent();
-
 		if (!in_array($boxName, $parser->availableBoxes)) {
 			return $this->Error(sprintf('Unknown box: %s', $boxName));
 		}
@@ -152,14 +152,12 @@ class FPDI extends FPDF_TPL {
 
 		// fix for rotated pages
 		$rotation = $parser->getPageRotation($pageno);
-
 		if (isset($rotation[1]) && ($angle = $rotation[1] % 360) != 0) {
 			$steps    = $angle / 90;
 			$_w       = $tpl['w'];
 			$_h       = $tpl['h'];
 			$tpl['w'] = $steps % 2 == 0 ? $_w : $_h;
 			$tpl['h'] = $steps % 2 == 0 ? $_h : $_w;
-
 			if ($steps % 2 != 0) {
 				$x = $y = ($steps == 1 || $steps == -3) ? $tpl['h'] : $tpl['w'];
 			} else {
@@ -188,7 +186,6 @@ class FPDI extends FPDF_TPL {
 		$s = parent::useTemplate($tplidx, $_x, $_y, $_w, $_h);
 
 		$this->_out('Q');
-
 		return $s;
 	}
 
@@ -199,10 +196,10 @@ class FPDI extends FPDF_TPL {
 		if (is_array($this->parsers) && count($this->parsers) > 0) {
 			foreach ($this->parsers as $filename => $p) {
 				$this->current_parser =& $this->parsers[$filename];
-
 				if (is_array($this->_obj_stack[$filename])) {
 					while ($n = key($this->_obj_stack[$filename])) {
 						$nObj = $this->current_parser->pdf_resolve_object($this->current_parser->c, $this->_obj_stack[$filename][$n][1]);
+
 						$this->_newobj($this->_obj_stack[$filename][$n][0]);
 
 						if ($nObj[0] == PDF_TYPE_STREAM) {
@@ -212,6 +209,7 @@ class FPDI extends FPDF_TPL {
 						}
 
 						$this->_out('endobj');
+
 						$this->_obj_stack[$filename][$n] = null; // free memory
 						unset($this->_obj_stack[$filename][$n]);
 						reset($this->_obj_stack[$filename]);
@@ -239,6 +237,7 @@ class FPDI extends FPDF_TPL {
 
 		//Resource dictionary
 		$this->offsets[2] = strlen($this->buffer);
+
 		$this->_out('2 0 obj');
 		$this->_out('<<');
 		$this->_putresourcedict();
@@ -251,13 +250,18 @@ class FPDI extends FPDF_TPL {
 	 */
 	public function _putformxobjects() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
+
 		reset($this->tpls);
 
 		foreach ($this->tpls as $tplidx => $tpl) {
 			$p = ($this->compress) ? gzcompress($tpl['buffer']) : $tpl['buffer'];
+
 			$this->_newobj();
+
 			$this->tpls[$tplidx]['n'] = $this->n;
+
 			$this->_out('<<' . $filter . '/Type /XObject');
+
 			$this->_out('/Subtype /Form');
 			$this->_out('/FormType 1');
 			$this->_out(
@@ -269,7 +273,6 @@ class FPDI extends FPDF_TPL {
 					($tpl['h'] + (isset($tpl['box']['y']) ? $tpl['box']['y'] : 0) - $tpl['y'] - $tpl['h']) * $this->k
 				)
 			);
-
 			if (isset($tpl['box'])) {
 				$this->_out(sprintf('/Matrix [1 0 0 1 %.5f %.5f]', -$tpl['box']['x'] * $this->k, -$tpl['box']['y'] * $this->k));
 			}
@@ -278,6 +281,7 @@ class FPDI extends FPDF_TPL {
 
 			if (isset($tpl['resources'])) {
 				$this->current_parser =& $tpl['parser'];
+
 				$this->pdf_write_value($tpl['resources']);
 			} else {
 				$this->_out('<</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
@@ -296,7 +300,6 @@ class FPDI extends FPDF_TPL {
 					|| isset($this->_res['tpl'][$tplidx]['tpls']) && count($this->_res['tpl'][$tplidx]['tpls'])
 				) {
 					$this->_out('/XObject <<');
-
 					if (isset($this->_res['tpl'][$tplidx]['images']) && count($this->_res['tpl'][$tplidx]['images'])) {
 						foreach ($this->_res['tpl'][$tplidx]['images'] as $image) {
 							$this->_out('/I' . $image['i'] . ' ' . $image['n'] . ' 0 R');
@@ -332,7 +335,9 @@ class FPDI extends FPDF_TPL {
 		//Begin a new object
 		if (!$onlynewobj) {
 			$this->offsets[$obj_id] = strlen($this->buffer);
+
 			$this->_out($obj_id . ' 0 obj');
+
 			$this->_current_obj_id = $obj_id; // for later use with encryption
 		}
 	}
@@ -350,9 +355,7 @@ class FPDI extends FPDF_TPL {
 				// A numeric value or a token.
 				// Simply output them
 				$this->_out($value[1] . ' ', false);
-
 				break;
-
 			case PDF_TYPE_ARRAY:
 				// An array. Output the proper
 				// structure and move on.
@@ -363,15 +366,12 @@ class FPDI extends FPDF_TPL {
 				}
 
 				$this->_out(']');
-
 				break;
-
 			case PDF_TYPE_DICTIONARY:
 				// A dictionary.
 				$this->_out('<<', false);
 
 				reset($value[1]);
-
 				while (list($k, $v) = each($value[1])) {
 					$this->_out($k . ' ', false);
 					$this->pdf_write_value($v);
@@ -380,44 +380,39 @@ class FPDI extends FPDF_TPL {
 				$this->_out('>>');
 
 				break;
-
 			case PDF_TYPE_OBJREF:
 				// An indirect object reference
 				// Fill the object stack if needed
 				$cpfn =& $this->current_parser->filename;
-
 				if (!isset($this->_don_obj_stack[$cpfn][$value[1]])) {
 					$this->_newobj(false, true);
+
 					$this->_obj_stack[$cpfn][$value[1]]     = array($this->n, $value);
 					$this->_don_obj_stack[$cpfn][$value[1]] = array($this->n, $value);
 				}
 
 				$objid = $this->_don_obj_stack[$cpfn][$value[1]][0];
+
 				$this->_out("{$objid} 0 R"); //{$value[2]}
 				break;
-
 			case PDF_TYPE_STRING:
 				// A string.
 				$this->_out('(' . $value[1] . ')');
 
 				break;
-
 			case PDF_TYPE_STREAM:
 				// A stream. First, output the
 				// stream dictionary, then the
 				// stream data itself.
 				$this->pdf_write_value($value[1]);
+
 				$this->_out('stream');
 				$this->_out($value[2][1]);
 				$this->_out('endstream');
-
 				break;
-
 			case PDF_TYPE_HEX:
 				$this->_out('<' . $value[1] . '>');
-
 				break;
-
 			case PDF_TYPE_NULL:
 				// The null object.
 				$this->_out('null');
@@ -459,6 +454,7 @@ class FPDI extends FPDF_TPL {
 		if ($this->state > 2 && count($this->parsers) > 0) {
 			foreach ($this->parsers as $k => $_) {
 				$this->parsers[$k]->closeFile();
+
 				$this->parsers[$k] = null;
 
 				unset($this->parsers[$k]);

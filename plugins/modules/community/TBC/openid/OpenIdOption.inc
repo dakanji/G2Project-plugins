@@ -97,7 +97,6 @@ class OpenIdOption extends GalleryOption {
 			case 'UserPreferences':
 				// Always true
 				return array(null, true);
-
 			case 'UserSelfRegistration':
 				// Only true if already authenticated using OpenID
 				if (empty($data['openId'])) {

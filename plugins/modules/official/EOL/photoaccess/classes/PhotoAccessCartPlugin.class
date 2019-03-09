@@ -53,7 +53,6 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 		}
 
 		$action = $module->translate('Print with PhotoWorks');
-
 		return array(null, $action);
 	}
 
@@ -89,3 +88,4 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 		);
 	}
 }
+

@@ -92,7 +92,6 @@ class DuplicateItemChecker {
 
 			// Item was a duplicate
 			$this->setLastItem($item, true);
-
 			return true;
 		}
 

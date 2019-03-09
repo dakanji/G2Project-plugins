@@ -55,7 +55,6 @@ class DetailsController extends GalleryController {
 				&& GalleryUtilities::isValidEmailString($form['custEmail'])
 			) {
 				$form['custRecipientName'] = trim($form['custRecipientName']);
-
 				if (empty($form['custRecipientName'])) {
 					$form['custRecipientName'] = $form['custFirstName']
 						. ' '
@@ -88,7 +87,6 @@ class DetailsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

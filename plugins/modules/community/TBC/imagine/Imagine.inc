@@ -63,7 +63,8 @@ class ImagineView extends GalleryView {
                [GalleryItem::title] NOT LIKE "IMG%"
             '
 			);
-			$stopWords           = array_flip(
+
+			$stopWords = array_flip(
 				array(
 					'and',
 					'on',
@@ -87,7 +88,6 @@ class ImagineView extends GalleryView {
 
 			while ($result = $results->nextResult()) {
 				$title = strtolower($result[0]);
-
 				foreach (explode(' ', preg_replace('/[^A-Za-z ]/', '', $title)) as $word) {
 					if ($word && strlen($word) > 2 && @!array_key_exists($word, $stopWords)) {
 						@$seen[$word]++;
@@ -97,10 +97,8 @@ class ImagineView extends GalleryView {
 
 			arsort($seen);
 			$i = 0;
-
 			foreach ($seen as $key => $value) {
 				echo "$key\n";
-
 				if ($i++ == 100) {
 					break;
 				}
@@ -123,7 +121,6 @@ class ImagineView extends GalleryView {
 			}
 
 			$itemIds = array();
-
 			foreach ($results['results'] as $result) {
 				$itemIds[] = $result['itemId'];
 			}
@@ -135,7 +132,6 @@ class ImagineView extends GalleryView {
 			}
 
 			$urlGenerator =& $gallery->getUrlGenerator();
-
 			foreach ($thumbs as $thumb) {
 				$url = $urlGenerator->generateUrl(
 					array(
@@ -153,7 +149,6 @@ class ImagineView extends GalleryView {
 				echo $url;
 				echo ' ';
 				$bigger = $thumb;
-
 				while (GalleryUtilities::isA($bigger, 'GalleryDerivative')) {
 					list($ret, $bigger) = GalleryCoreApi::loadEntitiesById($bigger->getDerivativeSourceId());
 

@@ -21,6 +21,7 @@ class pdf_context {
 	// Constructor
 	public function __construct($f) {
 		$this->file = $f;
+
 		$this->reset();
 	}
 
@@ -59,7 +60,6 @@ class pdf_context {
 
 		$this->buffer .= fread($this->file, $l);
 		$this->length  = strlen($this->buffer);
-
 		return true;
 	}
 }

@@ -72,7 +72,6 @@ class WebDavRewriteHelper {
 		 */
 		$url = str_replace('%path%', '/' . $params['path'], $url);
 		unset($params['path']);
-
 		return true;
 	}
 }

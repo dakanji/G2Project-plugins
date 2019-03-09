@@ -42,7 +42,6 @@ class UserinfoSetupController extends GalleryController {
 		$status  = $error  = array();
 		$canSave = !empty($form['action']) &&
 		array_intersect(array_keys($form['action']), array('save1', 'emailTest'));
-
 		if ($canSave) {
 			if ($form['action'] = 'save1') {
 				$tableName3 = 'UserinfoSetupMap';
@@ -145,7 +144,6 @@ class UserinfoSetupController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -171,7 +169,6 @@ class UserinfoSetupView extends GalleryView {
 		}
 
 		$UserinfoSetup = array();
-
 		if ($form['formName'] != 'UserInfoTab') {
 			// Load up our form data
 			$tableName = 'UserinfoSetupMap';
@@ -211,7 +208,6 @@ class UserinfoSetupView extends GalleryView {
 			}
 
 			$data['mapInfo'] = (array_keys($mapInfo));
-
 			for ($i = 1; $i <= count($data['mapInfo']); $i++) {
 				if ($data['mapInfo'][0] == 'id') {
 					$column1 = 'ID';

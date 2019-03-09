@@ -96,11 +96,12 @@
 			}
 
 			// Provide parent, parent URL and get-children function to Theme API
-			$item->urlParams           = array(
+			$item->urlParams = array(
 				'view'        => $this->_view,
 				'chars'       => $chars,
 				'highlightId' => $itemId,
 			);
+
 			$item->getChildrenFunction = array(get_class($this), 'getChildIds');
 			$viewItem->parent          = $item;
 			$item                      = $viewItem;
@@ -232,7 +233,6 @@
 
 		// safety limit of first 100 results
 		$results = array_slice($results, 0, 100);
-
 		return array(null, $results);
 	}
 

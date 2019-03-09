@@ -44,7 +44,9 @@ class NotificationModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getSiteAdminViews|getUserAdminViews|getItemLinks|getItemAdminViews');
 	}
@@ -354,7 +356,6 @@ class NotificationModule extends GalleryModule {
 		global $gallery;
 
 		$storage =& $gallery->getStorage();
-
 		if (empty($currentVersion)) {
 			$currentVersion = '0';
 		}
@@ -407,6 +408,7 @@ class NotificationModule extends GalleryModule {
 
 				while ($rowsRead < $count) {
 					$gallery->guaranteeTimeLimit(30);
+
 					$options['limit']['offset'] = $offset;
 
 					list($ret, $results) = GalleryCoreApi::getMapEntry(
@@ -421,16 +423,16 @@ class NotificationModule extends GalleryModule {
 					}
 
 					$rowsRead += $results->resultCount();
-
 					if ($results->resultCount() == 0) {
 						break;
 					}
 
 					while ($row = $results->nextResult()) {
-						$newRow                     = array(
+						$newRow = array(
 							'userId'      => $row[1],
 							'handlerName' => 'NotificationMethodEmail',
 						);
+
 						$notificationName           = $row[0] == 'NotificationEventItemAdd' ? 'ItemAddedNotification' : 'CommentAddNotification';
 						$newRow['notificationName'] = $notificationName;
 						$newRow['itemId']           = (int)substr($row[3], 2);
@@ -501,7 +503,6 @@ class NotificationModule extends GalleryModule {
 		}
 
 		$show = false;
-
 		if (!$isAnonymous) {
 			list($ret, $notifications) = NotificationHelper::getEnabledNotifications();
 

@@ -61,7 +61,6 @@ class NotificationHelper {
 	 */
 	public static function getEnabledNotifications($forUpdate = false) {
 		$eventMapLockId = null;
-
 		if ($forUpdate) {
 			list($ret, $eventMapLock) = GalleryCoreApi::getPluginParameter('module', 'notification', 'id.eventMapLock');
 
@@ -91,7 +90,6 @@ class NotificationHelper {
 		}
 
 		$enabled = !empty($enabled) ? unserialize($enabled) : array();
-
 		foreach ($enabled as $notification => $handlers) {
 			foreach ($handlers as $handler => $value) {
 				if (empty($value['public']) && !$isAdmin) {
@@ -239,7 +237,6 @@ class NotificationHelper {
 		}
 
 		$subscriptions = array();
-
 		while ($row = $searchResult->nextResult()) {
 			$subscriptions[$row[0]][] = $row[1];
 		}
@@ -264,7 +261,6 @@ class NotificationHelper {
 		}
 
 		$events = array();
-
 		while ($row = $searchResult->nextResult()) {
 			list($ret, $notification) = GalleryCoreApi::newFactoryInstanceById('NotificationEvent_1_0', $row[0]);
 
@@ -274,7 +270,6 @@ class NotificationHelper {
 
 			$specs    = $notification->getEventSpecs();
 			$events[] = $specs['eventName'];
-
 			if ($ret) {
 				return array($ret, null);
 			}
@@ -305,7 +300,6 @@ class NotificationHelper {
 		}
 
 		$notifications = array();
-
 		while ($row = $searchResult->nextResult()) {
 			$notifications[$row[0]][] = $row[1];
 		}
@@ -342,10 +336,8 @@ class NotificationHelper {
 		 * @todo Performance: either load the permissions all at once or do more in SQL.
 		 */
 		$subscriptions = array();
-
 		while ($row = $searchResult->nextResult()) {
 			$userId = $row[0];
-
 			if (!$notification->isGlobal()) {
 				list($ret, $permissions) = GalleryCoreApi::getPermissions($itemId, $userId);
 
@@ -396,7 +388,6 @@ class NotificationHelper {
 		}
 
 		$subscriptions = array();
-
 		while ($row = $searchResult->nextResult()) {
 			$subscriptions[$row[0]][] = array($row[1], $row[2]);
 		}
@@ -534,10 +525,8 @@ class NotificationHelper {
 
 		$count = $results->nextResult();
 		$count = (int)$count[0];
-
 		if (empty($count)) {
 			$hint = GalleryUtilities::strToLower($event);
-
 			if (!empty($hints)) {
 				$key = array_search($hint, $hints);
 				unset($hints[$key]);
@@ -601,7 +590,6 @@ class NotificationHelper {
 
 		$hint        = GalleryUtilities::strToLower($eventName);
 		$updateHints = false;
-
 		if (!empty($hints)) {
 			$key = array_search($hint, $hints);
 
@@ -717,16 +705,13 @@ class NotificationHelper {
 				}
 
 				$subscriptions = array();
-
 				if (!empty($all[$name])) {
 					$subscriptions = $all[$name];
 				}
 
 				$requiredPermission = $notification->getPermission();
-
 				foreach ($childItems as $child) {
 					$childId = $child->getId();
-
 					if (in_array($childId, $subscriptions)) {
 						continue;
 					}

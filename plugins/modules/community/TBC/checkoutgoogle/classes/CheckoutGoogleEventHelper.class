@@ -42,7 +42,6 @@ class CheckoutGoogleEventHelper {
 
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
-
 			if (GalleryUtilities::isA($entity, 'GalleryCheckoutTransaction')) {
 				// Note: better to do this with one or maybe two SQL queries, but syntax varies between DB types, maybe
 				// Remove Google Entries that refer to that order
@@ -88,14 +87,12 @@ class CheckoutGoogleEventHelper {
 		// for Google Checkout transactions we can post a 'dispatched' notification back to the Google website
 		if ($event->getEventName() == 'GalleryCheckout::transactionChange') {
 			$transaction = $event->getEntity();
-
 			if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
 
 			if ($transaction->getPaymentPlugin() == 'checkoutgoogle') {
 				$data = $event->getData();
-
 				switch ($data['type']) {
 					case 'complete':
 						list($ret, $success, $body) = CheckoutGoogleResponseHelper::SendDelivered(

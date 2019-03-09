@@ -43,6 +43,7 @@ class TagCloudView extends GalleryView {
 				)
 			)
 		);
+
 		$template->javascript('modules/tags/js/Tags.js');
 
 		list($ret, $tags) = TagsHelper::getTagListWithTagCount();

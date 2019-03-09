@@ -113,7 +113,6 @@ class ICalendarController extends GalleryController {
 			}
 
 			$addedItems = array();
-
 			for ($i = 0; $i < count($status['addedFiles']); $i++) {
 				$file =& $status['addedFiles'][$i];
 
@@ -127,7 +126,6 @@ class ICalendarController extends GalleryController {
 
 				// Check if we should extract individual files out of an archive
 				$toolkit = null;
-
 				if (GalleryUtilities::isA($addedItem, 'GalleryDataItem')) {
 					list($ret, $toolkit) = GalleryCoreApi::getToolkitByOperation($addedItem->getMimeType(), 'extract');
 
@@ -200,7 +198,6 @@ class ICalendarController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -357,10 +354,8 @@ class ICalendarView extends GalleryView {
 		$startDate                   = time() - ($today['mday'] * 86400) - ((time() - $weekStartDate) % 604800);
 		$endDate                     = mktime(0, 0, 0, $today['mon'] + 1, 0, $today['year']);
 		$date                        = $startDate;
-
 		while ($date < mktime(0, 0, 0, $today['mon'] + 1, 0, $today['year'])) {
 			$weekDates = array();
-
 			for ($i = 0; $i < 7; $i++) {
 				$weekDates[] = $date;
 				$date       += 86400;
@@ -374,9 +369,13 @@ class ICalendarView extends GalleryView {
 		$CalendarMonth['eventsPerDay'] = 4;
 
 		$template->setVariable('CalendarMonth', $CalendarMonth);
+
 		$template->javascript('modules/calendar/lib/javascript-logging/js/logging.js');
+
 		$template->javascript('modules/calendar/lib/javascript-logging/js/class.js');
+
 		$template->style('modules/calendar/lib/javascript-logging/css/logging.css');
+
 		$template->javascript('modules/calendar/lib/DataRequestor.js');
 		$template->javascript('modules/calendar/lib/domdrag/dom-drag.js');
 		$template->javascript('modules/calendar/javascript/calendar.js');

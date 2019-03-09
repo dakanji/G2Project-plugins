@@ -38,10 +38,8 @@ class UploadAppletSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
-
 		if (isset($form['action']['add'])) {
 			$type = $form['variable']['type'];
-
 			if (empty($form[$type]['name']) || empty($form[$type]['value'])) {
 				$error[] = "form[error][$type]";
 			} else {
@@ -63,7 +61,6 @@ class UploadAppletSiteAdminController extends GalleryController {
 			}
 		} elseif (isset($form['action']['delete'])) {
 			$type = $form['variable']['type'];
-
 			if (empty($form['delete']['variable'])) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
@@ -95,13 +92,11 @@ class UploadAppletSiteAdminController extends GalleryController {
 		$results[$method]['subView'] = 'uploadapplet.UploadAppletSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;
-
 		return array(null, $results);
 	}
 
 	public function implode_with_key($assoc, $inglue = '=', $outglue = '&') {
 		$return = '';
-
 		if (!empty($assoc)) {
 			foreach ($assoc as $tk => $tv) {
 				$return = ($return != '' ? $return . $outglue : '') .
@@ -126,7 +121,6 @@ class UploadAppletSiteAdminController extends GalleryController {
 		// unserialize the plugin parameter
 		if (!empty($variables)) {
 			$variables1 = explode('|', $variables);
-
 			foreach ($variables1 as $variable) {
 				list($key, $value) = explode('=', $variable);
 
@@ -141,7 +135,6 @@ class UploadAppletSiteAdminController extends GalleryController {
 
 	public function setVariables($type, $variables) {
 		$params = $this->implode_with_key($variables, '=', '|');
-
 		return GalleryCoreApi::setPluginParameter(
 			'module',
 			'uploadapplet',
@@ -181,7 +174,6 @@ class UploadAppletSiteAdminView extends GalleryView {
 			if (!empty($form[$key])) {
 				$variablesArray = explode('|', $form[$key]);
 				$variables      = array();
-
 				foreach ($variablesArray as $variable) {
 					$variables[] = $variable;
 				}

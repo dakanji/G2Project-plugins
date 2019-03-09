@@ -74,7 +74,6 @@ class PanoramaJsOption extends ItemEditOption {
 		}
 
 		$form['PanoramaJsOption']['isPanoramaJs'] = $item->getRenderer() == 'PanoramaJsRenderer';
-
 		return array(null, 'modules/panoramajs/templates/PanoramaJsOption.tpl', 'modules_panoramajs');
 	}
 
@@ -83,7 +82,6 @@ class PanoramaJsOption extends ItemEditOption {
 	 */
 	public function handleRequestAfterEdit($form, &$item, &$preferred) {
 		$isUsingPanoramaJsRenderer = $item->getRenderer() == 'PanoramaJsRenderer';
-
 		if ($isUsingPanoramaJsRenderer && !isset($form['PanoramaJsOption']['isPanoramaJs'])) {
 			$item->setRenderer(null);
 		} elseif (!$isUsingPanoramaJsRenderer && isset($form['PanoramaJsOption']['isPanoramaJs'])) {

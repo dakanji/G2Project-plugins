@@ -58,7 +58,6 @@ class ConfirmImportController extends GalleryController {
 		// build framework for error and status arrays
 		$error  = array();
 		$status = array();
-
 		if (!isset($form['sourceEncoding'])) {
 			$form['sourceEncoding'] = 'UTF-8';
 		}
@@ -72,6 +71,7 @@ class ConfirmImportController extends GalleryController {
 				array($this, 'performImport'),
 				array($form, $albumsPath)
 			);
+
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
@@ -84,7 +84,6 @@ class ConfirmImportController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 
@@ -118,7 +117,6 @@ class ConfirmImportController extends GalleryController {
 		}
 
 		$importComments = !empty($moduleStatusList['comment']['active']);
-
 		if (!empty($form['customFields'])) {
 			list($ret, $customFieldInterface) = GalleryCoreApi::newFactoryInstance('CustomFieldInterface_1_0');
 
@@ -131,7 +129,6 @@ class ConfirmImportController extends GalleryController {
 			}
 
 			$skipCustomItemFields = array();
-
 			if (!empty($form['skipCustomItemFields'])) {
 				foreach (array('title', 'summary', 'description') as $field) {
 					if ($form['set'][$field] == 'custom') {
@@ -248,7 +245,6 @@ class ConfirmImportController extends GalleryController {
 		// go through the list of chosen users
 		$totalUsersToImport    = count($form['migrateUser']);
 		$numberOfUsersImported = 0;
-
 		foreach (array_keys($form['migrateUser']) as $uid) {
 			$gallery->guaranteeTimeLimit(30);
 
@@ -260,7 +256,6 @@ class ConfirmImportController extends GalleryController {
 			}
 
 			$userName = GalleryCoreApi::convertToUtf8($fields['username'], $sourceEncoding);
-
 			if (empty($totalUsersToImport)) {
 				$totalUsersToImport = 1;
 			}
@@ -305,6 +300,7 @@ class ConfirmImportController extends GalleryController {
 				 */
 				$user->setEmail($fields['email']);
 				$user->setHashedPassword($fields['password']);
+
 				$fullName = GalleryCoreApi::convertToUtf8(
 					trim($fields['fullname']),
 					$sourceEncoding
@@ -389,7 +385,6 @@ class ConfirmImportController extends GalleryController {
 		// Go through the list of selected gallery1 albums to import
 		$totalItemsToImport = 0;
 		$albumfields        = $albumHighlight        = array();
-
 		foreach (array_keys($form['sourceAlbums']) as $sourceAlbumName) {
 			/*
 			 * attempt to load the metadata from the selected album into a
@@ -427,9 +422,9 @@ class ConfirmImportController extends GalleryController {
 		 * list as they are handled.
 		 */
 		$i = $numberOfItemsImported = 0;
-
 		while ($albumfields && $i < count($form['sourceAlbums']) ** 2 && !connection_aborted()) {
 			$gallery->guaranteeTimeLimit(30);
+
 			$album = array_shift($albumfields);
 
 			/*
@@ -437,10 +432,8 @@ class ConfirmImportController extends GalleryController {
 			 * load it into the targeted G2 top album as set in $destinationAlbumID
 			 */
 			$targetAlbumID = $newAlbumInstanceId = $isHiddenAlbum = false;
-
 			if (!in_array($album['parentAlbumName'], array_keys($form['sourceAlbums']))) {
 				$targetAlbumID = $destinationAlbumID;
-
 				if ($album['parentAlbumName'] != '.root') {
 					// load parent album to check if this album is hidden
 					list($ret, $parentPhotos) = Gallery1DataParser::getme()->getPhotos($albumsPath . $album['parentAlbumName']);
@@ -454,7 +447,6 @@ class ConfirmImportController extends GalleryController {
 							&& $parentAlbumItem->isAlbumName == $album['name']
 						) {
 							$isHiddenAlbum = isset($parentAlbumItem->hidden) && $parentAlbumItem->hidden;
-
 							break;
 						}
 					}
@@ -494,7 +486,6 @@ class ConfirmImportController extends GalleryController {
 			$desiredname = $platform->legalizePathComponent($album['name']);
 			$k           = 0;
 			$invalidName = true;
-
 			while ($invalidName) {
 				list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent($targetAlbumID, $desiredname);
 
@@ -574,6 +565,7 @@ class ConfirmImportController extends GalleryController {
 				// load up the album with metadata from the old album
 				if (isset($album['title'])) {
 					$sourceData['title'] = $this->convertHtml($markupType, $album['title'], $sourceEncoding);
+
 					$newAlbumInstance->setTitle($sourceData['title']);
 				}
 
@@ -595,6 +587,7 @@ class ConfirmImportController extends GalleryController {
 						$album['description'],
 						$sourceEncoding
 					);
+
 					$newAlbumInstance->setSummary($sourceData['summary']);
 				}
 
@@ -604,6 +597,7 @@ class ConfirmImportController extends GalleryController {
 						&& $album['clicks_date'] < $album['last_mod_time']
 					) {
 						$newAlbumInstance->setCreationTimestamp($album['clicks_date']);
+
 						$newAlbumInstance->setOriginationTimestamp($album['clicks_date']);
 					} else {
 						$newAlbumInstance->setCreationTimestamp($album['last_mod_time']);
@@ -617,10 +611,10 @@ class ConfirmImportController extends GalleryController {
 
 				// $newAlbumInstance->setorderBy
 				// $newAlbumInstance->setorderDirection
+
 				// Set album owner
 				if (isset($album['owner'])) {
 					$validUID = Gallery1DataParser::getme()->isValidUid($albumsPath, $album['owner']);
-
 					if ($validUID) {
 						list($ret, $albumUserFields) = Gallery1DataParser::getme()->getUserFieldsByUid($albumsPath, $album['owner']);
 
@@ -743,7 +737,6 @@ class ConfirmImportController extends GalleryController {
 
 				// Set album owner permissions
 				$validUID = Gallery1DataParser::getme()->isValidUid($albumsPath, $album['owner']);
-
 				if ($validUID) {
 					list($ret, $albumUserFields) = Gallery1DataParser::getme()->getUserFieldsByUid(
 						$albumsPath,
@@ -816,7 +809,6 @@ class ConfirmImportController extends GalleryController {
 										}
 
 										break;
-
 									case 'everybody':
 										if ($everybodyGroupId) {
 											$ret = GalleryCoreApi::addGroupPermission(
@@ -834,11 +826,9 @@ class ConfirmImportController extends GalleryController {
 										}
 
 										break;
-
 									case 'Nobody':
 									case 'admin':
 										break;
-
 									default:
 										$validPermUID = Gallery1DataParser::getme()->isValidUid(
 											$albumsPath,
@@ -984,7 +974,6 @@ class ConfirmImportController extends GalleryController {
 				if (!empty($params['perPage'])) {
 					// Gallery 1 has no perPage value. Thus multiply rows and cols.
 					$perPage = $album['rows'] * $album['cols'];
-
 					if ($params['perPage'] != $perPage) {
 						$ret = $theme->setParameter('perPage', $perPage, $newAlbumInstanceId);
 
@@ -1071,10 +1060,8 @@ class ConfirmImportController extends GalleryController {
 			}
 
 			$albumNeedsThumbnail = empty($thumbnailTable);
-
 			foreach ($photos as $j => $importAlbumItem) {
 				$gallery->guaranteeTimeLimit(30);
-
 				if (isset($importAlbumItem->isAlbumName) && $importAlbumItem->isAlbumName) {
 					if ($importAlbumItem->highlight == 1) {
 						$albumHighlight[$newAlbumInstanceId] = $importAlbumItem->isAlbumName;
@@ -1092,7 +1079,6 @@ class ConfirmImportController extends GalleryController {
 					}
 
 					$albumPosition[$importAlbumItem->isAlbumName] = $weight + 100 + $j;
-
 					if (isset($importAlbumItem->hidden) && $importAlbumItem->hidden) {
 						$hiddenAlbums[$importAlbumItem->isAlbumName] = true;
 					}
@@ -1123,7 +1109,8 @@ class ConfirmImportController extends GalleryController {
 						$importAlbumItem->caption,
 						$sourceEncoding
 					);
-					$data             = array(
+
+					$data = array(
 						'title'       => '',
 						'summary'     => '',
 						'description' => '',
@@ -1133,14 +1120,10 @@ class ConfirmImportController extends GalleryController {
 						switch ($form['set'][$field]) {
 							case 'filename':
 								$data[$field] = $base;
-
 								break;
-
 							case 'caption':
 								$data[$field] = $convertedCaption;
-
 								break;
-
 							case 'custom':
 								$customField  = $form['customfield'][$field];
 								$encodedField = GalleryCoreApi::convertFromUtf8(
@@ -1253,7 +1236,6 @@ class ConfirmImportController extends GalleryController {
 							$newItem->getId(),
 							$importAlbumItem->clicks
 						);
-
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($importLockIds);
 
@@ -1298,20 +1280,23 @@ class ConfirmImportController extends GalleryController {
 								return $ret;
 							}
 
-							$width      = $importAlbumItem->image->raw_width;
-							$height     = $importAlbumItem->image->raw_height;
-							$xPerc      = GalleryUtilities::roundToString(
+							$width  = $importAlbumItem->image->raw_width;
+							$height = $importAlbumItem->image->raw_height;
+							$xPerc  = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_x * 100 / $width,
 								3
 							);
-							$yPerc      = GalleryUtilities::roundToString(
+
+							$yPerc = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_y * 100 / $height,
 								3
 							);
-							$widthPerc  = GalleryUtilities::roundToString(
+
+							$widthPerc = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_width * 100 / $width,
 								3
 							);
+
 							$heightPerc = GalleryUtilities::roundToString(
 								$importAlbumItem->image->thumb_height * 100 / $height,
 								3
@@ -1328,7 +1313,6 @@ class ConfirmImportController extends GalleryController {
 								),
 								true
 							);
-
 							if ($ret) {
 								GalleryCoreApi::releaseLocks($importLockIds);
 								GalleryCoreApi::releaseLocks($lock);
@@ -1339,6 +1323,7 @@ class ConfirmImportController extends GalleryController {
 							$thumbnail->setDerivativeOperations($operations);
 							$thumbnail->setWidth(0);
 							$thumbnail->setHeight(0);
+
 							$ret = $thumbnail->save();
 
 							if ($ret) {
@@ -1373,12 +1358,12 @@ class ConfirmImportController extends GalleryController {
 
 					$validItemUID      = $itemUID      = false;
 					$defaultToAlbumUID = true;
-
 					if (isset($importAlbumItem->owner)) {
 						if (!strcmp('everybody', $importAlbumItem->owner)
 							|| !strcmp('nobody', $importAlbumItem->owner)
 						) {
 							$defaultToAlbumUID = false;
+
 							$newItem->setownerId($guestUserId);
 						} elseif (strcmp('logged-in', $importAlbumItem->owner)) {
 							$validItemUID = Gallery1DataParser::getme()->isValidUid(
@@ -1395,7 +1380,6 @@ class ConfirmImportController extends GalleryController {
 
 					if ($defaultToAlbumUID) {
 						$validItemUID = Gallery1DataParser::getme()->isValidUid($albumsPath, $album['owner']);
-
 						if ($validItemUID) {
 							$itemUID = $album['owner'];
 						}
@@ -1419,7 +1403,6 @@ class ConfirmImportController extends GalleryController {
 
 						if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
 							GalleryCoreApi::releaseLocks($importLockIds);
-
 							return $ret;
 						}
 
@@ -1439,7 +1422,6 @@ class ConfirmImportController extends GalleryController {
 					// Set custom field values
 					if (isset($customFieldInterface) && !empty($importAlbumItem->extraFields)) {
 						$extraFields = array();
-
 						foreach ($importAlbumItem->extraFields as $key => $value) {
 							if (in_array($key, $skipCustomItemFields)) {
 								continue;
@@ -1458,7 +1440,6 @@ class ConfirmImportController extends GalleryController {
 								$newItem->getId(),
 								$extraFields
 							);
-
 							if ($ret) {
 								return $ret;
 							}
@@ -1479,8 +1460,8 @@ class ConfirmImportController extends GalleryController {
 									$albumsPath,
 									$importComment->UID
 								);
-								$g1CommenterId   = $importComment->UID;
 
+								$g1CommenterId = $importComment->UID;
 								if (!$validCommentUid) {
 									// Fallback to the album owner.
 									$validCommentUid = Gallery1DataParser::getme()->isValidUid(
@@ -1575,6 +1556,7 @@ class ConfirmImportController extends GalleryController {
 								)
 							);
 							$comment->setDate($importComment->datePosted);
+
 							$ret = $comment->save();
 
 							if ($ret) {
@@ -1592,7 +1574,6 @@ class ConfirmImportController extends GalleryController {
 					}
 
 					$itemLockIds = array();
-
 					if (isset($importAlbumItem->hidden) && $importAlbumItem->hidden) {
 						if (isset($hiddenInterface)) {
 							$ret = $hiddenInterface->hideItem($newItem);
@@ -1726,7 +1707,6 @@ class ConfirmImportController extends GalleryController {
 		//$albumHighlight[$newAlbumInstanceId]=$importAlbumItem->isAlbumName;
 		//$finishedAlbums[$album['name']] = $newAlbumInstanceId;
 		$checkPointCounter = 0;
-
 		foreach ($albumHighlight as $highlightRecipientId => $nameOfAlbumToHighlight) {
 			if (isset($finishedAlbums[$nameOfAlbumToHighlight])
 				&& $finishedAlbums[$nameOfAlbumToHighlight]
@@ -1796,7 +1776,6 @@ class ConfirmImportController extends GalleryController {
 			$createThumbsMessage = $module->translate('Creating thumbnails');
 			$itemsCreatedCount   = count($itemsCreated);
 			$thumbsCreated       = 0;
-
 			while (!empty($itemsCreated)) {
 				$chunk = array_splice($itemsCreated, 0, 20);
 
@@ -1846,10 +1825,13 @@ class ConfirmImportController extends GalleryController {
 		}
 
 		$session =& $gallery->getSession();
+
 		$session->putStatus($status);
+
 		$redirect['view']    = 'core.SiteAdmin';
 		$redirect['subView'] = 'migrate.ImportResults';
 		$urlGenerator        =& $gallery->getUrlGenerator();
+
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 
 		return null;
@@ -1863,16 +1845,12 @@ class ConfirmImportController extends GalleryController {
 	 */
 	public function convertHtml($markupType, $item, $sourceEncoding = 'UTF-8') {
 		$item = GalleryCoreApi::convertToUtf8($item, $sourceEncoding);
-
 		switch ($markupType) {
 			case 'bbcode':
 				$item = $this->convertHtmlToBbcode($item);
-
 				break;
-
 			case 'html':
 				break;
-
 			case 'none':
 			default:
 				$item = strip_tags($item);
@@ -1909,7 +1887,6 @@ class ConfirmImportController extends GalleryController {
 		}
 
 		$item = preg_replace($match, $replace, $item);
-
 		return strip_tags($item);
 	}
 
@@ -2035,7 +2012,6 @@ class ConfirmImportView extends GalleryView {
 
 		$illegalAlbumNames = $existingAlbums = $titles = array();
 		$albumValidOwner   = $albumOwnerUserName   = $albumOwnerUid   = $albumfields   = array();
-
 		if (!isset($form['sourceAlbums'])) {
 			$form['sourceAlbums'] = array();
 		}
@@ -2087,12 +2063,10 @@ class ConfirmImportView extends GalleryView {
 		}
 
 		$i = 0;
-
 		while ($albumfields) {
 			$existingAlbumId = false;
 			$album           = array_shift($albumfields);
 			$albumName       = $album['name'];
-
 			if (!in_array($album['parentAlbumName'], $form['sourceAlbums'])) {
 				list($ret, $existingAlbumId) = GalleryCoreApi::fetchChildIdByPathComponent($destinationAlbumID, $albumName);
 			}
@@ -2108,7 +2082,6 @@ class ConfirmImportView extends GalleryView {
 			}
 
 			$titles[$albumName] = GalleryCoreApi::convertToUtf8($album['title'], $form['sourceEncoding']);
-
 			if (!$platform->isLegalPathComponent($albumName)) {
 				$illegalAlbumNames[$albumName] = $platform->legalizePathComponent($albumName);
 			} else {
@@ -2116,7 +2089,6 @@ class ConfirmImportView extends GalleryView {
 			}
 
 			$validUid = Gallery1DataParser::getme()->isValidUid($albumsPath, $album['owner']);
-
 			if ($validUid) {
 				list($ret, $testUser) = Gallery1DataParser::getme()->getUserFieldsByUid(
 					$albumsPath,

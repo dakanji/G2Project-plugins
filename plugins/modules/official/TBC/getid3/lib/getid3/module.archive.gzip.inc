@@ -22,7 +22,6 @@
 class getid3_gzip extends getid3_handler {
 	// public: Optional file list - disable for speed.
 	public $option_gzip_parse_contents = false; // decode gzipped files, if possible, and parse recursively (.tar.gz for example)
-
 	public function Analyze() {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'gzip';
@@ -34,18 +33,16 @@ class getid3_gzip extends getid3_handler {
 		//+---+---+---+---+---+---+---+---+---+---+
 		if ($info['php_memory_limit'] && ($info['filesize'] > $info['php_memory_limit'])) {
 			$info['error'][] = 'File is too large (' . number_format($info['filesize']) . ' bytes) to read into memory (limit: ' . number_format($info['php_memory_limit'] / 1048576) . 'MB)';
-
 			return false;
 		}
 
 		$this->fseek(0);
+
 		$buffer      = $this->fread($info['filesize']);
 		$arr_members = explode("\x1F\x8B\x08", $buffer);
-
 		while (true) {
 			$is_wrong_members = false;
 			$num_members      = intval(count($arr_members));
-
 			for ($i = 0; $i < $num_members; $i++) {
 				if (strlen($arr_members[$i]) == 0) {
 					continue;
@@ -53,13 +50,11 @@ class getid3_gzip extends getid3_handler {
 
 				$buf  = "\x1F\x8B\x08" . $arr_members[$i];
 				$attr = unpack($unpack_header, substr($buf, 0, $start_length));
-
 				if (!$this->get_os_type(ord($attr['os']))) {
 					// Merge member with previous if wrong OS type
 					$arr_members[($i - 1)] .= $buf;
 					$arr_members[$i]        = '';
 					$is_wrong_members       = true;
-
 					continue;
 				}
 			}
@@ -72,7 +67,6 @@ class getid3_gzip extends getid3_handler {
 		$info['gzip']['files'] = array();
 		$fpointer              = 0;
 		$idx                   = 0;
-
 		for ($i = 0; $i < $num_members; $i++) {
 			if (strlen($arr_members[$i]) == 0) {
 				continue;
@@ -94,10 +88,8 @@ class getid3_gzip extends getid3_handler {
 			$thisInfo['flags']['comment']  = (bool)($thisInfo['raw']['flags'] & 0x10);
 			$thisInfo['compression']       = $this->get_xflag_type($thisInfo['raw']['xflags']);
 			$thisInfo['os']                = $this->get_os_type($thisInfo['raw']['os']);
-
 			if (!$thisInfo['os']) {
 				$info['error'][] = 'Read error on gzip file';
-
 				return false;
 			}
 
@@ -119,7 +111,6 @@ class getid3_gzip extends getid3_handler {
 				//|SI1|SI2|  LEN  |... LEN bytes of subfield data ...|
 				//+---+---+---+---+==================================+
 				$idx = 0;
-
 				while (true) {
 					if ($idx >= $xlen) {
 						break;
@@ -127,7 +118,6 @@ class getid3_gzip extends getid3_handler {
 
 					$si1 = ord(substr($buff, $fpointer + $idx++, 1));
 					$si2 = ord(substr($buff, $fpointer + $idx++, 1));
-
 					if (($si1 == 0x41) && ($si2 == 0x70)) {
 						$w_xsublen       = substr($buff, $fpointer + $idx, 2);
 						$xsublen         = getid3_lib::LittleEndian2Int($w_xsublen);
@@ -148,14 +138,11 @@ class getid3_gzip extends getid3_handler {
 			//+=========================================+
 			// GZIP files may have only one file, with no filename, so assume original filename is current filename without .gz
 			$thisInfo['filename'] = preg_replace('#\\.gz$#i', '', $info['filename']);
-
 			if ($thisInfo['flags']['filename']) {
 				$thisInfo['filename'] = '';
-
 				while (true) {
 					if (ord($buff[$fpointer]) == 0) {
 						$fpointer++;
-
 						break;
 					}
 
@@ -172,7 +159,6 @@ class getid3_gzip extends getid3_handler {
 				while (true) {
 					if (ord($buff[$fpointer]) == 0) {
 						$fpointer++;
-
 						break;
 					}
 
@@ -199,13 +185,11 @@ class getid3_gzip extends getid3_handler {
 			$thisInfo['crc32']     = getid3_lib::LittleEndian2Int(substr($buff, strlen($buff) - 8, 4));
 			$thisInfo['filesize']  = getid3_lib::LittleEndian2Int(substr($buff, strlen($buff) - 4));
 			$info['gzip']['files'] = getid3_lib::array_merge_clobber($info['gzip']['files'], getid3_lib::CreateDeepArray($thisInfo['filename'], '/', $thisInfo['filesize']));
-
 			if ($this->option_gzip_parse_contents) {
 				// Try to inflate GZip
 				$csize    = 0;
 				$inflated = '';
 				$chkcrc32 = '';
-
 				if (function_exists('gzinflate')) {
 					$cdata    = substr($buff, $fpointer);
 					$cdata    = substr($cdata, 0, strlen($cdata) - 8);
@@ -223,7 +207,6 @@ class getid3_gzip extends getid3_handler {
 
 					// file format is determined
 					$determined_format['module'] = (isset($determined_format['module']) ? $determined_format['module'] : '');
-
 					switch ($determined_format['module']) {
 						case 'tar':
 							// view TAR-file info
@@ -231,7 +214,6 @@ class getid3_gzip extends getid3_handler {
 								if (($temp_tar_filename = tempnam(GETID3_TEMP_DIR, 'getID3')) === false) {
 									// can't find anywhere to create a temp file, abort
 									$info['error'][] = 'Unable to create temp file to parse TAR inside GZIP file';
-
 									break;
 								}
 
@@ -241,21 +223,21 @@ class getid3_gzip extends getid3_handler {
 									$getid3_temp = new getID3();
 
 									$getid3_temp->openfile($temp_tar_filename);
+
 									$getid3_tar = new getid3_tar($getid3_temp);
 
 									$getid3_tar->Analyze();
+
 									$info['gzip']['member_header'][$idx]['tar'] = $getid3_temp->info['tar'];
 									unset($getid3_temp, $getid3_tar);
 									unlink($temp_tar_filename);
 								} else {
 									$info['error'][] = 'Unable to fopen() temp file to parse TAR inside GZIP file';
-
 									break;
 								}
 							}
 
 							break;
-
 						case '':
 						default:
 							// unknown or unhandled format

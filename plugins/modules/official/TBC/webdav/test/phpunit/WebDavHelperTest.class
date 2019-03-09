@@ -43,8 +43,8 @@ class WebDavHelperTest extends GalleryTestCase {
 
 		// Initialize test URL generator
 		$this->_urlGenerator = new GalleryUrlGenerator();
-		$ret                 = $this->_urlGenerator->init('http://example.com/gallery2/main.php');
 
+		$ret = $this->_urlGenerator->init('http://example.com/gallery2/main.php');
 		if ($ret) {
 			return $ret;
 		}
@@ -73,6 +73,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$this->_parserType  = 'preGallery';
 		$this->_activeRules =& WebDavHelperTestRewriteApi::_fetchActiveRulesForModule('webdav');
 		$this->_activeRules = array('connect', 'davmount', 'options');
+
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'RewriteApi',
@@ -82,6 +83,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			'test'
 		);
 		$this->_registerFactoryImplementationForTest(
+
 			'HttpAuthInterface_1_0',
 			'WebDavHelperTestHttpAuthInterface',
 			'WebDavHelperTestHttpAuthInterface',
@@ -92,7 +94,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		WebDavHelperTestHttpAuthInterface::_getConfiguration(true);
 
 		// Define requests
-		$this->_optionsRequest        = implode(
+		$this->_optionsRequest = implode(
 			"\r\n",
 			array(
 				'OPTIONS ' . $this->_urlGenerator->generateUrl(
@@ -109,6 +111,7 @@ class WebDavHelperTest extends GalleryTestCase {
 				'',
 			)
 		);
+
 		$this->_alternativeUrlRequest = implode(
 			"\r\n",
 			array(
@@ -128,7 +131,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		);
 
 		// Define success and failure responses
-		$this->_methodHandledResponse      = implode(
+		$this->_methodHandledResponse = implode(
 			"\r\n",
 			array(
 				'HTTP/1.1 200 OK',
@@ -142,7 +145,8 @@ class WebDavHelperTest extends GalleryTestCase {
 				'PASS_WEBDAV',
 			)
 		);
-		$this->_methodNotHandledResponse   = implode(
+
+		$this->_methodNotHandledResponse = implode(
 			"\r\n",
 			array(
 				'HTTP/1.1 200 OK',
@@ -156,6 +160,7 @@ class WebDavHelperTest extends GalleryTestCase {
 				'',
 			)
 		);
+
 		$this->_includesDavHeadersResponse = implode(
 			"\r\n",
 			array(
@@ -172,7 +177,8 @@ class WebDavHelperTest extends GalleryTestCase {
 				'',
 			)
 		);
-		$this->_missingDavHeadersResponse  = implode(
+
+		$this->_missingDavHeadersResponse = implode(
 			"\r\n",
 			array(
 				'HTTP/1.1 200 OK',
@@ -190,7 +196,6 @@ class WebDavHelperTest extends GalleryTestCase {
 		// Use WebDavHelperTestPlatform
 		$this->_platform = new WebDavHelperTestPlatform();
 		$this->_requests = array();
-
 		foreach (array(
 			'PROPFIND',
 			'PROPPATCH',
@@ -201,7 +206,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			'LOCK',
 			'UNLOCK',
 		) as $requestMethod) {
-			$this->_requests[$requestMethod]                              = implode(
+			$this->_requests[$requestMethod] = implode(
 				"\r\n",
 				array(
 					$requestMethod . ' ' . $this->_urlGenerator->generateUrl(
@@ -219,11 +224,13 @@ class WebDavHelperTest extends GalleryTestCase {
 					'',
 				)
 			);
+
 			$this->_platform->_messages[$this->_requests[$requestMethod]] = $this->_methodHandledResponse;
 		}
 
 		$this->_platform->_messages[$this->_optionsRequest]        = $this->_includesDavHeadersResponse;
 		$this->_platform->_messages[$this->_alternativeUrlRequest] = $this->_includesDavHeadersResponse;
+
 		$gallery->setPlatform($this->_platform);
 	}
 
@@ -422,6 +429,7 @@ class WebDavHelperTest extends GalleryTestCase {
 				)
 			)
 		);
+
 		$this->assert($success);
 	}
 
@@ -438,6 +446,7 @@ class WebDavHelperTest extends GalleryTestCase {
 				)
 			)
 		);
+
 		$this->assert(!$success);
 	}
 
@@ -562,6 +571,7 @@ class WebDavHelperTest extends GalleryTestCase {
 			'displayname',
 			empty($itemTitle) ? $item->getPathComponent() : $itemTitle
 		);
+
 		$expectedProps[] = WebDavServer::getme()->mkprop(
 			'getlastmodified',
 			20000000
@@ -659,6 +669,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		$item->setTitle('old title');
 		$item->setSummary('old summary');
 		$item->setCreationTimestamp(10000000);
+
 		$props = array(
 			0 => array(
 				'ns'     => WEBDAV_GALLERY_NAMESPACE,
@@ -705,12 +716,16 @@ class WebDavHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals('new title', $item->getTitle(), 'title');
+
 		$this->assertEquals('new summary', $item->getSummary(), 'summary');
+
 		$this->assertEquals(20000000, $item->getCreationTimestamp(), 'creation timestamp');
+
 		$this->assertEquals('GalleryUnknownItem', $item->getEntityType(), 'entity type changed');
 
 		// Verify the status of the props
 		$this->assertEquals(null, $props[0]['status'], 'summary is writable');
+
 		$this->assertEquals(
 			'403 Forbidden',
 			$props[1]['status'],
@@ -740,6 +755,7 @@ class WebDavHelperTest extends GalleryTestCase {
 				'itemId' => $itemId,
 			)
 		);
+
 		$this->assertEquals($expected, $link);
 	}
 
@@ -759,6 +775,7 @@ class WebDavHelperTest extends GalleryTestCase {
 				'itemId' => $itemId,
 			)
 		);
+
 		$this->assertEquals($expected, $link);
 	}
 
@@ -780,6 +797,7 @@ class WebDavHelperTest extends GalleryTestCase {
 				'useAuthToken'   => false,
 			)
 		);
+
 		$this->assertEquals($expected, $link);
 	}
 
@@ -815,7 +833,6 @@ class WebDavHelperTest extends GalleryTestCase {
 		list($ret, $parentId) = WebDavHelper::getParentItemIdByPath(
 			'/' . $album->getPathComponent() . '/foo'
 		);
-
 		if ($ret) {
 			return $ret;
 		}
@@ -843,7 +860,6 @@ class WebDavHelperTest extends GalleryTestCase {
 			__FILE__,
 			'GalleryPhotoItem'
 		);
-
 		if ($ret) {
 			return $ret;
 		}
@@ -857,22 +873,24 @@ class WebDavHelperTest extends GalleryTestCase {
 			__FILE__,
 			'GalleryPhotoItem'
 		);
-
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->_markForCleanup($targetEntity);
+
 		$expectedItemId        = $sourceEntity->getId();
 		$targetItemIdBackup    = $targetEntity->getId();
 		$expectedPathComponent = $sourceEntity->getPathComponent();
 		$expectedTitle         = 'Test title';
 
 		$sourceEntity->setTitle($expectedTitle);
+
 		$expectedDescription = 'Test description';
 
 		$sourceEntity->setDescription($expectedDescription);
 		$targetEntity->setDescription('New description');
+
 		$expectedRenderer = 'New renderer';
 
 		$sourceEntity->setRenderer('Test renderer');
@@ -885,6 +903,7 @@ class WebDavHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($expectedItemId, $mirrorEntity->getId());
+
 		$this->assertEquals($expectedPathComponent, $mirrorEntity->getPathComponent());
 		$this->assertEquals($expectedTitle, $mirrorEntity->getTitle());
 		$this->assertEquals($expectedDescription, $mirrorEntity->getDescription());
@@ -963,14 +982,12 @@ class WebDavHelperTestPlatform extends GalleryPlatform {
 
 		$buffer        = substr($this->_buffer, 0, $length);
 		$this->_buffer = substr($this->_buffer, $length);
-
 		return $buffer;
 	}
 
 	public function fwrite($handle, $string, $length = 0) {
 		if (isset($this->_messages[$string])) {
 			$this->_buffer = $this->_messages[$string];
-
 			return strlen($string);
 		}
 	}

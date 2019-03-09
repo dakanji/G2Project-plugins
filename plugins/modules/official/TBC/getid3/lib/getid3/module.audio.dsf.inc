@@ -24,16 +24,15 @@ class getid3_dsf extends getid3_handler {
 		$info['audio']['bitrate_mode'] = 'cbr';
 
 		$this->fseek($info['avdataoffset']);
+
 		$dsfheader                   = $this->fread(28 + 12);
 		$headeroffset                = 0;
 		$info['dsf']['dsd']['magic'] = substr($dsfheader, $headeroffset, 4);
 		$headeroffset               += 4;
 		$magic                       = 'DSD ';
-
 		if ($info['dsf']['dsd']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['dsf']['dsd']['magic']) . '"';
 			unset($info['fileformat'], $info['audio'], $info['dsf']);
-
 			return false;
 		}
 
@@ -46,10 +45,8 @@ class getid3_dsf extends getid3_handler {
 		$info['dsf']['fmt']['magic']             = substr($dsfheader, $headeroffset, 4);
 		$headeroffset                           += 4;
 		$magic                                   = 'fmt ';
-
 		if ($info['dsf']['fmt']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $headeroffset . ', found "' . getid3_lib::PrintHexBytes($info['dsf']['fmt']['magic']) . '"';
-
 			return false;
 		}
 
@@ -58,7 +55,6 @@ class getid3_dsf extends getid3_handler {
 		$dsfheader                           .= $this->fread($info['dsf']['fmt']['fmt_chunk_size'] - 12 + 12);  // we have already read the entire DSD chunk, plus 12 bytes of FMT. We now want to read the size of FMT, plus 12 bytes into the next chunk to get magic and size.
 		if (strlen($dsfheader) != ($info['dsf']['dsd']['dsd_chunk_size'] + $info['dsf']['fmt']['fmt_chunk_size'] + 12)) {
 			$info['error'][] = 'Expecting ' . ($info['dsf']['dsd']['dsd_chunk_size'] + $info['dsf']['fmt']['fmt_chunk_size']) . ' bytes header, found ' . strlen($dsfheader) . ' bytes';
-
 			return false;
 		}
 
@@ -83,10 +79,8 @@ class getid3_dsf extends getid3_handler {
 		$info['dsf']['data']['magic']             = substr($dsfheader, $headeroffset, 4);
 		$headeroffset                            += 4;
 		$magic                                    = 'data';
-
 		if ($info['dsf']['data']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $headeroffset . ', found "' . getid3_lib::PrintHexBytes($info['dsf']['data']['magic']) . '"';
-
 			return false;
 		}
 
@@ -94,10 +88,10 @@ class getid3_dsf extends getid3_handler {
 		$headeroffset                          += 8;
 		$info['avdataoffset']                   = $headeroffset;
 		$info['avdataend']                      = $info['avdataoffset'] + $info['dsf']['data']['data_chunk_size'];
-
 		if ($info['dsf']['dsd']['meta_chunk_offset'] > 0) {
 			$getid3_id3v2                 = new getid3_id3v2($this->getid3);
 			$getid3_id3v2->StartingOffset = $info['dsf']['dsd']['meta_chunk_offset'];
+
 			$getid3_id3v2->Analyze();
 
 			unset($getid3_id3v2);
@@ -110,7 +104,6 @@ class getid3_dsf extends getid3_handler {
 		$info['audio']['channels']          = $info['dsf']['fmt']['channels'];
 		$info['audio']['bitrate']           = $info['audio']['bits_per_sample'] * $info['audio']['sample_rate'] * $info['audio']['channels'];
 		$info['playtime_seconds']           = ($info['dsf']['data']['data_chunk_size'] * 8) / $info['audio']['bitrate'];
-
 		return true;
 	}
 

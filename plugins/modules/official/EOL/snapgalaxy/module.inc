@@ -42,7 +42,9 @@ class SnapGalaxyModule extends GalleryModule {
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 	}
@@ -84,13 +86,13 @@ class SnapGalaxyModule extends GalleryModule {
 					'snapgalaxy.print',
 					$gallery->i18n('[snapgalaxy] Print')
 				);
-
 				if ($ret) {
 					return $ret;
 				}
 
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -109,7 +111,6 @@ class SnapGalaxyModule extends GalleryModule {
 				}
 
 				break;
-
 			case '0.9.0':
 			case '0.9.0.1':
 			case '0.9.1':
@@ -128,7 +129,6 @@ class SnapGalaxyModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
-
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,
@@ -168,10 +168,8 @@ class SnapGalaxyModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId = null) {
 		$links = array();
-
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
 			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['snapgalaxy.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {

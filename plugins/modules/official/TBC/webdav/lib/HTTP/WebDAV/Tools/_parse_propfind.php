@@ -77,7 +77,6 @@ class _parse_propfind {
 		// open input stream
 		if (!$handle) {
 			$this->success = false;
-
 			return;
 		}
 
@@ -103,10 +102,8 @@ class _parse_propfind {
 		// parse input
 		while ($this->success && !feof($handle)) {
 			$line = fgets($handle);
-
 			if (is_string($line)) {
-				$had_input = true;
-
+				$had_input      = true;
 				$this->success &= xml_parse($parser, $line, false);
 			}
 		}

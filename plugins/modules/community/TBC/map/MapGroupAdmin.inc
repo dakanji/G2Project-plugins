@@ -63,7 +63,6 @@ class MapGroupAdminController extends GalleryController {
 			$tmp       = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 			$AllGroups = explode('|', $tmp[1]);
 			$newgroups = '';
-
 			foreach ($AllGroups as $group) {
 				$temp = explode('`', $group);
 
@@ -87,8 +86,8 @@ class MapGroupAdminController extends GalleryController {
 	    ';
 
 			list($ret, $result) = $gallery->search($query, array(), array());
-			$params             = '';
 
+			$params = '';
 			while ($param = $result->nextResult()) {
 				$params .= ($params != '') ? '|' : '';
 				$params .= $param[0] . ':' . $param[1];
@@ -127,14 +126,12 @@ class MapGroupAdminController extends GalleryController {
 			$GroupDate = strtotime($_POST['GroupDate']);
 			$Groupfile = $form['name'][3];
 			$oldgroups = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
-
 			if ($oldgroups[1] != '') {
 				// Get the Group ID if editing an existing one, otherwise initialize to 0
 				$num = isset($_POST['oldid']) ? $_POST['oldid'] : 0;
 
 				// Make sure all the groups have unique IDs
 				$groupstrings = explode('|', $oldgroups[1]);
-
 				foreach ($groupstrings as $tempgroup) {
 					$tempgroups[] = explode('`', $tempgroup);
 				}
@@ -142,10 +139,8 @@ class MapGroupAdminController extends GalleryController {
 				$maxGroupId = 0;
 				$editIdDupe = false;
 				$groupsById = array();
-
 				foreach ($tempgroups as $groupKey => $groupArray) {
 					$maxGroupId = max(array($maxGroupId, $groupArray[0]));
-
 					if (array_key_exists($groupArray[0], $groupsById)) { // Duplicate ID
 						// Check if the ID being edited is a duplicate
 						if ($num == $groupArray[0]) {
@@ -173,7 +168,6 @@ class MapGroupAdminController extends GalleryController {
 			}
 
 			$hash = array();
-
 			foreach ($_POST as $key => $value) {
 				if (substr($key, 0, 2) == 'P:') {
 					if ($value) {
@@ -183,7 +177,6 @@ class MapGroupAdminController extends GalleryController {
 			}
 
 			$GroupItems = implode('`', $hash);
-
 			if ($GroupName == '') {
 				$GroupName = 'Group ' . $num;
 			}
@@ -202,7 +195,6 @@ class MapGroupAdminController extends GalleryController {
 			$coordinate = (isset($_POST['GroupGPS'])) ? $_POST['GroupGPS'] : '';
 			$zoom       = (isset($_POST['GroupZoomlevel'])) ? $_POST['GroupZoomlevel'] : '';
 			$color      = (isset($_POST['GroupColor'])) ? $_POST['GroupColor'] : '';
-
 			if ($coordinate != '') {
 				$ret = GalleryCoreApi::addMapEntry(
 					'mapMap',
@@ -268,10 +260,8 @@ class MapGroupAdminController extends GalleryController {
 			$tmp           = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 			$currentgroups = explode('|', $tmp[1]);
 			$newgroups     = '';
-
 			foreach ($currentgroups as $group) {
 				$temp = explode('`', $group);
-
 				if ($temp[0] != $id) {
 					$newgroups = ($newgroups == '') ? $group : $newgroups . '|' . $group;
 				}
@@ -308,14 +298,12 @@ class MapGroupAdminController extends GalleryController {
 			$GroupDate = strtotime($_POST['GroupDate']);
 			$Groupfile = basename($_POST['pic']);
 			$oldgroups = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
-
 			if ($oldgroups[1] != '') {
 				// Get the Group ID if editing an existing one, otherwise initialize to 0
 				$num = isset($_POST['oldid']) ? $_POST['oldid'] : 0;
 
 				// Make sure all the groups have unique IDs
 				$groupstrings = explode('|', $oldgroups[1]);
-
 				foreach ($groupstrings as $tempgroup) {
 					$tempgroups[] = explode('`', $tempgroup);
 				}
@@ -323,10 +311,8 @@ class MapGroupAdminController extends GalleryController {
 				$maxGroupId = 0;
 				$editIdDupe = false;
 				$groupsById = array();
-
 				foreach ($tempgroups as $groupKey => $groupArray) {
 					$maxGroupId = max(array($maxGroupId, $groupArray[0]));
-
 					if (array_key_exists($groupArray[0], $groupsById)) { // Duplicate ID
 						// Check if the ID being edited is a duplicate
 						if ($num == $groupArray[0]) {
@@ -354,7 +340,6 @@ class MapGroupAdminController extends GalleryController {
 			}
 
 			$hash = array();
-
 			foreach ($_POST as $key => $value) {
 				if (substr($key, 0, 2) == 'P:') {
 					if ($value) {
@@ -364,7 +349,6 @@ class MapGroupAdminController extends GalleryController {
 			}
 
 			$GroupItems = implode('`', $hash);
-
 			if ($GroupName == '') {
 				$GroupName = 'Group ' . $num;
 			}
@@ -464,14 +448,12 @@ class MapGroupAdminController extends GalleryController {
 			$GroupDate = strtotime($_POST['GroupDate']);
 			$Groupfile = basename($_POST['pic']);
 			$oldgroups = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
-
 			if ($oldgroups[1] != '') {
 				// Get the Group ID if editing an existing one, otherwise initialize to 0
 				$num = isset($_POST['oldid']) ? $_POST['oldid'] : 0;
 
 				// Make sure all the groups have unique IDs
 				$groupstrings = explode('|', $oldgroups[1]);
-
 				foreach ($groupstrings as $tempgroup) {
 					$tempgroups[] = explode('`', $tempgroup);
 				}
@@ -479,10 +461,8 @@ class MapGroupAdminController extends GalleryController {
 				$maxGroupId = 0;
 				$editIdDupe = false;
 				$groupsById = array();
-
 				foreach ($tempgroups as $groupKey => $groupArray) {
 					$maxGroupId = max(array($maxGroupId, $groupArray[0]));
-
 					if (array_key_exists($groupArray[0], $groupsById)) { // Duplicate ID
 						// Check if the ID being edited is a duplicate
 						if ($num == $groupArray[0]) {
@@ -510,7 +490,6 @@ class MapGroupAdminController extends GalleryController {
 			}
 
 			$hash = array();
-
 			foreach ($_POST as $key => $value) {
 				if (substr($key, 0, 2) == 'P:') {
 					if ($value) {
@@ -520,7 +499,6 @@ class MapGroupAdminController extends GalleryController {
 			}
 
 			$GroupItems = implode('`', $hash);
-
 			if ($GroupName == '') {
 				$GroupName = 'Group ' . $num;
 			}
@@ -539,7 +517,6 @@ class MapGroupAdminController extends GalleryController {
 			$coordinate = (isset($_POST['GroupGPS'])) ? $_POST['GroupGPS'] : '';
 			$zoom       = (isset($_POST['GroupZoomlevel'])) ? $_POST['GroupZoomlevel'] : '';
 			$color      = (isset($_POST['GroupColor'])) ? $_POST['GroupColor'] : '';
-
 			if ($coordinate != '') {
 				$ret = GalleryCoreApi::addMapEntry(
 					'mapMap',
@@ -628,7 +605,8 @@ class MapGroupAdminView extends GalleryView {
 
 		// Select items that have GPS coordinates filled out
 		$storage =& $gallery->getStorage();
-		$query   = '
+
+		$query = '
 	SELECT
 	  [mapMap::itemId],
 	  [mapMap::value]
@@ -654,7 +632,6 @@ class MapGroupAdminView extends GalleryView {
 			 */
 			$ids       = array();
 			$pointHash = array();
-
 			while ($result = $results->nextResult()) {
 				$id                    = $result[0];
 				$ids[]                 = $id;
@@ -662,13 +639,11 @@ class MapGroupAdminView extends GalleryView {
 				$pointHash[$id]['id']  = $id;
 				$pointHash[$id]['gps'] = $result[1];
 				$tmp                   = array();
-
 				if (substr($id, 0, 1) == 'G') {
 					if ((array_key_exists('EditGroup', $form) and $form['EditGroup'] != '')
 						and (array_key_exists('mode', $form) and $form['mode'] == 'AddGroup')
 					) {
 						$tmp = explode('`', $form['EditGroup']);
-
 						if ($tmp[0] == substr($id, 1)) {
 							unset($pointHash[$id]);
 						}
@@ -681,11 +656,9 @@ class MapGroupAdminView extends GalleryView {
 						list($ret, $tmpparam) = GalleryCoreApi::getPluginParameter('module', 'map', 'MapGroups');
 
 						$groups = explode('|', $tmpparam);
-
 						foreach ($groups as $group) {
 							if (!empty($group)) {
 								$groupinfo = explode('`', $group);
-
 								if ($groupinfo[0] == $groupid and $groupid != '') {
 									$thumbpic                      = $basegallerydir . 'modules/map/images/groups/'
 										. $groupinfo[4];
@@ -702,7 +675,6 @@ class MapGroupAdminView extends GalleryView {
 
 			// create an ID array without the groups in it
 			$tmp = array();
-
 			foreach ($ids as $id) {
 				if (substr($id, 0, 1) != 'G') {
 					$tmp[] = $id;
@@ -735,21 +707,24 @@ class MapGroupAdminView extends GalleryView {
 			 * end up embedded within.
 			 */
 			foreach ($entities as $entity) {
-				$pointHash[$entity->getId()]['type']        = $entity->getEntityType();
-				$pointHash[$entity->getId()]['title']       = preg_replace(array('/\n/', '/\r/'), array('', ''), $entity->getTitle());
+				$pointHash[$entity->getId()]['type'] = $entity->getEntityType();
+
+				$pointHash[$entity->getId()]['title'] = preg_replace(array('/\n/', '/\r/'), array('', ''), $entity->getTitle());
+
 				$pointHash[$entity->getId()]['description'] = preg_replace(array('/\n/', '/\r/'), array('', ''), $entity->getDescription());
-				$pointHash[$entity->getId()]['thumb']       = $urlGenerator->generateUrl(
+
+				$pointHash[$entity->getId()]['thumb'] = $urlGenerator->generateUrl(
 					array(
 						'view'         => 'core.DownloadItem',
 						'itemId'       => $thumbs[$entity->getId()]->getId(),
 						'serialNumber' => $thumbs[$entity->getId()]->getSerialNumber(),
 					)
 				);
-				$pointHash[$entity->getId()]['date']        = strftime($dateFormat, $entity->getCreationTimestamp());
+
+				$pointHash[$entity->getId()]['date'] = strftime($dateFormat, $entity->getCreationTimestamp());
 			}
 
 			$GPSItem = array();
-
 			foreach ($pointHash as $id => $point) {
 				$GPSItem[] = $point;
 			}
@@ -787,10 +762,8 @@ class MapGroupAdminView extends GalleryView {
 
 				fclose($handle);
 				$form['colorGoption'] = '';
-
 				foreach ($list as $color) {
 					$form['colorGoption'] .= '<option value="' . $color . '" ';
-
 					if ((array_key_exists('EditGroupParam', $form)
 						and is_array($form['EditGroupParam'])
 						and array_key_exists('Color', $form['EditGroupParam'])
@@ -813,7 +786,6 @@ class MapGroupAdminView extends GalleryView {
 		if (array_key_exists('MapGroups', $param) and $param['MapGroups'] != '') {
 			$groups = explode('|', $param['MapGroups']);
 			sort($groups);
-
 			foreach ($groups as $group) {
 				$tmp    = explode('`', $group);
 				$tmp[5] = strftime($dateFormat, $tmp[5]);

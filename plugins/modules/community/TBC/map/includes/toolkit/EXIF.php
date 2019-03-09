@@ -117,7 +117,6 @@ function get_EXIF_JPEG($filename) {
 		echo "To work on an internet file, copy it locally to start with:<br><br>\n";
 		echo "\$newfilename = tempnam ( \$dir, \"tmpexif\" );<br>\n";
 		echo "copy ( \"http://whatever.com\", \$newfilename );<br><br>\n";
-
 		return false;
 	}
 
@@ -153,7 +152,6 @@ function get_EXIF_JPEG($filename) {
 	if (!$filehnd) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
-
 		return false;
 	}
 
@@ -164,7 +162,6 @@ function get_EXIF_JPEG($filename) {
 
 	// Close File
 	fclose($filehnd);
-
 	return $exif_data;
 }
 
@@ -197,7 +194,6 @@ function get_EXIF_JPEG($filename) {
 function put_EXIF_JPEG($exif_data, $jpeg_header_data) {
 	// pack the EXIF data into its proper format for a JPEG file
 	$packed_data = get_TIFF_Packed_Data($exif_data);
-
 	if ($packed_data === false) {
 		return $jpeg_header_data;
 	}
@@ -214,7 +210,6 @@ function put_EXIF_JPEG($exif_data, $jpeg_header_data) {
 			) {
 				// Found a preexisting EXIF block - Replace it with the new one and return.
 				$jpeg_header_data[$i]['SegData'] = $packed_data;
-
 				return $jpeg_header_data;
 			}
 		}
@@ -279,7 +274,6 @@ function get_Meta_JPEG($filename) {
 		echo "To work on an internet file, copy it locally to start with:<br><br>\n";
 		echo "\$newfilename = tempnam ( \$dir, \"tmpmeta\" );<br>\n";
 		echo "copy ( \"http://whatever.com\", \$newfilename );<br><br>\n";
-
 		return false;
 	}
 
@@ -315,7 +309,6 @@ function get_Meta_JPEG($filename) {
 	if (!$filehnd) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
-
 		return false;
 	}
 
@@ -326,7 +319,6 @@ function get_Meta_JPEG($filename) {
 
 	// Close File
 	fclose($filehnd);
-
 	return $meta;
 }
 
@@ -359,7 +351,6 @@ function get_Meta_JPEG($filename) {
 function put_Meta_JPEG($meta_data, $jpeg_header_data) {
 	// pack the Meta data into its proper format for a JPEG file
 	$packed_data = get_TIFF_Packed_Data($meta_data);
-
 	if ($packed_data === false) {
 		return $jpeg_header_data;
 	}
@@ -376,7 +367,6 @@ function put_Meta_JPEG($meta_data, $jpeg_header_data) {
 			) {
 				// Found a preexisting Meta block - Replace it with the new one and return.
 				$jpeg_header_data[$i]['SegData'] = $packed_data;
-
 				return $jpeg_header_data;
 			}
 		}
@@ -438,7 +428,6 @@ function get_EXIF_TIFF($filename) {
 		echo "To work on an internet file, copy it locally to start with:<br><br>\n";
 		echo "\$newfilename = tempnam ( \$dir, \"tmptiff\" );<br>\n";
 		echo "copy ( \"http://whatever.com\", \$newfilename );<br><br>\n";
-
 		return false;
 	}
 
@@ -448,7 +437,6 @@ function get_EXIF_TIFF($filename) {
 	if (!$filehnd) {
 		// Could't open the file - exit
 		echo "<p>Could not open file $filename</p>\n";
-
 		return false;
 	}
 
@@ -457,7 +445,6 @@ function get_EXIF_TIFF($filename) {
 
 	// Close File
 	fclose($filehnd);
-
 	return $exif_data;
 }
 
@@ -521,7 +508,6 @@ function Interpret_EXIF_to_HTML($Exif_array, $filename) {
 
 	// Cycle through any other IFD's
 	$i = 2;
-
 	while (array_key_exists($i, $Exif_array)) {
 		// Add a heading for the IFD
 		$output_str .= "<h3  class=\"EXIF_Secondary_Heading\">Image File Directory (IFD) $i Information</h2>\n";
@@ -609,7 +595,6 @@ function get_IFD_Array_Packed_Data($ifd_data, $Zero_IFD_offset, $Byte_Align) {
 
 	// Count the IFDs
 	$ifd_count = 0;
-
 	foreach ($ifd_data as $key => $IFD) {
 		// Make sure we only count the IFD's, not other information keys
 		if (is_numeric($key)) {
@@ -658,7 +643,6 @@ function get_IFD_Packed_Data($ifd_data, $IFD_offset, $Byte_Align, $Another_IFD) 
 
 	// Count the Tags in this IFD
 	$tag_count = 0;
-
 	foreach ($ifd_data as $key => $tag) {
 		// Make sure we only count the Tags, not other information keys
 		if (is_numeric($key)) {
@@ -875,7 +859,6 @@ function process_TIFF_Header($filehnd, $Tag_Definitions_Name) {
 
 	// Next two bytes are TIFF ID - should be value 42 with the appropriate byte alignment
 	$TIFF_ID = substr($DataStr, $pos, 2);
-
 	if (get_IFD_Data_Type($TIFF_ID, 3, $Byte_Align) != 42) {
 		// TIFF header ID not found
 		return false;
@@ -939,7 +922,6 @@ function process_TIFF_Header($filehnd, $Tag_Definitions_Name) {
 function read_Multiple_IFDs($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definitions_Name, $local_offsets = false, $read_next_ptr = true) {
 	// Start at the offset of the first IFD
 	$Next_Offset = 0;
-
 	do {
 		// Read an IFD
 		list($IFD_Array, $Next_Offset) = read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definitions_Name, $local_offsets, $read_next_ptr);
@@ -948,7 +930,6 @@ function read_Multiple_IFDs($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 		if (fseek($filehnd, $Tiff_offset + $Next_Offset) !== 0) {
 			// Error seeking to position of next IFD
 			echo "<p>Error: Corrupted EXIF</p>\n";
-
 			return false;
 		}
 
@@ -1001,7 +982,6 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 	if ($No_Entries > 80000) {
 		// Huge number of entries - abort
 		echo "<p>Error: huge number of EXIF entries ($No_Entries)- EXIF is probably Corrupted</p>\n";
-
 		return array(false, 0);
 	}
 
@@ -1023,7 +1003,6 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 	if (strlen($IFD_Data) != (12 * $No_Entries)) {
 		// Couldn't read the IFD Data properly, Some Casio files have no Next IFD pointer, hence cause this error
 		echo "<p>Error: EXIF Corrupted</p>\n";
-
 		return array(false, 0);
 	}
 
@@ -1057,7 +1036,6 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 		// If Datatype is not between 1 and 12, then skip this entry, it is probably corrupted or custom
 		if (($Data_Type > 12) || ($Data_Type < 1)) {
 			$pos += 8;
-
 			continue 1;  // Stop trying to process the tag any further and skip to the next one
 		}
 
@@ -1065,7 +1043,6 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 		$Data_Count_str = substr($IFD_Data, $pos, 4);
 		$Data_Count     = get_IFD_Data_Type($Data_Count_str, 4, $Byte_Align);
 		$pos           += 4;
-
 		if ($Data_Count > 100000) {
 			//echo "<p>Error: huge EXIF data count - EXIF is probably Corrupted</p>\n";
 			// Some Casio files have no Next IFD pointer, hence cause errors
@@ -1461,9 +1438,7 @@ function get_Special_Tag_Text_Value($Tag, $Tag_Definitions_Name) {
 
 						// Other values are unknown
 				return 'Unknown Reserved value (' . $Tag['Data'][0] . ')';
-
 				break;
-
 			default:
 				return false;
 		}
@@ -1483,43 +1458,28 @@ function get_Special_Tag_Text_Value($Tag, $Tag_Definitions_Name) {
 					// Construct second part of text string via
 					// lookup using numerical value
 					$value = ord($Tag['Data'][$Num]);
-
 					switch ($value) {
 						case 0:
 									$output_str .= "Does not exist\n";
-
 							break;
-
 						case 1:
 										$output_str .= "Y (Luminance)\n";
-
 							break;
-
 						case 2:
 							$output_str .= "Cb (Chroma minus Blue)\n";
-
 							break;
-
 						case 3:
 							$output_str .= "Cr (Chroma minus Red)\n";
-
 							break;
-
 						case 4:
 							$output_str .= "Red\n";
-
 							break;
-
 						case 5:
 							$output_str .= "Green\n";
-
 							break;
-
 						case 6:
 							$output_str .= "Blue\n";
-
 							break;
-
 						default:
 							$output_str .= "Unknown value $value\n";
 					}
@@ -1527,9 +1487,7 @@ function get_Special_Tag_Text_Value($Tag, $Tag_Definitions_Name) {
 
 				// Return the completed string
 				return $output_str;
-
 						break;
-
 			case 41730:
 					// The first two characters are a SHORT for Horizontal repeat pixel unit -
 					$n_max = get_IFD_Data_Type(substr($Tag['Data'], 0, 2), 3, $Tag['Byte Align']);
@@ -1557,42 +1515,27 @@ function get_Special_Tag_Text_Value($Tag, $Tag_Definitions_Name) {
 						switch (ord($Tag['Data'][($n_max * ($m - 1) + $n + 3)])) {
 							case 0:
 											$output_str .= 'RED     ';
-
 								break;
-
 							case 1:
 										$output_str .= 'GREEN   ';
-
 								break;
-
 							case 2:
 								$output_str .= 'BLUE    ';
-
 								break;
-
 							case 3:
 										$output_str .= 'CYAN    ';
-
 								break;
-
 							case 4:
 											$output_str .= 'MAGENTA ';
-
 								break;
-
 							case 5:
 								$output_str .= 'YELLOW  ';
-
 								break;
-
 							case 6:
 									$output_str .= 'WHITE   ';
-
 								break;
-
 							default:
 										$output_str .= 'Unknown ';
-
 								break;
 						}
 					}
@@ -1602,9 +1545,7 @@ function get_Special_Tag_Text_Value($Tag, $Tag_Definitions_Name) {
 
 					// Return the resulting string
 				return $output_str;
-
 						break;
-
 			default:
 				return false;
 		}
@@ -1835,7 +1776,6 @@ function get_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 		// Hence this should not be processed here, as it would have
 		// to return multiple values instead of a single value
 		echo "<p>Error - ASCII Strings should not be processed in get_IFD_Data_Type</p>\n";
-
 		return 'Error Should never get here'; //explode( "\x00", $input_data );
 	}
 
@@ -1983,15 +1923,11 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 	switch ($data_type) {
 		case 1: // Unsigned Byte - return character as is
 			return chr($input_data);
-
 					break;
-
 		case 2: // ASCII String
 				// Return the string with terminating null
 			return $input_data . "\x00";
-
 					break;
-
 		case 3: // Unsigned Short
 				// Check byte alignment
 			if ($Byte_Align == 'II') {
@@ -2001,9 +1937,7 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 
 					// Motorola/Big Endian - pack the short and return
 			return pack('n', $input_data);
-
 			break;
-
 		case 4: // Unsigned Long
 				// Check byte alignment
 			if ($Byte_Align == 'II') {
@@ -2013,9 +1947,7 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 
 					// Motorola/Big Endian - pack the long and return
 			return pack('N', $input_data);
-
 			break;
-
 		case 5: // Unsigned Rational
 				// Check byte alignment
 			if ($Byte_Align == 'II') {
@@ -2025,9 +1957,7 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 
 					// Motorola/Big Endian - pack the two longs and return
 			return pack('NN', $input_data['Numerator'], $input_data['Denominator']);
-
 			break;
-
 		case 6: // Signed Byte
 				// Check if number is negative
 			if ($input_data < 0) {
@@ -2037,14 +1967,10 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 
 					// Number is positive - return character
 			return chr($input_data);
-
 			break;
-
 		case 7: // Unknown - return as is
 			return $input_data;
-
 					break;
-
 		case 8: // Signed Short
 				// Check if number is negative
 			if ($input_data < 0) {
@@ -2060,9 +1986,7 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 
 					// Motorola/Big Endian - pack the short and return
 			return pack('n', $input_data);
-
 			break;
-
 		case 9: // Signed Long
 				// Check if number is negative
 			if ($input_data < 0) {
@@ -2078,9 +2002,7 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 
 					// Motorola/Big Endian - pack the long and return
 			return pack('n', $input_data);
-
 			break;
-
 		case 10: // Signed Rational
 				// Check if numerator is negative
 			if ($input_data['Numerator'] < 0) {
@@ -2102,27 +2024,20 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 
 					// Motorola/Big Endian - pack the two longs and return
 			return pack('NN', $input_data['Numerator'], $input_data['Denominator']);
-
 			break;
-
 		case 11: // Float
 				// IEEE 754 Float
 				// TODO - EXIF - IFD datatype Float not implemented yet
 			return 'FLOAT NOT IMPLEMENTED YET';
-
 					break;
-
 		case 12: // Double
 				// IEEE 754 Double
 				// TODO - EXIF - IFD datatype Double not implemented yet
 			return 'DOUBLE NOT IMPLEMENTED YET';
-
 					break;
-
 		default:
 				// Error - Invalid Datatype
 			return "Invalid Datatype $data_type";
-
 					break;
 	}
 
@@ -2189,13 +2104,10 @@ function get_IFD_value_as_text($Exif_Tag) {
 			}
 
 			break;
-
 		case 2: // ASCII
 				// Append all the strings together, separated by Newlines
 				$output_str .= implode("\n", $Exif_Tag['Data']);
-
 			break;
-
 		case 5: // Unsigned Rational
 		case 10:
 				// Cycle through each of the values for this tag
@@ -2217,14 +2129,11 @@ function get_IFD_value_as_text($Exif_Tag) {
 			}
 
 			break;
-
 		case 11: // Float
 		case 12: // Double
 				// TODO - EXIF - IFD datatype Double and Float not implemented yet
 				$output_str .= 'Float and Double not implemented yet';
-
 			break;
-
 		case 7: // Undefined
 				// Unless the User has asked to see the raw binary data, this
 				// type should not be displayed
@@ -2247,11 +2156,9 @@ function get_IFD_value_as_text($Exif_Tag) {
 			}
 
 			break;
-
 		default:
 				// Error - Unknown IFD datatype
 				$output_str .= 'Error - Exif tag data type (' . $Exif_Tag['Data Type'] . ') is invalid';
-
 			break;
 	}
 

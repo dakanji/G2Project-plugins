@@ -62,7 +62,9 @@ class ShutterflyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 		global $gallery;
 
 		$session =& $gallery->getSession();
+
 		$session->put('shutterfly.cart', $cartItemIds);
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnUrl    = $urlGenerator->generateUrl(
 			array('view' => 'cart.ViewCart'),
@@ -73,3 +75,4 @@ class ShutterflyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 				 'authToken'            => $session->getAuthToken(), ));
 	}
 }
+

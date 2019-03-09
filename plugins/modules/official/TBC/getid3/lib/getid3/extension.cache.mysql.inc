@@ -82,7 +82,6 @@ class getID3_cached_mysql extends getID3 {
 
 		// Connect to database
 		$this->connection = mysql_pconnect($host, $username, $password);
-
 		if (!$this->connection) {
 			throw new Exception('mysql_pconnect() failed - check permissions and spelling.');
 		}
@@ -106,7 +105,6 @@ class getID3_cached_mysql extends getID3 {
 		$SQLquery .= ' AND (`filesize` = -1)';
 		$SQLquery .= ' AND (`filetime` = -1)';
 		$SQLquery .= ' AND (`analyzetime` = -1)';
-
 		if ($this->cursor = mysql_query($SQLquery, $this->connection)) {
 			list($version) = mysql_fetch_array($this->cursor);
 		}
@@ -132,14 +130,12 @@ class getID3_cached_mysql extends getID3 {
 			$filesize = filesize($filename);
 
 			// Lookup file
-			$SQLquery  = 'SELECT `value`';
-			$SQLquery .= ' FROM `' . mysql_real_escape_string($this->table) . '`';
-			$SQLquery .= ' WHERE (`filename` = \'' . mysql_real_escape_string($filename) . '\')';
-			$SQLquery .= '   AND (`filesize` = \'' . mysql_real_escape_string($filesize) . '\')';
-			$SQLquery .= '   AND (`filetime` = \'' . mysql_real_escape_string($filetime) . '\')';
-
+			$SQLquery     = 'SELECT `value`';
+			$SQLquery    .= ' FROM `' . mysql_real_escape_string($this->table) . '`';
+			$SQLquery    .= ' WHERE (`filename` = \'' . mysql_real_escape_string($filename) . '\')';
+			$SQLquery    .= '   AND (`filesize` = \'' . mysql_real_escape_string($filesize) . '\')';
+			$SQLquery    .= '   AND (`filetime` = \'' . mysql_real_escape_string($filetime) . '\')';
 			$this->cursor = mysql_query($SQLquery, $this->connection);
-
 			if (mysql_num_rows($this->cursor) > 0) {
 				// Hit
 				list($result) = mysql_fetch_array($this->cursor);
@@ -153,13 +149,12 @@ class getID3_cached_mysql extends getID3 {
 
 		// Save result
 		if (file_exists($filename)) {
-			$SQLquery  = 'INSERT INTO `' . mysql_real_escape_string($this->table) . '` (`filename`, `filesize`, `filetime`, `analyzetime`, `value`) VALUES (';
-			$SQLquery .= '\'' . mysql_real_escape_string($filename) . '\'';
-			$SQLquery .= ', \'' . mysql_real_escape_string($filesize) . '\'';
-			$SQLquery .= ', \'' . mysql_real_escape_string($filetime) . '\'';
-			$SQLquery .= ', \'' . mysql_real_escape_string(time()) . '\'';
-			$SQLquery .= ', \'' . mysql_real_escape_string(base64_encode(serialize($analysis))) . '\')';
-
+			$SQLquery     = 'INSERT INTO `' . mysql_real_escape_string($this->table) . '` (`filename`, `filesize`, `filetime`, `analyzetime`, `value`) VALUES (';
+			$SQLquery    .= '\'' . mysql_real_escape_string($filename) . '\'';
+			$SQLquery    .= ', \'' . mysql_real_escape_string($filesize) . '\'';
+			$SQLquery    .= ', \'' . mysql_real_escape_string($filetime) . '\'';
+			$SQLquery    .= ', \'' . mysql_real_escape_string(time()) . '\'';
+			$SQLquery    .= ', \'' . mysql_real_escape_string(base64_encode(serialize($analysis))) . '\')';
 			$this->cursor = mysql_query($SQLquery, $this->connection);
 		}
 
@@ -168,14 +163,13 @@ class getID3_cached_mysql extends getID3 {
 
 	// private: (re)create sql table
 	private function create_table($drop = false) {
-		$SQLquery  = 'CREATE TABLE IF NOT EXISTS `' . mysql_real_escape_string($this->table) . '` (';
-		$SQLquery .= '`filename` VARCHAR(500) NOT NULL DEFAULT \'\'';
-		$SQLquery .= ', `filesize` INT(11) NOT NULL DEFAULT \'0\'';
-		$SQLquery .= ', `filetime` INT(11) NOT NULL DEFAULT \'0\'';
-		$SQLquery .= ', `analyzetime` INT(11) NOT NULL DEFAULT \'0\'';
-		$SQLquery .= ', `value` LONGTEXT NOT NULL';
-		$SQLquery .= ', PRIMARY KEY (`filename`, `filesize`, `filetime`)) ENGINE=MyISAM';
-
+		$SQLquery     = 'CREATE TABLE IF NOT EXISTS `' . mysql_real_escape_string($this->table) . '` (';
+		$SQLquery    .= '`filename` VARCHAR(500) NOT NULL DEFAULT \'\'';
+		$SQLquery    .= ', `filesize` INT(11) NOT NULL DEFAULT \'0\'';
+		$SQLquery    .= ', `filetime` INT(11) NOT NULL DEFAULT \'0\'';
+		$SQLquery    .= ', `analyzetime` INT(11) NOT NULL DEFAULT \'0\'';
+		$SQLquery    .= ', `value` LONGTEXT NOT NULL';
+		$SQLquery    .= ', PRIMARY KEY (`filename`, `filesize`, `filetime`)) ENGINE=MyISAM';
 		$this->cursor = mysql_query($SQLquery, $this->connection);
 
 		echo mysql_error($this->connection);

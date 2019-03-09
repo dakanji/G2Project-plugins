@@ -35,7 +35,6 @@ class UploadController extends GalleryController {
 
 		// Request forgery protection
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-
 		if (strstr($httpUserAgent, 'Nokia') === false) {
 			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null);
 		}
@@ -46,7 +45,6 @@ class UploadController extends GalleryController {
 
 		$results['status'] = ImageUploadHelper::doUpload();
 		$results['error']  = array();
-
 		return array(null, $results);
 	}
 
@@ -77,9 +75,10 @@ class UploadView extends GalleryView {
 		global $gallery;
 
 		$gallery->debug("##### UploadView #####\n\$status = ");
-		$gallery->debug_r($status);
-		$reply = $status['success'] . "\r\n";
 
+		$gallery->debug_r($status);
+
+		$reply = $status['success'] . "\r\n";
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR) {
 			$reply .= 'Free=' . $status['spaceleft'] . "\r\n";
 		} else {
@@ -97,7 +96,6 @@ class UploadView extends GalleryView {
 		header('Content-type: text/plain; charset=UTF-8');
 		header('Content-Length: ' . strlen($reply));
 		echo $reply;
-
 		return null;
 	}
 }

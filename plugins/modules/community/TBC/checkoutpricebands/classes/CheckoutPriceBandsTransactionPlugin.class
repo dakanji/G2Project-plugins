@@ -30,7 +30,6 @@
 		foreach ($itemProducts as $itemId => $itemProduct) {
 			foreach ($itemProduct as $position => $product) {
 				$productId = $product['productId'];
-
 				if (isset($items[$itemId][$productId]['quant']) && $items[$itemId][$productId]['quant'] > 0) {
 					if (isset($product['priceBandData'])) {
 						$priceBandData                             = explode(',', $product['priceBandData']);

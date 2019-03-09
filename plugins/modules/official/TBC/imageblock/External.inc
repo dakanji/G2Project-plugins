@@ -78,10 +78,8 @@ class ExternalView extends GalleryView {
 			'albumFrame',
 		) as $key) {
 			$tmp = GalleryUtilities::getRequestVariables($key);
-
 			if (!empty($tmp)) {
 				$params[$key] = $tmp;
-
 				if ($key == 'itemFrame' || $key == 'albumFrame') {
 					$frameIds[$tmp] = 1;
 				}
@@ -121,7 +119,6 @@ class ExternalView extends GalleryView {
 		}
 
 		$phpVm = $gallery->getPhpVm();
-
 		if ($template->hasVariable('ImageBlockData')) {
 			$ImageBlockData                 =& $template->getVariableByReference('ImageBlockData');
 			$ImageBlockData['forceFullUrl'] = 1;
@@ -149,7 +146,6 @@ class ExternalView extends GalleryView {
 			} else {
 				if (!$phpVm->headers_sent()) {
 					$phpVm->header('Content-type: text/html; charset=UTF-8');
-
 					$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
 
 					$phpVm->header('Cache-Control: no-cache');

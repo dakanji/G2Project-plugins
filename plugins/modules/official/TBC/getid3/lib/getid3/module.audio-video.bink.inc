@@ -18,25 +18,21 @@ class getid3_bink extends getid3_handler {
 	public function Analyze() {
 		$info            =& $this->getid3->info;
 		$info['error'][] = 'Bink / Smacker files not properly processed by this version of getID3() [' . $this->getid3->version() . ']';
-		$this->fseek($info['avdataoffset']);
-		$fileTypeID = $this->fread(3);
 
+		$this->fseek($info['avdataoffset']);
+
+		$fileTypeID = $this->fread(3);
 		switch ($fileTypeID) {
 			case 'BIK':
 				return $this->ParseBink();
-
 				break;
-
 			case 'SMK':
 				return $this->ParseSmacker();
 
 				break;
-
 			default:
 				$info['error'][] = 'Expecting "BIK" or "SMK" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($fileTypeID) . '"';
-
 				return false;
-
 				break;
 		}
 
@@ -50,7 +46,6 @@ class getid3_bink extends getid3_handler {
 		$fileData                    = 'BIK' . $this->fread(13);
 		$info['bink']['data_size']   = getid3_lib::LittleEndian2Int(substr($fileData, 4, 4));
 		$info['bink']['frame_count'] = getid3_lib::LittleEndian2Int(substr($fileData, 8, 2));
-
 		if (($info['avdataend'] - $info['avdataoffset']) != ($info['bink']['data_size'] + 8)) {
 			$info['error'][] = 'Probably truncated file: expecting ' . $info['bink']['data_size'] . ' bytes, found ' . ($info['avdataend'] - $info['avdataoffset']);
 		}
@@ -62,7 +57,6 @@ class getid3_bink extends getid3_handler {
 		$info                        =& $this->getid3->info;
 		$info['fileformat']          = 'smacker';
 		$info['video']['dataformat'] = 'smacker';
-
 		return true;
 	}
 }

@@ -73,12 +73,12 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		}
 
 		$message = $module->translate('Processing...');
-		$ret     = $templateAdapter->updateProgressBar(
+
+		$ret = $templateAdapter->updateProgressBar(
 			$module->translate('Create signatures'),
 			$message,
 			''
 		);
-
 		if ($ret->isError()) {
 			return array($ret, null, null);
 		}
@@ -96,7 +96,6 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		$i      = $updated      = 0;
 		$allIds = array();
 		$total  = $results->resultCount();
-
 		while ($result = $results->nextResult()) {
 			// extracting histogram information can take loooooong time
 			$gallery->guaranteeTimeLimit(60);
@@ -104,7 +103,6 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 			// Grab 5 items at a time
 			$ids      = array($result[0]);
 			$allIds[] = $result[0];
-
 			for ($j = 0; $j < 4 && ($result = $results->nextResult()); $j++) {
 				$ids[]    = $result[0];
 				$allIds[] = $result[0];
@@ -133,7 +131,8 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 					'arg2' => $total,
 				)
 			);
-			$ret     = $templateAdapter->updateProgressBar($message, '', $i / $total / 1.1);
+
+			$ret = $templateAdapter->updateProgressBar($message, '', $i / $total / 1.1);
 
 			if ($ret->isError()) {
 				return array($ret, null, null);
@@ -142,7 +141,6 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 
 		// now that all items have signatures, discover duplicates
 		$i = 0;
-
 		foreach ($allIds as $id) {
 			$i++;
 
@@ -171,7 +169,8 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 					'arg2' => $total,
 				)
 			);
-			$ret     = $templateAdapter->updateProgressBar(
+
+			$ret = $templateAdapter->updateProgressBar(
 				$message,
 				'',
 				0.9 + (($i / $total) * 0.1)
@@ -187,7 +186,8 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 				'text' => 'Done',
 			)
 		);
-		$ret     = $templateAdapter->updateProgressBar($message, '', 1);
+
+		$ret = $templateAdapter->updateProgressBar($message, '', 1);
 
 		if ($ret->isError()) {
 			return array($ret, null, null);

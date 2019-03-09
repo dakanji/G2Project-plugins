@@ -64,7 +64,6 @@ class CheckoutDiscountMapHelper {
 
 		$discounts = array();
 		$i         = 0;
-
 		while ($result = $searchResults->nextResult()) {
 			$discounts[] = array(
 				'discountId'      => $result[0],

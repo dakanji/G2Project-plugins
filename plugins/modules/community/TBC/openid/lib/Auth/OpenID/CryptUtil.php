@@ -40,13 +40,11 @@ class Auth_OpenID_CryptUtil {
 		static $f = null;
 
 		$bytes = '';
-
 		if ($f === null) {
 			if (Auth_OpenID_RAND_SOURCE === null) {
 				$f = false;
 			} else {
 				$f = @fopen(Auth_OpenID_RAND_SOURCE, 'r');
-
 				if ($f === false) {
 					$msg = 'Define Auth_OpenID_RAND_SOURCE as null to ' .
 						' continue with an insecure random number generator.';
@@ -58,7 +56,6 @@ class Auth_OpenID_CryptUtil {
 		if ($f === false) {
 			// pseudorandom used
 			$bytes = '';
-
 			for ($i = 0; $i < $num_bytes; $i += 4) {
 				$bytes .= pack('L', mt_rand());
 			}
@@ -86,7 +83,6 @@ class Auth_OpenID_CryptUtil {
 		}
 
 		$popsize = strlen($population);
-
 		if ($popsize > 256) {
 			$msg = 'More than 256 characters supplied to ' . __FUNCTION__;
 			trigger_error($msg, E_USER_ERROR);
@@ -94,7 +90,6 @@ class Auth_OpenID_CryptUtil {
 
 		$duplicate = 256 % $popsize;
 		$str       = '';
-
 		for ($i = 0; $i < $length; $i++) {
 			do {
 				$n = ord(Auth_OpenID_CryptUtil::getBytes(1));

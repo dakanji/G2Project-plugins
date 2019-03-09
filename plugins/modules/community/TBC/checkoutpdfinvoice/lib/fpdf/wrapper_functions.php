@@ -16,9 +16,9 @@ if (!defined('PHP_VER_LOWER43')) {
 }/**
  * ensure that strspn works correct if php-version < 4.3
  */
+
 function _strspn($str1, $str2, $start = null, $length = null) {
 	$numargs = func_num_args();
-
 	if (PHP_VER_LOWER43 == 1) {
 		if (isset($length)) {
 			$str1 = substr($str1, $start, $length);
@@ -43,7 +43,6 @@ function _strspn($str1, $str2, $start = null, $length = null) {
  */
 function _strcspn($str1, $str2, $start = null, $length = null) {
 	$numargs = func_num_args();
-
 	if (PHP_VER_LOWER43 == 1) {
 		if (isset($length)) {
 			$str1 = substr($str1, $start, $length);
@@ -69,7 +68,6 @@ function _strcspn($str1, $str2, $start = null, $length = null) {
 function _fgets(&$h, $force = false) {
 	$startpos = ftell($h);
 	$s        = fgets($h, 1024);
-
 	if ((PHP_VER_LOWER43 == 1 || $force) && preg_match("/^([^\r\n]*[\r\n]{1,2})(.)/", trim($s), $ns)) {
 		$s = $ns[1];
 		fseek($h, $startpos + strlen($s));

@@ -55,7 +55,6 @@ class SimpleviewerParameterMapHelper {
 		}
 
 		$params = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$params[] = array(
 				'id'         => $result[0],
@@ -90,7 +89,6 @@ class SimpleviewerParameterMapHelper {
 		}
 
 		$paramIds = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$paramIds[] = $result[0];
 		}
@@ -124,7 +122,6 @@ class SimpleviewerParameterMapHelper {
 		}
 
 		$params = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$params[$result[0]] = $result[1];
 		}
@@ -154,14 +151,12 @@ class SimpleviewerParameterMapHelper {
 		}
 
 		$paramNames = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$paramNames[] = $result[0];
 		}
 
 		$paramNames = array_unique($paramNames);
 		sort($paramNames);
-
 		return array(null, $paramNames);
 	}
 
@@ -194,7 +189,6 @@ class SimpleviewerParameterMapHelper {
 		}
 
 		$params = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$params[] = array(
 				'id'         => $result[0],
@@ -231,7 +225,6 @@ class SimpleviewerParameterMapHelper {
 		// work through each album
 		$params      = array();
 		$albumParams = array();
-
 		foreach ($albumIdTree as $myAlbumId) {
 			list($ret, $albumParams) = SimpleviewerParametermapHelper::fetchParamsForAlbumByName(
 				$myAlbumId,

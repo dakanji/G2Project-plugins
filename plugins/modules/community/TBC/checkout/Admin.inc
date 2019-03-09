@@ -55,7 +55,6 @@ class AdminController extends GalleryController {
 
 		$error  = array();
 		$status = array();
-
 		if (isset($form['action']['save'])) {
 			// Store email, paper, postage details
 			foreach ($form['emails'] as $index => $email) {
@@ -534,7 +533,6 @@ class AdminController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
-
 			if ($isActive) {
 				$redirect['subView'] = 'checkout.Admin';
 				$status['saved']     = 1;
@@ -556,7 +554,6 @@ class AdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -704,7 +701,6 @@ class AdminView extends GalleryView {
 			}
 
 			$displayPos = 1;
-
 			foreach ($products as $product) {
 				$form['products'][] = array(
 					'id'              => $product['productId'],
@@ -795,14 +791,12 @@ class AdminView extends GalleryView {
 		$translator   =& $gallery->getTranslator();
 		$languageList = array();
 		$canTranslate = false;
-
 		if ($translator->canTranslate()) {
 			$canTranslate = true;
 
 			// Set up our language selection list
 			$AdminCore['languageList'] = array();
 			$supportedLanguages        = $translator->getSupportedLanguages();
-
 			foreach ($supportedLanguages as $language => $countryList) {
 				foreach ($countryList as $country => $languageData) {
 					$languageList[$language . '_' . $country] = $languageData['description'];

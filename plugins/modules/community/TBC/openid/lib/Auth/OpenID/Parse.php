@@ -105,27 +105,31 @@ class Auth_OpenID_Parse {
 	public $_close_tag_expr = "<((\/%s\b)|(%s[^>\/]*\/))>";
 
 	public function __construct() {
-		$this->_link_find           = sprintf(
+		$this->_link_find = sprintf(
 			"/<link\b(?!:)([^>]*)(?!<)>/%s",
 			$this->_re_flags
 		);
+
 		$this->_entity_replacements = array(
 			'amp'  => '&',
 			'lt'   => '<',
 			'gt'   => '>',
 			'quot' => '"',
 		);
-		$this->_attr_find           = sprintf(
+
+		$this->_attr_find = sprintf(
 			'/%s/%s',
 			$this->_attr_find,
 			$this->_re_flags
 		);
-		$this->_removed_re          = sprintf(
+
+		$this->_removed_re = sprintf(
 			'/%s/%s',
 			$this->_removed_re,
 			$this->_re_flags
 		);
-		$this->_ent_replace         = sprintf(
+
+		$this->_ent_replace = sprintf(
 			'&(%s);',
 			implode(
 				'|',
@@ -140,7 +144,6 @@ class Auth_OpenID_Parse {
 	 */
 	public function tagMatcher($tag_name, $close_tags = null) {
 		$expr = $this->_tag_expr;
-
 		if ($close_tags) {
 			$options = implode('|', array_merge(array($tag_name), $close_tags));
 			$closer  = sprintf('(?:%s)', $options);
@@ -215,7 +218,6 @@ class Auth_OpenID_Parse {
 		$matches = array();
 		$double  = '/^"(.*)"$/';
 		$single  = "/^\'(.*)\'$/";
-
 		if (preg_match($double, $str, $matches)) {
 			return $matches[1];
 		}
@@ -236,14 +238,14 @@ class Auth_OpenID_Parse {
 	 * link tag
 	 */
 	public function parseLinkAttrs($html) {
-		$stripped   = preg_replace(
+		$stripped = preg_replace(
 			$this->_removed_re,
 			'',
 			$html
 		);
+
 		$html_begin = $this->htmlBegin($stripped);
 		$html_end   = $this->htmlEnd($stripped);
-
 		if ($html_begin === false) {
 			return array();
 		}
@@ -261,14 +263,12 @@ class Auth_OpenID_Parse {
 		// Try to find the <HEAD> tag.
 		$head_re      = $this->headFind();
 		$head_matches = array();
-
 		if (!preg_match($head_re, $stripped, $head_matches)) {
 			return array();
 		}
 
 		$link_data    = array();
 		$link_matches = array();
-
 		if (!preg_match_all(
 			$this->_link_find,
 			$head_matches[0],
@@ -280,14 +280,16 @@ class Auth_OpenID_Parse {
 
 		foreach ($link_matches[0] as $link) {
 			$attr_matches = array();
-			preg_match_all($this->_attr_find, $link, $attr_matches);
-			$link_attrs = array();
 
+			preg_match_all($this->_attr_find, $link, $attr_matches);
+
+			$link_attrs = array();
 			foreach ($attr_matches[0] as $index => $full_match) {
-				$name                          = $attr_matches[1][$index];
-				$value                         = $this->replaceEntities(
+				$name  = $attr_matches[1][$index];
+				$value = $this->replaceEntities(
 					$this->removeQuotes($attr_matches[2][$index])
 				);
+
 				$link_attrs[strtolower($name)] = $value;
 			}
 
@@ -301,10 +303,8 @@ class Auth_OpenID_Parse {
 		// Does this target_rel appear in the rel_str?
 		// XXX: TESTME
 		$rels = preg_split('/\s+/', trim($rel_attr));
-
 		foreach ($rels as $rel) {
 			$rel = strtolower($rel);
-
 			if ($rel == $target_rel) {
 				return 1;
 			}
@@ -317,7 +317,6 @@ class Auth_OpenID_Parse {
 		// Does this link have target_rel as a relationship?
 		// XXX: TESTME
 		$rel_attr = Auth_OpeniD::arrayGet($link_attrs, 'rel', null);
-
 		return $rel_attr && $this->relMatches(
 			$rel_attr,
 			$target_rel
@@ -329,7 +328,6 @@ class Auth_OpenID_Parse {
 		// target_rel as a relationship.
 		// XXX: TESTME
 		$result = array();
-
 		foreach ($link_attrs_list as $attr) {
 			if ($this->linkHasRel($attr, $target_rel)) {
 				$result[] = $attr;
@@ -353,7 +351,6 @@ class Auth_OpenID_Parse {
 		}
 
 		$first = $matches[0];
-
 		return Auth_OpenID::arrayGet($first, 'href', null);
 	}
 }

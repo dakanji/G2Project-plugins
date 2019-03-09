@@ -59,6 +59,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 		// Ensure there's a image frame implementation
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
+
 			'ImageFrameInterface_1_1',
 			'ExternalCSSControllerTestImageFrame',
 			'testImplId',
@@ -79,6 +80,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
+
 		$this->assertEquals('frameA|frameB', GalleryUtilities::getRequestVariables('frames'));
 	}
 
@@ -96,11 +98,13 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
+
 		$this->assertEquals('frameFromRequest', GalleryUtilities::getRequestVariables('frames'));
 	}
 
 	public function testExternalCSSWithoutImageFrameModule() {
 		$this->_unregisterFactoryImplementationForTest('ImageFrameInterface_1_1');
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

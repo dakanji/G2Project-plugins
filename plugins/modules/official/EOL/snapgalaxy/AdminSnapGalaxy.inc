@@ -40,7 +40,6 @@ class AdminSnapGalaxyController extends GalleryController {
 		}
 
 		$status = $error = array();
-
 		if (isset($form['action']['save'])) {
 			if (empty($form['snapgalaxyPartnerId'])
 				|| !preg_match('/^[A-Za-z0-9_\-]+$/', $form['snapgalaxyPartnerId'])

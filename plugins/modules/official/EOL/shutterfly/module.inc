@@ -40,7 +40,9 @@ class ShutterflyModule extends GalleryModule {
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -85,13 +87,13 @@ class ShutterflyModule extends GalleryModule {
 					'shutterfly.print',
 					$gallery->i18n('[shutterfly] Print')
 				);
-
 				if ($ret) {
 					return $ret;
 				}
 
 				// Give everybody print permission by default
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -104,19 +106,18 @@ class ShutterflyModule extends GalleryModule {
 				}
 
 				break;
-
 			case '1.0.0':
 				$ret = GalleryCoreApi::registerPermission(
 					$this->getId(),
 					'shutterfly.print',
 					$gallery->i18n('[shutterfly] Print')
 				);
-
 				if ($ret) {
 					return $ret;
 				}
 
 				$gallery->guaranteeTimeLimit(300);
+
 				$ret = GalleryCoreApi::addGroupPermission(
 					$coreParams['id.rootAlbum'],
 					$coreParams['id.everybodyGroup'],
@@ -155,7 +156,6 @@ class ShutterflyModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
-
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,
@@ -198,10 +198,8 @@ class ShutterflyModule extends GalleryModule {
 
 		$session =& $gallery->getSession();
 		$links   = array();
-
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
 			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['shutterfly.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {

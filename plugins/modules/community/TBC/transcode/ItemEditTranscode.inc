@@ -97,14 +97,12 @@ class ItemEditTranscode extends ItemEditPlugin {
 								}
 
 								break;
-
 							default:
 								$error[] = 'form[error][asr][invalid]';
 						}
 					}
 
 					$setAudioBitrate = '';
-
 					if (!$mute && isset($form['encode']['audiobitrate']) && ($form['encode']['audiobitrate'] != '')) {
 						$setAudioBitrate = 'set-audio-bitrate|' . $form['encode']['audiobitrate'] . ';';
 					}
@@ -135,7 +133,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 					// Set resizing operation if different from native
 					$setVideoDimensions = '';
-
 					if (($form['encode']['width'] != $nativeWidth) || ($form['encode']['height'] != $nativeHeight)) {
 						$setVideoDimensions = 'set-video-dimensions|' . $form['encode']['width'] . ',' . $form['encode']['height'] . ';';
 					}
@@ -168,32 +165,27 @@ class ItemEditTranscode extends ItemEditPlugin {
 								}
 
 								break;
-
 							default:
 								$error[] = 'form[error][asr][invalid]';
 						}
 					}
 
 					$setAudioBitrate = '';
-
 					if (!$mute && isset($form['encode']['audiobitrate']) && ($form['encode']['audiobitrate'] != '')) {
 						$setAudioBitrate = 'set-audio-bitrate|' . $form['encode']['audiobitrate'] . ';';
 					}
 
 					$setVideoBitrate = '';
-
 					if (isset($form['encode']['bitrate']) && ($form['encode']['bitrate'] != '')) {
 						$setVideoBitrate = 'set-video-bitrate|' . $form['encode']['bitrate'] . ';';
 					}
 
 					$setVideoFramerate = '';
-
 					if (isset($form['encode']['fps']) && ($form['encode']['fps'] != '')) {
 						$setVideoFramerate = 'set-video-framerate|' . (float)$form['encode']['fps'] . ';';
 					}
 
 					$setVideosameq = '';
-
 					if (isset($form['sameq']) && ($form['sameq'] != '')) {
 						$setVideosameq = 'set-video-sameq;';
 					}
@@ -223,11 +215,9 @@ class ItemEditTranscode extends ItemEditPlugin {
 					}
 
 					$reused = false;
-
 					if (!empty($preferreds[$itemId])) {
 						foreach ($preferreds as $preferred) {
 							$op = strstr($preferred->getDerivativeOperations(), '/convert-to-/');
-
 							if (strlen($op) > 0) {
 								list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($preferred->getId());
 
@@ -236,6 +226,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 								}
 
 								$preferred->setDerivativeOperations($setVideoFramerate . $setVideoDimensions . $setVideoBitrate . $setVideosameq . $setAudioBitrate . $setAudioChans . $setAudioRate . 'convert-to-' . $params['outputMime']);
+
 								$ret = $preferred->save();
 
 								if ($ret) {
@@ -298,6 +289,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 							//if($derivative->getHeight() != $form['encode']['height'])$derivative->setHeight($form['encode']['height']);
 							$derivative->setDerivativeOperations($setVideoFramerate . $setVideoDimensions . $setVideoBitrate . $setVideosameq . $setAudioBitrate . $setAudioChans . $setAudioRate . 'convert-to-' . $params['outputMime']);
 							$derivative->setDerivativeSourceId($source->getId());
+
 							$ret = $derivative->save();
 
 							if ($ret) {
@@ -309,7 +301,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 							// Set FlashVideoRenderer, is there a way of knowing whether it's available?
 							$renderer = '';
-
 							if ($params['outputMime'] == 'video/x-flv' || $params['outputMime'] == 'video/mp4' || $params['outputMime'] == 'video/webm' || $params['outputMime'] == 'video/ogg') {
 								$renderer = 'FlashVideoRenderer';
 							} elseif (preg_match('/audio/', $params['outputMime'])) {
@@ -334,6 +325,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 								}
 
 								$item->setRenderer($renderer);
+
 								$ret = $item->save();
 
 								if ($ret) {
@@ -370,11 +362,9 @@ class ItemEditTranscode extends ItemEditPlugin {
 				}
 
 				$deletedDeriv = false;
-
 				if (isset($preferreds[$itemId])) {
 					foreach ($preferreds as $preferred) {
 						$convert = strstr($preferred->getDerivativeOperations(), 'convert-to-');
-
 						if (strlen($convert)) {
 							$ret = GalleryCoreApi::deleteEntityById($preferred->getId(), 'GalleryDerivative');
 
@@ -405,6 +395,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 						}
 
 						$item->setRenderer(null);
+
 						$ret = $item->save();
 
 						if ($ret) {
@@ -477,7 +468,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 			if (isset($preferreds[$itemId])) {
 				foreach ($preferreds as $preferred) {
 					$operations = split(';', $preferred->getDerivativeOperations());
-
 					foreach ($operations as $operation) {
 						if (preg_match('/set\-audio\-chans\|(\d+);?/', $operation, $regs)) {
 							$form['encode']['achans'] = $regs[1];
@@ -511,6 +501,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 			// Get output options
 			list($ret, $path) = GalleryCoreApi::getPluginParameter('module', 'ffmpeg', 'path');
+
 			GalleryCoreApi::requireOnce('modules/ffmpeg/classes/FfmpegToolkitHelper.class');
 
 			list($ret, $tests, $mimeTypes, $supportsOffset,
@@ -519,7 +510,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 			/** Its time to trim the fat and lose the non-web friendly mime types */
 			$acceptableEncoders = array('audio/mpeg', 'audio/ogg');
 			$outputOptions      = array();
-
 			foreach ($mimeTypesEncoder as $option) {
 				if (in_array($option, $acceptableEncoders)) {
 					$outputOptions[] = $option;
@@ -540,7 +530,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 		}
 
 		$aspect = $nativeWidth / $nativeHeight;
-
 		if (($nativeWidth % 2) != 0) {
 			$nativeWidth = $nativeWidth - 1;
 		}
@@ -552,7 +541,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 		$template->setVariable('aspect', $aspect);
 
 		$derivativeSize = 0;
-
 		if (($nativeWidth > 0) && ($nativeHeight > 0) && ($nativeFps > 0.0) && ($nativeVbr > 0)) {
 			$form['hasVideo']          = true;
 			$form['native']['width']   = $form['encode']['width']   = $nativeWidth;
@@ -602,7 +590,6 @@ class ItemEditTranscode extends ItemEditPlugin {
 			if (isset($preferreds[$itemId])) {
 				foreach ($preferreds as $preferred) {
 					$operations = split(';', $preferred->getDerivativeOperations());
-
 					foreach ($operations as $operation) {
 						if (preg_match('/set\-audio\-chans\|(\d+);?/', $operation, $regs)) {
 							$form['encode']['achans'] = $regs[1];
@@ -702,11 +689,11 @@ class ItemEditTranscode extends ItemEditPlugin {
 		}
 
 		$template->setVariable('outputMime', $defaults['outputMime']);
+
 		$template->setVariable('defaultBitrate', $defaults['defaultBitrate']);
 		$template->setVariable('defaultAudioChannels', $defaults['defaultAudioChannels']);
 		$template->setVariable('defaultAudioSampleRate', $defaults['defaultAudioSampleRate']);
 		$template->setVariable('controller', 'transcode.ItemEditTranscode');
-
 		return array(null, 'modules/transcode/templates/Transcode.tpl', 'modules_transcode');
 	}
 
@@ -750,6 +737,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 		$logentry  = str_replace(array('<?', '?>'), array('(@', '@)'), $logentry);
 		$timestamp = strftime('%c');
+
 		fwrite(fopen($gallery->getConfig('data.gallery.base') . 'plugins_data/modules/ffmpeg/ffmpeg.log', 'a'), $timestamp . ': ' . $logentry . "\n");
 		chmod($gallery->getConfig('data.gallery.base') . 'plugins_data/modules/ffmpeg/ffmpeg.log', 0777);
 	}

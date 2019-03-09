@@ -33,7 +33,6 @@
 
 	// fix for multisite installs
 	$baseURL = $gallery->getConfig('galleryBaseUrl');
-
 if (!empty($baseURL)) {
 	$base = $baseURL;
 }

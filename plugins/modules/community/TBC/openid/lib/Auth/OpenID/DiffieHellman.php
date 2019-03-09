@@ -86,7 +86,6 @@ class Auth_OpenID_DiffieHellman {
 
 	public function usingDefaultValues() {
 		return $this->mod == Auth_OpenID_getDefaultMod() &&
-
 				$this->gen == Auth_OpenID_getDefaultGen();
 	}
 
@@ -95,7 +94,6 @@ class Auth_OpenID_DiffieHellman {
 		$dh_shared_str  = $this->lib->longToBinary($dh_shared);
 		$hash_dh_shared = $hash_func($dh_shared_str);
 		$xsecret        = '';
-
 		for ($i = 0; $i < Auth_OpenID::bytes($secret); $i++) {
 			$xsecret .= chr(ord($secret[$i]) ^ ord($hash_dh_shared[$i]));
 		}

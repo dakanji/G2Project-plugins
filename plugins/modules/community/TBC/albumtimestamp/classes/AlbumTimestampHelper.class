@@ -31,7 +31,6 @@
  */
 function __reduceTimestampMin($x, $item) {
 	$t = $item->getOriginationTimestamp();
-
 	if (isset($x)) {
 		return isset($t) ? min($x, $t) : $x;
 	}
@@ -41,7 +40,6 @@ function __reduceTimestampMin($x, $item) {
 
 function __reduceTimestampMax($x, $item) {
 	$t = $item->getOriginationTimestamp();
-
 	if (isset($x)) {
 		return isset($t) ? max($x, $t) : $x;
 	}
@@ -64,7 +62,6 @@ class AlbumTimestampHelper {
 		}
 
 		$param = null;
-
 		foreach ($searchIds as $id) {
 			list($ret, $param) = GalleryCoreApi::getPluginParameter(
 				'module',
@@ -87,7 +84,6 @@ class AlbumTimestampHelper {
 
 	public function getItemParam($paramName, $itemId = 0, $withInteritance = 0) {
 		$param = null;
-
 		if ($itemId != 0) {
 			global $gallery;
 
@@ -158,7 +154,6 @@ class AlbumTimestampHelper {
 		$ret = null;
 
 		AlbumTimestampHelper::log("LEO: setItemParam: $itemId: $name = $value ($currentValue)");
-
 		if ($currentValue != $value) {
 			if (isset($value)) {
 				$ret = GalleryCoreApi::setPluginParameter(
@@ -189,6 +184,7 @@ class AlbumTimestampHelper {
 		global $gallery;
 
 		$itemId = $item->getId();
+
 		$gallery->debug('LEO: setAlbumTimestampMode: ' . $itemId . ', ' . $value);
 
 		list($ret, $oldValue) = AlbumTimestampHelper::setItemParam(
@@ -220,7 +216,6 @@ class AlbumTimestampHelper {
 
 		$itemId = $item->getId();
 		$gallery->debug("LEO: autoSetAlbumTimestamps: itemId=$itemId, rec=$recurse, override=" . empty($overrideChild));
-
 		AlbumTimestampHelper::log(
 			"LEO: autoSetAlbumTimestamps: itemId=$itemId, rec=$recurse, override=" . empty($overrideChild)
 			. ", mode=$mode, recurseAll=$recurseAll"
@@ -330,10 +325,9 @@ class AlbumTimestampHelper {
 
 		$itemId = $item->getId();
 		AlbumTimestampHelper::log("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
-
 		$gallery->debug("LEO: setOriginationTimestamp: itemId=$itemId, ts=$timestamp, inShutdown=$inShutdown");
-		$item->setOriginationTimestamp($timestamp);
 
+		$item->setOriginationTimestamp($timestamp);
 		if ($item->isModified()) {
 			// $itemId = $item->getId();
 			if (GalleryCoreApi::isReadLocked($itemId) && !$inShutdown) {
@@ -410,7 +404,6 @@ class AlbumTimestampHelper {
 		}
 
 		$newTimestamp = null;
-
 		if (!empty($childItems)) {
 			if ($mode == 'newest') {
 				$func = '__reduceTimestampMax';
@@ -443,7 +436,6 @@ class AlbumTimestampHelper {
 		}
 
 		$enabled = $value;
-
 		return $enabled;
 	}
 
@@ -454,7 +446,6 @@ class AlbumTimestampHelper {
 			if ($fd = fopen($gallery->_debugLogFile, 'a')) {
 				$date    = date('Y-m-d H:i:s');
 				$session =& $gallery->getSession();
-
 				if (!empty($session)) {
 					$id = $session->getId();
 				} else {
@@ -469,7 +460,6 @@ class AlbumTimestampHelper {
 
 	public function debug_backtrace($provideObject = false) {
 		$bt = array();
-
 		foreach (debug_backtrace($provideObject) as $row) {
 			if ($last != $row['file']) {
 				$bt[] = "File: $file\n'";
@@ -477,7 +467,6 @@ class AlbumTimestampHelper {
 
 			$last = $row['file'];
 			$bt[] = " Line: $row[line]: ";
-
 			if ($row['class'] != '') {
 				$bt[] = "$row[class]$row[type]$row[function]";
 			} else {

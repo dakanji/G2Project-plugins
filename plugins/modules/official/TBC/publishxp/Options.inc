@@ -38,7 +38,6 @@ class OptionsController extends GalleryController {
 		global $gallery;
 
 		$results = array();
-
 		if (isset($form['action']['setOptions'])) {
 			// No form processing/validation required so just continue the next page
 			$results['redirect']['view']            = 'publishxp.UploadItems';
@@ -52,6 +51,7 @@ class OptionsController extends GalleryController {
 			 * the form in the session for later.
 			 */
 			$session =& $gallery->getSession();
+
 			$session->put('publishxp.extraOptionsForm', serialize($form));
 		} else {
 			$results['delegate']['view'] = 'publishxp.Options';
@@ -59,7 +59,6 @@ class OptionsController extends GalleryController {
 
 		$results['status'] = array();
 		$results['error']  = array();
-
 		return array(null, $results);
 	}
 }
@@ -131,7 +130,6 @@ class OptionsView extends GalleryView {
 		}
 
 		$Options['options'] = array();
-
 		foreach ($optionInstances as $option) {
 			list($ret, $entry['file'], $entry['l10Domain']) = $option->loadTemplate($template, $form, $item);
 

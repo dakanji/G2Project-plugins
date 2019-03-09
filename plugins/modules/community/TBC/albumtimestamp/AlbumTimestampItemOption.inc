@@ -59,19 +59,21 @@ class AlbumTimestampItemOption extends ItemEditOption {
 
 		list($ret, $mode, $inheritedMode) = AlbumTimestampHelper::getItemInheritedParam('albumTimestampMode', $item->getId());
 
-		list($ret, $newAlbumMode, $newInheritedMode)      = AlbumTimestampHelper::getItemInheritedParam('newAlbumTimestampMode', $item->getId());
+		list($ret, $newAlbumMode, $newInheritedMode) = AlbumTimestampHelper::getItemInheritedParam('newAlbumTimestampMode', $item->getId());
+
 		$form['AlbumTimestampItemOption']['mode']         = isset($mode) ? $mode : 'inherited';
 		$form['AlbumTimestampItemOption']['newAlbumMode'] = isset($newAlbumMode) ? $newAlbumMode : 'off';
 
 		// AlbumTimestampHelper::log("LEO: loadTemplate: itemId=$itemId mode=$mode newAlbumMode=$newAlbumMode");
-		$newText                   = $module->translate('Use the timestamp of the newest item in this album');
-		$oldText                   = $module->translate('Use the timestamp of the oldest item in this album');
-		$settingsList              = array(
+		$newText      = $module->translate('Use the timestamp of the newest item in this album');
+		$oldText      = $module->translate('Use the timestamp of the oldest item in this album');
+		$settingsList = array(
 			'inherited' => '',
 			'off'       => $module->translate('Do not set this albums timestamp automatically'),
 			'newest'    => $newText,
 			'oldest'    => $oldText,
 		);
+
 		$settingsList['inherited'] = '* '
 		. $module->translate('Inherited Setting') . ': '
 			. $settingsList[isset($inheritedMode) ? $inheritedMode : 'off']
@@ -81,6 +83,7 @@ class AlbumTimestampItemOption extends ItemEditOption {
 			'newest' => $newText,
 			'oldest' => $oldText,
 		);
+
 		$template->setVariable(
 			'AlbumTimestampItemOption',
 			array(
@@ -105,7 +108,8 @@ class AlbumTimestampItemOption extends ItemEditOption {
 		GalleryCoreApi::requireOnce('modules/albumtimestamp/classes/AlbumTimestampHelper.class');
 
 		$itemId = $item->getId();
-		$ret    = GalleryCoreApi::assertHasItemPermission($itemId, 'core.changePermissions');
+
+		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.changePermissions');
 
 		if ($ret) {
 			return array($ret, null, null);
@@ -126,6 +130,7 @@ class AlbumTimestampItemOption extends ItemEditOption {
 			}
 
 			$gallery->debug('LEO: setAlbumTimestampMode: ' . $itemId . ', ' . $mode);
+
 			$ret = AlbumTimestampHelper::setAlbumTimestampMode($item, $mode);
 
 			if ($ret) {

@@ -47,7 +47,6 @@ class BuildDownloadController extends GalleryController {
 		$status          = array();
 		$results         = array();
 		$transactionId   = GalleryUtilities::getRequestVariables('transactionId');
-
 		if (empty($transactionId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -70,7 +69,6 @@ class BuildDownloadController extends GalleryController {
 		// security check
 		$verify1 = GalleryUtilities::getRequestVariables('verify1');
 		$verify2 = GalleryUtilities::getRequestVariables('verify2');
-
 		if ($verify1 != $transaction->getDate() || $verify2 != $transaction->getSecurity()) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
@@ -97,7 +95,6 @@ class BuildDownloadController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 
@@ -115,6 +112,7 @@ class BuildDownloadController extends GalleryController {
 		}
 
 		$heading = $module->translate('Preparing your download...');
+
 		$templateAdapter->updateProgressBar($heading, $module->translate('Preparing...'), 0);
 
 		list($ret, $itemList) = CheckoutTransactionHelper::fetchTransactionItems($transactionId);
@@ -130,7 +128,6 @@ class BuildDownloadController extends GalleryController {
 		}
 
 		$count = count($itemIdsAndOperations);
-
 		if (empty($itemIdsAndOperations) || !isset($transactionId)) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
@@ -165,9 +162,9 @@ class BuildDownloadController extends GalleryController {
 
 		$archive = new PclZip($zipFile);
 		$i       = 0;
-
 		foreach ($itemIdsAndOperations as $itemRecord) {
 			$gallery->guaranteeTimeLimit(60);
+
 			$i++;
 
 			// Update Progress Bar
@@ -178,7 +175,9 @@ class BuildDownloadController extends GalleryController {
 					'arg2' => $count,
 				)
 			);
+
 			$templateAdapter->updateProgressBar($heading, $message, $i / $count);
+
 			$itemId = $itemRecord['id'];
 
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
@@ -235,7 +234,6 @@ class BuildDownloadController extends GalleryController {
 				$context           = array();
 				$context['width']  = $scaleToFit;
 				$context['height'] = $scaleToFit;
-
 				if ($context['width'] == 0 && $context['height'] == 0) {
 					// Don't put unknown size into context
 					$context = array();
@@ -272,9 +270,9 @@ class BuildDownloadController extends GalleryController {
 			// save new file names for addition to zip
 			if ($archive->add($destination, PCLZIP_OPT_REMOVE_PATH, $stripPath) == 0) {
 				@$platform->unlink($zipFile);
+
 				@$platform->unlink($zipBase);
 				@$platform->rmdir($zipDir);
-
 				return GalleryCoreApi::error(
 					ERROR_PLATFORM_FAILURE,
 					__FILE__,
@@ -293,8 +291,11 @@ class BuildDownloadController extends GalleryController {
 				'text' => 'Finishing off...',
 			)
 		);
+
 		$templateAdapter->updateProgressBar($heading, $message, 1);
+
 		$finalFile = $gallery->getConfig('data.gallery.tmp') . $transactionId . '.zip';
+
 		@$platform->unlink($finalFile);
 		@$platform->rename($zipFile, $finalFile);
 		@$platform->unlink($zipFile);
@@ -314,12 +315,15 @@ class BuildDownloadController extends GalleryController {
 				'text' => 'Hit Continue to download your file.',
 			)
 		);
+
 		$message = $module->translate(
 			array(
 				'text' => 'Done.',
 			)
 		);
+
 		$templateAdapter->updateProgressBar($heading, $message, 1);
+
 		$redirect = array(
 			'view'          => 'checkoutdownload.FetchDownload',
 			'transactionId' => $transactionId,
@@ -328,6 +332,7 @@ class BuildDownloadController extends GalleryController {
 		);
 
 		$urlGenerator =& $gallery->getUrlGenerator();
+
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
 
 		return null;

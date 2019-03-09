@@ -35,7 +35,6 @@ class NewDirectoryController extends GalleryController {
 
 		// Request forgery protection
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-
 		if (strstr($httpUserAgent, 'Nokia') === false) {
 			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null);
 		}
@@ -46,7 +45,6 @@ class NewDirectoryController extends GalleryController {
 
 		$results['status'] = ImageUploadHelper::createNewDirectory();
 		$results['error']  = array();
-
 		return array(null, $results);
 	}
 
@@ -77,6 +75,7 @@ class NewDirectoryView extends GalleryView {
 		global $gallery;
 
 		$gallery->debug("##### NewDirectoryView #####\n\$status = ");
+
 		$gallery->debug_r($status);
 
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR && !isset($status['id'])) {
@@ -84,7 +83,6 @@ class NewDirectoryView extends GalleryView {
 		}
 
 		$reply = $status['success'] . "\r\n";
-
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR) {
 			$reply .= 'Did=' . $status['id'] . "\r\n";
 		} else {
@@ -102,7 +100,6 @@ class NewDirectoryView extends GalleryView {
 		header('Content-type: text/plain; charset=UTF-8');
 		header('Content-Length: ' . strlen($reply));
 		echo $reply;
-
 		return null;
 	}
 }

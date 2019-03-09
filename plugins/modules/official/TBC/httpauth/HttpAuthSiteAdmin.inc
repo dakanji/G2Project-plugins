@@ -39,10 +39,8 @@ class HttpAuthSiteAdminController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['save'])) {
 			ob_start();
-
 			if (preg_match($form['authtypePattern'], '') === false) {
 				$error[] = 'form[error][authtype][regex][invalid]';
 			}
@@ -50,14 +48,12 @@ class HttpAuthSiteAdminController extends GalleryController {
 			$status['authtypeRegexMessage'] = ob_get_contents();
 			ob_clean();
 			ob_start();
-
 			if (preg_match($form['usernamePattern'], '') === false) {
 				$error[] = 'form[error][username][regex][invalid]';
 			}
 
 			$status['usernameRegexMessage'] = ob_get_contents();
 			ob_clean();
-
 			if (!empty($error)) {
 				return array(
 					null,
@@ -163,7 +159,6 @@ class HttpAuthSiteAdminView extends GalleryView {
 		// Load our default values if we didn't just come from this form
 		if ($form['formName'] != 'HttpAuthSiteAdmin') {
 			$form['formName'] = 'HttpAuthSiteAdmin';
-
 			foreach (array(
 				'httpAuthPlugin',
 				'useGlobally',

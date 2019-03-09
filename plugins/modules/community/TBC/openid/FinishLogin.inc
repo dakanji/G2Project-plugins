@@ -70,16 +70,15 @@ class FinishLoginController extends GalleryController {
 				'htmlEntities' => false,
 			)
 		);
-		$results      = $status = $error = array();
+
+		$results = $status = $error = array();
 
 		// Complete the authentication using the server's response
 		$consumer       =& OpenIdHelper::getConsumer();
 		$response       = $consumer->complete($returnTo);
 		$responseStatus = empty($response->status) || empty($response->identity_url) ? '' : $response->status;
-
 		if ($responseStatus != Auth_OpenID_SUCCESS) {
 			$error[] = 'form[error][openId][error]';
-
 			if (!empty($response->status)) {
 				$results['delegate']['responseStatus'] = $response->status;
 			}
@@ -137,7 +136,6 @@ class FinishLoginController extends GalleryController {
 				}
 
 				$error = array_merge($error, $pluginErrors);
-
 				if (!$continue) {
 					break;
 				}
@@ -178,7 +176,6 @@ class FinishLoginController extends GalleryController {
 					$sregResponse = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
 					$sreg         = $sregResponse->contents();
 					$data         = array();
-
 					foreach (array(
 						'userName' => 'nickname',
 						'fullName' => 'fullname',
@@ -255,6 +252,7 @@ class FinishLoginController extends GalleryController {
 		 */
 		if (empty($error) && GalleryUtilities::isA($user, 'GalleryUser')) {
 			$gallery->setActiveUser($user);
+
 			$event = GalleryCoreApi::newEvent('Gallery::Login');
 
 			$event->setEntity($user);
@@ -266,7 +264,8 @@ class FinishLoginController extends GalleryController {
 			}
 
 			$session =& $gallery->getSession();
-			$ret     = $session->regenerate();
+
+			$ret = $session->regenerate();
 
 			if ($ret) {
 				return array($ret, null);
@@ -287,7 +286,6 @@ class FinishLoginController extends GalleryController {
 		} else {
 			$results['delegate']['view']    = 'core.UserAdmin';
 			$results['delegate']['subView'] = 'openid.UserLogin';
-
 			if (empty($error)) {
 				$error[] = 'form[error][userName][pending]';
 			}
@@ -295,7 +293,6 @@ class FinishLoginController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

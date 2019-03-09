@@ -69,7 +69,6 @@ class PDFOutView extends GalleryView {
 
 		// Figure out which item we're talking about
 		$transactionId = (int)GalleryUtilities::getRequestVariables('transactionId');
-
 		if (empty($transactionId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -88,7 +87,6 @@ class PDFOutView extends GalleryView {
 		// Perform security check
 		$verify1 = GalleryUtilities::getRequestVariables('verify1');
 		$verify2 = GalleryUtilities::getRequestVariables('verify2');
-
 		if ($verify1 != $transaction->getDate() || $verify2 != $transaction->getSecurity()) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
@@ -128,24 +126,22 @@ class PDFOutView extends GalleryView {
 
 		// add a page
 		$pdf->AliasNbPages();
-
 		// set the sourcefile
 		$pdf->setSourceFile('modules/checkoutpdfinvoice/templates/pdf/invoice_master.pdf');
 
 		// import page 1
 		$tplIdx = $pdf->importPage(1);
+
 		$pdf->SetFont('Arial');
 		$pdf->SetTextColor(0, 0, 0);
 		$pdf->SetFontSize(9.5);
 
 		// split the items into groups to display on each page
 		$itemGroups = array_chunk($itemIds, $itemsPerPage);
-
 		foreach ($itemGroups as $myGroup) {
 			// start a new page
 			$pdf->AddPage();
 			$pdf->useTemplate($tplIdx, 0, 0);
-
 			PDFOutView::writeHeader($transaction, $pdf);
 
 			$pdf->SetY($firstItemY);
@@ -173,25 +169,32 @@ class PDFOutView extends GalleryView {
 				}
 
 				$thumb = $thumbs[$masterId];
-
 				if (method_exists($thumb, 'fetchPath')) {
 					list($ret, $path) = $thumb->fetchPath();
 
 					if (!$ret and $path) {
 						$printWidth = $thumbHeight * $thumb->getWidth() / $thumb->getHeight();
+
 						$pdf->Image($path, $col1X + ($thumbWidth - $printWidth) / 2, $curY - $thumbHeight / 2, 0, $thumbHeight, 'JPEG');
 					}
 				}
 
 				$pdf->SetXY($col2X, $curY);
+
 				$itemName = PDFOutView::fString($transactionItem->getItemName());
+
 				$pdf->MultiCell($col2Width, $lineHeight, $itemName, 0, 'L');
 				$pdf->SetXY($col3X, $curY);
+
 				$productName = PDFOutView::fString($transactionItem->getProductName());
 				$notes       = PDFOutView::fString($transactionItem->getNotes());
+
 				$pdf->MultiCell($col3Width, $lineHeight, $productName . "\n" . $notes, 0, 'L');
+
 				$pdf->SetXY($col4X, $curY);
+
 				$pdf->MultiCell($col4Width, $lineHeight, 'Qty: ' . $transactionItem->getQty(), 0, 'L');
+
 				$pdf->SetXY($col5XRight - $col5Width, $curY);
 				$pdf->MultiCell($col5Width, $lineHeight, '@ ' . sprintf($cformat, $transactionItem->getPriceEach()), 0, 'R');
 				$pdf->SetXY($col6XRight - $col6Width, $curY);
@@ -202,11 +205,9 @@ class PDFOutView extends GalleryView {
 
 		// if the last page was full or nearly full, start a new page
 		$itemGroups = array_reverse($itemGroups);
-
 		if (count($itemGroups[0]) + 1 >= $itemsPerPage) {
 			$pdf->AddPage();
 			$pdf->useTemplate($tplIdx, 0, 0);
-
 			PDFOutView::writeHeader($transaction, $pdf);
 
 			$pdf->SetY($firstItemY);
@@ -215,11 +216,13 @@ class PDFOutView extends GalleryView {
 		// discount
 		$curY     = $pdf->GetY();
 		$discount = $transaction->getDiscount();
-
 		if ($discount) {
 			$curY = $pdf->GetY();
+
 			$pdf->SetXY($col3X, $curY);
+
 			$discountDescription = PDFOutView::fString($gallery->i18n('Discount:') . ' ' . $transaction->getDiscountDescription());
+
 			$pdf->MultiCell($col3Width + $col4Width, $lineHeight, $discountDescription, 0, 'L');
 			$pdf->SetXY($col6XRight - $col6Width, $curY);
 			$pdf->MultiCell($col6Width, $lineHeight, '-' . $csymbol . sprintf($cformat, $discount), 0, 'R');
@@ -228,33 +231,41 @@ class PDFOutView extends GalleryView {
 
 		// postage
 		$curY = $pdf->GetY();
+
 		$pdf->SetXY($col3X, $curY);
+
 		$postageType = PDFOutView::fString($gallery->i18n('Postage and Packing:') . ' ' . $transaction->getPostageType());
+
 		$pdf->MultiCell($col3Width + $col4Width, $lineHeight, $postageType, 0, 'L');
 		$pdf->SetXY($col6XRight - $col6Width, $curY);
 		$pdf->MultiCell($col6Width, $lineHeight, $csymbol . sprintf($cformat, $transaction->getPostage()), 0, 'R');
-
 		// draw line
 		$pdf->SetY($curY + $itemYinc / 2);
-		$curY = $pdf->GetY();
-		$pdf->Line($leftLine, $curY, $rightLine, $curY);
 
+		$curY = $pdf->GetY();
+
+		$pdf->Line($leftLine, $curY, $rightLine, $curY);
 		// Order Total
 		$pdf->SetFont('Arial', 'B');
 		$pdf->SetY($curY + $itemYinc / 2);
+
 		$curY = $pdf->GetY();
+
 		$pdf->SetXY($col3X, $curY);
+
 		$OTA = PDFOutView::fString($gallery->i18n('Order Total Amount'));
+
 		$pdf->MultiCell($col3Width, $lineHeight, $OTA, 0, 'L');
 		$pdf->SetXY($col6XRight - $col6Width, $curY);
 		$pdf->MultiCell($col6Width, $lineHeight, $csymbol . sprintf($cformat, $transaction->getAmount()), 0, 'R');
-
 		// Paid thanks
 		if ($transaction->getFlagCleared()) {
 			$pdf->SetY($curY + $lineHeight * 2);
 			$pdf->SetFont('Arial', 'B');
+
 			$curY           = $pdf->GetY();
 			$paymentCleared = PDFOutView::fString($gallery->i18n('Payment has cleared - thank you.'));
+
 			$pdf->Text($col3X, $curY, $paymentCleared);
 		}
 
@@ -264,13 +275,15 @@ class PDFOutView extends GalleryView {
 		$pdf->SetY($commentY);      // back up the page
 		$pdf->SetFont('Arial');
 		$pdf->SetFontSize(8.5);
+
 		$curY = $pdf->GetY();
+
 		$pdf->SetX($leftMargin);
+
 		$commentText = preg_replace('/\s\s+/', ' ', $transaction->getCustNotes() . $transaction->getCustComments());
 		$commentText = PDFOutView::fString($commentText);
 
 		$pdf->Write($lineHeight, $commentText);
-
 		// send the output
 		$pdf->SetDisplayMode('fullpage');
 		$pdf->Output("invoice_$transactionId.pdf", 'I');
@@ -285,20 +298,18 @@ class PDFOutView extends GalleryView {
 
 		// put the date
 		$pdf->Text(156, 49, strftime('%d %b %Y', $transaction->getDate()));
-
 		// order reference
 		$pdf->Text(156, 73, $transaction->getId());
 
 		// order placed by
 		$placedBy = PDFOutView::fString($transaction->getFirstName() . ' ' . $transaction->getLastName());
-		$pdf->Text(156, 80, $placedBy);
 
+		$pdf->Text(156, 80, $placedBy);
 		// page
 		$pdf->Text(156, 87, $pdf->PageNo() . ' / {nb}');
 
 		// addressee
 		$line1 = PDFOutView::fString($transaction->getRecipientName());
-
 		if (empty($line1)) {
 			$line1 = $placedBy;
 		}
@@ -311,6 +322,7 @@ class PDFOutView extends GalleryView {
 			trim($transaction->getAddress4()) . "\n" .
 			trim($transaction->getAddress5()) . "\n" .
 			trim($transaction->getAddressZip()) . "\n" .
+
 			trim($transaction->getAddressCountry());
 		} else {
 			$addressblock = $gallery->i18n('(continued)');
@@ -326,7 +338,6 @@ class PDFOutView extends GalleryView {
 	public function fString($string) {
 		// fpdf doesn't support utf-8 :-(
 		$string = trim($string);
-
 		if (function_exists('iconv')) {
 			$string = iconv('UTF-8', 'windows-1252', $string);
 		} else {
@@ -334,7 +345,6 @@ class PDFOutView extends GalleryView {
 		}
 
 		$string = html_entity_decode($string);
-
 		return $string;
 	}
 }

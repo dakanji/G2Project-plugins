@@ -24,9 +24,9 @@ class getid3_pcd extends getid3_handler {
 		$info['video']['lossless']   = false;
 
 		$this->fseek($info['avdataoffset'] + 72);
+
 		$PCDflags      = $this->fread(1);
 		$PCDisVertical = ((ord($PCDflags) & 0x01) ? true : false);
-
 		if ($PCDisVertical) {
 			$info['video']['resolution_x'] = 3072;
 			$info['video']['resolution_y'] = 2048;
@@ -58,7 +58,6 @@ class getid3_pcd extends getid3_handler {
 				$PCD_data_Y2 = $this->fread($PCD_width);
 				$PCD_data_Cb = $this->fread(intval(round($PCD_width / 2)));
 				$PCD_data_Cr = $this->fread(intval(round($PCD_width / 2)));
-
 				for ($x = 0; $x < $PCD_width; $x++) {
 					if ($PCDisVertical) {
 						$info['pcd']['data'][$PCD_width - $x][$y]     = $this->YCbCr2RGB(ord($PCD_data_Y1[$x]), ord($PCD_data_Cb[floor($x / 2)]), ord($PCD_data_Cr[floor($x / 2)]));
@@ -89,15 +88,15 @@ class getid3_pcd extends getid3_handler {
 		static $YCbCr_constants = array();
 
 		if (empty($YCbCr_constants)) {
-			$YCbCr_constants['red']['Y']    = 0.0054980  * 256;
-			$YCbCr_constants['red']['Cb']   = 0.0000000  * 256;
-			$YCbCr_constants['red']['Cr']   = 0.0051681  * 256;
-			$YCbCr_constants['green']['Y']  = 0.0054980  * 256;
+			$YCbCr_constants['red']['Y']    = 0.0054980 * 256;
+			$YCbCr_constants['red']['Cb']   = 0.0000000 * 256;
+			$YCbCr_constants['red']['Cr']   = 0.0051681 * 256;
+			$YCbCr_constants['green']['Y']  = 0.0054980 * 256;
 			$YCbCr_constants['green']['Cb'] = -0.0015446 * 256;
 			$YCbCr_constants['green']['Cr'] = -0.0026325 * 256;
-			$YCbCr_constants['blue']['Y']   = 0.0054980  * 256;
-			$YCbCr_constants['blue']['Cb']  = 0.0079533  * 256;
-			$YCbCr_constants['blue']['Cr']  = 0.0000000  * 256;
+			$YCbCr_constants['blue']['Y']   = 0.0054980 * 256;
+			$YCbCr_constants['blue']['Cb']  = 0.0079533 * 256;
+			$YCbCr_constants['blue']['Cr']  = 0.0000000 * 256;
 		}
 
 		$RGBcolor = array(

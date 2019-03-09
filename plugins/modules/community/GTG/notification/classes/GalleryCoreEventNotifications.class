@@ -44,6 +44,7 @@ class ActivatePluginNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		return $this->_translateText(
+
 			'notification',
 			array(
 				'arg1' => $this->getPluginType(),
@@ -76,7 +77,6 @@ class ActivatePluginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getPlugin() {
 		$data = $this->_event->getData();
-
 		return $data['pluginId'];
 	}
 
@@ -87,7 +87,6 @@ class ActivatePluginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getPluginType() {
 		$data = $this->_event->getData();
-
 		return $data['pluginType'];
 	}
 }
@@ -141,7 +140,6 @@ class DeactivatePluginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getPlugin() {
 		$data = $this->_event->getData();
-
 		return $data['pluginId'];
 	}
 
@@ -152,7 +150,6 @@ class DeactivatePluginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getPluginType() {
 		$data = $this->_event->getData();
-
 		return $data['pluginType'];
 	}
 }
@@ -199,7 +196,6 @@ class ErrorNotification extends NotificationEvent_1_0 {
 	 */
 	public function getError() {
 		$data = $this->_event->getData();
-
 		return $data['error'];
 	}
 }
@@ -236,7 +232,6 @@ class ItemOrderNotification extends NotificationEvent_1_0 {
 		}
 
 		$title = GalleryUtilities::markup($item->getTitle(), 'strip');
-
 		return $this->_translateText(
 			'notification',
 			array(
@@ -302,7 +297,6 @@ class LoginNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		$user = $this->getUser();
-
 		return $this->_translateText(
 			'notification',
 			array(
@@ -369,7 +363,6 @@ class FailedLoginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getUserName() {
 		$data = $this->_event->getData();
-
 		return $data['userName'];
 	}
 }
@@ -408,7 +401,6 @@ class LogoutNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		$user = $this->getUser();
-
 		return $this->_translateText(
 			'notification',
 			array(
@@ -452,7 +444,6 @@ class RemovePermissionNotification extends NotificationEvent_1_0 {
 	public function getItemId() {
 		$data    = $this->_event->getData();
 		$itemIds = array_keys($data['itemIdsAndBits']);
-
 		return $itemIds[0];
 	}
 
@@ -531,7 +522,6 @@ class UninstallPluginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getPlugin() {
 		$data = $this->_event->getData();
-
 		return $data['pluginId'];
 	}
 
@@ -542,7 +532,6 @@ class UninstallPluginNotification extends NotificationEvent_1_0 {
 	 */
 	public function getPluginType() {
 		$data = $this->_event->getData();
-
 		return $data['pluginType'];
 	}
 }
@@ -593,7 +582,6 @@ class AlbumStructureChangeNotification extends NotificationEvent_1_0 {
 	 */
 	public function getItemId() {
 		$data = $this->_event->getData();
-
 		return $data['itemId'];
 	}
 
@@ -632,7 +620,6 @@ class SaveNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		$entity = $this->_event->getEntity();
-
 		return $this->_translateText(
 			'notification',
 			array(
@@ -693,7 +680,6 @@ class DeleteNotification extends NotificationEvent_1_0 {
 		global $gallery;
 
 		$entity = $this->_event->getEntity();
-
 		return $this->_translateText(
 			'notification',
 			array(
@@ -757,7 +743,6 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 		// How should we handle what type it is and where to link?
 		$parentId  = $items[0]->getParentId();
 		$itemCount = count($items);
-
 		if ($itemCount == 1) {
 			// One item, call it what it is and link to it directly
 			$itemTypeName = $items[0]->itemTypeName();
@@ -767,7 +752,6 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 			// Many items, link to the parent
 			$itemId    = $parentId;
 			$itemTypes = array();
-
 			foreach ($items as $item) {
 				$itemTypeName             = $item->itemTypeName();
 				$itemTypeName             = $itemTypeName[1];
@@ -818,7 +802,6 @@ class ItemAddedNotification extends NotificationEvent_1_0 {
 	 */
 	public function getItemId() {
 		$data = $this->_event->getData();
-
 		return count($data) == 1 ? $data[0]->getId() : $data[0]->getParentId();
 	}
 

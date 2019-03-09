@@ -59,14 +59,13 @@ class getid3_avr extends getid3_handler {
 		$info['fileformat'] = 'avr';
 
 		$this->fseek($info['avdataoffset']);
+
 		$AVRheader                   = $this->fread(128);
 		$info['avr']['raw']['magic'] = substr($AVRheader, 0, 4);
 		$magic                       = '2BIT';
-
 		if ($info['avr']['raw']['magic'] != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['avr']['raw']['magic']) . '"';
 			unset($info['fileformat'], $info['avr']);
-
 			return false;
 		}
 
@@ -91,7 +90,6 @@ class getid3_avr extends getid3_handler {
 		$info['avr']['flags']['signed']    = (($info['avr']['raw']['signed'] == 0) ? false : true);
 		$info['avr']['flags']['loop']      = (($info['avr']['raw']['loop'] == 0) ? false : true);
 		$info['avr']['midi_notes']         = array();
-
 		if (($info['avr']['raw']['midi'] & 0xFF00) != 0xFF00) {
 			$info['avr']['midi_notes'][] = ($info['avr']['raw']['midi'] & 0xFF00) >> 8;
 		}
@@ -110,9 +108,8 @@ class getid3_avr extends getid3_handler {
 		$info['audio']['bits_per_sample'] = $info['avr']['bits_per_sample'];
 		$info['audio']['sample_rate']     = $info['avr']['sample_rate'];
 		$info['audio']['channels']        = ($info['avr']['flags']['stereo'] ? 2 : 1);
-		$info['playtime_seconds']         = ($info['avr']['sample_length'] / $info['audio']['channels'])                        / $info['avr']['sample_rate'];
+		$info['playtime_seconds']         = ($info['avr']['sample_length'] / $info['audio']['channels']) / $info['avr']['sample_rate'];
 		$info['audio']['bitrate']         = ($info['avr']['sample_length'] * (($info['avr']['bits_per_sample'] == 8) ? 8 : 16)) / $info['playtime_seconds'];
-
 		return true;
 	}
 }

@@ -54,7 +54,6 @@ class TagsCallbackView extends GalleryView {
 		);
 
 		$tagName = trim($tagName);
-
 		if (!headers_sent()) {
 			header('Content-type: text/plain; charset=UTF-8');
 		}
@@ -70,7 +69,6 @@ class TagsCallbackView extends GalleryView {
 				}
 
 				break;
-
 			case 'delTag':
 				if (!empty($tagName)) {
 					$ret = TagsHelper::unassignTag($itemId, $tagName);
@@ -81,7 +79,6 @@ class TagsCallbackView extends GalleryView {
 				}
 
 				break;
-
 			case 'newTag':
 				if (!empty($tagName)) {
 					list($ret, $tagList) = TagsHelper::splitTags($tagName);
@@ -106,7 +103,6 @@ class TagsCallbackView extends GalleryView {
 				}
 
 				break;
-
 			case 'getTagList':
 				$prefix = GalleryUtilities::getRequestVariables('prefix');
 
@@ -131,7 +127,6 @@ class TagsCallbackView extends GalleryView {
 
 				// @todo Log Error when debug is on
 				break;
-
 			default:
 				// @note Not sure if this should a debug log instead
 				return GalleryCoreApi::error(ERROR_BAD_PARAMETER);

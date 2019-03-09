@@ -13,7 +13,9 @@
  * checkid request to the OpenID provider:
  *
  *   $sreg_req = Auth_OpenID_SRegRequest::build(array('email'));
+
  *   $auth_request->addExtension($sreg_req);
+
  *
  * 2. The OpenID provider extracts the simple registration request
  * from the OpenID request using {@link
@@ -27,7 +29,9 @@
  *   //   the fields in sreg_response were requested ]
  *   $sreg_resp = Auth_OpenID_SRegResponse::extractResponse(
  *                                  $sreg_req, $user_data);
+
  *   $sreg_resp->toMessage($openid_response->fields);
+
  *
  * 3. The relying party uses {@link
  * Auth_OpenID_SRegResponse::fromSuccessResponse} to extract the data
@@ -132,10 +136,8 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
 			Auth_OpenID_SREG_NS_URI_1_0,
 		) as $sreg_ns_uri) {
 			$alias = $message->namespaces->getAlias($sreg_ns_uri);
-
 			if ($alias !== null) {
 				$found_ns_uri = $sreg_ns_uri;
-
 				break;
 			}
 		}
@@ -144,7 +146,6 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
 			// There is no alias for either of the types, so try to
 			// add one. We default to using the modern value (1.1)
 			$found_ns_uri = Auth_OpenID_SREG_NS_URI_1_1;
-
 			if ($message->namespaces->addAlias(
 				Auth_OpenID_SREG_NS_URI_1_1,
 				'sreg'
@@ -185,13 +186,11 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		$sreg_ns_uri = Auth_OpenID_SREG_NS_URI,
 		$cls = 'Auth_OpenID_SRegRequest'
 	) {
-		$obj = new $cls();
-
+		$obj             = new $cls();
 		$obj->required   = array();
 		$obj->optional   = array();
 		$obj->policy_url = $policy_url;
 		$obj->ns_uri     = $sreg_ns_uri;
-
 		if ($required) {
 			if (!$obj->requestFields($required, true, true)) {
 				return null;
@@ -231,7 +230,6 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		$m           = $request->message;
 		$obj->ns_uri = $obj->_getSRegNS($m);
 		$args        = $m->getArgs($obj->ns_uri);
-
 		if ($args === null || Auth_OpenID::isFailure($args)) {
 			return null;
 		}
@@ -257,7 +255,9 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 	 * parsed than that method provides.
 	 *
 	 * $args == $message->getArgs($ns_uri);
+
 	 * $request->parseExtensionArgs($args);
+
 	 *
 	 * $args: The unqualified simple registration arguments
 	 *
@@ -269,7 +269,6 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		foreach (array('required', 'optional') as $list_name) {
 			$required = ($list_name == 'required');
 			$items    = Auth_OpenID::arrayGet($args, $list_name);
-
 			if ($items) {
 				foreach (explode(',', $items) as $field_name) {
 					if (!$this->requestField($field_name, $required, $strict)) {
@@ -282,7 +281,6 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		}
 
 		$this->policy_url = Auth_OpenID::arrayGet($args, 'policy_url');
-
 		return true;
 	}
 
@@ -306,6 +304,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 	 */
 	public function contains($field_name) {
 		return in_array($field_name, $this->required) ||
+
 				in_array($field_name, $this->optional);
 	}
 
@@ -396,7 +395,6 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 	 */
 	public function getExtensionArgs() {
 		$args = array();
-
 		if ($this->required) {
 			$args['required'] = implode(',', $this->required);
 		}
@@ -450,13 +448,10 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
 	 * stored under the key 'nickname'.
 	 */
 	public function extractResponse($request, $data) {
-		$obj = new Auth_OpenID_SRegResponse();
-
+		$obj         = new Auth_OpenID_SRegResponse();
 		$obj->ns_uri = $request->ns_uri;
-
 		foreach ($request->allRequestedFields() as $field) {
 			$value = Auth_OpenID::arrayGet($data, $field);
-
 			if ($value !== null) {
 				$obj->data[$field] = $value;
 			}
@@ -482,10 +477,8 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
 	public function fromSuccessResponse(&$success_response, $signed_only = true) {
 		global $Auth_OpenID_sreg_data_fields;
 
-		$obj = new Auth_OpenID_SRegResponse();
-
+		$obj         = new Auth_OpenID_SRegResponse();
 		$obj->ns_uri = $obj->_getSRegNS($success_response->message);
-
 		if ($signed_only) {
 			$args = $success_response->getSignedNS($obj->ns_uri);
 		} else {

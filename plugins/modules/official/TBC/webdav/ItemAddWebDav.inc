@@ -34,7 +34,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 	 */
 	public function handleRequest($form, &$item, &$addController = null) {
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
-
 		if ($requestMethod != 'put') {
 			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null, null);
 		}
@@ -126,20 +125,19 @@ class ItemAddWebDav extends ItemAddPlugin {
 		$tmpDir  = $gallery->getConfig('data.gallery.tmp');
 		$tmpFile = $platform->tempnam($tmpDir, 'webdav');
 		$handle  = $platform->fopen($tmpFile, 'wb');
-
 		if (!$handle) {
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 		}
 
 		while (!$platform->feof($stream)) {
 			$buf = $platform->fread($stream, 4096);
-
 			if ($platform->fwrite($handle, $buf) != 4096) {
 				break;
 			}
 		}
 
 		$platform->fclose($handle);
+
 		$originalPath = GalleryUtilities::getRequestVariables('originalPath');
 		$title        = empty($originalPath) ? basename($path) : basename($originalPath);
 
@@ -152,9 +150,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			$mimeType,
 			$parentItem->getId()
 		);
-
 		@$platform->unlink($tmpFile);
-
 		if ($ret) {
 			return array($ret, null, null);
 		}
@@ -297,12 +293,12 @@ class ItemAddWebDav extends ItemAddPlugin {
 		if ($ret) {
 			if (!($ret->getErrorCode() & ERROR_BAD_DATA_TYPE)) {
 				GalleryCoreApi::releaseLocks($lockIds);
-
 				return array($ret, null, null);
 			}
 
 			$gallery->debug(
 				'Error in ItemEditWebDav::handleRequest: ' . $newItem->getClassName()
+
 				. ' doesn\'t support the file content.  Falling back on an unknown item.'
 			);
 
@@ -373,7 +369,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			@$platform->unlink($tmpFile);
-
 			GalleryCoreApi::releaseLocks($lockIds);
 
 			return array($ret, null, null);
@@ -385,7 +380,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 		 */
 		if (!$platform->copy($tmpFile, $filePath)) {
 			@$platform->unlink($tmpFile);
-
 			GalleryCoreApi::releaseLocks($lockIds);
 
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
@@ -393,6 +387,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		@$platform->unlink($tmpFile);
 		$newItem->setPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
+
 		$ret = $newItem->save();
 
 		if ($ret) {
@@ -458,7 +453,6 @@ class ItemAddWebDav extends ItemAddPlugin {
 	 */
 	public function _hasLinkedEntity($item) {
 		$hasLink = $item->isLinked();
-
 		if (!$hasLink) {
 			list($ret, $linkedIds) = GalleryCoreApi::fetchEntitiesLinkedTo($item->getId());
 

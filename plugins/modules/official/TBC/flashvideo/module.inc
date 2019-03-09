@@ -40,7 +40,9 @@ class FlashVideoModule extends GalleryModule {
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('');
 	}
@@ -116,7 +118,6 @@ class FlashVideoModule extends GalleryModule {
 		}
 
 		$ids = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$ids[] = (int)$result[0];
 		}
@@ -152,6 +153,7 @@ class FlashVideoModule extends GalleryModule {
 					}
 
 					$item->setRenderer('FlashVideoRenderer');
+
 					$ret = $item->save();
 
 					if ($ret) {

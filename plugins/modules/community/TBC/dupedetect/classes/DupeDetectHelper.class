@@ -140,7 +140,6 @@ class DupeDetectHelper {
 				}
 
 				break;
-
 			case 'GalleryEntity::save':
 				/*
 				 * If the added entity is an image,
@@ -227,7 +226,6 @@ class DupeDetectHelper {
 		}
 
 		$dupes = array_merge($crcDupes, $histDupes);
-
 		return array(GalleryStatus::success(), $dupes);
 	}
 
@@ -320,7 +318,6 @@ class DupeDetectHelper {
 		);
 
 		$data = $aclIds;
-
 		if (isset($type)) {
 			$query .= 'AND [DupeDetectDupesListMap::dupType] = ?';
 			$data[] = $type;
@@ -358,8 +355,9 @@ class DupeDetectHelper {
 				'dupType'    => $result[2],
 				'userStatus' => $result[3],
 			);
-			$ids[]  = $result[0];
-			$ids[]  = $result[1];
+
+			$ids[] = $result[0];
+			$ids[] = $result[1];
 		}
 
 		// Fetch entities for the src and dup ids
@@ -371,7 +369,6 @@ class DupeDetectHelper {
 			}
 
 			$entitiesById = array();
-
 			foreach ($entities as $entity) {
 				$entitiesById[$entity->getId()] = $entity;
 			}
@@ -435,7 +432,6 @@ class DupeDetectHelper {
 		}
 
 		$query .= '[DupeDetectDupesListMap::dupItemId] = ?)';
-
 		if ($type != null) {
 			$query .= 'AND [DupeDetectDupesListMap::dupType] = ?';
 			$data[] = $type;
@@ -448,7 +444,6 @@ class DupeDetectHelper {
 		}
 
 		$dups = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$dups[] = array(
 				'srcItemId'  => $result[0],
@@ -481,7 +476,6 @@ class DupeDetectHelper {
 		global $gallery;
 
 		$count = 0;
-
 		if (empty($dupesList)) {
 			return array(GalleryStatus::success(), $count);
 		}
@@ -679,7 +673,8 @@ class DupeDetectHelper {
 		// If we're linking to an item that's already a link, then link to its source instead
 		if ($item->isLinked()) {
 			$linkedEntity = $item->getLinkedEntity();
-			$ret          = $linkedItem->createLink($linkedEntity, $destinationId);
+
+			$ret = $linkedItem->createLink($linkedEntity, $destinationId);
 		} else {
 			$ret = $linkedItem->createLink($item, $destinationId);
 		}

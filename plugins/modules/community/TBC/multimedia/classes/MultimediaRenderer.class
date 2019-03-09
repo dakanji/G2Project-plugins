@@ -48,7 +48,6 @@ class MultimediaRenderer extends GalleryRenderer {
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
 		$av       = preg_match('/video/', $entity->getMimeType()) ? 'video' : (preg_match('/audio/', $entity->getMimeType()) ? 'audio' : null);
-
 		if ($format != 'HTML' || !$av) {
 			return null;
 		}
@@ -66,7 +65,7 @@ class MultimediaRenderer extends GalleryRenderer {
 		);
 
 		// Using flowplayer
-		$playerJsUrl     = $urlGenerator->generateUrl(
+		$playerJsUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.min.js',
 			),
@@ -74,7 +73,8 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$playerUrl       = $urlGenerator->generateUrl(
+
+		$playerUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer-3.2.7.swf',
 			),
@@ -82,6 +82,7 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
+
 		$pseudoPluginUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.pseudostreaming-3.2.7.swf',
@@ -90,7 +91,8 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$audioPluginUrl  = $urlGenerator->generateUrl(
+
+		$audioPluginUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/multimedia/lib/flowplayer/flowplayer.audio-3.2.2.swf',
 			),
@@ -98,9 +100,10 @@ class MultimediaRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$itemId          = $item->getId();
-		$thumbUrl        = '';
-		$thumbWidth      = $thumbHeight = 200;
+
+		$itemId     = $item->getId();
+		$thumbUrl   = '';
+		$thumbWidth = $thumbHeight = 200;
 
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
@@ -197,7 +200,6 @@ class MultimediaRenderer extends GalleryRenderer {
 						);
 
 						break;
-
 					case 'video/x-flv':
 					case 'video/quicktime':
 					case 'video/ogg':
@@ -301,10 +303,8 @@ class MultimediaRenderer extends GalleryRenderer {
 						);
 
 						break;
-
 					default:
 						$display = 'Sorry your browser does not support ' . $fallback;
-
 						break;
 				}
 
@@ -485,17 +485,14 @@ class MultimediaRenderer extends GalleryRenderer {
 						);
 
 						break;
-
 					default:
 						// Sorry we don't support midi, wma, real, aiff...
 						return null;
 				}
 
 				break;
-
 			default:
 				$display = 'Sorry your browser does not support ' . $fallback;
-
 				break;// end case: audio
 		}
 

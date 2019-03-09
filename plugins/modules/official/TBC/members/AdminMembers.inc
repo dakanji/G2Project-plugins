@@ -38,7 +38,6 @@ class AdminMembersController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['save'])) {
 			foreach (array('canViewMembersModule', 'canViewEmailAddress') as $key) {
 				if (isset($form[$key])) {
@@ -69,7 +68,6 @@ class AdminMembersController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -125,10 +123,12 @@ class AdminMembersView extends GalleryView {
 			$groupIds[2] => $module->translate('Registered Users'),
 			$groupIds[0] => $module->translate('Site Admins'),
 		);
-		$members['emailViews']  = array(
+
+		$members['emailViews'] = array(
 			1 => $module->translate('Show Email Addresses'),
 			0 => $module->translate("Don't Show Email Addresses"),
 		);
+
 		$template->setVariable('Members', $members);
 		$template->setVariable('controller', 'members.AdminMembers');
 

@@ -93,7 +93,6 @@ class _parse_lockinfo {
 		// open input stream
 		if (!$handle) {
 			$this->success = false;
-
 			return;
 		}
 
@@ -121,10 +120,8 @@ class _parse_lockinfo {
 		// parse input
 		while ($this->success && !feof($handle)) {
 			$line = fgets($handle);
-
 			if (is_string($line)) {
-				$had_input = true;
-
+				$had_input      = true;
 				$this->success &= xml_parse($parser, $line, false);
 			}
 		}
@@ -168,7 +165,6 @@ class _parse_lockinfo {
 		if ($this->collect_owner) {
 			$ns_short = '';
 			$ns_attr  = '';
-
 			if ($ns) {
 				if ($ns == 'DAV:') {
 					$ns_short = 'D:';
@@ -183,18 +179,13 @@ class _parse_lockinfo {
 			switch ($name) {
 				case 'write':
 					$this->locktype = $name;
-
 					break;
-
 				case 'exclusive':
 				case 'shared':
 					$this->lockscope = $name;
-
 					break;
-
 				case 'owner':
 					$this->collect_owner = true;
-
 					break;
 			}
 		}
@@ -225,7 +216,6 @@ class _parse_lockinfo {
 		if ($this->collect_owner) {
 			$ns_short = '';
 			$ns_attr  = '';
-
 			if ($ns) {
 				if ($ns == 'DAV:') {
 					$ns_short = 'D:';

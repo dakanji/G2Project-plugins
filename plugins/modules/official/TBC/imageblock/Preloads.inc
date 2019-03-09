@@ -37,7 +37,6 @@ class ImageBlockPreloads {
 				}
 
 				$frameIds = array();
-
 				foreach ($paramSet as $params) {
 					foreach (array('itemFrame', 'albumFrame', 'photoFrame') as $key) {
 						if (isset($params[$key])) {

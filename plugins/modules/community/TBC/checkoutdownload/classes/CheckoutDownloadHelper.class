@@ -54,7 +54,6 @@ class CheckoutDownloadHelper {
 	 */
 	public function getDownloadableItemIds($items) {
 		$itemIdsAndOperations = array();
-
 		foreach ($items as $item) {
 			// Check the item still exists
 			list($ret, $itemEntity) = GalleryCoreApi::loadEntitiesById($item[0]);

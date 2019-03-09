@@ -79,7 +79,6 @@ class ContainView extends BeginView {
 
 		// safety limit of first 100 results
 		$results = array_slice($results, 0, 100);
-
 		return array(null, $results);
 	}
 }

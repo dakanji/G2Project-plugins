@@ -38,7 +38,9 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -72,7 +74,6 @@ class CheckoutAuthorizeNetModule extends GalleryModule {
 				// Fix AuthorizeNetAim.class:109 direct call of cURL, now uses $this->_curlPath
 			case 'end of upgrade path':
 				break;
-
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,

@@ -70,7 +70,6 @@ class TimestampToTags extends MaintenanceTask {
 		}
 
 		$ids = array();
-
 		while ($res = $result->nextResult()) {
 			$ids[] = $res[0];
 		}
@@ -78,7 +77,8 @@ class TimestampToTags extends MaintenanceTask {
 		$totalItems       = count($ids);
 		$current          = 1;
 		$migrationMessage = $module->translate('Migrating origination date into tags');
-		$ret              = $templateAdapter->updateProgressBar(
+
+		$ret = $templateAdapter->updateProgressBar(
 			$migrationMessage,
 			$module->translate(
 				array(
@@ -106,7 +106,6 @@ class TimestampToTags extends MaintenanceTask {
 
 			foreach ($items as $item) {
 				$itemDate = $item->getOriginationTimestamp();
-
 				if (!empty($itemDate)) {
 					$itemDateTags = date('F,Y', $itemDate);
 

@@ -38,10 +38,8 @@ class ImageBlockSiteAdminController extends GalleryController {
 		}
 
 		$status = array();
-
 		if (isset($form['action']['save'])) {
 			$param = array();
-
 			foreach (array('heading', 'title', 'date', 'views', 'owner') as $key) {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
@@ -81,7 +79,6 @@ class ImageBlockSiteAdminController extends GalleryController {
 		$results['redirect']['subView'] = 'imageblock.ImageBlockSiteAdmin';
 		$results['status']              = $status;
 		$results['error']               = array();
-
 		return array(null, $results);
 	}
 }
@@ -102,7 +99,6 @@ class ImageBlockSiteAdminView extends GalleryView {
 
 		if ($form['formName'] != 'ImageBlockSiteAdmin') {
 			$form['formName'] = 'ImageBlockSiteAdmin';
-
 			foreach (array('heading', 'title', 'date', 'views', 'owner') as $tmp) {
 				$form[$tmp] = 0;
 			}

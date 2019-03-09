@@ -46,7 +46,6 @@ class EmailController extends GalleryController {
 		$error   = array();
 		$status  = array();
 		$results = array();
-
 		if (isset($form['action']['send'])) {
 			if (!empty($form['custEmail'])
 				&& GalleryUtilities::isValidEmailString($form['custEmail'])
@@ -59,7 +58,6 @@ class EmailController extends GalleryController {
 
 				$transactionId             = $transaction->getId();
 				$form['custRecipientName'] = trim($form['custRecipientName']);
-
 				if (empty($form['custRecipientName'])) {
 					$form['custRecipientName'] = $form['custFirstName']
 						. ' '
@@ -93,7 +91,6 @@ class EmailController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

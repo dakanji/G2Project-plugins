@@ -41,7 +41,6 @@ class TagTreeConfigAdminView extends GalleryView {
 
 		$form['requiredTagsMajorVersion'] = TAGTREE_REQUIRED_TAGS_MAJOR_VERSION;
 		$form['requiredTagsMinorVersion'] = TAGTREE_REQUIRED_TAGS_MINOR_VERSION;
-
 		return array(
 			null,
 			array(

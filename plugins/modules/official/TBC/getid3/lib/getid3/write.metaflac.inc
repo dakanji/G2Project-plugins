@@ -19,7 +19,6 @@ class getid3_write_metaflac {
 	public $tag_data;
 	public $warnings = array(); // any non-critical errors will be stored here
 	public $errors   = array(); // any critical errors will be stored here
-
 	public function __construct() {
 		return true;
 	}
@@ -27,13 +26,11 @@ class getid3_write_metaflac {
 	public function WriteMetaFLAC() {
 		if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 			$this->errors[] = 'PHP running in Safe Mode (backtick operator not available) - cannot call metaflac, tags not written';
-
 			return false;
 		}
 
 		// Create file with new comments
 		$tempcommentsfilename = tempnam(GETID3_TEMP_DIR, 'getID3');
-
 		if (is_writable($tempcommentsfilename) && is_file($tempcommentsfilename) && ($fpcomments = fopen($tempcommentsfilename, 'wb'))) {
 			foreach ($this->tag_data as $key => $value) {
 				foreach ($value as $commentdata) {
@@ -44,12 +41,10 @@ class getid3_write_metaflac {
 			fclose($fpcomments);
 		} else {
 			$this->errors[] = 'failed to open temporary tags file, tags not written - fopen("' . $tempcommentsfilename . '", "wb")';
-
 			return false;
 		}
 
 		$oldignoreuserabort = ignore_user_abort(true);
-
 		if (GETID3_OS_ISWINDOWS) {
 			if (file_exists(GETID3_HELPERAPPSDIR . 'metaflac.exe')) {
 				//$commandline = '"'.GETID3_HELPERAPPSDIR.'metaflac.exe" --no-utf8-convert --remove-all-tags --import-tags-from="'.$tempcommentsfilename.'" "'.str_replace('/', '\\', $this->filename).'"';
@@ -64,10 +59,8 @@ class getid3_write_metaflac {
 				$timestampbeforewriting = filemtime($this->filename);
 				$commandline            = GETID3_HELPERAPPSDIR . 'metaflac.exe --no-utf8-convert --remove-all-tags --import-tags-from=' . escapeshellarg($tempcommentsfilename) . ' ' . escapeshellarg($this->filename) . ' 2>&1';
 				$metaflacError          = `$commandline`;
-
 				if (empty($metaflacError)) {
 					clearstatcache();
-
 					if ($timestampbeforewriting == filemtime($this->filename)) {
 						$metaflacError = 'File modification timestamp has not changed - it looks like the tags were not written';
 					}
@@ -84,10 +77,8 @@ class getid3_write_metaflac {
 		// Remove temporary comments file
 		unlink($tempcommentsfilename);
 		ignore_user_abort($oldignoreuserabort);
-
 		if (!empty($metaflacError)) {
 			$this->errors[] = 'System call to metaflac failed with this message returned: ' . "\n\n" . $metaflacError;
-
 			return false;
 		}
 
@@ -97,12 +88,10 @@ class getid3_write_metaflac {
 	public function DeleteMetaFLAC() {
 		if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 			$this->errors[] = 'PHP running in Safe Mode (backtick operator not available) - cannot call metaflac, tags not deleted';
-
 			return false;
 		}
 
 		$oldignoreuserabort = ignore_user_abort(true);
-
 		if (GETID3_OS_ISWINDOWS) {
 			if (file_exists(GETID3_HELPERAPPSDIR . 'metaflac.exe')) {
 				// To at least see if there was a problem, compare file modification timestamps before and after writing
@@ -110,10 +99,8 @@ class getid3_write_metaflac {
 				$timestampbeforewriting = filemtime($this->filename);
 				$commandline            = GETID3_HELPERAPPSDIR . 'metaflac.exe --remove-all-tags "' . $this->filename . '" 2>&1';
 				$metaflacError          = `$commandline`;
-
 				if (empty($metaflacError)) {
 					clearstatcache();
-
 					if ($timestampbeforewriting == filemtime($this->filename)) {
 						$metaflacError = 'File modification timestamp has not changed - it looks like the tags were not deleted';
 					}
@@ -128,10 +115,8 @@ class getid3_write_metaflac {
 		}
 
 		ignore_user_abort($oldignoreuserabort);
-
 		if (!empty($metaflacError)) {
 			$this->errors[] = 'System call to metaflac failed with this message returned: ' . "\n\n" . $metaflacError;
-
 			return false;
 		}
 

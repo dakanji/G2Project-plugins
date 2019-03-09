@@ -75,8 +75,8 @@ class ImageUploadHelper {
 
 		if ($file['size'] == 0 || $file['tmp_name'] == 'none') {
 			$gallery->debug('ERROR: File is too big.');
-			$status['success'] = NOKIAUPLOAD_ERR_TOOBIG;
 
+			$status['success'] = NOKIAUPLOAD_ERR_TOOBIG;
 			return $status;
 		}
 
@@ -109,7 +109,6 @@ class ImageUploadHelper {
 						'core.all',
 						false
 					);
-
 					if ($ret) {
 						$gallery->debug(
 							'ERROR: CoreApi::addUserPermission failed, but item was added.'
@@ -173,6 +172,7 @@ class ImageUploadHelper {
 		}
 
 		$album->setOwnerId($ownerId);
+
 		$ret = $album->save();
 
 		if ($ret) {

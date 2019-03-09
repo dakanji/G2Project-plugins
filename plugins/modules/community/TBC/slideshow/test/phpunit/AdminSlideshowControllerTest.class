@@ -62,6 +62,7 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 
 		$mockPicLensHelper->setReply('install', array(), array(null, 'TEST_VERSION'));
 		$this->_controller->_setPicLensHelper($mockPicLensHelper);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -76,6 +77,7 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
+
 		$this->assertTrue($mockPicLensHelper->isComplete(), $mockPicLensHelper->getRemaining());
 	}
 
@@ -89,6 +91,7 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 			array(GalleryCoreApi::error(ERROR_UNKNOWN), null)
 		);
 		$this->_controller->_setPicLensHelper($mockPicLensHelper);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -103,6 +106,7 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 			),
 			$results
 		);
+
 		$this->assertTrue($mockPicLensHelper->isComplete(), $mockPicLensHelper->getRemaining());
 	}
 
@@ -124,6 +128,7 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 
 		$mockPicLensHelper->setReply('uninstall', array(), null);
 		$this->_controller->_setPicLensHelper($mockPicLensHelper);
+
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

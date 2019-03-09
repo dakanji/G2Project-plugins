@@ -49,7 +49,6 @@ class PanoramaOption extends ItemEditOption {
 
 		$width    = empty($preferred) ? $item->getWidth() : $preferred[$item->getId()]->getWidth();
 		$mimeType = empty($preferred) ? $item->getMimeType() : $preferred[$item->getId()]->getMimeType();
-
 		return array(
 			null,
 			$item->getRenderer() == 'PanoramaRenderer' ||
@@ -69,7 +68,6 @@ class PanoramaOption extends ItemEditOption {
 		}
 
 		$form['PanoramaOption']['isPanorama'] = $item->getRenderer() == 'PanoramaRenderer';
-
 		return array(null, 'modules/panorama/templates/PanoramaOption.tpl', 'modules_panorama');
 	}
 
@@ -78,7 +76,6 @@ class PanoramaOption extends ItemEditOption {
 	 */
 	public static function handleRequestAfterEdit($form, &$item, &$preferred) {
 		$isUsingPanoramaRenderer = $item->getRenderer() == 'PanoramaRenderer';
-
 		if ($isUsingPanoramaRenderer && !isset($form['PanoramaOption']['isPanorama'])) {
 			$item->setRenderer(null);
 		} elseif (!$isUsingPanoramaRenderer && isset($form['PanoramaOption']['isPanorama'])) {

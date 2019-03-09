@@ -140,6 +140,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 			$results,
 			'wrong results on Submit of empty form'
 		);
+
 		$ret = $this->_cleanTestPair($pair);
 
 		if ($ret->isError()) {
@@ -247,6 +248,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		// check that item1 was indeed deleted
 		$ret = $this->_verifyMissing($this->_item1->getId());
+
 		$this->assert($ret->isError() == false, 'item still exists');
 
 		// clean up
@@ -295,6 +297,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		// check that item1 was indeed deleted
 		$ret = $this->_verifyMissing($this->_item2->getId());
+
 		$this->assert($ret->isError() == false, 'item still exists');
 
 		// clean up
@@ -348,6 +351,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		// check that item2 was indeed deleted
 		$ret = $this->_verifyMissing($this->_item2->getId());
+
 		$this->assert($ret->isError() == false, 'item still exists');
 
 		// check that there is indeed an item linked to item1
@@ -406,6 +410,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		// check that item2 was indeed deleted
 		$ret = $this->_verifyMissing($this->_item1->getId());
+
 		$this->assert($ret->isError() == false, 'item still exists');
 
 		// check that there is indeed an item linked to item1
@@ -437,7 +442,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -446,7 +450,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
-
 			return $this->failWithStatus($ret);
 		}
 
@@ -464,7 +467,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -483,7 +485,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 			$this->_album->getId(),
 			false
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -506,6 +507,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->assert(count($entities) == 2, 'didn\'t get 2 entities');
+
 		$dupRecord['srcItem'] = $entities[0];
 		$dupRecord['dupItem'] = $entities[1];
 
@@ -554,7 +556,6 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 			$this->_item1->getId(),
 			array(array($this->_item2->getId(), 1))
 		);
-
 		if ($ret->isError()) {
 			return $this->failWithStatus($ret);
 		}
@@ -577,6 +578,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
+
 		$ret = DupeDetectHelper::deleteDupes($pair['srcItemId']);
 
 		if ($ret->isError()) {

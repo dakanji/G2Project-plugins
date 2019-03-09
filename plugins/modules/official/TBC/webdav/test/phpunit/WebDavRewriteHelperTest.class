@@ -78,7 +78,8 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		// Rename the album
 		$oldPathComponent = $album->getPathComponent();
-		$ret              = $album->rename('The Quick!Brown#Fox');
+
+		$ret = $album->rename('The Quick!Brown#Fox');
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
@@ -128,7 +129,8 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		// Rename the item
 		$oldPathComponent = $item->getPathComponent();
-		$ret              = $item->rename('Jumps Over%The/Lazy_Dog');
+
+		$ret = $item->rename('Jumps Over%The/Lazy_Dog');
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
@@ -158,6 +160,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 			'controller' => 'webdav.WebDav',
 			'itemId'     => $item->getId(),
 		);
+
 		$entity = null;
 
 		// Perform the request and verify that we succeeded
@@ -166,12 +169,14 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 		$this->assert($ret, 'status');
 		$this->assertEquals('w/The%20Quick_Brown%23Fox/Jumps%20Over_The_Lazy_Dog', $url, 'url');
 		$this->assertEquals(
+
 			array(
 				'controller' => 'webdav.WebDav',
 			),
 			$params,
 			'params'
 		);
+
 		$this->assertEquals($item, $entity, 'entity');
 
 		// Use valid inputs
@@ -195,12 +200,14 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 		$this->assert($ret, 'status');
 		$this->assertEquals('w/The%20Quick_Brown%23Fox/Jumps%20Over_The_Lazy_Dog', $url, 'url');
 		$this->assertEquals(
+
 			array(
 				'controller' => 'webdav.WebDav',
 			),
 			$params,
 			'params'
 		);
+
 		$this->assertEquals(null, $entity, 'entity');
 	}
 }

@@ -62,9 +62,7 @@ function TrOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt') {
 		case 'memory':
 		case 'log':
 			$g_pcl_trace_mode = $p_mode;
-
 			break;
-
 		default:
 			$g_pcl_trace_mode = 'logged';
 	}
@@ -361,14 +359,12 @@ function TrDisplay() {
 
 	// ----- Display
 	$v_again = 0;
-
 	for ($i = 0; $i < sizeof($g_pcl_trace_entries); $i++) {
 		// ---- Row header
 		echo '<tr>';
 		echo '<td><table width=100% border=0 cellspacing=0 cellpadding=0><tr>';
 		$n = ($g_pcl_trace_entries[$i]['index'] + 1) * 10;
 		echo '<td width=' . $n . '><table width=100% border=0 cellspacing=0 cellpadding=0><tr>';
-
 		for ($j = 0; $j <= $g_pcl_trace_entries[$i]['index']; $j++) {
 			if ($j == $g_pcl_trace_entries[$i]['index']) {
 				if (($g_pcl_trace_entries[$i]['type'] == 1)
@@ -384,26 +380,19 @@ function TrDisplay() {
 		//echo "<td>&nbsp</td>";
 		echo '</tr></table></td>';
 		echo '<td width=2></td>';
-
 		switch ($g_pcl_trace_entries[$i]['type']) {
 			case 1:
 				echo "<td><font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['name'] . '(' . $g_pcl_trace_entries[$i]['param'] . ')</font></td>';
-
 				break;
-
 			case 2:
 				echo "<td><font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['name'] . '()=' . $g_pcl_trace_entries[$i]['param'] . '</font></td>';
-
 				break;
-
 			case 3:
 			case 4:
 				echo '<td><table width=100% border=0 cellspacing=0 cellpadding=0><td width=20></td><td>';
 				echo "<font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['message'] . '</font>';
 				echo '</td></table></td>';
-
 				break;
-
 			default:
 				echo "<td><font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['name'] . '(' . $g_pcl_trace_entries[$i]['param'] . ')</font></td>';
 		}
@@ -481,25 +470,18 @@ function PclTraceHide(element) {
 	// ----- Trace Header
 	// ----- Display the items
 	$v_again = 0;
-
 	for ($i = 0; $i < sizeof($g_pcl_trace_entries); $i++) {
 		switch ($g_pcl_trace_entries[$i]['type']) {
 			case 1: // fct start
 				PclTraceDisplayItemStart($i);
-
 				break;
-
 			case 2: // fct stop
 				PclTraceDisplayItemStop($i);
-
 				break;
-
 			case 3: // fct msg
 			case 4: // msg
 				PclTraceDisplayItemMsg($i);
-
 				break;
-
 			default:
 		}
 
@@ -513,7 +495,8 @@ function PclTraceHide(element) {
 		*/
 	}
 
-	// ----- Trace footer ?>
+	// ----- Trace footer
+	?>
 	</td>
   </tr>
   <tr>
@@ -527,7 +510,8 @@ function PclTraceShowAll() {
 		if ($g_pcl_trace_entries[$i]['type'] == 1) {
 			echo "PclTraceShow(document.getElementById('fct-" . $i . "'));";
 		}
-	} ?>
+	}
+	?>
 }
 
 function PclTraceHideAll() {
@@ -536,7 +520,8 @@ function PclTraceHideAll() {
 		if ($g_pcl_trace_entries[$i]['type'] == 1) {
 			echo "PclTraceHide(document.getElementById('fct-" . $i . "'));";
 		}
-	} ?>
+	}
+	?>
 }
 
 </script>
@@ -558,7 +543,9 @@ function PclTraceHideAll() {
 function PclTraceDisplayItemStart($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-	global $g_pcl_trace_suspend; ?>
+	global $g_pcl_trace_suspend;
+	?>
+
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td width="10"><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2">+</font></b></font></td>
@@ -586,7 +573,9 @@ function PclTraceDisplayItemStart($p_id) {
 function PclTraceDisplayItemStop($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-	global $g_pcl_trace_suspend; ?>
+	global $g_pcl_trace_suspend;
+	?>
+
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2">
@@ -609,7 +598,9 @@ function PclTraceDisplayItemStop($p_id) {
 function PclTraceDisplayItemMsg($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
 	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-	global $g_pcl_trace_suspend; ?>
+	global $g_pcl_trace_suspend;
+	?>
+
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td width="10"><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2"><center>.</center></font></b></font></td>

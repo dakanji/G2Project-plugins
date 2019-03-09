@@ -57,7 +57,6 @@ class NotificationItemAdminController extends GalleryController {
 
 		$itemId       = $item->getId();
 		$returnOption = 'redirect';
-
 		if (!empty($form['action']['save'])) {
 			foreach ($form['notifications'] as $i => $notification) {
 				if (empty($notification['oldSubscribed']) ^ empty($notification['subscribed'])) {
@@ -81,7 +80,6 @@ class NotificationItemAdminController extends GalleryController {
 						);
 					} else {
 						$authorized = $isAdminGroup;
-
 						if (!$authorized) {
 							list($ret, $instance) = GalleryCoreApi::newFactoryInstanceById(
 								'NotificationEvent_1_0',
@@ -93,7 +91,6 @@ class NotificationItemAdminController extends GalleryController {
 							}
 
 							$permission = $instance->getPermission();
-
 							if (!empty($permission)) {
 								list($ret, $authorized) = GalleryCoreApi::hasItemPermission($itemId, $permission);
 
@@ -142,7 +139,6 @@ class NotificationItemAdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -219,7 +215,6 @@ class NotificationItemAdminView extends GalleryView {
 		// Events
 		$form['notifications'] = array();
 		$i                     = 0;
-
 		foreach ($notifications as $notificationName => $notification) {
 			list($ret, $instance) = GalleryCoreApi::newFactoryInstanceById(
 				'NotificationEvent_1_0',

@@ -106,6 +106,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 		// Restore platform before releasing locks
 		$gallery->setPlatform($this->_savePlatform);
+
 		$ret = GalleryCoreApi::releaseLocks($this->_lockId);
 
 		if ($ret) {
@@ -200,9 +201,10 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'test');
 
 		$results = $this->handleRequest($this->_album);
-		$this->assertEquals(array(array(), array()), $results);
-		$template = null;
 
+		$this->assertEquals(array(array(), array()), $results);
+
+		$template = null;
 		foreach (array(
 			''            => array(
 				'imageUrl' => array(
@@ -234,7 +236,6 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 			if ($ret) {
 				$this->assert(false, $url);
-
 				return $ret;
 			}
 
@@ -273,7 +274,6 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		GalleryUtilities::putRequestVariable('form[action][checkUrl]', 1);
 
 		$template = null;
-
 		foreach (array(
 			'file://hoho' => array(
 				'imageUrl' => array(
@@ -294,7 +294,6 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 			if ($ret) {
 				$this->fail($url);
-
 				return $ret;
 			}
 
@@ -305,7 +304,9 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testAddWebCam() {
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'http://test.com/test.jpg');
+
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array(), $results[0], 'no error');
 		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
@@ -325,6 +326,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		}
 
 		$results = $this->handleRequest($this->_album, ERROR_PERMISSION_DENIED);
+
 		$this->assertEquals(array(null, null), $results);
 	}
 
@@ -333,7 +335,9 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'http://test.com/testimage');
+
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array(), $results[0], 'should succeed');
 		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
@@ -348,7 +352,9 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testAddWebCamNotFound() {
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'http://test.com/404.jpg');
+
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array('form[error][imageUrl][unavailable]'), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
@@ -356,7 +362,9 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testAddWebCamBadType() {
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'http://test.com/test.html');
+
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array('form[error][imageUrl][notImage]'), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
@@ -364,7 +372,9 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testAddWebCamBadUrl() {
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'test://test.com/test.jpg');
+
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array('form[error][imageUrl][invalid]'), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
@@ -372,7 +382,9 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testAddWebCamFile() {
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'file:///tmp/test.jpg');
+
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array(), $results[0], 'no error');
 		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
@@ -412,7 +424,9 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable('form[imageUrl]', 'file:///tmp/test.jpg');
+
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array('form[error][imageUrl][invalid]'), $results[0], 'error');
 		$this->assertEquals(array(), $results[1], 'status');
 	}
@@ -420,12 +434,15 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testAddWebCamXssUrl() {
 		GalleryUtilities::putRequestVariable('form[action][addWebCam]', 1);
 		GalleryUtilities::putRequestVariable(
+
 			'form[imageUrl]',
 			'http://test.com/foo<script>bar.jpg'
 		);
 
 		$results = $this->handleRequest($this->_album);
+
 		$this->assertEquals(array(), $results[0], 'no error');
+
 		$this->assertEquals(array(), $results[0], 'no error');
 		$this->assertEquals(array('addedFiles'), array_keys($results[1]), 'addedFiles');
 		$this->assertEquals(1, count($results[1]['addedFiles']), '1 file');
@@ -482,6 +499,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 		}
 
 		$this->_markToolkitForCleanup('ItemAddWebCamTestToolkit');
+
 		$ret = GalleryCoreApi::registerToolkitProperty(
 			'ItemAddWebCamTestToolkit',
 			array('image/test'),
@@ -538,42 +556,35 @@ class ItemAddWebCamTestPlatform {
 				case "GET /foo<script>bar.jpg HTTP/1.0\r\nHost: test.com\r\n\r\n":
 					$status = 'HTTP/1.1 200 OK';
 					$mime   = 'image/jpeg';
-
 					break;
-
 				case "GET /404.jpg HTTP/1.0\r\nHost: test.com\r\n\r\n":
 					$status = 'HTTP/1.1 404 Not Found';
 					$mime   = 'text/html';
-
 					break;
-
 				case "GET /test.html HTTP/1.0\r\nHost: test.com\r\n\r\n":
 					$status = 'HTTP/1.1 200 OK';
 					$mime   = 'text/html';
-
 					break;
 			}
 
 			if (isset($status)) {
-				$buffer   = array();
-				$buffer[] = $status;
-				$buffer[] = 'Connection: close';
-				$buffer[] = 'Date: Mon, 3 Nov 2004 05:40:03 GMT';
-				$buffer[] = 'Accept-Ranges: bytes';
-				$buffer[] = 'ETag: "122ae4-5-3fc199b0"';
-				$buffer[] = 'Server: Apache/1.3.28 (Unix)';
-				$buffer[] = 'Content-Length: 5';
-				$buffer[] = $this->_contentType . ': ' . $mime;
-				$buffer[] = 'Last-Modified: Mon, 3 Nov 2004 05:40:00 GMT';
-				$buffer[] = 'Client-Date: Mon, 3 Nov 2004 05:40:03 GMT';
-				$buffer[] = 'Client-Peer: 209.237.226.157:80';
-				$buffer[] = 'Client-Response-Num: 1';
-				$buffer[] = '';
-				$buffer[] = 'test';
-				$buffer[] = '';
-
+				$buffer                     = array();
+				$buffer[]                   = $status;
+				$buffer[]                   = 'Connection: close';
+				$buffer[]                   = 'Date: Mon, 3 Nov 2004 05:40:03 GMT';
+				$buffer[]                   = 'Accept-Ranges: bytes';
+				$buffer[]                   = 'ETag: "122ae4-5-3fc199b0"';
+				$buffer[]                   = 'Server: Apache/1.3.28 (Unix)';
+				$buffer[]                   = 'Content-Length: 5';
+				$buffer[]                   = $this->_contentType . ': ' . $mime;
+				$buffer[]                   = 'Last-Modified: Mon, 3 Nov 2004 05:40:00 GMT';
+				$buffer[]                   = 'Client-Date: Mon, 3 Nov 2004 05:40:03 GMT';
+				$buffer[]                   = 'Client-Peer: 209.237.226.157:80';
+				$buffer[]                   = 'Client-Response-Num: 1';
+				$buffer[]                   = '';
+				$buffer[]                   = 'test';
+				$buffer[]                   = '';
 				$this->_readBuffer[$handle] = $buffer;
-
 				return strlen($string);
 			}
 		} elseif ($handle == '/test/webcam') {
@@ -581,7 +592,6 @@ class ItemAddWebCamTestPlatform {
 		}
 
 		echo "Unexpected write: $handle $string\n";
-
 		return 0;
 	}
 
@@ -595,13 +605,10 @@ class ItemAddWebCamTestPlatform {
 			case 'testimage':
 			case 'test.html':
 				return $component;
-
 			case 'foo<script>bar.jpg':
 				return 'foo_script_bar.jpg';
-
 			default:
 				print "Unexpected legalizePathComponent($component)";
-
 				return 'UNEXPECTED';
 		}
 	}
@@ -624,7 +631,6 @@ class ItemAddWebCamTestPlatform {
 		}
 
 		echo "unexpected copy($fromFile, $toFile)";
-
 		return false;
 	}
 
@@ -634,13 +640,10 @@ class ItemAddWebCamTestPlatform {
 			case 'testimage':
 			case 'foo_script_bar.jpg':
 				$result = array(100, 200);
-
 				break;
-
 			default:
 				print "unexpected getimagesize($filename)";
 				$result = false;
-
 				break;
 		}
 
@@ -661,13 +664,11 @@ class ItemAddWebCamTestPlatform {
 		}
 
 		echo "unexpected filesize($filename)";
-
 		return 0;
 	}
 
 	public function mkdir($dirname) {
 		echo "unexpected mkdir($dirname)";
-
 		return false;
 	}
 
@@ -694,7 +695,6 @@ class ItemAddWebCamTestPlatform {
 		}
 
 		echo "Attempted to unlink bogus file: $filename";
-
 		return 0;
 	}
 
@@ -702,7 +702,6 @@ class ItemAddWebCamTestPlatform {
 		switch ($handle) {
 			case 'test-resource-1':
 				return true;
-
 			default:
 				return false;
 		}
@@ -727,16 +726,15 @@ class ItemAddWebCamTestPlatform {
 		 */
 		if ($length >= strlen(join("\n", $this->_readBuffer[$handle]))) {
 			$tmp = join("\n", $this->_readBuffer[$handle]);
+
 			unset($this->_readBuffer[$handle]);
 
 			return $tmp;
 		}
 
-		$buf = join("\n", $this->_readBuffer[$handle]);
-		$tmp = substr($buf, 0, $length);
-
+		$buf                        = join("\n", $this->_readBuffer[$handle]);
+		$tmp                        = substr($buf, 0, $length);
 		$this->_readBuffer[$handle] = explode("\n", substr($buf, $length + 1));
-
 		return $tmp;
 	}
 
@@ -779,7 +777,6 @@ class ItemAddWebCamTestPlatform {
 		}
 
 		echo "Unexpected fopen($filename, $modes)";
-
 		return null;
 	}
 

@@ -17,12 +17,12 @@
 class getid3_dss extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-		$this->fseek($info['avdataoffset']);
-		$DSSheader = $this->fread(1540);
 
+		$this->fseek($info['avdataoffset']);
+
+		$DSSheader = $this->fread(1540);
 		if (!preg_match('#^(\x02|\x03)ds[s2]#', $DSSheader)) {
 			$info['error'][] = 'Expecting "[02-03] 64 73 [73|32]" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($DSSheader, 0, 4)) . '"';
-
 			return false;
 		}
 
@@ -49,7 +49,6 @@ class getid3_dss extends getid3_handler {
 		$info['audio']['sample_rate']     = $this->DSSsampleRateLookup($info['dss']['sample_rate_index']);
 		$info['audio']['channels']        = 1;
 		$info['playtime_seconds']         = $info['dss']['playtime_ms'] / 1000;
-
 		if (floor($info['dss']['playtime_ms'] / 1000) != $info['dss']['playtime_sec']) {
 			// *should* just be playtime_ms / 1000 but at least one sample file has playtime_ms at offset 530 instead of offset 512, so safety check
 			$info['playtime_seconds'] = $info['dss']['playtime_sec'];
@@ -58,7 +57,6 @@ class getid3_dss extends getid3_handler {
 		}
 
 		$info['audio']['bitrate'] = ($info['filesize'] * 8) / $info['playtime_seconds'];
-
 		return true;
 	}
 
@@ -70,7 +68,6 @@ class getid3_dss extends getid3_handler {
 		$i  = substr($datestring, 8, 2);
 		$s  = substr($datestring, 10, 2);
 		$y += (($y < 95) ? 2000 : 1900);
-
 		return mktime($h, $i, $s, $m, $d, $y);
 	}
 

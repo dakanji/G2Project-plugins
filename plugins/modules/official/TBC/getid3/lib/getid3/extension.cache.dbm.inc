@@ -106,11 +106,9 @@ class getID3_cached_dbm extends getID3 {
 
 		// Try to open dbm file for writing
 		$this->dba = dba_open($dbm_filename, 'w', $cache_type);
-
 		if (!$this->dba) {
 			// Failed - create new dbm file
 			$this->dba = dba_open($dbm_filename, 'n', $cache_type);
-
 			if (!$this->dba) {
 				throw new Exception('failed to create dbm file: ' . $dbm_filename);
 			}
@@ -138,10 +136,8 @@ class getID3_cached_dbm extends getID3 {
 	public function __destruct() {
 		// Close dbm file
 		dba_close($this->dba);
-
 		// Release exclusive lock
 		flock($this->lock, LOCK_UN);
-
 		// Close lock file
 		fclose($this->lock);
 	}
@@ -153,7 +149,6 @@ class getID3_cached_dbm extends getID3 {
 
 		// Create new dbm file
 		$this->dba = dba_open($this->dbm_filename, 'n', $this->cache_type);
-
 		if (!$this->dba) {
 			throw new Exception('failed to clear cache/recreate dbm file: ' . $this->dbm_filename);
 		}

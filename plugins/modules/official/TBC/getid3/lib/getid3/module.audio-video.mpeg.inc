@@ -31,6 +31,7 @@ class getid3_mpeg extends getid3_handler {
 		$info['fileformat'] = 'mpeg';
 
 		$this->fseek($info['avdataoffset']);
+
 		$MPEGstreamData       = $this->fread($this->getid3->option_fread_buffer_size);
 		$MPEGstreamBaseOffset = 0; // how far are we from the beginning of the file data ($info['avdataoffset'])
 		$MPEGstreamDataOffset = 0; // how far are we from the beginning of the buffer data (~32kB)
@@ -39,14 +40,12 @@ class getid3_mpeg extends getid3_handler {
 		$GOPcounter           = -1;
 		$FramesByGOP          = array();
 		$ParsedAVchannels     = array();
-
 		do {
 			//echo $MPEGstreamDataOffset.' vs '.(strlen($MPEGstreamData) - 1024).'<Br>';
 			if ($MPEGstreamDataOffset > (strlen($MPEGstreamData) - 16384)) {
 				// buffer running low, get more data
 				//echo 'reading more data<br>';
 				$MPEGstreamData .= $this->fread($this->getid3->option_fread_buffer_size);
-
 				if (strlen($MPEGstreamData) > $this->getid3->option_fread_buffer_size) {
 					$MPEGstreamData        = substr($MPEGstreamData, $MPEGstreamDataOffset);
 					$MPEGstreamBaseOffset += $MPEGstreamDataOffset;
@@ -65,7 +64,6 @@ class getid3_mpeg extends getid3_handler {
 
 			//echo 'Found "'.strtoupper(dechex($StartCodeValue)).'" at offset '.($MPEGstreamBaseOffset + $StartCodeOffset).' ($MPEGstreamDataOffset = '.$MPEGstreamDataOffset.')<br>';
 			$MPEGstreamDataOffset += 4;
-
 			switch ($StartCodeValue) {
 				case 0x00: // picture_start_code
 					if (!empty($info['mpeg']['video']['bitrate_mode']) && ($info['mpeg']['video']['bitrate_mode'] == 'vbr')) {
@@ -80,7 +78,6 @@ class getid3_mpeg extends getid3_handler {
 					}
 
 					break;
-
 				case 0xB3: // sequence_header_code
 					/*
 					Note: purposely doing the less-pretty (and probably a bit slower) method of using string of bits rather than bitwise operations.
@@ -101,17 +98,14 @@ class getid3_mpeg extends getid3_handler {
 					$info['mpeg']['video']['raw']['load_intra_quantiser_matrix'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: load_intra_quantiser_matrix
 					if ($info['mpeg']['video']['raw']['load_intra_quantiser_matrix']) {
 						$bitstream .= getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 12, 64));
-
 						for ($i = 0; $i < 64; $i++) {
 							$info['mpeg']['video']['raw']['intra_quantiser_matrix'][$i] = self::readBitsFromStream($bitstream, $bitstreamoffset, 8);
 						}
 					}
 
 					$info['mpeg']['video']['raw']['load_non_intra_quantiser_matrix'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1);
-
 					if ($info['mpeg']['video']['raw']['load_non_intra_quantiser_matrix']) {
 						$bitstream .= getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 12 + ($info['mpeg']['video']['raw']['load_intra_quantiser_matrix'] ? 64 : 0), 64));
-
 						for ($i = 0; $i < 64; $i++) {
 							$info['mpeg']['video']['raw']['non_intra_quantiser_matrix'][$i] = self::readBitsFromStream($bitstream, $bitstreamoffset, 8);
 						}
@@ -120,7 +114,6 @@ class getid3_mpeg extends getid3_handler {
 					$info['mpeg']['video']['pixel_aspect_ratio']      = self::videoAspectRatioLookup($info['mpeg']['video']['raw']['aspect_ratio_information']);
 					$info['mpeg']['video']['pixel_aspect_ratio_text'] = self::videoAspectRatioTextLookup($info['mpeg']['video']['raw']['aspect_ratio_information']);
 					$info['mpeg']['video']['frame_rate']              = self::videoFramerateLookup($info['mpeg']['video']['raw']['frame_rate_code']);
-
 					if ($info['mpeg']['video']['raw']['bitrate'] == 0x3FFFF) { // 18 set bits = VBR
 						//$this->warning('This version of getID3() ['.$this->getid3->version().'] cannot determine average bitrate of VBR MPEG video files');
 						$info['mpeg']['video']['bitrate_mode'] = 'vbr';
@@ -137,9 +130,7 @@ class getid3_mpeg extends getid3_handler {
 					$info['video']['pixel_aspect_ratio'] = $info['mpeg']['video']['pixel_aspect_ratio'];
 					$info['video']['lossless']           = false;
 					$info['video']['bits_per_sample']    = 24;
-
 					break;
-
 				case 0xB5: // extension_start_code
 					$info['video']['codec'] = 'MPEG-2';
 					$bitstream              = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 4, 8)); // 48 bits for Sequence Extension ID; 61 bits for Sequence Display Extension ID; 59 bits for Sequence Scalable Extension ID
@@ -160,13 +151,11 @@ class getid3_mpeg extends getid3_handler {
 							$info['mpeg']['video']['raw']['frame_rate_extension_n']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 2); //  2 bits for frame_rate_extension_n
 							$info['mpeg']['video']['raw']['frame_rate_extension_d']    = self::readBitsFromStream($bitstream, $bitstreamoffset, 5); //  5 bits for frame_rate_extension_d
 							$info['video']['resolution_x']                             = ($info['mpeg']['video']['raw']['horizontal_size_extension'] << 12) | $info['mpeg']['video']['raw']['horizontal_size_value'];
-							$info['video']['resolution_y']                             = ($info['mpeg']['video']['raw']['vertical_size_extension'] << 12)   | $info['mpeg']['video']['raw']['vertical_size_value'];
+							$info['video']['resolution_y']                             = ($info['mpeg']['video']['raw']['vertical_size_extension'] << 12) | $info['mpeg']['video']['raw']['vertical_size_value'];
 							$info['video']['interlaced']                               = !$info['mpeg']['video']['raw']['progressive_sequence'];
 							$info['mpeg']['video']['interlaced']                       = !$info['mpeg']['video']['raw']['progressive_sequence'];
 							$info['mpeg']['video']['chroma_format']                    = self::chromaFormatTextLookup($info['mpeg']['video']['raw']['chroma_format']);
-
 							break;
-
 						case 2: // 0010 Sequence Display Extension ID
 							$info['mpeg']['video']['raw']['video_format']       = self::readBitsFromStream($bitstream, $bitstreamoffset, 3); //  3 bits for video_format
 							$info['mpeg']['video']['raw']['colour_description'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); //  1 bit flag: colour_description
@@ -180,12 +169,9 @@ class getid3_mpeg extends getid3_handler {
 							$marker_bit                                            = self::readBitsFromStream($bitstream, $bitstreamoffset, 1); // The term "marker_bit" indicates a one bit field in which the value zero is forbidden. These marker bits are introduced at several points in the syntax to avoid start code emulation.
 							$info['mpeg']['video']['raw']['display_vertical_size'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 14); // 14 bits for display_vertical_size
 							$info['mpeg']['video']['video_format']                 = self::videoFormatTextLookup($info['mpeg']['video']['raw']['video_format']);
-
 							break;
-
 						case 3: // 0011 Quant Matrix Extension ID
 							break;
-
 						case 5: // 0101 Sequence Scalable Extension ID
 							$info['mpeg']['video']['raw']['scalable_mode'] = self::readBitsFromStream($bitstream, $bitstreamoffset, 2); //  2 bits for scalable_mode
 							$info['mpeg']['video']['raw']['layer_id']      = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); //  4 bits for layer_id
@@ -208,12 +194,9 @@ class getid3_mpeg extends getid3_handler {
 							}
 
 							$info['mpeg']['video']['scalable_mode'] = self::scalableModeTextLookup($info['mpeg']['video']['raw']['scalable_mode']);
-
 							break;
-
 						case 7: // 0111 Picture Display Extension ID
 							break;
-
 						case 8: // 1000 Picture Coding Extension ID
 							$info['mpeg']['video']['raw']['f_code_00']                  = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); // 4 bits for f_code[0][0] (forward horizontal)
 							$info['mpeg']['video']['raw']['f_code_01']                  = self::readBitsFromStream($bitstream, $bitstreamoffset, 4); // 4 bits for f_code[0][1] (forward vertical)
@@ -241,15 +224,11 @@ class getid3_mpeg extends getid3_handler {
 
 							$info['mpeg']['video']['intra_dc_precision_bits'] = $info['mpeg']['video']['raw']['intra_dc_precision'] + 8;
 							$info['mpeg']['video']['picture_structure']       = self::pictureStructureTextLookup($info['mpeg']['video']['raw']['picture_structure']);
-
 							break;
-
 						case 9: // 1001 Picture Spatial Scalable Extension ID
 							break;
-
 						case 10: // 1010 Picture Temporal Scalable Extension ID
 							break;
-
 						default:
 							$this->warning('Unexpected $info[mpeg][video][raw][extension_start_code_identifier] value of ' . $info['mpeg']['video']['raw']['extension_start_code_identifier']);
 
@@ -257,10 +236,8 @@ class getid3_mpeg extends getid3_handler {
 					}
 
 					break;
-
 				case 0xB8: // group_of_pictures_header
 					$GOPcounter++;
-
 					if ($info['mpeg']['video']['bitrate_mode'] == 'vbr') {
 						$bitstream                           = getid3_lib::BigEndian2Bin(substr($MPEGstreamData, $StartCodeOffset + 4, 4)); // 27 bits needed for group_of_pictures_header
 						$bitstreamoffset                     = 0;
@@ -280,7 +257,6 @@ class getid3_mpeg extends getid3_handler {
 					}
 
 					break;
-
 				case 0xC0: // audio stream
 				case 0xC1: // audio stream
 				case 0xC2: // audio stream
@@ -381,10 +357,9 @@ class getid3_mpeg extends getid3_handler {
 					$getid3_temp = new getID3();
 
 					$getid3_temp->openfile($this->getid3->filename);
+
 					$getid3_temp->info = $info;
-
-					$getid3_mp3 = new getid3_mp3($getid3_temp);
-
+					$getid3_mp3        = new getid3_mp3($getid3_temp);
 					for ($i = 0; $i <= 7; $i++) {
 						// some files have the MPEG-audio header 8 bytes after the end of the $00 $00 $01 $C0 signature, some have it up to 13 bytes (or more?) after
 						// I have no idea why or what the difference is, so this is a stupid hack.
@@ -396,15 +371,12 @@ class getid3_mpeg extends getid3_handler {
 							$info                          = $getid3_temp->info;
 							$info['audio']['bitrate_mode'] = 'cbr';
 							$info['audio']['lossless']     = false;
-
 							break;
 						}
 					}
 
 					unset($getid3_temp, $getid3_mp3);
-
 					break;
-
 				case 0xBC: // Program Stream Map
 				case 0xBD: // Private stream 1 (non MPEG audio, subpictures)
 				case 0xBE: // Padding stream
@@ -427,7 +399,6 @@ class getid3_mpeg extends getid3_handler {
 				case 0xFF: // program stream directory
 					// ignore
 					break;
-
 				default:
 					// ignore
 					break;
@@ -494,7 +465,6 @@ class getid3_mpeg extends getid3_handler {
 			$frames_in_last_GOP       = count($FramesByGOP[$last_GOP_id]);
 			$gopdata                  =& $info['mpeg']['group_of_pictures'][$last_GOP_id];
 			$info['playtime_seconds'] = ($gopdata['time_code_hours'] * 3600) + ($gopdata['time_code_minutes'] * 60) + $gopdata['time_code_seconds'] + (($gopdata['time_code_pictures'] + $frames_in_last_GOP + 1) / $info['mpeg']['video']['frame_rate']);
-
 			if (!isset($info['video']['bitrate'])) {
 				$overall_bitrate          = ($info['avdataend'] - $info['avdataoffset']) * 8 / $info['playtime_seconds'];
 				$info['video']['bitrate'] = $overall_bitrate - (isset($info['audio']['bitrate']) ? $info['audio']['bitrate'] : 0);
@@ -509,7 +479,6 @@ class getid3_mpeg extends getid3_handler {
 	private function readBitsFromStream(&$bitstream, &$bitstreamoffset, $bits_to_read, $return_singlebit_as_boolean = true) {
 		$return           = bindec(substr($bitstream, $bitstreamoffset, $bits_to_read));
 		$bitstreamoffset += $bits_to_read;
-
 		if (($bits_to_read == 1) && $return_singlebit_as_boolean) {
 			$return = (bool)$return;
 		}
@@ -537,7 +506,6 @@ class getid3_mpeg extends getid3_handler {
 		$BitrateToUseMin                  = 32;
 		$BitrateToUseMax                  = 32;
 		$previousBitrate                  = 32;
-
 		foreach ($OverheadMultiplierByBitrate as $key => $value) {
 			if ($AudioBitrate >= $previousBitrate) {
 				$BitrateToUseMin = $previousBitrate;
@@ -545,7 +513,6 @@ class getid3_mpeg extends getid3_handler {
 
 			if ($AudioBitrate < $key) {
 				$BitrateToUseMax = $key;
-
 				break;
 			}
 
@@ -563,53 +530,45 @@ class getid3_mpeg extends getid3_handler {
 		$OverheadPercentage += $VideoFactorMin2 * (1 - $FactorA) * $FactorV;
 		$OverheadPercentage += $VideoFactorMax1 * $FactorA * (1 - $FactorV);
 		$OverheadPercentage += $VideoFactorMax2 * (1 - $FactorA) * (1 - $FactorV);
-
 		return $OverheadPercentage;
 	}
 
 	public static function videoFramerateLookup($rawframerate) {
 		$lookup = array(0, 23.976, 24, 25, 29.97, 30, 50, 59.94, 60);
-
 		return isset($lookup[$rawframerate]) ? (float)$lookup[$rawframerate] : (float)0;
 	}
 
 	public static function videoAspectRatioLookup($rawaspectratio) {
 		$lookup = array(0, 1, 0.6735, 0.7031, 0.7615, 0.8055, 0.8437, 0.8935, 0.9157, 0.9815, 1.0255, 1.0695, 1.0950, 1.1575, 1.2015, 0);
-
 		return isset($lookup[$rawaspectratio]) ? (float)$lookup[$rawaspectratio] : (float)0;
 	}
 
 	public static function videoAspectRatioTextLookup($rawaspectratio) {
 		$lookup = array('forbidden', 'square pixels', '0.6735', '16:9, 625 line, PAL', '0.7615', '0.8055', '16:9, 525 line, NTSC', '0.8935', '4:3, 625 line, PAL, CCIR601', '0.9815', '1.0255', '1.0695', '4:3, 525 line, NTSC, CCIR601', '1.1575', '1.2015', 'reserved');
-
 		return isset($lookup[$rawaspectratio]) ? $lookup[$rawaspectratio] : '';
 	}
 
 	public static function videoFormatTextLookup($video_format) {
 		// ISO/IEC 13818-2, section 6.3.6, Table 6-6. Meaning of video_format
 		$lookup = array('component', 'PAL', 'NTSC', 'SECAM', 'MAC', 'Unspecified video format', 'reserved(6)', 'reserved(7)');
-
 		return isset($lookup[$video_format]) ? $lookup[$video_format] : '';
 	}
 
 	public static function scalableModeTextLookup($scalable_mode) {
 		// ISO/IEC 13818-2, section 6.3.8, Table 6-10. Definition of scalable_mode
 		$lookup = array('data partitioning', 'spatial scalability', 'SNR scalability', 'temporal scalability');
-
 		return isset($lookup[$scalable_mode]) ? $lookup[$scalable_mode] : '';
 	}
 
 	public static function pictureStructureTextLookup($picture_structure) {
 		// ISO/IEC 13818-2, section 6.3.11, Table 6-14 Meaning of picture_structure
 		$lookup = array('reserved', 'Top Field', 'Bottom Field', 'Frame picture');
-
 		return isset($lookup[$picture_structure]) ? $lookup[$picture_structure] : '';
 	}
 
 	public static function chromaFormatTextLookup($chroma_format) {
 		// ISO/IEC 13818-2, section 6.3.11, Table 6-14 Meaning of picture_structure
 		$lookup = array('reserved', '4:2:0', '4:2:2', '4:4:4');
-
 		return isset($lookup[$chroma_format]) ? $lookup[$chroma_format] : '';
 	}
 }

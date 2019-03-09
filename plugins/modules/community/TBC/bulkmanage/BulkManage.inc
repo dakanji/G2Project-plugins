@@ -86,13 +86,13 @@ class BulkManageController extends GalleryController {
 				// Parameters passed to helper
 					array($itemId, $plugin, $params)
 			);
+
 			$results['delegate']['view'] = 'core.ProgressBar';
 		}
 
 		// If we have an error then pass back to plugin to handle it
 		$results['error']  = $error;
 		$results['status'] = $status;
-
 		if (!empty($results['error'])) {
 			$results['delegate']['view']       = 'core.ItemAdmin';
 			$results['delegate']['subView']    = 'bulkmanage.BulkManage';
@@ -144,10 +144,8 @@ class BulkManageView extends GalleryView {
 		// Get the preferred plugin from the session
 		$session              =& $gallery->getSession();
 		$bulkPluginSessionKey = 'bulkmanage.view.plugin.' . get_class($item);
-
 		if (empty($bulkPlugin) || !isset($pluginInstances[$bulkPlugin])) {
 			$bulkPlugin = $session->get($bulkPluginSessionKey);
-
 			if (empty($bulkPlugin) || !isset($pluginInstances[$bulkPlugin])) {
 				$ids        = array_keys($pluginInstances);
 				$bulkPlugin = $ids[0];
@@ -158,7 +156,6 @@ class BulkManageView extends GalleryView {
 
 		// Get display data for all plugins
 		$plugins = array();
-
 		foreach ($pluginInstances as $pluginId => $plugin) {
 			list($ret, $title) = $plugin->getTitle();
 

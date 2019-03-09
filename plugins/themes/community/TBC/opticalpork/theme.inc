@@ -31,7 +31,9 @@ class OpticalporkTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('opticalpork');
+
 		$this->setName($gallery->i18n('Opticalpork'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'Opticalpork.com Gallery theme'
@@ -41,6 +43,7 @@ class OpticalporkTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'perPage'        => 9,
 				'contentWidth'   => 700,
@@ -92,7 +95,6 @@ class OpticalporkTheme extends GalleryTheme {
 
 		// Override some navigator settings
 		$theme =& $template->getVariableByReference('theme');
-
 		if (isset($theme['navigator']['first'])) {
 			unset($theme['navigator']['first']);
 		}
@@ -121,7 +123,6 @@ class OpticalporkTheme extends GalleryTheme {
 				)
 			) {
 				$theme['params']['thumbnailSize'] = $matches[1];
-
 				break;
 			}
 		}
@@ -164,7 +165,6 @@ class OpticalporkTheme extends GalleryTheme {
 
 		// Override some navigator settings
 		$theme =& $template->getVariableByReference('theme');
-
 		if (isset($theme['navigator']['first'])) {
 			unset($theme['navigator']['first']);
 		}
@@ -217,7 +217,6 @@ class OpticalporkTheme extends GalleryTheme {
 		// Add in our extra stuff
 		$theme                  =& $template->getVariableByReference('theme');
 		$theme['adminTemplate'] = $templateFile;
-
 		return array(null, 'theme.tpl');
 	}
 
@@ -266,6 +265,7 @@ class OpticalporkTheme extends GalleryTheme {
 			),
 			'value'      => $params['contentWidth'],
 		);
+
 		$settings[] = array(
 			'key'   => 'groupByYear',
 			'name'  => $this->translate(
@@ -274,6 +274,7 @@ class OpticalporkTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['groupByYear'],
 		);
+
 		$settings[] = array(
 			'key'   => 'enableImageMap',
 			'name'  => $this->translate(
@@ -291,7 +292,6 @@ class OpticalporkTheme extends GalleryTheme {
 	 */
 	public function validateSettings($settings) {
 		$error = parent::validateSettings($settings);
-
 		if (!is_numeric($settings['contentWidth'])) {
 			$error['contentWidth'] = $this->translate('You must enter a number');
 		}

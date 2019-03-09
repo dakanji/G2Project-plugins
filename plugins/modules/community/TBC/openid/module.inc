@@ -39,7 +39,9 @@ class OpenIdModule extends GalleryModule {
 		$this->setVersion('1.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));
 		$this->setCallbacks('getSystemLinks|getSiteAdminViews|registerEventListeners');
 	}
@@ -110,7 +112,6 @@ class OpenIdModule extends GalleryModule {
 			case null:
 				// Initial install
 				break;
-
 			case '0.0.1':
 				// Add OpenIdMap
 			case '0.0.2':
@@ -133,7 +134,6 @@ class OpenIdModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
-
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,
@@ -151,7 +151,6 @@ class OpenIdModule extends GalleryModule {
 		global $gallery;
 
 		$links = array();
-
 		if ($gallery->getConfig('login')) {
 			list($ret, $isAnonymous) = GalleryCoreApi::isAnonymousUser();
 
@@ -162,7 +161,6 @@ class OpenIdModule extends GalleryModule {
 			if ($isAnonymous) {
 				// Do not add separate Login link if default login is configured for OpenID
 				$loginRedirect = $gallery->getConfig('loginRedirect');
-
 				if (empty($loginRedirect['subView'])
 					|| $loginRedirect['subView'] !== 'openid.UserLogin'
 				) {
@@ -203,7 +201,6 @@ class OpenIdModule extends GalleryModule {
 		switch ($event->getEventName()) {
 			case 'GalleryEntity::delete':
 				$entity = $event->getEntity();
-
 				if (GalleryUtilities::isA($entity, 'GalleryUser')
 					|| GalleryUtilities::isA($entity, 'GalleryPendingUser')
 				) {
@@ -218,7 +215,8 @@ class OpenIdModule extends GalleryModule {
 
 					// Remove corresponding OpenIDs
 					$galleryIds[] = $entity->getId();
-					$ret          = GalleryCoreApi::removeMapEntry(
+
+					$ret = GalleryCoreApi::removeMapEntry(
 						'OpenIdMap',
 						array(
 							'galleryId' => $galleryIds,
@@ -231,7 +229,6 @@ class OpenIdModule extends GalleryModule {
 				}
 
 				break;
-
 			case 'GalleryPendingUser::createGalleryUser':
 				$pendingUser = $event->getEntity();
 

@@ -74,7 +74,6 @@ class AdminSessionsView extends GalleryView {
 
 		$badHosts  = array('search.msn.com', 'crawl.yahoo.net', '^65.55');
 		$userNames = array();
-
 		while ($pSession = $results->nextResult()) {
 			$mySession->_userId            = (int)$pSession[1];
 			$mySession->_remoteIdentifier  = unserialize($pSession[2]);
@@ -86,7 +85,6 @@ class AdminSessionsView extends GalleryView {
 			//$hostName = gethostbyaddr($mySession->_remoteIdentifier[0]);
 			// Remove obvious searchbots
 			$host = $mySession->_remoteIdentifier[0];
-
 			foreach ($badHosts as $badHost) {
 				if (ereg($badHost, $host)) {
 					continue 2;
@@ -102,7 +100,6 @@ class AdminSessionsView extends GalleryView {
 
 			*/
 			$transactionId = $mySession->get('checkout.transactionId');
-
 			if (ereg(';', $transactionId)) {
 				$transactionId = unserialize($transactionId);
 			}
@@ -128,7 +125,6 @@ class AdminSessionsView extends GalleryView {
 		}
 
 		$userNames = array();
-
 		foreach ($users as $user) {
 			$userNames[$user->getId()] = $user->getFullName();
 		}

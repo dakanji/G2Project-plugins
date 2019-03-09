@@ -37,6 +37,7 @@ class DupeDetectModule extends GalleryModule {
 		global $gallery;
 
 		$this->setId('dupedetect');
+
 		$this->setName($gallery->i18n('DupeDetect'));
 		$this->setDescription(
 			$gallery->i18n(
@@ -44,11 +45,12 @@ class DupeDetectModule extends GalleryModule {
 			)
 		);
 		$this->setVersion('1.0.0');
-
 		// Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $this->translate('Gallery'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews');
 	}

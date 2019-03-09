@@ -91,7 +91,6 @@ class CheckoutGooglePaymentPlugin extends CheckoutPaymentInterface_1_3 {
 		}
 
 		$orderTotal = $transaction->getAmount();
-
 		return array(
 			null,
 			array(

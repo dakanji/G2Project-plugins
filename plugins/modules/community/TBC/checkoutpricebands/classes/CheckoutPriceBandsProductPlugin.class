@@ -30,7 +30,6 @@
 		foreach ($products as $position => $product) {
 			if (isset($product['priceBandDescription'])) {
 				unset($products[$position]['price']);
-
 				if (!isset($products[$position]['description'])) {
 					$products[$position]['description'] = '';
 				}

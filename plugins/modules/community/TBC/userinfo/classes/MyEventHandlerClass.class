@@ -36,7 +36,6 @@ class MyEventHandlerClass // extends GalleryEventListener
 	 */
 	public function getRemoteIdentifier() {
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-
 		return array(
 			GalleryUtilities::getRemoteHostAddress(),
 			isset($httpUserAgent) ? md5($httpUserAgent) : null,
@@ -147,3 +146,4 @@ class MyEventHandlerClass // extends GalleryEventListener
 		}
 	}
 }
+

@@ -33,6 +33,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 	 */
 	public function canBeViewedInline($item) {
 		return GalleryUtilities::isA($item, 'GalleryDataItem')
+
 		&& $item->getMimeType() == 'audio/mpeg';
 	}
 
@@ -43,7 +44,6 @@ class MP3AudioRenderer extends GalleryRenderer {
 		global $gallery;
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
-
 		if ($format != 'HTML' || $entity->getMimeType() != 'audio/mpeg') {
 			return null;
 		}
@@ -61,13 +61,14 @@ class MP3AudioRenderer extends GalleryRenderer {
 				'htmlEntities'   => false,
 			)
 		);
-		$flashVars    = 'mp3Url=' . urlencode($src);
+
+		$flashVars = 'mp3Url=' . urlencode($src);
 
 		/*
 		 * Including SWFObject<http://blog.deconcept.com/swfobject/> to defeat the
 		 * "Click to activate..." in IE
 		 */
-		$SWFObjectUrl      = $urlGenerator->generateUrl(
+		$SWFObjectUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/mp3audio/lib/swfobject.js',
 			),
@@ -75,6 +76,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
+
 		$expressInstallUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/mp3audio/lib/expressinstall.swf',
@@ -83,7 +85,8 @@ class MP3AudioRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$playerUrl         = $urlGenerator->generateUrl(
+
+		$playerUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/mp3audio/lib/G2mp3.swf',
 			),
@@ -112,7 +115,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if (!$ret && !empty($thumbnail)) {
-			$thumbUrl   = $urlGenerator->generateUrl(
+			$thumbUrl = $urlGenerator->generateUrl(
 				array(
 					'view'         => 'core.DownloadItem',
 					'itemId'       => $thumbnail[$itemId]->getId(),
@@ -124,6 +127,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 					'htmlEntities'   => false,
 				)
 			);
+
 			$flashVars .= '&thumbUrl=' . urlencode($thumbUrl);
 		}
 
@@ -154,7 +158,6 @@ class MP3AudioRenderer extends GalleryRenderer {
 		}
 
 		$jsWarning = $module->translate('JavaScript required to view this content.');
-
 		return sprintf(
 			'<script type="text/javascript" src="%s"></script>
 	    <div id="soContent">%s</div>

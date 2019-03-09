@@ -17,13 +17,13 @@
 class getid3_ts extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
+
 		$this->fseek($info['avdataoffset']);
+
 		$TSheader = $this->fread(19);
 		$magic    = "\x47";
-
 		if (substr($TSheader, 0, 1) != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at ' . $info['avdataoffset'] . ', found ' . getid3_lib::PrintHexBytes(substr($TSheader, 0, 1)) . ' instead.';
-
 			return false;
 		}
 
@@ -41,12 +41,11 @@ class getid3_ts extends getid3_handler {
 		$info['ts']['packet']['flags']['payload_unit_start_indicator'] = (bool)($pid_flags_raw & 0x4000);      // 1 means start of PES data or PSI otherwise zero only.
 		$info['ts']['packet']['flags']['transport_high_priority']      = (bool)($pid_flags_raw & 0x2000);      // 1 means higher priority than other packets with the same PID.
 		$info['ts']['packet']['packet_id']                             = ($pid_flags_raw & 0x1FFF) >> 0;
-		$info['ts']['packet']['raw']['scrambling_control']             = ($SAC_raw & 0xC0)         >> 6;
+		$info['ts']['packet']['raw']['scrambling_control']             = ($SAC_raw & 0xC0) >> 6;
 		$info['ts']['packet']['flags']['adaption_field_exists']        = (bool)($SAC_raw & 0x20);
 		$info['ts']['packet']['flags']['payload_exists']               = (bool)($SAC_raw & 0x10);
 		$info['ts']['packet']['continuity_counter']                    = ($SAC_raw & 0x0F) >> 0; // Incremented only when a payload is present
 		$info['ts']['packet']['scrambling_control']                    = $this->TSscramblingControlLookup($info['ts']['packet']['raw']['scrambling_control']);
-
 		if ($info['ts']['packet']['flags']['adaption_field_exists']) {
 			$AdaptionField_raw                                = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 2));
 			$offset                                          += 2;
@@ -71,7 +70,6 @@ class getid3_ts extends getid3_handler {
 		}
 
 		$info['error'][] = 'MPEG Transport Stream (.ts) parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
-
 		return false;
 	}
 

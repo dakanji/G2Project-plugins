@@ -46,7 +46,6 @@ class ImageBlockCallbacks {
 					if (!isset($params['show'])) {
 						// As a theme block the 'show' elements are set as separate properties
 						$showMap = array_flip(explode('|', $moduleParams['show']));
-
 						foreach (array(
 							'showHeading' => 'heading',
 							'showTitle'   => 'title',
@@ -74,8 +73,7 @@ class ImageBlockCallbacks {
 				 * ImageBlockHelper expects a GalleryTemplate, but Smarty callbacks don't provide
 				 * one, so create a temporary wrapper.
 				 */
-				$template = new GalleryTemplate(__DIR__, false);
-
+				$template          = new GalleryTemplate(__DIR__, false);
 				$template->_smarty =& $smarty;
 
 				// Remove null parameters

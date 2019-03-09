@@ -52,7 +52,6 @@ class CheckoutProductMapHelper {
 		}
 
 		$params = array();
-
 		while ($result = $searchResults->nextResult()) {
 			/*
 			 * Note: Item-wide parameters given product Id of zero: ignore when
@@ -87,7 +86,6 @@ class CheckoutProductMapHelper {
 		}
 
 		$products = array();
-
 		foreach ($params as $param) {
 			$products[$param['productId']][$param['paramName']] = $param['paramValue'];
 		}
@@ -117,7 +115,6 @@ class CheckoutProductMapHelper {
 
 		$result          = $searchResults->nextResult();
 		$displayPriority = '';
-
 		if ($result) {
 			$displayPriority = $result[0];
 		}
@@ -129,7 +126,6 @@ class CheckoutProductMapHelper {
 		}
 
 		$accessories = array();
-
 		foreach ($params as $param) {
 			$accessories[$param['productId']][$param['paramName']] = $param['paramValue'];
 		}
@@ -148,7 +144,6 @@ class CheckoutProductMapHelper {
 
 		// and sort:
 		usort($accessories, create_function('$a,$b', 'return $a["position"] > $b["position"];'));
-
 		return array(null, $accessories, $displayPriority);
 	}
 
@@ -191,7 +186,6 @@ class CheckoutProductMapHelper {
 			foreach ($item['options'] as $optionId => $option) {
 				if (!isset($option['isAccessory'])) {
 					unset($accessories[$itemId]['options'][$optionId]);
-
 					continue;
 				}
 
@@ -201,7 +195,6 @@ class CheckoutProductMapHelper {
 			// If the item has no options, remove it
 			if (empty($accessories[$itemId]['options'])) {
 				unset($accessories[$itemId]);
-
 				continue;
 			}
 
@@ -229,7 +222,6 @@ class CheckoutProductMapHelper {
 		 * values above
 		 */
 		usort($accessories, create_function('$a,$b', 'return $a["position"] > $b["position"];'));
-
 		foreach ($accessories as $itemId => $item) {
 			usort($item['options'], create_function('$a,$b', 'return $a["position"] > $b["position"];'));
 			$accessories[$itemId]['options'] = $item['options'];
@@ -255,7 +247,6 @@ class CheckoutProductMapHelper {
 
 		// Using custom parameters?
 		$useLocal = false;
-
 		if ($checkUseLocal) {
 			list($ret, $useLocal) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'customPrices');
 
@@ -286,7 +277,6 @@ class CheckoutProductMapHelper {
 
 		// Work through each album
 		$products = array();
-
 		foreach ($itemIdTree as $myItemId) {
 			list($ret, $productsParams) = CheckoutProductMapHelper::fetchLocalParams($myItemId);
 
@@ -346,7 +336,6 @@ class CheckoutProductMapHelper {
 		foreach ($products as $which => $product) {
 			if ($product['visible'] != 'true') {
 				unset($products[$which]);
-
 				continue;
 			}
 

@@ -80,7 +80,6 @@ class StatisticsSiteAdminView extends GalleryView {
 		}
 
 		$pluginInstances = array();
-
 		foreach (array_keys($allPluginIds) as $pluginId) {
 			list($ret, $plugin) = GalleryCoreApi::newFactoryInstanceById('StatisticsSiteAdminPlugin', $pluginId);
 
@@ -102,10 +101,8 @@ class StatisticsSiteAdminView extends GalleryView {
 		// Get the preferred plugin from the session
 		$session                    =& $gallery->getSession();
 		$statisticsPluginSessionKey = 'statistics.view.plugin';
-
 		if (empty($statisticsPlugin) || !isset($pluginInstances[$statisticsPlugin])) {
 			$statisticsPlugin = $session->get($statisticsPluginSessionKey);
-
 			if (empty($statisticsPlugin) || !isset($pluginInstances[$statisticsPlugin])) {
 				$ids              = array_keys($pluginInstances);
 				$statisticsPlugin = $ids[0];
@@ -116,7 +113,6 @@ class StatisticsSiteAdminView extends GalleryView {
 
 		// Get display data for all plugins
 		$plugins = array();
-
 		foreach ($pluginInstances as $pluginId => $plugin) {
 			list($ret, $title) = $plugin->getTitle();
 

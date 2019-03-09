@@ -46,7 +46,6 @@ class TranscodeOnUploadOption extends ItemAddOption {
 	 */
 	public function handleRequestAfterAdd($form, $items) {
 		$errors = $warnings = array();
-
 		if (!empty($form['TranscodeOnUploadOption']['transcodeNever'])) {
 			return array(null, $errors, $warnings);
 		}
@@ -78,11 +77,9 @@ class TranscodeOnUploadOption extends ItemAddOption {
 			 * assume a value of 100 which is fairly low
 			 */
 			$batchSize = 100;
-
 			do {
 				$currentItems = array_splice($itemsInBatches, 0, $batchSize);
 				$itemIds      = array();
-
 				foreach ($currentItems as $item) {
 					$itemIds[] = $item->getId();
 				}
@@ -153,18 +150,15 @@ class TranscodeOnUploadOption extends ItemAddOption {
 							// Set extra derivative operations
 							list($ret, $nativeWidth, $nativeHeight, $nativeFps, $nativeVideoBitrate,
 							$nativeAudioSampleRate, $nativeAudioChannels) = TranscodeHelper::_getProperties($item);
-
 							if ($ret) {
 								return array($ret, null, null);
 							}
 
 							$setVideoDimensions = '';
-
 							if ($nativeWidth > $params['maxWidth']) {
 								$aspect    = $nativeHeight / $nativeWidth;
 								$maxWidth  = $params['maxWidth'];
 								$maxHeight = round($maxWidth * $aspect);
-
 								if (($maxWidth % 2) != 0) {
 									$maxWidth = $maxWidth - 1;
 								}
@@ -178,19 +172,16 @@ class TranscodeOnUploadOption extends ItemAddOption {
 							}
 
 							$setVideoBitrate = '';
-
 							if (isset($params['defaultBitrate']) && ($params['defaultBitrate'] != '')) {
 								$setVideoBitrate = 'set-video-bitrate|' . $params['defaultBitrate'] . ';';
 							}
 
 							$setAudioChannels = '';
-
 							if (isset($params['defaultAudioChannels']) && ($params['defaultAudioChannels'] != '')) {
 								$setAudioChannels = 'set-audio-channels|' . $params['defaultAudioChannels'] . ';';
 							}
 
 							$setAudioSampleRate = '';
-
 							if (isset($params['defaultAudioSampleRate']) && ($params['defaultAudioSampleRate'] != '')) {
 								$setAudioSampleRate = 'set-audio-samplerate|' . $params['defaultAudioSampleRate'] . ';';
 							}
@@ -202,6 +193,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								$setVideoBitrate . $setVideoDimensions . 'convert-to-' . $params['outputMime']
 							);
 							$derivative->setDerivativeSourceId($source->getId());
+
 							$ret = $derivative->save();
 
 							if ($ret) {
@@ -225,6 +217,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								}
 
 								$currentItems[$i]->setRenderer($renderer);
+
 								$ret = $currentItems[$i]->save();
 
 								if ($ret) {

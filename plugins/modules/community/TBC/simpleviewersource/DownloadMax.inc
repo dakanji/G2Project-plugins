@@ -43,7 +43,6 @@ class DownloadMaxView extends DownloadItemView {
 		$masterId       = (int)GalleryUtilities::getRequestVariables('itemId');
 		$maxImageHeight = (int)GalleryUtilities::getRequestVariables('maxImageHeight');
 		$maxImageWidth  = (int)GalleryUtilities::getRequestVariables('maxImageWidth');
-
 		if (empty($masterId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -150,7 +149,6 @@ class DownloadMaxView extends DownloadItemView {
 		 */
 		$widthbound = (!$maxImageHeight || $potentialImages[0]->height * $maxImageWidth < $potentialImages[0]->width * $maxImageHeight) ? 1 : 0;
 		usort($potentialImages, array('DownloadMaxView', 'byWidth'));
-
 		if ($maxImageWidth && $widthbound) {
 			foreach ($potentialImages as $potentialImage) {
 				if ($potentialImage->width >= $maxImageWidth) {

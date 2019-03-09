@@ -38,7 +38,9 @@ class WebCamModule extends GalleryModule {
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('import', $gallery->i18n('Import'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -91,7 +93,8 @@ class WebCamModule extends GalleryModule {
 				case '0.8.5':
 					// Changed from GalleryLiveImage entity type to onLoadHandler
 					$storage = $gallery->getStorage();
-					$query   = "
+
+					$query = "
 						UPDATE
 							[GalleryEntity]
 		    			SET
@@ -138,7 +141,6 @@ class WebCamModule extends GalleryModule {
 					}
 
 					break;
-
 				case '0.9.0':
 				case '0.9.1':
 				case '0.9.2':
@@ -177,7 +179,6 @@ class WebCamModule extends GalleryModule {
 					 * so that we always properly terminate our upgrade path with a break.
 					 */
 					break;
-
 				default:
 					return GalleryCoreApi::error(
 						ERROR_BAD_PLUGIN,
@@ -309,7 +310,6 @@ class WebCamModule extends GalleryModule {
 			}
 
 			$urlComponents = parse_url($url);
-
 			if ($urlComponents['scheme'] == 'file') {
 				// PHP 4.3.0 trips on file:///path/here (triple slash).. result lands in 'host'
 				if (!isset($urlComponents['path']) && isset($urlComponents['host'])) {
@@ -357,7 +357,6 @@ class WebCamModule extends GalleryModule {
 				if ($ret) {
 					if (!($ret->getErrorCode() & ERROR_BAD_DATA_TYPE)) {
 						GalleryCoreApi::releaseLocks($lockId);
-
 						return $ret;
 					}
 
@@ -365,6 +364,7 @@ class WebCamModule extends GalleryModule {
 					$platform->copy($backupFile, $path);
 				} else {
 					$item->setOriginationTimestamp(time());
+
 					$ret = $item->save();
 
 					if ($ret) {

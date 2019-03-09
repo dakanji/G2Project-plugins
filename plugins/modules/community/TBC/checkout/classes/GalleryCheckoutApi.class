@@ -164,6 +164,7 @@
 
 		$event->setEntity($transaction);
 		$event->setData(
+
 			array(
 				'type'    => $type,
 				'message' => $message,

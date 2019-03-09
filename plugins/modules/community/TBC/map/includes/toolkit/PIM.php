@@ -157,7 +157,6 @@ function Encode_PIM($tag, $Byte_Align) {
 
 			// Cycle through each tag
 			$tag_count = 0;
-
 			foreach ($tag['Data'] as $key => $curr_tag) {
 				// Make sure this is a tag and not supplementary info
 				if (is_numeric($key)) {

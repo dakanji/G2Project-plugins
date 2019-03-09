@@ -38,7 +38,6 @@ class FavouritesSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
-
 		if (isset($form['action']['displayFromText'])) {
 			// look for userName first, then fullName if not found
 			$user   = null;
@@ -110,7 +109,7 @@ class FavouritesSiteAdminController extends GalleryController {
 		if (isset($form['action']['save']) && empty($error)) {
 			// textual data
 			foreach (array('themeId')
-			as $key) {
+ as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'favourites',
@@ -171,7 +170,7 @@ class FavouritesSiteAdminView extends GalleryView {
 
 		if ($form['formName'] != 'FavouritesSiteAdmin') {
 			foreach (array('themeId', 'offerToGuests')
- as $key) {
+			as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'favourites', $key);
 
 				if ($ret) {
@@ -193,7 +192,6 @@ class FavouritesSiteAdminView extends GalleryView {
 		}
 
 		$form['list']['users'] = $results;
-
 		if (!isset($form['list']['page']) || $form['list']['page'] < 1) {
 			$form['list']['page'] = 1;
 		}
@@ -273,6 +271,7 @@ class FavouritesSiteAdminView extends GalleryView {
 				'defaultList' => $defaultList,
 			)
 		);
+
 		$template->setVariable('controller', 'favourites.FavouritesSiteAdmin');
 
 		return array(

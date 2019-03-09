@@ -37,6 +37,7 @@ class LZWDecode {
 		}
 
 		$this->initsTable();
+
 		$this->data =& $data;
 
 		// Initialize pointers
@@ -47,12 +48,11 @@ class LZWDecode {
 		$oldCode           = 0;
 		$string            = '';
 		$uncompData        = '';
-
 		while (($code = $this->getNextCode()) != 257) {
 			if ($code == 256) {
 				$this->initsTable();
-				$code = $this->getNextCode();
 
+				$code = $this->getNextCode();
 				if ($code == 257) {
 					break;
 				}
@@ -65,6 +65,7 @@ class LZWDecode {
 					$uncompData .= $string;
 
 					$this->addStringToTable($this->sTable[$oldCode], $string[0]);
+
 					$oldCode = $code;
 				} else {
 					$string      = $this->sTable[$oldCode];
@@ -72,6 +73,7 @@ class LZWDecode {
 					$uncompData .= $string;
 
 					$this->addStringToTable($string);
+
 					$oldCode = $code;
 				}
 			}
@@ -85,7 +87,6 @@ class LZWDecode {
 	 */
 	public function initsTable() {
 		$this->sTable = array();
-
 		for ($i = 0; $i < 256; $i++) {
 			$this->sTable[$i] = chr($i);
 		}
@@ -102,7 +103,6 @@ class LZWDecode {
 
 		// Add this new String to the table
 		$this->sTable[$this->tIdx++] = $string;
-
 		if ($this->tIdx == 511) {
 			$this->bitsToGet = 10;
 		} elseif ($this->tIdx == 1023) {
@@ -120,7 +120,6 @@ class LZWDecode {
 
 		$this->nextData  = ($this->nextData << 8) | (ord($this->data[$this->bytePointer++]) & 0xff);
 		$this->nextBits += 8;
-
 		if ($this->nextBits < $this->bitsToGet) {
 			$this->nextData  = ($this->nextData << 8) | (ord($this->data[$this->bytePointer++]) & 0xff);
 			$this->nextBits += 8;
@@ -128,7 +127,6 @@ class LZWDecode {
 
 		$code            = ($this->nextData >> ($this->nextBits - $this->bitsToGet)) & $this->andTable[$this->bitsToGet - 9];
 		$this->nextBits -= $this->bitsToGet;
-
 		return $code;
 	}
 }

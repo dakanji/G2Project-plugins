@@ -187,7 +187,6 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 		foreach ($IPTC_info as $IPTC_Record) {
 			// Check if the record is a known IPTC field
 			$Record_Name = $IPTC_Record['RecName'];
-
 			if ($Record_Name == '') {
 				// Record is an unknown field - add message to HTML
 				$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">Unknown IPTC field '" . htmlentities($IPTC_Record['IPTC_Type']) . "' :</td><td class=\"IPTC_Value_Cell\">" . nl2br(HTML_UTF8_Escape($IPTC_Record['RecData'])) . "</td></tr>\n";
@@ -197,12 +196,9 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 					case '1:00':    // Envelope Record:Model Version
 					case '1:22':    // Envelope Record:File Format Version
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">" . hexdec(bin2hex($IPTC_Record['RecData'])) . "</td></tr>\n";
-
 						break;
-
 					case '1:90':    // Envelope Record:Coded Character Set
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">Decoding not yet implemented<br>\n (Hex Data: " . bin2hex($IPTC_Record['RecData']) . ")</td></tr>\n";
-
 						break;
 
 												// TODO: Implement decoding of IPTC record 1:90
@@ -219,12 +215,9 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 						}
 
 						break;
-
 					case '2:00':    // Application Record:Record Version
 							$output_str .= '<tr class="IPTC_Table_Row"><td class="IPTC_Caption_Cell">IPTC Version</td><td class="IPTC_Value_Cell">' . hexdec(bin2hex($IPTC_Record['RecData'])) . "</td></tr>\n";
-
 						break;
-
 					case '2:42':
 							// Looup Action
 						if ($IPTC_Record['RecData'] == '01') {
@@ -241,7 +234,6 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 						}
 
 						break;
-
 					case '2:08':    // Application Record:Editorial Update
 						if ($IPTC_Record['RecData'] == '01') {
 							// Additional Language
@@ -252,7 +244,6 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 						}
 
 						break;
-
 					case '2:30':    // Application Record:Release Date
 					case '2:37':    // Application Record:Expiration Date
 					case '2:47':    // Application Record:Reference Date
@@ -261,9 +252,7 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 					case '1:70':    // Envelope Record:Date Sent
 							$date_array  = unpack('a4Year/a2Month/A2Day', $IPTC_Record['RecData']);
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">" . nl2br(HTML_UTF8_Escape($date_array['Day'] . '/' . $date_array['Month'] . '/' . $date_array['Year'])) . "</td></tr>\n";
-
 						break;
-
 					case '2:35':    // Application Record:Release Time
 					case '2:38':    // Application Record:Expiration Time
 					case '2:60':    // Application Record:Time Created
@@ -271,9 +260,7 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 					case '1:80':    // Envelope Record:Time Sent
 							$time_array  = unpack('a2Hour/a2Minute/A2Second/APlusMinus/A4Timezone', $IPTC_Record['RecData']);
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">" . nl2br(HTML_UTF8_Escape($time_array['Hour'] . ':' . $time_array['Minute'] . ':' . $time_array['Second'] . ' ' . $time_array['PlusMinus'] . $time_array['Timezone'])) . "</td></tr>\n";
-
 						break;
-
 					case '2:75':    // Application Record:Object Cycle
 							// Lookup Value
 						if ($IPTC_Record['RecData'] == 'a') {
@@ -288,10 +275,8 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 						}
 
 						break;
-
 					case '2:125':   // Application Record:Rasterised Caption
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">460x128 pixel black and white caption image</td></tr>\n";
-
 						break;
 
 												// TODO: Display Rasterised Caption for IPTC record 2:125
@@ -313,9 +298,7 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 						}
 
 																$output_str .= "</td></tr>\n";
-
 						break;
-
 					case '2:131':   // Application Record:Image Orientation
 							// Lookup value
 						if ($IPTC_Record['RecData'] == 'L') {
@@ -330,10 +313,8 @@ function Interpret_IPTC_to_HTML($IPTC_info) {
 						}
 
 						break;
-
 					default:        // All other records
 							$output_str .= "<tr class=\"IPTC_Table_Row\"><td class=\"IPTC_Caption_Cell\">$Record_Name</td><td class=\"IPTC_Value_Cell\">" . nl2br(HTML_UTF8_Escape($IPTC_Record['RecData'])) . "</td></tr>\n";
-
 						break;
 				}
 			}

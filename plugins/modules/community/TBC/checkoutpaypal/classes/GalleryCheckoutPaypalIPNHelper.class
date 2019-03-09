@@ -37,7 +37,6 @@
  */
 class GalleryCheckoutPaypalIPNHelper {
 	// Methods
-
 	/**
 	 * Return the PayPal transactions for a given checkout transaction
 	 *
@@ -53,14 +52,10 @@ class GalleryCheckoutPaypalIPNHelper {
 		switch ($orderDirection) {
 			case ORDER_ASCENDING:
 				$direction = 'ASC';
-
 				break;
-
 			case ORDER_DESCENDING:
 				$direction = 'DESC';
-
 				break;
-
 			default:
 				return array(
 					GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__),
@@ -97,14 +92,12 @@ class GalleryCheckoutPaypalIPNHelper {
 
 		// Get all of our ids
 		$allIds = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$allIds[] = $result[0];
 		}
 
 		// Load all the transactions at once
 		$ppTransactions = array();
-
 		if (!empty($allIds)) {
 			list($ret, $ppTransactions) = GalleryCoreApi::loadEntitiesById($allIds);
 
@@ -154,7 +147,6 @@ class GalleryCheckoutPaypalIPNHelper {
 		}
 
 		$data = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$data[$result[0]] = (int)$result[1];
 		}

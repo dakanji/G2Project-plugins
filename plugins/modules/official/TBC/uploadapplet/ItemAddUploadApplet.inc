@@ -45,7 +45,6 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 		}
 
 		$ItemAddUploadApplet = array();
-
 		if (!isset($modules['remote']['active']) || !$modules['remote']['active']) {
 			$ItemAddUploadApplet['NoProtocolError'] = 1;
 		} else {
@@ -96,10 +95,8 @@ class ItemAddUploadApplet extends ItemAddPlugin {
 
 			foreach (array('default', 'override') as $type) {
 				$ItemAddUploadApplet[$type] = array();
-
 				if (!empty($params['upload' . $type . 'Variables'])) {
 					$variablesArray = explode('|', $params['upload' . $type . 'Variables']);
-
 					foreach ($variablesArray as $variable) {
 						list($name, $value) = explode('=', $variable);
 

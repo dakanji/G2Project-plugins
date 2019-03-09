@@ -100,7 +100,6 @@ class ImageBlockOption extends ItemEditOption {
 		&& $form['ImageBlockOption']['setDisabled'] != 'off';
 		$setRecursive = isset($form['ImageBlockOption']['setRecursive'])
 		&& $form['ImageBlockOption']['setRecursive'] != 'off';
-
 		return $setRecursive && $setDisabled != $currentlyDisabled;
 	}
 }

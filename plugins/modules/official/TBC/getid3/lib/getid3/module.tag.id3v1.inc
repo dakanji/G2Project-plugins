@@ -17,17 +17,15 @@
 class getid3_id3v1 extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-
 		if (!getid3_lib::intValueSupported($info['filesize'])) {
 			$info['warning'][] = 'Unable to check for ID3v1 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
-
 			return false;
 		}
 
 		$this->fseek(-256, SEEK_END);
+
 		$preid3v1 = $this->fread(128);
 		$id3v1tag = $this->fread(128);
-
 		if (substr($id3v1tag, 0, 3) == 'TAG') {
 			$info['avdataend']      = $info['filesize'] - 128;
 			$ParsedID3v1['title']   = $this->cutfield(substr($id3v1tag, 3, 30));
@@ -46,7 +44,6 @@ class getid3_id3v1 extends getid3_handler {
 
 			$ParsedID3v1['comment'] = $this->cutfield($ParsedID3v1['comment']);
 			$ParsedID3v1['genre']   = $this->LookupGenreName($ParsedID3v1['genreid']);
-
 			if (!empty($ParsedID3v1['genre'])) {
 				unset($ParsedID3v1['genreid']);
 			}
@@ -71,7 +68,6 @@ class getid3_id3v1 extends getid3_handler {
 			);
 
 			$ParsedID3v1['padding_valid'] = true;
-
 			if ($id3v1tag !== $GoodFormatID3v1tag) {
 				$ParsedID3v1['padding_valid'] = false;
 				$info['warning'][]            = 'Some ID3v1 fields do not use NULL characters for padding';
@@ -295,7 +291,6 @@ class getid3_id3v1 extends getid3_handler {
 			case 'RX':
 			case 'CR':
 				break;
-
 			default:
 				if (!is_numeric($genreid)) {
 					return false;
@@ -306,14 +301,12 @@ class getid3_id3v1 extends getid3_handler {
 		}
 
 		$GenreLookup = self::ArrayOfGenres($allowSCMPXextended);
-
 		return isset($GenreLookup[$genreid]) ? $GenreLookup[$genreid] : false;
 	}
 
 	public static function LookupGenreID($genre, $allowSCMPXextended = false) {
 		$GenreLookup                = self::ArrayOfGenres($allowSCMPXextended);
 		$LowerCaseNoSpaceSearchTerm = strtolower(str_replace(' ', '', $genre));
-
 		foreach ($GenreLookup as $key => $value) {
 			if (strtolower(str_replace(' ', '', $value)) == $LowerCaseNoSpaceSearchTerm) {
 				return $key;
@@ -337,11 +330,9 @@ class getid3_id3v1 extends getid3_handler {
 		$ID3v1Tag .= str_pad(trim(substr($artist, 0, 30)), 30, "\x00", STR_PAD_RIGHT);
 		$ID3v1Tag .= str_pad(trim(substr($album, 0, 30)), 30, "\x00", STR_PAD_RIGHT);
 		$ID3v1Tag .= str_pad(trim(substr($year, 0, 4)), 4, "\x00", STR_PAD_LEFT);
-
 		if (!empty($track) && ($track > 0) && ($track <= 255)) {
 			$ID3v1Tag .= str_pad(trim(substr($comment, 0, 28)), 28, "\x00", STR_PAD_RIGHT);
 			$ID3v1Tag .= "\x00";
-
 			if (gettype($track) == 'string') {
 				$track = (int)$track;
 			}
@@ -359,9 +350,7 @@ class getid3_id3v1 extends getid3_handler {
 			case 'string':
 			case 'integer':
 				$ID3v1Tag .= chr(intval($genreid));
-
 				break;
-
 			default:
 				$ID3v1Tag .= chr(255); // 'unknown' genre
 				break;

@@ -17,9 +17,10 @@
 class getid3_svg extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
-		$this->fseek($info['avdataoffset']);
-		$SVGheader = $this->fread(4096);
 
+		$this->fseek($info['avdataoffset']);
+
+		$SVGheader = $this->fread(4096);
 		if (preg_match('#\<\?xml([^\>]+)\?\>#i', $SVGheader, $matches)) {
 			$info['svg']['xml']['raw'] = $matches;
 		}
@@ -34,14 +35,12 @@ class getid3_svg extends getid3_handler {
 
 		if (isset($info['svg']['svg']['raw'])) {
 			$sections_to_fix = array('xml', 'doctype', 'svg');
-
 			foreach ($sections_to_fix as $section_to_fix) {
 				if (!isset($info['svg'][$section_to_fix])) {
 					continue;
 				}
 
 				$section_data = array();
-
 				while (preg_match('/ "([^"]+)"/', $info['svg'][$section_to_fix]['raw'][1], $matches)) {
 					$section_data[]                         = $matches[1];
 					$info['svg'][$section_to_fix]['raw'][1] = str_replace($matches[0], '', $info['svg'][$section_to_fix]['raw'][1]);
@@ -53,10 +52,8 @@ class getid3_svg extends getid3_handler {
 				}
 
 				$section_data = array_merge($section_data, preg_split('/[\s,]+/', $info['svg'][$section_to_fix]['raw'][1]));
-
 				foreach ($section_data as $keyvaluepair) {
 					$keyvaluepair = trim($keyvaluepair);
-
 					if ($keyvaluepair) {
 						$keyvalueexploded                               = explode('=', $keyvaluepair);
 						$key                                            = (isset($keyvalueexploded[0]) ? $keyvalueexploded[0] : '');
@@ -72,7 +69,6 @@ class getid3_svg extends getid3_handler {
 
 			//$info['video']['bits_per_sample'] = 24;
 			$info['video']['pixel_aspect_ratio'] = (float)1;
-
 			if (!empty($info['svg']['svg']['sections']['width'])) {
 				$info['svg']['width'] = intval($info['svg']['svg']['sections']['width']);
 			}
@@ -89,7 +85,6 @@ class getid3_svg extends getid3_handler {
 				foreach ($info['svg']['doctype']['sections'] as $key => $value) {
 					if (preg_match('#//W3C//DTD SVG ([0-9\.]+)//#i', $key, $matches)) {
 						$info['svg']['version'] = $matches[1];
-
 						break;
 					}
 				}
@@ -107,7 +102,6 @@ class getid3_svg extends getid3_handler {
 		}
 
 		$info['error'][] = 'Did not find expected <svg> tag';
-
 		return false;
 	}
 }

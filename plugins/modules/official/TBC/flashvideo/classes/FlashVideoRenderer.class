@@ -33,6 +33,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 	 */
 	public function canBeViewedInline($item) {
 		return GalleryUtilities::isA($item, 'GalleryMovieItem')
+
 		&& $item->getMimeType() == 'video/x-flv';
 	}
 
@@ -43,7 +44,6 @@ class FlashVideoRenderer extends GalleryRenderer {
 		global $gallery;
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
-
 		if ($format != 'HTML' || $entity->getMimeType() != 'video/x-flv') {
 			return null;
 		}
@@ -73,7 +73,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		 * Including SWFObject<http://blog.deconcept.com/swfobject/> to defeat the
 		 * "Click to activate..." in IE
 		 */
-		$SWFObjectUrl      = $urlGenerator->generateUrl(
+		$SWFObjectUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/swfobject.js',
 			),
@@ -81,6 +81,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
+
 		$expressInstallUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/expressinstall.swf',
@@ -89,7 +90,8 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$playerUrl         = $urlGenerator->generateUrl(
+
+		$playerUrl = $urlGenerator->generateUrl(
 			array(
 				'href' => 'modules/flashvideo/lib/G2flv.swf',
 			),
@@ -97,9 +99,10 @@ class FlashVideoRenderer extends GalleryRenderer {
 				'forceFullUrl' => true,
 			)
 		);
-		$flashVars         = 'flvUrl=' . urlencode($src) . '&Width=' . $width . '&Height=' . $height
+
+		$flashVars = 'flvUrl=' . urlencode($src) . '&Width=' . $width . '&Height=' . $height
 		   . '&title=' . urlencode($title);
-		$extraAttr         = '';
+		$extraAttr = '';
 
 		// Uncomment the next line to allow download button. Default: false
 		//$flashVars .= '&allowDownload=true';
@@ -118,7 +121,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		list($ret, $thumbnail) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
 
 		if (!$ret && !empty($thumbnail)) {
-			$thumbUrl   = $urlGenerator->generateUrl(
+			$thumbUrl = $urlGenerator->generateUrl(
 				array(
 					'view'         => 'core.DownloadItem',
 					'itemId'       => $thumbnail[$itemId]->getId(),
@@ -130,6 +133,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 					'htmlEntities'   => false,
 				)
 			);
+
 			$flashVars .= '&thumbUrl=' . urlencode($thumbUrl);
 		}
 

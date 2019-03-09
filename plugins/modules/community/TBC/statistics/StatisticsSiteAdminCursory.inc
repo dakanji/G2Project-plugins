@@ -42,7 +42,6 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$count = 0;
-
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
@@ -62,7 +61,6 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$count = 0;
-
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
@@ -82,7 +80,6 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$count = 0;
-
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}

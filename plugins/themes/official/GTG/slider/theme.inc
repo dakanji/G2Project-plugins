@@ -32,6 +32,7 @@ class SliderTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('slider');
+
 		$this->setName($gallery->i18n('Slider'));
 		$this->setDescription(
 			$gallery->i18n(
@@ -43,6 +44,7 @@ class SliderTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'colorpack'      => '',
 				'sidebarBlocks'  => serialize(
@@ -121,7 +123,6 @@ class SliderTheme extends GalleryTheme {
 	 */
 	public function showPhotoPage(&$template, $item, $params) {
 		$renderId = GalleryUtilities::getRequestVariables('renderId');
-
 		if (!empty($renderId)) {
 			// Render this item
 			list($ret, $image) = GalleryCoreApi::loadEntitiesById(
@@ -174,7 +175,6 @@ class SliderTheme extends GalleryTheme {
 		}
 
 		$theme =& $template->getVariableByReference('theme');
-
 		foreach ($theme['children'] as $tmp) {
 			if ($tmp['id'] == $item->getId()) {
 				if (isset($tmp['imageIndex'])) {
@@ -255,7 +255,6 @@ class SliderTheme extends GalleryTheme {
 	 */
 	public function _buildItemList($childIds, &$children) {
 		$imageWidths = $imageHeights = $childItems = array();
-
 		if (!empty($childIds)) {
 			$ret = GalleryCoreApi::studyPermissions($childIds);
 
@@ -298,11 +297,9 @@ class SliderTheme extends GalleryTheme {
 		}
 
 		$i = -1;
-
 		foreach ($childItems as $child) {
 			$i++;
 			$childId = $child->getId();
-
 			if (!GalleryUtilities::isA($child, 'GalleryDataItem')) {
 				continue;
 			}
@@ -330,7 +327,6 @@ class SliderTheme extends GalleryTheme {
 			}
 
 			$images = array();
-
 			if (isset($permissions['core.viewSource'])) {
 				// Full size; check for preferred copy
 				if (isset($preferredFullImages[$childId])) {
@@ -369,7 +365,6 @@ class SliderTheme extends GalleryTheme {
 				$image                      = (array)$image;
 				$children[$i]['image']      = $image;
 				$children[$i]['imageIndex'] = count($imageWidths);
-
 				if (GalleryUtilities::isExactlyA($child, 'GalleryPhotoItem')
 					&& $image['width'] > 0
 					&& $image['height'] > 0

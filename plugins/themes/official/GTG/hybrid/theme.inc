@@ -31,7 +31,9 @@ class HybridTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('hybrid');
+
 		$this->setName($gallery->i18n('Hybrid'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'Combined album/image/slideshow dynamic view'
@@ -41,6 +43,7 @@ class HybridTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'rows'             => 30,
 				'columns'          => 2,
@@ -104,36 +107,42 @@ class HybridTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showText'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showAlbumDate',
 			'name'  => $this->translate('Show dates for albums'),
 			'type'  => 'checkbox',
 			'value' => $params['showAlbumDate'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showImageDate',
 			'name'  => $this->translate('Show dates with thumbnails'),
 			'type'  => 'checkbox',
 			'value' => $params['showImageDate'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showDateInViewer',
 			'name'  => $this->translate('Show dates in image view'),
 			'type'  => 'checkbox',
 			'value' => $params['showDateInViewer'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showSize',
 			'name'  => $this->translate('Show album sizes'),
 			'type'  => 'checkbox',
 			'value' => $params['showSize'],
 		);
+
 		$settings[] = array(
 			'key'   => 'showViewCount',
 			'name'  => $this->translate('Show view counts'),
 			'type'  => 'checkbox',
 			'value' => $params['showViewCount'],
 		);
+
 		$settings[] = array(
 			'key'     => 'thumbTitle',
 			'name'    => $this->translate('Mouseover on thumbnails'),
@@ -317,11 +326,9 @@ class HybridTheme extends GalleryTheme {
 
 		$perPage = $this->getPageSize($params);
 		$page    = 1;
-
 		for ($i = 0; $i < count($childIds); $i++) {
 			if ($childIds[$i] == $item->getId()) {
 				$page = ceil(($i + 1) / $perPage);
-
 				break;
 			}
 		}
@@ -336,7 +343,6 @@ class HybridTheme extends GalleryTheme {
 		}
 
 		$redirect['showId'] = $item->getId();
-
 		return array(
 			null,
 			array(
@@ -412,7 +418,6 @@ class HybridTheme extends GalleryTheme {
 	 */
 	public function _buildItemList($childIds, &$children) {
 		$imageWidths = $imageHeights = $childItems = array();
-
 		if (!empty($childIds)) {
 			$ret = GalleryCoreApi::studyPermissions($childIds);
 
@@ -446,11 +451,9 @@ class HybridTheme extends GalleryTheme {
 		}
 
 		$i = -1;
-
 		foreach ($childItems as $child) {
 			$i++;
 			$childId = $child->getId();
-
 			if (isset($thumbnails[$childId])) {
 				if (!($thumbnails[$childId]->getWidth() && $thumbnails[$childId]->getHeight())) {
 					list($ret, $thumbnails[$childId]) = GalleryCoreApi::rebuildDerivativeCache($thumbnails[$childId]->getId());
@@ -474,7 +477,6 @@ class HybridTheme extends GalleryTheme {
 			}
 
 			$images = array();
-
 			if (isset($permissions['core.viewSource'])) {
 				// Full size; check for preferred copy
 				if (isset($preferredFullImages[$childId])) {
@@ -512,7 +514,6 @@ class HybridTheme extends GalleryTheme {
 				$image                      = (array)$image;
 				$children[$i]['image']      = $image;
 				$children[$i]['imageIndex'] = count($imageWidths);
-
 				if (GalleryUtilities::isExactlyA($child, 'GalleryPhotoItem')
 					&& $image['width'] > 0 && $image['height'] > 0
 				) {

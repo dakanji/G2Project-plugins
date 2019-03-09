@@ -81,7 +81,6 @@ class DownloadDavMountView extends GalleryView {
 		}
 
 		$path = ltrim($path, '/');
-
 		if (!empty($path)) {
 			echo '  <dm:open>' . $path . "</dm:open>\n";
 		}
@@ -94,6 +93,7 @@ class DownloadDavMountView extends GalleryView {
 
 		if (!$isAnonymous) {
 			$user = $gallery->getActiveUser();
+
 			echo '  <dm:username>' . $user->getUserName() . "</dm:username>\n";
 		}
 

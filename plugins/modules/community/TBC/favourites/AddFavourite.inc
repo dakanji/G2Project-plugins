@@ -113,7 +113,6 @@ class AddFavouriteView extends GalleryView {
 	public function loadTemplate(&$template, &$form) {
 		// from the URL ...
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
-
 		if (!empty($itemId)) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 

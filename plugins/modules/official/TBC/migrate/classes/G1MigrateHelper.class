@@ -59,7 +59,6 @@ class G1MigrateHelper {
 		}
 
 		$count = 0;
-
 		if ($result = $searchResults->nextResult()) {
 			$count = (int)$result[0];
 		}
@@ -90,7 +89,6 @@ class G1MigrateHelper {
 		';
 
 		$data = array($g1album);
-
 		if (isset($g1item)) {
 			$query .= '=?';
 			$data[] = $g1item;
@@ -105,7 +103,6 @@ class G1MigrateHelper {
 		}
 
 		$id = null;
-
 		if ($result = $searchResults->nextResult()) {
 			$id = (int)$result[0];
 		}

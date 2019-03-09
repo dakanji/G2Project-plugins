@@ -55,7 +55,6 @@ class DupeDetectHistogramHelper {
 		list($ret, $hasSignature) = DupeDetectHistogramHelper::getHistogramSignature(
 			$newEntity->getId()
 		);
-
 		if ($ret->isError()) {
 			return array($ret, null);
 		}
@@ -161,7 +160,6 @@ class DupeDetectHistogramHelper {
 
 		// Get data from query result
 		$signatures = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$signatures[$result[0]] = array(
 				'red0_63'      => $result[1],
@@ -221,7 +219,6 @@ class DupeDetectHistogramHelper {
 		';
 
 		$thrsh = 5;
-
 		foreach ($signatures[$id] as $field => $value) {
 			$query .= "[DupeDetectHistogramsMap::$field] > ? AND ";
 			$data[] = $value - $thrsh;
@@ -246,7 +243,6 @@ class DupeDetectHistogramHelper {
 
 		// Get the dupes ids from query result
 		$dups = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$dups[] = array($result[0], DUPEDETECT_HISTOGRAM_ALGORITHM);
 		}

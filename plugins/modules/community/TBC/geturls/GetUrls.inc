@@ -34,6 +34,7 @@ class GetUrlsView extends GalleryView {
 	 */
 	public function loadTemplate(&$template) {
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
+
 		GalleryCoreApi::requireOnce('modules/geturls/classes/GetUrlsHelper.class');
 
 		list($ret, $data) = GetUrlsHelper::getUrlsByItemId($itemId);

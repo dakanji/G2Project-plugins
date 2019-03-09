@@ -40,7 +40,6 @@ class ContactController extends GalleryController {
 		global $gallery;
 
 		$session =& $gallery->getSession();
-
 		if (isset($form['action']['send'])) {
 			$form['custName']    = GalleryUtilities::htmlSafe($form['custName'], true);
 			$form['custEmail']   = GalleryUtilities::htmlSafe($form['custEmail'], true);
@@ -48,7 +47,6 @@ class ContactController extends GalleryController {
 			$form['custMessage'] = GalleryUtilities::htmlSafe($form['custMessage'], true);
 			$emailsent           = false;
 			$error               = $status               = $results               = array();
-
 			if (strlen($form['custName']) < 1) {
 				$error[] = 'form[error][contactOwner][name]';
 			}
@@ -92,7 +90,6 @@ class ContactController extends GalleryController {
 					}
 
 					$error = array_merge($error, $pluginErrors);
-
 					if (!$continue) {
 						break;
 					}
@@ -113,10 +110,8 @@ class ContactController extends GalleryController {
 				$toSubject           = $parameters['toSubject'];
 				$maxEmailsPerSession = $parameters['maxEmailsPerSession'];
 				$emailCount          = 1;
-
 				if ($session->exists('contactowner.emailcount')) {
 					$emailCount = $session->get('contactowner.emailcount');
-
 					if (1 <= $emailCount && $emailCount <= 999) {
 						$emailCount += 1;
 					}
@@ -168,12 +163,12 @@ class ContactController extends GalleryController {
 		}
 
 		$session->put('contactowner.emailsent', $emailsent);
+
 		$returnType                      = empty($error) ? 'redirect' : 'delegate';
 		$results[$returnType]['view']    = 'core.UserAdmin';
 		$results[$returnType]['subView'] = $nextView;
 		$results['status']               = $status;
 		$results['error']                = $error;
-
 		return array(null, $results);
 	}
 }
@@ -208,7 +203,6 @@ class ContactView extends GalleryView {
 		}
 
 		$captchaLevel = $parameters['validation.level'];
-
 		if ($captchaLevel != 'OFF') {
 			list($ret, $allPluginIds) = GalleryCoreApi::getAllFactoryImplementationIds('GalleryValidationPlugin');
 
@@ -237,11 +231,10 @@ class ContactView extends GalleryView {
 		}
 
 		$template->setVariable('validationPlugins', $plugins);
-		$maxEmailsPerSession = $parameters['maxEmailsPerSession'];
 
+		$maxEmailsPerSession = $parameters['maxEmailsPerSession'];
 		if ($session->exists('contactowner.emailcount')) {
 			$emailCount = $session->get('contactowner.emailcount');
-
 			if ($emailCount < 1 || $emailCount > 999) {
 				$emailCount = 1;
 			} else {
@@ -252,7 +245,6 @@ class ContactView extends GalleryView {
 		}
 
 		$contactOwner = array();
-
 		if ($emailCount <= $maxEmailsPerSession) {
 			if (empty($form['formName'])) {
 				$form['formName'] = 'ContactView';
@@ -273,7 +265,9 @@ class ContactView extends GalleryView {
 			}
 
 			$contactOwner['title'] = $module->translate('Contact::Enter Your Details');
+
 			$template->setVariable('controller', 'contactowner.Contact');
+
 			$body = 'modules/contactowner/templates/Contact.tpl';
 		} else {
 			$contactOwner['emailsent'] = false;

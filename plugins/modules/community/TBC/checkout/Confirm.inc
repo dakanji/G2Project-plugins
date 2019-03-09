@@ -36,6 +36,7 @@ GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutInterfaceHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutDiscountMapHelper.class');
+
 GalleryCoreApi::requireOnce('modules/checkout/classes/GalleryCheckoutApi.class');
 
 /**
@@ -76,7 +77,6 @@ class ConfirmController extends GalleryController {
 
 			// build table of available products for each item in the cart
 			$itemProducts = array();
-
 			foreach ($items as $itemId => $item) {
 				if (!is_numeric($itemId)) {
 					continue;
@@ -149,7 +149,6 @@ class ConfirmController extends GalleryController {
 
 			// Any required paper choices missing?
 			$missingPaper = false;
-
 			foreach ($items as $itemId => $item) {
 				// break out for postage, discount etc
 				if (!is_numeric($itemId)) {
@@ -158,7 +157,6 @@ class ConfirmController extends GalleryController {
 
 				$subtotal                 = 0;
 				$atLeastOneQtySetThisItem = false;
-
 				foreach ($itemProducts[$itemId] as $product) {
 					// ignore this entry if no quantity set for it
 					if (!isset($item[$product['productId']]['quant']) || $item[$product['productId']]['quant'] == 0) {
@@ -193,21 +191,26 @@ class ConfirmController extends GalleryController {
 
 					// store the txnItem Id in the cart for other modules to use
 					$items[$itemId][$product['productId']]['txnItemId'] = $txnItem->getId();
+
 					$txnItem->setItem($itemId);
+
 					$txnItem->setTransaction($transaction->getId());
+
 					$txnItem->setItemName($item['fullItemDetails']['pathComponent']);
 					$txnItem->setItemText($item['parentTitle']);
 					$txnItem->setProduct($product['productId']);
 					$txnItem->setProductName($product['name']);
 					$txnItem->setQty($item[$product['productId']]['quant']);
+
 					$productCount += $item[$product['productId']]['quant'];
 
 					$txnItem->setPriceEach($product['price']);
 					$txnItem->setPriceTotal(
+
 						number_format($item[$product['productId']]['quant'] * $product['price'], 2, '.', '')
 					);
-					$subtotal += ($item[$product['productId']]['quant'] * $product['price']);
 
+					$subtotal += ($item[$product['productId']]['quant'] * $product['price']);
 					if ($product['paperSet']) {
 						if (isset($item[$product['productId']]['paper']) && $item[$product['productId']]['paper'] != '') {
 							$txnItem->setNotes($item[$product['productId']]['paper']);
@@ -240,10 +243,8 @@ class ConfirmController extends GalleryController {
 
 			foreach ($accessoriesDetails as $accessoryDetails) {
 				$subtotal = 0;
-
 				foreach ($accessoryDetails['options'] as $option) {
 					$optionId = $option['id'];
-
 					if (isset($items['accessories'][$optionId]) && $items['accessories'][$optionId]['quant'] > 0) {
 						$postageBand = max($postageBand, $option['postageBand']);
 
@@ -266,17 +267,22 @@ class ConfirmController extends GalleryController {
 
 						// store the txnItem Id in the cart for other modules to use
 						$items['accessories'][$optionId]['txnItemId'] = $txnItem->getId();
+
 						$txnItem->setItem($accessoryDetails['id']);
+
 						$txnItem->setTransaction($transaction->getId());
+
 						$txnItem->setItemName($accessoryDetails['fullItemDetails']['title']);
 						$txnItem->setItemText($accessoryDetails['fullItemDetails']['summary']);
 						$txnItem->setProduct($optionId);
 						$txnItem->setProductName($option['name']);
 						$txnItem->setQty($items['accessories'][$optionId]['quant']);
+
 						$productCount += $items['accessories'][$optionId]['quant'];
 
 						$txnItem->setPriceEach($option['price']);
 						$txnItem->setPriceTotal(number_format($items['accessories'][$optionId]['quant'] * $option['price'], 2, '.', ''));
+
 						$subtotal                                   += ($items['accessories'][$optionId]['quant'] * $option['price']);
 						$items['accessories'][$optionId]['subtotal'] = number_format($subtotal, 2, '.', '');
 
@@ -302,7 +308,6 @@ class ConfirmController extends GalleryController {
 
 			// Calculate appropriate discount
 			unset($myDiscount);
-
 			foreach ($discounts as $discount) {
 				list($ret, $inGroup) = GalleryCoreApi::isUserInGroup($gallery->getActiveUserId(), $discount['groupId']);
 
@@ -321,7 +326,6 @@ class ConfirmController extends GalleryController {
 					}
 
 					$myDiscount = $discount;
-
 					break;
 				}
 			}
@@ -348,13 +352,13 @@ class ConfirmController extends GalleryController {
 
 			if ($postageBand && isset($items['postage'])) {
 				$postage = $posts[$items['postage']]['price'][$postageBand];
-
 				if (isset($myDiscount['freePostage']) && $myDiscount['freePostage'] == 'true') {
 					$postage = 0;
 				}
 
 				$transaction->setPostageType($posts[$items['postage']]['type']);
 				$transaction->setPostage($postage);
+
 				$total += $postage;
 			}
 
@@ -371,6 +375,7 @@ class ConfirmController extends GalleryController {
 
 			// Set and save the data
 			$transaction->sethost(GalleryUtilities::getRemoteHostAddress());
+
 			$translator =& $gallery->getTranslator();
 
 			list($ret, $languageCode) = $translator->getDefaultLanguageCode();
@@ -386,6 +391,7 @@ class ConfirmController extends GalleryController {
 			$total = number_format($total, 2, '.', '');
 
 			$transaction->setamount($total);
+
 			$ret = $transaction->save();
 
 			if ($ret) {
@@ -471,7 +477,6 @@ class ConfirmController extends GalleryController {
 			}
 
 			$returnURL = CheckoutHelper::fetchReturnURL();
-
 			if (!isset($returnURL)) {
 				$results['redirect']['view'] = 'core.ShowItem';
 			} else {
@@ -493,7 +498,6 @@ class ConfirmController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

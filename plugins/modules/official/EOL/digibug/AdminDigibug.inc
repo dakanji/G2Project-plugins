@@ -45,7 +45,6 @@ class AdminDigibugController extends GalleryController {
 		$adminPlugins = 'core.Admin'
 		. ($apiVersion[0] > 7 || $apiVersion[1] >= 7 ? 'Plugins' : 'Modules');
 		$status       = $error = array();
-
 		if (isset($form['action']['save'])) {
 			if ($form['digibugIdChoice'] == 'owner') {
 				if (empty($form['digibugCustomerId'])
@@ -176,11 +175,13 @@ class AdminDigibugView extends GalleryView {
 
 		$template->style('modules/digibug/digibug.css');
 		$template->setVariable(
+
 			'AdminDigibug',
 			array(
 				'isConfigure' => !$isActive,
 			)
 		);
+
 		$template->setVariable('controller', 'digibug.AdminDigibug');
 
 		return array(

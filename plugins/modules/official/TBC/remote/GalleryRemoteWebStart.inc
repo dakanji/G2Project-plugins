@@ -70,7 +70,6 @@ class GalleryRemoteWebStartView extends GalleryView {
 			array('view' => 'remote.GalleryRemoteWebStart'),
 			array('forceDirect' => true, 'forceFullUrl' => true, 'forceSessionId' => false));*/
 		$user = $gallery->getActiveUser();
-
 		if (isset($user)) {
 			$username = $user->getUserName();
 		}
@@ -110,7 +109,8 @@ class GalleryRemoteWebStartView extends GalleryView {
 	<argument>-username</argument>
 	<argument><?php echo $username; ?></argument>
 			<?php
-		} ?>
+		}
+		?>
   </application-desc>
 </jnlp>
 		<?php

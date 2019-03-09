@@ -93,7 +93,6 @@ class _parse_proppatch {
 		// open input stream
 		if (!$handle) {
 			$this->success = false;
-
 			return;
 		}
 
@@ -121,10 +120,8 @@ class _parse_proppatch {
 		// parse input
 		while ($this->success && !feof($handle)) {
 			$line = fgets($handle);
-
 			if (is_string($line)) {
-				$had_input = true;
-
+				$had_input      = true;
 				$this->success &= xml_parse($parser, $line, false);
 			}
 		}
@@ -165,9 +162,10 @@ class _parse_proppatch {
 		}
 
 		if ($this->depth == 3) {
-			$prop          = array(
+			$prop = array(
 				'name' => $name,
 			);
+
 			$this->current = array(
 				'name'   => $name,
 				'ns'     => $ns,
@@ -181,7 +179,6 @@ class _parse_proppatch {
 
 		if ($this->depth >= 4) {
 			$this->current['value'] .= "<$name";
-
 			foreach ($attr as $key => $value) {
 				$this->current['value'] .= ' ' . $key . '="'
 					. str_replace('"', '&quot;', $value) . '"';
@@ -213,7 +210,6 @@ class _parse_proppatch {
 
 		// decrement the depth count
 		$this->depth--;
-
 		if ($this->depth >= 4) {
 			$this->current['value'] .= "</$name>";
 		}

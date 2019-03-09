@@ -42,7 +42,9 @@ class DebugModule extends GalleryModule {
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -75,7 +77,6 @@ class DebugModule extends GalleryModule {
 		if ($isAdmin) {
 			foreach ($items as $item) {
 				$itemId = $item->getId();
-
 				if (isset($wantsDetailedLinks[$itemId])) {
 					$links[$itemId][] = array(
 						'text'   => $this->translate('Show Debug Tree'),

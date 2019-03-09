@@ -69,7 +69,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$items = array();
-
 		for ($i = 0; $i < 5; $i++) {
 			list($ret, $items[$i]) = $this->_createRandomDataItem($album->getId());
 
@@ -100,7 +99,9 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
+
 		$this->assert($disabledFlag, 'getDisabledFlag returned false');
+
 		$ret = GalleryCoreApi::removeMapEntry(
 			'ImageBlockDisabledMap',
 			array(
@@ -113,6 +114,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		list($ret, $disabledFlag) = ImageBlockHelper::getDisabledFlag($this->_topAlbum->getId());
+
 		$this->assert(!$disabledFlag, 'getDisabledFlag returned true');
 	}
 
@@ -132,7 +134,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$itemIds = array();
-
 		foreach ($this->_topItems as $item) {
 			$itemIds[] = (int)$item->getId();
 		}
@@ -153,7 +154,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$dbItemIds = array();
-
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
@@ -162,6 +162,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		sort($dbItemIds);
 
 		$this->assertEquals($itemIds, $dbItemIds, 'Items not added to the DisableMap');
+
 		$ret = ImageBlockHelper::setDisabledFlag($this->_topAlbum, false, false);
 
 		if ($ret) {
@@ -175,7 +176,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$dbItemIds = array();
-
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
@@ -192,17 +192,16 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		$mockAdapter = new MockTemplateAdapter();
-
+		$mockAdapter               = new MockTemplateAdapter();
 		$gallery->_templateAdapter =& $mockAdapter;
-		$ret                       = ImageBlockHelper::setDisabledFlag($this->_topAlbum, true, true);
+
+		$ret = ImageBlockHelper::setDisabledFlag($this->_topAlbum, true, true);
 
 		if ($ret) {
 			return $ret;
 		}
 
 		$itemIds = array();
-
 		foreach (array_merge($this->_topItems, $this->_subItems) as $item) {
 			$itemIds[] = (int)$item->getId();
 		}
@@ -224,7 +223,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$dbItemIds = array();
-
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
@@ -232,6 +230,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		sort($dbItemIds);
 
 		$this->assertEquals($itemIds, $dbItemIds, 'Items not added to the DisableMap');
+
 		$ret = ImageBlockHelper::setDisabledFlag($this->_topAlbum, true, false);
 
 		if ($ret) {
@@ -251,7 +250,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$dbItemIds = array();
-
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
@@ -276,7 +274,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$itemIds = array();
-
 		foreach ($this->_subItems as $item) {
 			$itemIds[] = (int)$item->getId();
 		}
@@ -297,7 +294,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$dbItemIds = array();
-
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
@@ -337,7 +333,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		}
 
 		$dbItemIds = array();
-
 		while ($rec = $searchResults->nextResult()) {
 			$dbItemIds[] = (int)$rec[0];
 		}
@@ -414,7 +409,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			null,
 			200 // maxSize
 		);
-
 		if ($ret) {
 			return $ret;
 		}
@@ -506,7 +500,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			null,
 			130 // maxSize
 		);
-
 		if ($ret) {
 			return $ret;
 		}
@@ -529,16 +522,13 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 	public function testGetRandomKeyInDefaultRange() {
 		$a = ImageBlockHelper::getRandomKey();
-
 		$this->assert(0 <= $a, "$a must be >= 0");
 		$b = ImageBlockHelper::getRandomKey();
-
 		$this->assert(2147483647 >= $b, "$a must be >= 2147483647");
 	}
 
 	public function testGetRandomKeyWithRange() {
 		$a = ImageBlockHelper::getRandomKey(17, 30);
-
 		$this->assert($a <= 30 && $a >= 17, "$a is not in specified range");
 	}
 
@@ -550,7 +540,6 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 	public function testGetRandomKeyWithSmallRange() {
 		$a = ImageBlockHelper::getRandomKey(25, 26);
-
 		$this->assert($a == 25 || $a == 26, "$a is outside of specified range");
 	}
 
@@ -570,6 +559,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			array($isCachedQuery, array($userId), array()),
 			array(null, new UnitTestStorageSearchResults(array(array(2))))
 		);
+
 		$query = '
 	SELECT MIN([ImageBlockCacheMap::random]), MAX([ImageBlockCacheMap::random])
 	FROM [ImageBlockCacheMap] LEFT JOIN [ImageBlockDisabledMap] ON '
@@ -582,6 +572,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			array(null, new UnitTestStorageSearchResults(array(array(5, 9))))
 		);
 		$phpVm->setReply('rand', array(5, 9), 7);
+
 		$query = 'SELECT [ImageBlockCacheMap::itemId] FROM [ImageBlockCacheMap] '
 		   . 'LEFT JOIN [ImageBlockDisabledMap] ON '
 		   . '[ImageBlockCacheMap::itemId]=[ImageBlockDisabledMap::itemId] '
@@ -594,6 +585,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			array(null, $query . ' LIMIT 2')
 		);
 		$storage->setReply(
+
 			'search',
 			array($query . ' LIMIT 2', array($userId, 1, 6), array()),
 			array(null, new UnitTestStorageSearchResults(array(array(15, 4), array(19, 99))))
@@ -618,6 +610,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			),
 			$results
 		);
+
 		$this->assert($storage->isComplete(), $storage->getRemaining());
 	}
 
@@ -661,6 +654,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 		// Ensure that wrap around must be used by rigging the random key
 		$gallery->_phpVm = new UnitTestPhpVm();
 		$phpVm           = $gallery->getPhpVm();
+
 		$phpVm->setReply('rand', '*', $max);
 
 		list($ret, $randItems) = ImageBlockHelper::fetchViewableData('Image', 'random', count($items), $album->getId());
@@ -685,7 +679,8 @@ class ImageBlockHelperTest extends GalleryTestCase {
 
 		$gallery->_storage = new UnitTestStorage();
 		$storage           =& $gallery->getStorage();
-		$query             = '
+
+		$query = '
 	SELECT MIN([ImageBlockCacheMap::random]), MAX([ImageBlockCacheMap::random])
 	FROM [ImageBlockCacheMap] LEFT JOIN [ImageBlockDisabledMap] ON '
 		. '[ImageBlockCacheMap::itemId]=[ImageBlockDisabledMap::itemId]

@@ -27,17 +27,14 @@ class getid3_tar extends getid3_handler {
 		$unpack_header        = 'a100fname/a8mode/a8uid/a8gid/a12size/a12mtime/a8chksum/a1typflag/a100lnkname/a6magic/a2ver/a32uname/a32gname/a8devmaj/a8devmin/a155prefix';
 		$null_512k            = str_repeat("\x00", 512); // end-of-file marker
 		$this->fseek(0);
-
 		while (!feof($this->getid3->fp)) {
 			$buffer = $this->fread(512);
-
 			if (strlen($buffer) < 512) {
 				break;
 			}
 
 			// check the block
 			$checksum = 0;
-
 			for ($i = 0; $i < 148; $i++) {
 				$checksum += ord($buffer[$i]);
 			}
@@ -67,7 +64,6 @@ class getid3_tar extends getid3_handler {
 			$devmaj  = octdec(isset($attr['devmaj']) ? trim($attr['devmaj']) : '');
 			$devmin  = octdec(isset($attr['devmin']) ? trim($attr['devmin']) : '');
 			$prefix  = (isset($attr['prefix']) ? trim($attr['prefix']) : '');
-
 			if (($checksum == 256) && ($chksum == 0)) {
 				// EOF Found
 				break;
@@ -88,8 +84,8 @@ class getid3_tar extends getid3_handler {
 
 			// Read to the next chunk
 			$this->fseek($size, SEEK_CUR);
-			$diff = $size % 512;
 
+			$diff = $size % 512;
 			if ($diff != 0) {
 				// Padding, throw away
 				$this->fseek((512 - $diff), SEEK_CUR);
@@ -180,7 +176,6 @@ class getid3_tar extends getid3_handler {
 		$s .= sprintf('%1s%1s%1s', $owner['read'], $owner['write'], $owner['execute']);
 		$s .= sprintf('%1s%1s%1s', $group['read'], $group['write'], $group['execute']);
 		$s .= sprintf('%1s%1s%1s' . "\n", $world['read'], $world['write'], $world['execute']);
-
 		return $s;
 	}
 

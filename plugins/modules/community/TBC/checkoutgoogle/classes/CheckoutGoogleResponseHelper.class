@@ -74,7 +74,6 @@ class CheckoutGoogleResponseHelper {
 		$username      = GalleryUtilities::getServerVar('PHP_AUTH_USER');
 		$password      = GalleryUtilities::getServerVar('PHP_AUTH_PW');
 		$authorization = GalleryUtilities::getRequestVariables('authorization');
-
 		if (empty($authorization)) {
 			// IIS ISAPI PHP defines HTTP_AUTHORIZATION
 			$authorization = GalleryUtilities::getServerVar('HTTP_AUTHORIZATION');
@@ -139,7 +138,6 @@ class CheckoutGoogleResponseHelper {
 	public function GetParsedXML($request = null) {
 		$root = '';
 		$data = '';
-
 		if (!is_null($request)) {
 			GalleryCoreApi::requireOnce('modules/checkoutgoogle/lib/gc_xmlparser.php');
 
@@ -170,7 +168,6 @@ class CheckoutGoogleResponseHelper {
 		}
 
 		$result = $results->nextResult();
-
 		return array(null, $result[0]);
 	}
 
@@ -193,7 +190,6 @@ class CheckoutGoogleResponseHelper {
 		}
 
 		$result = $results->nextResult();
-
 		return array(null, $result[0], $result[1]);
 	}
 
@@ -235,7 +231,6 @@ class CheckoutGoogleResponseHelper {
 		}
 
 		$authorizationKey = base64_encode($gcMerchantId . ':' . $gcMerchantKey);
-
 		switch ($type) {
 			case 'checkout':
 				if ($gcMode == 'test') {
@@ -245,7 +240,6 @@ class CheckoutGoogleResponseHelper {
 				}
 
 				break;
-
 			case 'order processing':
 				if ($gcMode == 'test') {
 					$url = 'https://sandbox.google.com/checkout/api/checkout/v2/request/Merchant/' . $gcMerchantId;
@@ -254,7 +248,6 @@ class CheckoutGoogleResponseHelper {
 				}
 
 				break;
-
 			default:
 				$url = $type;
 		}
@@ -267,7 +260,6 @@ class CheckoutGoogleResponseHelper {
 		// Handle redirection here
 		$depth   = 0;
 		$headers = array();
-
 		do {
 			if (isset($headers['Location'])) {
 				$url = WebHelper_simple::_parseLocation($responseHeaders['Location'], parse_url($url));
@@ -277,7 +269,6 @@ class CheckoutGoogleResponseHelper {
 			list($returnStatus, $headers, $body) = GalleryCoreApi::requestWebPage($url, 'POST', $googleHeaders, $data);
 		} while ($depth < 5 && isset($headers['Location']));
 		$success = preg_match('/^HTTP\/\d+\.\d+\s2\d{2}/', $returnStatus);
-
 		return array($success, $body, $url, $returnStatus);
 	}
 

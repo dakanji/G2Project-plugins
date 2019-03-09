@@ -116,6 +116,7 @@ class SlideshowView extends GalleryView {
 					)
 				)
 			);
+
 			$jsUrlParams = array(
 				'forJavascript' => true,
 				'forceFullUrl'  => true,
@@ -189,6 +190,7 @@ class SlideshowView extends GalleryView {
 		$template->javascript('lib/yui/yahoo-dom-event.js');
 		$template->javascript('modules/slideshow/data/lytebox.js');
 		$template->link(
+
 			array(
 				'rel'   => 'stylesheet',
 				'href'  => 'modules/slideshow/data/lytebox.css',

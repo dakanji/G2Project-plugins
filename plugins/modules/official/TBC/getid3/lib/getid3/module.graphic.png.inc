@@ -16,7 +16,6 @@
 /////////////////////////////////////////////////////////////////
 class getid3_png extends getid3_handler {
 	public $max_data_bytes = 10000000; // if data chunk is larger than this do not read it completely (getID3 only needs the first few dozen bytes for parsing)
-
 	public function Analyze() {
 		$info =& $this->getid3->info;
 
@@ -28,36 +27,31 @@ class getid3_png extends getid3_handler {
 		$info['video']['lossless']   = false;
 
 		$this->fseek($info['avdataoffset']);
+
 		$PNGfiledata   = $this->fread($this->getid3->fread_buffer_size());
 		$offset        = 0;
 		$PNGidentifier = substr($PNGfiledata, $offset, 8); // $89 $50 $4E $47 $0D $0A $1A $0A
 		$offset       += 8;
-
 		if ($PNGidentifier != "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A") {
 			$info['error'][] = 'First 8 bytes of file (' . getid3_lib::PrintHexBytes($PNGidentifier) . ') did not match expected PNG identifier';
 			unset($info['fileformat']);
-
 			return false;
 		}
 
 		while ((($this->ftell() - (strlen($PNGfiledata) - $offset)) < $info['filesize'])) {
 			$chunk['data_length'] = getid3_lib::BigEndian2Int(substr($PNGfiledata, $offset, 4));
-
 			if ($chunk['data_length'] === false) {
 				$info['error'][] = 'Failed to read data_length at offset ' . $offset;
-
 				return false;
 			}
 
 			$offset        += 4;
 			$truncated_data = false;
-
 			while (((strlen($PNGfiledata) - $offset) < ($chunk['data_length'] + 4)) && ($this->ftell() < $info['filesize'])) {
 				if (strlen($PNGfiledata) < $this->max_data_bytes) {
 					$PNGfiledata .= $this->fread($this->getid3->fread_buffer_size());
 				} else {
 					$info['warning'][] = 'At offset ' . $offset . ' chunk "' . substr($PNGfiledata, $offset, 4) . '" exceeded max_data_bytes value of ' . $this->max_data_bytes . ', data chunk will be truncated at ' . (strlen($PNGfiledata) - 8) . ' bytes';
-
 					break;
 				}
 			}
@@ -77,7 +71,6 @@ class getid3_png extends getid3_handler {
 			// shortcut
 			$thisfile_png[$chunk['type_text']] = array();
 			$thisfile_png_chunk_type_text      =& $thisfile_png[$chunk['type_text']];
-
 			switch ($chunk['type_text']) {
 				case 'IHDR': // Image Header
 					$thisfile_png_chunk_type_text['header']                    = $chunk;
@@ -95,13 +88,10 @@ class getid3_png extends getid3_handler {
 					$info['video']['resolution_x']                             = $thisfile_png_chunk_type_text['width'];
 					$info['video']['resolution_y']                             = $thisfile_png_chunk_type_text['height'];
 					$info['video']['bits_per_sample']                          = $this->IHDRcalculateBitsPerSample($thisfile_png_chunk_type_text['raw']['color_type'], $thisfile_png_chunk_type_text['raw']['bit_depth']);
-
 					break;
-
 				case 'PLTE': // Palette
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 					$paletteoffset                          = 0;
-
 					for ($i = 0; $i <= 255; $i++) {
 						//$thisfile_png_chunk_type_text['red'][$i] = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
 						//$thisfile_png_chunk_type_text['green'][$i] = getid3_lib::BigEndian2Int(substr($chunk['data'], $paletteoffset++, 1));
@@ -113,30 +103,23 @@ class getid3_png extends getid3_handler {
 					}
 
 					break;
-
 				case 'tRNS': // Transparency
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-
 					switch ($thisfile_png['IHDR']['raw']['color_type']) {
 						case 0:
 							$thisfile_png_chunk_type_text['transparent_color_gray'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 2));
-
 							break;
-
 						case 2:
 							$thisfile_png_chunk_type_text['transparent_color_red']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 2));
 							$thisfile_png_chunk_type_text['transparent_color_green'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 2, 2));
 							$thisfile_png_chunk_type_text['transparent_color_blue']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 2));
-
 							break;
-
 						case 3:
 							for ($i = 0; $i < strlen($chunk['data']); $i++) {
 								$thisfile_png_chunk_type_text['palette_opacity'][$i] = getid3_lib::BigEndian2Int(substr($chunk['data'], $i, 1));
 							}
 
 							break;
-
 						case 4:
 						case 6:
 							$info['error'][] = 'Invalid color_type in tRNS chunk: ' . $thisfile_png['IHDR']['raw']['color_type'];
@@ -144,38 +127,30 @@ class getid3_png extends getid3_handler {
 							// Fall Through
 						default:
 							$info['warning'][] = 'Unhandled color_type in tRNS chunk: ' . $thisfile_png['IHDR']['raw']['color_type'];
-
 							break;
 					}
 
 					break;
-
 				case 'gAMA': // Image Gamma
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 					$thisfile_png_chunk_type_text['gamma']  = getid3_lib::BigEndian2Int($chunk['data']) / 100000;
-
 					break;
-
 				case 'cHRM': // Primary Chromaticities
 					$thisfile_png_chunk_type_text['header']  = $chunk;
-					$thisfile_png_chunk_type_text['white_x'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4))  / 100000;
-					$thisfile_png_chunk_type_text['white_y'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4))  / 100000;
-					$thisfile_png_chunk_type_text['red_y']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 4))  / 100000;
+					$thisfile_png_chunk_type_text['white_x'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4)) / 100000;
+					$thisfile_png_chunk_type_text['white_y'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4)) / 100000;
+					$thisfile_png_chunk_type_text['red_y']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 4)) / 100000;
 					$thisfile_png_chunk_type_text['red_y']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 12, 4)) / 100000;
 					$thisfile_png_chunk_type_text['green_y'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 16, 4)) / 100000;
 					$thisfile_png_chunk_type_text['green_y'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 20, 4)) / 100000;
 					$thisfile_png_chunk_type_text['blue_y']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 24, 4)) / 100000;
 					$thisfile_png_chunk_type_text['blue_y']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 28, 4)) / 100000;
-
 					break;
-
 				case 'sRGB': // Standard RGB Color Space
 					$thisfile_png_chunk_type_text['header']                 = $chunk;
 					$thisfile_png_chunk_type_text['reindering_intent']      = getid3_lib::BigEndian2Int($chunk['data']);
 					$thisfile_png_chunk_type_text['reindering_intent_text'] = $this->PNGsRGBintentLookup($thisfile_png_chunk_type_text['reindering_intent']);
-
 					break;
-
 				case 'iCCP': // Embedded ICC Profile
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 
@@ -185,9 +160,7 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text['compression_method']      = getid3_lib::BigEndian2Int(substr($compressiondata, 0, 1));
 					$thisfile_png_chunk_type_text['compression_profile']     = substr($compressiondata, 1);
 					$thisfile_png_chunk_type_text['compression_method_text'] = $this->PNGcompressionMethodLookup($thisfile_png_chunk_type_text['compression_method']);
-
 					break;
-
 				case 'tEXt': // Textual Data
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 
@@ -196,9 +169,7 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text['keyword']                              = $keyword;
 					$thisfile_png_chunk_type_text['text']                                 = $text;
 					$thisfile_png['comments'][$thisfile_png_chunk_type_text['keyword']][] = $thisfile_png_chunk_type_text['text'];
-
 					break;
-
 				case 'zTXt': // Compressed Textual Data
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 
@@ -208,13 +179,10 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text['compression_method']      = getid3_lib::BigEndian2Int(substr($otherdata, 0, 1));
 					$thisfile_png_chunk_type_text['compressed_text']         = substr($otherdata, 1);
 					$thisfile_png_chunk_type_text['compression_method_text'] = $this->PNGcompressionMethodLookup($thisfile_png_chunk_type_text['compression_method']);
-
 					switch ($thisfile_png_chunk_type_text['compression_method']) {
 						case 0:
 							$thisfile_png_chunk_type_text['text'] = gzuncompress($thisfile_png_chunk_type_text['compressed_text']);
-
 							break;
-
 						default:
 							// unknown compression method
 							break;
@@ -225,7 +193,6 @@ class getid3_png extends getid3_handler {
 					}
 
 					break;
-
 				case 'iTXt': // International Textual Data
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 
@@ -240,14 +207,11 @@ class getid3_png extends getid3_handler {
 
 					$thisfile_png_chunk_type_text['language_tag']       = $languagetag;
 					$thisfile_png_chunk_type_text['translated_keyword'] = $translatedkeyword;
-
 					if ($thisfile_png_chunk_type_text['compression']) {
 						switch ($thisfile_png_chunk_type_text['compression_method']) {
 							case 0:
 								$thisfile_png_chunk_type_text['text'] = gzuncompress($text);
-
 								break;
-
 							default:
 								// unknown compression method
 								break;
@@ -261,82 +225,61 @@ class getid3_png extends getid3_handler {
 					}
 
 					break;
-
 				case 'bKGD': // Background Color
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-
 					switch ($thisfile_png['IHDR']['raw']['color_type']) {
 						case 0:
 						case 4:
 							$thisfile_png_chunk_type_text['background_gray'] = getid3_lib::BigEndian2Int($chunk['data']);
-
 							break;
-
 						case 2:
 						case 6:
 							$thisfile_png_chunk_type_text['background_red']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 0 * $thisfile_png['IHDR']['raw']['bit_depth'], $thisfile_png['IHDR']['raw']['bit_depth']));
 							$thisfile_png_chunk_type_text['background_green'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 1 * $thisfile_png['IHDR']['raw']['bit_depth'], $thisfile_png['IHDR']['raw']['bit_depth']));
 							$thisfile_png_chunk_type_text['background_blue']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 2 * $thisfile_png['IHDR']['raw']['bit_depth'], $thisfile_png['IHDR']['raw']['bit_depth']));
-
 							break;
-
 						case 3:
 							$thisfile_png_chunk_type_text['background_index'] = getid3_lib::BigEndian2Int($chunk['data']);
-
 							break;
-
 						default:
 							break;
 					}
 
 					break;
-
 				case 'pHYs': // Physical Pixel Dimensions
 					$thisfile_png_chunk_type_text['header']            = $chunk;
 					$thisfile_png_chunk_type_text['pixels_per_unit_x'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4));
 					$thisfile_png_chunk_type_text['pixels_per_unit_y'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4));
 					$thisfile_png_chunk_type_text['unit_specifier']    = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 1));
 					$thisfile_png_chunk_type_text['unit']              = $this->PNGpHYsUnitLookup($thisfile_png_chunk_type_text['unit_specifier']);
-
 					break;
-
 				case 'sBIT': // Significant Bits
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-
 					switch ($thisfile_png['IHDR']['raw']['color_type']) {
 						case 0:
 							$thisfile_png_chunk_type_text['significant_bits_gray'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 1));
-
 							break;
-
 						case 2:
 						case 3:
 							$thisfile_png_chunk_type_text['significant_bits_red']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 1));
 							$thisfile_png_chunk_type_text['significant_bits_green'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 1, 1));
 							$thisfile_png_chunk_type_text['significant_bits_blue']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 2, 1));
-
 							break;
-
 						case 4:
 							$thisfile_png_chunk_type_text['significant_bits_gray']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 1));
 							$thisfile_png_chunk_type_text['significant_bits_alpha'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 1, 1));
-
 							break;
-
 						case 6:
 							$thisfile_png_chunk_type_text['significant_bits_red']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 1));
 							$thisfile_png_chunk_type_text['significant_bits_green'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 1, 1));
 							$thisfile_png_chunk_type_text['significant_bits_blue']  = getid3_lib::BigEndian2Int(substr($chunk['data'], 2, 1));
 							$thisfile_png_chunk_type_text['significant_bits_alpha'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 3, 1));
-
 							break;
-
 						default:
 							break;
 					}
 
 					break;
-
 				case 'sPLT': // Suggested Palette
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 
@@ -348,7 +291,6 @@ class getid3_png extends getid3_handler {
 					$sPLToffset                                        += 1;
 					$thisfile_png_chunk_type_text['sample_depth_bytes'] = $thisfile_png_chunk_type_text['sample_depth_bits'] / 8;
 					$paletteCounter                                     = 0;
-
 					while ($sPLToffset < strlen($otherdata)) {
 						$thisfile_png_chunk_type_text['red'][$paletteCounter]   = getid3_lib::BigEndian2Int(substr($otherdata, $sPLToffset, $thisfile_png_chunk_type_text['sample_depth_bytes']));
 						$sPLToffset                                            += $thisfile_png_chunk_type_text['sample_depth_bytes'];
@@ -364,18 +306,15 @@ class getid3_png extends getid3_handler {
 					}
 
 					break;
-
 				case 'hIST': // Palette Histogram
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 					$hISTcounter                            = 0;
-
 					while ($hISTcounter < strlen($chunk['data'])) {
 						$thisfile_png_chunk_type_text[$hISTcounter] = getid3_lib::BigEndian2Int(substr($chunk['data'], $hISTcounter / 2, 2));
 						$hISTcounter                               += 2;
 					}
 
 					break;
-
 				case 'tIME': // Image Last-Modification Time
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 					$thisfile_png_chunk_type_text['year']   = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 2));
@@ -385,18 +324,14 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text['minute'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 5, 1));
 					$thisfile_png_chunk_type_text['second'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 6, 1));
 					$thisfile_png_chunk_type_text['unix']   = gmmktime($thisfile_png_chunk_type_text['hour'], $thisfile_png_chunk_type_text['minute'], $thisfile_png_chunk_type_text['second'], $thisfile_png_chunk_type_text['month'], $thisfile_png_chunk_type_text['day'], $thisfile_png_chunk_type_text['year']);
-
 					break;
-
 				case 'oFFs': // Image Offset
 					$thisfile_png_chunk_type_text['header']         = $chunk;
 					$thisfile_png_chunk_type_text['position_x']     = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 4), false, true);
 					$thisfile_png_chunk_type_text['position_y']     = getid3_lib::BigEndian2Int(substr($chunk['data'], 4, 4), false, true);
 					$thisfile_png_chunk_type_text['unit_specifier'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 8, 1));
 					$thisfile_png_chunk_type_text['unit']           = $this->PNGoFFsUnitLookup($thisfile_png_chunk_type_text['unit_specifier']);
-
 					break;
-
 				case 'pCAL': // Calibration Of Pixel Values
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 
@@ -414,9 +349,7 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text['parameter_count']    = getid3_lib::BigEndian2Int(substr($chunk['data'], $pCALoffset, 1));
 					$pCALoffset                                        += 1;
 					$thisfile_png_chunk_type_text['parameters']         = explode("\x00", substr($chunk['data'], $pCALoffset));
-
 					break;
-
 				case 'sCAL': // Physical Scale Of Image Subject
 					$thisfile_png_chunk_type_text['header']         = $chunk;
 					$thisfile_png_chunk_type_text['unit_specifier'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 1));
@@ -426,12 +359,9 @@ class getid3_png extends getid3_handler {
 
 					$thisfile_png_chunk_type_text['pixel_width']  = $pixelwidth;
 					$thisfile_png_chunk_type_text['pixel_height'] = $pixelheight;
-
 					break;
-
 				case 'gIFg': // GIF Graphic Control Extension
 					$gIFgCounter = 0;
-
 					if (isset($thisfile_png_chunk_type_text) && is_array($thisfile_png_chunk_type_text)) {
 						$gIFgCounter = count($thisfile_png_chunk_type_text);
 					}
@@ -440,12 +370,9 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text[$gIFgCounter]['disposal_method'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 0, 1));
 					$thisfile_png_chunk_type_text[$gIFgCounter]['user_input_flag'] = getid3_lib::BigEndian2Int(substr($chunk['data'], 1, 1));
 					$thisfile_png_chunk_type_text[$gIFgCounter]['delay_time']      = getid3_lib::BigEndian2Int(substr($chunk['data'], 2, 2));
-
 					break;
-
 				case 'gIFx': // GIF Application Extension
 					$gIFxCounter = 0;
-
 					if (isset($thisfile_png_chunk_type_text) && is_array($thisfile_png_chunk_type_text)) {
 						$gIFxCounter = count($thisfile_png_chunk_type_text);
 					}
@@ -454,31 +381,23 @@ class getid3_png extends getid3_handler {
 					$thisfile_png_chunk_type_text[$gIFxCounter]['application_identifier'] = substr($chunk['data'], 0, 8);
 					$thisfile_png_chunk_type_text[$gIFxCounter]['authentication_code']    = substr($chunk['data'], 8, 3);
 					$thisfile_png_chunk_type_text[$gIFxCounter]['application_data']       = substr($chunk['data'], 11);
-
 					break;
-
 				case 'IDAT': // Image Data
 					$idatinformationfieldindex = 0;
-
 					if (isset($thisfile_png['IDAT']) && is_array($thisfile_png['IDAT'])) {
 						$idatinformationfieldindex = count($thisfile_png['IDAT']);
 					}
 
 					unset($chunk['data']);
 					$thisfile_png_chunk_type_text[$idatinformationfieldindex]['header'] = $chunk;
-
 					break;
-
 				case 'IEND': // Image Trailer
 					$thisfile_png_chunk_type_text['header'] = $chunk;
-
 					break;
-
 				default:
 					//unset($chunk['data']);
 					$thisfile_png_chunk_type_text['header'] = $chunk;
 					$info['warning'][]                      = 'Unhandled chunk type: ' . $chunk['type_text'];
-
 					break;
 			}
 		}
@@ -547,27 +466,18 @@ class getid3_png extends getid3_handler {
 		switch ($color_type) {
 			case 0: // Each pixel is a grayscale sample.
 				return $bit_depth;
-
 				break;
-
 			case 2: // Each pixel is an R,G,B triple
 				return 3 * $bit_depth;
-
 				break;
-
 			case 3: // Each pixel is a palette index; a PLTE chunk must appear.
 				return $bit_depth;
-
 				break;
-
 			case 4: // Each pixel is a grayscale sample, followed by an alpha sample.
 				return 2 * $bit_depth;
-
 				break;
-
 			case 6: // Each pixel is an R,G,B triple, followed by an alpha sample.
 				return 4 * $bit_depth;
-
 				break;
 		}
 

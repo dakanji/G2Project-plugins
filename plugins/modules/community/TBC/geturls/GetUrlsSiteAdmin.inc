@@ -38,10 +38,8 @@ class GetUrlsSiteAdminController extends GalleryController {
 		}
 
 		$status = array();
-
 		if (isset($form['action']['save'])) {
 			$param = array();
-
 			foreach (array('suppressSourceWarning', 'suppressResizedWarning')
 			 as $key) {
 				if (isset($form[$key]) && $form[$key]) {
@@ -61,7 +59,6 @@ class GetUrlsSiteAdminController extends GalleryController {
 			}
 
 			$param = array();
-
 			foreach (array('HtmlLink', 'HtmlInline', 'HtmlThumbnail', 'HtmlResize2Full',
 			   'BbLink', 'BbInline', 'BbThumbnail', 'BbResize2Full', )
 			 as $key) {
@@ -82,7 +79,6 @@ class GetUrlsSiteAdminController extends GalleryController {
 			}
 
 			$param = array();
-
 			foreach (array('MiscItemId', 'MiscResizeId', 'MiscThumbnailId')
 			 as $key) {
 				if (isset($form[$key]) && $form[$key]) {
@@ -141,7 +137,6 @@ class GetUrlsSiteAdminController extends GalleryController {
 		$results['redirect']['subView'] = 'geturls.GetUrlsSiteAdmin';
 		$results['status']              = $status;
 		$results['error']               = array();
-
 		return array(null, $results);
 	}
 }
@@ -205,3 +200,4 @@ class GetUrlsSiteAdminView extends GalleryView {
 			 array('body' => 'modules/geturls/templates/GetUrlsSiteAdmin.tpl'), );
 	}
 }
+

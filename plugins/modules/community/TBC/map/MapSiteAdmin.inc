@@ -253,7 +253,6 @@ class MapSiteAdminController extends GalleryController {
 				}
 
 				$results['redirect']['view'] = 'core.SiteAdmin';
-
 				if ($isActive) {
 					$results['status']              = $status;
 					$results['error']               = $error;
@@ -431,7 +430,6 @@ class mapSiteAdminView extends GalleryView {
 		}
 
 		$form['editProfile'] = $profile;
-
 		if ($template->hasVariable('SiteAdmin')) {
 			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';

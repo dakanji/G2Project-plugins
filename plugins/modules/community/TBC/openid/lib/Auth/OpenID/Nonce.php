@@ -39,7 +39,6 @@ define(
 function Auth_OpenID_splitNonce($nonce_string) {
 	// Extract a timestamp from the given nonce string
 	$result = preg_match(Auth_OpenID_Nonce_REGEX, $nonce_string, $matches);
-
 	if ($result != 1 || count($matches) != 8) {
 		return null;
 	}
@@ -53,7 +52,6 @@ function Auth_OpenID_splitNonce($nonce_string) {
 		 $tm_sec,
 		 $uniquifier) = $matches;
 	$timestamp        = @gmmktime($tm_hour, $tm_min, $tm_sec, $tm_mon, $tm_mday, $tm_year);
-
 	if ($timestamp === false || $timestamp < 0) {
 		return null;
 	}
@@ -75,7 +73,6 @@ function Auth_OpenID_checkTimestamp(
 	}
 
 	$parts = Auth_OpenID_splitNonce($nonce_string);
-
 	if ($parts == null) {
 		return false;
 	}
@@ -113,6 +110,5 @@ function Auth_OpenID_mkNonce($when = null) {
 	}
 
 	$time_str = gmstrftime(Auth_OpenID_Nonce_TIME_FMT, $when);
-
 	return $time_str . $salt;
 }

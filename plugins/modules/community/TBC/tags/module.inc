@@ -43,9 +43,12 @@ class TagsModule extends GalleryModule {
 		$this->setVersion('2.0.0'); // Update upgrade() as required
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks(
+
 			'getSiteAdminViews|registerEventListeners|getItemLinks|getItemSummaries'
 		);
 	}
@@ -158,7 +161,6 @@ class TagsModule extends GalleryModule {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
 			if (isset($permissions[$itemId]['tags.edit'])) {
 				$links[$itemId][] = array(
 					'text'   => $this->translate('Edit Tags'),
@@ -222,7 +224,6 @@ class TagsModule extends GalleryModule {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
-
 			if ($canViewSummaries) {
 				list($ret, $tags) = TagsHelper::getTagsByItemId($itemId);
 
@@ -232,7 +233,6 @@ class TagsModule extends GalleryModule {
 
 				if (!empty($tags)) {
 					$tagsLink = '';
-
 					foreach ($tags as $rawTagName => $tagName) {
 						$tagUrl = $urlGenerator->generateUrl(
 							array(
@@ -267,6 +267,7 @@ class TagsModule extends GalleryModule {
 					$urlsTemplate = new GalleryTemplate(dirname(__FILE__) . '/../..');
 
 					$urlsTemplate->setVariable('l10Domain', 'modules_' . $this->getId());
+
 					$tpl            = 'gallery:modules/tags/templates/TagsSummaryEdit.tpl';
 					$interfaceAdded = true;
 				}
@@ -387,7 +388,6 @@ class TagsModule extends GalleryModule {
 				}
 
 				break;
-
 			case '1.0.0':
 			case '1.0.1':
 			case '1.0.2':
@@ -454,6 +454,7 @@ class TagsModule extends GalleryModule {
 
 					while (($oldTag = $oldTagsSearchResults->nextResult()) !== false) {
 						$gallery->guaranteeTimeLimit(30);
+
 						$oldTagId = (int)$oldTag[0];
 						$tagName  = $oldTag[1];
 
@@ -483,6 +484,7 @@ class TagsModule extends GalleryModule {
 
 							while (($row = $oldTagItemMapSearchResults->nextResult()) !== false) {
 								$gallery->guaranteeTimeLimit(30);
+
 								$itemId = (int)$row[0];
 
 								$ret = TagsHelper::assignTagById($itemId, $newTagId);
@@ -557,7 +559,6 @@ class TagsModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
-
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,

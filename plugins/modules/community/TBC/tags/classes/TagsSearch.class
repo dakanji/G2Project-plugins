@@ -161,7 +161,6 @@ class TagsSearch extends GallerySearchInterface_1_0 {
 
 		$tagNameText   = $module->translate('Tag Name');
 		$searchResults = array();
-
 		while ($result = $results->nextResult()) {
 			$fields   = array();
 			$fields[] = array(

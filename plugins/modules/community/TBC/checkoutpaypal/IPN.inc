@@ -56,6 +56,7 @@ class IPNView extends GalleryView {
 	 */
 	public function renderImmediate($status, $error) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/checkoutpaypal/classes/GalleryCheckoutPaypalIPNHelper.class');
 
 		list($ret, $ppurl) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'ppurl');
@@ -80,12 +81,10 @@ class IPNView extends GalleryView {
 				$IPNVerified = true;
 			} else {
 				echo 'Invalid';
-
 				return null;
 			}
 		} else {
 			echo 'Unable to Connect';
-
 			return null;
 		}
 
@@ -140,6 +139,7 @@ class IPNView extends GalleryView {
 						'arg2' => $paypalname,
 					),
 				);
+
 				$IPNReason[] = "\n";
 				$notes      .= 'Wrong Business Name: ' . $IPNpost[16] . ' and ours is ' . $paypalname;
 
@@ -154,8 +154,9 @@ class IPNView extends GalleryView {
 							'arg2' => $transaction->getamount(),
 						),
 					);
-					$IPNReason[]       = "\n";
-					$notes            .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
+
+					$IPNReason[] = "\n";
+					$notes      .= 'Wrong Amount: ' . $IPNpost[8] . ' and our value is ' . $transaction->getamount();
 				} else {
 					$IPNAmountVerified = true;
 				}
@@ -226,9 +227,7 @@ class IPNView extends GalleryView {
 
 						$IPNReason[] = "\n";
 						$notes      .= ' Accepted. ';
-
 						break;
-
 					case 'Pending':
 					case 'Refunded':
 					case 'Denied':
@@ -245,6 +244,7 @@ class IPNView extends GalleryView {
 							'domain' => 'checkoutpaypal',
 							'data'   => $gallery->i18n('Unhandled Paypal State:'),
 						);
+
 						$IPNReason[] = "\n";
 						$IPNReason[] = $IPNpost[2];
 						$IPNReason[] = "\n";

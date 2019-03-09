@@ -83,14 +83,11 @@ class gc_xmlparser {
 		XML_OPTION_CASE_FOLDING => 0,
 	)) {
 		$xmlp = xml_parser_create();
-
 		foreach ($xmlParams as $opt => $optVal) {
 			switch ($opt) {
 				case XML_OPTION_CASE_FOLDING:
 					$this->fold = $optVal;
-
 					break;
-
 				default:
 					break;
 			}
@@ -120,10 +117,8 @@ class gc_xmlparser {
 	public function xml2ary($vals) {
 		$mnary = array();
 		$ary   =&$mnary;
-
 		foreach ($vals as $r) {
 			$t = $r['tag'];
-
 			if ($r['type'] == 'open') {
 				if (isset($ary[$t]) && !empty($ary[$t])) {
 					if (isset($ary[$t][0])) {
@@ -138,7 +133,6 @@ class gc_xmlparser {
 				}
 
 				$cv = array();
-
 				if (isset($r['attributes'])) {
 					foreach ($r['attributes'] as $k => $v) {
 						$cv[$k] = $v;

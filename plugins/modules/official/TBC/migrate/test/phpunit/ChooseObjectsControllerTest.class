@@ -58,6 +58,7 @@ class ChooseObjectsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][import]', 1);
 		GalleryUtilities::putRequestVariable('form[set][title]', 'filename');
 		GalleryUtilities::putRequestVariable('form[set][summary]', 'caption');
+
 		GalleryUtilities::putRequestVariable('form[set][description]', 'blank');
 
 		$results = $this->handleRequest();
@@ -80,6 +81,7 @@ class ChooseObjectsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][import]', 1);
 		GalleryUtilities::putRequestVariable('form[set][title]', 'caption');
 		GalleryUtilities::putRequestVariable('form[set][summary]', 'filename');
+
 		GalleryUtilities::putRequestVariable('form[set][description]', 'custom');
 		GalleryUtilities::putRequestVariable('form[customfield][description]', 'Description');
 
@@ -103,6 +105,7 @@ class ChooseObjectsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][import]', 1);
 		GalleryUtilities::putRequestVariable('form[set][title]', 'custom');
 		GalleryUtilities::putRequestVariable('form[set][summary]', 'custom');
+
 		GalleryUtilities::putRequestVariable('form[set][description]', 'custom');
 
 		$results = $this->handleRequest();

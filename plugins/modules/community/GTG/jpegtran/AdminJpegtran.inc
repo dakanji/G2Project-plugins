@@ -42,7 +42,6 @@ class AdminJpegtranController extends GalleryController {
 		}
 
 		$error = $status = array();
-
 		if (isset($form['action']['save']) || isset($form['action']['test'])) {
 			if (empty($form['path'])) {
 				$error[] = 'form[error][path][missing]';
@@ -51,7 +50,6 @@ class AdminJpegtranController extends GalleryController {
 				$platform     =& $gallery->getPlatform();
 				$slash        = $platform->getDirectorySeparator();
 				$form['path'] = trim($form['path']);
-
 				if (!$platform->isRestrictedByOpenBaseDir($form['path'])) {
 					if ($platform->is_dir($form['path'])) {
 						if (!empty($form['path'])) {
@@ -60,7 +58,6 @@ class AdminJpegtranController extends GalleryController {
 
 						// Try adding on "jpegtran"
 						$path = $form['path'] . 'jpegtran';
-
 						if (GalleryUtilities::isA($platform, 'WinNtPlatform')) {
 							$path .= '.exe';
 						}
@@ -101,7 +98,6 @@ class AdminJpegtranController extends GalleryController {
 				}
 			} else {
 				$failCount = 0;
-
 				foreach ($testResults as $testResult) {
 					// Rotate must work, other operations are optional
 					if ($testResult['name'] == 'rotate' && !$testResult['success']) {
@@ -134,7 +130,6 @@ class AdminJpegtranController extends GalleryController {
 				}
 
 				$redirect['view'] = 'core.SiteAdmin';
-
 				if ($isActive) {
 					$redirect['subView'] = 'jpegtran.AdminJpegtran';
 					$status['saved']     = 1;
@@ -160,7 +155,6 @@ class AdminJpegtranController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -176,7 +170,8 @@ class AdminJpegtranView extends GalleryView {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-		$ret      = GalleryCoreApi::assertUserIsSiteAdministrator();
+
+		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
 			return array($ret, null);
@@ -202,7 +197,6 @@ class AdminJpegtranView extends GalleryView {
 		$tests        = array();
 		$debugSnippet = '';
 		$failCount    = 0;
-
 		if (isset($form['action']['test']) && empty($form['error'])) {
 			if (!empty($form['path'])) {
 				$gallery->startRecordingDebugSnippet();
@@ -212,7 +206,6 @@ class AdminJpegtranView extends GalleryView {
 					$testResults
 				)             = JpegtranToolkitHelper::testBinary($platform->realpath($form['path']));
 				$debugSnippet = $gallery->stopRecordingDebugSnippet();
-
 				if ($ret) {
 					if ($ret->getErrorCode() & ERROR_BAD_PATH) {
 						$testResults                      = array();

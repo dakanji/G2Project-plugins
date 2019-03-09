@@ -102,7 +102,6 @@ class Image_XMP {
 			// No SOI (FF D8) at start of file - This probably isn't a JPEG file - close file and return;
 			echo '<p>This probably is not a JPEG file</p>' . "\n";
 			fclose($filehnd);
-
 			return false;
 		}
 
@@ -113,7 +112,6 @@ class Image_XMP {
 		if ($data[0] != "\xFF") {
 			// NO FF found - close file and return - JPEG is probably corrupted
 			fclose($filehnd);
-
 			return false;
 		}
 
@@ -161,7 +159,6 @@ class Image_XMP {
 				if ($data[0] != "\xFF") {
 					// NO FF found - close file and return - JPEG is probably corrupted
 					fclose($filehnd);
-
 					return false;
 				}
 			}
@@ -197,7 +194,6 @@ class Image_XMP {
 					// Found a XMP/RDF block
 					// Return the XMP text
 					$xmp_data = substr($jpeg_header_data[$i]['SegData'], 29);
-
 					return trim($xmp_data); // trim() should not be neccesary, but some files found in the wild with null-terminated block (known samples from Apple Aperture) causes problems elsewhere (see http://www.getid3.org/phpBB3/viewtopic.php?f=4&t=1153)
 				}
 			}
@@ -229,7 +225,6 @@ class Image_XMP {
 		if (xml_parser_set_option($xml_parser, XML_OPTION_SKIP_WHITE, 0) == false) {
 			// Error setting case folding - destroy the parser and return
 			xml_parser_free($xml_parser);
-
 			return false;
 		}
 
@@ -239,7 +234,6 @@ class Image_XMP {
 		if (xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, 0) == false) {
 			// Error setting case folding - destroy the parser and return
 			xml_parser_free($xml_parser);
-
 			return false;
 		}
 
@@ -247,7 +241,6 @@ class Image_XMP {
 		if (xml_parse_into_struct($xml_parser, $xmltext, $values, $tags) == 0) {
 			// Error Parsing XML - destroy the parser and return
 			xml_parser_free($xml_parser);
-
 			return false;
 		}
 
@@ -267,11 +260,9 @@ class Image_XMP {
 				case 'x:xmpmeta':
 					// only defined attribute is x:xmptk written by Adobe XMP Toolkit; value is the version of the toolkit
 					break;
-
 				case 'rdf:RDF':
 					// required element immediately within x:xmpmeta; no data here
 					break;
-
 				case 'rdf:Description':
 					switch ($xml_elem['type']) {
 						case 'open':
@@ -299,7 +290,6 @@ class Image_XMP {
 				case 'rdf:nodeID':
 					// Attributes are ignored
 					break;
-
 				case 'rdf:li':
 					// Property member
 					if ($xml_elem['type'] == 'complete') {
@@ -319,7 +309,6 @@ class Image_XMP {
 					}
 
 					break;
-
 				case 'rdf:Seq':
 				case 'rdf:Bag':
 				case 'rdf:Alt':
@@ -327,20 +316,15 @@ class Image_XMP {
 					switch ($xml_elem['type']) {
 						case 'open':
 							$container_index = 0;
-
 							break;
-
 						case 'close':
 							$container_index = -1;
-
 							break;
-
 						case 'cdata':
 							break;
 					}
 
 					break;
-
 				default:
 					// Check whether we want the details from this attribute
 					//                  if (in_array($xml_elem['tag'], $GLOBALS['XMP_tag_captions']))
@@ -349,21 +333,15 @@ class Image_XMP {
 							case 'open':
 								// open current element
 								$current_property = $xml_elem['tag'];
-
 								break;
-
 							case 'close':
 								// close current element
 								$current_property = '';
-
 								break;
-
 							case 'complete':
 								// store attribute value
 								$xmp_array[$xml_elem['tag']] = (isset($xml_elem['attributes']) ? $xml_elem['attributes'] : (isset($xml_elem['value']) ? $xml_elem['value'] : ''));
-
 								break;
-
 							case 'cdata':
 								// ignore
 								break;
@@ -384,11 +362,9 @@ class Image_XMP {
 	 */
 	public function __construct($sFilename) {
 		$this->_sFilename = $sFilename;
-
 		if (is_file($this->_sFilename)) {
 			// Get XMP data
 			$xmp_data = $this->_get_XMP_text($sFilename);
-
 			if ($xmp_data) {
 				$this->_aXMP      = $this->read_XMP_array_from_text($xmp_data);
 				$this->_bXMPParse = true;

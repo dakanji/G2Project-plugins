@@ -49,18 +49,19 @@ class ServerAuthPluginTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
-		$_SERVER['AUTH_TYPE'] = 'Test';
 
-		$this->_plugin      = new ServerAuthPlugin();
-		$this->_saveSession = $gallery->_session;
-		$gallery->_session  = new ServerAuthPluginTestSession();
+		$_SERVER['AUTH_TYPE'] = 'Test';
+		$this->_plugin        = new ServerAuthPlugin();
+		$this->_saveSession   = $gallery->_session;
+		$gallery->_session    = new ServerAuthPluginTestSession();
 	}
 
 	public function tearDown() {
 		global $gallery;
 
 		$gallery->_session = $this->_saveSession;
-		$ret               = GalleryCoreApi::removeAllMapEntries('FailedLoginsMap');
+
+		$ret = GalleryCoreApi::removeAllMapEntries('FailedLoginsMap');
 
 		if ($ret) {
 			$this->failWithStatus($ret);

@@ -50,17 +50,17 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		$frames = array(
 			'solid' => $module->translate('Solid'),
 		);
-		$dir    = __DIR__ . '/../frames';
 
+		$dir = __DIR__ . '/../frames';
 		if ($platform->is_dir($dir) && $platform->is_readable($dir)
 			&& $fd = $platform->opendir($dir)
 		) {
 			while ($file = $platform->readdir($fd)) {
 				$subdir   = "$dir/$file";
 				$frameinc = "$subdir/frame.inc";
-
 				if ($platform->is_dir($subdir) && $platform->file_exists($frameinc)) {
 					include $frameinc;
+
 					$frames[$file] = $module->translate($frameData['name']);
 				}
 			}
@@ -69,7 +69,6 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		}
 
 		asort($frames);
-
 		return array(
 			null,
 			array_merge(
@@ -91,7 +90,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		static $simpleFrames;
 
 		if (!$template->hasVariable('ImageFrameData')) {
-			$simpleFrames    = array(
+			$simpleFrames = array(
 				'none' => array(
 					'type'  => 'style',
 					'style' => 'border-style: none',
@@ -101,6 +100,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 					'style' => 'border: 1px solid black !important',
 				),
 			);
+
 			$templateAdapter =& $gallery->getTemplateAdapter();
 			$template->setVariable(
 				'ImageFrameData',
@@ -112,6 +112,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		}
 
 		$template->head('modules/imageframe/templates/ImageFrameHead.tpl');
+
 		$data =& $template->getVariableByReference('ImageFrameData');
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe');
@@ -141,9 +142,9 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 			} else {
 				$dir      = __DIR__ . "/../frames/$frameId";
 				$frameinc = "$dir/frame.inc";
-
 				if ($platform->is_dir($dir) && $platform->file_exists($frameinc)) {
 					include $frameinc;
+
 					$frame = array(
 						'type' => isset($frameData['style']) ? 'style' : 'image',
 					);
@@ -173,7 +174,6 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		}
 
 		$data['idList'] = implode('|', array_keys($data['data']));
-
 		return null;
 	}
 

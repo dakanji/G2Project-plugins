@@ -43,9 +43,7 @@ class TagsCallbacks {
 				$block                                   =& $smarty->_tpl_vars['block'];
 				$block['tags']['TagsLink']['Tags']       = $tags;
 				$block['tags']['TagsLink']['TagsNumber'] = count($tags);
-
 				return null;
-
 			case 'GetTagCloud':
 				list($ret, $tags) = TagsHelper::getTagListWithTagCount();
 
@@ -55,10 +53,8 @@ class TagsCallbacks {
 
 				$tagCloud = TagsHelper::createTagCloudFromList($tags);
 				$block    =& $smarty->_tpl_vars['block'];
-
 				if (isset($params['totalTagCount']) and $params['totalTagCount']) {
 					$totalTagCount = 0;
-
 					foreach ($tagCloud as $tag) {
 						$totalTagCount += $tag['rawTagCount'];
 					}
@@ -67,7 +63,6 @@ class TagsCallbacks {
 				}
 
 				$block['tags']['taglist'] = $tagCloud;
-
 				return null;
 		}
 

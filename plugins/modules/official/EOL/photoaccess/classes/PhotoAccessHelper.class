@@ -96,18 +96,15 @@ class PhotoAccessHelper {
 
 		// If we don't have a cart url that means we don't have a photoaccess session yet
 		$photoAccessServer = 'www.photoworks.com';
-
 		if (empty($cartUrlFragment)) {
 			$cartUrlFragment = '/sbo/anonCartXML.jsp';
 		}
 
 		// Assemble all our data
 		$entries = $protectedIds = array();
-
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 			$entry  = array();
-
 			if (!isset($permissions[$itemId]['photoaccess.print'])) {
 				// Skip any cart items for which we don't have print permission
 				continue;
@@ -115,7 +112,6 @@ class PhotoAccessHelper {
 
 			$source      = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
 			$needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
-
 			if ($needSession && !isset($pwSession)) {
 				/*
 				 * Get G2 session for photoaccess to access non-public images.
@@ -133,16 +129,17 @@ class PhotoAccessHelper {
 			}
 
 			if ($needSession) {
-				$sessionParam   = array(
+				$sessionParam = array(
 					$pwSession->getKey() => $pwSession->getId(),
 				);
+
 				$protectedIds[] = $source->getId();
 			} else {
 				$sessionParam = array();
 			}
 
-			$entry['id']          = $source->getId();
-			$entry['imageUrl']    = $urlGenerator->generateUrl(
+			$entry['id']       = $source->getId();
+			$entry['imageUrl'] = $urlGenerator->generateUrl(
 				array_merge(
 					array(
 						'view'   => 'core.DownloadItem',
@@ -155,15 +152,14 @@ class PhotoAccessHelper {
 					'forceFullUrl'   => true,
 				)
 			);
+
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
-
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
 				// Use the source if the thumbnail has a postfilter (like a watermark)
 				$thumbSource = $source;
 			} else {
 				$thumbSource = $thumbnails[$itemId];
-
 				if ($needSession) {
 					$protectedIds[] = $thumbSource->getId();
 				}
@@ -182,7 +178,8 @@ class PhotoAccessHelper {
 					'forceFullUrl'   => true,
 				)
 			);
-			$entries[]         = $entry;
+
+			$entries[] = $entry;
 
 			// We should scan the results for a "200 OK" result
 		}
@@ -245,8 +242,8 @@ class PhotoAccessHelper {
 		$postData['xml_request'] = join('', $lines);
 
 		$gallery->guaranteeTimeLimit(30);
-		$cartUrl = 'http://' . $photoAccessServer . $cartUrlFragment;
 
+		$cartUrl = 'http://' . $photoAccessServer . $cartUrlFragment;
 		if ($gallery->getDebug()) {
 			$gallery->debug('Post data:');
 			$gallery->debug_r($postData, true);
@@ -284,6 +281,7 @@ class PhotoAccessHelper {
 			$cartUrlFragment = str_replace('&#38;', '&', $matches[1]);
 
 			$session->put('photoaccess.cartUrlFragment', $cartUrlFragment);
+
 			$redirectUrl = 'http://' . $photoAccessServer . str_replace('&#38;', '&', $matches[2]);
 		} else {
 			$redirectUrl = $urlGenerator->generateUrl(

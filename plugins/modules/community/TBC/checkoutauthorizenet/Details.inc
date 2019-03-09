@@ -56,7 +56,6 @@ class DetailsController extends GalleryController {
 
 		$session =& $gallery->getSession();
 		$error   = $status   = array();
-
 		if (isset($form['action']['send'])) {
 			// Basic input checks
 			if (empty($form['custFirstName']) || empty($form['custLastName'])) {
@@ -139,20 +138,30 @@ class DetailsController extends GalleryController {
 					GalleryCoreApi::requireOnce(
 						'modules/checkoutauthorizenet/classes/GalleryAuthorizeNet.class'
 					);
+
 					$auth = new GalleryAuthorizeNet();
 				} else {
 					$auth =& $this->_authorizeNet;
 				}
 
 				$auth->init();
+
 				$auth->setFirstName($form['custFirstName']);
+
 				$auth->setLastName($form['custLastName']);
+
 				$auth->setEmail($form['custEmail']);
+
 				$auth->setEmailCustomer('FALSE');
+
 				$auth->setPhone($form['custPhone']);
+
 				$auth->setCardNum($form['custCcNumber']);
+
 				$auth->setExpDate($form['custCcMonth'] . '/' . $form['custCcYear']);
+
 				$auth->setAddress($form['custAddress']);
+
 				$auth->setCity($form['custCity']);
 				$auth->setState($form['custState']);
 				$auth->setZip($form['custCcZip']);
@@ -191,7 +200,6 @@ class DetailsController extends GalleryController {
 					// Get a write lock for the transaction and refresh from database
 					list($ret, $lockId)
 							= GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
-
 					if ($ret) {
 						return array($ret, null);
 					}
@@ -204,12 +212,19 @@ class DetailsController extends GalleryController {
 
 					// Set the customer information into the original transaction
 					$transaction->setFirstName($form['custFirstName']);
+
 					$transaction->setLastName($form['custLastName']);
+
 					$transaction->setEmail($form['custEmail']);
+
 					$transaction->setRecipientName($form['custRecipientName']);
+
 					$transaction->setAddress1($form['custAddress']);
+
 					$transaction->setAddress4($form['custState']);
+
 					$transaction->setAddress5($form['custCity']);
+
 					$transaction->setAddressZip($form['custCcZip']);
 					$transaction->setAddressCountry($form['custCcCountry']);
 					$transaction->setCustNotes($form['custComments']);
@@ -245,7 +260,6 @@ class DetailsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -273,7 +287,8 @@ class DetailsView extends GalleryView {
 			// Populate the form if a user is logged in
 			if ($user->getUserName() != 'guest') {
 				list($form['custFirstName'], $form['custLastName']) = explode(' ', $user->getFullName(), 2);
-				$form['custEmail']                                  = $user->getEmail();
+
+				$form['custEmail'] = $user->getEmail();
 			}
 		}
 
@@ -290,6 +305,7 @@ class DetailsView extends GalleryView {
 		}
 
 		$template->setVariable('Details', $Details);
+
 		$form['controller'] = 'checkoutauthorizenet.Details';
 		$template->title(
 			$gallery->i18n('Checkout') . '::' .

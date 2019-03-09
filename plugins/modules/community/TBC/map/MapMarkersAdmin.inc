@@ -79,7 +79,6 @@ class MapMarkersAdminController extends GalleryController {
 				list($ret, $param) = mapHelper::loadParameters(0, false);
 
 				$newparam['common'] = $param['common'];
-
 				if (isset($form['useMarkerSet'])) {
 					$handle = fopen(
 						$basegallerydir . 'map/images/markers/'
@@ -229,7 +228,6 @@ class MapMarkersAdminController extends GalleryController {
 						$width50   = $currentsize[0] / 2;
 						$height200 = $currentsize[1] * 2;
 						$width200  = $currentsize[0] * 2;
-
 						if ($form['size'][0] == '50') {
 							$resize = $width50 . 'x' . $height50;
 						}
@@ -256,7 +254,6 @@ class MapMarkersAdminController extends GalleryController {
 
 				if ($form['colors'] != 'all') {
 					$colors = array();
-
 					if (isset($_POST['blue'])) {
 						$colors = $colors + array(
 							'BLUE' => '95,95,31',
@@ -321,7 +318,6 @@ class MapMarkersAdminController extends GalleryController {
 				// Put the colorlist in a file for later retrieval
 				$colorlist = array();
 				$handle    = fopen($basegallerydir . 'map/images/markers/' . $setname . '/colorlist', 'w');
-
 				foreach ($colors as $name => $value) {
 					$colorlist[] = $name;
 					fwrite($handle, $name . '*');
@@ -342,7 +338,6 @@ class MapMarkersAdminController extends GalleryController {
 					$command   = array($magicpath . 'convert');
 					$command[] = '-modulate';
 					$command[] = $modulate;
-
 					if (!empty($resize)) {
 						$command[] = '-resize';
 						$command[] = $resize;
@@ -365,7 +360,6 @@ class MapMarkersAdminController extends GalleryController {
 					) {
 						$statusexec = 1;
 						$error[]    = 'form[createicons][' . $returnstuff[2][0] . ']';
-
 						break;
 					}
 				}
@@ -489,6 +483,7 @@ class MapMarkersAdminView extends GalleryView {
 
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
+
 		$basepngdir = $basegallerydir . 'modules/map/images/basemarkers/';
 		$pngdir     = $base . 'modules/map/images/basemarkers/';
 
@@ -510,7 +505,6 @@ class MapMarkersAdminView extends GalleryView {
 		);
 
 		$mydir = dir($basegallerydir . 'modules/map/images/markers/');
-
 		while (($file = $mydir->read()) !== false) {
 			if ((is_dir($basegallerydir . 'modules/map/images/markers/' . $file))
 				and (substr($file, -1) != '.') and ($file != 'CVS')
@@ -626,7 +620,6 @@ class MapMarkersAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
-
 		if ($template->hasVariable('SiteAdmin')) {
 			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';

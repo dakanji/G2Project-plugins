@@ -63,7 +63,6 @@ class WebDavController extends GalleryController {
 		 * WebDAV with Windows Web Folders.
 		 */
 		$userAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
-
 		if (strpos($userAgent, 'Microsoft Data Access Internet Publishing Provider DAV') !== false
 			|| strpos($userAgent, 'Microsoft-WebDAV-MiniRedir') !== false
 		) {
@@ -115,7 +114,6 @@ class WebDavController extends GalleryController {
 			);
 
 			$handle = WebDavServer::getme()->openRequestBody();
-
 			while (!feof($handle)) {
 				fgets($handle);
 			}
@@ -125,7 +123,6 @@ class WebDavController extends GalleryController {
 
 		// Silently legalize path component
 		$pathComponents = preg_split('/\//', $path, -1, PREG_SPLIT_NO_EMPTY);
-
 		foreach ($pathComponents as $key => $pathComponent) {
 			GalleryUtilities::unsanitizeInputValues($pathComponent);
 

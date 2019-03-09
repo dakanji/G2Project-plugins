@@ -33,7 +33,6 @@ function Auth_OpenID_getURLIllegalCharRE() {
 
 function Auth_OpenID_getUnreserved() {
 	$_unreserved = array();
-
 	for ($i = 0; $i < 256; $i++) {
 		$_unreserved[$i] = false;
 	}
@@ -54,13 +53,11 @@ function Auth_OpenID_getUnreserved() {
 	$_unreserved[ord('.')] = true;
 	$_unreserved[ord('_')] = true;
 	$_unreserved[ord('~')] = true;
-
 	return $_unreserved;
 }
 
 function Auth_OpenID_getEscapeRE() {
 	$parts = array();
-
 	foreach (array_merge(
 		Auth_Yadis_getUCSChars(),
 		Auth_Yadis_getIPrivateChars()
@@ -76,13 +73,11 @@ function Auth_OpenID_getEscapeRE() {
 function Auth_OpenID_pct_encoded_replace_unreserved($mo) {
 	$_unreserved = Auth_OpenID_getUnreserved();
 	$i           = intval($mo[1], 16);
-
 	if ($_unreserved[$i]) {
 		return chr($i);
 	}
 
 	return strtoupper($mo[0]);
-
 	return $mo[0];
 }
 
@@ -92,7 +87,6 @@ function Auth_OpenID_pct_encoded_replace($mo) {
 
 function Auth_OpenID_remove_dot_segments($path) {
 	$result_segments = array();
-
 	while ($path) {
 		if (Auth_Yadis_startswith($path, '../')) {
 			$path = substr($path, 3);
@@ -104,13 +98,11 @@ function Auth_OpenID_remove_dot_segments($path) {
 			$path = '/';
 		} elseif (Auth_Yadis_startswith($path, '/../')) {
 			$path = substr($path, 3);
-
 			if ($result_segments) {
 				array_pop($result_segments);
 			}
 		} elseif ($path == '/..') {
 			$path = '/';
-
 			if ($result_segments) {
 				array_pop($result_segments);
 			}
@@ -120,13 +112,11 @@ function Auth_OpenID_remove_dot_segments($path) {
 			$path = '';
 		} else {
 			$i = 0;
-
 			if ($path[0] == '/') {
 				$i = 1;
 			}
 
 			$i = strpos($path, '/', $i);
-
 			if ($i === false) {
 				$i = strlen($path);
 			}
@@ -142,7 +132,6 @@ function Auth_OpenID_remove_dot_segments($path) {
 function Auth_OpenID_urinorm($uri) {
 	$uri_matches = array();
 	preg_match(Auth_OpenID_getURIPattern(), $uri, $uri_matches);
-
 	if (count($uri_matches) < 9) {
 		for ($i = count($uri_matches); $i <= 9; $i++) {
 			$uri_matches[] = '';
@@ -161,27 +150,23 @@ function Auth_OpenID_urinorm($uri) {
 	}
 
 	$scheme = $uri_matches[2];
-
 	if ($scheme) {
 		$scheme = strtolower($scheme);
 	}
 
 	$scheme = $uri_matches[2];
-
 	if ($scheme === '') {
 		// No scheme specified
 		return null;
 	}
 
 	$scheme = strtolower($scheme);
-
 	if (!in_array($scheme, array('http', 'https'))) {
 		// Not an absolute HTTP or HTTPS URI
 		return null;
 	}
 
 	$authority = $uri_matches[4];
-
 	if ($authority === '') {
 		// Not an absolute URI
 		return null;
@@ -219,7 +204,7 @@ function Auth_OpenID_urinorm($uri) {
 			$host
 		);
 
-	// NO IDNA.
+		// NO IDNA.
 		// $host = unicode($host, 'utf-8').encode('idna');
 	} else {
 		$host = strtolower($host);
@@ -245,19 +230,16 @@ function Auth_OpenID_urinorm($uri) {
 	);
 
 	$path = Auth_OpenID_remove_dot_segments($path);
-
 	if (!$path) {
 		$path = '/';
 	}
 
 	$query = $uri_matches[6];
-
 	if ($query === null) {
 		$query = '';
 	}
 
 	$fragment = $uri_matches[8];
-
 	if ($fragment === null) {
 		$fragment = '';
 	}

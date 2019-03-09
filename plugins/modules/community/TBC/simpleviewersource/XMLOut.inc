@@ -41,7 +41,6 @@ class XMLOutView extends GalleryView {
 
 		// Figure out which item we're talking about
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
-
 		if (empty($itemId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -105,6 +104,7 @@ class XMLOutView extends GalleryView {
 				'htmlEntities'   => true,
 			)
 		);
+
 		$fnParams['imagePath'] = $urlgen->generateUrl(
 			array(
 				'view'           => 'simpleviewersource.DownloadMax',
@@ -150,7 +150,6 @@ class XMLOutView extends GalleryView {
 				$myFilename = $myItem->getTitle();
 				$myCaption  = $myItem->getSummary();
 				echo "<image><filename>$myItemId</filename><caption>$myFilename</caption></image>\n";
-
 				if (isset($moduleParams['maxItems']) && !(--$moduleParams['maxItems'])) {
 					break;
 				}
@@ -159,7 +158,6 @@ class XMLOutView extends GalleryView {
 
 		// done
 		echo '</simpleviewerGallery>';
-
 		return null;
 	}
 }

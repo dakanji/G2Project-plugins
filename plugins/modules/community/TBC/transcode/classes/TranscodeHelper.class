@@ -144,7 +144,6 @@ class TranscodeHelper {
 		if (isset($derivatives[$itemId])) {
 			foreach ($derivatives as $derivative) {
 				$op = strstr($derivative->getDerivativeOperations(), 'convert-to-/');
-
 				if (strlen($op) > 0) {
 					return array(null, $derivative);
 				}

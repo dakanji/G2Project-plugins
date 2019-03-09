@@ -30,6 +30,7 @@ class MultimediaModule extends GalleryModule {
 		global $gallery;
 
 		$this->setId('multimedia');
+
 		$this->setName($gallery->i18n('Multimedia'));
 		$this->setDescription(
 			$gallery->i18n(
@@ -39,7 +40,9 @@ class MultimediaModule extends GalleryModule {
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -121,7 +124,6 @@ class MultimediaModule extends GalleryModule {
 		}
 
 		$ids = array();
-
 		while ($result = $searchResults->nextResult()) {
 			$ids[] = (int)$result[0];
 		}
@@ -154,6 +156,7 @@ class MultimediaModule extends GalleryModule {
 					}
 
 					$item->setRenderer('MultimediaRenderer');
+
 					$ret = $item->save();
 
 					if ($ret) {

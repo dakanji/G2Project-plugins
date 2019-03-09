@@ -104,7 +104,9 @@ class FlashVideoRendererTest extends GalleryTestCase {
 				'fallback' => 'FALLBACK',
 			)
 		);
+
 		$this->assert(strpos($html, '<div id="flashvideo"') !== false, 'flash <div> placeholder');
+
 		$this->assert(strpos($html, '.swf'), '.swf');
 		$this->assert(strpos($html, 'http'), 'http');
 		$this->assert(strpos($html, (string)$this->_item->getId()), 'itemId');

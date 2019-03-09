@@ -63,11 +63,9 @@ class Getid3DescriptionOption extends ItemAddOption {
 		 * assume a value of 100 which is fairly low
 		 */
 		$batchSize = 100;
-
 		do {
 			$currentItems = array_splice($itemsInBatches, 0, $batchSize);
 			$itemIds      = array();
-
 			foreach ($currentItems as $item) {
 				$itemIds[] = $item->getId();
 			}
@@ -99,10 +97,10 @@ class Getid3DescriptionOption extends ItemAddOption {
 					}
 
 					$mustSave = false;
-
 					if (!empty($getid3Data[$itemId]['Title']['value'])) {
 						if ($addOption & GETID3_MP3_TITLE) {
 							$currentItems[$i]->setTitle($getid3Data[$itemId]['Title']['value']);
+
 							$mustSave = true;
 						}
 					}
@@ -125,7 +123,6 @@ class Getid3DescriptionOption extends ItemAddOption {
 				return array($ret, null, null);
 			}
 		} while (!empty($itemsInBatches));
-
 		return array(null, $errors, $warnings);
 	}
 }

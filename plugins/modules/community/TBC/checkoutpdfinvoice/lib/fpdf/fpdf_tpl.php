@@ -112,15 +112,16 @@ class FPDF_TPL extends FPDF {
 			'w'               => $w,
 			'h'               => $h,
 		);
+
 		$this->SetAutoPageBreak(false);
 
 		// Define own high and width to calculate possitions correct
 		$this->h      = $h;
 		$this->w      = $w;
 		$this->_intpl = true;
+
 		$this->SetXY($x + $this->lMargin, $y + $this->tMargin);
 		$this->SetRightMargin($this->w - $w + $this->rMargin);
-
 		return $this->tpl;
 	}
 
@@ -135,14 +136,16 @@ class FPDF_TPL extends FPDF {
 		if ($this->_intpl) {
 			$this->_intpl = false;
 			$tpl          =& $this->tpls[$this->tpl];
+
 			$this->SetXY($tpl['o_x'], $tpl['o_y']);
+
 			$this->tMargin = $tpl['o_tMargin'];
 			$this->lMargin = $tpl['o_lMargin'];
 			$this->rMargin = $tpl['o_rMargin'];
 			$this->h       = $tpl['o_h'];
 			$this->w       = $tpl['o_w'];
-			$this->SetAutoPageBreak($tpl['o_AutoPageBreak'], $tpl['o_bMargin']);
 
+			$this->SetAutoPageBreak($tpl['o_AutoPageBreak'], $tpl['o_bMargin']);
 			return $this->tpl;
 		}
 
@@ -184,7 +187,6 @@ class FPDF_TPL extends FPDF {
 		$y   = $tpl['y'];
 		$w   = $tpl['w'];
 		$h   = $tpl['h'];
-
 		if ($_x == null) {
 			$_x = $x;
 		}
@@ -196,6 +198,7 @@ class FPDF_TPL extends FPDF {
 		$wh = $this->getTemplateSize($tplidx, $_w, $_h);
 		$_w = $wh['w'];
 		$_h = $wh['h'];
+
 		$this->_out(sprintf('q %.4f 0 0 %.4f %.2f %.2f cm', ($_w / $w), ($_h / $h), $_x * $this->k, ($this->h - ($_y + $_h)) * $this->k)); // Translate
 		$this->_out($this->tplprefix . $tplidx . ' Do Q');
 
@@ -223,7 +226,6 @@ class FPDF_TPL extends FPDF {
 		$tpl =& $this->tpls[$tplidx];
 		$w   = $tpl['w'];
 		$h   = $tpl['h'];
-
 		if ($_w == 0 and $_h == 0) {
 			$_w = $w;
 			$_h = $h;
@@ -256,7 +258,6 @@ class FPDF_TPL extends FPDF {
 
 		parent::SetFont($family, $style, $size);
 		$fontkey = $this->FontFamily . $this->FontStyle;
-
 		if ($this->_intpl) {
 			$this->_res['tpl'][$this->tpl]['fonts'][$fontkey] =& $this->fonts[$fontkey];
 		} else {
@@ -269,7 +270,6 @@ class FPDF_TPL extends FPDF {
 	 */
 	public function Image($file, $x, $y, $w = 0, $h = 0, $type = '', $link = '') {
 		parent::Image($file, $x, $y, $w, $h, $type, $link);
-
 		if ($this->_intpl) {
 			$this->_res['tpl'][$this->tpl]['images'][$file] =& $this->images[$file];
 		} else {
@@ -322,17 +322,26 @@ class FPDF_TPL extends FPDF {
 	 */
 	public function _putformxobjects() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
+
 		reset($this->tpls);
 
 		foreach ($this->tpls as $tplidx => $tpl) {
 			$p = ($this->compress) ? gzcompress($tpl['buffer']) : $tpl['buffer'];
+
 			$this->_newobj();
+
 			$this->tpls[$tplidx]['n'] = $this->n;
+
 			$this->_out('<<' . $filter . '/Type /XObject');
+
 			$this->_out('/Subtype /Form');
+
 			$this->_out('/FormType 1');
+
 			$this->_out(sprintf('/BBox [%.2f %.2f %.2f %.2f]', $tpl['x'] * $this->k, ($tpl['h'] - $tpl['y']) * $this->k, $tpl['w'] * $this->k, ($tpl['h'] - $tpl['y'] - $tpl['h']) * $this->k));
+
 			$this->_out('/Resources ');
+
 			$this->_out('<</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
 
 			if (isset($this->_res['tpl'][$tplidx]['fonts']) && count($this->_res['tpl'][$tplidx]['fonts'])) {
@@ -349,7 +358,6 @@ class FPDF_TPL extends FPDF {
 				|| isset($this->_res['tpl'][$tplidx]['tpls']) && count($this->_res['tpl'][$tplidx]['tpls'])
 			) {
 				$this->_out('/XObject <<');
-
 				if (isset($this->_res['tpl'][$tplidx]['images']) && count($this->_res['tpl'][$tplidx]['images'])) {
 					foreach ($this->_res['tpl'][$tplidx]['images'] as $image) {
 						$this->_out('/I' . $image['i'] . ' ' . $image['n'] . ' 0 R');
@@ -366,7 +374,9 @@ class FPDF_TPL extends FPDF {
 			}
 
 			$this->_out('>>');
+
 			$this->_out('/Length ' . strlen($p) . ' >>');
+
 			$this->_putstream($p);
 			$this->_out('endobj');
 		}
@@ -382,7 +392,9 @@ class FPDF_TPL extends FPDF {
 
 		//Resource dictionary
 		$this->offsets[2] = strlen($this->buffer);
+
 		$this->_out('2 0 obj');
+
 		$this->_out('<<');
 		$this->_putresourcedict();
 		$this->_out('>>');
@@ -391,7 +403,6 @@ class FPDF_TPL extends FPDF {
 
 	public function _putxobjectdict() {
 		parent::_putxobjectdict();
-
 		if (count($this->tpls)) {
 			foreach ($this->tpls as $tplidx => $tpl) {
 				$this->_out($this->tplprefix . $tplidx . ' ' . $tpl['n'] . ' 0 R');

@@ -65,10 +65,8 @@ class MapFilterAdminController extends GalleryController {
 			$tmp            = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 			$currentfilters = explode('|', $tmp[1]);
 			$newfilter      = '';
-
 			foreach ($currentfilters as $filter) {
 				$temp = explode('`', $filter);
-
 				if ($temp[0] != $id) {
 					if ($newfilter == '') {
 						$newfilter = $filter;
@@ -93,10 +91,8 @@ class MapFilterAdminController extends GalleryController {
 			$tmp            = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 			$currentfilters = explode('|', $tmp[1]);
 			$newfilter      = '';
-
 			foreach ($currentfilters as $filter) {
 				$temp = explode('`', $filter);
-
 				if ($temp[0] != $id) {
 					if ($newfilter == '') {
 						$newfilter = $filter;
@@ -139,10 +135,8 @@ class MapFilterAdminController extends GalleryController {
 				$FilterName   = $_POST['FilterName'];
 				$FilterZoom   = $_POST['FilterZoom'];
 				$FilterCenter = $_POST['FilterCenter'];
-
 				if ($oldfilter[1] != '') {
 					$temp = explode('|', $oldfilter[1]);
-
 					if (!isset($_POST['oldid'])) {
 						// @todo This code will not get the maximum id. Fix similar to Routes
 						$maxfilter = explode('`', max($temp));
@@ -181,7 +175,6 @@ class MapFilterAdminController extends GalleryController {
 		if (isset($form['action']['savesettings'])) {
 			$form['ShowAlbumFilters'] = false;
 			$form['ShowFilters']      = 0;
-
 			if (array_key_exists('showalbumfilters', $_POST) and $_POST['showalbumfilters']) {
 				$form['ShowAlbumFilters'] = true;
 			}
@@ -218,15 +211,16 @@ class MapFilterAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
-
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
-									$value             = str_replace('[map.map]', '', $value);
-									$value             = '[map.map] ' . $value;
+
+									$value = str_replace('[map.map]', '', $value);
+									$value = '[map.map] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -236,18 +230,19 @@ class MapFilterAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-									$value                 = str_replace('[map.map]', '', $value);
-									$value                 = '[map.map] ' . $value;
+
+									$value = str_replace('[map.map]', '', $value);
+									$value = '[map.map] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
 					}
 
 					break;
-
 				case 2: // Show on the right, no sidebar block -> continue
 				case 3: // Show on the top, no sidebar block -> continue
 				case 4: // Show on the bottom, no sidebar block -> continue
@@ -278,14 +273,15 @@ class MapFilterAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
-
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
-									$value             = str_replace('[map.map]', '', $value);
+
+									$value = str_replace('[map.map]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -295,10 +291,12 @@ class MapFilterAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-									$value                 = str_replace('[map.map]', '', $value);
+
+									$value = str_replace('[map.map]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -352,6 +350,7 @@ class MapFilterAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$template->head('modules/map/includes/GoogleMap.css');
+
 		$form['formName'] = 'MapFilterAdmin';
 
 		// Set default values for undefined plugin parameters
@@ -378,7 +377,6 @@ class MapFilterAdminView extends GalleryView {
 			$filteroptions    = array();
 			$separatedfilters = explode('|', $param['Filters']);
 			sort($separatedfilters);
-
 			foreach ($separatedfilters as $alloptions) {
 				$options              = explode('`', $alloptions);
 				$form['filterlist'][] = array(

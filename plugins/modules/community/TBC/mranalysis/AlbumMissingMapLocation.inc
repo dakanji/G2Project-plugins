@@ -45,6 +45,7 @@ class AlbumMissingMapLocationView extends GalleryView {
 		$form['formName'] = 'AdminAlbumMissingMapLocation';
 
 		$gallery->guaranteeTimeLimit(120);
+
 		$query = '
             SELECT DISTINCT
                 [GalleryAlbumItem::id]

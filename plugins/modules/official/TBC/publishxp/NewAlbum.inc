@@ -39,7 +39,6 @@ class NewAlbumController extends GalleryController {
 
 		$platform =& $gallery->getPlatform();
 		$results  = $error  = $status  = array();
-
 		if (isset($form['action']['newAlbum'])) {
 			if (empty($form['parentId'])) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
@@ -100,7 +99,6 @@ class NewAlbumController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -121,7 +119,6 @@ class NewAlbumView extends GalleryView {
 		if ($form['formName'] != 'NewAlbum') {
 			$form['formName'] = 'NewAlbum';
 			$parentId         = GalleryUtilities::getRequestVariables('parentId');
-
 			if (empty($parentId)) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}

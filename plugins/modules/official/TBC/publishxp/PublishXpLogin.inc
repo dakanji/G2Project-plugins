@@ -37,7 +37,6 @@ class PublishXpLoginController extends GalleryController {
 		global $gallery;
 
 		$results = $error = array();
-
 		if (isset($form['action']['login'])) {
 			if (empty($form['userName'])) {
 				$error[] = 'form[error][userName][missing]';
@@ -68,6 +67,7 @@ class PublishXpLoginController extends GalleryController {
 
 				if (isset($user) && $user->isCorrectPassword($form['password'])) {
 					$gallery->setActiveUser($user);
+
 					$event = GalleryCoreApi::newEvent('Gallery::Login');
 
 					$event->setEntity($user);
@@ -104,7 +104,6 @@ class PublishXpLoginController extends GalleryController {
 
 		$results['status'] = array();
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }

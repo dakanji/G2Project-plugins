@@ -54,7 +54,6 @@ class MapLegendAdminController extends GalleryController {
 			$form['AlbumLegend'] = false;
 			$form['PhotoLegend'] = false;
 			$form['GroupLegend'] = false;
-
 			if (array_key_exists('usealbumlegend', $_POST) and $_POST['usealbumlegend']) {
 				$form['AlbumLegend'] = true;
 			}
@@ -70,7 +69,6 @@ class MapLegendAdminController extends GalleryController {
 			$form['ExpandAlbumLegend'] = false;
 			$form['ExpandPhotoLegend'] = false;
 			$form['ExpandGroupLegend'] = false;
-
 			if (array_key_exists('ExpandAlbumLegend', $_POST) and $_POST['ExpandAlbumLegend']) {
 				$form['ExpandAlbumLegend'] = true;
 			}
@@ -86,7 +84,6 @@ class MapLegendAdminController extends GalleryController {
 			$albumlegenditem = '';
 			$photolegenditem = '';
 			$grouplegenditem = '';
-
 			for ($i = 0; $i < 10; $i++) {
 				if ($form['AlbumLegend']) {
 					$albumlegenditem .= $_POST['A' . $i] . '|';
@@ -104,7 +101,6 @@ class MapLegendAdminController extends GalleryController {
 			$form['PhotoLegends'] = $photolegenditem;
 			$form['AlbumLegends'] = $albumlegenditem;
 			$form['GroupLegends'] = $grouplegenditem;
-
 			switch ($form['LegendPos']) {
 				case 1:
 					// Legend is on the left, add the map.Legend Block
@@ -134,15 +130,16 @@ class MapLegendAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
-
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
-									$value             = str_replace('[map.Legend]', '', $value);
-									$value             = '[map.Legend] ' . $value;
+
+									$value = str_replace('[map.Legend]', '', $value);
+									$value = '[map.Legend] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -152,18 +149,19 @@ class MapLegendAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-									$value                 = str_replace('[map.Legend]', '', $value);
-									$value                 = '[map.Legend] ' . $value;
+
+									$value = str_replace('[map.Legend]', '', $value);
+									$value = '[map.Legend] ' . $value;
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
 					}
 
 					break;
-
 				case 2: // Legend on the top   -> continue
 				case 3: // Legend on the bottom -> continue
 				case 4: // No Legend to show -> continue
@@ -194,14 +192,15 @@ class MapLegendAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
-
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
-									$value             = str_replace('[map.Legend]', '', $value);
+
+									$value = str_replace('[map.Legend]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						} elseif (is_array($settings[1])) {
@@ -211,10 +210,12 @@ class MapLegendAdminController extends GalleryController {
 										'block-list',
 										$settings[1][$num]['value']
 									);
-									$value                 = str_replace('[map.Legend]', '', $value);
+
+									$value = str_replace('[map.Legend]', '', $value);
 
 									list($ret, $newvalue) = $deftheme->packSetting('block-list', $value);
-									$ret                  = $deftheme->setParameter('sidebarBlocks', $newvalue);
+
+									$ret = $deftheme->setParameter('sidebarBlocks', $newvalue);
 								}
 							}
 						}
@@ -269,6 +270,7 @@ class MapLegendAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$template->head('modules/map/includes/GoogleMap.css');
+
 		$form['formName'] = 'MapLegendAdmin';
 
 		// Set default values for undefined plugin parameters
@@ -331,7 +333,6 @@ class MapLegendAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
-
 		if ($template->hasVariable('SiteAdmin')) {
 			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';

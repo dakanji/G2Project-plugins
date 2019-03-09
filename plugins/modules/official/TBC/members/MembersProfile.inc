@@ -32,6 +32,7 @@ class MembersProfileView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/members/classes/GalleryMembersHelper.class');
 
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());
@@ -52,7 +53,6 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$userId = GalleryUtilities::getRequestVariables('userId');
-
 		if (empty($userId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
@@ -79,7 +79,6 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$MembersProfile['lastItems'] = array();
-
 		foreach ($lastItems as $item) {
 			$MembersProfile['lastItems'][] = (array)$item;
 		}

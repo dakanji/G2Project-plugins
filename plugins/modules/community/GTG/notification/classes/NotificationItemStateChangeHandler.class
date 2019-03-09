@@ -37,7 +37,6 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 
 		$eventName = $event->getEventName();
 		$entity    = $event->getEntity();
-
 		if (empty($entity)) {
 			return array(
 				GalleryCoreApi::error(
@@ -124,7 +123,6 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 
 			$eventName          = $hints[0];
 			$requiredPermission = $notification->getPermission();
-
 			foreach ($subscribers as $data) {
 				list($ret, $permissions) = GalleryCoreApi::getPermissions($entity->getId(), $data[0]);
 
@@ -154,3 +152,4 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 		return null;
 	}
 }
+

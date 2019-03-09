@@ -17,13 +17,13 @@
 class getid3_amr extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
+
 		$this->fseek($info['avdataoffset']);
+
 		$AMRheader = $this->fread(6);
 		$magic     = '#!AMR' . "\x0A";
-
 		if (substr($AMRheader, 0, 6) != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($AMRheader, 0, 6)) . '"';
-
 			return false;
 		}
 
@@ -48,7 +48,6 @@ class getid3_amr extends getid3_handler {
 		);
 
 		$buffer = '';
-
 		do {
 			if ((strlen($buffer) < $this->getid3->fread_buffer_size()) && !feof($this->getid3->fp)) {
 				$buffer .= $this->fread($this->getid3->fread_buffer_size() * 2);
@@ -58,7 +57,6 @@ class getid3_amr extends getid3_handler {
 			$codec_mode_request = ($AMR_frame_header & 0x78) >> 3; // The 2nd bit through 5th bit (counting the most significant bit as the first bit) comprise the CMR (Codec Mode Request), values 0-7 being valid for AMR. The top bit of the CMR can actually be ignored, though it is used when AMR forms RTP payloads. The lower 3-bits of the header are reserved and are not used. Viewing the header from most significant bit to least significant bit, the encoding is XCCCCXXX, where Xs are reserved (typically 0) and the Cs are the CMR.
 			if ($codec_mode_request > 7) {
 				$info['error'][] = '';
-
 				break;
 			}
 
@@ -68,7 +66,6 @@ class getid3_amr extends getid3_handler {
 		$info['playtime_seconds'] = array_sum($thisfile_amr['frame_mode_count']) * 0.020; // each frame contain 160 samples and is 20 milliseconds long
 		$info['audio']['bitrate'] = (8 * ($info['avdataend'] - $info['avdataoffset'])) / $info['playtime_seconds']; // bitrate could be calculated from average bitrate by distributation of frame types. That would give effective audio bitrate, this gives overall file bitrate which will be a little bit higher since every frame will waste 8 bits for header, plus a few bits for octet padding
 		$info['bitrate']          = $info['audio']['bitrate'];
-
 		return true;
 	}
 

@@ -52,7 +52,6 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 
 		// Verify that we're in the right mode now
 		$session =& $gallery->getSession();
-
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
 			$this->fail('Missing session value');
 		}
@@ -81,7 +80,6 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 
 		// Verify that we're in the right mode now
 		$session =& $gallery->getSession();
-
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
 			$this->fail('Missing session value');
 		}
@@ -110,7 +108,6 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 
 		// Verify that we're in the right mode now
 		$session =& $gallery->getSession();
-
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
 			$this->fail('Missing session value');
 		}

@@ -32,6 +32,7 @@ class MembersListView extends GalleryView {
 	 */
 	public function loadTemplate(&$template = null, &$form = null) {
 		global $gallery;
+
 		GalleryCoreApi::requireOnce('modules/members/classes/GalleryMembersHelper.class');
 
 		list($ret, $result) = GalleryMembersHelper::canViewMembersModule($gallery->getActiveUserId());
@@ -81,7 +82,6 @@ class MembersListView extends GalleryView {
 
 		// Figure out our max pages, make sure our current page fits in it
 		$form['list']['maxPages'] = ceil($form['list']['count'] / $form['list']['pageSize']);
-
 		if ($form['list']['page'] > $form['list']['maxPages']) {
 			$form['list']['page'] = $form['list']['maxPages'];
 		}
@@ -108,7 +108,6 @@ class MembersListView extends GalleryView {
 		}
 
 		$MembersList['users'] = array();
-
 		foreach ($users as $user) {
 			$MembersList['users'][$user->getId()] = (array)$user;
 		}

@@ -45,6 +45,7 @@ class MissingKeywordsView extends GalleryView {
 		$form['formName'] = 'AdminMissingKeywords';
 
 		$gallery->guaranteeTimeLimit(120);
+
 		$query = "
             SELECT
                 [GalleryPhotoItem::id]

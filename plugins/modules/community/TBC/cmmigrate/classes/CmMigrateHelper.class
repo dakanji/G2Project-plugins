@@ -41,7 +41,6 @@ class CmMigrateHelper {
 		$platform =& $gallery->getPlatform();
 		$slash    = $platform->getDirectorySeparator();
 		$tmp      = trim($baseDir);
-
 		if ($tmp[strlen($tmp) - 1] != $slash) {
 			$tmp .= $slash;
 		}
@@ -60,13 +59,11 @@ class CmMigrateHelper {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
-
 		if (!$platform->is_dir($baseDir)) {
 			return false;
 		}
 
 		$configpath = CmMigrateHelper::configPath($baseDir);
-
 		if (!$platform->is_file($configpath)) {
 			return false;
 		}

@@ -95,7 +95,6 @@ class Auth_Yadis_SessionLoader {
 		}
 
 		$required = $this->requiredKeys();
-
 		foreach ($required as $k) {
 			if (!array_key_exists($k, $data)) {
 				return null;
@@ -108,7 +107,6 @@ class Auth_Yadis_SessionLoader {
 
 		$data = array_merge($data, $this->prepareForLoad($data));
 		$obj  = $this->newObject($data);
-
 		if (!$obj) {
 			return null;
 		}
@@ -153,13 +151,11 @@ class Auth_Yadis_SessionLoader {
 	 */
 	public function toSession($obj) {
 		$data = array();
-
 		foreach ($obj as $k => $v) {
 			$data[$k] = $v;
 		}
 
 		$extra = $this->prepareForSave($obj);
-
 		if ($extra && is_array($extra)) {
 			foreach ($extra as $k => $v) {
 				$data[$k] = $v;
@@ -192,7 +188,6 @@ class Auth_OpenID_ServiceEndpointLoader extends Auth_Yadis_SessionLoader {
 	public function requiredKeys() {
 		$obj  = new Auth_OpenID_ServiceEndpoint();
 		$data = array();
-
 		foreach ($obj as $k => $v) {
 			$data[] = $k;
 		}
@@ -238,7 +233,6 @@ class Auth_Yadis_ManagerLoader extends Auth_Yadis_SessionLoader {
 	public function prepareForLoad($data) {
 		$loader   = new Auth_OpenID_ServiceEndpointLoader();
 		$services = array();
-
 		foreach ($data['services'] as $s) {
 			$services[] = $loader->fromSession($s);
 		}
@@ -251,7 +245,6 @@ class Auth_Yadis_ManagerLoader extends Auth_Yadis_SessionLoader {
 	public function prepareForSave($obj) {
 		$loader   = new Auth_OpenID_ServiceEndpointLoader();
 		$services = array();
-
 		foreach ($obj->services as $s) {
 			$services[] = $loader->toSession($s);
 		}
@@ -386,7 +379,6 @@ class Auth_Yadis_Discovery {
 		/// Initialize a discovery object
 		$this->session =& $session;
 		$this->url     = $url;
-
 		if ($session_key_suffix === null) {
 			$session_key_suffix = $this->DEFAULT_SUFFIX;
 		}
@@ -401,7 +393,6 @@ class Auth_Yadis_Discovery {
 	 */
 	public function getNextService($discover_cb, &$fetcher) {
 		$manager = $this->getManager();
-
 		if (!$manager || (!$manager->services)) {
 			$this->destroyManager();
 
@@ -410,7 +401,8 @@ class Auth_Yadis_Discovery {
 				$this->url,
 				$fetcher
 			);
-			$manager                    = $this->createManager($services, $yadis_url);
+
+			$manager = $this->createManager($services, $yadis_url);
 		}
 
 		if ($manager) {
@@ -437,9 +429,9 @@ class Auth_Yadis_Discovery {
 	 */
 	public function cleanup($force = false) {
 		$manager = $this->getManager($force);
-
 		if ($manager) {
 			$service = $manager->current();
+
 			$this->destroyManager($force);
 		} else {
 			$service = null;
@@ -467,7 +459,6 @@ class Auth_Yadis_Discovery {
 		// suffix from the session.
 		$manager_str = $this->session->get($this->getSessionKey());
 		$manager     = null;
-
 		if ($manager_str !== null) {
 			$loader  = new Auth_Yadis_ManagerLoader();
 			$manager = $loader->fromSession(unserialize($manager_str));
@@ -478,7 +469,6 @@ class Auth_Yadis_Discovery {
 		}
 
 		$unused = null;
-
 		return $unused;
 	}
 
@@ -487,7 +477,6 @@ class Auth_Yadis_Discovery {
 	 */
 	public function &createManager($services, $yadis_url = null) {
 		$key = $this->getSessionKey();
-
 		if ($this->getManager()) {
 			return $this->getManager();
 		}
@@ -510,7 +499,6 @@ class Auth_Yadis_Discovery {
 
 		// Oh, PHP.
 		$unused = null;
-
 		return $unused;
 	}
 
@@ -523,6 +511,7 @@ class Auth_Yadis_Discovery {
 	public function destroyManager($force = false) {
 		if ($this->getManager($force) !== null) {
 			$key = $this->getSessionKey();
+
 			$this->session->del($key);
 		}
 	}

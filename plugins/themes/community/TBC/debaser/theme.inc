@@ -35,7 +35,9 @@ class DebaserTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('debaser');
+
 		$this->setName($gallery->i18n('Debaser'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'Something different, something lower'
@@ -45,6 +47,7 @@ class DebaserTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'rows'                => 3,
 				'columns'             => 3,
@@ -160,6 +163,7 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['showThumbTitles'],
 		);
+
 		$settings[] = array(
 			'key'   => 'specialEffects',
 			'name'  => $this->translate(
@@ -168,6 +172,7 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['specialEffects'],
 		);
+
 		$settings[] = array(
 			'key'   => 'roundedCorners',
 			'name'  => $this->translate(
@@ -176,6 +181,7 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'checkbox',
 			'value' => $params['roundedCorners'],
 		);
+
 		$settings[] = array(
 			'key'   => 'htmlHeaderBlock',
 			'name'  => $this->translate(
@@ -184,6 +190,7 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'textarea',
 			'value' => $params['htmlHeaderBlock'],
 		);
+
 		$settings[] = array(
 			'key'   => 'htmlFooterBlock',
 			'name'  => $this->translate(
@@ -192,6 +199,7 @@ class DebaserTheme extends GalleryTheme {
 			'type'  => 'textarea',
 			'value' => $params['htmlFooterBlock'],
 		);
+
 		$settings[] = array(
 			'key'        => 'backgroundImage',
 			'name'       => $this->translate(
@@ -203,6 +211,7 @@ class DebaserTheme extends GalleryTheme {
 			),
 			'value'      => $params['backgroundImage'],
 		);
+
 		$settings[] = array(
 			'key'        => 'backgroundItemImage',
 			'name'       => $this->translate(

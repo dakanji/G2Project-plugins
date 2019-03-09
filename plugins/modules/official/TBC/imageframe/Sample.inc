@@ -58,7 +58,6 @@ class SampleView extends GalleryView {
 		);
 
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
-
 		if (!empty($itemId)) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 

@@ -46,7 +46,6 @@ class NotificationSiteAdminController extends GalleryController {
 		}
 
 		$returnOption = 'redirect';
-
 		if (!empty($form['action']['save'])) {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'notification');
 
@@ -61,7 +60,6 @@ class NotificationSiteAdminController extends GalleryController {
 			}
 
 			$inputRows = 0;
-
 			foreach ($form['notificationMap'] as $i => $notificationMap) {
 				if (empty($notificationMap['currentName'])
 					&& empty($notificationMap['notificationName'])
@@ -73,12 +71,10 @@ class NotificationSiteAdminController extends GalleryController {
 					&& empty($notificationMap['handler'])
 				) {
 					$error[] = 'form[error][notificationMap][' . $i . '][noEventHandler]';
-
 					continue;
 				}
 
 				$inputRows++;
-
 				if (empty($notificationMap['currentName'])) {
 					$ret = $this->_addHandlerEntry($notifications, $notificationMap);
 
@@ -90,11 +86,11 @@ class NotificationSiteAdminController extends GalleryController {
 				} else {
 					$notificationName = $notificationMap['notificationName'];
 					$handlerId        = $notificationMap['handler'];
-
 					if ($notificationMap['currentName'] != $notificationName
 						|| $notificationMap['currentHandler'] != $handlerId
 					) {
 						$this->_removeHandlerEntry($notifications, $notificationMap);
+
 						$ret = $this->_addHandlerEntry($notifications, $notificationMap);
 
 						if ($ret) {
@@ -142,7 +138,6 @@ class NotificationSiteAdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 
@@ -183,7 +178,6 @@ class NotificationSiteAdminController extends GalleryController {
 		$notificationName = $notificationMap['currentName'];
 		$handlerId        = $notificationMap['currentHandler'];
 		unset($notifications[$notificationName][$handlerId]);
-
 		if (empty($notifications[$notificationName])) {
 			unset($notifications[$notificationMap['currentName']]);
 		}
@@ -201,6 +195,7 @@ class NotificationSiteAdminView extends GalleryView {
 		global $gallery;
 
 		$template->style('modules/notification/data/grids.css');
+
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 
 		if ($ret) {
@@ -260,7 +255,6 @@ class NotificationSiteAdminView extends GalleryView {
 
 		$form['notificationMap'] = array();
 		$i                       = 1;
-
 		foreach ($notifications as $notificationName => $handlers) {
 			foreach ($handlers as $handler => $enabledEvent) {
 				$form['notificationMap'][$i++] = array(
@@ -277,8 +271,7 @@ class NotificationSiteAdminView extends GalleryView {
 		}
 
 		$form['totalRows']   = count($form['notificationMap']) + 20;
-		$form['displayRows'] = count($notifications)           + 1;
-
+		$form['displayRows'] = count($notifications) + 1;
 		return null;
 	}
 }

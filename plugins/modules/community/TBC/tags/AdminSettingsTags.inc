@@ -36,7 +36,6 @@ class AdminSettingsTagsController extends GalleryController {
 		global $gallery;
 
 		$redirect = $status = $error = array();
-
 		if (isset($form['action']['save'])) {
 			// Error checking
 			if ($form['tagAdminMode'] == 'General') {
@@ -89,10 +88,8 @@ class AdminSettingsTagsController extends GalleryController {
 						$error[] = 'form[error][classNumber]';
 					} else {
 						$tagCssClass = '';
-
 						for ($i = 0; $i < $form['classNumber']; $i++) {
 							$settings = $form['tagCssClass'][$i];
-
 							if ($settings['font'] != '') {
 								if ($settings['color'] == '') {
 									$settings['color'] = '#000000'; // default to black
@@ -102,15 +99,13 @@ class AdminSettingsTagsController extends GalleryController {
 							} else {
 								// Only store if the font / color are all set
 								$form['classNumber'] = $i;
-
 								break;
 							}
 						}
 
 						$form['tagCssClass'] = substr($tagCssClass, 0, -2);
-
 						foreach (array('classNumber', 'tagCssClass', 'tagCloudTemplate')
- as $setting) {
+						as $setting) {
 							$ret = GalleryCoreApi::setPluginParameter(
 								'module',
 								'tags',
@@ -148,7 +143,6 @@ class AdminSettingsTagsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
-
 		return array(null, $results);
 	}
 }
@@ -182,12 +176,19 @@ class AdminSettingsTagsView extends GalleryView {
 		$tagAdminMode            = empty($tagAdminMode) ? 'General' : $tagAdminMode;
 
 		$template->javascript('lib/yui/yahoo-min.js');
+
 		$template->javascript('lib/yui/event-min.js');
+
 		$template->javascript('lib/yui/dom-min.js');
+
 		$template->javascript('lib/yui/dragdrop-min.js');
+
 		$template->javascript('lib/yui/connection-min.js');
+
 		$template->javascript('lib/yui/color.js');
+
 		$template->javascript('lib/yui/slider-min.js');
+
 		$template->javascript('lib/javascript/ColorChooser.js');
 		$template->javascript('modules/tags/js/AdminTags.js');
 		$template->setVariable('controller', 'tags.AdminSettingsTags');

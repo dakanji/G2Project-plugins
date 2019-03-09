@@ -47,6 +47,7 @@ class BrokenImagesView extends GalleryView {
 		$form['formName'] = 'AdminBrokenImages';
 
 		$gallery->guaranteeTimeLimit(120);
+
 		$query = '
             SELECT DISTINCT
                 [GalleryPhotoItem::id]

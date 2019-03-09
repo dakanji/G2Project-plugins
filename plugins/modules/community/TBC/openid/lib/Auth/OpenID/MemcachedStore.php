@@ -57,7 +57,8 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 			$server_url,
 			$association->handle
 		);
-		$serverKey      = $this->associationServerKey($server_url);
+
+		$serverKey = $this->associationServerKey($server_url);
 
 		// get list of associations
 		$serverAssociations = $this->connection->get($serverKey);
@@ -76,7 +77,6 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 			$serverAssociations,
 			$this->compress
 		);
-
 		// save association itself
 		$this->connection->set(
 			$associationKey,
@@ -120,7 +120,6 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 
 		// get association, return null if failed
 		$association = $this->connection->get($lastKey);
-
 		return $association ? $association : null;
 	}
 
@@ -146,7 +145,6 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 
 		// ensure that given association key exists in list
 		$serverAssociations = array_flip($serverAssociations);
-
 		if (!array_key_exists($associationKey, $serverAssociations)) {
 			return false;
 		}
@@ -161,7 +159,6 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 			$serverAssociations,
 			$this->compress
 		);
-
 		// delete association
 		return $this->connection->delete($associationKey);
 	}

@@ -41,7 +41,9 @@ class FluidTheme extends GalleryTheme {
 		global $gallery;
 
 		$this->setId('fluid');
+
 		$this->setName($gallery->i18n('Fluid'));
+
 		$this->setDescription(
 			$gallery->i18n(
 				'A Flash based Theme'
@@ -51,6 +53,7 @@ class FluidTheme extends GalleryTheme {
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
 		$this->setStandardSettings(
+
 			array(
 				'perPage'       => 12,
 				'colorpack'     => '',
@@ -122,7 +125,6 @@ class FluidTheme extends GalleryTheme {
 		$theme                   =& $template->getVariableByReference('theme');
 		$theme['columnWidthPct'] = floor(100 / $params['perPage']);
 		$showXml                 = GalleryUtilities::getRequestVariables('showxml');
-
 		return array(null, $showXml == 'album' ? 'theme_xml.tpl' : 'theme_flash.tpl');
 	}
 
@@ -152,7 +154,6 @@ class FluidTheme extends GalleryTheme {
 		}
 
 		$showXml = GalleryUtilities::getRequestVariables('showxml');
-
 		return array(null, $showXml == 'album' ? 'theme_xml.tpl' : 'theme.tpl');
 	}
 

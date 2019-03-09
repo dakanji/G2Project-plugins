@@ -62,6 +62,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$this->_markToolkitForCleanup('ImageBlockToolkit');
+
 		$ret = GalleryCoreApi::registerToolkitOperation(
 			'ImageBlockToolkit',
 			array('image/gif'),
@@ -189,7 +190,6 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 
 		$items   = array();
 		$items[] = $photo->getId();
-
 		return array(null, $album, $items);
 	}
 
@@ -218,6 +218,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$photo->setTitle('Test Item');
+
 		$ret = $photo->save();
 
 		if ($ret) {
@@ -264,12 +265,12 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 			// Set scaled size:
 			$w = $src->getWidth();
 			$h = $src->getHeight();
-
 			if ($w <= $size && $h <= $size && $derivativeType == DERIVATIVE_TYPE_IMAGE_THUMBNAIL) {
 				$derivative->setWidth($w);
 				$derivative->setHeight($h);
 			} elseif ($w >= $h) {
 				$derivative->setWidth($size);
+
 				$derivative->setHeight((int)($size * $h / $w));
 			} else {
 				$derivative->setHeight($size);
@@ -315,6 +316,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 		}
 
 		$data = $smarty->_tpl_vars;
+
 		$this->assert(!isset($data['ImageBlockData']['blocks']), 'Block should not exist');
 	}
 
@@ -343,6 +345,7 @@ class ImageBlockDisabledTest extends GalleryTestCase {
 
 		$data = $smarty->_tpl_vars;
 		$this->assert(1 == count($data['ImageBlockData']['blocks']), 'One block');
+
 		$this->assertBlock($data['ImageBlockData']['blocks'][0]);
 	}
 }

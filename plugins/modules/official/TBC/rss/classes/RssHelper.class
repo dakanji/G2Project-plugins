@@ -76,6 +76,7 @@ class RssHelper {
 				'forceFullUrl'   => true,
 			)
 		);
+
 		$generator->addProperty('title', $memberData['title']);
 		$generator->addProperty('description', $memberData['description']);
 		$generator->addProperty('link', $albumUrl);
@@ -101,6 +102,7 @@ class RssHelper {
 						'forceFullUrl'   => true,
 					)
 				);
+
 				$generator->addProperty(
 					'image',
 					array(
@@ -142,15 +144,15 @@ class RssHelper {
 
 		$generator->addProperty('generator', 'Gallery 2 RSS Module, version ' . $version);
 		$generator->addProperty('ttl', $param['ttl']);
-		$vm = $gallery->getPhpVm();
-		$generator->addProperty('lastBuildDate', date('r', $vm->time()));
 
+		$vm = $gallery->getPhpVm();
+
+		$generator->addProperty('lastBuildDate', date('r', $vm->time()));
 		// language tag
 		$generator->addProperty('language', $param['language']);
 
 		$items   = array();
 		$newOnly = ($param['feedDate'] == 'new');
-
 		switch ($param['feedType']) {
 			case 'album':
 			case 'photosRecursive':
@@ -181,7 +183,6 @@ class RssHelper {
 					) {
 						// load parents also, so we can display the name of the parent albums
 						$parentIds = array();
-
 						foreach ($items as $item) {
 							if (!in_array($item->getParentId(), $parentIds)) {
 								$parentIds[] = $item->getParentId();
@@ -195,7 +196,6 @@ class RssHelper {
 						}
 
 						$parentsA = array();
-
 						foreach ($parents as $parent) {
 							$parentsA[$parent->getId()] = $parent;
 						}
@@ -205,7 +205,6 @@ class RssHelper {
 				}
 
 				break;
-
 			case 'photos':
 			case 'photosRandom':
 				list($ret, $items) = RssHelper::getPhotoFeed(
@@ -219,7 +218,6 @@ class RssHelper {
 				}
 
 				break;
-
 			case 'commentsAlbum':
 			case 'commentsPhoto':
 				list($ret, $items) = GalleryCommentHelper::fetchComments(
@@ -233,7 +231,6 @@ class RssHelper {
 				}
 
 				break;
-
 			case 'commentsRecursive':
 				list($ret, $items) = GalleryCommentHelper::fetchAllComments(
 					$id,
@@ -252,7 +249,6 @@ class RssHelper {
 		// if necessary, fetch the thumbnails
 		if (!strstr($param['feedType'], 'comments')) {
 			$itemIds = array();
-
 			foreach ($items as $item) {
 				$itemIds[] = $item->getId();
 			}
@@ -326,16 +322,14 @@ class RssHelper {
 
 		// generate description
 		$description = $item->getDescription();
-
 		if (!isset($description)) {
 			$description = '';
 		}
 
 		$itemSettings = array();
-
 		if (!empty($param['thumbnails']) && !empty($param['thumbnails'][$item->getId()])) {
-			$thumbnail                           = $param['thumbnails'][$item->getId()];
-			$imageUrl                            = $urlGenerator->generateUrl(
+			$thumbnail = $param['thumbnails'][$item->getId()];
+			$imageUrl  = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.DownloadItem',
 					'itemId' => $thumbnail->getId(),
@@ -345,6 +339,7 @@ class RssHelper {
 					'forceFullUrl'   => true,
 				)
 			);
+
 			$description                         = '<a href="' . $url . '"><img border="0" src="' . $imageUrl .
 			'" width="' . $thumbnail->getWidth() .
 			'" height="' . $thumbnail->getHeight() .
@@ -364,7 +359,7 @@ class RssHelper {
 				return $ret;
 			}
 
-			$url1         = $urlGenerator->generateUrl(
+			$url1 = $urlGenerator->generateUrl(
 				array(
 					'view'   => 'core.ShowItem',
 					'itemId' => $item->getParentId(),
@@ -374,6 +369,7 @@ class RssHelper {
 					'forceFullUrl'   => true,
 				)
 			);
+
 			$description .= '<br/>' . $module->translate(
 				array(
 					'text' => 'In album %s',
@@ -387,7 +383,6 @@ class RssHelper {
 		}
 
 		$title = $item->getTitle();
-
 		if (!isset($title)) {
 			$title = $item->getPathComponent();
 		}
@@ -395,7 +390,6 @@ class RssHelper {
 		$itemSettings['title']       = $title;
 		$itemSettings['link']        = $url;
 		$itemSettings['description'] = $description;
-
 		if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 			$itemSettings['category'] = 'album';
 		} else {
@@ -467,6 +461,7 @@ class RssHelper {
 				'forceFullUrl'   => true,
 			)
 		);
+
 		$itemSettings = array(
 			'title'       => $item->getSubject(),
 			'link'        => $url,
@@ -528,7 +523,6 @@ class RssHelper {
 		}
 
 		krsort($itemsAcc);
-
 		return array(null, $itemsAcc);
 	}
 
@@ -601,7 +595,6 @@ class RssHelper {
 		}
 
 		$timeCutOff = time() - 3600 * 24 * $newDays;
-
 		if ($random) {
 			// get the random function for the DB
 			list($ret, $orderBy) = $storage->getFunctionSql('RAND', array());
@@ -616,7 +609,6 @@ class RssHelper {
 		$query = "
 	    SELECT
 	      [$table::id]";
-
 		if ($perAlbumLimit != 0) {
 			$query .= ', [GalleryItemAttributesMap::parentSequence]';
 		}
@@ -626,7 +618,6 @@ class RssHelper {
 	      [$table], [GalleryItemAttributesMap],
 	      [GalleryAccessSubscriberMap], [GalleryEntity]
 	    WHERE ";
-
 		if (!$random) {
 			$query .= "
 	      [GalleryEntity::$timestamp] >= $timeCutOff
@@ -637,7 +628,6 @@ class RssHelper {
 	      [$table::id] = [GalleryItemAttributesMap::itemId]
 	      AND
 	      [$table::id] = [GalleryEntity::id]";
-
 		if (!empty($parentSequence)) {
 			$query .= "
 	      AND
@@ -655,7 +645,6 @@ class RssHelper {
 
 		$data   = $aclIds;
 		$params = array();
-
 		if (isset($limit)) {
 			$params['limit'] = array(
 				'count' => $limit,
@@ -670,7 +659,6 @@ class RssHelper {
 
 		$list     = array();
 		$perAlbum = array();
-
 		while ($result = $searchResults->nextResult()) {
 			if ($perAlbumLimit != 0) {
 				/*
@@ -679,7 +667,6 @@ class RssHelper {
 				 */
 				if (isset($perAlbum[$result[1]])) {
 					$n = $perAlbum[$result[1]];
-
 					if ($n < $perAlbumLimit) {
 						// under the limit
 						$perAlbum[$result[1]] = $n + 1;

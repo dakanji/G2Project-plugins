@@ -42,23 +42,26 @@ class Auth_Yadis_ParseHTML {
 	public $_attr_find = '\b([-\w]+)=(".*?"|\'.*?\'|.+?)[\/\s>]';
 
 	public function __construct() {
-		$this->_attr_find           = sprintf(
+		$this->_attr_find = sprintf(
 			'/%s/%s',
 			$this->_attr_find,
 			$this->_re_flags
 		);
-		$this->_removed_re          = sprintf(
+
+		$this->_removed_re = sprintf(
 			'/%s/%s',
 			$this->_removed_re,
 			$this->_re_flags
 		);
+
 		$this->_entity_replacements = array(
 			'amp'  => '&',
 			'lt'   => '<',
 			'gt'   => '>',
 			'quot' => '"',
 		);
-		$this->_ent_replace         = sprintf(
+
+		$this->_ent_replace = sprintf(
 			'&(%s);',
 			implode('|', $this->_entity_replacements)
 		);
@@ -82,7 +85,6 @@ class Auth_Yadis_ParseHTML {
 		// do it for us.
 		$str = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $str);
 		$str = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $str);
-
 		return $str;
 	}
 
@@ -99,7 +101,6 @@ class Auth_Yadis_ParseHTML {
 		$matches = array();
 		$double  = '/^"(.*)"$/';
 		$single  = "/^\'(.*)\'$/";
-
 		if (preg_match($double, $str, $matches)) {
 			return $matches[1];
 		}
@@ -154,6 +155,7 @@ class Auth_Yadis_ParseHTML {
 	 * @param string $html_string An HTMl document string
 	 * @return array $tag_list Array of tags; each tag is an array of
 	 * attribute -> value.
+
 	 */
 	public function getMetaTags($html_string) {
 		$html_string = preg_replace(
@@ -161,7 +163,8 @@ class Auth_Yadis_ParseHTML {
 			'',
 			$html_string
 		);
-		$key_tags    = array(
+
+		$key_tags = array(
 			$this->tagPattern('html', false, false),
 			$this->tagPattern('head', false, false),
 			$this->tagPattern('head', true, false),
@@ -183,11 +186,9 @@ class Auth_Yadis_ParseHTML {
 		);
 
 		$key_tags_pos = array();
-
 		foreach ($key_tags as $pat) {
 			$matches = array();
 			preg_match($pat, $html_string, $matches, PREG_OFFSET_CAPTURE);
-
 			if ($matches) {
 				$key_tags_pos[] = $matches[0][1];
 			} else {
@@ -230,7 +231,6 @@ class Auth_Yadis_ParseHTML {
 
 		$link_data    = array();
 		$link_matches = array();
-
 		if (!preg_match_all(
 			$this->tagPattern('meta', false, 'maybe'),
 			$html_string,
@@ -242,9 +242,10 @@ class Auth_Yadis_ParseHTML {
 
 		foreach ($link_matches[0] as $link) {
 			$attr_matches = array();
-			preg_match_all($this->_attr_find, $link, $attr_matches);
-			$link_attrs = array();
 
+			preg_match_all($this->_attr_find, $link, $attr_matches);
+
+			$link_attrs = array();
 			foreach ($attr_matches[0] as $index => $full_match) {
 				$name  = $attr_matches[1][$index];
 				$value = $this->replaceEntities(
@@ -272,7 +273,6 @@ class Auth_Yadis_ParseHTML {
 	 */
 	public function getHTTPEquiv($html_string) {
 		$meta_tags = $this->getMetaTags($html_string);
-
 		if ($meta_tags) {
 			foreach ($meta_tags as $tag) {
 				if (array_key_exists('http-equiv', $tag)

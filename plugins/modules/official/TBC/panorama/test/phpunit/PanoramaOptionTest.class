@@ -91,6 +91,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$this->_item->setRenderer('PanoramaRenderer');
+
 		$ret = $this->_item->save();
 
 		if ($ret) {
@@ -109,6 +110,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 	public function testPanoramaOn() {
 		$form['PanoramaOption']['isPanorama'] = 1;
 		$result                               = $this->_handleRequestAfterEdit($form, $this->_item);
+
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $item) = $this->_item->refresh();
@@ -128,6 +130,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterEdit(array(), $this->_item);
+
 		$this->assertEquals(array(array(), array()), $result, 'controller results');
 
 		list($ret, $item) = $this->_item->refresh();
@@ -168,10 +171,12 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			preg_match('{<param name="archive" value="http}', $html),
 			'item: jar full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match('{<param[^>]*name="ScrollerThumb"[^>]*value="http}', $html),
 			'item: slider full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match(
 				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
@@ -180,15 +185,18 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 			),
 			'item: image full url: ' . htmlentities($html)
 		);
+
 		$html = $this->_renderer->render('HTML', $this->_derivative, $this->_item, array());
 		$this->assert(
 			preg_match('{<param name="archive" value="http}', $html),
 			'deriv: jar full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match('{<param[^>]*name="ScrollerThumb"[^>]*value="http}', $html),
 			'deriv: slider full url: ' . htmlentities($html)
 		);
+
 		$this->assert(
 			preg_match(
 				'{<param[^>]*name="PanoramaTile"[^>]*value="http[^"]*'
@@ -207,7 +215,9 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 				'forceRawImage' => true,
 			)
 		);
+
 		$this->assertEquals(null, $html, 'item: raw image');
+
 		$html = $this->_renderer->render(
 			'HTML',
 			$this->_derivative,
@@ -216,6 +226,7 @@ class PanoramaOptionTest extends ItemEditOptionTestCase {
 				'forceRawImage' => true,
 			)
 		);
+
 		$this->assertEquals(null, $html, 'deriv: raw image');
 	}
 }

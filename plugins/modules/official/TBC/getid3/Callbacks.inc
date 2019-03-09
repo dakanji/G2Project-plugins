@@ -62,10 +62,8 @@ class Getid3Callbacks {
 
 				// Figure out which version we're looking at
 				$session =& $gallery->getSession();
-
 				if (empty($mode)) {
 					$mode = $session->get('getid3.module.LoadGetid3Info.mode');
-
 					if (empty($mode)) {
 						$mode = 'summary';
 					}
@@ -111,7 +109,6 @@ class Getid3Callbacks {
 				$block['getid3']['LoadGetid3Info']['getid3Data'] = $getid3Data;
 				$block['getid3']['LoadGetid3Info']['getid3ArchiveData'] = $getid3ArchiveData;
 				$block['getid3']['LoadGetid3Info']['mode']              = $mode;
-
 				return null;
 		}
 
