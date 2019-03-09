@@ -105,3 +105,7 @@ composer.phar
 /modules/thumbpage
 /modules/useralbum
 /modules/watermark
+
+# Align Structure #
+###################
+/plugins/
