@@ -77,6 +77,8 @@ class EcardSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[footer]', 'Sent via G2 Ecard tester');
 		GalleryUtilities::putRequestVariable('form[format]', 'html');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
+		// Perform the request
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(

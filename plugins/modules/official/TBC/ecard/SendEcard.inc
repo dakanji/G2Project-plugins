@@ -164,17 +164,22 @@ class SendEcardController extends GalleryController {
 				return array($ret, null);
 			}
 
-			$urlGenerator   =& $gallery->getUrlGenerator();
-			$link           = $canLink ? $urlGenerator->generateUrl(
-				array(
-					'view'   => 'core.ShowItem',
-					'itemId' => $itemId,
-				),
-				array(
-					'forceFullUrl'   => true,
-					'forceSessionId' => false,
-				)
-			) : '';
+			$urlGenerator =& $gallery->getUrlGenerator();
+			if ($canLink) {
+				$link = $urlGenerator->generateUrl(
+					array(
+						'view'   => 'core.ShowItem',
+						'itemId' => $itemId,
+					),
+					array(
+						'forceFullUrl'   => true,
+						'forceSessionId' => false,
+					)
+				);
+			} else {
+				$link = '';
+			}
+
 			$data           = $form;
 			$data['header'] = EcardHelper::replaceKeywords($config['header'], $form);
 			$data['footer'] = EcardHelper::replaceKeywords($config['footer'], $form);
@@ -186,8 +191,14 @@ class SendEcardController extends GalleryController {
 			$data['header']     = nl2br($data['header']);
 			$data['footer']     = nl2br($data['footer']);
 			$data['text']       = nl2br($data['text']);
-			$headers            = array(
-				'from'    => $config['from'] ? $config['from'] : $form['fromName'] . ' <' . $form['from'] . '>',
+			if ($config['from']) {
+				$tempVar = $config['from'];
+			} else {
+				$tempVar = $form['fromName'] . ' <' . $form['from'] . '>';
+			}
+
+			$headers = array(
+				'from'    => $tempVar,
 				'to'      => $form['to'],
 				'subject' => EcardHelper::replaceKeywords($config['subject'], $form),
 			);
@@ -279,7 +290,7 @@ class SendEcardController extends GalleryController {
 			$redirect['itemId'] = (int)$itemId;
 			$status['sent']     = 1;
 		} elseif (isset($form['action']['cancel'])) {
-			// Where to go on a cancel?  Back to viewing the item.
+			// Go Back to viewing the item on cancel.
 			$redirect['view']   = 'core.ShowItem';
 			$redirect['itemId'] = (int)$itemId;
 		}
@@ -361,10 +372,16 @@ class SendEcardView extends GalleryView {
 			}
 		}
 
-		$SendEcard              = array();
-		$SendEcard['itemId']    = $item->getId();
-		$SendEcard['item']      = (array)$item;
-		$SendEcard['emailFrom'] = $config['from'] ? $config['from'] : $form['fromName'] . ' &lt;' . $form['from'] . '&gt;';
+		$SendEcard           = array();
+		$SendEcard['itemId'] = $item->getId();
+		$SendEcard['item']   = (array)$item;
+		if ($config['from']) {
+			$tempVar = $config['from'];
+		} else {
+			$tempVar = $form['fromName'] . ' &lt;' . $form['from'] . '&gt;';
+		}
+
+		$SendEcard['emailFrom'] = $tempVar;
 
 		list($ret, $resize) = EcardHelper::getSmallestSize($item->getId());
 

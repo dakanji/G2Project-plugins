@@ -83,7 +83,11 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		list($ret, $this->_everybodyId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
+		list($ret, $this->_everybodyId) = GalleryCoreApi::getPluginParameter(
+			'module',
+			'core',
+			'id.everybodyGroup'
+		);
 
 		if ($ret) {
 			return $ret;
@@ -229,13 +233,17 @@ class EcardControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
+		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'example@example.com');
 		GalleryUtilities::putRequestVariable('form[fromName]', 'Unit Tester');
 		GalleryUtilities::putRequestVariable('form[text]', 'Test email');
 		GalleryUtilities::putRequestVariable('form[action][send]', 1);
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
-		$gallery->setPlatform($this->_platform);
+
+		// Perform the request
 		$this->handleRequest(ERROR_PERMISSION_DENIED);
 	}
 
@@ -286,12 +294,16 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		);
 
 		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'example@example.com');
 		GalleryUtilities::putRequestVariable('form[fromName]', 'Unit Tester');
 		GalleryUtilities::putRequestVariable('form[text]', 'Test < email');
 		GalleryUtilities::putRequestVariable('form[action][send]', 1);
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
+
+		// Perform the request
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -363,12 +375,16 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		);
 
 		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'example@example.com');
 		GalleryUtilities::putRequestVariable('form[fromName]', 'Unit Tester');
 		GalleryUtilities::putRequestVariable('form[text]', 'Test < email');
 		GalleryUtilities::putRequestVariable('form[action][send]', 1);
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
+
+		// Perform the request
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -436,12 +452,16 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		);
 
 		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'example@example.com');
 		GalleryUtilities::putRequestVariable('form[fromName]', 'Unit Tester');
 		GalleryUtilities::putRequestVariable('form[text]', 'Test < email');
 		GalleryUtilities::putRequestVariable('form[action][send]', 1);
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
+
+		// Perform the request
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -476,6 +496,8 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		}
 
 		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('itemId', $this->_item->getId());
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'example@example.com');
@@ -503,6 +525,8 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		$gallery->setConfig('anonymousUserId', $gallery->getActiveUserId());
 		$this->_controller->_pluginInstances = array(new AddEcardTestValidation());
 		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('itemId', $this->_item->getId());
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'example@example.com');
@@ -590,6 +614,8 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		);
 
 		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('itemId', $this->_item->getId());
 		GalleryUtilities::putRequestVariable('form[to]', 'example2@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'example@example.com');
@@ -671,11 +697,15 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		);
 
 		$gallery->setPlatform($this->_platform);
+
+		// Set request variables
 		GalleryUtilities::putRequestVariable('form[to]', 'sucker@example.com');
 		GalleryUtilities::putRequestVariable('form[from]', 'hacker@example.com');
 		GalleryUtilities::putRequestVariable('form[text]', 'Hi <script>alert(1);</script> friend');
 		GalleryUtilities::putRequestVariable('form[action][send]', 1);
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
+
+		// Perform the request
 		$results = $this->handleRequest();
 		$this->assertEquals(
 			array(
@@ -694,7 +724,6 @@ class EcardControllerTest extends GalleryControllerTestCase {
 	}
 }
 
-GalleryCoreApi::requireOnce('modules/core/classes/GalleryValidationPlugin.class');
 class AddEcardTestValidation extends GalleryValidationPlugin {
 	public function performValidation(&$form, $options = array()) {
 		return array(
