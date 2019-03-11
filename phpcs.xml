@@ -129,6 +129,20 @@
 			<property name="ignoreNewlines" value="true" />
 		</properties>
 	</rule>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+		<properties>
+			<property name="ignoreBlankLines" value="false"/>
+		</properties>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+		<severity>5</severity>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+		<severity>5</severity>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+		<severity>5</severity>
+	</rule>
 
 	<!-- APPLY ADDITIONAL SELECTED PEAR RULES -->
 	<rule ref="PEAR.Commenting.InlineComment" />
