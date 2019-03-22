@@ -109,9 +109,7 @@ class FavouritesSiteAdminController extends GalleryController {
 
 		if (isset($form['action']['save']) && empty($error)) {
 			// textual data
-			foreach (array('themeId')
-
-			as $key) {
+			foreach (array('themeId') as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'favourites',
@@ -171,9 +169,7 @@ class FavouritesSiteAdminView extends GalleryView {
 		}
 
 		if ($form['formName'] != 'FavouritesSiteAdmin') {
-			foreach (array('themeId', 'offerToGuests')
-
- as $key) {
+			foreach (array('themeId', 'offerToGuests') as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'favourites', $key);
 
 				if ($ret) {

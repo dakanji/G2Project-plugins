@@ -56,7 +56,6 @@ if (!defined('PDF_TYPE_STREAM')) {
 }
 
 require_once 'pdf_context.php';
-
 require_once 'wrapper_functions.php';
 
 class pdf_parser {

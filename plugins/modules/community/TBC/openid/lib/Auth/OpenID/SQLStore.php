@@ -28,7 +28,6 @@ $__Auth_OpenID_PEAR_AVAILABLE = @require_once 'DB.php';
  * @access private
  */
 require_once 'Auth/OpenID/Interface.php';
-
 require_once 'Auth/OpenID/Nonce.php';
 
 /**

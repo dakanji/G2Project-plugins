@@ -11,9 +11,7 @@
  * Require utility classes and functions for the consumer.
  */
 require_once 'Auth/OpenID/Extension.php';
-
 require_once 'Auth/OpenID/Message.php';
-
 require_once 'Auth/OpenID/TrustRoot.php';
 
 define(

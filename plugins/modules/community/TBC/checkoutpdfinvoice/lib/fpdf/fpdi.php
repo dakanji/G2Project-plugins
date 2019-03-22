@@ -17,7 +17,6 @@ define('FPDI_VERSION', '1.2');
 ini_set('auto_detect_line_endings', 1);
 
 require_once 'fpdf_tpl.php';
-
 require_once 'fpdi_pdf_parser.php';
 
 class FPDI extends FPDF_TPL {

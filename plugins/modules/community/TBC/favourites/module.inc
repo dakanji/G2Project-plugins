@@ -78,9 +78,7 @@ class FavouritesModule extends GalleryModule {
 		foreach (array(
 			'themeId'       => '',
 			'offerToGuests' => 1,
-		)
-
- as $key => $value) {
+		) as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
 

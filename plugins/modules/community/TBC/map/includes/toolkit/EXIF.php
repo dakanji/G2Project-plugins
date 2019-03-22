@@ -88,11 +88,8 @@ require_once 'EXIF_Tags.php';
 
 //include_once 'EXIF_Makernote.php';
 require_once 'PIM.php';
-
 require_once 'Unicode.php';
-
 require_once 'JPEG.php';
-
 require_once 'IPTC.php';
 
 // Change: as of version 1.11  - Required for TIFF with embedded IRB

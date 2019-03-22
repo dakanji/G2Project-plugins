@@ -18,7 +18,6 @@
  * presence or absence of CURL.
  */
 require_once 'Auth/Yadis/PlainHTTPFetcher.php';
-
 require_once 'Auth/Yadis/ParanoidHTTPFetcher.php';
 
 /**

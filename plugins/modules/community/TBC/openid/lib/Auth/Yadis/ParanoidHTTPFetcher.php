@@ -17,7 +17,6 @@
  * Interface import
  */
 require_once 'Auth/Yadis/HTTPFetcher.php';
-
 require_once 'Auth/OpenID.php';
 
 /**

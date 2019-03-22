@@ -10,9 +10,7 @@
  * Import tools needed to deal with messages.
  */
 require_once 'Auth/OpenID.php';
-
 require_once 'Auth/OpenID/KVForm.php';
-
 require_once 'Auth/Yadis/XML.php';
 
 // For Auth_OpenID_FailureResponse

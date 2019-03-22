@@ -58,11 +58,21 @@ class GetUrlsHelper {
 		$permissions = array('viewResizes' => false, 'viewSource' => false);
 		$options     = array();
 
-		foreach (array('suppressSourceWarning', 'suppressResizedWarning', 'HtmlLink', 'HtmlInline',
-			   'HtmlThumbnail', 'BbLink', 'BbInline', 'BbThumbnail', 'MiscItemId',
-			   'HtmlResize2Full', 'BbResize2Full', 'MiscResizeId', 'MiscThumbnailId', )
-
-		 as $tmp) {
+		foreach (array(
+			'suppressSourceWarning',
+			'suppressResizedWarning',
+			'HtmlLink',
+			'HtmlInline',
+			'HtmlThumbnail',
+			'BbLink',
+			'BbInline',
+			'BbThumbnail',
+			'MiscItemId',
+			'HtmlResize2Full',
+			'BbResize2Full',
+			'MiscResizeId',
+			'MiscThumbnailId',
+		) as $tmp) {
 			$options[$tmp] = 0;
 		}
 

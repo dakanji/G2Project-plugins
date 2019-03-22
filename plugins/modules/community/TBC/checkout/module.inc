@@ -194,11 +194,11 @@ class CheckoutModule extends GalleryModule {
 
 					// Convert the old integer amounts to strings by dividing by 100
 					$query = '
-	        UPDATE
-	          [GalleryCheckoutTransaction]
-	        SET
-	          [::amount] = [::amount]/100
-	        ';
+						UPDATE
+							[GalleryCheckoutTransaction]
+						SET
+							[::amount] = [::amount]/100
+					';
 
 					$ret = $storage->execute($query);
 
@@ -217,13 +217,13 @@ class CheckoutModule extends GalleryModule {
 
 					// For transactions with an email address, set flagPaid
 					$query = '
-	            UPDATE
-	              [GalleryCheckoutTransaction]
-	            SET
-	              [::flagPaid] = 1
-	            WHERE
-	              [::email] IS NOT NULL
-	            ';
+						UPDATE
+							[GalleryCheckoutTransaction]
+						SET
+							[::flagPaid] = 1
+						WHERE
+							[::email] IS NOT NULL
+					';
 
 					$ret = $storage->execute($query);
 
@@ -244,16 +244,16 @@ class CheckoutModule extends GalleryModule {
 					}
 
 					if (!empty($moduleStatus['checkoutpaypal']['active'])) {
-						$query = '
-	                UPDATE
-	                  [GalleryCheckoutTransaction]
-	                INNER JOIN
-	                  [GalleryChildEntity]
-	                ON
-	                  [GalleryChildEntity::parentId] = [GalleryCheckoutTransaction::id]
-	                SET
-	                  [GalleryCheckoutTransaction::paymentPlugin] = \'checkoutpaypal\'
-	                ';
+						$query = "
+							UPDATE
+								[GalleryCheckoutTransaction]
+							INNER JOIN
+								[GalleryChildEntity]
+							ON
+								[GalleryChildEntity::parentId] = [GalleryCheckoutTransaction::id]
+							SET
+								[GalleryCheckoutTransaction::paymentPlugin] = 'checkoutpaypal'
+						";
 
 						$ret = $storage->execute($query);
 
@@ -263,14 +263,14 @@ class CheckoutModule extends GalleryModule {
 					}
 
 					// For all other transactions, set paymentPlugin=checkoutemail
-					$query = '
-	            UPDATE
-	              [GalleryCheckoutTransaction]
-	            SET
-	              [::paymentPlugin] = \'checkoutemail\'
-	            WHERE
-	              [::paymentPlugin] IS NULL
-	            ';
+					$query = "
+						UPDATE
+							[GalleryCheckoutTransaction]
+						SET
+							[::paymentPlugin] = 'checkoutemail'
+						WHERE
+							[::paymentPlugin] IS NULL
+					";
 
 					$ret = $storage->execute($query);
 
@@ -360,19 +360,30 @@ class CheckoutModule extends GalleryModule {
 							return $ret;
 						}
 
-						list($ret, $price) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'price' . $i);
+						list($ret, $price) = GalleryCoreApi::getPluginParameter(
+							'module',
+							'checkout',
+							'price' . $i
+						);
 
 						if ($ret) {
 							return $ret;
 						}
 
-						list($ret, $restrict) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'restrict' . $i);
+						list($ret, $restrict) = GalleryCoreApi::getPluginParameter(
+							'module',
+							'checkout', 'restrict' . $i
+						);
 
 						if ($ret) {
 							return $ret;
 						}
 
-						list($ret, $downloadable) = GalleryCoreApi::getPluginParameter('module', 'checkout', 'downloadable' . $i);
+						list($ret, $downloadable) = GalleryCoreApi::getPluginParameter(
+							'module',
+							'checkout',
+							'downloadable' . $i
+						);
 
 						if ($ret) {
 							return $ret;
@@ -392,9 +403,7 @@ class CheckoutModule extends GalleryModule {
 							'download'      => $downloadable == 'on' ? 'true' : 'false',
 							'chargePostage' => $downloadable == 'on' ? 'false' : 'true',
 							'showPapers'    => 'false',
-						)
-
- as $paramName => $paramValue) {
+						) as $paramName => $paramValue) {
 							$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $rootAlbumId);
 
 							if ($ret) {
@@ -421,16 +430,16 @@ class CheckoutModule extends GalleryModule {
 				case '0.2.0':
 					/* version number cockup in galleryCheckoutTransaction.class in 0.1.18 means we
 					need to manually advance the schema from 1.6 to 1.7 where it should have been */
-					$query = '
-	            UPDATE
-	              [GallerySchema]
-	            SET
-	              [::minor] = 7
-	            WHERE
-	              [::name] = \'CheckoutTransaction\'
-	            AND
-	              [::minor] = 6
-	            ';
+					$query = "
+						UPDATE
+						[GallerySchema]
+						SET
+						[::minor] = 7
+						WHERE
+						[::name] = 'CheckoutTransaction'
+						AND
+						[::minor] = 6
+					";
 
 					$ret = $storage->execute($query);
 
@@ -458,7 +467,12 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-					$ret = GalleryCoreApi::setPluginparameter('module', 'checkout', 'postType0', $gallery->i18n('Standard'));
+					$ret = GalleryCoreApi::setPluginparameter(
+						'module',
+						'checkout',
+						'postType0',
+						$gallery->i18n('Standard')
+					);
 
 					if ($ret) {
 						return $ret;
@@ -501,16 +515,16 @@ class CheckoutModule extends GalleryModule {
 					// Fall Through
 				case '0.3.1':
 					//new installs of 0.3.1 had the wrong schema...
-					$query = '
-	            UPDATE
-	              [GallerySchema]
-	            SET
-	              [::minor] = 10
-	            WHERE
-	              [::name] = \'CheckoutTransaction\'
-	            AND
-	              [::minor] = 9
-	            ';
+					$query = "
+						UPDATE
+						[GallerySchema]
+						SET
+						[::minor] = 10
+						WHERE
+						[::name] = 'CheckoutTransaction'
+						AND
+						[::minor] = 9
+					";
 
 					$ret = $storage->execute($query);
 
@@ -678,7 +692,12 @@ class CheckoutModule extends GalleryModule {
 					}
 
 					foreach ($products as $product) {
-						$ret = CheckoutProductMapHelper::setParam($product['productId'], 'appliesToItem', 'true', $rootAlbumId);
+						$ret = CheckoutProductMapHelper::setParam(
+							$product['productId'],
+							'appliesToItem',
+							'true',
+							$rootAlbumId
+						);
 
 						if ($ret) {
 							return $ret;
@@ -686,7 +705,12 @@ class CheckoutModule extends GalleryModule {
 
 						// once only, may set initialQuantity on a product
 						if ($defaultqty) {
-							$ret = CheckoutProductMapHelper::setParam($product['productId'], 'initialQuantity', '1', $rootAlbumId);
+							$ret = CheckoutProductMapHelper::setParam(
+								$product['productId'],
+								'initialQuantity',
+								'1',
+								$rootAlbumId
+							);
 
 							if ($ret) {
 								return $ret;
@@ -697,10 +721,19 @@ class CheckoutModule extends GalleryModule {
 					}
 
 					// register new purchase album permission
-					$permissions[] = array('purchaseAlbum', $gallery->i18n('[checkout] Purchase album'), 0, array());
+					$permissions[] = array(
+						'purchaseAlbum',
+						$gallery->i18n('[checkout] Purchase album'), 0, array()
+					);
 
 					foreach ($permissions as $p) {
-						$ret = GalleryCoreApi::registerPermission($this->getId(), 'checkout.' . $p[0], $p[1], $p[2], $p[3]);
+						$ret = GalleryCoreApi::registerPermission(
+							$this->getId(),
+							'checkout.' . $p[0],
+							$p[1],
+							$p[2],
+							$p[3]
+						);
 
 						if ($ret) {
 							return $ret;
@@ -720,16 +753,16 @@ class CheckoutModule extends GalleryModule {
 				case '0.4.0':
 				case '0.4.1':
 					// New installs with wrong schema
-					$query = '
-	            UPDATE
-	              [GallerySchema]
-	            SET
-	              [::minor] = 13
-	            WHERE
-	              [::name] = \'CheckoutTransaction\'
-	            AND
-	              [::minor] = 12
-	            ';
+					$query = "
+						UPDATE
+							[GallerySchema]
+						SET
+							[::minor] = 13
+						WHERE
+							[::name] = 'CheckoutTransaction'
+						AND
+							[::minor] = 12
+					";
 
 					$ret = $storage->execute($query);
 
@@ -745,8 +778,25 @@ class CheckoutModule extends GalleryModule {
 					}
 
 					// copy old to new
-					foreach (array('Confirmed', 'Paid', 'Cleared', 'Fulfil', 'Fulfilled', 'Completed', 'Hold', 'Problem', 'Downloaded') as $title) {
-						$query = "UPDATE [GalleryCheckoutTransaction] SET [::time$title] = 1 WHERE [::flag$title] = 1;";
+					foreach (array(
+						'Confirmed',
+						'Paid',
+						'Cleared',
+						'Fulfil',
+						'Fulfilled',
+						'Completed',
+						'Hold',
+						'Problem',
+						'Downloaded'
+					) as $title) {
+						$query = "
+							UPDATE
+								[GalleryCheckoutTransaction]
+							SET
+								[::time$title] = 1
+							WHERE
+								[::flag$title] = 1;
+						";
 
 						$gallery->debug("Monster query: $query");
 
@@ -797,7 +847,12 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'postages', serialize($posts));
+					$ret = GalleryCoreApi::setPluginParameter(
+						'module',
+						'checkout',
+						'postages',
+						serialize($posts)
+					);
 
 					if ($ret) {
 						return $ret;
@@ -822,7 +877,12 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'papers', serialize($papers));
+					$ret = GalleryCoreApi::setPluginParameter(
+						'module',
+						'checkout',
+						'papers',
+						serialize($papers)
+					);
 
 					if ($ret) {
 						return $ret;
@@ -842,7 +902,13 @@ class CheckoutModule extends GalleryModule {
 							}
 						}
 
-						foreach (array('showCustomer', 'showLinks', 'showContents', 'showThumbs', 'isAdmin') as $paramName) {
+						foreach (array(
+							'showCustomer',
+							'showLinks',
+							'showContents',
+							'showThumbs',
+							'isAdmin'
+						) as $paramName) {
 							$emails[$i][$paramName] = $mp[$paramName . $i] ? 1 : 0;
 
 							$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', $paramName . $i);
@@ -859,7 +925,12 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-					$ret = GalleryCoreApi::setPluginParameter('module', 'checkout', 'emails', serialize($emails));
+					$ret = GalleryCoreApi::setPluginParameter(
+						'module',
+						'checkout',
+						'emails',
+						serialize($emails)
+					);
 
 					if ($ret) {
 						return $ret;
@@ -890,16 +961,17 @@ class CheckoutModule extends GalleryModule {
 						);
 					}
 
-					$query = '
-	            UPDATE
-	              [CheckoutProductMap]
-	            SET
-	              [::paramName] = \'postageBand\', [::paramValue] = 0
-	            WHERE
-	              [::paramName] = \'chargePostage\'
-	            AND
-	              [::paramValue] = \'false\'
-	            ';
+					$query = "
+						UPDATE
+							[CheckoutProductMap]
+						SET
+							[::paramName] = 'postageBand',
+							[::paramValue] = 0
+						WHERE
+							[::paramName] = 'chargePostage'
+						AND
+							[::paramValue] = 'false'
+					";
 
 					$ret = $storage->execute($query);
 
@@ -907,16 +979,17 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-					$query = '
-	            UPDATE
-	              [CheckoutProductMap]
-	            SET
-	              [::paramName] = \'postageBand\', [::paramValue] = 1
-	            WHERE
-	              [::paramName] = \'chargePostage\'
-	            AND
-	              [::paramValue] = \'true\'
-	            ';
+					$query = "
+						UPDATE
+							[CheckoutProductMap]
+						SET
+							[::paramName] = 'postageBand',
+							[::paramValue] = 1
+						WHERE
+							[::paramName] = 'chargePostage'
+						AND
+							[::paramValue] = 'true'
+					";
 
 					$ret = $storage->execute($query);
 
@@ -924,16 +997,17 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-					$query = '
-	            UPDATE
-	              [CheckoutProductMap]
-	            SET
-	              [::paramName] = \'paperSet\', [::paramValue] = 0
-	            WHERE
-	              [::paramName] = \'showPapers\'
-	            AND
-	              [::paramValue] = \'false\'
-	            ';
+					$query = "
+						UPDATE
+							[CheckoutProductMap]
+						SET
+							[::paramName] = 'paperSet',
+							[::paramValue] = 0
+						WHERE
+							[::paramName] = 'showPapers'
+						AND
+							[::paramValue] = 'false'
+					";
 
 					$ret = $storage->execute($query);
 
@@ -941,16 +1015,17 @@ class CheckoutModule extends GalleryModule {
 						return $ret;
 					}
 
-					$query = '
-	            UPDATE
-	              [CheckoutProductMap]
-	            SET
-	              [::paramName] = \'paperSet\', [::paramValue] = 1
-	            WHERE
-	              [::paramName] = \'showPapers\'
-	            AND
-	              [::paramValue] = \'true\'
-	            ';
+					$query = "
+						UPDATE
+							[CheckoutProductMap]
+						SET
+							[::paramName] = 'paperSet',
+							[::paramValue] = 1
+						WHERE
+							[::paramName] = 'showPapers'
+						AND
+							[::paramValue] = 'true'
+				";
 
 					$ret = $storage->execute($query);
 
@@ -983,11 +1058,20 @@ class CheckoutModule extends GalleryModule {
 					}
 
 					// Fall Through
-				case 'end of upgrade path':
-					break;
+					case 'end of upgrade path':
+						/*
+						 * Leave this bogus case at the end of the legitimate case statements
+						 * so that we always properly terminate our upgrade path with a break.
+						 */
+						break;
 
-				default:
-					return GalleryCoreApi::error(ERROR_BAD_PLUGIN, sprintf('Unknown module version %s', $currentVersion));
+					default:
+						return GalleryCoreApi::error(
+							ERROR_BAD_PLUGIN,
+							__FILE__,
+							__LINE__,
+							sprintf('Unknown module version %s', $currentVersion)
+						);
 			}
 		}
 

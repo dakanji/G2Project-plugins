@@ -89,9 +89,7 @@ class GetUrlsSiteAdminController extends GalleryController {
 
 			$param = array();
 
-			foreach (array('MiscItemId', 'MiscResizeId', 'MiscThumbnailId')
-
-			 as $key) {
+			foreach (array('MiscItemId', 'MiscResizeId', 'MiscThumbnailId') as $key) {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}

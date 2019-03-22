@@ -110,9 +110,7 @@ class AdminSettingsTagsController extends GalleryController {
 
 						$form['tagCssClass'] = substr($tagCssClass, 0, -2);
 
-						foreach (array('classNumber', 'tagCssClass', 'tagCloudTemplate')
-
- as $setting) {
+						foreach (array('classNumber', 'tagCssClass', 'tagCloudTemplate') as $setting) {
 							$ret = GalleryCoreApi::setPluginParameter(
 								'module',
 								'tags',

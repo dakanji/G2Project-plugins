@@ -72,7 +72,6 @@ if (!isset($GLOBALS['HIDE_UNKNOWN_TAGS'])) {
 }
 
 require_once 'IPTC.php';
-
 require_once 'Unicode.php';
 
 // TODO: Many Photoshop IRB resources not interpeted

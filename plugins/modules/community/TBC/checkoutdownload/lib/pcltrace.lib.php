@@ -562,6 +562,7 @@ function PclTraceHideAll() {
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemStart($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend; ?>
+
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td width="10"><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2">+</font></b></font></td>
@@ -588,6 +589,7 @@ function PclTraceDisplayItemStart($p_id) {
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemStop($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend; ?>
+
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2">
@@ -609,6 +611,7 @@ function PclTraceDisplayItemStop($p_id) {
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemMsg($p_id) {
 	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend; ?>
+
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td width="10"><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2"><center>.</center></font></b></font></td>
