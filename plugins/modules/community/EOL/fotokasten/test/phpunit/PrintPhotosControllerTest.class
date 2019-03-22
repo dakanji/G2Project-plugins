@@ -43,6 +43,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		// Use mock soap client
 		$this->_controller->soapclient = 'FotokastenTestSoapClient';
+
 		FotokastenTestSoapClient::setTest($this);
 
 		// Create some random photo items that we can print
@@ -116,6 +117,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		$session             =& $gallery->getSession();
 		$this->_saveEndpoint = $session->get('fotokasten.endpoint');
 		$this->_sessionKey   = GalleryUtilities::prefixFormVariable($session->getKey());
+
 		$session->remove('fotokasten.endpoint');
 	}
 
@@ -124,6 +126,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		// Restore session id
 		$session =& $gallery->getSession();
+
 		if (isset($this->_saveEndpoint)) {
 			$session->put('fotokasten.endpoint', $this->_saveEndpoint);
 		} else {
@@ -134,6 +137,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		if (isset($this->_printSID)) {
 			$testSession             = new GallerySession();
 			$testSession->_sessionId = $this->_printSID;
+
 			$testSession->reset();
 		}
 
@@ -146,7 +150,9 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 	public function testPrintSingle() {
 		GalleryUtilities::putRequestVariable('itemId', $this->_items[2]->getId());
+
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -160,7 +166,9 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assertTrue(isset($this->_basketParams['request']['basket']), 'basket');
+
 		$basket = $this->_basketParams['request']['basket'];
+
 		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
 		$this->assertTrue(isset($basket['item1']['photo_url']), 'photo url');
 		$this->assertTrue(
@@ -178,6 +186,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$itemId = $this->_items[2]->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 
 		// We only have permission to print and view the thumbnail
@@ -208,6 +217,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		}
 
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -221,7 +231,9 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assertTrue(isset($this->_basketParams['request']['basket']), 'basket');
+
 		$basket = $this->_basketParams['request']['basket'];
+
 		$this->assertEquals(array('item1'), array_keys($basket), 'item keys');
 		$this->assertTrue(isset($basket['item1']['photo_url']), 'photo url');
 		$this->assertTrue(
@@ -259,6 +271,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$session =& $gallery->getSession();
+
 		$session->put(
 			'fotokasten.cart',
 			array(
@@ -269,6 +282,7 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		);
 
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -281,12 +295,16 @@ class PrintPhotosControllerTest extends GalleryControllerTestCase {
 		);
 
 		$printCart = $session->get('fotokasten.cart');
+
 		$this->assertEquals(null, $printCart, 'cart');
 		$this->assertEquals('TEST_endpoint', $this->_basketEndpoint, 'endpoint');
 		$this->assertTrue(isset($this->_basketParams['request']['basket']), 'basket');
+
 		$basket = $this->_basketParams['request']['basket'];
+
 		$this->assertEquals(array('item1', 'item2'), array_keys($basket), 'item keys');
 		$this->assertTrue(isset($basket['item1']['photo_url']), 'photo url');
+
 		preg_match(
 			'/' . $this->_sessionKey . '=([A-Za-z0-9]+)/',
 			$basket['item1']['photo_url'],
@@ -339,6 +357,7 @@ class FotokastenTestSoapClient {
 				$test                          =& $this->getTest();
 				$test['test']->_basketEndpoint = $this->endpoint;
 				$test['test']->_basketParams   = $params;
+
 				return array(
 					'browserlink' => 'TEST_redirect',
 					'error_code'  => 0,
@@ -347,6 +366,7 @@ class FotokastenTestSoapClient {
 			default:
 				$this->faultcode   = 'TEST_error';
 				$this->faultstring = "Unknown method: $method";
+
 				return null;
 		}
 	}

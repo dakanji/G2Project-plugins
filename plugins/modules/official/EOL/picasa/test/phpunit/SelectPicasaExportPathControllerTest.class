@@ -66,9 +66,12 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
 		$this->_platform->setReply('file_exists', array('/index.xml'), true);
 		$this->_platform->setReply('is_readable', array('/index.xml'), false);
+
 		GalleryUtilities::putRequestVariable('form[picasaXmlPath]', '/');
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -93,11 +96,15 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
 		$this->_platform->setReply('file_exists', array('/index.xml'), true);
 		$this->_platform->setReply('is_readable', array('/index.xml'), true);
+
 		$picasaXmlPath = '/';
+
 		GalleryUtilities::putRequestVariable('form[picasaXmlPath]', $picasaXmlPath);
 		GalleryUtilities::putRequestVariable('form[destinationAlbumId]', 0);
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -119,7 +126,9 @@ class SelectPicasaExportPathControllerTest extends GalleryControllerTestCase {
 	public function testMissingpicasaXmlPath() {
 		GalleryUtilities::putRequestVariable('form[picasaXmlPath]', '');
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(

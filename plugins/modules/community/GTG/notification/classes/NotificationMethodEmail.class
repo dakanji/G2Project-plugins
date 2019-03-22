@@ -54,6 +54,7 @@ class NotificationMethodEmail extends NotificationHandler_1_0 {
 		}
 
 		$emails = array();
+
 		foreach ($users as $user) {
 			if (!GalleryUtilities::isValidEmailString($user->getEmail())) {
 				continue;

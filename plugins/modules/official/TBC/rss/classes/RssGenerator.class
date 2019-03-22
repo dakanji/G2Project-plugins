@@ -119,9 +119,12 @@ class RssGenerator {
 		switch ($version) {
 			case '0.91':
 				return $this->generate091();
+
 			break;
+
 			case '2.0':
 				return $this->generate200();
+
 			break;
 		}
 	}
@@ -157,6 +160,7 @@ class RssGenerator {
 		'</language>' : '') . $lf .
 		(!empty($this->_properties['copyright']) ? '<copyright>' . GalleryUtilities::markup($this->_properties['copyright']) .
 		'</copyright>' : '');
+
 		if (isset($this->_properties['webmaster'])) {
 			$data .= '<webMaster>' . GalleryUtilities::markup($this->_properties['webmaster']) .
 			'</webMaster>' . $lf;
@@ -186,6 +190,7 @@ class RssGenerator {
 		}
 
 		$data .= '</channel>' . $lf . '</rss>';
+
 		return $data;
 	}
 
@@ -199,6 +204,7 @@ class RssGenerator {
 
 		$platform =& $gallery->getPlatform();
 		$lf       = $platform->getLineEnding();
+
 		if (isset($this->_properties['useMedia']) && $this->_properties['useMedia'] == 1) {
 			$data = '<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">';
 		} else {
@@ -234,6 +240,7 @@ class RssGenerator {
 		'</title>' . $lf .
 		' <link>' . $this->_properties['image']['link'] . '</link></image>' . $lf : '');
 		$userMap = array();
+
 		foreach ($this->_items as $item) {
 			if (isset($item['title'], $item['link'], $item['description'])) {
 				$data .= '<item>' . $lf .
@@ -244,8 +251,10 @@ class RssGenerator {
 				' <description>' .
 				$this->cdata(GalleryUtilities::markup($item['description']))
 				. '</description>' . $lf;
+
 				if (isset($item['ownerId'])) {
 					$ownerId = $item['ownerId'];
+
 					if (!isset($userMap[$item['ownerId']])) {
 						list($ret, $userMap[$ownerId]) = GalleryCoreApi::loadEntitiesById($ownerId, 'GalleryUser');
 
@@ -259,6 +268,7 @@ class RssGenerator {
 
 					if (isset($userMap[$ownerId])) {
 						$name = $userMap[$ownerId]->getFullName();
+
 						if (empty($name)) {
 							$name = $userMap[$ownerId]->getUsername();
 						}
@@ -297,6 +307,7 @@ class RssGenerator {
 					. ' <media:text type="html">'
 					. $this->cdata(GalleryUtilities::markup($item['description']))
 					. '</media:text>' . $lf;
+
 					if (isset($item['thumbnail'])) {
 						$data .= ' <media:thumbnail url="' . $item['thumbnail']['url'] . '" width="'
 						. $item['thumbnail']['width'] . '" height="'
@@ -321,6 +332,7 @@ class RssGenerator {
 		}
 
 		$data .= '</channel>' . $lf . '</rss>';
+
 		return $data;
 	}
 

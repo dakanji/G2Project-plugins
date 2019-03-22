@@ -8,13 +8,13 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.audio.dts.php                                        //
 // module for analyzing DTS Audio files                        //
 // dependencies: NONE                                          //
 //                                                             //
 /////////////////////////////////////////////////////////////////
+
 /**
  * @tutorial http://wiki.multimedia.cx/index.php?title=DTS
  */
@@ -39,10 +39,15 @@ class getid3_dts extends getid3_handler {
 	public function Analyze() {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'dts';
+
 		$this->fseek($info['avdataoffset']);
-		$DTSheader = $this->fread(20); // we only need 2 words magic + 6 words frame header, but these words may be normal 16-bit words OR 14-bit words with 2 highest bits set to zero, so 8 words can be either 8*16/8 = 16 bytes OR 8*16*(16/14)/8 = 18.3 bytes
+
+		// we only need 2 words magic + 6 words frame header, but these words may be normal 16-bit words OR 14-bit words with 2 highest bits set to zero, so 8 words can be either 8*16/8 = 16 bytes OR 8*16*(16/14)/8 = 18.3 bytes
+		$DTSheader = $this->fread(20);
+
 		// check syncword
 		$sync = substr($DTSheader, 0, 4);
+
 		if (($encoding = array_search($sync, self::$syncwords)) !== false) {
 			$info['dts']['raw']['magic'] = $sync;
 			$this->readBinDataOffset     = 32;
@@ -52,24 +57,33 @@ class getid3_dts extends getid3_handler {
 			$this->readBinDataOffset = 0;
 		} else {
 			unset($info['fileformat']);
+
 			return $this->error('Expecting "' . implode('| ', array_map('getid3_lib::PrintHexBytes', self::$syncwords)) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($sync) . '"');
 		}
 
 		// decode header
 		$fhBS = '';
+
 		for ($word_offset = 0; $word_offset <= strlen($DTSheader); $word_offset += 2) {
 			switch ($encoding) {
 				case 0: // raw big-endian
 					$fhBS .= getid3_lib::BigEndian2Bin(substr($DTSheader, $word_offset, 2));
+
 					break;
+
 				case 1: // raw little-endian
 					$fhBS .= getid3_lib::BigEndian2Bin(strrev(substr($DTSheader, $word_offset, 2)));
+
 					break;
+
 				case 2: // 14-bit big-endian
 					$fhBS .= substr(getid3_lib::BigEndian2Bin(substr($DTSheader, $word_offset, 2)), 2, 14);
+
 					break;
+
 				case 3: // 14-bit little-endian
 					$fhBS .= substr(getid3_lib::BigEndian2Bin(strrev(substr($DTSheader, $word_offset, 2))), 2, 14);
+
 					break;
 			}
 		}
@@ -92,6 +106,7 @@ class getid3_dts extends getid3_handler {
 		$info['dts']['flags']['audio_sync_insertion'] = (bool)$this->readBinData($fhBS, 1);
 		$info['dts']['raw']['lfe_effects']            = $this->readBinData($fhBS, 2);
 		$info['dts']['flags']['predictor_history']    = (bool)$this->readBinData($fhBS, 1);
+
 		if ($info['dts']['flags']['crc_present']) {
 			$info['dts']['raw']['crc16'] = $this->readBinData($fhBS, 16);
 		}
@@ -119,8 +134,10 @@ class getid3_dts extends getid3_handler {
 		$info['audio']['sample_rate']                = $info['dts']['sample_rate'];
 		$info['audio']['channels']                   = $info['dts']['channels'];
 		$info['audio']['bitrate']                    = $info['dts']['bitrate'];
+
 		if (isset($info['avdataend']) && !empty($info['dts']['bitrate']) && is_numeric($info['dts']['bitrate'])) {
 			$info['playtime_seconds'] = ($info['avdataend'] - $info['avdataoffset']) / ($info['dts']['bitrate'] / 8);
+
 			if (($encoding == 2) || ($encoding == 3)) {
 				// 14-bit data packed into 16-bit words, so the playtime is wrong because only (14/16) of the bytes in the data portion of the file are used at the specified bitrate
 				$info['playtime_seconds'] *= (14 / 16);
@@ -133,6 +150,7 @@ class getid3_dts extends getid3_handler {
 	private function readBinData($bin, $length) {
 		$data                     = substr($bin, $this->readBinDataOffset, $length);
 		$this->readBinDataOffset += $length;
+
 		return bindec($data);
 	}
 
@@ -213,35 +231,50 @@ class getid3_dts extends getid3_handler {
 		switch ($index) {
 			case 0:
 				return 1;
+
 				break;
+
 			case 1:
 			case 2:
 			case 3:
 			case 4:
 				return 2;
+
 				break;
+
 			case 5:
 			case 6:
 				return 3;
+
 				break;
+
 			case 7:
 			case 8:
 				return 4;
+
 				break;
+
 			case 9:
 				return 5;
+
 				break;
+
 			case 10:
 			case 11:
 			case 12:
 				return 6;
+
 				break;
+
 			case 13:
 				return 7;
+
 				break;
+
 			case 14:
 			case 15:
 				return 8;
+
 				break;
 		}
 
@@ -275,9 +308,12 @@ class getid3_dts extends getid3_handler {
 		switch ($version) {
 			case 7:
 				return 0 - $index;
+
 				break;
+
 			case 6:
 				return 0 - 16 - $index;
+
 				break;
 		}
 

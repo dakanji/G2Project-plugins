@@ -11,7 +11,9 @@
  * Require utility classes and functions for the consumer.
  */
 require_once 'Auth/OpenID/Extension.php';
+
 require_once 'Auth/OpenID/Message.php';
+
 require_once 'Auth/OpenID/TrustRoot.php';
 
 define(
@@ -112,6 +114,7 @@ class Auth_OpenID_AX_Message extends Auth_OpenID_Extension {
 	 */
 	public function _checkMode($ax_args) {
 		$mode = Auth_OpenID::arrayGet($ax_args, 'mode');
+
 		if ($mode != $this->mode) {
 			return new Auth_OpenID_AX_Error(
 				sprintf(
@@ -207,6 +210,7 @@ class Auth_OpenID_AX_AttrInfo {
 	) {
 		if ($alias !== null) {
 			$result = Auth_OpenID_AX_checkAlias($alias);
+
 			if (Auth_OpenID_AX::isError($result)) {
 				return $result;
 			}
@@ -250,9 +254,11 @@ class Auth_OpenID_AX_AttrInfo {
  */
 function Auth_OpenID_AX_toTypeURIs(&$namespace_map, $alias_list_s) {
 	$uris = array();
+
 	if ($alias_list_s) {
 		foreach (explode(',', $alias_list_s) as $alias) {
 			$type_uri = $namespace_map->getNamespaceURI($alias);
+
 			if ($type_uri === null) {
 				// raise KeyError(
 				// 'No type is defined for attribute name %r' % (alias,))
@@ -314,6 +320,7 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 		}
 
 		$this->requested_attributes[$attribute->type_uri] = $attribute;
+
 		return true;
 	}
 
@@ -327,11 +334,13 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 		$required     = array();
 		$if_available = array();
 		$ax_args      = $this->_newArgs();
+
 		foreach ($this->requested_attributes as $type_uri => $attribute) {
 			if ($attribute->alias === null) {
 				$alias = $aliases->add($type_uri);
 			} else {
 				$alias = $aliases->addAlias($type_uri, $attribute->alias);
+
 				if ($alias === null) {
 					return new Auth_OpenID_AX_Error(
 						sprintf(
@@ -376,6 +385,7 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 	 */
 	public function getRequiredAttrs() {
 		$required = array();
+
 		foreach ($this->requested_attributes as $type_uri => $attribute) {
 			if ($attribute->required) {
 				$required[] = $type_uri;
@@ -400,6 +410,7 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 		$obj     = new Auth_OpenID_AX_FetchRequest();
 		$ax_args = $m->getArgs($obj->ns_uri);
 		$result  = $obj->parseExtensionArgs($ax_args);
+
 		if (Auth_OpenID_AX::isError($result)) {
 			return $result;
 		}
@@ -452,16 +463,19 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 	 */
 	public function parseExtensionArgs($ax_args) {
 		$result = $this->_checkMode($ax_args);
+
 		if (Auth_OpenID_AX::isError($result)) {
 			return $result;
 		}
 
 		$aliases = new Auth_OpenID_NamespaceMap();
+
 		foreach ($ax_args as $key => $value) {
 			if (strpos($key, 'type.') === 0) {
 				$alias    = substr($key, 5);
 				$type_uri = $value;
 				$alias    = $aliases->addAlias($type_uri, $alias);
+
 				if ($alias === null) {
 					return new Auth_OpenID_AX_Error(
 						sprintf(
@@ -473,8 +487,10 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 				}
 
 				$count_s = Auth_OpenID::arrayGet($ax_args, 'count.' . $alias);
+
 				if ($count_s) {
 					$count = Auth_OpenID::intval($count_s);
+
 					if (($count === false)
 						&& ($count_s === Auth_OpenID_AX_UNLIMITED_VALUES)
 					) {
@@ -525,6 +541,7 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 		);
 
 		$all_type_uris = array_merge($required, $if_available);
+
 		foreach ($aliases->iterNamespaceURIs() as $type_uri) {
 			if (!in_array($type_uri, $all_type_uris)) {
 				return new Auth_OpenID_AX_Error(
@@ -538,6 +555,7 @@ class Auth_OpenID_AX_FetchRequest extends Auth_OpenID_AX_Message {
 		}
 
 		$this->update_url = Auth_OpenID::arrayGet($ax_args, 'update_url');
+
 		return true;
 	}
 
@@ -619,10 +637,12 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 		}
 
 		$ax_args = array();
+
 		foreach ($this->data as $type_uri => $values) {
 			$alias                      = $aliases->add($type_uri);
 			$ax_args['type.' . $alias]  = $type_uri;
 			$ax_args['count.' . $alias] = strval(count($values));
+
 			foreach ($values as $i => $value) {
 				$key           = sprintf('value.%s.%d', $alias, $i + 1);
 				$ax_args[$key] = $value;
@@ -642,21 +662,25 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 	 */
 	public function parseExtensionArgs($ax_args) {
 		$result = $this->_checkMode($ax_args);
+
 		if (Auth_OpenID_AX::isError($result)) {
 			return $result;
 		}
 
 		$aliases = new Auth_OpenID_NamespaceMap();
+
 		foreach ($ax_args as $key => $value) {
 			if (strpos($key, 'type.') === 0) {
 				$type_uri = $value;
 				$alias    = substr($key, 5);
 				$result   = Auth_OpenID_AX_checkAlias($alias);
+
 				if (Auth_OpenID_AX::isError($result)) {
 					return $result;
 				}
 
 				$alias = $aliases->addAlias($type_uri, $alias);
+
 				if ($alias === null) {
 					return new Auth_OpenID_AX_Error(
 						sprintf(
@@ -676,6 +700,7 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 				$count_key = 'count.' . $alias;
 				$count_s   = $ax_args[$count_key];
 				$count     = Auth_OpenID::intval($count_s);
+
 				if ($count === false) {
 					return new Auth_OpenID_AX_Error(
 						sprintf(
@@ -688,8 +713,10 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 				}
 
 				$values = array();
+
 				for ($i = 1; $i < $count + 1; $i++) {
 					$value_key = sprintf('value.%s.%d', $alias, $i);
+
 					if (!array_key_exists($value_key, $ax_args)) {
 						return new Auth_OpenID_AX_Error(
 							sprintf(
@@ -704,6 +731,7 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 				}
 			} else {
 				$key = 'value.' . $alias;
+
 				if (!array_key_exists($key, $ax_args)) {
 					return new Auth_OpenID_AX_Error(
 						sprintf(
@@ -714,6 +742,7 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 				}
 
 				$value = $ax_args['value.' . $alias];
+
 				if ($value == '') {
 					$values = array();
 				} else {
@@ -742,6 +771,7 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 	 */
 	public function getSingle($type_uri, $default = null) {
 		$values = Auth_OpenID::arrayGet($this->data, $type_uri);
+
 		if (!$values) {
 			return $default;
 		}
@@ -821,6 +851,7 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 
 	public function __construct($update_url = null) {
 		parent::__construct();
+
 		$this->update_url = $update_url;
 	}
 
@@ -835,6 +866,7 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 	public function getExtensionArgs($request = null) {
 		$aliases          = new Auth_OpenID_NamespaceMap();
 		$zero_value_types = array();
+
 		if ($request !== null) {
 			// Validate the data in the context of the request (the
 			// same attributes should be present in each, and the
@@ -909,6 +941,7 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 		}
 
 		$update_url = null;
+
 		if ($request) {
 			$update_url = $request->update_url;
 		} else {
@@ -920,6 +953,7 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 		}
 
 		Auth_OpenID::update($ax_args, $kv_args);
+
 		return $ax_args;
 	}
 
@@ -929,11 +963,13 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 	 */
 	public function parseExtensionArgs($ax_args) {
 		$result = parent::parseExtensionArgs($ax_args);
+
 		if (Auth_OpenID_AX::isError($result)) {
 			return $result;
 		}
 
 		$this->update_url = Auth_OpenID::arrayGet($ax_args, 'update_url');
+
 		return true;
 	}
 
@@ -951,6 +987,7 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 	 */
 	public function fromSuccessResponse($success_response, $signed = true) {
 		$obj = new Auth_OpenID_AX_FetchResponse();
+
 		if ($signed) {
 			$ax_args = $success_response->getSignedNS($obj->ns_uri);
 		} else {
@@ -964,6 +1001,7 @@ class Auth_OpenID_AX_FetchResponse extends Auth_OpenID_AX_KeyValueMessage {
 		}
 
 		$result = $obj->parseExtensionArgs($ax_args);
+
 		if (Auth_OpenID_AX::isError($result)) {
 			// XXX log me
 			return null;
@@ -988,7 +1026,9 @@ class Auth_OpenID_AX_StoreRequest extends Auth_OpenID_AX_KeyValueMessage {
 	public function getExtensionArgs($aliases = null) {
 		$ax_args = $this->_newArgs();
 		$kv_args = $this->_getExtensionKVArgs($aliases);
+
 		Auth_OpenID::update($ax_args, $kv_args);
+
 		return $ax_args;
 	}
 }
@@ -1038,6 +1078,7 @@ class Auth_OpenID_AX_StoreResponse extends Auth_OpenID_AX_Message {
 
 	public function getExtensionArgs() {
 		$ax_args = $this->_newArgs();
+
 		if ((!$this->succeeded()) && $this->error_message) {
 			$ax_args['error'] = $this->error_message;
 		}

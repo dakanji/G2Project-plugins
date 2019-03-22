@@ -76,6 +76,7 @@ class PanoramaJsRenderer extends GalleryRenderer {
 		);
 
 		$speed = $levier[$speed];
+
 		if ($rotate == 0) {
 			$speed        = 0;
 			$initPosition = 0;

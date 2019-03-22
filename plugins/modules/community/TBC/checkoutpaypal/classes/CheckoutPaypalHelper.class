@@ -83,6 +83,7 @@ class CheckoutPaypalHelper {
 			$ppItem[$ppItems]['options']['on0_' . $ppItems] = 'Product';
 			$ppItem[$ppItems]['options']['os0_' . $ppItems] = $item['productName'];
 			$ppItem[$ppItems]['shipping']                   = 0;
+
 			if (!empty($item['notes'])) {
 				$ppItem[$ppItems]['options']['on1_' . $ppItems] = 'Notes:';
 				$ppItem[$ppItems]['options']['os1_' . $ppItems] = $item['notes'];
@@ -92,6 +93,7 @@ class CheckoutPaypalHelper {
 		// paypal doesn't allow discounts or negative price items, so we have to 'cheat'
 		// subtract the discount item-wise from the end of the order until it reaches zero
 		$discount = $transaction->getDiscount();
+
 		for ($key = $ppItems; $key > 0; $key--) {
 			if ($discount > 0) {
 				if ($ppItem[$key]['amount'] * $ppItem[$key]['quantity'] <= $discount) {
@@ -147,6 +149,7 @@ class CheckoutPaypalHelper {
 		$ppItem[$ppItems]['shipping']                   = 0;
 		$verify[1]                                      = $transaction->getDate();
 		$verify[2]                                      = $transaction->getSecurity();
+
 		return array(null, $ppItem, $verify);
 	}
 }

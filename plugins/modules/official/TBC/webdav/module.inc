@@ -40,10 +40,13 @@ class WebDavModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('interfaces', $gallery->i18n('Remote Interfaces'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -111,6 +114,7 @@ class WebDavModule extends GalleryModule {
 				}
 
 				break;
+
 			case '0.0.3':
 				// Add WebDavSiteAdmin and WebDavLockMap
 			case '0.0.4':
@@ -199,6 +203,7 @@ class WebDavModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
+
 			default:
 				return GalleryStatus::error(
 					ERROR_BAD_PLUGIN,
@@ -248,6 +253,7 @@ class WebDavModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId = null) {
 		$links = array();
+
 		foreach ($items as $item) {
 			if (!$item->getCanContainChildren() || empty($wantsDetailedLinks[$item->getId()])) {
 				continue;
@@ -319,7 +325,6 @@ class WebDavModule extends GalleryModule {
 			'match'    => array(
 				'view' => 'webdav.DownloadDavMount',
 			),
-
 			// TODO: How to work with the root album?
 			'pattern'  => 'v/%path%.davmount',
 			'keywords' => array(
@@ -377,6 +382,7 @@ class WebDavModule extends GalleryModule {
 		if (!in_array('options', $activeRules)) {
 			// Check that OPTIONS responses include the DAV headers
 			GalleryCoreApi::requireOnce('modules/webdav/classes/WebDavHelper.class');
+
 			if (WebDavHelper::checkDavHeaders(
 				$urlGenerator->generateUrl(
 					array(
@@ -399,7 +405,6 @@ class WebDavModule extends GalleryModule {
 			'help'       => $this->translate(
 				'Redirect OPTIONS requests so we can set DAV headers.'
 			),
-
 			// Use trailing '/' to avoid 301 Moved Permanently
 			'match'      => array(
 				'href' => 'modules/webdav/data/options/',
@@ -422,6 +427,7 @@ class WebDavModule extends GalleryModule {
 		switch ($event->getEventName()) {
 			case 'Gallery::ActivatePlugin':
 				$data = $event->getData();
+
 				if ($data['pluginType'] != 'module' || $data['pluginId'] != 'rewrite') {
 					return array(null, null);
 				}
@@ -433,8 +439,10 @@ class WebDavModule extends GalleryModule {
 				}
 
 				return array(null, null);
+
 			case 'Gallery::Error':
 				$data = $event->getData();
+
 				if (($data['error']->getErrorCode() & ERROR_PERMISSION_DENIED)) {
 					// Prompt for authentication
 					list($ret, $httpAuthInterface) = GalleryCoreApi::newFactoryInstance('HttpAuthInterface_1_0');

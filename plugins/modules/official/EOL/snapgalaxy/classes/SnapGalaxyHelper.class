@@ -96,15 +96,18 @@ class SnapGalaxyHelper {
 
 		// If we don't have a cart url that means we don't have a snapgalaxy session yet
 		$snapgalaxyServer = 'www.snapgalaxy.com';
+
 		if (empty($cartUrlFragment)) {
 			$cartUrlFragment = '/pt/ptcartpost';
 		}
 
 		// Assemble all our data
 		$entries = $protectedIds = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 			$entry  = array();
+
 			if (!isset($permissions[$itemId]['snapgalaxy.print'])) {
 				// Skip any cart items for which we don't have print permission
 				continue;
@@ -112,6 +115,7 @@ class SnapGalaxyHelper {
 
 			$source      = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
 			$needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
+
 			if ($needSession && !isset($pwSession)) {
 				/*
 				 * Get G2 session for snapgalaxy to access non-public images.
@@ -155,11 +159,13 @@ class SnapGalaxyHelper {
 
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
+
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
 				// Use the source if the thumbnail has a postfilter (like a watermark)
 				$thumbSource = $source;
 			} else {
 				$thumbSource = $thumbnails[$itemId];
+
 				if ($needSession) {
 					$protectedIds[] = $thumbSource->getId();
 				}
@@ -216,6 +222,7 @@ class SnapGalaxyHelper {
 		$postData['addmoreurl'] = $returnUrl;
 		$postData['returnurl']  = $returnUrl;
 		$postData['imagecount'] = count($entries);
+
 		for ($i = 0; $i < sizeof($entries); $i++) {
 			$j                             = $i + 1;
 			$postData['image_' . $j]       = $entries[$i]['imageUrl'];
@@ -228,7 +235,9 @@ class SnapGalaxyHelper {
 		}
 
 		$gallery->guaranteeTimeLimit(30);
+
 		$cartUrl = 'http://' . $snapgalaxyServer . $cartUrlFragment;
+
 		if ($gallery->getDebug()) {
 			$gallery->debug('Post data:');
 			$gallery->debug_r($postData, true);
@@ -264,6 +273,7 @@ class SnapGalaxyHelper {
 			 * So we are storing requesturl in session variable.
 			 */
 			$session->put('snapgalaxy.cartUrlFragment', $cartUrlFragment);
+
 			$redirectUrl = 'http://' . $snapgalaxyServer . $matches[2];
 		} else {
 			$redirectUrl = $urlGenerator->generateUrl(

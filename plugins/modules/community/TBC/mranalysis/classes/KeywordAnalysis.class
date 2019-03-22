@@ -151,6 +151,7 @@ class KeywordAnalysis {
 		$musthave['Steam Train']         = array('Train');
 		$musthave['Train Lights']        = array('Train');
 		$musthave['Austin 7']            = array('Car');
+
 		return $musthave;
 	}
 
@@ -158,6 +159,7 @@ class KeywordAnalysis {
 	public static function commonkeywordtypos() {
 		// this function should be stored as a config somewhere
 		$typos = array();
+
 		if (!MRAnalysisModule::isModuleInstalledAndActive('mrextraheadings')) {
 			// All of the the data in this section will only appear on my
 			// development system which has the module above installed.
@@ -167,6 +169,7 @@ class KeywordAnalysis {
 		$typos['Cathederal']       = 'Cathedral';
 		$typos['Actors']           = 'Actor';
 		$typos['Bar-Headed Goose'] = 'Bar-Headed Geese';
+
 		return $typos;
 	}
 
@@ -187,6 +190,7 @@ class KeywordAnalysis {
 		}
 
 		$split_params = $params['split'];
+
 		if (strlen($split_params) == 0) {
 			$split_params = ';';
 		} else {
@@ -218,9 +222,11 @@ class KeywordAnalysis {
 
 		// Ensure keywords are unique
 		$usedkeywords = array();
+
 		foreach ($itemkeywords as $ksrch) {
 			// Convert the keyword to title case
 			$keyword_to_add = ucwords(strtolower($ksrch));
+
 			if (!in_array($keyword_to_add, $usedkeywords)) {
 				$usedkeywords[] = $keyword_to_add;
 			}
@@ -231,12 +237,14 @@ class KeywordAnalysis {
 
 		// Build list of unique keywords
 		$newkeywords = '';
+
 		foreach ($usedkeywords as $ksrch) {
 			$newkeywords = $newkeywords . $ksrch . $split_params;
 		}
 
 		// Trim trailing split param and spaces
 		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
+
 		$itemtochange->setKeywords($newkeywords);
 
 		$ret = $itemtochange->save();
@@ -270,6 +278,7 @@ class KeywordAnalysis {
 		}
 
 		$split_params = $params['split'];
+
 		if (strlen($split_params) == 0) {
 			$split_params = ';';
 		} else {
@@ -300,6 +309,7 @@ class KeywordAnalysis {
 
 		// Ensure keywords are unique
 		$usedkeywords = array();
+
 		foreach ($itemkeywords as $ksrch) {
 			// Replace the keyword
 			if (0 == strcasecmp($ksrch, $originalkeyword)) {
@@ -308,6 +318,7 @@ class KeywordAnalysis {
 
 			// Convert the keyword to title case
 			$keyword_to_add = ucwords(strtolower($ksrch));
+
 			if (!in_array($keyword_to_add, $usedkeywords)) {
 				$usedkeywords[] = $keyword_to_add;
 			}
@@ -318,12 +329,14 @@ class KeywordAnalysis {
 
 		// Build list of unique keywords
 		$newkeywords = '';
+
 		foreach ($usedkeywords as $ksrch) {
 			$newkeywords = $newkeywords . $ksrch . $split_params;
 		}
 
 		// Trim trailing split param and spaces
 		$newkeywords = rtrim(rtrim($newkeywords, $split_params));
+
 		$itemtochange->setKeywords($newkeywords);
 
 		$ret = $itemtochange->save();
@@ -356,10 +369,13 @@ class KeywordAnalysis {
 	// has it got a special keyword?
 	public static function has_special_keyword($keywords, $searchkeyword, $specialword, $specialkeywordpos) {
 		$specialwordlen = strlen($specialword);
+
 		if ($specialkeywordpos == 0) {
 			$endswith = substr($searchkeyword, $specialwordlen);
+
 			foreach ($keywords as $ksrch) {
 				$endpos = stripos($ksrch, $endswith);
+
 				if (!($endpos === false)) {
 					return true;
 				}
@@ -367,6 +383,7 @@ class KeywordAnalysis {
 		} elseif ($specialkeywordpos == (strlen($searchkeyword) - $specialwordlen)) {
 			$startswithlen = (strlen($searchkeyword) - $specialwordlen);
 			$startswith    = substr($searchkeyword, 0, $startswithlen);
+
 			foreach ($keywords as $ksrch) {
 				if (0 == strncasecmp($ksrch, $startswith, $startswithlen)) {
 					return true;
@@ -385,6 +402,7 @@ class KeywordAnalysis {
 
 	public static function keyword_contains_special_word($keyword) {
 		$specialkeywordpos = stripos($keyword, KeywordAnalysis::special_word());
+
 		return !($specialkeywordpos === false);
 	}
 
@@ -394,6 +412,7 @@ class KeywordAnalysis {
 		// ideally this should not just be a prefix, but be allowed to be a suffix too.
 		$specialword       = KeywordAnalysis::special_word();
 		$specialkeywordpos = stripos($searchkeyword, $specialword);
+
 		if ($specialkeywordpos === false) {
 			return KeywordAnalysis::has_normal_keyword($keywords, $searchkeyword);
 		}
@@ -425,10 +444,12 @@ class KeywordAnalysis {
 	// Is the item missing any must-have keywords? If so returns the list of must-have's
 	public function missing_must_have_keywords($itemkeywords) {
 		$missing = array();
+
 		foreach ($itemkeywords as $ksrch) {
 			if (KeywordAnalysis::has_assoc_element($ksrch, $this->must_have_keywords)) {
 				foreach ($this->must_have_keywords[$ksrch] as $mustexistkeyword) {
 					$kwdmissing = array();
+
 					if (!KeywordAnalysis::has_keyword($itemkeywords, $mustexistkeyword)) {
 						$kwdmissing[$mustexistkeyword] = !KeywordAnalysis::keyword_contains_special_word($mustexistkeyword);
 					}
@@ -448,14 +469,17 @@ class KeywordAnalysis {
 		$weirdseparators    = ':@\\"#~<>!$%';
 		$weirdseparatorslen = strlen($weirdseparators);
 		$typos              = array();
+
 		foreach ($itemkeywords as $ksrch) {
 			$keywordtypos  = array();
 			$keywordlength = strlen($ksrch);
+
 			if (($keywordlength % 2) == 0) {
 				// look for [Keyword][Keyword]
 				$midpoint = $keywordlength / 2;
 				$left     = substr($ksrch, 0, $midpoint);
 				$right    = substr($ksrch, $midpoint);
+
 				if (0 == strcasecmp($left, $right)) {
 					$keywordtypos['doublekeyword'] = $left;
 				}
@@ -465,6 +489,7 @@ class KeywordAnalysis {
 					$midpoint = ($keywordlength - 1) / 2;
 					$left     = substr($ksrch, 0, $midpoint);
 					$right    = substr($ksrch, $midpoint + 1);
+
 					if (0 == strcasecmp($left, $right)) {
 						$keywordtypos['doublekeyword'] = $left;
 
@@ -513,6 +538,7 @@ class KeywordAnalysis {
 		$ret['missing'] = $this->missing_must_have_keywords($itemkeywords);
 		$ret['typo']    = $this->has_typos($itemkeywords);
 		$errors         = 0;
+
 		foreach ($ret as $key => $value) {
 			$errors += count($value);
 		}
@@ -522,6 +548,7 @@ class KeywordAnalysis {
 		}
 
 		return false;
+
 		return (count($missing) > 0) || (count($typo) > 0);
 	}
 
@@ -545,6 +572,7 @@ class KeywordAnalysis {
 
 		$tester = new KeywordAnalysis();
 		$items  = ItemList::readItemsFromQuery($query, array($tester, 'check'));
+
 		return $items;
 	}
 }

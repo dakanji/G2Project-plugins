@@ -38,12 +38,14 @@ class ItemList {
 	 */
 	public static function itemname($itempair) {
 		$name = '';
+
 		foreach ($itempair['parent'] as $item) {
 			$name .= $item->title;
 			$name .= ' :: ';
 		}
 
 		$name .= $itempair['item']->title;
+
 		return $name;
 	}
 
@@ -59,6 +61,7 @@ class ItemList {
 
 	public static function sort_by_item_title_then_path($item1, $item2) {
 		$cmp = strcasecmp($item1['item']->title, $item2['item']->title);
+
 		if (0 == $cmp) {
 			return ItemList::sort_by_item_path($item1, $item2);
 		}
@@ -78,12 +81,14 @@ class ItemList {
 		$newitem           = array();
 		$newitem['item']   = $item;
 		$newitem['parent'] = $parentSequence;
+
 		return $newitem;
 	}
 
 	public static function append_itemdata(&$item, $itemdata) {
 		$item['missing'] = $itemdata['missing'];
 		$item['typo']    = $itemdata['typo'];
+
 		foreach ($itemdata as $key => $value) {
 			//print '<br>' . $key;
 			//$item[ $key ] = $value;
@@ -103,6 +108,7 @@ class ItemList {
 		}
 
 		$items = array();
+
 		if (!$ret) {
 			while ($result = $results->nextResult()) {
 				$currentid = (int)$result[0];
@@ -111,8 +117,10 @@ class ItemList {
 
 				if (!$ret) {
 					$keep = call_user_func($filter, $ids);
+
 					if ($keep) {
 						$item = ItemList::getitemithparentinformation($ids);
+
 						if (is_array($keep)) {
 							ItemList::append_itemdata($item, $keep);
 						}
@@ -124,6 +132,7 @@ class ItemList {
 		}
 
 		usort($items, array('ItemList', 'sort_by_item_path'));
+
 		return $items;
 	}
 
@@ -132,12 +141,14 @@ class ItemList {
 	 */
 	public static function LoadSpecificItems($itemlist) {
 		$items = array();
+
 		foreach ($itemlist as $nextitem) {
 			$item    = ItemList::getitemithparentinformation($nextitem);
 			$items[] = $item;
 		}
 
 		usort($items, array('ItemList', 'sort_by_item_path'));
+
 		return $items;
 	}
 }

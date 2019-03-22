@@ -54,6 +54,7 @@ class MapLegendAdminController extends GalleryController {
 			$form['AlbumLegend'] = false;
 			$form['PhotoLegend'] = false;
 			$form['GroupLegend'] = false;
+
 			if (array_key_exists('usealbumlegend', $_POST) and $_POST['usealbumlegend']) {
 				$form['AlbumLegend'] = true;
 			}
@@ -69,6 +70,7 @@ class MapLegendAdminController extends GalleryController {
 			$form['ExpandAlbumLegend'] = false;
 			$form['ExpandPhotoLegend'] = false;
 			$form['ExpandGroupLegend'] = false;
+
 			if (array_key_exists('ExpandAlbumLegend', $_POST) and $_POST['ExpandAlbumLegend']) {
 				$form['ExpandAlbumLegend'] = true;
 			}
@@ -84,6 +86,7 @@ class MapLegendAdminController extends GalleryController {
 			$albumlegenditem = '';
 			$photolegenditem = '';
 			$grouplegenditem = '';
+
 			for ($i = 0; $i < 10; $i++) {
 				if ($form['AlbumLegend']) {
 					$albumlegenditem .= $_POST['A' . $i] . '|';
@@ -101,6 +104,7 @@ class MapLegendAdminController extends GalleryController {
 			$form['PhotoLegends'] = $photolegenditem;
 			$form['AlbumLegends'] = $albumlegenditem;
 			$form['GroupLegends'] = $grouplegenditem;
+
 			switch ($form['LegendPos']) {
 				case 1:
 					// Legend is on the left, add the map.Legend Block
@@ -130,6 +134,7 @@ class MapLegendAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
+
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
@@ -162,6 +167,7 @@ class MapLegendAdminController extends GalleryController {
 					}
 
 					break;
+
 				case 2: // Legend on the top   -> continue
 				case 3: // Legend on the bottom -> continue
 				case 4: // No Legend to show -> continue
@@ -192,6 +198,7 @@ class MapLegendAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
+
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
@@ -270,6 +277,7 @@ class MapLegendAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$template->head('modules/map/includes/GoogleMap.css');
+
 		$form['formName'] = 'MapLegendAdmin';
 
 		// Set default values for undefined plugin parameters
@@ -310,7 +318,8 @@ class MapLegendAdminView extends GalleryView {
 		}
 
 		if (!array_key_exists('LegendPos', $form)) {
-			$form['LegendPos'] = 0; // right by default
+			// right by default
+			$form['LegendPos'] = 0;
 		}
 
 		// Explode the list of information in the legends if available
@@ -328,18 +337,22 @@ class MapLegendAdminView extends GalleryView {
 			$grouplegends         = explode('|', $form['GroupLegends']);
 			$form['GroupLegends'] = $grouplegends;
 		}
+
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		$form['allmarkers'] = GoogleMapUtilities::AllMarkers();
+
 		if ($template->hasVariable('SiteAdmin')) {
 			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapLegendAdmin');
+
 		return array(
 			null,
 			array(

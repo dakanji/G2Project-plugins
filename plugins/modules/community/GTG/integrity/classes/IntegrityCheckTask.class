@@ -52,7 +52,9 @@ class IntegrityCheckTask extends MaintenanceTask {
 		$templateAdapter =& $gallery->getTemplateAdapter();
 		$platform        =& $gallery->getPlatform();
 		$slash           = $platform->getDirectorySeparator();
+
 		GalleryDataCache::setFileCachingEnabled(false);
+
 		$baseDir = dirname(dirname(dirname(dirname(__FILE__))));
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'integrity');
@@ -66,6 +68,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		// Load all entities
 		$message = $module->translate('Loading all entities');
+
 		$templateAdapter->updateProgressBar($title, $message, 0);
 
 		$query = '
@@ -92,8 +95,10 @@ class IntegrityCheckTask extends MaintenanceTask {
 			ORDER BY [Entity::id]
 		';
 
-		$failIds    = array();
-		$ids        = null;   // Initialize ids
+		$failIds = array();
+
+		// Initialize ids
+		$ids        = null;
 		$batch_size = 100;
 		$start_id   = 000;
 
@@ -120,6 +125,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			}
 
 			$ids = array();
+
 			while ($result = $results->nextResult()) {
 				$ids[] = (int)$result[0];
 			}
@@ -175,6 +181,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		$tables = array_keys($allEntityData);
 		$i      = 0;
 		$total  = count($tables) + 1;
+
 		foreach ($tables as $table) {
 			$templateAdapter->updateProgressBar($message, $table, $i ++ / $total);
 			$gallery->guaranteeTimeLimit(120);
@@ -200,6 +207,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			}
 
 			$ids = array();
+
 			while ($result = $results->nextResult()) {
 				$ids[] = (int)$result[0];
 			}
@@ -243,6 +251,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		$ids = array();
+
 		while ($result = $results->nextResult()) {
 			$ids[] = (int)$result[0];
 		}
@@ -268,7 +277,6 @@ class IntegrityCheckTask extends MaintenanceTask {
 		$message = $module->translate('Checking for orphaned item data');
 		$tables  = array(
 			array('ItemAttributesMap', 'itemId', 'GalleryItem', 'id'),
-
 			//Most AccessSubscriberMap::itemId should map to Item::id, but ThumbnailImage/WatermarkImage use
 			//permissions too.. ThumbnailImage is a ChildEntity, WatermarkImage is just an Entity.
 			//			array('AccessSubscriberMap', 'itemId', 'GalleryItem', 'id'),
@@ -278,6 +286,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		$i     = 0;
 		$total = count($tables) + 1;
+
 		foreach ($tables as $tableData) {
 			list($table, $idColumn, $joinTable, $joinColumn) = $tableData;
 
@@ -306,6 +315,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			}
 
 			$ids = array();
+
 			while ($result = $results->nextResult()) {
 				$ids[] = (int)$result[0];
 			}
@@ -347,6 +357,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		$ids = array();
+
 		while ($result = $results->nextResult()) {
 			$ids[] = (int)$result[0];
 		}
@@ -382,6 +393,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		while ($result = $results->nextResult()) {
 			$file = $baseDir . '/' . $result[0] . 's/' . $result[1] . '/' . $result[0] . '.inc';
+
 			if (!$platform->file_exists($file)) {
 				$output[] = $module->translate(
 					array(
@@ -419,6 +431,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		$ids = array();
+
 		while ($result = $results->nextResult()) {
 			$ids[] = $result[0] . '/' . $result[1];
 		}
@@ -438,6 +451,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		// Check FileSystem - verify dirs/files in sync with path components in db
 		$message = $module->translate('Checking file system');
+
 		$templateAdapter->updateProgressBar($message, '', 0);
 
 		$query = '
@@ -477,6 +491,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		$ids = array();
+
 		while ($result = $results->nextResult()) {
 			$ids[] = $result[0];
 		}
@@ -500,6 +515,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		// Traverse album directories
 		$examine = array(array($rootId, $gallery->getConfig('data.gallery.albums')));
 		$i       = 0;
+
 		while (!empty($examine)) {
 			$gallery->guaranteeTimeLimit(120);
 
@@ -542,6 +558,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		$templateAdapter->updateProgressBar($message, '', 1);
+
 		return array(null, true, $output);
 	}
 
@@ -561,6 +578,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 
 		$platform     =& $gallery->getPlatform();
 		$fsComponents = $dirs = array();
+
 		if (!($dh = $platform->opendir($dir))) {
 			return array(
 				GalleryCoreApi::error(
@@ -581,6 +599,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 			}
 
 			$fsComponents[$file] = true;
+
 			if ($platform->is_dir($dir . $file)) {
 				$dirs[$file] = true;
 			}
@@ -617,6 +636,7 @@ class IntegrityCheckTask extends MaintenanceTask {
 		}
 
 		$dbComponents = array();
+
 		while ($result = $results->nextResult()) {
 			$dbComponents[(int)$result[0]] = $result[1];
 		}

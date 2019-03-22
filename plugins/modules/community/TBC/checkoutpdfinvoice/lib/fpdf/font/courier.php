@@ -1,4 +1,5 @@
 <?php
+
 for ($i = 0; $i <= 255; $i++) {
 	$fpdf_charwidths['courier'][chr($i)] = 600;
 }

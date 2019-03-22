@@ -80,13 +80,18 @@ class DownloadRegistryFileView extends GalleryView {
 		header('Cache-control: private');
 		header('Content-Type: application/octet-stream');
 		header('Content-Disposition: filename=install_registry.reg');
+
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(__DIR__ . '/../..');
+
 		$template->setVariable('l10Domain', 'modules_publishxp');
+
 		$vistaVersion                         = GalleryUtilities::getRequestVariables('vistaVersion');
 		$DownloadRegistryFile['vistaVersion'] = !empty($vistaVersion);
 		$DownloadRegistryFile['title']        = $title;
 		$DownloadRegistryFile['domain']       = $domain;
+
 		$template->setVariable('DownloadRegistryFile', $DownloadRegistryFile);
 
 		list($ret, $registryFileContents) = $template->fetch('gallery:modules/publishxp/templates/DownloadRegistryFile.tpl');
@@ -100,7 +105,9 @@ class DownloadRegistryFileView extends GalleryView {
 
 		// Convert the text to the Windows character set corresponding to the requested locale
 		$clientWindowsLocale = $this->_getCharsetFromRequest();
+
 		echo GalleryCoreApi::convertFromUtf8($registryFileContents, $clientWindowsLocale);
+
 		return null;
 	}
 
@@ -143,8 +150,10 @@ class DownloadRegistryFileView extends GalleryView {
 		}
 
 		$languageCode = empty($languageCode) ? $defaultLanguageCode : $languageCode;
+
 		if ($languageCode == $defaultLanguageCode) {
 			$httpAcceptLanguage = GalleryUtilities::getServerVar('HTTP_ACCEPT_LANGUAGE');
+
 			if (!empty($httpAcceptLanguage)) {
 				$codes        = explode(',', $httpAcceptLanguage);
 				$languageCode = $codes[0];
@@ -160,22 +169,32 @@ class DownloadRegistryFileView extends GalleryView {
 		switch (trim(GalleryUtilities::strToLower((string)$language))) {
 			case 'th': // Thai
 				$codePage = 874;
+
 				break;
+
 			case 'ja': // Japanese
 				$codePage = 932;
+
 				break;
+
 			case 'zh': // Chinese
 				$country = trim(GalleryUtilities::strToLower((string)$country));
+
 				if (in_array($country, array('hans', 'cn'))) {
-					$codePage = 936; // Chinese (Simplified)
+					// Chinese (Simplified)
+					$codePage = 936;
 				} else {
-					$codePage = 950; // Chinese (Traditional)
+					// Chinese (Traditional)
+					$codePage = 950;
 				}
 
 				break;
+
 			case 'ko': // Korean
 				$codePage = 949;
+
 				break;
+
 			case 'hr': // Croatian
 			case 'cs': // Czech
 			case 'hu': // Hungarian
@@ -184,11 +203,15 @@ class DownloadRegistryFileView extends GalleryView {
 			case 'sk': // Slovak
 			case 'sl': // Slovenian
 				$codePage = 1250;
+
 				break;
+
 			case 'bg': // Bulgarian
 			case 'ru': // Russian
 				$codePage = 1251;
+
 				break;
+
 			case 'ca': // Catalan
 			case 'da': // Danish
 			case 'nl': // Dutch
@@ -202,25 +225,37 @@ class DownloadRegistryFileView extends GalleryView {
 			case 'es': // Spanish
 			case 'sv': // Swedish
 				$codePage = 1252;
+
 				break;
+
 			case 'el': // Greek
 				$codePage = 1253;
+
 				break;
+
 			case 'tr': // Turkish
 				$codePage = 1254;
+
 				break;
+
 			case 'he': // Hebrew
 			case 'iw': // Hebrew (legacy)
 				$codePage = 1255;
+
 				break;
+
 			case 'ar': // Arabic
 				$codePage = 1256;
+
 				break;
+
 			case 'et': // Estonian
 			case 'lv': // Latvian
 			case 'lt': // Lithuanian
 				$codePage = 1257;
+
 				break;
+
 			default:
 				$codePage = 1252;
 		}

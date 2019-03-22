@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/core/DownloadItem.inc');/**
+
  * Provides downloading of binary items as files
  * @version $Revision: 1654 $
  * @package DownloadLink
@@ -41,9 +42,11 @@ class OfferDownloadView extends DownloadItemView {
 		}
 
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
+
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: attachment; filename="' . $data['pseudoFileName'] . '"');
 		$stats = $platform->stat($data['derivativePath']);
+
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
 
@@ -74,11 +77,13 @@ class OfferDownloadView extends DownloadItemView {
 			if ($fd = $platform->fopen($data['derivativePath'], 'rb')) {
 				while (true) {
 					$bits = $platform->fread($fd, 65535);
+
 					if (strlen($bits) == 0) {
 						break;
 					}
 
 					echo $bits;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 
@@ -100,18 +105,23 @@ class OfferDownloadView extends DownloadItemView {
 
 		$session             =& $gallery->getSession();
 		$itemIdForPermission = $item->getId();
+
 		if (!empty($derivativeType)) {
 			$itemIdForPermission = $item->getParentId();
 		}
 
 		// Make sure we have permission
 		$permission = 'downloadlink.original';
+
 		switch ($derivativeType) {
 			case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
 				$permission = 'downloadlink.thumbnail';
+
 				break;
+
 			case DERIVATIVE_TYPE_IMAGE_RESIZE:
 				$permission = 'downloadlink.resizes';
+
 				break;
 
 			// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource
@@ -132,6 +142,7 @@ class OfferDownloadView extends DownloadItemView {
 
 				if ($permission == 'downloadlink.original' || empty($hasPermission)) {
 					$ret->addErrorCode(ERROR_MISSING_OBJECT);
+
 					return $ret;
 				}
 			}

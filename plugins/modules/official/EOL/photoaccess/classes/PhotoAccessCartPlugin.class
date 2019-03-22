@@ -26,8 +26,9 @@
  * @author Bharat Mediratta <bharat@menalto.com>
  * @version $Revision: 17580 $
  */
-class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterface_1_1
-{
+
+// implements CartPluginInterface_1_0 and CartPluginInterface_1_1
+class PhotoAccessCartPlugin {
 	/**
 	 * @see CartPluginInterface_1_0::getSupportedItemTypes
 	 */
@@ -53,6 +54,7 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 		}
 
 		$action = $module->translate('Print with PhotoWorks');
+
 		return array(null, $action);
 	}
 
@@ -86,8 +88,5 @@ class PhotoAccessCartPlugin // implements CartPluginInterface_1_0 and CartPlugin
 				'href' => $cartUrl,
 			),
 		);
-
 	}
-
 }
-

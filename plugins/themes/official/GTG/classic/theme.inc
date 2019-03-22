@@ -38,10 +38,10 @@ class ClassicTheme extends GalleryTheme {
 				'Classic Gallery2 root album look and feel'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'rows'            => 10,
@@ -132,6 +132,7 @@ class ClassicTheme extends GalleryTheme {
 	 */
 	public function validateSettings($settings) {
 		$error = parent::validateSettings($settings);
+
 		if (!is_numeric($settings['subalbumDepth'])) {
 			$error['subalbumDepth'] = $this->translate('You must enter a number');
 		}
@@ -170,8 +171,10 @@ class ClassicTheme extends GalleryTheme {
 
 		// Add in our extra stuff
 		$theme =& $template->getVariableByReference('theme');
+
 		if ($params['showSubalbums']) {
 			$theme['tree'] = $theme['treeItems'] = array();
+
 			if ($params['subalbumDepth'] > 0) {
 				$subalbumDepth = $params['subalbumDepth'];
 			} else {
@@ -307,6 +310,7 @@ class ClassicTheme extends GalleryTheme {
 		}
 
 		$treeIds = array();
+
 		foreach ($items as $item) {
 			if (!GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 				continue;
@@ -337,6 +341,7 @@ class ClassicTheme extends GalleryTheme {
 				}
 
 				$treeList[$id] = array();
+
 				$this->_parseTree($tree, $treeList[$id], $treeIds);
 			}
 		}
@@ -399,6 +404,7 @@ class ClassicTheme extends GalleryTheme {
 				);
 
 				$treeItems[$id] = (array)$subAlbum;
+
 				if (!isset($maxDepth) || $depth < $maxDepth) {
 					$ret = $this->_doBuildTree(
 						$subAlbum,

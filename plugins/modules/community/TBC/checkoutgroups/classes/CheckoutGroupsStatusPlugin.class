@@ -51,6 +51,7 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 	public function loadTemplate(&$template, &$form) {
 		// Figure out which item we're talking about
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
+
 		if (empty($transactionId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null);
 		}
@@ -70,7 +71,9 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 		$buyerId   = $transaction->getBuyerId();
 		$hasGroup  = false;
 		$groupInfo = array();
-		foreach ($items as $item) { //$item.itemId and $item.product are the two things we need
+
+		foreach ($items as $item) {
+			//$item.itemId and $item.product are the two things we need
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($item['itemId'], true, true);
 
 			if ($ret) {
@@ -78,7 +81,8 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 			}
 
 			foreach ($products as $product) {
-				if ($product['productId'] == $item['product'] && isset($product['groupId'])) {//matches one from order
+				if ($product['productId'] == $item['product'] && isset($product['groupId'])) {
+					//matches one from order
 					$hasGroup = true;
 
 					list($ret, $group) = GalleryCoreAPI::loadEntitiesById($product['groupId'], 'GalleryGroup');
@@ -112,7 +116,9 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 		$checkoutgroups['isGuest']   = $anon;
 		$checkoutgroups['hasGroups'] = $hasGroup;
 		$checkoutgroups['groupInfo'] = $groupInfo;
+
 		$template->setvariable('checkoutgroups', $checkoutgroups);
+
 		return array(null, 'modules/checkoutgroups/templates/GroupStatus.tpl', 'modules_checkoutgroups');
 	}
 

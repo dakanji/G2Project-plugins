@@ -39,6 +39,7 @@ class BulkManageRescan extends BulkManagePlugin {
 		// Accumulate parameters
 		$recursive           = (isset($form['recursive']) && $form['recursive'] === 'on') ? true : false;
 		$params['recursive'] = $recursive;
+
 		return array(null, $error, $status, $params);
 	}
 
@@ -47,6 +48,7 @@ class BulkManageRescan extends BulkManagePlugin {
 	 */
 	public function loadTemplate(&$template) {
 		$template->setVariable('controller', 'bulkmanage.BulkManage');
+
 		return array(null, 'modules/bulkmanage/templates/BulkManageRescan.tpl', 'modules_bulkmange');
 	}
 

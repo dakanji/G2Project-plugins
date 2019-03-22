@@ -37,10 +37,10 @@ class x_tremeTheme extends GalleryTheme {
 				'X-Treme Theme for Gallery2 by PedroGilberto.net'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'rows'                    => 4,
@@ -4655,6 +4655,7 @@ class x_tremeTheme extends GalleryTheme {
 	 */
 	public function validateSettings($settings) {
 		$error = parent::validateSettings($settings);
+
 		if (empty($settings['columnsMT']) || !is_numeric($settings['columnsMT'])) {
 			$error['columnsMT'] = $this->translate(
 				'You must enter a number greater than 0'
@@ -4775,6 +4776,7 @@ class x_tremeTheme extends GalleryTheme {
 		}
 
 		$theme =& $template->getVariableByReference('theme');
+
 		if (!empty($pluginStatus['slideshow']['active'])) {
 			$theme['slideshow'] = 1;
 		} else {
@@ -4785,9 +4787,11 @@ class x_tremeTheme extends GalleryTheme {
 			$theme['zencart'] = 1;
 		} else {
 			$theme['zencart'] = 0;
+
 			if (!empty($pluginStatus['cart']['active'])) {
 				if (!empty($pluginStatus['checkout']['active'])) {
 					$theme['cart'] = 3;
+
 					if (!empty($pluginStatus['fotokasten']['active'])) {
 						$theme['print'] = Fotokasten;
 					}
@@ -4892,6 +4896,7 @@ class x_tremeTheme extends GalleryTheme {
 		}
 
 		$theme =& $template->getVariableByReference('theme');
+
 		if (!empty($pluginStatus['slideshow']['active'])) {
 			$theme['slideshow'] = 1;
 		} else {
@@ -4902,9 +4907,11 @@ class x_tremeTheme extends GalleryTheme {
 			$theme['zencart'] = 1;
 		} else {
 			$theme['zencart'] = 0;
+
 			if (!empty($pluginStatus['cart']['active'])) {
 				if (!empty($pluginStatus['checkout']['active'])) {
 					$theme['cart'] = 3;
+
 					if (!empty($pluginStatus['fotokasten']['active'])) {
 						$theme['print'] = Fotokasten;
 					}

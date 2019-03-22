@@ -38,6 +38,7 @@ class AdminMultimediaController extends GalleryController {
 		}
 
 		$error = $status = array();
+
 		if (isset($form['action']['save'])) {
 			foreach (array(
 				'color1',
@@ -117,6 +118,7 @@ class AdminMultimediaView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'multimedia.AdminMultimedia');
+
 		return array(
 			null,
 			array(

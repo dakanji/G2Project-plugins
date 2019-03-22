@@ -57,6 +57,7 @@ class CheckoutGroupsPlugin extends CheckoutCustomPageInterface_1_0 {
 		}
 
 		$template->setVariable('groups', $groups);
+
 		return null;
 	}
 
@@ -77,13 +78,15 @@ class CheckoutGroupsPlugin extends CheckoutCustomPageInterface_1_0 {
 					$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $itemId);
 
 					if ($ret) {
-						return array($ret, null, null); // ... error and status
+						// ... error and status
+						return array($ret, null, null);
 					}
 				} else {
 					$ret = CheckoutProductMapHelper::deleteParam($productId, $paramName, $paramValue, $itemId);
 
 					if ($ret) {
-						return array($ret, null, null); // ... error and status
+						// ... error and status
+						return array($ret, null, null);
 					}
 				}
 			}

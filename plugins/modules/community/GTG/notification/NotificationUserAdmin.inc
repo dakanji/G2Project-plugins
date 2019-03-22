@@ -50,6 +50,7 @@ class NotificationUserAdminController extends GalleryController {
 		}
 
 		$returnOption = 'redirect';
+
 		if (!empty($form['action']['save'])) {
 			foreach ($form['notifications'] as $i => $notification) {
 				$notificationName = $notification['name'];
@@ -64,6 +65,7 @@ class NotificationUserAdminController extends GalleryController {
 				}
 
 				$permission = $instance->getPermission();
+
 				if (!$isAdminGroup && empty($permission)) {
 					continue;
 				}
@@ -92,6 +94,7 @@ class NotificationUserAdminController extends GalleryController {
 							$itemId     = (int)$formItem['itemId'];
 							$authorized = $isAdminGroup;
 							$item       = null;
+
 							if (!empty($itemId)) {
 								list($ret, $authorized) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
 
@@ -155,6 +158,7 @@ class NotificationUserAdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -190,6 +194,7 @@ class NotificationUserAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'notification.NotificationUserAdmin');
+
 		return array(
 			null,
 			array(
@@ -226,6 +231,7 @@ class NotificationUserAdminView extends GalleryView {
 
 		$form['notifications'] = array();
 		$i                     = 0;
+
 		foreach ($notifications as $notificationName => $notification) {
 			list($ret, $instance) = GalleryCoreApi::newFactoryInstanceById('NotificationEvent_1_0', $notificationName);
 
@@ -319,6 +325,7 @@ class NotificationUserAdminView extends GalleryView {
 						}
 
 						$filteredItemIds = array();
+
 						foreach ($itemIds as $itemId) {
 							if (!(empty($permission)
 								|| empty($itemPermissions[$itemId]['core.view'])
@@ -329,6 +336,7 @@ class NotificationUserAdminView extends GalleryView {
 						}
 
 						$itemIds = $filteredItemIds;
+
 						if (!empty($itemIds)) {
 							list($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryItem');
 
@@ -337,6 +345,7 @@ class NotificationUserAdminView extends GalleryView {
 							}
 
 							$j = 0;
+
 							foreach ($items as $item) {
 								$itemUrl = $urlGenerator->generateUrl(
 									array(

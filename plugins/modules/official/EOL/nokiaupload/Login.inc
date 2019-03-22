@@ -35,6 +35,7 @@ class LoginController extends GalleryController {
 
 		// Request forgery protection
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+
 		if (strstr($httpUserAgent, 'Nokia') === false) {
 			return array(GalleryCoreApi::error(ERROR_REQUEST_FORGED), null);
 		}
@@ -45,6 +46,7 @@ class LoginController extends GalleryController {
 
 		$results['status'] = ImageUploadHelper::doLogin();
 		$results['error']  = array();
+
 		return array(null, $results);
 	}
 
@@ -75,9 +77,12 @@ class LoginView extends GalleryView {
 		global $gallery;
 
 		$gallery->debug("##### LoginView #####\n\$status = ");
+
 		$gallery->debug_r($status);
+
 		$reply   = array($status['success'] . "\r\n");
 		$reply[] = 'Version=' . NOKIAUPLOAD_PROTOCOLVERSION . "\r\n";
+
 		if ($status['success'] == NOKIAUPLOAD_ERR_NOERR) {
 			$session =& $gallery->getSession();
 			$reply[] = 'SId=' . GalleryUtilities::prefixFormVariable($session->getKey()) .
@@ -101,10 +106,13 @@ class LoginView extends GalleryView {
 		}
 
 		$reply = implode('', $reply);
+
 		$gallery->debug("Sending:\n$reply");
+
 		header('Content-type: text/plain; charset=UTF-8');
 		header('Content-Length: ' . strlen($reply));
 		echo $reply;
+
 		return null;
 	}
 }

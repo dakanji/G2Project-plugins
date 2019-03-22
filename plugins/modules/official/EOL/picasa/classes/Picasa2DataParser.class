@@ -39,6 +39,7 @@ class Picasa2DataParser {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
+
 		if (($platform->file_exists($path . 'index.xml'))
 			&& ($platform->is_readable($path . 'index.xml'))
 		) {
@@ -61,6 +62,7 @@ class Picasa2DataParser {
 
 		// check for file
 		$platform =& $gallery->getPlatform();
+
 		if (!$platform->file_exists($picasaXmlFile) || !$platform->is_readable($picasaXmlFile)) {
 			return array(
 				GalleryCoreApi::error(
@@ -74,6 +76,7 @@ class Picasa2DataParser {
 		}
 
 		$rawXml = implode('', $platform->file($picasaXmlFile));
+
 		if (!is_string($rawXml)) {
 			return array(
 				GalleryCoreApi::error(
@@ -125,10 +128,12 @@ class Picasa2DataParser {
 		xml_parse_into_struct($xmlParser, $rawXml, $vals);
 		xml_parser_free($xmlParser);
 		$_tmp = '';
+
 		foreach ($vals as $xmlElem) {
 			$xTag   = $xmlElem['tag'];
 			$xLevel = $xmlElem['level'];
 			$xType  = $xmlElem['type'];
+
 			if (($xLevel != 1) && ($xType == 'close')) {
 				if (isset($multiKey[$xTag][$xLevel])) {
 					$multiKey[$xTag][$xLevel] = 1;
@@ -150,18 +155,21 @@ class Picasa2DataParser {
 			$xTag   = $xmlElem['tag'];
 			$xLevel = $xmlElem['level'];
 			$xType  = $xmlElem['type'];
+
 			if ($xType == 'open') {
 				$level[$xLevel] = $xTag;
 			}
 
 			$startLevel = 1;
 			$phpStmt    = '$xmlArray';
+
 			if ($xType == 'close' && $xLevel != 1) {
 				$multiKey[$xTag][$xLevel]++;
 			}
 
 			while ($startLevel < $xLevel) {
 				$phpStmt .= '[$level[' . $startLevel . ']]';
+
 				if ((isset($multiKey[$level[$startLevel]][$startLevel]))
 					&& ($multiKey[$level[$startLevel]][$startLevel])
 				) {
@@ -172,6 +180,7 @@ class Picasa2DataParser {
 			}
 
 			$add = '';
+
 			if ((isset($multiKey[$xTag][$xLevel])) && ($multiKey[$xTag][$xLevel])
 				&& (($xType == 'open') || ($xType == 'complete'))
 			) {
@@ -201,12 +210,14 @@ class Picasa2DataParser {
 				if (isset($xmlElem['value'])) {
 					$phpStmtMain = $phpStmt . '[$xTag]' . $add .
 					'[\'content\'] = $xmlElem[\'value\'];';
+
 					$gallery->runEval($phpStmtMain);
 				}
 
 				foreach ($xmlElem['attributes'] as $key => $value) {
 					$phpStmtAtt = $phpStmt . '[$xTag]' . $add .
 					'[\'attributes\'][$key] = $value;';
+
 					$gallery->runEval($phpStmtAtt);
 				}
 			}
@@ -235,6 +246,7 @@ class Picasa2DataParser {
 	 */
 	public static function getAlbumFromArray($picasaXmlArray) {
 		$imageArray = $picasaXmlArray;
+
 		if (isset($imageArray['album']['albumName'])) {
 			$albumArray['albumName'] = trim($imageArray['album']['albumName']);
 		} else {

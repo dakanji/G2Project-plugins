@@ -45,6 +45,7 @@ class ImportResultsView extends GalleryView {
 
 		$status = $template->getVariable('status');
 		$counts = array();
+
 		foreach (array(
 			'albumImportFailure',
 			'albumImportSuccess',
@@ -61,8 +62,10 @@ class ImportResultsView extends GalleryView {
 		$ImportResults           = array();
 		$ImportResults['counts'] = $counts;
 		$ImportResults['status'] = $status;
+
 		$template->setVariable('ImportResults', $ImportResults);
 		$template->setVariable('controller', 'picasa.ImportResults');
+
 		return array(
 			null,
 			array(

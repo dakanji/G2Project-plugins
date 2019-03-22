@@ -84,6 +84,7 @@ class DupeDetectHistogramsMap extends DupeDetectHistogramsMap_core {
 		$info['members']['blue64_127']   = STORAGE_TYPE_INTEGER;
 		$info['members']['blue128_191']  = STORAGE_TYPE_INTEGER;
 		$info['members']['blue192_255']  = STORAGE_TYPE_INTEGER;
+
 		return $info;
 	}
 

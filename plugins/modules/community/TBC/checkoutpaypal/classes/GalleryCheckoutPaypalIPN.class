@@ -53,6 +53,7 @@ class GalleryCheckoutPaypalIPN extends GalleryEntity {
 	*/
 
 	// Members
+
 	/**
 	 * PayPal transaction ID
 	 *

@@ -1,3 +1,5 @@
+
+
 function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	global $gallery;
 
@@ -10,9 +12,9 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	*   }
 	*/
 
-	/* Variables to push through into the function */
+/* Variables to push through into the function */
 
-	/*
+/*
 	* $view = "core.SiteAdmin";
 	* $subView = "userinfo.Userinfo3";
 	* $count = "20";
@@ -22,23 +24,24 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	$subView = $mySubView;
 	$count = $count;
 	$totalRecords = $myTotalRecords;
+
 	if (!isset($theme2['pageUrl'])) {
 		$theme2['pageUrl'] = array(
 			'view' => $view,
 			'subView' => $subView
 		);
-
 	}
 
 	/* If we care about pagination, then figure out the current page and total pages */
 	$perPage = $count;
 	$page = GalleryUtilities::getRequestVariables('page');
+
 	if ($perPage == 0 || empty($page)) {
 		$page = 1;
 
 		/* Redirect to the new page */
 
-		/*
+/*
 		*       $redirect = $theme['pageUrl'];
 		*       if ($page != 1) {
 		*           $redirect['page'] = $page;
@@ -65,12 +68,13 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 	*       }
 	*/
 
-	/*
+/*
 	 * --------------------------------------------------------------------------------------
 	 * 'jumpRange'
 	 */
 	if (isset($theme2['totalPages'])) {
 		$page = GalleryUtilities::getRequestVariables('page');
+
 		if (empty($page)) {
 			$page = 1;
 		}
@@ -79,6 +83,7 @@ function numPages($myView, $mySubView, $count, $myTotalRecords) {
 		$jumpRange = array();
 		$lowerPage = max($page - (int)($windowSize / 2), 1);
 		$upperPage = min($page + (int)($windowSize / 2), $theme2['totalPages']);
+
 		if ($upperPage == 0) {
 			$upperPage = 1;
 		}

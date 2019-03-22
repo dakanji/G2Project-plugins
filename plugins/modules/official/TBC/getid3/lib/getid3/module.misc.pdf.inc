@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.misc.pdf.php                                         //
 // module for analyzing PDF files                              //
@@ -20,6 +19,7 @@ class getid3_pdf extends getid3_handler {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'pdf';
 		$info['error'][]    = 'PDF parsing not enabled in this version of getID3() [' . $this->getid3->version() . ']';
+
 		return false;
 	}
 }

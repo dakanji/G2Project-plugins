@@ -39,15 +39,17 @@ class FavouritesModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks(
 			'registerEventListeners|getItemLinks|getSystemLinks|getSiteAdminViews'
 		);
-
 	}
 
 	/**
@@ -77,16 +79,15 @@ class FavouritesModule extends GalleryModule {
 			'themeId'       => '',
 			'offerToGuests' => 1,
 		)
-		as $key => $value) {
+
+ as $key => $value) {
 			if (!isset($params[$key])) {
 				$ret = $this->setParameter($key, $value);
 
 				if ($ret) {
 					return $ret;
 				}
-
 			}
-
 		}
 
 		if (!isset($params['themeSettingsId'])) {
@@ -106,7 +107,6 @@ class FavouritesModule extends GalleryModule {
 					__LINE__,
 					'Unable to get a GalleryEntity instance'
 				);
-
 			}
 
 			$ret = $entity->create();
@@ -126,7 +126,6 @@ class FavouritesModule extends GalleryModule {
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		return null;
@@ -146,6 +145,7 @@ class FavouritesModule extends GalleryModule {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		$userId = $gallery->getActiveUserId();
 
 		// show to guest user for tantalisation purposes?
@@ -166,13 +166,16 @@ class FavouritesModule extends GalleryModule {
 		}
 
 		$viewingFavourites = false;
+
 		if ('favourites.FavouritesAlbum' == $gallery->getCurrentView()) {
 			$viewingFavourites = true;
 		}
 
 		$links = array();
+
 		foreach ($items as $item) {
 			/*no link for album items
+
 			if ($item->getCanContainChildren()) {
 			continue;
 			}*/
@@ -200,7 +203,6 @@ class FavouritesModule extends GalleryModule {
 						'return'     => 1,
 					),
 				);
-
 			} else {
 				$links[$item->getId()][] = array(
 					'text' => $this->translate(
@@ -216,9 +218,7 @@ class FavouritesModule extends GalleryModule {
 						'return'     => 1,
 					),
 				);
-
 			}
-
 		}
 
 		if ($viewingFavourites) {
@@ -234,7 +234,6 @@ class FavouritesModule extends GalleryModule {
 					'return'     => 1,
 				),
 			);
-
 		}
 
 		return array(null, $links);
@@ -247,6 +246,7 @@ class FavouritesModule extends GalleryModule {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		$links  = array();
 		$userId = $gallery->getActiveUserId();
 
@@ -277,7 +277,6 @@ class FavouritesModule extends GalleryModule {
 					'view' => 'favourites.FavouritesAlbum',
 				),
 			);
-
 		}
 
 		return array(null, $links);
@@ -296,7 +295,6 @@ class FavouritesModule extends GalleryModule {
 				),
 			),
 		);
-
 	}
 
 	/**
@@ -306,13 +304,15 @@ class FavouritesModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		$data = $event->getData();
+
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
+
 			if (GalleryUtilities::isA($entity, 'GalleryItem')) {
 				FavouritesMapHelper::clearFavourites($entity->getId());
 			}
-
 		}
 
 		return array(null, null);
@@ -361,8 +361,5 @@ class FavouritesModule extends GalleryModule {
 				'help'     => $this->translate('Short URL for album of Favorite Items'),
 			),
 		);
-
 	}
-
 }
-

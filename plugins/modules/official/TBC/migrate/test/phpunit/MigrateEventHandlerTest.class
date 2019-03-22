@@ -50,6 +50,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_temporaryAlbum);
+
 		$this->_temporaryAlbumId = $this->_temporaryAlbum->getId();
 
 		list($ret, $this->_mapCount) = G1MigrateHelper::getme()->fetchMapCount();
@@ -152,6 +153,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		);
 
 		$event = GalleryCoreApi::newEvent('GalleryEntity::delete');
+
 		$event->setEntity($g1MapHandlerItem);
 
 		list($ret) = MigrateModule::getme()->handleEvent($event);
@@ -161,6 +163,7 @@ class MigrateEventHandlerTest extends GalleryControllerTestCase {
 		}
 
 		$event = GalleryCoreApi::newEvent('GalleryEntity::delete');
+
 		$event->setEntity($g1MapHandlerAlbum);
 
 		list($ret) = MigrateModule::getme()->handleEvent($event);

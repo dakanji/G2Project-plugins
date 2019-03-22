@@ -140,6 +140,7 @@ class DupeDetectHelper {
 				}
 
 				break;
+
 			case 'GalleryEntity::save':
 				/*
 				 * If the added entity is an image,
@@ -226,6 +227,7 @@ class DupeDetectHelper {
 		}
 
 		$dupes = array_merge($crcDupes, $histDupes);
+
 		return array(GalleryStatus::success(), $dupes);
 	}
 
@@ -254,11 +256,13 @@ class DupeDetectHelper {
 			  ';
 
 		list ($ret, $searchResults) = $gallery->search($query, array($itemId));
+
 		if ($ret->isError()) {
 			return array($ret, null);
 		}
 
 		$result = false;
+
 		if ($rec = $searchResults->nextResult()) {
 			$result = (bool)$rec[0];
 		}
@@ -318,6 +322,7 @@ class DupeDetectHelper {
 		);
 
 		$data = $aclIds;
+
 		if (isset($type)) {
 			$query .= 'AND [DupeDetectDupesListMap::dupType] = ?';
 
@@ -349,7 +354,10 @@ class DupeDetectHelper {
 
 		// Get all data from query result
 		$dups = array();
-		$ids  = array(); // store both source and dup ids
+
+		// store both source and dup ids
+		$ids = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$dups[] = array(
 				'srcItemId'  => $result[0],
@@ -371,6 +379,7 @@ class DupeDetectHelper {
 			}
 
 			$entitiesById = array();
+
 			foreach ($entities as $entity) {
 				$entitiesById[$entity->getId()] = $entity;
 			}
@@ -448,6 +457,7 @@ class DupeDetectHelper {
 		}
 
 		$dups = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$dups[] = array(
 				'srcItemId'  => $result[0],
@@ -480,6 +490,7 @@ class DupeDetectHelper {
 		global $gallery;
 
 		$count = 0;
+
 		if (empty($dupesList)) {
 			return array(GalleryStatus::success(), $count);
 		}
@@ -658,6 +669,7 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
+
 			return array($ret, null);
 		}
 
@@ -665,6 +677,7 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
+
 			return array($ret, null);
 		}
 
@@ -683,6 +696,7 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
+
 			return array($ret, null);
 		}
 
@@ -690,6 +704,7 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
+
 			return array($ret, null);
 		}
 
@@ -697,6 +712,7 @@ class DupeDetectHelper {
 
 		if ($ret->isError()) {
 			GalleryCoreApi::releaseLocks($locks);
+
 			return array($ret, null);
 		}
 

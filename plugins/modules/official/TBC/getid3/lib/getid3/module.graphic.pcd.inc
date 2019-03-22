@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.graphic.pcd.php                                      //
 // module for analyzing PhotoCD (PCD) Image files              //
@@ -23,9 +22,12 @@ class getid3_pcd extends getid3_handler {
 		$info['fileformat']          = 'pcd';
 		$info['video']['dataformat'] = 'pcd';
 		$info['video']['lossless']   = false;
+
 		$this->fseek($info['avdataoffset'] + 72);
+
 		$PCDflags      = $this->fread(1);
 		$PCDisVertical = ((ord($PCDflags) & 0x01) ? true : false);
+
 		if ($PCDisVertical) {
 			$info['video']['resolution_x'] = 3072;
 			$info['video']['resolution_y'] = 2048;
@@ -37,15 +39,25 @@ class getid3_pcd extends getid3_handler {
 		if ($this->ExtractData > 3) {
 			$info['error'][] = 'Cannot extract PSD image data for detail levels above BASE (level-3) because encrypted with Kodak-proprietary compression/encryption.';
 		} elseif ($this->ExtractData > 0) {
-			$PCD_levels[1] = array(192, 128, 0x02000); // BASE/16
-			$PCD_levels[2] = array(384, 256, 0x0B800); // BASE/4
-			$PCD_levels[3] = array(768, 512, 0x30000); // BASE
-			//$PCD_levels[4] = array(1536, 1024,    ??); // BASE*4  - encrypted with Kodak-proprietary compression/encryption
-			//$PCD_levels[5] = array(3072, 2048,    ??); // BASE*16 - encrypted with Kodak-proprietary compression/encryption
-			//$PCD_levels[6] = array(6144, 4096,    ??); // BASE*64 - encrypted with Kodak-proprietary compression/encryption; PhotoCD-Pro only
+			// BASE/16
+			$PCD_levels[1] = array(192, 128, 0x02000);
+
+			// BASE/4
+			$PCD_levels[2] = array(384, 256, 0x0B800);
+
+			// BASE
+			$PCD_levels[3] = array(768, 512, 0x30000);
+
+			// BASE*4  - encrypted with Kodak-proprietary compression/encryption
+			//$PCD_levels[4] = array(1536, 1024,    ??);
+			// BASE*16 - encrypted with Kodak-proprietary compression/encryption
+			//$PCD_levels[5] = array(3072, 2048,    ??);
+			// BASE*64 - encrypted with Kodak-proprietary compression/encryption; PhotoCD-Pro only
+			//$PCD_levels[6] = array(6144, 4096,    ??);
 			list($PCD_width, $PCD_height, $PCD_dataOffset) = $PCD_levels[3];
 
 			$this->fseek($info['avdataoffset'] + $PCD_dataOffset);
+
 			for ($y = 0; $y < $PCD_height; $y += 2) {
 				// The image-data of these subtypes start at the respective offsets of 02000h, 0b800h and 30000h.
 				// To decode the YcbYr to the more usual RGB-code, three lines of data have to be read, each
@@ -56,6 +68,7 @@ class getid3_pcd extends getid3_handler {
 				$PCD_data_Y2 = $this->fread($PCD_width);
 				$PCD_data_Cb = $this->fread(intval(round($PCD_width / 2)));
 				$PCD_data_Cr = $this->fread(intval(round($PCD_width / 2)));
+
 				for ($x = 0; $x < $PCD_width; $x++) {
 					if ($PCDisVertical) {
 						$info['pcd']['data'][$PCD_width - $x][$y]     = $this->YCbCr2RGB(ord($PCD_data_Y1[$x]), ord($PCD_data_Cb[floor($x / 2)]), ord($PCD_data_Cr[floor($x / 2)]));
@@ -86,15 +99,15 @@ class getid3_pcd extends getid3_handler {
 		static $YCbCr_constants = array();
 
 		if (empty($YCbCr_constants)) {
-			$YCbCr_constants['red']['Y']    = 0.0054980 * 256;
-			$YCbCr_constants['red']['Cb']   = 0.0000000 * 256;
-			$YCbCr_constants['red']['Cr']   = 0.0051681 * 256;
-			$YCbCr_constants['green']['Y']  = 0.0054980 * 256;
+			$YCbCr_constants['red']['Y']    = 0.0054980  * 256;
+			$YCbCr_constants['red']['Cb']   = 0.0000000  * 256;
+			$YCbCr_constants['red']['Cr']   = 0.0051681  * 256;
+			$YCbCr_constants['green']['Y']  = 0.0054980  * 256;
 			$YCbCr_constants['green']['Cb'] = -0.0015446 * 256;
 			$YCbCr_constants['green']['Cr'] = -0.0026325 * 256;
-			$YCbCr_constants['blue']['Y']   = 0.0054980 * 256;
-			$YCbCr_constants['blue']['Cb']  = 0.0079533 * 256;
-			$YCbCr_constants['blue']['Cr']  = 0.0000000 * 256;
+			$YCbCr_constants['blue']['Y']   = 0.0054980  * 256;
+			$YCbCr_constants['blue']['Cb']  = 0.0079533  * 256;
+			$YCbCr_constants['blue']['Cr']  = 0.0000000  * 256;
 		}
 
 		$RGBcolor = array(

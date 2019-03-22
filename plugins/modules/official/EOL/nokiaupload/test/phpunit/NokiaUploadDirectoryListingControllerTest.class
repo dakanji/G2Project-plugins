@@ -126,7 +126,9 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 
 		// Login our test user
 		$gallery->setActiveUser($this->_user);
+
 		$session =& $gallery->getSession();
+
 		$session->remove('permissionCache');
 
 		$ret = GalleryCoreApi::assertHasItemPermission($this->_getRootId(), 'core.addAlbumItem');
@@ -136,6 +138,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		}
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array('view' => 'nokiaupload.DirectoryListing'),
 			$results['delegate'],
@@ -145,18 +148,18 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		$this->assertEquals(array(), $results['error'], 'error');
 		$this->assertEquals(NOKIAUPLOAD_ERR_NOERR, $results['status']['success'], 'success');
 		$this->assertFalse(empty($results['status']['albums']), 'album list');
-		foreach ($results['status']['albums'] as $item) { //in_array needle can't be array in php41
+
+		foreach ($results['status']['albums'] as $item) {
+			//in_array needle can't be array in php41
 			if ($item == array('id' => $this->_album->getId(),
 			'parentid'              => $this->_album->getParentId(),
 			'name'                  => GalleryUtilities::HtmlEntityDecode($this->_album->getTitle()), )) {
 				$foundIt = 1;
+
 				break;
 			}
-
 		}
 
 		$this->assertTrue(isset($foundIt), 'upload album');
 	}
-
 }
-

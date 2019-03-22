@@ -62,8 +62,10 @@ class TagCloudCssView extends GalleryView {
 		$cssFile              = $cssDir . $slash . 'tags.css';
 		$cssFileStat          = $platform->stat($cssFile);
 		$fileLastModifiedDate = $cssFileStat[9];
+
 		if (function_exists('getallheaders')) {
 			$headers = getallheaders();
+
 			if (isset($headers['If-modified-since'])) {
 				$headers['If-Modified-Since'] = $headers['If-modified-since'];
 			}
@@ -74,6 +76,7 @@ class TagCloudCssView extends GalleryView {
 			) {
 				// File not changed, don't resend
 				header('HTTP/1.0 304 Not Modified');
+
 				return null;
 			}
 		}

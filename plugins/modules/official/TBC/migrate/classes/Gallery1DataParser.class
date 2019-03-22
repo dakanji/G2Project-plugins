@@ -51,6 +51,7 @@ class Gallery1DataParser {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
+
 		if ($platform->file_exists($path . 'albumdb.dat')
 			&& $platform->is_readable($path . 'albumdb.dat')
 		) {
@@ -71,6 +72,7 @@ class Gallery1DataParser {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
+
 		if (!$platform->file_exists($fileName) || !$platform->is_readable($fileName)) {
 			if ($platform->file_exists($fileName . '.bak')
 				&& $platform->is_readable($fileName . '.bak')
@@ -90,6 +92,7 @@ class Gallery1DataParser {
 		}
 
 		$tmp = $platform->file($fileName);
+
 		if (empty($tmp)) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_VALUE), null);
 		}
@@ -105,6 +108,7 @@ class Gallery1DataParser {
 		}
 
 		$object = unserialize($tmp);
+
 		return array(null, $object);
 	}
 
@@ -253,6 +257,7 @@ class Gallery1DataParser {
 		$platform =& $gallery->getPlatform();
 		$slash    = $platform->getDirectorySeparator();
 		$tmp      = trim($path);
+
 		if ($tmp[strlen($tmp) - 1] != $slash) {
 			$tmp .= $slash;
 		}
@@ -268,6 +273,7 @@ class Gallery1DataParser {
 		}
 
 		$album->fields['name'] = $albumName;
+
 		if (!$album->fields['parentAlbumName']) {
 			$album->fields['parentAlbumName'] = '.root';
 		}
@@ -290,6 +296,7 @@ class Gallery1DataParser {
 		}
 
 		$photoCount = count($photos);
+
 		return array(null, $photoCount);
 	}
 
@@ -324,7 +331,6 @@ class Gallery1DataParser {
 	 */
 	public function getUserUids($path) {
 		global $gallery;
-
 		static $uids;
 
 		if (!isset($uids[$path])) {
@@ -342,6 +348,7 @@ class Gallery1DataParser {
 			}
 
 			$uids[$path] = array();
+
 			foreach ($userDB->userMap as $username => $uid) {
 				if (Gallery1DataParser::getme()->isValidUid($path, $uid)
 					&& !Gallery1DataParser::getme()->isValidUid($path, $username)
@@ -378,7 +385,6 @@ class Gallery1DataParser {
 	 */
 	public function isValidUid($path, $uid) {
 		global $gallery;
-
 		static $valid;
 
 		if (!isset($valid[$path][$uid])) {
@@ -392,6 +398,7 @@ class Gallery1DataParser {
 
 			$platform =& $gallery->getPlatform();
 			$slash    = $platform->getDirectorySeparator();
+
 			if (Gallery1DataParser::getme()->isValidUidString($uid)) {
 				list($ret, $fields) = Gallery1DataParser::getme()->getUserFieldsByUid($path, $uid);
 
@@ -418,7 +425,6 @@ class Gallery1DataParser {
 	 */
 	public function getUserFieldsByUid($path, $uid) {
 		global $gallery;
-
 		static $fields;
 
 		if (!isset($fields[$path][$uid])) {
@@ -433,6 +439,7 @@ class Gallery1DataParser {
 			$platform            =& $gallery->getPlatform();
 			$slash               = $platform->getDirectorySeparator();
 			$fields[$path][$uid] = array();
+
 			if (Gallery1DataParser::getme()->isValidUidString($uid)) {
 				list($ret, $user) = Gallery1DataParser::getme()->loadFile($path . '.users' . $slash . $uid);
 
@@ -478,6 +485,7 @@ class Gallery1DataParser {
 }
 
 // Define these classes so that unserialize can use them
+
 /**
  * A stub class into which various G1 objects can be unserialized.
  */

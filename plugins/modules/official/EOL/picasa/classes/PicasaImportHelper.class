@@ -37,18 +37,23 @@ class PicasaImportHelper {
 	 */
 	public static function convertHtml($markupType, $item, $sourceEncoding = 'UTF-8') {
 		$item = GalleryCoreApi::convertToUtf8($item, $sourceEncoding);
+
 		switch ($markupType) {
 			case 'bbcode':
 				$item = PicasaImportHelper::convertHtmlToBbcode($item);
+
 				break;
+
 			case 'html':
 				break;
+
 			case 'none':
 			default:
 				$item = strip_tags($item);
 		}
 
 		GalleryUtilities::sanitizeInputValues($item, false);
+
 		return $item;
 	}
 
@@ -78,6 +83,7 @@ class PicasaImportHelper {
 		}
 
 		$item = preg_replace($match, $replace, $item);
+
 		return strip_tags($item);
 	}
 }

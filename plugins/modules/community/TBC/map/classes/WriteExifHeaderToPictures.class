@@ -79,6 +79,7 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
               [DataItem::mimeType] = \'image/jpeg\'
             AND
               [mapMap::field] = \'GPS\'
+
             ORDER BY [PhotoItem::id]';
 
 		list($ret, $result) = $gallery->search($query);
@@ -88,6 +89,7 @@ class WriteExifHeaderToPictures extends MaintenanceTask {
 		}
 
 		$ids = array();
+
 		while ($res = $result->nextResult()) {
 			$ids[] = $res[0];
 		}

@@ -57,6 +57,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		$this->_parserType  = 'preGallery';
 		$this->_activeRules =& HttpAuthHelperTestRewriteApi::_fetchActiveRulesForModule('httpauth');
 		$this->_activeRules = array('authorization');
+
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'RewriteApi',
@@ -113,6 +114,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		// Use HttpAuthHelperTestPlatform
 		$this->_platform                                          = new HttpAuthHelperTestPlatform();
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_accessAuthorizationResponse;
+
 		$gallery->setPlatform($this->_platform);
 
 		$ret = $this->_markPluginParametersForCleanup('module', 'httpauth');
@@ -165,7 +167,9 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		$this->_headers       = array();
 		$this->_saveSession   = $gallery->_session;
 		$_SERVER['AUTH_TYPE'] = $_SERVER['PHP_AUTH_USER'] = $_SERVER['PHP_AUTH_PW'] = null;
+
 		GalleryUtilities::removeRequestVariable('authorization');
+
 		$_SERVER['HTTP_AUTHORIZATION'] = null;
 	}
 
@@ -173,6 +177,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 		global $gallery;
 
 		GalleryDataCache::reset();
+
 		$gallery->_session = $this->_saveSession;
 
 		$ret = parent::tearDown();
@@ -224,6 +229,7 @@ class HttpAuthHelperTest extends GalleryTestCase {
 	public function testCheckConfigurationRewriteModuleDisabled() {
 		$this->_platform->_messages[$this->_httpAuthWorksRequest] = $this->_missingAuthorizationResponse;
 		$moduleStatus                                             = array();
+
 		GalleryDataCache::put('GalleryPluginHelper::fetchPluginList(module)', $moduleStatus);
 
 		list($ret, $code) = HttpAuthHelper::checkConfiguration();
@@ -275,7 +281,9 @@ class HttpAuthHelperTest extends GalleryTestCase {
 
 	public function testCheckConfigurationHttpAuthWorksIgnoresCauses() {
 		$moduleStatus = array();
+
 		GalleryDataCache::put('GalleryPluginHelper::fetchPluginList(module)', $moduleStatus);
+
 		$this->_parserType  = 'bogus';
 		$this->_activeRules = array();
 
@@ -813,12 +821,14 @@ class HttpAuthHelperTestPlatform extends GalleryPlatform {
 
 		$buffer        = substr($this->_buffer, 0, $length);
 		$this->_buffer = substr($this->_buffer, $length);
+
 		return $buffer;
 	}
 
 	public function fwrite($handle, $string, $length = 0) {
 		if (isset($this->_messages[$string])) {
 			$this->_buffer = $this->_messages[$string];
+
 			return strlen($string);
 		}
 

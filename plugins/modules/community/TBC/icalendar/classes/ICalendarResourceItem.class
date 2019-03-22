@@ -94,6 +94,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 	    FROM
 	      [ICalendarResourceMap]
 	    WHERE
+
 	      [ICalendarResourceMap::resourceId] = ?';
 
 		list($ret, $results) = $gallery->search($query, array($this->getId()));
@@ -129,6 +130,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 		}
 
 		$handle = $platform->fopen($fspath, 'rb');
+
 		if (!$handle) {
 			return GalleryCoreApi::error(GALLERY_ERROR);
 		}
@@ -182,13 +184,11 @@ class ICalendarResourceItem extends GalleryDataItem {
 					$comp->properties['DTSTART'][0]->value
 				)
 			);
-
 			$newEntity->setEnd(
 				ICalendarParser::datetime_to_timestamp(
 					$comp->properties['DTEND'][0]->value
 				)
 			);
-
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
 
 			$ret = $newEntity->save();
@@ -199,6 +199,7 @@ class ICalendarResourceItem extends GalleryDataItem {
 
 			/*$ret = GalleryCoreApi::addExistingItemToAlbum($newEntity, $resourceItem->getParentId(),
 			true);
+
 			if ($ret) {
 			return $ret;
 			}*/

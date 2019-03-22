@@ -84,12 +84,15 @@ class AuthorizeNetAim {
 
 	public function __construct($loginId, $tranKey) {
 		$this->_aimVersion = '3.1';
+
 		$this->setLoginId($loginId);
 		$this->setTranKey($tranKey);
 
 		// Should always be false, I think
 		$this->_relayResponse = 'FALSE';
+
 		$this->setType('AUTH_CAPTURE');
+
 		$this->_delimData  = 'TRUE';
 		$this->_delimChar  = '|';
 		$this->_eCheckType = 'WEB';
@@ -102,10 +105,12 @@ class AuthorizeNetAim {
 
 		// Get the data to send
 		$data = $this->getUrlData();
+
 		if (!empty($this->_curlPath)) {
 			// Run cURL with the data
 			list($success, $results, $error)
 					= $platform->exec(array(array($this->_curlPath, '-d', $data, $this->_gateway)));
+
 			if (!$success) {
 				return array(
 					GalleryCoreApi::error(ERROR_PLATFORM_FAILURE, __FILE__, __LINE__),
@@ -117,6 +122,7 @@ class AuthorizeNetAim {
 		}
 
 		$returnArray = explode($this->_delimChar, $results[0]);
+
 		if ($returnArray[2] == 1) {
 			// If success
 			return array(null, null);
@@ -126,6 +132,7 @@ class AuthorizeNetAim {
 			$this->_error = $returnArray[3];
 		} else {
 			$this->_error = '';
+
 			foreach ($results as $item) {
 				$this->_error .= $item;
 			}
@@ -136,14 +143,12 @@ class AuthorizeNetAim {
 
 	public function getUrlData() {
 		$data = 'x_version=' . $this->_aimVersion .
-
 		// The login ID
 		'&x_login=' . $this->_loginId .
 		'&x_tran_key=' . $this->_tranKey .
 		'&x_relay_response=' . $this->_relayResponse .
 		'&x_type=' . $this->_type .
 		'&x_delim_data=' . $this->_delimData .
-
 		// The character to delimit with
 		'&x_delim_char=' . $this->_delimChar .
 		'&x_first_name=' . $this->_firstName .
@@ -186,10 +191,14 @@ class AuthorizeNetAim {
 		switch ($mode) {
 			case 'LIVE':
 				$this->_gateway = 'https://secure.authorize.net/gateway/transact.dll';
+
 				break;
+
 			case 'TEST':
 				$this->_gateway = 'https://certification.authorize.net/gateway/transact.dll';
+
 				break;
+
 			default:
 				return GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__);
 		}
@@ -256,7 +265,9 @@ class AuthorizeNetAim {
 			case 'CC':
 			case 'ECHECK':
 				$this->_method = $method;
+
 				break;
+
 			default:
 				return GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__);
 		}

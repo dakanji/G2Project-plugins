@@ -35,10 +35,14 @@ class Getid3Module extends GalleryModule {
 		$this->setId('getid3');
 		$this->setName($gallery->i18n('Getid3'));
 		$this->setDescription($gallery->i18n('A toolkit for getting id3 tag information'));
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('data', $gallery->i18n('Extra Data'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -102,6 +106,7 @@ class Getid3Module extends GalleryModule {
 					 * so that we always properly terminate our upgrade path with a break.
 					 */
 					break;
+
 				default:
 					return GalleryCoreApi::error(
 						ERROR_BAD_PLUGIN,
@@ -187,6 +192,7 @@ class Getid3Module extends GalleryModule {
 		 * spaces in the path.
 		 */
 		$platform =& $gallery->getPlatform();
+
 		if (GalleryUtilities::isA($platform, 'WinNtPlatform')) {
 			return array(
 				null,

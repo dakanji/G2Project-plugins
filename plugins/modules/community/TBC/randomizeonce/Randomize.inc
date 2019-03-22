@@ -69,6 +69,7 @@ class RandomizeController extends GalleryController {
 		$results['redirect']  = $redirect;
 		$results['status']    = $status;
 		$results['error']     = $error;
+
 		return array(null, $results);
 	}
 }
@@ -95,6 +96,7 @@ class RandomizeView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'randomizeonce.Randomize');
+
 		return array(
 			null,
 			array(

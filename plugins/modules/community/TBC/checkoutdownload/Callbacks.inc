@@ -20,13 +20,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
- /**
-  * @version $Revision: 1690 $
-  * @package CheckoutDownload
-  * @author Alec Myers <alec@alecmyers.com>
-  */
+/**
+ * @version $Revision: 1690 $
+ * @package CheckoutDownload
+ * @author Alec Myers <alec@alecmyers.com>
+ */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 GalleryCoreApi::requireOnce('modules/checkoutdownload/classes/CheckoutDownloadHelper.class');
+
 class CheckoutdownloadCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;
@@ -52,13 +53,16 @@ class CheckoutdownloadCallbacks {
 					$ret,
 					$block['checkoutDownload']['downloadTest']
 				) = CheckoutDownloadHelper::checkDownloadOffer($params['transactionId']);
+
 				if ($ret) {
 					return $ret;
 				}
 
 				$block['checkoutDownload']['downloaded']       = $transaction->getTimeDownloaded();
 				$block['checkoutDownload']['downloadAttempts'] = $transaction->getDownloadAttempts();
+
 				return null;
+
 			break;
 		}
 

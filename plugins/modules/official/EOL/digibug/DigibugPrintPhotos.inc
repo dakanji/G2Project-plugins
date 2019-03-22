@@ -58,6 +58,7 @@ class DigibugPrintPhotosView extends GalleryView {
 		} else {
 			$session     =& $gallery->getSession();
 			$cartItemIds = $session->get('digibug.cart');
+
 			$session->remove('digibug.cart');
 		}
 
@@ -118,7 +119,11 @@ class DigibugPrintPhotosView extends GalleryView {
 			return $ret;
 		}
 
-		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds, $anonymousUserId, false);
+		list($ret, $publicPermissions) = GalleryCoreApi::fetchPermissionsForItems(
+			$itemIds,
+			$anonymousUserId,
+			false
+		);
 
 		if ($ret) {
 			return $ret;
@@ -127,8 +132,10 @@ class DigibugPrintPhotosView extends GalleryView {
 		// Assemble all our data
 		$i       = 1;
 		$entries = $protectedIds = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (!isset($permissions[$itemId]['digibug.print'])) {
 				// Skip any cart items for which we don't have print permission
 				continue;
@@ -136,6 +143,7 @@ class DigibugPrintPhotosView extends GalleryView {
 
 			$source      = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
 			$needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
+
 			if ($needSession && !isset($dgSession)) {
 				/*
 				 * Get G2 session for digibug to access non-public images.
@@ -182,6 +190,7 @@ class DigibugPrintPhotosView extends GalleryView {
 
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
+
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
 				// Use the source if the thumbnail has a postfilter (like a watermark)
 				$thumbSource = $source;
@@ -247,8 +256,11 @@ class DigibugPrintPhotosView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
 		$template->setVariable('l10Domain', 'modules_digibug');
+
 		$template->setVariable(
 			'DigibugPrintPhotos',
 			array(
@@ -260,6 +272,7 @@ class DigibugPrintPhotosView extends GalleryView {
 		);
 
 		$template->display('gallery:modules/digibug/templates/DigibugPrintPhotos.tpl');
+
 		return null;
 	}
 }

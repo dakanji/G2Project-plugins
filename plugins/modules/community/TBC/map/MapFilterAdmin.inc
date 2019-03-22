@@ -52,6 +52,7 @@ class MapFilterAdminController extends GalleryController {
 
 		if (isset($form['action']['add'])) {
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditFilter', '');
+
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -64,8 +65,10 @@ class MapFilterAdminController extends GalleryController {
 			$tmp            = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 			$currentfilters = explode('|', $tmp[1]);
 			$newfilter      = '';
+
 			foreach ($currentfilters as $filter) {
 				$temp = explode('`', $filter);
+
 				if ($temp[0] != $id) {
 					if ($newfilter == '') {
 						$newfilter = $filter;
@@ -76,6 +79,7 @@ class MapFilterAdminController extends GalleryController {
 			}
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $newfilter);
+
 			$status['filterdeleted']        = 1;
 			$results['status']              = $status;
 			$results['error']               = array();
@@ -89,8 +93,10 @@ class MapFilterAdminController extends GalleryController {
 			$tmp            = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 			$currentfilters = explode('|', $tmp[1]);
 			$newfilter      = '';
+
 			foreach ($currentfilters as $filter) {
 				$temp = explode('`', $filter);
+
 				if ($temp[0] != $id) {
 					if ($newfilter == '') {
 						$newfilter = $filter;
@@ -104,6 +110,7 @@ class MapFilterAdminController extends GalleryController {
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $newfilter);
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditFilter', $editfilter);
+
 			$results['status']              = $status;
 			$results['error']               = array();
 			$results['redirect']['view']    = 'core.SiteAdmin';
@@ -132,8 +139,10 @@ class MapFilterAdminController extends GalleryController {
 				$FilterName   = $_POST['FilterName'];
 				$FilterZoom   = $_POST['FilterZoom'];
 				$FilterCenter = $_POST['FilterCenter'];
+
 				if ($oldfilter[1] != '') {
 					$temp = explode('|', $oldfilter[1]);
+
 					if (!isset($_POST['oldid'])) {
 						// @todo This code will not get the maximum id. Fix similar to Routes
 						$maxfilter = explode('`', max($temp));
@@ -154,10 +163,12 @@ class MapFilterAdminController extends GalleryController {
 				}
 
 				GalleryCoreApi::setPluginParameter('module', 'map', 'Filters', $form['Filters']);
+
 				$status['filtersaved'] = 1;
 			}
 
 			GalleryCoreApi::setPluginParameter('module', 'map', 'EditFilter', '');
+
 			$method                      = empty($error) ? 'redirect' : 'delegate';
 			$mode                        = empty($error) ? 'Filter' : 'AddFilter';
 			$results['status']           = $status;
@@ -170,6 +181,7 @@ class MapFilterAdminController extends GalleryController {
 		if (isset($form['action']['savesettings'])) {
 			$form['ShowAlbumFilters'] = false;
 			$form['ShowFilters']      = 0;
+
 			if (array_key_exists('showalbumfilters', $_POST) and $_POST['showalbumfilters']) {
 				$form['ShowAlbumFilters'] = true;
 			}
@@ -206,6 +218,7 @@ class MapFilterAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
+
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
@@ -238,6 +251,7 @@ class MapFilterAdminController extends GalleryController {
 					}
 
 					break;
+
 				case 2: // Show on the right, no sidebar block -> continue
 				case 3: // Show on the top, no sidebar block -> continue
 				case 4: // Show on the bottom, no sidebar block -> continue
@@ -268,6 +282,7 @@ class MapFilterAdminController extends GalleryController {
 					if ($thememajor == 2 && $thememinor <= 3) {
 						if (array_key_exists('2', $settings)) {
 							$settings = $settings[2];
+
 							foreach ($settings as $key => $values) {
 								if ($key == 'sidebarBlocks') {
 									list($ret, $value) = $deftheme->unpackSetting('block-list', $values);
@@ -345,11 +360,13 @@ class MapFilterAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$template->head('modules/map/includes/GoogleMap.css');
+
 		$form['formName'] = 'MapFilterAdmin';
 
 		// Set default values for undefined plugin parameters
 		if (!array_key_exists('ShowFilters', $form)) {
-			$form['ShowFilters'] = 0; // hide the block by default
+			// hide the block by default
+			$form['ShowFilters'] = 0;
 		}
 
 		if (!array_key_exists('ShowAlbumFilters', $form)) {
@@ -363,6 +380,7 @@ class MapFilterAdminView extends GalleryView {
 		if (!array_key_exists('LevelFilterRoot', $form)) {
 			$form['LevelFilterRoot'] = false;
 		}
+
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		// Create the filter array
@@ -370,6 +388,7 @@ class MapFilterAdminView extends GalleryView {
 			$filteroptions    = array();
 			$separatedfilters = explode('|', $param['Filters']);
 			sort($separatedfilters);
+
 			foreach ($separatedfilters as $alloptions) {
 				$options              = explode('`', $alloptions);
 				$form['filterlist'][] = array(
@@ -384,10 +403,12 @@ class MapFilterAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapFilterAdmin');
+
 		return array(
 			null,
 			array(

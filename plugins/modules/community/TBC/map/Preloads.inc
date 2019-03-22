@@ -32,6 +32,7 @@ class mapPreloads {
 
 		$loaded = true;
 		$itemId = GalleryUtilities::getRequestVariables('itemId');
+
 		if (!empty($itemId)) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
 

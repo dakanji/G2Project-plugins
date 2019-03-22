@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.misc.par2.php                                        //
 // module for analyzing PAR2 files                             //
@@ -20,6 +19,7 @@ class getid3_par2 extends getid3_handler {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'par2';
 		$info['error'][]    = 'PAR2 parsing not enabled in this version of getID3()';
+
 		return false;
 	}
 }

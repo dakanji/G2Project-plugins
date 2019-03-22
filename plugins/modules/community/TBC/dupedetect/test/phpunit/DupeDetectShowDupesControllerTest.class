@@ -32,6 +32,7 @@
  * Load required classes
  */
 GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');/**
+
  * DupeDetectShowDupes Controller tests
  *
  * @package DupeDetect
@@ -55,7 +56,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 	 */
 	public function testReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -75,7 +78,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 	 */
 	public function testSubmitNoPairs() {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -113,7 +118,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'leaveAsIs');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -157,7 +164,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'ignore');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -215,7 +224,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'deleteSrc');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -263,7 +274,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'deleteDup');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -316,7 +329,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'linkToSrc');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -374,7 +389,9 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][submit]', '1');
 		GalleryUtilities::putRequestVariable('form[pairs][0]', $pair['srcItemId'] . ',' . $pair['dupItemId']);
 		GalleryUtilities::putRequestVariable('form[actions][0]', 'linkToDup');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -433,6 +450,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -441,6 +459,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 

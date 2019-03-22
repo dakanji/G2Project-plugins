@@ -33,6 +33,7 @@ class GetUrlsCallbacks {
 		switch ($callback) {
 			case 'LoadUrls':
 				$itemId = $params['itemId'];
+
 				GalleryCoreApi::requireOnce('modules/geturls/classes/GetUrlsHelper.class');
 
 				list($ret, $data) = GetUrlsHelper::getUrlsByItemId($itemId);
@@ -43,6 +44,7 @@ class GetUrlsCallbacks {
 
 				$block                        =& $smarty->_tpl_vars['block'];
 				$block['geturls']['LoadUrls'] = $data;
+
 				return null;
 		}
 

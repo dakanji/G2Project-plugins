@@ -2,6 +2,7 @@
 
 //Fix the description , summary and title HREFs
 $tmp = array();
+
 foreach ($map['mapPoints'] as $point) {
 	$point['description'] = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['description']);
 	$point['description'] = str_replace('[/url]', '</a>', $point['description']);
@@ -24,6 +25,7 @@ $map['infowindows'][0] = "''
 	+'<div style=\"width:200px\"><center><a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">'+title+'</a><br/>'
 	+'<a href=\"'+itemLink+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\"><img src=\"'+thumbLink+'\" width=\"'+thw+'\" height=\"'+thh+'\" alt=\"'+title+'\" style=\"max-width:200px;max-height:200px;\"/></a>'
 	+'<br/><font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font>'";
+
 if ($map['showItemSummaries']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +(summary!=\"\"?'<br/><br/><div style=\"width:200px\"><font color=black>'+summary+'</font></div>':'')";
@@ -36,6 +38,7 @@ if ($map['showItemDescriptions']) {
 
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><font color=black><b>Location:</b><br>'+lat+','+lon+'</font>'";
+
 if ($map['showZoomLinks']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><a href=\"#zoominlink\" onclick=\"javascript:map.setCenter(new GLatLng('+lat+','+lon+'), '+zoomlevel+'); return false;\">" . $module->translate('Zoom In') . "</a>'";

@@ -37,10 +37,10 @@ class CarbonTheme extends GalleryTheme {
 				'Gallery2 theme by mincel.com'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'rows'                 => 3,
@@ -239,6 +239,7 @@ class CarbonTheme extends GalleryTheme {
 	 */
 	public function validateSettings($settings) {
 		$error = parent::validateSettings($settings);
+
 		if (empty($settings['sidebarTop']) || !is_numeric($settings['sidebarTop'])) {
 			$error['sidebarTop'] = $this->translate('You must enter a number greater than 0');
 		}

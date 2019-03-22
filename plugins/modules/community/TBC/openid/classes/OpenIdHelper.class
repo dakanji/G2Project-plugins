@@ -93,6 +93,7 @@ class OpenIdHelper {
 		}
 
 		$openIds = array();
+
 		while (($result = $results->nextResult()) === false) {
 			$openIds[] = (int)$result[0];
 		}
@@ -154,6 +155,7 @@ class OpenIdHelper {
 		}
 
 		$galleryIds = array();
+
 		while (($result = $results->nextResult()) !== false) {
 			$galleryIds[] = (int)$result[0];
 		}
@@ -162,8 +164,8 @@ class OpenIdHelper {
 	}
 }
 
-class OpenIdSession // implements Auth_Yadis_PHPSession
- {
+// implements Auth_Yadis_PHPSession
+class OpenIdSession {
 	public $_session;
 
 	/**
@@ -184,6 +186,7 @@ class OpenIdSession // implements Auth_Yadis_PHPSession
 
 	public function get($key, $default = null) {
 		$key = 'openid.' . $key;
+
 		return $this->_session->exists($key) ? $this->_session->get($key) : $default;
 	}
 

@@ -62,7 +62,9 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[setCaptions]', 2);
 		GalleryUtilities::putRequestVariable('form[albumId]', 3);
 		GalleryUtilities::putRequestVariable('form[action][setOptions]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -82,7 +84,9 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[stripExtensions]', 1);
 		GalleryUtilities::putRequestVariable('form[setCaptions]', 2);
 		GalleryUtilities::putRequestVariable('form[albumId]', 3);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -99,7 +103,9 @@ class OptionsControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[action][setOptions]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', 2);
 		GalleryUtilities::putRequestVariable('form[SomeOption][someValue]', 3);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(

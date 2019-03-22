@@ -52,12 +52,14 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		);
 
 		$dir = __DIR__ . '/../frames';
+
 		if ($platform->is_dir($dir) && $platform->is_readable($dir)
 			&& $fd = $platform->opendir($dir)
 		) {
 			while ($file = $platform->readdir($fd)) {
 				$subdir   = "$dir/$file";
 				$frameinc = "$subdir/frame.inc";
+
 				if ($platform->is_dir($subdir) && $platform->file_exists($frameinc)) {
 					include $frameinc;
 
@@ -69,6 +71,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		}
 
 		asort($frames);
+
 		return array(
 			null,
 			array_merge(
@@ -87,6 +90,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
+
 		static $simpleFrames;
 
 		if (!$template->hasVariable('ImageFrameData')) {
@@ -102,6 +106,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 			);
 
 			$templateAdapter =& $gallery->getTemplateAdapter();
+
 			$template->setVariable(
 				'ImageFrameData',
 				array(
@@ -112,6 +117,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		}
 
 		$template->head('modules/imageframe/templates/ImageFrameHead.tpl');
+
 		$data =& $template->getVariableByReference('ImageFrameData');
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageframe');
@@ -141,6 +147,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 			} else {
 				$dir      = __DIR__ . "/../frames/$frameId";
 				$frameinc = "$dir/frame.inc";
+
 				if ($platform->is_dir($dir) && $platform->file_exists($frameinc)) {
 					include $frameinc;
 
@@ -173,6 +180,7 @@ class ImageFrameImpl extends ImageFrameInterface_1_1 {
 		}
 
 		$data['idList'] = implode('|', array_keys($data['data']));
+
 		return null;
 	}
 

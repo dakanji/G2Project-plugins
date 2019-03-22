@@ -40,14 +40,17 @@ class ZipCartAdminController extends GalleryController {
 		}
 
 		$error = $status = array();
+
 		if (isset($form['action']['save']) || isset($form['action']['test'])) {
 			$form['path'] = trim($form['path']);
+
 			if (empty($form['path'])) {
 				$error[] = 'form[error][path][missing]';
 			}
 
 			if (empty($error)) {
 				$platform =& $gallery->getPlatform();
+
 				if (!$platform->isRestrictedByOpenBaseDir($form['path'])) {
 					if (!$platform->is_executable($form['path'])) {
 						$error[] = 'form[error][path][badPath]';
@@ -61,19 +64,24 @@ class ZipCartAdminController extends GalleryController {
 				// Try zipping something
 				$zipBase = $platform->tempnam($gallery->getConfig('data.gallery.tmp'), 'zip_');
 				$zipFile = $zipBase . '.zip';
+
 				$gallery->guaranteeTimeLimit(30);
 				$gallery->startRecordingDebugSnippet();
+
 				if ($success = $platform->copy(__FILE__, $zipBase)) {
 					list($success) = $platform->exec(array(array($form['path'], $zipFile, $zipBase)));
 				}
 
 				$debugSnippet = $gallery->stopRecordingDebugSnippet();
+
 				if (!$success || !$platform->file_exists($zipFile)) {
 					$error[] = 'form[error][path][badZip]';
+
 					GalleryUtilities::putRequestVariable('debugSnippet', $debugSnippet);
 				}
 
 				@$platform->unlink($zipFile);
+
 				@$platform->unlink($zipBase);
 			}
 		}
@@ -98,6 +106,7 @@ class ZipCartAdminController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
+
 			if ($isActive) {
 				$redirect['subView'] = 'zipcart.ZipCartAdmin';
 				$status['saved']     = 1;
@@ -122,6 +131,7 @@ class ZipCartAdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -176,11 +186,13 @@ class ZipCartAdminView extends GalleryView {
 
 		if (isset($form['error']['path']['badZip']) > 0) {
 			$ZipCartAdmin['debugSnippet'] = GalleryUtilities::getRequestVariables('debugSnippet');
+
 			$template->javascript('lib/javascript/BlockToggle.js');
 		}
 
 		$template->setVariable('ZipCartAdmin', $ZipCartAdmin);
 		$template->setVariable('controller', 'zipcart.ZipCartAdmin');
+
 		return array(
 			null,
 			array(

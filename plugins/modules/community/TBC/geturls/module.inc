@@ -41,10 +41,13 @@ class GetUrlsModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews|getItemSummaries');
 	}
@@ -58,6 +61,7 @@ class GetUrlsModule extends GalleryModule {
 		if (!isset($currentVersion)) {
 			// Initial install.  Register our permissions
 			$permissions[] = array('view', $gallery->i18n('[URLs] View formatted URLs'));
+
 			foreach ($permissions as $p) {
 				$ret = GalleryCoreApi::registerPermission(
 					$this->getId(),
@@ -121,6 +125,7 @@ class GetUrlsModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		$links = array();
+
 		foreach ($items as $item) {
 			if (isset($permissions[$item->getId()]['geturls.view'])) {
 				$params['view']          = 'geturls.GetUrls';
@@ -157,13 +162,16 @@ class GetUrlsModule extends GalleryModule {
 
 		/** @todo Improve performance by doing the data acquiration in a batch */
 		$urlsTemplate = new GalleryTemplate(dirname(__FILE__) . '/../..');
+
 		$urlsTemplate->setVariable('l10Domain', 'modules_' . $this->getId());
 		$urlsTemplate->setVariable('isBlock', true);
 		$urlsTemplate->setVariable('width', $param['itemSummariesWidth']);
 		$urlsTemplate->setVariable('showHeadings', 0);
 		$urlsTemplate->setVariable('blockToggle', 1);
+
 		$tpl       = 'gallery:modules/geturls/templates/GetUrls.tpl';
 		$summaries = array();
+
 		foreach ($items as $item) {
 			if (isset($permissions[$item->getId()]['geturls.view'])) {
 				list($ret, $data) = GetUrlsHelper::getUrlsByItemId($item->getId());

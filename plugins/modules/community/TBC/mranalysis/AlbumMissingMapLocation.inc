@@ -43,6 +43,7 @@ class AlbumMissingMapLocationView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminAlbumMissingMapLocation';
+
 		$gallery->guaranteeTimeLimit(120);
 
 		$query = '
@@ -61,8 +62,10 @@ class AlbumMissingMapLocationView extends GalleryView {
         ';
 
 		$items = ItemList::readItemsFromQuery($query);
+
 		$template->setVariable('controller', 'mranalysis.AlbumMissingMapLocation');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

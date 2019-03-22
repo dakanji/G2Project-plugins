@@ -44,37 +44,30 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			"Se\xc3\xb1or Guapo's favorite!",
 			PicasaImportHelper::convertHtmlToBbcode("Se\xc3\xb1or Guapo\x27s favorite!")
 		);
-
 		$this->assertEquals(
 			'[b]bold[/b]',
 			PicasaImportHelper::convertHtmlToBbcode('<b>bold</b>')
 		);
-
 		$this->assertEquals(
 			'[i]italic[/i]',
 			PicasaImportHelper::convertHtmlToBbcode('<i>italic</i>')
 		);
-
 		$this->assertEquals(
 			'[i]italic[/i]',
 			PicasaImportHelper::convertHtmlToBbcode('<em>italic</em>')
 		);
-
 		$this->assertEquals(
 			'[b]bold[/b]',
 			PicasaImportHelper::convertHtmlToBbcode('<strong>bold</strong>')
 		);
-
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br>')
 		);
-
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br/>')
 		);
-
 		$this->assertEquals(
 			'\n',
 			PicasaImportHelper::convertHtmlToBbcode('<br />')
@@ -118,12 +111,10 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			'[list][/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul></ul>')
 		);
-
 		$this->assertEquals(
 			'[list][*]foo[/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul><li>foo</li></ul>')
 		);
-
 		$this->assertEquals(
 			'[list][*]foo[/list]',
 			PicasaImportHelper::convertHtmlToBbcode('<ul><li>foo</ul>')

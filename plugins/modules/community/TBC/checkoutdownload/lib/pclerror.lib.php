@@ -47,7 +47,6 @@ if (!defined('PCLERROR_LIB')) {
 	}
 
 	// --------------------------------------------------------------------------------
-
 	// --------------------------------------------------------------------------------
 	// Function : PclErrorFatal()
 	// Description :
@@ -60,11 +59,11 @@ if (!defined('PCLERROR_LIB')) {
 		$v_message .= "<p align=center><font color=red bgcolor=white><b>PclError Library has detected a fatal error on file '$p_file', line $p_line</b></font></p>";
 		$v_message .= "<p align=center><font color=red bgcolor=white><b>$p_error_string</b></font></p>";
 		$v_message .= '</body></html>';
+
 		die($v_message);
 	}
 
 	// --------------------------------------------------------------------------------
-
 	// --------------------------------------------------------------------------------
 	// Function : PclErrorReset()
 	// Description :
@@ -78,7 +77,6 @@ if (!defined('PCLERROR_LIB')) {
 	}
 
 	// --------------------------------------------------------------------------------
-
 	// --------------------------------------------------------------------------------
 	// Function : PclErrorCode()
 	// Description :
@@ -91,7 +89,6 @@ if (!defined('PCLERROR_LIB')) {
 	}
 
 	// --------------------------------------------------------------------------------
-
 	// --------------------------------------------------------------------------------
 	// Function : PclErrorString()
 	// Description :

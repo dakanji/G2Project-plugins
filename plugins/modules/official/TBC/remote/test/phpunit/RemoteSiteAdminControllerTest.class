@@ -48,7 +48,9 @@ class RemoteSiteAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testRemoteSiteAdminControllerReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -65,7 +67,9 @@ class RemoteSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testRemoteSiteAdminControllerSave() {
 		GalleryUtilities::putRequestVariable('form[showItemAdd]', '1');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(

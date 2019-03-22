@@ -68,11 +68,13 @@ class CompleteController extends GalleryController {
 		// Security check
 		$verify1 = GalleryUtilities::getRequestVariables('verify1');
 		$verify2 = GalleryUtilities::getRequestVariables('verify2');
+
 		if ($verify1 != $transaction->getDate() || $verify2 != $transaction->getSecurity()) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		$results['error'] = $results['status'] = array();
+
 		if ($error == 'cancel') {
 			$results['delegate']['view']          = 'checkout.OrderStatus';
 			$results['delegate']['transactionId'] = $transactionId;
@@ -82,6 +84,7 @@ class CompleteController extends GalleryController {
 		} elseif ($error == 'alreadyPlaced') {
 			// Empty out the shopping cart
 			GalleryCheckoutApi::emptyCart();
+
 			$results['redirect']['view']          = 'checkout.OrderStatus';
 			$results['redirect']['transactionId'] = $transactionId;
 			$results['redirect']['verify1']       = $verify1;

@@ -46,10 +46,13 @@ class AlbumTimestampModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $this->translate('Gallery'));
 	}
 
@@ -107,14 +110,17 @@ class AlbumTimestampModule extends GalleryModule {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/albumtimestamp/classes/AlbumTimestampHelper.class');
+
 		if (!AlbumTimestampHelper::eventHandlerEnabled()) {
 			// temporarily disabled
 			AlbumTimestampHelper::log('LEO: handleEvent: handler disabled');
+
 			return array(null, null);
 		}
 
 		$eventName = $event->getEventName();
 		$item      = $event->getEntity();
+
 		if (!GalleryUtilities::isA($item, 'GalleryChildEntity')) {
 			// this handler is only for items and albums, not e.g. for users or groups
 			return array(null, null);
@@ -123,7 +129,9 @@ class AlbumTimestampModule extends GalleryModule {
 		$itemId  = $item->getId();
 		$albumId = $item->getParentId();
 		$isNew   = $item->testPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
+
 		AlbumTimestampHelper::log("LEO: handleEvent: $eventName itemId=$itemId");
+
 		if (GalleryUtilities::isA($item, 'GalleryAlbumItem')
 			&& $eventName == 'GalleryEntity::save'
 			&& $isNew
@@ -189,6 +197,7 @@ class AlbumTimestampModule extends GalleryModule {
 		}
 
 		$albumTimestamp = $album->getOriginationTimestamp();
+
 		switch ($eventName) {
 			case 'GalleryEntity::save':
 				if (isset($prevTimestamp)) {
@@ -234,6 +243,7 @@ class AlbumTimestampModule extends GalleryModule {
 				}
 
 				break;
+
 			case 'GalleryEntity::delete':
 				if ($albumTimestamp == $prevTimestamp) {
 					// this item did define the album timestamp

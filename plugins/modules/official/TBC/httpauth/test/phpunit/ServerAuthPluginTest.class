@@ -49,6 +49,7 @@ class ServerAuthPluginTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
+
 		$_SERVER['AUTH_TYPE'] = 'Test';
 		$this->_plugin        = new ServerAuthPlugin();
 		$this->_saveSession   = $gallery->_session;

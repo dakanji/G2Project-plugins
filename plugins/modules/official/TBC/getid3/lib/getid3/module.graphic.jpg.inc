@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.graphic.jpg.php                                      //
 // module for analyzing JPEG Image files                       //
@@ -24,23 +23,30 @@ class getid3_jpg extends getid3_handler {
 		$info['video']['lossless']           = false;
 		$info['video']['bits_per_sample']    = 24;
 		$info['video']['pixel_aspect_ratio'] = (float)1;
+
 		$this->fseek($info['avdataoffset']);
+
 		$imageinfo = array();
 
 		//list($width, $height, $type) = getid3_lib::GetDataImageSize($this->fread($info['filesize']), $imageinfo);
-		list($width, $height, $type) = getimagesize($info['filenamepath'], $imageinfo); // http://www.getid3.org/phpBB3/viewtopic.php?t=1474
+		// http://www.getid3.org/phpBB3/viewtopic.php?t=1474
+		list($width, $height, $type) = getimagesize($info['filenamepath'], $imageinfo);
+
 		if (isset($imageinfo['APP13'])) {
 			// http://php.net/iptcparse
 			// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/IPTC.html
 			$iptc_parsed = iptcparse($imageinfo['APP13']);
+
 			if (is_array($iptc_parsed)) {
 				foreach ($iptc_parsed as $iptc_key_raw => $iptc_values) {
 					list($iptc_record, $iptc_tagkey) = explode('#', $iptc_key_raw);
 
 					$iptc_tagkey = intval(ltrim($iptc_tagkey, '0'));
+
 					foreach ($iptc_values as $key => $value) {
 						$IPTCrecordName    = $this->IPTCrecordName($iptc_record);
 						$IPTCrecordTagName = $this->IPTCrecordTagName($iptc_record, $iptc_tagkey);
+
 						if (isset($info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName])) {
 							$info['iptc']['comments'][$IPTCrecordName][$IPTCrecordTagName][] = $value;
 						} else {
@@ -52,10 +58,12 @@ class getid3_jpg extends getid3_handler {
 		}
 
 		$returnOK = false;
+
 		switch ($type) {
 			case IMG_JPG:
 				$info['video']['resolution_x'] = $width;
 				$info['video']['resolution_y'] = $height;
+
 				if (isset($imageinfo['APP1'])) {
 					if (function_exists('exif_read_data')) {
 						if (substr($imageinfo['APP1'], 0, 4) == 'Exif') {
@@ -71,12 +79,15 @@ class getid3_jpg extends getid3_handler {
 				}
 
 				$returnOK = true;
+
 				break;
+
 			default:
 				break;
 		}
 
 		$cast_as_appropriate_keys = array('EXIF', 'IFD0', 'THUMBNAIL');
+
 		foreach ($cast_as_appropriate_keys as $exif_key) {
 			if (isset($info['jpg']['exif'][$exif_key])) {
 				foreach ($info['jpg']['exif'][$exif_key] as $key => $value) {
@@ -119,6 +130,7 @@ class getid3_jpg extends getid3_handler {
 
 			if (isset($info['jpg']['exif']['GPS']['GPSLatitude']) && is_array($info['jpg']['exif']['GPS']['GPSLatitude'])) {
 				$direction_multiplier = ((isset($info['jpg']['exif']['GPS']['GPSLatitudeRef']) && ($info['jpg']['exif']['GPS']['GPSLatitudeRef'] == 'S')) ? -1 : 1);
+
 				foreach ($info['jpg']['exif']['GPS']['GPSLatitude'] as $key => $value) {
 					$computed_latitude[$key] = getid3_lib::DecimalizeFraction($value);
 				}
@@ -128,6 +140,7 @@ class getid3_jpg extends getid3_handler {
 
 			if (isset($info['jpg']['exif']['GPS']['GPSLongitude']) && is_array($info['jpg']['exif']['GPS']['GPSLongitude'])) {
 				$direction_multiplier = ((isset($info['jpg']['exif']['GPS']['GPSLongitudeRef']) && ($info['jpg']['exif']['GPS']['GPSLongitudeRef'] == 'W')) ? -1 : 1);
+
 				foreach ($info['jpg']['exif']['GPS']['GPSLongitude'] as $key => $value) {
 					$computed_longitude[$key] = getid3_lib::DecimalizeFraction($value);
 				}
@@ -136,19 +149,23 @@ class getid3_jpg extends getid3_handler {
 			}
 
 			if (isset($info['jpg']['exif']['GPS']['GPSAltitudeRef'])) {
-				$info['jpg']['exif']['GPS']['GPSAltitudeRef'] = ord($info['jpg']['exif']['GPS']['GPSAltitudeRef']); // 0 = above sea level; 1 = below sea level
+				// 0 = above sea level; 1 = below sea level
+				$info['jpg']['exif']['GPS']['GPSAltitudeRef'] = ord($info['jpg']['exif']['GPS']['GPSAltitudeRef']);
 			}
 
 			if (isset($info['jpg']['exif']['GPS']['GPSAltitude'])) {
-				$direction_multiplier                               = (!empty($info['jpg']['exif']['GPS']['GPSAltitudeRef']) ? -1 : 1);           // 0 = above sea level; 1 = below sea level
+				// 0 = above sea level; 1 = below sea level
+				$direction_multiplier                               = (!empty($info['jpg']['exif']['GPS']['GPSAltitudeRef']) ? -1 : 1);
 				$info['jpg']['exif']['GPS']['computed']['altitude'] = $direction_multiplier * getid3_lib::DecimalizeFraction($info['jpg']['exif']['GPS']['GPSAltitude']);
 			}
 		}
 
 		getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.xmp.php', __FILE__, true);
+
 		if (isset($info['filenamepath'])) {
 			$image_xmp = new Image_XMP($info['filenamepath']);
 			$xmp_raw   = $image_xmp->getAllTags();
+
 			foreach ($xmp_raw as $key => $value) {
 				if (strpos($key, ':')) {
 					list($subsection, $tagname) = explode(':', $key);
@@ -162,6 +179,7 @@ class getid3_jpg extends getid3_handler {
 
 		if (!$returnOK) {
 			unset($info['fileformat']);
+
 			return false;
 		}
 

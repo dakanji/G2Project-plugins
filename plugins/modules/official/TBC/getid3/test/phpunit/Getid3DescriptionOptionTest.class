@@ -86,6 +86,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
+
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $item) = $this->_items[0]->refresh();
@@ -99,6 +100,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 
 	public function testMultipleCreateDescription() {
 		$totalTestItems = 3;
+
 		for ($j = 1; $j < $totalTestItems; $j++) {
 			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
 				$this->_album->getId(),
@@ -126,7 +128,9 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
+
 		$this->assertEquals(array(array(), array()), $result);
+
 		for ($j = 0; $j < $totalTestItems; $j++) {
 			list($ret, $item) = $this->_items[$j]->refresh();
 
@@ -146,6 +150,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
+
 		$this->assertEquals(array(array(), array()), $result);
 
 		list($ret, $item) = $this->_items[0]->refresh();
@@ -159,6 +164,7 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 
 	public function testMultipleCreateWithCheckDisabled() {
 		$totalTestItems = 3;
+
 		for ($j = 1; $j < $totalTestItems; $j++) {
 			list($ret, $this->_items[$j]) = $this->_createRandomDataItem(
 				$this->_album->getId(),
@@ -181,7 +187,9 @@ class Getid3DescriptionOptionTest extends ItemAddOptionTestCase {
 		}
 
 		$result = $this->_handleRequestAfterAdd(array(), $this->_items);
+
 		$this->assertEquals(array(array(), array()), $result);
+
 		for ($j = 0; $j < $totalTestItems; $j++) {
 			list($ret, $item) = $this->_items[$j]->refresh();
 

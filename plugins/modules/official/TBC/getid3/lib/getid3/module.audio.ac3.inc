@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.audio.ac3.php                                        //
 // module for analyzing AC-3 (aka Dolby Digital) audio files   //
@@ -48,17 +47,21 @@ class getid3_ac3 extends getid3_handler {
 		// 	 frmsizecod   6
 		// } /* end of syncinfo */
 		$this->fseek($info['avdataoffset']);
+
 		$this->AC3header['syncinfo'] = $this->fread(5);
+
 		if (strpos($this->AC3header['syncinfo'], self::syncword) === 0) {
 			$thisfile_ac3_raw['synchinfo']['synchword'] = self::syncword;
 			$offset                                     = 2;
 		} else {
 			if (!$this->isDependencyFor('matroska')) {
 				unset($info['fileformat'], $info['ac3']);
+
 				return $this->error('Expecting "' . getid3_lib::PrintHexBytes(self::syncword) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($this->AC3header['syncinfo'], 0, 2)) . '"');
 			}
 
 			$offset = 0;
+
 			$this->fseek(-2, SEEK_CUR);
 		}
 
@@ -70,6 +73,7 @@ class getid3_ac3 extends getid3_handler {
 		$thisfile_ac3_raw['synchinfo']['fscod']      = ($ac3_synchinfo_fscod_frmsizecod & 0xC0) >> 6;
 		$thisfile_ac3_raw['synchinfo']['frmsizecod'] = ($ac3_synchinfo_fscod_frmsizecod & 0x3F);
 		$thisfile_ac3['sample_rate']                 = self::sampleRateCodeLookup($thisfile_ac3_raw['synchinfo']['fscod']);
+
 		if ($thisfile_ac3_raw['synchinfo']['fscod'] <= 3) {
 			$info['audio']['sample_rate'] = $thisfile_ac3['sample_rate'];
 		}
@@ -80,12 +84,15 @@ class getid3_ac3 extends getid3_handler {
 		$this->AC3header['bsi']       = getid3_lib::BigEndian2Bin($this->fread(15));
 		$ac3_bsi_offset               = 0;
 		$thisfile_ac3_raw_bsi['bsid'] = $this->readHeaderBSI(5);
+
 		if ($thisfile_ac3_raw_bsi['bsid'] > 8) {
 			// Decoders which can decode version 8 will thus be able to decode version numbers less than 8.
 			// If this standard is extended by the addition of additional elements or features, a value of bsid greater than 8 will be used.
 			// Decoders built to this version of the standard will not be able to decode versions with bsid greater than 8.
 			$this->error('Bit stream identification is version ' . $thisfile_ac3_raw_bsi['bsid'] . ', but getID3() only understands up to version 8');
+
 			unset($info['ac3']);
+
 			return false;
 		}
 
@@ -93,6 +100,7 @@ class getid3_ac3 extends getid3_handler {
 		$thisfile_ac3_raw_bsi['acmod'] = $this->readHeaderBSI(3);
 		$thisfile_ac3['service_type']  = self::serviceTypeLookup($thisfile_ac3_raw_bsi['bsmod'], $thisfile_ac3_raw_bsi['acmod']);
 		$ac3_coding_mode               = self::audioCodingModeLookup($thisfile_ac3_raw_bsi['acmod']);
+
 		foreach ($ac3_coding_mode as $key => $value) {
 			$thisfile_ac3[$key] = $value;
 		}
@@ -101,17 +109,23 @@ class getid3_ac3 extends getid3_handler {
 			case 0:
 			case 1:
 				$info['audio']['channelmode'] = 'mono';
+
 				break;
+
 			case 3:
 			case 4:
 				$info['audio']['channelmode'] = 'stereo';
+
 				break;
+
 			default:
 				$info['audio']['channelmode'] = 'surround';
+
 				break;
 		}
 
 		$info['audio']['channels'] = $thisfile_ac3['num_channels'];
+
 		if ($thisfile_ac3_raw_bsi['acmod'] & 0x01) {
 			// If the lsb of acmod is a 1, center channel is in use and cmixlev follows in the bit stream.
 			$thisfile_ac3_raw_bsi['cmixlev']  = $this->readHeaderBSI(2);
@@ -132,6 +146,7 @@ class getid3_ac3 extends getid3_handler {
 
 		$thisfile_ac3_raw_bsi['lfeon'] = (bool)$this->readHeaderBSI(1);
 		$thisfile_ac3['lfe_enabled']   = $thisfile_ac3_raw_bsi['lfeon'];
+
 		if ($thisfile_ac3_raw_bsi['lfeon']) {
 			//$info['audio']['channels']++;
 			$info['audio']['channels'] .= '.1';
@@ -144,17 +159,20 @@ class getid3_ac3 extends getid3_handler {
 		$thisfile_ac3_raw_bsi['dialnorm']       = $this->readHeaderBSI(5);
 		$thisfile_ac3['dialogue_normalization'] = '-' . $thisfile_ac3_raw_bsi['dialnorm'] . 'dB';
 		$thisfile_ac3_raw_bsi['compre_flag']    = (bool)$this->readHeaderBSI(1);
+
 		if ($thisfile_ac3_raw_bsi['compre_flag']) {
 			$thisfile_ac3_raw_bsi['compr']     = $this->readHeaderBSI(8);
 			$thisfile_ac3['heavy_compression'] = self::heavyCompression($thisfile_ac3_raw_bsi['compr']);
 		}
 
 		$thisfile_ac3_raw_bsi['langcode_flag'] = (bool)$this->readHeaderBSI(1);
+
 		if ($thisfile_ac3_raw_bsi['langcode_flag']) {
 			$thisfile_ac3_raw_bsi['langcod'] = $this->readHeaderBSI(8);
 		}
 
 		$thisfile_ac3_raw_bsi['audprodie'] = (bool)$this->readHeaderBSI(1);
+
 		if ($thisfile_ac3_raw_bsi['audprodie']) {
 			$thisfile_ac3_raw_bsi['mixlevel'] = $this->readHeaderBSI(5);
 			$thisfile_ac3_raw_bsi['roomtyp']  = $this->readHeaderBSI(2);
@@ -171,17 +189,20 @@ class getid3_ac3 extends getid3_handler {
 			$thisfile_ac3_raw_bsi['dialnorm2']       = $this->readHeaderBSI(5);
 			$thisfile_ac3['dialogue_normalization2'] = '-' . $thisfile_ac3_raw_bsi['dialnorm2'] . 'dB';
 			$thisfile_ac3_raw_bsi['compre_flag2']    = (bool)$this->readHeaderBSI(1);
+
 			if ($thisfile_ac3_raw_bsi['compre_flag2']) {
 				$thisfile_ac3_raw_bsi['compr2']     = $this->readHeaderBSI(8);
 				$thisfile_ac3['heavy_compression2'] = self::heavyCompression($thisfile_ac3_raw_bsi['compr2']);
 			}
 
 			$thisfile_ac3_raw_bsi['langcode_flag2'] = (bool)$this->readHeaderBSI(1);
+
 			if ($thisfile_ac3_raw_bsi['langcode_flag2']) {
 				$thisfile_ac3_raw_bsi['langcod2'] = $this->readHeaderBSI(8);
 			}
 
 			$thisfile_ac3_raw_bsi['audprodie2'] = (bool)$this->readHeaderBSI(1);
+
 			if ($thisfile_ac3_raw_bsi['audprodie2']) {
 				$thisfile_ac3_raw_bsi['mixlevel2'] = $this->readHeaderBSI(5);
 				$thisfile_ac3_raw_bsi['roomtyp2']  = $this->readHeaderBSI(2);
@@ -193,16 +214,19 @@ class getid3_ac3 extends getid3_handler {
 		$thisfile_ac3_raw_bsi['copyright']      = (bool)$this->readHeaderBSI(1);
 		$thisfile_ac3_raw_bsi['original']       = (bool)$this->readHeaderBSI(1);
 		$thisfile_ac3_raw_bsi['timecode1_flag'] = (bool)$this->readHeaderBSI(1);
+
 		if ($thisfile_ac3_raw_bsi['timecode1_flag']) {
 			$thisfile_ac3_raw_bsi['timecode1'] = $this->readHeaderBSI(14);
 		}
 
 		$thisfile_ac3_raw_bsi['timecode2_flag'] = (bool)$this->readHeaderBSI(1);
+
 		if ($thisfile_ac3_raw_bsi['timecode2_flag']) {
 			$thisfile_ac3_raw_bsi['timecode2'] = $this->readHeaderBSI(14);
 		}
 
 		$thisfile_ac3_raw_bsi['addbsi_flag'] = (bool)$this->readHeaderBSI(1);
+
 		if ($thisfile_ac3_raw_bsi['addbsi_flag']) {
 			$thisfile_ac3_raw_bsi['addbsi_length'] = $this->readHeaderBSI(6);
 			$this->AC3header['bsi']               .= getid3_lib::BigEndian2Bin($this->fread($thisfile_ac3_raw_bsi['addbsi_length']));
@@ -216,6 +240,7 @@ class getid3_ac3 extends getid3_handler {
 	private function readHeaderBSI($length) {
 		$data             = substr($this->AC3header['bsi'], $this->BSIoffset, $length);
 		$this->BSIoffset += $length;
+
 		return bindec($data);
 	}
 
@@ -245,6 +270,7 @@ class getid3_ac3 extends getid3_handler {
 			}
 
 			$serviceTypeLookup[7][1] = 'associated service: voice over (VO)';
+
 			for ($i = 2; $i <= 7; $i++) {
 				$serviceTypeLookup[7][$i] = 'main audio service: karaoke';
 			}
@@ -359,11 +385,14 @@ class getid3_ac3 extends getid3_handler {
 			case 4:
 			case 5:
 				$lookup['surround_mono'] = true;
+
 				break;
+
 			case 6:
 			case 7:
 				$lookup['surround_left']  = true;
 				$lookup['surround_right'] = true;
+
 				break;
 		}
 
@@ -397,6 +426,7 @@ class getid3_ac3 extends getid3_handler {
 		// -7    -36.12 dB
 		// -8    -42.14 dB
 		$fourbit = str_pad(decbin(($compre & 0xF0) >> 4), 4, '0', STR_PAD_LEFT);
+
 		if ($fourbit[0] == '1') {
 			$log_gain = -8 + bindec(substr($fourbit, 1));
 		} else {
@@ -429,8 +459,9 @@ class getid3_ac3 extends getid3_handler {
 	}
 
 	public static function frameSizeLookup($frmsizecod, $fscod) {
-		$padding                = (bool)($frmsizecod % 2);
-		$framesizeid            = floor($frmsizecod / 2);
+		$padding     = (bool)($frmsizecod % 2);
+		$framesizeid = floor($frmsizecod / 2);
+
 		static $frameSizeLookup = array();
 
 		if (empty($frameSizeLookup)) {
@@ -466,7 +497,8 @@ class getid3_ac3 extends getid3_handler {
 	}
 
 	public static function bitrateLookup($frmsizecod) {
-		$framesizeid          = floor($frmsizecod / 2);
+		$framesizeid = floor($frmsizecod / 2);
+
 		static $bitrateLookup = array(
 			0  => 32000,
 			1  => 40000,

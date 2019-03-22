@@ -3,12 +3,10 @@
 // $Id: frame.inc 1102 2007-06-12 18:30:45Z mindless $
 $frameData = array(
 	'name'      => $gallery->i18n('X_White Shadow - 14px (png)'),
-
 	// Top Left
 	'imageTL'   => 'TL.png',
 	'widthTL'   => 43,
 	'heightTL'  => 43,
-
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
@@ -16,12 +14,10 @@ $frameData = array(
 	'heightTT'  => 43,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR.png',
 	'widthTR'   => 43,
 	'heightTR'  => 43,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -29,7 +25,6 @@ $frameData = array(
 	'widthLL'   => 43,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -37,12 +32,10 @@ $frameData = array(
 	'widthRR'   => 43,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL.png',
 	'widthBL'   => 43,
 	'heightBL'  => 43,
-
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
@@ -50,7 +43,6 @@ $frameData = array(
 	'heightBB'  => 43,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR.png',
 	'widthBR'   => 43,

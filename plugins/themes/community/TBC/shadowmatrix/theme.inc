@@ -38,10 +38,10 @@ class ShadowMatrixTheme extends GalleryTheme {
 				'Matrix Theme with Shadowbox'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'rows'            => 3,
@@ -121,6 +121,7 @@ class ShadowMatrixTheme extends GalleryTheme {
 
 		// Add resizeId for shadowbox urls
 		$i = 0;
+
 		foreach ($theme['children'] as $child) {
 			if ($child['entityType'] == 'GalleryPhotoItem') {
 				list($ret, $id) = $this->getBestImageId($child['id']);
@@ -158,8 +159,10 @@ class ShadowMatrixTheme extends GalleryTheme {
 
 			$tmp = array();
 			$i   = 0;
+
 			foreach ($allChildren as $item) {
 				$itemId = $item->getId();
+
 				if (in_array($itemId, $childIds)) {
 					foreach ($theme['children'] as $child) {
 						if ($itemId == $child['id']) {
@@ -359,12 +362,14 @@ class ShadowMatrixTheme extends GalleryTheme {
 		$closest   = $potentialImages[0];
 		$requested = $maxImageHeight * $maxImageWidth;
 		$delta     = ($potentialImages[0]->height * $potentialImages[0]->width) - $requested;
+
 		if ($delta < 0) {
 			$delta *= -1;
 		}
 
 		foreach ($potentialImages as $potentialImage) {
 			$current = $potentialImage->height * $potentialImage->width - $requested;
+
 			if ($current < 0) {
 				$current *= -1;
 			}

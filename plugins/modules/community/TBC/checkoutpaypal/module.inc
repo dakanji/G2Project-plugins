@@ -38,10 +38,13 @@ class CheckoutPaypalModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -164,6 +167,7 @@ class CheckoutPaypalModule extends GalleryModule {
 
 		if (!empty($currentVersion)) {
 			$storage =& $gallery->getStorage();
+
 			switch ($currentVersion) {
 				case '0.1.1':
 				case '0.1.2':
@@ -203,6 +207,7 @@ class CheckoutPaypalModule extends GalleryModule {
 				case '0.3.3':
 				case 'end of upgrade path':
 					break;
+
 				default:
 					return GalleryCoreApi::error(
 						ERROR_BAD_PLUGIN,

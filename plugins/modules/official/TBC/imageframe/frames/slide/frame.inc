@@ -4,12 +4,10 @@
   // Contributed by: xlerb
 $frameData = array(
 	'name'      => $gallery->i18n('Slide'),
-
 	// Top Left
 	'imageTL'   => 'TL.gif',
 	'widthTL'   => 20,
 	'heightTL'  => 20,
-
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
@@ -17,12 +15,10 @@ $frameData = array(
 	'heightTT'  => 20,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR.gif',
 	'widthTR'   => 20,
 	'heightTR'  => 20,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -30,7 +26,6 @@ $frameData = array(
 	'widthLL'   => 20,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -38,12 +33,10 @@ $frameData = array(
 	'widthRR'   => 20,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL.gif',
 	'widthBL'   => 20,
 	'heightBL'  => 20,
-
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
@@ -51,7 +44,6 @@ $frameData = array(
 	'heightBB'  => 20,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 20,

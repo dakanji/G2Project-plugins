@@ -60,11 +60,13 @@ class RenderView extends GalleryView {
 
 		if ($ret) {
 			$this->handleError($gallery->i18n('This feed no longer exists!'));
+
 			return null;
 		}
 
 		$params   = array_merge($params, $params1);
 		$feedType = $params['feedType'];
+
 		if (($feedType == 'album' && $params['allowAlbums'] != 1)
 			|| ($feedType == 'photos' && $params['allowPhotos'] != 1)
 			|| ($feedType == 'photosRecursive' && $params['allowPhotosRecursive'] != 1)
@@ -75,6 +77,7 @@ class RenderView extends GalleryView {
 			|| ($feedType == 'photosRandomRecursive' && $params['allowPhotosRandomRecursive'] != 1)
 		) {
 			$this->handleError($gallery->i18n('Feeds of that type are not allowed!'));
+
 			return null;
 		}
 
@@ -104,6 +107,7 @@ class RenderView extends GalleryView {
 
 		// check render type
 		$feedType = $params['feedType'];
+
 		if (!in_array(
 			$feedType,
 			array(
@@ -119,6 +123,7 @@ class RenderView extends GalleryView {
 		)
 		) {
 			$this->handleError($gallery->i18n('Incorrect feed type!'));
+
 			return null;
 		}
 
@@ -150,6 +155,7 @@ class RenderView extends GalleryView {
 
 			if (!$perm) {
 				$this->handleError($gallery->i18n('Not permitted to view comments for this item'));
+
 				return null;
 			}
 		}
@@ -157,6 +163,7 @@ class RenderView extends GalleryView {
 		// check if count is set, if not, retrieve default values
 		$maxcount = $params['maxCount'];
 		$count    = $params['count'];
+
 		if (empty($count)) {
 			$count = $params['defaultCount'];
 		}
@@ -177,16 +184,20 @@ class RenderView extends GalleryView {
 		}
 
 		$generator->sliceItems($count);
+
 		$phpVm = $gallery->getPhpVm();
+
 		if (!$phpVm->headers_sent()) {
 			$phpVm->header('Content-type: text/xml; charset=UTF-8');
 			$expires = $gallery->getHttpDate($phpVm->time() - 7 * 24 * 3600);
+
 			$phpVm->header('Cache-Control: no-cache');
 			$phpVm->header('Pragma: no-cache');
 			$phpVm->header('Expires: ' . $expires);
 		}
 
 		echo $generator->generate($params['version']);
+
 		return null;
 	}
 

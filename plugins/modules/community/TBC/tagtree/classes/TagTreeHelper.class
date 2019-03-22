@@ -54,6 +54,7 @@ class TagTreeHelper {
 		}
 
 		$items = array();
+
 		foreach ($rootHierarchies as $rootHierarchy) {
 			$itemId  = $rootHierarchy[count($rootHierarchy) - 1];
 			$items[] = $itemId;
@@ -80,6 +81,7 @@ class TagTreeHelper {
 
 	public function fetchMatchingRootHierarchies($tags, $albumId, $onlyAlbums, $aclIds) {
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/HierarchyTagFilter.class');
+
 		global $gallery;
 
 		list($ret, $parentHierarchy) = TagTreeHelper::fetchHierarchy($albumId);
@@ -133,6 +135,7 @@ class TagTreeHelper {
 		$rootTagMap       = array();
 		$encompassingTags = null;
 		$descendantTags   = array();
+
 		foreach ($rootHierarchies as $rootHierarchy) {
 			list($ret, $rootTags) = TagTreeHelper::fetchAppliedTags($rootHierarchy, $node->tags);
 
@@ -142,6 +145,7 @@ class TagTreeHelper {
 
 			$childId              = $rootHierarchy[count($rootHierarchy) - 1];
 			$rootTagMap[$childId] = $rootTags;
+
 			if (is_null($encompassingTags)) {
 				$encompassingTags = $rootTags;
 			} else {
@@ -168,9 +172,11 @@ class TagTreeHelper {
 
 		$seenDescendantTags = array();
 		$promotedTags       = array();
+
 		foreach ($descendantTags as $rootDescendantTags) {
 			// Record the tags seen under this root.
 			$rootSeenDescendantTags = array();
+
 			foreach ($rootDescendantTags as $descendantTag) {
 				$tagId                          = $descendantTag['tagId'];
 				$rootSeenDescendantTags[$tagId] = true;
@@ -197,6 +203,7 @@ class TagTreeHelper {
 		}
 
 		$childItems = array();
+
 		foreach ($rootTagMap as $childId => $rootTags) {
 			foreach ($rootTags as $tagId) {
 				$promotedTags[$tagId] = true;
@@ -209,6 +216,7 @@ class TagTreeHelper {
 
 		$dominantTags = TagTreeHelper::getDominantTags($descendantTags, $promotedTags);
 		$children     = array();
+
 		foreach (array_keys($dominantTags) as $tagId) {
 			list($ret, $childNode) = TagTreeHelper::getChildTagNode($node, $tagId);
 
@@ -277,6 +285,7 @@ class TagTreeHelper {
 		}
 
 		$descendantTags = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$tagId          = $result[0];
 			$albumId        = $result[1];
@@ -295,11 +304,14 @@ class TagTreeHelper {
 
 	public function getDominantTags($descendantTags, $eligibleTags) {
 		$tagHierarchies = array();
+
 		foreach ($descendantTags as $rootDescendantTags) {
 			foreach ($rootDescendantTags as $descendantTag) {
 				$tagId = $descendantTag['tagId'];
+
 				if (array_key_exists($tagId, $eligibleTags)) {
 					$hierarchy = $descendantTag['hierarchy'];
+
 					if (!array_key_exists($tagId, $tagHierarchies)) {
 						$tagHierarchies[$tagId] = array();
 					}
@@ -317,6 +329,7 @@ class TagTreeHelper {
 		}
 
 		$dominatingTagsMap = array();
+
 		foreach ($tagHierarchies as $tagId => $hierarchies) {
 			$otherHierarchies = $tagHierarchies;
 			unset($otherHierarchies[$tagId]);
@@ -325,8 +338,10 @@ class TagTreeHelper {
 		}
 
 		$dominantTags = array();
+
 		foreach ($dominatingTagsMap as $tagId => $dominatingTags) {
 			$isDominant = true;
+
 			foreach ($dominatingTags as $dominatingTag) {
 				if (array_search($tagId, $dominatingTagsMap[$dominatingTag]) === false) {
 					$isDominant = false;
@@ -346,6 +361,7 @@ class TagTreeHelper {
 		$otherKeys        = array_keys($otherHierarchiesMap);
 		$otherIndices     = empty($otherHierarchies) ? array() : array_fill(0, count($otherHierarchies), 0);
 		$isDominatedCount = empty($otherHierarchies) ? array() : array_fill(0, count($otherHierarchies), 0);
+
 		foreach ($hierarchies as $hierarchy) {
 			for ($i = 0; $i < count($otherHierarchies); $i++) {
 				$compareHierarchies = $otherHierarchies[$i];
@@ -361,6 +377,7 @@ class TagTreeHelper {
 
 				if (count($compareHierarchies) > $otherIndices[$i]) {
 					$compareHierarchy = $compareHierarchies[$otherIndices[$i]];
+
 					if (HierarchyTagFilter::isAncestor(
 						$compareHierarchies[$otherIndices[$i]],
 						$hierarchy
@@ -373,6 +390,7 @@ class TagTreeHelper {
 		}
 
 		$dominatingTags = array();
+
 		for ($i = 0; $i < count($otherHierarchies); $i++) {
 			if ($isDominatedCount[$i] == count($hierarchies)) {
 				$dominatingTags[] = $otherKeys[$i];
@@ -391,6 +409,7 @@ class TagTreeHelper {
 		$discard   = array_pop($hierarchy);
 		assert(empty($discard));
 		$hierarchy[] = $albumId;
+
 		return $hierarchy;
 	}
 
@@ -398,6 +417,7 @@ class TagTreeHelper {
 		global $gallery;
 
 		$childNode = new TagTreeNode();
+
 		if ($onlyAlbums) {
 			$childNode->type = 'album';
 		} else {
@@ -487,6 +507,7 @@ class TagTreeHelper {
 
 		$parentSequence = $result[0];
 		$hierarchy      = TagTreeHelper::getHierarchyFromParentSequence($parentSequence, $albumId);
+
 		return array(null, $hierarchy);
 	}
 
@@ -524,6 +545,7 @@ class TagTreeHelper {
 		}
 
 		$appliedTags = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$tagId         = $result[0];
 			$appliedTags[] = $tagId;
@@ -540,6 +562,7 @@ class TagTreeHelper {
 		}
 
 		$title = $item->getTitle() ? $item->getTitle() : $item->getPathComponent();
+
 		if ($ret) {
 			return array($ret, null);
 		}
@@ -575,6 +598,7 @@ class TagTreeHelper {
 		}
 
 		$tagName = $result[0];
+
 		return array(null, $tagName);
 	}
 }

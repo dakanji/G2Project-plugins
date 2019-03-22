@@ -75,6 +75,7 @@ class DupeDetectDupesListMap extends DupeDetectDupesListMap_core {
 		$info['members']['dupItemId']  = STORAGE_TYPE_INTEGER;
 		$info['members']['dupType']    = STORAGE_TYPE_INTEGER;
 		$info['members']['userStatus'] = STORAGE_TYPE_INTEGER;
+
 		return $info;
 	}
 

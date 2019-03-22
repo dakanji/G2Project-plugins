@@ -93,6 +93,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		global $gallery;
 
 		$itemId = $this->_item->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
 
@@ -129,6 +130,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 		$results = ob_get_contents();
 		ob_end_clean();
+
 		if ($ret) {
 			return $ret;
 		}
@@ -161,7 +163,9 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		$session      =& $gallery->getSession();
 		$itemId       = $this->_item->getId();
 		$publicItemId = $this->_publicItem->getId();
+
 		GalleryUtilities::putRequestVariable('returnUrl', 'RETURN_URL');
+
 		$session->put(
 			'shutterfly.cart',
 			array(
@@ -178,6 +182,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 		// Give the active user view permissions through session-basd permissions
 		$sessionPermissionEntityId = $itemId;
+
 		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($sessionPermissionEntityId));
 
 		$ret = GalleryCoreApi::addEntityPermission(
@@ -212,6 +217,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 
 		$results = ob_get_contents();
 		ob_end_clean();
+
 		if ($ret) {
 			return $ret;
 		}
@@ -220,6 +226,7 @@ class ShutterflyPrintPhotosViewTest extends GalleryTestCase {
 		$session    =& $gallery->getSession();
 		$sessionVar = GalleryUtilities::prefixFormVariable($session->getKey());
 		$matched    = preg_match_all("/imraw-1.*?$sessionVar=([0-9a-f]*)/", $results, $matches);
+
 		if (!$matched) {
 			$this->fail('No shutterfly session found in generated HTML');
 		} else {

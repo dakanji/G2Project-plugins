@@ -40,6 +40,7 @@ class WebDavCallbacks {
 				}
 
 				$link = array();
+
 				if ($hasPermission) {
 					$link = WebDavHelper::getMountLink($params['itemId']);
 				}

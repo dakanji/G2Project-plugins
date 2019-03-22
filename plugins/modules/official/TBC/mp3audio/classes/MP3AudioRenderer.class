@@ -43,6 +43,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 		global $gallery;
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
+
 		if ($format != 'HTML' || $entity->getMimeType() != 'audio/mpeg') {
 			return null;
 		}
@@ -95,11 +96,13 @@ class MP3AudioRenderer extends GalleryRenderer {
 		);
 
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
+
 		$title      = smarty_modifier_markup($item->getTitle(), 'strip');
 		$flashVars .= '&title=' . urlencode($title);
 
 		// Uncomment the next line to allow download button. Default: false
 		//$flashVars .= '&allowDownload=true';
+
 		/*
 		 * Uncomment the next line to allow the share button (also the swfUrl below).
 		 * Default: false
@@ -156,6 +159,7 @@ class MP3AudioRenderer extends GalleryRenderer {
 		}
 
 		$jsWarning = $module->translate('JavaScript required to view this content.');
+
 		return sprintf(
 			'<script type="text/javascript" src="%s"></script>
 	    <div id="soContent">%s</div>

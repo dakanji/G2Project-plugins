@@ -44,10 +44,13 @@ class mapModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks(
 			'registerEventListeners|getSiteAdminViews|getItemSummaries|getItemLinks'
@@ -240,6 +243,7 @@ class mapModule extends GalleryModule {
 	public function getItemSummaries($items, $permissions) {
 		GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
+
 		$summaries = array();
 		$data      = array();
 
@@ -251,6 +255,7 @@ class mapModule extends GalleryModule {
 
 		foreach ($data as $itemId => $fields) {
 			$list = array();
+
 			foreach ($fields as $field => $value) {
 				$list[] = $field . ': ' . smarty_modifier_markup($value);
 			}
@@ -287,6 +292,7 @@ class mapModule extends GalleryModule {
 		);
 
 		$rules[0] = $rule;
+
 		return $rules;
 	}
 
@@ -370,6 +376,7 @@ class mapModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
+
 		$links = array();
 
 		list($ret, $linktype) = GalleryCoreApi::getPluginParameter('module', 'map', 'linktype');
@@ -383,6 +390,7 @@ class mapModule extends GalleryModule {
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 			$type   = $item->getEntityType();
+
 			if ($linktype != 3) {
 				if ($type == 'GalleryPhotoItem') {
 					$NitemId = $item->getParentId();
@@ -394,8 +402,10 @@ class mapModule extends GalleryModule {
 
 				$name      = $item->getTitle();
 				$goodalbum = false;
+
 				if ($linktype == 2) {
-					$goodalbum = true; // Always filter on current album
+					// Always filter on current album
+					$goodalbum = true;
 				}
 
 				if ($linktype == 1) {
@@ -478,6 +488,7 @@ class mapModule extends GalleryModule {
 		}
 
 		GalleryCoreApi::setPluginParameter('module', 'map', 'oldexifversion', 0);
+
 		if (!version_compare('1.0.1', $exifModule->getVersion(), '<=')) {
 			GalleryCoreApi::setPluginParameter('module', 'map', 'oldexifversion', 1);
 		}
@@ -493,6 +504,7 @@ class mapModule extends GalleryModule {
 		}
 
 		GalleryCoreApi::setPluginParameter('module', 'map', 'noimagemagick', 0);
+
 		if (!isset($currentVersion)) {
 			$currentVersion = '0';
 		}
@@ -501,6 +513,7 @@ class mapModule extends GalleryModule {
 			case '0':
 				// Initial install
 				break;
+
 			case '0.1.0':
 			case '0.1.1':
 			case '0.1.2':
@@ -530,10 +543,12 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if ($result[1] == 'Color') {
-							$result[1] = 'Colors'; // Replace the "color" field for "colors"
+							// Replace the "color" field for "colors"
+							$result[1] = 'Colors';
 						}
 
 						$insertquery = '
@@ -543,7 +558,9 @@ class mapModule extends GalleryModule {
 						. '\',\'' . $result[3] . '\',\'' . $result[4] . '\')
 		    ';
 
-						$ret = $storage->execute($insertquery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($insertquery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -567,12 +584,15 @@ class mapModule extends GalleryModule {
 				$newroutes = array();
 
 				// Update with new parameters set to no
-				if (!empty($routes[1])) {  // There is some routes, upgrading
+				if (!empty($routes[1])) {
+					// There is some routes, upgrading
 					$allroutes = explode('|', $routes[1]);
+
 					foreach ($allroutes as $route) {
 						$usingnewroutes = strpos($route, '`Yes`No') ? 1 : 0 + strpos($route, '`Yes`Yes') ? 1 : 0 + strpos($route, '`No`Yes') ? 1 : 0 + strpos($route, '`No`No') ? 1 : 0;
 						$posyes         = strpos($route, '`Yes');
 						$posno          = strpos($route, '`No');
+
 						if ($posyes and $usingnewroutes == 0) {
 							$newroutes[] = substr($route, 0, $posyes + 4) . '`No'
 							   . substr($route, $posyes + 4) . '<br>';
@@ -591,6 +611,7 @@ class mapModule extends GalleryModule {
 				}
 
 				// copy markers to the module directory (we don't care if that fails)
+
 				/**
 				 * @todo The substr() method is fragile. Change to use
 				 * GalleryCoreApi::getPluginBaseDir() for now, then getCodeBasePath() for Gallery 2.3+
@@ -602,6 +623,7 @@ class mapModule extends GalleryModule {
 				 * here, we can eliminate filecopy.class altogether.
 				 */
 				GalleryCoreApi::requireOnce('modules/map/classes/filecopy.class');
+
 				@CopyDir(
 					$basegallerydir . '../images/map',
 					$basegallerydir . 'map/images/markers',
@@ -616,13 +638,18 @@ class mapModule extends GalleryModule {
 				list($ret, $routes) = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
 
 				$newroutes = '';
-				if (!empty($routes)) { // there is some route, fix them :-)
+
+				if (!empty($routes)) {
+					// there is some route, fix them :-)
 					$allroutes = explode('|', $routes);
-					foreach ($allroutes as $route) { // go through each route
+
+					foreach ($allroutes as $route) {
+						// go through each route
 						$routeinfos = explode('`', $route);
 						$theroute   = $routeinfos[0] . '`' . $routeinfos[1] . '`' . $routeinfos[2]
 							. '`' . $routeinfos[3] . '`' . $routeinfos[4] . '`' . $routeinfos[5]
 							. '`' . $routeinfos[6];
+
 						for ($i = 7; $i < count($routeinfos); $i++) {
 							// Search for the itemid from the coordinate and replace
 							$query = '
@@ -673,7 +700,9 @@ class mapModule extends GalleryModule {
 	      [mapMap::itemId] VARCHAR(11) DEFAULT \'0\' NOT NULL
 	    ';
 
-				$ret = $storage->execute($query); // run the command
+				// run the command
+				$ret = $storage->execute($query);
+
 				if ($ret) {
 					return $ret;
 				}
@@ -722,7 +751,8 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[2])) {
 							$tempcoord = explode(',', $result[2]);
@@ -744,7 +774,9 @@ class mapModule extends GalleryModule {
 		      [mapMap::setType] = \'' . $result[4] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -767,7 +799,8 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							if ($result[4] == 'G_MAP_TYPE') {
@@ -798,7 +831,9 @@ class mapModule extends GalleryModule {
 		      [GalleryPluginParameterMap::parameterName] = \'' . $result[3] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -821,7 +856,8 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$tempcoord = explode(',', $result[4]);
@@ -843,7 +879,9 @@ class mapModule extends GalleryModule {
 		      [GalleryPluginParameterMap::parameterName] = \'' . $result[3] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -865,7 +903,8 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$tempcoord = explode(',', $result[4]);
@@ -887,7 +926,9 @@ class mapModule extends GalleryModule {
 		      [GalleryPluginParameterMap::parameterName] = \'' . $result[3] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -910,7 +951,8 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$result[4] = 17 - $result[4];
@@ -931,7 +973,9 @@ class mapModule extends GalleryModule {
 		      [GalleryPluginParameterMap::parameterName] = \'' . $result[3] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -954,7 +998,8 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$result[4] = 17 - $result[4];
@@ -975,7 +1020,9 @@ class mapModule extends GalleryModule {
 		      [GalleryPluginParameterMap::parameterName] = \'' . $result[3] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -998,7 +1045,8 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$result[4] = 17 - $result[4];
@@ -1019,7 +1067,9 @@ class mapModule extends GalleryModule {
 		      [GalleryPluginParameterMap::parameterName] = \'' . $result[3] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -1042,17 +1092,23 @@ class mapModule extends GalleryModule {
 
 				list($ret, $results) = $gallery->search($query, array(), array());
 
-				if ($results->resultCount() > 0) { // Verify that it isn't empty
+				if ($results->resultCount() > 0) {
+					// Verify that it isn't empty
 					while ($result = $results->nextResult()) {
-						if (!empty($result[4])) { // we do have some filters, start the upgrade
+						if (!empty($result[4])) {
+							// we do have some filters, start the upgrade
 							$filterarray = explode('|', $result[4]);
+
 							foreach ($filterarray as $key => $filterinfos) {
 								$infos      = explode('`', $filterinfos);
 								$tempcenter = explode(',', $infos[3]);
 
 								// invert the coordinates for this filter
 								$infos[3] = $tempcenter[1] . ',' . $tempcenter[0];
-								$infos[2] = 17 - $infos[2];  // change the zoom for this filter
+
+								// change the zoom for this filter
+								$infos[2] = 17 - $infos[2];
+
 								// put the new infos back into the original array
 								$filterarray[$key] = implode('`', $infos);
 							}
@@ -1076,7 +1132,9 @@ class mapModule extends GalleryModule {
 		      [GalleryPluginParameterMap::parameterName] = \'' . $result[3] . '\'
 		    ';
 
-						$ret = $storage->execute($updatequery); // put the values in Mapmap
+						// put the values in Mapmap
+						$ret = $storage->execute($updatequery);
+
 						if ($ret) {
 							return $ret;
 						}
@@ -1106,7 +1164,9 @@ class mapModule extends GalleryModule {
 	      [mapMap::field] = \'PhotoColor\'
 	    ';
 
-				$ret = $storage->execute($updatequery); // put the values in Mapmap
+				// put the values in Mapmap
+				$ret = $storage->execute($updatequery);
+
 				if ($ret) {
 					return $ret;
 				}
@@ -1135,6 +1195,7 @@ class mapModule extends GalleryModule {
 				 */
 				if (empty($ret)) {
 					$allkeysets = explode('|', $mapKeys);
+
 					foreach ($allkeysets as $keyset) {
 						$temp       = explode('`', $keyset);
 						$protocol   = ($temp[3] == '443') ? 'https://' : 'http://';
@@ -1161,6 +1222,7 @@ class mapModule extends GalleryModule {
 					if ($ret) {
 						// Attempt to put the old value back
 						GalleryCoreApi::setPluginParameter('module', 'map', 'MapKeys', $mapKeys);
+
 						return $ret;
 					}
 

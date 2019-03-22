@@ -50,6 +50,7 @@ class SnapGalaxyPrintPhotosController extends GalleryController {
 		}
 
 		$returnUrl = GalleryUtilities::htmlEntityDecode($returnUrl);
+
 		GalleryCoreApi::requireOnce('modules/snapgalaxy/classes/SnapGalaxyHelper.class');
 
 		list($ret, $cartUrl) = SnapGalaxyHelper::printPhotos(
@@ -67,6 +68,7 @@ class SnapGalaxyPrintPhotosController extends GalleryController {
 		$results['redirect']['href'] = $cartUrl;
 		$results['status']           = array();
 		$results['error']            = array();
+
 		return array(null, $results);
 	}
 }

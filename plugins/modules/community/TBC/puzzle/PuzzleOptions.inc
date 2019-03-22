@@ -45,7 +45,8 @@
 			$status = 'no';
 		} elseif (isset($form['PuzzleOptions']['enabled']) && ($form['PuzzleOptions']['enabled'] == 'on')) {
 			$status = 'yes';
-		} else {        // Hmm... this should not happen
+		} else {
+			// Hmm... this should not happen
 			$status = 'yes';
 		}
 
@@ -66,16 +67,19 @@
 		}
 
 		if (empty($enabled)) {
-			$PuzzleOptions['enabled'] = 'yes'; // default to yes
+			// default to yes
+			$PuzzleOptions['enabled'] = 'yes';
 		} elseif ($enabled == 'yes') {
 			$PuzzleOptions['enabled'] = 'yes';
 		} elseif ($enabled == 'no') {
 			$PuzzleOptions['enabled'] = 'no';
 		} else {
-			$PuzzleOptions['enabled'] = 'no'; // Hmm... this should not happen
+			// Hmm... this should not happen
+			$PuzzleOptions['enabled'] = 'no';
 		}
 
 		$template->setVariable('PuzzleOptions', $PuzzleOptions);
+
 		return array(
 			null,
 			'modules/puzzle/templates/PuzzleOptionsTemplate.tpl',

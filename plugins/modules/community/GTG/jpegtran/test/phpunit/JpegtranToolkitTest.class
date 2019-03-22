@@ -49,6 +49,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$this->_platform = new JpegtranToolkitTestPlatform($this, $this->_jpegtranPath);
+
 		$gallery->setPlatform($this->_platform);
 
 		// Get a toolkit to work with
@@ -120,6 +121,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$expectedMimeTypes = array('image/jpeg', 'image/pjpeg');
+
 		$this->assertEquals(
 			array(
 				'rotate' => array(
@@ -170,6 +172,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$expectedMimeTypes = array('image/jpeg', 'image/pjpeg');
+
 		$this->assertEquals(
 			array(
 				'rotate' => array(
@@ -198,6 +201,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$expectedMimeTypes = array('image/jpeg', 'image/pjpeg');
+
 		$this->assertEquals(array(), $results['operations'], 'operations');
 	}
 
@@ -336,6 +340,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals(array('IGNORE'), $context, 'context altered');
+
 		$this->assertEquals('image/pjpeg', $mimeType, 'output mimetype != input mimetype');
 	}
 
@@ -388,6 +393,7 @@ class JpegtranToolkitTest extends GalleryTestCase {
 
 		// Crop triggers 2 jpegtran calls and thus 4 chdir calls
 		$this->assertEquals('image/jpeg', $mimeType, 'output mimetype != input mimetype');
+
 		$this->assertEquals(4, $this->_platform->getChdirCount(), 'crop should trigger 4 changes');
 	}
 
@@ -484,6 +490,7 @@ class JpegtranToolkitTestPlatform {
 	public function exec($cmd) {
 		$results = array();
 		$stderr  = array();
+
 		switch (serialize($cmd)) {
 			case serialize(
 				array(
@@ -538,7 +545,9 @@ class JpegtranToolkitTestPlatform {
 				);
 
 				$stderr['rotateOnly'] = $stderr['normal'];
+
 				return array(1, array(), $stderr[$this->_envId]);
+
 			case serialize(
 				array(
 					array(
@@ -556,6 +565,7 @@ class JpegtranToolkitTestPlatform {
 			):
 				// Test command for crop
 				return array(in_array($this->_envId, array('nonStandard', 'normal')), array(), array());
+
 			case serialize(
 				array(
 					array(
@@ -591,6 +601,7 @@ class JpegtranToolkitTestPlatform {
 			):
 				// The crop operation that depends on the above "get dimensions" operation
 				return array(in_array($this->_envId, array('nonStandard', 'normal')), array(), array());
+
 			case serialize(
 				array(
 					array(
@@ -635,6 +646,7 @@ class JpegtranToolkitTestPlatform {
 		}
 
 		printf('Unexpected command for mock toolkit<pre>%s</pre>', print_r($cmd, true));
+
 		return array(0, '', 'unprepared for exec()');
 	}
 
@@ -656,6 +668,7 @@ class JpegtranToolkitTestPlatform {
 			case '/validPath/jpegtran':
 			case '/validPath/bogusBinary':
 				return true;
+
 			case 'TEMPFILE':
 				switch ($this->_envId) {
 					case 'nonStandard':
@@ -702,6 +715,7 @@ class JpegtranToolkitTestPlatform {
 
 	public function chmod($path, $mode = null) {
 		$this->_test->_chmodWasCalled = true;
+
 		return true;
 	}
 
@@ -717,6 +731,7 @@ class JpegtranToolkitTestPlatform {
 
 	public function chdir($path) {
 		$this->_chdirCount++;
+
 		return true;
 	}
 

@@ -41,6 +41,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		$redir = true;
 		$stop  = time() + $this->timeout;
 		$off   = $this->timeout;
+
 		while ($redir && ($off > 0)) {
 			$parts        = parse_url($url);
 			$specify_port = true;
@@ -48,6 +49,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			// Set a default port.
 			if (!array_key_exists('port', $parts)) {
 				$specify_port = false;
+
 				if ($parts['scheme'] == 'http') {
 					$parts['port'] = 80;
 				} elseif ($parts['scheme'] == 'https') {
@@ -62,6 +64,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			}
 
 			$host = $parts['host'];
+
 			if ($parts['scheme'] == 'https') {
 				$host = 'ssl://' . $host;
 			}
@@ -81,6 +84,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 
 			$errno  = 0;
 			$errstr = '';
+
 			if ($extra_headers) {
 				foreach ($extra_headers as $h) {
 					$headers[] = $h;
@@ -103,7 +107,9 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			fputs($sock, implode("\r\n", $headers) . "\r\n\r\n");
 			$data      = '';
 			$kilobytes = 0;
+
 			while (!feof($sock) &&
+
 				   $kilobytes < Auth_OpenID_FETCHER_MAX_RESPONSE_KB) {
 				$data      .= fgets($sock, 1024);
 				$kilobytes += 1;
@@ -117,6 +123,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			$headers   = explode("\r\n", $headers);
 			$http_code = explode(' ', $headers[0]);
 			$code      = $http_code[1];
+
 			if (in_array($code, array('301', '302'))) {
 				$url   = $this->_findRedirect($headers);
 				$redir = true;
@@ -128,9 +135,11 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		}
 
 		$new_headers = array();
+
 		foreach ($headers as $header) {
 			if (preg_match('/:/', $header)) {
 				$parts = explode(': ', $header, 2);
+
 				if (count($parts) == 2) {
 					list($name, $value) = $parts;
 
@@ -150,6 +159,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		$parts     = parse_url($url);
 		$headers   = array();
 		$post_path = $parts['path'];
+
 		if (isset($parts['query'])) {
 			$post_path .= '?' . $parts['query'];
 		}
@@ -158,6 +168,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		$headers[] = 'Host: ' . $parts['host'];
 		$headers[] = 'Content-type: application/x-www-form-urlencoded';
 		$headers[] = 'Content-length: ' . strval(strlen($body));
+
 		if ($extra_headers
 			&& is_array($extra_headers)
 		) {
@@ -207,6 +218,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 
 		// Get the response from the server.
 		$response = '';
+
 		while (!feof($sock)) {
 			if ($data = fgets($sock, 128)) {
 				$response .= $data;
@@ -226,6 +238,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		$http_code   = explode(' ', $headers[0]);
 		$code        = $http_code[1];
 		$new_headers = array();
+
 		foreach ($headers as $header) {
 			if (preg_match('/:/', $header)) {
 				list($name, $value) = explode(': ', $header, 2);

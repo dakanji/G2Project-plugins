@@ -47,6 +47,7 @@ class CheckoutDownloadStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 			$results['redirect']['verify2']       = $form['checkoutdownload']['verify2'];
 			$results['status']                    = '';
 			$results['error']                     = '';
+
 			return array(null, $results);
 		}
 

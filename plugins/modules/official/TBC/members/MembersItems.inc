@@ -57,6 +57,7 @@ class MembersItemsView extends GalleryView {
 		}
 
 		$userId = GalleryUtilities::getRequestVariables('userId');
+
 		if (empty($userId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
@@ -95,6 +96,7 @@ class MembersItemsView extends GalleryView {
 
 		// Figure out our max pages, make sure our current page fits in it
 		$form['list']['maxPages'] = ceil($form['list']['count'] / $form['list']['pageSize']);
+
 		if ($form['list']['page'] > $form['list']['maxPages']) {
 			$form['list']['page'] = $form['list']['maxPages'];
 		}
@@ -117,6 +119,7 @@ class MembersItemsView extends GalleryView {
 
 		$MembersItems['user']      = (array)$user;
 		$MembersItems['lastItems'] = array();
+
 		foreach ($lastItems as $item) {
 			$MembersItems['lastItems'][] = (array)$item;
 		}
@@ -130,6 +133,7 @@ class MembersItemsView extends GalleryView {
 		}
 
 		$template->title($module->translate('Member Items'));
+
 		return array(
 			null,
 			array(

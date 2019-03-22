@@ -27,6 +27,7 @@
 class ImageBlockCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		GalleryCoreApi::requireOnce('modules/imageblock/classes/ImageBlockHelper.class');
+
 		switch ($callback) {
 			case 'LoadImageBlock':
 				// Pick up our overrides
@@ -45,6 +46,7 @@ class ImageBlockCallbacks {
 					if (!isset($params['show'])) {
 						// As a theme block the 'show' elements are set as separate properties
 						$showMap = array_flip(explode('|', $moduleParams['show']));
+
 						foreach (array(
 							'showHeading' => 'heading',
 							'showTitle'   => 'title',

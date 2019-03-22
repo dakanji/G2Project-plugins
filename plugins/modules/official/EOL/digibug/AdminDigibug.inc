@@ -41,10 +41,17 @@ class AdminDigibugController extends GalleryController {
 		}
 
 		// Provide compatibility with 2.1 and 2.2
-		$apiVersion   = GalleryCoreApi::getApiVersion();
-		$adminPlugins = 'core.Admin'
-		. ($apiVersion[0] > 7 || $apiVersion[1] >= 7 ? 'Plugins' : 'Modules');
-		$status       = $error = array();
+		$apiVersion = GalleryCoreApi::getApiVersion();
+
+		if ($apiVersion[0] > 7 || $apiVersion[1] >= 7) {
+			$adminPlugins = 'core.Admin' . 'Plugins';
+		} else {
+			$adminPlugins = 'core.Admin' . 'Modules';
+		}
+
+		$status = array();
+		$error  = array();
+
 		if (isset($form['action']['save'])) {
 			if ($form['digibugIdChoice'] == 'owner') {
 				if (empty($form['digibugCustomerId'])
@@ -174,6 +181,7 @@ class AdminDigibugView extends GalleryView {
 		}
 
 		$template->style('modules/digibug/digibug.css');
+
 		$template->setVariable(
 			'AdminDigibug',
 			array(
@@ -182,6 +190,7 @@ class AdminDigibugView extends GalleryView {
 		);
 
 		$template->setVariable('controller', 'digibug.AdminDigibug');
+
 		return array(
 			null,
 			array(

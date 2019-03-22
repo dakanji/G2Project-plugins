@@ -32,6 +32,7 @@ class ConfigureController extends GalleryController {
 	 */
 	public function handleRequest($form) {
 		GalleryCoreApi::requireOnce('modules/nokiaupload/classes/ImageUploadHelper.class');
+
 		global $gallery;
 
 		$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
@@ -42,6 +43,7 @@ class ConfigureController extends GalleryController {
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			if (empty($form['group'])) {
 				$error[] = 'form[error][group][missing]';
@@ -80,6 +82,7 @@ class ConfigureController extends GalleryController {
 				}
 			}
 		} // else $form['action']['cancel']
+
 		if (empty($error)) {
 			$results['redirect'] = array(
 				'view'    => 'core.SiteAdmin',
@@ -94,6 +97,7 @@ class ConfigureController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -141,6 +145,7 @@ class ConfigureView extends GalleryView {
 		}
 
 		$albumTree = GalleryUtilities::createAlbumTree($albums);
+
 		$template->setVariable(
 			'NokiaUploadConfigure',
 			array(
@@ -149,6 +154,7 @@ class ConfigureView extends GalleryView {
 		);
 
 		$template->setVariable('controller', 'nokiaupload.Configure');
+
 		return array(
 			null,
 			array(

@@ -79,6 +79,7 @@ class GalleryMembersHelper {
 
 		$result   = $searchResults->nextResult();
 		$numItems = (int)$result[0];
+
 		return array(null, $numItems);
 	}
 
@@ -98,10 +99,14 @@ class GalleryMembersHelper {
 		switch ($orderDirection) {
 			case ORDER_ASCENDING:
 				$direction = 'ASC';
+
 				break;
+
 			case ORDER_DESCENDING:
 				$direction = 'DESC';
+
 				break;
+
 			default:
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
@@ -155,6 +160,7 @@ class GalleryMembersHelper {
 
 		// Get all of our item ids
 		$itemIds = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$itemIds[] = (int)$result[0];
 		}
@@ -270,6 +276,7 @@ class GalleryMembersHelper {
 		$todayStamp    = strtotime(date('F j, Y', time()));
 		$creationStamp = strtotime(date('F j, Y', $user->getCreationTimestamp()));
 		$age           = (int)round(($todayStamp - $creationStamp) / (24 * 60 * 60));
+
 		return array(null, $age);
 	}
 

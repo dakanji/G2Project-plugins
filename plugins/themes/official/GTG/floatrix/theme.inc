@@ -37,10 +37,10 @@ class FloatrixTheme extends GalleryTheme {
 				'Variable column theme based on Matrix'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'perPage'         => 12,
@@ -86,6 +86,7 @@ class FloatrixTheme extends GalleryTheme {
 	 */
 	public function validateSettings($settings) {
 		$error = parent::validateSettings($settings);
+
 		if (empty($settings['columnWidth'])) {
 			$error['columnWidth'] = $this->translate('You must enter a number');
 		}
@@ -138,6 +139,7 @@ class FloatrixTheme extends GalleryTheme {
 		}
 
 		$this->_splitItemLinks($template);
+
 		return array(null, 'theme.tpl');
 	}
 
@@ -178,6 +180,7 @@ class FloatrixTheme extends GalleryTheme {
 		}
 
 		$this->_splitItemLinks($template);
+
 		return array(null, 'theme.tpl');
 	}
 
@@ -196,6 +199,7 @@ class FloatrixTheme extends GalleryTheme {
 		);
 
 		$theme['userLinks'] = array();
+
 		foreach ($theme['itemLinks'] as $i => $link) {
 			if (isset($link['params']['view'], $userViews[$link['params']['view']])
 			) {

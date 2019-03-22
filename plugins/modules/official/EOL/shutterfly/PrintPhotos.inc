@@ -58,6 +58,7 @@ class PrintPhotosView extends GalleryView {
 		} else {
 			$session     =& $gallery->getSession();
 			$cartItemIds = $session->get('shutterfly.cart');
+
 			$session->remove('shutterfly.cart');
 		}
 
@@ -127,8 +128,10 @@ class PrintPhotosView extends GalleryView {
 		// Assemble all our data
 		$i       = 1;
 		$entries = $protectedIds = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (!isset($permissions[$itemId]['shutterfly.print'])) {
 				// Skip any cart items for which we don't have print permission
 				continue;
@@ -136,6 +139,7 @@ class PrintPhotosView extends GalleryView {
 
 			$source      = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
 			$needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
+
 			if ($needSession && !isset($sfSession)) {
 				/*
 				 * Get G2 session for shutterfly to access non-public images.
@@ -182,6 +186,7 @@ class PrintPhotosView extends GalleryView {
 
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
+
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
 				// Use the source if the thumbnail has a postfilter (like a watermark)
 				$thumbSource = $source;
@@ -241,8 +246,11 @@ class PrintPhotosView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
 		$template->setVariable('l10Domain', 'modules_shutterfly');
+
 		$template->setVariable(
 			'PrintPhotos',
 			array(
@@ -253,6 +261,7 @@ class PrintPhotosView extends GalleryView {
 		);
 
 		$template->display('gallery:modules/shutterfly/templates/PrintPhotos.tpl');
+
 		return null;
 	}
 }

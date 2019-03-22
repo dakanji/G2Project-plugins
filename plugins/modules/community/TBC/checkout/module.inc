@@ -50,10 +50,13 @@ class CheckoutModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews|getItemLinks|getSystemLinks');
 	}
@@ -125,6 +128,7 @@ class CheckoutModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		$myListener = new CheckoutModule();
+
 		GalleryCoreApi::registerEventListener('GalleryCheckout::emptyCart', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::purchaseComplete', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
@@ -148,6 +152,7 @@ class CheckoutModule extends GalleryModule {
 			//    $platform->recursiveRmdir($templateCacheDir);
 			// }
 			$storage =& $gallery->getStorage();
+
 			switch ($currentVersion) {
 				case '0.1.1':
 				case '0.1.2':
@@ -156,6 +161,7 @@ class CheckoutModule extends GalleryModule {
 				case '0.1.5':
 					// First standalone version.  Register our permissions
 					$permissions[] = array('purchase', $gallery->i18n('[checkout] Purchase item'), 0, array());
+
 					foreach ($permissions as $p) {
 						$ret = GalleryCoreApi::registerPermission(
 							$this->getId(),
@@ -168,7 +174,6 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
-
 					}
 
 					// Do the schema upgrade
@@ -255,7 +260,6 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
-
 					}
 
 					// For all other transactions, set paymentPlugin=checkoutemail
@@ -389,13 +393,13 @@ class CheckoutModule extends GalleryModule {
 							'chargePostage' => $downloadable == 'on' ? 'false' : 'true',
 							'showPapers'    => 'false',
 						)
-						as $paramName => $paramValue) {
+
+ as $paramName => $paramValue) {
 							$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $rootAlbumId);
 
 							if ($ret) {
 								return $ret;
 							}
-
 						}
 
 						foreach (array('product', 'price', 'restrict', 'downloadable', 'prodref') as $oldParamName) {
@@ -404,7 +408,6 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
-
 						}
 
 						$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numProducts');
@@ -412,7 +415,6 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
-
 					}
 
 					// Fall Through
@@ -692,18 +694,17 @@ class CheckoutModule extends GalleryModule {
 
 							$defaultqty = false;
 						}
-
 					}
 
 					// register new purchase album permission
 					$permissions[] = array('purchaseAlbum', $gallery->i18n('[checkout] Purchase album'), 0, array());
+
 					foreach ($permissions as $p) {
 						$ret = GalleryCoreApi::registerPermission($this->getId(), 'checkout.' . $p[0], $p[1], $p[2], $p[3]);
 
 						if ($ret) {
 							return $ret;
 						}
-
 					}
 
 					// Fall Through
@@ -754,7 +755,6 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
-
 					}
 
 					// Remove old columns
@@ -773,6 +773,7 @@ class CheckoutModule extends GalleryModule {
 
 					// Postage settings
 					$posts = array();
+
 					for ($i = 0; $i < $mp['numPostages']; $i++) {
 						$posts[$i]['type']  = $mp['postType' . $i];
 						$posts[$i]['price'] = $mp['postPrice' . $i];
@@ -788,7 +789,6 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
-
 					}
 
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numPostages');
@@ -805,6 +805,7 @@ class CheckoutModule extends GalleryModule {
 
 					// Papers
 					$papers = array();
+
 					for ($i = 0; $i < $mp['numPapers']; $i++) {
 						$papers[$i] = $mp['paper' . $i];
 
@@ -813,7 +814,6 @@ class CheckoutModule extends GalleryModule {
 						if ($ret) {
 							return $ret;
 						}
-
 					}
 
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numPapers');
@@ -830,6 +830,7 @@ class CheckoutModule extends GalleryModule {
 
 					// Emails
 					$emails = array();
+
 					for ($i = 0; $i < $mp['numAddresses']; $i++) {
 						foreach (array('toAddress', 'emailLanguage') as $paramName) {
 							$emails[$i][$paramName] = $mp[$paramName . $i];
@@ -839,7 +840,6 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
-
 						}
 
 						foreach (array('showCustomer', 'showLinks', 'showContents', 'showThumbs', 'isAdmin') as $paramName) {
@@ -850,9 +850,7 @@ class CheckoutModule extends GalleryModule {
 							if ($ret) {
 								return $ret;
 							}
-
 						}
-
 					}
 
 					$ret = GalleryCoreApi::removePluginParameter('module', 'checkout', 'numAddresses');
@@ -878,11 +876,11 @@ class CheckoutModule extends GalleryModule {
 
 					$papers   = unserialize($mp['papers']);
 					$postages = unserialize($mp['postages']);
+
 					foreach ($papers as $key => $type) {
 						$papers[$key] = array(
 							1 => $type,
 						);
-
 					}
 
 					foreach ($postages as $key => $details) {
@@ -890,7 +888,6 @@ class CheckoutModule extends GalleryModule {
 							1 => $details['price'],
 							2 => '',
 						);
-
 					}
 
 					$query = '
@@ -988,23 +985,23 @@ class CheckoutModule extends GalleryModule {
 					// Fall Through
 				case 'end of upgrade path':
 					break;
+
 				default:
 					return GalleryCoreApi::error(ERROR_BAD_PLUGIN, sprintf('Unknown module version %s', $currentVersion));
 			}
-
 		}
 
 		if (!isset($currentVersion)) {
 			// Initial install.  Register our permissions
 			$permissions[] = array('purchase', $gallery->i18n('[checkout] Purchase item'), 0, array());
 			$permissions[] = array('purchaseAlbum', $gallery->i18n('[checkout] Purchase album'), 0, array());
+
 			foreach ($permissions as $p) {
 				$ret = GalleryCoreApi::registerPermission($this->getId(), 'checkout.' . $p[0], $p[1], $p[2], $p[3]);
 
 				if ($ret) {
 					return $ret;
 				}
-
 			}
 
 			// Set current user's email address to receive order notifications
@@ -1085,7 +1082,6 @@ class CheckoutModule extends GalleryModule {
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		return null;
@@ -1136,7 +1132,6 @@ class CheckoutModule extends GalleryModule {
 				),
 			),
 		);
-
 	}
 
 	/**
@@ -1157,6 +1152,7 @@ class CheckoutModule extends GalleryModule {
 		}
 
 		$links = array();
+
 		foreach ($items as $item) {
 			if (isset($wantsDetailedLinks[$item->getId()]) || $alwaysShow) {
 				if (($item->getCanContainChildren() && isset($permissions[$item->getId()]['checkout.purchaseAlbum']))
@@ -1176,11 +1172,8 @@ class CheckoutModule extends GalleryModule {
 							'return'     => 1,
 						),
 					);
-
 				}
-
 			}
-
 		}
 
 		return array(null, $links);
@@ -1214,7 +1207,6 @@ class CheckoutModule extends GalleryModule {
 					'return'  => 1,
 				),
 			);
-
 		}
 
 		return array(null, $links);
@@ -1227,15 +1219,16 @@ class CheckoutModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		$result = null;
+
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
+
 			if (GalleryUtilities::isA($entity, 'GalleryItem')) {
 				$ret = CheckoutProductMapHelper::deleteItemParameters($entity->getId());
 
 				if ($ret) {
 					return array($ret, null);
 				}
-
 			}
 
 			return array(null, null);
@@ -1243,6 +1236,4 @@ class CheckoutModule extends GalleryModule {
 
 		return array(null, $result);
 	}
-
 }
-

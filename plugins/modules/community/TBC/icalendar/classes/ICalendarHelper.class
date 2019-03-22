@@ -21,6 +21,7 @@
 
 // Being developed as part of CalDAV server library for now
 //GalleryCoreApi::requireOnce('modules/caldav/lib/HTTP/CalDAV/Tools/ICalendarParser.php');
+
 /**
  * FIXME The implementation of the core-module
  *
@@ -38,6 +39,7 @@ class ICalendarHelper {
 	    FROM
 	      [ICalendarResourceMap]
 	    WHERE
+
 	      [ICalendarResourceMap::resourceId] = ?';
 
 		list($ret, $results) = $gallery->search($query, array($resourceItem->getId()));
@@ -73,6 +75,7 @@ class ICalendarHelper {
 		}
 
 		$handle = $platform->fopen($fspath, 'rb');
+
 		if (!handle) {
 			return GalleryCoreApi::error(GALLERY_ERROR);
 		}
@@ -126,13 +129,11 @@ class ICalendarHelper {
 					$comp->properties['DTSTART'][0]->value
 				)
 			);
-
 			$newEntity->setEnd(
 				ICalendarParser::datetime_to_timestamp(
 					$comp->properties['DTEND'][0]->value
 				)
 			);
-
 			$newEntity->setSummary($comp->properties['SUMMARY'][0]->value);
 
 			$ret = $newEntity->save();
@@ -143,6 +144,7 @@ class ICalendarHelper {
 
 			/*$ret = GalleryCoreApi::addExistingItemToAlbum($newEntity, $resourceItem->getParentId(),
 			true);
+
 			if ($ret) {
 			return $ret;
 			}*/
@@ -178,6 +180,7 @@ class ICalendarHelper {
 	    ON
 	      [Entity::id] = [ICalendarResourceMap::entityId]
 	    WHERE
+
 	      [ICalendarResourceMap::resourceId] IS NULL';
 
 		list($ret, $results) = $gallery->search($query);
@@ -187,6 +190,7 @@ class ICalendarHelper {
 		}
 
 		$ids = array();
+
 		while ($result = $results->nextResult()) {
 			$ids[] = $result[0];
 		}
@@ -198,8 +202,10 @@ class ICalendarHelper {
 		}
 
 		$components = array();
+
 		foreach ($entities as $entity) {
 			$component = ICalendarHelper::getComponentFromEntity($entity);
+
 			if (!is_array($components[$component->name])) {
 				$components[$component->name] = array();
 			}
@@ -269,6 +275,7 @@ class ICalendarHelper {
 	    WHERE
 	      [Entity::id] = [ICalendarResourceMap::entityId]
 	    AND
+
 	      [Entity::serialNumber] != [ICalendarResourceMap::entitySerialNumber]';
 
 		list($ret, $results) = $gallery->search($query, array($resourceItem->getId()));
@@ -278,6 +285,7 @@ class ICalendarHelper {
 		}
 
 		$ids = array();
+
 		while ($result = $results->nextResult()) {
 			$ids[] = $result[0];
 		}
@@ -313,6 +321,7 @@ class ICalendarHelper {
 	    ON
 	      [ICalendarResourceMap::entityId] = [Entity::id]
 	    WHERE
+
 	      [Entity::id] IS NULL';
 
 		list($ret, $results) = $gallery->search($query, array($resourceItem->getId()));

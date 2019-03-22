@@ -41,6 +41,7 @@ class Getid3Extractor extends Getid3Interface_1_0 {
 		}
 
 		$data = array();
+
 		foreach ($itemIds as $itemId) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 
@@ -60,8 +61,10 @@ class Getid3Extractor extends Getid3Interface_1_0 {
 			}
 
 			$data[$itemId] = array();
+
 			GalleryCoreApi::requireOnce('modules/getid3/classes/Getid3Helper.class');
 			Getid3Helper::_fetchRawGetid3Data($path, $rawGetid3Data);
+
 			foreach (Getid3Helper::getGetid3Keys() as $property => $keyData) {
 				if (!empty($properties) && !in_array($property, $properties)) {
 					continue;
@@ -69,6 +72,7 @@ class Getid3Extractor extends Getid3Interface_1_0 {
 
 				for ($i = 1; $i < count($keyData); $i++) {
 					$value = Getid3Helper::_getValue($rawGetid3Data, explode('.', $keyData[$i]));
+
 					if (isset($value)) {
 						$value                    = Getid3Helper::postProcessValue($property, $value);
 						$data[$itemId][$property] = array(

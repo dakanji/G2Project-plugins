@@ -5,16 +5,13 @@
 $frameData = array(
 	'name'      => $gallery->i18n('Slide (square)'),
 	'square'    => true,
-
 	// Center, no width/height setting neccessary
 	// Try setting this to 'CC.png' to see the centering, then make your own appealing img.
 	'imageCC'   => 'CC.gif',
-
 	// Top Left
 	'imageTL'   => 'TL.gif',
 	'widthTL'   => 11,
 	'heightTL'  => 11,
-
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
@@ -22,12 +19,10 @@ $frameData = array(
 	'heightTT'  => 11,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR.gif',
 	'widthTR'   => 11,
 	'heightTR'  => 11,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -35,7 +30,6 @@ $frameData = array(
 	'widthLL'   => 11,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -43,12 +37,10 @@ $frameData = array(
 	'widthRR'   => 11,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL.gif',
 	'widthBL'   => 11,
 	'heightBL'  => 11,
-
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
@@ -56,7 +48,6 @@ $frameData = array(
 	'heightBB'  => 11,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 11,

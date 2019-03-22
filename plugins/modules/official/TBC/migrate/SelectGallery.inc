@@ -43,6 +43,7 @@ class SelectGalleryController extends GalleryController {
 		}
 
 		$error = $status = array();
+
 		if (isset($form['action']['select'])) {
 			if (empty($form['albumsPath'])) {
 				$error[] = 'form[error][albumsPath][missing]';
@@ -50,11 +51,13 @@ class SelectGalleryController extends GalleryController {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
 				$tmp      = trim($form['albumsPath']);
+
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
 				}
 
 				$form['albumsPath'] = trim($tmp);
+
 				if (!Gallery1DataParser::getme()->isValidAlbumsPath($form['albumsPath'])) {
 					$error[] = 'form[error][albumsPath][invalid]';
 				}
@@ -64,6 +67,7 @@ class SelectGalleryController extends GalleryController {
 				// Save our albums path in the session
 				$session     =& $gallery->getSession();
 				$recentPaths = $session->get('migrate.view.SelectGallery.recentPaths');
+
 				if (empty($recentPaths)) {
 					$recentPaths = array();
 				}
@@ -75,6 +79,7 @@ class SelectGalleryController extends GalleryController {
 				}
 
 				$session->put('migrate.view.SelectGallery.recentPaths', $recentPaths);
+
 				$redirect['view']       = 'core.SiteAdmin';
 				$redirect['subView']    = 'migrate.ChooseObjects';
 				$redirect['albumsPath'] = $form['albumsPath'];
@@ -100,6 +105,7 @@ class SelectGalleryController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -128,6 +134,7 @@ class SelectGalleryView extends GalleryView {
 		// Load our recent paths from the session
 		$session     =& $gallery->getSession();
 		$recentPaths = $session->get('migrate.view.SelectGallery.recentPaths');
+
 		if (empty($recentPaths)) {
 			$recentPaths = array();
 		}
@@ -139,9 +146,11 @@ class SelectGalleryView extends GalleryView {
 		}
 
 		$hasToolkit = false;
+
 		for ($i = 0; $i < sizeof($operations); $i++) {
 			if ($operations[$i]['name'] == 'thumbnail') {
 				$hasToolkit = true;
+
 				break;
 			}
 		}
@@ -156,8 +165,10 @@ class SelectGalleryView extends GalleryView {
 		$SelectGallery['recentPaths'] = $recentPaths;
 		$SelectGallery['hasToolkit']  = $hasToolkit;
 		$SelectGallery['mapCount']    = $mapCount;
+
 		$template->setVariable('SelectGallery', $SelectGallery);
 		$template->setVariable('controller', 'migrate.SelectGallery');
+
 		return array(
 			null,
 			array(

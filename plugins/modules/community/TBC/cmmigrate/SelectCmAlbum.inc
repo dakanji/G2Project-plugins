@@ -41,6 +41,7 @@ class SelectCmAlbumController extends GalleryController {
 		}
 
 		$error = $status = array();
+
 		if (isset($form['action']['select'])) {
 			if (empty($form['copperminePath'])) {
 				$error[] = 'form[error][copperminePath][missing]';
@@ -48,11 +49,13 @@ class SelectCmAlbumController extends GalleryController {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
 				$tmp      = trim($form['copperminePath']);
+
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
 				}
 
 				$form['copperminePath'] = trim($tmp);
+
 				if (!CmMigrateHelper::isValidCopperminePath($form['copperminePath'], $slash)) {
 					$error[] = 'form[error][copperminePath][invalid]';
 				}
@@ -62,6 +65,7 @@ class SelectCmAlbumController extends GalleryController {
 				// Save our albums path in the session
 				$session     =& $gallery->getSession();
 				$recentPaths = $session->get('cmmigrate.view.SelectGallery.recentPaths');
+
 				if (empty($recentPaths)) {
 					$recentPaths = array();
 				}
@@ -73,6 +77,7 @@ class SelectCmAlbumController extends GalleryController {
 				}
 
 				$session->put('cmmigrate.view.SelectCmAlbum.recentPaths', $recentPaths);
+
 				$redirect['view']           = 'core.SiteAdmin';
 				$redirect['subView']        = 'cmmigrate.ChooseCmObjects';
 				$redirect['copperminePath'] = $form['copperminePath'];
@@ -88,6 +93,7 @@ class SelectCmAlbumController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -110,6 +116,7 @@ class SelectCmAlbumView extends GalleryView {
 		// Load our recent paths from the session
 		$session     =& $gallery->getSession();
 		$recentPaths = $session->get('cmmigrate.view.SelectCmAlbum.recentPaths');
+
 		if (empty($recentPaths)) {
 			$recentPaths = array();
 		}
@@ -121,9 +128,11 @@ class SelectCmAlbumView extends GalleryView {
 		}
 
 		$hasToolkit = false;
+
 		for ($i = 0; $i < count($operations); $i++) {
 			if ($operations[$i]['name'] == 'thumbnail') {
 				$hasToolkit = true;
+
 				break;
 			}
 		}
@@ -131,8 +140,10 @@ class SelectCmAlbumView extends GalleryView {
 		$SelectCmAlbum                = array();
 		$SelectCmAlbum['recentPaths'] = $recentPaths;
 		$SelectCmAlbum['hasToolkit']  = $hasToolkit;
+
 		$template->setVariable('controller', 'cmmigrate.SelectCmAlbum');
 		$template->setVariable('SelectCmAlbum', $SelectCmAlbum);
+
 		return array(
 			null,
 			array(

@@ -133,6 +133,7 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$session      =& $gallery->getSession();
 		$cartItemIds  = array();
+
 		for ($i = 0; $i < count($this->_items); $i++) {
 			$cartItemIds[$this->_items[$i]->getId()] = $i + 1;
 		}
@@ -170,6 +171,7 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 
 		$session   =& $gallery->getSession();
 		$printCart = $session->get('shutterfly.cart');
+
 		$this->assertEquals($cartItemIds, $printCart, 'cart');
 
 		// Render PrintPhotos view to test processing of cart items
@@ -180,17 +182,20 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 		}
 
 		GalleryUtilities::putRequestVariable('returnUrl', $returnUrl);
+
 		ob_start();
 
 		$ret = $view->renderImmediate(array(), array());
 
 		$form = ob_get_contents();
 		ob_end_clean();
+
 		if ($ret) {
 			return $ret;
 		}
 
 		$this->assertTrue(strpos($form, '"returl" value="' . $returnUrl . '"'), 'return url');
+
 		$this->assertTrue(
 			strpos($form, '"imnum" value="4"'),
 			'form should include 4 photos: qty 1 of item 0, none of item 1 ' .
@@ -256,13 +261,16 @@ class ShutterflyCartPluginTest extends GalleryTestCase {
 		);
 
 		$printCart = $session->get('shutterfly.cart');
+
 		$this->assertEquals(null, $printCart, 'cart');
 
 		// Clean up
 		$session->remove('shutterfly.cart');
+
 		if (!empty($matches[1]) && $matches[1][0] != $session->getId()) {
 			$testSession             = new GallerySession();
 			$testSession->_sessionId = $matches[1][0];
+
 			$testSession->reset();
 		}
 	}

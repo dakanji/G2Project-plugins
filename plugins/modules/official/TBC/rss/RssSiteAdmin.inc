@@ -46,6 +46,7 @@ class RssSiteAdminController extends GalleryController {
 
 		$status = $results = $error = array();
 		$mode   = empty($form['mode']) ? '' : $form['mode'];
+
 		if (isset($form['action']['save'])) {
 			if ($mode == 'settings') {
 				// error checking
@@ -161,6 +162,7 @@ class RssSiteAdminController extends GalleryController {
 		$results[$method]['view']    = 'core.SiteAdmin';
 		$results[$method]['subView'] = 'rss.RssSiteAdmin';
 		$results[$method]['mode']    = $mode;
+
 		return array(null, $results);
 	}
 }
@@ -184,6 +186,7 @@ class RssSiteAdminView extends GalleryView {
 		}
 
 		$RssSiteAdmin['mode'] = GalleryUtilities::getRequestVariables('mode');
+
 		if (empty($RssSiteAdmin['mode'])) {
 			$RssSiteAdmin['mode'] = 'settings';
 		}
@@ -216,6 +219,7 @@ class RssSiteAdminView extends GalleryView {
 			if (!empty($feeds)) {
 				// replace item Ids with actual items
 				$itemIds = array();
+
 				foreach ($feeds as $feed) {
 					$itemIds[] = $feed['itemId'];
 				}
@@ -236,6 +240,7 @@ class RssSiteAdminView extends GalleryView {
 
 		$template->setVariable('RssSiteAdmin', $RssSiteAdmin);
 		$template->setVariable('controller', 'rss.RssSiteAdmin');
+
 		return array(
 			null,
 			array(

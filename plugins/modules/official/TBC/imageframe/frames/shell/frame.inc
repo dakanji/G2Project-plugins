@@ -4,12 +4,10 @@
   // Contributed by: floridave
 $frameData = array(
 	'name'      => $gallery->i18n('Shells'),
-
 	// Top Left
 	'imageTL'   => 'TL.jpg',
 	'widthTL'   => 58,
 	'heightTL'  => 58,
-
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
@@ -17,12 +15,10 @@ $frameData = array(
 	'heightTT'  => 58,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR.jpg',
 	'widthTR'   => 58,
 	'heightTR'  => 58,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -30,7 +26,6 @@ $frameData = array(
 	'widthLL'   => 58,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -38,12 +33,10 @@ $frameData = array(
 	'widthRR'   => 58,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL.jpg',
 	'widthBL'   => 58,
 	'heightBL'  => 58,
-
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
@@ -51,7 +44,6 @@ $frameData = array(
 	'heightBB'  => 58,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR.jpg',
 	'widthBR'   => 58,

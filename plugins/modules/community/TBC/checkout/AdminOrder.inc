@@ -57,12 +57,14 @@ class AdminOrderController extends GalleryController {
 
 		//otherwise must be us
 		$messageText = '';
+
 		if (isset($form['messageText'])) {
 			$messageText = wordwrap($form['messageText'], 70);
 		}
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['deleteOrder'])) {
 			$ret = GalleryCoreApi::deleteEntityById($form['transactionId']);
 
@@ -75,6 +77,7 @@ class AdminOrderController extends GalleryController {
 			$results['redirect']['subView'] = 'checkout.AdminTransactions';
 			$results['status']              = $status;
 			$results['error']               = $error;
+
 			return array(null, $results);
 		}
 
@@ -175,6 +178,7 @@ class AdminOrderController extends GalleryController {
 		$results['redirect']['transactionId'] = $form['transactionId'];
 		$results['status']                    = $status;
 		$results['error']                     = $error;
+
 		return array(null, $results);
 	}
 }
@@ -198,6 +202,7 @@ class AdminOrderView extends GalleryView {
 
 			// Figure out which item we're talking about
 			$form['transactionId'] = (int)GalleryUtilities::getRequestVariables('transactionId');
+
 			if (empty($form['transactionId'])) {
 				return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 			}
@@ -221,10 +226,12 @@ class AdminOrderView extends GalleryView {
 		}
 
 		$tpl['id'] = $form['transactionId'];
+
 		$template->setVariable('statusPlugins', $plugins);
 		$template->title($tpl['busname'] . '::' . $gallery->i18n('Checkout'));
 		$template->setVariable('tpl', $tpl);
 		$template->setVariable('controller', 'checkout.AdminOrder');
+
 		return array(
 			null,
 			array(

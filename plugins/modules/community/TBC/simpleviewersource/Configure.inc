@@ -29,12 +29,12 @@
  * This view sets simpleviewersource parameters on the root album at config time
  */
 
- /**
-  * Add a comment to an item
-  * @package simpleviewersource
-  * @version $Revision: 1433 $
-  * @author Alec Myers <alec@alecmyers.com>
-  */
+/**
+ * Add a comment to an item
+ * @package simpleviewersource
+ * @version $Revision: 1433 $
+ * @author Alec Myers <alec@alecmyers.com>
+ */
 class ConfigureView extends GalleryView {
 	/**
 	 * @see GalleryView::loadTemplate
@@ -92,7 +92,9 @@ class ConfigureView extends GalleryView {
 		}
 
 		$status['configured'] = 1;
+
 		$template->setVariable('status', $status);
+
 		return array(
 			null,
 			array(

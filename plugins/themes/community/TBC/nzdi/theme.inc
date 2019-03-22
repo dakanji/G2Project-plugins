@@ -44,10 +44,10 @@ class NZDITheme extends GalleryTheme {
 				'NZ Digital Images theme'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'rows'               => 3,
@@ -56,7 +56,6 @@ class NZDITheme extends GalleryTheme {
 				'showAlbumOwner'     => 0,
 				'showSummaries'      => 0,
 				'colorpack'          => '',
-
 				// 'showMicroThumbs' => 0,
 				'enableImageMap'     => 1,
 				'fullsizepopup'      => 1,
@@ -202,6 +201,7 @@ class NZDITheme extends GalleryTheme {
 		// Add in our extra stuff
 		$theme                  =& $template->getVariableByReference('theme');
 		$theme['adminTemplate'] = $templateFile;
+
 		return array(null, 'theme.tpl');
 	}
 

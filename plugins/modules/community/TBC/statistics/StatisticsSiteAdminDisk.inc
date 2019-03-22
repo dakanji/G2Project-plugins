@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/statistics/StatisticsSiteAdmin.inc');/**
+
  * @version $Revision: 1036 $
  * @package Statistics
  * @author Aidan Lister <aidan@php.net>
@@ -59,6 +60,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		// Controller
 		$template->setVariable('controller', 'statistics.StatisticsSiteAdmin');
+
 		return array(null, 'modules/statistics/templates/StatisticsSiteAdminDisk.tpl', 'modules_statistics');
 	}
 
@@ -111,15 +113,19 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		}
 
 		$total = 0;
+
 		while ($result = $results->nextResult()) {
 			// Data_length + Index_length
 			switch ($dbversion) {
 				case 4:
 					$total += $result[5] + $result[7];
+
 					break;
+
 				case 3:
 				case 5:
 					$total += $result[6] + $result[8];
+
 					break;
 			}
 		}
@@ -153,6 +159,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		// Paths
 		$progress = 0.1;
 		$minitask = $module->translate('Scanning root directory');
+
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
@@ -175,6 +182,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		$progress = 0.5;
 		$minitask = $module->translate('Scanning derivative folder');
+
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
@@ -192,6 +200,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 		$progress = 0.8;
 		$minitask = $module->translate('Scanning album folder');
+
 		$templateAdapter->updateProgressBar(
 			$taskname,
 			$minitask,
@@ -234,6 +243,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		// Loop
 		$i    = 0;
 		$size = $size / $mod / $mod;
+
 		while ($size >= $mod && $i < $ii) {
 			$size /= $mod;
 			$i++;
@@ -270,6 +280,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 		$queue       = array($path);
 		$queue_count = 1;
 		$i           = 0;
+
 		while ($i < $queue_count) {
 			$current = $queue[$i++];
 
@@ -283,6 +294,7 @@ class StatisticsSiteAdminDisk extends StatisticsSiteAdminPlugin {
 
 					// Get list of directories or filesizes
 					$path = $current . $entry;
+
 					if (is_file($path)) {
 						$size += filesize($path);
 					} elseif (is_dir($path)) {

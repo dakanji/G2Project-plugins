@@ -2,6 +2,7 @@
 
 //Fix the description , summary and title HREFs
 $tmp = array();
+
 foreach ($map['mapPoints'] as $point) {
 	$point['description'] = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['description']);
 	$point['description'] = str_replace('[/url]', '</a>', $point['description']);
@@ -27,6 +28,7 @@ $map['infowindows'][0] = "'<div style=\";margin-top:10px;width:250px;height:150p
 	+'<td align=left colspan=\"1\"><br/><font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font></td></tr>'";
 $map['infowindows'][0] = $map['infowindows'][0] . "
 	+'<tr><td colspan=\"2\">&nbsp;</td></tr>'";
+
 if ($map['showItemSummaries']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
 	+'<tr><td colspan=\"2\">'
@@ -35,6 +37,7 @@ if ($map['showItemSummaries']) {
 
 $map['infowindows'][0] = $map['infowindows'][0] . "
 	+'<tr><td colspan=\"2\">&nbsp;</td></tr>'";
+
 if ($map['showItemDescriptions']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
 	+'<tr><td colspan=\"2\">'
@@ -59,6 +62,7 @@ $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<a href=\"http://www.weatherbonk.com/weather/index.jsp?query='+lat+','+lon+'\" target=\'gpop\' onClick=\"window.open(href, \'gpop\',\'left=20,top=20,scrollbars=yes\').focus();return false;\">WeatherBonk.com this location</a></td></tr>'";
 $map['infowindows'][0] = $map['infowindows'][0] . "
 	+'<tr><td colspan=\"2\">&nbsp;</td></tr>'";
+
 if ($map['showZoomLinks']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
 	+'<tr><td colspan=\"2\">'

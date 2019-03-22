@@ -39,6 +39,7 @@ class PicLensHelper {
 
 		$platform =& $gallery->getPlatform();
 		$info     = PicLensHelper::getLatestPicLensInfo();
+
 		if (empty($info)) {
 			return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null);
 		}
@@ -91,9 +92,12 @@ class PicLensHelper {
 		}
 
 		$info = array();
+
 		foreach (explode("\n", $body) as $line) {
 			$pair = explode('=', $line, 2);
+
 			GalleryUtilities::sanitizeInputValues($pair);
+
 			if (count($pair) == 2) {
 				$info[$pair[0]] = $pair[1];
 			}
@@ -110,8 +114,10 @@ class PicLensHelper {
 
 		$platform =& $gallery->getPlatform();
 		$codeDir  = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow/';
+
 		foreach (array('piclens.js', 'PicLensLite.swf') as $file) {
 			$path = "{$codeDir}$file";
+
 			if ($platform->file_exists($path)) {
 				@$platform->unlink($path);
 			}

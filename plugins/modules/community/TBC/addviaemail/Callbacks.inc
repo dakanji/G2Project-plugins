@@ -36,10 +36,13 @@ class AddviaEmailCallbacks {
 				}
 
 				$block =& $smarty->_tpl_vars['block'];
+
 				GalleryCoreApi::requireOnce('modules/addviaemail/classes/AddviaemailHelper.class');
+
 				$mintutesBetweenChecks = $moduleParams['pollFloor'];
 				$secondsBetweenChecks  = $mintutesBetweenChecks * 60;
 				$timeOfLastCheck       = $moduleParams['timeOfLastCheck'];
+
 				if ((time() - $timeOfLastCheck) > $secondsBetweenChecks) {
 					list($ret, $params) = AddviaemailHelper::processEmails();
 
@@ -59,6 +62,7 @@ class AddviaEmailCallbacks {
 				}
 
 				$block['addviaemail']['timeoflastcheck'] = $moduleParams['timeOfLastCheck'];
+
 				if (!empty($params['newItems'])) {
 					$block['addviaemail']['emailsprocessed'] = count($params['newItems']);
 				} else {

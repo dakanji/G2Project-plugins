@@ -38,6 +38,7 @@ class RemoteSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
+
 		if (isset($form['action']['save'])) {
 			foreach (array('showItemAdd') as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
@@ -101,6 +102,7 @@ class RemoteSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'remote.RemoteSiteAdmin');
+
 		return array(
 			null,
 			array(

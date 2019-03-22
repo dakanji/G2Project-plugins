@@ -46,6 +46,7 @@ class AdminSessionsView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GallerySession.class');
+
 		$mySession = new GallerySession();
 
 		list($ret, $results) = GalleryCoreApi::getMapEntry(
@@ -73,6 +74,7 @@ class AdminSessionsView extends GalleryView {
 
 		$badHosts  = array('search.msn.com', 'crawl.yahoo.net', '^65.55');
 		$userNames = array();
+
 		while ($pSession = $results->nextResult()) {
 			$mySession->_userId            = (int)$pSession[1];
 			$mySession->_remoteIdentifier  = unserialize($pSession[2]);
@@ -84,6 +86,7 @@ class AdminSessionsView extends GalleryView {
 			//$hostName = gethostbyaddr($mySession->_remoteIdentifier[0]);
 			// Remove obvious searchbots
 			$host = $mySession->_remoteIdentifier[0];
+
 			foreach ($badHosts as $badHost) {
 				if (ereg($badHost, $host)) {
 					continue 2;
@@ -93,12 +96,14 @@ class AdminSessionsView extends GalleryView {
 			$items = $mySession->get('checkout.items');
 
 			/* Remove empty carts
+
 			if (empty($items)) {
 			continue;
 			}
 
 			*/
 			$transactionId = $mySession->get('checkout.transactionId');
+
 			if (ereg(';', $transactionId)) {
 				$transactionId = unserialize($transactionId);
 			}
@@ -124,6 +129,7 @@ class AdminSessionsView extends GalleryView {
 		}
 
 		$userNames = array();
+
 		foreach ($users as $user) {
 			$userNames[$user->getId()] = $user->getFullName();
 		}
@@ -131,6 +137,7 @@ class AdminSessionsView extends GalleryView {
 		$template->setVariable('sessions', $sessions);
 		$template->setVariable('userNames', $userNames);
 		$template->setVariable('controller', 'checkout.AdminTransactions');
+
 		return array(
 			null,
 			array(

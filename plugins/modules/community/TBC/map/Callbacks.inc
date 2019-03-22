@@ -34,7 +34,8 @@ class mapCallbacks {
 	public function callback($params, &$smarty, $callback, $userId = null) {
 		global $gallery;
 
-		$platform        = $gallery->getPlatform();
+		$platform = $gallery->getPlatform();
+
 		static $blockNum = 0;
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'map');
@@ -58,6 +59,7 @@ class mapCallbacks {
 				}
 
 				return null;
+
 			case 'LoadFilters':
 				if (GalleryUtilities::getRequestVariables('view') == 'map.ShowMap') {
 					list($ret, $filters) = GalleryCoreApi::getPluginParameter(
@@ -81,14 +83,18 @@ class mapCallbacks {
 					}
 
 					$routefilters = array();
+
 					if (!empty($routes)) {
 						// we have some routes, check if there is a need to create a filter for them
 						$routearray = explode('|', $routes);
 						$i          = 0;
 						$routeword  = $module->translate('Route') . ':';
+
 						foreach ($routearray as $route) {
 							$routeinfos = explode('`', $route);
-							if ($routeinfos[6] == 'Yes') {  // yep, need a filter for that route :-)
+
+							if ($routeinfos[6] == 'Yes') {
+								// yep, need a filter for that route :-)
 								$routefilters[$i]['name']   = $routeword . ' ' . $routeinfos[1];
 								$routefilters[$i]['params'] = array(
 									'view'   => 'map.ShowMap',
@@ -123,10 +129,12 @@ class mapCallbacks {
 						}
 
 						$albumfilters = array();
+
 						if (!empty($albumlist)) {
 							$i            = 0;
 							$listofalbums = explode('`', $albumlist);
 							$albumword    = $module->translate('Album') . ':';
+
 							foreach ($listofalbums as $album) {
 								$albumfilters[$i]['name']   = $albumword . ' ' . $album;
 								$albumfilters[$i]['params'] = array(
@@ -141,6 +149,7 @@ class mapCallbacks {
 					}
 
 					$filteroptions = array();
+
 					if ((!empty($filters) and $filters != '') or !empty($albumfilters)
 						or !empty($routefilters)
 					) {
@@ -154,6 +163,7 @@ class mapCallbacks {
 					if (!empty($filters) and $filters != '') {
 						$separatedfilters = explode('|', $filters);
 						$i                = 1;
+
 						foreach ($separatedfilters as $alloptions) {
 							$options                     = explode('`', $alloptions);
 							$filteroptions[$i]['name']   = $options[1];
@@ -199,6 +209,7 @@ class mapCallbacks {
 				}
 
 				return null;
+
 			case 'ItemCoords':
 				if (GalleryUtilities::getRequestVariables('view') != 'map.ShowMap') {
 					// Get the item type
@@ -212,7 +223,8 @@ class mapCallbacks {
 						$ItemType = $module->translate('Album');
 					} elseif (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 						$ItemType = $module->translate('Photo');
-					} else { // Handle other cases (data items)
+					} else {
+						// Handle other cases (data items)
 						$ItemType = $module->translate('Item');
 					}
 
@@ -223,9 +235,11 @@ class mapCallbacks {
 						return array($ret, null);
 					}
 
-					$lat      = array();
-					$lng      = array();
-					$dir      = array(); // directions
+					$lat = array();
+					$lng = array();
+
+					// directions
+					$dir      = array();
 					$dir['N'] = $module->translate(
 						array(
 							'text' => 'N',
@@ -256,17 +270,22 @@ class mapCallbacks {
 
 					if (array_key_exists('GPS', $data[$item->getId()])) {
 						$coords = explode(',', $data[$item->getId()]['GPS']);
+
 						switch ($params['coordStyle']) {
 							case 1: // Decimal degrees
 								$lat['deg'] = sprintf('%.6F', $coords[0]);
 								$lng['deg'] = sprintf('%.6F', $coords[1]);
+
 								break;
+
 							case 2: // Degrees decimal minutes
 								$lat['deg'] = floor(abs($coords[0]));
 								$lat['min'] = sprintf('%.4F', fmod(abs($coords[0]), 1) * 60);
 								$lng['deg'] = floor(abs($coords[1]));
 								$lng['min'] = sprintf('%.4F', fmod(abs($coords[1]), 1) * 60);
+
 								break;
+
 							case 3: // Degrees minutes seconds
 								$lat['deg'] = floor(abs($coords[0]));
 								$lat['min'] = floor(fmod(abs($coords[0]), 1) * 60);
@@ -274,6 +293,7 @@ class mapCallbacks {
 								$lng['deg'] = floor(abs($coords[1]));
 								$lng['min'] = floor(fmod(abs($coords[1]), 1) * 60);
 								$lng['sec'] = sprintf('%.3F', fmod(fmod(abs($coords[1]), 1) * 60, 1) * 60);
+
 								break;
 						}
 
@@ -291,6 +311,7 @@ class mapCallbacks {
 				}
 
 				return null;
+
 			case 'MiniMap':
 				if (GalleryUtilities::getRequestVariables('view') != 'map.ShowMap') {
 					// Get the item type
@@ -304,7 +325,8 @@ class mapCallbacks {
 						$ItemType = $module->translate('Album');
 					} elseif (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 						$ItemType = $module->translate('Photo');
-					} else { // Handle other cases (data items)
+					} else {
+						// Handle other cases (data items)
 						$ItemType = $module->translate('Item');
 					}
 
@@ -323,6 +345,7 @@ class mapCallbacks {
 					}
 
 					// Get the real path for the map module installation
+
 					/** @todo for gallery 2.3 and later change this to use getCodeBasePath() */
 					$mapModBaseDir = GalleryCoreApi::getPluginBaseDir('module', 'map') . 'modules/map/';
 
@@ -331,6 +354,7 @@ class mapCallbacks {
 					$DefaultPhotoColor  = 'GREEN';
 					$DefaultAlbumMarker = 'bigdots';
 					$DefaultAlbumColor  = 'RED';
+
 					if (array_key_exists('useAlbumMarkerSet', $param)
 						&& $platform->is_dir(
 							$mapModBaseDir . 'images/markers/'
@@ -358,8 +382,10 @@ class mapCallbacks {
 					}
 
 					// Get the site default zoom level, or default to zoom level 5
-					$mapZoom       = (array_key_exists('zoomInLevel', $param)) ? $param['zoomInLevel'] : 5;
-					$mapCenter     = ''; // Default blank mapCenter
+					$mapZoom = (array_key_exists('zoomInLevel', $param)) ? $param['zoomInLevel'] : 5;
+
+					// Default blank mapCenter
+					$mapCenter     = '';
 					$markerItemIds = array();
 
 					// If it's an album, check settings and possibly fetch descendants
@@ -368,9 +394,11 @@ class mapCallbacks {
 						 * Note: Both fetchChildItemIds() and fetchDescendentItemIds() by default
 						 * retrieve only items for which the current user has 'core.view' permission.
 						 */
-						if ($params['albumItems'] == 2) { // show items in current level only
+						if ($params['albumItems'] == 2) {
+							// show items in current level only
 							list($ret, $markerItemIds) = GalleryCoreApi::fetchChildItemIds($item);
-						} elseif ($params['albumItems'] == 3) { // show all subitems
+						} elseif ($params['albumItems'] == 3) {
+							// show all subitems
 							list($ret, $markerItemIds) = GalleryCoreApi::fetchDescendentItemIds($item);
 						}
 
@@ -441,7 +469,8 @@ class mapCallbacks {
 							if (empty($mapCenter) && array_key_exists($parentId, $markerParams)
 								&& array_key_exists('GPS', $markerParams[$parentId])
 								&& true
-							) { // replace && true with coordinate validation function
+							) {
+								// replace && true with coordinate validation function
 								$mapCenter = $markerParams[$parentId]['GPS'];
 								$mapZoom   = (array_key_exists('ZoomLevel', $markerParams[$parentId])) ? $markerParams[$parentId]['ZoomLevel'] : $mapZoom;
 							}
@@ -468,18 +497,23 @@ class mapCallbacks {
 
 					// The smarty markup modifier is required to strip out markup code in titles
 					GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
+
 					$markerIcons = array();
+
 					foreach ($markerItems as $markerItem) {
 						// First make sure it has coordinates and that they're valid
+
 						/** @todo replace '&& true' with a new MapHelper function to validate coordinates */
 						if (!(array_key_exists('GPS', $markerParams[$markerItem->getId()]) && true)) {
 							// No coordinates; don't show this marker.
 							unset($markerParams[$markerItem->getId()]);
+
 							continue;
 						}
 
 						$ItemColor  = (array_key_exists('Color', $markerParams[$markerItem->getId()])) ? $markerParams[$markerItem->getId()]['Color'] : (($markerItem->getCanContainChildren()) ? $DefaultAlbumColor : $DefaultPhotoColor);
 						$ItemMarker = ($markerItem->getCanContainChildren()) ? $DefaultAlbumMarker : $DefaultPhotoMarker;
+
 						if (!array_key_exists("{$ItemMarker}_{$ItemColor}", $markerIcons)) {
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]           = array();
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]['imgUrl'] = $gurl->generateUrl(

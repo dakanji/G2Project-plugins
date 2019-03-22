@@ -46,6 +46,7 @@ class DerivativesItemEdit extends ItemEditPlugin {
 		}
 
 		$itemId = $item->getId();
+
 		if (isset($form['action']['save'])) {
 			// Save data
 			foreach ($form['derivatives'] as $derivativeId => $derivativeInfo) {
@@ -104,6 +105,7 @@ class DerivativesItemEdit extends ItemEditPlugin {
 						$derivative->setDerivativeSourceId($derivativeInfo['derivativeSourceId']);
 						$derivative->setDerivativeType($derivativeInfo['derivativeType']);
 						$derivative->setDerivativeOperations($derivativeInfo['derivativeOperations']);
+
 						if (isset($derivativeInfo['postFilterOperations'])) {
 							$derivative->setPostFilterOperations($derivativeInfo['postFilterOperations']);
 						}
@@ -162,6 +164,7 @@ class DerivativesItemEdit extends ItemEditPlugin {
 		}
 
 		$itemId = $item->getId();
+
 		if (!empty($itemId)) {
 			list($ret, $derivs) = GalleryCoreApi::fetchDerivativesByItemIds(array($itemId));
 
@@ -190,6 +193,7 @@ class DerivativesItemEdit extends ItemEditPlugin {
 		}
 
 		$template->setVariable('id', $itemId);
+
 		return array(null, 'modules/customderivatives/templates/DerivativesItemEdit.tpl', 'modules_customderivatives');
 	}
 

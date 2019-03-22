@@ -88,6 +88,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_album);
+
 		$this->_albumId   = $this->_album->getId();
 		$this->_albumName = 'testalbum-' . mt_rand();
 		$this->_itemId    = $this->_item->getId();
@@ -141,7 +142,9 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 
 		// Album
 		GalleryUtilities::putRequestVariable('path', $this->_albumName);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -157,11 +160,14 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Album with trailing slash
 		GalleryUtilities::putRequestVariable('path', $this->_albumName . '/');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -177,12 +183,15 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Album page 2
 		GalleryUtilities::putRequestVariable('path', $this->_albumName);
 		GalleryUtilities::putRequestVariable('page', '2', false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -199,12 +208,15 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Item
 		GalleryUtilities::removeRequestVariable('page', false);
 		GalleryUtilities::putRequestVariable('path', $this->_albumName . '/' . $this->_itemName);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -220,12 +232,15 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Item full size
 		GalleryUtilities::putRequestVariable('path', $this->_albumName . '/' . $this->_itemName);
 		GalleryUtilities::putRequestVariable('full', '1', false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -242,6 +257,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Invalid item
@@ -258,6 +274,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -273,6 +290,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Direct link to resized image
@@ -282,6 +300,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -297,6 +316,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Direct link to thumbnail image
@@ -306,6 +326,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -321,13 +342,17 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		// Fallback to SCRIPT_NAME if PHP_SELF isn't set
 		$_SERVER['SCRIPT_NAME'] = $_SERVER['PHP_SELF'];
 		unset($_SERVER['PHP_SELF']);
+
 		GalleryUtilities::putRequestVariable('path', $this->_albumName . '/' . $this->_itemName);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -343,6 +368,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		);
 
 		$this->assertEquals(array('HTTP/1.0 301 Moved Permanently'), $this->_headers);
+
 		$this->_headers = array();
 
 		/*
@@ -351,6 +377,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		 */
 		$_SERVER['PHP_SELF'] = $_SERVER['SCRIPT_NAME'] = '/G1/path/myalbum/aaa.jpg';
 		$results             = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(

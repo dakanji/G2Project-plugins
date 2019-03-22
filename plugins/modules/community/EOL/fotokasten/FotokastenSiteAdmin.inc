@@ -38,6 +38,7 @@ class FotokastenSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
+
 		if (isset($form['action']['save'])) {
 			if (empty($form['affiliateId']) || !preg_match('/^\d+$/', trim($form['affiliateId']))) {
 				$error[] = 'form[error][affiliateId]';
@@ -111,6 +112,7 @@ class FotokastenSiteAdminView extends GalleryView {
 
 		if ($form['formName'] != 'FotokastenSiteAdmin') {
 			$form['formName'] = 'FotokastenSiteAdmin';
+
 			foreach (array('affiliateId', 'affiliateIdPass') as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter(
 					'module',
@@ -127,6 +129,7 @@ class FotokastenSiteAdminView extends GalleryView {
 		$FotokastenSiteAdmin = array();
 		$var                 = ($form['affiliateId'] == FOTOKASTEN_GALLERY_AFFILIATE_ID);
 		$FotokastenSiteAdmin['usingDefaultGalleryAffiliateId'] = $var;
+
 		$template->setVariable('FotokastenSiteAdmin', $FotokastenSiteAdmin);
 		$template->setVariable('controller', 'fotokasten.FotokastenSiteAdmin');
 

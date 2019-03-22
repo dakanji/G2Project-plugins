@@ -30,6 +30,7 @@
 
 // Required Files\Classes
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/KeywordAnalysis.class');
+
 class KeywordAnalysisController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -45,9 +46,11 @@ class KeywordAnalysisController extends GalleryController {
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			$itemId = $form['itemId'];
 			$action = $form['changetype'];
+
 			if (0 == strcasecmp($action, 'AddKeyword')) {
 				$keyword = $form['keyword'];
 
@@ -86,6 +89,7 @@ class KeywordAnalysisController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
+
 			if ($isActive) {
 				$redirect['subView'] = 'mranalysis.KeywordAnalysis';
 				$status['saved']     = 1;
@@ -104,6 +108,7 @@ class KeywordAnalysisController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -121,8 +126,10 @@ class KeywordAnalysisView extends GalleryView {
 
 		$form['formName'] = 'mranalysis.KeywordAnalysis';
 		$items            = KeywordAnalysis::get_item_list();
+
 		$template->setVariable('controller', 'mranalysis.KeywordAnalysis');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

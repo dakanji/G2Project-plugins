@@ -31,6 +31,7 @@ define('HTTP_HEADER_STATUS_102', '102 Processing');
 define('HTTP_HEADER_STATUS_INFORMATIONAL', 1);
 
 // #@-
+
 /**#+
  * Success Codes
  */
@@ -45,6 +46,7 @@ define('HTTP_HEADER_STATUS_207', '207 Multi-Status');
 define('HTTP_HEADER_STATUS_SUCCESSFUL', 2);
 
 // #@-
+
 /**#@+
  * Redirection Codes
  */
@@ -59,6 +61,7 @@ define('HTTP_HEADER_STATUS_307', '307 Temporary Redirect');
 define('HTTP_HEADER_STATUS_REDIRECT', 3);
 
 // #@-
+
 /**#@+
  * Error Codes
  */
@@ -86,6 +89,7 @@ define('HTTP_HEADER_STATUS_424', '424 Failed Dependency');
 define('HTTP_HEADER_STATUS_CLIENT_ERROR', 4);
 
 // #@-
+
 /**#@+
  * Server Errors
  */
@@ -99,6 +103,7 @@ define('HTTP_HEADER_STATUS_507', '507 Insufficient Storage');
 define('HTTP_HEADER_STATUS_SERVER_ERROR', 5);
 
 // #@-
+
 /**
  * HTTP_Header
  *
@@ -154,11 +159,13 @@ class HTTP_Header extends HTTP {
 	 */
 	public function setHttpVersion($version) {
 		$version = round((float)$version, 1);
+
 		if ($version < 1.0 || $version > 1.1) {
 			return false;
 		}
 
 		$this->_httpVersion = sprintf('%0.1f', $version);
+
 		return true;
 	}
 
@@ -190,6 +197,7 @@ class HTTP_Header extends HTTP {
 		}
 
 		$key = strtolower($key);
+
 		if ($key == 'last-modified') {
 			if (!isset($value)) {
 				$value = HTTP::Date(time());
@@ -224,6 +232,7 @@ class HTTP_Header extends HTTP {
 		}
 
 		$key = strtolower($key);
+
 		if (!isset($this->_headers[$key])) {
 			return false;
 		}
@@ -251,6 +260,7 @@ class HTTP_Header extends HTTP {
 
 		if (count($keys)) {
 			array_change_key_case($keys, CASE_LOWER);
+
 			foreach ($this->_headers as $key => $value) {
 				if ($include ? in_array($key, $keys) : !in_array($key, $keys)) {
 					header($key . ': ' . $value);
@@ -374,6 +384,7 @@ class HTTP_Header extends HTTP {
 		}
 
 		$qs = array();
+
 		if ($session) {
 			$qs[] = session_name() . '=' . session_id();
 		}
@@ -412,6 +423,7 @@ class HTTP_Header extends HTTP {
 	public function getStatusType($http_code) {
 		if (is_int($http_code) && defined('HTTP_HEADER_STATUS_' . $http_code) || defined($http_code)) {
 			$type = substr($http_code, 0, 1);
+
 			switch ($type) {
 				case HTTP_HEADER_STATUS_INFORMATIONAL:
 				case HTTP_HEADER_STATUS_SUCCESSFUL:
@@ -419,9 +431,12 @@ class HTTP_Header extends HTTP {
 				case HTTP_HEADER_STATUS_CLIENT_ERROR:
 				case HTTP_HEADER_STATUS_SERVER_ERROR:
 					return $type;
+
 					break;
+
 				default:
 					return false;
+
 					break;
 			}
 		} else {

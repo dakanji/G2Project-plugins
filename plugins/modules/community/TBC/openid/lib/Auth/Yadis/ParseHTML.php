@@ -85,6 +85,7 @@ class Auth_Yadis_ParseHTML {
 		// do it for us.
 		$str = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $str);
 		$str = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $str);
+
 		return $str;
 	}
 
@@ -101,6 +102,7 @@ class Auth_Yadis_ParseHTML {
 		$matches = array();
 		$double  = '/^"(.*)"$/';
 		$single  = "/^\'(.*)\'$/";
+
 		if (preg_match($double, $str, $matches)) {
 			return $matches[1];
 		}
@@ -141,6 +143,7 @@ class Auth_Yadis_ParseHTML {
 		}
 
 		$expr = sprintf($this->_tag_expr, $close, $tag_names, $self_close);
+
 		return sprintf('/%s/%s', $expr, $this->_re_flags);
 	}
 
@@ -184,9 +187,11 @@ class Auth_Yadis_ParseHTML {
 		);
 
 		$key_tags_pos = array();
+
 		foreach ($key_tags as $pat) {
 			$matches = array();
 			preg_match($pat, $html_string, $matches, PREG_OFFSET_CAPTURE);
+
 			if ($matches) {
 				$key_tags_pos[] = $matches[0][1];
 			} else {
@@ -229,6 +234,7 @@ class Auth_Yadis_ParseHTML {
 
 		$link_data    = array();
 		$link_matches = array();
+
 		if (!preg_match_all(
 			$this->tagPattern('meta', false, 'maybe'),
 			$html_string,
@@ -242,6 +248,7 @@ class Auth_Yadis_ParseHTML {
 			$attr_matches = array();
 			preg_match_all($this->_attr_find, $link, $attr_matches);
 			$link_attrs = array();
+
 			foreach ($attr_matches[0] as $index => $full_match) {
 				$name  = $attr_matches[1][$index];
 				$value = $this->replaceEntities(
@@ -269,6 +276,7 @@ class Auth_Yadis_ParseHTML {
 	 */
 	public function getHTTPEquiv($html_string) {
 		$meta_tags = $this->getMetaTags($html_string);
+
 		if ($meta_tags) {
 			foreach ($meta_tags as $tag) {
 				if (array_key_exists('http-equiv', $tag)

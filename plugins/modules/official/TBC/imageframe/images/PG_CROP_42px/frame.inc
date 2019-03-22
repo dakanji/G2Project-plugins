@@ -3,12 +3,10 @@
 // $Id: frame.inc,v 1.1 2004/07/21 01:24:20 mindless Exp $
 $frameData = array(
 	'name'      => $gallery->i18n('PG_CROP_42px'),
-
 	// Top Left
 	'imageTL'   => 'TL.gif',
 	'widthTL'   => 42,
 	'heightTL'  => 42,
-
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
@@ -16,12 +14,10 @@ $frameData = array(
 	'heightTT'  => 42,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR.gif',
 	'widthTR'   => 42,
 	'heightTR'  => 42,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -29,7 +25,6 @@ $frameData = array(
 	'widthLL'   => 42,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -37,12 +32,10 @@ $frameData = array(
 	'widthRR'   => 42,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL.gif',
 	'widthBL'   => 42,
 	'heightBL'  => 42,
-
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
@@ -50,7 +43,6 @@ $frameData = array(
 	'heightBB'  => 42,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 42,

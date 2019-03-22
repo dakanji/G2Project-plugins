@@ -45,6 +45,7 @@ class BrokenImagesView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminBrokenImages';
+
 		$gallery->guaranteeTimeLimit(120);
 
 		$query = '
@@ -83,8 +84,10 @@ class BrokenImagesView extends GalleryView {
 		$query .= ' ORDER BY [GalleryPhotoItem::id]';
 
 		$items = ItemList::readItemsFromQuery($query);
+
 		$template->setVariable('controller', 'mranalysis.BrokenImages');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

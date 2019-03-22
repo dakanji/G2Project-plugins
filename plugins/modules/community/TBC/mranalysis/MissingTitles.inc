@@ -42,6 +42,7 @@ class MissingTitlesView extends GalleryView {
 	 */
 	public static function IsBlankOrDefaultFileName($item) {
 		$title = $item->title;
+
 		if (strlen($title) == 0) {
 			return true;
 		}
@@ -56,7 +57,9 @@ class MissingTitlesView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminMissingTitles';
+
 		$gallery->guaranteeTimeLimit(120);
+
 		$prefixes = Classification::DefaultFileNamePrefixes();
 
 		$query = "
@@ -87,6 +90,7 @@ class MissingTitlesView extends GalleryView {
 
 		$template->setVariable('controller', 'mranalysis.MissingTitles');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

@@ -40,10 +40,13 @@ class FotokastenModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $this->translate('Commerce'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 	}
@@ -167,8 +170,10 @@ class FotokastenModule extends GalleryModule {
 
 		$session =& $gallery->getSession();
 		$links   = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['fotokasten.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {

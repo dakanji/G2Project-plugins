@@ -39,10 +39,13 @@ class DownloadLinkModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -68,9 +71,11 @@ class DownloadLinkModule extends GalleryModule {
 
 		if (!empty($currentVersion)) {
 			$storage =& $gallery->getStorage();
+
 			switch ($currentVersion) {
 				case '0.1.0':
 					break;
+
 				default:
 					return GalleryCoreApi::error(
 						ERROR_BAD_PLUGIN,
@@ -91,6 +96,7 @@ class DownloadLinkModule extends GalleryModule {
 			$permissions[] = array('original', $gallery->i18n('[downloadlink] Show Download Original Link'), 0, array());
 			$permissions[] = array('resizes', $gallery->i18n('[downloadlink] Show Download Resize(s) Links'), 0, array());
 			$permissions[] = array('thumbnail', $gallery->i18n('[downloadlink] Show Download Thumbnail Link'), 0, array());
+
 			foreach ($permissions as $p) {
 				$ret = GalleryCoreApi::registerPermission($this->getId(), 'downloadlink.' . $p[0], $p[1], $p[2], $p[3]);
 
@@ -118,6 +124,7 @@ class DownloadLinkModule extends GalleryModule {
 
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions) {
 		$links = array();
+
 		foreach ($items as $item) {
 			if (!GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 				continue;
@@ -197,6 +204,7 @@ class DownloadLinkModule extends GalleryModule {
 			}
 
 			$itemTypeNames = $item->itemTypeName();
+
 			foreach ($potentialImages as $potentialImage) {
 				$links[$masterId][] = array(
 					'text' => $this->translate(

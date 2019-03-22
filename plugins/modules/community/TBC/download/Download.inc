@@ -27,6 +27,7 @@
  */
 GalleryCoreApi::requireOnce('modules/core/DownloadItem.inc');
 GalleryCoreApi::requireOnce('modules/download/lib/HTTP/Download.php');/**
+
  * Support HTTP compression, partial downloads & resuming using PEAR HTTP_Download package
  *
  * This enables MP3 players like Winamp to skip back & forward without buffering an entire file -
@@ -45,12 +46,16 @@ class DownloadView extends DownloadItemView {
 		if (!$session->get('core.isPrintService')) {
 			// Make sure we have permission
 			$permission = 'core.viewSource';
+
 			switch ($data['derivativeType']) {
 				case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
 					$permission = 'core.view';
+
 					break;
+
 				case DERIVATIVE_TYPE_IMAGE_RESIZE:
 					$permission = 'core.viewResizes';
+
 					break;
 
 				// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource

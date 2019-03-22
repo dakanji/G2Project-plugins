@@ -176,6 +176,7 @@ class TagsHelper {
 	 */
 	public function getTagList($prefix = null) {
 		$where = array();
+
 		if ($prefix) {
 			$where = array(
 				'tagName' => new GallerySqlFragment('LIKE ?', $prefix . '%'),
@@ -189,6 +190,7 @@ class TagsHelper {
 		}
 
 		$tagList = array();
+
 		while (($result = $searchResults->nextResult()) !== false) {
 			$tagList[] = $result[0];
 		}
@@ -235,6 +237,7 @@ class TagsHelper {
 		}
 
 		$tagList = array();
+
 		while (($result = $searchResults->nextResult()) !== false) {
 			$tagList[$result[0]] = $result[1];
 		}
@@ -293,9 +296,12 @@ class TagsHelper {
 		}
 
 		$tagList = array();
+
 		while (($result = $searchResults->nextResult()) !== false) {
 			$tagName = $rawTagName = $result[1];
+
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
+
 			$tagList[$rawTagName] = $tagName;
 		}
 
@@ -502,6 +508,7 @@ class TagsHelper {
 	 */
 	public function splitTags($tagSplit) {
 		$tagList = array();
+
 		GalleryUtilities::unsanitizeInputValues($tagSplit, false);
 
 		list($ret, $split) = GalleryCoreApi::getPluginParameter(
@@ -520,8 +527,10 @@ class TagsHelper {
 
 		foreach (preg_split('/[' . $split . ']+/u', $tagSplit) as $tag) {
 			$tag = $rawTag = trim($tag);
+
 			if (!empty($tag)) {
 				GalleryUtilities::sanitizeInputValues($tag, false);
+
 				$tagList[$rawTag] = $tag;
 			}
 		}
@@ -559,7 +568,9 @@ class TagsHelper {
 		foreach ($tagList as $tagName => $tagCount) {
 			$tagWeight  = ceil(($tagCount - $minCount) / $delta) + 1;
 			$rawTagName = $tagName;
+
 			GalleryUtilities::unsanitizeInputValues($rawTagName, false);
+
 			$tagCloud[$rawTagName] = array(
 				'count'    => $tagWeight,
 				'name'     => $tagName,
@@ -598,9 +609,11 @@ class TagsHelper {
 		}
 
 		$cssFile = $cssDir . $slash . 'tags.css';
+
 		if (!$platform->is_file($cssFile) || $forceOverwrite) {
 			// Gather  the database information and generate the content
 			$cssFileContent = '
+
 		#folksonomy {
 		  background-color: #eee;
 		  border: 1px solid Navy;
@@ -646,6 +659,7 @@ class TagsHelper {
 			}
 
 			$dbCss = explode('&&', $tempTagClass);
+
 			for ($i = 0; $i < $numberSteps; $i++) {
 				if (empty($dbCss[$i])) {
 					// No info in the DB for that tag CSS class
@@ -668,6 +682,7 @@ class TagsHelper {
 				// There are info, process and store
 				$tempCss         = explode('|', $dbCss[$i]);
 				$cssFileContent .= '
+
 			#folksonomy ul li.tag' . ($i + 1) . ' a {
 			  font-size: ' . $tempCss[0] . 'em !important;
 			  color: ' . $tempCss[1] . ' !important;

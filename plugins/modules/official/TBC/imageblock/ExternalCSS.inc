@@ -39,8 +39,10 @@ class ExternalCSSController extends GalleryController {
 
 		if (isset($imageframe)) {
 			$frames = GalleryUtilities::getRequestVariables('frames');
+
 			if (empty($frames)) {
 				$frames = array();
+
 				foreach (array('albumFrame', 'itemFrame') as $key) {
 					list($ret, $frame) = GalleryCoreApi::getPluginParameter('module', 'imageblock', $key);
 
@@ -116,6 +118,7 @@ class ExternalCSSView extends GalleryView {
 		header('Expires: ' . GalleryUtilities::getHttpDate(time() + 2592000));
 		echo '<style type="text/css"> img.giThumbnail { border-style: none; } </style>';
 		echo "\n";
+
 		return null;
 	}
 }

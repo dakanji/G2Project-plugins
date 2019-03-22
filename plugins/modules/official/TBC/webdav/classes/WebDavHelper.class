@@ -35,6 +35,7 @@ define('WEBDAV_STATUS_ERROR_UNKNOWN', 0x80000000);
 
 // Gallery property namespace - RFC2518 18
 define('WEBDAV_GALLERY_NAMESPACE', 'http://gallery2.org/dav/props/');
+
 /**
  * WebDAV helper class.
  * @package WebDav
@@ -95,7 +96,6 @@ class WebDavHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		}
 
 		/*
@@ -123,9 +123,7 @@ class WebDavHelper {
 					if (!in_array('options', $activeRules)) {
 						$code |= WEBDAV_STATUS_OPTIONS_RULE_DISABLED;
 					}
-
 				}
-
 			}
 
 			// No causes found for missing DAV headers!
@@ -145,7 +143,6 @@ class WebDavHelper {
 			if (!in_array('connect', $activeRules)) {
 				$code |= WEBDAV_STATUS_CONNECT_RULE_DISABLED;
 			}
-
 		}
 
 		/*
@@ -173,9 +170,7 @@ class WebDavHelper {
 				if (!$httpAuthPluginEnabled && !$serverAuthPluginEnabled) {
 					$code |= WEBDAV_STATUS_HTTPAUTH_AUTH_PLUGINS_DISABLED;
 				}
-
 			}
-
 		}
 
 		/*
@@ -183,6 +178,7 @@ class WebDavHelper {
 		 * DAV headers causes so we can show the error unknown warning if no causes are found.
 		 */
 		foreach (array('PROPFIND', 'PROPPATCH', 'MKCOL', 'DELETE', 'PUT', 'MOVE', 'LOCK', 'UNLOCK')
+
 		as $requestMethod) {
 			if (!WebDavHelper::checkRequestMethod($requestMethod)) {
 				if ($gallery->getDebug()) {
@@ -192,7 +188,6 @@ class WebDavHelper {
 
 				$code |= WEBDAV_STATUS_METHOD_NOT_HANDLED;
 			}
-
 		}
 
 		/*
@@ -221,6 +216,7 @@ class WebDavHelper {
 			array('forceFullUrl' => true,
 			'htmlEntities'       => false, )
 		), $requestMethod, array('Content-length' => 0));
+
 		if (!preg_match('/^HTTP\/[0-9]\.[0-9] 200/', $status)) {
 			return false;
 		}
@@ -245,6 +241,7 @@ class WebDavHelper {
 		}
 
 		if (empty($headers['Allow']) || $headers['Allow'] != 'OPTIONS,PROPFIND,PROPPATCH,MKCOL,GET'
+
 		. ',HEAD,DELETE,PUT,MOVE,LOCK,UNLOCK') {
 			return false;
 		}
@@ -281,6 +278,7 @@ class WebDavHelper {
 		);
 
 		$link['attrs'] = 'style="behavior: url(#default#anchorClick)" folder="' . $url . '"';
+
 		if (strpos($userAgent, 'MSIE') !== false) {
 			/*
 			 * Mount with JavaScript only if using MSIE.  By default, dropdowns link to davmount
@@ -309,6 +307,7 @@ class WebDavHelper {
 		}
 
 		$link['href'] = $urlGenerator->generateUrl($urlParams, $urlOptions);
+
 		return $link;
 	}
 
@@ -329,14 +328,12 @@ class WebDavHelper {
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		} else {
 			list($ret, $parentId) = GalleryCoreApi::fetchItemIdByPath($parentPath);
 
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		}
 
 		return array(null, (int)$parentId);
@@ -380,7 +377,6 @@ class WebDavHelper {
 				|| in_array($memberName, $override))) {
 					$mirrorEntity->$memberName = $sourceEntity->$memberName;
 				}
-
 			}
 
 			$className = $entityInfo[$className]['parent'];
@@ -391,6 +387,7 @@ class WebDavHelper {
 		 * always match the class name
 		 */
 		$mirrorEntity->entityType = $mirrorClassName;
+
 		return array(null, $mirrorEntity);
 	}
 
@@ -473,11 +470,13 @@ class WebDavHelper {
 			$data[] = "$path%";
 
 			$query .= '
+
 			[WebDavLockMap::path] LIKE ?';
 		} else {
 			$data[] = $path;
 
 			$query .= '
+
 			[WebDavLockMap::path] = ?';
 		}
 
@@ -504,6 +503,7 @@ class WebDavHelper {
 		}
 
 		$locks = array();
+
 		while (($result = $results->nextResult()) !== false) {
 			$locks[] = array('scope' => 'exclusive',
 			'type'                   => 'write',
@@ -547,7 +547,6 @@ class WebDavHelper {
 
 			return GalleryCoreApi::error(ERROR_LOCK_IN_USE);
 		}
-
 	}
 
 	/**
@@ -559,7 +558,6 @@ class WebDavHelper {
 		GalleryUtilities::setResponseHeader(
 			'Allow: OPTIONS,PROPFIND,PROPPATCH,MKCOL,GET,HEAD,DELETE,PUT,MOVE,LOCK,UNLOCK'
 		);
-
 		GalleryUtilities::setResponseHeader('DAV: 1,2');
 		GalleryUtilities::setResponseHeader('Content-Length: 0');
 		GalleryUtilities::setResponseHeader('MS-Author-Via: DAV');
@@ -578,6 +576,7 @@ class WebDavHelper {
 	 */
 	public static function propfindRequestHelper() {
 		$webDavServer =& WebDavHelper::getWebDavServer();
+
 		if (!$webDavServer->propfind_request_helper($webDavOptions)) {
 			// WebDAV library found error in the request
 			return array(GalleryCoreApi::error(ERROR_UNKNOWN), null, null);
@@ -599,6 +598,7 @@ class WebDavHelper {
 	public static function propfindResponseHelper($webDavOptions, $files, $namespaces) {
 		$webDavServer                =& WebDavHelper::getWebDavServer();
 		$webDavOptions['namespaces'] = $namespaces;
+
 		$webDavServer->propfind_response_helper($webDavOptions, $files);
 	}
 
@@ -617,20 +617,19 @@ class WebDavHelper {
 		$depth = trim(GalleryUtilities::strToLower($depth));
 		$path  = GalleryUtilities::getRequestVariables('path');
 		$path  = trim($path, '/');
+
 		if (empty($path)) {
 			list($ret, $itemId) = GalleryCoreApi::getDefaultAlbumId();
 
 			if ($ret) {
 				return $ret;
 			}
-
 		} else {
 			list($ret, $itemId) = GalleryCoreApi::fetchItemIdByPath($path);
 
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
@@ -661,7 +660,6 @@ class WebDavHelper {
 		if ($ret) {
 			return $ret;
 		}
-
 	}
 
 	/**
@@ -690,9 +688,7 @@ class WebDavHelper {
 					__LINE__,
 					"Item object does not implement a getter for '$memberName'"
 				);
-
 			}
-
 		}
 
 		$file = array('path' => $path, 'props' => array());
@@ -704,6 +700,7 @@ class WebDavHelper {
 		);
 
 		$displayName = $item->getTitle();
+
 		if (empty($displayName)) {
 			$displayName = $item->getPathComponent();
 		}
@@ -768,14 +765,15 @@ class WebDavHelper {
 				'resourcetype',
 				'collection'
 			);
-
 		} else {
 			$size = 0;
+
 			if (method_exists($item, 'getSize')) {
 				$size = $item->getSize();
 			}
 
 			$mimeType = 'application/unknown';
+
 			if (method_exists($item, 'getMimeType')) {
 				$mimeType = $item->getMimeType();
 			}
@@ -794,7 +792,6 @@ class WebDavHelper {
 				'resourcetype',
 				null
 			);
-
 		}
 
 		// Build Gallery properties
@@ -808,6 +805,7 @@ class WebDavHelper {
 			// Keep track of the properties that we add to prevent repetition
 			$defaultMembers = array('pathComponent', 'creationTimestamp', 'title',
 			'modificationTimestamp', 'mimeType', 'size', );
+
 			foreach ($memberInfo as $memberName => $accessInfo) {
 				$getter = 'get' . $memberName;
 
@@ -823,16 +821,13 @@ class WebDavHelper {
 							$memberName,
 							$value
 						);
-
 					}
-
 				}
-
 			}
-
 		}
 
 		$files[] = $file;
+
 		if (!$item->getCanContainChildren() || $depth !== 'infinity' && $depth <= 0) {
 			return null;
 		}
@@ -856,6 +851,7 @@ class WebDavHelper {
 		foreach ($childItems as $childItem) {
 			// Could we simply use something like $childItem->fetchLogicalPath?
 			$childPath = $childItem->getPathComponent();
+
 			if (!empty($path)) {
 				$childPath = "$path/" . $childPath;
 			}
@@ -870,7 +866,6 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		return null;
@@ -889,6 +884,7 @@ class WebDavHelper {
 	 */
 	public static function proppatchRequestHelper() {
 		$webDavServer =& WebDavHelper::getWebDavServer();
+
 		if (!$webDavServer->proppatch_request_helper($webDavOptions)) {
 			// WebDAV library found error in the request
 			return array(GalleryCoreApi::error(ERROR_UNKNOWN), null, null);
@@ -916,6 +912,7 @@ class WebDavHelper {
 		$webDavOptions['path']       = $path;
 		$webDavOptions['props']      = $props;
 		$webDavOptions['namespaces'] = $namespaces;
+
 		$webDavServer->proppatch_response_helper($webDavOptions);
 	}
 
@@ -940,14 +937,12 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		} else {
 			list($ret, $itemId) = GalleryCoreApi::fetchItemIdByPath($path);
 
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
@@ -986,9 +981,9 @@ class WebDavHelper {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
+
 				return $ret;
 			}
-
 		}
 
 		$ret = GalleryCoreApi::releaseLocks($lockId);
@@ -1027,6 +1022,7 @@ class WebDavHelper {
 
 		foreach ($props as $key => $prop) {
 			$name = $prop['name'];
+
 			if ($prop['ns'] == 'DAV:') {
 				if ($prop['name'] == 'displayname') {
 					$name = 'title';
@@ -1034,22 +1030,26 @@ class WebDavHelper {
 				// Want to support any other DAV: properties?
 				} else {
 					$props[$key]['status'] = '403 Forbidden';
+
 					continue;
 				}
-
 			} elseif ($prop['ns'] != WEBDAV_GALLERY_NAMESPACE) {
 				$props[$key]['status'] = '403 Forbidden';
+
 				continue;
 			}
 
 			$setter = 'set' . $name;
+
 			if (!isset($memberInfo[$name])|| !$memberInfo[$name]['write']
 			|| !method_exists($item, $setter)) {
 				$props[$key]['status'] = '403 Forbidden';
+
 				continue;
 			}
 
 			$value = $prop['value'];
+
 			if (is_string($value)) {
 				GalleryUtilities::sanitizeInputValues($value);
 			}
@@ -1129,11 +1129,13 @@ class WebDavHelper {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
 		if (!isset($albumItem)) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
 
@@ -1142,7 +1144,6 @@ class WebDavHelper {
 		if ($ret) {
 			return $ret;
 		}
-
 	}
 
 	/**
@@ -1197,7 +1198,6 @@ class WebDavHelper {
 				WebDavServer::getme()->setResponseStatus(
 					'409 Conflict'
 				);
-
 			}
 
 			return $ret;
@@ -1214,7 +1214,6 @@ class WebDavHelper {
 				if (!strpos($error, 'permission')) {
 					return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 				}
-
 			}
 
 			// If all errors were permission denied return more specific error
@@ -1237,7 +1236,6 @@ class WebDavHelper {
 				WebDavServer::getme()->setResponseStatus(
 					'403 Forbidden'
 				);
-
 			}
 
 			return $ret;
@@ -1247,7 +1245,6 @@ class WebDavHelper {
 		WebDavServer::getme()->setResponseStatus(
 			'201 Created'
 		);
-
 	}
 
 	/**
@@ -1307,11 +1304,11 @@ class WebDavHelper {
 					"Can't delete the root album"
 				), null);
 			}
-
 		}
 
 		// If we're still here then all are deletable
 		$count = 0;
+
 		foreach ($itemIds as $itemId) {
 			$ret = GalleryCoreApi::deleteEntityById($itemId, 'GalleryItem');
 
@@ -1360,14 +1357,12 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		} else {
 			list($ret, $itemId) = GalleryCoreApi::fetchItemIdByPath($path);
 
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
@@ -1410,6 +1405,7 @@ class WebDavHelper {
 	 */
 	public static function putRequestHelper() {
 		$webDavServer =& WebDavHelper::getWebDavServer();
+
 		if (!$webDavServer->put_request_helper($webDavOptions)) {
 			// WebDAV library found error in the request
 			return array(GalleryCoreApi::error(ERROR_UNKNOWN), null, null, null);
@@ -1432,6 +1428,7 @@ class WebDavHelper {
 	public static function putResponseHelper($webDavOptions, $stream) {
 		$webDavServer         =& WebDavHelper::getWebDavServer();
 		$webDavOptions['new'] = false;
+
 		$webDavServer->put_response_helper($webDavOptions, $stream);
 	}
 
@@ -1487,6 +1484,7 @@ class WebDavHelper {
 
 		// Check destination is legal
 		$pathComponent = basename($webDavOptions['dest']);
+
 		if (!$platform->isLegalPathComponent($pathComponent)) {
 			WebDavServer::getme()->setResponseStatus(
 				'403 Forbidden'
@@ -1519,6 +1517,7 @@ class WebDavHelper {
 		}
 
 		$error = array();
+
 		if (empty($newParent)) {
 			$error[] = 'form[error][destination][empty]';
 		}
@@ -1534,10 +1533,10 @@ class WebDavHelper {
 
 			$canAddItem  = isset($permissions['core.addDataItem']);
 			$canAddAlbum = isset($permissions['core.addAlbumItem']);
+
 			if (!$canAddAlbum && !$canAddItem) {
 				$error[] = 'form[error][destination][permission]';
 			}
-
 		}
 
 		if (empty($error)) {
@@ -1558,13 +1557,14 @@ class WebDavHelper {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (!empty($newParent)) {
 				// Can't move into a tree that is included in the source
 				if (in_array($itemId, $newParentAncestorIds)) {
 					$error[] = 'form[error][source][' . $itemId . '][selfMove]';
+
 					continue;
 				}
-
 			}
 
 			list($ret, $permissions) = GalleryCoreApi::getPermissions($itemId);
@@ -1584,19 +1584,15 @@ class WebDavHelper {
 					if (!$canAddItem) {
 						$error[] = 'form[error][source][' . $itemId . '][permission][addDataItem]';
 					}
-
 				} elseif (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 					if (!$canAddAlbum) {
 						$error[] = 'form[error][source][' . $itemId . '][permission][addAlbumItem]';
 					}
-
 				} else {
 					// The view should never let this happen
 					return array(GalleryCoreApi::error(ERROR_BAD_DATA_TYPE), null);
 				}
-
 			}
-
 		}
 
 		return array(null, $error);
@@ -1681,7 +1677,6 @@ class WebDavHelper {
 				WebDavServer::getme()->setResponseStatus(
 					'409 Conflict'
 				);
-
 			}
 
 			return $ret;
@@ -1696,6 +1691,7 @@ class WebDavHelper {
 		$pathComponent    = basename($path);
 		$newPathComponent = basename($newPath);
 		$oldParentId      = $item->getParentId();
+
 		if ($oldParentId != $newParentId) {
 			list($ret, $error) = WebDavHelper::moveValidateHelper($item, $newParent);
 
@@ -1708,20 +1704,17 @@ class WebDavHelper {
 					if (!strpos($error, 'permission')) {
 						return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 					}
-
 				}
 
 				// If all errors were permission denied return more specific error
 				return GalleryCoreApi::error(ERROR_PERMISSION_DENIED);
 			}
-
 		} else {
 			$ret = GalleryCoreApi::assertHasItemPermission($item->getId(), 'core.edit');
 
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		list($ret, $conflictingItemId) = GalleryCoreApi::fetchItemIdByPath($newPath);
@@ -1749,7 +1742,6 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		if ($oldParentId != $newParentId) {
@@ -1767,6 +1759,7 @@ class WebDavHelper {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
+
 				return $ret;
 			}
 
@@ -1774,9 +1767,9 @@ class WebDavHelper {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
+
 				return $ret;
 			}
-
 		}
 
 		// Write lock the item we're moving
@@ -1784,6 +1777,7 @@ class WebDavHelper {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -1792,6 +1786,7 @@ class WebDavHelper {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -1801,9 +1796,9 @@ class WebDavHelper {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockIds);
+
 				return $ret;
 			}
-
 		}
 
 		if ($newParentId != $oldParentId) {
@@ -1818,9 +1813,9 @@ class WebDavHelper {
 				}
 
 				GalleryCoreApi::releaseLocks($lockIds);
+
 				return $ret;
 			}
-
 		}
 
 		$ret = $item->save();
@@ -1833,6 +1828,7 @@ class WebDavHelper {
 			}
 
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -1843,11 +1839,10 @@ class WebDavHelper {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockIds);
+
 					return $ret;
 				}
-
 			}
-
 		}
 
 		// Release all locks
@@ -1865,7 +1860,6 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		// If an item was overwritten fix thumbnail integrity
@@ -1924,6 +1918,7 @@ class WebDavHelper {
 	 */
 	public static function lockRequestHelper() {
 		$webDavServer =& WebDavHelper::getWebDavServer();
+
 		if (!$webDavServer->lock_request_helper($webDavOptions)) {
 			// WebDAV library found error in the request
 			return array(GalleryCoreApi::error(ERROR_UNKNOWN),
@@ -1981,6 +1976,7 @@ class WebDavHelper {
 		$webDavOptions['owner']   = $owner;
 		$webDavOptions['expires'] = $expires;
 		$webDavOptions['token']   = $token;
+
 		$webDavServer->lock_response_helper($webDavOptions, $status);
 	}
 
@@ -2018,14 +2014,12 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		} else {
 			list($ret, $itemId) = GalleryCoreApi::fetchItemIdByPath($path);
 
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems(array($itemId));
@@ -2052,6 +2046,7 @@ class WebDavHelper {
 			WHERE
 			[WebDavLockMap::path] = ?
 			AND
+
 			[WebDavLockMap::token] = ?';
 
 			list($ret, $results) = $gallery->search($query, array($path, $update));
@@ -2089,9 +2084,7 @@ class WebDavHelper {
 				if ($ret) {
 					return $ret;
 				}
-
 			}
-
 		} else {
 			// Support only exclusive write locks
 			if ($scope != 'exclusive' || $type != 'write') {
@@ -2126,9 +2119,7 @@ class WebDavHelper {
 						null,
 						null
 					);
-
 				}
-
 			}
 
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($itemId);
@@ -2136,7 +2127,6 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		// Use Gallery lock freshUntil for WebDAV lock timeout
@@ -2146,6 +2136,7 @@ class WebDavHelper {
 		FROM
 		[Lock]
 		WHERE
+
 		[Lock::lockId] = ?';
 
 		list($ret, $results) = $gallery->search($query, array($lockId));
@@ -2160,7 +2151,9 @@ class WebDavHelper {
 			/*
 			* Might be using flock system
 			* TODO: Get expires from flock locks
+
 			return GalleryCoreApi::error(ERROR_MISSING_VALUE);
+
 			*/
 			$expires = time() + 30;
 		}
@@ -2176,7 +2169,6 @@ class WebDavHelper {
 			if ($ret) {
 				return $ret;
 			}
-
 		} else {
 			$ret = GalleryCoreApi::addMapEntry('WebDavLockMap', array('depth' => $depth,
 			'owner'         => $owner,
@@ -2184,10 +2176,10 @@ class WebDavHelper {
 			'token'         => $token,
 			'path'          => $path,
 			'galleryLockId' => $lockId, ));
+
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		// Format LOCK response
@@ -2206,7 +2198,6 @@ class WebDavHelper {
 		if ($ret) {
 			return $ret;
 		}
-
 	}
 
 	/**
@@ -2222,6 +2213,7 @@ class WebDavHelper {
 	 */
 	public static function unlockRequestHelper() {
 		$webDavServer =& WebDavHelper::getWebDavServer();
+
 		if (!$webDavServer->unlock_request_helper($webDavOptions)) {
 			// WebDAV library found error in the request
 			return array(GalleryCoreApi::error(ERROR_UNKNOWN), null, null);
@@ -2255,6 +2247,7 @@ class WebDavHelper {
 		WHERE
 		[WebDavLockMap::path] = ?
 		AND
+
 		[WebDavLockMap::token] = ?';
 
 		list($ret, $results) = $gallery->search($query, array($path, $token));
@@ -2294,7 +2287,6 @@ class WebDavHelper {
 
 		return null;
 	}
-
 }
 
 /**
@@ -2332,6 +2324,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();
+
 		return $urlGenerator->generateUrl(
 			array(
 				'controller' => 'webdav.WebDav',
@@ -2343,7 +2336,6 @@ class WebDavServer extends HTTP_WebDAV_Server {
 				'useAuthToken'           => false,
 			)
 		);
-
 	}
 
 	/**
@@ -2353,6 +2345,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
+
 		return $platform->fopen('php://input', 'rb');
 	}
 
@@ -2369,6 +2362,4 @@ class WebDavServer extends HTTP_WebDAV_Server {
 	public function setResponseStatus($status, $replace=true) {
 		GalleryUtilities::setResponseHeader("HTTP/1.0 $status", $replace);
 	}
-
 }
-

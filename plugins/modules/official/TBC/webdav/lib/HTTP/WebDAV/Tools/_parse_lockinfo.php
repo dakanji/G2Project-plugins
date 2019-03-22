@@ -1,6 +1,7 @@
 <?php
 
 // $Id: _parse_lockinfo.php 17189 2007-11-17 08:53:36Z bharat $
+
 /*
    +----------------------------------------------------------------------+
    | Copyright (c) 2002-2007 Christian Stocker, Hartmut Holzgraefe        |
@@ -93,6 +94,7 @@ class _parse_lockinfo {
 		// open input stream
 		if (!$handle) {
 			$this->success = false;
+
 			return;
 		}
 
@@ -120,6 +122,7 @@ class _parse_lockinfo {
 		// parse input
 		while ($this->success && !feof($handle)) {
 			$line = fgets($handle);
+
 			if (is_string($line)) {
 				$had_input      = true;
 				$this->success &= xml_parse($parser, $line, false);
@@ -165,6 +168,7 @@ class _parse_lockinfo {
 		if ($this->collect_owner) {
 			$ns_short = '';
 			$ns_attr  = '';
+
 			if ($ns) {
 				if ($ns == 'DAV:') {
 					$ns_short = 'D:';
@@ -179,13 +183,18 @@ class _parse_lockinfo {
 			switch ($name) {
 				case 'write':
 					$this->locktype = $name;
+
 					break;
+
 				case 'exclusive':
 				case 'shared':
 					$this->lockscope = $name;
+
 					break;
+
 				case 'owner':
 					$this->collect_owner = true;
+
 					break;
 			}
 		}
@@ -216,6 +225,7 @@ class _parse_lockinfo {
 		if ($this->collect_owner) {
 			$ns_short = '';
 			$ns_attr  = '';
+
 			if ($ns) {
 				if ($ns == 'DAV:') {
 					$ns_short = 'D:';

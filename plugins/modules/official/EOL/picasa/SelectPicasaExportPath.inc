@@ -43,6 +43,7 @@ class SelectPicasaExportPathController extends GalleryController {
 		}
 
 		$error = $status = array();
+
 		if (isset($form['action']['select'])) {
 			if (empty($form['picasaXmlPath'])) {
 				$error[] = 'form[error][picasaXmlPath][missing]';
@@ -50,12 +51,15 @@ class SelectPicasaExportPathController extends GalleryController {
 				$platform =& $gallery->getPlatform();
 				$slash    = $platform->getDirectorySeparator();
 				$tmp      = trim($form['picasaXmlPath']);
+
 				if ($tmp[strlen($tmp) - 1] != $slash) {
 					$tmp .= $slash;
 				}
 
 				GalleryUtilities::unsanitizeInputValues($tmp, false);
+
 				$form['picasaXmlPath'] = trim($tmp);
+
 				if (!Picasa2DataParser::isValidPicasaXmlPath($form['picasaXmlPath'])) {
 					$error[] = 'form[error][picasaXmlPath][invalid]';
 				}
@@ -64,6 +68,7 @@ class SelectPicasaExportPathController extends GalleryController {
 			if (empty($error)) {
 				$session     =& $gallery->getSession();
 				$recentPaths = $session->get('picasa.view.SelectPicasaExportPath.recentPaths');
+
 				if (empty($recentPaths)) {
 					$recentPaths = array();
 				}
@@ -75,6 +80,7 @@ class SelectPicasaExportPathController extends GalleryController {
 				}
 
 				$session->put('picasa.view.SelectPicasaExportPath.recentPaths', $recentPaths);
+
 				$redirect['view']               = 'core.SiteAdmin';
 				$redirect['subView']            = 'picasa.ConfirmPicasaImport';
 				$redirect['picasaXmlPath']      = $form['picasaXmlPath'];
@@ -91,6 +97,7 @@ class SelectPicasaExportPathController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -120,6 +127,7 @@ class SelectPicasaExportPathView extends GalleryView {
 		// Load our recent paths from the session
 		$session     =& $gallery->getSession();
 		$recentPaths = $session->get('picasa.view.SelectPicasaExportPath.recentPaths');
+
 		if (empty($recentPaths)) {
 			$recentPaths = array();
 		}
@@ -131,9 +139,11 @@ class SelectPicasaExportPathView extends GalleryView {
 		}
 
 		$hasToolkit = false;
+
 		for ($i = 0; $i < sizeof($operations); $i++) {
 			if ($operations[$i]['name'] == 'thumbnail') {
 				$hasToolkit = true;
+
 				break;
 			}
 		}
@@ -157,8 +167,10 @@ class SelectPicasaExportPathView extends GalleryView {
 		$SelectPicasaExportPath['recentPaths'] = $recentPaths;
 		$SelectPicasaExportPath['hasToolkit']  = $hasToolkit;
 		$SelectPicasaExportPath['g2AlbumTree'] = $albumTree;
+
 		$template->setVariable('controller', 'picasa.SelectPicasaExportPath');
 		$template->setVariable('SelectPicasaExportPath', $SelectPicasaExportPath);
+
 		return array(
 			null,
 			array(

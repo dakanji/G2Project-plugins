@@ -36,11 +36,12 @@ class MultimediaModule extends GalleryModule {
 				'Enable inline display of audio/video files'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -122,6 +123,7 @@ class MultimediaModule extends GalleryModule {
 		}
 
 		$ids = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$ids[] = (int)$result[0];
 		}
@@ -149,6 +151,7 @@ class MultimediaModule extends GalleryModule {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
+
 						return array($ret, null);
 					}
 
@@ -158,6 +161,7 @@ class MultimediaModule extends GalleryModule {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
+
 						return array($ret, null);
 					}
 

@@ -90,6 +90,7 @@ class CheckoutAuthorizeNetPlugin extends CheckoutPluginInterface_1_0 {
 		$session->put('checkoutauthorizenet.paper', serialize($paper));
 		$session->put('checkoutauthorizenet.transactionId', $session->get('checkout.transactionId'));
 		$session->put('checkoutauthorizenet.total', $session->get('checkout.total'));
+
 		return array(null, array());
 	}
 }

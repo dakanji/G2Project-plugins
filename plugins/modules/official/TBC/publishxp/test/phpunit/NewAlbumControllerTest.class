@@ -47,15 +47,16 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($parentAlbum);
+
 		$this->_parentAlbumId = $parentAlbum->getId();
 		$this->_userId        = $gallery->getActiveUserId();
+
 		GalleryUtilities::putRequestVariable('form[parentId]', $this->_parentAlbumId);
 		GalleryUtilities::putRequestVariable('form[action][newAlbum]', 1);
 		GalleryUtilities::putRequestVariable(
 			'form[pathComponent]',
 			$this->_pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
-
 		GalleryUtilities::putRequestVariable('form[title]', 'test title');
 		GalleryUtilities::putRequestVariable('form[summary]', 'test summary');
 		GalleryUtilities::putRequestVariable('form[description]', 'test description');
@@ -69,6 +70,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		$results = $this->handleRequest(ERROR_MISSING_OBJECT);
+
 		$this->assertEquals(null, $results, 'attempt without view permission');
 	}
 
@@ -86,6 +88,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		}
 
 		$results = $this->handleRequest(ERROR_PERMISSION_DENIED);
+
 		$this->assertEquals(null, $results, 'attempt without view permission');
 	}
 
@@ -115,6 +118,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$results       = $this->handleRequest();
 		$entityCounter =& GalleryTestCase::getEntityCounter();
 		$albumId       = $entityCounter->getRecentEntityId('GalleryAlbumItem');
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -149,14 +153,15 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 			'form[pathComponent]',
 			$pathComponent = 'test-' . mt_rand(1000, 9999)
 		);
-
 		GalleryUtilities::putRequestVariable('form[title]', 'test<script>evil</script> title');
 		GalleryUtilities::putRequestVariable('form[summary]', 'test<script>evil</script> summary');
 		GalleryUtilities::putRequestVariable('form[description]', 'test<script>evil</script> desc');
 		GalleryUtilities::putRequestVariable('form[action][newAlbum]', 1);
+
 		$results       = $this->handleRequest();
 		$entityCounter =& GalleryTestCase::getEntityCounter();
 		$albumId       = $entityCounter->getRecentEntityId('GalleryAlbumItem');
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -178,7 +183,9 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		$this->assertEquals($this->_getRootId(), $album->getParentId());
 		$this->assertEquals($pathComponent, $album->getPathComponent());
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; title', $album->getTitle());
+
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; summary', $album->getSummary());
+
 		$this->assertEquals('test&lt;script&gt;evil&lt;/script&gt; desc', $album->getDescription());
 
 		$ret = GalleryCoreApi::deleteEntityById($albumId, 'GalleryAlbumItem');
@@ -190,7 +197,9 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 
 	public function testNewAlbumInvalidPathComponent() {
 		GalleryUtilities::putRequestVariable('form[pathComponent]', '@!INVALID!@');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -208,7 +217,9 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::removeRequestVariable('form[title]');
 		GalleryUtilities::removeRequestVariable('form[summary]');
 		GalleryUtilities::removeRequestVariable('form[description]');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(

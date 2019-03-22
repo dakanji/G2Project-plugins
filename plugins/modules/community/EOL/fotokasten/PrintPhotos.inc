@@ -49,6 +49,7 @@ class PrintPhotosController extends GalleryController {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$itemId       = GalleryUtilities::getRequestVariables('itemId');
+
 		if (!empty($itemId)) {
 			$cartItemIds = array(
 				$itemId => 1,
@@ -56,6 +57,7 @@ class PrintPhotosController extends GalleryController {
 		} else {
 			$session     =& $gallery->getSession();
 			$cartItemIds = $session->get('fotokasten.cart');
+
 			$session->remove('fotokasten.cart');
 		}
 
@@ -123,8 +125,10 @@ class PrintPhotosController extends GalleryController {
 		// Assemble all our data
 		$i       = 0;
 		$entries = $protectedIds = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (!isset($permissions[$itemId]['fotokasten.print'])) {
 				// Skip any cart items for which we don't have print permission
 				continue;
@@ -132,6 +136,7 @@ class PrintPhotosController extends GalleryController {
 
 			$source      = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
 			$needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
+
 			if ($needSession && !isset($foSession)) {
 				/*
 				 * Get G2 session for fotokasten to access non-public images.
@@ -183,6 +188,7 @@ class PrintPhotosController extends GalleryController {
 				$thumbSource = $source;
 			} else {
 				$thumbSource = $thumbnails[$itemId];
+
 				if ($needSession) {
 					$protectedIds[] = $thumbSource->getId();
 				}
@@ -286,8 +292,10 @@ class PrintPhotosController extends GalleryController {
 
 		$session  =& $gallery->getSession();
 		$endpoint = $session->get('fotokasten.endpoint');
+
 		if (!empty($endpoint)) {
 			$this->server['endpoint'] = $endpoint;
+
 			return null;
 		}
 
@@ -319,6 +327,7 @@ class PrintPhotosController extends GalleryController {
 			if ($return['error_code'] != 0) {
 				$gallery->debug_r($soap->request);
 				$gallery->debug_r($return);
+
 				return GalleryCoreApi::error(
 					ERROR_UNKNOWN,
 					__FILE__,
@@ -336,10 +345,12 @@ class PrintPhotosController extends GalleryController {
 			$gallery->debug_r($soap->debug_str);
 			$gallery->debug_r($soap->request);
 			$gallery->debug_r($soap->response);
+
 			return GalleryCoreApi::error(ERROR_UNKNOWN, __FILE__, __LINE__, $soap->getError());
 		}
 
 		unset($soap);
+
 		return null;
 	}
 
@@ -382,6 +393,7 @@ class PrintPhotosController extends GalleryController {
 			if ($return['error_code'] != 0) {
 				$gallery->debug_r($soap->request);
 				$gallery->debug_r($return);
+
 				return array(
 					GalleryCoreApi::error(
 						ERROR_UNKNOWN,
@@ -399,6 +411,7 @@ class PrintPhotosController extends GalleryController {
 			$gallery->debug_r($soap->debug_str);
 			$gallery->debug_r($soap->request);
 			$gallery->debug_r($soap->response);
+
 			return array(
 				GalleryCoreApi::error(
 					ERROR_UNKNOWN,
@@ -411,6 +424,7 @@ class PrintPhotosController extends GalleryController {
 		}
 
 		unset($soap);
+
 		return array(null, $referer);
 	}
 }

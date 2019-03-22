@@ -29,10 +29,13 @@
 	public function __construct() {
 		global $gallery;
 
-		$this->_view            = 'title.Begin'; //got this one
-		$this->_title           = $gallery->i18n('Items that begin with');
-		$this->_itemType        = array($gallery->i18n('Begin'), $gallery->i18n('begin'));
-		$this->_viewDescription = $gallery->i18n('Items whose titles begin a particular way'); //got this one
+		//got this one
+		$this->_view     = 'title.Begin';
+		$this->_title    = $gallery->i18n('Items that begin with');
+		$this->_itemType = array($gallery->i18n('Begin'), $gallery->i18n('begin'));
+
+		//got this one
+		$this->_viewDescription = $gallery->i18n('Items whose titles begin a particular way');
 		$this->_param           = 'begin';
 	}
 
@@ -233,6 +236,7 @@
 
 		// safety limit of first 100 results
 		$results = array_slice($results, 0, 100);
+
 		return array(null, $results);
 	}
 

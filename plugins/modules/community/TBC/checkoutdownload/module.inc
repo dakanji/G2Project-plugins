@@ -36,10 +36,13 @@ class CheckoutDownloadModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -104,12 +107,14 @@ class CheckoutDownloadModule extends GalleryModule {
 				case '0.1.2':
 				case 'end of upgrade path':
 					break;
+
 				default:
 					return GalleryCoreApi::error(ERROR_BAD_PLUGIN, sprintf('Unknown module version %s', $currentVersion));
 			}
 		}
 
 		return null;
+
 		if (!isset($currentVersion)) {
 			// Initial install.
 		}

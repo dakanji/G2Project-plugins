@@ -20,17 +20,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
- /**
-  * @package CheckoutGoogle
-  * @subpackage UserInterface
-  * @author Alec Myers <alec@alecmyers.com>
-  * @version $Revision: 1687 $
-  */
+/**
+ * @package CheckoutGoogle
+ * @subpackage UserInterface
+ * @author Alec Myers <alec@alecmyers.com>
+ * @version $Revision: 1687 $
+ */
 
- /**
-  * Required classes
-  */
+/**
+ * Required classes
+ */
 GalleryCoreApi::requireOnce('modules/checkoutgoogle/classes/CheckoutGoogleResponseHelper.class');
+
 class AdminController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -46,6 +47,7 @@ class AdminController extends GalleryController {
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutgoogle', 'active', $form['active']);
 
@@ -120,6 +122,7 @@ class AdminController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
+
 			if ($isActive) {
 				$redirect['subView'] = 'checkoutgoogle.Admin';
 				$status['saved']     = 1;
@@ -158,6 +161,7 @@ class AdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -234,6 +238,7 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'checkoutgoogle.Admin');
+
 		return array(
 			null,
 			array(

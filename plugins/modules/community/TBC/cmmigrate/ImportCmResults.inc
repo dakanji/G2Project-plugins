@@ -38,6 +38,7 @@ class ImportCmResultsView extends GalleryView {
 
 		$status = $template->getVariable('status');
 		$counts = array();
+
 		foreach (array('albumImportFailure', 'albumImportSuccess') as $key) {
 			if (isset($status[$key])) {
 				$counts[$key] = count($status[$key]);
@@ -49,8 +50,10 @@ class ImportCmResultsView extends GalleryView {
 		$ImportResults           = array();
 		$ImportResults['counts'] = $counts;
 		$ImportResults['status'] = $status;
+
 		$template->setVariable('ImportResults', $ImportResults);
 		$template->setVariable('controller', 'cmmigrate.ImportCmResults');
+
 		return array(
 			null,
 			array(

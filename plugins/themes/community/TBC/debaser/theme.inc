@@ -41,10 +41,10 @@ class DebaserTheme extends GalleryTheme {
 				'Something different, something lower'
 			)
 		);
-
 		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'rows'                => 3,

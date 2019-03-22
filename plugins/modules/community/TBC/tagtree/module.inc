@@ -39,10 +39,13 @@ class TagTreeModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('blocks', $gallery->i18n('Blocks'));
 		$this->setCallbacks('getSiteAdminViews|registerEventListeners');
 	}
@@ -65,6 +68,7 @@ class TagTreeModule extends GalleryModule {
 	 */
 	public function registerEventListeners() {
 		$listener = new TagTreeModule();
+
 		GalleryCoreApi::registerEventListener('Gallery::ViewableTreeChange', $listener, true);
 		GalleryCoreApi::registerEventListener('Gallery::ItemOrder', $listener, true);
 		GalleryCoreApi::registerEventListener('GalleryEntity::save', $listener, true);
@@ -169,10 +173,12 @@ class TagTreeModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		$invalidateCache = false;
+
 		if ($event->getEventName() == 'Gallery::ViewableTreeChange') {
 			$invalidateCache = true;
 		} elseif ($event->getEventName() == 'GalleryEntity::save') {
 			$entity = $event->getEntity();
+
 			if ($entity->getEntityType() == 'GalleryAlbumItem'
 				and $entity->isModified('title')
 			) {

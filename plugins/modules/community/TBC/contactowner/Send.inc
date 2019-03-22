@@ -43,6 +43,7 @@ class SendController extends GalleryController {
 		global $gallery;
 
 		$session =& $gallery->getSession();
+
 		if (isset($form['action']['send'])) {
 			$form['custName']    = GalleryUtilities::htmlSafe($form['custName'], true);
 			$form['custEmail']   = GalleryUtilities::htmlSafe($form['custEmail'], true);
@@ -54,30 +55,35 @@ class SendController extends GalleryController {
 			$badsubject          = false;
 			$badmessage          = false;
 			$emailsent           = false;
+
 			if (strlen($form['custName']) < 1) {
 				$resubmit = true;
 				$badname  = true;
 			}
 
 			$session->put('contactowner.badname', serialize($badname));
+
 			if (!preg_match('(^[-\w\.]+@([-a-z0-9]+\.)+[a-z]{2,4}$)i', $form['custEmail'])) {
 				$resubmit = true;
 				$bademail = true;
 			}
 
 			$session->put('contactowner.bademail', serialize($bademail));
+
 			if (strlen($form['custSubject']) < 1) {
 				$resubmit   = true;
 				$badsubject = true;
 			}
 
 			$session->put('contactowner.badsubject', serialize($badsubject));
+
 			if (strlen($form['custMessage']) < 1) {
 				$resubmit   = true;
 				$badmessage = true;
 			}
 
 			$session->put('contactowner.badmessage', serialize($badmessage));
+
 			if ($resubmit == false) {
 				$nextView = 'contactowner.Sent';
 
@@ -101,8 +107,10 @@ class SendController extends GalleryController {
 				}
 
 				$temp = $session->get('contactowner.emailcount');
+
 				if (isset($temp)) {
 					$emailCount = unserialize($temp);
+
 					if ($emailCount < 1 || $emailCount > 999) {
 						$emailCount = 1;
 					} else {
@@ -143,12 +151,14 @@ class SendController extends GalleryController {
 					$emailsent           = true;
 					$form['custSubject'] = '';
 					$form['custMessage'] = '';
+
 					$session->put('contactowner.custsubject', serialize($form['custSubject']));
 					$session->put('contactowner.custmessage', serialize($form['custMessage']));
 					$session->put('contactowner.emailcount', serialize($emailCount));
 				}
 			} else {
 				$nextView = 'contactowner.Contact';
+
 				if (isset($form['custName'])) {
 					$session->put('contactowner.custname', serialize($form['custName']));
 				}
@@ -182,6 +192,7 @@ class SendController extends GalleryController {
 		$results['error']               = $error;
 		$results['isError']             = $isError;
 		$errorView                      = '';
+
 		return array(null, $results);
 	}
 }

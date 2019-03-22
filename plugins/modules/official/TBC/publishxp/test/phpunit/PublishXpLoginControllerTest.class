@@ -61,6 +61,7 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 		}
 
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'status'   => array(),
@@ -94,6 +95,7 @@ class PublishXpLoginControllerTest extends GalleryControllerTestCase {
 		}
 
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'status'   => array(),

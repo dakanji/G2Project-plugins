@@ -96,15 +96,18 @@ class PhotoAccessHelper {
 
 		// If we don't have a cart url that means we don't have a photoaccess session yet
 		$photoAccessServer = 'www.photoworks.com';
+
 		if (empty($cartUrlFragment)) {
 			$cartUrlFragment = '/sbo/anonCartXML.jsp';
 		}
 
 		// Assemble all our data
 		$entries = $protectedIds = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
 			$entry  = array();
+
 			if (!isset($permissions[$itemId]['photoaccess.print'])) {
 				// Skip any cart items for which we don't have print permission
 				continue;
@@ -112,6 +115,7 @@ class PhotoAccessHelper {
 
 			$source      = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
 			$needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
+
 			if ($needSession && !isset($pwSession)) {
 				/*
 				 * Get G2 session for photoaccess to access non-public images.
@@ -155,11 +159,13 @@ class PhotoAccessHelper {
 
 			$entry['imageWidth']  = $source->getWidth();
 			$entry['imageHeight'] = $source->getHeight();
+
 			if (!isset($thumbnails[$itemId]) || $thumbnails[$itemId]->getPostFilterOperations()) {
 				// Use the source if the thumbnail has a postfilter (like a watermark)
 				$thumbSource = $source;
 			} else {
 				$thumbSource = $thumbnails[$itemId];
+
 				if ($needSession) {
 					$protectedIds[] = $thumbSource->getId();
 				}
@@ -240,8 +246,11 @@ class PhotoAccessHelper {
 		$postData                = array();
 		$postData['cb']          = 'CB_GP';
 		$postData['xml_request'] = join('', $lines);
+
 		$gallery->guaranteeTimeLimit(30);
+
 		$cartUrl = 'http://' . $photoAccessServer . $cartUrlFragment;
+
 		if ($gallery->getDebug()) {
 			$gallery->debug('Post data:');
 			$gallery->debug_r($postData, true);
@@ -277,7 +286,9 @@ class PhotoAccessHelper {
 		)
 		) {
 			$cartUrlFragment = str_replace('&#38;', '&', $matches[1]);
+
 			$session->put('photoaccess.cartUrlFragment', $cartUrlFragment);
+
 			$redirectUrl = 'http://' . $photoAccessServer . str_replace('&#38;', '&', $matches[2]);
 		} else {
 			$redirectUrl = $urlGenerator->generateUrl(

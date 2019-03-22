@@ -47,7 +47,8 @@ class Auth_Yadis_HTTPResponse {
  * @package OpenID
  */
 class Auth_Yadis_HTTPFetcher {
-	public $timeout = 20; // timeout in seconds.
+	// timeout in seconds.
+	public $timeout = 20;
 
 	/**
 	 * Return whether a URL can be fetched.  Returns false if the URL
@@ -124,6 +125,7 @@ class Auth_Yadis_HTTPFetcher {
 		foreach ($headers as $line) {
 			if (strpos(strtolower($line), 'location: ') === 0) {
 				$parts = explode(' ', $line, 2);
+
 				return $parts[1];
 			}
 		}

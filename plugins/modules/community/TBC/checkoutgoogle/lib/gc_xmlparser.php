@@ -71,7 +71,8 @@
 
   // XML to Array
 class gc_xmlparser {
-	public $params = array(); //Stores the object representation of XML data
+	//Stores the object representation of XML data
+	public $params = array();
 	public $root;
 	public $global_index = -1;
 	public $fold         = false;
@@ -83,11 +84,14 @@ class gc_xmlparser {
 		XML_OPTION_CASE_FOLDING => 0,
 	)) {
 		$xmlp = xml_parser_create();
+
 		foreach ($xmlParams as $opt => $optVal) {
 			switch ($opt) {
 				case XML_OPTION_CASE_FOLDING:
 					$this->fold = $optVal;
+
 					break;
+
 				default:
 					break;
 			}
@@ -117,8 +121,10 @@ class gc_xmlparser {
 	public function xml2ary($vals) {
 		$mnary = array();
 		$ary   =&$mnary;
+
 		foreach ($vals as $r) {
 			$t = $r['tag'];
+
 			if ($r['type'] == 'open') {
 				if (isset($ary[$t]) && !empty($ary[$t])) {
 					if (isset($ary[$t][0])) {
@@ -133,6 +139,7 @@ class gc_xmlparser {
 				}
 
 				$cv = array();
+
 				if (isset($r['attributes'])) {
 					foreach ($r['attributes'] as $k => $v) {
 						$cv[$k] = $v;
@@ -142,7 +149,8 @@ class gc_xmlparser {
 				$cv['_p'] =&$ary;
 				$ary      =&$cv;
 			} elseif ($r['type'] == 'complete') {
-				if (isset($ary[$t]) && !empty($ary[$t])) { // same as open
+				if (isset($ary[$t]) && !empty($ary[$t])) {
+					// same as open
 					if (isset($ary[$t][0])) {
 						$ary[$t][] = array();
 					} else {
@@ -167,6 +175,7 @@ class gc_xmlparser {
 		}
 
 		$this->_del_p($mnary);
+
 		return $mnary;
 	}
 

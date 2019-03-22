@@ -43,6 +43,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		global $gallery;
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
+
 		if ($format != 'HTML' || $entity->getMimeType() != 'video/x-flv') {
 			return null;
 		}
@@ -64,9 +65,11 @@ class FlashVideoRenderer extends GalleryRenderer {
 		list($width, $height, $title) = array($entity->getWidth(), $entity->getHeight(), $item->getTitle());
 
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
+
 		$title = smarty_modifier_markup($title, 'strip');
 
 		// Default player: G2flv.swf
+
 		/*
 		 * Including SWFObject<http://blog.deconcept.com/swfobject/> to defeat the
 		 * "Click to activate..." in IE
@@ -106,6 +109,7 @@ class FlashVideoRenderer extends GalleryRenderer {
 		//$flashVars .= '&allowDownload=true';
 		// Uncomment the next line to disallow fullscreen button. Default: true
 		//$flashVars .= '&allowFullscreen=false';
+
 		/*
 		 * Uncomment the next line to allow the share button also the swfUrl below.
 		 * Default: false

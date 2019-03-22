@@ -37,6 +37,7 @@ class TagsPreloads {
 
 			$urlGenerator     =& $gallery->getUrlGenerator();
 			$loaded[$preload] = 1;
+
 			$template->style(
 				$urlGenerator->generateUrl(
 					array(

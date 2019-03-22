@@ -38,6 +38,7 @@ class PanoramaJsSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
+
 		if (isset($form['action']['save'])) {
 			if (!isset($form['width']) || ((int)$form['width']) < 100) {
 				$error[] = 'form[error][width]';
@@ -87,6 +88,7 @@ class PanoramaJsSiteAdminController extends GalleryController {
 		$results[$method]['subView'] = 'panoramajs.PanoramaJsSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;
+
 		return array(null, $results);
 	}
 }
@@ -115,6 +117,7 @@ class PanoramaJsSiteAdminView extends GalleryView {
 
 		if ($form['formName'] != 'PanoramaJsSiteAdmin') {
 			$form['formName'] = 'PanoramaJsSiteAdmin';
+
 			foreach (array('itemType', 'itemLink', 'width', 'rotate', 'speed') as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'panoramajs', $key);
 
@@ -125,6 +128,7 @@ class PanoramaJsSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'panoramajs.PanoramaJsSiteAdmin');
+
 		return array(
 			null,
 			array(

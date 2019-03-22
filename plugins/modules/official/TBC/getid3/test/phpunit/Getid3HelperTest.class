@@ -245,54 +245,70 @@ class Getid3HelperTest extends GalleryTestCase {
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
 		 */
 		$verifiedCount = $unknownCount = 0;
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			switch ($id3Data[$i]['title']) {
 				case 'Audio Bit Rate':
 					$this->assertEquals(88192, $id3Data[$i]['value'], 'Audio Bit Rate Mismatch');
 					$verifiedCount++;
+
 					break;
+
 				case 'Audio Bit Rate Mode':
 					$this->assertEquals('cbr', $id3Data[$i]['value'], 'Audio Bit Rate Mode Mismatch');
 					$verifiedCount++;
+
 					break;
+
 				case 'Audio Channels':
 					$this->assertEquals(1, $id3Data[$i]['value'], 'Audio Channels Mismatch');
 					$verifiedCount++;
+
 					break;
+
 				case 'Audio Codec':
 					$this->assertEquals(
 						'Pulse Code Modulation (PCM)',
 						$id3Data[$i]['value'],
 						'Audio Codec Mismatch'
 					);
-
 					$verifiedCount++;
+
 					break;
+
 				case 'Video Bit Rate Mode':
 					$this->assertEquals('vbr', $id3Data[$i]['value'], 'Video Bit Rate Mode Mismatch');
 					$verifiedCount++;
+
 					break;
+
 				case 'Video Codec':
 					$this->assertEquals(
 						'Microsoft Video 1 (CRAM)',
 						$id3Data[$i]['value'],
 						'Video Codec Mismatch'
 					);
-
 					$verifiedCount++;
+
 					break;
+
 				case 'Video Bit Rate Mode':
 					$this->assertEquals('vbr', $id3Data[$i]['value'], 'Video Bit Rate Mode Mismatch');
+
 					$verifiedCount++;
+
 					break;
+
 				case 'Channel Mode':
 				case 'Video Bit Rate':
 				case 'Date/Time':
 					// Don't verify these
 					break;
+
 				default:
 					print '<!-- Unknown: ' . $id3Data[$i]['title'] . ' = ' . $id3Data[$i]['value'] . " -->\n";
 					$unknownCount++;
+
 					break;
 			}
 		}
@@ -302,9 +318,12 @@ class Getid3HelperTest extends GalleryTestCase {
 
 		// Make sure there are no duplicates in the list
 		$seen = array();
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			$title = $id3Data[$i]['title'];
+
 			$this->assertFalse(isset($seen[$title]), "$title is duplicated");
+
 			$seen[$title] = 1;
 		}
 	}
@@ -329,28 +348,40 @@ class Getid3HelperTest extends GalleryTestCase {
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
 		 */
 		$verifiedCount = 0;
+
 		$this->assertTrue(sizeof($id3Data) > 0, 'No flac data');
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			switch ($id3Data[$i]['title']) {
 				case 'Audio Bit Rate':
 					$value = abs(488992.7448 - $id3Data[$i]['value']);
+
 					$this->assertTrue($value < 0.01, 'value is ' . $value);
 					$verifiedCount++;
+
 					break;
+
 				case 'Audio Bit Rate Mode':
 					$this->assertEquals('vbr', $id3Data[$i]['value'], 'audio bit rate mode');
 					$verifiedCount++;
+
 					break;
+
 				case 'Audio Channels':
 					$this->assertEquals(1, $id3Data[$i]['value'], 'audio channels');
 					$verifiedCount++;
+
 					break;
+
 				case 'Channel Mode':
 					$this->assertEquals('mono', $id3Data[$i]['value'], 'channel mode');
 					$verifiedCount++;
+
 					break;
+
 				default:
 					$this->assertEquals('', $id3Data[$i]['title'], 'Unknown flac data');
+
 					break;
 			}
 		}
@@ -359,9 +390,12 @@ class Getid3HelperTest extends GalleryTestCase {
 
 		// Make sure there are no duplicates in the list
 		$seen = array();
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			$title = $id3Data[$i]['title'];
+
 			$this->assertFalse(isset($seen[$title]), "$title is duplicated");
+
 			$seen[$title] = 1;
 		}
 	}
@@ -386,9 +420,11 @@ class Getid3HelperTest extends GalleryTestCase {
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
 		 */
 		$verifiedCount = 0;
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			if ($id3Data[$i]['title'] == 'Artist') {
 				$this->assertEquals('Don Willingham', $id3Data[$i]['value']);
+
 				$verifiedCount++;
 			}
 
@@ -402,9 +438,12 @@ class Getid3HelperTest extends GalleryTestCase {
 
 		// Make sure there are no duplicates in the list
 		$seen = array();
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			$title = $id3Data[$i]['title'];
+
 			$this->assertFalse(isset($seen[$title]), "$title is duplicated");
+
 			$seen[$title] = 1;
 		}
 	}
@@ -429,16 +468,21 @@ class Getid3HelperTest extends GalleryTestCase {
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
 		 */
 		$verifiedCount = 0;
+
 		$this->assertTrue(sizeof($id3Data) > 0, 'No ogg meta data');
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			switch ($id3Data[$i]['title']) {
 				case 'Artist':
 					$this->assertEquals('Don Willingham', $id3Data[$i]['value']);
 					$verifiedCount++;
+
 					break;
+
 				case 'Title':
 					$this->assertEquals('12000Hz sine', $id3Data[$i]['value']);
 					$verifiedCount++;
+
 					break;
 			}
 		}
@@ -447,9 +491,12 @@ class Getid3HelperTest extends GalleryTestCase {
 
 		// Make sure there are no duplicates in the list
 		$seen = array();
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			$title = $id3Data[$i]['title'];
+
 			$this->assertFalse(isset($seen[$title]), "$title is duplicated");
+
 			$seen[$title] = 1;
 		}
 	}
@@ -471,9 +518,11 @@ class Getid3HelperTest extends GalleryTestCase {
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
 		 */
 		$verifiedCount = 0;
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			if ($id3Data[$i]['title'] == 'Audio Bit Rate') {
 				$value = abs(205.3466 - $id3Data[$i]['value']);
+
 				$this->assertTrue($value < 0.01, "value $value");
 				$verifiedCount++;
 			}
@@ -483,9 +532,12 @@ class Getid3HelperTest extends GalleryTestCase {
 
 		// Make sure there are no duplicates in the list
 		$seen = array();
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			$title = $id3Data[$i]['title'];
+
 			$this->assertFalse(isset($seen[$title]), "$title is duplicated");
+
 			$seen[$title] = 1;
 		}
 	}
@@ -510,9 +562,11 @@ class Getid3HelperTest extends GalleryTestCase {
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
 		 */
 		$verifiedCount = 0;
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			if ($id3Data[$i]['title'] == 'Audio Bit Rate') {
 				$this->assertEquals(88200, $id3Data[$i]['value']);
+
 				$verifiedCount++;
 			}
 
@@ -526,9 +580,12 @@ class Getid3HelperTest extends GalleryTestCase {
 
 		// Make sure there are no duplicates in the list
 		$seen = array();
+
 		for ($i = 0; $i < sizeof($id3Data); $i++) {
 			$title = $id3Data[$i]['title'];
+
 			$this->assertFalse(isset($seen[$title]), "$title is duplicated");
+
 			$seen[$title] = 1;
 		}
 	}
@@ -539,18 +596,19 @@ class Getid3HelperTest extends GalleryTestCase {
 	public function testGetId3Keys() {
 		// There are a bajillion keys.  Do a quick sanity check
 		$getid3Keys = Getid3Helper::getGetid3Keys();
+
 		$this->assertEquals(24, sizeof($getid3Keys));
 		$this->assertTrue(isset($getid3Keys['Genre']));
 	}
 
 	public function testPostProcessValueDoesSanitize() {
 		$originalValue = 'A text with \ some backslashes \\.';
+
 		$this->assertEquals(
 			$originalValue,
 			ExifHelper::postProcessValue('SomeValue', $originalValue),
 			'backslash'
 		);
-
 		$this->assertEquals(
 			'&lt;ScRiPt foo=bar&gt;blah&lt;/SCRIPT&gt;',
 			ExifHelper::postProcessValue(

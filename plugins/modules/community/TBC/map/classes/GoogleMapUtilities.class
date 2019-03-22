@@ -33,6 +33,7 @@
  */
 GalleryCoreApi::requireOnce('modules/map/includes/toolkit/JPEG.php');
 GalleryCoreApi::requireOnce('modules/map/includes/toolkit/EXIF.php');
+
 class GoogleMapUtilities {
 	/**
 	 * Written by Jcampbel1
@@ -60,23 +61,29 @@ class GoogleMapUtilities {
 		 * pre: $coords is in the form (lon,lat)
 		 * post: returns "ideal" zoom and center for the map
 		 */
-		$base = (3.725E-06) * 1.5; // constant Mercantor Radian miles per pixel at zoom level 5
+
+		// constant Mercantor Radian miles per pixel at zoom level 5
+		$base = (3.725E-06) * 1.5;
+
 		// verify that more than one distinct coordinate exists
 		if (!is_array($coords)) {
 			$zoom   = 15;
 			$center = '0,0';
+
 			return;
 		}
 
 		if (count(array_unique($coords)) == 1) {
 			$zoom   = 6;
 			$center = implode('`', $coords);
+
 			return;
 		}
 
 		if (count(array_unique($coords)) == 0) {
 			$zoom   = 15;
 			$center = '0,0';
+
 			return;
 		}
 
@@ -95,11 +102,13 @@ class GoogleMapUtilities {
 		}
 
 		$centerlong = (min($lon) + max($lon)) / 2;
+
 		if (strpos($centerlong, ',')) {
 			$centerlong = str_replace(',', '.', $centerlong);
 		}
 
 		$centerlat = rad2deg(atan(sinh((min($merclat) + max($merclat)) / 2)));
+
 		if (strpos($centerlat, ',')) {
 			$centerlat = str_replace(',', '.', $centerlat);
 		}
@@ -107,6 +116,7 @@ class GoogleMapUtilities {
 		$center       = $centerlong . ',' . $centerlat;
 		$maxmercmiles = max($merclat) - min($merclat);
 		$maxlonmiles  = deg2rad(max($lon) - min($lon));
+
 		if ($maxmercmiles / $maph > $maxlonmiles / $mapw) {
 			$distperpixel = $maxmercmiles / $maph;
 		} else {
@@ -115,6 +125,7 @@ class GoogleMapUtilities {
 
 		$zoom = ((log($distperpixel) - log($base)) / log(2)) + 5;
 		$zoom = ceil($zoom);
+
 		if ($zoom > 17) {
 			$zoom = 17;
 		}
@@ -134,6 +145,7 @@ class GoogleMapUtilities {
 	 */
 	public function GoodFile($rep, $file) {
 		$good = false;
+
 		if (!is_dir($rep . $file) and (substr($file, -1) != '.') and ($file != 'CVS') and ($file != '.svn')) {
 			$good = true;
 		}
@@ -151,6 +163,7 @@ class GoogleMapUtilities {
 	 */
 	public function GoodFolder($rep, $file) {
 		$good = false;
+
 		if (is_dir($rep . $file) and (substr($file, -1) != '.') and ($file != 'CVS') and ($file != '.svn')) {
 			$good = true;
 		}
@@ -168,12 +181,15 @@ class GoogleMapUtilities {
 	 */
 	public function OptionFromColorList($folder, $selected) {
 		$colorlist = '';
+
 		if (file_exists($folder . '/colorlist')) {
 			$handle = fopen($folder . '/colorlist', 'r');
 			$list   = explode('*', fread($handle, filesize($folder . '/colorlist') - 1));
 			fclose($handle);
+
 			foreach ($list as $color) {
 				$colorlist .= '<option value="' . $color . '" ';
+
 				if ($selected == $color) {
 					$colorlist .= 'selected';
 				}
@@ -206,6 +222,7 @@ class GoogleMapUtilities {
 			// if the "file" is a folder and isn't "." or ".." or "CVS" then proceed with it
 			if (GoogleMapUtilities::GoodFolder($folder, $file)) {
 				$list .= '<option value="' . $file . '" ';
+
 				if ($selected == $file) {
 					$list .= 'selected';
 				}
@@ -215,6 +232,7 @@ class GoogleMapUtilities {
 		}
 
 		$mydir->close();
+
 		if ($list == '') {
 			$list = false;
 		}
@@ -242,6 +260,7 @@ class GoogleMapUtilities {
 		while (($file = $mydir->read()) !== false) {
 			if (GoogleMapUtilities::GoodFile($folder . $imagefolder, $file)) {
 				$mimetype = GalleryCoreApi::getMimeType($file);
+
 				if (($mimetype[1] == 'image/png') and ($file != 'marker_shadow.png')) {
 					/*
 					 * The output from this function is surrounded by quotes,
@@ -250,6 +269,7 @@ class GoogleMapUtilities {
 					$sizes = getimagesize($folder . $imagefolder . $file);
 					$name  = substr($file, 0, strrpos($file, '.'));
 					$msie  = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
+
 					if (!isset($_SERVER['HTTP_USER_AGENT'])
 						|| !preg_match($msie, $_SERVER['HTTP_USER_AGENT'])
 						|| preg_match('/opera/i', $_SERVER['HTTP_USER_AGENT'])
@@ -268,6 +288,7 @@ class GoogleMapUtilities {
 		}
 
 		$mydir->close();
+
 		return $filenames;
 	}
 
@@ -294,6 +315,7 @@ class GoogleMapUtilities {
 
 		$mydir         = dir($basegallerydir . 'modules/map/images/' . $imagetype . '/');
 		$filenamearray = array();
+
 		while (($filenames = $mydir->read()) !== false) {
 			if (is_dir($basegallerydir . 'modules/map/images/' . $imagetype . '/' . $filenames)
 				&& $filenames != '.' && $filenames != '..' && $filenames != 'multi'
@@ -305,6 +327,7 @@ class GoogleMapUtilities {
 				);
 
 				$imagearray = array();
+
 				while (($images = $mydir2->read()) !== false) {
 					if (is_file(
 						$basegallerydir . 'modules/map/images/' . $imagetype . '/'
@@ -316,11 +339,14 @@ class GoogleMapUtilities {
 				}
 
 				$mydir2->close();
+
 				sort($imagearray, SORT_STRING);
 				$allimagesarray = array();
+
 				foreach ($imagearray as $images) {
 					$msie  = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
 					$color = substr($images, 7, -4);
+
 					if (!isset($_SERVER['HTTP_USER_AGENT'])
 						|| !preg_match($msie, $_SERVER['HTTP_USER_AGENT'])
 						|| preg_match('/opera/i', $_SERVER['HTTP_USER_AGENT'])
@@ -342,7 +368,9 @@ class GoogleMapUtilities {
 		}
 
 		$mydir->close();
+
 		ksort($filenamearray, SORT_STRING);
+
 		foreach ($filenamearray as $filenames => $allimagesarray) {
 			$allmarkers[] = array(
 				$filenames => $allimagesarray,
@@ -385,6 +413,7 @@ class GoogleMapUtilities {
 		}
 
 		$exifdata = get_EXIF_JPEG($filename);
+
 		if (is_array($exifdata[0]) && array_key_exists(34853, $exifdata[0])
 			&& $exifdata[0][34853]['Tag Name'] == 'GPS Info Image File Directory (IFD)' && $overwrite == false
 		) {
@@ -524,6 +553,7 @@ class GoogleMapUtilities {
 		}
 
 		$status = $gallery->i18n('GPS coordinates written to file, old file backed up');
+
 		return array(null, $error, $status, null);
 	}
 
@@ -544,6 +574,7 @@ class GoogleMapUtilities {
 
 		if (!is_dir($filename)) {
 			$jpeg_header_data = @get_jpeg_header_data($filename);
+
 			if (!$jpeg_header_data) {
 				$coords = null;
 			} else {
@@ -552,12 +583,14 @@ class GoogleMapUtilities {
 				$Longitude  = '';
 				$NorthSouth = '';
 				$EastWest   = '';
+
 				if (is_array($temp[0])) {
 					foreach ($temp[0] as $id => $data) {
 						if (is_array($data) and array_key_exists('Tag Name', $temp[0][$id])
 							and ($temp[0][$id]['Tag Name'] == 'GPS Info Image File Directory (IFD)')
 						) {
 							$gpsdata = $temp[0][$id]['Data'][0];
+
 							foreach ($gpsdata as $id2 => $data) {
 								if (is_array($data)
 									and array_key_exists('Tag Name', $gpsdata[$id2])
@@ -610,7 +643,8 @@ class GoogleMapUtilities {
 					$coords = null;
 				}
 			}
-		} else { // this is a directory, no EXIF actions
+		} else {
+			// this is a directory, no EXIF actions
 			$coords = null;
 		}
 
@@ -631,6 +665,7 @@ class GoogleMapUtilities {
 			foreach ($points as $id => $point) {
 				if ($point['parentDist'] >= 0) {
 					$pixdist = mapHelper::PixelDistance($point['gps'], $points[$point['parentId']]['gps'], $z);
+
 					if ($pixdist <= $distance) {
 						// hide this one, set $z+1 when first time hidden
 						if ($point['regroupShowHigh'] <= $z) {
@@ -671,13 +706,16 @@ class GoogleMapUtilities {
 
 		$platform =& $gallery->getPlatform();
 		$Sizes    = array();
+
 		if ($set != 'none') {
 			$folder = substr(dirname(__FILE__), 0, -7) . 'images/markers/' . $set . '/';
 			$url    = GalleryUtilities::convertPathToUrl($folder);
 			$mydir  = $platform->opendir($folder);
+
 			while (($file = $platform->readdir($mydir)) !== false) {
 				if (($file != 'colorlist') and GoogleMapUtilities::goodFile($folder, $file)) {
 					$preload .= '<div style="display:none"><img alt="none" src="' . $url . $file . '" /></div>';
+
 					if (empty($Sizes)) {
 						$Sizes = $platform->getimagesize($folder . $file);
 					}

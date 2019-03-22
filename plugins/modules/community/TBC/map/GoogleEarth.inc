@@ -114,10 +114,13 @@ class GoogleEarthView extends GalleryView {
 			. '<Pair><key>normal</key><styleUrl>#PhotoIconNormal</styleUrl></Pair>' . "\n"
 			. '<Pair><key>highlight</key><styleUrl>#PhotoIconHighlight</styleUrl></Pair></StyleMap>'
 			. "\n" . $placemarks . "</Document>\n</kml>\n";
+
 			$phpVm->header('Content-Type: application/vnd.google-earth.kml+xml');
 			$phpVm->header('Content-Description: View Gallery items in Google Earth');
 			$phpVm->header("Content-Disposition: inline; filename=GalleryGE-{$itemId}.kml");
+
 			$phpVm->header('Content-Length: ' . strlen($outstring));
+
 			echo $outstring;
 		}
 
@@ -138,8 +141,12 @@ class GoogleEarthView extends GalleryView {
 	 */
 	public function _createGETree($item, $data, $ancestors) {
 		GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
-		$returnstring = ''; // start with a blank string
-		if (empty($data)) { // workaround for first call if no field data passed
+
+		// start with a blank string
+		$returnstring = '';
+
+		if (empty($data)) {
+			// workaround for first call if no field data passed
 			list($ret, $data) = mapHelper::fetchFieldValues(array($item));
 		}
 
@@ -198,7 +205,8 @@ class GoogleEarthView extends GalleryView {
 					}
 				}
 			}
-		} else { // It's not a container item
+		} else {
+			// It's not a container item
 			if (GalleryUtilities::isA($item, 'GalleryDataItem')) {
 				list($ret, $childitemstring) = GoogleEarthView::_createGEChildItem($item, $data[$item->getId()]);
 
@@ -223,6 +231,7 @@ class GoogleEarthView extends GalleryView {
 	 */
 	public function _createTextElements($item) {
 		$returnstring = '';
+
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.entitytruncate.php');
 
 		// Get the item title if not blank, else use the file/directory name (path component)
@@ -241,6 +250,7 @@ class GoogleEarthView extends GalleryView {
 			. GoogleEarthView::_createThumbnailLink($item)
 			. GalleryUtilities::markup($item->getDescription())
 			. ']]></description><Snippet>' . $summstring . "</Snippet>\n";
+
 		return $returnstring;
 	}
 
@@ -260,7 +270,9 @@ class GoogleEarthView extends GalleryView {
 		// Select items that have GPS coordinates filled out
 		if (!empty($fielddata['GPS'])) {
 			$posxy = explode(',', $fielddata['GPS']);
-			if (count($posxy) >= 2) { // changed to >= 2 to accommodate possible elevation field
+
+			if (count($posxy) >= 2) {
+				// changed to >= 2 to accommodate possible elevation field
 				$lat        = (float)$posxy[0];
 				$lon        = (float)$posxy[1];
 				$goodcoords = ((abs($lat) < 90) and (abs($lat) < 180));
@@ -303,9 +315,12 @@ class GoogleEarthView extends GalleryView {
 		$returnstring = '';
 		$goodcoords   = false;
 		$posxy        = array();
+
 		if (!empty($GPSstring)) {
 			$posxy = explode(',', $GPSstring);
-			if (count($posxy) >= 2) { // changed to >= 2 to accommodate possible elevation field
+
+			if (count($posxy) >= 2) {
+				// changed to >= 2 to accommodate possible elevation field
 				$lat        = (float)$posxy[0];
 				$lon        = (float)$posxy[1];
 				$goodcoords = ((abs($lat) < 90) and (abs($lon) < 180));
@@ -380,6 +395,7 @@ class GoogleEarthView extends GalleryView {
 	public function _createThumbnailLink($item) {
 		$hsitemLink = '';
 		$dthumbLink = '';
+
 		global $gallery;
 
 		$urlGenerator =& $gallery->getUrlGenerator();

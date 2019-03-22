@@ -96,6 +96,7 @@ class PanoramaRenderer extends GalleryRenderer {
 
 				$downloadText = $module->translate('Downloading the Panorama Applet');
 				$noAppletText = $module->translate('Your browser does not support Java applets');
+
 				return sprintf(
 					'
 	    <object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"

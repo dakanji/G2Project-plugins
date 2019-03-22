@@ -34,7 +34,9 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 	public function testNewAlbum() {
 		GalleryUtilities::putRequestVariable('form[action][newAlbum]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', 1);
+
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -50,7 +52,9 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 
 	public function testNewAlbumMissingAlbumId() {
 		GalleryUtilities::putRequestVariable('form[action][newAlbum]', 1);
+
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -66,7 +70,9 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 	public function testSelect() {
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
 		GalleryUtilities::putRequestVariable('form[albumId]', 1);
+
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -82,7 +88,9 @@ class SelectAlbumControllerTest extends GalleryControllerTestCase {
 
 	public function testSelectMissingAlbumId() {
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
+
 		$result = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(

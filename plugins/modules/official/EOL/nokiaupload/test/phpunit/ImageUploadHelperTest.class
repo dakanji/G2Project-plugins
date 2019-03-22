@@ -60,8 +60,11 @@ class ImageUploadHelperTest extends GalleryTestCase {
 		}
 
 		$status = ImageUploadHelper::doLogin();
+
 		$this->assertEventFired('Gallery::Login', $this->_user);
+
 		$suffix = "&\r\n";
+
 		$this->assertEquals(
 			array(
 				'success'      => '0',
@@ -98,6 +101,7 @@ class ImageUploadHelperTest extends GalleryTestCase {
 		}
 
 		$status = ImageUploadHelper::doLogin();
+
 		$this->assertEventFired(
 			'Gallery::FailedLogin',
 			null,
@@ -121,6 +125,7 @@ class ImageUploadHelperTest extends GalleryTestCase {
 class ImageUploadHelperUrlGenerator {
 	public function generateUrl($params, $options) {
 		$data = array();
+
 		foreach ($params as $key => $value) {
 			$data[] = "$key=$value";
 		}

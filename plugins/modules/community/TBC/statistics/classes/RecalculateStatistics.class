@@ -75,6 +75,7 @@ class RecalculateStatisticsTask extends MaintenanceTask {
 		}
 
 		$pluginInstances = array();
+
 		foreach (array_keys($allPluginIds) as $pluginId) {
 			list($ret, $plugin) = GalleryCoreApi::newFactoryInstanceById('StatisticsSiteAdminPlugin', $pluginId);
 
@@ -100,6 +101,7 @@ class RecalculateStatisticsTask extends MaintenanceTask {
 		);
 
 		$result = array($module->translate('All statistics successfully recalculated'));
+
 		return array(null, true, $result);
 	}
 

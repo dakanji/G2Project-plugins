@@ -38,6 +38,7 @@ class AdminMembersController extends GalleryController {
 		}
 
 		$error = $status = array();
+
 		if (isset($form['action']['save'])) {
 			foreach (array('canViewMembersModule', 'canViewEmailAddress') as $key) {
 				if (isset($form[$key])) {
@@ -56,6 +57,7 @@ class AdminMembersController extends GalleryController {
 
 			$status['saved'] = 1;
 		} // else $form['action']['cancel']
+
 		if (empty($error)) {
 			$results['redirect'] = array(
 				'view'    => 'core.SiteAdmin',
@@ -68,6 +70,7 @@ class AdminMembersController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -131,6 +134,7 @@ class AdminMembersView extends GalleryView {
 
 		$template->setVariable('Members', $members);
 		$template->setVariable('controller', 'members.AdminMembers');
+
 		return array(
 			null,
 			array(

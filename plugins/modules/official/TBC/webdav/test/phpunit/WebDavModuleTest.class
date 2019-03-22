@@ -44,6 +44,7 @@ class WebDavModuleTest extends GalleryTestCase {
 		$urlGenerator = new GalleryUrlGenerator();
 
 		$ret = $urlGenerator->init('http://example.com/gallery2/main.php');
+
 		if ($ret) {
 			return $ret;
 		}
@@ -85,6 +86,7 @@ class WebDavModuleTest extends GalleryTestCase {
 		$this->_activeRules   =& WebDavModuleTestRewriteApi::_fetchActiveRulesForModule('webdav');
 		$this->_activeRules   = array();
 		$this->_activateCalls =& WebDavModuleTestRewriteApi::_getActivateCalls();
+
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'RewriteApi',
@@ -163,6 +165,7 @@ class WebDavModuleTest extends GalleryTestCase {
 		// Use WebDavModuleTestPlatform
 		$this->_platform                                    = new WebDavModuleTestPlatform();
 		$this->_platform->_messages[$this->_optionsRequest] = $this->_includesDavHeadersResponse;
+
 		$gallery->setPlatform($this->_platform);
 		$this->_registerTestEventListener('Gallery::ActivatePlugin', $this->_module);
 	}
@@ -244,23 +247,27 @@ class WebDavModuleTest extends GalleryTestCase {
 
 	public function testGetRewriteRules() {
 		$rules = $this->_module->getRewriteRules();
+
 		$this->assertEquals(array('connect', 'davmount'), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesOptionsRuleActive() {
 		$this->_activeRules = array('options');
 		$rules              = $this->_module->getRewriteRules();
+
 		$this->assertEquals(array('connect', 'davmount', 'options'), array_keys($rules));
 	}
 
 	public function testGetRewriteRulesMissingDavHeaders() {
 		$this->_platform->_messages[$this->_optionsRequest] = $this->_missingDavHeadersResponse;
 		$rules = $this->_module->getRewriteRules();
+
 		$this->assertEquals(array('connect', 'davmount', 'options'), array_keys($rules));
 	}
 
 	public function testHandleEventActivatePlugin() {
 		$event = GalleryCoreApi::newEvent('Gallery::ActivatePlugin');
+
 		$event->setData(
 			array(
 				'pluginType' => 'module',
@@ -280,9 +287,12 @@ class WebDavModuleTest extends GalleryTestCase {
 	public function testHandleEventError() {
 		GalleryUtilities::removeRequestVariable('controller');
 		GalleryUtilities::putRequestVariable('view', 'webdav.WebDav');
+
 		$this->_registerTestEventListener('Gallery::Error', $this->_module);
+
 		$error = GalleryCoreApi::error(GALLERY_ERROR);
 		$event = GalleryCoreApi::newEvent('Gallery::Error');
+
 		$event->setData(
 			array(
 				'error' => $error,
@@ -315,9 +325,12 @@ class WebDavModuleTest extends GalleryTestCase {
 	public function testHandleEventErrorPermissionDenied() {
 		GalleryUtilities::removeRequestVariable('controller');
 		GalleryUtilities::putRequestVariable('view', 'webdav.WebDav');
+
 		$this->_registerTestEventListener('Gallery::Error', $this->_module);
+
 		$error = GalleryCoreApi::error(ERROR_PERMISSION_DENIED);
 		$event = GalleryCoreApi::newEvent('Gallery::Error');
+
 		$event->setData(
 			array(
 				'error' => $error,
@@ -408,12 +421,14 @@ class WebDavModuleTestPlatform extends GalleryPlatform {
 
 		$buffer        = substr($this->_buffer, 0, $length);
 		$this->_buffer = substr($this->_buffer, $length);
+
 		return $buffer;
 	}
 
 	public function fwrite($handle, $string, $length = 0) {
 		if (isset($this->_messages[$string])) {
 			$this->_buffer = $this->_messages[$string];
+
 			return strlen($string);
 		}
 	}
@@ -427,8 +442,8 @@ class WebDavModuleTestPlatform extends GalleryPlatform {
 	}
 }
 
-class WebDavModuleTestHttpAuthInterface // extends HttpAuthInterface_1_0
- {
+// extends HttpAuthInterface_1_0
+class WebDavModuleTestHttpAuthInterface {
 	public function _requestAuthenticationCalls($mode = false) {
 		static $calls = 0;
 
@@ -443,6 +458,7 @@ class WebDavModuleTestHttpAuthInterface // extends HttpAuthInterface_1_0
 
 	public function requestAuthentication() {
 		WebDavModuleTestHttpAuthInterface::_requestAuthenticationCalls();
+
 		return null;
 	}
 }

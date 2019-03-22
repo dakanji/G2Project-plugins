@@ -97,12 +97,14 @@ class ItemEditTranscode extends ItemEditPlugin {
 								}
 
 								break;
+
 							default:
 								$error[] = 'form[error][asr][invalid]';
 						}
 					}
 
 					$setAudioBitrate = '';
+
 					if (!$mute && isset($form['encode']['audiobitrate']) && ($form['encode']['audiobitrate'] != '')) {
 						$setAudioBitrate = 'set-audio-bitrate|' . $form['encode']['audiobitrate'] . ';';
 					}
@@ -133,6 +135,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 					// Set resizing operation if different from native
 					$setVideoDimensions = '';
+
 					if (($form['encode']['width'] != $nativeWidth) || ($form['encode']['height'] != $nativeHeight)) {
 						$setVideoDimensions = 'set-video-dimensions|' . $form['encode']['width'] . ',' . $form['encode']['height'] . ';';
 					}
@@ -165,27 +168,32 @@ class ItemEditTranscode extends ItemEditPlugin {
 								}
 
 								break;
+
 							default:
 								$error[] = 'form[error][asr][invalid]';
 						}
 					}
 
 					$setAudioBitrate = '';
+
 					if (!$mute && isset($form['encode']['audiobitrate']) && ($form['encode']['audiobitrate'] != '')) {
 						$setAudioBitrate = 'set-audio-bitrate|' . $form['encode']['audiobitrate'] . ';';
 					}
 
 					$setVideoBitrate = '';
+
 					if (isset($form['encode']['bitrate']) && ($form['encode']['bitrate'] != '')) {
 						$setVideoBitrate = 'set-video-bitrate|' . $form['encode']['bitrate'] . ';';
 					}
 
 					$setVideoFramerate = '';
+
 					if (isset($form['encode']['fps']) && ($form['encode']['fps'] != '')) {
 						$setVideoFramerate = 'set-video-framerate|' . (float)$form['encode']['fps'] . ';';
 					}
 
 					$setVideosameq = '';
+
 					if (isset($form['sameq']) && ($form['sameq'] != '')) {
 						$setVideosameq = 'set-video-sameq;';
 					}
@@ -215,9 +223,11 @@ class ItemEditTranscode extends ItemEditPlugin {
 					}
 
 					$reused = false;
+
 					if (!empty($preferreds[$itemId])) {
 						foreach ($preferreds as $preferred) {
 							$op = strstr($preferred->getDerivativeOperations(), '/convert-to-/');
+
 							if (strlen($op) > 0) {
 								list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($preferred->getId());
 
@@ -301,6 +311,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 							// Set FlashVideoRenderer, is there a way of knowing whether it's available?
 							$renderer = '';
+
 							if ($params['outputMime'] == 'video/x-flv' || $params['outputMime'] == 'video/mp4' || $params['outputMime'] == 'video/webm' || $params['outputMime'] == 'video/ogg') {
 								$renderer = 'FlashVideoRenderer';
 							} elseif (preg_match('/audio/', $params['outputMime'])) {
@@ -320,6 +331,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 								if ($ret) {
 									GalleryCoreApi::releaseLocks($lockId);
+
 									return array($ret, null);
 								}
 
@@ -329,6 +341,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 								if ($ret) {
 									GalleryCoreApi::releaseLocks($lockId);
+
 									return array($ret, null);
 								}
 
@@ -340,6 +353,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 							}
 						}
 					} // End if not reused
+
 					// Transcode now?
 					if (!isset($form['onDemand'])) {
 						list($ret) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($buildId, true);
@@ -360,9 +374,11 @@ class ItemEditTranscode extends ItemEditPlugin {
 				}
 
 				$deletedDeriv = false;
+
 				if (isset($preferreds[$itemId])) {
 					foreach ($preferreds as $preferred) {
 						$convert = strstr($preferred->getDerivativeOperations(), 'convert-to-');
+
 						if (strlen($convert)) {
 							$ret = GalleryCoreApi::deleteEntityById($preferred->getId(), 'GalleryDerivative');
 
@@ -388,6 +404,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
+
 							return array($ret, null);
 						}
 
@@ -397,6 +414,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 						if ($ret) {
 							GalleryCoreApi::releaseLocks($lockId);
+
 							return array($ret, null);
 						}
 
@@ -464,6 +482,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 			if (isset($preferreds[$itemId])) {
 				foreach ($preferreds as $preferred) {
 					$operations = split(';', $preferred->getDerivativeOperations());
+
 					foreach ($operations as $operation) {
 						if (preg_match('/set\-audio\-chans\|(\d+);?/', $operation, $regs)) {
 							$form['encode']['achans'] = $regs[1];
@@ -506,6 +525,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 			/** Its time to trim the fat and lose the non-web friendly mime types */
 			$acceptableEncoders = array('audio/mpeg', 'audio/ogg');
 			$outputOptions      = array();
+
 			foreach ($mimeTypesEncoder as $option) {
 				if (in_array($option, $acceptableEncoders)) {
 					$outputOptions[] = $option;
@@ -514,6 +534,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 			$template->setVariable('outputOptions', $outputOptions);
 			$template->setVariable('controller', 'transcode.ItemEditTranscode');
+
 			return array(null, 'modules/transcode/templates/AudioTranscode.tpl', 'modules_transcode');
 		}
 
@@ -525,6 +546,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 		}
 
 		$aspect = $nativeWidth / $nativeHeight;
+
 		if (($nativeWidth % 2) != 0) {
 			$nativeWidth = $nativeWidth - 1;
 		}
@@ -534,7 +556,9 @@ class ItemEditTranscode extends ItemEditPlugin {
 		}
 
 		$template->setVariable('aspect', $aspect);
+
 		$derivativeSize = 0;
+
 		if (($nativeWidth > 0) && ($nativeHeight > 0) && ($nativeFps > 0.0) && ($nativeVbr > 0)) {
 			$form['hasVideo']          = true;
 			$form['native']['width']   = $form['encode']['width']   = $nativeWidth;
@@ -584,6 +608,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 			if (isset($preferreds[$itemId])) {
 				foreach ($preferreds as $preferred) {
 					$operations = split(';', $preferred->getDerivativeOperations());
+
 					foreach ($operations as $operation) {
 						if (preg_match('/set\-audio\-chans\|(\d+);?/', $operation, $regs)) {
 							$form['encode']['achans'] = $regs[1];
@@ -664,17 +689,21 @@ class ItemEditTranscode extends ItemEditPlugin {
 
 		$template->setVariable('maxWidth', $defaults['maxWidth']);
 		$template->setVariable('widthWarningDisplay', 'none');
+
 		if ($form['encode']['width'] > $defaults['maxWidth']) {
 			$form['encode']['width']  = $defaults['maxWidth'];
 			$form['encode']['height'] = round($form['encode']['width'] / $aspect);
+
 			$template->setVariable('widthWarningDisplay', 'block');
 		}
 
 		$template->setVariable('maxHeight', $defaults['maxHeight']);
 		$template->setVariable('heightWarningDisplay', 'none');
+
 		if ($form['encode']['height'] > $defaults['maxHeight']) {
 			$form['encode']['height'] = $defaults['maxHeight'];
 			$form['encode']['width']  = round($form['encode']['height'] * $aspect);
+
 			$template->setVariable('heightWarningDisplay', 'block');
 		}
 
@@ -683,6 +712,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 		$template->setVariable('defaultAudioChannels', $defaults['defaultAudioChannels']);
 		$template->setVariable('defaultAudioSampleRate', $defaults['defaultAudioSampleRate']);
 		$template->setVariable('controller', 'transcode.ItemEditTranscode');
+
 		return array(null, 'modules/transcode/templates/Transcode.tpl', 'modules_transcode');
 	}
 
@@ -696,6 +726,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 			//$this->transcodeLog('types: '.print_r(explode('|', $mimeTypes), true));
 			if (!$ret) {
 				$list = explode('|', $mimeTypes);
+
 				return in_array($item->getMimeType(), $list);
 			}
 		}

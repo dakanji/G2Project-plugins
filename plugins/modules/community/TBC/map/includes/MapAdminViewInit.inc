@@ -110,6 +110,7 @@ foreach ($param as $key => $value) {
 	$form['mode']    = GalleryUtilities::getRequestVariables('mode');
 	$form['picbase'] = $base . 'modules/map/images/';
 	$msie            = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
+
 	if (!isset($_SERVER['HTTP_USER_AGENT']) || !preg_match($msie, $_SERVER['HTTP_USER_AGENT'])
 		|| preg_match('/opera/i', $_SERVER['HTTP_USER_AGENT'])
 	) {

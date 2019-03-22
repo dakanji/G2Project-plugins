@@ -63,6 +63,7 @@ class WebDavController extends GalleryController {
 		 * WebDAV with Windows Web Folders.
 		 */
 		$userAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+
 		if (strpos($userAgent, 'Microsoft Data Access Internet Publishing Provider DAV') !== false
 			|| strpos($userAgent, 'Microsoft-WebDAV-MiniRedir') !== false
 		) {
@@ -104,6 +105,7 @@ class WebDavController extends GalleryController {
 		 * @todo Refactor towards a cleaner approach, e.g. using a map for public paths.
 		 */
 		GalleryUtilities::putRequestVariable('originalPath', $path);
+
 		$pathComponent = basename($path);
 
 		// Special case to suppress Mac '._' and '.DS_Store files.  Ignore but return success.
@@ -113,6 +115,7 @@ class WebDavController extends GalleryController {
 			);
 
 			$handle = WebDavServer::getme()->openRequestBody();
+
 			while (!feof($handle)) {
 				fgets($handle);
 			}
@@ -122,13 +125,17 @@ class WebDavController extends GalleryController {
 
 		// Silently legalize path component
 		$pathComponents = preg_split('/\//', $path, -1, PREG_SPLIT_NO_EMPTY);
+
 		foreach ($pathComponents as $key => $pathComponent) {
 			GalleryUtilities::unsanitizeInputValues($pathComponent);
+
 			$pathComponents[$key] = $platform->legalizePathComponent($pathComponent);
 		}
 
 		$path = implode('/', $pathComponents);
+
 		GalleryUtilities::putRequestVariable('path', $path);
+
 		$requestMethod = GalleryUtilities::strToLower(
 			GalleryUtilities::getServerVar('REQUEST_METHOD')
 		);
@@ -156,6 +163,7 @@ class WebDavController extends GalleryController {
 
 			// Until there's a better way to delegate to Show/DownloadItem
 			GalleryUtilities::putRequestVariable('itemId', $itemId);
+
 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 				return array(
 					null,

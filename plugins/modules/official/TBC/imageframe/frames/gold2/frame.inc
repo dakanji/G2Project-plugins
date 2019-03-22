@@ -4,12 +4,10 @@
   // Contributed by: floridave
 $frameData = array(
 	'name'      => $gallery->i18n('Gold 2'),
-
 	// Top Left
 	'imageTL'   => 'TL.jpg',
 	'widthTL'   => 31,
 	'heightTL'  => 31,
-
 	// Top
 	'imageTTL'  => 'TTL.jpg',
 	'widthTTL'  => 31,
@@ -17,12 +15,10 @@ $frameData = array(
 	'heightTT'  => 31,
 	'imageTTR'  => 'TTR.jpg',
 	'widthTTR'  => 31,
-
 	// Top Right
 	'imageTR'   => 'TR.jpg',
 	'widthTR'   => 31,
 	'heightTR'  => 31,
-
 	// Left
 	'imageLLT'  => 'LLT.jpg',
 	'heightLLT' => 16,
@@ -30,7 +26,6 @@ $frameData = array(
 	'widthLL'   => 31,
 	'imageLLB'  => 'LLB.jpg',
 	'heightLLB' => 16,
-
 	// Right
 	'imageRRT'  => 'RRT.jpg',
 	'heightRRT' => 16,
@@ -38,12 +33,10 @@ $frameData = array(
 	'widthRR'   => 31,
 	'imageRRB'  => 'RRB.jpg',
 	'heightRRB' => 16,
-
 	// Bottom Left
 	'imageBL'   => 'BL.jpg',
 	'widthBL'   => 31,
 	'heightBL'  => 31,
-
 	// Bottom
 	'imageBBL'  => 'BBL.jpg',
 	'widthBBL'  => 31,
@@ -51,7 +44,6 @@ $frameData = array(
 	'heightBB'  => 31,
 	'imageBBR'  => 'BBR.jpg',
 	'widthBBR'  => 31,
-
 	// Bottom Right
 	'imageBR'   => 'BR.jpg',
 	'widthBR'   => 31,

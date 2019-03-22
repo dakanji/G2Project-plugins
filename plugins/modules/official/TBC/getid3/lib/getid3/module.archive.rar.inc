@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.archive.rar.php                                      //
 // module for analyzing RAR files                              //
@@ -21,16 +20,19 @@ class getid3_rar extends getid3_handler {
 	public function Analyze() {
 		$info               =& $this->getid3->info;
 		$info['fileformat'] = 'rar';
+
 		if ($this->option_use_rar_extension === true) {
 			if (function_exists('rar_open')) {
 				if ($rp = rar_open($info['filenamepath'])) {
 					$info['rar']['files'] = array();
 					$entries              = rar_list($rp);
+
 					foreach ($entries as $entry) {
 						$info['rar']['files'] = getid3_lib::array_merge_clobber($info['rar']['files'], getid3_lib::CreateDeepArray($entry->getName(), '/', $entry->getUnpackedSize()));
 					}
 
 					rar_close($rp);
+
 					return true;
 				}
 

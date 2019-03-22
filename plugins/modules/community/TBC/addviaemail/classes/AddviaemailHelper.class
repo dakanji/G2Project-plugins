@@ -151,6 +151,7 @@ class AddviaemailHelper {
 		 *
 		 */
 		imap_timeout(1, 1);
+
 		if (!($mbox = @imap_open('{' . $serverString . '}INBOX', $emailUserName, $emailPassWord))) {
 			return array(
 				GalleryCoreApi::error(
@@ -164,9 +165,12 @@ class AddviaemailHelper {
 		}
 
 		$mail_errors = imap_errors();
+
 		if ($mail_errors[0] == 'Mailbox is empty') {
 			$gallery->debug('ADDVIAEMAIL: Empty mailbox');
+
 			imap_close($mbox);
+
 			return array(null, $params);
 		}
 
@@ -174,21 +178,25 @@ class AddviaemailHelper {
 
 		// Process each message - This is the heavy lifting
 		$numOfHeaders = imap_num_msg($mbox);
+
 		for ($currentMsg = $counter = 1; $currentMsg <= $numOfHeaders; $currentMsg++) {
 			// We need to pull the header into so we can check the subject
 			$header_info = imap_headerinfo($mbox, $currentMsg);
+
 			if ($header_info->subject == $subjectToMatch
 				&& ($emailServerType == '1'
 				|| ($emailServerType == '2' && $header_info->Unseen == 'U'))
 			) {
 				// The subject matches, FOUND ONE!
 				$struct = imap_fetchstructure($mbox, $currentMsg);
+
 				if ($struct->type != 1 /* Multipart */ || count($struct->parts) < 2) {
 					// we simply do not have enough parts for any type of message
 					continue;
 				}
 
-				$imagesToAdd = array(); // blank it out so we dont add the same images again
+				// blank it out so we dont add the same images again
+				$imagesToAdd = array();
 				$success     = false;
 
 				// Special processors
@@ -204,8 +212,10 @@ class AddviaemailHelper {
 
 				// add each picture we found
 				$gallery->debug('ADDVIAEMAIL: going to try to add ' . count($imagesToAdd) . ' images');
+
 				foreach ($imagesToAdd as $imageToAdd) {
 					$gallery->debug_r($imageToAdd);
+
 					$filename = $imageToAdd[0];
 					$summary  = ($bodyAsCaption == '1') ? $imageToAdd[1] : '';
 					$mimeType = $imageToAdd[2];
@@ -214,6 +224,7 @@ class AddviaemailHelper {
 
 					if ($ret) {
 						imap_close($mbox);
+
 						return array($ret, $params);
 					}
 
@@ -229,7 +240,9 @@ class AddviaemailHelper {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
+
 						imap_close($mbox);
+
 						return array($ret, $params);
 					}
 
@@ -237,6 +250,7 @@ class AddviaemailHelper {
 
 					if ($ret) {
 						imap_close($mbox);
+
 						return array($ret, $params);
 					}
 
@@ -244,6 +258,7 @@ class AddviaemailHelper {
 
 					if ($ret) {
 						imap_close($mbox);
+
 						return array($ret, $params);
 					}
 
@@ -258,6 +273,7 @@ class AddviaemailHelper {
 					// If we got this far, it is safe to delete the file on the system
 					if (!$platform->unlink($pathToSaveFile . $filename)) {
 						imap_close($mbox);
+
 						return GalleryCoreApi::error(
 							ERROR_PLATFORM_FAILURE,
 							'',
@@ -275,6 +291,7 @@ class AddviaemailHelper {
 		}
 
 		imap_close($mbox);
+
 		return array(null, $params);
 	}
 
@@ -291,6 +308,7 @@ class AddviaemailHelper {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockId);
+
 			return $ret;
 		}
 
@@ -310,6 +328,7 @@ class AddviaemailHelper {
 
 		if (!$successfullyCopied) {
 			$gallery->debug('ADDVIAEMAIL: error in AddviaemailHelper::saveFileFromURL');
+
 			return GalleryCoreApi::error(
 				ERROR_PERMISSION_DENIED,
 				'',
@@ -331,8 +350,10 @@ class AddviaemailHelper {
 		global $gallery;
 
 		$gallery->debug('ADDVIAEMAIL: in isSprintMsg');
+
 		$struct = imap_fetchstructure($mbox, $currentMsg);
 		$body   = imap_fetchbody($mbox, $currentMsg, 1);
+
 		if ($struct->parts[0]->encoding == 3) {
 			$body = base64_decode($body);
 		}
@@ -343,6 +364,7 @@ class AddviaemailHelper {
 		}
 
 		$pos = strpos($body, 'sprintpcs.com');
+
 		if ($pos === false) {
 			return false;
 		}
@@ -359,6 +381,7 @@ class AddviaemailHelper {
 		// Get next part, thats where sprint puts the html with the url to the image
 		$struct = imap_fetchstructure($mbox, $currentMsg);
 		$body   = imap_fetchbody($mbox, $currentMsg, 2);
+
 		if ($struct->parts[1]->encoding == 3) {
 			$body = base64_decode($body);
 		}
@@ -372,8 +395,10 @@ class AddviaemailHelper {
 
 		$imagesToAdd = array();
 		$counter     = 0;
+
 		foreach ($matches[1] as $match) {
 			$gallery->debug('ADDVIAEMAIL: sprint img url: ' . $match);
+
 			$sprintImageUrl = str_replace('limitsize', 'limitsizebreak', $match);
 			$filename       = 'PictureMail' . $counter++ . '.jpg';
 
@@ -385,6 +410,7 @@ class AddviaemailHelper {
 
 			if ($ret) {
 				imap_close($mbox);
+
 				return $ret;
 			}
 
@@ -398,6 +424,7 @@ class AddviaemailHelper {
 		);
 
 		$gallery->debug_r($imagesToAdd);
+
 		return array(true, $imagesToAdd);
 	}
 
@@ -408,8 +435,10 @@ class AddviaemailHelper {
 
 		// Normal  type message
 		$gallery->debug('ADDVIAEMAIL: in processNormalMsg');
+
 		$struct = imap_fetchstructure($mbox, $currentMsg);
 		$body   = imap_fetchbody($mbox, $currentMsg, 1);
+
 		if ($struct->parts[0]->encoding == 3) {
 			$body = base64_decode($body);
 		}
@@ -422,6 +451,7 @@ class AddviaemailHelper {
 		) {
 			$gallery->debug('ADDVIAEMAIL: Message not in expected structure');
 			$gallery->debug_r($struct);
+
 			return false;
 		}
 
@@ -433,6 +463,7 @@ class AddviaemailHelper {
 		$imagesToAdd = array();
 		$counter     = 0;
 		$gallery->debug('ADDVIAEMAIL: processNormalMsg: Number of parts =' . count($struct->parts));
+
 		for ($x = 1; $x < count($struct->parts); $x++) {
 			$mimeType = 'image/' . GalleryUtilities::strToLower(
 				$struct->parts[$x]->subtype
@@ -442,9 +473,13 @@ class AddviaemailHelper {
 
 			$extension = empty($extension) ? '' : '.' . $extension[0];
 			$filename  = is_array($struct->parts[$x]->parameters) ? $struct->parts[$x]->parameters[0]->value : 'PictureMail' . $counter++ . $extension;
-			$data      = imap_fetchbody($mbox, $currentMsg, $x + 1); // remember, the body is part #1
+
+			// remember, the body is part #1
+			$data = imap_fetchbody($mbox, $currentMsg, $x + 1);
+
 			if (!$platform->file_put_contents($pathToSaveFile . $filename, base64_decode($data))) {
 				imap_close($mbox);
+
 				return GalleryCoreApi::error(
 					ERROR_PLATFORM_FAILURE,
 					'',
@@ -454,6 +489,7 @@ class AddviaemailHelper {
 			}
 
 			$gallery->debug('ADDVIAEMAIL: processNormalMsg: saved file');
+
 			$gallery->debug('ADDVIAEMAIL: path and file=' . $pathToSaveFile . $filename);
 			$gallery->debug('ADDVIAEMAIL: mimeType=' . $mimeType);
 			$image         = array($filename, $body, $mimeType);
@@ -462,7 +498,9 @@ class AddviaemailHelper {
 
 		// end of loop the find all images
 		$gallery->debug("ADDVIAEMAIL: count of $imagesToAdd after normal process=" . count($imagesToAdd));
+
 		$gallery->debug_r($imagesToAdd);
+
 		return array(true, $imagesToAdd);
 	}
 }

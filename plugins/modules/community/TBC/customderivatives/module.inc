@@ -19,12 +19,12 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * CustomDerivative module
-  * @version $Revision: 1507 $
-  * @package CustomDerivatives
-  * @author Alec Myers <alec@alecmyers.com>
-  */
+/**
+ * CustomDerivative module
+ * @version $Revision: 1507 $
+ * @package CustomDerivatives
+ * @author Alec Myers <alec@alecmyers.com>
+ */
 class CustomDerivativesModule extends GalleryModule {
 	public function __construct() {
 		global $gallery;
@@ -37,10 +37,13 @@ class CustomDerivativesModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('');
 	}

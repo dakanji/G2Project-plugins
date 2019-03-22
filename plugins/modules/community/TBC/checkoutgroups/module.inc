@@ -38,10 +38,13 @@ class CheckoutGroupsModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('registerEventListeners');
 	}
@@ -69,6 +72,7 @@ class CheckoutGroupsModule extends GalleryModule {
 			switch ($currentVersion) {
 				case '0.1.0':
 					break;
+
 				default:
 					return GalleryCoreApi::error(
 						ERROR_BAD_PLUGIN,
@@ -131,14 +135,17 @@ class CheckoutGroupsModule extends GalleryModule {
 
 	public function registerEventListeners() {
 		$myListener = new CheckoutGroupsModule();
+
 		GalleryCoreApi::registerEventListener('GalleryCheckout::transactionChange', $myListener);
 		GalleryCoreApi::registerEventListener('GalleryEntity::delete', $myListener);
 	}
 
 	public function handleEvent($event) {
 		$result = null;
+
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
+
 			if (GalleryUtilities::isA($entity, 'GalleryGroup')) {
 				$ret = GalleryCoreApi::removeMapEntry(
 					'CheckoutProductMap',

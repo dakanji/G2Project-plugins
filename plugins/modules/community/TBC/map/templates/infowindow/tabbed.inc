@@ -8,6 +8,7 @@ $map['infowindows'][0] = "''
 $map['infowindows'][1] = "''
       +'<table width=200px><tr><td><a href=\"'+itemLink+'\">'+title+'</a><br/>'
       +'<font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font>'";
+
 if ($map['showItemSummaries']) {
 	$map['infowindows'][1] = $map['infowindows'][1] . "
         +(summary!=\"\"?'<br/><br/><div style=\"width:200px\"><font color=black>'+summary+'</font></div>':'')";

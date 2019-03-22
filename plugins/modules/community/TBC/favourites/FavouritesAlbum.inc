@@ -72,6 +72,7 @@
 
 		if (empty($targetUserId) || $ret) {
 			$targetUserId = $gallery->getActiveUserId();
+
 			GalleryUtilities::putRequestVariable('targetUserId', $targetUserId);
 		}
 
@@ -89,6 +90,7 @@
 		}
 
 		$targetUserName = $targetUser->GetFullName();
+
 		$item->create(
 			$module->translate(
 				array(
@@ -219,6 +221,7 @@
 		}
 
 		GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 		return FavouritesMapHelper::fetchFavourites($targetUserId);
 	}
 

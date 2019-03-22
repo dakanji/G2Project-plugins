@@ -53,6 +53,7 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$userId = GalleryUtilities::getRequestVariables('userId');
+
 		if (empty($userId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
@@ -79,6 +80,7 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$MembersProfile['lastItems'] = array();
+
 		foreach ($lastItems as $item) {
 			$MembersProfile['lastItems'][] = (array)$item;
 		}
@@ -98,6 +100,7 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$MembersProfile['canViewProfileEmail'] = $canViewProfileEmail;
+
 		$template->setVariable('MembersProfile', $MembersProfile);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'members');
@@ -107,6 +110,7 @@ class MembersProfileView extends GalleryView {
 		}
 
 		$template->title($module->translate('Members Profile'));
+
 		return array(
 			null,
 			array(

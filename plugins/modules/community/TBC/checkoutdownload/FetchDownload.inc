@@ -51,6 +51,7 @@ class FetchDownloadView extends GalleryView {
 		$platform      =& $gallery->getPlatform();
 		$phpVm         = $gallery->getPhpVm();
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
+
 		if (empty($transactionId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -73,6 +74,7 @@ class FetchDownloadView extends GalleryView {
 		// security check
 		$verify1 = GalleryUtilities::getRequestVariables('verify1');
 		$verify2 = GalleryUtilities::getRequestVariables('verify2');
+
 		if ($verify1 != $transaction->getDate() || $verify2 != $transaction->getSecurity()) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
@@ -87,9 +89,11 @@ class FetchDownloadView extends GalleryView {
 
 		if ($permissionResult == 'permit') {
 			$file = $gallery->getConfig('data.gallery.tmp') . $transactionId . '.zip';
+
 			if (!$platform->is_readable($file)) {
 				$view         = 'checkout.OrderStatus';
 				$urlGenerator =& $gallery->getUrlGenerator();
+
 				$phpVm->header(
 					'Location: ' . $urlGenerator->generateUrl(
 						array(
@@ -109,6 +113,7 @@ class FetchDownloadView extends GalleryView {
 
 			// send event about download attempt
 			$event = GalleryCoreApi::newEvent('GalleryCheckoutDownload::downloadNotify');
+
 			$event->setEntity($transaction);
 			$event->setData('permitted');
 
@@ -169,6 +174,7 @@ class FetchDownloadView extends GalleryView {
 
 			$extension = 'zip';
 			$uniqueId  = '';
+
 			if ($uniquefilename) {
 				$uniqueId = '-' . date('YmdHis');
 			}
@@ -178,8 +184,10 @@ class FetchDownloadView extends GalleryView {
 
 			// Disable output compression (if necessary) since IE seems to have problems with it
 			@$phpVm->ini_set('zlib.output_compression', 0);
+
 			$phpVm->header('Content-Type: application/octet-stream');
 			$phpVm->header('Content-Disposition: attachment; filename="' . $zipName . '"');
+
 			if ($size > 0) {
 				$phpVm->header("Content-Length: $size");
 			}
@@ -187,11 +195,13 @@ class FetchDownloadView extends GalleryView {
 			if ($fd = $platform->fopen($file, 'rb')) {
 				while (true) {
 					$data = $platform->fread($fd, 65535);
+
 					if (strlen($data) == 0) {
 						break;
 					}
 
 					echo $data;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 

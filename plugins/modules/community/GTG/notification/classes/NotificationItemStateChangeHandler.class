@@ -27,8 +27,9 @@ GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHelper.cla
  * item are removed.  In the case of the save event, if there are any subscriptions on the
  * parent item, then these are propagated to the new item.
  */
-class NotificationItemStateChangeHandler // extends GalleryEventListener
-{
+
+// extends GalleryEventListener
+class NotificationItemStateChangeHandler {
 	/**
 	 * @see GalleryEventListener::handleEvent
 	 */
@@ -37,6 +38,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 
 		$eventName = $event->getEventName();
 		$entity    = $event->getEntity();
+
 		if (empty($entity)) {
 			return array(
 				GalleryCoreApi::error(
@@ -47,7 +49,6 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 				),
 				null,
 			);
-
 		}
 
 		if ($eventName == 'GalleryEntity::save') {
@@ -70,7 +71,6 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		} elseif ($eventName == 'GalleryEntity::delete') {
 			$deleteByColumn = GalleryUtilities::isA($entity, 'GalleryUser') ? 'userId' : 'itemId';
 
@@ -84,7 +84,6 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		}
 
 		return array(null, null);
@@ -126,6 +125,7 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 
 			$eventName          = $hints[0];
 			$requiredPermission = $notification->getPermission();
+
 			foreach ($subscribers as $data) {
 				list($ret, $permissions) = GalleryCoreApi::getPermissions($entity->getId(), $data[0]);
 
@@ -149,13 +149,9 @@ class NotificationItemStateChangeHandler // extends GalleryEventListener
 				if ($ret) {
 					return $ret;
 				}
-
 			}
-
 		}
 
 		return null;
 	}
-
 }
-

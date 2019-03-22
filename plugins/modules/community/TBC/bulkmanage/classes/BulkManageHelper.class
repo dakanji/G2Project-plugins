@@ -93,6 +93,7 @@ class BulkManageHelper {
 		$batchSize = 100;
 		$i         = 0;
 		$processed = 0;
+
 		while (!empty($itemIds)) {
 			// Grab a chunk
 			$itemIdsChunk = array_splice($itemIds, 0, $batchSize);
@@ -109,6 +110,7 @@ class BulkManageHelper {
 
 			if ($ret) {
 				GalleryCoreApi::releaseLocks($lockId);
+
 				return $ret;
 			}
 
@@ -135,6 +137,7 @@ class BulkManageHelper {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return $ret;
 				}
 
@@ -185,6 +188,7 @@ class BulkManageHelper {
 
 		$templateAdapter->updateProgressBar($title, $module->translate('Finished'), 1);
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
+
 		return array(null, true);
 	}
 
@@ -209,6 +213,7 @@ class BulkManageHelper {
 
 		// Load each plugin
 		$pluginInstances = array();
+
 		foreach (array_keys($allPluginIds) as $pluginId) {
 			list($ret, $plugin) = GalleryCoreApi::newFactoryInstanceById('BulkManagePlugin', $pluginId);
 

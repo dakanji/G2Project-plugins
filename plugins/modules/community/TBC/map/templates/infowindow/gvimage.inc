@@ -2,6 +2,7 @@
 
 //Fix the description , summary and title HREFs
 $tmp = array();
+
 foreach ($map['mapPoints'] as $point) {
 	$point['description'] = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['description']);
 	$point['description'] = str_replace('[/url]', '</a>', $point['description']);
@@ -12,6 +13,7 @@ foreach ($map['mapPoints'] as $point) {
 	$point['summary']     = str_replace('[url', "<a target='gpop' onClick=\"window.open(href, 'gpop','left=20,top=20,scrollbars=yes').focus();return false;\" href", $point['summary']);
 	$point['summary']     = str_replace('[/url]', '</a>', $point['summary']);
 	$point['summary']     = str_replace(']', '>', $point['summary']);
+
 	if ($point['type'] == 'GalleryMovieItem') {
 		$point['itemLink'] = '<div style=\";margin-top:10px;width:250px;height:180px;overflow:auto;\"><center><embed src=\"' . $gurl->generateUrl(
 			array(
@@ -47,6 +49,7 @@ $map['extramap']       = '';
 $map['infowindows'][0] = "''
 	+' '+itemLink+' '
 	+'<br/><font color=black><b>" . $module->translate('Date:') . "</b> '+created+'</font>'";
+
 if ($map['showItemSummaries']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +(summary!=\"\"?'<br/><br/><font color=black><b>Summary:</b><br/>'+summary+'</font>':'')";
@@ -59,6 +62,7 @@ if ($map['showItemDescriptions']) {
 
 $map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><font color=black><b>Location:</b><br>'+lat+','+lon+'</font>'";
+
 if ($map['showZoomLinks']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +'<br/><br/><a href=\"#zoominlink\" onclick=\"javascript:map.setCenter(new GLatLng('+lat+','+lon+'), '+zoomlevel+'); return false;\">" . $module->translate('Zoom In') . "</a>'";

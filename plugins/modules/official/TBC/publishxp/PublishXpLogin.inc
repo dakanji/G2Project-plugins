@@ -37,6 +37,7 @@ class PublishXpLoginController extends GalleryController {
 		global $gallery;
 
 		$results = $error = array();
+
 		if (isset($form['action']['login'])) {
 			if (empty($form['userName'])) {
 				$error[] = 'form[error][userName][missing]';
@@ -67,7 +68,9 @@ class PublishXpLoginController extends GalleryController {
 
 				if (isset($user) && $user->isCorrectPassword($form['password'])) {
 					$gallery->setActiveUser($user);
+
 					$event = GalleryCoreApi::newEvent('Gallery::Login');
+
 					$event->setEntity($user);
 
 					list($ret, $ignoreTheRedirect) = GalleryCoreApi::postEvent($event);
@@ -82,6 +85,7 @@ class PublishXpLoginController extends GalleryController {
 
 			if (!empty($error) && !empty($form['userName'])) {
 				$event = GalleryCoreApi::newEvent('Gallery::FailedLogin');
+
 				$event->setData(
 					array(
 						'userName' => $form['userName'],
@@ -102,6 +106,7 @@ class PublishXpLoginController extends GalleryController {
 
 		$results['status'] = array();
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -150,6 +155,7 @@ class PublishXpLoginView extends GalleryView {
 		$template->title($module->translate('Windows Publishing Wizard'));
 		$template->setVariable('controller', 'publishxp.PublishXpLogin');
 		$template->head('modules/publishxp/templates/Head.tpl');
+
 		return array(
 			null,
 			array(

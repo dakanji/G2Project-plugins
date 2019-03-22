@@ -37,8 +37,10 @@ class ASCII85Decode {
 		$state = 0;
 		$chn   = null;
 		$l     = strlen($in);
+
 		for ($k = 0; $k < $l; ++$k) {
 			$ch = ord($in[$k]) & 0xff;
+
 			if ($ch == ORD_tilde) {
 				break;
 			}
@@ -49,6 +51,7 @@ class ASCII85Decode {
 
 			if ($ch == ORD_z && $state == 0) {
 				$out .= chr(0) . chr(0) . chr(0) . chr(0);
+
 				continue;
 			}
 
@@ -57,9 +60,11 @@ class ASCII85Decode {
 			}
 
 			$chn[$state++] = $ch - ORD_exclmark;
+
 			if ($state == 5) {
 				$state = 0;
 				$r     = 0;
+
 				for ($j = 0; $j < 5; ++$j) {
 					$r = $r * 85 + $chn[$j];
 				}
@@ -72,6 +77,7 @@ class ASCII85Decode {
 		}
 
 		$r = 0;
+
 		if ($state == 1) {
 			$this->fpdi->error('Illegal length in ASCII85Decode.');
 		}

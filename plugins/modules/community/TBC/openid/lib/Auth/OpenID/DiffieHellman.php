@@ -14,6 +14,7 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 require_once 'Auth/OpenID.php';
+
 require_once 'Auth/OpenID/BigMath.php';
 
 function Auth_OpenID_getDefaultMod() {
@@ -86,7 +87,7 @@ class Auth_OpenID_DiffieHellman {
 
 	public function usingDefaultValues() {
 		return $this->mod == Auth_OpenID_getDefaultMod() &&
-				$this->gen == Auth_OpenID_getDefaultGen();
+				$this->gen      == Auth_OpenID_getDefaultGen();
 	}
 
 	public function xorSecret($composite, $secret, $hash_func) {
@@ -94,6 +95,7 @@ class Auth_OpenID_DiffieHellman {
 		$dh_shared_str  = $this->lib->longToBinary($dh_shared);
 		$hash_dh_shared = $hash_func($dh_shared_str);
 		$xsecret        = '';
+
 		for ($i = 0; $i < Auth_OpenID::bytes($secret); $i++) {
 			$xsecret .= chr(ord($secret[$i]) ^ ord($hash_dh_shared[$i]));
 		}

@@ -63,8 +63,10 @@ class PanoramaUpgradeHelper {
 
 		$photos      = array();
 		$derivatives = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$gallery->guaranteeTimeLimit(30);
+
 			if ($result[1] == 'PanoramaPhotoItem') {
 				$photos[] = $result[0];
 			} else {
@@ -120,7 +122,9 @@ class PanoramaUpgradeHelper {
 		 */
 		$cacheBaseDir = $gallery->getConfig('data.gallery.cache');
 		$platform     =& $gallery->getPlatform();
+
 		@$platform->recursiveRmDir("$cacheBaseDir/entity");
+
 		return null;
 	}
 }

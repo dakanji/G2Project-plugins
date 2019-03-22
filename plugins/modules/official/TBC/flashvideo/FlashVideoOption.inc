@@ -42,6 +42,7 @@ class FlashVideoOption extends ItemAddOption {
 
 		$storage =& $gallery->getStorage();
 		$errors  = $flvItems  = array();
+
 		foreach ($items as $item) {
 			if (GalleryUtilities::isA($item, 'GalleryMovieItem')
 				&& $item->getMimeType() == 'video/x-flv'
@@ -53,6 +54,7 @@ class FlashVideoOption extends ItemAddOption {
 		while (!empty($flvItems)) {
 			$currentItems = array_splice($flvItems, 0, 100);
 			$itemIds      = array();
+
 			foreach ($currentItems as $item) {
 				$itemIds[] = $item->getId();
 			}
@@ -68,6 +70,7 @@ class FlashVideoOption extends ItemAddOption {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return array($ret, null, null);
 				}
 
@@ -77,6 +80,7 @@ class FlashVideoOption extends ItemAddOption {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return array($ret, null, null);
 				}
 			}

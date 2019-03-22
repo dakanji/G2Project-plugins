@@ -47,6 +47,7 @@ class DupeDetectShowDupesController extends GalleryController {
 
 		if (isset($form['pairs'])) {
 			$pairIds = array_keys($form['pairs']);
+
 			foreach ($form['pairs'] as $pairId => $itemIds) {
 				$gallery->debug("pair # $pairId is $itemIds \n");
 			}
@@ -57,6 +58,7 @@ class DupeDetectShowDupesController extends GalleryController {
 		}
 
 		$status = array();
+
 		if (isset($form['action']['submit'])) {
 			$status['ignored']['count'] = 0;
 			$status['linked']['count']  = 0;
@@ -67,6 +69,7 @@ class DupeDetectShowDupesController extends GalleryController {
 
 			// now let's see what we have to do
 			GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
+
 			if (isset($form['actions'])) {
 				foreach ($form['actions'] as $pairId => $action) {
 					list($srcId, $dupId) = explode(',', $form['pairs'][$pairId]);
@@ -79,10 +82,13 @@ class DupeDetectShowDupesController extends GalleryController {
 							);
 
 							$status['ignored'][] = $pairId;
+
 							break;
+
 						case 'leaveAsIs':
 							// just do nothing
 							break;
+
 						case 'linkToSrc':
 							$pairsToLink[] = array(
 								'master' => $srcId,
@@ -90,7 +96,9 @@ class DupeDetectShowDupesController extends GalleryController {
 							);
 
 							$status['linked'][] = $pairId;
+
 							break;
+
 						case 'linkToDup':
 							$pairsToLink[] = array(
 								'master' => $dupId,
@@ -98,14 +106,19 @@ class DupeDetectShowDupesController extends GalleryController {
 							);
 
 							$status['linked'][] = $pairId;
+
 							break;
+
 						case 'deleteSrc':
 							$itemsToDelete[]     = $srcId;
 							$status['deleted'][] = $srcId;
+
 							break;
+
 						case 'deleteDup':
 							$itemsToDelete[]     = $dupId;
 							$status['deleted'][] = $dupId;
+
 							break;
 					}
 				}
@@ -161,7 +174,7 @@ class DupeDetectShowDupesController extends GalleryController {
 								ERROR_PERMISSION_DENIED,
 								__FILE__,
 								__LINE__,
-								"Don't have permission to delete this item"
+								'Not permitted to delete this item'
 							),
 							null,
 						);
@@ -179,6 +192,7 @@ class DupeDetectShowDupesController extends GalleryController {
 				}
 			}
 		} // end of form[action][save]
+
 		elseif (isset($form['action']['reset'])) {
 			$redirect = true;
 		}
@@ -195,6 +209,7 @@ class DupeDetectShowDupesController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = array();
+
 		return array(GalleryStatus::success(), $results);
 	}
 }
@@ -211,6 +226,7 @@ class DupeDetectShowDupesView extends GalleryView {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
+
 		if ($form['formName'] != 'DupeDetectShowDupes') {
 			$form['showIgnored'] = false;
 			$form['formName']    = 'DupeDetectShowDupes';
@@ -221,6 +237,7 @@ class DupeDetectShowDupesView extends GalleryView {
 		}
 
 		$typeToShow = null;
+
 		if ($form['showIgnored'] == true) {
 			$statusToShow = null;
 		} else {
@@ -242,17 +259,22 @@ class DupeDetectShowDupesView extends GalleryView {
 		 * e.g. an exact duplication will be discovered both by CRC32 and histogram
 		 */
 		$pairsIds = array();
+
 		foreach ($dupList as $key => $dupRecord) {
 			$pairId = $dupRecord['srcItemId'] . '|' . $dupRecord['dupItemId'];
+
 			if (array_key_exists($pairId, $pairsIds)) {
 				$gallery->debug("dupList size is $dupList\n");
 
 				// take the exact one
 				if ($dupRecord['dupType'] == DUPEDETECT_HISTOGRAM_ALGORITHM) {
 					$gallery->debug("***splicing out pair $key ($pairId)- new is histogram***\n");
+
 					unset($dupList[$key]);
-				} else { // $dupRecord is CRC32 duplication, so delete the other one
+				} else {
+					// $dupRecord is CRC32 duplication, so delete the other one
 					$gallery->debug("***splicing out pair $pairId  - new is CRC32***\n");
+
 					unset($dupList[$pairsIds[$pairId]]);
 					$pairsIds[$pairId] = $key;
 				}
@@ -263,6 +285,7 @@ class DupeDetectShowDupesView extends GalleryView {
 
 		// create a list of ids for all the items - source and dups - for thumb extraction
 		$allIds = array();
+
 		foreach ($dupList as $dupRecord) {
 			$allIds[] = $dupRecord['srcItemId'];
 			$allIds[] = $dupRecord['dupItemId'];
@@ -276,6 +299,7 @@ class DupeDetectShowDupesView extends GalleryView {
 		}
 
 		$pairsList = array();
+
 		foreach ($dupList as $dupRecord) {
 			$dupRecord['srcItemData'] = $dupRecord['srcItem']->getMemberData();
 
@@ -328,7 +352,9 @@ class DupeDetectShowDupesView extends GalleryView {
 		);
 
 		$form['dupStatusList'] = $dupStatus;
+
 		$template->setVariable('controller', 'dupedetect.DupeDetectShowDupes');
+
 		return array(
 			GalleryStatus::success(),
 			array(

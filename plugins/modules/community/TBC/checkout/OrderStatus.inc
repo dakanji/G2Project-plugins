@@ -38,6 +38,7 @@
  * Required classes
  */
 GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutHelper.class');
+
 class OrderStatusController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -61,6 +62,7 @@ class OrderStatusController extends GalleryController {
 			$results['redirect']['view'] = '';
 			$results['status']           = '';
 			$results['error']            = '';
+
 			return array(null, $results);
 		}
 	}
@@ -75,6 +77,7 @@ class OrderStatusView extends GalleryView {
 
 		// Figure out which item we're talking about
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
+
 		if (empty($transactionId)) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
@@ -97,6 +100,7 @@ class OrderStatusView extends GalleryView {
 		//security check
 		$verify1 = GalleryUtilities::getRequestVariables('verify1');
 		$verify2 = GalleryUtilities::getRequestVariables('verify2');
+
 		if ($verify1 != $transaction->getDate() || $verify2 != $transaction->getSecurity()) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
@@ -131,6 +135,7 @@ class OrderStatusView extends GalleryView {
 		$tpl['isAdmin']    = $isAdmin;
 		$tpl['id']         = $transactionId;
 		$tpl['controller'] = 'checkout.OrderStatus';
+
 		$template->setVariable('statusPlugins', $plugins);
 		$template->setVariable('tpl', $tpl);
 
@@ -141,6 +146,7 @@ class OrderStatusView extends GalleryView {
 		}
 
 		$template->title($tpl['busname'] . ' ' . $module->translate('Order Status'));
+
 		return array(
 			null,
 			array(

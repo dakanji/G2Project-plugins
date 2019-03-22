@@ -45,6 +45,7 @@ class CheckoutTransactionEventHelper {
 		global $gallery;
 
 		$transactionId = $transaction->getId();
+
 		switch ($type) {
 			case 'confirm':
 				$ret = CheckoutTransactionEventHelper::_setTransactionFlag($transaction, true, array('confirmed'));
@@ -71,6 +72,7 @@ class CheckoutTransactionEventHelper {
 				}
 
 				break;
+
 			case 'clear':
 				$ret = CheckoutTransactionEventHelper::_setTransactionFlag($transaction, true, array('paid', 'cleared', 'fulfil'));
 
@@ -96,6 +98,7 @@ class CheckoutTransactionEventHelper {
 				}
 
 				break;
+
 			case 'complete':
 				$ret = CheckoutTransactionEventHelper::_setTransactionFlag($transaction, true, array('fulfilled', 'completed'));
 
@@ -321,6 +324,7 @@ class CheckoutTransactionEventHelper {
 		$fromAddress   = $mp['orderStatusFromAddress'];
 		$subjectPrefix = $mp['orderStatusSubject'];
 		$emails        = unserialize($mp['emails']);
+
 		foreach ($emails as $index => $recipient) {
 			// Don't send admin notifications unless required to
 			if ($adminOnly and !$recipient['isAdmin']) {
@@ -400,6 +404,7 @@ class CheckoutTransactionEventHelper {
 			}
 
 			// see if $subject and $text need translating
+
 			/* subject either a string or a (domain, data) array
 			and data is itself a string or a (text, arg1, arg2...) array */
 			if (!is_array($subject)) {
@@ -426,6 +431,7 @@ class CheckoutTransactionEventHelper {
 				$lText = $text;
 			} else {
 				$lText = '';
+
 				foreach ($text as $line) {
 					if (is_array($line)) {
 						list($ret, $thisLine) = $translator->translateDomain($line['domain'], $line['data']);
@@ -522,27 +528,42 @@ class CheckoutTransactionEventHelper {
 			switch ($flag) {
 				case 'confirmed':
 					$transaction->setTimeConfirmed($flagValue);
+
 					break;
+
 				case 'paid':
 					$transaction->setTimePaid($flagValue);
+
 					break;
+
 				case 'cleared':
 					$transaction->setTimeCleared($flagValue);
+
 					break;
+
 				case 'fulfil':
 					$transaction->setTimeFulfil($flagValue);
+
 					break;
+
 				case 'fulfilled':
 					$transaction->setTimeFulfilled($flagValue);
+
 					break;
+
 				case 'completed':
 					$transaction->setTimeCompleted($flagValue);
+
 					break;
+
 				case 'hold':
 					$transaction->setTimeHold($flagValue);
+
 					break;
+
 				case 'problem':
 					$transaction->setTimeProblem($flagValue);
+
 					break;
 			}
 		}

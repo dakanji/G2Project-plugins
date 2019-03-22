@@ -45,6 +45,7 @@ class TryLoginController extends GalleryController {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$results      = array();
 		$error        = array();
+
 		if (isset($form['action']['login'])) {
 			if (empty($form['openId'])) {
 				$error[] = 'form[error][openId][missing]';
@@ -53,6 +54,7 @@ class TryLoginController extends GalleryController {
 
 				// Begin the OpenID authentication process
 				$request = $consumer->begin($form['openId']);
+
 				if (!isset($request)) {
 					$error[] = 'form[error][openId][invalid]';
 				}
@@ -153,6 +155,7 @@ class TryLoginController extends GalleryController {
 					);
 
 					$redirect = $request->redirectURL($trustRoot, $returnTo);
+
 					if (Auth_OpenID::isFailure($redirect)) {
 						return array(
 							GalleryStatus::error(
@@ -184,6 +187,7 @@ class TryLoginController extends GalleryController {
 
 		$results['status'] = array();
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }

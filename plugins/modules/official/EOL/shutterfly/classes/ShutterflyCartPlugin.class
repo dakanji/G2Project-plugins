@@ -26,8 +26,9 @@
  * @author Alan Harder <alan.harder@sun.com>
  * @version $Revision: 17580 $
  */
-class ShutterflyCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterface_1_1
-{
+
+// implements CartPluginInterface_1_0 and CartPluginInterface_1_1
+class ShutterflyCartPlugin {
 	/**
 	 * @see CartPluginInterface_1_0::getSupportedItemTypes
 	 */
@@ -62,16 +63,26 @@ class ShutterflyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 		global $gallery;
 
 		$session =& $gallery->getSession();
+
 		$session->put('shutterfly.cart', $cartItemIds);
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnUrl    = $urlGenerator->generateUrl(
-			array('view' => 'cart.ViewCart'),
-			array('forceFullUrl' => true)
-	);
+			array(
+				'view' => 'cart.ViewCart',
+			),
+			array(
+				'forceFullUrl' => true,
+			)
+		);
 
-		return array(null, array('view' => 'shutterfly.PrintPhotos', 'returnUrl' => $returnUrl,
-				 'authToken'            => $session->getAuthToken(), ));
+		return array(
+			null,
+			array(
+				'view'      => 'shutterfly.PrintPhotos',
+				'returnUrl' => $returnUrl,
+				'authToken' => $session->getAuthToken(),
+			),
+		);
 	}
-
 }
-

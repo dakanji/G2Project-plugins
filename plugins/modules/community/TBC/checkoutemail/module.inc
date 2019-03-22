@@ -42,10 +42,13 @@ class CheckoutEmailModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -153,6 +156,7 @@ class CheckoutEmailModule extends GalleryModule {
 
 		if (!empty($currentVersion)) {
 			$storage =& $gallery->getStorage();
+
 			switch ($currentVersion) {
 				case '0.0.1':
 				case '0.0.2':
@@ -222,6 +226,7 @@ class CheckoutEmailModule extends GalleryModule {
 				case '0.3.3':
 				case 'end of upgrade path':
 					break;
+
 				default:
 					return GalleryCoreApi::error(
 						ERROR_BAD_PLUGIN,

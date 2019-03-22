@@ -46,6 +46,7 @@ class AdminController extends GalleryController {
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'contactowner');
 
@@ -107,6 +108,7 @@ class AdminController extends GalleryController {
 				}
 
 				$redirect['view'] = 'core.SiteAdmin';
+
 				if ($isActive) {
 					$redirect['subView'] = 'contactowner.Admin';
 					$status['saved']     = 1;
@@ -129,6 +131,7 @@ class AdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -179,6 +182,7 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'contactowner.Admin');
+
 		return array(
 			null,
 			array(

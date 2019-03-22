@@ -117,6 +117,7 @@ class SendEcardController extends GalleryController {
 					}
 
 					$error = array_merge($error, $pluginErrors);
+
 					if (!$continue) {
 						break;
 					}
@@ -165,6 +166,7 @@ class SendEcardController extends GalleryController {
 			}
 
 			$urlGenerator =& $gallery->getUrlGenerator();
+
 			if ($canLink) {
 				$link = $urlGenerator->generateUrl(
 					array(
@@ -186,11 +188,14 @@ class SendEcardController extends GalleryController {
 			$data['image']  = $filename;
 			$data['link']   = $link;
 			$dataPlain      = $data;
+
 			GalleryUtilities::unsanitizeInputValues($dataPlain, false);
+
 			$dataPlain['image'] = $data['image'];
 			$data['header']     = nl2br($data['header']);
 			$data['footer']     = nl2br($data['footer']);
 			$data['text']       = nl2br($data['text']);
+
 			if ($config['from']) {
 				$tempVar = $config['from'];
 			} else {
@@ -208,6 +213,7 @@ class SendEcardController extends GalleryController {
 			}
 
 			GalleryUtilities::unsanitizeInputValues($headers, false);
+
 			$mime         = new Mail_mime("\n");
 			$platform     =& $gallery->getPlatform();
 			$messagePlain = $platform->file_get_contents(
@@ -215,6 +221,7 @@ class SendEcardController extends GalleryController {
 			);
 
 			$messagePlain = EcardHelper::replaceKeywords($messagePlain, $dataPlain);
+
 			$mime->setTXTBody($messagePlain);
 
 			// Either add attachment (plain) or add HTML image (html)
@@ -226,7 +233,9 @@ class SendEcardController extends GalleryController {
 				);
 
 				$messageHtml = EcardHelper::replaceKeywords($messageHtml, $data);
+
 				$mime->setHTMLBody($messageHtml);
+
 				if ($resize->canBeViewedInline()) {
 					$mime->addHTMLImage($path, $resize->getMimeType(), $filename);
 				} else {
@@ -252,6 +261,7 @@ class SendEcardController extends GalleryController {
 			}
 
 			$hdrs = '';
+
 			foreach ($mime->headers($tmp) as $key => $value) {
 				$hdrs .= $key . ': ' . $value . "\n";
 			}
@@ -267,6 +277,7 @@ class SendEcardController extends GalleryController {
 			}
 
 			$success = $platform->mail($headers['to'], $headers['subject'], $body, $hdrs);
+
 			if (!$success) {
 				return array(
 					GalleryCoreApi::error(
@@ -281,6 +292,7 @@ class SendEcardController extends GalleryController {
 
 			// Put sender data into session
 			$session->put('ecard.from', $form['from']);
+
 			if (isset($form['fromName'])) {
 				$session->put('ecard.fromName', $form['fromName']);
 			}
@@ -304,6 +316,7 @@ class SendEcardController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 
@@ -351,6 +364,7 @@ class SendEcardView extends GalleryView {
 			$form['text']     = '';
 			$form['from']     = $session->get('ecard.from');
 			$form['fromName'] = $session->get('ecard.fromName');
+
 			if (empty($form['from'])) {
 				list($ret, $isGuest) = GalleryCoreApi::isAnonymousUser();
 
@@ -375,6 +389,7 @@ class SendEcardView extends GalleryView {
 		$SendEcard           = array();
 		$SendEcard['itemId'] = $item->getId();
 		$SendEcard['item']   = (array)$item;
+
 		if ($config['from']) {
 			$tempVar = $config['from'];
 		} else {
@@ -391,6 +406,7 @@ class SendEcardView extends GalleryView {
 
 		$SendEcard['resize']  = (array)$resize;
 		$SendEcard['subject'] = EcardHelper::replaceKeywords($config['subject'], $form);
+
 		if (!empty($config['bcc'])) {
 			$SendEcard['bcc'] = $config['bcc'];
 		}
@@ -435,6 +451,7 @@ class SendEcardView extends GalleryView {
 		}
 
 		$SendEcard['plugins'] = $plugins;
+
 		$template->setVariable('SendEcard', $SendEcard);
 		$template->setVariable('controller', 'ecard.SendEcard');
 
@@ -445,6 +462,7 @@ class SendEcardView extends GalleryView {
 		}
 
 		$template->title($module->translate('Send eCard'));
+
 		return array(
 			null,
 			array(

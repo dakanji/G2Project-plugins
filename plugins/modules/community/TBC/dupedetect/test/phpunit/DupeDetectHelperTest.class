@@ -38,6 +38,7 @@ GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class')
  */
 
 //GalleryCoreApi::requireOnce('modules/quotas/classes/QuotasMap.class');
+
 /**
  * Test DupeDetect functionality
  *
@@ -60,6 +61,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -68,6 +70,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -408,6 +411,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($count, 1);
+
 		$dupeList = array(array($dupItem1->getId(), 0));
 
 		list($ret, $count) = DupeDetectHelper::addDupes($this->_item->getId(), $dupeList);
@@ -439,6 +443,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($exist, false);
+
 		$exist = true;
 
 		list($ret, $exist) = DupeDetectHelper::getDupePairs(
@@ -462,6 +467,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		// call handleEvent()
 		$eventName = 'GalleryEntity::save';
 		$event     = GalleryCoreApi::newEvent($eventName);
+
 		$event->setEntity($this->_item);
 
 		list($ret, $result) = DupeDetectHelper::handleEvent($event);
@@ -509,6 +515,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		// call handleEvent()
 		$eventName = 'GalleryEntity::delete';
 		$event     = GalleryCoreApi::newEvent($eventName);
+
 		$event->setEntity($this->_item);
 
 		list($ret, $result) = DupeDetectHelper::handleEvent($event);
@@ -574,6 +581,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		$this->assertEquals($existingDupes + 1, count($dupes));
+
 		$existingDupes = count($dupes);
 
 		/* now add another dup image, that is exact dupe of $this->_item. two more dupe
@@ -710,6 +718,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -720,6 +729,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 

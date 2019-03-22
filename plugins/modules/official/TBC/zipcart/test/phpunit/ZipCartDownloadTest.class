@@ -48,6 +48,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		}
 
 		$gallery->_phpVm = new ZipCartDownloadPhpVm($this);
+
 		$gallery->setConfig('data.gallery.tmp', '/data/tmp/');
 	}
 
@@ -55,6 +56,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
 		$platform->setReply('fopen', array('/data/tmp/test.zip', 'rb', 0), 'testfd');
@@ -64,7 +66,9 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		$platform->setReply('unlink', array('/data/tmp/test.zip'), true);
 		$platform->setReply('unlink', array('/data/tmp/test'), true);
 		$gallery->setPlatform($platform);
+
 		GalleryUtilities::putRequestVariable('file', 'test');
+
 		$_SERVER['HTTP_USER_AGENT'] = 'This is MSIE 6 browser';
 		set_error_handler('ZipCartDownloadTest_error_handler');
 		ob_start();
@@ -77,6 +81,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		$output = ob_get_contents();
 		ob_end_clean();
+
 		$this->assertEquals(
 			array(
 				'Content-Type: application/zip',
@@ -86,7 +91,6 @@ class ZipCartDownloadTest extends GalleryTestCase {
 			$this->_header,
 			'header'
 		);
-
 		$this->assertEquals('zipdata', $output, 'output');
 	}
 
@@ -94,6 +98,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), true);
 		$platform->setReply('filesize', array('/data/tmp/test.zip'), 123);
 		$platform->setReply('fopen', array('/data/tmp/test.zip', 'rb', 0), 'testfd');
@@ -103,7 +108,9 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		$platform->setReply('unlink', array('/data/tmp/test.zip'), true);
 		$platform->setReply('unlink', array('/data/tmp/test'), true);
 		$gallery->setPlatform($platform);
+
 		GalleryUtilities::putRequestVariable('file', 'test');
+
 		$_SERVER['HTTP_USER_AGENT'] = 'This is some Gecko browser';
 		set_error_handler('ZipCartDownloadTest_error_handler');
 		ob_start();
@@ -116,12 +123,12 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		$output = ob_get_contents();
 		ob_end_clean();
+
 		$this->assertEquals(
 			array('Content-Type: multipart/mixed; boundary=G2ZipCart'),
 			$this->_header,
 			'header'
 		);
-
 		$this->assertEquals(
 			"--G2ZipCart\nContent-Type: application/zip\nContent-Disposition: " .
 			"inline; filename=\"G2cart.zip\"\nContent-Length: 123\n\nzipdata\n--G2ZipCart\n" .
@@ -136,9 +143,12 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/test.zip'), false);
 		$gallery->setPlatform($platform);
+
 		GalleryUtilities::putRequestVariable('file', 'test');
+
 		ob_start();
 
 		$ret = $this->_view->renderImmediate(array(), array());
@@ -149,6 +159,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		$output = ob_get_contents();
 		ob_end_clean();
+
 		$this->assertEquals(1, count($this->_header), 'header lines');
 		$this->assertEquals('Location:', substr($this->_header[0], 0, 9), 'header');
 		$this->assertEquals('', $output, 'output');
@@ -158,11 +169,13 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		global $gallery;
 
 		$platform = new UnitTestPlatform();
+
 		$platform->setReply('is_readable', array('/data/tmp/passwd.zip'), false);
 		$gallery->setPlatform($platform);
 
 		// Verify a malicious file param can't get out of the tmp dir
 		GalleryUtilities::putRequestVariable('file', '../../etc/passwd');
+
 		ob_start();
 
 		$ret = $this->_view->renderImmediate(array(), array());
@@ -173,6 +186,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 
 		$output = ob_get_contents();
 		ob_end_clean();
+
 		$this->assertEquals(1, count($this->_header), 'header lines');
 		$this->assertEquals('Location:', substr($this->_header[0], 0, 9), 'header');
 		$this->assertEquals('', $output, 'output');
@@ -198,7 +212,8 @@ class ZipCartDownloadPhpVm extends GalleryPhpVm {
 
 function ZipCartDownloadTest_error_handler($errorNumber, $errorString, $file, $line, $context) {
 	if ($errorNumber == 2048) {
-		return; // E_STRICT
+		// E_STRICT
+		return;
 	}
 
 	if (error_reporting() == 0 && strpos($errorString, 'apacheSetenvBroken') !== false) {

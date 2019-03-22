@@ -54,6 +54,7 @@ class TranscodeHelper {
 		}
 
 		// Get dimensions (width x height)
+
 		/*No need to call ffmpeg 5 times
 		$width = $height = -1;
 
@@ -66,7 +67,6 @@ class TranscodeHelper {
 				$width = $result[0];
 				$height = $result[1];
 			}
-
 		}
 
 		/* Get video-framerate (frames per second) */
@@ -82,7 +82,6 @@ class TranscodeHelper {
 			if (!$ret) {
 				$fps = $result[0];
 			}
-
 		}
 
 		/* Get audio-samplerate (samples per second, Hz) */
@@ -98,7 +97,6 @@ class TranscodeHelper {
 			if (!$ret) {
 				$asr = $result[0];
 			}
-
 		}
 
 		/* Get audio-channels */
@@ -114,7 +112,6 @@ class TranscodeHelper {
 			if (!$ret) {
 				$chans = $result[0];
 			}
-
 		}
 
 		/* Get video-bitrate (kb/s) */
@@ -130,7 +127,6 @@ class TranscodeHelper {
 			if (!$ret) {
 				$vbr = $result[0];
 			}
-
 		}
 
 		*/
@@ -149,6 +145,7 @@ class TranscodeHelper {
 		if (isset($derivatives[$itemId])) {
 			foreach ($derivatives as $derivative) {
 				$op = strstr($derivative->getDerivativeOperations(), 'convert-to-/');
+
 				if (strlen($op) > 0) {
 					return array(null, $derivative);
 				}

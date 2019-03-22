@@ -57,7 +57,10 @@ class PuzzleHelper {
 		global $gallery;
 
 		$found = false;
-		$count = 0; // just being paranoid
+
+		// just being paranoid
+		$count = 0;
+
 		// I think the parent of any photo is the album, but let's traverse the tree to make sure
 		while (true) {
 			// just because I hate the idea of an infinite loop.

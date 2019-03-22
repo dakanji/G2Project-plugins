@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');/**
+
  * @package TagTree
  * @author Chad Parry <spam@chad.parry.org>
  * @version $Revision: 1733 $
@@ -28,6 +29,7 @@ class HierarchyTagFilter {
 		global $gallery;
 
 		$streams = array();
+
 		foreach ($tags as $tagId) {
 			list($ret, $stream) = HierarchyTagFilter::getStreamForTag($parentHierarchy, $tagId, $aclIds);
 
@@ -45,12 +47,15 @@ class HierarchyTagFilter {
 		}
 
 		$rootHierarchies = array();
+
 		while (count(array_filter($streams, array('HierarchyTagFilter', 'hierarchyStreamIsEmpty'))) == 0) {
 			usort($streams, array('HierarchyTagFilter', 'compareStreams'));
 			$isMatch       = true;
 			$lastHierarchy = null;
+
 			foreach ($streams as $stream) {
 				$hierarchy = $stream->getFront();
+
 				if ($lastHierarchy) {
 					$isMatch = $isMatch && HierarchyTagFilter::isAncestor($hierarchy, $lastHierarchy);
 				}
@@ -59,6 +64,7 @@ class HierarchyTagFilter {
 			}
 
 			$deepestHierarchyStream = $streams[0];
+
 			if ($isMatch) {
 				$rootHierarchies[] = $deepestHierarchyStream->getFront();
 			}
@@ -109,6 +115,7 @@ class HierarchyTagFilter {
 		}
 
 		$stream = new ParentSequenceHierarchyStream($searchResults);
+
 		return array(null, $stream);
 	}
 
@@ -152,6 +159,7 @@ class HierarchyTagFilter {
 		}
 
 		$stream = new AlbumChildHierarchyStream($searchResults, $hierarchy);
+
 		return array(null, $stream);
 	}
 
@@ -164,6 +172,7 @@ class HierarchyTagFilter {
 	public function compareStreams($leftStream, $rightStream) {
 		$leftHierarchy  = $leftStream->getFront();
 		$rightHierarchy = $rightStream->getFront();
+
 		return HierarchyTagFilter::compareHierarchies($leftHierarchy, $rightHierarchy);
 	}
 
@@ -173,8 +182,10 @@ class HierarchyTagFilter {
 	// In other words, siblings are sorted as strings, and descendants come before ancestors.
 	public function compareHierarchies($leftHierarchy, $rightHierarchy) {
 		$minLength = min(count($leftHierarchy), count($rightHierarchy));
+
 		for ($i = 0; $i < $minLength; $i++) {
 			$cmp = strcmp($leftHierarchy[$i], $rightHierarchy[$i]);
+
 			if ($cmp) {
 				return $cmp;
 			}
@@ -211,6 +222,7 @@ class AlbumChildHierarchyStream extends HierarchyStream {
 	public function __construct($searchResults, $parentHierarchy) {
 		$this->searchResults   = $searchResults;
 		$this->parentHierarchy = $parentHierarchy;
+
 		$this->advance();
 	}
 
@@ -224,6 +236,7 @@ class AlbumChildHierarchyStream extends HierarchyStream {
 
 	public function advance() {
 		$result = $this->searchResults->nextResult();
+
 		if ($result) {
 			$itemId      = $result[0];
 			$this->front = array_merge($this->parentHierarchy, array($itemId));
@@ -240,6 +253,7 @@ class ParentSequenceHierarchyStream extends HierarchyStream {
 
 	public function __construct($searchResults) {
 		$this->searchResults = $searchResults;
+
 		$this->advance();
 	}
 
@@ -253,8 +267,10 @@ class ParentSequenceHierarchyStream extends HierarchyStream {
 
 	public function advance() {
 		$popped = $this->front;
+
 		do {
 			$result = $this->searchResults->nextResult();
+
 			if ($result) {
 				$parentSequence = $result[0];
 				$albumId        = $result[1];

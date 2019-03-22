@@ -92,6 +92,7 @@ class AdminTagsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		if (empty($error)) {
 			$route = 'redirect';
 		} else {
@@ -99,6 +100,7 @@ class AdminTagsController extends GalleryController {
 		}
 
 		$results[$route] = $target;
+
 		return array(null, $results);
 	}
 }
@@ -118,9 +120,11 @@ class AdminTagsView extends GalleryView {
 		}
 
 		$TagNameEdit = GalleryUtilities::getRequestVariables('TagEdit');
+
 		$template->setVariable('Tags', $tags);
 		$template->setVariable('TagNameEdit', $TagNameEdit);
 		$template->javascript('modules/tags/js/AdminTags.js');
+
 		return array(
 			null,
 			array(

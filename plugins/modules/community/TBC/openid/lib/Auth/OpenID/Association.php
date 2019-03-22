@@ -139,6 +139,7 @@ class Auth_OpenID_Association {
 	public function fromExpiresIn($expires_in, $handle, $secret, $assoc_type) {
 		$issued   = time();
 		$lifetime = $expires_in;
+
 		return new Auth_OpenID_Association(
 			$handle,
 			$secret,
@@ -196,6 +197,7 @@ class Auth_OpenID_Association {
 		);
 
 		assert(array_keys($data) == $this->assoc_keys);
+
 		return Auth_OpenID_KVForm::fromArray($data, $strict = true);
 	}
 
@@ -210,6 +212,7 @@ class Auth_OpenID_Association {
 		$pairs  = Auth_OpenID_KVForm::toArray($assoc_s, $strict = true);
 		$keys   = array();
 		$values = array();
+
 		foreach ($pairs as $key => $value) {
 			if (is_array($value)) {
 				list($key, $value) = $value;
@@ -223,6 +226,7 @@ class Auth_OpenID_Association {
 		$class_assoc_keys = $class_vars['assoc_keys'];
 		sort($keys);
 		sort($class_assoc_keys);
+
 		if ($keys != $class_assoc_keys) {
 			trigger_error(
 				'Unexpected key values: ' . var_export($keys, true),
@@ -238,14 +242,17 @@ class Auth_OpenID_Association {
 		$issued     = $pairs['issued'];
 		$lifetime   = $pairs['lifetime'];
 		$assoc_type = $pairs['assoc_type'];
+
 		if ($version != '2') {
 			trigger_error('Unknown version: ' . $version, E_USER_WARNING);
+
 			return null;
 		}
 
 		$issued   = intval($issued);
 		$lifetime = intval($lifetime);
 		$secret   = base64_decode($secret);
+
 		return new $class_name(
 			$handle,
 			$secret,
@@ -269,6 +276,7 @@ class Auth_OpenID_Association {
 
 		// Invalid association types should be caught at constructor
 		$callback = $this->_macs[$this->assoc_type];
+
 		return call_user_func_array($callback, array($this->secret, $kv));
 	}
 
@@ -297,6 +305,7 @@ class Auth_OpenID_Association {
 		}
 
 		$signed_message = $message;
+
 		$signed_message->setArg(
 			Auth_OpenID_OPENID_NS,
 			'assoc_handle',
@@ -306,6 +315,7 @@ class Auth_OpenID_Association {
 		$message_keys  = array_keys($signed_message->toPostArgs());
 		$signed_list   = array();
 		$signed_prefix = 'openid.';
+
 		foreach ($message_keys as $k) {
 			if (strpos($k, $signed_prefix) === 0) {
 				$signed_list[] = substr($k, strlen($signed_prefix));
@@ -314,6 +324,7 @@ class Auth_OpenID_Association {
 
 		$signed_list[] = 'signed';
 		sort($signed_list);
+
 		$signed_message->setArg(
 			Auth_OpenID_OPENID_NS,
 			'signed',
@@ -321,7 +332,9 @@ class Auth_OpenID_Association {
 		);
 
 		$sig = $this->getMessageSignature($signed_message);
+
 		$signed_message->setArg(Auth_OpenID_OPENID_NS, 'sig', $sig);
+
 		return $signed_message;
 	}
 
@@ -334,6 +347,7 @@ class Auth_OpenID_Association {
 	 */
 	public function _makePairs(&$message) {
 		$signed = $message->getArg(Auth_OpenID_OPENID_NS, 'signed');
+
 		if (!$signed || Auth_OpenID::isFailure($signed)) {
 			// raise ValueError('Message has no signed list: %s' % (message,))
 			return null;
@@ -342,6 +356,7 @@ class Auth_OpenID_Association {
 		$signed_list = explode(',', $signed);
 		$pairs       = array();
 		$data        = $message->toPostArgs();
+
 		foreach ($signed_list as $field) {
 			$pairs[] = array(
 				$field,
@@ -365,6 +380,7 @@ class Auth_OpenID_Association {
 	 */
 	public function getMessageSignature(&$message) {
 		$pairs = $this->_makePairs($message);
+
 		return base64_encode($this->sign($pairs));
 	}
 
@@ -385,6 +401,7 @@ class Auth_OpenID_Association {
 		}
 
 		$calculated_sig = $this->getMessageSignature($message);
+
 		return $calculated_sig == $sig;
 	}
 }
@@ -407,6 +424,7 @@ function Auth_OpenID_getAllAssociationTypes() {
 
 function Auth_OpenID_getSupportedAssociationTypes() {
 	$a = array('HMAC-SHA1');
+
 	if (Auth_OpenID_HMACSHA256_SUPPORTED) {
 		$a[] = 'HMAC-SHA256';
 	}
@@ -440,14 +458,17 @@ function Auth_OpenID_checkSessionType($assoc_type, $session_type) {
 
 function Auth_OpenID_getDefaultAssociationOrder() {
 	$order = array();
+
 	if (!Auth_OpenID_noMathSupport()) {
 		$order[] = array('HMAC-SHA1', 'DH-SHA1');
+
 		if (Auth_OpenID_HMACSHA256_SUPPORTED) {
 			$order[] = array('HMAC-SHA256', 'DH-SHA256');
 		}
 	}
 
 	$order[] = array('HMAC-SHA1', 'no-encryption');
+
 	if (Auth_OpenID_HMACSHA256_SUPPORTED) {
 		$order[] = array('HMAC-SHA256', 'no-encryption');
 	}
@@ -457,6 +478,7 @@ function Auth_OpenID_getDefaultAssociationOrder() {
 
 function Auth_OpenID_getOnlyEncryptedOrder() {
 	$result = array();
+
 	foreach (Auth_OpenID_getDefaultAssociationOrder() as $pair) {
 		list($assoc, $session) = $pair;
 
@@ -534,6 +556,7 @@ function &Auth_OpenID_getEncryptedNegotiator() {
 class Auth_OpenID_SessionNegotiator {
 	public function __construct($allowed_types) {
 		$this->allowed_types = array();
+
 		$this->setAllowedTypes($allowed_types);
 	}
 
@@ -553,6 +576,7 @@ class Auth_OpenID_SessionNegotiator {
 		}
 
 		$this->allowed_types = $allowed_types;
+
 		return true;
 	}
 
@@ -570,6 +594,7 @@ class Auth_OpenID_SessionNegotiator {
 
 		if ($session_type === null) {
 			$available = Auth_OpenID_getSessionTypes($assoc_type);
+
 			if (!$available) {
 				return false;
 			}

@@ -46,6 +46,7 @@ class EmailController extends GalleryController {
 		$error   = array();
 		$status  = array();
 		$results = array();
+
 		if (isset($form['action']['send'])) {
 			if (!empty($form['custEmail'])
 				&& GalleryUtilities::isValidEmailString($form['custEmail'])
@@ -58,6 +59,7 @@ class EmailController extends GalleryController {
 
 				$transactionId             = $transaction->getId();
 				$form['custRecipientName'] = trim($form['custRecipientName']);
+
 				if (empty($form['custRecipientName'])) {
 					$form['custRecipientName'] = $form['custFirstName']
 						. ' '
@@ -81,7 +83,8 @@ class EmailController extends GalleryController {
 				$results['redirect']['verify1']       = $transaction->getDate();
 				$results['redirect']['verify2']       = $transaction->getSecurity();
 			} else {
-				$error[]                     = 'form[error][badEmail]'; // badly formed email address
+				// badly formed email address
+				$error[]                     = 'form[error][badEmail]';
 				$results['delegate']['view'] = 'checkoutemail.Details';
 			}
 		} elseif (isset($form['action']['email'])) {
@@ -91,6 +94,7 @@ class EmailController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }

@@ -49,6 +49,7 @@ class AdminModerationController extends GalleryController {
 		}
 
 		$userid = $gallery->getActiveUserId();
+
 		if (isset($form)) {
 			if (isset($form['approved'])) {
 				//Approve Item
@@ -76,8 +77,10 @@ class AdminModerationController extends GalleryController {
 					$groupId = $core['id.everybodyGroup'];
 
 					//                  break;
+
 					/*              case 'allusers':
 					$groupId = $core['id.allUserGroup'];
+
 					break;
 					} */
 					if (isset($groupId)) {
@@ -104,11 +107,13 @@ class AdminModerationController extends GalleryController {
 					}
 
 					/*          list ($ret, $rootEntity) = GalleryCoreApi::loadEntitiesById($parentEntity->getParentId());
+
 					if ($ret) {
 					return array($ret, null);
 					}
 
 					list ($ret, $rootId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
+
 					if ($ret) {
 					return array($ret, null);
 					}
@@ -121,6 +126,7 @@ class AdminModerationController extends GalleryController {
 					}
 
 					//          }
+
 					/* Check if the comments module is active */        //j0yst1ck mod
 					list($ret, $moduleStatus) = GalleryCoreApi::fetchPluginStatus('module');
 
@@ -223,6 +229,7 @@ class AdminModerationController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -260,9 +267,11 @@ class AdminModerationView extends GalleryView {
 		}
 
 		$imagesCont = 0;
+
 		$template->setVariable('images', $images);
 		$template->setVariable('imagesCont', $imagesCont);
 		$template->setVariable('controller', 'moderate.AdminModeration');
+
 		return array(
 			null,
 			array(

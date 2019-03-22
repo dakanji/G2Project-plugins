@@ -42,10 +42,13 @@ class ICalendarModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('misc', $gallery->i18n('Miscellaneous'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -139,6 +142,7 @@ class ICalendarModule extends GalleryModule {
 				// FIXME Added ICalendarResourceItem & ICalendarResourceMap
 			case 'end of upgrade path':
 				break;
+
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,

@@ -51,7 +51,9 @@ class DefaultFileNamesView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminDefaultFileNames';
+
 		$gallery->guaranteeTimeLimit(120);
+
 		$prefixes    = Classification::DefaultFileNamePrefixes();
 		$firstprefix = true;
 
@@ -90,6 +92,7 @@ class DefaultFileNamesView extends GalleryView {
 
 		$template->setVariable('controller', 'mranalysis.DefaultFileNames');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

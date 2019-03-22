@@ -94,6 +94,7 @@ class SlideshowMediaRssView extends GalleryView {
 		}
 
 		$template = new GalleryTemplate(GalleryCoreApi::getCodeBasePath());
+
 		$template->setVariable(
 			'SlideshowMediaRss',
 			array(

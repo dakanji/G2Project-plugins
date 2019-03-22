@@ -68,7 +68,9 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 		$keywordsadded = 0;
 		$itemschanged  = 0;
 		$total         = count($items);
+
 		$gallery->guaranteeTimeLimit(120);
+
 		foreach ($items as $dataitem) {
 			$item            = $dataitem['item'];
 			$typos           = $dataitem['typo'];
@@ -78,6 +80,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 			$itemid                     = $item->getId();
 			$itemchanged                = false;
 			$keywordsadded_to_this_item = array();
+
 			foreach ($typos as $sourcekeyword => $changes) {
 				foreach ($changes as $reason => $keyword) {
 					if (!in_array($keyword, $keywordsadded_to_this_item)) {
@@ -165,6 +168,7 @@ class CorrectKeywordTyposTask extends MaintenanceTask {
 		}
 
 		$gallery->guaranteeTimeLimit(120);
+
 		return null;
 	}
 

@@ -4,12 +4,10 @@
   // Contributed by: KnightScene
 $frameData = array(
 	'name'      => $gallery->i18n('Film Edges'),
-
 	// Top Left
 	'imageTL'   => 'TL.gif',
 	'widthTL'   => 6,
 	'heightTL'  => 18,
-
 	// Top
 	'imageTTL'  => 'TTL.gif',
 	'widthTTL'  => 88,
@@ -17,12 +15,10 @@ $frameData = array(
 	'heightTT'  => 18,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR.gif',
 	'widthTR'   => 8,
 	'heightTR'  => 18,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -30,7 +26,6 @@ $frameData = array(
 	'widthLL'   => 6,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -38,12 +33,10 @@ $frameData = array(
 	'widthRR'   => 8,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL.gif',
 	'widthBL'   => 6,
 	'heightBL'  => 18,
-
 	// Bottom
 	'imageBBL'  => 'BBL.gif',
 	'widthBBL'  => 88,
@@ -51,7 +44,6 @@ $frameData = array(
 	'heightBB'  => 18,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 8,

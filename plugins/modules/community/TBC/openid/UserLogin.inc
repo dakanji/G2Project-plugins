@@ -48,10 +48,12 @@ class UserLoginView extends GalleryView {
 			 * then check for cookie with user's OpenID.. if found, redirect to TryLogin.
 			 */
 			$openIdCookie = GalleryUtilities::getCookieVar('OpenIDForGallery');
+
 			if (!empty($openIdCookie)) {
 				$form['openId']          = $openIdCookie;
 				$form['setCookie']       = 1;
 				$form['action']['login'] = 1;
+
 				return array(
 					null,
 					array(
@@ -78,6 +80,7 @@ class UserLoginView extends GalleryView {
 		// Render the HTML body
 		$template->setVariable('controller', 'openid.TryLogin');
 		$template->style('modules/openid/data/openid.css');
+
 		return array(
 			null,
 			array(

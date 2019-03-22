@@ -31,6 +31,7 @@
 // Required Files\Classes
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsAccess.class');
 GalleryCoreApi::requireOnce('modules/mranalysis/classes/SettingsConstants.class');
+
 class SettingsController extends GalleryController {
 	/**
 	 * @see GalleryController::handleRequest
@@ -46,6 +47,7 @@ class SettingsController extends GalleryController {
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			$ret = SettingsAccess::SetValue('TreatZeroSizedDerivativesAsBroken', $form['TreatZeroSizedDerivativesAsBroken']);
 
@@ -72,6 +74,7 @@ class SettingsController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
+
 			if ($isActive) {
 				$redirect['subView'] = 'mranalysis.Settings';
 				$status['saved']     = 1;
@@ -90,6 +93,7 @@ class SettingsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -112,6 +116,7 @@ class SettingsView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'mranalysis.Settings');
+
 		return array(
 			null,
 			array(

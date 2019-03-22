@@ -18,6 +18,7 @@
  * Import the interface for creating a new store class.
  */
 require_once 'Auth/OpenID/Interface.php';
+
 require_once 'Auth/OpenID/HMAC.php';
 
 /**

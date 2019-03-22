@@ -61,6 +61,7 @@ class CheckoutHelper {
 
 		// don't store urls back into checkout
 		$matchstring = '/' . preg_quote('=checkout.') . '/';
+
 		if (!empty($returnURL) && !preg_match($matchstring, $returnURL)) {
 			$session->put('checkout.returnURL', $returnURL);
 		}
@@ -75,6 +76,7 @@ class CheckoutHelper {
 
 		$session   =& $gallery->getSession();
 		$returnURL = $session->get('checkout.returnURL');
+
 		return $returnURL;
 	}
 
@@ -91,6 +93,7 @@ class CheckoutHelper {
 
 		$session       =& $gallery->getSession();
 		$checkoutItems = $session->get('checkout.items');
+
 		if (empty($checkoutItems) || !is_array($checkoutItems)) {
 			$checkoutItems = array();
 		}
@@ -138,24 +141,33 @@ class CheckoutHelper {
 		}
 
 		$checkoutItems = array();
+
 		foreach ($items as $itemId => $item) {
 			switch ($itemId) {
 				// postage item
+
 				/* this is a nasty hack because
 				you have to take it out before, for instance
 				counting cart items. So when you think of a better way
 				of carrying the postage around ... you can change it. */
 				case 'postage':
 					$checkoutItems['postage'] = $item;
+
 					break;
+
 				case 'discountCode':
 					$checkoutItems['discountCode'] = $item;
+
 					break;
+
 				case 'instructions':
 					$checkoutItems['instructions'] = $item;
+
 					break;
+
 				case 'accessories':
 					$checkoutItems['accessories'] = $item;
+
 					break;
 
 				// other line items
@@ -166,6 +178,7 @@ class CheckoutHelper {
 						if ($ret->getErrorCode() & ERROR_MISSING_OBJECT) {
 							// Item deleted from the gallery; remove if from the cart
 							unset($checkoutItems[$itemId]);
+
 							continue;
 						}
 
@@ -188,6 +201,7 @@ class CheckoutHelper {
 
 					// work through each level
 					$pathstring = '';
+
 					foreach ($itemIdTree as $myItemId) {
 						list($ret, $parentEntity) = GalleryCoreApi::loadEntitiesById($myItemId);
 
@@ -241,6 +255,7 @@ class CheckoutHelper {
 	 */
 	public function parseForm($form) {
 		$items = array();
+
 		if (!isset($form['photos'])) {
 			return null;
 		}
@@ -396,6 +411,7 @@ class CheckoutHelper {
 
 		$phpVm   = $gallery->getPhpVm();
 		$session =& $gallery->getSession();
+
 		if (empty($checkoutItems)) {
 			$session->remove('checkout.items');
 		} else {
@@ -410,6 +426,7 @@ class CheckoutHelper {
 		}
 
 		$session->put('checkout.cartLastModified', $phpVm->time());
+
 		return null;
 	}
 

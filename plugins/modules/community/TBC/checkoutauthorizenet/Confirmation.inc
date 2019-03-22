@@ -52,12 +52,14 @@ class ConfirmationView extends GalleryView {
 		// Get parameters from the checkout plugin
 		list($ret, $postage)
 					= GalleryCoreApi::getPluginParameter('module', 'checkout', 'postage');
+
 		if ($ret) {
 			return array($ret, null);
 		}
 
 		list($ret, $csymbol)
 					= GalleryCoreApi::getPluginParameter('module', 'checkout', 'csymbol');
+
 		if ($ret) {
 			return array($ret, null);
 		}
@@ -112,7 +114,6 @@ class ConfirmationView extends GalleryView {
 			'custZip'           => $form['custZip'],
 			'custCountry'       => $form['custCountry'],
 			'custComments'      => $form['custComments'],
-
 						/*
 						'custAbaCode' => $form['custAbaCode'],
 						'custAccountNumber' => $form['custAccountNumber']
@@ -122,6 +123,7 @@ class ConfirmationView extends GalleryView {
 		// Load the thumbnails
 		list($ret, $thumbnailList)
 					= GalleryCoreApi::fetchThumbnailsByItemIds(array_keys($email['items']));
+
 		if ($ret) {
 			return array($ret, null);
 		}

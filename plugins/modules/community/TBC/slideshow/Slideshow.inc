@@ -103,6 +103,7 @@ class SlideshowView extends GalleryView {
 
 		if ($picLensVersion) {
 			$Slideshow['piclensVersion'] = $picLensVersion;
+
 			$template->javascript(
 				$urlGenerator->generateUrl(
 					array(
@@ -185,9 +186,11 @@ class SlideshowView extends GalleryView {
 		$Slideshow['items'] = $items;
 		$Slideshow['count'] = count($items);
 		$Slideshow['start'] = $start;
+
 		$template->setVariable('Slideshow', $Slideshow);
 		$template->javascript('lib/yui/yahoo-dom-event.js');
 		$template->javascript('modules/slideshow/data/lytebox.js');
+
 		$template->link(
 			array(
 				'rel'   => 'stylesheet',

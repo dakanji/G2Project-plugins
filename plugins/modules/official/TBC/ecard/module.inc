@@ -39,10 +39,13 @@ class EcardModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -143,6 +146,7 @@ class EcardModule extends GalleryModule {
 				}
 
 				break;
+
 			case '0.0.8':
 			case '0.0.9':
 			case '0.1.0':
@@ -156,6 +160,7 @@ class EcardModule extends GalleryModule {
 			case '1.0.3':
 			case 'end of upgrade path':
 				break;
+
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,
@@ -173,8 +178,10 @@ class EcardModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId = null) {
 		$links = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (GalleryUtilities::isA($item, 'GalleryPhotoItem')
 				&& isset($permissions[$itemId]['ecard.send'], $wantsDetailedLinks[$itemId])
 			) {

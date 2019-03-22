@@ -47,9 +47,11 @@ class ExtensionsInTitlesView extends GalleryView {
 		// ideally get this list from somewhere else?
 		// e.g. mime types somewhere else in G2?
 		$extensions = array('CR2', 'PSD', 'NEF', 'ARW', 'JPEG', 'JPG', 'TIFF', 'TIF', 'GIF', 'PNG');
+
 		foreach ($extensions as $ext) {
 			$search = '.' . $ext;
 			$pos    = stripos($title, $search);
+
 			if ($pos !== false) {
 				if ($pos + strlen($search) == $titlelength) {
 					return true;
@@ -67,6 +69,7 @@ class ExtensionsInTitlesView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminExtensionsInTitles';
+
 		$gallery->guaranteeTimeLimit(120);
 
 		$query = "
@@ -93,6 +96,7 @@ class ExtensionsInTitlesView extends GalleryView {
 
 		$template->setVariable('controller', 'mranalysis.ExtensionsInTitles');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

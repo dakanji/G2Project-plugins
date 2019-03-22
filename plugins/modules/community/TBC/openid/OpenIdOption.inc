@@ -85,6 +85,7 @@ class OpenIdOption extends GalleryOption {
 
 		// Render the HTML body
 		$template->style('modules/openid/data/openid.css');
+
 		return array(null, 'modules/openid/templates/OpenIdOption.tpl', 'modules_openid');
 	}
 
@@ -96,6 +97,7 @@ class OpenIdOption extends GalleryOption {
 			case 'UserPreferences':
 				// Always true
 				return array(null, true);
+
 			case 'UserSelfRegistration':
 				// Only true if already authenticated using OpenID
 				if (empty($data['openId'])) {

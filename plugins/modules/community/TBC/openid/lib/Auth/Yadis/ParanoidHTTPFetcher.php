@@ -17,6 +17,7 @@
  * Interface import
  */
 require_once 'Auth/Yadis/HTTPFetcher.php';
+
 require_once 'Auth/OpenID.php';
 
 /**
@@ -40,6 +41,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 	 */
 	public function _writeHeader($ch, $header) {
 		array_push($this->headers, rtrim($header));
+
 		return strlen($header);
 	}
 
@@ -52,6 +54,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		}
 
 		$this->data .= $data;
+
 		return strlen($data);
 	}
 
@@ -60,6 +63,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 	 */
 	public function supportsSSL() {
 		$v = curl_version();
+
 		if (is_array($v)) {
 			return in_array('https', $v['protocols']);
 		}
@@ -79,9 +83,12 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		$stop  = time() + $this->timeout;
 		$off   = $this->timeout;
 		$redir = true;
+
 		while ($redir && ($off > 0)) {
 			$this->reset();
+
 			$c = curl_init();
+
 			if ($c === false) {
 				Auth_OpenID::log(
 					'curl_init returned false; could not ' .
@@ -122,6 +129,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			}
 
 			$cv = curl_version();
+
 			if (is_array($cv)) {
 				$curl_user_agent = 'curl/' . $cv['version'];
 			} else {
@@ -146,6 +154,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 			$code    = curl_getinfo($c, CURLINFO_HTTP_CODE);
 			$body    = $this->data;
 			$headers = $this->headers;
+
 			if (!$code) {
 				Auth_OpenID::log('Got no response code when fetching %s', $url);
 				Auth_OpenID::log(
@@ -164,6 +173,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 				$redir = false;
 				curl_close($c);
 				$new_headers = array();
+
 				foreach ($headers as $header) {
 					if (strpos($header, ': ')) {
 						list($name, $value) = explode(': ', $header, 2);
@@ -198,7 +208,9 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 		}
 
 		$this->reset();
+
 		$c = curl_init();
+
 		if (defined('CURLOPT_NOSIGNAL')) {
 			curl_setopt($c, CURLOPT_NOSIGNAL, true);
 		}
@@ -215,14 +227,17 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 
 		curl_exec($c);
 		$code = curl_getinfo($c, CURLINFO_HTTP_CODE);
+
 		if (!$code) {
 			Auth_OpenID::log('Got no response code when fetching %s', $url);
+
 			return null;
 		}
 
 		$body = $this->data;
 		curl_close($c);
 		$new_headers = $extra_headers;
+
 		foreach ($this->headers as $header) {
 			if (strpos($header, ': ')) {
 				list($name, $value) = explode(': ', $header, 2);

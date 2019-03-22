@@ -81,11 +81,13 @@ class ICalendarController extends GalleryController {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockId);
+
 			return array($ret, null);
 		}
 
 		if (!isset($plugin)) {
 			GalleryCoreApi::releaseLocks($lockId);
+
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__), null);
 		}
 
@@ -93,6 +95,7 @@ class ICalendarController extends GalleryController {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockId);
+
 			return array($ret, null);
 		}
 
@@ -104,11 +107,13 @@ class ICalendarController extends GalleryController {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return array($ret, null);
 				}
 			}
 
 			$addedItems = array();
+
 			for ($i = 0; $i < count($status['addedFiles']); $i++) {
 				$file =& $status['addedFiles'][$i];
 
@@ -116,16 +121,19 @@ class ICalendarController extends GalleryController {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return array($ret, null);
 				}
 
 				// Check if we should extract individual files out of an archive
 				$toolkit = null;
+
 				if (GalleryUtilities::isA($addedItem, 'GalleryDataItem')) {
 					list($ret, $toolkit) = GalleryCoreApi::getToolkitByOperation($addedItem->getMimeType(), 'extract');
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
+
 						return array($ret, null);
 					}
 				}
@@ -135,6 +143,7 @@ class ICalendarController extends GalleryController {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
+
 						return array($ret, null);
 					}
 
@@ -142,6 +151,7 @@ class ICalendarController extends GalleryController {
 
 					if ($ret) {
 						GalleryCoreApi::releaseLocks($lockId);
+
 						return array($ret, null);
 					}
 
@@ -159,6 +169,7 @@ class ICalendarController extends GalleryController {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return array($ret, null);
 				}
 
@@ -189,6 +200,7 @@ class ICalendarController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -216,31 +228,39 @@ class ICalendarView extends GalleryView {
 		}
 
 		list ($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
+
 		if ($ret) {
 		return array($ret, null);
 		}
 
 		list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+
 		if ($ret) {
 		return array($ret, null);
 		}
 
 		/* Get all the add plugins
 		list ($ret, $allPluginIds) =
+
 		GalleryCoreApi::getAllFactoryImplementationIds('ItemAddPlugin');
+
 		if ($ret) {
 		return array($ret, null);
 		}
 
 		$pluginInstances = array();
+
 		foreach (array_keys($allPluginIds) as $pluginId) {
 		list ($ret, $plugin) =
+
 		GalleryCoreApi::newFactoryInstanceById('ItemAddPlugin', $pluginId);
+
 		if ($ret) {
 		return array($ret, null);
 		}
 
 		list ($ret, $isAppropriate) = $plugin->isAppropriate();
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -248,11 +268,11 @@ class ICalendarView extends GalleryView {
 		if ($isAppropriate) {
 		$pluginInstances[$pluginId] = $plugin;
 		}
-
 		}
 
 		/* Get all the add options
 		list ($ret, $optionInstances) = ItemAddOption::getAllAddOptions();
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -263,21 +283,24 @@ class ICalendarView extends GalleryView {
 		* preference in the session.
 		$session =& $gallery->getSession();
 		$addPluginSessionKey = 'core.view.ItemAdd.addPlugin.' . get_class($item);
+
 		if (empty($addPlugin) || !isset($pluginInstances[$addPlugin])) {
 		$addPlugin = $session->get($addPluginSessionKey);
+
 		if (empty($addPlugin) || !isset($pluginInstances[$addPlugin])) {
 		$ids = array_keys($pluginInstances);
 		$addPlugin = $ids[0];
 		}
-
 		}
 
 		$session->put($addPluginSessionKey, $addPlugin);
 
 		/* Get display data for all plugins
 		$plugins = array();
+
 		foreach ($pluginInstances as $pluginId => $plugin) {
 		list ($ret, $title) =  $plugin->getTitle();
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -294,16 +317,21 @@ class ICalendarView extends GalleryView {
 
 		/* Let the plugin load its template data
 		list ($ret, $ItemAdd['pluginFile'], $ItemAdd['pluginL10Domain']) =
+
 		$pluginInstances[$addPlugin]->loadTemplate($template, $form, $item);
+
 		if ($ret) {
 		return array($ret, null);
 		}
 
 		/* Now let all options load their template data
 		$ItemAdd['options'] = array();
+
 		foreach ($optionInstances as $option) {
 		list ($ret, $entry['file'], $entry['l10Domain']) =
+
 		$option->loadTemplate($template, $form, $item);
+
 		if ($ret) {
 		return array($ret, null);
 		}
@@ -311,26 +339,28 @@ class ICalendarView extends GalleryView {
 		if (!empty($entry['file'])) {
 		$ItemAdd['options'][] = $entry;
 		}
-
 		}
 
 		/* Make sure that we've got some toolkits
 		list ($ret, $operations) = GalleryCoreApi::getToolkitOperations('image/jpeg');
+
 		if ($ret) {
 		return array($ret, null);
 		}
 
 		$ItemAdd['hasToolkit'] = false;
+
 		for ($i = 0; $i < sizeof($operations); $i++) {
 		if ($operations[$i]['name'] == 'thumbnail') {
 		$ItemAdd['hasToolkit'] = true;
+
 		break;
 		}
-
 		}
 
 		$template->setVariable('ItemAdd', $ItemAdd);
 		$template->setVariable('controller', 'core.ItemAdd');
+
 		return array(null,
 			 array('body' => 'modules/core/templates/ItemAdd.tpl'));*/
 		$weekStartDate               = time() - (3 * 86400);
@@ -340,8 +370,10 @@ class ICalendarView extends GalleryView {
 		$startDate                   = time() - ($today['mday'] * 86400) - ((time() - $weekStartDate) % 604800);
 		$endDate                     = mktime(0, 0, 0, $today['mon'] + 1, 0, $today['year']);
 		$date                        = $startDate;
+
 		while ($date < mktime(0, 0, 0, $today['mon'] + 1, 0, $today['year'])) {
 			$weekDates = array();
+
 			for ($i = 0; $i < 7; $i++) {
 				$weekDates[] = $date;
 				$date       += 86400;
@@ -353,6 +385,7 @@ class ICalendarView extends GalleryView {
 		$CalendarMonth['startDate']    = $startDate;
 		$CalendarMonth['endDate']      = $endDate;
 		$CalendarMonth['eventsPerDay'] = 4;
+
 		$template->setVariable('CalendarMonth', $CalendarMonth);
 		$template->javascript('modules/calendar/lib/javascript-logging/js/logging.js');
 		$template->javascript('modules/calendar/lib/javascript-logging/js/class.js');
@@ -362,6 +395,7 @@ class ICalendarView extends GalleryView {
 		$template->javascript('modules/calendar/javascript/calendar.js');
 		$template->javascript('modules/calendar/javascript/util.js');
 		$template->style('modules/calendar/css/calendar.css');
+
 		return array(
 			null,
 			array(

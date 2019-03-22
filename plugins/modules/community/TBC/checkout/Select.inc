@@ -60,6 +60,7 @@ class SelectView extends GalleryView {
 		//$this->setCacheControl($template, 'no-cache'); RESTORE for 2.3
 		// entry point for checkout
 		CheckoutHelper::StoreReturnURL();
+
 		$form['formName'] = 'Select';
 
 		// General options
@@ -114,6 +115,7 @@ class SelectView extends GalleryView {
 
 		// Build table of available products for each item in the cart
 		$itemProducts = array();
+
 		foreach ($items as $item) {
 			list($ret, $thisItemsProducts) = CheckoutProductMapHelper::fetchVisibleProducts($item['id'], true);
 
@@ -126,6 +128,7 @@ class SelectView extends GalleryView {
 			/* count how many products with unset quantities there are
 			(if two or more then use combo if requested) */
 			$comboCount = 0;
+
 			foreach ($itemProducts[$item['id']] as $thisProduct) {
 				if (!isset($item[$thisProduct['productId']]['quant']) && $thisProduct['dropdown'] == 'true') {
 					$comboCount++;
@@ -138,6 +141,7 @@ class SelectView extends GalleryView {
 		// decide whether to include postage options in the template
 		$offerPostage          = false;
 		$tpl['postageOptions'] = array();
+
 		foreach ($items as $item) {
 			foreach ($itemProducts[$item['id']] as $product) {
 				if (isset($item[$product['productId']]['quant'])
@@ -160,6 +164,7 @@ class SelectView extends GalleryView {
 
 		// Get the thumbnails
 		$thumbnailIdList = array_keys($items);
+
 		foreach ($tpl['accessories'] as $accessory) {
 			$thumbnailIdList[] = $accessory['id'];
 		}
@@ -171,6 +176,7 @@ class SelectView extends GalleryView {
 		}
 
 		$thumbnails = array();
+
 		foreach ($thumbnailList as $thumbnail) {
 			$thumbnails[$thumbnail->getParentId()] = (array)$thumbnail;
 		}

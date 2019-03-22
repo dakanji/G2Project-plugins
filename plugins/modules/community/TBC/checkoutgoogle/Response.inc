@@ -81,7 +81,9 @@ class ResponseView extends GalleryView {
 				}
 
 				echo 'OK';
+
 				break;
+
 			case 'new-order-notification':
 				// Figure out which URL the order came from and reset the URL generator
 				$mainURL                     = $data[$root]['shopping-cart']['merchant-private-data']['mainURL']['VALUE'];
@@ -170,6 +172,7 @@ class ResponseView extends GalleryView {
 				);
 
 				break;
+
 			case 'charge-amount-notification':
 				// Find transactionId and load transaction
 				$googleOrderNumber = $data[$root]['google-order-number']['VALUE'];

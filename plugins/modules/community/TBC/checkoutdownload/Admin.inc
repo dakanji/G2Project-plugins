@@ -51,6 +51,7 @@ class AdminController extends GalleryController {
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			$storage =& $gallery->getStorage();
 
@@ -73,6 +74,7 @@ class AdminController extends GalleryController {
 				foreach (array('downloadSize') as $textParam) {
 					// Remove leading trailing white space, and if nothing left, unset it
 					$productParameters[$textParam] = trim($productParameters[$textParam]);
+
 					if ($productParameters[$textParam] == '') {
 						unset($productParameters[$textParam]);
 
@@ -255,6 +257,7 @@ class AdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -387,6 +390,7 @@ class AdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'checkoutdownload.Admin');
+
 		return array(
 			null,
 			array(

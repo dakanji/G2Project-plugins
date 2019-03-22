@@ -57,9 +57,11 @@ class GetUrlsHelper {
 		$data        = array();
 		$permissions = array('viewResizes' => false, 'viewSource' => false);
 		$options     = array();
+
 		foreach (array('suppressSourceWarning', 'suppressResizedWarning', 'HtmlLink', 'HtmlInline',
 			   'HtmlThumbnail', 'BbLink', 'BbInline', 'BbThumbnail', 'MiscItemId',
 			   'HtmlResize2Full', 'BbResize2Full', 'MiscResizeId', 'MiscThumbnailId', )
+
 		 as $tmp) {
 			$options[$tmp] = 0;
 		}
@@ -115,9 +117,12 @@ class GetUrlsHelper {
 		 */
 		$userId            = $gallery->getActiveUserId();
 		$data['guestMode'] = 0;
+
 		if ($param['guestMode']) {
 			list($ret, $guestUserId) =
+
 		GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
+
 			if ($ret) {
 				return array($ret, null);
 			}
@@ -130,13 +135,17 @@ class GetUrlsHelper {
 		}
 
 		list($ret, $hasViewSourcePermission) =
+
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewSource', $userId);
+
 		if ($ret) {
 			return array($ret, null);
 		}
 
 		list($ret, $hasViewResizesPermission) =
+
 		GalleryCoreApi::hasItemPermission($itemId, 'core.viewResizes', $userId);
+
 		if ($ret) {
 			return array($ret, null);
 		}
@@ -147,6 +156,7 @@ class GetUrlsHelper {
 		// All items can have a thumbnail, only photo items also have fullsize and resize images
 		if (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 			$data['isPhoto'] = 1;
+
 			if ($hasViewResizesPermission) {
 				/*
 				 * Because the user can't access the source image, we'll try using the
@@ -165,16 +175,14 @@ class GetUrlsHelper {
 					foreach ($resizes as $resize) {
 						$data['resizeId'] = $resize->getId();
 					}
-
 				}
-
 			}
-
 		} else {
 			$data['isPhoto'] = 0;
 		}
 
 		$data['isDataItem'] = 0;
+
 		if (GalleryUtilities::isA($item, 'GalleryDataItem')) {
 			$data['isDataItem'] = 1;
 		}
@@ -183,8 +191,7 @@ class GetUrlsHelper {
 		$data['options']     = $options;
 		$data['permissions'] = $permissions;
 		$data['itemTitle']   = $item->getTitle();
+
 		return  array(null, $data);
 	}
-
 }
-

@@ -31,8 +31,9 @@ GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
  * @author Jack Bates <ms419@freezone.co.uk>
  * @version $Revision: 17580 $
  */
-class HttpAuthPlugin // extends GalleryAuthPlugin
- {
+
+// extends GalleryAuthPlugin
+class HttpAuthPlugin {
 	/**
 	 * @see GalleryAuthPlugin::getUser
 	 */
@@ -65,6 +66,7 @@ class HttpAuthPlugin // extends GalleryAuthPlugin
 			 * try to force the user-agent to clear its auth cache.
 			 */
 			$event = GalleryCoreApi::newEvent('Gallery::FailedLogin');
+
 			$event->setData(
 				array(
 					'userName' => $username,

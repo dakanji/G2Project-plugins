@@ -60,6 +60,7 @@ class DownloadItemView extends GalleryView {
 	public function renderImmediate($status, $error) {
 		// Figure out which item we're talking about
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
+
 		if (empty($itemId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -77,6 +78,7 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$derivativeType = null;
+
 		if (GalleryUtilities::isA($item, 'GalleryDerivative')) {
 			$derivativeType = $item->getDerivativeType();
 		}
@@ -96,6 +98,7 @@ class DownloadItemView extends GalleryView {
 
 		// Don't allow malicious URLs
 		$fileName = GalleryUtilities::getRequestVariables('fileName');
+
 		if (!empty($fileName) && $fileName != $pseudoFileName) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__, 'malicious url');
 		}
@@ -163,9 +166,11 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$requestMethod = strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
+
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
 		$stats = $platform->stat($data['derivativePath']);
+
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
 
@@ -196,11 +201,13 @@ class DownloadItemView extends GalleryView {
 			if ($fd = $platform->fopen($data['derivativePath'], 'rb')) {
 				while (true) {
 					$bits = $platform->fread($fd, 65535);
+
 					if (strlen($bits) == 0) {
 						break;
 					}
 
 					echo $bits;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 
@@ -226,12 +233,23 @@ class DownloadItemView extends GalleryView {
 		}
 
 		$phpVm->header('Content-type: ' . $data['mimeType']);
-		$fp     = $platform->fopen($data['derivativePath'], 'rb');
-		$size   = $platform->filesize($data['derivativePath']); // File size
-		$length = $size;           // Content length
-		$start  = 0;               // Start byte
-		$end    = $size - 1;       // End byte
+
+		$fp = $platform->fopen($data['derivativePath'], 'rb');
+
+		// File size
+		$size = $platform->filesize($data['derivativePath']);
+
+		// Content length
+		$length = $size;
+
+		// Start byte
+		$start = 0;
+
+		// End byte
+		$end = $size - 1;
+
 		// Now that we've gotten so far without errors we send the accept range header
+
 		/* At the moment we only support single ranges.
 		 * Multiple ranges requires some more work to ensure it works correctly
 		 * and comply with the spesifications: http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.2
@@ -295,9 +313,12 @@ class DownloadItemView extends GalleryView {
 				return GalleryCoreApi::error(ERROR_BAD_REQUEST);
 			}
 
-			$start  = $c_start;
-			$end    = $c_end;
-			$length = $end - $start + 1; // Calculate new content length
+			$start = $c_start;
+			$end   = $c_end;
+
+			// Calculate new content length
+			$length = $end - $start + 1;
+
 			$platform->fseek($fp, $start);
 			$phpVm->header('HTTP/1.1 206 Partial Content');
 		}
@@ -308,6 +329,7 @@ class DownloadItemView extends GalleryView {
 
 		// Start buffered download
 		$buffer = 1024 * 8;
+
 		while (!$platform->feof($fp) && ($p = ftell($fp)) <= $end) {
 			if ($p + $buffer > $end) {
 				// In case we're only outputtin a chunk, make sure we don't
@@ -315,12 +337,17 @@ class DownloadItemView extends GalleryView {
 				$buffer = $end - $p + 1;
 			}
 
-			$gallery->guaranteeTimeLimit(30); // Reset time limit for big files
+			// Reset time limit for big files
+			$gallery->guaranteeTimeLimit(30);
+
 			echo $platform->fread($fp, $buffer);
-			flush(); // Free up memory. Otherwise large files will trigger PHP's memory limit.
+
+			// Free up memory. Otherwise large files will trigger PHP's memory limit.
+			flush();
 		}
 
 		$platform->fclose($fp);
+
 		return null;
 	}
 
@@ -335,6 +362,7 @@ class DownloadItemView extends GalleryView {
 
 		$session             =& $gallery->getSession();
 		$itemIdForPermission = $item->getId();
+
 		if (!empty($derivativeType)) {
 			$itemIdForPermission = $item->getParentId();
 		}
@@ -345,12 +373,16 @@ class DownloadItemView extends GalleryView {
 			$permission = 'core.view';
 		} else {
 			$permission = 'core.viewSource';
+
 			switch ($derivativeType) {
 				case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
 					$permission = 'core.view';
+
 					break;
+
 				case DERIVATIVE_TYPE_IMAGE_RESIZE:
 					$permission = 'core.viewResizes';
+
 					break;
 
 				// DERIVATIVE_TYPE_IMAGE_PREFERRED uses core.viewSource
@@ -372,6 +404,7 @@ class DownloadItemView extends GalleryView {
 
 				if ($permission == 'core.view' || empty($hasPermission)) {
 					$ret->addErrorCode(ERROR_MISSING_OBJECT);
+
 					return $ret;
 				}
 			}

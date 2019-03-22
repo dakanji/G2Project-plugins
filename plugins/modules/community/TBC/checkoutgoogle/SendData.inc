@@ -71,6 +71,7 @@ class SendDataController extends GalleryController {
 
 			$results['error']  = $error;
 			$results['status'] = $status;
+
 			return array(null, $results);
 		}
 
@@ -127,6 +128,7 @@ class SendDataController extends GalleryController {
 		 	<mainURL>' . $mainURL . '</mainURL>
 		 	</merchant-private-data>';
 		$googleData .= '<items>';
+
 		foreach ($items as $item) {
 			$name        = htmlspecialchars($item['itemName'], ENT_NOQUOTES);
 			$description = htmlspecialchars($item['productName'] . $item['notes'], ENT_NOQUOTES);
@@ -236,6 +238,7 @@ class SendDataController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }

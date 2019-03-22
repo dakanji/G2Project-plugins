@@ -48,6 +48,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		$this->_savePlatform =& $gallery->getPlatform();
 		$testPlatform        = new AdminJpegtranControllerTestPlatform();
+
 		$gallery->setPlatform($testPlatform);
 	}
 
@@ -58,6 +59,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -84,7 +86,9 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 	public function testReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -100,7 +104,9 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 	public function testCancel() {
 		GalleryUtilities::putRequestVariable('form[action][cancel]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -121,6 +127,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify that we failed
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -141,6 +148,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify that we failed
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -161,6 +169,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify that we failed
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -181,6 +190,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -212,6 +222,7 @@ class AdminJpegtranControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify that we failed
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -328,6 +339,7 @@ class AdminJpegtranControllerTestPlatform extends WinNtPlatform {
 				);
 
 			break;
+
 			case '/validPathBadBinary/jpegtran':
 				return array(
 					1,
@@ -339,6 +351,7 @@ class AdminJpegtranControllerTestPlatform extends WinNtPlatform {
 				);
 
 			break;
+
 			default:
 				return array(0, array(), array());
 		}

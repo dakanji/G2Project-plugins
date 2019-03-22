@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // module.audio.au.php                                         //
 // module for analyzing AU files                               //
@@ -18,11 +17,15 @@
 class getid3_au extends getid3_handler {
 	public function Analyze() {
 		$info =& $this->getid3->info;
+
 		$this->fseek($info['avdataoffset']);
+
 		$AUheader = $this->fread(8);
 		$magic    = '.snd';
+
 		if (substr($AUheader, 0, 4) != $magic) {
 			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes($magic) . '" (".snd") at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes(substr($AUheader, 0, 4)) . '"';
+
 			return false;
 		}
 
@@ -43,6 +46,7 @@ class getid3_au extends getid3_handler {
 		$thisfile_au['comments']['comment'][] = trim(substr($AUheader, 24));
 		$thisfile_au['data_format']           = $this->AUdataFormatNameLookup($thisfile_au['data_format_id']);
 		$thisfile_au['used_bits_per_sample']  = $this->AUdataFormatUsedBitsPerSampleLookup($thisfile_au['data_format_id']);
+
 		if ($thisfile_au['bits_per_sample'] = $this->AUdataFormatBitsPerSampleLookup($thisfile_au['data_format_id'])) {
 			$info['audio']['bits_per_sample'] = $thisfile_au['bits_per_sample'];
 		} else {
@@ -51,12 +55,14 @@ class getid3_au extends getid3_handler {
 
 		$info['audio']['sample_rate'] = $thisfile_au['sample_rate'];
 		$info['audio']['channels']    = $thisfile_au['channels'];
+
 		if (($info['avdataoffset'] + $thisfile_au['data_size']) > $info['avdataend']) {
 			$info['warning'][] = 'Possible truncated file - expecting "' . $thisfile_au['data_size'] . '" bytes of audio data, only found ' . ($info['avdataend'] - $info['avdataoffset']) . ' bytes"';
 		}
 
-		$info['playtime_seconds'] = $thisfile_au['data_size'] / ($thisfile_au['sample_rate'] * $thisfile_au['channels'] * ($thisfile_au['used_bits_per_sample'] / 8));
+		$info['playtime_seconds'] = $thisfile_au['data_size']       / ($thisfile_au['sample_rate'] * $thisfile_au['channels'] * ($thisfile_au['used_bits_per_sample'] / 8));
 		$info['audio']['bitrate'] = ($thisfile_au['data_size'] * 8) / $info['playtime_seconds'];
+
 		return true;
 	}
 

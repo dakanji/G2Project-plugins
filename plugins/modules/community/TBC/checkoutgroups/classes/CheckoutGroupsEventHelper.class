@@ -43,12 +43,15 @@ class CheckoutGroupsEventHelper {
 	public function handleTransactionChange(&$event) {
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutTransactionHelper.class');
 		GalleryCoreApi::requireOnce('modules/checkout/classes/CheckoutProductMapHelper.class');
+
 		global $gallery;
 
-		$transaction   = $event->getEntity(); // =, or =& ??
+		// =, or =& ??
+		$transaction   = $event->getEntity();
 		$data          = $event->getData();
 		$transactionId = $transaction->getId();
 		$data          = $event->getData();
+
 		if (!GalleryUtilities::isA($transaction, 'GalleryCheckoutTransaction')) {
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}

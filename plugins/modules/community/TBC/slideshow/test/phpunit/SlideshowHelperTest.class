@@ -51,9 +51,11 @@ class SlideshowHelperTest extends GalleryTestCase {
 		}
 
 		$this->_markForCleanup($album);
+
 		$optionList = explode(':', $optionListString);
 		$info       = array();
 		$itemIds    = array();
+
 		foreach ($optionList as $options) {
 			$options    = explode(',', $options);
 			$entityType = in_array('nonphoto', $options) ? 'GalleryUnknownItem' : 'GalleryPhotoItem';
@@ -73,6 +75,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$preferred = null;
 			$thumbnail = null;
 			$resizes   = null;
+
 			foreach ($options as $option) {
 				if (!$option) {
 					continue;
@@ -91,6 +94,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 						}
 
 						break;
+
 					case 'preferred':
 						list($ret, $preferred) = $this->_createDerivative(
 							$item,
@@ -103,6 +107,7 @@ class SlideshowHelperTest extends GalleryTestCase {
 						}
 
 						break;
+
 					case 'resize_100':
 					case 'resize_200':
 						$size = $option == 'resize_100' ? 100 : 200;
@@ -124,9 +129,11 @@ class SlideshowHelperTest extends GalleryTestCase {
 						}
 
 						break;
+
 					case 'nonphoto':
 						// Already handled
 						break;
+
 					default:
 						return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null, null, null);
 				}
@@ -594,7 +601,6 @@ class SlideshowHelperTest extends GalleryTestCase {
 			$prevOffset,
 			'Previous page offset should match'
 		);
-
 		$this->assertEquals(null, $nextOffset, 'Should be no next page');
 	}
 

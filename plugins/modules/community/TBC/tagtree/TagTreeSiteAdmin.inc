@@ -39,6 +39,7 @@ class TagTreeSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
+
 		if (isset($form['action']['save'])) {
 			foreach (array(
 				'showItems',
@@ -120,6 +121,7 @@ class TagTreeSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'tagtree.TagTreeSiteAdmin');
+
 		return array(
 			null,
 			array(

@@ -118,6 +118,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		}
 
 		$_SERVER['HTTP_USER_AGENT'] = 'Nokia6630/1.0 (2.39.129) Series60/2.6 Profile/MIDP-2.0';
+
 		$gallery->setActiveUser($this->_user);
 		$session->remove('permissionCache');
 
@@ -134,6 +135,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 
 	public function testUploadMissingFile() {
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -157,6 +159,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -180,7 +183,9 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		);
 
 		GalleryUtilities::putRequestVariable('DirId', 'badId', false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -204,7 +209,9 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		);
 
 		GalleryUtilities::putRequestVariable('DirId', $this->_subAlbum->getId(), false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -228,7 +235,9 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 		);
 
 		GalleryUtilities::putRequestVariable('Desc', 'this is the description', false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -246,6 +255,7 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 
 		$listener =& GalleryTestCase::getEntityCounter();
 		$itemId   = $listener->getRecentEntityId('GalleryPhotoItem');
+
 		if ($itemId) {
 			list($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryPhotoItem');
 
@@ -258,7 +268,6 @@ class NokiaUploadUploadControllerTest extends GalleryControllerTestCase {
 				$item->getDescription(),
 				'description mismatch'
 			);
-
 			$this->assertEquals($this->_album->getId(), $item->getParentId(), 'Wrong parent id');
 		} else {
 			$this->fail('Missing itemId. Has no item been created?');

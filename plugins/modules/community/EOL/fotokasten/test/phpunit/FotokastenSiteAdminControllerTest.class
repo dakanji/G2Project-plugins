@@ -48,7 +48,9 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testFotokastenSiteAdminControllerReset() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -66,7 +68,9 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[affiliateId]', '1234');
 		GalleryUtilities::putRequestVariable('form[affiliateIdPass]', 'abcde12345');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -95,7 +99,9 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[affiliateId]', 'anything');
 		GalleryUtilities::putRequestVariable('form[affiliateIdPass]', 'anything');
 		GalleryUtilities::putRequestVariable('form[action][useGalleryId]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -121,7 +127,6 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 			$params['affiliateId'],
 			'affiliateId'
 		);
-
 		$this->assertEquals(
 			FOTOKASTEN_GALLERY_AFFILIATE_PASSWORD,
 			$params['affiliateIdPass'],
@@ -133,7 +138,9 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[affiliateId]', '123x');
 		GalleryUtilities::putRequestVariable('form[affiliateIdPass]', 'abc</(de12345');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -154,7 +161,9 @@ class FotokastenSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[affiliateId]', '');
 		GalleryUtilities::putRequestVariable('form[affiliateIdPass]', '');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(

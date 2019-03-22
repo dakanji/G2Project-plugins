@@ -81,10 +81,12 @@ class IPNView extends GalleryView {
 				$IPNVerified = true;
 			} else {
 				echo 'Invalid';
+
 				return null;
 			}
 		} else {
 			echo 'Unable to Connect';
+
 			return null;
 		}
 
@@ -227,7 +229,9 @@ class IPNView extends GalleryView {
 
 						$IPNReason[] = "\n";
 						$notes      .= ' Accepted. ';
+
 						break;
+
 					case 'Pending':
 					case 'Refunded':
 					case 'Denied':
@@ -282,10 +286,13 @@ class IPNView extends GalleryView {
 			$ppTransaction->setppStatus($IPNpost[2]);
 			$ppTransaction->setppDate($IPNpost[3]);
 			$ppTransaction->setppSign($IPNpost[4]);
+
 			$notes .= time() . ' PayPal IPN postback received';
 			$notes .= ' - PayPal notes: ' . $IPNpost[15];
+
 			$ppTransaction->setnotes($notes);
 			$ppTransaction->save();
+
 			return null;
 		}
 	}

@@ -253,6 +253,7 @@ class MapSiteAdminController extends GalleryController {
 				}
 
 				$results['redirect']['view'] = 'core.SiteAdmin';
+
 				if ($isActive) {
 					$results['status']              = $status;
 					$results['error']               = $error;
@@ -316,9 +317,11 @@ class mapSiteAdminView extends GalleryView {
 		if ($ret) {
 			return array($ret, null);
 		}
+
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$form['formName'] = 'mapSiteAdmin';
+
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
 
@@ -364,48 +367,60 @@ class mapSiteAdminView extends GalleryView {
 		}
 
 		if (!array_key_exists('MapWidthFormat', $form)) {
-			$form['MapWidthFormat'] = 1; // pixels by default
+			// pixels by default
+			$form['MapWidthFormat'] = 1;
 		}
 
 		if (!array_key_exists('MapHeightFormat', $form)) {
-			$form['MapHeightFormat'] = 1; // pixels by default
+			// pixels by default
+			$form['MapHeightFormat'] = 1;
 		}
 
 		if (!array_key_exists('GoogleOverviewFeature', $form)) {
-			$form['GoogleOverviewFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['GoogleOverviewFeature'] = 0;
 		}
 
 		if (!array_key_exists('GZoomFeature', $form)) {
-			$form['GZoomFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['GZoomFeature'] = 0;
 		}
 
 		if (!array_key_exists('ThemeFeature', $form)) {
-			$form['ThemeFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['ThemeFeature'] = 0;
 		}
 
 		if (!array_key_exists('MarkerFeature', $form)) {
-			$form['MarkerFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['MarkerFeature'] = 0;
 		}
 
 		if (!array_key_exists('LegendFeature', $form)) {
-			$form['LegendFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['LegendFeature'] = 0;
 		}
 
 		if (!array_key_exists('FilterFeature', $form)) {
-			$form['FilterFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['FilterFeature'] = 0;
 		}
 
 		if (!array_key_exists('GroupFeature', $form)) {
-			$form['GroupFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['GroupFeature'] = 0;
 		}
 
 		if (!array_key_exists('RouteFeature', $form)) {
-			$form['RouteFeature'] = 0; // Disabled by default
+			// Disabled by default
+			$form['RouteFeature'] = 0;
 		}
 
 		if (!array_key_exists('linktype', $form)) {
-			$form['linktype'] = 0; // Default link
+			// Default link
+			$form['linktype'] = 0;
 		}
+
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		// Supply the current URL to the form to fill in default key profile values
@@ -427,15 +442,18 @@ class mapSiteAdminView extends GalleryView {
 		}
 
 		$form['editProfile'] = $profile;
+
 		if ($template->hasVariable('SiteAdmin')) {
 			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapSiteAdmin');
+
 		return array(
 			null,
 			array(

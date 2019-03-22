@@ -38,6 +38,7 @@ class ConfigureMultirootController extends GalleryController {
 		}
 
 		$status = $error = array();
+
 		if (isset($form['action']['generate'])) {
 			if (empty($form['viewUri'])) {
 				$error[] = 'form[error][viewUri]';
@@ -49,6 +50,7 @@ class ConfigureMultirootController extends GalleryController {
 		}
 
 		$method = empty($error) ? 'redirect' : 'delegate';
+
 		return array(
 			null,
 			array(
@@ -109,10 +111,12 @@ class ConfigureMultirootView extends GalleryView {
 		}
 
 		$multiroot['albumTree'] = GalleryUtilities::createAlbumTree($albums);
+
 		if (isset($form['generate']['go'])) {
 			$platform                =& $gallery->getPlatform();
 			$multiroot['basePath']   = dirname(dirname(__DIR__)) . $platform->getDirectorySeparator();
 			$multiroot['baseUriDir'] = substr($multiroot['baseUri'], 0, strrpos($multiroot['baseUri'], '/') + 1);
+
 			if (strpos($form['viewUri'], '/') === false) {
 				$form['viewUri'] = '/' . $form['viewUri'];
 			}
@@ -167,6 +171,7 @@ class ConfigureMultirootView extends GalleryView {
 
 		$template->setVariable('Multiroot', $multiroot);
 		$template->setVariable('controller', 'multiroot.ConfigureMultiroot');
+
 		return array(
 			null,
 			array(

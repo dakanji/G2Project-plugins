@@ -66,6 +66,7 @@ class Auth_OpenID_PostgreSQLStore extends Auth_OpenID_SQLStore {
 		$assoc_type
 	) {
 		$result = $this->_get_assoc($server_url, $handle);
+
 		if ($result) {
 			// Update the table since this associations already exists.
 			$this->connection->query(

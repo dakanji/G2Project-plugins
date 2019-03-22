@@ -43,6 +43,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 		}
 
 		$urlGenerator = new RewriteUrlGenerator();
+
 		$urlGenerator->init('phpunit');
 		$gallery->setUrlGenerator($urlGenerator);
 	}
@@ -62,6 +63,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIs);
+
 			return $ret;
 		}
 
@@ -70,6 +72,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -80,6 +83,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -87,7 +91,9 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			$album->rename($oldPathComponent);
+
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -108,6 +114,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIs);
+
 			return $ret;
 		}
 
@@ -116,6 +123,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -126,6 +134,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -133,7 +142,9 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		if ($ret) {
 			$item->rename($oldPathComponent);
+
 			GalleryCoreApi::releaseLocks($lockIds);
+
 			return $ret;
 		}
 
@@ -157,6 +168,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		$this->assertTrue($ret, 'status');
 		$this->assertEquals('w/The%20Quick_Brown%23Fox/Jumps%20Over_The_Lazy_Dog', $url, 'url');
+
 		$this->assertEquals(
 			array(
 				'controller' => 'webdav.WebDav',
@@ -187,6 +199,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		$this->assertTrue($ret, 'status');
 		$this->assertEquals('w/The%20Quick_Brown%23Fox/Jumps%20Over_The_Lazy_Dog', $url, 'url');
+
 		$this->assertEquals(
 			array(
 				'controller' => 'webdav.WebDav',

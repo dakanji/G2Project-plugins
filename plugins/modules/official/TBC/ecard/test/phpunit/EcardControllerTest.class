@@ -143,6 +143,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_platform = new UnitTestPlatform();
+
 		$this->_controller->setPluginInstances(array());
 	}
 
@@ -158,9 +159,12 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testCancel() {
 		$itemId = $this->_item->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][cancel]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -176,9 +180,12 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testMissingInputs() {
 		$itemId = $this->_item->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][send]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -197,13 +204,16 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 	public function testInvalidEmail() {
 		$itemId = $this->_item->getId();
+
 		GalleryUtilities::putRequestVariable('itemId', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][send]', 1);
 		GalleryUtilities::putRequestVariable('form[from]', 'bad!email@test.com');
 		GalleryUtilities::putRequestVariable('form[fromName]', 'Unit Tester');
 		GalleryUtilities::putRequestVariable('form[to]', 'bad!email2@test.com');
 		GalleryUtilities::putRequestVariable('form[text]', 'Test text');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -305,6 +315,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -386,6 +397,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -432,6 +444,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_platform->setReply('getDirectorySeparator', array(), '/');
+
 		$this->_platform->setReply(
 			'file_get_contents',
 			array(
@@ -463,6 +476,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -483,6 +497,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$this->_controller->_pluginInstances = array(new AddEcardTestValidation());
+
 		$this->_becomeGuestUser();
 
 		$ret = GalleryCoreApi::addUserPermission(
@@ -507,6 +522,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify validation plugin got error
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -523,7 +539,9 @@ class EcardControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		$gallery->setConfig('anonymousUserId', $gallery->getActiveUserId());
+
 		$this->_controller->_pluginInstances = array(new AddEcardTestValidation());
+
 		$gallery->setPlatform($this->_platform);
 
 		// Set request variables
@@ -536,6 +554,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify validation plugin got error
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -625,6 +644,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and eCard sent (validation plugin skipped)
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -707,6 +727,7 @@ class EcardControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(

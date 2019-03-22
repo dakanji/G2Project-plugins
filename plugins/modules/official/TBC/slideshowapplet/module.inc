@@ -36,10 +36,13 @@ class SlideshowAppletModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -128,10 +131,13 @@ class SlideshowAppletModule extends GalleryModule {
 		global $gallery;
 
 		$links = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (isset($wantsDetailedLinks[$itemId])) {
 				$showSlideshowLink = false;
+
 				if ($item->getCanContainChildren()) {
 					if (!isset($userId)) {
 						$userId = $gallery->getActiveUserId();
@@ -200,6 +206,7 @@ class SlideshowAppletModule extends GalleryModule {
 		);
 
 		$rules[] = $rule;
+
 		return $rules;
 	}
 

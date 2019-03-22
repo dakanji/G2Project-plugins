@@ -4,12 +4,10 @@
 // Contributed by: volksport
 $frameData = array(
 	'name'      => $gallery->i18n('Flicking'),
-
 	// Top Left
 	'imageTL'   => 'TL.gif',
 	'widthTL'   => 5,
 	'heightTL'  => 5,
-
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
@@ -17,12 +15,10 @@ $frameData = array(
 	'heightTT'  => 5,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR.gif',
 	'widthTR'   => 5,
 	'heightTR'  => 5,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -30,7 +26,6 @@ $frameData = array(
 	'widthLL'   => 5,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -38,12 +33,10 @@ $frameData = array(
 	'widthRR'   => 5,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL.gif',
 	'widthBL'   => 5,
 	'heightBL'  => 11,
-
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
@@ -51,7 +44,6 @@ $frameData = array(
 	'heightBB'  => 11,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR.gif',
 	'widthBR'   => 5,

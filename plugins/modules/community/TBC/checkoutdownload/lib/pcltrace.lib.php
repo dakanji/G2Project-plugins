@@ -49,11 +49,7 @@ function PclTraceOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt')
 }
 
 function TrOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt') {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend;
 
 	// ----- Enable trace mode
 	$g_pcl_trace_level = $p_level;
@@ -64,7 +60,9 @@ function TrOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt') {
 		case 'memory':
 		case 'log':
 			$g_pcl_trace_mode = $p_mode;
+
 			break;
+
 		default:
 			$g_pcl_trace_mode = 'logged';
 	}
@@ -75,7 +73,6 @@ function TrOn($p_level = 1, $p_mode = 'normal', $p_filename = 'trace.txt') {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : IsTrOn()
   // Description :
@@ -93,7 +90,6 @@ function IsTrOn() {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrOff()
   // Description :
@@ -104,9 +100,7 @@ function PclTraceOff() {
 }
 
 function TrOff() {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index;
 
 	// ----- Clean
 	$g_pcl_trace_mode = 'memory';
@@ -117,7 +111,6 @@ function TrOff() {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : PclTraceSuspend()
   // Description :
@@ -130,7 +123,6 @@ function PclTraceSuspend() {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : PclTraceResume()
   // Description :
@@ -143,7 +135,6 @@ function PclTraceResume() {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrFctStart()
   // Description :
@@ -157,11 +148,7 @@ function PclTraceFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message =
 }
 
 function TrFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message = '') {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
 	if (($g_pcl_trace_level < 1) || ($g_pcl_trace_suspend)) {
@@ -183,7 +170,10 @@ function TrFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message = '') {
 	$g_pcl_trace_entries[$i]['file']    = $p_file;
 	$g_pcl_trace_entries[$i]['line']    = $p_line;
 	$g_pcl_trace_entries[$i]['index']   = $g_pcl_trace_index;
-	$g_pcl_trace_entries[$i]['type']    = '1'; // means start of function
+
+	// means start of function
+	$g_pcl_trace_entries[$i]['type'] = '1';
+
 	// ----- Update the message entry
 	if ($p_message != '') {
 		$i                                  = sizeof($g_pcl_trace_entries);
@@ -193,7 +183,9 @@ function TrFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message = '') {
 		$g_pcl_trace_entries[$i]['file']    = $p_file;
 		$g_pcl_trace_entries[$i]['line']    = $p_line;
 		$g_pcl_trace_entries[$i]['index']   = $g_pcl_trace_index;
-		$g_pcl_trace_entries[$i]['type']    = '3'; // means message
+
+		// means message
+		$g_pcl_trace_entries[$i]['type'] = '3';
 	}
 
 	// ----- Action depending on mode
@@ -204,7 +196,6 @@ function TrFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message = '') {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrFctEnd()
   // Description :
@@ -218,11 +209,7 @@ function PclTraceFctEnd($p_file, $p_line, $p_return = 1, $p_message = '') {
 }
 
 function TrFctEnd($p_file, $p_line, $p_return = 1, $p_message = '') {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
 	if (($g_pcl_trace_level < 1) || ($g_pcl_trace_suspend)) {
@@ -251,7 +238,9 @@ function TrFctEnd($p_file, $p_line, $p_return = 1, $p_message = '') {
 		$g_pcl_trace_entries[$i]['file']    = $p_file;
 		$g_pcl_trace_entries[$i]['line']    = $p_line;
 		$g_pcl_trace_entries[$i]['index']   = $g_pcl_trace_index;
-		$g_pcl_trace_entries[$i]['type']    = '3'; // means message
+
+		// means message
+		$g_pcl_trace_entries[$i]['type'] = '3';
 	}
 
 	// ----- Update the function entry
@@ -262,13 +251,15 @@ function TrFctEnd($p_file, $p_line, $p_return = 1, $p_message = '') {
 	$g_pcl_trace_entries[$i]['file']    = $p_file;
 	$g_pcl_trace_entries[$i]['line']    = $p_line;
 	$g_pcl_trace_entries[$i]['index']   = $g_pcl_trace_index;
-	$g_pcl_trace_entries[$i]['type']    = '2'; // means end of function
+
+	// means end of function
+	$g_pcl_trace_entries[$i]['type'] = '2';
+
 	// ----- Action depending on mode
 	PclTraceAction($g_pcl_trace_entries[$i]);
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrFctMessage()
   // Description :
@@ -279,11 +270,7 @@ function PclTraceFctMessage($p_file, $p_line, $p_level, $p_message = '') {
 }
 
 function TrFctMessage($p_file, $p_line, $p_level, $p_message = '') {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
 	if (($g_pcl_trace_level < $p_level) || ($g_pcl_trace_suspend)) {
@@ -298,13 +285,15 @@ function TrFctMessage($p_file, $p_line, $p_level, $p_message = '') {
 	$g_pcl_trace_entries[$i]['file']    = $p_file;
 	$g_pcl_trace_entries[$i]['line']    = $p_line;
 	$g_pcl_trace_entries[$i]['index']   = $g_pcl_trace_index;
-	$g_pcl_trace_entries[$i]['type']    = '3'; // means message of function
+
+	// means message of function
+	$g_pcl_trace_entries[$i]['type'] = '3';
+
 	// ----- Action depending on mode
 	PclTraceAction($g_pcl_trace_entries[$i]);
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrMessage()
   // Description :
@@ -315,11 +304,7 @@ function PclTraceMessage($p_file, $p_line, $p_level, $p_message = '') {
 }
 
 function TrMessage($p_file, $p_line, $p_level, $p_message = '') {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
 	if (($g_pcl_trace_level < $p_level) || ($g_pcl_trace_suspend)) {
@@ -334,13 +319,15 @@ function TrMessage($p_file, $p_line, $p_level, $p_message = '') {
 	$g_pcl_trace_entries[$i]['file']    = $p_file;
 	$g_pcl_trace_entries[$i]['line']    = $p_line;
 	$g_pcl_trace_entries[$i]['index']   = $g_pcl_trace_index;
-	$g_pcl_trace_entries[$i]['type']    = '4'; // means simple message
+
+	// means simple message
+	$g_pcl_trace_entries[$i]['type'] = '4';
+
 	// ----- Action depending on mode
 	PclTraceAction($g_pcl_trace_entries[$i]);
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrDisplay()
   // Description :
@@ -351,11 +338,7 @@ function PclTraceDisplay() {
 }
 
 function TrDisplay() {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
 	if (($g_pcl_trace_level <= 0) || ($g_pcl_trace_mode != 'memory') || ($g_pcl_trace_suspend)) {
@@ -381,12 +364,14 @@ function TrDisplay() {
 
 	// ----- Display
 	$v_again = 0;
+
 	for ($i = 0; $i < sizeof($g_pcl_trace_entries); $i++) {
 		// ---- Row header
 		echo '<tr>';
 		echo '<td><table width=100% border=0 cellspacing=0 cellpadding=0><tr>';
 		$n = ($g_pcl_trace_entries[$i]['index'] + 1) * 10;
 		echo '<td width=' . $n . '><table width=100% border=0 cellspacing=0 cellpadding=0><tr>';
+
 		for ($j = 0; $j <= $g_pcl_trace_entries[$i]['index']; $j++) {
 			if ($j == $g_pcl_trace_entries[$i]['index']) {
 				if (($g_pcl_trace_entries[$i]['type'] == 1)
@@ -402,19 +387,26 @@ function TrDisplay() {
 		//echo "<td>&nbsp</td>";
 		echo '</tr></table></td>';
 		echo '<td width=2></td>';
+
 		switch ($g_pcl_trace_entries[$i]['type']) {
 			case 1:
 				echo "<td><font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['name'] . '(' . $g_pcl_trace_entries[$i]['param'] . ')</font></td>';
+
 				break;
+
 			case 2:
 				echo "<td><font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['name'] . '()=' . $g_pcl_trace_entries[$i]['param'] . '</font></td>';
+
 				break;
+
 			case 3:
 			case 4:
 				echo '<td><table width=100% border=0 cellspacing=0 cellpadding=0><td width=20></td><td>';
 				echo "<font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['message'] . '</font>';
 				echo '</td></table></td>';
+
 				break;
+
 			default:
 				echo "<td><font size=2 face=$v_font>" . $g_pcl_trace_entries[$i]['name'] . '(' . $g_pcl_trace_entries[$i]['param'] . ')</font></td>';
 		}
@@ -444,31 +436,26 @@ function TrDisplay() {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrDisplayNew()
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
 function PclTraceDisplayNew() {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend;
 
 	// ----- Look for disabled trace
 	if (($g_pcl_trace_level <= 0) || ($g_pcl_trace_mode != 'memory') || ($g_pcl_trace_suspend)) {
 		return;
 	} ?>
 <script language="javascript">
+
 function PclTraceToggleView(element) {
 	if (element.style.visibility == 'visible') {
 		PclTraceHide(element);
 	} else {
 		PclTraceShow(element);
 	}
-
 }
 
 function PclTraceShow(element) {
@@ -496,18 +483,25 @@ function PclTraceHide(element) {
 	// ----- Trace Header
 	// ----- Display the items
 	$v_again = 0;
+
 	for ($i = 0; $i < sizeof($g_pcl_trace_entries); $i++) {
 		switch ($g_pcl_trace_entries[$i]['type']) {
 			case 1: // fct start
 				PclTraceDisplayItemStart($i);
+
 				break;
+
 			case 2: // fct stop
 				PclTraceDisplayItemStop($i);
+
 				break;
+
 			case 3: // fct msg
 			case 4: // msg
 				PclTraceDisplayItemMsg($i);
+
 				break;
+
 			default:
 		}
 
@@ -521,8 +515,7 @@ function PclTraceHide(element) {
 		*/
 	}
 
-	// ----- Trace footer
-	?>
+	// ----- Trace footer ?>
 	</td>
   </tr>
   <tr>
@@ -530,26 +523,25 @@ function PclTraceHide(element) {
   </tr>
 </table>
 <script language="javascript">
+
 function PclTraceShowAll() {
 	<?php
+
 	for ($i = 0; $i < sizeof($g_pcl_trace_entries); $i++) {
 		if ($g_pcl_trace_entries[$i]['type'] == 1) {
 			echo "PclTraceShow(document.getElementById('fct-" . $i . "'));";
 		}
-	}
-
-	?>
+	} ?>
 }
 
 function PclTraceHideAll() {
 	<?php
+
 	for ($i = 0; $i < sizeof($g_pcl_trace_entries); $i++) {
 		if ($g_pcl_trace_entries[$i]['type'] == 1) {
 			echo "PclTraceHide(document.getElementById('fct-" . $i . "'));";
 		}
-	}
-
-	?>
+	} ?>
 }
 
 </script>
@@ -563,20 +555,13 @@ function PclTraceHideAll() {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrDisplayNew()
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemStart($p_id) {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
-
-	?>
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend; ?>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td width="10"><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2">+</font></b></font></td>
@@ -596,20 +581,13 @@ function PclTraceDisplayItemStart($p_id) {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrDisplayNew()
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemStop($p_id) {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
-
-	?>
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend; ?>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2">
@@ -624,20 +602,13 @@ function PclTraceDisplayItemStop($p_id) {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : TrDisplayNew()
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
 function PclTraceDisplayItemMsg($p_id) {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
-
-	global $g_pcl_trace_suspend;
-
-	?>
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries,  $g_pcl_trace_suspend; ?>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td width="10"><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font color="#000000" size="2"><center>.</center></font></b></font></td>
@@ -655,16 +626,13 @@ function PclTraceDisplayItemMsg($p_id) {
 }
 
   // --------------------------------------------------------------------------------
-
   // --------------------------------------------------------------------------------
   // Function : PclTraceAction()
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
 function PclTraceAction($p_entry) {
-	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename;
-
-	global $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
+	global $g_pcl_trace_level, $g_pcl_trace_mode, $g_pcl_trace_filename,  $g_pcl_trace_name, $g_pcl_trace_index, $g_pcl_trace_entries;
 
 	if ($g_pcl_trace_mode == 'normal') {
 		for ($i = 0; $i < $p_entry['index']; $i++) {

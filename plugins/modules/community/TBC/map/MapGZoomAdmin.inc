@@ -88,8 +88,10 @@ class MapGZoomAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$form['formName'] = 'MapGZoomAdmin';
+
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
+
 		if (!array_key_exists('GZoom', $form)) {
 			$form['GZoom'] = false;
 		}
@@ -105,6 +107,7 @@ class MapGZoomAdminView extends GalleryView {
 		if (!array_key_exists('GZPosOffY', $form)) {
 			$form['GZPosOffY'] = '30';
 		}
+
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		if ($template->hasVariable('SiteAdmin')) {
@@ -112,10 +115,12 @@ class MapGZoomAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapGZoomAdmin');
+
 		return array(
 			null,
 			array(

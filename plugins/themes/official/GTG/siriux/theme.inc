@@ -37,10 +37,10 @@ class SiriuxTheme extends GalleryTheme {
 				'Siriux.net Gallery theme'
 			)
 		);
-
 		$this->setVersion('7.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'perPage'        => 9,
@@ -94,6 +94,7 @@ class SiriuxTheme extends GalleryTheme {
 
 		// Override some navigator settings
 		$theme =& $template->getVariableByReference('theme');
+
 		if (isset($theme['navigator']['first'])) {
 			unset($theme['navigator']['first']);
 		}
@@ -122,6 +123,7 @@ class SiriuxTheme extends GalleryTheme {
 				)
 			) {
 				$theme['params']['thumbnailSize'] = $matches[1];
+
 				break;
 			}
 		}
@@ -155,6 +157,7 @@ class SiriuxTheme extends GalleryTheme {
 
 		// Override some navigator settings
 		$theme =& $template->getVariableByReference('theme');
+
 		if (isset($theme['navigator']['first'])) {
 			unset($theme['navigator']['first']);
 		}
@@ -207,6 +210,7 @@ class SiriuxTheme extends GalleryTheme {
 		// Add in our extra stuff
 		$theme                  =& $template->getVariableByReference('theme');
 		$theme['adminTemplate'] = $templateFile;
+
 		return array(null, 'theme.tpl');
 	}
 
@@ -282,6 +286,7 @@ class SiriuxTheme extends GalleryTheme {
 	 */
 	public function validateSettings($settings) {
 		$error = parent::validateSettings($settings);
+
 		if (!is_numeric($settings['contentWidth'])) {
 			$error['contentWidth'] = $this->translate('You must enter a number');
 		}

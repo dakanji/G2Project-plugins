@@ -70,13 +70,16 @@
 if (!isset($GLOBALS['HIDE_UNKNOWN_TAGS'])) {
 	$GLOBALS['HIDE_UNKNOWN_TAGS'] = false;
 }
+
 require_once 'IPTC.php';
+
 require_once 'Unicode.php';
 
 // TODO: Many Photoshop IRB resources not interpeted
 // TODO: Obtain a copy of the Photoshop CS File Format Specification
 // TODO: Find out what Photoshop IRB resources 1061, 1062 & 1064 are
 // TODO: Test get_Photoshop_IRB and put_Photoshop_IRB with multiple APP13 segments
+
 /******************************************************************************
  *
  * Function:     get_Photoshop_IRB
@@ -94,7 +97,6 @@ require_once 'Unicode.php';
  *                       or if an error occured
  *
  ******************************************************************************/
-
 function get_Photoshop_IRB($jpeg_header_data) {
 	// Photoshop Image Resource blocks can span several JPEG APP13 segments, so we need to join them up if there are more than one
 	$joined_IRB = '';
@@ -123,6 +125,7 @@ function get_Photoshop_IRB($jpeg_header_data) {
 }
 
 // End of Function:     get_Photoshop_IRB
+
 /******************************************************************************
  *
  * Function:     put_Photoshop_IRB
@@ -144,7 +147,6 @@ function get_Photoshop_IRB($jpeg_header_data) {
  *               FALSE - if an error occured
  *
  ******************************************************************************/
-
 function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 	// Delete all existing Photoshop IRB blocks - the new one will replace them
 	//Cycle through the header segments
@@ -168,6 +170,7 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 	//          when there are no APP segments present
 	//Cycle through the header segments in reverse order (to find where to put the APP13 block - after any APP0 to APP12 blocks)
 	$i = count($jpeg_header_data) - 1;
+
 	while (($i >= 0) && (($jpeg_header_data[$i]['SegType'] > 0xED) || ($jpeg_header_data[$i]['SegType'] < 0xE0))) {
 		$i--;
 	}
@@ -210,6 +213,7 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 }
 
 // End of Function:     put_Photoshop_IRB
+
 /******************************************************************************
  *
  * Function:     get_Photoshop_IPTC
@@ -226,7 +230,6 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
  *                       an error occured
  *
  ******************************************************************************/
-
 function get_Photoshop_IPTC($Photoshop_IRB_data) {
 	// Change: Initialise array correctly, as of revision 1.10
 	$IPTC_Data_Out = array();
@@ -251,6 +254,7 @@ function get_Photoshop_IPTC($Photoshop_IRB_data) {
 }
 
 // End of Function:     get_Photoshop_IPTC
+
 /******************************************************************************
  *
  * Function:     put_Photoshop_IPTC
@@ -269,7 +273,6 @@ function get_Photoshop_IPTC($Photoshop_IRB_data) {
  *                                     IPTC-NAA IIM resource inserted
  *
  ******************************************************************************/
-
 function put_Photoshop_IPTC($Photoshop_IRB_data, $new_IPTC_block) {
 	$iptc_block_pos = -1;
 
@@ -302,6 +305,7 @@ function put_Photoshop_IPTC($Photoshop_IRB_data, $new_IPTC_block) {
 }
 
 // End of Function:     put_Photoshop_IPTC
+
 /******************************************************************************
  *
  * Function:     Interpret_IRB_to_HTML
@@ -329,7 +333,6 @@ function put_Photoshop_IPTC($Photoshop_IRB_data, $new_IPTC_block) {
  * Returns:      output_str - the HTML string
  *
  ******************************************************************************/
-
 function Interpret_IRB_to_HTML($IRB_array, $filename) {
 	// Create a string to receive the HTML
 	$output_str = '';
@@ -365,10 +368,14 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 			switch ($IRB_Resource['ResID']) {
 				case 0x0404: // IPTC-NAA IIM Record
 						$secondary_output_str .= Interpret_IPTC_to_HTML(get_IPTC($IRB_Resource['ResData']));
+
 					break;
+
 				case 0x040B: // URL
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><a href=\"" . $IRB_Resource['ResData'] . '">' . htmlentities($IRB_Resource['ResData']) . "</a></td></tr>\n";
+
 					break;
+
 				case 0x040A: // Copyright Marked
 					if (hexdec(bin2hex($IRB_Resource['ResData'])) == 1) {
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>Image is Copyrighted Material</pre></td></tr>\n";
@@ -377,12 +384,17 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					}
 
 					break;
+
 				case 0x040D: // Global Lighting Angle
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>Global lighting angle for effects layer = " . hexdec(bin2hex($IRB_Resource['ResData'])) . " degrees</pre></td></tr>\n";
+
 					break;
+
 				case 0x0419: // Global Altitude
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>Global Altitude = " . hexdec(bin2hex($IRB_Resource['ResData'])) . "</pre></td></tr>\n";
+
 					break;
+
 				case 0x0421: // Version Info
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
 						$output_str .= 'Version = ' . hexdec(bin2hex(substr($IRB_Resource['ResData'], 0, 4))) . "\n";
@@ -393,7 +405,9 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						$output_str .= 'Reader Name = ' . HTML_UTF16_Escape(substr($IRB_Resource['ResData'], 13 + $writer_size, $reader_size), true) . "\n";
 						$output_str .= 'File Version = ' . hexdec(bin2hex(substr($IRB_Resource['ResData'], 13 + $writer_size + $reader_size, 4))) . "\n";
 						$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				case 0x0411: // ICC Untagged
 					if ($IRB_Resource['ResData'] == "\x01") {
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>Intentionally untagged - any assumed ICC profile handling disabled</pre></td></tr>\n";
@@ -402,6 +416,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					}
 
 					break;
+
 				case 0x041A: // Slices
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\">";
 
@@ -497,7 +512,9 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					}
 
 						$output_str .= "</td></tr>\n";
+
 					break;
+
 				case 0x0408: // Grid and Guides information
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\">";
 
@@ -512,6 +529,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						// Unpack the info for this guide
 						$Guide_Info  = unpack('NLocation/CDirection', substr($IRB_Resource['ResData'], 16 + $i * 5, 5));
 						$output_str .= "<br>Guide $i : Location = " . $Guide_Info['Location'] / 32 . ' Pixel(s) from edge';
+
 						if ($Guide_Info['Direction'] === 0) {
 							$output_str .= ", Vertical\n";
 						} else {
@@ -520,64 +538,99 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					}
 
 					break;
+
 								$output_str .= "</td></tr>\n";
+
 				case 0x0406: // JPEG Quality
 						$Qual_Info   = unpack('nQuality/nFormat/nScans/Cconst', $IRB_Resource['ResData']);
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\">";
+
 					switch ($Qual_Info['Quality']) {
 						case 0xFFFD:
 							$output_str .= "Quality 1 (Low)<br>\n";
+
 							break;
+
 						case 0xFFFE:
 							$output_str .= "Quality 2 (Low)<br>\n";
+
 							break;
+
 						case 0xFFFF:
 								$output_str .= "Quality 3 (Low)<br>\n";
+
 							break;
+
 						case 0x0000:
 								$output_str .= "Quality 4 (Low)<br>\n";
+
 							break;
+
 						case 0x0001:
 								$output_str .= "Quality 5 (Medium)<br>\n";
+
 							break;
+
 						case 0x0002:
 								$output_str .= "Quality 6 (Medium)<br>\n";
+
 							break;
+
 						case 0x0003:
 								$output_str .= "Quality 7 (Medium)<br>\n";
+
 							break;
+
 						case 0x0004:
 								$output_str .= "Quality 8 (High)<br>\n";
+
 							break;
+
 						case 0x0005:
 								$output_str .= "Quality 9 (High)<br>\n";
+
 							break;
+
 						case 0x0006:
 								$output_str .= "Quality 10 (Maximum)<br>\n";
+
 							break;
+
 						case 0x0007:
 								$output_str .= "Quality 11 (Maximum)<br>\n";
+
 							break;
+
 						case 0x0008:
 								$output_str .= "Quality 12 (Maximum)<br>\n";
+
 							break;
+
 						default:
 								$output_str .= 'Unknown Quality (' . $Qual_Info['Quality'] . ")<br>\n";
+
 							break;
 					}
 
 					switch ($Qual_Info['Format']) {
 						case 0x0000:
 								$output_str .= "Standard Format\n";
+
 							break;
+
 						case 0x0001:
 								$output_str .= "Optimised Format\n";
+
 							break;
+
 						case 0x0101:
 								$output_str .= "Progressive Format<br>\n";
+
 							break;
+
 						default:
 								$output_str .= 'Unknown Format (' . $Qual_Info['Format'] . ")\n";
+
 							break;
 					}
 
@@ -585,21 +638,30 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						switch ($Qual_Info['Scans']) {
 							case 0x0001:
 								$output_str .= "3 Scans\n";
+
 								break;
+
 							case 0x0002:
 									$output_str .= "4 Scans\n";
+
 								break;
+
 							case 0x0003:
 									$output_str .= "5 Scans\n";
+
 								break;
+
 							default:
 									$output_str .= 'Unknown number of scans (' . $Qual_Info['Scans'] . ")\n";
+
 								break;
 						}
 					}
 
 									$output_str .= "</td></tr>\n";
+
 					break;
+
 				case 0x0409: // Thumbnail Resource
 				case 0x040C: // Thumbnail Resource
 						$thumb_data  = unpack('NFormat/NWidth/NHeight/NWidthBytes/NSize/NCompressedSize/nBitsPixel/nPlanes', $IRB_Resource['ResData']);
@@ -622,10 +684,14 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						// Add thumbnail link to html
 						$output_str .= "Thumbnail Data:</pre><a class=\"Photoshop_Thumbnail_Link\" href=\"$link_str\"><img class=\"Photoshop_Thumbnail_Link\" src=\"$link_str\"></a>\n";
 						$output_str .= "</td></tr>\n";
+
 					break;
+
 				case 0x0414: // Document Specific ID's
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>" . hexdec(bin2hex($IRB_Resource['ResData'])) . "</pre></td></tr>\n";
+
 					break;
+
 				case 0x041E: // URL List
 						$URL_count   = hexdec(bin2hex(substr($IRB_Resource['ResData'], 0, 4)));
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\">\n";
@@ -643,12 +709,16 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					}
 
 						$output_str .= "</td></tr>\n";
+
 					break;
+
 				case 0x03F4: // Grayscale and multichannel halftoning information.
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
 						$output_str .= Interpret_Halftone($IRB_Resource['ResData']);
 						$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				case 0x03F5: // Color halftoning information
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
 						$output_str .= "Cyan Halftoning Info:\n" . Interpret_Halftone(substr($IRB_Resource['ResData'], 0, 18)) . "\n\n";
@@ -656,21 +726,28 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						$output_str .= "Yellow Halftoning Info:\n" . Interpret_Halftone(substr($IRB_Resource['ResData'], 36, 18)) . "\n";
 						$output_str .= "Black Halftoning Info:\n" . Interpret_Halftone(substr($IRB_Resource['ResData'], 54, 18)) . "\n";
 						$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				case 0x03F7: // Grayscale and multichannel transfer function.
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
 						$output_str .= Interpret_Transfer_Function(substr($IRB_Resource['ResData'], 0, 28));
 						$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				case 0x03F8: // Color transfer functions
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
 						$output_str .= "Red Transfer Function:   \n" . Interpret_Transfer_Function(substr($IRB_Resource['ResData'], 0, 28)) . "\n\n";
 						$output_str .= "Green Transfer Function: \n" . Interpret_Transfer_Function(substr($IRB_Resource['ResData'], 28, 28)) . "\n\n";
 						$output_str .= "Blue Transfer Function:  \n" . Interpret_Transfer_Function(substr($IRB_Resource['ResData'], 56, 28)) . "\n";
 						$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				case 0x03F3: // Print Flags
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
+
 					if ($IRB_Resource['ResData'][0] == "\x01") {
 						$output_str .= "Labels Selected\n";
 					} else {
@@ -720,7 +797,9 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					}
 
 									$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				case 0x2710: // Print Flags Information
 						$PrintFlags  = unpack('nVersion/CCentCrop/Cjunk/NBleedWidth/nBleedWidthScale', $IRB_Resource['ResData']);
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
@@ -729,12 +808,15 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 						$output_str .= 'Bleed Width = ' . $PrintFlags['BleedWidth'] . "\n";
 						$output_str .= 'Bleed Width Scale = ' . $PrintFlags['BleedWidthScale'];
 						$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				case 0x03ED: // Resolution Info
 						$ResInfo     = unpack('nhRes_int/nhResdec/nhResUnit/nwidthUnit/nvRes_int/nvResdec/nvResUnit/nheightUnit', $IRB_Resource['ResData']);
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\"><pre>\n";
 						$output_str .= 'Horizontal Resolution = ' . ($ResInfo['hRes_int'] + $ResInfo['hResdec'] / 65536) . " pixels per Inch\n";
 						$output_str .= 'Vertical Resolution = ' . ($ResInfo['vRes_int'] + $ResInfo['vResdec'] / 65536) . " pixels per Inch\n";
+
 					if ($ResInfo['hResUnit'] == 1) {
 						$output_str .= "Display units for Horizontal Resolution = Pixels per Inch\n";
 					} elseif ($ResInfo['hResUnit'] == 2) {
@@ -780,7 +862,9 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 					}
 
 									$output_str .= "</pre></td></tr>\n";
+
 					break;
+
 				default: // All other records
 						$output_str .= "<tr class=\"Photoshop_Table_Row\"><td class=\"Photoshop_Caption_Cell\">$Resource_Name</td><td class=\"Photoshop_Value_Cell\">RESOURCE DECODING NOT IMPLEMENTED YET<BR>" . strlen($IRB_Resource['ResData']) . " bytes</td></tr>\n";
 			}
@@ -799,6 +883,7 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
 
 // End of Function:     Interpret_IRB_to_HTML
 // INTERNAL FUNCTIONS
+
 /******************************************************************************
  *
  * Function:     unpack_Photoshop_IRB_Data
@@ -811,7 +896,6 @@ function Interpret_IRB_to_HTML($IRB_array, $filename) {
  * Returns:      IRBdata - The array of Photoshop IRB records
  *
  ******************************************************************************/
-
 function unpack_Photoshop_IRB_Data($IRB_Data) {
 	$pos = 0;
 
@@ -896,6 +980,7 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
 }
 
 // End of Function:     unpack_Photoshop_IRB_Data
+
 /******************************************************************************
  *
  * Function:     pack_Photoshop_IRB_Data
@@ -909,7 +994,6 @@ function unpack_Photoshop_IRB_Data($IRB_Data) {
  * Returns:      packed_IRB_data - the binary string of packed IRB data
  *
  ******************************************************************************/
-
 function pack_Photoshop_IRB_Data($IRB_data) {
 	$packed_IRB_data = '';
 
@@ -963,6 +1047,7 @@ function pack_Photoshop_IRB_Data($IRB_data) {
 }
 
 // End of Function:     pack_Photoshop_IRB_Data
+
 /******************************************************************************
  *
  * Internal Function:     Interpret_Transfer_Function
@@ -977,7 +1062,6 @@ function pack_Photoshop_IRB_Data($IRB_data) {
  *                            information
  *
  ******************************************************************************/
-
 function Interpret_Transfer_Function($Transfer_Function_Binary) {
 	// Unpack the Transfer function information
 	$Trans_vals = unpack('n13Curve/nOverride', $Transfer_Function_Binary);
@@ -1011,6 +1095,7 @@ function Interpret_Transfer_Function($Transfer_Function_Binary) {
 }
 
 // End of Function:     Interpret_Transfer_Function
+
 /******************************************************************************
 *
 * Internal Function:     Interpret_Halftone
@@ -1026,7 +1111,6 @@ function Interpret_Transfer_Function($Transfer_Function_Binary) {
 *                            information
 *
 ******************************************************************************/
-
 function Interpret_Halftone($Halftone_Binary) {
 	// Create a string to receive the output
 	$output_str = '';
@@ -1036,6 +1120,7 @@ function Interpret_Halftone($Halftone_Binary) {
 
 	// Interpret Ink Screen Frequency
 	$output_str .= 'Ink Screen Frequency = ' . ($HalftoneInfo['FreqVal_int'] + $HalftoneInfo['FreqVal_dec'] / 65536) . " lines per Inch\n";
+
 	if ($HalftoneInfo['FreqScale'] == 1) {
 		$output_str .= "Display units for Ink Screen Frequency = Inches\n";
 	} else {
@@ -1085,6 +1170,7 @@ function Interpret_Halftone($Halftone_Binary) {
 }
 
 // End of Global Variable:     Interpret_Halftone
+
 /******************************************************************************
  * Global Variable:      Photoshop_ID_Names
  *
@@ -1150,6 +1236,7 @@ $GLOBALS['Photoshop_ID_Names'] = array(
 );
 
 // End of Global Variable:     Photoshop_ID_Names
+
 /******************************************************************************
  * Global Variable:      Photoshop_ID_Descriptions
  *

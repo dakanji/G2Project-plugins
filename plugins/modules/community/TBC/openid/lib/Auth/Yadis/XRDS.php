@@ -40,6 +40,7 @@ define('SERVICES_YADIS_MAX_PRIORITY', 2 ** 30);
  * XRD XML namespace
  */
 define('Auth_Yadis_XMLNS_XRD_2_0', 'xri://$xrd*($v*2.0)');
+
 /**
  * XRDS XML namespace
  */
@@ -57,6 +58,7 @@ function Auth_Yadis_getNSMap() {
  */
 function Auth_Yadis_array_scramble($arr) {
 	$result = array();
+
 	while (count($arr)) {
 		$index    = array_rand($arr, 1);
 		$result[] = $arr[$index];
@@ -95,8 +97,10 @@ class Auth_Yadis_Service {
 	 */
 	public function getTypes() {
 		$t = array();
+
 		foreach ($this->getElements('xrd:Type') as $elem) {
 			$c = $this->parser->content($elem);
+
 			if ($c) {
 				$t[] = $c;
 			}
@@ -107,6 +111,7 @@ class Auth_Yadis_Service {
 
 	public function matchTypes($type_uris) {
 		$result = array();
+
 		foreach ($this->getTypes() as $typ) {
 			if (in_array($typ, $type_uris)) {
 				$result[] = $typ;
@@ -125,13 +130,16 @@ class Auth_Yadis_Service {
 	public function getURIs() {
 		$uris = array();
 		$last = array();
+
 		foreach ($this->getElements('xrd:URI') as $elem) {
 			$uri_string = $this->parser->content($elem);
 			$attrs      = $this->parser->attributes($elem);
+
 			if ($attrs
 				&& array_key_exists('priority', $attrs)
 			) {
 				$priority = intval($attrs['priority']);
+
 				if (!array_key_exists($priority, $uris)) {
 					$uris[$priority] = array();
 				}
@@ -147,6 +155,7 @@ class Auth_Yadis_Service {
 
 		// Rebuild array of URIs.
 		$result = array();
+
 		foreach ($keys as $k) {
 			$new_uris = Auth_Yadis_array_scramble($uris[$k]);
 			$result   = array_merge($result, $new_uris);
@@ -169,6 +178,7 @@ class Auth_Yadis_Service {
 	 */
 	public function getPriority() {
 		$attributes = $this->parser->attributes($this->element);
+
 		if (array_key_exists('priority', $attributes)) {
 			return intval($attributes['priority']);
 		}
@@ -205,6 +215,7 @@ class Auth_Yadis_Service {
  */
 function Auth_Yadis_getXRDExpiration($xrd_element, $default = null) {
 	$expires_element = $xrd_element->$parser->evalXPath('/xrd:Expires');
+
 	if ($expires_element === null) {
 		return $default;
 	}
@@ -214,6 +225,7 @@ function Auth_Yadis_getXRDExpiration($xrd_element, $default = null) {
 	// Will raise ValueError if the string is not the expected
 	// format
 	$t = strptime($expires_string, '%Y-%m-%dT%H:%M:%SZ');
+
 	if ($t === false) {
 		return false;
 	}
@@ -255,6 +267,7 @@ class Auth_Yadis_XRDS {
 		$this->xrdNode     = $xrdNodes[count($xrdNodes) - 1];
 		$this->allXrdNodes = $xrdNodes;
 		$this->serviceList = array();
+
 		$this->_parse();
 	}
 
@@ -269,12 +282,14 @@ class Auth_Yadis_XRDS {
 	 */
 	public function &parseXRDS($xml_string, $extra_ns_map = null) {
 		$_null = null;
+
 		if (!$xml_string) {
 			return $_null;
 		}
 
 		$parser = Auth_Yadis_getXMLParser();
 		$ns_map = Auth_Yadis_getNSMap();
+
 		if ($extra_ns_map && is_array($extra_ns_map)) {
 			$ns_map = array_merge($ns_map, $extra_ns_map);
 		}
@@ -285,6 +300,7 @@ class Auth_Yadis_XRDS {
 
 		// Try to get root element.
 		$root = $parser->evalXPath('/xrds:XRDS[1]');
+
 		if (!$root) {
 			return $_null;
 		}
@@ -294,6 +310,7 @@ class Auth_Yadis_XRDS {
 		}
 
 		$attrs = $parser->attributes($root);
+
 		if (array_key_exists('xmlns:xrd', $attrs)
 			&& $attrs['xmlns:xrd'] != Auth_Yadis_XMLNS_XRDS
 		) {
@@ -309,11 +326,13 @@ class Auth_Yadis_XRDS {
 
 		// Get the last XRD node.
 		$xrd_nodes = $parser->evalXPath('/xrds:XRDS[1]/xrd:XRD');
+
 		if (!$xrd_nodes) {
 			return $_null;
 		}
 
 		$xrds = new Auth_Yadis_XRDS($parser, $xrd_nodes);
+
 		return $xrds;
 	}
 
@@ -322,6 +341,7 @@ class Auth_Yadis_XRDS {
 	 */
 	public function _addService($priority, $service) {
 		$priority = intval($priority);
+
 		if (!array_key_exists($priority, $this->serviceList)) {
 			$this->serviceList[$priority] = array();
 		}
@@ -338,11 +358,13 @@ class Auth_Yadis_XRDS {
 	public function _parse() {
 		$this->serviceList = array();
 		$services          = $this->parser->evalXPath('xrd:Service', $this->xrdNode);
+
 		foreach ($services as $node) {
 			$s          = new Auth_Yadis_Service();
 			$s->element = $node;
 			$s->parser  = $this->parser;
 			$priority   = $s->getPriority();
+
 			if ($priority === null) {
 				$priority = SERVICES_YADIS_MAX_PRIORITY;
 			}
@@ -388,6 +410,7 @@ class Auth_Yadis_XRDS {
 			|| (!is_array($filters))
 		) {
 			$result = array();
+
 			foreach ($pri_keys as $pri) {
 				$result = array_merge($result, $this->serviceList[$pri]);
 			}
@@ -410,15 +433,20 @@ class Auth_Yadis_XRDS {
 		// Otherwise, use the callbacks in the filter list to
 		// determine which services are returned.
 		$filtered = array();
+
 		foreach ($pri_keys as $priority_value) {
 			$service_obj_list = $this->serviceList[$priority_value];
+
 			foreach ($service_obj_list as $service) {
 				$matches = 0;
+
 				foreach ($filters as $filter) {
 					if (call_user_func_array($filter, array($service))) {
 						$matches++;
+
 						if ($filter_mode == SERVICES_YADIS_MATCH_ANY) {
 							$pri = $service->getPriority();
+
 							if ($pri === null) {
 								$pri = SERVICES_YADIS_MAX_PRIORITY;
 							}
@@ -428,6 +456,7 @@ class Auth_Yadis_XRDS {
 							}
 
 							$filtered[$pri][] = $service;
+
 							break;
 						}
 					}
@@ -437,6 +466,7 @@ class Auth_Yadis_XRDS {
 					&& ($matches == count($filters))
 				) {
 					$pri = $service->getPriority();
+
 					if ($pri === null) {
 						$pri = SERVICES_YADIS_MAX_PRIORITY;
 					}
@@ -453,6 +483,7 @@ class Auth_Yadis_XRDS {
 		$pri_keys = array_keys($filtered);
 		sort($pri_keys, SORT_NUMERIC);
 		$result = array();
+
 		foreach ($pri_keys as $pri) {
 			$result = array_merge($result, $filtered[$pri]);
 		}

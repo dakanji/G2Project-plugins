@@ -30,6 +30,7 @@
  */
 GalleryCoreApi::requireOnce('modules/map/classes/GoogleMapUtilities.class');
 GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
+
 class ShowMapController extends GalleryController {
 	public function handleRequest($form) {
 		global $gallery;
@@ -81,6 +82,7 @@ class ShowMapController extends GalleryController {
 		if (isset($form['save'])) {
 			if ($form['plugin'] == 'ItemEdit' or $form['plugin'] == 'GroupCoord') {
 				$groupid = GalleryUtilities::getRequestVariables('groupid');
+
 				if (!empty($groupid)) {
 					$id = $groupid;
 				} else {
@@ -161,6 +163,7 @@ class ShowMapController extends GalleryController {
 					list($ret, $result) = $gallery->search($query, array(), array());
 
 					$params = '';
+
 					while ($param = $result->nextResult()) {
 						if ($params != '') {
 							$params = $params . '|' . $param[0] . ':' . $param[1];
@@ -174,12 +177,15 @@ class ShowMapController extends GalleryController {
 
 				$results['status'] = '';
 				$results['error']  = array();
-				if ($form['plugin'] == 'ItemEdit') { // return to the page "ItemEdit"
+
+				if ($form['plugin'] == 'ItemEdit') {
+					// return to the page "ItemEdit"
 					$results['redirect']['view']       = 'core.ItemAdmin';
 					$results['redirect']['subView']    = 'core.ItemEdit';
 					$results['redirect']['itemId']     = $id;
 					$results['redirect']['editPlugin'] = 'mapItemEdit';
-				} else { // return to the page "Edit Group"
+				} else {
+					// return to the page "Edit Group"
 					$results['redirect']['view']    = 'core.SiteAdmin';
 					$results['redirect']['subView'] = 'map.MapGroupAdmin';
 					$results['redirect']['mode']    = 'AddGroup';
@@ -193,7 +199,6 @@ class ShowMapController extends GalleryController {
 					'centerLongLat',
 					$form['coord']
 				);
-
 				GalleryCoreApi::setPluginParameter('module', 'map', 'zoomLevel', $form['zoom']);
 
 				// return to the page "AdminPanel"
@@ -216,6 +221,7 @@ class ShowMapController extends GalleryController {
 
 			if ($form['plugin'] == 'Filters') {
 				$oldeditfilter = GalleryCoreApi::getPluginParameter('module', 'map', 'EditFilter');
+
 				if (!empty($oldeditfilter[1])) {
 					$oldfilter     = explode('`', $oldeditfilter[1]);
 					$oldfilter[2]  = $form['zoom'];
@@ -223,8 +229,10 @@ class ShowMapController extends GalleryController {
 					$neweditfilter = implode('`', $oldfilter);
 				} else {
 					$oldfilters = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
+
 					if (!empty($oldfilters[1])) {
 						$currentfilters = explode('|', $oldfilters[1]);
+
 						foreach ($currentfilters as $filterinfos) {
 							$infos = explode('`', $filterinfos);
 							$ids[] = $infos[0];
@@ -268,6 +276,7 @@ class ShowMapView extends GalleryView {
 		}
 
 		// Get the real path for the map module installation
+
 		/** @todo for gallery 2.3 and later change this to use getCodeBasePath() */
 
 		// $mapModBaseDir = GalleryCoreApi::getPluginBaseDir('module', 'map') . 'modules/map/';
@@ -284,6 +293,7 @@ class ShowMapView extends GalleryView {
 
 		// creates the array that will be later passed on to ShowMap.inc
 		$map = array();
+
 		foreach ($param as $key => $value) {
 			$map[$key] = $param[$key];
 		}
@@ -300,10 +310,11 @@ class ShowMapView extends GalleryView {
 		$map['useMarkerSet']      = 'none';
 		$map['useAlbumMarkerSet'] = 'none';
 		$map['useGroupMarkerSet'] = 'none';
+
 		if (array_key_exists('useMarkerSet', $param)
 			and $platform->is_dir(
 				$mapModBaseDir . 'images/markers/'
-				   . $param['useMarkerSet']
+							. $param['useMarkerSet']
 			)
 		) {
 			$map['useMarkerSet'] = $param['useMarkerSet'];
@@ -345,6 +356,7 @@ class ShowMapView extends GalleryView {
 		$map['mapType']      = isset($param['mapType']) ? $param['mapType'] : 'G_SATELLITE_TYPE';
 		$map['mode']         = GalleryUtilities::getRequestVariables('Mode');
 		$fullScreen          = GalleryUtilities::getRequestVariables('fullScreen');
+
 		if (empty($map['mode'])) {
 			$map['mode'] = 'Normal';
 		}
@@ -362,6 +374,7 @@ class ShowMapView extends GalleryView {
 		);
 
 		unset($map['zoomLevel']);
+
 		if ($map['mode'] == 'Normal') {
 			$map['EnableRouteNumber'] = isset($param['EnableRouteNumber']) ? $param['EnableRouteNumber'] : 0;
 			$color                    = mapHelper::getItemColor(177);
@@ -398,6 +411,7 @@ class ShowMapView extends GalleryView {
 				$pointHash = $gpsitems + $groups;
 				$ids       = array_keys($gpsitems);
 				$isgroup   = GalleryUtilities::getRequestVariables('Group');
+
 				if (!empty($isgroup)) {
 					/** todo add this to the function that gets items */
 
@@ -407,8 +421,10 @@ class ShowMapView extends GalleryView {
 						// we have some groups, let's check
 						$allgroups   = explode('|', $param['MapGroups']);
 						$theonegroup = array();
+
 						foreach ($allgroups as $agroup) {
 							$tmp = explode('`', $agroup);
+
 							if ('G' . $tmp[0] == $isgroup) {
 								$theonegroup = $tmp;
 							}
@@ -427,8 +443,10 @@ class ShowMapView extends GalleryView {
 							)
 								. '>Show All</a>';
 							$NumberOfIds   = count($ids);
+
 							for ($i = 0; $i < $NumberOfIds; $i++) {
 								$inGroup = false;
+
 								for ($j = 6; $j < count($theonegroup); $j++) {
 									if ($theonegroup[$j] == $ids[$i]) {
 										$inGroup = true;
@@ -439,10 +457,12 @@ class ShowMapView extends GalleryView {
 									unset($pointHash[$ids[$i]], $ids[$i]);
 								}
 							}
-						} else { // No group found corresponding, joke ?
+						} else {
+							// No group found corresponding, joke ?
 							$map['GroupHackingError'] = 1;
 						}
-					} else { // No groups at all ...
+					} else {
+						// No groups at all ...
 						$map['GroupHackingError'] = 1;
 					}
 
@@ -455,6 +475,7 @@ class ShowMapView extends GalleryView {
 					// Get the list of album with GPS Item in them
 					$map['listalbums'] = $parentsequences;
 					$temp              = array();
+
 					foreach ($map['listalbums'] as $tmp) {
 						$temp[] = implode('`', $tmp);
 					}
@@ -462,6 +483,7 @@ class ShowMapView extends GalleryView {
 					$listofalbums = implode('`', array_unique($temp));
 					$temp         = explode('`', $listofalbums);
 					$listofalbums = implode('`', array_unique($temp));
+
 					GalleryCoreApi::setPluginParameter('module', 'map', 'albumlist', $listofalbums);
 
 					// Trim the list if the "Album" filter is ON
@@ -473,18 +495,22 @@ class ShowMapView extends GalleryView {
 					}
 
 					$map['noiteminalbum'] = false;
+
 					if (!empty($albumfilter)) {
 						/** @todo: Include a marker for the album if it has coordinates */
 						$map['Filter'] = 'Album: ' . $albumfilter;
 						$NumberOfIds   = count($ids);
+
 						for ($i = 0; $i < $NumberOfIds; $i++) {
 							$pos     = $ids[$i];
 							$InAlbum = false;
+
 							if ($pos != $TheRoot) {
 								for ($j = 0; $j < count($parentsequences[$pos]); $j++) {
 									if (strtolower($parentsequences[$pos][$j]) == strtolower($albumfilter)
 									) {
 										$InAlbum = true;
+
 										break;
 									}
 								}
@@ -497,12 +523,14 @@ class ShowMapView extends GalleryView {
 					}
 
 					$ids = array_values($ids);
+
 					if (count($ids) > 0) {
 						// prepare for regrouping
 						foreach ($ids as $id) {
 							$pointHash[$id]['regroupShowHigh'] = 0;
 							$pointHash[$id]['regroupShowLow']  = 19;
 							$parentId                          = $pointHash[$id]['parentId'];
+
 							if (array_key_exists($pointHash[$id]['parentId'], $pointHash)
 								and (array_key_exists('regroupAlbums', $param)
 								and array_key_exists('regroupDist', $param)
@@ -544,6 +572,7 @@ class ShowMapView extends GalleryView {
 
 							$map['ReplaceMarkerSizeX'] = $iconsize[0];
 							$map['ReplaceMarkerSizeY'] = $iconsize[1];
+
 							if ($param['regroupIcon'] == 'zoom-in-trans') {
 								$map['replaceAnchorPos'] = '' . ($iconsize[0] / 2) . ', '
 											. ($iconsize[1] / 2);
@@ -561,7 +590,10 @@ class ShowMapView extends GalleryView {
 							$groupItemDists = array();
 							$groupDists     = array();
 							$nbpoints       = count($mapPoints);
-							$DEBUG_REGROUP  = false; // set true to output ugly regroup feature debug info instead of a nice map
+
+							// set true to output ugly regroup feature debug info instead of a nice map
+							$DEBUG_REGROUP = false;
+
 							for ($z = 19; $z >= 0; $z--) {
 								if ($DEBUG_REGROUP) {
 									echo " -------------- ZOOMLEVEL $z -----------------\n";
@@ -575,6 +607,7 @@ class ShowMapView extends GalleryView {
 									if ($z < $point['regroupShowHigh']) {
 										// item no longer visible because of album regroup
 										$mapPoints[$id]['display'] = false;
+
 										if (isset($showItems[$id])) {
 											unset($showItems[$id]);
 										}
@@ -602,6 +635,7 @@ class ShowMapView extends GalleryView {
 											);
 
 											$pixdist = $groupItemDists[$groupId][$id];
+
 											if ($pixdist <= $regroupDist) {
 												if ($mapPoints[$id]['regroupShowLow'] == $z) {
 													if ($DEBUG_REGROUP) {
@@ -616,7 +650,8 @@ class ShowMapView extends GalleryView {
 													// do nothing
 													$mapPoints[$id]['display']         = false;
 													$mapPoints[$id]['regroupShowHigh'] = $z + 1;
-												} else { // add marker to group
+												} else {
+													// add marker to group
 													if ($DEBUG_REGROUP) {
 														echo " Adding Item  $id to groups $groupId\n";
 													}
@@ -654,6 +689,7 @@ class ShowMapView extends GalleryView {
 
 											$distances[$id1][$id2] = $dist;
 											$pixdist               = $distances[$id1][$id2];
+
 											if ($pixdist <= $regroupDist) {
 												if ($mapPoints[$id1]['regroupShowLow'] == $z) {
 													/*
@@ -670,6 +706,7 @@ class ShowMapView extends GalleryView {
 
 													$mapPoints[$id1]['display']         = false;
 													$mapPoints[$id1]['regroupShowHigh'] = $z + 1;
+
 													continue 1;
 												}
 
@@ -686,12 +723,14 @@ class ShowMapView extends GalleryView {
 
 													$mapPoints[$id2]['display']         = false;
 													$mapPoints[$id2]['regroupShowHigh'] = $z + 1;
+
 													continue;
 												}
 
 												// check if these items have been grouped
 												$g1 = $mapPoints[$id1]['group'];
 												$g2 = $mapPoints[$id2]['group'];
+
 												if ($g1 < 0 and $g2 < 0) {
 													if ($DEBUG_REGROUP) {
 														echo " regrouping ITEMS $id1 and $id2, CREATING NEW GROUP $nbgroups !!!\n";
@@ -769,6 +808,7 @@ class ShowMapView extends GalleryView {
 														 * do nothing!
 														 */
 														continue;
+
 														if ($DEBUG_REGROUP) {
 															echo " ITEMS $id1 and $id2 are already in $g1, skipping $id2\n";
 														}
@@ -779,6 +819,7 @@ class ShowMapView extends GalleryView {
 													}
 
 													// put item2 in g1
+
 													/*
 													 * if old item2 was already in a new group,
 													 * this will be merged afterwards
@@ -808,6 +849,7 @@ class ShowMapView extends GalleryView {
 													$mapPoints[$id2]['group']           = $g1;
 													$mapPoints[$id2]['regroupShowHigh'] = $z + 1;
 													$mapPoints[$id2]['display']         = false;
+
 													if ($g2 > -1) {
 														if ($DEBUG_REGROUP) {
 															echo " regrouping ITEMS $id1 and $id2, both were in a group ($g1 and $g2). Moving elements of $g2 into $g1\n";
@@ -862,8 +904,10 @@ class ShowMapView extends GalleryView {
 														}
 
 														unset($groups[$g2]);
+
 														if (isset($showGroups[$g2])) {
-															unset($showGroups[$g2]); // die("noo 1");
+															// die("noo 1");
+															unset($showGroups[$g2]);
 														}
 													}
 												}
@@ -903,6 +947,7 @@ class ShowMapView extends GalleryView {
 											);
 
 											$pixdist = $groupDists[$gid1][$gid2];
+
 											if ($pixdist <= $regroupDist) {
 												if ($DEBUG_REGROUP) {
 													echo " groups $gid1 and $gid2 have dist $pixdist\n";
@@ -911,6 +956,7 @@ class ShowMapView extends GalleryView {
 												// check if these groups have been regrouped
 												$g1 = $groups[$gid1]['group'];
 												$g2 = $groups[$gid2]['group'];
+
 												if ($g1 < 0 && $g2 < 0) {
 													if ($DEBUG_REGROUP) {
 														echo " regrouping groups $gid1 and $gid2, CREATING NEW GROUP $nbgroups !!!\n";
@@ -999,6 +1045,7 @@ class ShowMapView extends GalleryView {
 													}
 
 													// put (old) group2 in NEW g1
+
 													/*
 													 * if old group2 was already in a new group,
 													 * this will be merged afterwards
@@ -1028,6 +1075,7 @@ class ShowMapView extends GalleryView {
 													$groups[$gid2]['group']           = $g1;
 													$groups[$gid2]['regroupShowHigh'] = $z + 1;
 													$groups[$gid2]['display']         = false;
+
 													if ($g2 > -1) {
 														if ($DEBUG_REGROUP) {
 															echo " group2 $gid2 was in NEW group $g2\n";
@@ -1082,6 +1130,7 @@ class ShowMapView extends GalleryView {
 														}
 
 														unset($groups[$g2]);
+
 														if (isset($showGroups[$g2])) {
 															unset($showGroups[$g2]);
 														}
@@ -1135,7 +1184,8 @@ class ShowMapView extends GalleryView {
 							$map['regroupItems'] = false;
 						}
 					} else {
-						$map['noiteminalbum'] = true; // No item in the selected album
+						// No item in the selected album
+						$map['noiteminalbum'] = true;
 					}
 				} else {
 					/*
@@ -1154,25 +1204,32 @@ class ShowMapView extends GalleryView {
 			// Set various parameters needed by ShowMap.tpl, accessible as {$map.mapWidth}, etc.
 			$map['mapPoints']    = (isset($mapPoints)) ? $mapPoints : array();
 			$map['RegroupItems'] = (isset($groups)) ? $groups : array();
+
 			if (!array_key_exists('MapWindowType', $map) or $map['MapWindowType'] == '') {
 				$map['MapWindowType'] = 'default';
 			}
+
 			include $mapModBaseDir . 'templates/infowindow/' . $map['MapWindowType'] . '.inc';
 
 			$filter = GalleryUtilities::getRequestVariables('filter');
+
 			if (!empty($filter)) {
 				if (!array_key_exists('Filters', $param) and substr($filter, 0, 5) != 'Route') {
 					$map['filterhackingerror'] = 1;
 				} else {
 					$currentfilters = $param['Filters'];
+
 					if ($currentfilters != '') {
 						$filterarray = explode('|', $currentfilters);
+
 						foreach ($filterarray as $filterinfos) {
 							$infos = explode('`', $filterinfos);
+
 							if ($infos[1] == $filter) {
 								$map['centerLongLat'] = $infos[3];
 								$map['zoomLevel']     = $infos[2];
 								$map['Filter']        = $infos[1];
+
 								break;
 							}
 						}
@@ -1213,6 +1270,7 @@ class ShowMapView extends GalleryView {
 			$map['defaultgroupcolor']    = (array_key_exists('defaultgroupcolor', $param)) ? $param['defaultgroupcolor'] : '';
 			$map['GoogleOverview']       = (array_key_exists('GoogleOverview', $param)) ? $param['GoogleOverview'] : false;
 			$map['GZoom']                = (array_key_exists('GZoom', $param)) ? $param['GZoom'] : false;
+
 			if ($map['GZoom']) {
 				$map['GZPos']     = $param['GZPos'];
 				$map['GZPosOffX'] = isset($param['GZPosOffX']) ? $param['GZPosOffX'] : 7;
@@ -1302,6 +1360,7 @@ class ShowMapView extends GalleryView {
 
 			$settings  = $deftheme->getSettings(null);
 			$bodycolor = '';
+
 			if (is_array($settings[1])) {
 				foreach ($settings[1] as $num => $arrayinfo) {
 					if (($settings[1][$num]['key'] == 'colorpack')
@@ -1312,6 +1371,7 @@ class ShowMapView extends GalleryView {
 						. $colorpack . '/color.css';
 						@$filepointer = fopen($filename, 'r');
 						$file         = '';
+
 						if ($filepointer) {
 							while (!feof($filepointer)) {
 								$buffer = fgets($filepointer, 4096);
@@ -1333,6 +1393,7 @@ class ShowMapView extends GalleryView {
 			}
 
 			$map['bodycolor'] = $bodycolor;
+
 			if ($deftheme->getName() == 'Floatrix') {
 				$map['sidebar'] = 0;
 			}
@@ -1351,6 +1412,7 @@ class ShowMapView extends GalleryView {
 
 			if (array_key_exists('2', $settings)) {
 				$settings = $settings[2];
+
 				foreach ($settings as $key => $value) {
 					if ($key == 'sidebarBlocks') {
 						list($success, $sidebarvalue) = $deftheme->unpackSetting('block-list', $value);
@@ -1411,6 +1473,7 @@ class ShowMapView extends GalleryView {
 			// get data for item edit
 			if ($map['plugin'] == 'ItemEdit' or $map['plugin'] == 'GroupCoord') {
 				$groupid = GalleryUtilities::getRequestVariables('groupid');
+
 				if (!empty($groupid)) {
 					$form['id'] = $groupid;
 				}
@@ -1469,6 +1532,7 @@ class ShowMapView extends GalleryView {
 				$map['filter'] = true;
 				$center        = GalleryUtilities::getRequestVariables('center');
 				$zoom          = GalleryUtilities::getRequestVariables('zoom');
+
 				if (!empty($center)) {
 					$map['coordinates'] = $center;
 				}
@@ -1484,6 +1548,7 @@ class ShowMapView extends GalleryView {
 			}
 
 			$map['centerLongLat'] = $map['coordinates'];
+
 			if (!isset($map['zoomLevel']) or $map['zoomLevel'] == '') {
 				$map['zoomLevel'] = (isset($map['GVMZoom']) and $map['GVMZoom'] != '') ? $map['GVMZoom'] : '2';
 			}
@@ -1517,6 +1582,7 @@ class ShowMapView extends GalleryView {
 		}
 
 		$map['fullScreen'] = $fullScreen;
+
 		$template->setVariable('map', $map);
 
 		// Render the actual template with the map display

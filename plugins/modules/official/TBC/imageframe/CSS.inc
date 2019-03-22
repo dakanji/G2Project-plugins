@@ -53,13 +53,16 @@ class CSSView extends GalleryView {
 	 */
 	public function renderImmediate($status = null, $error = null) {
 		$frameList = GalleryUtilities::getRequestVariables('frames');
+
 		if (empty($frameList)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
 
 		$frameList = explode('|', $frameList);
+
 		if (function_exists('getallheaders')) {
 			$headers = getallheaders();
+
 			if (isset($headers['If-modified-since'])) {
 				$headers['If-Modified-Since'] = $headers['If-modified-since'];
 			}
@@ -71,18 +74,22 @@ class CSSView extends GalleryView {
 				global $gallery;
 
 				$platform =& $gallery->getPlatform();
+
 				foreach ($frameList as $frameId) {
 					$inc = __DIR__ . "/frames/$frameId/frame.inc";
+
 					if ($platform->file_exists($inc) && ($stat = $platform->stat($inc))
 						&& $stat[9] > $when
 					) {
 						$new = true;
+
 						break;
 					}
 				}
 
 				if (!isset($new)) {
 					header('HTTP/1.0 304 Not Modified');
+
 					return null;
 				}
 			}
@@ -99,7 +106,9 @@ class CSSView extends GalleryView {
 		}
 
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
 		$template->setVariable('l10Domain', 'modules_imageframe');
 
 		$ret = $imageframe->init($template, $frameList);

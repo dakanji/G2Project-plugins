@@ -19,12 +19,12 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- /**
-  * This view produces xml output to feed to Simpleviewer
-  * @package SimpleviewerSource
-  * @version $Revision: 1729 $
-  * @author Alec Myers <alec@alecmyers.com>
-  */
+/**
+ * This view produces xml output to feed to Simpleviewer
+ * @package SimpleviewerSource
+ * @version $Revision: 1729 $
+ * @author Alec Myers <alec@alecmyers.com>
+ */
 class XMLOutView extends GalleryView {
 	/**
 	 * @see GalleryView::isImmediate
@@ -41,6 +41,7 @@ class XMLOutView extends GalleryView {
 
 		// Figure out which item we're talking about
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
+
 		if (empty($itemId)) {
 			return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -150,6 +151,7 @@ class XMLOutView extends GalleryView {
 				$myFilename = $myItem->getTitle();
 				$myCaption  = $myItem->getSummary();
 				echo "<image><filename>$myItemId</filename><caption>$myFilename</caption></image>\n";
+
 				if (isset($moduleParams['maxItems']) && !(--$moduleParams['maxItems'])) {
 					break;
 				}
@@ -158,6 +160,7 @@ class XMLOutView extends GalleryView {
 
 		// done
 		echo '</simpleviewerGallery>';
+
 		return null;
 	}
 }

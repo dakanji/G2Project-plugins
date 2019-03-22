@@ -41,10 +41,13 @@ class JpegtranModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('toolkits', $gallery->i18n('Graphics Toolkits'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -108,6 +111,7 @@ class JpegtranModule extends GalleryModule {
 		}
 
 		$priority = $priority ? $priority : 5;
+
 		foreach ($results['operations'] as $operation => $info) {
 			$outputMimeType = isset($info['outputMimeType']) ? $info['outputMimeType'] : '';
 
@@ -207,9 +211,11 @@ class JpegtranModule extends GalleryModule {
 		 * then tack on other likely paths, based on our OS
 		 */
 		$paths = array();
+
 		if (GalleryUtilities::isA($platform, 'WinNtPlatform')) {
 			foreach (explode(';', getenv('PATH')) as $path) {
 				$path = trim($path);
+
 				if (empty($path)) {
 					continue;
 				}
@@ -234,6 +240,7 @@ class JpegtranModule extends GalleryModule {
 		} elseif (GalleryUtilities::isA($platform, 'UnixPlatform')) {
 			foreach (explode(':', getenv('PATH')) as $path) {
 				$path = trim($path);
+
 				if (empty($path)) {
 					continue;
 				}
@@ -269,6 +276,7 @@ class JpegtranModule extends GalleryModule {
 
 			$failCount = 0;
 			$canRotate = false;
+
 			foreach ($testResults as $testResult) {
 				// Rotate is mandatory, the rest is optional
 				if (isset($testResult['name']['rotate'])) {

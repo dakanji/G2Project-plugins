@@ -29,15 +29,18 @@ class RssCallbacks {
 		static $feeds;
 
 		GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
+
 		switch ($callback) {
 			case 'FeedList':
 				if (empty($params['number'])) {
 					// we're called during preload, so we have to find the params another way
 					if (!empty($smarty->_tpl_vars['theme']['params']['sidebarBlocks'])) {
 						$blocks = $smarty->_tpl_vars['theme']['params']['sidebarBlocks'];
+
 						foreach ($blocks as $block) {
 							if ($block[0] == 'rss.RssBlock') {
 								$params = $block[1];
+
 								break;
 							}
 						}
@@ -61,6 +64,7 @@ class RssCallbacks {
 				$block                    =& $smarty->_tpl_vars['block'];
 				$block['rss']['feeds']    = $feeds;
 				$block['rss']['showMore'] = !empty($feeds);
+
 				return null;
 		}
 

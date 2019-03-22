@@ -1,6 +1,7 @@
 <?php
 
 // $Id: _parse_proppatch.php 17189 2007-11-17 08:53:36Z bharat $
+
 /*
    +----------------------------------------------------------------------+
    | Copyright (c) 2002-2007 Christian Stocker, Hartmut Holzgraefe        |
@@ -93,6 +94,7 @@ class _parse_proppatch {
 		// open input stream
 		if (!$handle) {
 			$this->success = false;
+
 			return;
 		}
 
@@ -120,6 +122,7 @@ class _parse_proppatch {
 		// parse input
 		while ($this->success && !feof($handle)) {
 			$line = fgets($handle);
+
 			if (is_string($line)) {
 				$had_input      = true;
 				$this->success &= xml_parse($parser, $line, false);
@@ -173,12 +176,14 @@ class _parse_proppatch {
 			);
 
 			if ($this->mode == 'set') {
-				$this->current['value'] = ''; // set default value
+				// set default value
+				$this->current['value'] = '';
 			}
 		}
 
 		if ($this->depth >= 4) {
 			$this->current['value'] .= "<$name";
+
 			foreach ($attr as $key => $value) {
 				$this->current['value'] .= ' ' . $key . '="'
 					. str_replace('"', '&quot;', $value) . '"';
@@ -210,6 +215,7 @@ class _parse_proppatch {
 
 		// decrement the depth count
 		$this->depth--;
+
 		if ($this->depth >= 4) {
 			$this->current['value'] .= "</$name>";
 		}

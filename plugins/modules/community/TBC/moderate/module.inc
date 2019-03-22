@@ -39,10 +39,13 @@ class ModerateModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('gallery', $gallery->i18n('Gallery'));
 		$this->setCallbacks('registerEventListeners|getSiteAdminViews');
 	}
@@ -97,8 +100,10 @@ class ModerateModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		$result = null;
+
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$thisEntity = $event->getEntity();
+
 			if ($thisEntity->getEntityType() != 'GalleryAlbumItem'
 				&& $thisEntity->getEntityType() != 'GalleryPhotoItem'
 			) {
@@ -142,6 +147,7 @@ class ModerateModule extends GalleryModule {
 
 					if ($child_count[$parentEntity->getId()] <= 1) {
 						/*	$ret = GalleryCoreApi::deleteEntityById($parentEntity->getId());
+
 						if ($ret) {
 						return array($ret, null);
 						}

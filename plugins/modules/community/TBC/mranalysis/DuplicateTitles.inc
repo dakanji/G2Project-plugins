@@ -44,7 +44,9 @@ class DuplicateTitlesView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminDuplicateTitles';
+
 		$gallery->guaranteeTimeLimit(120);
+
 		$tester = new DuplicateItemChecker();
 
 		$query = '
@@ -72,6 +74,7 @@ class DuplicateTitlesView extends GalleryView {
 
 		// Determine the sort order
 		$sortfunction = 'sort_by_item_path';
+
 		if ($tester->checktitlesacrossalbums) {
 			$sortfunction = 'sort_by_item_title_then_path';
 		}
@@ -83,6 +86,7 @@ class DuplicateTitlesView extends GalleryView {
 
 		$template->setVariable('controller', 'mranalysis.DuplicateTitles');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

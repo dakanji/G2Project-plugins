@@ -27,8 +27,9 @@ GalleryCoreApi::requireOnce('modules/notification/classes/NotificationHelper.cla
  * @author Tim Almdal <tnalmdal@shaw.ca>
  * @version $Revision: 17580 $
  */
-class NotificationRouter // extends GalleryEventListener
-{
+
+// extends GalleryEventListener
+class NotificationRouter {
 	/**
 	 * Generic event handler for notifications.
 	 * Determine if there are any notification handlers registered for the input event and if there
@@ -49,7 +50,7 @@ class NotificationRouter // extends GalleryEventListener
 		list($ret, $implementations) = GalleryCoreApi::getAllFactoryImplementationIdsWithHint(
 			'NotificationEvent_1_0',
 			$eventName
-	);
+		);
 
 		if ($ret) {
 			return array($ret, null);
@@ -75,7 +76,7 @@ class NotificationRouter // extends GalleryEventListener
 			list($ret, $notification) = GalleryCoreApi::newFactoryInstanceById(
 				'NotificationEvent_1_0',
 				$notificationName
-		);
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -83,22 +84,25 @@ class NotificationRouter // extends GalleryEventListener
 
 			$specs  = $notification->getEventSpecs();
 			$entity = $event->getEntity();
+
 			if (!empty($entity) && !empty($specs['entityType'])) {
 				if (!GalleryUtilities::isA($entity, $specs['entityType'])) {
 					continue;
 				}
 
 				if (!empty($specs['persistentFlag'])
-			&& !$entity->testPersistentFlag($specs['persistentFlag'])) {
+					&& !$entity->testPersistentFlag($specs['persistentFlag'])
+				) {
 					continue;
 				}
-
 			}
 
 			$notification->setEvent($event);
+
 			foreach ($handlers as $handlerId) {
 				if (empty($notifications[$notificationName][$handlerId])
-			|| empty($notifications[$notificationName][$handlerId]['enabled'])) {
+					|| empty($notifications[$notificationName][$handlerId]['enabled'])
+				) {
 					continue;
 				}
 
@@ -107,9 +111,7 @@ class NotificationRouter // extends GalleryEventListener
 				if ($ret) {
 					return array($ret, null);
 				}
-
 			}
-
 		}
 
 		return array(null, null);
@@ -140,11 +142,8 @@ class NotificationRouter // extends GalleryEventListener
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		return null;
 	}
-
 }
-

@@ -63,6 +63,7 @@ class FotokastenCartPluginTest extends GalleryTestCase {
 
 		$session   =& $gallery->getSession();
 		$printCart = $session->get('fotokasten.cart');
+
 		$this->assertEquals($cartItemIds, $printCart, 'cart');
 	}
 }

@@ -56,6 +56,7 @@ class CheckoutPaypalEmailPlugin extends CheckoutEmailInterface_1_0 {
 		switch ($templateName) {
 			case 'paid':
 				return array(null, 'modules/checkoutpaypal/templates/email/paid.tpl', 'modules_checkoutpaypal', null);
+
 			break;
 		}
 

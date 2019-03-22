@@ -4,6 +4,7 @@ $map['extramap']       = '';
 $map['infowindows'][0] = "'<div style=\"width:200px\"><a href=\"'+itemLink+'\">'+title+'<\/a><br/>'
       +'<a href=\"'+itemLink+'\"><img src=\"'+thumbLink+'\" width=\"'+thw+'\" height=\"'+thh+'\" alt=\"'+title+'\" style=\"max-width:200px;max-height:200px;\"/><\/a>'
       +'<br/><font color=black><b>" . $module->translate('Date:') . "<\/b> '+created+'<\/font>'";
+
 if ($map['showItemSummaries']) {
 	$map['infowindows'][0] = $map['infowindows'][0] . "
         +(summary!=\"\"?'<br/><br/><div style=\"width:200px\"><font color=black>'+summary+'<\/font><\/div>':'')";

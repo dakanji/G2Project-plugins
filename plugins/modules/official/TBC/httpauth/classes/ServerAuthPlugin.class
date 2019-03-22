@@ -33,8 +33,9 @@ GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
  * @author Jack Bates <ms419@freezone.co.uk>
  * @version $Revision: 17580 $
  */
-class ServerAuthPlugin // extends GalleryAuthPlugin
-{
+
+// extends GalleryAuthPlugin
+class ServerAuthPlugin {
 	/**
 	 * @see GalleryAuthPlugin::getUser
 	 */
@@ -60,11 +61,8 @@ class ServerAuthPlugin // extends GalleryAuthPlugin
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		}
 
 		return array(null, $user);
 	}
-
 }
-

@@ -37,10 +37,10 @@ class TileTheme extends GalleryTheme {
 				'Tile view of background image and image thumbnails'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'colorpack'     => '',
@@ -93,6 +93,7 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$theme =& $template->getVariableByReference('theme');
+
 		if (!empty($params['backgroundId'])) {
 			// XXX: Use an interface for images instead of 'GalleryEntity'
 			list($ret, $bgImage) = GalleryCoreApi::loadEntitiesById(
@@ -108,6 +109,7 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$map = array();
+
 		for ($i = 0; $i < $params['rows']; $i++) {
 			for ($j = 0; $j < $params['cols']; $j++) {
 				$map[$i][$j] = 0;
@@ -117,6 +119,7 @@ class TileTheme extends GalleryTheme {
 		if (!empty($params['map'])) {
 			foreach (explode(';', $params['map']) as $key) {
 				$value = explode(',', $key);
+
 				if (count($value) == 3) {
 					$map[$value[0]][$value[1]]  = $value[2];
 					$params['row_' . $value[2]] = $value[0] + 1;
@@ -137,6 +140,7 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$itemMap = array();
+
 		foreach ($theme['children'] as $child) {
 			$itemMap[$child['id']] = $child;
 		}
@@ -146,6 +150,7 @@ class TileTheme extends GalleryTheme {
 		$theme['imageHeights'] = implode(',', $imageHeights);
 		$theme['imageCount']   = count($imageWidths);
 		$theme['param']        = $params;
+
 		if ($showHead) {
 			$template->head('themes/tile/templates/header.tpl');
 		}
@@ -158,6 +163,7 @@ class TileTheme extends GalleryTheme {
 	 */
 	public function showPhotoPage(&$template, $item, $params) {
 		$renderId = GalleryUtilities::getRequestVariables('renderId');
+
 		if (!empty($renderId)) {
 			// Render this item
 			list($ret, $image) = GalleryCoreApi::loadEntitiesById(
@@ -208,6 +214,7 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$theme =& $template->getVariableByReference('theme');
+
 		foreach ($theme['children'] as $tmp) {
 			if ($tmp['id'] == $item->getId()) {
 				if (isset($tmp['imageIndex'])) {
@@ -287,6 +294,7 @@ class TileTheme extends GalleryTheme {
 
 	public function _buildItemList($childIds, &$children) {
 		$imageWidths = $imageHeights = $childItems = array();
+
 		if (!empty($childIds)) {
 			$ret = GalleryCoreApi::studyPermissions($childIds);
 
@@ -329,9 +337,11 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$i = -1;
+
 		foreach ($childItems as $child) {
 			$i++;
 			$childId = $child->getId();
+
 			if (isset($thumbnails[$childId])) {
 				if (!($thumbnails[$childId]->getWidth() && $thumbnails[$childId]->getHeight())) {
 					list($ret, $thumbnails[$childId]) = GalleryCoreApi::rebuildDerivativeCache(
@@ -359,6 +369,7 @@ class TileTheme extends GalleryTheme {
 			}
 
 			$images = array();
+
 			if (isset($permissions['core.viewSource'])) {
 				// Full size; check for preferred copy
 				if (isset($preferredFullImages[$childId])) {
@@ -395,6 +406,7 @@ class TileTheme extends GalleryTheme {
 				$image                      = (array)$image;
 				$children[$i]['image']      = $image;
 				$children[$i]['imageIndex'] = count($imageWidths);
+
 				if (GalleryUtilities::isExactlyA($child, 'GalleryPhotoItem')
 					&& $image['width'] > 0
 					&& $image['height'] > 0
@@ -465,6 +477,7 @@ class TileTheme extends GalleryTheme {
 		}
 
 		$this->_setDefaultParameters($params);
+
 		$theme                 =& $template->getVariableByReference('theme');
 		$theme['param']        = $params;
 		$theme['actingUserId'] = $gallery->getActiveUserId();
@@ -501,6 +514,7 @@ class TileTheme extends GalleryTheme {
 
 		$status = null;
 		$error  = array();
+
 		if (isset($form['action']['save'])) {
 			foreach (array('backgroundId', 'rows', 'cols', 'cellWidth', 'cellHeight') as $key) {
 				if (isset($form[$key])) {
@@ -519,10 +533,12 @@ class TileTheme extends GalleryTheme {
 			}
 
 			$map = array();
+
 			foreach ($form as $key => $value) {
 				if (!strncmp($key, 'row_', 4)) {
 					$id = substr($key, 4);
 					$k2 = 'col_' . $id;
+
 					if (isset($form[$k2]) && $value > 0 && $form[$k2] > 0) {
 						$map[] = ($value - 1) . ',' . ($form[$k2] - 1) . ',' . $id;
 					}

@@ -63,6 +63,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		global $gallery;
 
 		$templateAdapter =& $gallery->getTemplateAdapter();
+
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHelper.class');
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
@@ -96,6 +97,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 		$i      = $updated      = 0;
 		$allIds = array();
 		$total  = $results->resultCount();
+
 		while ($result = $results->nextResult()) {
 			// extracting histogram information can take loooooong time
 			$gallery->guaranteeTimeLimit(60);
@@ -103,6 +105,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 			// Grab 5 items at a time
 			$ids      = array($result[0]);
 			$allIds[] = $result[0];
+
 			for ($j = 0; $j < 4 && ($result = $results->nextResult()); $j++) {
 				$ids[]    = $result[0];
 				$allIds[] = $result[0];
@@ -141,6 +144,7 @@ class DupeDetectRecreateDupInfoTask extends MaintenanceTask {
 
 		// now that all items have signatures, discover duplicates
 		$i = 0;
+
 		foreach ($allIds as $id) {
 			$i++;
 

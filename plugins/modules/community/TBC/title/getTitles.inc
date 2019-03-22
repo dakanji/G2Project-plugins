@@ -54,10 +54,14 @@ class GetTitlesView extends GalleryView {
 		switch ($command) {
 			case 'begin':
 				$chars .= '%';
+
 				break;
+
 			case 'contain':
 				$chars = '%' . $chars . '%';
+
 				break;
+
 			default:
 				return null;
 		}
@@ -88,6 +92,7 @@ class GetTitlesView extends GalleryView {
 		// safety limit of first 100 results
 		$results = array_slice($results, 0, 100);
 		echo implode("\n", $results);
+
 		return null;
 	}
 }

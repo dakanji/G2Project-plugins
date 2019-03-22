@@ -55,6 +55,7 @@ class DetailsController extends GalleryController {
 				&& GalleryUtilities::isValidEmailString($form['custEmail'])
 			) {
 				$form['custRecipientName'] = trim($form['custRecipientName']);
+
 				if (empty($form['custRecipientName'])) {
 					$form['custRecipientName'] = $form['custFirstName']
 						. ' '
@@ -73,7 +74,8 @@ class DetailsController extends GalleryController {
 					return array($ret, null);
 				}
 			} else {
-				$error[]                     = 'form[error][badEmail]'; // badly formed email address
+				// badly formed email address
+				$error[]                     = 'form[error][badEmail]';
 				$results['delegate']['view'] = 'checkoutemail.Details';
 			}
 		}
@@ -87,6 +89,7 @@ class DetailsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -144,6 +147,7 @@ class DetailsView extends GalleryView {
 
 		$template->title($busname . ' ' . $module->translate('Customer Details'));
 		$template->setVariable('form', $form);
+
 		return array(
 			null,
 			array(

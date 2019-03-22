@@ -57,6 +57,7 @@ class DownloadPicLensView extends GalleryView {
 		// Figure out which file we're talking about
 		$file    = GalleryUtilities::getRequestVariables('file');
 		$codeDir = $gallery->getConfig('data.gallery.plugins_data') . 'modules/slideshow/';
+
 		switch ($file) {
 			case 'js':
 				return $this->_sendFile(
@@ -107,13 +108,16 @@ class DownloadPicLensView extends GalleryView {
 		}
 
 		$requestMethod = GalleryUtilities::strtolower(GalleryUtilities::getServerVar('REQUEST_METHOD'));
+
 		if (!$platform->file_exists($data['path'])) {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT, null, null, "$data[path] missing");
 		}
 
 		$stats = $platform->stat($data['path']);
+
 		$phpVm->header('Content-type: ' . $data['mimeType']);
 		$phpVm->header('Content-Disposition: inline; filename="' . $data['pseudoFileName'] . '"');
+
 		$phpVm->header('Last-Modified: ' . GalleryUtilities::getHttpDate($stats[9]));
 		$phpVm->header('Expires: ' . GalleryUtilities::getHttpDate(2147483647));
 		$phpVm->header('Cache-Control: public');
@@ -134,11 +138,13 @@ class DownloadPicLensView extends GalleryView {
 			if ($fd = $platform->fopen($data['path'], 'rb')) {
 				while (true) {
 					$bytes = $platform->fread($fd, 65535);
+
 					if (strlen($bytes) == 0) {
 						break;
 					}
 
 					echo $bytes;
+
 					$gallery->guaranteeTimeLimit(30);
 				}
 

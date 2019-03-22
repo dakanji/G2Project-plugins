@@ -4,12 +4,10 @@
   // Contributed by: demonhood
 $frameData = array(
 	'name'      => $gallery->i18n('Postage'),
-
 	// Top Left
 	'imageTL'   => 'TL5.gif',
 	'widthTL'   => 10,
 	'heightTL'  => 10,
-
 	// Top
 	'imageTTL'  => '',
 	'widthTTL'  => 0,
@@ -17,12 +15,10 @@ $frameData = array(
 	'heightTT'  => 10,
 	'imageTTR'  => '',
 	'widthTTR'  => 0,
-
 	// Top Right
 	'imageTR'   => 'TR5.gif',
 	'widthTR'   => 10,
 	'heightTR'  => 10,
-
 	// Left
 	'imageLLT'  => '',
 	'heightLLT' => 0,
@@ -30,7 +26,6 @@ $frameData = array(
 	'widthLL'   => 10,
 	'imageLLB'  => '',
 	'heightLLB' => 0,
-
 	// Right
 	'imageRRT'  => '',
 	'heightRRT' => 0,
@@ -38,12 +33,10 @@ $frameData = array(
 	'widthRR'   => 10,
 	'imageRRB'  => '',
 	'heightRRB' => 0,
-
 	// Bottom Left
 	'imageBL'   => 'BL5.gif',
 	'heightBL'  => 10,
 	'widthBL'   => 10,
-
 	// Bottom
 	'imageBBL'  => '',
 	'widthBBL'  => 0,
@@ -51,7 +44,6 @@ $frameData = array(
 	'heightBB'  => 10,
 	'imageBBR'  => '',
 	'widthBBR'  => 0,
-
 	// Bottom Right
 	'imageBR'   => 'BR5.gif',
 	'widthBR'   => 10,

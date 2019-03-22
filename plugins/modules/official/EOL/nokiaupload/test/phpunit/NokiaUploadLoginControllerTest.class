@@ -65,7 +65,9 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_user);
+
 		$this->_password = 'password';
+
 		if (!$this->_user->isCorrectPassword($this->_password)) {
 			return $this->assertTrue(false, "test user wasn't created with expected password");
 		}
@@ -109,7 +111,9 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		// Invalid username
 		GalleryUtilities::putRequestVariable('Username', 'this is an invalid username', false);
 		GalleryUtilities::putRequestVariable('Password', 'x', false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -129,7 +133,9 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		// Invalid password
 		GalleryUtilities::putRequestVariable('Username', $this->_user->getUserName(), false);
 		GalleryUtilities::putRequestVariable('Password', 'wrong password', false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -149,7 +155,9 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		// Valid credentials
 		GalleryUtilities::putRequestVariable('Username', $this->_user->getUserName(), false);
 		GalleryUtilities::putRequestVariable('Password', $this->_password, false);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'view' => 'nokiaupload.Login',

@@ -61,7 +61,9 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[default][value]', 'value');
 		GalleryUtilities::putRequestVariable('form[variable][type]', 'default');
 		GalleryUtilities::putRequestVariable('form[action][add]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -75,6 +77,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$target = empty($orig) ? 'name=value' : $orig . '|name=value';
+
 		foreach (array(
 			'slideshowdefaultVariables' => $target,
 		) as $key => $expectedValue) {
@@ -89,7 +92,9 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		// now test replacing
 		GalleryUtilities::putRequestVariable('form[default][value]', 'value1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -103,6 +108,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$target = empty($orig) ? 'name=value1' : $orig . '|name=value1';
+
 		foreach (array(
 			'slideshowdefaultVariables' => $target,
 		) as $key => $expectedValue) {
@@ -131,7 +137,9 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[override][value]', 'value');
 		GalleryUtilities::putRequestVariable('form[variable][type]', 'override');
 		GalleryUtilities::putRequestVariable('form[action][add]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -145,6 +153,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$target = empty($orig) ? 'name=value' : $orig . '|name=value';
+
 		foreach (array(
 			'slideshowoverrideVariables' => $target,
 		) as $key => $expectedValue) {
@@ -173,7 +182,9 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[default][value]', 'value');
 		GalleryUtilities::putRequestVariable('form[variable][type]', 'default');
 		GalleryUtilities::putRequestVariable('form[action][add]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -187,6 +198,7 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$target = empty($orig) ? 'name=value' : $orig . '|name=value';
+
 		foreach (array(
 			'slideshowdefaultVariables' => $target,
 		) as $key => $expectedValue) {
@@ -205,7 +217,9 @@ class SlideshowAppletSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::removeRequestVariable('form[default][value]');
 		GalleryUtilities::putRequestVariable('form[action][delete]', '1');
 		GalleryUtilities::putRequestVariable('form[delete][variable]', 'name');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(

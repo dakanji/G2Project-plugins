@@ -63,7 +63,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 			if ($ret) {
 				return $ret;
 			}
-
 		}
 
 		$ret = parent::tearDown();
@@ -71,25 +70,27 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			$this->failWithStatus($ret);
 		}
-
 	}
 
 	public function testCancel() {
 		GalleryUtilities::putRequestVariable('form[action][cancel]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array('redirect' => array('view' => 'core.SiteAdmin',
 						   'subView'                  => 'core.AdminPlugins', ),
 				  'status' => array(), 'error' => array(), ),
 			$results
 	);
-
 	}
 
 	public function testMissingData() {
 		GalleryUtilities::putRequestVariable('form[group]', '');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 		'delegate' => array(
@@ -100,7 +101,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		'error'  => array('form[error][group][missing]', 'form[error][album][missing]'), ),
 			$results
 	);
-
 	}
 
 	public function testGroupCollision() {
@@ -123,7 +123,9 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[group]', $group->getGroupName());
 		GalleryUtilities::putRequestVariable('form[album]', 'Nokia Test');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 			'delegate' => array(
@@ -135,7 +137,6 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		),
 			$results
 	);
-
 	}
 
 	public function testConfigure() {
@@ -143,7 +144,9 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[album]', 'NokiaAlbum ' . mt_rand(1000, 100000));
 		GalleryUtilities::putRequestVariable('form[parent]', (string)$this->_album->getId());
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 			'redirect' => array(
@@ -180,6 +183,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 
 		$this->assertFalse(empty($params['id.mobileGroup']), 'group param');
 		$this->assertFalse(empty($params['id.uploadAlbum']), 'album param');
+
 		$this->_groupId = $params['id.mobileGroup'];
 
 		list($ret, $perms) = GalleryCoreApi::fetchAllPermissionsForItem(
@@ -192,6 +196,7 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 		}
 
 		$hasAddDataItem = false;
+
 		foreach ($perms as $perm) {
 			if ($perm == array(
 				'groupId' => $this->_groupId,
@@ -199,11 +204,8 @@ class NokiaUploadConfigureControllerTest extends GalleryControllerTestCase {
 			)) {
 				$hasDataItem = true;
 			}
-
 		}
 
 		$this->assertTrue($hasDataItem, 'missing addDataItem permission');
 	}
-
 }
-

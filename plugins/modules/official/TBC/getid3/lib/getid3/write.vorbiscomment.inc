@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // write.vorbiscomment.php                                     //
 // module for writing VorbisComment tags                       //
@@ -18,8 +17,13 @@
 class getid3_write_vorbiscomment {
 	public $filename;
 	public $tag_data;
-	public $warnings = array(); // any non-critical errors will be stored here
-	public $errors   = array(); // any critical errors will be stored here
+
+	// any non-critical errors will be stored here
+	public $warnings = array();
+
+	// any critical errors will be stored here
+	public $errors = array();
+
 	public function __construct() {
 		return true;
 	}
@@ -27,11 +31,13 @@ class getid3_write_vorbiscomment {
 	public function WriteVorbisComment() {
 		if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 			$this->errors[] = 'PHP running in Safe Mode (backtick operator not available) - cannot call vorbiscomment, tags not written';
+
 			return false;
 		}
 
 		// Create file with new comments
 		$tempcommentsfilename = tempnam(GETID3_TEMP_DIR, 'getID3');
+
 		if (is_writable($tempcommentsfilename) && is_file($tempcommentsfilename) && ($fpcomments = fopen($tempcommentsfilename, 'wb'))) {
 			foreach ($this->tag_data as $key => $value) {
 				foreach ($value as $commentdata) {
@@ -42,10 +48,12 @@ class getid3_write_vorbiscomment {
 			fclose($fpcomments);
 		} else {
 			$this->errors[] = 'failed to open temporary tags file "' . $tempcommentsfilename . '", tags not written';
+
 			return false;
 		}
 
 		$oldignoreuserabort = ignore_user_abort(true);
+
 		if (GETID3_OS_ISWINDOWS) {
 			if (file_exists(GETID3_HELPERAPPSDIR . 'vorbiscomment.exe')) {
 				//$commandline = '"'.GETID3_HELPERAPPSDIR.'vorbiscomment.exe" -w --raw -c "'.$tempcommentsfilename.'" "'.str_replace('/', '\\', $this->filename).'"';
@@ -60,8 +68,10 @@ class getid3_write_vorbiscomment {
 				$timestampbeforewriting = filemtime($this->filename);
 				$commandline            = GETID3_HELPERAPPSDIR . 'vorbiscomment.exe -w --raw -c "' . $tempcommentsfilename . '" "' . $this->filename . '" 2>&1';
 				$VorbiscommentError     = `$commandline`;
+
 				if (empty($VorbiscommentError)) {
 					clearstatcache();
+
 					if ($timestampbeforewriting == filemtime($this->filename)) {
 						$VorbiscommentError = 'File modification timestamp has not changed - it looks like the tags were not written';
 					}
@@ -77,8 +87,10 @@ class getid3_write_vorbiscomment {
 		// Remove temporary comments file
 		unlink($tempcommentsfilename);
 		ignore_user_abort($oldignoreuserabort);
+
 		if (!empty($VorbiscommentError)) {
 			$this->errors[] = 'system call to vorbiscomment failed with message: ' . "\n\n" . $VorbiscommentError;
+
 			return false;
 		}
 
@@ -87,6 +99,7 @@ class getid3_write_vorbiscomment {
 
 	public function DeleteVorbisComment() {
 		$this->tag_data = array(array());
+
 		return $this->WriteVorbisComment();
 	}
 

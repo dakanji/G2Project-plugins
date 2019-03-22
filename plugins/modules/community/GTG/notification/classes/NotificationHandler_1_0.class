@@ -66,6 +66,7 @@ class NotificationHandler_1_0 {
 		}
 
 		$text = $module->translate($translateParms);
+
 		return array(null, $text);
 	}
 }

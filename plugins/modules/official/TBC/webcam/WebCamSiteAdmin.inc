@@ -38,6 +38,7 @@ class WebCamSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
+
 		if (isset($form['action']['save'])) {
 			if (!isset($form['fromweb'])
 				|| !in_array($form['fromweb'], array('on', 'off', 'admin'))
@@ -84,6 +85,7 @@ class WebCamSiteAdminController extends GalleryController {
 		$results[$method]['subView'] = 'webcam.WebCamSiteAdmin';
 		$results['status']           = $status;
 		$results['error']            = $error;
+
 		return array(null, $results);
 	}
 }
@@ -110,6 +112,7 @@ class WebCamSiteAdminView extends GalleryView {
 
 		if ($form['formName'] != 'WebCamSiteAdmin') {
 			$form['formName'] = 'WebCamSiteAdmin';
+
 			foreach (array('fromweb', 'duration') as $key) {
 				list($ret, $form[$key]) = $module->getParameter($key);
 
@@ -132,6 +135,7 @@ class WebCamSiteAdminView extends GalleryView {
 
 		$template->setVariable('WebCamSiteAdmin', $WebCamSiteAdmin);
 		$template->setVariable('controller', 'webcam.WebCamSiteAdmin');
+
 		return array(
 			null,
 			array(

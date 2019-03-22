@@ -26,8 +26,9 @@
  * @author Alan Harder <alan.harder@sun.com>
  * @version $Revision: 17580 $
  */
-class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterface_1_1
-{
+
+// implements CartPluginInterface_1_0 and CartPluginInterface_1_1
+class DigibugCartPlugin {
 	/**
 	 * @see CartPluginInterface_1_0::getSupportedItemTypes
 	 */
@@ -62,15 +63,18 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 		global $gallery;
 
 		$session =& $gallery->getSession();
+
 		$session->put('digibug.cart', $cartItemIds);
+
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnUrl    = $urlGenerator->generateUrl(
 			array(
-				'view' => 'cart.ViewCart', ),
+				'view' => 'cart.ViewCart',
+			),
 			array(
-					'forceFullUrl' => true,
-				)
-			);
+				'forceFullUrl' => true,
+			)
+		);
 
 		return array(
 			null,
@@ -80,8 +84,5 @@ class DigibugCartPlugin // implements CartPluginInterface_1_0 and CartPluginInte
 				'returnUrl' => $returnUrl,
 			),
 		);
-
 	}
-
 }
-

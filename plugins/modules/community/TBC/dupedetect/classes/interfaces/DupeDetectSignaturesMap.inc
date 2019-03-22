@@ -73,6 +73,7 @@ class DupeDetectSignaturesMap extends DupeDetectSignaturesMap_core {
 		$info                      = array();
 		$info['members']['itemId'] = STORAGE_TYPE_INTEGER;
 		$info['members']['crc32']  = STORAGE_TYPE_INTEGER;
+
 		return $info;
 	}
 

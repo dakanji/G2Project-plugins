@@ -61,6 +61,7 @@ class SelectAlbumController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		if (!empty($redirect)) {
 			$results['redirect'] = $redirect;
 		} else {
@@ -113,6 +114,7 @@ class SelectAlbumView extends GalleryView {
 
 		// Merge them together to get the master list of ids
 		$albumIds['allIds'] = array_unique(array_merge($albumIds['addDataItem'], $albumIds['addAlbumItem']));
+
 		if (!empty($albumIds['allIds'])) {
 			/** @todo Use fetchAllItemIds with multiple permissions once the API is available */
 			list($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($albumIds['allIds']);
@@ -122,6 +124,7 @@ class SelectAlbumView extends GalleryView {
 			}
 
 			$filteredIds = array();
+
 			foreach ($albumIds['allIds'] as $id) {
 				if (!empty($permissions[$id]['core.view'])) {
 					$filteredIds[] = $id;
@@ -132,6 +135,7 @@ class SelectAlbumView extends GalleryView {
 		}
 
 		$albums = array();
+
 		if (!empty($albumIds['allIds'])) {
 			// Load all the album entities
 			list($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds['allIds'], 'GalleryAlbumItem');
@@ -154,6 +158,7 @@ class SelectAlbumView extends GalleryView {
 		$template->setVariable('SelectAlbum', $SelectAlbum);
 		$template->setVariable('controller', 'publishxp.SelectAlbum');
 		$template->head('modules/publishxp/templates/Head.tpl');
+
 		return array(
 			null,
 			array(

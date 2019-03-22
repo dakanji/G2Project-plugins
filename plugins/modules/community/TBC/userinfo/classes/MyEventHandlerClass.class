@@ -25,8 +25,9 @@
  * @author Charles Knowlton charles2007@users.sourceforge.net
  * @version $Revision$
  */
-class MyEventHandlerClass // extends GalleryEventListener
-{
+
+// extends GalleryEventListener
+class MyEventHandlerClass {
 	/**
 	 * Return a value that we can use to identify the client.  We can't tie it to the IP address
 	 * because that changes too frequently (dialup users, users behind proxies) so we have to be
@@ -36,11 +37,11 @@ class MyEventHandlerClass // extends GalleryEventListener
 	 */
 	public function getRemoteIdentifier() {
 		$httpUserAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
+
 		return array(
 			GalleryUtilities::getRemoteHostAddress(),
 			isset($httpUserAgent) ? md5($httpUserAgent) : null,
 		);
-
 	}
 
 	public function handleEvent($event) {
@@ -83,7 +84,6 @@ class MyEventHandlerClass // extends GalleryEventListener
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		}
 
 		if ($event->getEventName() == 'Gallery::Logout') {
@@ -115,7 +115,6 @@ class MyEventHandlerClass // extends GalleryEventListener
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		}
 
 		if ($event->getEventName() == 'Gallery::FailedLogin') {
@@ -146,10 +145,6 @@ class MyEventHandlerClass // extends GalleryEventListener
 			if ($ret) {
 				return array($ret, null);
 			}
-
 		}
-
 	}
-
 }
-

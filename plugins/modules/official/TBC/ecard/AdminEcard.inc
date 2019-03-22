@@ -39,6 +39,7 @@ class AdminEcardController extends GalleryController {
 		}
 
 		$results = $error = $status = array();
+
 		if (isset($form['action']['save'])) {
 			foreach (array('from', 'subject', 'bcc', 'header', 'footer', 'format') as $key) {
 				$ret = GalleryCoreApi::setPluginParameter('module', 'ecard', $key, $form[$key]);
@@ -65,6 +66,7 @@ class AdminEcardController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -85,6 +87,7 @@ class AdminEcardView extends GalleryView {
 
 		if ($form['formName'] != 'AdminEcard') {
 			$form['formName'] = 'AdminEcard';
+
 			foreach (array('from', 'subject', 'bcc', 'header', 'footer', 'format') as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'ecard', $key);
 
@@ -109,6 +112,7 @@ class AdminEcardView extends GalleryView {
 
 		$template->setVariable('AdminEcard', $AdminEcard);
 		$template->setVariable('controller', 'ecard.AdminEcard');
+
 		return array(
 			null,
 			array(

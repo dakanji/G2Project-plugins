@@ -62,6 +62,7 @@ class AddToCartController extends GalleryController {
 		}
 
 		$itemsDetails = explode(',', GalleryUtilities::getRequestVariables('itemId'));
+
 		foreach ($itemsDetails as $itemDetails) {
 			if (empty($itemDetails)) {
 				continue;
@@ -69,6 +70,7 @@ class AddToCartController extends GalleryController {
 
 			// break out product and quantity if set
 			$itemProductQuantity = explode('|', $itemDetails);
+
 			if (empty($itemProductQuantity[0])) {
 				continue;
 			}
@@ -117,6 +119,7 @@ class AddToCartController extends GalleryController {
 				}
 
 				$items[] = $newItem;
+
 				if (isset($itemProductQuantity[1], $itemProductQuantity[2])) {
 					$IPQ[$newItem->getId()][$itemProductQuantity[1]] = $itemProductQuantity[2];
 				}
@@ -157,7 +160,9 @@ class AddToCartController extends GalleryController {
 
 		if ($cartRedirect == 1) {
 			CheckoutHelper::StoreReturnURL();
+
 			$results['redirect']['view'] = 'checkout.Select';
+
 			if (isset($firstItemId)) {
 				$results['redirect']['fragment'] = $firstItemId;
 			}
@@ -172,6 +177,7 @@ class AddToCartController extends GalleryController {
 		}
 
 		$results['error'] = array();
+
 		return array(null, $results);
 	}
 }

@@ -34,10 +34,14 @@ class SlideshowModule extends GalleryModule {
 		$this->setId('slideshow');
 		$this->setName($gallery->i18n('Slideshow'));
 		$this->setDescription($gallery->i18n('Slideshow'));
-		$this->setVersion('3.0.0'); // Update upgrade() as required
+
+		// Update upgrade() as required
+		$this->setVersion('3.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $gallery->i18n('Display'));
 		$this->setCallbacks('getItemLinks|getSiteAdminViews');
 	}
@@ -173,6 +177,7 @@ class SlideshowModule extends GalleryModule {
 		}
 
 		$links = array();
+
 		foreach ($items as $item) {
 			$itemId      = $item->getId();
 			$jsUrlParams = array(
@@ -193,6 +198,7 @@ class SlideshowModule extends GalleryModule {
 				 * Show View Slideshow link, only when album has images in it.
 				 */
 				$showSlideshowLink = false;
+
 				if ($item->getCanContainChildren()) {
 					if (!isset($userId)) {
 						$userId = $gallery->getActiveUserId();
@@ -332,6 +338,7 @@ class SlideshowModule extends GalleryModule {
 		);
 
 		$rules[] = $rule;
+
 		return $rules;
 	}
 
@@ -343,6 +350,7 @@ class SlideshowModule extends GalleryModule {
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$data         = $event->getData();
+
 		if ($event->getEventName() == 'Gallery::BeforeDisplay'
 			&& $data['view']->getViewType() == VIEW_TYPE_SHOW_ITEM
 		) {

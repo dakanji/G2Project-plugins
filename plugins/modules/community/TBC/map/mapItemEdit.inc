@@ -54,6 +54,7 @@ class mapItemEdit extends ItemEditPlugin {
 
 		if (isset($form['action']['save'])) {
 			// error control
+
 			/*
 			 * heading can be +/- 180 degrees
 			 * tilt can be 0-90 degrees
@@ -67,6 +68,7 @@ class mapItemEdit extends ItemEditPlugin {
 			// latitude can be +/- 90 degrees, longitude can be +/- 180 degrees
 			$latregex = '[-+]?' . $tiltregex;
 			$lonregex = $headingregex;
+
 			if (!preg_match(
 				'/^(' . $latregex . '(\040)*,(\040)*' . $lonregex
 				. ')?$/',
@@ -187,6 +189,7 @@ class mapItemEdit extends ItemEditPlugin {
 		}
 
 		$form['fields'] = $tmp[$item->getId()];
+
 		foreach (array(
 			'common' => 1,
 			$set     => 1,
@@ -203,6 +206,7 @@ class mapItemEdit extends ItemEditPlugin {
 		}
 
 		$tpl = 'modules/map/templates/mapItemEdit.tpl';
+
 		$template->setVariable('controller', 'map.mapItemEdit');
 
 		// Add stuff for the help system
@@ -211,6 +215,7 @@ class mapItemEdit extends ItemEditPlugin {
 		list($ret, $form['UserHelp']) = GalleryCoreApi::getPluginParameter('module', 'map', 'UserHelp');
 
 		$msie = '/msie\s(5\.[5-9]|[6-9]\.[0-9]*).*(win)/i';
+
 		if (!isset($_SERVER['HTTP_USER_AGENT']) || !preg_match($msie, $_SERVER['HTTP_USER_AGENT'])
 			|| preg_match('/opera/i', $_SERVER['HTTP_USER_AGENT'])
 		) {

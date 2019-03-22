@@ -43,7 +43,10 @@
  *               purposes, please contact the author: evan@ozhiker.com
  *
  ******************************************************************************/
-require_once 'Unicode.php';          // Unicode is required as XML is always Unicode encoded
+
+// Unicode is required as XML is always Unicode encoded
+require_once 'Unicode.php';
+
 /******************************************************************************
  *
  * Function:     read_xml_array_from_text
@@ -61,7 +64,6 @@ require_once 'Unicode.php';          // Unicode is required as XML is always Uni
  *               FALSE - if an error occured
  *
  ******************************************************************************/
-
 function read_xml_array_from_text($xmltext) {
 	// Check if there actually is any text to parse
 	if (trim($xmltext) == '') {
@@ -78,6 +80,7 @@ function read_xml_array_from_text($xmltext) {
 	if (xml_parser_set_option($xml_parser, XML_OPTION_SKIP_WHITE, 0) == false) {
 		// Error setting case folding - destroy the parser and return
 		xml_parser_free($xml_parser);
+
 		return false;
 	}
 
@@ -87,6 +90,7 @@ function read_xml_array_from_text($xmltext) {
 	if (xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, 0) == false) {
 		// Error setting case folding - destroy the parser and return
 		xml_parser_free($xml_parser);
+
 		return false;
 	}
 
@@ -94,6 +98,7 @@ function read_xml_array_from_text($xmltext) {
 	if (xml_parse_into_struct($xml_parser, $xmltext, $vals, $index) == 0) {
 		// Error Parsing XML - destroy the parser and return
 		xml_parser_free($xml_parser);
+
 		return false;
 	}
 
@@ -126,6 +131,7 @@ function read_xml_array_from_text($xmltext) {
 }
 
 // End of Function:     read_xml_array_from_text
+
 /******************************************************************************
  *
  * Function:     write_xml_array_to_text
@@ -146,7 +152,6 @@ function read_xml_array_from_text($xmltext) {
  *               FALSE - if an error occured
  *
  ******************************************************************************/
-
 function write_xml_array_to_text($xmlarray, $indentlevel) {
 	// Create a string to receive the XML
 	$output_xml_text = '';
@@ -198,6 +203,7 @@ function write_xml_array_to_text($xmlarray, $indentlevel) {
 
 // End of Function:     write_xml_array_to_text
 // INTERNAL FUNCTIONS
+
 /******************************************************************************
  *
  * Internal Function:     xml_get_children
@@ -217,7 +223,6 @@ function write_xml_array_to_text($xmlarray, $indentlevel) {
  *               FALSE - if an error occured
  *
  ******************************************************************************/
-
 function xml_get_children(&$input_xml_array, &$item_num) {
 	// Make an array to receive the output XML tree structure
 	$children = array();
@@ -232,13 +237,19 @@ function xml_get_children(&$input_xml_array, &$item_num) {
 			case 'cdata':     // This is a non parsed Character Data tag
 			case 'complete':  // This is a pair of XML matching tags possibly with text (but no tags) inside
 				$children[] = xml_get_child($v);
+
 				break;
+
 			case 'open':      // This is a single opening tag
 					// Recursively get the children for this opening tag
 					$children[] = xml_get_child($v, xml_get_children($input_xml_array, $item_num));
-				break;    // This is a single opening tag
+
+				// This is a single opening tag
+				break;
+
 			case 'close':     // This is a single closing tag
-				break 2;  // leave "while" loop (and the function)
+				// leave "while" loop (and the function)
+				break 2;
 		}
 	}
 
@@ -247,6 +258,7 @@ function xml_get_children(&$input_xml_array, &$item_num) {
 }
 
 // End of Function:     xml_get_children
+
 /******************************************************************************
  *
  * Internal Function:     xml_get_child
@@ -264,7 +276,6 @@ function xml_get_children(&$input_xml_array, &$item_num) {
  *               FALSE - if an error occured
  *
  ******************************************************************************/
-
 function xml_get_child(&$input_xml_item, $children = null) {
 	// Create an array to receive the child structure
 	$child = array();

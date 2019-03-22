@@ -66,6 +66,7 @@ class ChooseObjectsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -161,6 +162,7 @@ class ChooseObjectsView extends GalleryView {
 		);
 
 		$possibleEncodingMatch = '';
+
 		foreach ($availableEncodings as $encodingName => $encoding) {
 			if (strpos($encodingName, $defaultLanguage) !== false) {
 				$possibleEncodingMatch = $encodingName;
@@ -170,6 +172,7 @@ class ChooseObjectsView extends GalleryView {
 		$platform   =& $gallery->getPlatform();
 		$slash      = $platform->getDirectorySeparator();
 		$albumsPath = GalleryUtilities::getRequestVariables('albumsPath');
+
 		if ($albumsPath == null) {
 			return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 		}
@@ -264,8 +267,10 @@ class ChooseObjectsView extends GalleryView {
 		$ChooseObjects['availableEncodings']    = $availableEncodings;
 		$ChooseObjects['possibleEncodingMatch'] = $possibleEncodingMatch;
 		$ChooseObjects['customFieldsActive']    = isset($customFieldInterface);
+
 		$template->setVariable('ChooseObjects', $ChooseObjects);
 		$template->setVariable('controller', 'migrate.ChooseObjects');
+
 		return array(
 			null,
 			array(
@@ -293,6 +298,7 @@ class ChooseObjectsView extends GalleryView {
 		}
 
 		$tree = array();
+
 		foreach ($hierarchy as $albumName => $subHierarchy) {
 			$tree = array_merge(
 				$tree,
@@ -318,6 +324,7 @@ class ChooseObjectsView extends GalleryView {
 
 		foreach ($hierarchy as $childAlbumName => $subHierarchy) {
 			$gallery->guaranteeTimeLimit(30);
+
 			$data = array_merge(
 				$data,
 				$this->_createG1DepthTree(

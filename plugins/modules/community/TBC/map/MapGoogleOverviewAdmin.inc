@@ -116,8 +116,10 @@ class MapGoogleOverviewAdminView extends GalleryView {
 		include dirname(__FILE__) . '/includes/MapAdminViewInit.inc';
 
 		$form['formName'] = 'MapGoogleOverviewAdmin';
+
 		$template->head('modules/map/includes/GoogleMap.css');
 		$template->javascript('modules/map/GoogleMap.js');
+
 		if (!array_key_exists('GoogleOverview', $form)) {
 			$form['GoogleOverview'] = false;
 		}
@@ -145,6 +147,7 @@ class MapGoogleOverviewAdminView extends GalleryView {
 		if (!array_key_exists('GOType', $form)) {
 			$form['GOType'] = 'G_SATELLITE_TYPE';
 		}
+
 		include dirname(__FILE__) . '/includes/MapAdminEdits.inc';
 
 		if ($template->hasVariable('SiteAdmin')) {
@@ -152,10 +155,12 @@ class MapGoogleOverviewAdminView extends GalleryView {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
 		} else {
 			$SiteAdmin['enctype'] = 'multipart/form-data';
+
 			$template->setVariable('SiteAdmin', $SiteAdmin);
 		}
 
 		$template->setVariable('controller', 'map.MapGoogleOverviewAdmin');
+
 		return array(
 			null,
 			array(

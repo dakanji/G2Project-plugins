@@ -104,6 +104,7 @@ class GalleryAuthorizeNet {
 		}
 
 		$this->_authorizeNet->setCurlPath($curl);
+
 		return null;
 	}
 

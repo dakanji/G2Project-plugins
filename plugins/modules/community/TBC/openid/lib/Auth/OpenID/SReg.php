@@ -43,6 +43,7 @@
  * Import message and extension internals.
  */
 require_once 'Auth/OpenID/Message.php';
+
 require_once 'Auth/OpenID/Extension.php';
 
 // The data fields that are listed in the sreg spec
@@ -95,6 +96,7 @@ Auth_OpenID_registerNamespaceAlias(Auth_OpenID_SREG_NS_URI_1_1, 'sreg');
  */
 function Auth_OpenID_supportsSReg(&$endpoint) {
 	return $endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_1) ||
+
 			$endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_0);
 }
 
@@ -131,8 +133,10 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
 			Auth_OpenID_SREG_NS_URI_1_0,
 		) as $sreg_ns_uri) {
 			$alias = $message->namespaces->getAlias($sreg_ns_uri);
+
 			if ($alias !== null) {
 				$found_ns_uri = $sreg_ns_uri;
+
 				break;
 			}
 		}
@@ -141,6 +145,7 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
 			// There is no alias for either of the types, so try to
 			// add one. We default to using the modern value (1.1)
 			$found_ns_uri = Auth_OpenID_SREG_NS_URI_1_1;
+
 			if ($message->namespaces->addAlias(
 				Auth_OpenID_SREG_NS_URI_1_1,
 				'sreg'
@@ -186,6 +191,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		$obj->optional   = array();
 		$obj->policy_url = $policy_url;
 		$obj->ns_uri     = $sreg_ns_uri;
+
 		if ($required) {
 			if (!$obj->requestFields($required, true, true)) {
 				return null;
@@ -225,11 +231,13 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		$m           = $request->message;
 		$obj->ns_uri = $obj->_getSRegNS($m);
 		$args        = $m->getArgs($obj->ns_uri);
+
 		if ($args === null || Auth_OpenID::isFailure($args)) {
 			return null;
 		}
 
 		$obj->parseExtensionArgs($args);
+
 		return $obj;
 	}
 
@@ -261,6 +269,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		foreach (array('required', 'optional') as $list_name) {
 			$required = ($list_name == 'required');
 			$items    = Auth_OpenID::arrayGet($args, $list_name);
+
 			if ($items) {
 				foreach (explode(',', $items) as $field_name) {
 					if (!$this->requestField($field_name, $required, $strict)) {
@@ -273,6 +282,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 		}
 
 		$this->policy_url = Auth_OpenID::arrayGet($args, 'policy_url');
+
 		return true;
 	}
 
@@ -386,6 +396,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 	 */
 	public function getExtensionArgs() {
 		$args = array();
+
 		if ($this->required) {
 			$args['required'] = implode(',', $this->required);
 		}
@@ -441,8 +452,10 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
 	public function extractResponse($request, $data) {
 		$obj         = new Auth_OpenID_SRegResponse();
 		$obj->ns_uri = $request->ns_uri;
+
 		foreach ($request->allRequestedFields() as $field) {
 			$value = Auth_OpenID::arrayGet($data, $field);
+
 			if ($value !== null) {
 				$obj->data[$field] = $value;
 			}
@@ -470,6 +483,7 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
 
 		$obj         = new Auth_OpenID_SRegResponse();
 		$obj->ns_uri = $obj->_getSRegNS($success_response->message);
+
 		if ($signed_only) {
 			$args = $success_response->getSignedNS($obj->ns_uri);
 		} else {

@@ -56,6 +56,7 @@ class DetailsController extends GalleryController {
 
 		$session =& $gallery->getSession();
 		$error   = $status   = array();
+
 		if (isset($form['action']['send'])) {
 			// Basic input checks
 			if (empty($form['custFirstName']) || empty($form['custLastName'])) {
@@ -108,6 +109,7 @@ class DetailsController extends GalleryController {
 
 			// TODO: Move to AuthorizeNetAim?
 			// Perform checksum validation on routing number
+
 			/* Check processing can be added relatively easily, given the time.
 			$abaCode = $form['custAbaCode'];
 			$checksum = (substr($abaCode, 0, 1) * 3 + substr($abaCode, 1, 1) * 7
@@ -119,7 +121,9 @@ class DetailsController extends GalleryController {
 			*/
 
 			// Note that this is only valid for US checks
+
 			/*
+
 			if (empty($abaCode) || !is_numeric($abaCode) || strlen($abaCode) != 9
 					|| $checksum != 0) {
 				$error[] = 'form[error][custAbaCode][bad]';
@@ -168,6 +172,7 @@ class DetailsController extends GalleryController {
 				// If Authorize.Net returned an error, save for output
 				if (!empty($errorMsg)) {
 					$error[] = 'form[error][authorizeNet][fail]';
+
 					GalleryUtilities::putRequestVariable('authorizeNetError', $errorMsg);
 				} else {
 					// Write the customer information back into the original transaction
@@ -190,6 +195,7 @@ class DetailsController extends GalleryController {
 					// Get a write lock for the transaction and refresh from database
 					list($ret, $lockId)
 							= GalleryCoreApi::acquireWriteLock(array($transaction->getId()));
+
 					if ($ret) {
 						return array($ret, null);
 					}
@@ -243,6 +249,7 @@ class DetailsController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -288,7 +295,9 @@ class DetailsView extends GalleryView {
 		}
 
 		$template->setVariable('Details', $Details);
+
 		$form['controller'] = 'checkoutauthorizenet.Details';
+
 		$template->title(
 			$gallery->i18n('Checkout') . '::' .
 						 $gallery->i18n('Customer Details')

@@ -28,6 +28,7 @@ $__Auth_OpenID_PEAR_AVAILABLE = @require_once 'DB.php';
  * @access private
  */
 require_once 'Auth/OpenID/Interface.php';
+
 require_once 'Auth/OpenID/Nonce.php';
 
 /**
@@ -227,7 +228,6 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 				$this->associations_table_name
 			)
 		);
-
 		$this->connection->query(
 			sprintf(
 				'DELETE FROM %s',
@@ -291,6 +291,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		foreach ($replacements as $item) {
 			$value = $item['value'];
 			$keys  = $item['keys'];
+
 			foreach ($keys as $k) {
 				if (is_array($this->sql[$k])) {
 					foreach ($this->sql[$k] as $part_key => $part_value) {
@@ -316,9 +317,12 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
 	public function createTables() {
 		$this->connection->autoCommit(true);
+
 		$n = $this->create_nonce_table();
 		$a = $this->create_assoc_table();
+
 		$this->connection->autoCommit(false);
+
 		if ($n && $a) {
 			return true;
 		}
@@ -329,6 +333,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	public function create_nonce_table() {
 		if (!$this->tableExists($this->nonces_table_name)) {
 			$r = $this->connection->query($this->sql['nonce_table']);
+
 			return $this->resultToBool($r);
 		}
 
@@ -338,6 +343,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	public function create_assoc_table() {
 		if (!$this->tableExists($this->associations_table_name)) {
 			$r = $this->connection->query($this->sql['assoc_table']);
+
 			return $this->resultToBool($r);
 		}
 
@@ -444,6 +450,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		if ($handle !== null) {
 			$assoc  = $this->_get_assoc($server_url, $handle);
 			$assocs = array();
+
 			if ($assoc) {
 				$assocs[] = $assoc;
 			}
@@ -456,6 +463,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		}
 
 		$associations = array();
+
 		foreach ($assocs as $assoc_row) {
 			$assoc = new Auth_OpenID_Association(
 				$assoc_row['handle'],
@@ -466,6 +474,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 			);
 
 			$assoc->secret = $this->blobDecode($assoc->secret);
+
 			if ($assoc->getExpiresIn() == 0) {
 				$this->removeAssociation($server_url, $assoc->handle);
 			} else {
@@ -476,6 +485,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		if ($associations) {
 			$issued = array();
 			$assocs = array();
+
 			foreach ($associations as $key => $assoc) {
 				$issued[$key] = $assoc[0];
 				$assocs[$key] = $assoc[1];
@@ -540,8 +550,10 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	 */
 	public function _octify($str) {
 		$result = '';
+
 		for ($i = 0; $i < Auth_OpenID::bytes($str); $i++) {
 			$ch = substr($str, $i, 1);
+
 			if ($ch == '\\') {
 				$result .= '\\\\\\\\';
 			} elseif (ord($ch) == 0) {
@@ -563,8 +575,10 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	public function _unoctify($str) {
 		$result = '';
 		$i      = 0;
+
 		while ($i < strlen($str)) {
 			$char = $str[$i];
+
 			if ($char == '\\') {
 				// Look to see if the next char is a backslash and
 				// append it.
@@ -591,9 +605,13 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		global $Auth_OpenID_SKEW;
 
 		$v = time() - $Auth_OpenID_SKEW;
+
 		$this->connection->query($this->sql['clean_nonce'], array($v));
+
 		$num = $this->connection->affectedRows();
+
 		$this->connection->commit();
+
 		return $num;
 	}
 
@@ -604,7 +622,9 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		);
 
 		$num = $this->connection->affectedRows();
+
 		$this->connection->commit();
+
 		return $num;
 	}
 }

@@ -63,7 +63,9 @@ class FotokastenCartPlugin {
 		global $gallery;
 
 		$session =& $gallery->getSession();
+
 		$session->put('fotokasten.cart', $cartItemIds);
+
 		return array(
 			null,
 			array(

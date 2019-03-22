@@ -55,13 +55,17 @@ class RedirectController extends GalleryController {
 		global $gallery;
 
 		$phpVm = $gallery->getPhpVm();
+
 		GalleryCoreApi::requireOnce('modules/migrate/classes/G1MigrateHelper.class');
+
 		$path = GalleryUtilities::getRequestVariables('path');
 		$path = preg_split('|/|', $path, -1, PREG_SPLIT_NO_EMPTY);
 		$view = 'core.ShowItem';
+
 		if (count($path) > 1) {
 			// Check for direct link to image file (name.type, name.thumb.type, name.sized.type)
 			$file = explode('.', $path[1]);
+
 			switch (count($file)) {
 				case 3:
 					if ($file[1] == 'sized') {
@@ -74,6 +78,7 @@ class RedirectController extends GalleryController {
 				case 2:
 					$view    = 'core.DownloadItem';
 					$path[1] = $file[0];
+
 					if (!isset($derivative)) {
 						$derivative = DERIVATIVE_TYPE_IMAGE_PREFERRED;
 					}
@@ -86,6 +91,7 @@ class RedirectController extends GalleryController {
 			}
 
 			$itemId = $id;
+
 			if (isset($id, $derivative)) {
 				switch ($derivative) {
 					case DERIVATIVE_TYPE_IMAGE_PREFERRED:
@@ -96,6 +102,7 @@ class RedirectController extends GalleryController {
 						}
 
 						break;
+
 					case DERIVATIVE_TYPE_IMAGE_RESIZE:
 						list($ret, $data) = GalleryCoreApi::fetchResizesByItemIds(array($id));
 
@@ -104,6 +111,7 @@ class RedirectController extends GalleryController {
 						}
 
 						break;
+
 					case DERIVATIVE_TYPE_IMAGE_THUMBNAIL:
 						list($ret, $data) = GalleryCoreApi::fetchThumbnailsByItemIds(array($id));
 
@@ -116,6 +124,7 @@ class RedirectController extends GalleryController {
 
 				if (!empty($data)) {
 					$derivative = $data[$id];
+
 					if (is_array($derivative)) {
 						$derivative = array_shift($derivative);
 					}
@@ -148,6 +157,7 @@ class RedirectController extends GalleryController {
 
 		// Redirect browser
 		$phpVm->header('HTTP/1.0 301 Moved Permanently');
+
 		$results = array(
 			'redirect' => array(
 				'view'   => $view,
@@ -158,6 +168,7 @@ class RedirectController extends GalleryController {
 		);
 
 		$scriptName = GalleryUtilities::getServerVar('PHP_SELF');
+
 		if (empty($scriptName)) {
 			// PHP as CGI needs to use PHP_SELF; fallback to SCRIPT_NAME just in case
 			$scriptName = GalleryUtilities::getServerVar('SCRIPT_NAME');
@@ -216,10 +227,14 @@ class RedirectView extends GalleryView {
 		}
 
 		header('Content-type: text/plain');
+
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryTemplate.class');
+
 		$template = new GalleryTemplate(dirname(dirname(__DIR__)));
+
 		$template->setVariable('l10Domain', 'modules_migrate');
 		$template->display('gallery:modules/migrate/templates/Htaccess.tpl');
+
 		return null;
 	}
 }

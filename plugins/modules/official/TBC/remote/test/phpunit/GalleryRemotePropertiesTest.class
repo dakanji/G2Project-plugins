@@ -35,14 +35,18 @@ class GalleryRemotePropertiesTest extends GalleryControllerTestCase {
 
 	public function testSetAndListProperties() {
 		$props = new GalleryRemoteProperties();
+
 		$props->setProperty('test.1', 'bar');
 		$props->setProperty('test.2', 'baz');
 		$props->setProperty('test.2', 'overwrite baz');
 		$props->setProperty('test.3', "carriage\rreturn");
 		$props->setProperty('test.4', "carriage return\r\nlinefeed");
 		$props->setProperty('test key.5', "linefeed\nlinefeed");
+
 		$props->setProperty('test=key.6', "tab\ttab");
+
 		$props->setProperty('test#key.7', "backslash\\backslash");
+
 		$this->assertEquals(
 			join(
 				"\n",
@@ -63,6 +67,7 @@ class GalleryRemotePropertiesTest extends GalleryControllerTestCase {
 
 	public function testHasProperty() {
 		$props = new GalleryRemoteProperties();
+
 		$props->setProperty('test.1', 'bar');
 		$this->assertTrue($props->hasProperty('test.1'));
 		$this->assertFalse($props->hasProperty('test.2'));
@@ -70,6 +75,7 @@ class GalleryRemotePropertiesTest extends GalleryControllerTestCase {
 
 	public function testGetProperty() {
 		$props = new GalleryRemoteProperties();
+
 		$props->setProperty('test.1', 'bar');
 		$this->assertEquals('bar', $props->getProperty('test.1'));
 		$props->setProperty('test.2', "carriage\rreturn");

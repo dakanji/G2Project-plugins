@@ -45,6 +45,7 @@
 require_once 'EXIF.php';
 
 // TODO Find out definitions of Print Image Matching Info tags
+
 /******************************************************************************
  *
  * Function:     Decode_PIM
@@ -61,7 +62,6 @@ require_once 'EXIF.php';
  *                        an array of the PIM contents
  *
  ******************************************************************************/
-
 function Decode_PIM($tag, $Tag_Definitions_Name) {
 	// Create a new EXIF tag for the output
 	$newtag = $tag;
@@ -121,6 +121,7 @@ function Decode_PIM($tag, $Tag_Definitions_Name) {
 }
 
 // End of Function:     Decode_PIM
+
 /******************************************************************************
  *
  * Function:     Encode_PIM
@@ -135,7 +136,6 @@ function Decode_PIM($tag, $Tag_Definitions_Name) {
  * Returns:      packed_data - The packed binary string representing the PIM data
  *
  ******************************************************************************/
-
 function Encode_PIM($tag, $Byte_Align) {
 	// Create a string to receive the packed data
 	$packed_data = '';
@@ -157,6 +157,7 @@ function Encode_PIM($tag, $Byte_Align) {
 
 			// Cycle through each tag
 			$tag_count = 0;
+
 			foreach ($tag['Data'] as $key => $curr_tag) {
 				// Make sure this is a tag and not supplementary info
 				if (is_numeric($key)) {
@@ -184,6 +185,7 @@ function Encode_PIM($tag, $Byte_Align) {
 }
 
 // End of Function:     Encode_PIM
+
 /******************************************************************************
  *
  * Function:     get_PIM_Text_Value
@@ -199,7 +201,6 @@ function Encode_PIM($tag, $Byte_Align) {
  * Returns:      output_str - The text string representing the PIM info
  *
  ******************************************************************************/
-
 function get_PIM_Text_Value($Tag, $Tag_Definitions_Name) {
 	// Create a string to receive the output
 	$output_str = '';

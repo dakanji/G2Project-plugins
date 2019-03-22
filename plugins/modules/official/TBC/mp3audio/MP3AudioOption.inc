@@ -42,6 +42,7 @@ class MP3AudioOption extends ItemAddOption {
 
 		$storage =& $gallery->getStorage();
 		$errors  = $mp3Items  = array();
+
 		foreach ($items as $item) {
 			if (GalleryUtilities::isA($item, 'GalleryDataItem')
 				&& $item->getMimeType() == 'audio/mpeg'
@@ -53,6 +54,7 @@ class MP3AudioOption extends ItemAddOption {
 		while (!empty($mp3Items)) {
 			$currentItems = array_splice($mp3Items, 0, 100);
 			$itemIds      = array();
+
 			foreach ($currentItems as $item) {
 				$itemIds[] = $item->getId();
 			}
@@ -68,6 +70,7 @@ class MP3AudioOption extends ItemAddOption {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return array($ret, null, null);
 				}
 
@@ -77,6 +80,7 @@ class MP3AudioOption extends ItemAddOption {
 
 				if ($ret) {
 					GalleryCoreApi::releaseLocks($lockId);
+
 					return array($ret, null, null);
 				}
 			}

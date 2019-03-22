@@ -43,6 +43,7 @@ class MissingTagsView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminMissingTags';
+
 		$gallery->guaranteeTimeLimit(120);
 
 		$query = '
@@ -61,8 +62,10 @@ class MissingTagsView extends GalleryView {
         ';
 
 		$items = ItemList::readItemsFromQuery($query);
+
 		$template->setVariable('controller', 'mranalysis.MissingTags');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

@@ -40,10 +40,13 @@ class HttpAuthModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('authentication', $gallery->i18n('Authentication'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -281,6 +284,7 @@ class HttpAuthModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
+
 			default:
 				return GalleryStatus::error(
 					ERROR_BAD_PLUGIN,
@@ -417,6 +421,7 @@ class HttpAuthModule extends GalleryModule {
 		switch ($event->getEventName()) {
 			case 'Gallery::ActivatePlugin':
 				$data = $event->getData();
+
 				if ($data['pluginType'] != 'module' || $data['pluginId'] != 'rewrite') {
 					return array(null, null);
 				}
@@ -428,8 +433,10 @@ class HttpAuthModule extends GalleryModule {
 				}
 
 				return array(null, null);
+
 			case 'Gallery::Error':
 				$data = $event->getData();
+
 				if (!($data['error']->getErrorCode() & ERROR_PERMISSION_DENIED)) {
 					return array(null, null);
 				}
@@ -459,6 +466,7 @@ class HttpAuthModule extends GalleryModule {
 				list($authtype, $username, $password) = HttpAuthHelper::getHttpAuth();
 
 				$remoteUser = GalleryUtilities::getServerVar('REMOTE_USER');
+
 				if (!empty($username) || !empty($remoteUser)) {
 					return array(
 						null,

@@ -26,8 +26,9 @@
  * @author Alan Harder <alan.harder@sun.com>
  * @version $Revision: 17934 $
  */
-class SnapGalaxyCartPlugin // implements CartPluginInterface_1_0 and CartPluginInterface_1_1
-{
+
+// implements CartPluginInterface_1_0 and CartPluginInterface_1_1
+class SnapGalaxyCartPlugin {
 	/**
 	 * @see CartPluginInterface_1_0::getSupportedItemTypes
 	 */
@@ -63,9 +64,14 @@ class SnapGalaxyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$returnUrl    = $urlGenerator->generateUrl(
-			array('view' => 'cart.ViewCart'),
-			array('forceFullUrl' => true, 'htmlEntities' => false)
-	);
+			array(
+				'view' => 'cart.ViewCart',
+			),
+			array(
+				'forceFullUrl' => true,
+				'htmlEntities' => false,
+			)
+		);
 
 		GalleryCoreApi::requireOnce('modules/snapgalaxy/classes/SnapGalaxyHelper.class');
 
@@ -75,8 +81,11 @@ class SnapGalaxyCartPlugin // implements CartPluginInterface_1_0 and CartPluginI
 			return array($ret, null);
 		}
 
-		return array(null, array('href' => $cartUrl));
+		return array(
+			null,
+			array(
+				'href' => $cartUrl,
+			),
+		);
 	}
-
 }
-

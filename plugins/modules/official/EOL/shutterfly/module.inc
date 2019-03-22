@@ -38,10 +38,13 @@ class ShutterflyModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -106,6 +109,7 @@ class ShutterflyModule extends GalleryModule {
 				}
 
 				break;
+
 			case '1.0.0':
 				$ret = GalleryCoreApi::registerPermission(
 					$this->getId(),
@@ -157,6 +161,7 @@ class ShutterflyModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
+
 			default:
 				return GalleryCoreApi::error(
 					ERROR_BAD_PLUGIN,
@@ -199,8 +204,10 @@ class ShutterflyModule extends GalleryModule {
 
 		$session =& $gallery->getSession();
 		$links   = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (isset($wantsDetailedLinks[$itemId], $permissions[$itemId]['shutterfly.print'])
 				&& GalleryUtilities::isA($item, 'GalleryPhotoItem')
 			) {

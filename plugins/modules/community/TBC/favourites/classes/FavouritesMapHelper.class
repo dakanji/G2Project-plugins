@@ -49,6 +49,7 @@ class FavouritesMapHelper {
 		}
 
 		$faves = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$ret = GalleryCoreApi::assertHasItemPermission($result[0], 'core.view');
 
@@ -58,6 +59,7 @@ class FavouritesMapHelper {
 		}
 
 		$faves = array_unique($faves);
+
 		return array(null, $faves);
 	}
 
@@ -85,6 +87,7 @@ class FavouritesMapHelper {
 
 		$result = $searchResults->nextResult();
 		$id     = $result[0];
+
 		return array(null, $id);
 	}
 

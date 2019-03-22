@@ -37,10 +37,10 @@ class HybridTheme extends GalleryTheme {
 				'Combined album/image/slideshow dynamic view'
 			)
 		);
-
 		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredThemeApi(array(3, 0));
+
 		$this->setStandardSettings(
 			array(
 				'rows'             => 30,
@@ -240,6 +240,7 @@ class HybridTheme extends GalleryTheme {
 		}
 
 		$template->head('themes/hybrid/templates/header.tpl');
+
 		return array(null, 'theme.tpl');
 	}
 
@@ -302,6 +303,7 @@ class HybridTheme extends GalleryTheme {
 			}
 
 			$template->style('themes/hybrid/theme.css');
+
 			return array(null, 'detail.tpl');
 		}
 
@@ -322,9 +324,11 @@ class HybridTheme extends GalleryTheme {
 
 		$perPage = $this->getPageSize($params);
 		$page    = 1;
+
 		for ($i = 0; $i < count($childIds); $i++) {
 			if ($childIds[$i] == $item->getId()) {
 				$page = ceil(($i + 1) / $perPage);
+
 				break;
 			}
 		}
@@ -339,6 +343,7 @@ class HybridTheme extends GalleryTheme {
 		}
 
 		$redirect['showId'] = $item->getId();
+
 		return array(
 			null,
 			array(
@@ -414,6 +419,7 @@ class HybridTheme extends GalleryTheme {
 	 */
 	public function _buildItemList($childIds, &$children) {
 		$imageWidths = $imageHeights = $childItems = array();
+
 		if (!empty($childIds)) {
 			$ret = GalleryCoreApi::studyPermissions($childIds);
 
@@ -447,9 +453,11 @@ class HybridTheme extends GalleryTheme {
 		}
 
 		$i = -1;
+
 		foreach ($childItems as $child) {
 			$i++;
 			$childId = $child->getId();
+
 			if (isset($thumbnails[$childId])) {
 				if (!($thumbnails[$childId]->getWidth() && $thumbnails[$childId]->getHeight())) {
 					list($ret, $thumbnails[$childId]) = GalleryCoreApi::rebuildDerivativeCache($thumbnails[$childId]->getId());
@@ -473,6 +481,7 @@ class HybridTheme extends GalleryTheme {
 			}
 
 			$images = array();
+
 			if (isset($permissions['core.viewSource'])) {
 				// Full size; check for preferred copy
 				if (isset($preferredFullImages[$childId])) {
@@ -510,6 +519,7 @@ class HybridTheme extends GalleryTheme {
 				$image                      = (array)$image;
 				$children[$i]['image']      = $image;
 				$children[$i]['imageIndex'] = count($imageWidths);
+
 				if (GalleryUtilities::isExactlyA($child, 'GalleryPhotoItem')
 					&& $image['width'] > 0 && $image['height'] > 0
 				) {

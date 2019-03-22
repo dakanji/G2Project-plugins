@@ -54,8 +54,10 @@ class TagsItemEditController extends GalleryController {
 		if (isset($form['action']['apply'])) {
 			if ($item->getCanContainChildren()) {
 				// Figure out what to extend it to
+
 				/** todo move this to the callback and add permission check on the first 2 functions */
 				$items = array();
+
 				if (!empty($form['AlbumItems']) && !empty($form['AllAlbumItems'])) {
 					list($ret, $tmpItems) = GalleryCoreApi::fetchChildDataItemIds($item);
 
@@ -107,6 +109,7 @@ class TagsItemEditController extends GalleryController {
 				}
 
 				$templateAdapter =& $gallery->getTemplateAdapter();
+
 				$templateAdapter->registerTrailerCallback(
 					array($this, 'runApplyTags'),
 					array($items, $itemId)
@@ -122,6 +125,7 @@ class TagsItemEditController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 
@@ -144,8 +148,11 @@ class TagsItemEditController extends GalleryController {
 		}
 
 		$heading = $module->translate('Applying Album Tags to SubItems');
+
 		$templateAdapter->updateProgressBar($heading, $module->translate('Preparing...'), 0);
+
 		$total = count($items);
+
 		foreach ($items as $key => $id) {
 			foreach ($tags as $rawTagName => $tagName) {
 				$message = $module->translate(
@@ -172,7 +179,9 @@ class TagsItemEditController extends GalleryController {
 		);
 
 		$urlGenerator =& $gallery->getUrlGenerator();
+
 		$templateAdapter->completeProgressBar($urlGenerator->generateUrl($redirect));
+
 		return null;
 	}
 }
@@ -219,6 +228,7 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		$tagExifInfo = array();
+
 		if ($exifModuleActive) {
 			// Grab the list of fields in 'details'
 			list($ret, $path) = $item->fetchPath();
@@ -241,6 +251,7 @@ class TagsItemEditView extends GalleryView {
 
 		$tagItem = GalleryUtilities::isA($item, 'GalleryAlbumItem') ? 'Album' : 'Other';
 		$tagMode = ($tagMode == '') ? 'Existing' : $tagMode;
+
 		if ($form['formName'] != 'TagsItemEdit') {
 			$form['formName'] = 'TagsItemEdit';
 			$form['itemId']   = $itemId;
@@ -259,6 +270,7 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		$tempArray = array();
+
 		foreach ($thisItemTagList as $tagId => $tagName) {
 			$tempArray[$tagName] = $tagId;
 		}
@@ -301,6 +313,7 @@ class TagsItemEditView extends GalleryView {
 		$template->setVariable('tagExifInfo', $tagExifInfo);
 		$template->setVariable('itemId', $itemId);
 		$template->setVariable('popLimit', $popLimit);
+
 		return array(
 			null,
 			array(

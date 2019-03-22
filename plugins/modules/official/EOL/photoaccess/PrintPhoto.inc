@@ -66,6 +66,7 @@ class PrintPhotoController extends GalleryController {
 		$results['redirect']['href'] = $cartUrl;
 		$results['status']           = array();
 		$results['error']            = array();
+
 		return array(null, $results);
 	}
 }

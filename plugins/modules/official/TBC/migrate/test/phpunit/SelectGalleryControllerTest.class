@@ -37,7 +37,9 @@ class SelectGalleryControllerTest extends GalleryControllerTestCase {
 	public function testBadAlbumsPath() {
 		GalleryUtilities::putRequestVariable('form[albumsPath]', __DIR__);
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -60,9 +62,12 @@ class SelectGalleryControllerTest extends GalleryControllerTestCase {
 		$platform   =& $gallery->getPlatform();
 		$slash      = $platform->getDirectorySeparator();
 		$albumsPath = __DIR__ . '/../data/albums';
+
 		GalleryUtilities::putRequestVariable('form[albumsPath]', $albumsPath);
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -83,7 +88,9 @@ class SelectGalleryControllerTest extends GalleryControllerTestCase {
 	public function testMissingAlbumsPath() {
 		GalleryUtilities::putRequestVariable('form[albumsPath]', '');
 		GalleryUtilities::putRequestVariable('form[action][select]', 1);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(

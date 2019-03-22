@@ -48,9 +48,16 @@ class AdminSlideshowController extends GalleryController {
 			return array($ret, null);
 		}
 
+		$error  = array();
+		$status = array();
+
 		// Allow our helper to be injected as a dependency for ease in testing
-		$picLensHelper = isset($this->_picLensHelper) ? $this->_picLensHelper : new PicLensHelper();
-		$error         = $status         = array();
+		if (isset($this->_picLensHelper)) {
+			$picLensHelper = $this->_picLensHelper;
+		} else {
+			$picLensHelper = new PicLensHelper();
+		}
+
 		if (isset($form['action']['install'])) {
 			list($ret, $version) = $picLensHelper->install();
 
@@ -153,6 +160,7 @@ class AdminSlideshowView extends GalleryView {
 
 		$picLensHelper = new PicLensHelper();
 		$info          = $picLensHelper->getLatestPicLensInfo();
+
 		if (empty($info)) {
 			$update = null;
 
@@ -178,6 +186,7 @@ class AdminSlideshowView extends GalleryView {
 
 		$template->setVariable('AdminSlideshow', $AdminSlideshow);
 		$template->setVariable('controller', 'slideshow.AdminSlideshow');
+
 		return array(
 			null,
 			array(

@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // write.apetag.php                                            //
 // module for writing APE tags                                 //
@@ -16,12 +15,20 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH . 'module.tag.apetag.php', __FILE__, true);
+
 class getid3_write_apetag {
 	public $filename;
 	public $tag_data;
-	public $always_preserve_replaygain = true;    // ReplayGain / MP3gain tags will be copied from old tag even if not passed in data
-	public $warnings                   = array(); // any non-critical errors will be stored here
-	public $errors                     = array(); // any critical errors will be stored here
+
+	// ReplayGain / MP3gain tags will be copied from old tag even if not passed in data
+	public $always_preserve_replaygain = true;
+
+	// any non-critical errors will be stored here
+	public $warnings = array();
+
+	// any critical errors will be stored here
+	public $errors = array();
+
 	public function __construct() {
 		return true;
 	}
@@ -30,6 +37,7 @@ class getid3_write_apetag {
 		// NOTE: All data passed to this function must be UTF-8 format
 		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
+
 		if (isset($ThisFileInfo['ape']['tag_offset_start'], $ThisFileInfo['lyrics3']['tag_offset_end'])) {
 			if ($ThisFileInfo['ape']['tag_offset_start'] >= $ThisFileInfo['lyrics3']['tag_offset_end']) {
 				// Current APE tag between Lyrics3 and ID3v1/EOF
@@ -44,6 +52,7 @@ class getid3_write_apetag {
 
 		if ($this->always_preserve_replaygain) {
 			$ReplayGainTagsToPreserve = array('mp3gain_minmax', 'mp3gain_album_minmax', 'mp3gain_undo', 'replaygain_track_peak', 'replaygain_track_gain', 'replaygain_album_peak', 'replaygain_album_gain');
+
 			foreach ($ReplayGainTagsToPreserve as $rg_key) {
 				if (isset($ThisFileInfo['ape']['items'][strtolower($rg_key)]['data'][0]) && !isset($this->tag_data[strtoupper($rg_key)][0])) {
 					$this->tag_data[strtoupper($rg_key)][0] = $ThisFileInfo['ape']['items'][strtolower($rg_key)]['data'][0];
@@ -56,6 +65,7 @@ class getid3_write_apetag {
 				$oldignoreuserabort = ignore_user_abort(true);
 				flock($fp, LOCK_EX);
 				$PostAPEdataOffset = $ThisFileInfo['avdataend'];
+
 				if (isset($ThisFileInfo['ape']['tag_offset_end'])) {
 					$PostAPEdataOffset = max($PostAPEdataOffset, $ThisFileInfo['ape']['tag_offset_end']);
 				}
@@ -66,17 +76,20 @@ class getid3_write_apetag {
 
 				fseek($fp, $PostAPEdataOffset);
 				$PostAPEdata = '';
+
 				if ($ThisFileInfo['filesize'] > $PostAPEdataOffset) {
 					$PostAPEdata = fread($fp, $ThisFileInfo['filesize'] - $PostAPEdataOffset);
 				}
 
 				fseek($fp, $PostAPEdataOffset);
+
 				if (isset($ThisFileInfo['ape']['tag_offset_start'])) {
 					fseek($fp, $ThisFileInfo['ape']['tag_offset_start']);
 				}
 
 				ftruncate($fp, ftell($fp));
 				fwrite($fp, $APEtag, strlen($APEtag));
+
 				if (!empty($PostAPEdata)) {
 					fwrite($fp, $PostAPEdata, strlen($PostAPEdata));
 				}
@@ -84,6 +97,7 @@ class getid3_write_apetag {
 				flock($fp, LOCK_UN);
 				fclose($fp);
 				ignore_user_abort($oldignoreuserabort);
+
 				return true;
 			}
 		}
@@ -94,18 +108,21 @@ class getid3_write_apetag {
 	public function DeleteAPEtag() {
 		$getID3       = new getID3();
 		$ThisFileInfo = $getID3->analyze($this->filename);
+
 		if (isset($ThisFileInfo['ape']['tag_offset_start'], $ThisFileInfo['ape']['tag_offset_end'])) {
 			if (is_writable($this->filename) && is_file($this->filename) && ($fp = fopen($this->filename, 'a+b'))) {
 				flock($fp, LOCK_EX);
 				$oldignoreuserabort = ignore_user_abort(true);
 				fseek($fp, $ThisFileInfo['ape']['tag_offset_end']);
 				$DataAfterAPE = '';
+
 				if ($ThisFileInfo['filesize'] > $ThisFileInfo['ape']['tag_offset_end']) {
 					$DataAfterAPE = fread($fp, $ThisFileInfo['filesize'] - $ThisFileInfo['ape']['tag_offset_end']);
 				}
 
 				ftruncate($fp, $ThisFileInfo['ape']['tag_offset_start']);
 				fseek($fp, $ThisFileInfo['ape']['tag_offset_start']);
+
 				if (!empty($DataAfterAPE)) {
 					fwrite($fp, $DataAfterAPE, strlen($DataAfterAPE));
 				}
@@ -113,6 +130,7 @@ class getid3_write_apetag {
 				flock($fp, LOCK_UN);
 				fclose($fp);
 				ignore_user_abort($oldignoreuserabort);
+
 				return true;
 			}
 
@@ -125,6 +143,7 @@ class getid3_write_apetag {
 	public function GenerateAPEtag() {
 		// NOTE: All data passed to this function must be UTF-8 format
 		$items = array();
+
 		if (!is_array($this->tag_data)) {
 			return false;
 		}
@@ -135,6 +154,7 @@ class getid3_write_apetag {
 			}
 
 			$valuestring = '';
+
 			foreach ($arrayofvalues as $value) {
 				$valuestring .= str_replace("\x00", '', $value) . "\x00";
 			}
@@ -156,6 +176,7 @@ class getid3_write_apetag {
 
 	public function GenerateAPEtagHeaderFooter(&$items, $isheader = false) {
 		$tagdatalength = 0;
+
 		foreach ($items as $itemdata) {
 			$tagdatalength += strlen($itemdata);
 		}
@@ -166,21 +187,26 @@ class getid3_write_apetag {
 		$APEheader .= getid3_lib::LittleEndian2String(count($items), 4);
 		$APEheader .= $this->GenerateAPEtagFlags(true, true, $isheader, 0, false);
 		$APEheader .= str_repeat("\x00", 8);
+
 		return $APEheader;
 	}
 
 	public function GenerateAPEtagFlags($header = true, $footer = true, $isheader = false, $encodingid = 0, $readonly = false) {
 		$APEtagFlags = array_fill(0, 4, 0);
+
 		if ($header) {
-			$APEtagFlags[0] |= 0x80; // Tag contains a header
+			// Tag contains a header
+			$APEtagFlags[0] |= 0x80;
 		}
 
 		if (!$footer) {
-			$APEtagFlags[0] |= 0x40; // Tag contains no footer
+			// Tag contains no footer
+			$APEtagFlags[0] |= 0x40;
 		}
 
 		if ($isheader) {
-			$APEtagFlags[0] |= 0x20; // This is the header, not the footer
+			// This is the header, not the footer
+			$APEtagFlags[0] |= 0x20;
 		}
 
 		// 0: Item contains text information coded in UTF-8
@@ -188,8 +214,10 @@ class getid3_write_apetag {
 		// 2: Item is a locator of external stored information °°)
 		// 3: reserved
 		$APEtagFlags[3] |= ($encodingid << 1);
+
 		if ($readonly) {
-			$APEtagFlags[3] |= 0x01; // Tag or Item is Read Only
+			// Tag or Item is Read Only
+			$APEtagFlags[3] |= 0x01;
 		}
 
 		return chr($APEtagFlags[3]) . chr($APEtagFlags[2]) . chr($APEtagFlags[1]) . chr($APEtagFlags[0]);
@@ -205,9 +233,12 @@ class getid3_write_apetag {
 			case 'LC':
 			case 'ISRC':
 				$itemkey = strtoupper($itemkey);
+
 				break;
+
 			default:
 				$itemkey = ucwords($itemkey);
+
 				break;
 		}
 

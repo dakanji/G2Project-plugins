@@ -57,10 +57,14 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 
 	public function testInstallSuccess() {
 		GalleryUtilities::putRequestVariable('form[action][install]', 1);
+
 		$mockPicLensHelper = new AdminSlideshowControllerTest_MockPicLensHelper();
+
 		$mockPicLensHelper->setReply('install', array(), array(null, 'TEST_VERSION'));
 		$this->_controller->_setPicLensHelper($mockPicLensHelper);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -80,15 +84,18 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 
 	public function testInstallFailed() {
 		GalleryUtilities::putRequestVariable('form[action][install]', 1);
+
 		$mockPicLensHelper = new AdminSlideshowControllerTest_MockPicLensHelper();
+
 		$mockPicLensHelper->setReply(
 			'install',
 			array(),
 			array(GalleryCoreApi::error(ERROR_UNKNOWN), null)
 		);
-
 		$this->_controller->_setPicLensHelper($mockPicLensHelper);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -121,9 +128,12 @@ class AdminSlideshowControllerTest extends GalleryControllerTestCase {
 		}
 
 		$mockPicLensHelper = new AdminSlideshowControllerTest_MockPicLensHelper();
+
 		$mockPicLensHelper->setReply('uninstall', array(), null);
 		$this->_controller->_setPicLensHelper($mockPicLensHelper);
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(

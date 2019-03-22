@@ -54,7 +54,9 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 
 	public function testWebCamSiteAdminControllerUndo() {
 		GalleryUtilities::putRequestVariable('form[action][reset]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -72,7 +74,9 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[duration]', '123.4');
 		GalleryUtilities::putRequestVariable('form[fromweb]', 'off');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -100,7 +104,9 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 	public function testWebCamSiteAdminControllerSaveNoDuration() {
 		GalleryUtilities::putRequestVariable('form[fromweb]', 'off');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -126,7 +132,9 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[duration]', 'abc');
 		GalleryUtilities::putRequestVariable('form[fromweb]', 'off');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -153,7 +161,9 @@ class WebCamSiteAdminControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[duration]', '123,4');
 		GalleryUtilities::putRequestVariable('form[fromweb]', 'off');
 		GalleryUtilities::putRequestVariable('form[action][save]', '1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(

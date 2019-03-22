@@ -18,6 +18,7 @@
  * presence or absence of CURL.
  */
 require_once 'Auth/Yadis/PlainHTTPFetcher.php';
+
 require_once 'Auth/Yadis/ParanoidHTTPFetcher.php';
 
 /**
@@ -287,6 +288,7 @@ class Auth_Yadis_Yadis {
 	public function _getContentType($content_type_header) {
 		if ($content_type_header) {
 			$parts = explode(';', $content_type_header);
+
 			return strtolower($parts[0]);
 		}
 	}
@@ -330,10 +332,12 @@ class Auth_Yadis_Yadis {
 		}
 
 		$response = $fetcher->get($uri, $headers);
+
 		if (!$response || ($response->status != 200
 			and $response->status != 206)
 		) {
 			$result->fail();
+
 			return $result;
 		}
 
@@ -361,10 +365,12 @@ class Auth_Yadis_Yadis {
 			if ($yadis_location) {
 				$result->xrds_uri = $yadis_location;
 				$response         = $fetcher->get($yadis_location);
+
 				if ((!$response) || ($response->status != 200
 					and $response->status != 206)
 				) {
 					$result->fail();
+
 					return $result;
 				}
 
@@ -376,6 +382,7 @@ class Auth_Yadis_Yadis {
 		}
 
 		$result->response_text = $response->body;
+
 		return $result;
 	}
 }

@@ -6,18 +6,16 @@
 //            or http://www.getid3.org                         //
 //          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // extension.cache.dbm.php - part of getID3()                  //
 // Please see readme.txt for more information                  //
 //                                                            ///
-
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // This extension written by Allan Hansen <ahØartemis*dk>      //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
+
 /**
  * This is a caching extension for getID3(). It works the exact same
  * way as the getID3 class, but return cached information very fast
@@ -109,9 +107,11 @@ class getID3_cached_dbm extends getID3 {
 
 		// Try to open dbm file for writing
 		$this->dba = dba_open($dbm_filename, 'w', $cache_type);
+
 		if (!$this->dba) {
 			// Failed - create new dbm file
 			$this->dba = dba_open($dbm_filename, 'n', $cache_type);
+
 			if (!$this->dba) {
 				throw new Exception('failed to create dbm file: ' . $dbm_filename);
 			}
@@ -154,6 +154,7 @@ class getID3_cached_dbm extends getID3 {
 
 		// Create new dbm file
 		$this->dba = dba_open($this->dbm_filename, 'n', $this->cache_type);
+
 		if (!$this->dba) {
 			throw new Exception('failed to clear cache/recreate dbm file: ' . $this->dbm_filename);
 		}

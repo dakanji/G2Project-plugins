@@ -43,6 +43,7 @@ class MissingKeywordsView extends GalleryView {
 		global $gallery;
 
 		$form['formName'] = 'AdminMissingKeywords';
+
 		$gallery->guaranteeTimeLimit(120);
 
 		$query = "
@@ -63,8 +64,10 @@ class MissingKeywordsView extends GalleryView {
         ";
 
 		$items = ItemList::readItemsFromQuery($query);
+
 		$template->setVariable('controller', 'mranalysis.MissingKeywords');
 		$template->setVariable('baditems', $items);
+
 		return array(
 			null,
 			array(

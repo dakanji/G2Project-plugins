@@ -49,6 +49,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryEntity.class');
  */
 class GalleryCheckoutTransaction extends GalleryEntity {
 	// Members
+
 	/**
 	 * Date of the transaction
 	 *
@@ -575,6 +576,7 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 		$this->setTimeHold(0);
 		$this->setTimeProblem(0);
 		$this->setTimeDownloaded(0);
+
 		return null;
 	}
 
@@ -604,6 +606,7 @@ class GalleryCheckoutTransaction extends GalleryEntity {
 		}
 
 		$i = 0;
+
 		while ($result = $searchResults->nextResult()) {
 			$ret = GalleryCoreApi::deleteEntityById($result[0], 'GalleryChildEntity');
 

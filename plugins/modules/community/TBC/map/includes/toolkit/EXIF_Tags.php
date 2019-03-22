@@ -57,7 +57,6 @@
  *
  ******************************************************************************/
 $GLOBALS['IFD_Tag_Definitions'] = array(
-
 	// TIFF Tags
 	'TIFF' => array(
 		256 => array(
@@ -266,10 +265,8 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Type' => 'PIM',
 		),
 	),
-
 	// EXIF Tags
 	'EXIF' => array(
-
 		// Exif IFD
 		36864 => array(
 			'Name' => 'Exif Version',
@@ -280,7 +277,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Type'      => 'SubIFD',
 			'Tags Name' => 'Interoperability',
 		),
-
 		// Change: removed GPS IFD tag from here as it was incorrect location - as of version 1.11
 		40960 => array(
 			'Name' => 'FlashPix Version',
@@ -624,11 +620,9 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Name' => 'Image Unique ID',
 			'Type' => 'String',
 		),
-
 	//  11  => "ACDComment",
 	//  255 => "NewSubfileType"
 	),
-
 	// Interoperability Tags
 	'Interoperability' => array(
 		1 => array(
@@ -654,7 +648,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Units' => 'pixels ',
 		),
 	),
-
 	// GPS Tags
 	'GPS' => array(
 		0 => array(
@@ -816,7 +809,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			1      => 'Differential correction applied',
 		),
 	),
-
 	// META (App3) Tags
 	'Meta' => array(
 		50000 => array(
@@ -958,7 +950,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			'Type' => 'Unknown',
 		),
 	),
-
 	// Kodak Special Effects IFD Tags
 	'KodakSpecialEffects' => array(
 		0 => array(
@@ -975,7 +966,6 @@ $GLOBALS['IFD_Tag_Definitions'] = array(
 			0      => 'None Applied',
 		),
 	),
-
 	// Kodak Borders IFD Tags
 	'KodakBorders' => array(
 		0 => array(

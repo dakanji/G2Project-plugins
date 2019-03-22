@@ -40,10 +40,13 @@ class RssModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('getSiteAdminViews|getItemLinks');
 	}
@@ -79,6 +82,7 @@ class RssModule extends GalleryModule {
 	 */
 	public function getItemLinks($items, $wantsDetailedLinks, $permissions, $userId) {
 		GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
+
 		$links = array();
 
 		// check that this type of link is allowed
@@ -96,6 +100,7 @@ class RssModule extends GalleryModule {
 
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (!isset($wantsDetailedLinks[$itemId])) {
 				continue;
 			}
@@ -219,8 +224,10 @@ class RssModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		$data = $event->getData();
+
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
+
 			if (GalleryUtilities::isA($entity, 'GalleryItem')) {
 				GalleryCoreApi::requireOnce('modules/rss/classes/RssMapHelper.class');
 
@@ -413,6 +420,7 @@ class RssModule extends GalleryModule {
 				 * so that we always properly terminate our upgrade path with a break.
 				 */
 				break;
+
 			default:
 				return GalleryStatus::error(
 					ERROR_BAD_PLUGIN,

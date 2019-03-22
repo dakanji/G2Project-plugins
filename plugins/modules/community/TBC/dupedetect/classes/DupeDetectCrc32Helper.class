@@ -124,6 +124,7 @@ class DupeDetectCrc32Helper {
 
 		// Get data from query result
 		$signatures = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$signatures[$result[0]] = $result[1];
 		}
@@ -184,6 +185,7 @@ class DupeDetectCrc32Helper {
 
 		// Get the dupes ids from query result
 		$dups = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$dups[] = array($result[0], DUPEDETECT_CRC32_ALGORITHM);
 		}

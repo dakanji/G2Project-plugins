@@ -52,6 +52,7 @@ class UserinfoView extends GalleryView {
 	 */
 	public function loadTemplate(&$template, &$form) {
 		GalleryCoreApi::requireOnce('modules/userinfo/functions.inc');
+
 		$tableName3 = 'UserinfoSetupMap';
 		$select3    = array(
 			'uiPerPage',
@@ -71,8 +72,10 @@ class UserinfoView extends GalleryView {
 			);
 		}
 
-		$count  = $data['result']['uiPerPage']; //# to display per page
+		//# to display per page
+		$count  = $data['result']['uiPerPage'];
 		$offset = '0';
+
 		if (isset($_GET['g2_page']) && ($_GET['g2_page'] == '1' || $_GET['g2_page'] == '')) {
 			$offset = '0';
 		} else {
@@ -134,6 +137,7 @@ class UserinfoView extends GalleryView {
 		} else {
 			// Use Defaults
 			$column = $data['result']['uiDefaultSortColumn'];
+
 			if ($data['result']['uiDefaultSortOrder'] == 'DES') {
 				$optional = array(
 					'limit' => array(
@@ -199,9 +203,11 @@ class UserinfoView extends GalleryView {
 		$mySubView                = 'userinfo.Userinfo';
 		$myTotalRecords           = $rowsCount;
 		$pagination               = numPages($myView, $mySubView, $count, $myTotalRecords);
+
 		$template->setVariable('pagination', $pagination);
 		$template->setVariable('controller', 'userinfo.Userinfo');
 		$template->setVariable('Userinfo', $Userinfo);
+
 		return array(
 			null,
 			array(

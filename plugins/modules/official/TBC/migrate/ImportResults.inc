@@ -58,6 +58,7 @@ class ImportResultsView extends GalleryView {
 
 		$status = $template->getVariable('status');
 		$counts = array();
+
 		foreach (array(
 			'userImportFailure',
 			'userImportSuccess',
@@ -74,8 +75,10 @@ class ImportResultsView extends GalleryView {
 		$ImportResults           = array();
 		$ImportResults['counts'] = $counts;
 		$ImportResults['status'] = $status;
+
 		$template->setVariable('ImportResults', $ImportResults);
 		$template->setVariable('controller', 'migrate.ImportResults');
+
 		return array(
 			null,
 			array(

@@ -81,6 +81,7 @@ function get_XMP_text($jpeg_header_data) {
 				// Found a XMP/RDF block
 				// Return the XMP text
 				$xmp_data = substr($jpeg_header_data[$i]['SegData'], 29);
+
 				return $xmp_data;
 			}
 		}
@@ -90,6 +91,7 @@ function get_XMP_text($jpeg_header_data) {
 }
 
 // End of Function:     get_XMP_text
+
 /******************************************************************************
  *
  * Function:     put_XMP_text
@@ -110,7 +112,6 @@ function get_XMP_text($jpeg_header_data) {
  *               FALSE - if an error occured
  *
  ******************************************************************************/
-
 function put_XMP_text($jpeg_header_data, $newXMP) {
 	//Cycle through the header segments
 	for ($i = 0; $i < count($jpeg_header_data); $i++) {
@@ -120,6 +121,7 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
 			if (strncmp($jpeg_header_data[$i]['SegData'], "http://ns.adobe.com/xap/1.0/\x00", 29) == 0) {
 				// Found a preexisting XMP/RDF block - Replace it with the new one and return.
 				$jpeg_header_data[$i]['SegData'] = "http://ns.adobe.com/xap/1.0/\x00" . $newXMP;
+
 				return $jpeg_header_data;
 			}
 		}
@@ -155,6 +157,7 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
 }
 
 // End of Function:     put_XMP_text
+
 /******************************************************************************
  *
  * Function:     read_XMP_array_from_text
@@ -173,12 +176,12 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
  *               FALSE - if an error occured
  *
  ******************************************************************************/
-
 function read_XMP_array_from_text($xmptext) {
 	return read_xml_array_from_text($xmptext);
 }
 
 // End of Function:     read_XMP_array_from_text
+
 /******************************************************************************
  *
  * Function:     write_XMP_array_to_text
@@ -198,7 +201,6 @@ function read_XMP_array_from_text($xmptext) {
  * Returns:      output_XMP_text - the string containing the equivalent XMP text
  *
  ******************************************************************************/
-
 function write_XMP_array_to_text($xmparray) {
 	// Add the XMP packet header
 	// The sequence 0xEFBBBF is the UTF-8 encoded version of the Unicode �zero
@@ -226,6 +228,7 @@ function write_XMP_array_to_text($xmparray) {
 }
 
 // End of Function:     write_XMP_array_to_text
+
 /******************************************************************************
  *
  * Function:     Interpret_XMP_to_HTML
@@ -239,7 +242,6 @@ function write_XMP_array_to_text($xmparray) {
  * Returns:      output - the HTML string
  *
  ******************************************************************************/
-
 function Interpret_XMP_to_HTML($XMP_array) {
 	// Create a string to receive the output html
 	$output = '';
@@ -281,49 +283,76 @@ function Interpret_XMP_to_HTML($XMP_array) {
 						switch (substr($key, 6)) {
 							case 'photoshop':
 												$output .= "<h3 class=\"XMP_Secondary_Heading\">Photoshop RDF Segment</h3>\n";
+
 								break;
+
 							case 'xapBJ':
 											$output .= "<h3 class=\"XMP_Secondary_Heading\">Basic Job Ticket RDF Segment</h3>\n";
+
 								break;
+
 							case 'xapMM':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Media Management RDF Segment</h3>\n";
+
 								break;
+
 							case 'xapRights':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Rights Management RDF Segment</h3>\n";
+
 								break;
+
 							case 'dc':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Dublin Core Metadata Initiative RDF Segment</h3>\n";
+
 								break;
+
 							case 'xmp':
 							case 'xap':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP Basic Segment</h3>\n";
+
 								break;
+
 							case 'xmpTPg':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP Paged-Text Segment</h3>\n";
+
 								break;
+
 							case 'xmpTPg':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Adobe PDF Segment</h3>\n";
+
 								break;
+
 							case 'tiff':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP - embedded TIFF Segment</h3>\n";
+
 								break;
+
 							case 'exif':
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">XMP - embedded EXIF Segment</h3>\n";
+
 								break;
+
 							case 'xapGImg':  // Sub Category - Do nothing
 								break;
+
 							case 'stDim':  // Sub Category - Do nothing
 								break;
+
 							case 'stEvt':  // Sub Category - Do nothing
 								break;
+
 							case 'stRef':  // Sub Category - Do nothing
 								break;
+
 							case 'stVer':  // Sub Category - Do nothing
 								break;
+
 							case 'stJob':  // Sub Category - Do nothing
 								break;
+
 							default:
 									$output .= "<h3 class=\"XMP_Secondary_Heading\">Unknown RDF Segment '" . substr($key, 6) . "'</h3>\n";
+
 								break;
 						}
 					}
@@ -370,6 +399,7 @@ function Interpret_XMP_to_HTML($XMP_array) {
 
 // End of Function:     Interpret_XMP_to_HTML
 // INTERNAL FUNCTIONS
+
 /******************************************************************************
  *
  * Internal Function:     Interpret_RDF_Item
@@ -386,7 +416,6 @@ function Interpret_XMP_to_HTML($XMP_array) {
  *               value_str - the text representation of the value
  *
  ******************************************************************************/
-
 function Interpret_RDF_Item($Item) {
 	// TODO: Many RDF items have not been tested - only photoshop 7.0 and CS items
 	// Create a string to receive the HTML output
@@ -409,9 +438,12 @@ function Interpret_RDF_Item($Item) {
 
 				// Make a new date string with Day, Month, Year
 				$value_str = "$day/$month/$year";
+
 			break;
+
 		default:
 				$value_str = get_RDF_field_html_value($Item);
+
 			break;
 	}
 
@@ -420,6 +452,7 @@ function Interpret_RDF_Item($Item) {
 }
 
 // End of Function:     Interpret_RDF_Item
+
 /******************************************************************************
  *
  * Internal Function:     get_RDF_field_html_value
@@ -432,7 +465,6 @@ function Interpret_RDF_Item($Item) {
  * Returns:      output_str - the text representation of the field value
  *
  ******************************************************************************/
-
 function get_RDF_field_html_value($rdf_item) {
 	// Create a string to receive the output text
 	$output_str = '';
@@ -479,14 +511,19 @@ function get_RDF_field_html_value($rdf_item) {
 					case 'rdf:Alt':
 						$output_str .= "List of Alternates:\n";
 						$output_str .= interpret_RDF_collection($child_item);
+
 						break;
+
 					case 'rdf:Bag':
 								$output_str .= "Unordered List:\n";
 								$output_str .= interpret_RDF_collection($child_item);
+
 						break;
+
 					case 'rdf:Seq':
 									$output_str .= "Ordered List:\n";
 									$output_str .= interpret_RDF_collection($child_item);
+
 						break;
 
 									// Sub-Resource
@@ -510,9 +547,11 @@ function get_RDF_field_html_value($rdf_item) {
 									// Other
 					default:
 						$output_str .= 'Unknown Sub Item type:' . $child_item['tag'] . "\n";
+
 						break;
 				}
 			} // sub-item Has no tags, look for a value
+
 			elseif (array_key_exists('value', $child_item)) {
 				$output_str .= $rdf_item['value'] . "\n";
 			}
@@ -526,6 +565,7 @@ function get_RDF_field_html_value($rdf_item) {
 }
 
 // End of Function:     get_RDF_field_html_value
+
 /******************************************************************************
  *
  * Internal Function:     interpret_RDF_collection
@@ -539,7 +579,6 @@ function get_RDF_field_html_value($rdf_item) {
  * Returns:      output_str - the text representation of the collection value
  *
  ******************************************************************************/
-
 function interpret_RDF_collection($item) {
 	// Create a string to receive the output
 	$output_str = '';
@@ -602,6 +641,7 @@ function interpret_RDF_collection($item) {
 }
 
 // End of Function:     interpret_RDF_collection
+
 /******************************************************************************
  * Global Variable:      XMP_tag_captions
  *
@@ -634,7 +674,6 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'xmp:Nickname'                     => 'Nickname',
 	'xmp:Thumbnails'                   => 'Thumbnails',
 	'xmpidq:Scheme'                    => 'Identification Scheme',
-
 	// These are not in spec but Photoshop CS seems to use them
 	'xap:Advisory'                     => 'Externally Editied Properties',
 	'xap:BaseURL'                      => "Base URL for relative URL's",
@@ -822,25 +861,21 @@ $GLOBALS['XMP_tag_captions'] = array(
 	'stJob:name'                       => 'Job Name',
 	'stJob:id'                         => 'Unique Job ID',
 	'stJob:url'                        => 'URL for External Job Management File',
-
 	// Exif Flash
 	'exif:Fired'                       => 'Fired',
 	'exif:Return'                      => 'Return',
 	'exif:Mode'                        => 'Mode',
 	'exif:Function'                    => 'Function',
 	'exif:RedEyeMode'                  => 'Red Eye Mode',
-
 	// Exif OECF/SFR
 	'exif:Columns'                     => 'Columns',
 	'exif:Rows'                        => 'Rows',
 	'exif:Names'                       => 'Names',
 	'exif:Values'                      => 'Values',
-
 	// Exif CFAPattern
 	'exif:Columns'                     => 'Columns',
 	'exif:Rows'                        => 'Rows',
 	'exif:Values'                      => 'Values',
-
 	// Exif DeviceSettings
 	'exif:Columns'                     => 'Columns',
 	'exif:Rows'                        => 'Rows',

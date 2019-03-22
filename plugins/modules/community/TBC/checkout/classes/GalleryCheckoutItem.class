@@ -49,6 +49,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryChildEntity.class');
  */
 class GalleryCheckoutItem extends GalleryChildEntity {
 	// Members
+
 	/**
 	 * Id of the item
 	 *

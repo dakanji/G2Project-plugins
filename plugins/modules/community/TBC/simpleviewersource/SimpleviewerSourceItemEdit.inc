@@ -48,6 +48,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 
 			foreach ($params as $myTuple) {
 				trim($myTuple['paramName']);
+
 				if (!isset($myTuple['paramValue'])) {
 					$myTuple['paramValue'] = '';
 				}
@@ -135,11 +136,9 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 				'width',
 				'backgroundColor',
 				'preloaderColor',
-			) as $myParamName) { // easy to add more
-				list(
-					$ret,
-					$form['private'][$myParamName]
-				) = SimpleviewerParameterMapHelper::fetchParam(
+			) as $myParamName) {
+				// easy to add more
+				list($ret, $form['private'][$myParamName]) = SimpleviewerParameterMapHelper::fetchParam(
 					$item->getId(),
 					$myParamName,
 					'private'
@@ -163,10 +162,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 				'thumbnailRows',
 				'backgroundImagePath',
 			) as $myParamName) {
-				list(
-					$ret,
-					$form['fixed'][$myParamName]
-				) = SimpleviewerParameterMapHelper::fetchParam(
+				list($ret, $form['fixed'][$myParamName]) = SimpleviewerParameterMapHelper::fetchParam(
 					$item->getId(),
 					$myParamName,
 					'fixed'
@@ -186,10 +182,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 			);
 
 			foreach ($allCustomParamNames as $myParamName) {
-				list(
-					$ret,
-					$aParam
-				) = SimpleviewerParameterMapHelper::fetchParam(
+				list($ret, $aParam) = SimpleviewerParameterMapHelper::fetchParam(
 					$item->getId(),
 					$myParamName,
 					''
@@ -221,6 +214,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 
 		$template->setVariable('XMLurl', $XMLurl);
 		$template->setVariable('controller', 'simpleviewersource.SimpleviewerSourceItemEdit');
+
 		return array(
 			null,
 			'modules/simpleviewersource/templates/SimpleviewerSourceItemEdit.tpl',

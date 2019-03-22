@@ -75,6 +75,7 @@ class PopulateGPSEXIFInfos extends MaintenanceTask {
 		}
 
 		$ids = array();
+
 		while ($res = $result->nextResult()) {
 			$ids[] = $res[0];
 		}

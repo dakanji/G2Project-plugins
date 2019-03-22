@@ -47,10 +47,13 @@ class puzzleModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('3.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('3.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('display', $this->translate('Display'));
 		$this->setCallbacks('getItemLinks');
 	}
@@ -83,12 +86,14 @@ class puzzleModule extends GalleryModule {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/puzzle/classes/PuzzleHelper.class');
+
 		$links = array();
 
 		// use item to find the album
 		// list ($ret, $enabled) = GalleryCoreApi::getPluginParameter('module','puzzle','enabled',$item->getId());
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (isset($wantsDetailedLinks[$itemId])) {
 				if (GalleryUtilities::isA($item, 'GalleryPhotoItem')) {
 					// find the parent album of this photo item.
@@ -140,7 +145,10 @@ class puzzleModule extends GalleryModule {
 		global $gallery;
 
 		$found = false;
-		$count = 0; // just being paranoid
+
+		// just being paranoid
+		$count = 0;
+
 		// The parent of any photo should be the album, but we traverse the tree to make sure
 		while (true) {
 			// Avoid an infinite loop.

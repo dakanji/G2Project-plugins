@@ -4,12 +4,14 @@
  * Code for using a proxy XRI resolver.
  */
 require_once 'Auth/Yadis/XRDS.php';
+
 require_once 'Auth/Yadis/XRI.php';
 
 class Auth_Yadis_ProxyResolver {
 	public function __construct(&$fetcher, $proxy_url = null) {
 		$this->fetcher   =& $fetcher;
 		$this->proxy_url = $proxy_url;
+
 		if (!$this->proxy_url) {
 			$this->proxy_url = Auth_Yadis_getDefaultProxy();
 		}
@@ -38,14 +40,17 @@ class Auth_Yadis_ProxyResolver {
 	public function query($xri, $service_types, $filters = array()) {
 		$services    = array();
 		$canonicalID = null;
+
 		foreach ($service_types as $service_type) {
 			$url      = $this->queryURL($xri, $service_type);
 			$response = $this->fetcher->get($url);
+
 			if ($response->status != 200 and $response->status != 206) {
 				continue;
 			}
 
 			$xrds = Auth_Yadis_XRDS::parseXRDS($response->body);
+
 			if (!$xrds) {
 				continue;
 			}

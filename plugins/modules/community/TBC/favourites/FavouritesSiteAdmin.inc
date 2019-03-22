@@ -38,6 +38,7 @@ class FavouritesSiteAdminController extends GalleryController {
 		}
 
 		$status = $error = array();
+
 		if (isset($form['action']['displayFromText'])) {
 			// look for userName first, then fullName if not found
 			$user   = null;
@@ -59,7 +60,6 @@ class FavouritesSiteAdminController extends GalleryController {
 				if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
 					return array($ret, null);
 				}
-
 			}
 
 			if ($userId != null) {
@@ -71,7 +71,6 @@ class FavouritesSiteAdminController extends GalleryController {
 					'status'   => array(),
 					'error'    => array(),
 				);
-
 			} else {
 				$results = array(
 					'delegate' => array(
@@ -81,7 +80,6 @@ class FavouritesSiteAdminController extends GalleryController {
 					'error'    => array('form[error][notFound]'),
 					'status'   => array(),
 				);
-
 			}
 
 			return array(null, $results);
@@ -107,13 +105,13 @@ class FavouritesSiteAdminController extends GalleryController {
 			$status = empty($status) ? array() : array(
 				'statusMessage' => $status,
 			);
-
 		}
 
 		if (isset($form['action']['save']) && empty($error)) {
 			// textual data
 			foreach (array('themeId')
- as $key) {
+
+			as $key) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
 					'favourites',
@@ -124,7 +122,6 @@ class FavouritesSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
-
 			}
 
 			// yes/no data
@@ -139,7 +136,6 @@ class FavouritesSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
-
 			}
 
 			$status['saved'] = 1;
@@ -158,7 +154,6 @@ class FavouritesSiteAdminController extends GalleryController {
 
 		return array(null, $results);
 	}
-
 }
 
 /**
@@ -177,15 +172,14 @@ class FavouritesSiteAdminView extends GalleryView {
 
 		if ($form['formName'] != 'FavouritesSiteAdmin') {
 			foreach (array('themeId', 'offerToGuests')
-			as $key) {
+
+ as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'favourites', $key);
 
 				if ($ret) {
 					return array($ret, null);
 				}
-
 			}
-
 		} else {
 			// Reset theme selection on validation error for theme settings
 			$form['themeId'] = $form['currentThemeId'];
@@ -201,6 +195,7 @@ class FavouritesSiteAdminView extends GalleryView {
 		}
 
 		$form['list']['users'] = $results;
+
 		if (!isset($form['list']['page']) || $form['list']['page'] < 1) {
 			$form['list']['page'] = 1;
 		}
@@ -248,7 +243,6 @@ class FavouritesSiteAdminView extends GalleryView {
 
 				$themeList[$id] = $theme->translate($theme->getName());
 			}
-
 		}
 
 		// Set up theme settings
@@ -283,14 +277,12 @@ class FavouritesSiteAdminView extends GalleryView {
 		);
 
 		$template->setVariable('controller', 'favourites.FavouritesSiteAdmin');
+
 		return array(
 			null,
 			array(
 				'body' => 'modules/favourites/templates/FavouritesSiteAdmin.tpl',
 			),
 		);
-
 	}
-
 }
-

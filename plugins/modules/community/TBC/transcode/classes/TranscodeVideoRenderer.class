@@ -30,7 +30,9 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryRenderer.class');
 class TranscodeVideoRenderer extends GalleryRenderer {
 	/**
 	 * @see GalleryRenderer::canBeViewedInline
-	 */ /**
+	 */
+
+	/**
 	 * @see GalleryDataItem::canBeViewedInline
 	 */
 	public function canBeViewedInline($item) {
@@ -45,6 +47,7 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 		if (isset($preferreds[$itemId])) {
 			foreach ($preferreds as $preferred) {
 				$op = strstr($preferred->getDerivativeOperations(), 'convert-to-video/x-flv');
+
 				if (strlen($op) > 0) {
 					$item = $preferred;
 				}
@@ -77,7 +80,6 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 	 */
 	public function render($format, $entity, $item, $params) {
 		global $gallery;
-
 		static $mimeList = array(
 			'video/quicktime',
 			'video/mpeg',
@@ -90,6 +92,7 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 		);
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
+
 		if ($format != 'HTML' || !in_array($entity->getMimeType(), $mimeList)) {
 			return null;
 		}
@@ -116,7 +119,9 @@ class TranscodeVideoRenderer extends GalleryRenderer {
 					case 'video/webm':
 					case 'video/ogg':
 						GalleryCoreApi::requireOnce('modules/flashvideo/classes/FlashVideoRenderer.class');
+
 						return FlashVideoRenderer::render($format, $entity, $item, $params);
+
 					return sprintf(
 						'<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
              codebase="http://www.apple.com/qtactivex/qtplugin.cab"

@@ -37,6 +37,7 @@ GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramHelpe
  * Map class
  */
 GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectHistogramsMap.class');/**
+
  * Test DupeDetectHistogramHelper class functionality
  *
  * @package DupeDetect
@@ -58,6 +59,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -66,6 +68,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -105,6 +108,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -129,6 +133,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -139,6 +144,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -146,6 +152,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -158,6 +165,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -180,6 +188,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -187,6 +196,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 	}
@@ -197,6 +207,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -204,6 +215,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -238,6 +250,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 	}
@@ -249,6 +262,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -275,6 +289,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -283,6 +298,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -293,6 +309,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -301,6 +318,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -313,6 +331,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -322,6 +341,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -333,6 +353,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -341,6 +362,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -355,6 +377,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 
@@ -362,6 +385,7 @@ class DupeDetectHistogramHelperTest extends GalleryTestCase {
 
 		if ($ret->isError()) {
 			echo $ret->getAsHtml();
+
 			return $this->failWithStatus($ret);
 		}
 	}

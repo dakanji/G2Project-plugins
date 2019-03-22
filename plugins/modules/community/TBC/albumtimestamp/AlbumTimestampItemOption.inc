@@ -106,6 +106,7 @@ class AlbumTimestampItemOption extends ItemEditOption {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/albumtimestamp/classes/AlbumTimestampHelper.class');
+
 		$itemId = $item->getId();
 
 		$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.changePermissions');
@@ -138,7 +139,9 @@ class AlbumTimestampItemOption extends ItemEditOption {
 		}
 
 		$newAlbumMode = $form['AlbumTimestampItemOption']['newAlbumMode'];
+
 		AlbumTimestampHelper::log('LEO: set newAlbumTimestampMode: ' . $itemId . ', ' . $newAlbumMode);
+
 		$allowedNewAlbumSettings = array(
 			'off'    => 1,
 			'newest' => 1,
@@ -182,7 +185,9 @@ class AlbumTimestampItemOption extends ItemEditOption {
 		updates of the subalbums timestamps */
 
 		/* TODO: is this necessary?
+
 		return isset($form['AlbumTimestampItemOption']['mode']);
+
 		*/
 		return isset($form['AlbumTimestampItemOption']['forceUpdate'])
 		|| (($form['AlbumTimestampItemOption']['oldMode'] != $form['AlbumTimestampItemOption']['mode'])

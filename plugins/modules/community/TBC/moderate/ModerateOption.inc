@@ -97,7 +97,6 @@ class ModerateOption extends ItemAddOption {
 			if ($ret) {
 			return array($ret, null, null);
 			}
-
 			}
 
 			 */

@@ -63,7 +63,9 @@ class Getid3Helper {
 				$properties[] = 'Track';
 				$properties[] = 'Title';
 				$properties[] = 'DateTime';
+
 				break;
+
 			case GETID3_DETAILED:
 				$properties[] = 'Artist';
 				$properties[] = 'Album';
@@ -80,7 +82,9 @@ class Getid3Helper {
 				$properties[] = 'VideoBitRate';
 				$properties[] = 'VideoBitRateMode';
 				$properties[] = 'VideoCodec';
+
 				break;
+
 			default:
 				return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 		}
@@ -106,9 +110,12 @@ class Getid3Helper {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/getid3/lib/getid3/getid3.inc');
+
 		$platform =& $gallery->getPlatform();
+
 		if (!$platform->file_exists($path)) {
 			$rawGetid3Data = null;
+
 			return;
 		}
 
@@ -146,6 +153,7 @@ class Getid3Helper {
 
 	public static function getId3ArchiveTar($fileDetails) {
 		$results = array();
+
 		foreach (array_keys($fileDetails) as $filename) {
 			if (is_array($fileDetails[$filename])) {
 				$results[] = array(
@@ -160,7 +168,9 @@ class Getid3Helper {
 
 	public static function getId3ArchiveData($path, $viewMode) {
 		Getid3Helper::_fetchRawGetid3Data($path, $rawGetid3Data);
+
 		$fileArray = null;
+
 		if (isset($rawGetid3Data['zip']['files'])) {
 			// We must recurse through files array
 			return array(
@@ -209,6 +219,7 @@ class Getid3Helper {
 	 */
 	public static function getId3Data($path, $viewMode) {
 		Getid3Helper::_fetchRawGetid3Data($path, $rawGetid3Data);
+
 		$getid3Keys = Getid3Helper::getGetid3Keys();
 		$results    = array();
 
@@ -219,6 +230,7 @@ class Getid3Helper {
 		}
 
 		$errors = Getid3Helper::_getValue($rawGetid3Data, explode('.', 'error.0'));
+
 		if (isset($errors) && strlen($errors)) {
 			// If there was an error, return nothing
 			return array(null, array());
@@ -226,6 +238,7 @@ class Getid3Helper {
 
 		foreach ($properties as $property) {
 			$title = $getid3Keys[$property][0];
+
 			for ($i = 1; $i < count($getid3Keys[$property]); $i++) {
 				$value = Getid3Helper::_getValue(
 					$rawGetid3Data,
@@ -258,43 +271,68 @@ class Getid3Helper {
 		// Match "WED DEC 21 19:19:17 2005" format produced by a Canon SD400
 		if (preg_match('#(\w+)\ +(\w+)\ +(\d+)\ +(\d+):(\d+):(\d+)\ +(\d+)#', $value, $m)) {
 			$month = 0;
+
 			switch ($m[2]) {
 				case 'JAN':
 					$month = 1;
+
 					break;
+
 				case 'FEB':
 					$month = 2;
+
 					break;
+
 				case 'MAR':
 					$month = 3;
+
 					break;
+
 				case 'APR':
 					$month = 4;
+
 					break;
+
 				case 'MAY':
 					$month = 5;
+
 					break;
+
 				case 'JUN':
 					$month = 6;
+
 					break;
+
 				case 'JUL':
 					$month = 7;
+
 					break;
+
 				case 'AUG':
 					$month = 8;
+
 					break;
+
 				case 'SEP':
 					$month = 9;
+
 					break;
+
 				case 'OCT':
 					$month = 10;
+
 					break;
+
 				case 'NOV':
 					$month = 11;
+
 					break;
+
 				case 'DEC':
 					$month = 12;
+
 					break;
+
 				default:
 					return null;
 			}
@@ -355,6 +393,7 @@ class Getid3Helper {
 			// Get difference to UTC in seconds, then add to time
 			$utcdiff = date('Z', $time);
 			$time    = $time + $utcdiff;
+
 			return $time;
 		}
 
@@ -381,14 +420,17 @@ class Getid3Helper {
 			case 'DateTime':
 				// If it is already a timestamp, as a string
 				$tmp = Getid3Helper::getTimeInt($value);
+
 				if (isset($tmp)) {
 					$time = $tmp;
 				} else {
 					$tmp = Getid3Helper::getTimeDowMDHMSY($value);
+
 					if (isset($tmp)) {
 						$time = $tmp;
 					} else {
 						$tmp = Getid3Helper::getTimeYMDHMS($value);
+
 						if (isset($tmp)) {
 							$time = $tmp;
 						} else {
@@ -406,6 +448,7 @@ class Getid3Helper {
 
 				$platform =& $gallery->getPlatform();
 				$value    = $platform->strftime($format, $time);
+
 				break;
 		}
 
@@ -420,7 +463,9 @@ class Getid3Helper {
 	 */
 	public static function getOriginationTimestamp($path) {
 		$rawGetid3Data = array();
+
 		Getid3Helper::_fetchRawGetid3Data($path, $rawGetid3Data);
+
 		foreach (array(
 			'riff.AVI .hdrl.IDIT.0.data',
 			'riff.AVI .INFO.IDIT.0.data',
@@ -428,18 +473,22 @@ class Getid3Helper {
 			'quicktime.moov.subatoms.0.subatoms.1.subatoms.0.subatoms.0.creation_time_unix',
 		) as $tag) {
 			$value = Getid3Helper::_getValue($rawGetid3Data, explode('.', $tag));
+
 			if (isset($value)) {
 				$tmp = Getid3Helper::getTimeInt($value);
+
 				if (isset($tmp)) {
 					return $tmp;
 				}
 
 				$tmp = Getid3Helper::getTimeDowMDHMSY($value);
+
 				if (isset($tmp)) {
 					return $tmp;
 				}
 
 				$tmp = Getid3Helper::getTimeYMDHMS($value);
+
 				if (isset($tmp)) {
 					return $tmp;
 				}
@@ -471,6 +520,7 @@ class Getid3Helper {
 	 */
 	public static function _getValue(&$source, $keyPath) {
 		$key = array_shift($keyPath);
+
 		if (!isset($source[$key])) {
 			return null;
 		}
@@ -508,6 +558,7 @@ class Getid3Helper {
 		}
 
 		$data = array();
+
 		while ($result = $searchResults->nextResult()) {
 			$data[] = $result[0];
 		}
@@ -570,7 +621,6 @@ class Getid3Helper {
 	 */
 	public static function getGetid3Keys() {
 		global $gallery;
-
 		static $data;
 
 		if (!empty($data)) {

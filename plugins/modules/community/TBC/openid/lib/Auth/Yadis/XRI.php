@@ -9,7 +9,9 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 require_once 'Auth/Yadis/Misc.php';
+
 require_once 'Auth/Yadis/Yadis.php';
+
 require_once 'Auth/OpenID.php';
 
 function Auth_Yadis_getDefaultProxy() {
@@ -22,6 +24,7 @@ function Auth_Yadis_getXRIAuthorities() {
 
 function Auth_Yadis_getEscapeRE() {
 	$parts = array();
+
 	foreach (array_merge(
 		Auth_Yadis_getUCSChars(),
 		Auth_Yadis_getIPrivateChars()
@@ -62,6 +65,7 @@ function _escape_xref($xref_match) {
 	$xref = str_replace('/', '%2F', $xref);
 	$xref = str_replace('?', '%3F', $xref);
 	$xref = str_replace('#', '%23', $xref);
+
 	return $xref;
 }
 
@@ -111,6 +115,7 @@ function Auth_Yadis_XRIAppendArgs($url, $args) {
 		$keys = array_keys($args);
 		sort($keys);
 		$new_args = array();
+
 		foreach ($keys as $key) {
 			$new_args[] = array($key, $args[$key]);
 		}
@@ -135,18 +140,21 @@ function Auth_Yadis_XRIAppendArgs($url, $args) {
 function Auth_Yadis_providerIsAuthoritative($providerID, $canonicalID) {
 	$lastbang = strrpos($canonicalID, '!');
 	$p        = substr($canonicalID, 0, $lastbang);
+
 	return $p == $providerID;
 }
 
 function Auth_Yadis_rootAuthority($xri) {
 	// Return the root authority for an XRI.
 	$root = null;
+
 	if (Auth_Yadis_startswith($xri, 'xri://')) {
 		$xri = substr($xri, 6);
 	}
 
 	$authority = explode('/', $xri, 2);
 	$authority = $authority[0];
+
 	if ($authority[0] == '(') {
 		// Cross-reference.
 		// XXX: This is incorrect if someone nests cross-references so
@@ -161,6 +169,7 @@ function Auth_Yadis_rootAuthority($xri) {
 		// IRI reference.
 		$_segments = explode('!', $authority);
 		$segments  = array();
+
 		foreach ($_segments as $s) {
 			$segments = array_merge($segments, explode('*', $s));
 		}
@@ -186,6 +195,7 @@ function Auth_Yadis_getCanonicalID($iname, $xrds) {
 	$parser            =& $xrds->parser;
 	$node              = $xrd_list[0];
 	$canonicalID_nodes = $parser->evalXPath('xrd:CanonicalID', $node);
+
 	if (!$canonicalID_nodes) {
 		return false;
 	}
@@ -193,15 +203,18 @@ function Auth_Yadis_getCanonicalID($iname, $xrds) {
 	$canonicalID = $canonicalID_nodes[0];
 	$canonicalID = Auth_Yadis_XRI($parser->content($canonicalID));
 	$childID     = $canonicalID;
+
 	for ($i = 1; $i < count($xrd_list); $i++) {
 		$xrd           = $xrd_list[$i];
 		$parent_sought = substr($childID, 0, strrpos($childID, '!'));
 		$parentCID     = $parser->evalXPath('xrd:CanonicalID', $xrd);
+
 		if (!$parentCID) {
 			return false;
 		}
 
 		$parentCID = Auth_Yadis_XRI($parser->content($parentCID[0]));
+
 		if (strcasecmp($parent_sought, $parentCID)) {
 			// raise XRDSFraud.
 			return false;
@@ -211,6 +224,7 @@ function Auth_Yadis_getCanonicalID($iname, $xrds) {
 	}
 
 	$root = Auth_Yadis_rootAuthority($iname);
+
 	if (!Auth_Yadis_providerIsAuthoritative($root, $childID)) {
 		// raise XRDSFraud.
 		return false;

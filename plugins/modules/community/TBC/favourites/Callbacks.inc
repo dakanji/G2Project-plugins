@@ -34,6 +34,7 @@ class FavouritesCallbacks {
 			case 'getTop10':
 				// return 10 favourite items
 				GalleryCoreApi::requireOnce('modules/favourites/classes/FavouritesMapHelper.class');
+
 				$block =& $smarty->_tpl_vars['block'];
 
 				list($ret, $block['favourites']['Top10']) = FavouritesMapHelper::fetchFavourites($gallery->getActiveUserId());
@@ -53,6 +54,7 @@ class FavouritesCallbacks {
 				}
 
 				$block['favourites']['Top10'] = array_slice($block['favourites']['Top10'], 0, 14);
+
 				foreach (array_slice($block['favourites']['Top10'], 0, 5) as $additional) {
 					$block['favourites']['Top10'][] = $additional;
 				}

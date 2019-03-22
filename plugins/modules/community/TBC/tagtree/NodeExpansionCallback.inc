@@ -45,6 +45,7 @@ class NodeExpansionCallbackView extends GalleryView {
 
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeHelper.class');
 		GalleryCoreApi::requireOnce('modules/tagtree/classes/TagTreeNode.class');
+
 		$userId = $gallery->getActiveUserId();
 
 		list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'tagtree');
@@ -92,6 +93,7 @@ class NodeExpansionCallbackView extends GalleryView {
 		}
 
 		echo "</tree>\n";
+
 		return null;
 	}
 
@@ -123,6 +125,7 @@ class NodeExpansionCallbackView extends GalleryView {
 					);
 
 					break;
+
 				case 'tag':
 					$nodeAction = $urlGenerator->generateUrl(
 						array(
@@ -153,6 +156,7 @@ class NodeExpansionCallbackView extends GalleryView {
 					);
 
 					break;
+
 				case 'tag':
 					$closedIcon = $openIcon = $urlGenerator->generateUrl(
 						array(
@@ -161,6 +165,7 @@ class NodeExpansionCallbackView extends GalleryView {
 					);
 
 					break;
+
 				case 'item':
 					$closedIcon = $urlGenerator->generateUrl(
 						array(
@@ -169,10 +174,12 @@ class NodeExpansionCallbackView extends GalleryView {
 					);
 
 					$openIcon = null;
+
 					break;
 			}
 
 			$icons = sprintf(' icon="%s"', $closedIcon);
+
 			if (!is_null($openIcon)) {
 				$icons = $icons . sprintf(' openIcon="%s"', $openIcon);
 			}

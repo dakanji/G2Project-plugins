@@ -6,19 +6,17 @@
 //            or http://www.getid3.org                         //
 //          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // extension.cache.mysql.php - part of getID3()                //
 // Please see readme.txt for more information                  //
 //                                                            ///
-
 /////////////////////////////////////////////////////////////////
-
 //                                                             //
 // This extension written by Allan Hansen <ahØartemis*dk>      //
 // Table name mod by Carlo Capocasa <calroØcarlocapocasa*com>  //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
+
 /**
  * This is a caching extension for getID3(). It works the exact same
  * way as the getID3 class, but return cached information very fast
@@ -85,6 +83,7 @@ class getID3_cached_mysql extends getID3 {
 
 		// Connect to database
 		$this->connection = mysql_pconnect($host, $username, $password);
+
 		if (!$this->connection) {
 			throw new Exception('mysql_pconnect() failed - check permissions and spelling.');
 		}
@@ -108,6 +107,7 @@ class getID3_cached_mysql extends getID3 {
 		$SQLquery .= ' AND (`filesize` = -1)';
 		$SQLquery .= ' AND (`filetime` = -1)';
 		$SQLquery .= ' AND (`analyzetime` = -1)';
+
 		if ($this->cursor = mysql_query($SQLquery, $this->connection)) {
 			list($version) = mysql_fetch_array($this->cursor);
 		}
@@ -139,6 +139,7 @@ class getID3_cached_mysql extends getID3 {
 			$SQLquery    .= '   AND (`filesize` = \'' . mysql_real_escape_string($filesize) . '\')';
 			$SQLquery    .= '   AND (`filetime` = \'' . mysql_real_escape_string($filetime) . '\')';
 			$this->cursor = mysql_query($SQLquery, $this->connection);
+
 			if (mysql_num_rows($this->cursor) > 0) {
 				// Hit
 				list($result) = mysql_fetch_array($this->cursor);

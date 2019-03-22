@@ -46,6 +46,7 @@ class LinksInTheHeadSiteAdminController extends GalleryController {
 
 		$error  = array();
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			//	Explicitly erase whatever was previously set
 			list($ret, $links_in_the_head) = GalleryCoreApi::fetchAllPluginParameters('module', 'linksinthehead');
@@ -104,6 +105,7 @@ class LinksInTheHeadSiteAdminController extends GalleryController {
 			}
 
 			$redirect['view'] = 'core.SiteAdmin';
+
 			if ($isActive) {
 				$redirect['subView'] = 'linksinthehead.LinksInTheHeadSiteAdmin';
 				$status['saved']     = 1;
@@ -125,6 +127,7 @@ class LinksInTheHeadSiteAdminController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -158,6 +161,7 @@ class LinksInTheHeadSiteAdminView extends GalleryView {
 			 * we currently have configured
 			 */
 			$i = 0;
+
 			foreach ($links_in_the_head as $linkname => $redirectURL) {
 				if (!(strpos($linkname, '_') === 0)) {
 					$form['linkname'][$i] = $linkname;
@@ -171,6 +175,7 @@ class LinksInTheHeadSiteAdminView extends GalleryView {
 		}
 
 		$template->setVariable('controller', 'linksinthehead.LinksInTheHeadSiteAdmin');
+
 		return array(
 			null,
 			array(

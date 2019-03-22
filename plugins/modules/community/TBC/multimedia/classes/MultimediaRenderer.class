@@ -48,6 +48,7 @@ class MultimediaRenderer extends GalleryRenderer {
 
 		$fallback = trim(preg_replace("/[\r\n]/", '', $params['fallback']));
 		$av       = preg_match('/video/', $entity->getMimeType()) ? 'video' : (preg_match('/audio/', $entity->getMimeType()) ? 'audio' : null);
+
 		if ($format != 'HTML' || !$av) {
 			return null;
 		}
@@ -137,7 +138,9 @@ class MultimediaRenderer extends GalleryRenderer {
 		}
 
 		$jsWarning = $module->translate('JavaScript required to view this content.');
+
 		GalleryCoreApi::requireOnce('lib/smarty_plugins/modifier.markup.php');
+
 		$title = smarty_modifier_markup($item->getTitle(), 'strip');
 		$src   = $urlGenerator->generateUrl(
 			array(
@@ -198,6 +201,7 @@ class MultimediaRenderer extends GalleryRenderer {
 						);
 
 						break;
+
 					case 'video/x-flv':
 					case 'video/quicktime':
 					case 'video/ogg':
@@ -209,6 +213,7 @@ class MultimediaRenderer extends GalleryRenderer {
             <script src=\"%s\"></script>
             <script src=\"%s\"></script>
             <script>
+
                 var types = {
                     'x-flv' : 'flv',
                     'mp4' : 'h264',
@@ -222,11 +227,13 @@ class MultimediaRenderer extends GalleryRenderer {
                 }
 
                 var ext = '%s'.split('/')[1];
+
                 if (Modernizr.video && Modernizr.video[types[ext]]) {
                     // First try html5.video
                     jQuery('#multimedia-%s').empty().css({'width':%s,'height': %s})
                         .append(
                             jQuery('<video />')
+
                             .attr({
                                 'width' : %s,
                                 'height' : %s,
@@ -237,13 +244,13 @@ class MultimediaRenderer extends GalleryRenderer {
                                 'poster' : '%s'
                             }).append(
                                 jQuery('<source />')
+
                                 .attr({
                                     'src' : '%s',
                                     'type' : '%s'
                                 })
                             )
                         );
-
                 } else if (jQuery.inArray(ext, ['x-flv', 'f4v', 'mp4', 'm4v', 'm4a', 'quicktime']) != -1) {
                     // Lets try flash
                     jQuery('#multimedia-%s').empty().css({'width':%s,'height': %s});
@@ -263,15 +270,12 @@ class MultimediaRenderer extends GalleryRenderer {
                                     autoHide: 'always',
                                     hideDelay: 2000
                                 }
-
                             },
                             clip: {
                                 url: '%s',
                                 scaling: 'fit'
                             }
-
                         }
-
                     )
                 } else {
                     jQuery('#multimedia-%s').html('Sorry your browser does not support HTML5.video.'+types[ext]+'<br />%s');
@@ -304,12 +308,16 @@ class MultimediaRenderer extends GalleryRenderer {
 						);
 
 						break;
+
 					default:
 						$display = 'Sorry your browser does not support ' . $fallback;
+
 						break;
 				}
 
-				break; // end case: video
+				// end case: video
+				break;
+
 			case 'audio':
 				switch ($entity->getMimeType()) {
 					case 'audio/ogg':
@@ -321,6 +329,7 @@ class MultimediaRenderer extends GalleryRenderer {
                 <script src=\"%s\"></script>
                 <script src=\"%s\"></script>
                 <script>
+
                     var types = {
                         'x-wav' : 'wav',
                         'wav' : 'wav',
@@ -328,12 +337,14 @@ class MultimediaRenderer extends GalleryRenderer {
                         'mpeg' : 'mp3'
                     };
                     var ext = '%s'.split('/')[1];
+
                     if (Modernizr.audio && Modernizr.audio[types[ext]]) {
                         // First try html5.audio
                         jQuery('#multimedia-%s').empty().css({'width':'auto','height':'auto', 'text-align':'center'})
                             .append(jQuery('<img />').attr({'title':'%s', 'src':'%s'})).append('<br />')
                             .append(
                                 jQuery('<audio />')
+
                                 .attr({
                                     'title' : '%s',
                                     'preload' : true,
@@ -341,13 +352,13 @@ class MultimediaRenderer extends GalleryRenderer {
                                     'controls' : true
                                 }).append(
                                     jQuery('<source />')
+
                                     .attr({
                                         'src' : '%s',
                                         'type' : '%s'
                                     })
                                 )
                             );
-
                     } else if (jQuery.inArray(ext, ['mp4', 'mpeg']) != -1) {
                         // Lets try flash
                         jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s'});
@@ -366,16 +377,13 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
-
                                 },
                                 clip: {
                                     url: '%s',
                                     provider: 'audio',
                                     coverImage: { url: '%s', scaling: 'orig' }
                                 }
-
                             }
-
                         )
                     } else {
                         jQuery('#multimedia-%s').html('Sorry your browser does not support HTML5.audio.'+types[ext]+'<br />%s');
@@ -416,12 +424,14 @@ class MultimediaRenderer extends GalleryRenderer {
                 <script src=\"%s\"></script>
                 <script src=\"%s\"></script>
                 <script>
+
                     if (Modernizr.audio && Modernizr.audio.m4a) {
                         // First try html5.audio
                         jQuery('#multimedia-%s').empty().css({'width':'auto','height':'auto', 'text-align':'center'})
                             .append(jQuery('<img />').attr({'title':'%s', 'src':'%s'})).append('<br />')
                             .append(
                                 jQuery('<audio />')
+
                                 .attr({
                                     'title' : '%s',
                                     'preload' : true,
@@ -429,13 +439,13 @@ class MultimediaRenderer extends GalleryRenderer {
                                     'controls' : true
                                 }).append(
                                     jQuery('<source />')
+
                                     .attr({
                                         'src' : '%s',
                                         'type' : '%s'
                                     })
                                 )
                             );
-
                     } else {
                         // Lets try flash
                         jQuery('#multimedia-%s').empty().css({'width':'%s','height':'%s','position':'relative'});
@@ -455,16 +465,14 @@ class MultimediaRenderer extends GalleryRenderer {
                                     controls: {
                                         autoHide: false
                                     }
-
                                 },
                                 clip: {
                                     url: '%s'
                                 }
-
                             }
-
                         )
                         jQuery('#multimedia-%s').css({'background-image':'url(%s)', 'background-position':'top center', 'background-repeat':'no-repeat'});
+
                     }
 
                 </script>",
@@ -492,15 +500,19 @@ class MultimediaRenderer extends GalleryRenderer {
 						);
 
 						break;
+
 					default:
 						// Sorry we don't support midi, wma, real, aiff...
 						return null;
 				}
 
 				break;
+
 			default:
 				$display = 'Sorry your browser does not support ' . $fallback;
-				break;// end case: audio
+
+				// end case: audio
+				break;
 		}
 
 		return $display;

@@ -56,6 +56,7 @@ class ImageBlockHelper {
 		}
 
 		$params = array_merge($moduleParams, $params);
+
 		if (isset($params['itemId'])) {
 			$parentId = $params['itemId'];
 		} else {
@@ -67,6 +68,7 @@ class ImageBlockHelper {
 		}
 
 		$show = array();
+
 		foreach (explode('|', $params['show']) as $key) {
 			$show[$key] = 1;
 		}
@@ -83,6 +85,7 @@ class ImageBlockHelper {
 		$blocks     = array();
 		$blockCount = array();
 		$blockList  = explode('|', $params['blocks']);
+
 		foreach ($blockList as $block) {
 			if (!isset($blockCount[$block])) {
 				$blockCount[$block] = 0;
@@ -92,6 +95,7 @@ class ImageBlockHelper {
 		}
 
 		$maxSize = isset($params['maxSize']) ? $params['maxSize'] : (isset($params['exactSize']) ? $params['exactSize'] : null);
+
 		foreach ($blockCount as $block => $count) {
 			if (!preg_match('{^(.*?)([A-Z].*)$}', $block, $matches)) {
 				continue;
@@ -116,9 +120,11 @@ class ImageBlockHelper {
 		}
 
 		$lastType = '';
+
 		foreach ($blockList as $block) {
 			if (!empty($blockData[$block])) {
 				$nextBlock = array_shift($blockData[$block]);
+
 				if ($heading) {
 					// On 2nd of same type, update first to be plural; 3rd or more, no heading
 					$plural = ($block == $lastType) ? (empty($blocks[count($blocks) - 1]['title']) ? 0 : 2) : 1;
@@ -136,6 +142,7 @@ class ImageBlockHelper {
 							);
 
 							break;
+
 						case 'recentImage':
 							$title = $module->translate(
 								array(
@@ -146,6 +153,7 @@ class ImageBlockHelper {
 							);
 
 							break;
+
 						case 'viewedImage':
 							$title = $module->translate(
 								array(
@@ -156,6 +164,7 @@ class ImageBlockHelper {
 							);
 
 							break;
+
 						case 'randomAlbum':
 							$title = $module->translate(
 								array(
@@ -166,6 +175,7 @@ class ImageBlockHelper {
 							);
 
 							break;
+
 						case 'recentAlbum':
 							$title = $module->translate(
 								array(
@@ -176,6 +186,7 @@ class ImageBlockHelper {
 							);
 
 							break;
+
 						case 'viewedAlbum':
 							$title = $module->translate(
 								array(
@@ -186,24 +197,37 @@ class ImageBlockHelper {
 							);
 
 							break;
+
 						case 'dailyImage':
 							$title = $module->translate('Picture of the Day');
+
 							break;
+
 						case 'weeklyImage':
 							$title = $module->translate('Picture of the Week');
+
 							break;
+
 						case 'monthlyImage':
 							$title = $module->translate('Picture of the Month');
+
 							break;
+
 						case 'dailyAlbum':
 							$title = $module->translate('Album of the Day');
+
 							break;
+
 						case 'weeklyAlbum':
 							$title = $module->translate('Album of the Week');
+
 							break;
+
 						case 'monthlyAlbum':
 							$title = $module->translate('Album of the Month');
+
 							break;
+
 						default:
 							$title = '';
 					}
@@ -221,11 +245,13 @@ class ImageBlockHelper {
 		}
 
 		$ImageBlockData['show'] = $show;
+
 		if (isset($params['maxSize']) || isset($params['exactSize'])) {
 			$ImageBlockData['maxSize'] = $maxSize;
 		}
 
 		$ImageBlockData['link'] = isset($params['link']) ? $params['link'] : '';
+
 		if (isset($params['linkTarget'])) {
 			$ImageBlockData['linkTarget'] = $params['linkTarget'];
 		}
@@ -240,6 +266,7 @@ class ImageBlockHelper {
 
 			if (isset($imageframe)) {
 				$frameIds = array();
+
 				foreach (array('albumFrame', 'itemFrame') as $key) {
 					if (!empty($params[$key])) {
 						$frameIds[] = $ImageBlockData[$key] = $params[$key];
@@ -257,6 +284,7 @@ class ImageBlockHelper {
 
 			$ImageBlockData['blocks']       = $blocks;
 			$ImageBlockData['forceFullUrl'] = 0;
+
 			$template->setVariable('ImageBlockData', $ImageBlockData);
 		}
 
@@ -277,6 +305,7 @@ class ImageBlockHelper {
 		$biggerOnly = false
 	) {
 		$blocks = $data = array();
+
 		switch ($order) {
 			case 'specific':
 				if (!isset($parentId)) {
@@ -305,21 +334,29 @@ class ImageBlockHelper {
 				}
 
 				break;
+
 			case 'daily':
 			case 'weekly':
 			case 'monthly':
 				$key = $order . $itemType;
 				$now = localtime();
+
 				switch ($order) {
 					case 'daily':
-						$now = $now[7]; // tm_yday
+						// tm_yday
+						$now = $now[7];
+
 						break;
+
 					case 'weekly':
 						// Week number; Sunday as first day of week
 						$now = ((int)(($now[7] - $now[6] + ($now[7] < $now[6] ? 7 : 0)) / 7)) % 52;
+
 						break;
+
 					case 'monthly':
 						$now = $now[4];
+
 						break;
 				}
 
@@ -434,6 +471,7 @@ class ImageBlockHelper {
 			$image              = null;
 			$source             = null;
 			$derivativeParentId = $id;
+
 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem') && ($fullSize || $maxSize)) {
 				// If we may use a size larger than thumbnail, find derivative source for album
 				if (!isset($thumbnail)) {
@@ -442,6 +480,7 @@ class ImageBlockHelper {
 				}
 
 				$source = $thumbnail;
+
 				while (GalleryUtilities::isA($source, 'GalleryDerivative')
 					&& $source->getDerivativeType() != DERIVATIVE_TYPE_IMAGE_PREFERRED) {
 					list($ret, $source) = GalleryCoreApi::loadEntitiesById(
@@ -555,6 +594,7 @@ class ImageBlockHelper {
 				 * size or we don't have a height/width for the raw image (maybe it's not viewable?)
 				 */
 				$imageDifferential = $imageSize = 1000000;
+
 				if (isset($image) && method_exists($image, 'getWidth')) {
 					$imageDifferential = abs(($image->getHeight() - $maxSize) + ($image->getWidth() - $maxSize));
 					$imageSize         = $image->getHeight() * $image->getWidth();
@@ -589,6 +629,7 @@ class ImageBlockHelper {
 
 				foreach ($resizes as $imageObject) {
 					$rawDifferential = ($imageObject->getHeight() - $maxSize) + ($imageObject->getWidth() - $maxSize);
+
 					if ($biggerOnly && $rawDifferential < 0) {
 						continue;
 					}
@@ -683,11 +724,13 @@ class ImageBlockHelper {
 		$select[] = '[ImageBlockCacheMap::itemId]';
 		$from[]   = '[ImageBlockCacheMap] LEFT JOIN [ImageBlockDisabledMap] ON ' .
 			'[ImageBlockCacheMap::itemId]=[ImageBlockDisabledMap::itemId]';
-		$where[]  = '[ImageBlockCacheMap::userId] = ?';
-		$where[]  = '[ImageBlockCacheMap::itemType] = ?';
-		$where[]  = '[ImageBlockDisabledMap::itemId] IS NULL';
-		$data[]   = (int)$userId;
-		$data[]   = $typeMap[$itemType];
+
+		$where[] = '[ImageBlockCacheMap::userId] = ?';
+		$where[] = '[ImageBlockCacheMap::itemType] = ?';
+		$where[] = '[ImageBlockDisabledMap::itemId] IS NULL';
+		$data[]  = (int)$userId;
+		$data[]  = $typeMap[$itemType];
+
 		if ($order == 'viewed' || isset($parentId)) {
 			$select[] = '[GalleryItemAttributesMap::viewCount]';
 			$from[]   = '[GalleryItemAttributesMap]';
@@ -702,6 +745,7 @@ class ImageBlockHelper {
 
 		// Only use LIKE statement if necessary
 		$parentSequence = null;
+
 		if (isset($parentId) && $parentId != $rootAlbumId) {
 			/** @todo Evaluate adding parentSequence to the ImageBlockCachedMap (and its index) */
 			$where[] = '[GalleryItemAttributesMap::parentSequence] LIKE ?';
@@ -761,6 +805,7 @@ class ImageBlockHelper {
 
 		// Requery if necessary to fill requested count
 		$remainder = $count - count($results);
+
 		if ($order == 'random' && $remainder > 0) {
 			// Using exact same query as above except for where clause
 			$query = 'SELECT ' . implode(', ', $select) .
@@ -808,16 +853,23 @@ class ImageBlockHelper {
 		global $gallery;
 
 		$orderBy = null;
+
 		switch ($order) {
 			case 'random':
 				$orderBy = '[ImageBlockCacheMap::random] ASC';
+
 				break;
+
 			case 'recent':
 				$orderBy = '[ImageBlockCacheMap::itemTimestamp] DESC';
+
 				break;
+
 			case 'viewed':
 				$orderBy = '[GalleryItemAttributesMap::viewCount] DESC';
+
 				break;
+
 			default:
 				return array(GalleryCoreApi::error(ERROR_UNIMPLEMENTED), null);
 		}
@@ -838,6 +890,7 @@ class ImageBlockHelper {
 		}
 
 		$results = array();
+
 		while ($rec = $searchResults->nextResult()) {
 			$result = array(
 				'id' => (int)$rec[0],
@@ -869,6 +922,7 @@ class ImageBlockHelper {
 		}
 
 		$isCached = ($rec = $searchResults->nextResult()) && ($rec[0] > 0);
+
 		return array(null, $isCached);
 	}
 
@@ -958,6 +1012,7 @@ class ImageBlockHelper {
 				 *                   'itemId'=>id or array of ids or null)
 				 */
 				$param = $event->getData();
+
 				if (!empty($param['userId'])) {
 					$ret = GalleryCoreApi::removeMapEntry(
 						'ImageBlockCacheMap',
@@ -978,12 +1033,14 @@ class ImageBlockHelper {
 				}
 
 				break;
+
 			case 'GalleryEntity::delete':
 				/*
 				 * Determine if the item being deleted is listed in
 				 * the ImageBlockDisabledMap and if so, remove it
 				 */
 				$entity = $event->getEntity();
+
 				if (!GalleryUtilities::isA($entity, 'GalleryItem')) {
 					break;
 				}
@@ -1008,6 +1065,7 @@ class ImageBlockHelper {
 				}
 
 				break;
+
 			case 'GalleryEntity::save':
 				/*
 				 * Determines if the item being added has a parent that is listed in the
@@ -1111,6 +1169,7 @@ class ImageBlockHelper {
 
 		$parentAlbumId = $parentAlbum->getId();
 		$childIds      = array();
+
 		if ($useProgressBar) {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'imageblock');
 
@@ -1120,6 +1179,7 @@ class ImageBlockHelper {
 
 			$message         = $module->translate('Image Block');
 			$templateAdapter =& $gallery->getTemplateAdapter();
+
 			$templateAdapter->updateProgressBar($message, '', 0);
 		}
 
@@ -1166,6 +1226,7 @@ class ImageBlockHelper {
 			list($ret, $childIds) = GalleryCoreApi::fetchChildDataItemIds($parentAlbum);
 
 			$childIds[] = (int)$parentAlbum->getId();
+
 			if ($ret) {
 				return $ret;
 			}
@@ -1173,8 +1234,10 @@ class ImageBlockHelper {
 
 		$i     = 0;
 		$total = count($childIds);
+
 		foreach ($childIds as $itemId) {
 			$gallery->guaranteeTimeLimit(30);
+
 			if ($disabled) {
 				$ret = GalleryCoreApi::addMapEntry(
 					'ImageBlockDisabledMap',
@@ -1228,6 +1291,7 @@ class ImageBlockHelper {
 		}
 
 		$result = false;
+
 		if ($rec = $searchResults->nextResult()) {
 			$result = (bool)$rec[0];
 		}
@@ -1242,7 +1306,8 @@ class ImageBlockHelper {
 	public static function getRandomKey($min = 0, $max = 2147483647) {
 		global $gallery;
 
-		$phpVm              = $gallery->getPhpVm();
+		$phpVm = $gallery->getPhpVm();
+
 		static $initialized = false;
 
 		if (!$initialized) {
@@ -1276,6 +1341,7 @@ class ImageBlockHelper {
 		$where[] = '[ImageBlockCacheMap::random] IS NOT NULL';
 		$where[] = '[ImageBlockDisabledMap::itemId] IS NULL';
 		$data    = array($userId, $itemType);
+
 		if (!empty($parentSequence)) {
 			$from[]  = '[GalleryItemAttributesMap]';
 			$where[] = '[ImageBlockCacheMap::itemId] = [GalleryItemAttributesMap::itemId]';

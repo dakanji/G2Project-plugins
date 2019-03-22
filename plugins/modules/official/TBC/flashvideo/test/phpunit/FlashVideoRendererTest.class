@@ -106,6 +106,7 @@ class FlashVideoRendererTest extends GalleryTestCase {
 		);
 
 		$this->assertTrue(strpos($html, '<div id="flashvideo"') !== false, 'flash <div> placeholder');
+
 		$this->assertTrue(strpos($html, '.swf'), '.swf');
 		$this->assertTrue(strpos($html, 'http'), 'http');
 		$this->assertTrue(strpos($html, (string)$this->_item->getId()), 'itemId');

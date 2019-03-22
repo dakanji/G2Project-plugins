@@ -69,6 +69,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSWithDefaultImageFrames() {
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -85,7 +86,9 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSWithSpecifiedImageFrames() {
 		GalleryUtilities::putRequestVariable('frames', 'frameFromRequest');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -102,7 +105,9 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSWithoutImageFrameModule() {
 		$this->_unregisterFactoryImplementationForTest('ImageFrameInterface_1_1');
+
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -126,6 +131,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 		// Perform the request and verify that we succeeded
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'delegate' => array(
@@ -140,6 +146,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 
 	public function testExternalCSSDoesNotRequireAuthToken() {
 		$controller = new ExternalCSSController();
+
 		$this->assertTrue($controller->omitAuthTokenCheck());
 	}
 }

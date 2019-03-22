@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/bulkmanage/classes/BulkManageHelper.class');/**
+
  * Handle all form requests
  *
  * Load the plugin and let it process the form data, then run the progress bar
@@ -80,6 +81,7 @@ class BulkManageController extends GalleryController {
 
 			// Register progress bar
 			$templateAdapter =& $gallery->getTemplateAdapter();
+
 			$templateAdapter->registerTrailerCallback(
 				array($helper, 'execute'),
 				// Parameters passed to helper
@@ -92,6 +94,7 @@ class BulkManageController extends GalleryController {
 		// If we have an error then pass back to plugin to handle it
 		$results['error']  = $error;
 		$results['status'] = $status;
+
 		if (!empty($results['error'])) {
 			$results['delegate']['view']       = 'core.ItemAdmin';
 			$results['delegate']['subView']    = 'bulkmanage.BulkManage';
@@ -143,8 +146,10 @@ class BulkManageView extends GalleryView {
 		// Get the preferred plugin from the session
 		$session              =& $gallery->getSession();
 		$bulkPluginSessionKey = 'bulkmanage.view.plugin.' . get_class($item);
+
 		if (empty($bulkPlugin) || !isset($pluginInstances[$bulkPlugin])) {
 			$bulkPlugin = $session->get($bulkPluginSessionKey);
+
 			if (empty($bulkPlugin) || !isset($pluginInstances[$bulkPlugin])) {
 				$ids        = array_keys($pluginInstances);
 				$bulkPlugin = $ids[0];
@@ -155,6 +160,7 @@ class BulkManageView extends GalleryView {
 
 		// Get display data for all plugins
 		$plugins = array();
+
 		foreach ($pluginInstances as $pluginId => $plugin) {
 			list($ret, $title) = $plugin->getTitle();
 
@@ -183,6 +189,7 @@ class BulkManageView extends GalleryView {
 
 		$template->setVariable('BulkManage', $BulkManage);
 		$template->setVariable('controller', 'bulkmanage.BulkManage');
+
 		return array(
 			null,
 			array(

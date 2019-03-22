@@ -39,10 +39,13 @@ class SimpleviewerSourceModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('1.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('1.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('export', $gallery->i18n('Export'));
 		$this->setCallbacks('registerEventListeners|getItemLinks');
 	}
@@ -121,9 +124,12 @@ class SimpleviewerSourceModule extends GalleryModule {
 		global $gallery;
 
 		GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
+
 		$links = array();
+
 		foreach ($items as $item) {
 			$itemId = $item->getId();
+
 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
 				list($ret, $parameters) = SimpleviewerParameterMapHelper::fetchParams($itemId, 'private');
 
@@ -159,7 +165,8 @@ class SimpleviewerSourceModule extends GalleryModule {
 								),
 							);
 
-							break; //one is enough
+							//one is enough
+							break;
 						}
 					}
 				}
@@ -202,8 +209,10 @@ class SimpleviewerSourceModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		$data = $event->getData();
+
 		if ($event->getEventName() == 'GalleryEntity::delete') {
 			$entity = $event->getEntity();
+
 			if (GalleryUtilities::isA($entity, 'GalleryAlbumItem')) {
 				GalleryCoreApi::requireOnce('modules/simpleviewersource/classes/SimpleviewerParameterMapHelper.class');
 

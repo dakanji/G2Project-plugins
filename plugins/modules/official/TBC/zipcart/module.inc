@@ -38,10 +38,13 @@ class ZipCartModule extends GalleryModule {
 			)
 		);
 
-		$this->setVersion('2.0.0'); // Update upgrade() as required
+		// Update upgrade() as required
+		$this->setVersion('2.0.0');
 		$this->setRequiredCoreApi(array(8, 0));
 		$this->setRequiredModuleApi(array(4, 0));
+
 		$this->_templateVersion = 1;
+
 		$this->setGroup('commerce', $gallery->i18n('Commerce'));
 		$this->setCallbacks('getSiteAdminViews');
 	}
@@ -130,9 +133,11 @@ class ZipCartModule extends GalleryModule {
 		 * then tack on other likely paths, based on our OS
 		 */
 		$paths = array();
+
 		if (GalleryUtilities::isA($platform, 'WinNtPlatform')) {
 			foreach (explode(';', getenv('PATH')) as $path) {
 				$path = trim($path);
+
 				if (empty($path)) {
 					continue;
 				}
@@ -151,6 +156,7 @@ class ZipCartModule extends GalleryModule {
 		} elseif (GalleryUtilities::isA($platform, 'UnixPlatform')) {
 			foreach (explode(':', getenv('PATH')) as $path) {
 				$path = trim($path);
+
 				if (empty($path)) {
 					continue;
 				}

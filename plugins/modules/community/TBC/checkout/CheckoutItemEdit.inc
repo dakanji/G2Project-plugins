@@ -61,6 +61,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 				// otherwise ...
 				foreach ($productParameters as $paramName => $paramValue) {
 					$paramValue = trim($paramValue);
+
 					if ($paramValue != '') {
 						$ret = CheckoutProductMapHelper::setParam($productId, $paramName, $paramValue, $itemId);
 					} else {
@@ -78,6 +79,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 					// If the the name is not empty and the id is negative, get a new id
 					$name  = trim($accessoryParameters['name']);
 					$price = trim($accessoryParameters['price']);
+
 					if ($accessoryId < 0 && $name != '') {
 						list($ret, $accessoryId) = $storage->getUniqueId();
 
@@ -107,6 +109,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 				}
 
 				$displayPriority = trim($form['position']);
+
 				if ($displayPriority != '') {
 					$ret = CheckoutProductMapHelper::setParam(0, 'position', $displayPriority, $itemId);
 				} else {
@@ -165,6 +168,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 			// display *global* Name and productId, but *local* price and visible fields if they exist
 			foreach ($products as $productIndex => $product) {
 				$productId = $product['productId'];
+
 				if (key_exists($productId, $localProdParams)) {
 					// start with all local params
 					$form['products'][$productIndex]                = $localProdParams[$productId];
@@ -178,6 +182,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 			}
 
 			unset($form['accessories']);
+
 			if (!$item->getCanContainChildren()) {
 				list($ret, $accessories, $form['position']) = CheckoutProductMapHelper::fetchAccessoryData($thisId);
 
@@ -241,6 +246,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 		$template->setVariable('isRootAlbum', $isRootAlbum);
 		$template->setVariable('customPlugins', $plugins);
 		$template->setVariable('controller', 'checkout.CheckoutItemEdit');
+
 		return array(null, 'modules/checkout/templates/CheckoutItemEdit.tpl', 'modules_checkout');
 	}
 

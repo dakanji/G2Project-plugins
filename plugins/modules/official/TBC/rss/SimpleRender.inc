@@ -48,6 +48,7 @@ class SimpleRenderView extends RenderView {
 
 		if ($params['allowSimpleFeed'] != 1) {
 			$this->handleError($gallery->i18n('Feeds of that type are not allowed!'));
+
 			return null;
 		}
 

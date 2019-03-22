@@ -38,14 +38,14 @@ class GetUrlsSiteAdminController extends GalleryController {
 		}
 
 		$status = array();
+
 		if (isset($form['action']['save'])) {
 			$param = array();
-			foreach (array('suppressSourceWarning', 'suppressResizedWarning')
-			 as $key) {
+
+			foreach (array('suppressSourceWarning', 'suppressResizedWarning') as $key) {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}
-
 			}
 
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -60,13 +60,20 @@ class GetUrlsSiteAdminController extends GalleryController {
 			}
 
 			$param = array();
-			foreach (array('HtmlLink', 'HtmlInline', 'HtmlThumbnail', 'HtmlResize2Full',
-			   'BbLink', 'BbInline', 'BbThumbnail', 'BbResize2Full', )
-			 as $key) {
+
+			foreach (array(
+				'HtmlLink',
+				'HtmlInline',
+				'HtmlThumbnail',
+				'HtmlResize2Full',
+				'BbLink',
+				'BbInline',
+				'BbThumbnail',
+				'BbResize2Full',
+			) as $key) {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}
-
 			}
 
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -81,12 +88,13 @@ class GetUrlsSiteAdminController extends GalleryController {
 			}
 
 			$param = array();
+
 			foreach (array('MiscItemId', 'MiscResizeId', 'MiscThumbnailId')
+
 			 as $key) {
 				if (isset($form[$key]) && $form[$key]) {
 					$param[] = $key;
 				}
-
 			}
 
 			$ret = GalleryCoreApi::setPluginParameter(
@@ -117,10 +125,10 @@ class GetUrlsSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
-
 			}
 
 			if (isset($form['itemSummariesWidth']) &&
+
 			is_numeric($form['itemSummariesWidth'])) {
 				$ret = GalleryCoreApi::setPluginParameter(
 					'module',
@@ -132,19 +140,19 @@ class GetUrlsSiteAdminController extends GalleryController {
 				if ($ret) {
 					return array($ret, null);
 				}
-
 			}
 
 			$status['saved'] = 1;
 		} // else $form['action']['reset']
+
 		// Figure out where to redirect upon success
 		$results['redirect']['view']    = 'core.SiteAdmin';
 		$results['redirect']['subView'] = 'geturls.GetUrlsSiteAdmin';
 		$results['status']              = $status;
 		$results['error']               = array();
+
 		return array(null, $results);
 	}
-
 }
 
 /**
@@ -157,24 +165,39 @@ class GetUrlsSiteAdminView extends GalleryView {
 	 * @see GalleryView::loadTemplate
 	 */
 	public function loadTemplate(&$template, &$form) {
-		foreach (array('suppressSourceWarning', 'suppressResizedWarning', 'HtmlLink', 'HtmlInline',
-			   'HtmlThumbnail', 'HtmlResize2Full', 'BbLink', 'BbInline', 'BbThumbnail',
-			   'BbResize2Full', 'MiscItemId', 'MiscResizeId', 'MiscThumbnailId',
-			   'guestMode', 'showItemSummaries', 'showIeLinks', 'itemSummariesWidth', )
-		 as $param) {
+		foreach (array(
+			'suppressSourceWarning',
+			'suppressResizedWarning',
+			'HtmlLink',
+			'HtmlInline',
+			'HtmlThumbnail',
+			'HtmlResize2Full',
+			'BbLink',
+			'BbInline',
+			'BbThumbnail',
+			'BbResize2Full',
+			'MiscItemId',
+			'MiscResizeId',
+			'MiscThumbnailId',
+			'guestMode',
+			'showItemSummaries',
+			'showIeLinks',
+			'itemSummariesWidth',
+		) as $param) {
 			// Checkbox values are not defined if false
 			$form[$param] = empty($form[$param]) ? 0 : $form[$param];
 		}
 
-		$getUrlsAdmin['itemSummariesWidthList'] = array(10, 15, 20, 25, 30, 40, 50, 60, 70, 85, 100,
-							120, 150, );
+		$getUrlsAdmin['itemSummariesWidthList'] = array(10, 15, 20, 25, 30, 40, 50, 60, 70, 85, 100, 120, 150);
 
 		// Load defaults
 		if ($form['formName'] != 'GetUrlsSiteAdmin') {
 			$form['formName'] = 'GetUrlsSiteAdmin';
 
 			list($ret, $param) =
+
 		GalleryCoreApi::fetchAllPluginParameters('module', 'geturls');
+
 			if ($ret) {
 				return array($ret, null);
 			}
@@ -199,9 +222,12 @@ class GetUrlsSiteAdminView extends GalleryView {
 
 		$template->setVariable('controller', 'geturls.GetUrlsSiteAdmin');
 		$template->setVariable('GetUrlsAdmin', $getUrlsAdmin);
-		return array(null,
-			 array('body' => 'modules/geturls/templates/GetUrlsSiteAdmin.tpl'), );
+
+		return array(
+			null,
+			array(
+				'body' => 'modules/geturls/templates/GetUrlsSiteAdmin.tpl',
+			),
+		 );
 	}
-
 }
-

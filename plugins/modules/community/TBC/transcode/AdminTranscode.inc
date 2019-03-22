@@ -38,6 +38,7 @@ class AdminTranscodeController extends GalleryController {
 		}
 
 		$error = $status = array();
+
 		if (isset($form['action']['save'])) {
 			if (isset($form['outputMime'])) {
 				list($ret, $form['outputExtension']) = GalleryCoreApi::convertMimeToExtensions($form['outputMime']);
@@ -77,6 +78,7 @@ class AdminTranscodeController extends GalleryController {
 			list($ret, $mimeTypes) = GalleryCoreApi::getPluginParameter('module', 'transcode', 'movieTypes');
 
 			$mimeTypes = explode('|', $mimeTypes);
+
 			foreach ($mimeTypes as $key) {
 				if (isset($form[selectedMimeTypes][$key])) {
 					$selectedMimeTypes .= $key . '|';
@@ -103,6 +105,7 @@ class AdminTranscodeController extends GalleryController {
 
 		$results['status'] = $status;
 		$results['error']  = $error;
+
 		return array(null, $results);
 	}
 }
@@ -123,6 +126,7 @@ class AdminTranscodeView extends GalleryView {
 
 		if ($form['formName'] != 'AdminTranscode') {
 			$form['formName'] = 'AdminTranscode';
+
 			foreach (array(
 				'onUpload',
 				'outputMime',
@@ -151,6 +155,7 @@ class AdminTranscodeView extends GalleryView {
 		/** Its time to trim the fat and lose the non-web friendly mime types */
 		$acceptableEncoders = array('video/x-flv', 'video/mp4', 'video/webm', 'video/ogg');
 		$outputOptions      = array();
+
 		foreach ($mimeTypesEncoder as $option) {
 			if (in_array($option, $acceptableEncoders)) {
 				$outputOptions[] = $option;
@@ -178,6 +183,7 @@ class AdminTranscodeView extends GalleryView {
 		//$template->setVariable('selectedMimeTypes', explode('|', $mimeTypes));
 		//$template->setVariable('AdminTranscode', array());
 		$template->setVariable('controller', 'transcode:AdminTranscode');
+
 		return array(
 			null,
 			array(

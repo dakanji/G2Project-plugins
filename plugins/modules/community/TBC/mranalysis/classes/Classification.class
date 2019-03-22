@@ -36,6 +36,7 @@ class Classification {
 	// Default filename prefixes
 	public static function DefaultFileNamePrefixes() {
 		$defaultprefixes = array('PICT', 'DSC', 'IMG', 'HB5S', 'P');
+
 		return $defaultprefixes;
 
 		/*
@@ -52,6 +53,7 @@ class Classification {
 	// Does the prefix have a suffix?
 	public static function PrefixHasSuffix($ucasefilename, $pos, $prefixlen) {
 		$nextchar = substr($ucasefilename, $pos + $prefixlen, 1);
+
 		return ($nextchar == '_') || ($nextchar == ' ');
 	}
 
@@ -61,15 +63,18 @@ class Classification {
 	public static function IsDefaultFileName($filename) {
 		$ucasefilename = strtoupper($filename);
 		$extpos        = strrpos($ucasefilename, '.');
+
 		if ($extpos == false) {
 			// No extension - do not process.
 			return false;
 		}
 
 		$prefixes = Classification::DefaultFileNamePrefixes();
+
 		foreach ($prefixes as $prefix) {
 			//print "\n<br>" . $prefix . ' -> ' . $ucasefilename;
 			$pos = strpos($ucasefilename, $prefix);
+
 			if ($pos === false) {
 				//print ' -- not found';
 				// prefix not in use - skip
@@ -77,6 +82,7 @@ class Classification {
 			}
 
 			$prefixlen = strlen($prefix);
+
 			if (Classification::PrefixHasSuffix($ucasefilename, $pos, $prefixlen)) {
 				$prefixlen = $prefixlen + 1;
 			}
@@ -92,6 +98,7 @@ class Classification {
 			if (is_numeric($serialcandidate)) {
 				// Is it an int?
 				$candidatevalue = (int)$serialcandidate;
+
 				if ($candidatevalue !== false) {
 					//print ' -- found';
 					return true;

@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 GalleryCoreApi::requireOnce('modules/statistics/StatisticsSiteAdmin.inc');/**
+
  * @version $Revision: 1036 $
  * @package BulkManage
  * @author Aidan Lister <aidan@php.net>
@@ -41,6 +42,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$count = 0;
+
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
@@ -51,6 +53,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		$query = '
             SELECT COUNT([GalleryItem::id])
             FROM [GalleryItem]
+
             WHERE [GalleryItem::canContainChildren] = 0';
 
 		list($ret, $results) = $gallery->search($query);
@@ -60,6 +63,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$count = 0;
+
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
@@ -70,6 +74,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		$query = '
             SELECT COUNT([GalleryItem::id])
             FROM [GalleryItem]
+
             WHERE [GalleryItem::canContainChildren] = 1';
 
 		list($ret, $results) = $gallery->search($query);
@@ -79,6 +84,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$count = 0;
+
 		if ($result = $results->nextResult()) {
 			$count = (int)$result[0];
 		}
@@ -99,6 +105,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 		}
 
 		$statistics['users'] = $count + 1;
+
 		$template->setVariable(
 			'StatisticsSiteAdmin',
 			array(
@@ -108,6 +115,7 @@ class StatisticsSiteAdminCursory extends StatisticsSiteAdminPlugin {
 
 		// Controller
 		$template->setVariable('controller', 'statistics.StatisticsSiteAdmin');
+
 		return array(null, 'modules/statistics/templates/StatisticsSiteAdminCursory.tpl', 'modules_statistics');
 	}
 

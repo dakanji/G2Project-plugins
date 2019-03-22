@@ -36,6 +36,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		global $gallery;
 
 		parent::setUp();
+
 		$this->_unregisterFactoryImplementationForTest('NotificationEvent_1_0');
 		$this->_unregisterFactoryImplementationForTest('NotificationHandler_1_0');
 
@@ -90,6 +91,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$parms['_enabledMap'] = serialize($enabledMap);
+
 		GalleryDataCache::put($cacheKey, $parms);
 
 		list($ret, $this->_testAlbum) = $this->_createRandomAlbum($this->_getRootId());
@@ -99,6 +101,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		}
 
 		$this->_markForCleanup($this->_testAlbum);
+
 		$entities = array($this->_testAlbum->getId());
 
 		list($ret) = GalleryCoreApi::loadEntitiesById($entities, 'GalleryAlbumItem');
@@ -122,6 +125,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$userId             = $testUser->getId();
 		$sessionPermissions = (int)true;
 		$cacheKey           = "GalleryPermissionHelper::getPermissions($itemId,$userId,$sessionPermissions)";
+
 		GalleryDataCache::put($cacheKey, $permissions);
 
 		list($ret, $this->_adminGroupId) = GalleryCoreApi::getPluginParameter('module', 'core', 'id.adminGroup');
@@ -169,6 +173,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 		$storage              =& $gallery->getStorage();
 		$gallery->_lockSystem =& $this->_saveLockSystem;
+
 		if (!empty($this->_storageSet)) {
 			$this->assertTrue($storage->isComplete(), $storage->getRemaining());
 		}
@@ -182,6 +187,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$storage      =& $gallery->getStorage();
 		$activeUser   = $gallery->getActiveUser();
 		$activeUserId = $gallery->getActiveUserId();
+
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -204,6 +210,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$itemId = $this->_testAlbum->getId();
+
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationUserAdmin');
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
@@ -213,7 +220,6 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -224,6 +230,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -246,6 +253,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$storage      =& $gallery->getStorage();
 		$activeUser   = $gallery->getActiveUser();
 		$activeUserId = $gallery->getActiveUserId();
+
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -268,6 +276,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$itemId = (string)$this->_testAlbum->getId();
+
 		$storage->setReply(
 			'removeMapEntry',
 			array(
@@ -337,6 +346,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
+
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationUserAdmin');
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
@@ -346,7 +356,6 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -356,6 +365,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -378,6 +388,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$storage      =& $gallery->getStorage();
 		$activeUser   = $gallery->getActiveUser();
 		$activeUserId = $gallery->getActiveUserId();
+
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -428,6 +439,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
+
 		$storage->setReply(
 			'addMapEntry',
 			array(
@@ -444,6 +456,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$storage->setReply('checkPoint', array(), null);
+
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
 		GalleryUtilities::putRequestVariable('form[itemId]', $itemId);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
@@ -454,7 +467,6 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -466,6 +478,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -488,6 +501,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$storage      =& $gallery->getStorage();
 		$activeUser   = $gallery->getActiveUser();
 		$activeUserId = $gallery->getActiveUserId();
+
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -532,6 +546,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
+
 		$storage->setReply(
 			'addMapEntry',
 			array(
@@ -548,6 +563,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$storage->setReply('checkPoint', array(), null);
+
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationItem');
 		GalleryUtilities::putRequestVariable('form[itemId]', 0);
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
@@ -558,7 +574,6 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -570,6 +585,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
@@ -592,6 +608,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$storage      =& $gallery->getStorage();
 		$activeUser   = $gallery->getActiveUser();
 		$activeUserId = $gallery->getActiveUserId();
+
 		$storage->setReply(
 			'getMapEntry',
 			array(
@@ -682,6 +699,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		$storage->setReply('isTransactional', array(), false);
 		$storage->setReply('releaseLocks', array(array(42)), null);
 		$storage->setReply('checkPoint', array(), null);
+
 		GalleryUtilities::putRequestVariable('form[formName]', 'NotificationUserAdmin');
 		GalleryUtilities::putRequestVariable('form[action][save]', 'save');
 		GalleryUtilities::putRequestVariable(
@@ -691,7 +709,6 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 				'handler' => 'Test::EventHandler',
 			)
 		);
-
 		GalleryUtilities::putRequestVariable(
 			'form[notifications][1][items][1]',
 			array(
@@ -701,6 +718,7 @@ class NotificationUserAdminControllerTest extends GalleryControllerTestCase {
 		);
 
 		$results = $this->handleRequest();
+
 		$this->assertEquals(
 			array(
 				'redirect' => array(
