@@ -698,23 +698,23 @@ class getID3 {
 					'fail_ape'  => 'WARNING',
 				),
 				/*
-																																																											 // AA   - audio       - Audible Audiobook
-																															 'aa' => array(
-																																		 'pattern' => '^.{4}\x57\x90\x75\x36',
-																																		 'group' => 'audio',
-																																		 'module' => 'aa',
-																																		 'mime_type' => 'audio/audible',
-																																	 ),
-																														 */
+				 * // AA   - audio      - Audible Audiobook
+				 * 'aa' => array(
+				 * 	'pattern' => '^.{4}\x57\x90\x75\x36',
+				 * 	'group' => 'audio',
+				 * 	'module' => 'aa',
+				 * 	'mime_type' => 'audio/audible',
+				 * ),
+				 */
 
-																															 // AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
-																															 'adts' => array(
-																																 'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
-																																 'group'     => 'audio',
-																																 'module'    => 'aac',
-																																 'mime_type' => 'application/octet-stream',
-																																 'fail_ape'  => 'WARNING',
-																															 ),
+				 // AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
+				 'adts' => array(
+					 'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
+					 'group'     => 'audio',
+					 'module'    => 'aac',
+					 'mime_type' => 'application/octet-stream',
+					 'fail_ape'  => 'WARNING',
+				 ),
 				// AU   - audio       - NeXT/Sun AUdio (AU)
 				'au' => array(
 					'pattern'   => '^\.snd',
