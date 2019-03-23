@@ -1,0 +1,228 @@
+<?php
+
+/*
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2008 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ */
+
+/**
+ * A class to clean up html code.
+ * Based on the Beautify Module for Gallery3 by Niklas Dougherty (http://inposure.se)
+ * The Beautify Module was derived from WP-Beautify by Till Krüss (http://wordpress.pralinenschachtel.de)
+ *
+ * @author Dayo Akanji <http://dakanji.com>
+ */
+class RefineHTML {
+	/**
+	 * Processing options for output.
+	 *
+	 * @var array $refine_options
+	 */
+	public $refine_options;
+
+	// Constructor. Sets $refine_options
+	public function __construct() {
+		$this->refine_options = array(
+			'ignored_attributes' => 'onabort, onblur, onchange, onclick, ondblclick, onerror, onfocus, onkeydown, onkeypress, onkeyup, onload, onmousedown, onmousemove, onmouseout, onmouseover, onmouseup, onreset, onselect, onsubmit, onunload',
+			'ignored_tags'       => 'pre, script, textarea',
+		);
+	}
+
+	// Main entry function
+	public function refine_output($data, $mode) {
+		if ($mode == 2) {
+			$this->refine_options['output_flag']   = 2;
+			$this->refine_options['comments_flag'] = 1;
+		} elseif ($mode == 1) {
+			$this->refine_options['output_flag']   = 1;
+			$this->refine_options['comments_flag'] = 0;
+		} else {
+			$this->refine_options['output_flag']   = 0;
+			$this->refine_options['comments_flag'] = 0;
+		}
+
+		return $this->refine_this_xhtml($data);
+	}
+
+	public function refine_this_xhtml($xhtml) {
+		$xhtml = $this->refine_convert_quotes($xhtml, $this->refine_options['ignored_attributes']);
+
+		// construct the regexp to preserve defined tags
+		$ignored_tags_regexp = '~';
+		$ignored_tags        = explode(', ', $this->refine_options['ignored_tags']);
+
+		for ($i = 0, $size = count($ignored_tags); $i < $size; ++$i) {
+			if ($i < $size - 1) {
+				$tVar = '|';
+			} else {
+				$tVar = '';
+			}
+
+			$ignored_tags_regexp .= '<' . $ignored_tags[$i] . '[^>]*>.*?<\/' . $ignored_tags[$i] . '>' . $tVar;
+		}
+
+		$ignored_tags_regexp .= '~s';
+
+		// store the original contents of all ignored tags
+		preg_match_all($ignored_tags_regexp, $xhtml, $original_tags);
+
+		if ($this->refine_options['comments_flag'] == 1) {
+			$xhtml = $this->refine_remove_comments($xhtml);
+		}
+
+		$xhtml = $this->refine_clean_whitespace($xhtml);
+
+		if ($this->refine_options['output_flag'] == 1) {
+			$xhtml = $this->refine_beautify_this($xhtml);
+		} elseif ($this->refine_options['output_flag'] == 2) {
+			$xhtml = $this->refine_minify_this($xhtml);
+		}
+
+		// fetch all ignored tags which might been modified and restore them
+		preg_match_all($ignored_tags_regexp, $xhtml, $modified_tags);
+
+		foreach ($modified_tags[0] as $key => $match) {
+			$xhtml = str_replace($match, $original_tags[0][$key], $xhtml);
+		}
+
+		// final fix for minified output
+		if ($this->refine_options['output_flag'] == 2) {
+			$regex      = '~(<script\s+type[^>]*text\/javascript[^>]*>)~i';
+			$test_regex = preg_match($regex, $xhtml) ? true : false;
+
+			if ($test_regex) {
+				$xhtml = preg_replace($regex, "\n" . '\1', $xhtml);
+			}
+
+			$regex      = '~(<\/script[^>]*>)(<)~i';
+			$test_regex = preg_match($regex, $xhtml) ? true : false;
+
+			if ($test_regex) {
+				$xhtml = preg_replace($regex, '\1' . "\n" . '\2', $xhtml);
+			}
+		}
+
+		return $xhtml;
+	}
+
+	public function refine_remove_comments($string) {
+		// conditional comments will be ignored
+		return preg_replace('/<!--(?![\s]?\[if)(.|\s)*?-->/i', '', $string);
+	}
+
+	public function refine_convert_quotes($string, $ignored_attributes) {
+		$ignored_attributes = explode(', ', $ignored_attributes);
+		preg_match_all("~<[a-z]+[^<>]*='[^<>]*>~i", $string, $matched_tags);
+
+		// loop through tags that contain an attribute with single quotes
+		foreach ($matched_tags[0] as $tag) {
+			unset($converted_tag);
+			preg_match_all("~\s([a-z]+)='(.*?)'~", $tag, $matched_attributes);
+
+			// loop through all attributes of this tag
+			foreach ($matched_attributes[0] as $key => $attributes_string) {
+				// convert the attribute quotes, if it's not on our ignore list
+				if (isset($matched_attributes[1][$key], $matched_attributes[2][$key])
+					&& !in_array($matched_attributes[1][$key], $ignored_attributes)
+				) {
+					if (!isset($converted_tag)) {
+						$converted_tag = $tag;
+					}
+
+					$converted_tag = str_replace(
+						trim($attributes_string),
+						$matched_attributes[1][$key] . '="' . $matched_attributes[2][$key] . '"',
+						$converted_tag
+					);
+				}
+			}
+
+			// replace tag if we made changes to it
+			if (isset($converted_tag)) {
+				$string = str_replace($tag, $converted_tag, $string);
+			}
+		}
+
+		return $string;
+	}
+
+	public function refine_clean_whitespace($string) {
+		// replace \r\n with \n
+		$string = preg_replace('~\r\n~ms', "\n", $string);
+
+		// replace \r with \n
+		$string = preg_replace('~\r~ms', "\n", $string);
+
+		// remove whitespace from the beginnig
+		$string = preg_replace('~^\s+~s', '', $string);
+
+		// remove whitespace from the end
+		$string = preg_replace('~\s+$~s', '', $string);
+
+		// remove whitespace from the beginning of each line
+		$string = preg_replace('~^\s+~m', '', $string);
+
+		// remove whitespace from the end of each line
+		$string = preg_replace('~\s+$~m', '', $string);
+
+		// removes empty lines
+		$string = preg_replace('~\n\s*(?=\n)~ms', '', $string);
+
+		// removes whitespace between text
+		$string = preg_replace('~([^>\s])(\s+)([^<\s])~', '$1 $3', $string);
+
+		// remove tabs between tags
+		$string = preg_replace('~(?:(?<=\>)|(?<=\/\>))\t+(?=\<\/?)~', '', $string);
+
+		return $string;
+	}
+
+	public function refine_beautify_this($string) {
+		$indent = 0;
+		$string = explode("\n", $string);
+
+		foreach ($string as $line_num => $line) {
+			// correct indention, if line starts with closing tag
+			$correction        = intval(substr($line, 0, 2) == '</');
+			$string[$line_num] = str_repeat("\t", $indent - $correction) . $line;
+
+			// indent every tag
+			$indent += substr_count($line, '<');
+
+			// subtract doctype declaration and CDATA sections
+			$indent -= substr_count($line, '<!');
+
+			// subtract processing instructions
+			$indent -= substr_count($line, '<?');
+
+			// subtract self closing tags
+			$indent -= substr_count($line, '/>');
+
+			// subtract closing tags
+			$indent -= substr_count($line, '</') * 2;
+		}
+
+		$string = implode("\n", $string);
+
+		return $string;
+	}
+
+	public function refine_minify_this($string) {
+		$string = preg_replace('/[\r]+/', '\n', $string);
+		$string = preg_replace('/[\n]+/', '', $string);
+
+		return $string;
+	}
+}
