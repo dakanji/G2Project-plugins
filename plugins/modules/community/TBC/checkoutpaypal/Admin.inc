@@ -49,37 +49,67 @@ class AdminController extends GalleryController {
 		$status = array();
 
 		if (isset($form['action']['save'])) {
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutpaypal', 'active', $form['active']);
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'active',
+				$form['active']
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutpaypal', 'paypalname', $form['paypalname']);
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'paypalname',
+				$form['paypalname']
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutpaypal', 'ccode', $form['ccode']);
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'ccode',
+				$form['ccode']
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutpaypal', 'imageUrl', $form['imageUrl']);
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'imageUrl',
+				$form['imageUrl']
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutpaypal', 'ppurl', $form['ppurl']);
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'ppurl',
+				$form['ppurl']
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			$ret = GalleryCoreApi::setPluginParameter('module', 'checkoutpaypal', 'pprtnbuttontext', $form['pprtnbuttontext']);
+			$ret = GalleryCoreApi::setPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'pprtnbuttontext',
+				$form['pprtnbuttontext']
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -139,25 +169,41 @@ class AdminView extends GalleryView {
 		if ($form['formName'] != 'AdminCheckoutPaypal') {
 			$form['formName'] = 'AdminCheckoutPaypal';
 
-			list($ret, $form['active']) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'active');
+			list($ret, $form['active']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'active'
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			list($ret, $form['paypalname']) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'paypalname');
+			list($ret, $form['paypalname']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'paypalname'
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			list($ret, $form['ccode']) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'ccode');
+			list($ret, $form['ccode']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'ccode'
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			list($ret, $form['imageUrl']) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'imageUrl');
+			list($ret, $form['imageUrl']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'imageUrl'
+			);
 
 			if ($ret) {
 				return array($ret, null);
@@ -167,13 +213,21 @@ class AdminView extends GalleryView {
 				$form['ccode'] = 'USD';
 			}
 
-			list($ret, $form['ppurl']) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'ppurl');
+			list($ret, $form['ppurl']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'ppurl'
+			);
 
 			if ($ret) {
 				return array($ret, null);
 			}
 
-			list($ret, $form['pprtnbuttontext']) = GalleryCoreApi::getPluginParameter('module', 'checkoutpaypal', 'pprtnbuttontext');
+			list($ret, $form['pprtnbuttontext']) = GalleryCoreApi::getPluginParameter(
+				'module',
+				'checkoutpaypal',
+				'pprtnbuttontext'
+			);
 
 			if ($ret) {
 				return array($ret, null);
