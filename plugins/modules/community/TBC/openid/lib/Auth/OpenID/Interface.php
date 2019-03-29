@@ -34,7 +34,7 @@ class Auth_OpenID_OpenIDStore {
 	 *
 	 * @param string $server_url The URL of the identity server that
 	 * this association is with. Because of the way the server portion
-	 * of the library uses this interface, don't assume there are any
+	 * of the library uses this interface, do not assume there are any
 	 * limitations on the character set of the input string. In
 	 * particular, expect to see unescaped non-url-safe characters in
 	 * the server_url field.
@@ -124,7 +124,7 @@ class Auth_OpenID_OpenIDStore {
 	 *
 	 * @param string $server_url The URL of the identity server to get
 	 * the association for. Because of the way the server portion of
-	 * the library uses this interface, don't assume there are any
+	 * the library uses this interface, do not assume there are any
 	 * limitations on the character set of the input string.  In
 	 * particular, expect to see unescaped non-url-safe characters in
 	 * the server_url field.
@@ -146,18 +146,18 @@ class Auth_OpenID_OpenIDStore {
 	}
 
 	/**
-	 * This method removes the matching association if it's found, and
+	 * This method removes the matching association if it is found, and
 	 * returns whether the association was removed or not.
 	 *
 	 * @param string $server_url The URL of the identity server the
 	 * association to remove belongs to. Because of the way the server
-	 * portion of the library uses this interface, don't assume there
+	 * portion of the library uses this interface, do not assume there
 	 * are any limitations on the character set of the input
 	 * string. In particular, expect to see unescaped non-url-safe
 	 * characters in the server_url field.
 	 *
 	 * @param string $handle This is the handle of the association to
-	 * remove. If there isn't an association found that matches both
+	 * remove. If there is not an association found that matches both
 	 * the given URL and handle, then there was no matching handle
 	 * found.
 	 *

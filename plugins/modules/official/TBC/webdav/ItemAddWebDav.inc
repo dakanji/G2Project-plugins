@@ -64,7 +64,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 
 		if ($ret) {
 			if ($ret->getErrorCode() & ERROR_MISSING_OBJECT) {
-				// Item doesn't already exist at this path.  Create it.
+				// Item does not already exist at this path.  Create it.
 				list($ret, $error, $status) = $this->_addItem(
 					$item,
 					$webDavOptions,
@@ -200,7 +200,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			return array($ret, null, null);
 		}
 
-		// Write lock the item we're replacing
+		// Write lock the item we are replacing
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireWriteLock($itemId);
 
 		if ($ret) {
@@ -290,7 +290,7 @@ class ItemAddWebDav extends ItemAddPlugin {
 			return array($ret, null, null);
 		}
 
-		// Fall back on an unknown item if the new class doesn't support the file content
+		// Fall back on an unknown item if the new class does not support the file content
 		$ret = $newItem->rescan();
 
 		if ($ret) {

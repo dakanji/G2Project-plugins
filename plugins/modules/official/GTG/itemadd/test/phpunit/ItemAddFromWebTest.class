@@ -19,7 +19,7 @@
 
 /*
  * We need these classes around so that when the code actually tries to add
- * a photo to an album and create a derivative, the factory won't try to go off
+ * a photo to an album and create a derivative, the factory would not try to go off
  * and load these classes (which lightens the load on our dummy toolkit)
  */
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryPhotoItem.class');
@@ -992,7 +992,7 @@ class ItemAddFromWebTestPlatform {
 
 				case "GET /t/index.php?base=abs HTTP/1.0\r\nHost: www.test.com\r\n\r\n":
 					/*
-					 * Not testing relative base URLs, since they're not well supported in modern
+					 * Not testing relative base URLs, since they are not well supported in modern
 					 * browsers (Opera 9 handles them correctly, but IE7 and FF2 not).
 					 */
 					$buffer                     = array();

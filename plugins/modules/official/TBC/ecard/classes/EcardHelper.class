@@ -52,7 +52,7 @@ class EcardHelper {
 				$currentDimensions = 0;
 
 				foreach ($resizes[$itemId] as $resize) {
-					// Rebuild the derivative if we don't have its dimensions
+					// Rebuild the derivative if we do not have its dimensions
 					if ($resize->getWidth() == 0 || $resize->getHeight() == 0) {
 						list($ret, $resize) = GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($resize->getId());
 

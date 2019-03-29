@@ -79,12 +79,12 @@
 
 <div class="gbBlock">
   <p class="giDescription">
-    {g->text text="Transfer files that are already on your server into your Gallery.  The files must already have been uploaded to your server some other way (like FTP) and must be placed in an accessible directory.  If you're on Unix this means that the files and the directory the files are in should have modes of at least 755."}
+    {g->text text="Transfer files that are already on your server into your Gallery.  The files must already have been uploaded to your server some other way (like FTP) and must be placed in an accessible directory.  If you are on Unix this means that the files and the directory the files are in should have modes of at least 755."}
   </p>
 
   {if empty($ItemAddFromServer.localServerDirList)}
   <div class="giWarning">
-    {g->text text="For security purposes, you can't use this feature until the Gallery Site Administrator configures a set of legal upload directories."}
+    {g->text text="For security purposes, you cannot use this feature until the Gallery Site Administrator configures a set of legal upload directories."}
     {if $ItemAdd.isAdmin}
       <a href="{g->url arg1="view=core.SiteAdmin" arg2="subView=itemadd.ItemAddSiteAdmin"}">
 	{g->text text="site admin"}

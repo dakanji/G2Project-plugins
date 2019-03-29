@@ -45,7 +45,7 @@ msgstr "Werf Admin"
 msgid "Show Email Addresses"
 msgstr "Vertoon Epos adresse"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Moenie Epos adresse vertoon nie"
 
 msgid "Member Items"

@@ -181,7 +181,7 @@ class SendController extends GalleryController {
 
 		$session->put('contactowner.emailsent', serialize($emailsent));
 
-		// not really sure how to deal with these variables... but they're needed
+		// not really sure how to deal with these variables... but they are needed
 		$error                          = array();
 		$isError                        = false;
 		$status                         = array();

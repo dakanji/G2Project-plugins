@@ -69,7 +69,7 @@ msgstr "Brak autoryzacji HTTP"
 
 #, c-format
 msgid ""
-"Gallery can't access HTTP usernames and passwords.  You can still use your web server's "
+"Gallery cannot access HTTP usernames and passwords.  You can still use your web server's "
 "authentication.  Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 "Galeria nie ma dostępu do nazw użytkownika i haseł HTTP.  Możliwe jest jednak używanie "
@@ -81,7 +81,7 @@ msgstr "Moduł tworzenia krótkich adresów URL wyłączony"
 
 #, c-format
 msgid ""
-"We can't fall back on passing HTTP usernames and passwords to Gallery because the URL "
+"We cannot fall back on passing HTTP usernames and passwords to Gallery because the URL "
 "rewrite module is disabled.  You should activate the URL rewrite module in the %sSite Admin "
 "Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting "
 "documentation is in the %sGallery Codex%s."
@@ -97,7 +97,7 @@ msgstr "Nieprawidłowa konfiguracja modułu tworzenia krótkich adresów URL"
 
 #, c-format
 msgid ""
-"PHP Path Info rewrite doesn't support the rule to fall back on passing HTTP usernames and "
+"PHP Path Info rewrite does not support the rule to fall back on passing HTTP usernames and "
 "passwords to Gallery.  You should uninstall and reinstall the URL rewrite module in the %"
 "sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  "
 "Troubleshooting documentation is in the %sGallery Codex%s."
@@ -127,7 +127,7 @@ msgstr "Nieznana przyczyna"
 
 #, c-format
 msgid ""
-"Gallery can't access HTTP usernames and passwords and automated checks failed to find a "
+"Gallery cannot access HTTP usernames and passwords and automated checks failed to find a "
 "cause.  Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 "Galeria nie ma dostępu do nazw użytkownika i haseł HTTP i automatyczne sprawdzanie nie jest "
@@ -142,7 +142,7 @@ msgstr "Użyj autentykacji HTTP:"
 
 msgid ""
 "Gallery will prompt you to login with HTTP authentication when permission is denied.  HTTP "
-"authentication sends your client a realm to which your username belongs.  It's safe to leave "
+"authentication sends your client a realm to which your username belongs.  It is safe to leave "
 "the realm blank."
 msgstr ""
 "W przypadku braku dostępu, galeria zasugeruje zalogowanie się z autentykacją HTTP.  "
@@ -222,7 +222,7 @@ msgid "Reset"
 msgstr "Przywróć ustawienia domyślne"
 
 #, c-format
-msgid "If you're not automatically redirected, %sclick here to finish logging out%s."
+msgid "If you are not automatically redirected, %sclick here to finish logging out%s."
 msgstr ""
 "Jeśli nie zostaniesz automatycznie przeniesiony, %skliknij tutaj aby zakończyć wylogowywanie%"
 "s."

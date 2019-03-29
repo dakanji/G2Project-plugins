@@ -12,7 +12,7 @@
 {if $coordStyle eq 1}
 {$block.map.ItemCoords.lat.deg}&deg;, {$block.map.ItemCoords.lng.deg}&deg;
 {elseif $coordStyle eq 2}
-{* Use &#39; for apostrophe because &apos; doesn't work in IE *}
+{* Use &#39; for apostrophe because &apos; does not work in IE *}
 {$block.map.ItemCoords.lat.deg}&deg;{$block.map.ItemCoords.lat.min}&#39;&nbsp;{$block.map.ItemCoords.lat.dir},
 {$block.map.ItemCoords.lng.deg}&deg;{$block.map.ItemCoords.lng.min}&#39;&nbsp;{$block.map.ItemCoords.lng.dir}
 {elseif $coordStyle eq 3}

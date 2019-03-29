@@ -175,7 +175,7 @@ class HierarchyTagFilter {
 	}
 
 	// Lexicographical comparison of the hierarchy arrays, with two exceptions:
-	// 1. Each element is compared as a string, because that's how the database originally sorted them.
+	// 1. Each element is compared as a string, because that is how the database originally sorted them.
 	// 2. When one array is a prefix of the other, the longer one is reported to be first.
 	// In other words, siblings are sorted as strings, and descendants come before ancestors.
 	public function compareHierarchies($leftHierarchy, $rightHierarchy) {
@@ -277,7 +277,7 @@ class ParentSequenceHierarchyStream extends HierarchyStream {
 				$this->isEmpty = true;
 			}
 
-			// The nature of a hierarchy stream is that once we have seen one ancestor, we don't need
+			// The nature of a hierarchy stream is that once we have seen one ancestor, we do not need
 			// to see any of the descendants.
 		} while (!$this->isEmpty && isset($popped) && HierarchyTagFilter::isAncestor($popped, $this->front));
 	}

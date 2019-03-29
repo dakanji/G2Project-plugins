@@ -110,7 +110,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Make sure they're there
+		// Make sure they are there
 		list($ret, $properties) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 		if ($ret) {
@@ -144,7 +144,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Make sure they're gone
+		// Make sure they are gone
 		list($ret, $properties) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 		if ($ret) {
@@ -309,7 +309,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Make sure they're all back again
+		// Make sure they are all back again
 		list($ret, $properties) = Getid3Helper::getProperties(GETID3_SUMMARY);
 
 		if ($ret) {
@@ -345,7 +345,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Make sure they're there
+		// Make sure they are there
 		list($ret, $properties) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 		if ($ret) {
@@ -379,7 +379,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Make sure they're gone
+		// Make sure they are gone
 		list($ret, $properties) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 		if ($ret) {
@@ -544,7 +544,7 @@ class AdminGetid3ControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Make sure they're all back again
+		// Make sure they are all back again
 		list($ret, $properties) = Getid3Helper::getProperties(GETID3_DETAILED);
 
 		if ($ret) {

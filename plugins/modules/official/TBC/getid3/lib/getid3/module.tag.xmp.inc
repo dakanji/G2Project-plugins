@@ -57,7 +57,7 @@ class Image_XMP {
 	/**
 	 * Returns the status of XMP parsing during instantiation
 	 *
-	 * You'll normally want to call this method before trying to get XMP fields.
+	 * You will normally want to call this method before trying to get XMP fields.
 	 *
 	 * @return boolean
 	 * Returns true if an APP1 segment was found to contain XMP metadata.
@@ -100,7 +100,7 @@ class Image_XMP {
 
 		// Check that the first two characters are 0xFF 0xD8  (SOI - Start of image)
 		if ($data != "\xFF\xD8") {
-			// No SOI (FF D8) at start of file - This probably isn't a JPEG file - close file and return;
+			// No SOI (FF D8) at start of file - This probably is not a JPEG file - close file and return;
 			echo '<p>This probably is not a JPEG file</p>' . "\n";
 			fclose($filehnd);
 
@@ -126,9 +126,9 @@ class Image_XMP {
 		//                                       3) or end of file is hit
 		while (($data[1] != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd))) {
 			// Found a segment to look at.
-			// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
+			// Check that the segment marker is not a Restart marker - restart markers do not have size or data after them
 			if ((ord($data[1]) < 0xD0) || (ord($data[1]) > 0xD7)) {
-				// Segment isn't a Restart marker
+				// Segment is not a Restart marker
 				// Read the next two bytes (size)
 				$sizestr = fread($filehnd, 2);
 
@@ -213,7 +213,7 @@ class Image_XMP {
 	 * which contains all the XMP (XML) information.
 	 *
 	 * @return array $xmp_array - an array containing all xmp details retrieved.
-	 * @return boolean FALSE - couldn't parse the XMP data
+	 * @return boolean FALSE - could not parse the XMP data
 	 */
 	public function read_XMP_array_from_text($xmltext) {
 		// Check if there actually is any text to parse

@@ -355,7 +355,7 @@ Displaying the marker creation tool when requested
   </p>
   {if $form.noimagemagick}
   <div class="gbBlock">
-     <h2 class="giWarning">{g->text text="ImageMagick wasn't detected as installed, you may experience problem generating markers"}</h2>
+     <h2 class="giWarning">{g->text text="ImageMagick was not detected as installed, you may experience problem generating markers"}</h2>
   </div>
   {/if}
   {if isset($form.nobase)}

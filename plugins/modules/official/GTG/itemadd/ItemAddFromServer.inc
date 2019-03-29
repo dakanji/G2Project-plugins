@@ -226,7 +226,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 					if (!GalleryUtilities::isPathInList(dirname($file), $localServerDirList)
 						|| !$this->_platform->is_readable($file)
 					) {
-						// Ensure malformed input like fileKey = ../foo doesn't work
+						// Ensure malformed input like fileKey = ../foo does not work
 						continue;
 					}
 
@@ -731,7 +731,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 
 	/**
 	 * @see ItemAdd:loadTemplate
-	 * @todo Don't let the user select folders if the user is missing the core.addAlbum permission.
+	 * @todo Do not let the user select folders if the user is missing the core.addAlbum permission.
 	 */
 	public function loadTemplate(&$template, &$form, $item) {
 		global $gallery;
@@ -755,7 +755,7 @@ class ItemAddFromServer extends ItemAddPlugin {
 		if (isset($form['action']['startOver'])) {
 			$form['localServerFiles'] = array();
 		} elseif (isset($form['action']['findFilesFromLocalServer'])) {
-			// If we're uploading from the local server, get a file list now
+			// If we are uploading from the local server, get a file list now
 			$localServerPath = trim($form['localServerPath']);
 
 			/*

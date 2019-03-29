@@ -70,7 +70,7 @@ msgstr "Zip klasör yolu:"
 msgid "You must enter a path to your zip binary"
 msgstr "Zip binary'niz için klasör yolu girmelisin"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Girmiş olduğun klasör yolu geçersiz ya da işlem yapılamaz"
 
 msgid "Unable to create a zip file from this binary"

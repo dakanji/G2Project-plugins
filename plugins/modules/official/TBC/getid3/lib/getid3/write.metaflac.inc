@@ -80,7 +80,7 @@ class getid3_write_metaflac {
 				$metaflacError = 'metaflac.exe not found in ' . GETID3_HELPERAPPSDIR;
 			}
 		} else {
-			// It's simpler on *nix
+			// It is simpler on *nix
 			$commandline   = 'metaflac --no-utf8-convert --remove-all-tags --import-tags-from=' . escapeshellarg($tempcommentsfilename) . ' ' . escapeshellarg($this->filename) . ' 2>&1';
 			$metaflacError = `$commandline`;
 		}
@@ -126,7 +126,7 @@ class getid3_write_metaflac {
 				$metaflacError = 'metaflac.exe not found in ' . GETID3_HELPERAPPSDIR;
 			}
 		} else {
-			// It's simpler on *nix
+			// It is simpler on *nix
 			$commandline   = 'metaflac --remove-all-tags "' . $this->filename . '" 2>&1';
 			$metaflacError = `$commandline`;
 		}

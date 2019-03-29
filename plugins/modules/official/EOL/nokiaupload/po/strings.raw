@@ -5,7 +5,7 @@ gettext("Mobile Users")
 gettext("Pictures from mobile phones")
 
 /* DirectoryListing.inc */
-gettext("Couldn't fetch directory list.")
+gettext("Could not fetch directory list.")
 
 /* Login.inc */
 gettext("Login failed.")
@@ -14,7 +14,7 @@ gettext("Login failed.")
 gettext("Album creation failed.")
 
 /* RemoteStorageCapabilities.inc */
-gettext("Couldn't retrieve settings.")
+gettext("Could not retrieve settings.")
 
 /* Upload.inc */
 gettext("Upload failed.")

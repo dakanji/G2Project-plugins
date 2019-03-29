@@ -49,7 +49,7 @@
 
 <div class="gbBlock">
   {if $FotokastenSiteAdmin.usingDefaultGalleryAffiliateId}
-  {g->text text="You're currently using the default Gallery affiliate id.  This means that the Gallery project will receive a small commission for each print made from your website."}
+  {g->text text="You are currently using the default Gallery affiliate id.  This means that the Gallery project will receive a small commission for each print made from your website."}
   {else}
   {g->text text="You have specified your own affiliate id."}
   {/if}

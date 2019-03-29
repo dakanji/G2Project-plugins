@@ -122,7 +122,7 @@ class ConfigureView extends GalleryView {
 			return array($ret, null);
 		}
 
-		// Load our default values if we didn't just come from this form.
+		// Load our default values if we did not just come from this form.
 		if ($form['formName'] != 'NokiaUploadConfigure') {
 			$form['formName'] = 'NokiaUploadConfigure';
 			$form['group']    = $module->translate('Mobile Users');

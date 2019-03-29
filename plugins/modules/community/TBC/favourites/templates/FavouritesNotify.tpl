@@ -11,20 +11,20 @@
 
   {if !empty($form.error.isGuest) }
   <h2 class="giError">
-	{g->text text="You're not logged in."}
+	{g->text text="You are not logged in."}
   </h2>
   <p>
   {g->text text="To bookmark an item as one of your favorites, and to view them later, you need to be logged in as a registered user!"}
-  {g->text text="Use the register link above to create an account (it only takes a second) or login if you're already registered."}
+  {g->text text="Use the register link above to create an account (it only takes a second) or login if you are already registered."}
   </p>
   {/if}
 
   {if isset($status.isEmpty)}
   <h2 class="giError">
-    {g->text text="You haven't marked any favorites."}
+    {g->text text="You have not marked any favorites."}
   </h2>
   <p>
-  {g->text text="Use the add item to favorites link below pictures or albums that you like. The show favorites page will show you everything that you've marked."}
+  {g->text text="Use the add item to favorites link below pictures or albums that you like. The show favorites page will show you everything that you have marked."}
   </p>
   {/if}
 

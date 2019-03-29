@@ -265,7 +265,7 @@ function UTF16_fix($utf16_text, $MSB_first) {
 				}
 
 				// Low surrogate not found after high surrogate
-						// Don't add either to the output
+						// Do not add either to the output
 						// Only the High surrogate is skipped and processing continues after it
 			} else {
 				// Error - not enough data for low surrogate - end processing
@@ -465,7 +465,7 @@ function UTF16_to_unicode_array($utf16_text, $MSB_first) {
 				}
 
 				// Low surrogate not found after high surrogate
-						// Don't add either to the output
+						// Do not add either to the output
 						// The high surrogate is skipped and processing continued
 			} else {
 				// Error - not enough data for low surrogate - end processing
@@ -475,7 +475,7 @@ function UTF16_to_unicode_array($utf16_text, $MSB_first) {
 
 		// Low surrogate of a surrogate pair
 				// This should not happen - it means this is a lone low surrogate
-				// Don't add it to the output
+				// Do not add it to the output
 	}
 
 	// Return the result

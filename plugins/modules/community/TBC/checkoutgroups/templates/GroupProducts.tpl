@@ -5,14 +5,14 @@
 </div>
  <p class="giDescription">
     {g->text text="You may choose to make a product visible only to members of a particular group, here."}
-    {g->text text="Note that visibility of a product is additive. The visibility setting in this table only has effect if the product isn't globally visible already."}
+    {g->text text="Note that visibility of a product is additive. The visibility setting in this table only has effect if the product is not globally visible already."}
  </p>
  <p class="giDescription">
     {g->text text="If a customer purchases a product which has a group assigned to it as a purchase group, they will be added to that group when the order payment is cleared."}
     {g->text text="Groups can be used, for instance, to permit access to particular albums on payment, or to authorize discounts for returning customers."}
  </p>
  <p class="giDescription">
-    {g->text text="If the customer is not logged in (i.e. the customer is the Anonymous User) they won't be added to any groups. If you want a product to be available only to logged-in users then "}
+    {g->text text="If the customer is not logged in (i.e. the customer is the Anonymous User) they would not be added to any groups. If you want a product to be available only to logged-in users then "}
     {g->text text="set the global 'visible' setting to 'no', and make the product visible to the 'Registered Users' group here."}
  </p>
  

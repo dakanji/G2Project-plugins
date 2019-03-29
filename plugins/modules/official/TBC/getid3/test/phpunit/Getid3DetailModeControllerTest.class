@@ -49,7 +49,7 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Verify that we're in the right mode now
+		// Verify that we are in the right mode now
 		$session =& $gallery->getSession();
 
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
@@ -79,7 +79,7 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Verify that we're in the right mode now
+		// Verify that we are in the right mode now
 		$session =& $gallery->getSession();
 
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {
@@ -109,7 +109,7 @@ class Getid3DetailModeControllerTest extends GalleryControllerTestCase {
 			$results
 		);
 
-		// Verify that we're in the right mode now
+		// Verify that we are in the right mode now
 		$session =& $gallery->getSession();
 
 		if (!$session->exists('getid3.module.LoadGetid3Info.mode')) {

@@ -66,7 +66,7 @@ class UploadItemsController extends GalleryController {
 			list($ret, $canView) = GalleryCoreApi::hasItemPermission($form['albumId'], 'core.view');
 
 			if ($ret) {
-				// Avoid information disclosure, act as if the item didn't exist.
+				// Avoid information disclosure, act as if the item does not exist.
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
 

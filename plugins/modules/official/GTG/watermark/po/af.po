@@ -142,7 +142,7 @@ msgstr "Stap 3.  Kies welke weergawe van die beeld u wil watermerk"
 msgid "You must choose something to watermark!"
 msgstr "U moet iets kies om te watermerk!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Volgrootte (sal nie die oorspronklike lêer beskadig nie)"
 
 msgid "Resizes"
@@ -230,7 +230,7 @@ msgstr "Plasing"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Plaas u watermerk op die doek hieronder op die ligging waar u dit wil laat verskyn wanneer u "

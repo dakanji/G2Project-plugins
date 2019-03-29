@@ -1802,7 +1802,7 @@ class ConfirmImportController extends GalleryController {
 		if (!empty($form['generateThumbnails']) && !connection_aborted()) {
 			/*
 			 * Get the thumbnails for all of the items we created, in 20 item
-			 * increments so that we don't consume too much memory.
+			 * increments so that we do not consume too much memory.
 			 *
 			 * Note: this destroys the $itemsCreated array!
 			 */
@@ -2083,7 +2083,7 @@ class ConfirmImportView extends GalleryView {
 
 		foreach ($form['sourceAlbums'] as $key => $value) {
 			/*
-			 * We shouldn't really need to encode album names, but we may pass non UTF-8
+			 * We should not really need to encode album names, but we may pass non UTF-8
 			 * characters in the form data, so we urlencode these values to avoid mangling
 			 * by some browsers.
 			 */

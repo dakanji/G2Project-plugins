@@ -42,7 +42,7 @@ class DcrawToolkit extends GalleryToolkit {
 			case 'dimensions':
 				/*
 				 * @todo In dcraw v7.90 or newer we can get dimensions directly from dcraw -i -v.
-				 * For older dcraw versions we'll look to see if there's another toolkit that
+				 * For older dcraw versions we will look to see if there is another toolkit that
 				 * supports dimensions for PPM.  If we find one, then convert the image to PPM
 				 * and let that toolkit tell us its dimensions.
 				 */

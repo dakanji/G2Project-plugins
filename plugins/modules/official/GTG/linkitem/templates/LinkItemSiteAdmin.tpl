@@ -41,7 +41,7 @@
   <p class="giDescription">
     {capture assign=maintenanceLink}<a href="{g->url arg1="view=core.SiteAdmin"
      arg2="subView=core.AdminMaintenance"}">{/capture}
-    {g->text text="Webpage snapshots can be captured with %skhtml2png%s. This program is not trivial to setup, requiring ImageMagick and a running X server, with appropriate access permission for your webserver/PHP user. Install and test outside of Gallery to ensure the command entered above works as expected. Test with the webserver/PHP user to verify Gallery won't have permission problems. If Gallery produces broken thumbnails then try the Build Thumbnails %sMaintenance task%s to see debug output."
+    {g->text text="Webpage snapshots can be captured with %skhtml2png%s. This program is not trivial to setup, requiring ImageMagick and a running X server, with appropriate access permission for your webserver/PHP user. Install and test outside of Gallery to ensure the command entered above works as expected. Test with the webserver/PHP user to verify Gallery would not have permission problems. If Gallery produces broken thumbnails then try the Build Thumbnails %sMaintenance task%s to see debug output."
      arg1="<a href=\"http://khtml2png.sourceforge.net/\">" arg2="</a>"
      arg3=$maintenanceLink arg4="</a>"}
     <br/>
@@ -51,7 +51,7 @@
     <br/>
     {g->text text="Use %URL% %WIDTH% %HEIGHT% %OUTFILE% tokens."}
     <br/>
-    {g->text text="If you don't use webpage snapshots then URL links are given a default thumbnail. Use the Thumbnail Manager module to upload a custom thumbnail for these items."}
+    {g->text text="If you do not use webpage snapshots then URL links are given a default thumbnail. Use the Thumbnail Manager module to upload a custom thumbnail for these items."}
   </p>
 </div>
 

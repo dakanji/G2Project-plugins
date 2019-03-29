@@ -149,7 +149,7 @@ msgstr "Argazkitxo sortzea"
 
 msgid ""
 "Normally Gallery will generate thumbnails the first time you look at them, then save them "
-"for subsequent views.  If you check this box, we'll create the thumbnails at migration "
+"for subsequent views.  If you check this box, we will create the thumbnails at migration "
 "time.  Migration will take longer but the first time you view an album will go much faster."
 msgstr ""
 "Normalean galeriak argazkitxoak bistarazi behar dituen lehenengo aldian sortu eta hurrengo "
@@ -246,7 +246,7 @@ msgid "This album has an illegal name and will be renamed to <i>%s</i>"
 msgstr "Album honek legezkanpoko izen bat du eta <i>%s</i> bezala berrizendatua izango da"
 
 #, c-format
-msgid "This album's owner (%s) hasn't been imported."
+msgid "This album's owner (%s) has not been imported."
 msgstr "Album honen  jabea (%s) ez da inportatu"
 
 #, c-format
@@ -409,7 +409,7 @@ msgid "Import from Gallery 1"
 msgstr "Datuak Gallery 1-etik inportatu"
 
 msgid ""
-"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify "
+"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify "
 "your Gallery 1 data in any way."
 msgstr ""
 "Dagoen Gallery 1 instalazioaren zati bat edo dena Gallery 2-ra kopiatu. Honek ez du zure "
@@ -417,7 +417,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
 "Ez duzu JPEG irudiak kudea ditzaken tresna-jokorik instalaturik.  Orain inportatu ezkero, ez "

@@ -56,7 +56,7 @@ class DownloadItemView extends GalleryView {
 	 * @see GalleryView::renderImmediate
 	 */
 	public function renderImmediate($status, $error) {
-		// Figure out which item we're talking about
+		// Figure out which item we are talking about
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
 
 		if (empty($itemId)) {
@@ -71,7 +71,7 @@ class DownloadItemView extends GalleryView {
 		}
 
 		if (!method_exists($item, 'fetchPath') || !method_exists($item, 'getMimeType')) {
-			// Avoid information disclosure for bogus entities by acting as if it didn't exist
+			// Avoid information disclosure for bogus entities by acting as if it did not exist
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
 
@@ -94,7 +94,7 @@ class DownloadItemView extends GalleryView {
 			return $ret;
 		}
 
-		// Don't allow malicious URLs
+		// Do not allow malicious URLs
 		$fileName = GalleryUtilities::getRequestVariables('fileName');
 
 		if (!empty($fileName) && $fileName != $pseudoFileName) {
@@ -156,7 +156,7 @@ class DownloadItemView extends GalleryView {
 		$phpVm    = $gallery->getPhpVm();
 
 		/**
-		 * Try to prevent Apache's mod_deflate from gzipping the output since it's likely already
+		 * Try to prevent Apache's mod_deflate from gzipping the output since it is likely already
 		 * a binary file and broken versions of mod_deflate sometimes get the byte count wrong.
 		 */
 		if (function_exists('apache_setenv') && !@$gallery->getConfig('apacheSetenvBroken')) {
@@ -183,7 +183,7 @@ class DownloadItemView extends GalleryView {
 		 */
 		$phpVm->header('Cache-Control: private');
 
-		// If the request method is HEAD, don't send back the body
+		// If the request method is HEAD, do not send back the body
 		if ($requestMethod == 'head') {
 			$phpVm->header('Content-length: 0');
 		} else {
@@ -192,7 +192,7 @@ class DownloadItemView extends GalleryView {
 			}
 
 			/*
-			 * Don't use readfile() because it buffers the entire file in memory.  Profiling shows
+			 * Do not use readfile() because it buffers the entire file in memory.  Profiling shows
 			 * that this approach is as efficient as fpassthru() but we get to call
 			 * guaranteeTimeLimit which prevents it from failing on very large files
 			 */
@@ -223,7 +223,7 @@ class DownloadItemView extends GalleryView {
 		$phpVm    = $gallery->getPhpVm();
 
 		/**
-		 * Try to prevent Apache's mod_deflate from gzipping the output since it's likely already
+		 * Try to prevent Apache's mod_deflate from gzipping the output since it is likely already
 		 * a binary file and broken versions of mod_deflate sometimes get the byte count wrong.
 		 */
 		if (function_exists('apache_setenv') && !@$gallery->getConfig('apacheSetenvBroken')) {
@@ -246,7 +246,7 @@ class DownloadItemView extends GalleryView {
 		// End byte
 		$end = $size - 1;
 
-		// Now that we've gotten so far without errors we send the accept range header
+		// Now that we have gotten so far without errors we send the accept range header
 
 		/* At the moment we only support single ranges.
 		 * Multiple ranges requires some more work to ensure it works correctly
@@ -271,7 +271,7 @@ class DownloadItemView extends GalleryView {
 			// Extract the range string
 			list(, $range) = explode('=', GalleryUtilities::getServerVar('HTTP_RANGE'), 2);
 
-			// Make sure the client hasn't sent us a multibyte range
+			// Make sure the client has not sent us a multibyte range
 			if (strpos($range, ',') !== false) {
 				// (?) Shoud this be issued here, or should the first
 				// range be used? Or should the header be ignored and
@@ -295,14 +295,14 @@ class DownloadItemView extends GalleryView {
 				$c_end   = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
 			}
 
-			/* Check the range and make sure it's treated according to the specs.
+			/* Check the range and make sure it is treated according to the specs.
 			 * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
 			 */
 
 			// End bytes can not be larger than $end.
 			$c_end = ($c_end > $end) ? $end : $c_end;
 
-			// Validate the requested range and return an error if it's not correct.
+			// Validate the requested range and return an error if it is not correct.
 			if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size) {
 				$phpVm->header('HTTP/1.1 416 Requested Range Not Satisfiable');
 				$phpVm->header("Content-Range: bytes $start-$end/$size");
@@ -321,7 +321,7 @@ class DownloadItemView extends GalleryView {
 			$phpVm->header('HTTP/1.1 206 Partial Content');
 		}
 
-		// Notify the client the byte range we'll be outputting
+		// Notify the client the byte range we will be outputting
 		$phpVm->header("Content-Range: bytes $start-$end/$size");
 		$phpVm->header("Content-Length: $length");
 
@@ -330,7 +330,7 @@ class DownloadItemView extends GalleryView {
 
 		while (!$platform->feof($fp) && ($p = ftell($fp)) <= $end) {
 			if ($p + $buffer > $end) {
-				// In case we're only outputtin a chunk, make sure we don't
+				// In case we are only outputtin a chunk, make sure we don't
 				// read past the length
 				$buffer = $end - $p + 1;
 			}

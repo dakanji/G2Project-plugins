@@ -66,7 +66,7 @@ class getid3_optimfrog extends getid3_handler {
 		}
 
 		// move the data chunk after all other chunks (if any)
-		// so that the RIFF parser doesn't see EOF when trying
+		// so that the RIFF parser does not see EOF when trying
 		// to skip over the data chunk
 		$RIFFdata    = substr($RIFFdata, 0, 36) . substr($RIFFdata, 44) . substr($RIFFdata, 36, 8);
 		$getid3_temp = new getID3();
@@ -293,7 +293,7 @@ class getid3_optimfrog extends getid3_handler {
 		$info['audio']['bitrate'] = (($info['avdataend'] - $info['avdataoffset']) * 8) / $info['playtime_seconds'];
 
 		// move the data chunk after all other chunks (if any)
-		// so that the RIFF parser doesn't see EOF when trying
+		// so that the RIFF parser does not see EOF when trying
 		// to skip over the data chunk
 		$RIFFdata    = substr($RIFFdata, 0, 36) . substr($RIFFdata, 44) . substr($RIFFdata, 36, 8);
 		$getid3_temp = new getID3();

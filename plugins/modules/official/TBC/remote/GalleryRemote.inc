@@ -256,7 +256,7 @@ class GalleryRemoteController extends GalleryController {
 		$grStatusCodes  = GalleryRemoteConstants::getStatusCodes();
 		$grVersionCodes = GalleryRemoteConstants::getVersionCodes();
 
-		// If they don't provide a username, try the anonymous user
+		// If they do not provide a username, try the anonymous user
 		if (!empty($form['uname'])) {
 			list($ret, $user) = GalleryCoreApi::fetchUserByUsername($form['uname']);
 
@@ -286,7 +286,7 @@ class GalleryRemoteController extends GalleryController {
 
 				list($ret, $version) = GalleryCoreApi::getPluginParameter('module', 'remote', '_version');
 
-				// don't fail on error
+				// do not fail on error
 				$response->setProperty('debug_module_version', $version);
 				$response->setProperty('status', $grStatusCodes['SUCCESS']);
 				$response->setProperty('status_text', 'Login successful.');
@@ -337,7 +337,7 @@ class GalleryRemoteController extends GalleryController {
 			return null;
 		}
 
-		// They're logged in as the guest account
+		// They are logged in as the guest account
 		list($ret, $anonymousUserId) = GalleryCoreApi::getAnonymousUserId();
 
 		if ($ret) {
@@ -365,7 +365,7 @@ class GalleryRemoteController extends GalleryController {
 	/**
 	 * Load the album list into our response object
 	 *
-	 * @param boolean $prune prune albums where user can't upload to or create sub-albums
+	 * @param boolean $prune prune albums where user cannot upload to or create sub-albums
 	 * @param array $form key/value pairs from Gallery Remote
 	 * @param GalleryRemoteProperties $response a reference to our response object
 	 * @return GalleryStatus a status code
@@ -662,7 +662,7 @@ class GalleryRemoteController extends GalleryController {
 		$description = isset($form['extrafield.Description']) ? $form['extrafield.Description'] : null;
 
 		/*
-		 * Don't use uploaded files, because the framework cannot safely copy them.
+		 * Do not use uploaded files, because the framework cannot safely copy them.
 		 * Move it to our temporary directory first.
 		 */
 		$platform =& $gallery->getPlatform();
@@ -729,7 +729,7 @@ class GalleryRemoteController extends GalleryController {
 			 * Swallow option warnings and errors for now.
 			 *
 			 * TODO: Report warnings and errors back to Gallery Remote.  If the upload is denied
-			 * because of quota limitations, then we'll get an error that we should report back.
+			 * because of quota limitations, then we will get an error that we should report back.
 			 */
 		}
 
@@ -857,7 +857,7 @@ class GalleryRemoteController extends GalleryController {
 
 			if (empty($aclIds)) {
 				$response->setProperty('status', $grStatusCodes['ERROR']);
-				$response->setProperty('status_text', 'Can\'t get ACLs for the current user.');
+				$response->setProperty('status_text', 'Cannot get ACLs for the current user.');
 
 				return null;
 			}
@@ -1411,7 +1411,7 @@ class GalleryRemoteController extends GalleryController {
 
 	/**
 	 * Assert that the active user can view the specified item.
-	 * Otherwize, avoid information disclosure by acting as if the item didn't exist.
+	 * Otherwize, avoid information disclosure by acting as if the item did not exist.
 	 * @param int $itemId
 	 * @return GalleryStatus
 	 */
@@ -1422,7 +1422,7 @@ class GalleryRemoteController extends GalleryController {
 			return $ret;
 		}
 
-		// Avoid information disclosure, act as if the item didn't exist.
+		// Avoid information disclosure, act as if the item does not exist.
 		return $canView ? null : GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 	}
 }

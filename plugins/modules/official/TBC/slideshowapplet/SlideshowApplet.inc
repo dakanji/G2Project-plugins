@@ -69,7 +69,7 @@ class SlideshowAppletView extends GalleryView {
 			}
 
 			if (!$canView) {
-				// Avoid information disclosure, act as if the item didn't exist.
+				// Avoid information disclosure, act as if the item does not exist.
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
 		}
@@ -120,7 +120,7 @@ class SlideshowAppletView extends GalleryView {
 			$SlideshowApplet['locale'] = $locale;
 
 			if (isset($startId)) {
-				// format the start_from as album_picture, that's what GR expects
+				// format the start_from as album_picture, that is what GR expects
 				$SlideshowApplet['extra']['gr_slideshow_start_from'] = $item->getId() . '_' . $startId;
 			}
 

@@ -22,7 +22,7 @@
  * @author Steven N. Severinghaus <sns@severinghaus.org>
  * @version $Revision: 1253 $
  *
- * This is some of the ugliest code I've ever written. Please do not
+ * This is some of the ugliest code I have ever written. Please do not
  * judge me by it. :)
  * @todo Change the map groups to derive from GalleryEntity and use that framework.
  */
@@ -164,7 +164,7 @@ class MapGroupAdminController extends GalleryController {
 				}
 
 				/*
-				 * if $num was not found in the existing Group IDs (i.e., it's new)
+				 * if $num was not found in the existing Group IDs (i.e., it is new)
 				 * or if it was a dupe, then add it as a new group, else leave it alone
 				 */
 				$num = ($num == 0 or $editIdDupe) ? $maxGroupId + 1 : $num;
@@ -346,7 +346,7 @@ class MapGroupAdminController extends GalleryController {
 				}
 
 				/*
-				 * if $num was not found in the existing Group IDs (i.e., it's new)
+				 * if $num was not found in the existing Group IDs (i.e., it is new)
 				 * or if it was a dupe, then add it as a new group, else leave it alone
 				 */
 				$num = ($num == 0 or $editIdDupe) ? $maxGroupId + 1 : $num;
@@ -503,7 +503,7 @@ class MapGroupAdminController extends GalleryController {
 				}
 
 				/*
-				 * if $num was not found in the existing Group IDs (i.e., it's new)
+				 * if $num was not found in the existing Group IDs (i.e., it is new)
 				 * or if it was a dupe, then add it as a new group, else leave it alone
 				 */
 				$num = ($num == 0 or $editIdDupe) ? $maxGroupId + 1 : $num;
@@ -735,7 +735,7 @@ class MapGroupAdminView extends GalleryView {
 
 			/*
 			 * Fill out additional properties for each entity, taking care to
-			 * format them so that they don't break the Javascript that they
+			 * format them so that they do not break the Javascript that they
 			 * end up embedded within.
 			 */
 			foreach ($entities as $entity) {

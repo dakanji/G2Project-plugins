@@ -63,7 +63,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Descargando el Applet de Gallery Remoto"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Tu navegador no soporta applets; debes usar la presentación estandar."
 
 msgid "Slideshow Applet Settings"
@@ -148,11 +148,11 @@ msgstr "si está en true, evitará que la presentación descarge las imágenes a
 msgid "does slideshow loop when it gets to the end?"
 msgstr "&iquest;La presentación recomienza al llegar al final?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "si está en true, las imágenes mas pequeñas que la pantalla no serán estiradas"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "si está en true, la presentación descargara la imágenes antes de que se necesiten, lo cual "

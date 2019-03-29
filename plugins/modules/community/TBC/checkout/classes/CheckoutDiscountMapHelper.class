@@ -101,7 +101,7 @@ class CheckoutDiscountMapHelper {
 			)
 		);
 
-		//don't check return code
+		//do not check return code
 		$ret = GalleryCoreApi::addMapEntry(
 			'CheckoutDiscountMap',
 			array(

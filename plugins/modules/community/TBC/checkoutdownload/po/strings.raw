@@ -23,7 +23,7 @@ gettext("Downloadable") /* also in: templates/Admin.tpl */
 gettext("Download Options") /* also in: templates/Admin.tpl */
 gettext("Optionally users may be permitted to download items in their cart before payment is cleared.") /* also in: templates/Admin.tpl */
 gettext("Allow download before payment cleared?") /* also in: templates/Admin.tpl */
-gettext("You may optionally set your own filename to use for zipped file downloads - don't include the .zip ending - and/or have the date and time appended using the YYYMMDDHHMMSS format to make each filename unique. (Example: photos-20101231235959.zip)") /* also in: templates/Admin.tpl */
+gettext("You may optionally set your own filename to use for zipped file downloads - do not include the .zip ending - and/or have the date and time appended using the YYYMMDDHHMMSS format to make each filename unique. (Example: photos-20101231235959.zip)") /* also in: templates/Admin.tpl */
 gettext("Base filename") /* also in: templates/Admin.tpl */
 gettext("Append date & time?") /* also in: templates/Admin.tpl */
 gettext("Ordinarily viewing permissions on items are observed in deciding which derivative to offer for download. You may override permissions and ensure that the original item is always downloaded.")
@@ -55,7 +55,7 @@ gettext("Download as Zip") /* also in: templates/email/download.tpl */
 
 /* templates/Admin.tpl */
 gettext("Downloads will be resized to a maximum dimension that you enter. To download the original size, leave the size box empty.")
-gettext("Advanced users can enter a Gallery-style operation string to further alter the image that's downloaded.")
+gettext("Advanced users can enter a Gallery-style operation string to further alter the image that is downloaded.")
 gettext("Download Size (pixels)")
 gettext("Extra Operation String")
 

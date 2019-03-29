@@ -23,7 +23,7 @@
 	      <noscript>
 	      <center>
 	        <table cellpadding="0" cellspacing="0" border="0" width="550">
-	 	  <tr><td width="100%" valign="top" class="PPDesTxt"><b>Are you using a browser that doesn't support JavaScript?</b></td></tr>
+	 	  <tr><td width="100%" valign="top" class="PPDesTxt"><b>Are you using a browser that does not support JavaScript?</b></td></tr>
 		  <tr><td width="100%" valign="top" class="PPDesTxt">If your browser does not support JavaScript, you can upgrade to a newer browser, such as <a href="http://www.microsoft.com/windows/ie/downloads/ie6/default.asp">Microsoft&reg; Internet Explorer 6</a>, <a href="http://wp.netscape.com/computing/download/bdp/index.html">Netscape 6</a> or <a href="http://www.mozilla.com">Firefox 5.1</a>
 .</td></tr>
 		  <tr><td width="100%" valign="top" class="PPDesTxt"><b>Have you disabled JavaScript?</b></td></tr>

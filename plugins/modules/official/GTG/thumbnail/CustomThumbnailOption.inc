@@ -48,7 +48,7 @@ class CustomThumbnailOption extends ItemEditOption {
 		if (isset($thumbnailImage)) {
 			$thumbnailImage = (array)$thumbnailImage;
 		} else {
-			// Set the form's encoding type since we're uploading binary files
+			// Set the form's encoding type since we are uploading binary files
 			if ($template->hasVariable('ItemAdmin')) {
 				$ItemAdmin            =& $template->getVariableByReference('ItemAdmin');
 				$ItemAdmin['enctype'] = 'multipart/form-data';

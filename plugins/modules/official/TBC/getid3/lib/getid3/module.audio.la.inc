@@ -61,7 +61,7 @@ class getid3_la extends getid3_handler {
 					$info['la']['header_size'] = 49 + $info['la']['fmt_size'] - 24;
 					$offset                   += 4;
 				} else {
-					// version 0.2 didn't support additional data blocks
+					// version 0.2 did not support additional data blocks
 					$info['la']['header_size'] = 41;
 				}
 
@@ -152,7 +152,7 @@ class getid3_la extends getid3_handler {
 						$info['la']['footerstart'] = $info['filesize'];
 					}
 				} else {
-					// La v0.2 didn't have FooterStart value
+					// La v0.2 did not have FooterStart value
 					$info['la']['footerstart'] = $info['avdataend'];
 				}
 
@@ -197,7 +197,7 @@ class getid3_la extends getid3_handler {
 					}
 				}
 
-				// $info['avdataoffset'] should be zero to begin with, but just in case it's not, include the addition anyway
+				// $info['avdataoffset'] should be zero to begin with, but just in case it is not, include the addition anyway
 				$info['avdataend']               = $info['avdataoffset'] + $info['la']['footerstart'];
 				$info['avdataoffset']            = $info['avdataoffset'] + $offset;
 				$info['la']['compression_ratio'] = (float)(($info['avdataend'] - $info['avdataoffset']) / $info['la']['uncompressed_size']);

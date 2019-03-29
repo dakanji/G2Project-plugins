@@ -180,12 +180,12 @@ class CheckoutProductMapHelper {
 		}
 
 		/*
-		 *  Dropping the ones that aren't accessories,
+		 *  Dropping the ones that are not accessories,
 		 *  set ids as one of the values
 		 */
 		foreach ($accessories as $itemId => $item) {
 			// make each OptionId a parameter of that option
-			// or if it's not an accessory, remove it
+			// or if it is not an accessory, remove it
 			foreach ($item['options'] as $optionId => $option) {
 				if (!isset($option['isAccessory'])) {
 					unset($accessories[$itemId]['options'][$optionId]);
@@ -340,7 +340,7 @@ class CheckoutProductMapHelper {
 		}
 
 		/* Now strip out the ones for which visible is not 'true' or
-		   which don't apply according to whether the item is an album or not */
+		   which do not apply according to whether the item is an album or not */
 		foreach ($products as $which => $product) {
 			if ($product['visible'] != 'true') {
 				unset($products[$which]);
@@ -389,7 +389,7 @@ class CheckoutProductMapHelper {
 			)
 		);
 
-		// Don't check return code
+		// Do not check return code
 		$ret = GalleryCoreApi::addMapEntry(
 			'CheckoutProductMap',
 			array(

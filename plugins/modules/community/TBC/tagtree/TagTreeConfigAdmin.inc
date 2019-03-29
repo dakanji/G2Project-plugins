@@ -18,7 +18,7 @@
  */
 
 /**
- * A view to display when this module can't be activated
+ * A view to display when this module cannot be activated
  * @package TagTree
  * @subpackage UserInterface
  * @author Chad Parry <spam@chad.parry.org>

@@ -201,7 +201,7 @@ class CheckoutInterfaceHelper {
 				return array($ret, null);
 			}
 
-			// if no template declared by this plugin then don't call the plugin
+			// if no template declared by this plugin then do not call the plugin
 			if (empty($plugins[$id]['statusPageTemplate'])) {
 				unset($plugins[$id]);
 			}
@@ -258,7 +258,7 @@ class CheckoutInterfaceHelper {
 	/**
 	 * allows compatible plugins to add items to the cart to show on the select page
 	 * called once before the select page is displayed
-	 * typically a plugin can add an item if it's not already in the cart
+	 * typically a plugin can add an item if it is not already in the cart
 	 * @param &products array
 	 * @return object GalleryStatus a status code
 	 * @static
@@ -294,7 +294,7 @@ class CheckoutInterfaceHelper {
 	}
 
 	/**
-	 * allows compatible plugins to alter item's product list before it's displayed in the cart
+	 * allows compatible plugins to alter item's product list before it is displayed in the cart
 	 * called once per item when the product list is fetched for that item.
 	 * typically a plugin can adjust the visibility of a product, etc.
 	 * @param &products array
@@ -334,7 +334,7 @@ class CheckoutInterfaceHelper {
 	/**
 	 * allows compatible plugins to alter cart contents
 	 *
-	 * @param &$items array £$form array
+	 * @param &$items array ï¿½$form array
 	 * @return object GalleryStatus a status code
 	 * @static
 	 */
@@ -441,7 +441,7 @@ class CheckoutInterfaceHelper {
 				return array($ret, null);
 			}
 
-			// if no email template, don't bother
+			// if no email template, do not bother
 			if (empty($plugins[$id]['emailTemplate'])) {
 				unset($plugins[$id]);
 			}

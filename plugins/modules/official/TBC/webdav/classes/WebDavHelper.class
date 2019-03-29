@@ -133,7 +133,7 @@ class WebDavHelper {
 		}
 
 		/*
-		 * Must use short URL because most WebDAV clients don't support query strings.  Check it
+		 * Must use short URL because most WebDAV clients do not support query strings.  Check it
 		 * after checking for missing DAV headers causes so we can show the error unknown warning if
 		 * no causes are found.
 		 */
@@ -318,7 +318,7 @@ class WebDavHelper {
 
 	/**
 	 * Returns the id of item that corresponds to the parent of the given path.
-	 * The item at the given path doesn't have to exist, but its parent is expected to exist.
+	 * The item at the given path does not have to exist, but its parent is expected to exist.
 	 *
 	 * @return array GalleryStatus a status code,
 	 *               int the id of the parent item
@@ -399,7 +399,7 @@ class WebDavHelper {
 	/**
 	 * Get singleton WebDAV server library instance.
 	 *
-	 * If it didn't need path and baseUrl, we could eliminate and call library methods staticly.
+	 * If it did not need path and baseUrl, we could eliminate and call library methods staticly.
 	 *
 	 * @return WebDavServer instance
 	 */
@@ -441,7 +441,7 @@ class WebDavHelper {
 	public static function getLocks($path, $getDescendentsLocks=false) {
 		global $gallery;
 
-		// We haven't done any database calls yet, so GallerySqlFragment isn't defined
+		// We have not done any database calls yet, so GallerySqlFragment is not defined
 		GalleryCoreApi::requireOnce('modules/core/classes/GalleryStorage.class');
 
 		// Remove stale locks
@@ -738,7 +738,7 @@ class WebDavHelper {
 
 		/*
 		 * WebDavHelper::getLocks is potentially expensive.  Could optimize this if we knew
-		 * $webDavOptions['props'] didn't contain 'lockdiscovery' or 'allprop'.
+		 * $webDavOptions['props'] did not contain 'lockdiscovery' or 'allprop'.
 		 */
 		list($ret, $locks) = WebDavHelper::getLocks($path);
 
@@ -1270,7 +1270,7 @@ class WebDavHelper {
 			$itemIds = array($itemIds);
 		}
 
-		// Get the rootId, so we don't try to delete it
+		// Get the rootId, so we do not try to delete it
 		list($ret, $rootId) = GalleryCoreApi::getDefaultAlbumId();
 
 		if ($ret) {
@@ -1296,22 +1296,22 @@ class WebDavHelper {
 					ERROR_PERMISSION_DENIED,
 					__FILE__,
 					__LINE__,
-					"Don't have permission to delete this item"
+					"Do not have permission to delete this item"
 				), null);
 			}
 
-			// Make sure we're not deleting the root album
+			// Make sure we are not deleting the root album
 			if ($itemId == $rootId) {
 				return array(GalleryCoreApi::error(
 					ERROR_BAD_PARAMETER,
 					__FILE__,
 					__LINE__,
-					"Can't delete the root album"
+					"Cannot delete the root album"
 				), null);
 			}
 		}
 
-		// If we're still here then all are deletable
+		// If we are still here then all are deletable
 		$count = 0;
 
 		foreach ($itemIds as $itemId) {
@@ -1382,7 +1382,7 @@ class WebDavHelper {
 			return $ret;
 		}
 
-		// What do we do if we weren't successful?  No thumbnail, I guess.
+		// What do we do if we were not successful?  No thumbnail, I guess.
 		list($ret, $success) = GalleryCoreApi::guaranteeAlbumHasThumbnail($item->getParentId());
 
 		if ($ret) {
@@ -1550,7 +1550,7 @@ class WebDavHelper {
 				return array(GalleryCoreApi::error(ERROR_BAD_DATA_TYPE), null);
 			}
 
-			// Load destination parent ids: We don't want recursive moves
+			// Load destination parent ids: We do not want recursive moves
 			list($ret, $newParentAncestorIds) = GalleryCoreApi::fetchParentSequence($newParentId);
 
 			if ($ret) {
@@ -1564,7 +1564,7 @@ class WebDavHelper {
 			$itemId = $item->getId();
 
 			if (!empty($newParent)) {
-				// Can't move into a tree that is included in the source
+				// Cannot move into a tree that is included in the source
 				if (in_array($itemId, $newParentAncestorIds)) {
 					$error[] = 'form[error][source][' . $itemId . '][selfMove]';
 
@@ -1777,7 +1777,7 @@ class WebDavHelper {
 			}
 		}
 
-		// Write lock the item we're moving
+		// Write lock the item we are moving
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireWriteLock($itemId);
 
 		if ($ret) {
@@ -1795,7 +1795,7 @@ class WebDavHelper {
 			return $ret;
 		}
 
-		// Try renaming first - if it fails it's easier to undo
+		// Try renaming first - if it fails it is easier to undo
 		if ($newPathComponent != $pathComponent) {
 			$ret = $item->rename($newPathComponent);
 
@@ -1859,7 +1859,7 @@ class WebDavHelper {
 
 		// Fix thumbnail integrity
 		if ($newParentId != $oldParentId) {
-			// What do we do if we weren't successful?  No thumbnail, I guess.
+			// What do we do if we were not successful?  No thumbnail, I guess.
 			list($ret, $success) = GalleryCoreApi::guaranteeAlbumHasThumbnail($oldParentId);
 
 			if ($ret) {
@@ -1885,7 +1885,7 @@ class WebDavHelper {
 			$newParentId = $item->getParentId();
 		}
 
-		// What do we do if we weren't successful?  No thumbnail, I guess.
+		// What do we do if we were not successful?  No thumbnail, I guess.
 		list($ret, $success) = GalleryCoreApi::guaranteeAlbumHasThumbnail($newParentId);
 
 		if ($ret) {
@@ -2040,7 +2040,7 @@ class WebDavHelper {
 
 		// Refresh lock
 		if (!empty($update)) {
-			// Don't join with the Gallery lock table since we might be using flock system
+			// Do not join with the Gallery lock table since we might be using flock system
 			$query = '
 			SELECT
 			[WebDavLockMap::depth],
@@ -2080,7 +2080,7 @@ class WebDavHelper {
 			$owner  = $result[1];
 			$lockId = $result[2];
 
-			// Check that the Gallery lock didn't disappear before the WebDAV lock
+			// Check that the Gallery lock did not disappear before the WebDAV lock
 			if (GalleryCoreApi::isWriteLocked($itemId)) {
 				// TODO: Need an interface to update g_freshUntil for only $lockId
 			} else {

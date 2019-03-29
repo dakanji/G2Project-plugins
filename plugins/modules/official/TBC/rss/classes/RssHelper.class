@@ -20,7 +20,7 @@
 /*
  * Check if the comments module exists and load GalleryCommentHelper in that case, which is used to
  * retrieve comments from the database for comments rss feeds.
- * @todo Don't access GalleryCommentHelper directly
+ * @todo Do not access GalleryCommentHelper directly
  */
 if (GalleryPlatform::file_exists(
 	dirname(__FILE__)

@@ -51,7 +51,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Gaunama nutolusios galerijos programa"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr "Jūsų naršyklė nepalaiko Java programų; jums teks naudoti vieną iš kitų įkėlimo būdų."
 
 msgid "Uploading files..."
@@ -174,10 +174,10 @@ msgstr ""
 "nustatykite šią reikšmę į false, kad keičiant vaizdo matmenis neprarastumėte EXIF duomenų ir "
 "ImageMagick nerastas"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "jei reikšmė true, tuomet programa nesiskūs, kad neglai rasti ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "jei reikšmė true, tuomet programa nesiskūs, kad neglai rasti Jpegtran"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

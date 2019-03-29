@@ -262,7 +262,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 		$session =& $gallery->getSession();
 
-		// First call doesn't check given code, just increments fail count
+		// First call does not check given code, just increments fail count
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
 		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
@@ -287,7 +287,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 		$this->assertEquals(1, (int)$count, 'failure count 1');
 
-		// Now we've exceeded the failure threshold and code is checked
+		// Now we have exceeded the failure threshold and code is checked
 		$result = $this->_plugin->performValidation(
 			$this->_form,
 			array(
@@ -377,7 +377,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 
 		$session =& $gallery->getSession();
 
-		// First call doesn't check given code, just increments fail count
+		// First call does not check given code, just increments fail count
 		$this->_form['CaptchaValidationPlugin']['word'] = '4321';
 		$result                                         = $this->_plugin->performValidation(
 			$this->_form,
@@ -390,7 +390,7 @@ class CaptchaValidationPluginTest extends GalleryTestCase {
 		$this->assertEquals(array(null, array(), true), $result);
 		$this->assertEquals(1, (int)$session->get('captcha.failedAttempts'), 'failure count');
 
-		// Now we've exceeded the failure threshold and code is checked
+		// Now we have exceeded the failure threshold and code is checked
 		$result = $this->_plugin->performValidation(
 			$this->_form,
 			array(

@@ -42,7 +42,7 @@ msgstr "網站管理員"
 msgid "Show Email Addresses"
 msgstr "顯示電子郵件地址"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "不顯示電子郵件地址"
 
 msgid "Member Items"

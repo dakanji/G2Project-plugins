@@ -152,7 +152,7 @@ class HTTP_WebDAV_Server {
 		// check authentication
 		if (!$this->check_auth_wrapper()) {
 			// RFC2518 says we must use Digest instead of Basic but Microsoft
-			// clients do not support Digest and we don't support NTLM or
+			// clients do not support Digest and we do not support NTLM or
 			// Kerberos so we are stuck with Basic here
 			$this->setResponseHeader(
 				'WWW-Authenticate: Basic realm="'
@@ -975,7 +975,7 @@ class HTTP_WebDAV_Server {
 					$this->_multipart_byterange_header();
 				}
 			} else {
-				// normal request or stream isn't seekable, return full content
+				// normal request or stream is not seekable, return full content
 				if (!empty($options['size'])) {
 					$this->setResponseHeader("Content-Length: $options[size]");
 				}
@@ -1019,7 +1019,7 @@ class HTTP_WebDAV_Server {
 			if (empty($this->multipart_separator)) {
 				// init
 				// a little naive, this sequence *might* be part of the content
-				// but it's really not likely and rather expensive to check
+				// but it is really not likely and rather expensive to check
 				$this->multipart_separator = 'SEPARATOR_' . md5(microtime());
 
 				// generate HTTP header
@@ -1183,7 +1183,7 @@ class HTTP_WebDAV_Server {
 					$this->_multipart_byterange_header();
 				}
 			} else {
-				// normal request or stream isn't seekable, return full content
+				// normal request or stream is not seekable, return full content
 				if (!empty($options['size'])) {
 					$this->setResponseHeader("Content-Length: $options[size]");
 				}
@@ -2370,7 +2370,7 @@ class HTTP_WebDAV_Server {
 			// is a mistake to merge all lists of conditions.  Instead, a URL
 			// should reference an array of arrays of conditions, the inner
 			// array representing a conjunction and the outer array
-			// representing a disjunction, or $uris shouldn't be associative,
+			// representing a disjunction, or $uris should not be associative,
 			// but be an array of productions array('href' => $href,
 			// 'conditions' => array($condition, ...))
 			if (!empty($uris[$uri])) {
@@ -2502,7 +2502,7 @@ class HTTP_WebDAV_Server {
 	/**
 	 * Open request body input stream
 	 *
-	 * Because it's not possible to write to php://input (unlike the potential
+	 * Because it is not possible to write to php://input (unlike the potential
 	 * to set request variables) and not possible until PHP 5.1 to register
 	 * alternative stream wrappers with php:// URLs, this function enables
 	 * sub-classes to override the request body.  Gallery uses this for unit
@@ -2550,7 +2550,7 @@ class HTTP_WebDAV_Server {
 			$status = '200 OK';
 		}
 
-		// didn't set a more specific status code
+		// did not set a more specific status code
 		if (empty($status)) {
 			$status = '500 Internal Server Error';
 		}
@@ -2628,7 +2628,7 @@ class HTTP_WebDAV_Server {
 
 	/**
 	 * Verify that the Depth request header is set and has a non-empty value.
-	 * Doesn't verify for allowed values though.
+	 * Does not verify for allowed values though.
 	 * @return boolean true if set and not empty
 	 */
 	public function _hasNonEmptyDepthRequestHeader() {

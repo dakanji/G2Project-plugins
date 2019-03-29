@@ -49,7 +49,7 @@ msgstr "Site-Administratoren"
 msgid "Show Email Addresses"
 msgstr "eMail-Adressen anzeigen"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "eMail-Adressen nicht anzeigen"
 
 msgid "Member Items"

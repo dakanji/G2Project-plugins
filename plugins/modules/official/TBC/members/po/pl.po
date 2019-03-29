@@ -43,7 +43,7 @@ msgstr "Administratorzy strony"
 msgid "Show Email Addresses"
 msgstr "Pokaż adresy e-mail"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Nie pokazuj adresów e-mail"
 
 msgid "Member Items"

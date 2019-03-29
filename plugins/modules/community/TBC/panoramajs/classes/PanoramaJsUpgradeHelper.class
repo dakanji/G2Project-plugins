@@ -28,8 +28,8 @@
 class PanoramaJsUpgradeHelper {
 	/**
 	 * Switch back from using PanoramaJsPhotoItem and PanoramaJsDerivativeImage to
-	 * the base classes, now that we're using renderers.  This can get deleted
-	 * after GalleryCoreApi moves to 8.x because we're doing the same thing in
+	 * the base classes, now that we are using renderers.  This can get deleted
+	 * after GalleryCoreApi moves to 8.x because we are doing the same thing in
 	 * the core module.
 	 *
 	 * NOTE: If you change this code, you should update the matching block
@@ -114,8 +114,8 @@ class PanoramaJsUpgradeHelper {
 		}
 
 		/*
-		 * Flush the entity cache because we've changed types
-		 * Swallow any errors here; they're going to be recoverable.
+		 * Flush the entity cache because we have changed types
+		 * Swallow any errors here; they are going to be recoverable.
 		 * @todo Refactor this together with the code from the upgrader
 		 */
 		$cacheBaseDir = $gallery->getConfig('data.gallery.cache');

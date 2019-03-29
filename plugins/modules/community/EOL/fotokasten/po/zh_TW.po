@@ -73,7 +73,7 @@ msgid "Enter a valid affiliate password"
 msgstr "輸入有效的行銷夥伴密碼"
 
 msgid ""
-"You're currently using the default Gallery affiliate id.  This means that the Gallery "
+"You are currently using the default Gallery affiliate id.  This means that the Gallery "
 "project will receive a small commission for each print made from your website."
 msgstr ""
 "你目前正在使用預設的 Gallery 行銷夥伴代碼。這表示 Gallery 計劃會在每一個從你的網站印出的相片"

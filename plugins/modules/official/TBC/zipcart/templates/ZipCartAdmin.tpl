@@ -37,7 +37,7 @@
   {/if}
   {if isset($form.error.path.badPath)}
   <div class="giError">
-    {g->text text="The path you entered isn't valid or isn't executable"}
+    {g->text text="The path you entered is not valid or is not executable"}
   </div>
   {/if}
   {if isset($form.error.path.badZip)}

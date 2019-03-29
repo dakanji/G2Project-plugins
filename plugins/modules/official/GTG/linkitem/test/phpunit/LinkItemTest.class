@@ -108,7 +108,7 @@ class LinkItemTest extends GalleryTestCase {
 	}
 
 	public function testMoveLink() {
-		// We don't really have anything on the filesystem; make sure move() works ok
+		// We do not really have anything on the filesystem; make sure move() works ok
 		$this->_markForCleanup($this->_targetAlbum);
 
 		$ret = $this->_link->move($this->_targetAlbum->getId());

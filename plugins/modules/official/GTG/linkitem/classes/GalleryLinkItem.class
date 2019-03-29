@@ -104,7 +104,7 @@ class GalleryLinkItem extends GalleryItem {
 	 */
 	public function move($newParentId) {
 		/*
-		 * We don't really have anything in the filesystem to move.
+		 * We do not really have anything in the filesystem to move.
 		 * Pretend to be a linked entity during the move to avoid platform rename.
 		 */
 		$this->setLinkedEntity('fake');

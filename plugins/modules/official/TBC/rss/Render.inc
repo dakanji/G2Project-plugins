@@ -53,7 +53,7 @@ class RenderView extends GalleryView {
 		// retrieve request variables
 		$name = GalleryUtilities::getRequestVariables('name');
 
-		// we're a configurable feed, load the parameters
+		// we are a configurable feed, load the parameters
 		list($ret, $params1) = RssMapHelper::fetchFeed($name);
 
 		if ($ret) {
@@ -99,7 +99,7 @@ class RenderView extends GalleryView {
 		}
 
 		if (!$perm) {
-			// Avoid information disclosure, act as if the item didn't exist.
+			// Avoid information disclosure, act as if the item does not exist.
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
 

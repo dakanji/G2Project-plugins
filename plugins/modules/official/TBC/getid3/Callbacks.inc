@@ -42,7 +42,7 @@ class Getid3Callbacks {
 				}
 
 				if (!$hasPermission) {
-					// Avoid information disclosure, act as if the item didn't exist.
+					// Avoid information disclosure, act as if the item does not exist.
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
 
@@ -58,7 +58,7 @@ class Getid3Callbacks {
 					return $ret;
 				}
 
-				// Figure out which version we're looking at
+				// Figure out which version we are looking at
 				$session =& $gallery->getSession();
 
 				if (empty($mode)) {

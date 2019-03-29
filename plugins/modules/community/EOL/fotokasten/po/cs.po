@@ -78,7 +78,7 @@ msgid "Enter a valid affiliate password"
 msgstr "Zadání nastavení připojení."
 
 msgid ""
-"You're currently using the default Gallery affiliate id.  This means that the Gallery "
+"You are currently using the default Gallery affiliate id.  This means that the Gallery "
 "project will receive a small commission for each print made from your website."
 msgstr ""
 "Nyní používáte výchozí ID Galerie k připojení. To znamená, že projekt Galerie obdrží malou "

@@ -207,7 +207,7 @@ class CustomFieldHelper extends CustomFieldInterface_1_0 {
 	 *
 	 * @param string $field field to delete
 	 * @param int $containerId id of container, to delete only for specific album
-	 * @param string $exceptType 'album' or 'photo' -- don't delete values for items of this type
+	 * @param string $exceptType 'album' or 'photo' -- do not delete values for items of this type
 	 * @return GalleryStatus a status code
 	 */
 	public function deleteField($field, $containerId = 0, $exceptType = '') {

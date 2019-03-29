@@ -245,13 +245,13 @@ class Auth_OpenID_TrustRoot {
 			return false;
 		}
 
-		// Don't allow adjacent dots
+		// Do not allow adjacent dots
 		if (in_array('', $host_parts, true)) {
 			return false;
 		}
 
 		// Get the top-level domain of the host. If it is not a valid TLD,
-		// it's not sane.
+		// it is not sane.
 		preg_match(Auth_OpenID___TLDs, $parts['host'], $matches);
 
 		if (!$matches) {
@@ -265,7 +265,7 @@ class Auth_OpenID_TrustRoot {
 		}
 
 		if ($parts['wildcard']) {
-			// It's a 2-letter tld with a short second to last segment
+			// It is a 2-letter tld with a short second to last segment
 			// so there needs to be more than two segments specified
 			// (e.g. *.co.uk is insane)
 			$second_level = $host_parts[count($host_parts) - 2];
@@ -401,7 +401,7 @@ function &Auth_OpenID_extractReturnURL(&$endpoint_list) {
 function Auth_OpenID_returnToMatches($allowed_return_to_urls, $return_to) {
 	foreach ($allowed_return_to_urls as $allowed_return_to) {
 		// A return_to pattern works the same as a realm, except that
-		// it's not allowed to use a wildcard. We'll model this by
+		// it is not allowed to use a wildcard. We will model this by
 		// parsing it as a realm, and not trying to match it if it has
 		// a wildcard.
 		$return_realm = Auth_OpenID_TrustRoot::_parse($allowed_return_to);

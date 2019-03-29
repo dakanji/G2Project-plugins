@@ -60,7 +60,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Tõmban alla Galerii Remote Programmi"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Sinu veebilehitseja ei toeta programme; Sa peaksid kasutama tavalist slaidiesitlust."
 
 msgid "Slideshow Applet Settings"
@@ -145,11 +145,11 @@ msgstr "kui 'true', keelab slaidiesitlusel täis-resolutsiooniga piltide allatõ
 msgid "does slideshow loop when it gets to the end?"
 msgstr "kas slaidiesitlus hakkab algusest peale, kui kõik pildid on näidatud?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "kui 'true', siis ekraanist väiksemaid pilte suuremaks ei venitata"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "kui 'true', siis tõmbab slaidiesitlus pildid alla enne seda, kui neid vaja läheb, mis võib "

@@ -41,7 +41,7 @@
   <h3> {g->text text="Local Server Upload Paths"} </h3>
 
   <p class="giDescription">
-    {g->text text="Specify the legal directories on the local server where a user can store files and then upload them into Gallery using the <i>Upload from Local Server</i> feature.  The paths you enter here and all the files and directories under those paths will be available to any Gallery user who has upload privileges, so you should limit this to directories that won't contain sensitive data (eg. /tmp or /usr/ftp/incoming)"}
+    {g->text text="Specify the legal directories on the local server where a user can store files and then upload them into Gallery using the <i>Upload from Local Server</i> feature.  The paths you enter here and all the files and directories under those paths will be available to any Gallery user who has upload privileges, so you should limit this to directories that would not contain sensitive data (eg. /tmp or /usr/ftp/incoming)"}
   </p>
 
   <table class="gbDataTable"><tr>

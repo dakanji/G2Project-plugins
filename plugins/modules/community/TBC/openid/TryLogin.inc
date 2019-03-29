@@ -62,7 +62,7 @@ class TryLoginController extends GalleryController {
 				/*
 				 * TODO: Probably need to have this check only in FinishLogin.. the given
 				 * openId may not be the actual identity URL for this user.. for example,
-				 * for Yahoo! openid you can enter "yahoo.com" and we don't get the particular
+				 * for Yahoo! openid you can enter "yahoo.com" and we do not get the particular
 				 * user's identity URL until returning from the provider.
 				 */
 				list($ret, $userId) = OpenIdHelper::fetchGalleryIdByOpenId($form['openId']);

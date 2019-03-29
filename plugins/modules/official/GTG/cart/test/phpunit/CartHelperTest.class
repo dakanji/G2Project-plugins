@@ -285,7 +285,7 @@ class CartHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		// Just make sure it's really empty
+		// Just make sure it is really empty
 		list($ret, $cartItemCounts) = CartHelper::fetchCartItemCounts();
 
 		if ($ret) {

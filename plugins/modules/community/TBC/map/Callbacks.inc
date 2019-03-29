@@ -23,7 +23,7 @@ GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
  * @author Eric H Daniel <ehdaniel@gmail.com>
  * @version $Revision: 1576 $
  *
- * This is some of the ugliest code I've ever written. Please do not
+ * This is some of the ugliest code I have ever written. Please do not
  * judge me by it. :)
  *
  * based on some code form CustomField by Alan Harder <alan.harder@sun.com>
@@ -386,7 +386,7 @@ class mapCallbacks {
 					$mapCenter     = '';
 					$markerItemIds = array();
 
-					// If it's an album, check settings and possibly fetch descendants
+					// If it is an album, check settings and possibly fetch descendants
 					if ($item->getCanContainChildren()) {
 						/*
 						 * Note: Both fetchChildItemIds() and fetchDescendentItemIds() by default
@@ -479,7 +479,7 @@ class mapCallbacks {
 					}
 
 					if ($item->getCanContainChildren() && !$params['albumMarker']) {
-						// Don't show a marker for the album
+						// Do not show a marker for the album
 						unset($markerParams[$params['itemId']]);
 					}
 
@@ -499,11 +499,11 @@ class mapCallbacks {
 					$markerIcons = array();
 
 					foreach ($markerItems as $markerItem) {
-						// First make sure it has coordinates and that they're valid
+						// First make sure it has coordinates and that they are valid
 
 						/** @todo replace '&& true' with a new MapHelper function to validate coordinates */
 						if (!(array_key_exists('GPS', $markerParams[$markerItem->getId()]) && true)) {
-							// No coordinates; don't show this marker.
+							// No coordinates; do not show this marker.
 							unset($markerParams[$markerItem->getId()]);
 
 							continue;
@@ -521,14 +521,14 @@ class mapCallbacks {
 								)
 							);
 
-							/** @todo Each icon type should have it's own shadow */
+							/** @todo Each icon type should have it is own shadow */
 							$markerIcons["{$ItemMarker}_{$ItemColor}"]['shadowUrl'] = $gurl->generateUrl(
 								array(
 									'href' => 'modules/map/images/marker_shadow.png',
 								)
 							);
 
-							/** @todo Figure out error handling if image file doesn't exist */
+							/** @todo Figure out error handling if image file does not exist */
 
 							// Get the Marker Size
 							$imageSizes = $platform->getimagesize(

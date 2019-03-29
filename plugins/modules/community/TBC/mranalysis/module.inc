@@ -84,7 +84,7 @@ class MRAnalysisModule extends GalleryModule {
 	 * @see GalleryModule::autoConfigure
 	 */
 	public function autoConfigure() {
-		// We don't require any special configuration
+		// We do not require any special configuration
 		return array(null, true);
 	}
 

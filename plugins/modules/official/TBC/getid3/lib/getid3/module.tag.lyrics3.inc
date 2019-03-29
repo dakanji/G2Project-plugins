@@ -292,7 +292,7 @@ class getid3_lyrics3 extends getid3_handler {
 
 				foreach ($thislinetimestamps as $timestampkey => $timestamp) {
 					if (isset($Lyrics3data['synchedlyrics'][$timestamp])) {
-						// timestamps only have a 1-second resolution, it's possible that multiple lines
+						// timestamps only have a 1-second resolution, it is possible that multiple lines
 						// could have the same timestamp, if so, append
 						$Lyrics3data['synchedlyrics'][$timestamp] .= "\r\n" . $lyricline;
 					} else {

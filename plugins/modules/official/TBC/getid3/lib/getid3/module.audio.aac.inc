@@ -266,7 +266,7 @@ class getid3_aac extends getid3_handler {
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
 		// http://faac.sourceforge.net/wiki/index.php?page=ADTS // dead link
 		// http://wiki.multimedia.cx/index.php?title=ADTS
-		// * ADTS Fixed Header: these don't change from frame to frame
+		// * ADTS Fixed Header: these do not change from frame to frame
 		// syncword                                       12    always: '111111111111'
 		// ID                                              1    0: MPEG-4, 1: MPEG-2
 		// MPEG layer                                      2    If you send AAC in MPEG-TS, set to 0

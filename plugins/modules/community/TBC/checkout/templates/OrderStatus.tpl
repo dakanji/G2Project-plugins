@@ -38,7 +38,7 @@
   </h2>
 </div>
  <p>
-  {g->text text="Thank you very much for placing this order. You can bookmark this page and return to it to track progress of the order, and we'll also send you an email when the order status changes."}
+  {g->text text="Thank you very much for placing this order. You can bookmark this page and return to it to track progress of the order, and we will also send you an email when the order status changes."}
 </p>
 {elseif isset($status.alreadyPlaced)}
 <div class="gbBlock gcBackground1">

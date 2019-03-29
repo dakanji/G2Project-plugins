@@ -363,7 +363,7 @@ class RandomHighlightOptionTest extends ItemEditOptionTestCase {
 
 		$this->_becomeGuestUser();
 
-		// Even in DownloadItem requests, it should change if the user can't see the highlight
+		// Even in DownloadItem requests, it should change if the user cannot see the highlight
 		GalleryUtilities::putRequestVariable('view', 'core.DownloadItem');
 		GalleryDataCache::reset();
 

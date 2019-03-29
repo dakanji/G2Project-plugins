@@ -27,7 +27,7 @@
 | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
 | The WebFX Commercial license           http://webfx.eae.net/commercial.html |
 | Permits the  license holder the right to use  the software in a  commercial |
-| context. Such license must be specifically obtained, however it's valid for |
+| context. Such license must be specifically obtained, however it is valid for |
 | any number of  implementations of the licensed software.                    |
 | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
 | GPL - The GNU General Public License    http://www.gnu.org/licenses/gpl.txt |

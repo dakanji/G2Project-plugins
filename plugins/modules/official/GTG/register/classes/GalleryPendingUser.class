@@ -197,7 +197,7 @@ class GalleryPendingUser extends GalleryEntity {
 			return GalleryCoreApi::error(ERROR_COLLISION);
 		}
 
-		// okay, we don't have any collisions, so go on
+		// okay, we do not have any collisions, so go on
 		$ret = parent::create();
 
 		if ($ret) {

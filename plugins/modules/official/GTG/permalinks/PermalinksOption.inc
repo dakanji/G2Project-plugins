@@ -53,7 +53,7 @@ class PermalinksOption extends ItemEditOption {
 				$error[] = 'form[error][PermalinksOption][exists]';
 			}
 
-			// don't do anything if we're successful
+			// do not do anything if we are successful
 		}
 
 		if (isset($form['PermalinksOption']['delete'])) {
@@ -64,7 +64,7 @@ class PermalinksOption extends ItemEditOption {
 					return array($ret, null, null);
 				}
 
-				// don't do anything if we're successful
+				// do not do anything if we are successful
 			}
 
 			$warning[] = $module->translate('Permalink(s) deleted successfully');

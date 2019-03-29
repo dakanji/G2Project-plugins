@@ -1315,7 +1315,7 @@ if (!class_exists('FPDF')) {
 				case 'I':
 					//Send to standard output
 					if (ob_get_contents()) {
-						$this->Error('Some data has already been output, can\'t send PDF file');
+						$this->Error('Some data has already been output, cannot send PDF file');
 					}
 
 					if (php_sapi_name() != 'cli') {
@@ -1323,7 +1323,7 @@ if (!class_exists('FPDF')) {
 						header('Content-Type: application/pdf');
 
 						if (headers_sent()) {
-							$this->Error('Some data has already been output to browser, can\'t send PDF file');
+							$this->Error('Some data has already been output to browser, cannot send PDF file');
 						}
 
 						header('Content-Length: ' . strlen($this->buffer));
@@ -1337,7 +1337,7 @@ if (!class_exists('FPDF')) {
 				case 'D':
 					//Download file
 					if (ob_get_contents()) {
-						$this->Error('Some data has already been output, can\'t send PDF file');
+						$this->Error('Some data has already been output, cannot send PDF file');
 					}
 
 					if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE')) {
@@ -1347,7 +1347,7 @@ if (!class_exists('FPDF')) {
 					}
 
 					if (headers_sent()) {
-						$this->Error('Some data has already been output to browser, can\'t send PDF file');
+						$this->Error('Some data has already been output to browser, cannot send PDF file');
 					}
 
 					header('Content-Length: ' . strlen($this->buffer));
@@ -1938,7 +1938,7 @@ if (!class_exists('FPDF')) {
 			$f = fopen($file, 'rb');
 
 			if (!$f) {
-				$this->Error('Can\'t open image file: ' . $file);
+				$this->Error('Cannot open image file: ' . $file);
 			}
 
 			//Check signature

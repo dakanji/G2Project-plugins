@@ -109,7 +109,7 @@
     <td> {g->text text="Scale images to this maximum size. If used alone Gallery will locate the most-closely-sized image to the specified value - larger images will be scaled down as necessary in your browser. If specified along with %sshow=fullSize the full size image will always be used and scaled down as necessary." arg1=$ImageBlockSiteAdmin.prefix} </td>
   </tr><tr>
     <td> {$ImageBlockSiteAdmin.prefix}exactSize </td>
-    <td> {g->text text="Just like %smaxSize except that it will not substitute an image smaller than the size you request, so you'll get the closest match in size possible.  Note that this may use a lot more bandwidth if a much larger image has to be scaled down in your browser." arg1=$ImageBlockSiteAdmin.prefix} </td>
+    <td> {g->text text="Just like %smaxSize except that it will not substitute an image smaller than the size you request, so you will get the closest match in size possible.  Note that this may use a lot more bandwidth if a much larger image has to be scaled down in your browser." arg1=$ImageBlockSiteAdmin.prefix} </td>
   </tr><tr>
     <td> {$ImageBlockSiteAdmin.prefix}link </td>
     <td> {g->text text="Href for link on image; value of none for no link; default is link to item in the Gallery"} </td>

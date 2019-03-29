@@ -37,7 +37,7 @@ class CheckoutPaypalHelper {
 	/**
 	 * Return the list of items in a form needed for PayPal
 	 *
-	 * PayPal has it's own way of tracking each item. you can't skip numbers so I maintain
+	 * PayPal has it is own way of tracking each item. you cannot skip numbers so I maintain
 	 * my own counters.
 	 * See https://www.paypal.com/cgi-bin/webscr?cmd=p/pdn/howto_checkout-outside#methodtwo
 	 *
@@ -67,7 +67,7 @@ class CheckoutPaypalHelper {
 		$ppItems = 0;
 		$ppItem  = array();
 
-		// paypal doesn't allow discounts or negative price items, so we have to 'cheat'
+		// paypal does not allow discounts or negative price items, so we have to 'cheat'
 		foreach ($items as $item) {
 			// Create a paypal basket line for this item/product
 			$ppItems++;
@@ -90,7 +90,7 @@ class CheckoutPaypalHelper {
 			}
 		}
 
-		// paypal doesn't allow discounts or negative price items, so we have to 'cheat'
+		// paypal does not allow discounts or negative price items, so we have to 'cheat'
 		// subtract the discount item-wise from the end of the order until it reaches zero
 		$discount = $transaction->getDiscount();
 

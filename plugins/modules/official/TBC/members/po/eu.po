@@ -44,7 +44,7 @@ msgstr "Gune Kudeatzaileak"
 msgid "Show Email Addresses"
 msgstr "ePosta Helbidea Erakutsi"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Ez ePosta Helbidea Erakutsi"
 
 msgid "Member Items"

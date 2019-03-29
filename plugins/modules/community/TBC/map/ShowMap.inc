@@ -25,7 +25,7 @@
  * @version $Revision: 1576 $
  *
  * This implements the Google map view
- * This is some of the ugliest code I've ever written. Please do not
+ * This is some of the ugliest code I have ever written. Please do not
  * judge me by it. :)
  */
 GalleryCoreApi::requireOnce('modules/map/classes/GoogleMapUtilities.class');
@@ -298,7 +298,7 @@ class ShowMapView extends GalleryView {
 			$map[$key] = $param[$key];
 		}
 
-		/** @todo Aren't these already covered by the foreach() above? */
+		/** @todo Are not these already covered by the foreach() above? */
 		if (array_key_exists('ThumbBarPos', $param)) {
 			$map['ThumbBarPos'] = $param['ThumbBarPos'];
 		}
@@ -415,7 +415,7 @@ class ShowMapView extends GalleryView {
 				if (!empty($isgroup)) {
 					/** todo add this to the function that gets items */
 
-					// We're dealing with a group display, removing all item not in the group
+					// We are dealing with a group display, removing all item not in the group
 					// Get the group
 					if (array_key_exists('MapGroups', $param) and $param['MapGroups'] != '') {
 						// we have some groups, let's check
@@ -643,7 +643,7 @@ class ShowMapView extends GalleryView {
 													}
 
 													/*
-													 * in this case, we don't add the marker to
+													 * in this case, we do not add the marker to
 													 * the group because it was never showed.
 													 */
 
@@ -693,7 +693,7 @@ class ShowMapView extends GalleryView {
 											if ($pixdist <= $regroupDist) {
 												if ($mapPoints[$id1]['regroupShowLow'] == $z) {
 													/*
-													 * in this case, we don't add the marker to
+													 * in this case, we do not add the marker to
 													 * any group because it was never showed.
 													 */
 
@@ -712,7 +712,7 @@ class ShowMapView extends GalleryView {
 
 												if ($mapPoints[$id2]['regroupShowLow'] == $z) {
 													/*
-													 * in this case, we don't add the marker to
+													 * in this case, we do not add the marker to
 													 * any group because it was never showed.
 													 */
 

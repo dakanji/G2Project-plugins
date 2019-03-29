@@ -34,7 +34,7 @@
 0.5.0 - This version is MEANT FOR CODE REVIEW - NOT A PRODUCTION ENVIRONMENT.
         First sorta working version. Not meant for general distibution.
         TMP Location MUST include trailing slash.
-        Translations aren't done.
+        Translations are not done.
         Needs more robust error checking.
         Does not process more than one image per email. Not sure if it should yet.
         To process emails you have to click the link in the left nav.

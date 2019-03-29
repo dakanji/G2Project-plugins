@@ -27,7 +27,7 @@
 // extends GalleryEventListener
 class MyEventHandlerClass {
 	/**
-	 * Return a value that we can use to identify the client.  We can't tie it to the IP address
+	 * Return a value that we can use to identify the client.  We cannot tie it to the IP address
 	 * because that changes too frequently (dialup users, users behind proxies) so we have to be
 	 * creative.  Changing this algorithm will cause all existing sessions to be discarded.
 	 * @return array

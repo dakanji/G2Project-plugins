@@ -138,7 +138,7 @@ msgstr "Βήμα 3.  Διαλέξτε ποιες εικόνες θέλετε ν�
 msgid "You must choose something to watermark!"
 msgstr "Πρέπει να διαλέξετε κάτι για να υδατοσημάνετε"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Πλήρες Μέγεθος(δεν θα καταστρέψει την πρωτότυπη εικόνα)"
 
 msgid "Resizes"
@@ -226,7 +226,7 @@ msgstr "Τοποθέτηση"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Τοποθετήστε το υδατόσημο σας στον πίνακα πιο κάτω στην τοποθεσία που θέλετε να εμφανίζεται "

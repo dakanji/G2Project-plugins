@@ -52,7 +52,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Stahuji applet vzdálené Galerie"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr ""
 "Váš webový prohlížeč nepodporuje applety. Použijte prosím jinou metodu pro upload souborů."
 
@@ -175,10 +175,10 @@ msgstr ""
 "nastavte na NE, pokud chcete předejít ztrátě EXIF informací při úpravě velikosti fotografie "
 "a pokud ImageMagick nebyl nalezen"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "pokud bude nastaveno na ANO, applet si nebude stěžovat, že nenalezl ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "pokud bude nastaveno na ANO, applet si nebude stěžovat, že nenalezl Jpegtran"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

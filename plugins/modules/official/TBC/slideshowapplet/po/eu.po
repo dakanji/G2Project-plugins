@@ -63,7 +63,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Galeria Urrunekoa Applet-a deskargatzen"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Zure nabigatzaileak ez du applet-ik onartzen, aurkezpen arrunta erabili behar duzu."
 
 msgid "Slideshow Applet Settings"
@@ -148,11 +148,11 @@ msgstr "baiezkoan aurkezpenak erresoluzioa handieneko irudiak ez deskargatzea eg
 msgid "does slideshow loop when it gets to the end?"
 msgstr "aurkezpena berriz hasi behar al da amaierara eltzean?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "baiezkoan pantaila baino irudi txikiagoak ez dira txikituko"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "baiezkoan aurkezpenean fitxategia behar izan baino lehenago deskargatuko dira, abiadura "

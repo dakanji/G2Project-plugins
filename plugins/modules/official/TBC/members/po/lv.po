@@ -45,7 +45,7 @@ msgstr "Vietnes administratori"
 msgid "Show Email Addresses"
 msgstr "Rādīt e-pasta adrese"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Nerādīt e-pasta adreses"
 
 msgid "Member Items"

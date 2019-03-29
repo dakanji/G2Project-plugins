@@ -254,7 +254,7 @@ class FavouritesModule extends GalleryModule {
 			return array($ret, null);
 		}
 
-		// don't offer to show favourites to guests
+		// do not offer to show favourites to guests
 		if ($userId == $anonymousUserId) {
 			return array(null, $links);
 		}

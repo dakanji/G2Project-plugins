@@ -116,7 +116,7 @@ class MultiLangItemEdit extends ItemEditPlugin {
 		}
 
 		/*
-		 * If there was an error and the data wasn't saved
+		 * If there was an error and the data was not saved
 		 * then overwrite the values from the database with the ones from the form
 		 */
 		if (!empty($form['error'])) {

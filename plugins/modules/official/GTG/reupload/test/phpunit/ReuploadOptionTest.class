@@ -108,7 +108,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 	}
 
 	/*
-	 * This imitates the case when the file couldn't be uploaded.
+	 * This imitates the case when the file could not be uploaded.
 	 * We are assuming that the reason is that filesize exceeds the limit
 	 * which is most common case.
 	 */
@@ -118,7 +118,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 		$form['size']['reupload']     = 0;
 		$form['serialNumber']         = $this->_item->getSerialNumber();
 
-		// Perform the request and verify that we failed and filesize didn't change
+		// Perform the request and verify that we failed and filesize did not change
 		list($errors, $warnings) = $this->_handleRequestAfterEdit($form, $this->_item);
 
 		$this->assertEquals(array('form[error][reupload][failure]'), $errors, 'Errors');
@@ -134,7 +134,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 
 		GalleryUtilities::putRequestVariable('dimensions', 'bad_data');
 
-		// Perform the request and verify that we failed and filesize didn't change
+		// Perform the request and verify that we failed and filesize did not change
 		list($errors, $warnings) = $this->_handleRequestAfterEdit($form, $this->_item);
 
 		$this->assertEquals(array('form[error][reupload][toolkit]'), $errors, 'Errors');
@@ -151,8 +151,8 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 	}
 
 	/*
-	 * This imitates the case when we didn't even try to upload the file
-	 * Shouldn't be any errors!
+	 * This imitates the case when we did not even try to upload the file
+	 * Should not be any errors!
 	 */
 	public function testReuploadNothing() {
 		$form['tmp_name']['reupload'] = '';
@@ -160,7 +160,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 		$form['size']['reupload']     = 0;
 		$form['serialNumber']         = $this->_item->getSerialNumber();
 
-		// Perform the request and verify that we failed and filesize didn't change
+		// Perform the request and verify that we failed and filesize did not change
 		list($errors, $warnings) = $this->_handleRequestAfterEdit($form, $this->_item);
 
 		$this->assertEquals(array(), $errors, 'Errors');
@@ -168,7 +168,7 @@ class ReuploadOptionTest extends ItemEditOptionTestCase {
 	}
 
 	/**
-	 * Verify that attempt to reupload to a linked entity is blocked (UI doesn't allow it).
+	 * Verify that attempt to reupload to a linked entity is blocked (UI does not allow it).
 	 */
 	public function testReuploadLinkedEntity() {
 		list($ret, $linkedEntity) = $this->_createLinkedItem($this->_album->getId(), $this->_item);

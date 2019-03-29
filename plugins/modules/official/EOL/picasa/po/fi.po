@@ -234,7 +234,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
 "Sinulla ei ole yhtän grafiikkatyökalua aktivoituna, joka käsittelisi JPEG-kuvia. Jos tuot "

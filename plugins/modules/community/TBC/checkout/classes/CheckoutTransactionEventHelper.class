@@ -326,7 +326,7 @@ class CheckoutTransactionEventHelper {
 		$emails        = unserialize($mp['emails']);
 
 		foreach ($emails as $index => $recipient) {
-			// Don't send admin notifications unless required to
+			// Do not send admin notifications unless required to
 			if ($adminOnly and !$recipient['isAdmin']) {
 				continue;
 			}
@@ -339,7 +339,7 @@ class CheckoutTransactionEventHelper {
 
 				$toAddress = $transaction->getEmail();
 
-				/* If email address from transaction is blank, then the plugin hasn't updated the customer details
+				/* If email address from transaction is blank, then the plugin has not updated the customer details
 				in time. We will send an admin notification (unless the offending email is already an admin
 				notification - to avoid loops. Let's hope this code is re-entrant, hey?    */
 				if (empty($toAddress) && $templateName != 'notify') {
@@ -356,7 +356,7 @@ class CheckoutTransactionEventHelper {
 				}
 
 				if (empty($toAddress)) {
-					// don't send notifications to empty address
+					// do not send notifications to empty address
 					continue;
 				}
 			} else {
@@ -504,7 +504,7 @@ class CheckoutTransactionEventHelper {
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
 
-		// Check the transaction isn't in 'Hold' state
+		// Check the transaction is not in 'Hold' state
 		if ($transaction->getTimeHold()) {
 			// Failing silently in this case - not ideal - consider what else to do.
 			return null;

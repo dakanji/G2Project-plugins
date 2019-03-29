@@ -72,7 +72,7 @@ class TagCloudCssView extends GalleryView {
 				&& ($when = strtotime($headers['If-Modified-Since'])) > 0
 				&& $fileLastModifiedDate < $when
 			) {
-				// File not changed, don't resend
+				// File not changed, do not resend
 				header('HTTP/1.0 304 Not Modified');
 
 				return null;

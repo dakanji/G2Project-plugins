@@ -159,8 +159,8 @@ class PanoramaJsModule extends GalleryModule {
 			GalleryCoreApi::requireOnce('modules/panoramajs/classes/PanoramaJsHelper.class');
 
 			/*
-			 * This won't obey the acting user id, but that's ok because it's only used to
-			 * determine if a panorama is even possible.  We'll still also gate on the acting
+			 * This would not obey the acting user id, but that is ok because it is only used to
+			 * determine if a panorama is even possible.  We will still also gate on the acting
 			 * user's permissions that we receive.
 			 */
 			list($ret, $images) = PanoramaJsHelper::fetchViewableImages($items);

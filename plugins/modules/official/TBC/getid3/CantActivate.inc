@@ -18,7 +18,7 @@
  */
 
 /**
- * Show this view if the module can't be activated.
+ * Show this view if the module cannot be activated.
  * @package Getid3
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>

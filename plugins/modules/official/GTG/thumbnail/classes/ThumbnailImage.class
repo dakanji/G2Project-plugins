@@ -375,7 +375,7 @@ class ThumbnailImage extends GalleryFileSystemEntity {
 
 			$derivative = array_shift($derivatives);
 
-			// Don't loop in thumbnail delete event.
+			// Do not loop in thumbnail delete event.
 			$key = 'ThumbnailImage::delete';
 
 			if (GalleryDataCache::containsKey($key)

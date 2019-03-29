@@ -150,7 +150,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function testDeleteWatermark() {
-		// Create a watermark (it'll be created as our active user)
+		// Create a watermark (it will be created as our active user)
 		$watermark = new WatermarkImage();
 
 		$ret = $watermark->create(__FILE__, 'test/file', 'phpunit_' . mt_rand() . '.gif');
@@ -192,7 +192,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function testDeleteWatermarkInUse() {
-		// Create a watermark (it'll be created as our active user)
+		// Create a watermark (it will be created as our active user)
 		$watermark = new WatermarkImage();
 
 		$ret = $watermark->create(__FILE__, 'test/file', 'phpunit_' . mt_rand() . '.gif');
@@ -252,7 +252,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 			'Confirm Delete'
 		);
 
-		// Verify that it's NOT gone
+		// Verify that it is NOT gone
 		$ret = $this->_verifyEntity($watermark);
 
 		if ($ret) {
@@ -324,7 +324,7 @@ class UserWatermarksControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		// We're expecting the same name, but the . changed to _ in the file extension
+		// We are expecting the same name, but the . changed to _ in the file extension
 		$this->assertEquals($expectedName, basename($path));
 	}
 

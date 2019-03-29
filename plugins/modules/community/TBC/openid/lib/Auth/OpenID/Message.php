@@ -16,7 +16,7 @@ require_once 'Auth/Yadis/XML.php';
 // For Auth_OpenID_FailureResponse
 require_once 'Auth/OpenID/Consumer.php';
 
-// This doesn't REALLY belong here, but where is better?
+// This does not REALLY belong here, but where is better?
 define(
 	'Auth_OpenID_IDENTIFIER_SELECT',
 	'http://specs.openid.net/auth/2.0/identifier_select'

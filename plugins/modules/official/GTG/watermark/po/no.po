@@ -134,7 +134,7 @@ msgstr "Trinn 3.  Velg hvilke bilder som skal vannmerkes"
 msgid "You must choose something to watermark!"
 msgstr "Du må velge noe å vannmerke!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Full størrelse (vil ikke skade orginalfilen)"
 
 msgid "Resizes"
@@ -220,7 +220,7 @@ msgstr "Plassering"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Plasser ditt vannmerke på lerretet nedenfor der du ønsker at det skal vises når du "

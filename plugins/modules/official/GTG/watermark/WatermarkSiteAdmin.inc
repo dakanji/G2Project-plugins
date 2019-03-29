@@ -189,7 +189,7 @@ class WatermarkSiteAdminView extends GalleryView {
 			}
 		}
 
-		// Set the form's encoding type since we're uploading binary files
+		// Set the form's encoding type since we are uploading binary files
 		if ($template->hasVariable('SiteAdmin')) {
 			$SiteAdmin            =& $template->getVariableByReference('SiteAdmin');
 			$SiteAdmin['enctype'] = 'multipart/form-data';

@@ -198,7 +198,7 @@ class AdminOrderView extends GalleryView {
 			$form['formName']    = 'AdminOrder';
 			$form['messageText'] = '';
 
-			// Figure out which item we're talking about
+			// Figure out which item we are talking about
 			$form['transactionId'] = (int)GalleryUtilities::getRequestVariables('transactionId');
 
 			if (empty($form['transactionId'])) {

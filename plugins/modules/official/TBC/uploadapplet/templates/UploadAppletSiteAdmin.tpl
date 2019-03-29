@@ -126,9 +126,9 @@
     <tr class="gbEven"><td>useJavaResize</td><td>true/false</td>
       <td>{g->text text="set to false if you want to avoid losing EXIF data when the image is resized and ImageMagick is not found"}</td></tr>
     <tr class="gbOdd"><td>suppressWarningIM</td><td>true/false</td>
-      <td>{g->text text="if true, the applet will not complain if it can't find ImageMagick"}</td></tr>
+      <td>{g->text text="if true, the applet will not complain if it cannot find ImageMagick"}</td></tr>
     <tr class="gbEven"><td>suppressWarningJpegtran</td><td>true/false</td>
-      <td>{g->text text="if true, the applet will not complain if it can't find Jpegtran"}</td></tr>
+      <td>{g->text text="if true, the applet will not complain if it cannot find Jpegtran"}</td></tr>
     <tr class="gbOdd"><td>im.jpegQuality</td><td>0-99</td>
       <td>{g->text text="quality of JPEG compression when resizing with ImageMagick"}</td></tr>
   </table>

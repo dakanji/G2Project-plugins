@@ -43,7 +43,7 @@ if (array_key_exists('EditRoute', $param) and $param['EditRoute'] != '') {
 
 		$form['routevalues'] = $routevalues;
 	} else {
-		// We have a route in the edit state that didn't get saved ... restoring
+		// We have a route in the edit state that did not get saved ... restoring
 		$oldroutes = GalleryCoreApi::getPluginParameter('module', 'map', 'Routes');
 
 		if ($oldroutes[1] != '') {
@@ -66,7 +66,7 @@ if (array_key_exists('EditFilter', $form) and $form['EditFilter'] != '') {
 		$form['EditFilter'] = explode('`', $form['EditFilter']);
 		$form['OldFilter']  = $param['EditFilter'];
 	} else {
-		// We have a filter in the Edit state that didn't get saved ... restoring
+		// We have a filter in the Edit state that did not get saved ... restoring
 		$oldfilters = GalleryCoreApi::getPluginParameter('module', 'map', 'Filters');
 
 		if ($oldfilters[1] != '') {

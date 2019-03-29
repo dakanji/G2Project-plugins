@@ -61,7 +61,7 @@ class ImageUploadHelper {
 	 * Gets username and password from request and checks that they are valid.  Returns an address
 	 * for the remote storage capabilities query, name of the sessionId parameter and its value.  If
 	 * remote storage capabilities are available returns them as well to save the client from one
-	 * extra call.  Adds user into the mobile users group if s/he isn't yet a member of it.
+	 * extra call.  Adds user into the mobile users group if s/he is not yet a member of it.
 	 *
 	 * @return array ('success', 'rsurl', 'sessionidparam', 'sessionid', 'capabilities')
 	 */
@@ -87,13 +87,13 @@ class ImageUploadHelper {
 		list($ret, $user) = GalleryCoreApi::fetchUserByUsername($username);
 
 		if ($ret) {
-			$gallery->debug("ERROR: Couldn't fetch user by user name.\n" . $ret->getAsText());
+			$gallery->debug("ERROR: Could not fetch user by user name.\n" . $ret->getAsText());
 
 			$status['success'] = NOKIAUPLOAD_ERR_AUTH;
 		}
 
 		if ($isDisabled || empty($user) || !$user->isCorrectPassword($password)) {
-			$gallery->debug("ERROR: Couldn't authenticate user $username.");
+			$gallery->debug("ERROR: Could not authenticate user $username.");
 
 			$status['success'] = NOKIAUPLOAD_ERR_AUTH;
 		}
@@ -109,7 +109,7 @@ class ImageUploadHelper {
 
 			list($ret, $ignored) = GalleryCoreApi::postEvent($event);
 
-			// ignore errors, we're erroring out anyway
+			// ignore errors, we are erroring out anyway
 			return $status;
 		}
 
@@ -128,11 +128,11 @@ class ImageUploadHelper {
 			return $status;
 		}
 
-		// Add user to the mobile users' group if s/he isn't yet a member of it
+		// Add user to the mobile users' group if s/he is not yet a member of it
 		list($ret, $groupId) = GalleryCoreApi::getPluginParameter('module', 'nokiaupload', 'id.mobileGroup');
 
 		if ($ret) {
-			$gallery->debug("ERROR: Couldn't get Mobile Group id.\n" . $ret->getAsText());
+			$gallery->debug("ERROR: Could not get Mobile Group id.\n" . $ret->getAsText());
 
 			return $status;
 		}
@@ -149,7 +149,7 @@ class ImageUploadHelper {
 			$ret = GalleryCoreApi::addUserToGroup($user->getId(), $groupId);
 
 			if ($ret) {
-				$gallery->debug("ERROR: Couldn't add user to mobile group.\n" . $ret->getAsText());
+				$gallery->debug("ERROR: Could not add user to mobile group.\n" . $ret->getAsText());
 
 				return $status;
 			}
@@ -264,7 +264,7 @@ class ImageUploadHelper {
 		// Set the default return value.  This will be changed only if we succeed.
 		$status['success'] = NOKIAUPLOAD_ERR_DIRCREATE;
 
-		// If the client didn't give the parent id we need to use our own upload album
+		// If the client did not give the parent id we need to use our own upload album
 		if (empty($parentId)) {
 			$gallery->debug('Parent album id not given by client. Trying our own upload album.');
 
@@ -272,7 +272,7 @@ class ImageUploadHelper {
 
 			if ($ret) {
 				$gallery->debug(
-					"ERROR: Couldn't get id.uploadAlbum parameter.\n" .
+					"ERROR: Could not get id.uploadAlbum parameter.\n" .
 					$ret->getAsText()
 				);
 
@@ -352,7 +352,7 @@ class ImageUploadHelper {
 				$gallery->debug("ERROR: Album named $albumName already exists.");
 			}
 
-			$gallery->debug("ERROR: Couldn't create album $albumName.\n" . $ret->getAsText());
+			$gallery->debug("ERROR: Could not create album $albumName.\n" . $ret->getAsText());
 
 			return $status;
 		}
@@ -366,14 +366,14 @@ class ImageUploadHelper {
 		$ret = $instance->save();
 
 		if ($ret) {
-			$gallery->debug("ERROR: Couldn't save album.\n" . $ret->getAsText());
+			$gallery->debug("ERROR: Could not save album.\n" . $ret->getAsText());
 
 			return $status;
 		}
 
 		/*
-		 * We don't allow other (mobile) users to add anything to our personal album.  If we get an
-		 * error here it doesn't really matter so we don't check for errors.
+		 * We do not allow other (mobile) users to add anything to our personal album.  If we get an
+		 * error here it does not really matter so we do not check for errors.
 		 */
 		list($ret, $groupId) = GalleryCoreApi::getPluginParameter('module', 'nokiaupload', 'id.mobileGroup');
 
@@ -428,7 +428,7 @@ class ImageUploadHelper {
 
 		/*
 		 * We must specify how many bytes are still available for the current user.  Use a big
-		 * (random) number or define a real limit if you wish.  (I don't know what the phone does
+		 * (random) number or define a real limit if you wish.  (I do not know what the phone does
 		 * with this value, probably nothing.)
 		 */
 		$status['spaceleft'] = 10000000;
@@ -571,7 +571,7 @@ class ImageUploadHelper {
 			$name     = $album->getTitle();
 
 			if (empty($name)) {
-				// If album doesn't have a name set use the file system name
+				// If album does not have a name set use the file system name
 				$name = $album->getPathComponent();
 			}
 
@@ -667,7 +667,7 @@ class ImageUploadHelper {
 			return array($ret, null);
 		}
 
-		// Choose a name for the album. Hopefully it's unique
+		// Choose a name for the album. Hopefully it is unique
 		$albumName = $module->translate('nokia-image-upload-album');
 
 		$ret = $album->create($parentId, $albumName);

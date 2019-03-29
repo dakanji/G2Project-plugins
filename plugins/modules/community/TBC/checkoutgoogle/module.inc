@@ -288,7 +288,7 @@ class CheckoutGoogleModule extends GalleryModule {
 
 		/*
 		 * Only define the rule to pass the Authorization header to Gallery in a request variable if
-		 * it is already active, or if Gallery can't access HTTP usernames and passwords
+		 * it is already active, or if Gallery cannot access HTTP usernames and passwords
 		 */
 		list($ret, $rewriteApi) = GalleryCoreApi::newFactoryInstance('RewriteApi');
 

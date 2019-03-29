@@ -151,7 +151,7 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
 			) === null
 			) {
 				// An alias for the string 'sreg' already exists, but
-				// it's defined for something other than simple
+				// it is defined for something other than simple
 				// registration
 				return null;
 			}
@@ -225,7 +225,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 			array(null, null, null, Auth_OpenID_SREG_NS_URI, $cls)
 		);
 
-		// Since we're going to mess with namespace URI mapping, don't
+		// Since we are going to mess with namespace URI mapping, don't
 		// mutate the object that was passed in.
 		$m           = $request->message;
 		$obj->ns_uri = $obj->_getSRegNS($m);

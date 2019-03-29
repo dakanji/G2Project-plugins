@@ -243,7 +243,7 @@ class TagsItemEditView extends GalleryView {
 		}
 
 		if (!$exifModuleActive || empty($tagExifInfo)) {
-			// No EXIF ensure we don't go to that tab by 'mistake'
+			// No EXIF ensure we do not go to that tab by 'mistake'
 			$tagMode = ($tagMode == 'Exif') ? 'Existing' : $tagMode;
 		}
 

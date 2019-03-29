@@ -38,7 +38,7 @@ msgstr "Mobilbrukere"
 msgid "Pictures from mobile phones"
 msgstr "Bilder fra mobiltelefoner"
 
-msgid "Couldn't fetch directory list."
+msgid "Could not fetch directory list."
 msgstr "Kunne ikke hente katalogliste."
 
 msgid "Login failed."
@@ -47,7 +47,7 @@ msgstr "Innlogging mislyktes."
 msgid "Album creation failed."
 msgstr "Opprettelse av album mislyktes."
 
-msgid "Couldn't retrieve settings."
+msgid "Could not retrieve settings."
 msgstr "Kunne ikke hente innstillinger."
 
 msgid "Upload failed."

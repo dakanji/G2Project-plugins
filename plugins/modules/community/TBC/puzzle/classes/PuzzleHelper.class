@@ -39,7 +39,7 @@ class PuzzleHelper {
 		list($ret, $enabled) = GalleryCoreApi::getPluginParameter('module', 'puzzle', 'enabled', $album->getId());
 
 		if ($ret) {
-			// don't know what can cause this error
+			// do not know what can cause this error
 			return array($ret, null);
 		}
 

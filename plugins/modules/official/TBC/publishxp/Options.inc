@@ -46,7 +46,7 @@ class OptionsController extends GalleryController {
 
 			/*
 			 * Any options set by ItemAddOptions also need to get passed forward but
-			 * we don't know what or how complex they are, so let's take the easy route of storing
+			 * we do not know what or how complex they are, so let's take the easy route of storing
 			 * the form in the session for later.
 			 */
 			$session =& $gallery->getSession();

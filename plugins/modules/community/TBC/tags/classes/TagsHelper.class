@@ -333,7 +333,7 @@ class TagsHelper {
 	public function assignTagById($itemId, $tagId) {
 		global $gallery;
 
-		// Don't insert if the entry already exists
+		// Do not insert if the entry already exists
 		$query = '
 	    SELECT
 		[TagItemMap::tagId]
@@ -445,7 +445,7 @@ class TagsHelper {
 	}
 
 	/**
-	 * Rename a Tag, keeping it's existing mappings
+	 * Rename a Tag, keeping its existing mappings
 	 *
 	 * @param string $oldName the tag current name
 	 * @param string $newName the tag new name

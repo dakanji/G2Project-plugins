@@ -37,7 +37,7 @@ msgstr "Utenti di Telefoni Cellulari"
 msgid "Pictures from mobile phones"
 msgstr "Immagini dai telefoni cellulari"
 
-msgid "Couldn't fetch directory list."
+msgid "Could not fetch directory list."
 msgstr "Non è stato possibile ottenere la lista delle cartelle."
 
 msgid "Login failed."
@@ -46,7 +46,7 @@ msgstr "Login fallito."
 msgid "Album creation failed."
 msgstr "Creazione album fallita."
 
-msgid "Couldn't retrieve settings."
+msgid "Could not retrieve settings."
 msgstr "Non è stato possibile richiamare la configurazione."
 
 msgid "Upload failed."

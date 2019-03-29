@@ -236,7 +236,7 @@ class NewAlbumControllerTest extends GalleryControllerTestCase {
 	public function testNewAlbumBogusParentId() {
 		GalleryUtilities::putRequestVariable('form[parentId]', 0);
 
-		// We don't allow this via the UI, so a system error is acceptable
+		// We do not allow this via the UI, so a system error is acceptable
 		$results = $this->handleRequest(ERROR_BAD_PARAMETER);
 	}
 }

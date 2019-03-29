@@ -66,7 +66,7 @@ msgstr "沒有 HTTP 認証"
 
 #, c-format
 msgid ""
-"Gallery can't access HTTP usernames and passwords.  You can still use your web server's "
+"Gallery cannot access HTTP usernames and passwords.  You can still use your web server's "
 "authentication.  Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 "Gallery 無法存取 HTTP 用戶名稱和密碼。你必需用你的網頁伺服器的認証手續。排除問題的說明在 %"
@@ -77,7 +77,7 @@ msgstr "網址改寫模組未啟用"
 
 #, c-format
 msgid ""
-"We can't fall back on passing HTTP usernames and passwords to Gallery because the URL "
+"We cannot fall back on passing HTTP usernames and passwords to Gallery because the URL "
 "rewrite module is disabled.  You should activate the URL rewrite module in the %sSite Admin "
 "Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting "
 "documentation is in the %sGallery Codex%s."
@@ -91,7 +91,7 @@ msgstr "網址改寫設定不正確"
 
 #, c-format
 msgid ""
-"PHP Path Info rewrite doesn't support the rule to fall back on passing HTTP usernames and "
+"PHP Path Info rewrite does not support the rule to fall back on passing HTTP usernames and "
 "passwords to Gallery.  You should uninstall and reinstall the URL rewrite module in the %"
 "sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  "
 "Troubleshooting documentation is in the %sGallery Codex%s."
@@ -117,7 +117,7 @@ msgstr "不明原因"
 
 #, c-format
 msgid ""
-"Gallery can't access HTTP usernames and passwords and automated checks failed to find a "
+"Gallery cannot access HTTP usernames and passwords and automated checks failed to find a "
 "cause.  Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 "Gallery 無法取得 HTTP 用戶名稱和密碼而且自動檢查無法找出原因。排除問題的說明在 %sGallery "
@@ -131,7 +131,7 @@ msgstr "使用 HTTP 認証："
 
 msgid ""
 "Gallery will prompt you to login with HTTP authentication when permission is denied.  HTTP "
-"authentication sends your client a realm to which your username belongs.  It's safe to leave "
+"authentication sends your client a realm to which your username belongs.  It is safe to leave "
 "the realm blank."
 msgstr ""
 "Gallery 會在存取被拒時要求你使用 HTTP 認証來登入。HTTP 認証會送給你的網頁用戶程式一個你的用戶"
@@ -204,5 +204,5 @@ msgid "Reset"
 msgstr "重置"
 
 #, c-format
-msgid "If you're not automatically redirected, %sclick here to finish logging out%s."
+msgid "If you are not automatically redirected, %sclick here to finish logging out%s."
 msgstr "如果你沒有被自動轉到新的網頁，請%s按這裡完成登出手續%s。"

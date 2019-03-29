@@ -127,7 +127,7 @@ msgstr "步驟三：選擇要打上浮水印的圖片"
 msgid "You must choose something to watermark!"
 msgstr "你必須選擇加浮水印的內容！"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "全尺寸（不會損壞原始檔案）"
 
 msgid "Resizes"
@@ -213,7 +213,7 @@ msgstr "位置"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr "在下面的畫布中放置你希望浮水印顯示的位置。如果需要，你可以為單個照片更改浮水印位置。"
 

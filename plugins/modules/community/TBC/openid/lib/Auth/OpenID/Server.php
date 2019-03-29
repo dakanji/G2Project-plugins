@@ -17,7 +17,7 @@
  * intermediate task -- deciding how to respond to the request -- will
  * depend on what type of request it is.
  *
- * If it's a request to authenticate a user (a 'checkid_setup' or
+ * If it is a request to authenticate a user (a 'checkid_setup' or
  * 'checkid_immediate' request), you need to decide if you will assert
  * that this user may claim the identity in question.  Exactly how you
  * do that is a matter of application policy, but it generally
@@ -27,7 +27,7 @@
  * information to the party making the request.
  *
  * Examine the properties of the {@link Auth_OpenID_CheckIDRequest}
- * object, and if and when you've come to a decision, form a response
+ * object, and if and when you have come to a decision, form a response
  * by calling {@link Auth_OpenID_CheckIDRequest::answer()}.
  *
  * Other types of requests relate to establishing associations between
@@ -49,7 +49,7 @@
  *
  * Since extensions do not change the way OpenID authentication works,
  * code to handle extension requests may be completely separate from
- * the {@link Auth_OpenID_Request} class here.  But you'll likely want
+ * the {@link Auth_OpenID_Request} class here.  But you will likely want
  * data sent back by your extension to be signed.  {@link
  * Auth_OpenID_ServerResponse} provides methods with which you can add
  * data to it which can be signed with the other data in the OpenID
@@ -68,7 +68,7 @@
  * to function.  Its mechanism for doing this is called a store.  The
  * store interface is defined in Interface.php.  Additionally, several
  * concrete store implementations are provided, so that most sites
- * won't need to implement a custom store.  For a store backed by flat
+ * would not need to implement a custom store.  For a store backed by flat
  * files on disk, see {@link Auth_OpenID_FileStore}.  For stores based
  * on MySQL, SQLite, or PostgreSQL, see the {@link
  * Auth_OpenID_SQLStore} subclasses.
@@ -965,9 +965,9 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 			}
 		}
 
-		// There's a case for making self.trust_root be a TrustRoot
-		// here.  But if TrustRoot isn't currently part of the
-		// "public" API, I'm not sure it's worth doing.
+		// There is a case for making self.trust_root be a TrustRoot
+		// here.  But if TrustRoot is not currently part of the
+		// "public" API, I'm not sure it is worth doing.
 		if ($message->isOpenID1()) {
 			$trust_root_param = 'trust_root';
 		} else {
@@ -1019,7 +1019,7 @@ class Auth_OpenID_CheckIDRequest extends Auth_OpenID_Request {
 
 	public function idSelect() {
 		// Is the identifier to be selected by the IDP?
-		// So IDPs don't have to import the constant
+		// So IDPs do not have to import the constant
 		return $this->identity == Auth_OpenID_IDENTIFIER_SELECT;
 	}
 
@@ -1707,10 +1707,10 @@ class Auth_OpenID_Decoder {
 
 		if ($message === null) {
 			/*
-			 * It's useful to have a Message attached to a
+			 * It is useful to have a Message attached to a
 			 * ProtocolError, so we override the bad ns value to build
-			 * a Message out of it.  Kinda kludgy, since it's made of
-			 * lies, but the parts that aren't lies are more useful
+			 * a Message out of it.  Kinda kludgy, since it is made of
+			 * lies, but the parts that are not lies are more useful
 			 * than a 'None'.
 			 */
 			$old_ns             = $query['openid.ns'];

@@ -61,7 +61,7 @@ class ItemCreateReplicaController extends GalleryController {
 				}
 
 				if (!isset($permissions['core.view'])) {
-					// Avoid information disclosure, act as if the item didn't exist.
+					// Avoid information disclosure, act as if the item does not exist.
 					return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 				}
 
@@ -88,7 +88,7 @@ class ItemCreateReplicaController extends GalleryController {
 				// Look out for monkey business
 				foreach ($selectedItems as $selectedItem) {
 					if (!isset($permissions[$selectedItem->getId()]['core.view'])) {
-						// Avoid information disclosure, act as if the item didn't exist.
+						// Avoid information disclosure, act as if the item does not exist.
 						return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 					}
 
@@ -106,7 +106,7 @@ class ItemCreateReplicaController extends GalleryController {
 				}
 
 				/*
-				 * Ok we've got linkable items and a legal destination album.
+				 * Ok we have got linkable items and a legal destination album.
 				 * Lock everything up and start linkin'.  We need to read lock
 				 * the source ids, source hierarchy and destination hierarchy.
 				 */
@@ -142,7 +142,7 @@ class ItemCreateReplicaController extends GalleryController {
 					$linkedItem = new $classType();
 
 					/*
-					 * If we're linking to an item that's already a link,
+					 * If we are linking to an item that is already a link,
 					 * then link to its source instead.
 					 */
 					if ($selectedItem->isLinked()) {
@@ -277,7 +277,7 @@ class ItemCreateReplicaView extends GalleryView {
 			$numPages = ceil(sizeof($peerIds) / $form['numPerPage']);
 
 			if (empty($page)) {
-				// determine which page we're on
+				// determine which page we are on
 				$page = 1;
 
 				for ($i = 0; $i < sizeof($peerIds); $i++) {
@@ -321,7 +321,7 @@ class ItemCreateReplicaView extends GalleryView {
 				$peers[$peerItem->getId()]             = (array)$peerItem;
 				$peers[$peerItem->getId()]['selected'] = isset($form['selectedIds'][$peerItem->getId()]);
 
-				// While we're at it, attach the thumbnails
+				// While we are at it, attach the thumbnails
 				if (isset($thumbnails[$peerItem->getId()])) {
 					$thumbnail = $thumbnails[$peerItem->getId()];
 

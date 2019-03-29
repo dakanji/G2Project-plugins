@@ -44,7 +44,7 @@ class CompleteController extends GalleryController {
 
 		/* note: errors returned here should NOT affect order record
 		   it just means the customer baulked at payment - not that there was a processing error
-		   besides it's easily spoofed */
+		   besides it is easily spoofed */
 		list($error, $transactionId) = GalleryUtilities::getRequestVariables('error', 'transactionId');
 
 		if (empty($transactionId)) {

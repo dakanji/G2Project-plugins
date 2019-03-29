@@ -745,7 +745,7 @@ class getid3_mp3 extends getid3_handler {
 				if ($thisfile_mpeg_audio['xing_flags']['frames']) {
 					$thisfile_mpeg_audio['VBR_frames'] = getid3_lib::BigEndian2Int(substr($headerstring, $VBRidOffset + 8, 4));
 
-					// don't count header Xing/Info frame
+					// do not count header Xing/Info frame
 					//$thisfile_mpeg_audio['VBR_frames']--;
 				}
 
@@ -1200,7 +1200,7 @@ class getid3_mp3 extends getid3_handler {
 		$this->decodeMPEGaudioHeader($offset, $firstframetestarray, false);
 
 		for ($i = 0; $i < GETID3_MP3_VALID_CHECK_FRAMES; $i++) {
-			// check next GETID3_MP3_VALID_CHECK_FRAMES frames for validity, to make sure we haven't run across a false synch
+			// check next GETID3_MP3_VALID_CHECK_FRAMES frames for validity, to make sure we have not run across a false synch
 			if (($nextframetestoffset + 4) >= $info['avdataend']) {
 				// end of file
 				return true;
@@ -1230,7 +1230,7 @@ class getid3_mp3 extends getid3_handler {
 					return false;
 				}
 			} elseif (!empty($firstframetestarray['mpeg']['audio']['framelength']) && (($nextframetestoffset + $firstframetestarray['mpeg']['audio']['framelength']) > $info['avdataend'])) {
-				// it's not the end of the file, but there's not enough data left for another frame, so assume it's garbage/padding and return OK
+				// it is not the end of the file, but there is not enough data left for another frame, so assume it is garbage/padding and return OK
 				return true;
 			} else {
 				// next frame is not valid, note the error and fail, so scanning can contiue for a valid frame sequence
@@ -1309,7 +1309,7 @@ class getid3_mp3 extends getid3_handler {
 					// good - found where expected
 					$ActualFrameLengthValues[] = $framelength;
 				} elseif ((substr($NextSyncPattern, 0, strlen($SyncPattern1)) == $SyncPattern1) || (substr($NextSyncPattern, 0, strlen($SyncPattern2)) == $SyncPattern2)) {
-					// ok - found one byte earlier than expected (last frame wasn't padded, first frame was)
+					// ok - found one byte earlier than expected (last frame was not padded, first frame was)
 					$ActualFrameLengthValues[] = ($framelength - 1);
 					$nextoffset--;
 				} elseif ((substr($NextSyncPattern, 2, strlen($SyncPattern1)) == $SyncPattern1) || (substr($NextSyncPattern, 2, strlen($SyncPattern2)) == $SyncPattern2)) {
@@ -1585,7 +1585,7 @@ class getid3_mp3 extends getid3_handler {
 					$FirstFrameAVDataOffset = $avdataoffset + $SynchSeekOffset;
 
 					if (!$this->decodeMPEGaudioHeader($FirstFrameAVDataOffset, $FirstFrameThisfileInfo, false)) {
-						// if this is the first valid MPEG-audio frame, save it in case it's a VBR header frame and there's
+						// if this is the first valid MPEG-audio frame, save it in case it is a VBR header frame and there's
 						// garbage between this frame and a valid sequence of MPEG-audio frames, to be restored below
 						unset($FirstFrameThisfileInfo);
 					}
@@ -1760,7 +1760,7 @@ class getid3_mp3 extends getid3_handler {
 						$max_frames_scan   = 50000;
 						$max_scan_segments = 10;
 
-						// don't play with these numbers:
+						// do not play with these numbers:
 						$FastMode                = false;
 						$SynchErrorsFound        = 0;
 						$frames_scanned          = 0;
@@ -2080,7 +2080,7 @@ class getid3_mp3 extends getid3_handler {
 			return false;
 		}
 
-		// These are just either set or not set, you can't mess that up :)
+		// These are just either set or not set, you cannot mess that up :)
 		// $rawarray['protection'];
 		// $rawarray['padding'];
 		// $rawarray['private'];
@@ -2331,7 +2331,7 @@ class getid3_mp3 extends getid3_handler {
 					break;
 
 				case 'abr':
-				default: // other VBR modes shouldn't be here(?)
+				default: // other VBR modes should not be here(?)
 					$LAMEpresetUsedLookup[$i] = '--alt-preset ' . $i;
 
 					break;

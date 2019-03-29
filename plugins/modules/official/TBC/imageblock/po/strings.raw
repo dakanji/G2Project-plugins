@@ -49,7 +49,7 @@ gettext("Pipe(|) separate list chosen from: randomImage, recentImage, viewedImag
 gettext("Pipe(|) separated list chosen from: title, date, views, owner, heading, fullSize, rawImage; the value can also be: none")
 gettext("Limit the item selection to the subtree of the gallery under the album with the given id; or the id of the item to display when used with specificItem block type")
 gettext("Scale images to this maximum size. If used alone Gallery will locate the most-closely-sized image to the specified value - larger images will be scaled down as necessary in your browser. If specified along with %sshow=fullSize the full size image will always be used and scaled down as necessary.")
-gettext("Just like %smaxSize except that it will not substitute an image smaller than the size you request, so you'll get the closest match in size possible.  Note that this may use a lot more bandwidth if a much larger image has to be scaled down in your browser.")
+gettext("Just like %smaxSize except that it will not substitute an image smaller than the size you request, so you will get the closest match in size possible.  Note that this may use a lot more bandwidth if a much larger image has to be scaled down in your browser.")
 gettext("Href for link on image; value of none for no link; default is link to item in the Gallery")
 gettext("Add a link target (for example, to open links in a new browser window)")
 gettext("Image frame to use around images")

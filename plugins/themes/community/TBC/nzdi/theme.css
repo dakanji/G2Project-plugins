@@ -96,7 +96,7 @@ table.gbDataTable th, table.gbDataTable td {
 
 /* ********************************************************************************
  * Sections
- * body.gallery     Page body in G2 standalone (doesn't apply to embedded)
+ * body.gallery     Page body in G2 standalone (does not apply to embedded)
  * #gallery         Page container
  * #gsNavBar        Top bar with breadcrumb and other links
  * #gsSidebar       Sidebar

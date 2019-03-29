@@ -28,7 +28,7 @@
   <input type="checkbox" id="TranscodeNever_cb" checked="checked" onclick="checkOne(this);"
    name="{g->formVar var="form[TranscodeOnUploadOption][transcodeNever]"}"/>
   <label for="TranscodeNever_cb">
-    {g->text text="Don't transcode now, I can do it manually later."}
+    {g->text text="Do not transcode now, I can do it manually later."}
   </label>
   <input type="checkbox" id="TranscodeOnUpload_cb" onclick="checkOne(this);"
    name="{g->formVar var="form[TranscodeOnUploadOption][transcodeOnUpload]"}"/>

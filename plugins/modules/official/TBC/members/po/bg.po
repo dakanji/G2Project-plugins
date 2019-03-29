@@ -48,7 +48,7 @@ msgstr "Администратори"
 msgid "Show Email Addresses"
 msgstr "E-mail адресите са показани"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "E-mail адресите не са показани"
 
 msgid "Member Items"

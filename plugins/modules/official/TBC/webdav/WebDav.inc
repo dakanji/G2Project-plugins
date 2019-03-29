@@ -37,7 +37,7 @@ class WebDavController extends GalleryController {
 
 		/*
 		 * Suppress generating HTML error pages for WebDAV clients.  Exploit the fact that event
-		 * listeners aren't currently stored in the database, so this event listener is only
+		 * listeners are not currently stored in the database, so this event listener is only
 		 * registered for this request.  Since this is the WebDAV controller, we know it is a WebDAV
 		 * request.
 		 */
@@ -57,7 +57,7 @@ class WebDavController extends GalleryController {
 		/*
 		 * Windows Web Folders does not respect HTTP auth requests in PUT responses, so the user
 		 * will not be prompted to login.  To work around this, request HTTP auth in all responses
-		 * to anonymous Windows Web Folders requests.  Consequently anonymous users can't connect to
+		 * to anonymous Windows Web Folders requests.  Consequently anonymous users cannot connect to
 		 * WebDAV with Windows Web Folders.
 		 */
 		$userAgent = GalleryUtilities::getServerVar('HTTP_USER_AGENT');
@@ -90,12 +90,12 @@ class WebDavController extends GalleryController {
 		 * GalleryCoreApi::fetchItemIdByPath does not.  This is a problem for WebDAV because GET
 		 * following a successful PUT at the same URL should succeed.
 		 *
-		 * An alternative is to consistantly normalize all requests.  While this shouldn't break any
+		 * An alternative is to consistantly normalize all requests.  While this should not break any
 		 * clients, PROPFIND following a successful PUT should strictly include the URL of the PUT.
 		 *
 		 * Consequently we reject an illegal path component.
 		 *
-		 * This condition may be relaxed in future if it's a problem.
+		 * This condition may be relaxed in future if it is a problem.
 		 */
 		$path = GalleryUtilities::getRequestVariables('path');
 
@@ -159,7 +159,7 @@ class WebDavController extends GalleryController {
 				return array($ret, null);
 			}
 
-			// Until there's a better way to delegate to Show/DownloadItem
+			// Until there is a better way to delegate to Show/DownloadItem
 			GalleryUtilities::putRequestVariable('itemId', $itemId);
 
 			if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
@@ -205,7 +205,7 @@ class WebDavController extends GalleryController {
 				return array($ret, null);
 			}
 
-			// Until there's a better way to delegate to ItemAdd
+			// Until there is a better way to delegate to ItemAdd
 			GalleryUtilities::putRequestVariable('itemId', $parentId);
 			GalleryUtilities::putRequestVariable('addPlugin', 'ItemAddWebDav');
 
@@ -217,7 +217,7 @@ class WebDavController extends GalleryController {
 			}
 
 			/*
-			 * Don't send HTTP redirects or HTML status/error back to DAV clients since we
+			 * Do not send HTTP redirects or HTML status/error back to DAV clients since we
 			 * have already set our status code. Fall through to the standard empty return.
 			 */
 		}
@@ -243,7 +243,7 @@ class WebDavController extends GalleryController {
 
 	/**
 	 * Overriding permissionCheck() since the WebDAV protocol needs to handle authentication
-	 * differently (redirects to a HTML based login view don't work here).
+	 * differently (redirects to a HTML based login view do not work here).
 	 * @see GalleryController::permissionCheck()
 	 */
 	public function permissionCheck($ret) {
@@ -278,7 +278,7 @@ class WebDavView extends GalleryView {
 	 * @see GalleryView::isControllerLike
 	 */
 	public function isControllerLike() {
-		// Although this view is controller-like, we return false since we can't add authTokens
+		// Although this view is controller-like, we return false since we cannot add authTokens
 		return false;
 	}
 

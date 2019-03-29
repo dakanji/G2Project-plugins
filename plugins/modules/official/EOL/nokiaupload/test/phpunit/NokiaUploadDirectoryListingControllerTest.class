@@ -148,7 +148,7 @@ class NokiaUploadDirectoryListingControllerTest extends GalleryControllerTestCas
 		$this->assertFalse(empty($results['status']['albums']), 'album list');
 
 		foreach ($results['status']['albums'] as $item) {
-			//in_array needle can't be array in php41
+			//in_array needle cannot be array in php41
 			if ($item == array('id' => $this->_album->getId(),
 			'parentid'              => $this->_album->getParentId(),
 			'name'                  => GalleryUtilities::HtmlEntityDecode($this->_album->getTitle()), )) {

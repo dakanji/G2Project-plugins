@@ -14,7 +14,7 @@
  */
 
 /**
- * Require the PEAR DB module because we'll need it for the SQL-based
+ * Require the PEAR DB module because we will need it for the SQL-based
  * stores implemented here.  We silence any errors from the inclusion
  * because it might not be present, and a user of the SQL stores may
  * supply an Auth_OpenID_DatabaseConnection instance that implements
@@ -51,9 +51,9 @@ require_once 'Auth/OpenID/Nonce.php';
  * To create the tables with the proper schema, see the createTables
  * method.
  *
- * This class shouldn't be used directly.  Use one of its subclasses
+ * This class should not be used directly.  Use one of its subclasses
  * instead, as those contain the code necessary to use a specific
- * database.  If you're an OpenID integrator and you'd like to create
+ * database.  If you are an OpenID integrator and you'd like to create
  * an SQL-driven store that wraps an application's database
  * abstraction, be sure to create a subclass of
  * {@link Auth_OpenID_DatabaseConnection} that calls the application's
@@ -73,7 +73,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 	 *
 	 * @param connection $connection This must be an established
 	 * connection to a database of the correct type for the SQLStore
-	 * subclass you're using.  This must either be an PEAR DB
+	 * subclass you are using.  This must either be an PEAR DB
 	 * connection handle or an instance of a subclass of
 	 * Auth_OpenID_DatabaseConnection.
 	 *
@@ -95,7 +95,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 		$this->associations_table_name = 'oid_associations';
 		$this->nonces_table_name       = 'oid_nonces';
 
-		// Check the connection object type to be sure it's a PEAR
+		// Check the connection object type to be sure it is a PEAR
 		// database connection.
 		if (!(is_object($connection)
 			&& (is_subclass_of($connection, 'db_common')

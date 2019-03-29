@@ -50,7 +50,7 @@ class DownloadDavMountView extends GalleryView {
 		echo "<dm:mount xmlns:dm=\"http://purl.org/NET/webdav/mount\">\n";
 
 		/*
-		 * I guess URL shouldn't include session id because a query string may break some clients
+		 * I guess URL should not include session id because a query string may break some clients
 		 * and reusing session id by another browser may be considdered session hijacking
 		 */
 		echo '  <dm:url>' . $urlGenerator->generateUrl(

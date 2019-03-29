@@ -686,7 +686,7 @@ class CheckoutModule extends GalleryModule {
 
 					list($ret, $products) = CheckoutProductMapHelper::fetchProducts($rootAlbumId, true, false);
 
-					// do use local settings, don't pass products to plugins to modify
+					// do use local settings, do not pass products to plugins to modify
 					if ($ret) {
 						return $ret;
 					}

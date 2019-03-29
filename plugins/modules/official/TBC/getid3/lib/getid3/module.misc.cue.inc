@@ -121,7 +121,7 @@ class getid3_cue extends getid3_handler {
 					$this->parseTrack($file[$i], $track_on);
 
 					if (isset($currentFile)) {
-						// if there's a file
+						// if there is a file
 						$this->cuesheet['tracks'][$track_on]['datafile'] = $currentFile;
 					}
 

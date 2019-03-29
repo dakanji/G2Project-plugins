@@ -76,8 +76,8 @@ class DownloadView extends GalleryView {
 
 				echo "\n";
 			} else {
-				// Poor IE6 doesn't know multipart.. just send zip
-				// Safari doesn't get filename in multipart and may even crash
+				// Poor IE6 does not know multipart.. just send zip
+				// Safari does not get filename in multipart and may even crash
 				$phpVm->header('Content-Type: application/zip');
 				$phpVm->header('Content-Disposition: inline; filename="G2cart.zip"');
 

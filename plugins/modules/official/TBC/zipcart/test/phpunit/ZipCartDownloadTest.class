@@ -171,7 +171,7 @@ class ZipCartDownloadTest extends GalleryTestCase {
 		$platform->setReply('is_readable', array('/data/tmp/passwd.zip'), false);
 		$gallery->setPlatform($platform);
 
-		// Verify a malicious file param can't get out of the tmp dir
+		// Verify a malicious file param cannot get out of the tmp dir
 		GalleryUtilities::putRequestVariable('file', '../../etc/passwd');
 
 		ob_start();

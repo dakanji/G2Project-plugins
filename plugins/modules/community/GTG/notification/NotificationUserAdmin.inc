@@ -100,7 +100,7 @@ class NotificationUserAdminController extends GalleryController {
 									return array($ret, null);
 								}
 
-								// Avoid information disclosure, act as if the item didn't exist.
+								// Avoid information disclosure, act as if the item does not exist.
 								if (!$authorized) {
 									return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 								}
@@ -271,7 +271,7 @@ class NotificationUserAdminView extends GalleryView {
 				 */
 				if (!isset($subscriptions[$notificationName])) {
 					if (!$instance->isGlobal() || !$isAdminGroup) {
-						// If it is an item related event then we don't display it here
+						// If it is an item related event then we do not display it here
 						continue;
 					}
 

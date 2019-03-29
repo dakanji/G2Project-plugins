@@ -114,7 +114,7 @@ class TranscodeModule extends GalleryModule {
 		}
 
 		if (empty($movie)) {
-			// Can't activate unless there's already toolkit support
+			// Cannot activate unless there is already toolkit support
 			return array(
 				null,
 				array(

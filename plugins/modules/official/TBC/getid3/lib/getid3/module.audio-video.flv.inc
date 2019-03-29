@@ -257,7 +257,7 @@ class getid3_flv extends getid3_handler {
 						} elseif ($info['flv']['video']['videoCodec'] == GETID3_FLV_VIDEO_VP6FLV_ALPHA) {
 							// contributed by schouwerwouØgmail*com
 							if (!isset($info['video']['resolution_x'])) {
-								// only when meta data isn't set
+								// only when meta data is not set
 								$PictureSizeEnc['x']           = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 6, 2));
 								$PictureSizeEnc['y']           = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 7, 2));
 								$info['video']['resolution_x'] = ($PictureSizeEnc['x'] & 0xFF) << 3;

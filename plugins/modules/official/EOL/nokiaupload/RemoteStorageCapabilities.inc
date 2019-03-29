@@ -33,7 +33,7 @@ class RemoteStorageCapabilitiesView extends GalleryView {
 	}
 
 	/**
-	 * API defines the output very specifically so we can't allow any global templating to be used.
+	 * API defines the output very specifically so we cannot allow any global templating to be used.
 	 * @see GalleryView::renderImmediate
 	 */
 	public function renderImmediate($status = null, $error = null) {
@@ -49,9 +49,9 @@ class RemoteStorageCapabilitiesView extends GalleryView {
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'nokiaupload');
 
 			if ($ret) {
-				$reply .= "Couldn't retrieve settings.\r\n";
+				$reply .= "Could not retrieve settings.\r\n";
 			} else {
-				$reply .= $module->translate("Couldn't retrieve settings.") . "\r\n";
+				$reply .= $module->translate("Could not retrieve settings.") . "\r\n";
 			}
 		} else {
 			$reply = NOKIAUPLOAD_ERR_NOERR . "\r\n" . implode('', $capabilities);

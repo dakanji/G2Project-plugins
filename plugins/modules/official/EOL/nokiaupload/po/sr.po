@@ -36,7 +36,7 @@ msgstr "Mobilni korisnici"
 msgid "Pictures from mobile phones"
 msgstr "Slike mobilnih korisnika"
 
-msgid "Couldn't fetch directory list."
+msgid "Could not fetch directory list."
 msgstr "Greška prilikom preuzimanja liste direktorijuma"
 
 msgid "Login failed."
@@ -45,7 +45,7 @@ msgstr "Greška prilikom prijave."
 msgid "Album creation failed."
 msgstr "Greška prilikom pravljenja albuma."
 
-msgid "Couldn't retrieve settings."
+msgid "Could not retrieve settings."
 msgstr "Greška prilikom preuzimanja parametara."
 
 msgid "Upload failed."

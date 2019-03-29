@@ -86,7 +86,7 @@
      <td colspan="3">
        <h3Flash Parameters included in the html</h3>
        <p class="giDescription">
-        {g->text text="These parameters are included in the html Simpleviewer loader if loaded through the Gallery link. If you use Simpleviewer externally they will have no effect, and you'll need to adjust your html file with the required values instead. "}
+        {g->text text="These parameters are included in the html Simpleviewer loader if loaded through the Gallery link. If you use Simpleviewer externally they will have no effect, and you will need to adjust your html file with the required values instead. "}
  	</p>
 
      </td>

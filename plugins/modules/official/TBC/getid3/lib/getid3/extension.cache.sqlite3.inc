@@ -207,7 +207,7 @@ class getID3_cached_sqlite3 extends getID3 {
 			return unserialize(base64_decode($result));
 		}
 
-		// if it hasn't been analyzed before, then do it now
+		// if it has not been analyzed before, then do it now
 		$analysis = parent::analyze($filename, $filesize, $original_filename);
 
 		// Save result
@@ -241,7 +241,7 @@ class getID3_cached_sqlite3 extends getID3 {
 	/**
 	 * get cached directory
 	 *
-	 * This function is not in the MySQL extention, it's ment to speed up requesting multiple files
+	 * This function is not in the MySQL extention, it is ment to speed up requesting multiple files
 	 * which is ideal for podcasting, playlists, etc.
 	 *
 	 * @access public

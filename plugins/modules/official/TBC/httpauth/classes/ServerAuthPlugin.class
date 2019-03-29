@@ -23,7 +23,7 @@ GalleryCoreApi::requireOnce('modules/httpauth/classes/HttpAuthHelper.class');
  *
  * With server authentication Gallery delegates authentication to the web server and Gallery trusts
  * the given username from the 'REMOTE_USER' variable without doing any authentication on its own
- * (same as in GalleryEmbed).  It's the web server's responsibility to do the authentication in some
+ * (same as in GalleryEmbed).  It is the web server's responsibility to do the authentication in some
  * way.
  *
  * @package HttpAuth

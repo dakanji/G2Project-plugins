@@ -53,7 +53,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Descarca Gallery Remote Applet"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr "Browser-ul tau nu permite appleturi java; foloseste o alta metoda de incarcare foto."
 
 msgid "Uploading files..."
@@ -177,10 +177,10 @@ msgstr ""
 "alege nu daca vrei sa eviti pierderea informatiilor EXIF cind faci redimensionare la "
 "fotografii si ImageMagick nu este instalat"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "daca da, aplicatia nu va mentiona lipsa lui ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "daca da, aplicatia nu va mentiona lipsa lui Jpegtran"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

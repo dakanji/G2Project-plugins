@@ -205,7 +205,7 @@ var Debaser = {
 		anim2.animate();
 		Debaser.toolsIsOpen = true;
 
-		// The info panel underneath might have an onClick. don't let that happen.
+		// The info panel underneath might have an onClick. do not let that happen.
 		YAHOO.util.Event.stopEvent(ev);
 	},
 	closeDrawer : function (id) {

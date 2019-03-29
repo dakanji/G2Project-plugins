@@ -64,7 +64,7 @@ class FPDF_TPL extends FPDF {
 	 *
 	 * If no parameter is given, the template uses the current page-size.
 	 * The Method returns an ID of the current Template. This ID is used later for using this template.
-	 * Warning: A created Template is used in PDF at all events. Still if you don't use it after creation!
+	 * Warning: A created Template is used in PDF at all events. Still if you do not use it after creation!
 	 *
 	 * @param int $x The x-coordinate given in user-unit
 	 * @param int $y The y-coordinate given in user-unit
@@ -288,7 +288,7 @@ class FPDF_TPL extends FPDF {
 	/**
 	 * See FPDF-Documentation ;-)
 	 *
-	 * AddPage is not available when you're "in" a template.
+	 * AddPage is not available when you are "in" a template.
 	 */
 	public function AddPage($orientation = '') {
 		if ($this->_intpl) {
@@ -299,7 +299,7 @@ class FPDF_TPL extends FPDF {
 	}
 
 	/**
-	 * Preserve adding Links in Templates ...won't work
+	 * Preserve adding Links in Templates ...would not work
 	 */
 	public function Link($x, $y, $w, $h, $link) {
 		if ($this->_intpl) {

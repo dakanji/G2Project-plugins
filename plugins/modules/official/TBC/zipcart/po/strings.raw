@@ -15,7 +15,7 @@ gettext("The exec() function is disabled in your PHP by the <b>disabled_function
 gettext("Enter full path to the zip executable.")
 gettext("Zip Path:")
 gettext("You must enter a path to your zip binary")
-gettext("The path you entered isn't valid or isn't executable")
+gettext("The path you entered is not valid or is not executable")
 gettext("Unable to create a zip file from this binary")
 gettext("The path you entered is valid")
 gettext("Debug output")

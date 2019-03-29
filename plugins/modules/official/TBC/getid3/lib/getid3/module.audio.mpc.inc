@@ -336,7 +336,7 @@ class getid3_mpc extends getid3_handler {
 		if ($thisfile_mpc_header['title_peak'] > 0) {
 			$info['replay_gain']['track']['peak'] = $thisfile_mpc_header['title_peak'];
 		} elseif (round($thisfile_mpc_header['max_level'] * 1.18) > 0) {
-			// why? I don't know - see mppdec.c
+			// why? I do not know - see mppdec.c
 			$info['replay_gain']['track']['peak'] = getid3_lib::CastAsInt(round($thisfile_mpc_header['max_level'] * 1.18));
 		}
 

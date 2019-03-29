@@ -1,6 +1,6 @@
 {*
   * This an eg. from googlesyndication.com to see how it work's
-  * you shoul delete the code below and insert your's to display as banner 
+  * you shoul delete the code below and insert yoursto display as banner 
 *}
 
 <table align="right"><tr><td>

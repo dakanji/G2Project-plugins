@@ -53,7 +53,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Descarregant Aplicació de Pujada per a mitjans"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr "El vostre navegador no suporta applets, haureu d'utilitzar un altre mètode de pujada."
 
 msgid "Uploading files..."
@@ -177,11 +177,11 @@ msgstr ""
 "configureu.ho com a  'false' si voleu evitar perdre les dades EXIF quan la imatge es "
 "redimensioni i no es trobi ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr ""
 "si el valor és 'true' (cert), l'aplicació no mostrarà error si no pot trobar ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "si el valor és 'true' (cert), l'aplicació no mostrarà error si no pot trobar Jpegtran"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

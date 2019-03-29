@@ -246,7 +246,7 @@ class getid3_wavpack extends getid3_handler {
 							$info['wavpack']['riff_trailer_size']   = $original_wav_filesize - $metablock['riff']['WAVE']['data'][0]['size'] - $metablock['riff']['header_size'];
 							$info['playtime_seconds']               = $info['wavpack']['blockheader']['total_samples'] / $info['audio']['sample_rate'];
 
-							// Safe RIFF header in case there's a RIFF footer later
+							// Safe RIFF header in case there is a RIFF footer later
 							$metablockRIFFheader = $metablock['data'];
 
 							break;
@@ -350,7 +350,7 @@ class getid3_wavpack extends getid3_handler {
 							// compute & store MD5 signature
 							$metablock['flags']['md5_checksum'] = (bool)($metablock['flags_raw'] & 0x080000);
 
-							// don't report progress %
+							// do not report progress %
 							$metablock['flags']['quiet_mode'] = (bool)($metablock['flags_raw'] & 0x100000);
 							$info['wavpack']['config_flags']  = $metablock['flags'];
 							$info['audio']['encoder_options'] = '';

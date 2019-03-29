@@ -48,7 +48,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Tõmban alla Galerii Remote Programmi"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr ""
 "Sinu veebilehitseja ei toeta programme; Sa peaksid kasutama teisi üleslaadimise meetoteid."
 
@@ -171,10 +171,10 @@ msgstr ""
 "sea false'ks, kui sa ei taha kaotada EXIF andmeid, kui pilti suurust ümber muudetakse ja "
 "ImageMagickut ei leita"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "kui true, siis ei kurda programm, kui ei leia ImageMagicut"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "kui true, siis programm ei kurda, kui ei leida Jpegtran'i"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

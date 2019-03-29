@@ -60,7 +60,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Завантаження Аплету Віддалена Галерея"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr ""
 "Ваш веб-оглядач не підтримує аплети; Ви зможете використовувати лише звичайний режим "
 "слайдшоу."
@@ -146,11 +146,11 @@ msgstr "якщо так, слайдшоу не завантажуватиме з
 msgid "does slideshow loop when it gets to the end?"
 msgstr "чи повинне слайдшоу починатись з початку, досягнувши кінця?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "якщо так, зображення менші за екран не розтягуватимуться"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "якщо так, слайдшоу буде завантажувати зображення ще до того як їх показує, що пришвидчить "

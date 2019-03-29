@@ -137,7 +137,7 @@ msgstr "第三步：选择您希望使用水印的图片版本。"
 msgid "You must choose something to watermark!"
 msgstr "您必须选择加水印的内容！"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "完全尺寸（不会损坏原始文件）"
 
 msgid "Resizes"
@@ -223,7 +223,7 @@ msgstr "布局"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr "在下面的画布中放置您希望水印显示的位置。如果需要，您可以为单个照片更改水印位置。"
 

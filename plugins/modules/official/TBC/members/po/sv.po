@@ -50,7 +50,7 @@ msgstr "Siteadministratörer"
 msgid "Show Email Addresses"
 msgstr "Visa E-postadresser"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Visa Inte E-postadresser"
 
 msgid "Member Items"

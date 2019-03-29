@@ -624,7 +624,7 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 	 * Get the extension arguments for the key/value pairs contained
 	 * in this message.
 	 *
-	 * @param aliases: An alias mapping. Set to None if you don't care
+	 * @param aliases: An alias mapping. Set to None if you do not care
 	 * about the aliases for this request.
 	 *
 	 * @access private
@@ -791,8 +791,8 @@ class Auth_OpenID_AX_KeyValueMessage extends Auth_OpenID_AX_Message {
 	 * fetch_response.
 	 *
 	 * XXX: what to do if the values are not present? default
-	 * parameter? this is funny because it's always supposed to return
-	 * a list, so the default may break that, though it's provided by
+	 * parameter? this is funny because it is always supposed to return
+	 * a list, so the default may break that, though it is provided by
 	 * the user's code, so it might be okay. If no default is
 	 * supplied, should the return be None or []?
 	 *

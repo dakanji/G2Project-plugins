@@ -63,7 +63,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Bezig met downloaden van de Gallery Remote applet"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Uw browser ondersteund geen java applets; U moet de standaard diashow gebruiken."
 
 msgid "Slideshow Applet Settings"
@@ -151,11 +151,11 @@ msgstr ""
 msgid "does slideshow loop when it gets to the end?"
 msgstr "gaat de slideshow opnieuw door wanneer het aan het einde komt?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "indien waar, zullen afbeeldingen kleiner dan het scherm zullen niet worden uitgrekt"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "indien waar, zal de diashow afbeeldingen downloaden voordat ze benodigd zijn, wat de "

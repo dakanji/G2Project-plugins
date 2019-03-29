@@ -93,7 +93,7 @@ class AdminMembersView extends GalleryView {
 			return array($ret, null);
 		}
 
-		// Load our default values if we didn't just come from this form.
+		// Load our default values if we did not just come from this form.
 		if ($form['formName'] != 'AdminMembers') {
 			foreach (array('canViewMembersModule', 'canViewEmailAddress') as $key) {
 				list($ret, $form[$key]) = GalleryCoreApi::getPluginParameter('module', 'members', $key);
@@ -127,7 +127,7 @@ class AdminMembersView extends GalleryView {
 
 		$members['emailViews'] = array(
 			1 => $module->translate('Show Email Addresses'),
-			0 => $module->translate("Don't Show Email Addresses"),
+			0 => $module->translate("Do not Show Email Addresses"),
 		);
 
 		$template->setVariable('Members', $members);

@@ -333,7 +333,7 @@ class pdf_parser {
 				while (1) {
 					$match = strpos($c->buffer, '>', $pos);
 
-					// If you can't find it, try
+					// If you cannot find it, try
 					// reading more data from the stream
 					if ($match === false) {
 						if (!$c->increase_length()) {
@@ -400,7 +400,7 @@ class pdf_parser {
 					// parenthesis
 					$match = strpos($c->buffer, ')', $pos);
 
-					// If you can't find it, try
+					// If you cannot find it, try
 					// reading more data from the stream
 					if ($match === false) {
 						if (!$c->increase_length()) {
@@ -474,7 +474,7 @@ class pdf_parser {
 					if (($tok2 = $this->pdf_read_token($c)) !== false) {
 						if (is_numeric($tok2)) {
 							// Two numeric tokens in a row.
-							// In this case, we're probably in
+							// In this case, we are probably in
 							// front of either an object reference
 							// or an object specification.
 							// Determine the case and return the data
@@ -523,7 +523,7 @@ class pdf_parser {
 			if (isset($this->xref['xref'][$obj_spec[1]][$obj_spec[2]])) {
 				// Save current file position
 				// This is needed if you want to resolve
-				// references while you're reading another object
+				// references while you are reading another object
 				// (e.g.: if you need to determine the length
 				// of a stream)
 				$old_pos = ftell($c->file);
@@ -538,7 +538,7 @@ class pdf_parser {
 					$this->error("Unable to find object ({$obj_spec[1]}, {$obj_spec[2]}) at expected location");
 				}
 
-				// If we're being asked to store all the information
+				// If we are being asked to store all the information
 				// about the object, we add the object ID and generation
 				// number for later use
 				$this->actual_obj =& $result;
@@ -559,7 +559,7 @@ class pdf_parser {
 					$value = $this->pdf_read_value($c);
 
 					if ($value === false || count($result) > 4) {
-						// in this case the parser coudn't find an endobj so we break here
+						// in this case the parser coud not find an endobj so we break here
 						break;
 					}
 

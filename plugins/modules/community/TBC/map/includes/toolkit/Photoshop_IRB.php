@@ -174,7 +174,7 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 		$i--;
 	}
 
-	// Cycle through the packed output data until it's size is less than 32000 bytes, outputting each 32000 byte block to an APP13 segment
+	// Cycle through the packed output data until it is size is less than 32000 bytes, outputting each 32000 byte block to an APP13 segment
 	while (strlen($packed_IRB_data) > 32000) {
 		// Change: Fixed put_Photoshop_IRB to output "Photoshop 3.0\x00" string with every APP13 segment, not just the first one, as of 1.03
 		// Write a 32000 byte APP13 segment
@@ -199,7 +199,7 @@ function put_Photoshop_IRB($jpeg_header_data, $new_IRB_data) {
 		$i++;
 	}
 
-	// Write the last block of packed output data to an APP13 segment - Note array_splice doesn't work with multidimensional arrays, hence inserting a blank string
+	// Write the last block of packed output data to an APP13 segment - Note array_splice does not work with multidimensional arrays, hence inserting a blank string
 	array_splice($jpeg_header_data, $i + 1, 0, '');
 	$jpeg_header_data[$i + 1] = array(
 		'SegType' => 0xED,
@@ -237,7 +237,7 @@ function get_Photoshop_IPTC($Photoshop_IRB_data) {
 	for ($i = 0; $i < count($Photoshop_IRB_data); $i++) {
 		// Check if each record is a IPTC record (which has id 0x0404)
 		if ($Photoshop_IRB_data[$i]['ResID'] == 0x0404) {
-			// We've found an IPTC block - Decode it
+			// We have found an IPTC block - Decode it
 			$IPTC_Data_Out = get_IPTC($Photoshop_IRB_data[$i]['ResData']);
 		}
 	}
@@ -279,7 +279,7 @@ function put_Photoshop_IPTC($Photoshop_IRB_data, $new_IPTC_block) {
 	for ($i = 0; $i < count($Photoshop_IRB_data); $i++) {
 		// Check if each record is a IPTC record (which has id 0x0404)
 		if ($Photoshop_IRB_data[$i]['ResID'] == 0x0404) {
-			// We've found an IPTC block - save the position
+			// We have found an IPTC block - save the position
 			$iptc_block_pos = $i;
 		}
 	}
@@ -1086,7 +1086,7 @@ function Interpret_Transfer_Function($Transfer_Function_Binary) {
 	if ($Trans_vals['Override'] == 0) {
 		$output_str .= "\nOverride: Let printer supply curve";
 	} else {
-		$output_str .= "\nOverride: Override printer’s default transfer curve";
+		$output_str .= "\nOverride: Override printerï¿½s default transfer curve";
 	}
 
 	// Return the result
@@ -1159,7 +1159,7 @@ function Interpret_Halftone($Halftone_Binary) {
 
 	// Interpret Printer Default Screens
 	if ($HalftoneInfo['Default'] == 1) {
-		$output_str .= "Use printer’s default screens\n";
+		$output_str .= "Use printerï¿½s default screens\n";
 	} else {
 		$output_str .= "Use Other (not Printer Default) Screens Selected\n";
 	}
@@ -1244,9 +1244,9 @@ $GLOBALS['Photoshop_ID_Names'] = array(
  *
  ******************************************************************************/
 $GLOBALS['Photoshop_ID_Descriptions'] = array(
-	0x03E8 => 'Obsolete—Photoshop 2.0 only. number of channels, rows, columns, depth, and mode.',
+	0x03E8 => 'Obsoleteï¿½Photoshop 2.0 only. number of channels, rows, columns, depth, and mode.',
 	0x03E9 => 'Optional. Macintosh print manager print info record.',
-	0x03EB => 'Obsolete—Photoshop 2.0 only. Contains the indexed color table.',
+	0x03EB => 'Obsoleteï¿½Photoshop 2.0 only. Contains the indexed color table.',
 	0x03ED => 'ResolutionInfo structure. See Appendix A in Photoshop SDK Guide.pdf',
 	0x03EE => 'Names of the alpha channels as a series of Pascal strings.',
 	0x03EF => 'DisplayInfo structure. See Appendix A in Photoshop SDK Guide.pdf',

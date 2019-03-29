@@ -224,7 +224,7 @@ class PermalinksModule extends GalleryModule {
 			}
 
 			if ($isActive) {
-				// We can't run without the rewrite module, so we might as well deactivate.
+				// We cannot run without the rewrite module, so we might as well deactivate.
 				list($ret, $redirect) = $this->deactivate();
 
 				if ($ret) {

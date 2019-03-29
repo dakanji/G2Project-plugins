@@ -206,7 +206,7 @@ class UploadifyController extends GalleryController {
 		$description = (isset($form['set']['description']) && $form['set']['description'] == 1) ? $base : '';
 
 		/*
-		 * Don't use uploaded files, because the framework cannot safely copy them.
+		 * Do not use uploaded files, because the framework cannot safely copy them.
 		 * Move it to our temporary directory first.
 		 */
 		$platform =& $gallery->getPlatform();
@@ -276,7 +276,7 @@ class UploadifyController extends GalleryController {
 			 * Swallow option warnings and errors for now.
 			 *
 			 * TODO: Report warnings and errors back to Gallery Remote.  If the upload is denied
-			 * because of quota limitations, then we'll get an error that we should report back.
+			 * because of quota limitations, then we will get an error that we should report back.
 			 */
 		}
 
@@ -406,7 +406,7 @@ class UploadifyController extends GalleryController {
 
 			$operations = $resize[$mimeType]['operations'];
 
-			// Special case to make sure that we don't upsample photos
+			// Special case to make sure that we do not upsample photos
 			if (GalleryUtilities::isA($item, 'GalleryPhotoItem')
 				&& $item->getWidth() <= $resize['width']
 				&& $item->getHeight() <= $resize['height']

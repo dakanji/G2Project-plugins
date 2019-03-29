@@ -240,7 +240,7 @@ class ItemEditWatermarkPluginTest extends ItemEditPluginTestCase {
 			$results
 		);
 
-		// And verify that they're all gone
+		// And verify that they are all gone
 		foreach (array($this->_preferred, $this->_resize, $this->_thumbnail) as $derivative) {
 			list($ret, $derivative) = $derivative->refresh();
 

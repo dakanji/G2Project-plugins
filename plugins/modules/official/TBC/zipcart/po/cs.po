@@ -65,7 +65,7 @@ msgstr "Cesta k programu zip:"
 msgid "You must enter a path to your zip binary"
 msgstr "Musíte zadat cestu k programu zip"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Cesta, kterou jste zadali, je neplatná nebo soubor není spustitelný"
 
 msgid "Unable to create a zip file from this binary"

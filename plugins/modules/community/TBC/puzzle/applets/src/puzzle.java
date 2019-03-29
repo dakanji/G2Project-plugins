@@ -27,7 +27,7 @@
 //
 //  [ Import ]
 //
-// I know that I don't need to include all of these, but it makes
+// I know that I do not need to include all of these, but it makes
 // virtually no difference in compile time and no change in compiled
 // size.  Some day I may spend an hour to get these down to just what
 // I use.
@@ -46,7 +46,7 @@ public class puzzle extends Applet implements Runnable, MouseListener
 {
    // [ Global variables ]
    //
-   // I wish I didn't have to use any, but my code would look much worse than
+   // I wish I did not have to use any, but my code would look much worse than
    // it already does, and it looks bad enough now.
    //
    Thread killme = null;               // No clue
@@ -399,7 +399,7 @@ public class puzzle extends Applet implements Runnable, MouseListener
    // [ CreateXPolygon (int X, int Y, int width, int height, int thickness) ] {{{
    // 
    // Creates a polygon X for covering images
-   // Doesn't optimize polygon if thickness is 0 or 1.
+   // Does not optimize polygon if thickness is 0 or 1.
    // 
    public Polygon CreateXPolygon(int X, int Y, int width, int height, int thickness)
      {
@@ -613,7 +613,7 @@ public class puzzle extends Applet implements Runnable, MouseListener
         int w;
         
         //
-        // There is no need to draw a bar that doesn't exist.
+        // There is no need to draw a bar that does not exist.
         // 
 	if (Bar_Positions == -1)
 	  {
@@ -933,7 +933,7 @@ public class puzzle extends Applet implements Runnable, MouseListener
    
    // [ mouse* (MouseEvent e) ] {{{
    //
-   // Just blank functions so that Java doesn't complain.
+   // Just blank functions so that Java does not complain.
    public void mouseClicked(MouseEvent e){};
    public void mouseReleased(MouseEvent e){};
    public void mouseExited(MouseEvent e){};

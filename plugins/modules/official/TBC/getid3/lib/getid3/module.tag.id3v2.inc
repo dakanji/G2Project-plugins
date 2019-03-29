@@ -64,7 +64,7 @@ class getid3_id3v2 extends getid3_handler {
 		}
 
 		if ($id3v2_majorversion > 4) {
-			// this script probably won't correctly parse ID3v2.5.x and above (if it ever exists)
+			// this script probably would not correctly parse ID3v2.5.x and above (if it ever exists)
 			$info['error'][] = 'this script only parses up to ID3v2.4.x - this tag is ID3v2.' . $id3v2_majorversion . '.' . $thisfile_id3v2['minorversion'];
 
 			return false;
@@ -113,13 +113,13 @@ class getid3_id3v2 extends getid3_handler {
 				break;
 		}
 
-		// length of ID3v2 tag in 10-byte header doesn't include 10-byte header length
+		// length of ID3v2 tag in 10-byte header does not include 10-byte header length
 		$thisfile_id3v2['headerlength']     = getid3_lib::BigEndian2Int(substr($header, 6, 4), 1) + 10;
 		$thisfile_id3v2['tag_offset_start'] = $this->StartingOffset;
 		$thisfile_id3v2['tag_offset_end']   = $thisfile_id3v2['tag_offset_start'] + $thisfile_id3v2['headerlength'];
 
 		// create 'encoding' key - used by getid3::HandleAllTags()
-		// in ID3v2 every field can have it's own encoding type
+		// in ID3v2 every field can have it is own encoding type
 		// so force everything to UTF-8 so it can be handled consistantly
 		$thisfile_id3v2['encoding'] = 'UTF-8';
 

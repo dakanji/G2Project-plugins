@@ -218,7 +218,7 @@ class ThumbnailModuleExtras {
 
 					/*
 					 * Since the class hierarchy for ThumbnailImage changed in this upgrade,
-					 * we can't use loadEntitiesById().
+					 * we cannot use loadEntitiesById().
 					 */
 					$parentIdQuery = '
 						UPDATE 

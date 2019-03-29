@@ -128,7 +128,7 @@ class OpenIdSiteAdminView extends GalleryView {
 		$OpenIdSiteAdmin['fetchResult']   = $fetcher->get($OpenIdSiteAdmin['fetchUrl']);
 		$OpenIdSiteAdmin['expectedUrl']   = $OpenIdSiteAdmin['fetchUrl'] . '.txt';
 
-		// Load our default values if we didn't just come from this form
+		// Load our default values if we did not just come from this form
 		if ($form['formName'] != 'OpenIdSiteAdmin') {
 			$form['formName'] = 'OpenIdSiteAdmin';
 		}

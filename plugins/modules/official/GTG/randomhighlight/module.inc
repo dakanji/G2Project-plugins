@@ -268,7 +268,7 @@ class RandomHighlightModule extends GalleryModule {
 		$loop    = GalleryDataCache::containsKey("randomhighlight:load-$id");
 		$count   = GalleryDataCache::containsKey('randomhighlight:count') ? GalleryDataCache::get('randomhighlight:count') : 0;
 
-		// Don't refresh the highlight during an upgrade; also limit # of reselects in 1 request
+		// Do not refresh the highlight during an upgrade; also limit # of reselects in 1 request
 		if ($duringUpgrade || $loop || $count >= 3) {
 			return null;
 		}
@@ -304,11 +304,11 @@ class RandomHighlightModule extends GalleryModule {
 		$viewName = GalleryUtilities::getRequestVariables('view');
 
 		/*
-		 * Check if we need to pick a new highlight. Don't pick a new one on DownloadItem
-		 * requests, unless we don't have the permission to see the current highlight
+		 * Check if we need to pick a new highlight. Do not pick a new one on DownloadItem
+		 * requests, unless we do not have the permission to see the current highlight
 		 */
 		if (($isOld && $viewName != 'core.DownloadItem') || !$canSee) {
-			// Lock and refresh to ensure another request didn't just update highlight
+			// Lock and refresh to ensure another request did not just update highlight
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($id);
 
 			if ($ret) {

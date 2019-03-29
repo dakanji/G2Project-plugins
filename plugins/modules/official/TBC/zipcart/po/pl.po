@@ -66,7 +66,7 @@ msgstr "Ścieżka zip:"
 msgid "You must enter a path to your zip binary"
 msgstr "Proszę podać ścieżkę do binariów zip"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Podana ścieżka nie istnieje lub nie ma ustawionych praw wykonywania"
 
 msgid "Unable to create a zip file from this binary"

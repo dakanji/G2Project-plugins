@@ -65,7 +65,7 @@ class PDFOutView extends GalleryView {
 			return $ret;
 		}
 
-		// Figure out which item we're talking about
+		// Figure out which item we are talking about
 		$transactionId = (int)GalleryUtilities::getRequestVariables('transactionId');
 
 		if (empty($transactionId)) {
@@ -348,7 +348,7 @@ class PDFOutView extends GalleryView {
 	}
 
 	public function fString($string) {
-		// fpdf doesn't support utf-8 :-(
+		// fpdf does not support utf-8 :-(
 		$string = trim($string);
 
 		if (function_exists('iconv')) {

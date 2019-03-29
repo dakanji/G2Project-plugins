@@ -18,7 +18,7 @@
  */
 
 /**
- * A view to display when there's no toolkit support for this module.
+ * A view to display when there is no toolkit support for this module.
  * @package SquareThumb
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>

@@ -173,7 +173,7 @@ class WatermarkModule extends GalleryModule {
 					}
 
 					if ($searchResults->resultCount() == 0) {
-						// We're done
+						// We are done
 						break;
 					}
 

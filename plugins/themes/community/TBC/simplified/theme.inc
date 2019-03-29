@@ -172,7 +172,7 @@ class SimplifiedTheme extends GalleryTheme {
 		}
 
 		foreach ($maxRowSizes as $index => $rowSize) {
-			// if we didn't find any thumbnails in row, use default album thumbnail size
+			// if we did not find any thumbnails in row, use default album thumbnail size
 			if ($rowSize == 0) {
 				$maxRowSizes[$index] = $albumThumbnailSize;
 			}

@@ -49,7 +49,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Lejupielādē Galerijas attēlināto sīklietotni"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr ""
 "Jūsu pārlūkprogramma neatbalsta sīklietotnes; Jums ir jālieto kāda cita augšupielādes metode."
 
@@ -162,10 +162,10 @@ msgid ""
 "is not found"
 msgstr ""
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr ""
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr ""
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

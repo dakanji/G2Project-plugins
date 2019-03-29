@@ -18,7 +18,7 @@ enabled mobile phone (e.g. Nokia 3650 and 6600) she will be added to the mobile 
 group. The login address is visible in the description of the album (make sure your
 layout shows album descriptions).
 
-If you don't have a mobile phone that supports the protocol you can still play with
+If you do not have a mobile phone that supports the protocol you can still play with
 the module.  For example to login using the Image uploader module type
 http://your.gallery/main.php?g2_controller=nokiaupload.Login&Username=<username>&Password=<password>
 in your browser's address field.

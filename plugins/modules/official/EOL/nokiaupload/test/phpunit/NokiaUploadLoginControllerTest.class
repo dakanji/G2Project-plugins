@@ -67,7 +67,7 @@ class NokiaUploadLoginControllerTest extends GalleryControllerTestCase {
 		$this->_password = 'password';
 
 		if (!$this->_user->isCorrectPassword($this->_password)) {
-			return $this->assertTrue(false, "test user wasn't created with expected password");
+			return $this->assertTrue(false, "test user was not created with expected password");
 		}
 
 		$this->_saveUser = $gallery->getActiveUser();

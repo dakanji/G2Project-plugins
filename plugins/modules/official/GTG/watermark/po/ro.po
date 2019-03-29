@@ -133,7 +133,7 @@ msgstr "Pasul 3.  Alege imaginile pe care sa aplici watermark-ul"
 msgid "You must choose something to watermark!"
 msgstr "Trebuie sa alegi ceva pe care sa aplici watermark-ul!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Dimensiunea originala (nu afecteaza fisierul original)"
 
 msgid "Resizes"
@@ -219,7 +219,7 @@ msgstr "Pozitionare"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Pozitioneaza watermark-ul pe plansa de mai jos in locul unde vrei sa apara pe fotografii.  "

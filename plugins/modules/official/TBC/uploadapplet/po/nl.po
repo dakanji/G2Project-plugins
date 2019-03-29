@@ -50,7 +50,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Bezig met downloaden van de Gallery Remote applet"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr ""
 "Uw browser ondersteund geen applets; u zult één van de andere upload methodes moeten "
 "gebruiken."
@@ -176,12 +176,12 @@ msgstr ""
 "op false instellen indien U wilt voorkomen dat de EXIF gegevens verloren gaan bij het "
 "verschalen van de afbeeldingen zonder ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr ""
 "Indien true, dan geeft de upload applet geen waarschuwing indien ImageMagick niet "
 "geactiveerd is"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr ""
 "Indien true, dan geeft de upload applet geen waarschuwing indien Jpegtran niet gevonden is"
 

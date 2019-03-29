@@ -44,7 +44,7 @@ msgstr "Site Beheer"
 msgid "Show Email Addresses"
 msgstr "E-mail Adressen Weergeven"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "E-mail Adressen niet Weergeven"
 
 msgid "Member Items"

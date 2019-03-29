@@ -81,7 +81,7 @@ class ReuploadPhotoOption extends ItemEditOption {
 
 			/*
 			 * The parent must be read locked at this point to make sure that it's
-			 * not going to be moved around while we're copying a file to its directory.
+			 * not going to be moved around while we are copying a file to its directory.
 			 */
 			list($ret, $lockIds[]) = GalleryCoreApi::acquireReadLockParents($item->getId());
 

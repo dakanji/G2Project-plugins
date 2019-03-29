@@ -25,7 +25,7 @@
 {if $map.mode eq "Normal"}
     {if $map.useMarkerSet eq "none"}
     <!-- 
-    If there are no markers, don't display a map. Instead, show a link to the admin page for the 
+    If there are no markers, do not display a map. Instead, show a link to the admin page for the 
     markers to be created 
     -->
     <div class="gbBlock">
@@ -39,7 +39,7 @@
     {/if}
 
     {if isset($map.nogpscoords) and $map.nogpscoords}
-    <!-- If there are no items with GPS coordinate, don't display a map and show a message -->
+    <!-- If there are no items with GPS coordinate, do not display a map and show a message -->
     <div class="gbBlock">
        <h2 class="giError">{g->text text="There are no items with GPS coordinates"}
        <a href='http://codex.gallery2.org/index.php/Gallery2:Modules:UserGuide'> {g->text text="Check the Wiki for more information"}</a></h2>

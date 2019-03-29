@@ -65,7 +65,7 @@ msgstr "Zip Path:"
 msgid "You must enter a path to your zip binary"
 msgstr "당신의 Zip 바이러니의 경로를 입력해야합니다."
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "당신이 입력한 경로는 실행할 수 없거나 값이 잘못돼었습니다."
 
 msgid "Unable to create a zip file from this binary"

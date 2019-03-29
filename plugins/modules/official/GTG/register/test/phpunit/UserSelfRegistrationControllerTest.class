@@ -212,7 +212,7 @@ class UserSelfRegistrationControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function testEntities() {
-		// Make sure emails sent out don't include text like &amp;
+		// Make sure emails sent out do not include text like &amp;
 		// Also verify password with <&"> characters is not entitized before being hashed
 		global $gallery;
 

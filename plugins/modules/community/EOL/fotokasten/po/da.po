@@ -77,7 +77,7 @@ msgid "Enter a valid affiliate password"
 msgstr "Indtast et gyldigt affiliale kodeord"
 
 msgid ""
-"You're currently using the default Gallery affiliate id.  This means that the Gallery "
+"You are currently using the default Gallery affiliate id.  This means that the Gallery "
 "project will receive a small commission for each print made from your website."
 msgstr ""
 "Du bruger i øjeblikket Gallery's standard affiliate-id. Dette betyder at Gallery projektet "

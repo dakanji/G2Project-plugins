@@ -83,7 +83,7 @@ class WatermarkTest extends GalleryTestCase {
 	}
 
 	public function testFetchWatermarks1() {
-		// We never gave permission to our test watermark, so it shouldn't show up
+		// We never gave permission to our test watermark, so it should not show up
 		list($ret, $watermarks) = WatermarkHelper::fetchWatermarks();
 
 		if ($ret) {

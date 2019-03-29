@@ -60,7 +60,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Descarca Gallery Remote Applet"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Browser-ul tau nu suporta applets; foloseste prezentarea standard."
 
 msgid "Slideshow Applet Settings"
@@ -146,11 +146,11 @@ msgstr "daca da, nu permite ca prezentarea sa descarce folografii la rezolutie m
 msgid "does slideshow loop when it gets to the end?"
 msgstr "vrei ca prezentarea sa re-inceapa cind ajunga la final ?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "daca da, fotografiile mai mici decit ecranul nu vor fi marite"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "daca da, prezentarea va descarca fotografiile inainte sa fie necesar, ceea ce va mari "

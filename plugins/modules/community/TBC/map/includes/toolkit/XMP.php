@@ -131,7 +131,7 @@ function put_XMP_text($jpeg_header_data, $newXMP) {
 	// Change: changed to initialise $i properly as of revision 1.04
 	$i = 0;
 
-	// Loop until a block is found that isn't an APP0 or APP1
+	// Loop until a block is found that is not an APP0 or APP1
 	while (($jpeg_header_data[$i]['SegName'] == 'APP0') || ($jpeg_header_data[$i]['SegName'] == 'APP1')) {
 		$i++;
 	}
@@ -208,7 +208,7 @@ function write_XMP_array_to_text($xmparray) {
 	// whether UTF-16 or UTF-8 is being used.
 	$output_XMP_text = "<?php xpacket begin='\xef\xbb\xbf' id='W5M0MpCehiHzreSzNTczkc9d'?>\n";
 
-	// Photoshop Seems to add this, but there doesn't appear to be
+	// Photoshop Seems to add this, but there does not appear to be
 	// any information on what it means
 	// TODO : XMP, Find out what the adobe-xap-filters tag means
 	$output_XMP_text .= "<?php adobe-xap-filters esc=\"CR\"?>\n";
@@ -250,13 +250,13 @@ function Interpret_XMP_to_HTML($XMP_array) {
 	if ($XMP_array !== false) {
 		// Check if there is a rdf:RDF tag at either the first or second level
 		if (($XMP_array[0]['tag'] == 'x:xapmeta') && ($XMP_array[0]['children'][0]['tag'] == 'rdf:RDF')) {
-			// RDF found at second level - Save it's position
+			// RDF found at second level - Save it is position
 			$RDF_Contents =& $XMP_array[0]['children'][0]['children'];
 		} elseif (($XMP_array[0]['tag'] == 'x:xmpmeta') && ($XMP_array[0]['children'][0]['tag'] == 'rdf:RDF')) {
-			// RDF found at second level - Save it's position
+			// RDF found at second level - Save it is position
 			$RDF_Contents =& $XMP_array[0]['children'][0]['children'];
 		} elseif ($XMP_array[0]['tag'] == 'rdf:RDF') {
-			// RDF found at first level - Save it's position
+			// RDF found at first level - Save it is position
 			$RDF_Contents =& $XMP_array[0]['children'];
 		} else {
 			// RDF section not found - abort
@@ -389,7 +389,7 @@ function Interpret_XMP_to_HTML($XMP_array) {
 				$output .= "\n</table>\n";
 			}
 
-			// Don't know how to process tags other than rdf:Description - do nothing
+			// Do not know how to process tags other than rdf:Description - do nothing
 		}
 	}
 
@@ -430,7 +430,7 @@ function Interpret_RDF_Item($Item) {
 		$tag_caption = 'Unknown field ' . $Item['tag'];
 	}
 
-	// Process specially the item according to it's tag
+	// Process specially the item according to it is tag
 	switch ($Item['tag']) {
 		case 'photoshop:DateCreated':            // This is in year month day order
 				// Extract the year,month and day
@@ -587,7 +587,7 @@ function interpret_RDF_collection($item) {
 	if (array_key_exists('children', $item)) {
 		// Cycle through each of the sub-items
 		foreach ($item['children'] as $list_item) {
-			// Check that the sub item has a tag, and don't process it if it doesn't
+			// Check that the sub item has a tag, and do not process it if it doesn't
 			if (!array_key_exists('tag', $list_item)) {
 				continue 1;
 			}
@@ -635,7 +635,7 @@ function interpret_RDF_collection($item) {
 		$output_str = rtrim($output_str);
 	}
 
-	// No sub-items in collection - can't do anything
+	// No sub-items in collection - cannot do anything
 	// Return the output value
 	return $output_str;
 }

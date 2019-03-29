@@ -53,7 +53,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 		$this->_markForCleanup($this->_album);
 
 		/*
-		 * Create a new item and force it to be a GalleryPhotoItem, cause that's the only type
+		 * Create a new item and force it to be a GalleryPhotoItem, cause that is the only type
 		 * that this plugin will print.  Make it an unsupported mime type so that no graphics
 		 * toolkits will get involved.
 		 */
@@ -132,7 +132,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 
 		$session->remove('snapgalaxy.cartUrlFragment');
 
-		// Make sure translate calls during test won't generate any platform calls
+		// Make sure translate calls during test would not generate any platform calls
 		list($ret) = GalleryCoreApi::getPermissionIds();
 
 		if ($ret) {
@@ -298,7 +298,7 @@ class SnapGalaxyPrintPhotosControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		// Make sure we don't get any platform calls during test from releasing flock locks
+		// Make sure we do not get any platform calls during test from releasing flock locks
 		$storage =& $gallery->getStorage();
 
 		$ret = $storage->checkPoint();

@@ -42,7 +42,7 @@ msgstr "Adminstrateurs du site"
 msgid "Show Email Addresses"
 msgstr "Afficher l'adresse email"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Ne pas afficher les adresses email"
 
 msgid "Member Items"

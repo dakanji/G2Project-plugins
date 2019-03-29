@@ -144,7 +144,7 @@ class CheckoutItemEdit extends ItemEditPlugin {
 
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($thisId, true, false);
 
-			// must be using custom parameters, but don't pass via external plugins
+			// must be using custom parameters, but do not pass via external plugins
 			if ($ret) {
 				return array($ret, null);
 			}

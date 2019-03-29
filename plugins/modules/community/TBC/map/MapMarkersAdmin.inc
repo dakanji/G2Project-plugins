@@ -22,7 +22,7 @@
  * @author Steven N. Severinghaus <sns@severinghaus.org>
  * @version $Revision: 1253 $
  *
- * This is some of the ugliest code I've ever written. Please do not
+ * This is some of the ugliest code I have ever written. Please do not
  * judge me by it. :)
  */
 GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');

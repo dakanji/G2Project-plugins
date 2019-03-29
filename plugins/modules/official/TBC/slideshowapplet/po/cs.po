@@ -64,7 +64,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Stahuji applet vzdálené Galerie"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Váš webový prohlížeč nepodporuje applety. Použijte prosím standardní prezentaci."
 
 msgid "Slideshow Applet Settings"
@@ -149,11 +149,11 @@ msgstr "při true zabrání prezentaci stahování obrázků v plném rozlišen�
 msgid "does slideshow loop when it gets to the end?"
 msgstr "má prezentace při dosáhnutí konce začít od začátku?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "při true obrázky menší než je velikost obrazovky nebudou roztáhnuty"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "při true bude prezentace stahovat obrázky dříve než je bude potřebovat, což urychlí "

@@ -6,14 +6,14 @@
 #
 # Some WebDAV clients, e.g. Mac OS X WebDAVFS, fail to connect if this header
 # is missing.  The WebDAV module will return the DAV header on all responses,
-# but some server configurations don't pass OPTIONS requests to scripts, e.g.
-# Apache doesn't pass OPTIONS requests to CGI scripts:
+# but some server configurations do not pass OPTIONS requests to scripts, e.g.
+# Apache does not pass OPTIONS requests to CGI scripts:
 # http://issues.apache.org/bugzilla/show_bug.cgi?id=37982
 #
 # Consequently, some WebDAV clients will work with mod_php, but not php-cgi.
 #
 # Alternatively, we can set the DAV header using mod_rewrite and mod_headers.
-# The Header statement doesn't belong in gallery2/.htaccess, it belongs in the
+# The Header statement does not belong in gallery2/.htaccess, it belongs in the
 # directory of the interpreter, i.e. php-cgi.
 #
 # To avoid editing /usr/lib/cgi-bin/.htaccess we can use the URL rewrite module

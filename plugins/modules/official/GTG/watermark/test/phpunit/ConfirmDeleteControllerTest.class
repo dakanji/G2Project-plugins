@@ -55,7 +55,7 @@ class ConfirmDeleteControllerTest extends GalleryControllerTestCase {
 
 		$gallery->setActiveUser($this->_user);
 
-		// Create a watermark (it'll be created as our active user)
+		// Create a watermark (it will be created as our active user)
 		$watermark = new WatermarkImage();
 
 		$ret = $watermark->create(__FILE__, 'test/file', 'phpunit_' . mt_rand() . '.gif');

@@ -142,7 +142,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		// Move a data item from one album with disabledFlag to another album with disabledFlag
 		$item = $this->_topItems[0];
 
-		// Add the item / it's parent album to the disabled map
+		// Add the item / it is parent album to the disabled map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, true);
 
 		// Add new parent to disabled map
@@ -167,7 +167,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		 */
 		$item = $this->_topItems[0];
 
-		// Make sure the item / it's parent album are not in disabledFlag map
+		// Make sure the item / it is parent album are not in disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, false);
 
 		// Add new parent to disabled map
@@ -192,10 +192,10 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		 */
 		$item = $this->_topItems[0];
 
-		// Make sure the item / it's parent album are in disabledFlag map
+		// Make sure the item / it is parent album are in disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, true);
 
-		// Make sure it's new parent album is not in the disabledFlag map
+		// Make sure it is new parent album is not in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, false);
 
 		// Make sure the event handler is registered
@@ -217,10 +217,10 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 		 */
 		$item = $this->_topItems[0];
 
-		// Make sure the item / it's parent album are not in disabledFlag map
+		// Make sure the item / it is parent album are not in disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_topAlbum, false);
 
-		// Make sure it's new parent album is not in the disabledFlag map
+		// Make sure it is new parent album is not in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, false);
 
 		// Make sure the event handler is registered
@@ -237,7 +237,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 	// Create a new data item in an album with disabledFlag
 	public function testImageBlockDisabledMapHandlerNewItemToDisabledAlbum() {
-		// Make sure it's new parent album is in the disabledFlag map
+		// Make sure it is new parent album is in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, true);
 
 		// Make sure the event handler is registered
@@ -258,7 +258,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 	// Create a new data item in an album without disabledFlag
 	public function testImageBlockDisabledMapHandlerNewItemToAlbum() {
-		// Make sure it's new parent album is in the disabledFlag map
+		// Make sure it is new parent album is in the disabledFlag map
 		$this->_setAndAssertDisabledFlag($this->_subAlbum, false);
 
 		// Make sure the event handler is registered
@@ -510,7 +510,7 @@ class ImageBlockHandlerTest extends GalleryTestCase {
 
 		if ($ret) {
 			/*
-			 * The imageblock event handler shouldn't have attempted to add the item to the
+			 * The imageblock event handler should not have attempted to add the item to the
 			 * disabled list if it already was in the list, else we'd see the result here
 			 * as an error
 			 */

@@ -138,7 +138,7 @@ msgstr "Feed-URL"
 msgid "Feed name"
 msgstr "Feed-Name"
 
-msgid "You can't change the name of the feed"
+msgid "You cannot change the name of the feed"
 msgstr "SIe können den Namen des Feeds nicht ändern"
 
 msgid ""
@@ -170,7 +170,7 @@ msgid "Items in this album"
 msgstr "Elemente in diesem Album"
 
 msgid ""
-"Feeds of this type are disallowed by the administrator. Users won't be able to view them."
+"Feeds of this type are disallowed by the administrator. Users would not be able to view them."
 msgstr ""
 "Feeds dieses Typs wurden vom Administrator verboten. Die Benutzer werden die Elemente dieses "
 "Feeds nicht sehen können."

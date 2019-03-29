@@ -145,7 +145,7 @@ function WebFXTreeAbstractNode(sText, sAction) {
 }
 
 /*
- * To speed thing up if you're adding multiple nodes at once (after load)
+ * To speed thing up if you are adding multiple nodes at once (after load)
  * use the bNoIdent parameter to prevent automatic re-indentation and call
  * the obj.ident() method manually once all nodes has been added.
  */

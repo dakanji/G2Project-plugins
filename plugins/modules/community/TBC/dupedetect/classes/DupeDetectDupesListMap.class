@@ -33,7 +33,7 @@
  * dupes detection algorithms and status field which states
  * whether this pair is new or already processed by the user
  * (who decided to keep both duplicated images)
- * Past duplicated (pairs that got linked) won't be listed here.
+ * Past duplicated (pairs that got linked) would not be listed here.
  *
  * @g2 <class-name>DupeDetectDupesListMap</class-name>
  * @g2 <schema>

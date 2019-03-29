@@ -265,7 +265,7 @@ class DetailsView extends GalleryView {
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
 
-		// Load our default values if we didn't just come from this form.
+		// Load our default values if we did not just come from this form.
 		if ($form['formName'] != 'Details') {
 			$form['formName'] = 'Details';
 

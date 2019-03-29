@@ -331,7 +331,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 			$watermarks[$watermarkId] = (array)$watermarks[$watermarkId];
 		}
 
-		// Grab the smallest derivative that's greater than 400px on a side
+		// Grab the smallest derivative that is greater than 400px on a side
 		$itemId      = $item->getId();
 		$derivatives = array();
 

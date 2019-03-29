@@ -248,7 +248,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testCheckUrlAsNormalUser() {
 		global $gallery;
 
-		// Make sure the request isn't blocked because of the "fromweb" setting
+		// Make sure the request is not blocked because of the "fromweb" setting
 		$ret = $this->_module->setParameter('fromweb', 'on');
 
 		if ($ret) {
@@ -395,7 +395,7 @@ class ItemAddWebCamTest extends ItemAddPluginTestCase {
 	public function testAddWebCamFileOnlyAllowedForSiteAdmins() {
 		global $gallery;
 
-		// Make sure the request isn't blocked because of the "fromweb" setting
+		// Make sure the request is not blocked because of the "fromweb" setting
 		$ret = $this->_module->setParameter('fromweb', 'on');
 
 		if ($ret) {

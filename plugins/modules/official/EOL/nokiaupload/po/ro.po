@@ -40,7 +40,7 @@ msgstr "Utilizatori mobili"
 msgid "Pictures from mobile phones"
 msgstr "Poze din telefoane mobile"
 
-msgid "Couldn't fetch directory list."
+msgid "Could not fetch directory list."
 msgstr "Nu pot sa extrag lista de foldere."
 
 msgid "Login failed."
@@ -49,7 +49,7 @@ msgstr "Eroare la login."
 msgid "Album creation failed."
 msgstr "Creearea albumului a esuat."
 
-msgid "Couldn't retrieve settings."
+msgid "Could not retrieve settings."
 msgstr "Nu pot sa preiau setarile."
 
 msgid "Upload failed."

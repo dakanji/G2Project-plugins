@@ -26,7 +26,7 @@ define('TAGTREE_CACHE', 1);
 /**
  * Switch to remove from the tree any tags that are the only children of their parents.
  * Such tags are not useful for organizing because they require the user to
- * click an extra time but they don't help discriminate among their descendants.
+ * click an extra time but they do not help discriminate among their descendants.
  */
 define('TAGTREE_ELIDE_ENCOMPASSING_TAGS', 1);/**
  * @package TagTree

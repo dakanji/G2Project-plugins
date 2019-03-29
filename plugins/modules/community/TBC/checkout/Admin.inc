@@ -153,7 +153,7 @@ class AdminController extends GalleryController {
 					continue;
 				}
 
-				// If the productId is negative, it's new, so assign a unique Id
+				// If the productId is negative, it is new, so assign a unique Id
 				if ($productId < 0) {
 					list($ret, $productId) = $storage->getUniqueId();
 
@@ -225,7 +225,7 @@ class AdminController extends GalleryController {
 					continue;
 				}
 
-				//if the discountId is negative, it's new, so assign a unique Id
+				//if the discountId is negative, it is new, so assign a unique Id
 				if ($discountId < 0) {
 					list($ret, $discountId) = $storage->getUniqueId();
 
@@ -590,7 +590,7 @@ class AdminView extends GalleryView {
 
 			/*
 			 * Include check-box fields to stop smarty notices since
-			 * there's no 'default' option, and {if isset...}{/if} very clumsy
+			 * there is no 'default' option, and {if isset...}{/if} very clumsy
 			 */
 			$form['emails'][] = array(
 				'showCustomer'  => '',
@@ -698,7 +698,7 @@ class AdminView extends GalleryView {
 
 			list($ret, $products) = CheckoutProductMapHelper::fetchProducts($rootAlbumId, true, false);
 
-			// Do use local settings, don't pass products to plugins to modify
+			// Do use local settings, do not pass products to plugins to modify
 			if ($ret) {
 				return array($ret, null);
 			}

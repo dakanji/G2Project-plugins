@@ -3,7 +3,7 @@
 /**
  * This module documents the main interface with the OpenID consumer
  * library.  The only part of the library which has to be used and
- * isn't documented in full here is the store required to create an
+ * is not documented in full here is the store required to create an
  * Auth_OpenID_Consumer instance.  More on the abstract store type and
  * concrete implementations of it that are provided in the
  * documentation for the Auth_OpenID_Consumer constructor.
@@ -86,7 +86,7 @@
  * IMMEDIATE MODE
  *
  * In the flow described above, the user may need to confirm to the
- * lidentity server that it's ok to authorize his or her identity.
+ * lidentity server that it is ok to authorize his or her identity.
  * The server may draw pages asking for information from the user
  * before it redirects the browser back to the consumer's site.  This
  * is generally transparent to the consumer site, so it is typically
@@ -96,7 +96,7 @@
  * response immediately.  When this is the case, the consumer can put
  * the library in immediate mode.  In immediate mode, there is an
  * extra response possible from the server, which is essentially the
- * server reporting that it doesn't have enough information to answer
+ * server reporting that it does not have enough information to answer
  * the question yet.
  *
  * USING THIS LIBRARY
@@ -200,7 +200,7 @@ define('Auth_OpenID_SETUP_NEEDED', 'setup needed');
 
 /**
  * This is the status code beginAuth returns when the page fetched
- * from the entered OpenID URL doesn't contain the necessary link tags
+ * from the entered OpenID URL does not contain the necessary link tags
  * to function as an identity page.
  */
 define('Auth_OpenID_PARSE_ERROR', 'parse error');
@@ -241,7 +241,7 @@ class Auth_OpenID_Consumer {
 	 * MySQL, PostgreSQL, or SQLite, see the {@link
 	 * Auth_OpenID_SQLStore} class and its sublcasses.  For a
 	 * filesystem-backed store, see the {@link Auth_OpenID_FileStore}
-	 * module.  As a last resort, if it isn't possible for the server
+	 * module.  As a last resort, if it is not possible for the server
 	 * to store state at all, an instance of {@link
 	 * Auth_OpenID_DumbStore} can be used.
 	 *
@@ -294,7 +294,7 @@ class Auth_OpenID_Consumer {
 	 *
 	 * @param bool $anonymous True if the OpenID request is to be sent
 	 * to the server without any identifier information.  Use this
-	 * when you want to transport data but don't want to do OpenID
+	 * when you want to transport data but do not want to do OpenID
 	 * authentication with identifiers.
 	 *
 	 * @return Auth_OpenID_AuthRequest $auth_request An object
@@ -591,7 +591,7 @@ class Auth_OpenID_GenericConsumer {
 	 * cases.  For stores backed by MySQL, PostgreSQL, or SQLite, see
 	 * the {@link Auth_OpenID_SQLStore} class and its sublcasses.  For a
 	 * filesystem-backed store, see the {@link Auth_OpenID_FileStore} module.
-	 * As a last resort, if it isn't possible for the server to store
+	 * As a last resort, if it is not possible for the server to store
 	 * state at all, an instance of {@link Auth_OpenID_DumbStore} can be used.
 	 *
 	 */
@@ -810,7 +810,7 @@ class Auth_OpenID_GenericConsumer {
 		$return_to_parts     = parse_url(Auth_OpenID_urinorm($return_to));
 		$msg_return_to_parts = parse_url(Auth_OpenID_urinorm($msg_return_to));
 
-		// If port is absent from both, add it so it's equal in the
+		// If port is absent from both, add it so it is equal in the
 		// check below.
 		if ((!array_key_exists('port', $return_to_parts))
 			&& (!array_key_exists('port', $msg_return_to_parts))
@@ -819,7 +819,7 @@ class Auth_OpenID_GenericConsumer {
 			$msg_return_to_parts['port'] = null;
 		}
 
-		// If path is absent from both, add it so it's equal in the
+		// If path is absent from both, add it so it is equal in the
 		// check below.
 		if ((!array_key_exists('path', $return_to_parts))
 			&& (!array_key_exists('path', $msg_return_to_parts))
@@ -948,7 +948,7 @@ class Auth_OpenID_GenericConsumer {
 				return new Auth_OpenID_FailureResponse(null, 'Bad signature');
 			}
 		} else {
-			// It's not an association we know about.  Stateless mode
+			// It is not an association we know about.  Stateless mode
 			// is our only possible path for recovery.  XXX - async
 			// framework will not want to block on this call to
 			// _checkAuth.
@@ -1039,7 +1039,7 @@ class Auth_OpenID_GenericConsumer {
 	 * @access private
 	 */
 	public function _verifyDiscoverySingle($endpoint, $to_match) {
-		// Every type URI that's in the to_match endpoint has to be
+		// Every type URI that is in the to_match endpoint has to be
 		// present in the discovered endpoint.
 		foreach ($to_match->type_uris as $type_uri) {
 			if (!$endpoint->usesExtension($type_uri)) {
@@ -1050,7 +1050,7 @@ class Auth_OpenID_GenericConsumer {
 			}
 		}
 
-		// Fragments do not influence discovery, so we can't compare a
+		// Fragments do not influence discovery, so we cannot compare a
 		// claimed identifier with a fragment to discovered
 		// information.
 		list($defragged_claimed_id, $_) = Auth_OpenID::urldefrag($to_match->claimed_id);
@@ -1079,7 +1079,7 @@ class Auth_OpenID_GenericConsumer {
 
 		// If the server URL is None, this must be an OpenID 1
 		// response, because op_endpoint is a required parameter in
-		// OpenID 2. In that case, we don't actually care what the
+		// OpenID 2. In that case, we do not actually care what the
 		// discovered server_url is, because signature checking or
 		// check_auth should take care of that check for us.
 		if ($to_match->server_url === null) {
@@ -1140,14 +1140,14 @@ class Auth_OpenID_GenericConsumer {
 		if ($to_match->claimed_id === null) {
 			// This is a response without identifiers, so there's
 			// really no checking that we can do, so return an
-			// endpoint that's for the specified `openid.op_endpoint'
+			// endpoint that is for the specified `openid.op_endpoint'
 			return Auth_OpenID_ServiceEndpoint::fromOPEndpointURL($to_match->server_url);
 		}
 
 		if (!$endpoint) {
-			// The claimed ID doesn't match, so we have to do
+			// The claimed ID does not match, so we have to do
 			// discovery again. This covers not using sessions, OP
-			// identifier endpoints and responses that didn't match
+			// identifier endpoints and responses that did not match
 			// the original request.
 			// oidutil.log('No pre-discovered information supplied.')
 			return $this->_discoverAndVerify($to_match->claimed_id, array($to_match));
@@ -1503,7 +1503,7 @@ class Auth_OpenID_GenericConsumer {
 			return null;
 		}
 
-		// The server didn't like the association/session type that we
+		// The server did not like the association/session type that we
 		// sent, and it sent us back a message that might tell us how
 		// to handle it.
 		// Extract the session_type and assoc_type from the error
@@ -1631,7 +1631,7 @@ class Auth_OpenID_GenericConsumer {
 		// expires_in is a base-10 string. The Python parsing will
 		// accept literals that have whitespace around them and will
 		// accept negative values. Neither of these are really in-spec,
-		// but we think it's OK to accept them.
+		// but we think it is OK to accept them.
 		$expires_in_str = $assoc_response->getArg(
 			Auth_OpenID_OPENID_NS,
 			'expires_in',
@@ -1734,8 +1734,8 @@ class Auth_OpenID_GenericConsumer {
 			$args['ns'] = Auth_OpenID_OPENID2_NS;
 		}
 
-		// Leave out the session type if we're in compatibility mode
-		// *and* it's no-encryption.
+		// Leave out the session type if we are in compatibility mode
+		// *and* it is no-encryption.
 		if ((!$endpoint->compatibilityMode())
 			|| ($assoc_session->session_type != 'no-encryption')
 		) {
@@ -1762,14 +1762,14 @@ class Auth_OpenID_GenericConsumer {
 	 * @return $typ The association type for this message
 	 */
 	public function _getOpenID1SessionType($assoc_response) {
-		// If it's an OpenID 1 message, allow session_type to default
+		// If it is an OpenID 1 message, allow session_type to default
 		// to None (which signifies "no-encryption")
 		$session_type = $assoc_response->getArg(Auth_OpenID_OPENID1_NS, 'session_type');
 
 		// Handle the differences between no-encryption association
 		// respones in OpenID 1 and 2:
 		// no-encryption is not really a valid session type for OpenID
-		// 1, but we'll accept it anyway, while issuing a warning.
+		// 1, but we will accept it anyway, while issuing a warning.
 		if ($session_type == 'no-encryption') {
 			// oidutil.log('WARNING: OpenID server sent "no-encryption"'
 			//             'for OpenID 1.X')
@@ -1936,7 +1936,7 @@ class Auth_OpenID_AuthRequest {
 
 		if (!$this->_anonymous) {
 			if ($this->endpoint->isOPIdentifier()) {
-				// This will never happen when we're in compatibility
+				// This will never happen when we are in compatibility
 				// mode, as long as isOPIdentifier() returns False
 				// whenever preferredNamespace() returns OPENID1_NS.
 				$claimed_id = $request_identity = Auth_OpenID_IDENTIFIER_SELECT;

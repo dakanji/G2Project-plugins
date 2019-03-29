@@ -20,7 +20,7 @@
 /**
  * Provide the user the option of downloading the Windows registry file.
  * This plugin is only responsible for building the config file to allow the user to register
- * Gallery as a publisher in XP, it doesn't actually do any of the processing of images.
+ * Gallery as a publisher in XP, it does not actually do any of the processing of images.
  *
  * @package PublishXp
  * @subpackage UserInterface

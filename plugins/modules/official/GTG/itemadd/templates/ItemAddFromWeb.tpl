@@ -37,7 +37,7 @@
 
 <div class="gbBlock">
   <p class="giDescription">
-    {g->text text="Import files into Gallery from another website.  Enter a URL below to a web page anywhere on the net and Gallery will allow you to upload any media files that it finds on that page.  Note that if you're entering a URL to a directory, you should end the URL with a trailing slash (eg, http://example.com/directory/). "}
+    {g->text text="Import files into Gallery from another website.  Enter a URL below to a web page anywhere on the net and Gallery will allow you to upload any media files that it finds on that page.  Note that if you are entering a URL to a directory, you should end the URL with a trailing slash (eg, http://example.com/directory/). "}
   </p>
 
   {if empty($form.webPageUrls)}

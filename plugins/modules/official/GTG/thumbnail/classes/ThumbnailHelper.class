@@ -262,7 +262,7 @@ class ThumbnailHelper {
 	 * @param string $tmpfile path to image file
 	 * @param string $fileMimeType mime type of image file
 	 * @param array $knownSize known width and height of image (used if toolkit unable to get size)
-	 * @param ThumbnailImage $item (optional -- if you don't provide it we'll
+	 * @param ThumbnailImage $item (optional -- if you do not provide it we'll
 	 *                                     get one from the Factory)
 	 * @return array GalleryStatus a status code,
 	 *               int id of newly created object

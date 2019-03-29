@@ -307,7 +307,7 @@ class DupeDetectCrc32HelperTest extends GalleryTestCase {
 			return $this->failWithStatus($ret);
 		}
 
-		/* first check that no dupes are discovered as there's no
+		/* first check that no dupes are discovered as there is no
 		 * signature for the new file yet */
 		list($ret, $dupes) = DupeDetectCrc32Helper::discoverCrc32Dupes($this->_item->getId());
 

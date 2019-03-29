@@ -59,7 +59,7 @@
     <input type="checkbox" id="cbThumb" {if !empty($form.generateThumbnails)} checked="checked"{/if}
      name="{g->formVar var="form[generateThumbnails]"}"/>
     <label for="cbThumb">
-      {g->text text="Normally Gallery will generate thumbnails the first time you look at them, then save them for subsequent views.  If you check this box, we'll create the thumbnails at migration time.  Migration will take longer but the first time you view an album will go much faster."}
+      {g->text text="Normally Gallery will generate thumbnails the first time you look at them, then save them for subsequent views.  If you check this box, we will create the thumbnails at migration time.  Migration will take longer but the first time you view an album will go much faster."}
     </label>
   </div>
 </div>

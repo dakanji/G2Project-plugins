@@ -222,7 +222,7 @@ class ModifyCartControllerTest extends GalleryControllerTestCase {
 		// Verify that the cart has been processed correctly (filtered and updated count)
 
 		/**
-		 * @todo Shouldn't we update item counts on fulfillment requests as well?
+		 * @todo Should not we update item counts on fulfillment requests as well?
 		 */
 		$this->assertEquals(
 			array(

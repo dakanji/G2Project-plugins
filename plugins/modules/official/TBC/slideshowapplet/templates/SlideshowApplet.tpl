@@ -75,8 +75,8 @@
           codebase_lookup="false"
           image="{g->url href="modules/slideshowapplet/applets/splash.gif"}"
       >
-          <noembed alt="{g->text text="Your browser doesn't support applets; you should use the standard slideshow."}">
-            {g->text text="Your browser doesn't support applets; you should use the standard slideshow."}
+          <noembed alt="{g->text text="Your browser does not support applets; you should use the standard slideshow."}">
+            {g->text text="Your browser does not support applets; you should use the standard slideshow."}
           </noembed>
       </embed>
     </comment>

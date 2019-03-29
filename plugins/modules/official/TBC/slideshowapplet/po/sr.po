@@ -61,7 +61,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Preuzimanje Daljinske alatke Galerije"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Vaš čitač ne podržava aplete; koristite standardnu projekciju."
 
 msgid "Slideshow Applet Settings"
@@ -146,11 +146,11 @@ msgstr "ako je true, sprečiće projekciju da preuzima slike u punoj veličini"
 msgid "does slideshow loop when it gets to the end?"
 msgstr "da li se projekcija ciklično reprodukuje?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "ako je true, slika manje od veličine ekrana neće biti rastegnute"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "ako je true, projekcija će preuzeti slike pre nego što postanu potrebne, što može ubrzati "

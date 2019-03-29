@@ -97,7 +97,7 @@ class UserAlbumHelper {
 		$albumId = $album->getId();
 
 		// Set permissions..
-		// If the active user isn't the album owner, the default permissions should be removed
+		// If the active user is not the album owner, the default permissions should be removed
 		$currentUserId = $gallery->getActiveUserId();
 
 		if ($currentUserId != $user->getId()) {
@@ -130,7 +130,7 @@ class UserAlbumHelper {
 		$visited = array();
 
 		foreach ($permissions as $permission) {
-			// don't bother for administrator group
+			// do not bother for administrator group
 			if (empty($permission['groupId']) || $permission['groupId'] != $core['id.adminGroup']) {
 				// remove all view permissions at once
 				if (strstr($permission['permission'], 'core.view')

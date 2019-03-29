@@ -49,7 +49,7 @@ class CustomFieldCallbacks {
 				}
 
 				if (!$hasPermission) {
-					// Avoid information disclosure, act as if the item didn't exist.
+					// Avoid information disclosure, act as if the item does not exist.
 					return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 				}
 

@@ -73,7 +73,7 @@ class puzzleModule extends GalleryModule {
 	 * @see GalleryModule::autoConfigure
 	 */
 	public function autoConfigure() {
-		// We don't require any special configuration
+		// We do not require any special configuration
 		return array(null, true);
 	}
 
@@ -99,7 +99,7 @@ class puzzleModule extends GalleryModule {
 
 					if ($ret) {
 						// cannot find parent album.
-						// don't know how this can happen ... it is probably a bad, bad thing
+						// do not know how this can happen ... it is probably a bad, bad thing
 						return array($ret, null);
 					}
 
@@ -109,7 +109,7 @@ class puzzleModule extends GalleryModule {
 					list($ret, $enabled) = PuzzleHelper::isEnabledForAlbum($parentAlbum);
 
 					if ($ret) {
-						// don't know what can cause this error
+						// do not know what can cause this error
 						return array($ret, null);
 					}
 

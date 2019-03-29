@@ -72,7 +72,7 @@ function Decode_PIM($tag, $Tag_Definitions_Name) {
 		if (substr($tag['Data'], 0, 8) == "PrintIM\x00") {
 			// Find the end of the version string
 			if (($ver_pos = strpos($tag['Data'], "\0", 8)) == -1) {
-				// couldn't find the start of the version string
+				// could not find the start of the version string
 				return $newtag;
 			}
 
@@ -142,7 +142,7 @@ function Encode_PIM($tag, $Byte_Align) {
 
 	// Check that this tag is for Print Image Matching Info
 	if ($tag['Type'] == 'PIM') {
-		// Check that the tag has been decoded - otherwise we don't need to do anything
+		// Check that the tag has been decoded - otherwise we do not need to do anything
 		if ((is_array($tag['Data']))
 			&& (count($tag['Data']) > 0)
 		) {

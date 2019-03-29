@@ -500,7 +500,7 @@ class MultimediaRenderer extends GalleryRenderer {
 						break;
 
 					default:
-						// Sorry we don't support midi, wma, real, aiff...
+						// Sorry we do not support midi, wma, real, aiff...
 						return null;
 				}
 

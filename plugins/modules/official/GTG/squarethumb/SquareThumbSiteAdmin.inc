@@ -43,7 +43,7 @@ class SquareThumbSiteAdminController extends GalleryController {
 			}
 
 			if ($form['mode'] == 'fit') {
-				// Can't crop-to-square without PPM support
+				// Cannot crop-to-square without PPM support
 				list($ret, $toolkit) = GalleryCoreApi::getToolkitByOperation(
 					'image/x-portable-pixmap',
 					'convert-to-image/jpeg'
@@ -131,7 +131,7 @@ class SquareThumbSiteAdminView extends GalleryView {
 			}
 		}
 
-		// Can't crop-to-square without ppm support
+		// Cannot crop-to-square without ppm support
 		list($ret, $toolkit) = GalleryCoreApi::getToolkitByOperation(
 			'image/x-portable-pixmap',
 			'convert-to-image/jpeg'
