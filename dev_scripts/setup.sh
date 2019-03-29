@@ -4,7 +4,6 @@
 ABSPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 HOOKSPATH=$ABSPATH/hooks
 MAINPATH=$ABSPATH/..
-CSCACHEPATH=$MAINPATH/.php_cs_cache
 
 if [ ! -L $MAINPATH/.git/hooks ]
 then
@@ -42,10 +41,6 @@ then
 	echo ""
 	echo "Developer Environment Update Started"
 
-
-
-	# Delete php_cs_cache
-	rm -f $CSCACHEPATH
 
 
 	# Add Upstream Remote
