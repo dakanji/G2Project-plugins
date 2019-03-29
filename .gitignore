@@ -76,6 +76,33 @@ plugins/modules/official/EOL/*
 ############################
 plugins/modules/official/GTG/*
 !plugins/modules/official/GTG/README.md
+!plugins/modules/official/GTG/albumselect
+!plugins/modules/official/GTG/captcha
+!plugins/modules/official/GTG/cart
+!plugins/modules/official/GTG/colorpack
+!plugins/modules/official/GTG/customfield
+!plugins/modules/official/GTG/dcraw
+!plugins/modules/official/GTG/debug
+!plugins/modules/official/GTG/dynamicalbum
+!plugins/modules/official/GTG/hidden
+!plugins/modules/official/GTG/itemadd
+!plugins/modules/official/GTG/linkitem
+!plugins/modules/official/GTG/multilang
+!plugins/modules/official/GTG/newitems
+!plugins/modules/official/GTG/password
+!plugins/modules/official/GTG/permalinks
+!plugins/modules/official/GTG/quotas
+!plugins/modules/official/GTG/randomhighlight
+!plugins/modules/official/GTG/register
+!plugins/modules/official/GTG/replica
+!plugins/modules/official/GTG/reupload
+!plugins/modules/official/GTG/sitemap
+!plugins/modules/official/GTG/sizelimit
+!plugins/modules/official/GTG/squarethumb
+!plugins/modules/official/GTG/thumbnail
+!plugins/modules/official/GTG/thumbpage
+!plugins/modules/official/GTG/useralbum
+!plugins/modules/official/GTG/watermark
 
 
 # G2 Modules Official TBC #
@@ -117,7 +144,6 @@ plugins/modules/community/EOL/*
 ############################
 plugins/modules/community/GTG/*
 !plugins/modules/community/GTG/README.md
-!plugins/modules/community/GTG/jpegtran
 !plugins/modules/community/GTG/integrity
 !plugins/modules/community/GTG/linksinthehead
 !plugins/modules/community/GTG/notification
