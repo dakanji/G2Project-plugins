@@ -124,7 +124,7 @@ class ThumbPageModule extends GalleryModule {
 		}
 
 		if (empty($page) && empty($movie)) {
-			// Can't activate unless there's already toolkit support
+			// Cannot activate unless there is already toolkit support
 			return array(
 				null,
 				array(
@@ -258,8 +258,8 @@ class ThumbPageModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		/*
-		 * We're going to deactivate this module which will generate another
-		 * Gallery::DeactivatePlugin event, so make sure that we don't handle
+		 * We are going to deactivate this module which will generate another
+		 * Gallery::DeactivatePlugin event, so make sure that we do not handle
 		 * *that* event and get into an infinite loop!
 		 */
 		$data = $event->getData();

@@ -73,7 +73,7 @@ class MembersTest extends GalleryTestCase {
 		$this->assertEquals(0, $itemCount);
 
 		/*
-		 * Create some random items so that there's something for the API method to work with.
+		 * Create some random items so that there is something for the API method to work with.
 		 * Set the timestamp to bogus (but well known) values and set the owner to our test user.
 		 */
 		$numItems = 4;
@@ -106,7 +106,7 @@ class MembersTest extends GalleryTestCase {
 
 	public function testFetchLastUserItems() {
 		/*
-		 * Create some random items so that there's something for the API method to work with.
+		 * Create some random items so that there is something for the API method to work with.
 		 * Set the timestamp to bogus (but well known) values and set the owner to our test user.
 		 */
 		for ($i = 0; $i < 4; $i++) {

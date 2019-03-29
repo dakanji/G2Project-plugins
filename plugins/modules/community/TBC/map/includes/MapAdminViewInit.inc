@@ -37,7 +37,7 @@ foreach ($param as $key => $value) {
 	$form[$key] = $value;
 }
 
-	// Add the google map fields (we don't care about errors)
+	// Add the google map fields (we do not care about errors)
 	list($ret, $added) = mapHelper::addField('GPS', 'common', 0);
 
 	list($ret, $added) = mapHelper::addField('ZoomLevel', 'common', 0);

@@ -199,7 +199,7 @@ class mapHelper extends mapInterface_1_0 {
 	 *
 	 * @param string field to delete
 	 * @param int id of container, to delete only for specific album
-	 * @param string 'album' or 'photo' -- don't delete values for items of this type
+	 * @param string 'album' or 'photo' -- do not delete values for items of this type
 	 * @return GalleryStatus a status code
 	 * @static
 	 */
@@ -827,7 +827,7 @@ class mapHelper extends mapInterface_1_0 {
 		$addNew = false;
 
 		if (!empty($oldUrl)) {
-			/* If we're editing a key, locate it by the oldUrl and modify the saved profile.
+			/* If we are editing a key, locate it by the oldUrl and modify the saved profile.
 			 * If no match, then add a new profile.
 			 */
 			$index = mapHelper::_matchLongestUrl($allKeySets, $oldUrl);
@@ -874,7 +874,7 @@ class mapHelper extends mapInterface_1_0 {
 			 * Go through all the keys and pick the longest (most-specific) match, in case more than
 			 * one key applies to the given url. Use a case-insensitive compare. Could conceivably
 			 * give a false match if URL contains a path after the host name, if the path is
-			 * case-sensitive, but that's a very unlikey situation.
+			 * case-sensitive, but that is a very unlikey situation.
 			 */
 			$length = strlen($keySet['url']);
 
@@ -1567,11 +1567,11 @@ class mapHelper extends mapInterface_1_0 {
 						/**
 						 * @todo Change this to use ImageMagick's "annotate" instead of
 						 * "draw text".
-						 * Can't do it yet because ImageMagick 6 is required.
+						 * Cannot do it yet because ImageMagick 6 is required.
 						 */
 
 						/* ImageMagick's convert is picky about the format used for the
-						 * -draw text argument and how it's quoted, so note the extra double
+						 * -draw text argument and how it is quoted, so note the extra double
 						 * quotes used before text and after the text to be drawn ($nb), and
 						 * the single quotes around the text to be drawn on the image.
 						 */

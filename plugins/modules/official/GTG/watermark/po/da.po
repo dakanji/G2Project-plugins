@@ -138,7 +138,7 @@ msgstr "Trin 3.  Vælg hvilke billeder der skal vandmærkes"
 msgid "You must choose something to watermark!"
 msgstr "Du skal vælge hvad  der skal vandmærke på!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Originalstørrelse (den originale fil vil ikke blive berørt)"
 
 msgid "Resizes"
@@ -224,7 +224,7 @@ msgstr "Placering"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Placer vandmærket i feltet nedenfor der hvor du vil have det placeret når du vandmærker nye "

@@ -427,7 +427,7 @@ class WebDavTest extends GalleryTestCase {
 		$path     = ltrim($path, '/');
 		$itemPath = ltrim($itemPath, '/');
 
-		// The sub-album without view permissions shouldn't be listed
+		// The sub-album without view permissions should not be listed
 		$this->assertEquals(
 			preg_split(
 				"/\r?\n/",
@@ -543,7 +543,7 @@ class WebDavTest extends GalleryTestCase {
 		$_SERVER['REQUEST_METHOD'] = 'PROPFIND';
 		$_SERVER['HTTP_DEPTH']     = '1';
 
-		// Add some sub-sub items to verify that they don't get listed
+		// Add some sub-sub items to verify that they do not get listed
 		list($ret, $subItem) = $this->_createRandomDataItem(
 			$this->_subAlbum->getId(),
 			'test/file'
@@ -610,7 +610,7 @@ class WebDavTest extends GalleryTestCase {
 		$itemPath     = ltrim($itemPath, '/');
 		$subAlbumPath = ltrim($subAlbumPath, '/');
 
-		// The sub-album without view permissions shouldn't be listed
+		// The sub-album without view permissions should not be listed
 		$this->assertEquals(
 			preg_split(
 				"/\r?\n/",
@@ -1285,7 +1285,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 
-		/** @todo Don't require core.addDataItem permission */
+		/** @todo Do not require core.addDataItem permission */
 		$ret = $this->_becomeGuestUserWithPermission(
 			array('core.view', 'core.edit', 'core.addDataItem')
 		);
@@ -1341,7 +1341,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 
-		/** @todo Don't require core.addDataItem permission */
+		/** @todo Do not require core.addDataItem permission */
 		$ret = $this->_becomeGuestUserWithPermission(array('core.view', 'core.addDataItem'));
 
 		if ($ret) {
@@ -1389,7 +1389,7 @@ class WebDavTest extends GalleryTestCase {
 		// Use valid inputs
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 
-		/** @todo Don't require core.addDataItem permission */
+		/** @todo Do not require core.addDataItem permission */
 		$ret = $this->_becomeGuestUserWithPermission(
 			array('core.view', 'core.edit', 'core.addDataItem')
 		);
@@ -2577,7 +2577,7 @@ class WebDavTestStream {
 }
 
 /*
- * Our default unit test error_handler doesn't allow the suppression of errors, but getImageSize()
+ * Our default unit test error_handler does not allow the suppression of errors, but getImageSize()
  * returns a PHP error when operating on an empty file.
  */
 function WebDavTest_error_handler($errno, $errstr, $errfile, $errline) {

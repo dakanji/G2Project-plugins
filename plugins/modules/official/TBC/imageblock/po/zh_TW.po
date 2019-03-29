@@ -185,7 +185,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Just like %smaxSize except that it will not substitute an image smaller than the size you "
-"request, so you'll get the closest match in size possible.  Note that this may use a lot "
+"request, so you will get the closest match in size possible.  Note that this may use a lot "
 "more bandwidth if a much larger image has to be scaled down in your browser."
 msgstr ""
 "和 %smaxSize 一樣，但是它不會換成比你要求的大小還小的圖像，所以你會得到大小最接近的圖。注意："

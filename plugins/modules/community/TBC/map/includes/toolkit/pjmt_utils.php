@@ -72,7 +72,7 @@ function get_relative_path($target, $fromdir) {
 	$target = realpath($target);
 	$to     = dirname($target);
 
-	// Can't get relative path with drive in path - remove it
+	// Cannot get relative path with drive in path - remove it
 	if (($colonpos = strpos($target, ':')) != false) {
 		$target = substr($target, $colonpos + 1);
 	}

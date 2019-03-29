@@ -97,8 +97,8 @@ class getid3_mpeg extends getid3_handler {
 				case 0xB3:
 					/*
 					Note: purposely doing the less-pretty (and probably a bit slower) method of using string of bits rather than bitwise operations.
-						  Mostly because PHP 32-bit doesn't handle unsigned integers well for bitwise operation.
-						  Also the MPEG stream is designed as a bitstream and often doesn't align nicely with byte boundaries.
+						  Mostly because PHP 32-bit does not handle unsigned integers well for bitwise operation.
+						  Also the MPEG stream is designed as a bitstream and often does not align nicely with byte boundaries.
 					*/
 
 					// will be updated if extension_start_code found

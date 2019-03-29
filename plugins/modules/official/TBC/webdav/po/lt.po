@@ -50,8 +50,8 @@ msgid "Connect to WebDAV"
 msgstr ""
 
 msgid ""
-"Use short URL because most WebDAV clients don't support query strings.  The Windows WebDAV "
-"client requires that you don't add a slash before the %path% variable."
+"Use short URL because most WebDAV clients do not support query strings.  The Windows WebDAV "
+"client requires that you do not add a slash before the %path% variable."
 msgstr ""
 
 msgid "Path to an item (eg. /album/image.jpg.html)"
@@ -101,7 +101,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You can't connect with WebDAV because PHP has no XML support on this server.  "
+"You cannot connect with WebDAV because PHP has no XML support on this server.  "
 "Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 
@@ -110,7 +110,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You can't connect with WebDAV because this server doesn't pass WebDAV requests to Gallery.  "
+"You cannot connect with WebDAV because this server does not pass WebDAV requests to Gallery.  "
 "Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 
@@ -119,7 +119,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You can connect with WebDAV anonymously, but you can't do anything which requires you to "
+"You can connect with WebDAV anonymously, but you cannot do anything which requires you to "
 "login because the HTTP auth module is disabled.  You should activate the HTTP auth module in "
 "the %sSite Admin Plugins option%s.  Troubleshooting documentation is in the %sGallery Codex%"
 "s."
@@ -129,7 +129,7 @@ msgid "HTTP auth plugin disabled"
 msgstr ""
 
 msgid ""
-"You can connect with WebDAV anonymously, but you can't do anything which requires you to "
+"You can connect with WebDAV anonymously, but you cannot do anything which requires you to "
 "login because neither HTTP authentication nor server authentication are enabled in the HTTP "
 "auth module.  You should activate HTTP authentication in the settings of the HTTP auth "
 "module."
@@ -180,7 +180,7 @@ msgstr "Bloga URL rewrite konfigūracija"
 
 #, c-format
 msgid ""
-"PHP PathInfo rewrite doesn't support the rule to fall back on an alternative URL.  You "
+"PHP PathInfo rewrite does not support the rule to fall back on an alternative URL.  You "
 "should uninstall and reinstall the URL rewrite module in the %sSite Admin Plugins option%s "
 "and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting information is in "
 "the %sGallery Codex%s."

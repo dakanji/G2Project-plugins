@@ -31,7 +31,7 @@ class ImageBlockCallbacks {
 				// Pick up our overrides
 				if (!$params['useDefaults']) {
 					/*
-					 * If we're overriding the defaults, then overlay our changes on top of the
+					 * If we are overriding the defaults, then overlay our changes on top of the
 					 * defaults and pass in a complete 'show' parameter.
 					 */
 					list($ret, $moduleParams) = GalleryCoreApi::fetchAllPluginParameters('module', 'imageblock');
@@ -69,7 +69,7 @@ class ImageBlockCallbacks {
 				}
 
 				/*
-				 * ImageBlockHelper expects a GalleryTemplate, but Smarty callbacks don't provide
+				 * ImageBlockHelper expects a GalleryTemplate, but Smarty callbacks do not provide
 				 * one, so create a temporary wrapper.
 				 */
 				$template          = new GalleryTemplate(__DIR__, false);

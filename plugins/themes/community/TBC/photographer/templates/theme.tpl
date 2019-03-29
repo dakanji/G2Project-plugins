@@ -14,7 +14,7 @@
     {* Let Gallery print out anything it wants to put into the <head> element *}
     {g->head}
 
-    {* If Gallery doesn't provide a header, we use the album/photo title (or filename) *}
+    {* If Gallery does not provide a header, we use the album/photo title (or filename) *}
     {if empty($head.title)}
       <title>{$theme.item.title|markup:strip|default:$theme.item.pathComponent}</title>
     {/if}
@@ -38,7 +38,7 @@
       </div>
       <div id="gallery">
           {*
-          * Some module views (eg slideshow) want the full screen.  So for those, we don't draw
+          * Some module views (eg slideshow) want the full screen.  So for those, we do not draw
           * a header, footer, navbar, etc.  Those views are responsible for drawing everything.
           *}
           {if $theme.useFullScreen}
@@ -73,7 +73,7 @@
           {/if}  {* end of full screen check *}
           {*
           * Give Gallery a chance to output any cleanup code, like javascript that needs to be run 
-          * at the end of the <body> tag.  If you take this out, some code won't work properly.
+          * at the end of the <body> tag.  If you take this out, some code would not work properly.
           *}
           {g->trailer}
           {* Put any debugging output here, if debugging is enabled *}

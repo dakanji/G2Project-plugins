@@ -112,7 +112,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		if ($ret) {
 			/*
 			 * ERROR_COLLISION is when you try to create something that
-			 * already exists.  If this test user already exists, we're happy.
+			 * already exists.  If this test user already exists, we are happy.
 			 */
 			if (!($ret->getErrorCode() & ERROR_COLLISION)) {
 				return $ret;
@@ -140,7 +140,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		$this->testHidden   = !empty($moduleStatusList['hidden']['active']);
 		$this->testComments = !empty($moduleStatusList['comment']['active']);
 
-		// Comment permissions might be registered in db even though module isn't active:
+		// Comment permissions might be registered in db even though module is not active:
 		list($ret, $bits) = GalleryCoreApi::convertPermissionIdsToBits('comment.all');
 
 		$this->commentPermissionsExist = !$ret;
@@ -331,7 +331,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[set][summary]', 'blank');
 		GalleryUtilities::putRequestVariable('form[set][description]', 'blank');
 
-		// We still have 2 progressbar resets, even though we don't import albums and make thumbs
+		// We still have 2 progressbar resets, even though we do not import albums and make thumbs
 		list($ret, $status) = $this->_runBackgroundTask(
 			array(
 				0,
@@ -379,7 +379,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[set][summary]', 'blank');
 		GalleryUtilities::putRequestVariable('form[set][description]', 'blank');
 
-		// We still have 2 progressbar resets, even though we don't import albums and make thumbs
+		// We still have 2 progressbar resets, even though we do not import albums and make thumbs
 		list($ret, $status) = $this->_runBackgroundTask(
 			array(
 				0,
@@ -430,7 +430,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::putRequestVariable('form[set][summary]', 'blank');
 		GalleryUtilities::putRequestVariable('form[set][description]', 'blank');
 
-		// We still have 2 progressbar resets, even though we don't import albums and make thumbs
+		// We still have 2 progressbar resets, even though we do not import albums and make thumbs
 		list($ret, $status) = $this->_runBackgroundTask(
 			array(
 				0,
@@ -592,7 +592,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		/*
 		 * This is the user that we expect to be associated with this album.
-		 * It really shouldn't be the admin, but the test data needs to be
+		 * It really should not be the admin, but the test data needs to be
 		 * changed to fix it, so we will change it later - probably to
 		 * phpunit_foobar, or whatever we are loading in the other unit test
 		 */
@@ -1455,7 +1455,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		/*
 		 * This is the user that we expect to be associated with this album.
-		 * It really shouldn't be the admin, but the test data needs to be
+		 * It really should not be the admin, but the test data needs to be
 		 * changed to fix it, so we will change it later - probably to
 		 * phpunit_foobar, or whatever we are loading in the other unit test
 		 */
@@ -1680,7 +1680,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		/*
 		 * This is the user that we expect to be associated with this album.
-		 * It really shouldn't be the admin, but the test data needs to be
+		 * It really should not be the admin, but the test data needs to be
 		 * changed to fix it, so we will change it later - probably to
 		 * phpunit_foobar, or whatever we are loading in the other unit test
 		 */
@@ -1807,7 +1807,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		/*
 		 * This is the user that we expect to be associated with this album.
-		 * It really shouldn't be the admin, but the test data needs to be
+		 * It really should not be the admin, but the test data needs to be
 		 * changed to fix it, so we will change it later - probably to
 		 * phpunit_foobar, or whatever we are loading in the other unit test
 		 */
@@ -1977,7 +1977,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		/*
 		 * This is the user that we expect to be associated with this album.
-		 * It really shouldn't be the admin, but the test data needs to be
+		 * It really should not be the admin, but the test data needs to be
 		 * changed to fix it, so we will change it later - probably to
 		 * phpunit_foobar, or whatever we are loading in the other unit test
 		 */
@@ -2148,7 +2148,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 
 		/*
 		 * This is the user that we expect to be associated with this album.
-		 * It really shouldn't be the admin, but the test data needs to be
+		 * It really should not be the admin, but the test data needs to be
 		 * changed to fix it, so we will change it later - probably to
 		 * phpunit_foobar, or whatever we are loading in the other unit test
 		 */
@@ -2527,7 +2527,7 @@ class ConfirmImportControllerTest extends GalleryControllerTestCase {
 			)
 		);
 
-		// Malformed HTML tags should not be turned into BBCode, but we can't stop it
+		// Malformed HTML tags should not be turned into BBCode, but we cannot stop it
 		$this->assertEquals(
 			'[i][b]interleaved[/i][/b]',
 			ConfirmImportController::getme()->convertHtmlToBbcode('<i><b>interleaved</i></b>')

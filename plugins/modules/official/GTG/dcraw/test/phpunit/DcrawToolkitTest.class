@@ -332,9 +332,9 @@ class DcrawToolkitTest extends GalleryTestCase {
 	}
 
 	/*
-	 * This test is commented out for now because it's not possible to make sure that
+	 * This test is commented out for now because it is not possible to make sure that
 	 * our dummy toolkit is called instead of a real toolkit because right now
-	 * toolkit properties don't have priorities.  If/when we resolve that, we can
+	 * toolkit properties do not have priorities.  If/when we resolve that, we can
 	 * enable this test.
 	 *
 

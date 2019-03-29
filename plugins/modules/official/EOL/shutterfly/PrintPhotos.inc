@@ -87,7 +87,7 @@ class PrintPhotosView extends GalleryView {
 
 		foreach ($itemIds as $id) {
 			if (empty($permissions[$id]['core.view'])) {
-				// Avoid information disclosure, act as if the item didn't exist.
+				// Avoid information disclosure, act as if the item does not exist.
 				return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 			}
 		}
@@ -131,7 +131,7 @@ class PrintPhotosView extends GalleryView {
 			$itemId = $item->getId();
 
 			if (!isset($permissions[$itemId]['shutterfly.print'])) {
-				// Skip any cart items for which we don't have print permission
+				// Skip any cart items for which we do not have print permission
 				continue;
 			}
 
@@ -141,7 +141,7 @@ class PrintPhotosView extends GalleryView {
 			if ($needSession && !isset($sfSession)) {
 				/*
 				 * Get G2 session for shutterfly to access non-public images.
-				 * We can't use this session because hijack protection will prevent access
+				 * We cannot use this session because hijack protection will prevent access
 				 * plus the current user could logout before shutterfly retrieves the images.
 				 * Create a new session with the rights of current user for shutterfly to use.
 				 */
@@ -207,7 +207,7 @@ class PrintPhotosView extends GalleryView {
 			$entry['thumbHeight'] = $thumbSource->getHeight();
 
 			/*
-			 * Ugh, the Shutterfly api doesn't have a parameter for quantity.
+			 * Ugh, the Shutterfly api does not have a parameter for quantity.
 			 * Repeat the same entry multiple times to get desired quantity!
 			 */
 			for ($j = 0; $j < $cartItemIds[$itemId]; $j++) {
@@ -234,7 +234,7 @@ class PrintPhotosView extends GalleryView {
 
 		/*
 		 * Ugh, the Shutterfly api can only track its session data via some cookies
-		 * (redirecting to a url with embedded session id won't work) so we must
+		 * (redirecting to a url with embedded session id would not work) so we must
 		 * render a form and submit it.. here we set our own cookie that will be
 		 * checked to ensure we submit our form only once.
 		 */

@@ -145,7 +145,7 @@ msgstr "Steg 3. Välj vilka bilder som du vill vattenstämpla"
 msgid "You must choose something to watermark!"
 msgstr "Du måste välja något att vattenstäpla!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Full storlek (förstör inte orginalfilen)"
 
 msgid "Resizes"
@@ -233,7 +233,7 @@ msgstr "Placering"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Placera din vattenstämpel pä duken nedan i positionen du vill att den skall framträda när du "

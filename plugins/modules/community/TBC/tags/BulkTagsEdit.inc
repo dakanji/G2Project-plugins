@@ -45,7 +45,7 @@ class BulkTagsEditController extends GalleryController {
 				return array($ret, null);
 			}
 
-			// We'll check permissions one at a time below, but precache them now
+			// We will check permissions one at a time below, but precache them now
 			$ret = GalleryCoreApi::studyPermissions($ids);
 
 			if ($ret) {
@@ -183,7 +183,7 @@ class BulkTagsEditView extends GalleryView {
 			$numPages           = ceil(sizeof($childIds) / $form['numPerPage']);
 
 			if (empty($page) && !empty($selectedId)) {
-				// No page given.  Determine which page we're on from the selectedId
+				// No page given.  Determine which page we are on from the selectedId
 				for ($i = 0; $i < count($childIds); $i++) {
 					if ($childIds[$i] == $selectedId) {
 						$page = ceil(($i + 1) / $form['numPerPage']);
@@ -192,7 +192,7 @@ class BulkTagsEditView extends GalleryView {
 			}
 
 			if (empty($page) && !empty($albumPage)) {
-				// Still no page.  Determine which page we're on from albumPage
+				// Still no page.  Determine which page we are on from albumPage
 				list($ret, $theme) = $this->loadThemeForItem($item);
 
 				if ($ret) {
@@ -237,7 +237,7 @@ class BulkTagsEditView extends GalleryView {
 				$childId                 = $child->getId();
 				$form['items'][$childId] = (array)$child;
 
-				// While we're at it, attach thumbnails and resizes
+				// While we are at it, attach thumbnails and resizes
 				if (isset($derivatives[$childId])) {
 					foreach ($derivatives[$childId] as $derivative) {
 						$type = $derivative->getDerivativeType();

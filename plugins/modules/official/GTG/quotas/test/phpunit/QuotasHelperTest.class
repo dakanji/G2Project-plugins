@@ -66,7 +66,7 @@ class QuotasHelperTest extends GalleryTestCase {
 
 		$this->_markForCleanup($this->_group);
 
-		// Save/clear quotas for All Users,Everybody groups so they won't interfere with tests
+		// Save/clear quotas for All Users,Everybody groups so they would not interfere with tests
 		$this->_saveQuota = array();
 
 		foreach (array('allUserGroup', 'everybodyGroup') as $groupName) {
@@ -245,7 +245,7 @@ class QuotasHelperTest extends GalleryTestCase {
 	}
 
 	public function testGetUserDiskQuota() {
-		// user doesn't have a quota yet
+		// user does not have a quota yet
 		list($ret, $quotaExists, $userDiskQuota) = GalleryQuotasHelper::getUserDiskQuota($this->_user->getId());
 
 		if ($ret) {
@@ -333,7 +333,7 @@ class QuotasHelperTest extends GalleryTestCase {
 			)
 		);
 
-		// user doesn't have any quotas anymore
+		// user does not have any quotas anymore
 		list($ret, $quotaExists, $userDiskQuota) = GalleryQuotasHelper::getUserDiskQuota($this->_user->getId());
 
 		if ($ret) {

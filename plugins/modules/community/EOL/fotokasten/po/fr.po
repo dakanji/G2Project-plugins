@@ -73,7 +73,7 @@ msgid "Enter a valid affiliate password"
 msgstr "Saisir un mot de passe d'affilié valide"
 
 msgid ""
-"You're currently using the default Gallery affiliate id.  This means that the Gallery "
+"You are currently using the default Gallery affiliate id.  This means that the Gallery "
 "project will receive a small commission for each print made from your website."
 msgstr ""
 "Vous utilisez actuellement l'identifiant d'affiliation par défaut de Gallery. Celà signifie "

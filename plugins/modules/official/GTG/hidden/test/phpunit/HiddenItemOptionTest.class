@@ -1394,8 +1394,8 @@ class HiddenItemOptionTest extends ItemEditOptionTestCase {
 		$session->put(GALLERY_PERMISSION_SESSION_KEY, array());
 
 		/*
-		 * No action if don't have any view permissions, as with a password protected item
-		 * for which we haven't yet entered the password.
+		 * No action if do not have any view permissions, as with a password protected item
+		 * for which we have not yet entered the password.
 		 */
 		$ret = $module->onLoad($this->_topItems[1], false);
 

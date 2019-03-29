@@ -114,7 +114,7 @@ class Auth_OpenID_Association {
 	/**
 	 * This is an alternate constructor (factory method) used by the
 	 * OpenID consumer library to create associations.  OpenID store
-	 * implementations shouldn't use this constructor.
+	 * implementations should not use this constructor.
 	 *
 	 * @access private
 	 *

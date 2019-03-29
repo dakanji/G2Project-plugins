@@ -46,7 +46,7 @@ msgstr "사이트 관리자"
 msgid "Show Email Addresses"
 msgstr "전자 편지 주소 보이기"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "전자 편지 주소 보이지 않음"
 
 msgid "Member Items"

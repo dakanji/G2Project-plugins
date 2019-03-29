@@ -49,7 +49,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Laddar ner Gallery Remote Applet"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr ""
 "Din webbläsare understödjer inte applets; Du måste använda någon annan uppladdnings metod."
 
@@ -174,10 +174,10 @@ msgstr ""
 "sätt till falskt om du vill undvika att förlora EXIF data när bilden skalas om och "
 "ImageMagick inte kan användas"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "om sant, så kommer inte appleten att klaga om den inte kan hitta ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "om sant, så kommer inte appleten att klaga om den inte kan finna Jpegtran"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

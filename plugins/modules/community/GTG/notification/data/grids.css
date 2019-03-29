@@ -16,7 +16,7 @@ version: 2.3.0
 	width:73.074em;*width:71.313em;}
 /* 100% with 10px viewport side matting */
 #doc3 {
-	margin:auto 10px; /* not for structure, but so content doesn't bleed to edge */
+	margin:auto 10px; /* not for structure, but so content does not bleed to edge */
 	width:auto;}
 /* 974 centered */
 #doc4 {

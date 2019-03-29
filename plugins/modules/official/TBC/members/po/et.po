@@ -42,7 +42,7 @@ msgstr "Saidi Adminnid"
 msgid "Show Email Addresses"
 msgstr "Näita Emailiaadresse"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Ära Näita Emailiaadresse"
 
 msgid "Member Items"

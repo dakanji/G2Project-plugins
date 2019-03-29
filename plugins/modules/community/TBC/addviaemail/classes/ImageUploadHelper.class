@@ -46,7 +46,7 @@ class ImageUploadHelper {
 		/*
 		 * We must specify how many bytes are still available for the current user.
 		 * Use a big (random) number or define a real limit if you wish.
-		 * (I don't know what the phone does with this value, probably nothing.)
+		 * (I do not know what the phone does with this value, probably nothing.)
 		 */
 		$status['spaceleft'] = 10000000;
 

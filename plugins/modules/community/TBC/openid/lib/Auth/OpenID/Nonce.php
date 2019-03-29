@@ -105,9 +105,9 @@ function Auth_OpenID_mkNonce($when = null) {
 	);
 
 	if ($when === null) {
-		// It's safe to call time() with no arguments; it returns a
+		// It is safe to call time() with no arguments; it returns a
 		// GMT unix timestamp on PHP 4 and PHP 5.  gmmktime() with no
-		// args returns a local unix timestamp on PHP 4, so don't use
+		// args returns a local unix timestamp on PHP 4, so do not use
 		// that.
 		$when = time();
 	}

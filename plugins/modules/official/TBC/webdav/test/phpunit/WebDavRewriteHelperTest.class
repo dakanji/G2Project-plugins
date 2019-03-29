@@ -56,7 +56,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 
 		$this->_markForCleanup($album);
 
-		// Write lock the album we're moving
+		// Write lock the album we are moving
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireWriteLock($album->getId());
 
 		if ($ret) {
@@ -107,7 +107,7 @@ class WebDavRewriteHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		// Write lock the item we're moving
+		// Write lock the item we are moving
 		list($ret, $lockIds[]) = GalleryCoreApi::acquireWriteLock($item->getId());
 
 		if ($ret) {

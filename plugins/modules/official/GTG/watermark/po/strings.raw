@@ -40,7 +40,7 @@ gettext("Step 2.  Placement for the watermark")
 gettext("watermark")
 gettext("Step 3.  Choose which images to watermark")
 gettext("You must choose something to watermark!") /* also in: templates/WatermarkEdit.tpl */
-gettext("Full size (won't damage the original file)") /* also in: templates/WatermarkEdit.tpl */
+gettext("Full size (would not damage the original file)") /* also in: templates/WatermarkEdit.tpl */
 gettext("Resizes") /* also in: templates/WatermarkEdit.tpl */
 gettext("Thumbnail") /* also in: templates/WatermarkEdit.tpl */
 gettext("Step 4.  Subalbums")
@@ -72,7 +72,7 @@ gettext("Give this watermark a name so that you can identify it in a list.")
 gettext("You must provide a name")
 gettext("Name already used by another watermark")
 gettext("Placement")
-gettext("Place your watermark on the canvas below in the location where you'd like it to appear when you watermark newly uploaded photos.  You'll be able to edit individual photos to move the watermark later on, if you choose.")
+gettext("Place your watermark on the canvas below in the location where you'd like it to appear when you watermark newly uploaded photos.  You will be able to edit individual photos to move the watermark later on, if you choose.")
 gettext("Choose which versions of the image you'd like to watermark")
 gettext("Replace image")
 gettext("Uploading a new image file will reapply this watermark everywhere it is used in the Gallery.  The new image must match the mime type of the existing file.")

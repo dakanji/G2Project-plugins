@@ -176,7 +176,7 @@ class getid3_asf extends getid3_handler {
 					// Type-Specific Data           BYTESTREAM   variable        // type-specific format data, depending on value of Stream Type
 					// Error Correction Data        BYTESTREAM   variable        // error-correction-specific format data, depending on value of Error Correct Type
 					// There is one GETID3_ASF_Stream_Properties_Object for each stream (audio, video) but the
-					// stream number isn't known until halfway through decoding the structure, hence it
+					// stream number is not known until halfway through decoding the structure, hence it
 					// it is decoded to a temporary variable and then stuck in the appropriate index later
 					$StreamPropertiesObjectData['offset']             = $NextObjectOffset + $offset;
 					$StreamPropertiesObjectData['objectid']           = $NextObjectGUID;

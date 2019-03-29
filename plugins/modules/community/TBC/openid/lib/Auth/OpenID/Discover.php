@@ -437,8 +437,8 @@ class Auth_OpenID_ServiceEndpoint {
 		// Discover OpenID services for a URI. Tries Yadis and falls back
 		// on old-style <link rel='...'> discovery if Yadis fails.
 		// Might raise a yadis.discover.DiscoveryFailure if no document
-		// came back for that URI at all.  I don't think falling back to
-		// OpenID 1.0 discovery on the same URL will help, so don't bother
+		// came back for that URI at all.  I do not think falling back to
+		// OpenID 1.0 discovery on the same URL will help, so do not bother
 		// to catch it.
 		if ($discover_function === null) {
 			$discover_function = array('Auth_Yadis_Yadis', 'discover');
@@ -538,7 +538,7 @@ class Auth_OpenID_ServiceEndpoint {
 	}
 
 	public function Auth_OpenID_discover($uri, &$fetcher) {
-		// If the fetcher (i.e., PHP) doesn't support SSL, we can't do
+		// If the fetcher (i.e., PHP) does not support SSL, we cannot do
 		// discovery on an HTTPS URL.
 		if ($fetcher->isHTTPS($uri) && !$fetcher->supportsSSL()) {
 			return array($uri, array());
@@ -550,7 +550,7 @@ class Auth_OpenID_ServiceEndpoint {
 			$result = Auth_OpenID_discoverURI($uri, $fetcher);
 		}
 
-		// If the fetcher doesn't support SSL, we can't interact with
+		// If the fetcher does not support SSL, we cannot interact with
 		// HTTPS server URLs; remove those endpoints from the list.
 		if (!$fetcher->supportsSSL()) {
 			$http_endpoints = array();

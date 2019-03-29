@@ -62,7 +62,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr ""
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "당신의 애플릿은 애플릿을 지원하지 않습니다; 기본 슬라이드 쇼를 이용하십시요."
 
 msgid "Slideshow Applet Settings"
@@ -142,11 +142,11 @@ msgstr ""
 msgid "does slideshow loop when it gets to the end?"
 msgstr ""
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr ""
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 

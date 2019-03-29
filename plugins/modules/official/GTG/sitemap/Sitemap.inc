@@ -69,7 +69,7 @@ class SitemapView extends GalleryView {
 		 */
 
 		/*
-		 * Don't use a template for this as we may wind up trying to buffer
+		 * Do not use a template for this as we may wind up trying to buffer
 		 * way too much data
 		 */
 		$phpVm->header('Content-type: application/xhtml+xml');

@@ -10,7 +10,7 @@
 
 <div id="flashcontent" style="height:700px;">
   <h1>Oops!</h1>
-  <p>It looks like you don't have flash player 6 installed. <a href="http://www.macromedia.com/go/getflashplayer" >Click here</a> to go to Macromedia download page.
+  <p>It looks like you do not have flash player 6 installed. <a href="http://www.macromedia.com/go/getflashplayer" >Click here</a> to go to Macromedia download page.
   </p>
 </div>
 		

@@ -154,7 +154,7 @@ msgstr "Generación de miniaturas"
 
 msgid ""
 "Normally Gallery will generate thumbnails the first time you look at them, then save them "
-"for subsequent views.  If you check this box, we'll create the thumbnails at migration "
+"for subsequent views.  If you check this box, we will create the thumbnails at migration "
 "time.  Migration will take longer but the first time you view an album will go much faster."
 msgstr ""
 "Normalmente Gallery generará miniaturas la pimera vez que las veas y las guardara para las "
@@ -252,7 +252,7 @@ msgid "This album has an illegal name and will be renamed to <i>%s</i>"
 msgstr "Este álbum tiene un nombre ilegal y será renombrado a <i>%s</i>"
 
 #, c-format
-msgid "This album's owner (%s) hasn't been imported."
+msgid "This album's owner (%s) has not been imported."
 msgstr "El propietario de este álbum (%s) no puede ser importado."
 
 #, c-format
@@ -419,7 +419,7 @@ msgid "Import from Gallery 1"
 msgstr "Importar desde Gallery 1"
 
 msgid ""
-"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify "
+"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify "
 "your Gallery 1 data in any way."
 msgstr ""
 "Copia todo o parte de una instalación existente de G1 en tu Gallery 2.  No modifica los "
@@ -427,7 +427,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
 "No tienen ninguna Herramienta Gráfica activada para manejar imágenes JPEG.  Si importas "

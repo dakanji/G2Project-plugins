@@ -29,20 +29,20 @@
 	all subitems of current item
  * Only include subitems (in particular ChildDataItems) that have GPS coordinates set
  * Added support for optional 'GELookAt' field to customize how GE portrays the location
- * Got rid of the View and associated form, which wasn't doing anything but confusing people.
+ * Got rid of the View and associated form, which was not doing anything but confusing people.
 	Note that this requires a change to the "Export to GE" link in map/module.inc
 	to call this as 'controller' instead of 'view'.
 	It makes the "Export to GE" a direct link to download to Google Earth.
  Further updates (Karl Newman, 2006-12-26)
  * Added "Document" enclosing structure; fixed styles to avoid using deprecated icons.
  Still more updates (Karl Newman, 2006-12-27)
- * Use "LookAt" block for albums if they have coordinates set (still won't show a point, though)
+ * Use "LookAt" block for albums if they have coordinates set (still would not show a point, though)
  * Include albums if they have coordinates set, even if no children do.
  * Show the album thumbnail and link to the album in the folder description.
  More refinements (Karl Newman, 2006-12-28)
  * Changed the prefix to GoogleEarth instead of GoogleEarthAlbum, since it can be used to view a
 	single item as well as an album. Also, this really should be a View, not a Controller, since
-	it doesn't modify any data. So, I changed it to an Immediate view, patterned after
+	it does not modify any data. So, I changed it to an Immediate view, patterned after
 	DownloadItem in the Core module. These changes will affect module.inc as well.
  * Added function documentation, prefix private functions with _
  */
@@ -148,7 +148,7 @@ class GoogleEarthView extends GalleryView {
 			list($ret, $data) = mapHelper::fetchFieldValues(array($item));
 		}
 
-		// If it's an album or similar
+		// If it is an album or similar
 		if ($item->getCanContainChildren()) {
 			// Get all the direct children of this item, in album sort order
 			list($ret, $childIds) = GalleryCoreApi::fetchChildItemIds($item);
@@ -157,9 +157,9 @@ class GoogleEarthView extends GalleryView {
 				return array($ret, null);
 			}
 
-			// If the list of direct children wasn't empty
+			// If the list of direct children was not empty
 			if (!empty($childIds)) {
-				// If we haven't already included this item in a parent folder
+				// If we have not already included this item in a parent folder
 				if (!array_search($item->getId(), $ancestors)) {
 					// Add ourselves to the ancestors array
 					$ancestors[] = $item->getId();
@@ -204,7 +204,7 @@ class GoogleEarthView extends GalleryView {
 				}
 			}
 		} else {
-			// It's not a container item
+			// It is not a container item
 			if (GalleryUtilities::isA($item, 'GalleryDataItem')) {
 				list($ret, $childitemstring) = GoogleEarthView::_createGEChildItem($item, $data[$item->getId()]);
 

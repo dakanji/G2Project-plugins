@@ -39,7 +39,7 @@
 	{g->text text="Sandbox Merchant Id and Key"}
       </h3>
       <p class="giDescription">
-	{g->text text="This is your Google Checkout account identifier for testing in the Sandbox. You don't need to enter anything here unles you use want to use the Test mode."}
+	{g->text text="This is your Google Checkout account identifier for testing in the Sandbox. You do not need to enter anything here unles you use want to use the Test mode."}
       </p>
       <input type="text" size="50" name="{g->formVar var="form[gcTestMerchantId]"}" value="{$form.gcTestMerchantId}">
        <p class="giDescription">
@@ -58,7 +58,7 @@
       </p>
       <input type="text" size="60" name="{g->formVar var="form[gcCallbackURL]"}" value="{$form.gcCallbackURL}" size="60">&nbsp;&nbsp;<input type="submit" class="inputTypeSubmit" name="{g->formVar var="form[action][test]"}" value="{g->text text="Test notification URL"}"/>
       <p class="giDescription">
-       {g->text text="If you are using the URL Rewrite Module rule for authorization in checkoutgoogle, you can override the detected path for the rewritten URL with the full version you've entered above."}
+       {g->text text="If you are using the URL Rewrite Module rule for authorization in checkoutgoogle, you can override the detected path for the rewritten URL with the full version you have entered above."}
        {g->text text="After changing this setting you should go to the Rewrite Module admin page, make sure the Checkout Google rule is enabled, and resave that page."}
        </p>
        {g->text text="Override URL in URL Rewrite rule?"} <input type="checkbox" name="{g->formVar var="form[overrideURL]"}" value = "true" {if $form.overrideURL}checked{/if}>

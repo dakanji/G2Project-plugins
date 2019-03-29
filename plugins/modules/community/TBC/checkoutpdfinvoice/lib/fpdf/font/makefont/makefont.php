@@ -308,7 +308,7 @@ function SaveToFile($file, $s, $mode = 't') {
 	$f = fopen($file, 'w' . $mode);
 
 	if (!$f) {
-		die('Can\'t write to file ' . $file);
+		die('Cannot write to file ' . $file);
 	}
 
 	fwrite($f, $s, strlen($s));
@@ -332,7 +332,7 @@ function CheckTTF($file) {
 	$f = fopen($file, 'rb');
 
 	if (!$f) {
-		die('<B>Error:</B> Can\'t open ' . $file);
+		die('<B>Error:</B> Cannot open ' . $file);
 	}
 
 	//Extract number of tables
@@ -377,9 +377,9 @@ function CheckTTF($file) {
 }
 
 /*******************************************************************************
- * $fontfile : chemin du fichier TTF (ou chaîne vide si pas d'incorporation)    *
+ * $fontfile : chemin du fichier TTF (ou chaine vide si pas d'incorporation)    *
  * $afmfile :  chemin du fichier AFM                                            *
- * $enc :      encodage (ou chaîne vide si la police est symbolique)            *
+ * $enc :      encodage (ou chaine vide si la police est symbolique)            *
  * $patch :    patch optionnel pour l'encodage                                  *
  * $type :     type de la police si $fontfile est vide                          *
  *******************************************************************************/
@@ -464,7 +464,7 @@ function MakeFont($fontfile, $afmfile, $enc = 'cp1252', $patch = array(), $type 
 		$f = fopen($fontfile, 'rb');
 
 		if (!$f) {
-			die('<B>Error:</B> Can\'t open ' . $fontfile);
+			die('<B>Error:</B> Cannot open ' . $fontfile);
 		}
 
 		$file = fread($f, filesize($fontfile));

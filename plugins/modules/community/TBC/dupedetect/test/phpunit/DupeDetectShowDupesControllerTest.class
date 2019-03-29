@@ -576,7 +576,7 @@ class DupeDetectShowDupesControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function _cleanTestPair($pair) {
-		// don't delete if already deleted
+		// do not delete if already deleted
 		$ret = $this->_verifyMissing($this->_item1->getId());
 
 		if ($ret->isError()) {

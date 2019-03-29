@@ -10,7 +10,7 @@
 /**
  * The base session class used by the Auth_Yadis_Manager.  This
  * class wraps the default PHP session machinery and should be
- * subclassed if your application doesn't use PHP sessioning.
+ * subclassed if your application does not use PHP sessioning.
  *
  * @package OpenID
  */
@@ -32,7 +32,7 @@ class Auth_Yadis_PHPSession {
 	 * @param string $default The optional value to return if the key
 	 * is not found in the session.
 	 * @return string $result The key's value in the session or
-	 * $default if it isn't found.
+	 * $default if it is not found.
 	 */
 	public function get($name, $default = null) {
 		if (array_key_exists($name, $_SESSION)) {
@@ -64,7 +64,7 @@ class Auth_Yadis_PHPSession {
  * objects.  Note that the class used must have a constructor that
  * takes no parameters.  This is not a general solution, but it works
  * for dumb objects that just need to have attributes set.  The idea
- * is that you'll subclass this and override $this->check($data) ->
+ * is that you will subclass this and override $this->check($data) ->
  * bool to implement your own session data validation.
  *
  * @package OpenID
@@ -435,7 +435,7 @@ class Auth_Yadis_Discovery {
 	 * exists.
 	 *
 	 * @param $force True if the manager should be deleted regardless
-	 * of whether it's a manager for $this->url.
+	 * of whether it is a manager for $this->url.
 	 */
 	public function cleanup($force = false) {
 		$manager = $this->getManager($force);
@@ -463,7 +463,7 @@ class Auth_Yadis_Discovery {
 	 * @access private
 	 *
 	 * @param $force True if the manager should be returned regardless
-	 * of whether it's a manager for $this->url.
+	 * of whether it is a manager for $this->url.
 	 */
 	public function &getManager($force = false) {
 		// Extract the YadisServiceManager for this object's URL and
@@ -521,7 +521,7 @@ class Auth_Yadis_Discovery {
 	 * @access private
 	 *
 	 * @param $force True if the manager should be deleted regardless
-	 * of whether it's a manager for $this->url.
+	 * of whether it is a manager for $this->url.
 	 */
 	public function destroyManager($force = false) {
 		if ($this->getManager($force) !== null) {

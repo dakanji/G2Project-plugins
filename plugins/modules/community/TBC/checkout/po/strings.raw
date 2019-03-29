@@ -87,7 +87,7 @@ gettext("The customer can be given the opportunity to enter a special discount c
 gettext("Ask for discount code?")
 gettext("Minimum Order Value")
 gettext("You have the option to reject any orders unless they meet a specified minimum order value (excluding postage costs).")
-gettext("If you're happy to accept orders of any value leave this setting blank.")
+gettext("If you are happy to accept orders of any value leave this setting blank.")
 gettext("Minimum Order Value?")
 gettext("Cart Display Options")
 gettext("When a user adds an item to their cart you can have them redirected to show the cart contents, or have them stay at the same page.")
@@ -246,7 +246,7 @@ gettext("Order Administration Page")
 gettext("Order Cancelled.")
 gettext("The order process was halted, but your cart has not been emptied.")
 gettext("Your order is confirmed.")
-gettext("Thank you very much for placing this order. You can bookmark this page and return to it to track progress of the order, and we'll also send you an email when the order status changes.")
+gettext("Thank you very much for placing this order. You can bookmark this page and return to it to track progress of the order, and we will also send you an email when the order status changes.")
 gettext("Order Already Placed")
 gettext("This order has already been placed. You can see its status on this page.")
 gettext("Continue shopping") /* also in: templates/Select.tpl */
@@ -265,7 +265,7 @@ gettext("Info") /* also in: templates/TransactionContents.tpl templates/email/Tr
 gettext("Product - Price - Quantity") /* also in: templates/TransactionContents.tpl */
 gettext("You must set a quantity for at least one item before continuing")
 gettext("Please confirm your option selections.")
-gettext("Your order doesn't reach the minimum value required.")
+gettext("Your order does not reach the minimum value required.")
 gettext("No thumbnail") /* also in: templates/blocks/ShowCart.tpl templates/email/TransactionContents.tpl */
 gettext("Title") /* also in: templates/email/TransactionContents.tpl */
 gettext("Album")

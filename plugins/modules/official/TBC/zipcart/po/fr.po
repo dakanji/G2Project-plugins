@@ -64,7 +64,7 @@ msgstr "Chemin vers zip&nbsp;:"
 msgid "You must enter a path to your zip binary"
 msgstr "Vous devez saisir le chemin vers votre binaire zip"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Le chemin que vous avez saisi n'est pas valide ou n'est pas exécutable"
 
 msgid "Unable to create a zip file from this binary"

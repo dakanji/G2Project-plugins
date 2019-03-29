@@ -150,7 +150,7 @@ msgstr "縮略圖生成"
 
 msgid ""
 "Normally Gallery will generate thumbnails the first time you look at them, then save them "
-"for subsequent views.  If you check this box, we'll create the thumbnails at migration "
+"for subsequent views.  If you check this box, we will create the thumbnails at migration "
 "time.  Migration will take longer but the first time you view an album will go much faster."
 msgstr ""
 "一般情況下，Gallery 將在你第一次觀看時產生縮略圖，然後保存縮略圖供後續使用。如果你勾選這個選"
@@ -240,7 +240,7 @@ msgid "This album has an illegal name and will be renamed to <i>%s</i>"
 msgstr "這個相簿有不合法的名字，將被重改名為<i>%s</i>"
 
 #, c-format
-msgid "This album's owner (%s) hasn't been imported."
+msgid "This album's owner (%s) has not been imported."
 msgstr "這個相簿的所有者（%s）並未被引進。"
 
 #, c-format
@@ -393,14 +393,14 @@ msgid "Import from Gallery 1"
 msgstr "從 Gallery 1 中引進"
 
 msgid ""
-"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify "
+"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify "
 "your Gallery 1 data in any way."
 msgstr ""
 "將現有 Gallery 1 的全部或部分檔案拷貝到你的 Gallery 2 中。這完全不會更動你的 Gallery 1 資料."
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
 "你沒有開啟任何可處理 JPEG 的圖形工具。如果你現在引進，將不會生成任何縮略圖。請前往%s模組%s頁"

@@ -60,7 +60,7 @@ class QuotasListenerTest extends GalleryTestCase {
 
 		/*
 		 * Save/clear quotas for All Users, Everybody groups
-		 * so they won't interfere with tests
+		 * so they would not interfere with tests
 		 */
 		$this->_saveQuota = array();
 

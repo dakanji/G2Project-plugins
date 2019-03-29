@@ -207,7 +207,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 
 		if (!$tmp_file) {
 			trigger_error(
-				"_mktemp didn't return a valid file descriptor",
+				"_mktemp did not return a valid file descriptor",
 				E_USER_WARNING
 			);
 
@@ -232,7 +232,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 			return true;
 		}
 
-		// If there was an error, don't leave the temporary file
+		// If there was an error, do not leave the temporary file
 		// around.
 		Auth_OpenID_FileStore::_removeIfPresent($tmp);
 
@@ -540,7 +540,7 @@ class Auth_OpenID_FileStore extends Auth_OpenID_OpenIDStore {
 			return true;
 		}
 
-		// Couldn't open directory.
+		// Could not open directory.
 		return false;
 	}
 

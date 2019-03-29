@@ -237,7 +237,7 @@
       <h3>{g->text text="Minimum Order Value"}</h3>
       <p class="giDescription">
         {g->text text="You have the option to reject any orders unless they meet a specified minimum order value (excluding postage costs)."}
-        {g->text text="If you're happy to accept orders of any value leave this setting blank."}
+        {g->text text="If you are happy to accept orders of any value leave this setting blank."}
       </p>
        <table class="gbDataTable">
       <tr>

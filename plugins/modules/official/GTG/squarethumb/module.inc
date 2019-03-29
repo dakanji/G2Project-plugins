@@ -185,7 +185,7 @@ class SquareThumbModule extends GalleryModule {
 				return array($ret, null);
 			}
 		} else {
-			// Can't activate unless there's a toolkit to leech off of
+			// Cannot activate unless there is a toolkit to leech off of
 			return array(
 				null,
 				array(
@@ -196,7 +196,7 @@ class SquareThumbModule extends GalleryModule {
 		}
 
 		if (!isset($toolkit)) {
-			// Make sure we're in crop mode, if toolkit support for fit mode gets deactivated
+			// Make sure we are in crop mode, if toolkit support for fit mode gets deactivated
 			$ret = $this->setParameter('mode', 'crop');
 
 			if ($ret) {
@@ -278,8 +278,8 @@ class SquareThumbModule extends GalleryModule {
 	 */
 	public function handleEvent($event) {
 		/*
-		 * We're going to deactivate this plugin which will generate another
-		 * Gallery::DeactivatePlugin event, so make sure that we don't handle
+		 * We are going to deactivate this plugin which will generate another
+		 * Gallery::DeactivatePlugin event, so make sure that we do not handle
 		 * *that* event and get into an infinite loop!
 		 */
 		$data = $event->getData();

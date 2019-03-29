@@ -69,7 +69,7 @@ msgstr "Путь к zip:"
 msgid "You must enter a path to your zip binary"
 msgstr "Вы должны ввести путь к двоичному коду zip"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Введённый вами путь неверен, либо не является исполняемым"
 
 msgid "Unable to create a zip file from this binary"

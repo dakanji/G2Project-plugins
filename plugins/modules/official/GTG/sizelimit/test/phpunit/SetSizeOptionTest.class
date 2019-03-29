@@ -195,7 +195,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertTrue($appropriate, 'appropriate');
 	}
 
-	// change dimensions, don't keep original
+	// change dimensions, do not keep original
 	public function testChangeDimNoOriginal() {
 		global $gallery;
 
@@ -246,7 +246,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		}
 	}
 
-	// change dimensions on multiple items, don't keep originals
+	// change dimensions on multiple items, do not keep originals
 	public function testMultipleChangeDimNoOriginal() {
 		global $gallery;
 
@@ -445,7 +445,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals($this->_expectResize, $operation, 'operation');
 	}
 
-	// change size, don't keep original
+	// change size, do not keep original
 	public function testChangeSizeNoOriginal() {
 		global $gallery;
 
@@ -496,7 +496,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals($this->_items[0], $preferred, 'No preferred');
 	}
 
-	// change size on multiple items, don't keep originals
+	// change size on multiple items, do not keep originals
 	public function testMultipleChangeSizeNoOriginal() {
 		global $gallery;
 
@@ -834,7 +834,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals($this->_expectResizeCompress, $operation, 'operation');
 	}
 
-	// change dimensions AND size, don't keep original
+	// change dimensions AND size, do not keep original
 	public function testChangeBothNoOriginal() {
 		global $gallery;
 
@@ -888,7 +888,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals(1000, $this->_items[0]->getSize(), 'Size');
 	}
 
-	// change dimensions AND size on multiple items, don't keep originals
+	// change dimensions AND size on multiple items, do not keep originals
 	public function testMultipleChangeBothNoOriginal() {
 		global $gallery;
 
@@ -1039,7 +1039,7 @@ class SetSizeOptionTest extends ItemAddOptionTestCase {
 		$this->assertEquals($this->_expectWarnings, $warnings);
 	}
 
-	// ensure no change when image is already smaller than limits (don't stretch)
+	// ensure no change when image is already smaller than limits (do not stretch)
 	public function testBelowLimits() {
 		foreach (array(
 			'width'        => 1800,
@@ -1256,7 +1256,7 @@ class SetSizeOptionTestPlatform extends GalleryPlatform {
 	}
 
 	public function unlink($filename) {
-		// if it is a derivative - we didn't really create it
+		// if it is a derivative - we did not really create it
 		if ($this->_savedPlatform->file_exists($filename)) {
 			return $this->_savedPlatform->unlink($filename);
 		}

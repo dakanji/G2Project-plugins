@@ -81,7 +81,7 @@ class ConfigureController extends GalleryController {
 					// They dont want to create one, they chose from the list
 					$albumId = $form['destinationAlbum'];
 				} else {
-					// They want to create a new one, and they've chose the parent
+					// They want to create a new one, and they have chose the parent
 					list($ret, $albumId) = ImageUploadHelper::createUploadAlbum(
 						$form['album'],
 						$form['destinationAlbum'],
@@ -202,12 +202,12 @@ class ConfigureView extends GalleryView {
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
 
-		// Load our default values if we didn't just come from this form.
+		// Load our default values if we did not just come from this form.
 		if ($form['formName'] != 'AddviaEmailConfigure') {
 			$form['formName'] = 'AddviaEmailConfigure';
 			$form['album']    = '';
 
-			// Set defaults from the existing Parameters, when we're editing
+			// Set defaults from the existing Parameters, when we are editing
 			list($ret, $params) = GalleryCoreApi::fetchAllPluginParameters('module', 'addviaemail');
 
 			if ($ret) {

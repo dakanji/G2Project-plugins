@@ -36,7 +36,7 @@ msgstr "Mugikor Erabiltzaileak"
 msgid "Pictures from mobile phones"
 msgstr "Telefono mugikorreko irudiak"
 
-msgid "Couldn't fetch directory list."
+msgid "Could not fetch directory list."
 msgstr "Ezinda direktorio zerrenda ebatzi"
 
 msgid "Login failed."
@@ -45,7 +45,7 @@ msgstr "Saio hasteak huts egin du"
 msgid "Album creation failed."
 msgstr "Album sortzeak huts egin du."
 
-msgid "Couldn't retrieve settings."
+msgid "Could not retrieve settings."
 msgstr "Ezin dira ezarpenak eskuratu"
 
 msgid "Upload failed."

@@ -59,7 +59,7 @@ class CheckoutHelper {
 		$session   =& $gallery->getSession();
 		$returnURL = GalleryUtilities::getRequestVariables('return');
 
-		// don't store urls back into checkout
+		// do not store urls back into checkout
 		$matchstring = '/' . preg_quote('=checkout.') . '/';
 
 		if (!empty($returnURL) && !preg_match($matchstring, $returnURL)) {
@@ -194,7 +194,7 @@ class CheckoutHelper {
 						return array($ret, null);
 					}
 
-					// drop the root album if there's more than one level
+					// drop the root album if there is more than one level
 					if (count($itemIdTree) > 1) {
 						array_shift($itemIdTree);
 					}
@@ -415,7 +415,7 @@ class CheckoutHelper {
 		if (empty($checkoutItems)) {
 			$session->remove('checkout.items');
 		} else {
-			// don't keep full item details in session
+			// do not keep full item details in session
 			foreach ($checkoutItems as $key => $item) {
 				if (is_array($item) && isset($item['fullItemDetails'])) {
 					unset($checkoutItems[$key]['fullItemDetails']);

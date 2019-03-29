@@ -237,7 +237,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		}
 
 		/*
-		 * What we get back depends on what options we've set for our mode, which will vary
+		 * What we get back depends on what options we have set for our mode, which will vary
 		 * depending on the current settings of the database.  Even if we request a specific field,
 		 * we still may not get it back if its not in the image.  Doh.  Let's do a quick and dirty
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
@@ -300,7 +300,7 @@ class Getid3HelperTest extends GalleryTestCase {
 				case 'Channel Mode':
 				case 'Video Bit Rate':
 				case 'Date/Time':
-					// Don't verify these
+					// Do not verify these
 					break;
 
 				default:
@@ -340,7 +340,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		}
 
 		/*
-		 * What we get back depends on what options we've set for our mode, which will vary
+		 * What we get back depends on what options we have set for our mode, which will vary
 		 * depending on the current settings of the database.  Even if we request a specific field,
 		 * we still may not get it back if its not in the image.  Doh.  Let's do a quick and dirty
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
@@ -412,7 +412,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		}
 
 		/*
-		 * What we get back depends on what options we've set for our mode, which will vary
+		 * What we get back depends on what options we have set for our mode, which will vary
 		 * depending on the current settings of the database.  Even if we request a specific field,
 		 * we still may not get it back if its not in the image.  Doh.  Let's do a quick and dirty
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
@@ -460,7 +460,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		}
 
 		/*
-		 * What we get back depends on what options we've set for our mode, which will vary
+		 * What we get back depends on what options we have set for our mode, which will vary
 		 * depending on the current settings of the database.  Even if we request a specific field,
 		 * we still may not get it back if its not in the image.  Doh.  Let's do a quick and dirty
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
@@ -510,7 +510,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		}
 
 		/*
-		 * What we get back depends on what options we've set for our mode, which will vary
+		 * What we get back depends on what options we have set for our mode, which will vary
 		 * depending on the current settings of the database.  Even if we request a specific field,
 		 * we still may not get it back if its not in the image.  Doh.  Let's do a quick and dirty
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.
@@ -554,7 +554,7 @@ class Getid3HelperTest extends GalleryTestCase {
 		}
 
 		/*
-		 * What we get back depends on what options we've set for our mode, which will vary
+		 * What we get back depends on what options we have set for our mode, which will vary
 		 * depending on the current settings of the database.  Even if we request a specific field,
 		 * we still may not get it back if its not in the image.  Doh.  Let's do a quick and dirty
 		 * test for now and just check for 'Make' and 'Model' to make sure that we got something.

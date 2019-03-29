@@ -35,7 +35,7 @@ class getid3_riff extends getid3_handler {
 		$info =& $this->getid3->info;
 
 		// initialize these values to an empty array, otherwise they default to NULL
-		// and you can't append array values to a NULL value
+		// and you cannot append array values to a NULL value
 		$info['riff'] = array(
 			'raw' => array(),
 		);
@@ -115,7 +115,7 @@ class getid3_riff extends getid3_handler {
 
 					if ($nextRIFFoffset == ($info['avdataend'] - 1)) {
 						if (substr($nextRIFFheader, 0, 1) == "\x00") {
-							// RIFF padded to WORD boundary, we're actually already at the end
+							// RIFF padded to WORD boundary, we are actually already at the end
 							break;
 						}
 					}
@@ -514,7 +514,7 @@ class getid3_riff extends getid3_handler {
 					}
 
 					// move the data chunk after all other chunks (if any)
-					// so that the RIFF parser doesn't see EOF when trying
+					// so that the RIFF parser does not see EOF when trying
 					// to skip over the data chunk
 					$RIFFdata    = substr($RIFFdata, 0, 36) . substr($RIFFdata, 44) . substr($RIFFdata, 36, 8);
 					$getid3_riff = new getid3_riff($this->getid3);
@@ -528,7 +528,7 @@ class getid3_riff extends getid3_handler {
 					switch ($thisfile_riff_raw['fmt ']['wFormatTag']) {
 						case 0x0001: // PCM
 							if (!empty($info['ac3'])) {
-								// Dolby Digital WAV files masquerade as PCM-WAV, but they're not
+								// Dolby Digital WAV files masquerade as PCM-WAV, but they are not
 								$thisfile_audio['wformattag']  = 0x2000;
 								$thisfile_audio['codec']       = self::wFormatTagLookup($thisfile_audio['wformattag']);
 								$thisfile_audio['lossless']    = false;
@@ -537,7 +537,7 @@ class getid3_riff extends getid3_handler {
 							}
 
 							if (!empty($info['dts'])) {
-								// Dolby DTS files masquerade as PCM-WAV, but they're not
+								// Dolby DTS files masquerade as PCM-WAV, but they are not
 								$thisfile_audio['wformattag']  = 0x2001;
 								$thisfile_audio['codec']       = self::wFormatTagLookup($thisfile_audio['wformattag']);
 								$thisfile_audio['lossless']    = false;
@@ -995,7 +995,7 @@ class getid3_riff extends getid3_handler {
 				$info['fileformat'] = 'amv';
 				$info['mime_type']  = 'video/amv';
 
-				// it's MJPEG, presumably contant-quality encoding, thereby VBR
+				// it is MJPEG, presumably contant-quality encoding, thereby VBR
 				$thisfile_video['bitrate_mode']    = 'vbr';
 				$thisfile_video['dataformat']      = 'mjpeg';
 				$thisfile_video['codec']           = 'mjpeg';

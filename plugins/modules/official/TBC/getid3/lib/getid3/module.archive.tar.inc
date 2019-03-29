@@ -85,7 +85,7 @@ class getid3_tar extends getid3_handler {
 			}
 
 			if ($buffer == $null_512k) {
-				// it's the end of the tar-file...
+				// it is the end of the tar-file...
 				break;
 			}
 

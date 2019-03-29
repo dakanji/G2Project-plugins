@@ -103,7 +103,7 @@ class getid3_writetags {
 		$TagFormatsToRemove = array();
 
 		if (filesize($this->filename) == 0) {
-			// empty file special case - allow any tag format, don't check existing format
+			// empty file special case - allow any tag format, do not check existing format
 			// could be useful if you want to generate tag data for a non-existant file
 			$this->ThisFileInfo = array(
 				'fileformat' => '',
@@ -255,7 +255,7 @@ class getid3_writetags {
 			return false;
 		}
 
-		// convert supplied data array keys to upper case, if they're not already
+		// convert supplied data array keys to upper case, if they are not already
 		foreach ($this->tag_data as $tag_key => $tag_array) {
 			if (strtoupper($tag_key) !== $tag_key) {
 				$this->tag_data[strtoupper($tag_key)] = $this->tag_data[$tag_key];
@@ -263,7 +263,7 @@ class getid3_writetags {
 			}
 		}
 
-		// convert source data array keys to upper case, if they're not already
+		// convert source data array keys to upper case, if they are not already
 		if (!empty($this->ThisFileInfo['tags'])) {
 			foreach ($this->ThisFileInfo['tags'] as $tag_format => $tag_data_array) {
 				foreach ($tag_data_array as $tag_key => $tag_array) {
@@ -612,7 +612,7 @@ class getid3_writetags {
 				case '':
 					$this->errors[] = 'ID3v2: Skipping "' . $tag_key . '" because cannot match it to a known ID3v2 frame type';
 
-					// some other data type, don't know how to handle it, ignore it
+					// some other data type, do not know how to handle it, ignore it
 					break;
 
 				default:
@@ -668,7 +668,7 @@ class getid3_writetags {
 							}
 						}
 
-						// These values are not needed for all frame types, but if they're not used no matter
+						// These values are not needed for all frame types, but if they are not used no matter
 						$tag_data_id3v2[$ID3v2_framename][$key]['description'] = '';
 						$tag_data_id3v2[$ID3v2_framename][$key]['language']    = $this->id3v2_tag_language;
 					}

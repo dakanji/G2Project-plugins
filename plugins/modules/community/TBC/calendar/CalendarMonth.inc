@@ -275,7 +275,7 @@ class CalendarMonthView extends GalleryView {
 		}
 
 		/*
-		* If the plugin is empty get it from the session.  If it's empty there,
+		* If the plugin is empty get it from the session.  If it is empty there,
 		* default to the first plugin we find.  Either way, save the user's
 		* preference in the session.
 		$session =& $gallery->getSession();
@@ -338,7 +338,7 @@ class CalendarMonthView extends GalleryView {
 		}
 		}
 
-		/* Make sure that we've got some toolkits
+		/* Make sure that we have got some toolkits
 		list ($ret, $operations) = GalleryCoreApi::getToolkitOperations('image/jpeg');
 
 		if ($ret) {

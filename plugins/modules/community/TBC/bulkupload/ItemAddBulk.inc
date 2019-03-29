@@ -104,7 +104,7 @@ class ItemAddBulk extends ItemAddPlugin {
 							return array($ret, null, null);
 						}
 
-						// Set the keywords by hand, since we don't offer that in the API
+						// Set the keywords by hand, since we do not offer that in the API
 						if (!empty($line['keywords'])) {
 							list($ret, $itemLockId) = GalleryCoreApi::acquireWriteLock($newItem->getId());
 

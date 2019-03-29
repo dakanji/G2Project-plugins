@@ -48,7 +48,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Gallery リモートアプレットをダウンロードしています"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr "このブラウザはアプレットをサポートしていません。他のアップロード方法を使ってください。"
 
 msgid "Uploading files..."
@@ -169,10 +169,10 @@ msgstr ""
 "画像をリサイズして、ImageMagickが見つからない場合にEXIFデータが失われたくなければ、falseに設"
 "定する"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "もしtrueなら、アプレットはImageMagickが見つからないとメッセージを出しません"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "もしtrueなら、アプレットはJpegtranが見つからないとメッセージを出しません"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

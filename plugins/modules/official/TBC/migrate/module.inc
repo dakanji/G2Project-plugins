@@ -75,7 +75,7 @@ class MigrateModule extends GalleryModule {
 
 		$storage =& $gallery->getStorage();
 
-		// We don't care about anything older than 1.0.4
+		// We do not care about anything older than 1.0.4
 		if (version_compare($currentVersion, '1.0.4', '<=')) {
 			$currentVersion = '0';
 		}

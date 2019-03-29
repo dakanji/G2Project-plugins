@@ -190,7 +190,7 @@ class PicasaImportHelperTest extends GalleryControllerTestCase {
 			)
 		);
 
-		// Malformed HTML tags should not be turned into BBCode, but we can't stop it
+		// Malformed HTML tags should not be turned into BBCode, but we cannot stop it
 		$this->assertEquals(
 			'[i][b]interleaved[/i][/b]',
 			PicasaImportHelper::convertHtmlToBbcode('<i><b>interleaved</i></b>')

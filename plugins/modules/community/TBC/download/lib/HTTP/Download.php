@@ -90,7 +90,7 @@ define('HTTP_DOWNLOAD_E_INVALID_ARCHIVE_TYPE', -9);
  * raw data ie. from database BLOBs.
  *
  * <i>ATTENTION:</i>
- * You shouldn't use this package together with ob_gzhandler or
+ * You should not use this package together with ob_gzhandler or
  * zlib.output_compression enabled in your php.ini, especially
  * if you want to send already gzipped data!
  *
@@ -274,7 +274,7 @@ class HTTP_Download {
 
 			if (!method_exists($this, $method)) {
 				return PEAR::raiseError(
-					"Method '$method' doesn't exist.",
+					"Method '$method' does not exist.",
 					HTTP_DOWNLOAD_E_INVALID_PARAM
 				);
 			}
@@ -293,14 +293,14 @@ class HTTP_Download {
 	 * Set path to file for download
 	 *
 	 * The Last-Modified header will be set to files filemtime(), actually.
-	 * Returns PEAR_Error (HTTP_DOWNLOAD_E_INVALID_FILE) if file doesn't exist.
+	 * Returns PEAR_Error (HTTP_DOWNLOAD_E_INVALID_FILE) if file does not exist.
 	 * Sends HTTP 404 status if $send_404 is set to true.
 	 *
 	 * @access  public
 	 * @return  mixed   Returns true on success or PEAR_Error on failure.
 	 * @param   string  $file       path to file for download
 	 * @param   bool    $send_404   whether to send HTTP/404 if
-	 *                              the file wasn't found
+	 *                              the file was not found
 	 */
 	public function setFile($file, $send_404 = true) {
 		$file = realpath($file);
@@ -397,10 +397,10 @@ class HTTP_Download {
 	/**
 	 * Whether to allow caching
 	 *
-	 * If set to true (default) we'll send some headers that are commonly
+	 * If set to true (default) we will send some headers that are commonly
 	 * used for caching purposes like ETag, Cache-Control and Last-Modified.
 	 *
-	 * If caching is disabled, we'll send the download no matter if it
+	 * If caching is disabled, we will send the download no matter if it
 	 * would actually be cached at the client side.
 	 *
 	 * @access  public
@@ -414,7 +414,7 @@ class HTTP_Download {
 	/**
 	 * Whether to allow proxies to cache
 	 *
-	 * If set to 'private' proxies shouldn't cache the response.
+	 * If set to 'private' proxies should not cache the response.
 	 * This setting defaults to 'public' and affects only cached responses.
 	 *
 	 * @access  public
@@ -563,7 +563,7 @@ class HTTP_Download {
 	 *
 	 * Default content type of the download will be 'application/x-octetstream'.
 	 * Returns PEAR_Error (HTTP_DOWNLOAD_E_INVALID_CONTENT_TYPE) if
-	 * $content_type doesn't seem to be valid.
+	 * $content_type does not seem to be valid.
 	 *
 	 * @access  public
 	 * @return  mixed   Returns true on success or PEAR_Error on failure.
@@ -593,7 +593,7 @@ class HTTP_Download {
 	 *        (HTTP_DOWNLOAD_E_INVALID_CONTENT_TYPE)
 	 *      o ext/magic.mime is not installed, or not properly configured
 	 *        (HTTP_DOWNLOAD_E_NO_EXT_MMAGIC)
-	 *      o mime_content_type() couldn't guess content type or returned
+	 *      o mime_content_type() could not guess content type or returned
 	 *        a content type considered to be bogus by setContentType()
 	 *        (HTTP_DOWNLOAD_E_INVALID_CONTENT_TYPE)
 	 *
@@ -646,7 +646,7 @@ class HTTP_Download {
 	 * @access  public
 	 * @return  mixed   Returns true on success or PEAR_Error on failure.
 	 * @param   bool    $autoSetContentDisposition Whether to set the
-	 *                  Content-Disposition header if it isn't already.
+	 *                  Content-Disposition header if it is not already.
 	 */
 	public function send($autoSetContentDisposition = true) {
 		if (headers_sent()) {
@@ -988,7 +988,7 @@ class HTTP_Download {
 	}
 
 	/**
-	 * Check if entity hasn't changed
+	 * Check if entity has not changed
 	 *
 	 * @access  protected
 	 * @return  bool
@@ -1057,7 +1057,7 @@ class HTTP_Download {
 
 		$this->HTTP->sendHeaders();
 
-		// NSAPI won't output anything if we did this
+		// NSAPI would not output anything if we did this
 		if (strncasecmp(PHP_SAPI, 'nsapi', 5)) {
 			ob_flush();
 			flush();

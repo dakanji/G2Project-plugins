@@ -47,7 +47,7 @@ msgstr "Site Yöneticileri"
 msgid "Show Email Addresses"
 msgstr "Email Adreslerini Göster"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Email Adreslerini Gösterme"
 
 msgid "Member Items"

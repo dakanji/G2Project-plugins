@@ -147,7 +147,7 @@ class LoginCookieModule extends GalleryModule {
 
 		if ($ret) {
 			if ($ret->getErrorCode() & ERROR_STORAGE_FAILURE) {
-				// During installation it's possible the database isn't around yet.  Keep going.
+				// During installation it is possible the database is not around yet.  Keep going.
 				$sessionLifetime = 0;
 			} else {
 				return $ret;

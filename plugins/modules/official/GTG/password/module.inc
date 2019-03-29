@@ -229,7 +229,7 @@ class PasswordModule extends GalleryModule {
 
 	/**
 	 * Redirect to getPassword view when core.ShowItem accessed directly for this item
-	 * and user doesn't already have permission.
+	 * and user does not already have permission.
 	 */
 	public function onLoad(&$item, $duringUpgrade) {
 		list($view, $itemId) = GalleryUtilities::getRequestVariables('view', 'itemId');

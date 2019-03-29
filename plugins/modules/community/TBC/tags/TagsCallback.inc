@@ -113,7 +113,7 @@ class TagsCallbackView extends GalleryView {
 				if (!$ret) {
 					/*
 					 * AutoComplete's handling of HTML entities has been fixed in r16352. Calling
-					 * unsanitize() doesn't do the same but is a workaround for older G2 versions.
+					 * unsanitize() does not do the same but is a workaround for older G2 versions.
 					 */
 					if (!GalleryUtilities::isCompatibleWithApi(
 						array(7, 29),

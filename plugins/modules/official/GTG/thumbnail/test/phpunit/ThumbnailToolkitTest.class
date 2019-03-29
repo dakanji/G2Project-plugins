@@ -280,7 +280,7 @@ class ThumbnailToolkitTest extends GalleryTestCase {
 		}
 
 		/*
-		 * Call the toolkit for a mime-type thumbnail operation and ensure it doesn't call itself
+		 * Call the toolkit for a mime-type thumbnail operation and ensure it does not call itself
 		 * again for the thumbnail operation.
 		 */
 		list($ret, $outputMimeType) = $this->_toolkit->performOperation(

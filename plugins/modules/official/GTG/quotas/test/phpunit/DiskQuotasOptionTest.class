@@ -89,7 +89,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 			return $ret;
 		}
 
-		// Save/clear quotas for All Users,Everybody groups so they won't interfere with tests
+		// Save/clear quotas for All Users,Everybody groups so they would not interfere with tests
 		$this->_saveQuota = array();
 
 		foreach (array('allUserGroup', 'everybodyGroup') as $groupName) {
@@ -138,7 +138,7 @@ class DiskQuotasOptionTest extends ItemAddOptionTestCase {
 		$this->_platform =& $gallery->getPlatform();
 
 		/*
-		 * We'll be running shutdown actions in these tests, but we don't want to update
+		 * We will be running shutdown actions in these tests, but we do not want to update
 		 * the modification timestamp of the root album (due to adding a subalbum) so
 		 * clear the list before we start our tests.
 		 */

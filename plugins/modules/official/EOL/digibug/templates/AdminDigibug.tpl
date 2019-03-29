@@ -64,7 +64,7 @@
 	{g->text text="Fast Easy Photo Fulfillment"}
         </div>
         <div class="mode-text">
-  	{g->text text="Power up your Gallery with professional level fulfillment from Kodak. Just use Digibug Basic and there's nothing else to do - no registration, no administration, no hassles."}
+  	{g->text text="Power up your Gallery with professional level fulfillment from Kodak. Just use Digibug Basic and there is nothing else to do - no registration, no administration, no hassles."}
         </div>
         <div class="mode-items">
 	  <ul class="mode-item">
@@ -98,10 +98,10 @@
 	{g->text text="The Pro's Solution"}
         </div>
         <div class="mode-text">
-  	{g->text text="Digibug ADVANCED allows you to set your own price for photos and gifts. Simply provide us with your account information and we'll send you a check each month with your profits. It's the perfect online retail business solution for a photographer - no inventory, no overhead... just profits!"}
+  	{g->text text="Digibug ADVANCED allows you to set your own price for photos and gifts. Simply provide us with your account information and we will send you a check each month with your profits. It is the perfect online retail business solution for a photographer - no inventory, no overhead... just profits!"}
         </div>
         <div class="mode-text">
-  	{g->text text="Enjoy the same range of professional level photo prints and gifts, but set your own price and charge what you believe your photos are worth. We'll take care of the rest."}
+  	{g->text text="Enjoy the same range of professional level photo prints and gifts, but set your own price and charge what you believe your photos are worth. We will take care of the rest."}
         </div>
         <div class="mode-text dig-sign-in" style="width: 120px;">
   	{g->text text="New to Digibug ADVANCED?"}

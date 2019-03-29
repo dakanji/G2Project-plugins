@@ -64,7 +64,7 @@ msgstr "Zip 路徑："
 msgid "You must enter a path to your zip binary"
 msgstr "你必須輸入一個 zip 執行檔路徑"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "你輸入的路徑是無效的或不是一個執行檔"
 
 msgid "Unable to create a zip file from this binary"

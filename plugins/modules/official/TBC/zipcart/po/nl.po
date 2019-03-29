@@ -63,7 +63,7 @@ msgstr "Zip Pad:"
 msgid "You must enter a path to your zip binary"
 msgstr "U moet een pad naar uw zip programma opgeven"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Het opgegeven pad is ongeldig of niet uitvoerbaar"
 
 msgid "Unable to create a zip file from this binary"

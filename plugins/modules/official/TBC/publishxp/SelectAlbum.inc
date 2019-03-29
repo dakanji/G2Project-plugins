@@ -88,7 +88,7 @@ class SelectAlbumView extends GalleryView {
 			$form['albumId']  = GalleryUtilities::getRequestVariables('albumId');
 		} else {
 			/*
-			 * In case they didn't select an album in the prior page (they're going
+			 * In case they did not select an album in the prior page (they are going
 			 * to get an error message, but we require form[albumId] to be set in the template).
 			 */
 			if (!isset($form['albumId'])) {

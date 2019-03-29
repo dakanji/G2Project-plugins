@@ -65,7 +65,7 @@ msgstr "Sökväg till Zip:"
 msgid "You must enter a path to your zip binary"
 msgstr "Du måste ange en sökväg till ditt zip program"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Sökvägen du angav stämmer inte eller också så är den inte exekverbar"
 
 msgid "Unable to create a zip file from this binary"

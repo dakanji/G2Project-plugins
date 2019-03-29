@@ -149,7 +149,7 @@ class ModifyCartController extends GalleryController {
 					}
 
 					if (!isset($redirect['href'])) {
-						// If we're redirecting offsite, don't include the status
+						// If we are redirecting offsite, do not include the status
 						$status['cartModified'] = 1;
 					}
 
@@ -166,7 +166,7 @@ class ModifyCartController extends GalleryController {
 
 			/*
 			 * Propagate the itemId to have a return link (bug 1818602).
-			 * Don't include the itemId when processing the cart though (bug 2013274).
+			 * Do not include the itemId when processing the cart though (bug 2013274).
 			 */
 			$results['redirect']['itemId'] = GalleryUtilities::getRequestVariables('itemId');
 		}

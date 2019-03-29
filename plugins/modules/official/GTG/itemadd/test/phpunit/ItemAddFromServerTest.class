@@ -250,7 +250,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 	 * they all run through this method. The two parameters to this method
 	 * are: '$useSymlink', which is a boolean specifying if we should try
 	 * to add the files using a symlink or not.  The second param is
-	 * '$shouldSucceed'.  Since windows based OSes don't support symlinks,
+	 * '$shouldSucceed'.  Since windows based OSes do not support symlinks,
 	 * G2 will not support adding a file using symlinks on those OSes.
 	 * We have two different mock platform objects, one that supports
 	 * symlinks and one that does not.  If we expect using a symlink to
@@ -356,7 +356,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 				}
 			}
 
-			// .. is invalid and will be ignored, don't expect it in results
+			// .. is invalid and will be ignored, do not expect it in results
 			unset($dirs[2]);
 		}
 
@@ -379,7 +379,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 
 		$this->assertEquals(array(), $results[0]);
 
-		// We don't know the ids, but we can verify everything else
+		// We do not know the ids, but we can verify everything else
 		$i = 0;
 
 		$this->assertEquals(count($files), count($results[1]['addedFiles']), 'added count');
@@ -615,7 +615,7 @@ class ItemAddFromServerTest extends ItemAddPluginTestCase {
 	}
 
 	public function testAddFromServerMalformedInput() {
-		// Test that manually constructed input can't get outside our approved dirs
+		// Test that manually constructed input cannot get outside our approved dirs
 		global $gallery;
 
 		$platform =& $gallery->getPlatform();
@@ -778,8 +778,8 @@ class ItemAddFromServerTestPlatform extends GalleryPlatform {
 	}
 
 	/*
-	 * Simply collapse .. clauses out of paths.  If we use realpath() it'll try to verify that the
-	 * path actually exists (which it won't, in some cases)
+	 * Simply collapse .. clauses out of paths.  If we use realpath() it will try to verify that the
+	 * path actually exists (which it would not, in some cases)
 	 */
 	public function realpath($path) {
 		return preg_replace('#[^\\\/]+[\\\/]\.\.([\\\/]|$)#', '', $path);

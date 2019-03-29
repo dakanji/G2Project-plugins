@@ -219,7 +219,7 @@
 
   {if $GetUrlsData.isPhoto && isset($GetUrlsData.resizeId) && $GetUrlsData.options.MiscResizeId}
   <p class="gbDescription">
-    {g->text text="The ID of the resized version that we're using is %s," arg1=$GetUrlsData.resizeId}
+    {g->text text="The ID of the resized version that we are using is %s," arg1=$GetUrlsData.resizeId}
   </p>
   <p class="gbDescription">
     {g->text text="URL for resized version:"}

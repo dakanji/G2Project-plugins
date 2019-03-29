@@ -62,7 +62,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Downloading the Gallery Remote Applet"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr ""
 "Twoja przeglądarka nie obsługuje apletów; proszę skorzystać ze standardowego pokazu slajdów."
 
@@ -148,11 +148,11 @@ msgstr "jeśli \"true\" zabezpiecza pokaz slajdów przed pobieraniem pełno-form
 msgid "does slideshow loop when it gets to the end?"
 msgstr "jeśli \"true\" pokaz slajdów po zakończeniu zacznie się od początku"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "jeśli \"true\" obrazy mniejsze niż ekran nie będą rozciągane"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "jeśli \"true\" wszystkie potrzebne obrazy zostaną pobrane przed rozpoczęciem pokazu slajdów"

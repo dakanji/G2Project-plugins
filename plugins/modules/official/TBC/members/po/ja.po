@@ -42,7 +42,7 @@ msgstr "サイト管理者"
 msgid "Show Email Addresses"
 msgstr "メールアドレスを表示する"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "メールアドレスを表示しない"
 
 msgid "Member Items"

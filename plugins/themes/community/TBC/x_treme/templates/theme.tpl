@@ -10,7 +10,7 @@
     {* Include this theme's java script *}
     <script type="text/javascript" src="{g->theme url='theme.js'}"></script>
 
-    {* If Gallery doesn't provide a header, we use the album/photo title (or filename) *}
+    {* If Gallery does not provide a header, we use the album/photo title (or filename) *}
     {if empty($head.title)}
       {if $theme.pageType == 'album' || $theme.pageType == 'photo'}
         <title>{if !empty($theme.params.site)}{$theme.params.site} - {/if}
@@ -702,7 +702,7 @@ div#floatingSidebar {
   <body class="gallery">
     <div {g->mainDivAttributes}>
       {*
-       * Some module views (eg slideshow) want the full screen.  So for those, we don't draw
+       * Some module views (eg slideshow) want the full screen.  So for those, we do not draw
        * a header, footer, navbar, etc.  Those views are responsible for drawing everything.
        *}
       {if $theme.useFullScreen}
@@ -737,7 +737,7 @@ div#floatingSidebar {
 	      <noscript>
 	      <center>
 	        <table cellpadding="0" cellspacing="0" border="0" width="550">
-	 	  <tr><td width="100%" valign="top" class="PPDesTxt"><b>Are you using a browser that doesn't support JavaScript?</b></td></tr>
+	 	  <tr><td width="100%" valign="top" class="PPDesTxt"><b>Are you using a browser that does not support JavaScript?</b></td></tr>
 		  <tr><td width="100%" valign="top" class="PPDesTxt">If your browser does not support JavaScript, you can upgrade to a newer browser, such as <a href="http://www.microsoft.com/windows/ie/downloads/ie6/default.asp">Microsoft&reg; Internet Explorer 6</a>, <a href="http://wp.netscape.com/computing/download/bdp/index.html">Netscape 6</a> or <a href="http://www.mozilla.com">Firefox 5.1</a>
 .</td></tr>
 		  <tr><td width="100%" valign="top" class="PPDesTxt"><b>Have you disabled JavaScript?</b></td></tr>
@@ -887,7 +887,7 @@ div#floatingSidebar {
 
     {*
      * Give Gallery a chance to output any cleanup code, like javascript that needs to be run
-     * at the end of the <body> tag.  If you take this out, some code won't work properly.
+     * at the end of the <body> tag.  If you take this out, some code would not work properly.
      *}
     {g->trailer}
 

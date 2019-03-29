@@ -43,7 +43,7 @@ msgstr "Správci"
 msgid "Show Email Addresses"
 msgstr "Zobrazovat e-mail adresy"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Nezobrazovat e-mail adresy"
 
 msgid "Member Items"

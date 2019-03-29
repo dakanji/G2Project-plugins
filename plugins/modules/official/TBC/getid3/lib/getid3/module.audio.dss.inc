@@ -46,7 +46,7 @@ class getid3_dss extends getid3_handler {
 		$info['dss']['hardware'] = trim(substr($DSSheader, 12, 16));
 		$info['dss']['unknown1'] = getid3_lib::LittleEndian2Int(substr($DSSheader, 28, 4));
 
-		// 32-37 = "FE FF FE FF F7 FF" in all the sample files I've seen
+		// 32-37 = "FE FF FE FF F7 FF" in all the sample files I have seen
 		$info['dss']['date_create']   = $this->DSSdateStringToUnixDate(substr($DSSheader, 38, 12));
 		$info['dss']['date_complete'] = $this->DSSdateStringToUnixDate(substr($DSSheader, 50, 12));
 
@@ -58,10 +58,10 @@ class getid3_dss extends getid3_handler {
 		$info['dss']['priority']    = ord(substr($DSSheader, 793, 1));
 		$info['dss']['comments']    = trim(substr($DSSheader, 798, 100));
 
-		// this isn't certain, this may or may not be where the sample rate info is stored, but it seems consistent on my small selection of sample files
+		// this is not certain, this may or may not be where the sample rate info is stored, but it seems consistent on my small selection of sample files
 		$info['dss']['sample_rate_index'] = ord(substr($DSSheader, 1538, 1));
 
-		// maybe, maybe not -- most compressed audio formats don't have a fixed bits-per-sample value, but this is a reasonable approximation
+		// maybe, maybe not -- most compressed audio formats do not have a fixed bits-per-sample value, but this is a reasonable approximation
 		$info['audio']['bits_per_sample'] = 16;
 		$info['audio']['sample_rate']     = $this->DSSsampleRateLookup($info['dss']['sample_rate_index']);
 		$info['audio']['channels']        = 1;

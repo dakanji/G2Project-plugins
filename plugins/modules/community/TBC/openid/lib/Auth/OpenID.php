@@ -155,7 +155,7 @@ class Auth_OpenID {
 		} else {
 			// XXX HACK FIXME HORRIBLE.
 			// POSTing to a URL with query parameters is acceptable, but
-			// we don't have a clean way to distinguish those parameters
+			// we do not have a clean way to distinguish those parameters
 			// when we need to do things like return_to verification
 			// which only want to look at one kind of parameter.  We're
 			// going to emulate the behavior of some other environments
@@ -454,7 +454,7 @@ class Auth_OpenID {
 	}
 
 	/**
-	 * Replacement (wrapper) for PHP's intval() because it's broken.
+	 * Replacement (wrapper) for PHP's intval() because it is broken.
 	 *
 	 * @access private
 	 */

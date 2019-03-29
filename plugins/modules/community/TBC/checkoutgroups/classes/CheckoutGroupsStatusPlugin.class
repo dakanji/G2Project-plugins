@@ -49,7 +49,7 @@ class CheckoutGroupsStatusPlugin extends CheckoutStatusPageInterface_1_0 {
 	 * @see CheckoutStatusPageInterface_1_0::setStatusPageVariables($transactionId)
 	 */
 	public function loadTemplate(&$template, &$form) {
-		// Figure out which item we're talking about
+		// Figure out which item we are talking about
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
 
 		if (empty($transactionId)) {

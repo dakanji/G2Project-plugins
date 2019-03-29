@@ -54,7 +54,7 @@ class ExternalCSSControllerTest extends GalleryControllerTestCase {
 			}
 		}
 
-		// Ensure there's a image frame implementation
+		// Ensure there is a image frame implementation
 		$this->_markFactoryForCleanup();
 		$this->_registerFactoryImplementationForTest(
 			'ImageFrameInterface_1_1',

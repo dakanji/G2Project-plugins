@@ -359,7 +359,7 @@ class getID3 {
 
 			// option_max_2gb_check
 			if ($this->option_max_2gb_check) {
-				// PHP (32-bit all, and 64-bit Windows) doesn't support integers larger than 2^31 (~2GB)
+				// PHP (32-bit all, and 64-bit Windows) does not support integers larger than 2^31 (~2GB)
 				// filesize() simply returns (filesize % (pow(2, 32)), no matter the actual filesize
 				// ftell() returns 0 if seeking to the end is beyond the range of unsigned integer
 				$fseek = fseek($this->fp, 0, SEEK_END);
@@ -480,7 +480,7 @@ class getID3 {
 					$this->info['id3v2']['majorversion'] = ord($header[3]);
 					$this->info['id3v2']['minorversion'] = ord($header[4]);
 
-					// length of ID3v2 tag in 10-byte header doesn't include 10-byte header length
+					// length of ID3v2 tag in 10-byte header does not include 10-byte header length
 					$this->info['avdataoffset'] += getid3_lib::BigEndian2Int(substr($header, 6, 4), 1) + 10;
 				}
 			}
@@ -1183,9 +1183,9 @@ class getID3 {
 		}
 
 		if (preg_match('/\.cue$/i', $filename) && preg_match('#FILE "[^"]+" (BINARY|MOTOROLA|AIFF|WAVE|MP3)#', $filedata)) {
-			// there's not really a useful consistent "magic" at the beginning of .cue files to identify them
+			// there is not really a useful consistent "magic" at the beginning of .cue files to identify them
 			// so until I think of something better, just go by filename if all other format checks fail
-			// and verify there's at least one instance of "TRACK xx AUDIO" in the file
+			// and verify there is at least one instance of "TRACK xx AUDIO" in the file
 			$GetFileFormatArray = $this->GetFileFormatArray();
 			$info               = $GetFileFormatArray['cue'];
 			$info['include']    = 'module.' . $info['group'] . '.' . $info['module'] . '.php';
@@ -1318,7 +1318,7 @@ class getID3 {
 			}
 		}
 
-		// pictures can take up a lot of space, and we don't need multiple copies of them
+		// pictures can take up a lot of space, and we do not need multiple copies of them
 		// let there be a single copy in [comments][picture], and not elsewhere
 		if (!empty($this->info['tags'])) {
 			$unset_keys = array('tags', 'tags_html');

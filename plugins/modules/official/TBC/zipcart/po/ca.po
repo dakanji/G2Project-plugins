@@ -64,7 +64,7 @@ msgstr "Ruta a Zip:"
 msgid "You must enter a path to your zip binary"
 msgstr "Has d'introduïr la ruta al programa zip"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "La ruta que has introduït no es v&agrave;lida o no es executable"
 
 msgid "Unable to create a zip file from this binary"

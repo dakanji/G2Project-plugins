@@ -64,7 +64,7 @@ class getid3_rkau extends getid3_handler {
 		}
 
 		// Note: compressed_bytes does not always equal what appears to be the actual number of compressed bytes,
-		// sometimes it's more, sometimes less. No idea why(?)
+		// sometimes it is more, sometimes less. No idea why(?)
 		$info['audio']['lossless']        = $info['rkau']['lossless'];
 		$info['audio']['channels']        = $info['rkau']['channels'];
 		$info['audio']['bits_per_sample'] = $info['rkau']['bits_per_sample'];

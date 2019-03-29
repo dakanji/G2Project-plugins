@@ -44,7 +44,7 @@
 	}
 
 	/**
-	 * Return the transaction that's currently in the Session
+	 * Return the transaction that is currently in the Session
 	 *
 	 * @return GalleryStatus a status code
 	 *         object the transaction

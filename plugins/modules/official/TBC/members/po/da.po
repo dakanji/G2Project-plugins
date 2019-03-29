@@ -42,7 +42,7 @@ msgstr "Administratorer"
 msgid "Show Email Addresses"
 msgstr "Vis emailadresser"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Vis ikke emailadresser"
 
 msgid "Member Items"

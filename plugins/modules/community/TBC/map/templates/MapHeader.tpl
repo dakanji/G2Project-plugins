@@ -78,8 +78,8 @@ a:hover {ldelim} outline: none; {rdelim}
     var _mFeet = '{g->text text="ft" forJavascript=true}';
     var _mDecimalPoint = '{g->text text="." hint="Decimal point" forJavascript=true}';
     var _mThousandsSeparator = '{g->text text="," hint="Thousands separator" forJavascript=true}';
-    var _mMapErrorTile = "{g->text text="We are sorry, but we don't have maps at this zoom level for this region. Try zooming out for a broader look." forJavascript=true}";
-    var _mKeyholeErrorTile = "{g->text text="We are sorry, but we don't have imagery at this zoom level for this region. Try zooming out for a broader look." forJavascript=true}";
+    var _mMapErrorTile = "{g->text text="We are sorry, but we do not have maps at this zoom level for this region. Try zooming out for a broader look." forJavascript=true}";
+    var _mKeyholeErrorTile = "{g->text text="We are sorry, but we do not have imagery at this zoom level for this region. Try zooming out for a broader look." forJavascript=true}";
     var _mTermsURL = '{g->text text="http://www.google.com/intl/en_ALL/help/terms_local.html" forJavascript=true}';
     var _mStaticPath = '{g->text text="http://www.google.com/intl/en_ALL/mapfiles/" forJavascript=true}';
     var _mDomain = '{g->text text="google.com" forJavascript=true}';
@@ -733,7 +733,7 @@ a:hover {ldelim} outline: none; {rdelim}
       {foreach from=$map.routeitem key=name item=items}
        {foreach from=$items item=id key=num}
         {if $point.id == $id}
-         {if $iconDef eq "Default"}{* variable hasn't been declared yet *}
+         {if $iconDef eq "Default"}{* variable has not been declared yet *}
           {assign var=iconDef value=""}{* Clear the "Default" text *}
           var {$itemType}Icon = new GIcon(Default{$itemType}Icon);
          {/if}

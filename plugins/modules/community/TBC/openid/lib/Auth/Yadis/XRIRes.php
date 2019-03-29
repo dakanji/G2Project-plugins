@@ -27,7 +27,7 @@ class Auth_Yadis_ProxyResolver {
 		if ($service_type) {
 			$args['_xrd_t'] = $service_type;
 		} else {
-			// Don't perform service endpoint selection.
+			// Do not perform service endpoint selection.
 			$args['_xrd_r'] .= ';sep=false';
 		}
 

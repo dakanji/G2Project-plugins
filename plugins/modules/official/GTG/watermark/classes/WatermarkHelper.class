@@ -223,7 +223,7 @@ class WatermarkHelper {
 		}
 
 		if (!($isAdmin || $item->getOwnerId() == $gallery->getActiveUserId())) {
-			// Avoid information disclosure, act as if the item didn't exist.
+			// Avoid information disclosure, act as if the item does not exist.
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
@@ -340,7 +340,7 @@ class WatermarkHelper {
 			return $ret;
 		}
 
-		// Weed out derivatives that we don't want to modify
+		// Weed out derivatives that we do not want to modify
 		$derivatives  = array();
 		$add          = array();
 		$remove       = array();
@@ -362,7 +362,7 @@ class WatermarkHelper {
 			}
 		}
 
-		// If they want to modify the original, and we don't have one -- create a preferred
+		// If they want to modify the original, and we do not have one -- create a preferred
 		if ($whichDerivatives[DERIVATIVE_TYPE_IMAGE_PREFERRED] && !$hasPreferred) {
 			list($ret, $preferred) = GalleryCoreApi::newFactoryInstanceByHint(
 				'GalleryDerivative',
@@ -631,7 +631,7 @@ class WatermarkHelper {
 		}
 
 		if (!$canView) {
-			// Avoid information disclosure, act as if the item didn't exist.
+			// Avoid information disclosure, act as if the item does not exist.
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
@@ -818,7 +818,7 @@ class WatermarkHelper {
 		}
 
 		if (!$canView) {
-			// Avoid information disclosure, act as if the item didn't exist.
+			// Avoid information disclosure, act as if the item does not exist.
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
 

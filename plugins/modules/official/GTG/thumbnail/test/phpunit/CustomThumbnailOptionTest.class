@@ -606,7 +606,7 @@ class CustomThumbnailOptionTest extends ItemEditOptionTestCase {
 		$this->assertEquals(array(), $thumbnails, 'no highlight');
 	}
 
-	// Test that guaranteeAlbumHasThumbnail won't remove a custom thumbnail
+	// Test that guaranteeAlbumHasThumbnail would not remove a custom thumbnail
 	public function testGuarantee() {
 		// Add custom thumbnail to album..
 		$form = array(
@@ -664,7 +664,7 @@ class CustomThumbnailOptionTest extends ItemEditOptionTestCase {
 	}
 
 	public function testLongFilename() {
-		// Verify filename is truncated to fit in db column; don't want db/filesystem mismatch
+		// Verify filename is truncated to fit in db column; do not want db/filesystem mismatch
 		$filename = '1234567891123456789212345678931234567894123456789512345678961234567897'
 		. '123456789812345678991234567890123456789112345678921234567893.jpg';
 		$testfile = GalleryCoreApi::getCodeBasePath('modules/core/test/data/test1.jpg');

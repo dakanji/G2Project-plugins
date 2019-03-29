@@ -53,7 +53,7 @@ class PhotoAccessHelper {
 
 		foreach ($itemIds as $id) {
 			if (empty($permissions[$id]['core.view'])) {
-				// Avoid information disclosure, act as if the item didn't exist.
+				// Avoid information disclosure, act as if the item does not exist.
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
 		}
@@ -92,7 +92,7 @@ class PhotoAccessHelper {
 		$session         =& $gallery->getSession();
 		$cartUrlFragment = $session->get('photoaccess.cartUrlFragment');
 
-		// If we don't have a cart url that means we don't have a photoaccess session yet
+		// If we do not have a cart url that means we do not have a photoaccess session yet
 		$photoAccessServer = 'www.photoworks.com';
 
 		if (empty($cartUrlFragment)) {
@@ -107,7 +107,7 @@ class PhotoAccessHelper {
 			$entry  = array();
 
 			if (!isset($permissions[$itemId]['photoaccess.print'])) {
-				// Skip any cart items for which we don't have print permission
+				// Skip any cart items for which we do not have print permission
 				continue;
 			}
 
@@ -117,7 +117,7 @@ class PhotoAccessHelper {
 			if ($needSession && !isset($pwSession)) {
 				/*
 				 * Get G2 session for photoaccess to access non-public images.
-				 * We can't use this session because hijack protection will prevent access
+				 * We cannot use this session because hijack protection will prevent access
 				 * plus the current user could logout before photoaccess retrieves the images.
 				 * Create a new session with the rights of current user for photoaccess to use.
 				 */

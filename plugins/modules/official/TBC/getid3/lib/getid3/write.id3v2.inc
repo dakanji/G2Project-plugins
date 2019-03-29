@@ -38,7 +38,7 @@ class getid3_write_id3v2 {
 	// default text encoding (ISO-8859-1) if not explicitly passed
 	public $id3v2_default_encodingid = 0;
 
-	// the specs say it should be TRUE, but most other ID3v2-aware programs are broken if unsynchronization is used, so by default don't use it.
+	// the specs say it should be TRUE, but most other ID3v2-aware programs are broken if unsynchronization is used, so by default do not use it.
 	public $id3v2_use_unsynchronisation = false;
 
 	// any non-critical errors will be stored here
@@ -52,7 +52,7 @@ class getid3_write_id3v2 {
 	}
 
 	public function WriteID3v2() {
-		// File MUST be writeable - CHMOD(646) at least. It's best if the
+		// File MUST be writeable - CHMOD(646) at least. It is best if the
 		// directory is also writeable, because that method is both faster and less susceptible to errors.
 		if (!empty($this->filename) && (is_writeable($this->filename) || (!file_exists($this->filename) && is_writeable(dirname($this->filename))))) {
 			// Initialize getID3 engine
@@ -144,7 +144,7 @@ class getid3_write_id3v2 {
 	}
 
 	public function RemoveID3v2() {
-		// File MUST be writeable - CHMOD(646) at least. It's best if the
+		// File MUST be writeable - CHMOD(646) at least. It is best if the
 		// directory is also writeable, because that method is both faster and less susceptible to errors.
 		if (is_writeable(dirname($this->filename))) {
 			// preferred method - only one copying operation, minimal chance of corrupting
@@ -1438,7 +1438,7 @@ class getid3_write_id3v2 {
 					break;
 
 				case 'LINK':
-					// this isn't implemented quite right (yet) - it should check the target frame data for compliance
+					// this is not implemented quite right (yet) - it should check the target frame data for compliance
 					// but right now it just allows one linked frame of each type, to be safe.
 					if (!isset($source_data_array['frameid'])) {
 						$this->errors[] = '[frameid] not specified for ' . $frame_name;
@@ -1459,7 +1459,7 @@ class getid3_write_id3v2 {
 
 				case 'COMR':
 					//   There may be more than one 'commercial frame' in a tag, but no two may be identical
-					// Checking isn't implemented at all (yet) - just assumes that it's OK.
+					// Checking is not implemented at all (yet) - just assumes that it is OK.
 					break;
 
 				case 'PRIV':
@@ -1572,7 +1572,7 @@ class getid3_write_id3v2 {
 					break;
 
 				case 'LINK':
-					// this isn't implemented quite right (yet) - it should check the target frame data for compliance
+					// this is not implemented quite right (yet) - it should check the target frame data for compliance
 					// but right now it just allows one linked frame of each type, to be safe.
 					if (!isset($source_data_array['frameid'])) {
 						$this->errors[] = '[frameid] not specified for ' . $frame_name;
@@ -1593,7 +1593,7 @@ class getid3_write_id3v2 {
 
 				case 'COMR':
 					//   There may be more than one 'commercial frame' in a tag, but no two may be identical
-					// Checking isn't implemented at all (yet) - just assumes that it's OK.
+					// Checking is not implemented at all (yet) - just assumes that it is OK.
 					break;
 
 				case 'PRIV':
@@ -1690,7 +1690,7 @@ class getid3_write_id3v2 {
 					break;
 
 				case 'LNK':
-					// this isn't implemented quite right (yet) - it should check the target frame data for compliance
+					// this is not implemented quite right (yet) - it should check the target frame data for compliance
 					// but right now it just allows one linked frame of each type, to be safe.
 					if (!isset($source_data_array['frameid'])) {
 						$this->errors[] = '[frameid] not specified for ' . $frame_name;
@@ -1726,7 +1726,7 @@ class getid3_write_id3v2 {
 	}
 
 	public function GenerateID3v2Tag($noerrorsonly = true) {
-		// clear static array in case this isn't the first call to $this->GenerateID3v2Tag()
+		// clear static array in case this is not the first call to $this->GenerateID3v2Tag()
 		$this->ID3v2FrameIsAllowed(null, '');
 
 		$tagstring = '';
@@ -2024,7 +2024,7 @@ class getid3_write_id3v2 {
 		// And should be replaced with:
 		//      %11111111 00000000 111xxxxx
 		// This has the side effect that all $FF 00 combinations have to be
-		// altered, so they won't be affected by the decoding process. Therefore
+		// altered, so they would not be affected by the decoding process. Therefore
 		// all the $FF 00 combinations have to be replaced with the $FF 00 00
 		// combination during the unsynchronisation.
 		$data          = str_replace("\xFF\x00", "\xFF\x00\x00", $data);

@@ -74,7 +74,7 @@ msgstr ""
 
 msgid ""
 "Power up your Gallery with professional level fulfillment from Kodak. Just use Digibug Basic "
-"and there's nothing else to do - no registration, no administration, no hassles."
+"and there is nothing else to do - no registration, no administration, no hassles."
 msgstr ""
 
 msgid "Matte and Glossy prints, from 4x6 to as big as 30x40"
@@ -102,14 +102,14 @@ msgstr ""
 
 msgid ""
 "Digibug ADVANCED allows you to set your own price for photos and gifts. Simply provide us "
-"with your account information and we'll send you a check each month with your profits. It's "
+"with your account information and we will send you a check each month with your profits. It is "
 "the perfect online retail business solution for a photographer - no inventory, no "
 "overhead... just profits!"
 msgstr ""
 
 msgid ""
 "Enjoy the same range of professional level photo prints and gifts, but set your own price "
-"and charge what you believe your photos are worth. We'll take care of the rest."
+"and charge what you believe your photos are worth. We will take care of the rest."
 msgstr ""
 
 msgid "New to Digibug ADVANCED?"

@@ -36,7 +36,7 @@ class getid3_id3v1 extends getid3_handler {
 			$ParsedID3v1['album']  = $this->cutfield(substr($id3v1tag, 63, 30));
 			$ParsedID3v1['year']   = $this->cutfield(substr($id3v1tag, 93, 4));
 
-			// can't remove nulls yet, track detection depends on them
+			// cannot remove nulls yet, track detection depends on them
 			$ParsedID3v1['comment'] = substr($id3v1tag, 97, 30);
 			$ParsedID3v1['genreid'] = ord(substr($id3v1tag, 127, 1));
 

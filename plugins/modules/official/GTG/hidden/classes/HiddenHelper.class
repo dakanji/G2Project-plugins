@@ -51,7 +51,7 @@ class HiddenHelper extends HiddenInterface_1_0 {
 	 * and add session based permission for core.view.  Add an onLoadHandler that will
 	 * grant this permission to the session when core.ShowItem view is directly accessed
 	 * for this item.
-	 * If an album, cascades the effects to all contained items that aren't already hidden.
+	 * If an album, cascades the effects to all contained items that are not already hidden.
 	 * Thus all contents of the album are hidden and become visible when the album is accessed.
 	 *
 	 * @param GalleryItem $item the item to be hidden
@@ -70,7 +70,7 @@ class HiddenHelper extends HiddenInterface_1_0 {
 	) {
 		global $gallery;
 
-		// If item is already hidden, we're done
+		// If item is already hidden, we are done
 		if ($item->hasOnLoadHandler('Hidden')) {
 			return null;
 		}
@@ -336,7 +336,7 @@ class HiddenHelper extends HiddenInterface_1_0 {
 	) {
 		global $gallery;
 
-		// If given item is not hidden or subitem is hidden, we're done
+		// If given item is not hidden or subitem is hidden, we are done
 		if ($item->hasOnLoadHandler('Hidden') == isset($hideId)) {
 			return null;
 		}

@@ -28,7 +28,7 @@ GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
 GalleryCoreApi::requireOnce('modules/map/classes/GoogleMapUtilities.class');
 
 /**
- * This is a MaintenanceTask that will write to the EXIF header of the file the GPS coordinates stored in the database if the header doesn't exist.
+ * This is a MaintenanceTask that will write to the EXIF header of the file the GPS coordinates stored in the database if the header does not exist.
  *
  * @package map
  * @subpackage Classes

@@ -137,7 +137,7 @@ msgstr "1단계: 사용하고자 하는 무늬를 선택하십시요."
 msgid "You must choose something to watermark!"
 msgstr "무늬를 사용하고자하는 것을 고르십시요."
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "원본에 적용(원본 파일에 피해를 주지않습니다.)"
 
 msgid "Resizes"
@@ -223,7 +223,7 @@ msgstr "위치 선정"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 

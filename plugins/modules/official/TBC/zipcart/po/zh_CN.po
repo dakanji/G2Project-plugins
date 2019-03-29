@@ -62,7 +62,7 @@ msgstr "压缩路径:"
 msgid "You must enter a path to your zip binary"
 msgstr "您必须输入一个压缩程序路径"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "您输入的路径时无效的或不可执行"
 
 msgid "Unable to create a zip file from this binary"

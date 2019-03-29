@@ -156,7 +156,7 @@ msgstr "Esikatselukuvien luonti"
 
 msgid ""
 "Normally Gallery will generate thumbnails the first time you look at them, then save them "
-"for subsequent views.  If you check this box, we'll create the thumbnails at migration "
+"for subsequent views.  If you check this box, we will create the thumbnails at migration "
 "time.  Migration will take longer but the first time you view an album will go much faster."
 msgstr ""
 "Yleensä Galleria tekee esikatselukuvat kun ensimmäistä kertaa katsot niitä ja samalla "
@@ -250,7 +250,7 @@ msgid "This album has an illegal name and will be renamed to <i>%s</i>"
 msgstr "Tällä albumilla on kielletty nimi ja se uudelleennimetään nimellä <i>%s</i>"
 
 #, c-format
-msgid "This album's owner (%s) hasn't been imported."
+msgid "This album's owner (%s) has not been imported."
 msgstr "Albumin omistajaa (%s) ei ole tuotu."
 
 #, c-format
@@ -411,7 +411,7 @@ msgid "Import from Gallery 1"
 msgstr "Tuo Gallery 1:sta"
 
 msgid ""
-"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify "
+"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify "
 "your Gallery 1 data in any way."
 msgstr ""
 "Kopioi kaikki tai osa olemassaolevasta Gallery1:n asennuksesta Gallery2:een. Se ei muokkaa "
@@ -419,7 +419,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
 "Sinulla ei ole yhtän grafiikkatyökalua aktivoituna, joka käsittelisi JPEG-kuvia. Jos tuot "

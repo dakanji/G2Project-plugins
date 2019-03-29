@@ -184,9 +184,9 @@ class Getid3Module extends GalleryModule {
 		}
 
 		/*
-		 * Stopgap for now, don't allow installation on Windows until
+		 * Stopgap for now, do not allow installation on Windows until
 		 * we resolve the fact that the helperapps dir is missing from
-		 * the getid3 lib and the lib won't work properly if there are
+		 * the getid3 lib and the lib would not work properly if there are
 		 * spaces in the path.
 		 */
 		$platform =& $gallery->getPlatform();

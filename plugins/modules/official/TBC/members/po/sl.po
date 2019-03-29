@@ -50,7 +50,7 @@ msgstr "Administratorji"
 msgid "Show Email Addresses"
 msgstr "Pokaži e-mail naslove"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Skrij e-mail naslove"
 
 msgid "Member Items"

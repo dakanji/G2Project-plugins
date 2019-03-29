@@ -73,9 +73,9 @@ class getid3_lib {
 
 		// convert a float to type int, only if possible
 		if (self::trunc($floatnum) == $floatnum) {
-			// it's not floating point
+			// it is not floating point
 			if (self::intValueSupported($floatnum)) {
-				// it's within int range
+				// it is within int range
 				$floatnum = (int)$floatnum;
 			}
 		}
@@ -710,7 +710,7 @@ class getid3_lib {
 
 		// try to create a temporary file in the system temp directory - invalid dirname should force to system temp dir
 		if (($data_filename = tempnam($tempdir, 'gI3')) === false) {
-			// can't find anywhere to create a temp file, just fail
+			// cannot find anywhere to create a temp file, just fail
 			return false;
 		}
 
@@ -1426,7 +1426,7 @@ class getid3_lib {
 			if (!empty($ThisFileInfo['comments'])) {
 				foreach ($ThisFileInfo['comments'] as $field => $values) {
 					if ($field == 'picture') {
-						// pictures can take up a lot of space, and we don't need multiple copies of them
+						// pictures can take up a lot of space, and we do not need multiple copies of them
 						// let there be a single copy in [comments][picture], and not elsewhere
 						continue;
 					}

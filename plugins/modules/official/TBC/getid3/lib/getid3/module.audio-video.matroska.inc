@@ -104,10 +104,10 @@ define('EBML_ID_EBMLVERSION', 0x0286);
 //         [42][87] -- The version of DocType interpreter used to create the file.
 define('EBML_ID_DOCTYPEVERSION', 0x0287);
 
-//         [42][F2] -- The maximum length of the IDs you'll find in this file (4 or less in Matroska).
+//         [42][F2] -- The maximum length of the IDs you will find in this file (4 or less in Matroska).
 define('EBML_ID_EBMLMAXIDLENGTH', 0x02F2);
 
-//         [42][F3] -- The maximum length of the sizes you'll find in this file (8 or less in Matroska). This does not override the element size indicated at the beginning of an element. Elements that have an indicated size which is larger than what is allowed by EBMLMaxSizeLength shall be considered invalid.
+//         [42][F3] -- The maximum length of the sizes you will find in this file (8 or less in Matroska). This does not override the element size indicated at the beginning of an element. Elements that have an indicated size which is larger than what is allowed by EBMLMaxSizeLength shall be considered invalid.
 define('EBML_ID_EBMLMAXSIZELENGTH', 0x02F3);
 
 //         [42][F7] -- The minimum EBML version a parser has to support to read this file.
@@ -152,7 +152,7 @@ define('EBML_ID_TAGNAME', 0x05A3);
 //         [45][B9] -- Contains all information about a segment edition.
 define('EBML_ID_EDITIONENTRY', 0x05B9);
 
-//         [45][BC] -- A unique ID to identify the edition. It's useful for tagging an edition.
+//         [45][BC] -- A unique ID to identify the edition. It is useful for tagging an edition.
 define('EBML_ID_EDITIONUID', 0x05BC);
 
 //         [45][BD] -- If an edition is hidden (1), it should not be available to the user interface (but still to Control Tracks).
@@ -521,7 +521,7 @@ define('EBML_ID_PIXELHEIGHT', 0x3A);
 //             [BB] -- Contains all information relative to a seek point in the segment.
 define('EBML_ID_CUEPOINT', 0x3B);
 
-//             [BF] -- The CRC is computed on all the data of the Master element it's in, regardless of its position. It's recommended to put the CRC value at the beggining of the Master element for easier reading. All level 1 elements should include a CRC-32.
+//             [BF] -- The CRC is computed on all the data of the Master element it is in, regardless of its position. It is recommended to put the CRC value at the beggining of the Master element for easier reading. All level 1 elements should include a CRC-32.
 define('EBML_ID_CRC32', 0x3F);
 
 //             [CB] -- The ID of the BlockAdditional element (0 is the main Block).
@@ -578,7 +578,7 @@ define('EBML_ID_CUETRACK', 0x77);
 //             [FA] -- This frame is referenced and has the specified cache priority. In cache only a frame of the same or higher priority can replace this frame. A value of 0 means the frame is not referenced.
 define('EBML_ID_CLUSTERREFERENCEPRIORITY', 0x7A);
 
-//             [FB] -- Timecode of another frame used as a reference (ie: B or P frame). The timecode is relative to the block it's attached to.
+//             [FB] -- Timecode of another frame used as a reference (ie: B or P frame). The timecode is relative to the block it is attached to.
 define('EBML_ID_CLUSTERREFERENCEBLOCK', 0x7B);
 
 //             [FD] -- Relative position of the data that should be in position of the virtual block.
@@ -587,12 +587,12 @@ define('EBML_ID_CLUSTERREFERENCEVIRTUAL', 0x7D);
 /**
  * @tutorial http://www.matroska.org/technical/specs/index.html
  *
- * @todo Rewrite EBML parser to reduce it's size and honor default element values
+ * @todo Rewrite EBML parser to reduce it is size and honor default element values
  * @todo After rewrite implement stream size calculation, that will provide additional useful info and enable AAC/FLAC audio bitrate detection
  */
 class getid3_matroska extends getid3_handler {
 	// public options
-	// if true, do not return information about CLUSTER chunks, since there's a lot of them and they're not usually useful [default: TRUE]
+	// if true, do not return information about CLUSTER chunks, since there is a lot of them and they are not usually useful [default: TRUE]
 	public static $hide_clusters = true;
 
 	// true to parse the whole file, not only header [default: FALSE]
@@ -811,7 +811,7 @@ class getid3_matroska extends getid3_handler {
 							case 'A_AAC/MPEG2/LC/SBR':
 							case 'A_AAC/MPEG4/LC':
 							case 'A_AAC/MPEG4/LC/SBR':
-								$this->warning($trackarray['CodecID'] . ' audio data contains no header, audio/video bitrates can\'t be calculated');
+								$this->warning($trackarray['CodecID'] . ' audio data contains no header, audio/video bitrates cannot be calculated');
 
 								break;
 
@@ -1967,7 +1967,7 @@ class getid3_matroska extends getid3_handler {
 					// Lace-coded size of each frame of the lace, except for the last one (multiple uint8). *This is not used with Fixed-size lacing as it is calculated automatically from (total size of lace) / (number of frames in lace).
 					if ($block_data['flags']['lacing'] == 0x03) {
 						// EBML lacing
-						// TODO: read size correctly, calc size for the last frame. For now offsets are deteminded OK with readEBMLint() and that's the most important thing.
+						// TODO: read size correctly, calc size for the last frame. For now offsets are deteminded OK with readEBMLint() and that is the most important thing.
 						$block_data['lace_frames_size'][$i] = $this->readEBMLint();
 					} else {
 						// Xiph lacing

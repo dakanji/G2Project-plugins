@@ -17,7 +17,7 @@
     <h3 class="giWarning"> {g->text text="Missing HTTP Authorization"} </h3>
 
     <p class="giDescription">
-      {g->text text="Gallery can't access HTTP usernames and passwords.  You can still use your web server's authentication.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg2="</a>"}
+      {g->text text="Gallery cannot access HTTP usernames and passwords.  You can still use your web server's authentication.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg2="</a>"}
     </p>
   </div>
 {/if}
@@ -28,7 +28,7 @@
 
     <p class="giDescription">
       {capture assign="adminPluginsUrl"}{g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminPlugins" return=true}{/capture}
-      {g->text text="We can't fall back on passing HTTP usernames and passwords to Gallery because the URL rewrite module is disabled.  You should activate the URL rewrite module in the %sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg4="</a>"}
+      {g->text text="We cannot fall back on passing HTTP usernames and passwords to Gallery because the URL rewrite module is disabled.  You should activate the URL rewrite module in the %sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg4="</a>"}
     </p>
   </div>
 {/if}
@@ -39,7 +39,7 @@
 
     <p class="giDescription">
       {capture assign="adminPluginsUrl"}{g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminPlugins" return=true}{/capture}
-      {g->text text="PHP Path Info rewrite doesn't support the rule to fall back on passing HTTP usernames and passwords to Gallery.  You should uninstall and reinstall the URL rewrite module in the %sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg4="</a>"}
+      {g->text text="PHP Path Info rewrite does not support the rule to fall back on passing HTTP usernames and passwords to Gallery.  You should uninstall and reinstall the URL rewrite module in the %sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg4="</a>"}
     </p>
   </div>
 {/if}
@@ -60,7 +60,7 @@
     <h3 class="giWarning"> {g->text text="Unknown Cause"} </h3>
 
     <p class="giDescription">
-      {g->text text="Gallery can't access HTTP usernames and passwords and automated checks failed to find a cause.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg2="</a>"}
+      {g->text text="Gallery cannot access HTTP usernames and passwords and automated checks failed to find a cause.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:httpauth\">" arg2="</a>"}
     </p>
   </div>
 {/if}
@@ -76,7 +76,7 @@
 
 <div class="gbBlock" id="cbAuthName"{if empty($form.httpAuthPlugin)} style="display: none"{/if}>
   <p class="giDescription">
-    {g->text text="Gallery will prompt you to login with HTTP authentication when permission is denied.  HTTP authentication sends your client a realm to which your username belongs.  It's safe to leave the realm blank."}
+    {g->text text="Gallery will prompt you to login with HTTP authentication when permission is denied.  HTTP authentication sends your client a realm to which your username belongs.  It is safe to leave the realm blank."}
   </p>
   {g->text text="HTTP Authentication Realm:"}
   <input name="{g->formVar var="form[authName]"}" type="text" value="{$form.authName}"/>

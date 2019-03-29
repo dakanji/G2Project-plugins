@@ -38,7 +38,7 @@ class DcrawToolkitHelperTest extends GalleryTestCase {
 			return $ret;
 		}
 
-		// Make sure translate calls during test won't generate any platform calls
+		// Make sure translate calls during test would not generate any platform calls
 		list($ret, $this->_module) = GalleryCoreApi::loadPlugin('module', 'dcraw');
 
 		if ($ret) {

@@ -23,7 +23,7 @@ require_once 'Auth/OpenID/HMAC.php';
 /**
  * This is a store for use in the worst case, when you have no way of
  * saving state on the consumer site. Using this store makes the
- * consumer vulnerable to replay attacks, as it's unable to use
+ * consumer vulnerable to replay attacks, as it is unable to use
  * nonces. Avoid using this store if it is at all possible.
  *
  * Most of the methods of this class are implementation details.

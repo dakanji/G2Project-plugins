@@ -80,7 +80,7 @@ class PrintPhotosController extends GalleryController {
 
 		foreach ($itemIds as $id) {
 			if (empty($permissions[$id]['core.view'])) {
-				// Avoid information disclosure, act as if the item didn't exist.
+				// Avoid information disclosure, act as if the item does not exist.
 				return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 			}
 		}
@@ -128,7 +128,7 @@ class PrintPhotosController extends GalleryController {
 			$itemId = $item->getId();
 
 			if (!isset($permissions[$itemId]['fotokasten.print'])) {
-				// Skip any cart items for which we don't have print permission
+				// Skip any cart items for which we do not have print permission
 				continue;
 			}
 
@@ -138,7 +138,7 @@ class PrintPhotosController extends GalleryController {
 			if ($needSession && !isset($foSession)) {
 				/*
 				 * Get G2 session for fotokasten to access non-public images.
-				 * We can't use this session because hijack protection will prevent access
+				 * We cannot use this session because hijack protection will prevent access
 				 * plus the current user could logout before fotokasten retrieves the images.
 				 * Create a new session with the rights of current user for fotokasten to use.
 				 */

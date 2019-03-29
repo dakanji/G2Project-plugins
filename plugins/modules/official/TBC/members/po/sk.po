@@ -48,7 +48,7 @@ msgstr "Správcovia"
 msgid "Show Email Addresses"
 msgstr "Zobraziť emailovú adresu"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Nezobrazovať emailovú adresu"
 
 msgid "Member Items"

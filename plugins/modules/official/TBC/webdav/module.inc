@@ -293,7 +293,7 @@ class WebDavModule extends GalleryModule {
 		$urlGenerator =& $gallery->getUrlGenerator();
 		$rules        = array();
 
-		// Use short URL because most WebDAV clients don't support query strings
+		// Use short URL because most WebDAV clients do not support query strings
 		$rules['connect'] = array(
 			'comment'  => $this->translate('Connect to WebDAV'),
 			'help'     => $this->translate(

@@ -149,7 +149,7 @@ function get_EXIF_JPEG($filename) {
 
 	// Check if an EXIF segment was found
 	if ($EXIF_Location == -1) {
-		// Couldn't find any EXIF block to decode
+		// Could not find any EXIF block to decode
 		return false;
 	}
 
@@ -311,7 +311,7 @@ function get_Meta_JPEG($filename) {
 
 	// Check if an EXIF segment was found
 	if ($Meta_Location == -1) {
-		// Couldn't find any Meta block to decode
+		// Could not find any Meta block to decode
 		return false;
 	}
 
@@ -627,10 +627,10 @@ function get_IFD_Array_Packed_Data($ifd_data, $Zero_IFD_offset, $Byte_Align) {
 	for ($ifdno = 0; $ifdno < $ifd_count; $ifdno++) {
 		// Check if this IFD is the last one
 		if ($ifdno == $ifd_count - 1) {
-			// This IFD is the last one, get it's packed data
+			// This IFD is the last one, get it is packed data
 			$packed_data .= get_IFD_Packed_Data($ifd_data[$ifdno], $Zero_IFD_offset + strlen($packed_data), $Byte_Align, false);
 		} else {
-			// This IFD is NOT the last one, get it's packed data
+			// This IFD is NOT the last one, get it is packed data
 			$packed_data .= get_IFD_Packed_Data($ifd_data[$ifdno], $Zero_IFD_offset + strlen($packed_data), $Byte_Align, true);
 		}
 	}
@@ -860,7 +860,7 @@ function process_TIFF_Header($filehnd, $Tag_Definitions_Name) {
 
 	// Check that we did get all eight bytes
 	if (strlen($DataStr) != 8) {
-		// Couldn't read the TIFF header properly
+		// Could not read the TIFF header properly
 		return false;
 	}
 
@@ -873,7 +873,7 @@ function process_TIFF_Header($filehnd, $Tag_Definitions_Name) {
 
 	// Check the Byte Align Characters for validity
 	if (($Byte_Align != 'II') && ($Byte_Align != 'MM')) {
-		// Byte align field is invalid - we won't be able to decode file
+		// Byte align field is invalid - we would not be able to decode file
 		return false;
 	}
 
@@ -1031,7 +1031,7 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 
 	// Check if the entire IFD was able to be read
 	if (strlen($IFD_Data) != (12 * $No_Entries)) {
-		// Couldn't read the IFD Data properly, Some Casio files have no Next IFD pointer, hence cause this error
+		// Could not read the IFD Data properly, Some Casio files have no Next IFD pointer, hence cause this error
 		echo "<p>Error: EXIF Corrupted</p>\n";
 
 		return array(false, 0);
@@ -1183,7 +1183,7 @@ function read_IFD_universal($filehnd, $Tiff_offset, $Byte_Align, $Tag_Definition
 		}
 
 		// Some information of type "Unknown" (type 7) might require information about
-		// how it's position and byte alignment in order to be decoded
+		// how it is position and byte alignment in order to be decoded
 		if ($Data_Type == 7) {
 			$OutputArray[$Tag_No]['Offset']     = $Data_Start_pos;
 			$OutputArray[$Tag_No]['Byte Align'] = $Byte_Align;
@@ -1432,7 +1432,7 @@ function get_Tag_Text_Value($Tag, $Tag_Definitions_Name) {
 		return '';
 	}
 
-	// Unknown Format - Couldn't interpret using the IFD_Tag_Definitions global array information
+	// Unknown Format - Could not interpret using the IFD_Tag_Definitions global array information
 	return false;
 }
 
@@ -1664,7 +1664,7 @@ function interpret_IFD($IFD_array, $filename) {
 
 	// Cycle through each tag in the IFD
 	foreach ($IFD_array as $Tag_ID => $Exif_Tag) {
-		// Ignore the non numeric elements - they aren't tags
+		// Ignore the non numeric elements - they are not tags
 		if (!is_numeric($Tag_ID)) {
 			// Skip Tags Name
 		}
@@ -1672,7 +1672,7 @@ function interpret_IFD($IFD_array, $filename) {
 		// Check if the Tag has been decoded successfully
 		elseif ($Exif_Tag['Decoded'] == true) {
 			// This tag has been successfully decoded
-			// Table cells won't get drawn with nothing in them -
+			// Table cells would not get drawn with nothing in them -
 			// Ensure that at least a non breaking space exists in them
 			if (trim($Exif_Tag['Text Value']) == '') {
 				$Exif_Tag['Text Value'] = '&nbsp;';
@@ -1736,7 +1736,7 @@ function interpret_IFD($IFD_array, $filename) {
 			// Tag has NOT been decoded successfully
 			// Hence it is either an unknown tag, or one which
 			// requires processing at the time of html construction
-			// Table cells won't get drawn with nothing in them -
+			// Table cells would not get drawn with nothing in them -
 			// Ensure that at least a non breaking space exists in them
 			if (trim($Exif_Tag['Text Value']) == '') {
 				$Exif_Tag['Text Value'] = '&nbsp;';
@@ -2138,7 +2138,7 @@ function put_IFD_Data_Type($input_data, $data_type, $Byte_Align) {
 					break;
 	}
 
-	// Shouldn't get here
+	// Should not get here
 	return false;
 }
 
@@ -2190,9 +2190,9 @@ function get_IFD_value_as_text($Exif_Tag) {
 		case 9:
 				// Cycle through each of the values for this tag
 			foreach ($Exif_Tag['Data'] as $val) {
-				// Check that this isn't the first value,
+				// Check that this is not the first value,
 				if ($output_str != '') {
-					// This isn't the first value, Add a Comma and Newline to the output
+					// This is not the first value, Add a Comma and Newline to the output
 					$output_str .= ",\n";
 				}
 
@@ -2212,9 +2212,9 @@ function get_IFD_value_as_text($Exif_Tag) {
 		case 10:
 				// Cycle through each of the values for this tag
 			foreach ($Exif_Tag['Data'] as $val) {
-				// Check that this isn't the first value,
+				// Check that this is not the first value,
 				if ($output_str != '') {
-					// This isn't the first value, Add a Comma and Newline to the output
+					// This is not the first value, Add a Comma and Newline to the output
 					$output_str .= ",\n";
 				}
 

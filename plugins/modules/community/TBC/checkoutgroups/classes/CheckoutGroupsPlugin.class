@@ -68,7 +68,7 @@ class CheckoutGroupsPlugin extends CheckoutCustomPageInterface_1_0 {
 		foreach ($form['checkoutGroups'] as $productId => $productParameters) {
 			$itemId = $item->getId();
 
-			// annoying that there's no return value from unticked checkbox
+			// annoying that there is no return value from unticked checkbox
 			if (!isset($productParameters['groupHideAnonymous'])) {
 				$productParameters['groupHideAnonymous'] = '';
 			}

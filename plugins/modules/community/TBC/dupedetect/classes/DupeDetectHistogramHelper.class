@@ -79,8 +79,8 @@ class DupeDetectHistogramHelper {
 			return $ret;
 		}
 
-		/* we don't want to fail if there is no adequate toolkit, or the item's mimeType
-		 * is not supported. (e.g. when it's not an image) */
+		/* we do not want to fail if there is no adequate toolkit, or the item's mimeType
+		 * is not supported. (e.g. when it is not an image) */
 		if (!isset($toolkit)) {
 			return GalleryStatus::success();
 

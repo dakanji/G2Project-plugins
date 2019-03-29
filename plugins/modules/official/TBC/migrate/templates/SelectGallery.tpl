@@ -6,7 +6,7 @@
   <h2> {g->text text="Import from Gallery 1"} </h2>
 
   <p class="giDescription">
-    {g->text text="Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify your Gallery 1 data in any way."}
+    {g->text text="Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify your Gallery 1 data in any way."}
   </p>
 </div>
 
@@ -15,7 +15,7 @@
   {capture name="url"}
     {g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminPlugins"}
   {/capture}
-  {g->text text="You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit." arg1="<a href=\"`$smarty.capture.url`\">" arg2="</a>"}
+  {g->text text="You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit." arg1="<a href=\"`$smarty.capture.url`\">" arg2="</a>"}
 </p></div>
 {/if}
 

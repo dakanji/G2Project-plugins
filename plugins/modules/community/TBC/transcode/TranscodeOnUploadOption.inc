@@ -72,7 +72,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 			$itemsInBatches = $items;
 
 			/*
-			 * Batch size should be <= ulimit max open files, as long as we don't query this value,
+			 * Batch size should be <= ulimit max open files, as long as we do not query this value,
 			 * assume a value of 100 which is fairly low
 			 */
 			$batchSize = 100;
@@ -103,7 +103,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 
 						$itemId = $currentItems[$i]->getId();
 
-						// Create a new preferred since one doesn't exist
+						// Create a new preferred since one does not exist
 						list($ret, $source) = GalleryCoreApi::fetchPreferredSource($currentItems[$i]);
 
 						if ($ret) {
@@ -207,7 +207,7 @@ class TranscodeOnUploadOption extends ItemAddOption {
 								return array($ret, null, null, null);
 							}
 
-							// Set FlashVideoRenderer, is there a way of knowing whether it's available?
+							// Set FlashVideoRenderer, is there a way of knowing whether it is available?
 							if (!$currentItems[$i]->getRenderer()) {
 								list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($currentItems[$i]->getId());
 

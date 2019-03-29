@@ -67,7 +67,7 @@ class getid3_voc extends getid3_handler {
 
 			switch ($BlockType) {
 				case 0:  // Terminator
-					// do nothing, we'll break out of the loop down below
+					// do nothing, we will break out of the loop down below
 					break;
 
 				case 1:  // Sound data
@@ -160,7 +160,7 @@ class getid3_voc extends getid3_handler {
 			}
 		} while (!feof($this->getid3->fp) && ($BlockType != 0));
 
-		// Terminator block doesn't have size field, so seek back 3 spaces
+		// Terminator block does not have size field, so seek back 3 spaces
 		$this->fseek(-3, SEEK_CUR);
 
 		ksort($thisfile_voc['blocktypes']);

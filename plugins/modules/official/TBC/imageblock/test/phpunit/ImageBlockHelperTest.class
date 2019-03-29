@@ -314,7 +314,7 @@ class ImageBlockHelperTest extends GalleryTestCase {
 			'Precondition: Items not added to the DisableMap'
 		);
 
-		// Execute the test: Ensure that we succeed and don't attempt to insert duplicate rows.
+		// Execute the test: Ensure that we succeed and do not attempt to insert duplicate rows.
 		$ret = ImageBlockHelper::setDisabledFlag($this->_topAlbum, true, true);
 
 		if ($ret) {

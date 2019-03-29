@@ -92,7 +92,7 @@
   <input type="checkbox" {if isset($form.whichDerivative.preferred)}checked="checked" {/if}
    name="{g->formVar var="form[whichDerivative][preferred]"}" id="cbFullSize"/>
   <label for="cbFullSize">
-    {g->text text="Full size (won't damage the original file)"}
+    {g->text text="Full size (would not damage the original file)"}
   </label>
   <br/>
 

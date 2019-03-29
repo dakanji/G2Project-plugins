@@ -68,7 +68,7 @@ msgstr "ZIP-Pfad:"
 msgid "You must enter a path to your zip binary"
 msgstr "Sie müssen den Pfad zur ZIP-Binärdatei angeben."
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Der von Ihnen angegeben Pfad ist nicht gültig oder das Programm ist nicht ausführbar"
 
 msgid "Unable to create a zip file from this binary"

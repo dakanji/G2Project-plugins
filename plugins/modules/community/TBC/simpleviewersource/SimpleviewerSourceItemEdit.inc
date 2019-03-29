@@ -105,7 +105,7 @@ class SimpleviewerSourceItemEdit extends ItemEditPlugin {
 		if ($form['formName'] != 'SimpleviewerSourceItemEdit') {
 			$form['formName'] = 'SimpleviewerSourceItemEdit';
 
-			// work out the url for the XML generator, as it's helpful to display it
+			// work out the url for the XML generator, as it is helpful to display it
 			$myUrlGenerator =& $gallery->getUrlGenerator();
 			$XMLurl         = $myUrlGenerator->generateUrl(
 				array(

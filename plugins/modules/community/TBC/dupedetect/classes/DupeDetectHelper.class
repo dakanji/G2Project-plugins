@@ -49,8 +49,8 @@ class DupeDetectHelper {
 	 * @static
 	 */
 	public function createDupeSignatures($entity) {
-		/* linked items don't interest us as they share their image file with another,
-		 * non-linked image. we don't create signatures for them.
+		/* linked items do not interest us as they share their image file with another,
+		 * non-linked image. we do not create signatures for them.
 		 */
 		if ($entity->isLinked()) {
 			return GalleryStatus::success();
@@ -118,8 +118,8 @@ class DupeDetectHelper {
 					break;
 				}
 
-				/* linked items don't interest us as they share their image file with another,
-				 * non-linked image. we don't even create signatures for them, so don't delete anything.
+				/* linked items do not interest us as they share their image file with another,
+				 * non-linked image. we do not even create signatures for them, so do not delete anything.
 				 */
 				if ($entity->isLinked()) {
 					break;
@@ -555,7 +555,7 @@ class DupeDetectHelper {
 
 		GalleryCoreApi::requireOnce('modules/dupedetect/classes/DupeDetectDupesListMap.class');
 
-		// delete all the pairs where this item is the source and all the ones where it's the dup
+		// delete all the pairs where this item is the source and all the ones where it is the dup
 		$ret = DupeDetectDupesListMap::removeMapEntry(
 			array(
 				'srcItemId' => $itemId,
@@ -653,7 +653,7 @@ class DupeDetectHelper {
 		}
 
 		/*
-		 * Ok we've got a linkable item and a legal destination album.
+		 * Ok we have got a linkable item and a legal destination album.
 		 * Lock everything up and start linkin'.  We need to read lock
 		 * the source ids, source hierarchy and destination hierarchy.
 		 */
@@ -685,7 +685,7 @@ class DupeDetectHelper {
 		$classType  = get_class($item);
 		$linkedItem = new $classType();
 
-		// If we're linking to an item that's already a link, then link to its source instead
+		// If we are linking to an item that is already a link, then link to its source instead
 		if ($item->isLinked()) {
 			$linkedEntity = $item->getLinkedEntity();
 
@@ -734,7 +734,7 @@ class DupeDetectHelper {
 	}
 
 	/**
-	 * Mark a pair of dupe items as an ignored one. (that won't be defaulty displayed
+	 * Mark a pair of dupe items as an ignored one. (that would not be defaulty displayed
 	 * in the list of duplicate pair
 	 *
 	 * @param int $id1 the id of the first item in the pair

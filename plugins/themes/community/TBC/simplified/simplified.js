@@ -31,7 +31,7 @@ function initSidebar() {
 function showSidebar(e) {
 	YAHOO.util.Event.preventDefault(e);
 
-	/* don't show sidebar while getting dimensions */
+	/* do not show sidebar while getting dimensions */
 	YAHOO.util.Dom.setStyle(gsSidebar, "visibility", "hidden");
 
 	/* Save original dimensions (must be block to get dimensions, hence the hidden above */
@@ -54,7 +54,7 @@ function showSidebar(e) {
 	YAHOO.util.Dom.setY(gsSidebar, YAHOO.util.Event.getPageY(e));
 
 	/* Set size of containers to auto width to see if we can leave them auto */
-	/* We can't leave auto if we are scrolled right because browser shrinks sidebar */
+	/* We cannot leave auto if we are scrolled right because browser shrinks sidebar */
 	YAHOO.util.Dom.setStyle(gsSidebar, "width", "auto");
 
 	/* Get size after move (we check difference after animation further below) */

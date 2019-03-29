@@ -352,7 +352,7 @@ class ItemAddFromWeb extends ItemAddPlugin {
 								 *   http://example.com/path/to/file.html
 								 *   http://example.com/path/to/
 								 *
-								 * If it's a directory, it should have a trailing slash at
+								 * If it is a directory, it should have a trailing slash at
 								 * this point.  Either way, we want the base path to be:
 								 *   http://example.com/path/to/
 								 */
@@ -391,7 +391,7 @@ class ItemAddFromWeb extends ItemAddPlugin {
 				}
 
 				if (empty($form['webPageUrls'])) {
-					// Didn't find any urls to add
+					// Did not find any urls to add
 					$form['error']['webPage']['noUrlsFound'] = 1;
 				}
 			}
@@ -525,7 +525,7 @@ class ItemAddFromWeb extends ItemAddPlugin {
 	 */
 	public function _getTypeName($url, $htmlAttribute = null, $headers = null) {
 		if (isset($htmlAttribute) && strtolower($htmlAttribute) == 'src') {
-			// For <img> src attribute just assume "Photo" and don't examine mime type
+			// For <img> src attribute just assume "Photo" and do not examine mime type
 			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'itemadd');
 
 			if ($ret) {

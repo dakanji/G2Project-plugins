@@ -362,7 +362,7 @@ class TagsModule extends GalleryModule {
 			}
 		}
 
-		// Create the css file to use for the Tag Cloud if doesn't exist
+		// Create the css file to use for the Tag Cloud if does not exist
 		$ret = TagsHelper::createCssFile();
 
 		if ($ret) {
@@ -526,7 +526,7 @@ class TagsModule extends GalleryModule {
 				// Look if an empty tag is in the database and delete it
 				$ret = TagsHelper::removeTag('');
 
-				// We don't care about errors
+				// We do not care about errors
 				// Fall Through
 			case '1.2.4':
 				// Adding the Edit Tag Permission into the system

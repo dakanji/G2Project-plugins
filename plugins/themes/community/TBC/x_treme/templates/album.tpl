@@ -63,7 +63,7 @@
       {/if}
 
     <script type="text/javascript">
-      {* hide the sidebar if there's nothing in it *}
+      {* hide the sidebar if there is nothing in it *}
       // <![CDATA[
       var el = document.getElementById("floatingSidebar");
 

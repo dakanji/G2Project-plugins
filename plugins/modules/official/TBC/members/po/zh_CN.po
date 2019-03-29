@@ -42,7 +42,7 @@ msgstr "网站管理"
 msgid "Show Email Addresses"
 msgstr "显示Email地址"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "不显示Email地址"
 
 msgid "Member Items"

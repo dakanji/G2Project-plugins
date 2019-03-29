@@ -125,7 +125,7 @@ End of error/success displaying
             {/if}            
         <td>
           <select name="ShowFilters">
-          <option value="0">{g->text text="Hide" hint="Don't display"}</option>
+          <option value="0">{g->text text="Hide" hint="Do not display"}</option>
           <option value="1" {if $form.ShowFilters eq 1}selected{/if}>{g->text text="Left" hint="Opposite of right"}</option>
           <option value="2" {if $form.ShowFilters eq 2}selected{/if}>{g->text text="Right" hint="Opposite of left"}</option>
           <option value="3" {if $form.ShowFilters eq 3}selected{/if}>{g->text text="Top" hint="Opposite of bottom"}</option>

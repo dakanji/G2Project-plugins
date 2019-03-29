@@ -133,7 +133,7 @@ class RefineHTML {
 
 			// loop through all attributes of this tag
 			foreach ($matched_attributes[0] as $key => $attributes_string) {
-				// convert the attribute quotes, if it's not on our ignore list
+				// convert the attribute quotes, if it is not on our ignore list
 				if (isset($matched_attributes[1][$key], $matched_attributes[2][$key])
 					&& !in_array($matched_attributes[1][$key], $ignored_attributes)
 				) {

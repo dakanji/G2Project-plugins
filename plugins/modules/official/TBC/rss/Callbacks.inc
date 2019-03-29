@@ -31,7 +31,7 @@ class RssCallbacks {
 		switch ($callback) {
 			case 'FeedList':
 				if (empty($params['number'])) {
-					// we're called during preload, so we have to find the params another way
+					// we are called during preload, so we have to find the params another way
 					if (!empty($smarty->_tpl_vars['theme']['params']['sidebarBlocks'])) {
 						$blocks = $smarty->_tpl_vars['theme']['params']['sidebarBlocks'];
 

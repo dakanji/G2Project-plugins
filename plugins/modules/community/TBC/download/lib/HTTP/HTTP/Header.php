@@ -313,7 +313,7 @@ class HTTP_Header extends HTTP {
 	 * Converts dates like
 	 *      Mon, 31 Mar 2003 15:26:34 GMT
 	 *      Tue, 15 Nov 1994 12:45:26 GMT
-	 * into a timestamp, strtotime() didn't do it in older versions.
+	 * into a timestamp, strtotime() did not do it in older versions.
 	 *
 	 * @deprecated      Use PHPs strtotime() instead.
 	 * @access  public

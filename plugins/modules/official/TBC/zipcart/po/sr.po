@@ -63,7 +63,7 @@ msgstr "Zip putanja:"
 msgid "You must enter a path to your zip binary"
 msgstr "Morate uneti putanju do vaše zip izvršne datoteke"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Putanja koju ste uneli nije ispravna ili nije izvršiva"
 
 msgid "Unable to create a zip file from this binary"

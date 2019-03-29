@@ -23,7 +23,7 @@
  * @subpackage UserInterface
  * @author Alan Harder <alan.harder@sun.com>
  * @version $Revision: 17580 $
- * @todo Testability: Change the class name such that it doesn't collide with core.DownloadItem
+ * @todo Testability: Change the class name such that it does not collide with core.DownloadItem
  */
 class DownloadItemView extends GalleryView {
 	/**
@@ -65,7 +65,7 @@ class DownloadItemView extends GalleryView {
 		}
 
 		if (!method_exists($item, 'fetchPath') || !method_exists($item, 'getMimeType')) {
-			// Avoid information disclosure for bogus entities by acting as if it didn't exist
+			// Avoid information disclosure for bogus entities by acting as if it did not exist
 			return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 		}
 
@@ -88,7 +88,7 @@ class DownloadItemView extends GalleryView {
 			return $ret;
 		}
 
-		// Don't allow malicious URLs
+		// Do not allow malicious URLs
 		$fileName = GalleryUtilities::getRequestVariables('fileName');
 
 		if (!empty($fileName) && $fileName != $pseudoFileName) {
@@ -133,7 +133,7 @@ class DownloadItemView extends GalleryView {
 
 			if (!isset($toolkit)) {
 				/*
-				 * Allow items that can't be watermarked (movies, audio, etc) to be
+				 * Allow items that cannot be watermarked (movies, audio, etc) to be
 				 * downloaded.  Uncomment the line below to block these downloads.
 				 */
 
@@ -220,7 +220,7 @@ class DownloadItemView extends GalleryView {
 		$platform =& $gallery->getPlatform();
 
 		/**
-		 * Try to prevent Apache's mod_deflate from gzipping the output since it's likely already
+		 * Try to prevent Apache's mod_deflate from gzipping the output since it is likely already
 		 * a binary file and broken versions of mod_deflate sometimes get the byte count wrong.
 		 */
 		if (function_exists('apache_setenv')
@@ -241,7 +241,7 @@ class DownloadItemView extends GalleryView {
 		header('Expires: ' . GalleryUtilities::getHttpDate(time() + 31536000));
 
 		/*
-		 * Don't use readfile() because it buffers the entire file in memory.  Profiling shows
+		 * Do not use readfile() because it buffers the entire file in memory.  Profiling shows
 		 * that this approach is as efficient as fpassthru() but we get to call guaranteeTimeLimit
 		 * which prevents it from failing on very large files.
 		 */

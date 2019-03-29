@@ -64,7 +64,7 @@ msgstr "Zip Bidea:"
 msgid "You must enter a path to your zip binary"
 msgstr "Zip bitarrari bide osoa idatzi behar duzu"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Idatzitako bidea ez da baliozkoa edo ez da abiarazgarria"
 
 msgid "Unable to create a zip file from this binary"

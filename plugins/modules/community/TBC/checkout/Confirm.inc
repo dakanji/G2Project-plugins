@@ -120,7 +120,7 @@ class ConfirmController extends GalleryController {
 				return array($ret, null);
 			}
 
-			// create a new transaction item - no lock needed as it's new
+			// create a new transaction item - no lock needed as it is new
 			list($ret, $transaction) = GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryCheckoutTransaction');
 
 			if ($ret) {

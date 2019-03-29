@@ -25,7 +25,7 @@
       </p>
       <p class="giDescription">
       {g->text text="Downloads will be resized to a maximum dimension that you enter. To download the original size, leave the size box empty."}
-   {*   {g->text text="Advanced users can enter a Gallery-style operation string to further alter the image that's downloaded."} *}
+   {*   {g->text text="Advanced users can enter a Gallery-style operation string to further alter the image that is downloaded."} *}
       </p>
         <table class="gbDataTable">
       	<tr>
@@ -59,7 +59,7 @@
       </tr>
       </table>
 	<p class="giDescription">
-        {g->text text="You may optionally set your own filename to use for zipped file downloads - don't include the .zip ending - and/or have the date and time appended using the YYYMMDDHHMMSS format to make each filename unique. (Example: photos-20101231235959.zip)"}
+        {g->text text="You may optionally set your own filename to use for zipped file downloads - do not include the .zip ending - and/or have the date and time appended using the YYYMMDDHHMMSS format to make each filename unique. (Example: photos-20101231235959.zip)"}
       </p>
 	<table class="gbDataTable">
       <tr>

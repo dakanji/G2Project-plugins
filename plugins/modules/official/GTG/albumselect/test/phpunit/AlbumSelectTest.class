@@ -657,7 +657,7 @@ class AlbumSelectTest extends GalleryTestCase {
 		// Then test with session permission
 		$session->put(GALLERY_PERMISSION_SESSION_KEY, array($itemId));
 
-		// Don't use GalleryDataCache::reset() this test is about caching
+		// Do not use GalleryDataCache::reset() this test is about caching
 		GalleryDataCache::removeByPattern('[Aa]ccessList');
 
 		$ret = $callbacks->callback(
@@ -680,7 +680,7 @@ class AlbumSelectTest extends GalleryTestCase {
 		// Again without session permissions
 		$session->put(GALLERY_PERMISSION_SESSION_KEY, array());
 
-		// Don't use GalleryDataCache::reset() this test is about caching
+		// Do not use GalleryDataCache::reset() this test is about caching
 		GalleryDataCache::removeByPattern('[Aa]ccessList');
 
 		$ret = $callbacks->callback(

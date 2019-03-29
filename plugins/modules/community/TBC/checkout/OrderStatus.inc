@@ -75,7 +75,7 @@ class OrderStatusView extends GalleryView {
 	public function loadTemplate(&$template, &$form) {
 		global $gallery;
 
-		// Figure out which item we're talking about
+		// Figure out which item we are talking about
 		$transactionId = GalleryUtilities::getRequestVariables('transactionId');
 
 		if (empty($transactionId)) {
@@ -108,7 +108,7 @@ class OrderStatusView extends GalleryView {
 		if ($form['formName'] != 'OrderStatus') {
 			$form['formName'] = 'OrderStatus';
 
-			// Figure out which item we're talking about
+			// Figure out which item we are talking about
 			$form['transactionId'] = $transactionId;
 		}
 

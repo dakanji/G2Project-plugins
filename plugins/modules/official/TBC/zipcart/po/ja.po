@@ -63,7 +63,7 @@ msgstr "Zipのパス:"
 msgid "You must enter a path to your zip binary"
 msgstr "zipバイナリのパスを入力しなくてはなりません。"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "入力されたパスは有効でないか実行不可能です。"
 
 msgid "Unable to create a zip file from this binary"

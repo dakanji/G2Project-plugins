@@ -22,7 +22,7 @@
  * @author Steven N. Severinghaus <sns@severinghaus.org>
  * @version $Revision: 1253 $
  *
- * This is some of the ugliest code I've ever written. Please do not
+ * This is some of the ugliest code I have ever written. Please do not
  * judge me by it. :)
  * @todo Change the map filters to derive from GalleryEntity and use that framework.
  */
@@ -253,7 +253,7 @@ class MapFilterAdminController extends GalleryController {
 				case 2: // Show on the right, no sidebar block -> continue
 				case 3: // Show on the top, no sidebar block -> continue
 				case 4: // Show on the bottom, no sidebar block -> continue
-				case 0: // Don't show the filter block in the sidebar
+				case 0: // Do not show the filter block in the sidebar
 					// Grab the Default theme value (used for the google map)
 					list($ret, $themeId) = GalleryCoreApi::getPluginParameter('module', 'core', 'default.theme');
 

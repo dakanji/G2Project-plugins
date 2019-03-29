@@ -149,7 +149,7 @@ msgstr ""
 msgid "You must choose something to watermark!"
 msgstr "Voc&ecirc; precisa escolher algo para colocar a marca d'&aacute;gua"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Tamanho m&aacute;ximo (n&atilde;o ir&aacute; danificar o arquivo original)"
 
 msgid "Resizes"
@@ -239,7 +239,7 @@ msgstr "Posicionamento"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Posiciona a sua marca d'&aacute;gua na folha abaixo no local em que voc&ecirc; quer que ela "

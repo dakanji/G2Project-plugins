@@ -61,7 +61,7 @@ msgstr "ZIPi Tee:"
 msgid "You must enter a path to your zip binary"
 msgstr "Sa pead sisestama tee oma zip programmi juurde"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Sisestatud tee on ebakorrektne või ei ole käivitatav"
 
 msgid "Unable to create a zip file from this binary"

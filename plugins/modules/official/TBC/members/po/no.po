@@ -44,7 +44,7 @@ msgstr "Nettstedadministratorer"
 msgid "Show Email Addresses"
 msgstr "Vis e-postadresser"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Ikke vis e-postadresser"
 
 msgid "Member Items"

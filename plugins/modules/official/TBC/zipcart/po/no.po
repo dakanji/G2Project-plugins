@@ -64,7 +64,7 @@ msgstr "Zip-sti:"
 msgid "You must enter a path to your zip binary"
 msgstr "Du må skrive inn stien til zip-programmet"
 
-msgid "The path you entered isn't valid or isn't executable"
+msgid "The path you entered is not valid or is not executable"
 msgstr "Stien du skrev inn er ikke gyldig eller kjørbar"
 
 msgid "Unable to create a zip file from this binary"

@@ -614,7 +614,7 @@ class getid3_ogg extends getid3_handler {
 					$info['ogg']['pageheader'][$oggpageinfo['page_seqno']] = $oggpageinfo;
 					$VorbisCommentPage++;
 
-					// First, save what we haven't read yet
+					// First, save what we have not read yet
 					$AsYetUnusedData = substr($commentdata, $commentdataoffset);
 
 					// Then take that data off the end
@@ -649,7 +649,7 @@ class getid3_ogg extends getid3_handler {
 				$oggpageinfo                                           = $this->ParseOggPageHeader();
 				$info['ogg']['pageheader'][$oggpageinfo['page_seqno']] = $oggpageinfo;
 
-				// First, save what we haven't read yet
+				// First, save what we have not read yet
 				$AsYetUnusedData = substr($commentdata, $commentdataoffset);
 
 				// Then take that data off the end

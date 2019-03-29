@@ -204,7 +204,7 @@ class Auth_OpenID_MemcachedStore extends Auth_OpenID_OpenIDStore {
 	}
 
 	/**
-	 * Report that this storage doesn't support cleanup
+	 * Report that this storage does not support cleanup
 	 */
 	public function supportsCleanup() {
 		return false;

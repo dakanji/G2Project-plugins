@@ -22,7 +22,7 @@
  * @author Steven N. Severinghaus <sns@severinghaus.org>
  * @version $Revision: 1576 $
  *
- * This is some of the ugliest code I've ever written. Please do not
+ * This is some of the ugliest code I have ever written. Please do not
  * judge me by it. :)
  */
 GalleryCoreApi::requireOnce('modules/map/classes/mapHelper.class');
@@ -171,7 +171,7 @@ class MapSiteAdminController extends GalleryController {
 		}
 
 		if (isset($form['action']['addKey'])) {
-			// Don't supply a keyUrl param when adding a new key
+			// Do not supply a keyUrl param when adding a new key
 			$results['status']   = array();
 			$results['error']    = array();
 			$results['redirect'] = array(

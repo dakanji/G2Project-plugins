@@ -151,11 +151,11 @@ msgstr "Thumbnail generation"
 
 msgid ""
 "Normally Gallery will generate thumbnails the first time you look at them, then save them "
-"for subsequent views.  If you check this box, we'll create the thumbnails at migration "
+"for subsequent views.  If you check this box, we will create the thumbnails at migration "
 "time.  Migration will take longer but the first time you view an album will go much faster."
 msgstr ""
 "Normally Gallery will generate thumbnails the first time you look at them, then save them "
-"for subsequent views.  If you check this box, we'll create the thumbnails at migration "
+"for subsequent views.  If you check this box, we will create the thumbnails at migration "
 "time.  Migration will take longer but the first time you view an album will go much faster."
 
 msgid "Item captions"
@@ -246,8 +246,8 @@ msgid "This album has an illegal name and will be renamed to <i>%s</i>"
 msgstr "This album has an illegal name and will be renamed to <i>%s</i>"
 
 #, c-format
-msgid "This album's owner (%s) hasn't been imported."
-msgstr "This album's owner (%s) hasn't been imported."
+msgid "This album's owner (%s) has not been imported."
+msgstr "This album's owner (%s) has not been imported."
 
 #, c-format
 msgid "Import %s now."
@@ -407,18 +407,18 @@ msgid "Import from Gallery 1"
 msgstr "Import from Gallery 1"
 
 msgid ""
-"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify "
+"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify "
 "your Gallery 1 data in any way."
 msgstr ""
-"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify "
+"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify "
 "your Gallery 1 data in any way."
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 
 msgid "Path to Gallery 1 albums directory"

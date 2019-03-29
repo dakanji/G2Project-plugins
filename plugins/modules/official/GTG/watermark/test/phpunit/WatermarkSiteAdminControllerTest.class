@@ -202,7 +202,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 	}
 
 	public function testAddWrongMimeType() {
-		// Add same name, browser doesn't send correct mime type
+		// Add same name, browser does not send correct mime type
 		GalleryUtilities::putRequestVariable('form[action][add]', '1');
 		GalleryUtilities::putRequestVariable('form[name][1]', $this->_randomName);
 		GalleryUtilities::putRequestVariable('form[type][1]', 'image/jpeg');
@@ -296,7 +296,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->assertTrue(empty($defaultWatermarkId), 'The default Watermark Id was not removed');
 
-		// Verify that it's gone
+		// Verify that it is gone
 		$ret = $this->_verifyMissing($idToDelete);
 
 		if ($ret) {
@@ -381,13 +381,13 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 
 		$this->assertTrue(!empty($defaultWatermarkId), 'Expected new default watermark');
 
-		// If there are several watermarks, we can't be sure which one will be selected
+		// If there are several watermarks, we cannot be sure which one will be selected
 		$this->assertTrue(
 			(int)$defaultWatermarkId != (int)$idToDelete,
 			'Unexpected default watermark id'
 		);
 
-		// Verify that it's gone
+		// Verify that it is gone
 		$ret = $this->_verifyMissing($idToDelete);
 
 		if ($ret) {
@@ -459,7 +459,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 			'Confirm Delete'
 		);
 
-		// Verify that it's NOT gone
+		// Verify that it is NOT gone
 		$ret = $this->_verifyEntity($watermark);
 
 		if ($ret) {
@@ -533,7 +533,7 @@ class WatermarkSiteAdminControllerTest extends GalleryControllerTestCase {
 				return $ret;
 			}
 
-			// We're expecting the same name, but the . changed to _ in the file extension
+			// We are expecting the same name, but the . changed to _ in the file extension
 			$this->assertEquals($expectedName, basename($path));
 		} else {
 			$this->assertTrue(false, 'Object is not a watermark');

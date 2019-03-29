@@ -25,7 +25,7 @@
     <h3 class="giError"> {g->text text="PHP has no XML support"} </h3>
 
     <p class="giDescription">
-      {g->text text="You can't connect with WebDAV because PHP has no XML support on this server.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg2="</a>"}
+      {g->text text="You cannot connect with WebDAV because PHP has no XML support on this server.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg2="</a>"}
     </p>
   </div>
 {/if}
@@ -35,7 +35,7 @@
     <h3 class="giError"> {g->text text="WebDAV requests not handled"} </h3>
 
     <p class="giDescription">
-      {g->text text="You can't connect with WebDAV because this server doesn't pass WebDAV requests to Gallery.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg2="</a>"}
+      {g->text text="You cannot connect with WebDAV because this server does not pass WebDAV requests to Gallery.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg2="</a>"}
     </p>
   </div>
 {/if}
@@ -46,7 +46,7 @@
 
     <p class="giDescription">
       {capture assign="adminPluginsUrl"}{g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminPlugins" return=true}{/capture}
-      {g->text text="You can connect with WebDAV anonymously, but you can't do anything which requires you to login because the HTTP auth module is disabled.  You should activate the HTTP auth module in the %sSite Admin Plugins option%s.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg4="</a>"}
+      {g->text text="You can connect with WebDAV anonymously, but you cannot do anything which requires you to login because the HTTP auth module is disabled.  You should activate the HTTP auth module in the %sSite Admin Plugins option%s.  Troubleshooting documentation is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg4="</a>"}
     </p>
   </div>
 {elseif $WebDavSiteAdmin.code & WEBDAV_STATUS_HTTPAUTH_AUTH_PLUGINS_DISABLED}
@@ -54,7 +54,7 @@
     <h3 class="giWarning"> {g->text text="HTTP auth plugin disabled"} </h3>
 
     <p class="giDescription">
-      {g->text text="You can connect with WebDAV anonymously, but you can't do anything which requires you to login because neither HTTP authentication nor server authentication are enabled in the HTTP auth module.  You should activate HTTP authentication in the settings of the HTTP auth module."}
+      {g->text text="You can connect with WebDAV anonymously, but you cannot do anything which requires you to login because neither HTTP authentication nor server authentication are enabled in the HTTP auth module.  You should activate HTTP authentication in the settings of the HTTP auth module."}
     </p>
   </div>
 
@@ -112,7 +112,7 @@
 
     <p class="giDescription">
       {capture assign="adminPluginsUrl"}{g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminPlugins" return=true}{/capture}
-      {g->text text="PHP PathInfo rewrite doesn't support the rule to fall back on an alternative URL.  You should uninstall and reinstall the URL rewrite module in the %sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting information is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg4="</a>"}
+      {g->text text="PHP PathInfo rewrite does not support the rule to fall back on an alternative URL.  You should uninstall and reinstall the URL rewrite module in the %sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting information is in the %sGallery Codex%s." arg1="<a href=\"$adminPluginsUrl\">" arg2="</a>" arg3="<a href=\"http://codex.gallery2.org/index.php/Gallery2:Modules:webdav:admin\">" arg4="</a>"}
     </p>
   </div>
 {/if}

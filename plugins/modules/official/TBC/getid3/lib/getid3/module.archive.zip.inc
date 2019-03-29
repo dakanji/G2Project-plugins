@@ -124,7 +124,7 @@ class getid3_zip extends getid3_handler {
 			return false;
 		}
 
-		// central directory couldn't be found and/or parsed
+		// central directory could not be found and/or parsed
 		// scan through actual file data entries, recover as much as possible from probable trucated file
 		if ($info['zip']['compressed_size'] > ($info['filesize'] - 46 - 22)) {
 			$info['error'][] = 'Warning: Truncated file! - Total compressed file sizes (' . $info['zip']['compressed_size'] . ' bytes) is greater than filesize minus Central Directory and End Of Central Directory structures (' . ($info['filesize'] - 46 - 22) . ' bytes)';
@@ -258,7 +258,7 @@ class getid3_zip extends getid3_handler {
 
 		if ($LocalFileHeader['compressed_size'] == 0) {
 			// *Could* be a zero-byte file
-			// But could also be a file written on the fly that didn't know compressed filesize beforehand.
+			// But could also be a file written on the fly that did not know compressed filesize beforehand.
 			// Correct compressed filesize should be in the data_descriptor located after this file data, and also in Central Directory (at end of zip file)
 			if (!empty($this->getid3->info['zip']['central_directory'])) {
 				foreach ($this->getid3->info['zip']['central_directory'] as $central_directory_entry) {

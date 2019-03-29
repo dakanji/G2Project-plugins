@@ -37,7 +37,7 @@ class XMLOutView extends GalleryView {
 	public function renderImmediate($status, $error) {
 		global $gallery;
 
-		// Figure out which item we're talking about
+		// Figure out which item we are talking about
 		$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
 
 		if (empty($itemId)) {

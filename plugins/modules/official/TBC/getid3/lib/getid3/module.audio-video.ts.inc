@@ -40,7 +40,7 @@ class getid3_ts extends getid3_handler {
 		$SAC_raw                      = getid3_lib::BigEndian2Int(substr($TSheader, $offset, 1));
 		$offset                      += 1;
 
-		// Set by demodulator if can't correct errors in the stream, to tell the demultiplexer that the packet has an uncorrectable error
+		// Set by demodulator if cannot correct errors in the stream, to tell the demultiplexer that the packet has an uncorrectable error
 		$info['ts']['packet']['flags']['transport_error_indicator'] = (bool)($pid_flags_raw & 0x8000);
 
 		// 1 means start of PES data or PSI otherwise zero only.

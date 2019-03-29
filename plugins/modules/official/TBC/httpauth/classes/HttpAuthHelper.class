@@ -54,7 +54,7 @@ class HttpAuthHelper {
 			return array($ret, null);
 		}
 
-		// Check for causes why Gallery can't access HTTP usernames and passwords
+		// Check for causes why Gallery cannot access HTTP usernames and passwords
 		if (!$success) {
 			list($ret, $moduleStatus) = GalleryCoreApi::fetchPluginList('module');
 
@@ -100,7 +100,7 @@ class HttpAuthHelper {
 				}
 			}
 
-			// No causes found for why Gallery can't access HTTP usernames and passwords!
+			// No causes found for why Gallery cannot access HTTP usernames and passwords!
 			if (!$code) {
 				$code |= HTTPAUTH_STATUS_ERROR_UNKNOWN;
 			}
@@ -226,7 +226,7 @@ class HttpAuthHelper {
 			return array(null, null);
 		}
 
-		// Ignore disabled users, since we don't have a facility for showing an error
+		// Ignore disabled users, since we do not have a facility for showing an error
 		list($ret, $isDisabled) = GalleryCoreApi::isDisabledUsername($username);
 
 		if ($ret) {
@@ -239,7 +239,7 @@ class HttpAuthHelper {
 
 		list($ret, $user) = GalleryCoreApi::fetchUserByUsername($username);
 
-		// ERROR_MISSING_OBJECT check to suppress error if username doesn't exist
+		// ERROR_MISSING_OBJECT check to suppress error if username does not exist
 		if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
 			return array($ret, null);
 		}

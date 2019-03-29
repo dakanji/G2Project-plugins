@@ -469,7 +469,7 @@ class ItemAddFromPicasa extends ItemAddPlugin {
 			)
 		);
 
-		// Set the ItemAdmin form's encoding type specially since we're uploading binary files
+		// Set the ItemAdmin form's encoding type specially since we are uploading binary files
 		if ($template->hasVariable('ItemAdmin')) {
 			$ItemAdmin            =& $template->getVariableByReference('ItemAdmin');
 			$ItemAdmin['enctype'] = 'multipart/form-data';

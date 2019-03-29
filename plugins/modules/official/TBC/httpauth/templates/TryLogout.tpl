@@ -18,6 +18,6 @@
 
 <div class="gbBlock">
   <p class="giDescription">
-    {g->text text="If you're not automatically redirected, %sclick here to finish logging out%s." arg1="<a href=\"`$TryLogout.hrefUrl`\">" arg2="</a>"}
+    {g->text text="If you are not automatically redirected, %sclick here to finish logging out%s." arg1="<a href=\"`$TryLogout.hrefUrl`\">" arg2="</a>"}
   </p>
 </div>

@@ -231,7 +231,7 @@ class getid3_gzip extends getid3_handler {
 							// view TAR-file info
 							if (file_exists(GETID3_INCLUDEPATH . $determined_format['include']) && include_once GETID3_INCLUDEPATH . $determined_format['include']) {
 								if (($temp_tar_filename = tempnam(GETID3_TEMP_DIR, 'getID3')) === false) {
-									// can't find anywhere to create a temp file, abort
+									// cannot find anywhere to create a temp file, abort
 									$info['error'][] = 'Unable to create temp file to parse TAR inside GZIP file';
 
 									break;

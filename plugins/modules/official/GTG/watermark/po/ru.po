@@ -143,7 +143,7 @@ msgstr "Шаг 3. Выберите, на какие изображения вы 
 msgid "You must choose something to watermark!"
 msgstr "Вы должны выбрать что-либо для наложения водяного знака!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Полный размер (оригинальный файл поврежден не будет)"
 
 msgid "Resizes"
@@ -231,7 +231,7 @@ msgstr "Размещение"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Поместите ваш водяной знак на расположенное ниже поле в то место, где бы вы хотели, чтобы "

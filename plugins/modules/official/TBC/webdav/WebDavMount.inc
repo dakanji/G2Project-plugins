@@ -42,7 +42,7 @@ class WebDavMountView extends GalleryView {
 		}
 
 		if (!$canView) {
-			// Avoid information disclosure, act as if the item didn't exist.
+			// Avoid information disclosure, act as if the item does not exist.
 			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 

@@ -56,7 +56,7 @@ class ItemCreateReplicaSingleController extends GalleryController {
 				}
 
 				if (!isset($permissions[$destinationId])) {
-					// Avoid information disclosure, act as if the item didn't exist.
+					// Avoid information disclosure, act as if the item does not exist.
 					return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 				}
 
@@ -74,7 +74,7 @@ class ItemCreateReplicaSingleController extends GalleryController {
 				}
 
 				/*
-				 * Ok we've got a linkable item and a legal destination album.
+				 * Ok we have got a linkable item and a legal destination album.
 				 * Lock everything up and start linkin'.  We need to read lock
 				 * the source ids, source hierarchy and destination hierarchy.
 				 */
@@ -105,7 +105,7 @@ class ItemCreateReplicaSingleController extends GalleryController {
 				$linkedItem = new $classType();
 
 				/*
-				 * If we're linking to an item that's already a link,
+				 * If we are linking to an item that is already a link,
 				 * then link to its source instead.
 				 */
 				if ($item->isLinked()) {

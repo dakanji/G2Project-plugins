@@ -159,7 +159,7 @@ class UserWatermarksView extends GalleryView {
 			}
 		}
 
-		// Set the form's encoding type since we're uploading binary files
+		// Set the form's encoding type since we are uploading binary files
 		if ($template->hasVariable('UserAdmin')) {
 			$UserAdmin            =& $template->getVariableByReference('UserAdmin');
 			$UserAdmin['enctype'] = 'multipart/form-data';

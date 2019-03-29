@@ -59,7 +59,7 @@ msgstr "這個功能依賴一個目前沒有啟動的 Gallery 2 模組。請要�
 msgid "Downloading the Gallery Remote Applet"
 msgstr "下載 Gallery 遠端上傳小程式"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "你的瀏覽程式不支援 Java 小程式；請使用標準的幻燈片放映方式。"
 
 msgid "Slideshow Applet Settings"
@@ -141,11 +141,11 @@ msgstr "若為真，將避免幻燈片放映下載全尺寸的圖片"
 msgid "does slideshow loop when it gets to the end?"
 msgstr "幻燈片放映到底時要反覆重放嗎？"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "若為真，比螢幕小的圖片不會放大"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr "若為真，幻燈片放映會在要用到圖片之前就先把它下載，這樣會比較快，但也可能會浪費頻寬。"
 

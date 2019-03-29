@@ -112,8 +112,8 @@
             scriptable = false \
             pluginspage = "http://java.sun.com/products/plugin/index.html#download">
 
-            <NOEMBED alt="{g->text text="Your browser doesn't support applets; you should use one of the other upload methods."}">
-              {g->text text="Your browser doesn't support applets; you should use one of the other upload methods."}
+            <NOEMBED alt="{g->text text="Your browser does not support applets; you should use one of the other upload methods."}">
+              {g->text text="Your browser does not support applets; you should use one of the other upload methods."}
             </NOEMBED>
 
         </EMBED>

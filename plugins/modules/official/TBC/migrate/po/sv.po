@@ -162,7 +162,7 @@ msgstr "Generering av miniatyrbilder"
 
 msgid ""
 "Normally Gallery will generate thumbnails the first time you look at them, then save them "
-"for subsequent views.  If you check this box, we'll create the thumbnails at migration "
+"for subsequent views.  If you check this box, we will create the thumbnails at migration "
 "time.  Migration will take longer but the first time you view an album will go much faster."
 msgstr ""
 "Normalt så genererar Gallery miniatyrbilder första gången du tittar på dem, och sparar dem "
@@ -258,7 +258,7 @@ msgid "This album has an illegal name and will be renamed to <i>%s</i>"
 msgstr "Detta album har ett ogiltigt namn och kommer att döpas om till <i>%s<i> "
 
 #, c-format
-msgid "This album's owner (%s) hasn't been imported."
+msgid "This album's owner (%s) has not been imported."
 msgstr "Detta albums ägare (%s) har inte blivit importerad"
 
 #, c-format
@@ -422,7 +422,7 @@ msgid "Import from Gallery 1"
 msgstr "Importera från Gallery 1"
 
 msgid ""
-"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It won't modify "
+"Copy all or part of an existing Gallery 1 installation into your Gallery 2.  It would not modify "
 "your Gallery 1 data in any way."
 msgstr ""
 "Kopiera alla eller delar av en existerande Gallery1 installation till din Gallery 2. Det "
@@ -430,7 +430,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
 "Du har inte något Grafikverktyg aktiverat för att hantera JPEG-bilder. Om du importerar nu "

@@ -47,7 +47,7 @@ msgstr "Svetainės adminai"
 msgid "Show Email Addresses"
 msgstr "Rodyti el. pašto adresus"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Nerodyti el. pašto adresų"
 
 msgid "Member Items"

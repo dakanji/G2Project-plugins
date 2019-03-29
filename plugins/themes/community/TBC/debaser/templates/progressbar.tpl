@@ -40,7 +40,7 @@
 {*
  * After the template is sent to the browser, Gallery will send a
  * Javascript snippet to the browser that calls the updateStatus()
- * function below.  It'll call it over and over again until the task
+ * function below.  It will call it over and over again until the task
  * is done.  The code below should update the update the various elements
  * of the page (title, description, etc) with the values that it receives as
  * arguments.

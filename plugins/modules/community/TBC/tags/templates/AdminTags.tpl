@@ -14,7 +14,7 @@
 
 {if isset($status.deleted)}
 <div class="gbBlock">
-   <h2 class="giSuccess">{g->text text="The Tag and it's mappings have been successfully deleted."}</h2>
+   <h2 class="giSuccess">{g->text text="The Tag and its mappings have been successfully deleted."}</h2>
 </div>
 {/if}
 
@@ -96,5 +96,3 @@
   </div>
   {/if}
 </form>
-
-

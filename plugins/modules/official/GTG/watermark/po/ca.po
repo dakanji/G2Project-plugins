@@ -140,7 +140,7 @@ msgstr "Etapa 3. Escollir les versions de la imatge sobre les que aplicaràs la 
 msgid "You must choose something to watermark!"
 msgstr "Has de seleccionar un element sobre el que aplicar la marca d'aigua!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Talla Sencera (no modifica la imatge original)"
 
 msgid "Resizes"
@@ -228,7 +228,7 @@ msgstr "Emplacement"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Placer le filigrane dans le cadre ci-dessous à la position où vous souhaitez le voir "

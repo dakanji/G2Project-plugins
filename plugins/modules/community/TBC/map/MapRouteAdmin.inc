@@ -130,9 +130,9 @@ class MapRouteAdminController extends GalleryController {
 
 			if ($file && $handle) {
 				foreach ($file as $line) {
-					// Use the triple === to make sure it's not the boolean value false
+					// Use the triple === to make sure it is not the boolean value false
 					if (strpos(strtolower(trim($line)), '<html') === 0) {
-						// It doesn't have the magic string
+						// It does not have the magic string
 						if (strpos(strtolower($line), IEXMLSTRING) === false) {
 							$newline = preg_replace('/>$/', ' ' . IEXMLSTRING . ">\n", trim($line));
 							fwrite($handle, $newline);
@@ -264,7 +264,7 @@ class MapRouteAdminController extends GalleryController {
 					}
 
 					/*
-					 * if $num was not found in the existing Route IDs (i.e., it's new)
+					 * if $num was not found in the existing Route IDs (i.e., it is new)
 					 * or if it was a dupe, then add it as a new route, else leave it alone
 					 */
 					$num = ($num == 0 or $editIdDupe) ? $maxRouteId + 1 : $num;
@@ -452,7 +452,7 @@ class MapRouteAdminView extends GalleryView {
 
 			/*
 			 * Fill out additional properties for each entity, taking care to
-			 * format them so that they don't break the Javascript that they
+			 * format them so that they do not break the Javascript that they
 			 * end up embedded within.
 			 */
 			foreach ($entities as $entity) {
@@ -503,9 +503,9 @@ class MapRouteAdminView extends GalleryView {
 
 		if ($file) {
 			foreach ($file as $line) {
-				// Use the triple === to make sure it's not the boolean value false
+				// Use the triple === to make sure it is not the boolean value false
 				if (strpos(strtolower(trim($line)), '<html') === 0) {
-					// It doesn't have the magic string
+					// It does not have the magic string
 					if (strpos(strtolower($line), IEXMLSTRING) === false) {
 						$form['badhtmltag'] = 1;
 

@@ -578,7 +578,7 @@ class NotificationEventHandlingTest extends GalleryTestCase {
 		}
 
 		/*
-		 * .tpl files in SVN on Windows will have \r\n line endings, on Linux they'll have \n.
+		 * .tpl files in SVN on Windows will have \r\n line endings, on Linux they will have \n.
 		 * Since we hardcode the line ending above in our expected data, normalize it all here so
 		 * that we can do a clean comparison.
 		 */

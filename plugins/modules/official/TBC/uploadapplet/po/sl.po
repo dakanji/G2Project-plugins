@@ -49,7 +49,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Prenašam oddaljen vmesnik Galerije"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr ""
 "Vaš brskalnik ne podpira vmesnikov. Uporabiti boste morali eno od drugih metod za nalaganje."
 
@@ -173,10 +173,10 @@ msgstr ""
 "nastavite na 'false', če se želite izogniti izgube EXIF podatkov ob pomanjšanju fotografije "
 "v primeru ne-najdenja ImageMagick orodja"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "če je 'true', se vmesnik ne bo pritoževal, v primeru ne-najdenja ImageMagick orodja"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "če je 'true', se vmesnik ne bo pritoževal v primeru ne-najdenja Jpegtran orodja"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

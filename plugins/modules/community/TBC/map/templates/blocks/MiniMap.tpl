@@ -64,7 +64,7 @@ if (GBrowserIsCompatible()) {ldelim}
     {/if}
 {rdelim}
 {rdelim}
-//<!-- Weird workaround onLoad hack for IE; Mozilla doesn't need this extra code -->
+//<!-- Weird workaround onLoad hack for IE; Mozilla does not need this extra code -->
 function init_map_{$block.map.MiniMap.blockNum}() {ldelim}
 if (arguments.callee.done) return; 
 arguments.callee.done = true; 

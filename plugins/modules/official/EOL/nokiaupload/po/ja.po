@@ -34,7 +34,7 @@ msgstr "モバイルユーザ"
 msgid "Pictures from mobile phones"
 msgstr "携帯電話からの画像"
 
-msgid "Couldn't fetch directory list."
+msgid "Could not fetch directory list."
 msgstr "ディレクトリリストをフェッチできません。"
 
 msgid "Login failed."
@@ -43,7 +43,7 @@ msgstr "ログイン失敗"
 msgid "Album creation failed."
 msgstr "アルバムの作成に失敗しました。"
 
-msgid "Couldn't retrieve settings."
+msgid "Could not retrieve settings."
 msgstr "設定を取り出せません。"
 
 msgid "Upload failed."

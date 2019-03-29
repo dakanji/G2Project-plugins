@@ -45,7 +45,7 @@
   <h3> {g->text text="Placement"} </h3>
 
   <p class="giDescription">
-    {g->text text="Place your watermark on the canvas below in the location where you'd like it to appear when you watermark newly uploaded photos.  You'll be able to edit individual photos to move the watermark later on, if you choose."}
+    {g->text text="Place your watermark on the canvas below in the location where you'd like it to appear when you watermark newly uploaded photos.  You will be able to edit individual photos to move the watermark later on, if you choose."}
   </p>
 
   {include file="gallery:modules/core/templates/JavaScriptWarning.tpl" l10Domain="modules_core"}
@@ -74,7 +74,7 @@
 
   <input type="checkbox" {if isset($form.whichDerivative.preferred)}checked="checked" {/if}
    name="{g->formVar var="form[whichDerivative][preferred]"}"/>
-  {g->text text="Full size (won't damage the original file)"}
+  {g->text text="Full size (would not damage the original file)"}
   <br/>
 
   <input type="checkbox" {if isset($form.whichDerivative.resizes)}checked="checked" {/if}

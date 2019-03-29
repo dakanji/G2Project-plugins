@@ -39,7 +39,7 @@ class DownloadMaxView extends DownloadItemView {
 	public function renderImmediate($status, $error) {
 		global $gallery;
 
-		// Figure out which item we're talking about
+		// Figure out which item we are talking about
 		$masterId       = (int)GalleryUtilities::getRequestVariables('itemId');
 		$maxImageHeight = (int)GalleryUtilities::getRequestVariables('maxImageHeight');
 		$maxImageWidth  = (int)GalleryUtilities::getRequestVariables('maxImageWidth');

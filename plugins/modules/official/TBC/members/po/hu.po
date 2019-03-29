@@ -47,7 +47,7 @@ msgstr "Adminisztrátorok"
 msgid "Show Email Addresses"
 msgstr "Mutassa az email címeket"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "Ne mutassa az email címeket"
 
 # Items != Photos

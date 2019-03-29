@@ -92,7 +92,7 @@ class ItemCreateReplicaSingleControllerTest extends GalleryControllerTestCase {
 	}
 
 	/**
-	 * Test linking an album (shouldn't succeeed)
+	 * Test linking an album (should not succeeed)
 	 */
 	public function testAlbumReplica() {
 		global $gallery;
@@ -182,7 +182,7 @@ class ItemCreateReplicaSingleControllerTest extends GalleryControllerTestCase {
 			return $ret;
 		}
 
-		// The UI never displays targets that we can't add to
+		// The UI never displays targets that we cannot add to
 		$results = $this->handleRequest(ERROR_PERMISSION_DENIED);
 	}
 }

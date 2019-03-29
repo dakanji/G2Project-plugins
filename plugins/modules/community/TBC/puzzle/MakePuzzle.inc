@@ -171,7 +171,7 @@ class MakePuzzleView extends GalleryView {
 
 		if ($ret) {
 			// cannot find parent album.
-			// don't know how this can happen ... it is probably a bad, bad thing
+			// do not know how this can happen ... it is probably a bad, bad thing
 			return array($ret, null);
 		}
 
@@ -181,7 +181,7 @@ class MakePuzzleView extends GalleryView {
 		list($ret, $enabled) = PuzzleHelper::isEnabledForAlbum($parentAlbum);
 
 		if ($ret) {
-			// don't know what can cause this error
+			// do not know what can cause this error
 			return array($ret, null);
 		}
 

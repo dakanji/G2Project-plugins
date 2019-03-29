@@ -244,7 +244,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 
 		$this->_markForCleanup($dupItem2);
 
-		// test getDupePairs when the pair doesn't exist
+		// test getDupePairs when the pair does not exist
 		$exist = true;
 
 		list($ret, $exist) = DupeDetectHelper::getDupePairs(
@@ -647,7 +647,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 	 * test markAsIgnoredDuplicate() and getDupePairs() functions
 	 */
 	public function testMarkAsIgnoredDuplicate() {
-		// test that fails when asked to mark a pair that doesn't exist
+		// test that fails when asked to mark a pair that does not exist
 		$ret = DupeDetectHelper::MarkAsIgnoredDuplicate($this->_item, $this->_item2);
 
 		$this->assertTrue($ret->isError(), '');
@@ -734,7 +734,7 @@ class DupeDetectHelperTest extends GalleryTestCase {
 		}
 
 		/* upload another test image, this time to album2.
-		 * doesn't need to be marked for cleanup as we delete it later */
+		 * does not need to be marked for cleanup as we delete it later */
 		$title = '_test_dupedetect_' . mt_rand();
 		$path  = dirname(__FILE__) . '/../data/50.jpg';
 

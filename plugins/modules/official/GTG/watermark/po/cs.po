@@ -140,7 +140,7 @@ msgstr "Krok 3 - Vyberte, na které obrázky chcete vodotisk použít."
 msgid "You must choose something to watermark!"
 msgstr "Musíte vybrat, na co chcete aplikovat vodotisk!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Plná velikost (nezničí původní soubor)"
 
 msgid "Resizes"
@@ -226,7 +226,7 @@ msgstr "Umístění"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Umistěte vodotisk na plochu, tak jak chcete aby byl zobrazen na nově uploadovaných "

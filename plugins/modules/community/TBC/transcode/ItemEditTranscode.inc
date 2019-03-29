@@ -256,7 +256,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 					}
 
 					if (!$reused) {
-						// Create a new preferred since one doesn't exist
+						// Create a new preferred since one does not exist
 						list($ret, $source) = GalleryCoreApi::fetchPreferredSource($item);
 
 						if ($ret) {
@@ -307,7 +307,7 @@ class ItemEditTranscode extends ItemEditPlugin {
 							// Id to build if not on demand
 							$buildId = $derivative->getId();
 
-							// Set FlashVideoRenderer, is there a way of knowing whether it's available?
+							// Set FlashVideoRenderer, is there a way of knowing whether it is available?
 							$renderer = '';
 
 							if ($params['outputMime'] == 'video/x-flv' || $params['outputMime'] == 'video/mp4' || $params['outputMime'] == 'video/webm' || $params['outputMime'] == 'video/ogg') {

@@ -64,7 +64,7 @@ msgstr ""
 msgid "Downloading the Gallery Remote Applet"
 msgstr "Downloader Gallery Fjernstyrings-applet"
 
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr "Din browser understøtter ikke 'applets'; du må benytte standard billed-fremvisning."
 
 msgid "Slideshow Applet Settings"
@@ -149,11 +149,11 @@ msgstr "Hvis sandt bliver fremvisningen forhindret i at downloade billeder i ful
 msgid "does slideshow loop when it gets to the end?"
 msgstr "skal fremvisningen starte forfra når den når til slutningen?"
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr "Hvis sandt vil billeder der er mindre end skærmopløsningen ikke blive strukket"
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 "Hvis sandt vil fremvisningen downloade billeder før der er behov for dem. Det kan forøge "

@@ -139,7 +139,7 @@ msgstr "3 Urratsa.  Irudiaren zein bertsiori ur-marka ipiniko zaion hautatu"
 msgid "You must choose something to watermark!"
 msgstr "Ur-marka ipintzeko zerbait hautatu behar duzu!"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "Tamaina osoa (ez da jatorrizko irudia erabiliko)"
 
 msgid "Resizes"
@@ -226,7 +226,7 @@ msgstr "Kokalekua"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "Zure ur-marka igo berri diren argazkietan agertzea nahi duzun beheko ohalaren kokapen "

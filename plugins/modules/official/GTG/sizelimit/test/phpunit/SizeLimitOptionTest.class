@@ -508,7 +508,7 @@ class SizeLimitOptionTestPlatform extends GalleryPlatform {
 	}
 
 	public function unlink($filename) {
-		// if it is a derivative - we didn't really create it
+		// if it is a derivative - we did not really create it
 		if ($this->_savedPlatform->file_exists($filename)) {
 			return $this->_savedPlatform->unlink($filename);
 		}

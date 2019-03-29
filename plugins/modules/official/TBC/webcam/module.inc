@@ -257,7 +257,7 @@ class WebCamModule extends GalleryModule {
 		$id   = $item->getId();
 		$loop = GalleryDataCache::containsKey("webcam:load-$id");
 
-		// We don't want to refresh the external source during an upgrade
+		// We do not want to refresh the external source during an upgrade
 		if ($duringUpgrade) {
 			return null;
 		}
@@ -270,11 +270,11 @@ class WebCamModule extends GalleryModule {
 
 		if (time() - $item->getModificationTimestamp() > $duration && !$loop) {
 			if (GalleryCoreApi::isWriteLocked($id)) {
-				// Item already busy (maybe being deleted).. don't update now
+				// Item already busy (maybe being deleted).. do not update now
 				return null;
 			}
 
-			// Lock and refresh to ensure another request didn't just update image..
+			// Lock and refresh to ensure another request did not just update image..
 			list($ret, $lockId) = GalleryCoreApi::acquireWriteLock($id);
 
 			if ($ret) {
@@ -328,7 +328,7 @@ class WebCamModule extends GalleryModule {
 			}
 
 			if (!$successfullyCopied) {
-				// Can't get the current image.. just keep what we have now
+				// Cannot get the current image.. just keep what we have now
 			} else {
 				list($ret, $path) = $item->fetchPath();
 

@@ -37,7 +37,7 @@
     <td></td>
     <td></td>
     <td style="text-align:right;"><span class="checkoutErrorText" style="color:Red;font-weight:bold;">
-		{g->text text="Your order doesn't reach the minimum value required."}<br><br></span>
+		{g->text text="Your order does not reach the minimum value required."}<br><br></span>
     </td></tr>
     {/if}
       	  {* ----- Loop through each item ------- *}
@@ -153,7 +153,7 @@
     <td></td>
     <td></td>
     <td style="text-align:right;"><span class="checkoutErrorText" style="color:Red;font-weight:bold;">
-		{g->text text="Your order doesn't reach the minimum value required."}<br><br></span>
+		{g->text text="Your order does not reach the minimum value required."}<br><br></span>
     </td></tr>
     {/if}
      

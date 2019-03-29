@@ -53,7 +53,7 @@ class SizeLimitOption extends ItemEditOption {
 			return array($ret, null, null);
 		}
 
-		// if there aren't any - assume 'no limits'
+		// if there are not any - assume 'no limits'
 		if (!isset($params['height']) || $params['height'] == 0) {
 			$SizeLimitOption['dimensionChoice'] = 'unlimited';
 			$SizeLimitOption['height']          = '';
@@ -339,7 +339,7 @@ class SizeLimitOption extends ItemEditOption {
 
 		/*
 		 * Process these descendents in chunks since we may have thousands of
-		 * items and we don't want to give the database a heart attack.
+		 * items and we do not want to give the database a heart attack.
 		 */
 		$chunkSize            = 200;
 		$numberOfItemsResized = 0;

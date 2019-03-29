@@ -112,7 +112,7 @@ class PermalinksOptionTest extends ItemEditOptionTestCase {
 	public function testPermalinksOptionCollision() {
 		/*
 		 * Collisions cause foreign key constraints in Postgres which invalidates the transaction.
-		 * That's hard to recover from.  Don't run this test on Postgres for now.
+		 * That's hard to recover from.  Do not run this test on Postgres for now.
 		 *
 		 * TODO: Use a mock database for this test
 		 */
@@ -132,7 +132,7 @@ class PermalinksOptionTest extends ItemEditOptionTestCase {
 
 		$this->assertEquals($this->_item1->getId(), $destId);
 
-		// now test a collision, this generates an error with some DB drivers, that's OK
+		// now test a collision, this generates an error with some DB drivers, that is OK
 		$result = $this->_handleRequestAfterEdit($form, $this->_item);
 
 		$this->assertEquals(

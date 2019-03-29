@@ -239,7 +239,7 @@ class BuildDownloadController extends GalleryController {
 				$context['height'] = $scaleToFit;
 
 				if ($context['width'] == 0 && $context['height'] == 0) {
-					// Don't put unknown size into context
+					// Do not put unknown size into context
 					$context = array();
 				}
 
@@ -320,7 +320,7 @@ class BuildDownloadController extends GalleryController {
 			return $ret;
 		}
 
-		// Yay, we're done! Ensure the progress bar is at 100% and show a continue link.
+		// Yay, we are done! Ensure the progress bar is at 100% and show a continue link.
 		$heading = $module->translate(
 			array(
 				'text' => 'Hit Continue to download your file.',

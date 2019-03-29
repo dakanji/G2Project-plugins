@@ -222,7 +222,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
+"You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you "
 "will not have any thumbnails.  Visit the %sModules%s page to activate a Graphics Toolkit."
 msgstr ""
 "你沒有任何以處厘 JPEG 圖像的圖形工具。如果你現在引進，你不會有任何縮略圖。請到%s模組%s頁面啟"

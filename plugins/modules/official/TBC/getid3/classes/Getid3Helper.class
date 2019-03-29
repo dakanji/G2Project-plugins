@@ -203,7 +203,7 @@ class Getid3Helper {
 			);
 		}
 
-		// File probably isn't an archive
+		// File probably is not an archive
 		return array(null, null);
 	}
 
@@ -399,7 +399,7 @@ class Getid3Helper {
 	}
 
 	/**
-	 * Sometimes the values that are returned aren't quite as we'd like to
+	 * Sometimes the values that are returned are not quite as we'd like to
 	 * present them, so do a little post processing on the text
 	 *
 	 * @param string $property the property name (eg. "ShutterSpeedValue")
@@ -432,7 +432,7 @@ class Getid3Helper {
 						if (isset($tmp)) {
 							$time = $tmp;
 						} else {
-							// If we couldn't turn it into a timestamp, just use the original value
+							// If we could not turn it into a timestamp, just use the original value
 							return $value;
 						}
 					}

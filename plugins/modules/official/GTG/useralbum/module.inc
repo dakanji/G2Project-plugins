@@ -237,7 +237,7 @@ class UserAlbumModule extends GalleryModule {
 			case 'GalleryEntity::delete':
 				$entity = $event->getEntity();
 
-				// We don't care unless it's an album
+				// We do not care unless it is an album
 				if (!GalleryUtilities::isA($entity, 'GalleryAlbumItem')) {
 					break;
 				}

@@ -47,7 +47,7 @@ msgstr "上傳小程式需要的 Gallery 2 模組目前沒有啟動。請要求�
 msgid "Downloading the Gallery Remote Applet"
 msgstr "下載 Gallery 遠端上傳小程式"
 
-msgid "Your browser doesn't support applets; you should use one of the other upload methods."
+msgid "Your browser does not support applets; you should use one of the other upload methods."
 msgstr "你的瀏覽程式不支援 Java 小程式；請你使用其他的上傳方法。"
 
 msgid "Uploading files..."
@@ -159,10 +159,10 @@ msgid ""
 "is not found"
 msgstr "如果要避免沒有 ImageMagick 時，縮放圖片會失去 EXIF 資料的話，設成假"
 
-msgid "if true, the applet will not complain if it can't find ImageMagick"
+msgid "if true, the applet will not complain if it cannot find ImageMagick"
 msgstr "若為真，小程式不會抱怨它找不到 ImageMagick"
 
-msgid "if true, the applet will not complain if it can't find Jpegtran"
+msgid "if true, the applet will not complain if it cannot find Jpegtran"
 msgstr "若為真，小程式不會抱怨它找不到 Jpegtran"
 
 msgid "quality of JPEG compression when resizing with ImageMagick"

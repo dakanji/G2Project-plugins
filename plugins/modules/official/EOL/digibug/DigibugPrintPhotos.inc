@@ -87,7 +87,7 @@ class DigibugPrintPhotosView extends GalleryView {
 
 		foreach ($itemIds as $id) {
 			if (empty($permissions[$id]['core.view'])) {
-				// Avoid information disclosure, act as if the item didn't exist.
+				// Avoid information disclosure, act as if the item does not exist.
 				return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
 			}
 		}
@@ -135,7 +135,7 @@ class DigibugPrintPhotosView extends GalleryView {
 			$itemId = $item->getId();
 
 			if (!isset($permissions[$itemId]['digibug.print'])) {
-				// Skip any cart items for which we don't have print permission
+				// Skip any cart items for which we do not have print permission
 				continue;
 			}
 
@@ -145,7 +145,7 @@ class DigibugPrintPhotosView extends GalleryView {
 			if ($needSession && !isset($dgSession)) {
 				/*
 				 * Get G2 session for digibug to access non-public images.
-				 * We can't use this session because hijack protection will prevent access
+				 * We cannot use this session because hijack protection will prevent access
 				 * plus the current user could logout before digibug retrieves the images.
 				 * Create a new session with the rights of current user for digibug to use.
 				 */
@@ -211,7 +211,7 @@ class DigibugPrintPhotosView extends GalleryView {
 			$entry['thumbHeight'] = $thumbSource->getHeight();
 
 			/*
-			 * Ugh, the Digibug api doesn't have a parameter for quantity.
+			 * Ugh, the Digibug api does not have a parameter for quantity.
 			 * Repeat the same entry multiple times to get desired quantity!
 			 */
 			for ($j = 0; $j < $cartItemIds[$itemId]; $j++) {
@@ -238,7 +238,7 @@ class DigibugPrintPhotosView extends GalleryView {
 
 		/*
 		 * Ugh, the Digibug api can only track its session data via some cookies
-		 * (redirecting to a url with embedded session id won't work) so we must
+		 * (redirecting to a url with embedded session id would not work) so we must
 		 * render a form and submit it.. here we set our own cookie that will be
 		 * checked to ensure we submit our form only once.
 		 */

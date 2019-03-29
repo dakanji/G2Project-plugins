@@ -262,7 +262,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 		GalleryUtilities::removeRequestVariable('full', false);
 		GalleryUtilities::putRequestVariable('path', 'invalid-' . mt_rand() . '/aaa');
 
-		// Invalid item sends 404 and does exit; we don't want to bail out of unit tests..
+		// Invalid item sends 404 and does exit; we do not want to bail out of unit tests..
 		// $results = $this->handleRequest();
 		// assert(got 404)
 		// Direct link to full size image
@@ -343,7 +343,7 @@ class RedirectControllerTest extends GalleryControllerTestCase {
 
 		$this->_headers = array();
 
-		// Fallback to SCRIPT_NAME if PHP_SELF isn't set
+		// Fallback to SCRIPT_NAME if PHP_SELF is not set
 		$_SERVER['SCRIPT_NAME'] = $_SERVER['PHP_SELF'];
 		unset($_SERVER['PHP_SELF']);
 

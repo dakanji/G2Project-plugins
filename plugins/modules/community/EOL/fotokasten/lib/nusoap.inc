@@ -243,7 +243,7 @@ class nusoap_base {
 
 		// if type is prefixed, create type prefix
 		if ($type_ns != '' && $type_ns == $this->namespaces['xsd']) {
-			// need to fix this. shouldn't default to xsd if no ns specified
+			// need to fix this. should not default to xsd if no ns specified
 			// w/o checking against typemap
 			$type_prefix = 'xsd';
 		} elseif ($type_ns) {
@@ -598,10 +598,10 @@ class soap_fault extends nusoap_base {
 <?php
 
 /**
- * parses an XML Schema, allows access to it's data, other utility methods
+ * parses an XML Schema, allows access to its data, other utility methods
  * no validation... yet.
  * very experimental and limited. As is discussed on XML-DEV, I'm one of the people
- * that just doesn't have time to read the spec(s) thoroughly, and just have a couple of trusty
+ * that just does not have time to read the spec(s) thoroughly, and just have a couple of trusty
  * tutorials I refer to :)
  *
  * @author   Dietrich Ayala <dietrich@ganx4.com>
@@ -1622,7 +1622,7 @@ class soap_transport_http extends nusoap_base {
 		// decode content-encoding
 		if (isset($headers['Content-Encoding']) && $headers['Content-Encoding'] != '') {
 			if ($headers['Content-Encoding'] == 'deflate' || $headers['Content-Encoding'] == 'gzip') {
-				// if decoding works, use it. else assume data wasn't gzencoded
+				// if decoding works, use it. else assume data was not gzencoded
 				if (function_exists('gzinflate')) {
 					//$timer->setMarker('starting decoding of gzip/deflated content');
 					if ($headers['Content-Encoding'] == 'deflate' && $degzdata = @gzinflate($data)) {
@@ -1819,7 +1819,7 @@ class soap_transport_http extends nusoap_base {
 		// decode content-encoding
 		if ($headers['Content-Encoding'] != '') {
 			if ($headers['Content-Encoding'] == 'deflate' || $headers['Content-Encoding'] == 'gzip') {
-				// if decoding works, use it. else assume data wasn't gzencoded
+				// if decoding works, use it. else assume data was not gzencoded
 				if (function_exists('gzinflate')) {
 					//$timer->setMarker('starting decoding of gzip/deflated content');
 					if ($headers['Content-Encoding'] == 'deflate' && $degzdata = @gzinflate($data)) {
@@ -2508,7 +2508,7 @@ class soap_server extends nusoap_base {
 <?php
 
 /**
- * parses a WSDL file, allows access to it's data, other utility methods
+ * parses a WSDL file, allows access to its data, other utility methods
  *
  * @author   Dietrich Ayala <dietrich@ganx4.com>
  * @version  v 0.6.3
@@ -3249,7 +3249,7 @@ class wsdl extends XMLSchema {
 	 *
 	 * @param string $ type name
 	 * @param mixed $ param value
-	 * @return mixed new param or false if initial value didn't validate
+	 * @return mixed new param or false if initial value did not validate
 	 */
 	public function serializeRPCParameters($operation, $direction, $parameters) {
 		$this->debug('in serializeRPCParameters with operation ' . $operation . ', direction ' . $direction . ' and ' . count($parameters) . ' param(s), and xml schema version ' . $this->XMLSchemaVersion);
@@ -3321,7 +3321,7 @@ class wsdl extends XMLSchema {
 					$value = htmlspecialchars($value);
 				}
 
-				// it's a scalar
+				// it is a scalar
 				return "<$name xsi:type=\"" . $this->getPrefixFromNamespace($this->XMLSchemaVersion) . ":$uqType\">$value</$name>";
 			}
 		} else {
@@ -3684,7 +3684,7 @@ class soap_parser extends nusoap_base {
 					$this->methodNamespace = $value;
 				}
 
-				// if it's a type declaration, set type
+				// if it is a type declaration, set type
 			} elseif ($key_localpart == 'type') {
 				$value_prefix                      = $this->getPrefix($value);
 				$value_localpart                   = $this->getLocalPart($value);

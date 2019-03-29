@@ -66,7 +66,7 @@ class BulkManageHelper {
 			0
 		);
 
-		// Get the items we're going to be operating on
+		// Get the items we are going to be operating on
 		if ($params['recursive']) {
 			list($ret, $albumItem) = GalleryCoreApi::loadEntitiesById($albumId, 'GalleryAlbumItem');
 

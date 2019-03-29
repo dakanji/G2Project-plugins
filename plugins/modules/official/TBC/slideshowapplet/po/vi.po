@@ -61,7 +61,7 @@ msgid "Downloading the Gallery Remote Applet"
 msgstr "Đang tải Ứng dụng con Gallery Remote"
 
 #, fuzzy
-msgid "Your browser doesn't support applets; you should use the standard slideshow."
+msgid "Your browser does not support applets; you should use the standard slideshow."
 msgstr ""
 "Trình duyệt bạn đang dùng không hỗ trợ ứng dụng con; bạn nên dùng một phương thức tải tập "
 "tin khác."
@@ -144,11 +144,11 @@ msgstr ""
 msgid "does slideshow loop when it gets to the end?"
 msgstr ""
 
-msgid "if true, pictures smaller than the screen won't be stretched"
+msgid "if true, pictures smaller than the screen would not be stretched"
 msgstr ""
 
 msgid ""
-"if true, the slideshow will download pictures before they're needed, which can speed up, but "
+"if true, the slideshow will download pictures before they are needed, which can speed up, but "
 "also may waste bandwidth"
 msgstr ""
 

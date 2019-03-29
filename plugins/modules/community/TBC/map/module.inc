@@ -479,8 +479,8 @@ class mapModule extends GalleryModule {
 
 		if ($ret) {
 			/**
-			 * @todo This doesn't seem right. The upgrade shouldn't bail out just because this
-			 * plugin couldn't be loaded. It's not required for core functionality of this module.
+			 * @todo This does not seem right. The upgrade should not bail out just because this
+			 * plugin could not be loaded. It is not required for core functionality of this module.
 			 */
 			return $ret;
 		}
@@ -495,8 +495,8 @@ class mapModule extends GalleryModule {
 
 		if ($ret) {
 			/*
-			 * @todo This doesn't seem right. The upgrade shouldn't bail out just because this
-			 * plugin couldn't be loaded. It's not required for core functionality of this module.
+			 * @todo This does not seem right. The upgrade should not bail out just because this
+			 * plugin could not be loaded. It is not required for core functionality of this module.
 			 */
 			return $ret;
 		}
@@ -542,7 +542,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if ($result[1] == 'Color') {
 							// Replace the "color" field for "colors"
@@ -608,7 +608,7 @@ class mapModule extends GalleryModule {
 					}
 				}
 
-				// copy markers to the module directory (we don't care if that fails)
+				// copy markers to the module directory (we do not care if that fails)
 
 				/**
 				 * @todo The substr() method is fragile. Change to use
@@ -750,7 +750,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[2])) {
 							$tempcoord = explode(',', $result[2]);
@@ -798,7 +798,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							if ($result[4] == 'G_MAP_TYPE') {
@@ -855,7 +855,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$tempcoord = explode(',', $result[4]);
@@ -902,7 +902,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$tempcoord = explode(',', $result[4]);
@@ -950,7 +950,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$result[4] = 17 - $result[4];
@@ -997,7 +997,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$result[4] = 17 - $result[4];
@@ -1044,7 +1044,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							$result[4] = 17 - $result[4];
@@ -1091,7 +1091,7 @@ class mapModule extends GalleryModule {
 				list($ret, $results) = $gallery->search($query, array(), array());
 
 				if ($results->resultCount() > 0) {
-					// Verify that it isn't empty
+					// Verify that it is not empty
 					while ($result = $results->nextResult()) {
 						if (!empty($result[4])) {
 							// we do have some filters, start the upgrade

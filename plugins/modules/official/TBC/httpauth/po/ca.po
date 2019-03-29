@@ -70,7 +70,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Gallery can't access HTTP usernames and passwords.  You can still use your web server's "
+"Gallery cannot access HTTP usernames and passwords.  You can still use your web server's "
 "authentication.  Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"We can't fall back on passing HTTP usernames and passwords to Gallery because the URL "
+"We cannot fall back on passing HTTP usernames and passwords to Gallery because the URL "
 "rewrite module is disabled.  You should activate the URL rewrite module in the %sSite Admin "
 "Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  Troubleshooting "
 "documentation is in the %sGallery Codex%s."
@@ -90,7 +90,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"PHP Path Info rewrite doesn't support the rule to fall back on passing HTTP usernames and "
+"PHP Path Info rewrite does not support the rule to fall back on passing HTTP usernames and "
 "passwords to Gallery.  You should uninstall and reinstall the URL rewrite module in the %"
 "sSite Admin Plugins option%s and choose either Apache mod_rewrite or ISAPI_Rewrite.  "
 "Troubleshooting documentation is in the %sGallery Codex%s."
@@ -111,7 +111,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Gallery can't access HTTP usernames and passwords and automated checks failed to find a "
+"Gallery cannot access HTTP usernames and passwords and automated checks failed to find a "
 "cause.  Troubleshooting documentation is in the %sGallery Codex%s."
 msgstr ""
 
@@ -123,7 +123,7 @@ msgstr ""
 
 msgid ""
 "Gallery will prompt you to login with HTTP authentication when permission is denied.  HTTP "
-"authentication sends your client a realm to which your username belongs.  It's safe to leave "
+"authentication sends your client a realm to which your username belongs.  It is safe to leave "
 "the realm blank."
 msgstr ""
 
@@ -187,5 +187,5 @@ msgid "Reset"
 msgstr "Reiniciar"
 
 #, c-format
-msgid "If you're not automatically redirected, %sclick here to finish logging out%s."
+msgid "If you are not automatically redirected, %sclick here to finish logging out%s."
 msgstr ""

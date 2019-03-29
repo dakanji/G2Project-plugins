@@ -69,7 +69,7 @@
   <h3> {g->text text="Feed name"} </h3>
 {if ($EditFeed.mode == 'edit')}
   <p class="giDescription">
-    {g->text text="You can't change the name of the feed"}
+    {g->text text="You cannot change the name of the feed"}
   </p>
 
   <table class="gbDataTable">
@@ -135,7 +135,7 @@
         {g->text text="Items in this album"}
       </label>
     {if !$param.allowPhotos}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
     </td>
   </tr><tr valign="top">
@@ -148,7 +148,7 @@
         {g->text text="Sub-albums of this album"}
       </label>
     {if !$param.allowAlbums}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
     </td>
   </tr><tr valign="top">
@@ -161,7 +161,7 @@
         {g->text text="Items in this album and its subalbums"}
       </label>
     {if !$param.allowPhotosRecursive}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
       <br/>
       <label for="EditFeed_typePhotosRecursiveLimit">
@@ -188,7 +188,7 @@
         {g->text text="Comments for this album"}
       </label>
     {if !$param.allowCommentsAlbum}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
     </td>
   </tr><tr valign="top">
@@ -201,7 +201,7 @@
         {g->text text="Comments for this album and its subalbums"}
       </label>
     {if !$param.allowCommentsRecursive}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
     </td>
   </tr><tr valign="top">
@@ -214,7 +214,7 @@
         {g->text text="Random pictures inside this album"}
       </label>
     {if !$param.allowPhotosRandom}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
     </td>
   </tr><tr valign="top">
@@ -227,7 +227,7 @@
         {g->text text="Random pictures inside this album and its subalbums"}
       </label>
     {if !$param.allowPhotosRandomRecursive}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
     </td>
   </tr>
@@ -241,7 +241,7 @@
         {g->text text="Comments for this item"}
       </label>
     {if !$param.allowCommentsPhoto}
-      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users won't be able to view them."}
+      <br/>{g->text text="Feeds of this type are disallowed by the administrator. Users would not be able to view them."}
     {/if}
     </td>
   </tr>

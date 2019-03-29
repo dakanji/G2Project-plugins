@@ -44,7 +44,7 @@ msgstr "Administradors de la Web"
 msgid "Show Email Addresses"
 msgstr "Mostrar la direcci&oacute; d'e-mail"
 
-msgid "Don't Show Email Addresses"
+msgid "Do not Show Email Addresses"
 msgstr "No mostrar l'e-mail"
 
 msgid "Member Items"

@@ -5,7 +5,7 @@ gettext("Everybody")
 gettext("Registered Users")
 gettext("Site Admins")
 gettext("Show Email Addresses")
-gettext("Don't Show Email Addresses")
+gettext("Do not Show Email Addresses")
 
 /* MembersItems.inc */
 gettext("Member Items")

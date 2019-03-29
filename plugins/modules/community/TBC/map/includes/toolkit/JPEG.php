@@ -81,7 +81,7 @@ function get_jpeg_header_data($filename) {
 
 	// Check that the first two characters are 0xFF 0xDA  (SOI - Start of image)
 	if ($data != "\xFF\xD8") {
-		// No SOI (FF D8) at start of file - This probably isn't a JPEG file - close file and return;
+		// No SOI (FF D8) at start of file - This probably is not a JPEG file - close file and return;
 		fclose($filehnd);
 
 		return false;
@@ -106,9 +106,9 @@ function get_jpeg_header_data($filename) {
 	//                                       3) or end of file is hit
 	while (($data[1] != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd))) {
 		// Found a segment to look at.
-		// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
+		// Check that the segment marker is not a Restart marker - restart markers do not have size or data after them
 		if ((ord($data[1]) < 0xD0) || (ord($data[1]) > 0xD7)) {
-			// Segment isn't a Restart marker
+			// Segment is not a Restart marker
 			// Read the next two bytes (size)
 			$sizestr = network_safe_fread($filehnd, 2);
 
@@ -198,7 +198,7 @@ function put_jpeg_header_data($old_filename, $new_filename, $jpeg_header_data) {
 
 	// Check if the extraction worked
 	if (($compressed_image_data === false) || ($compressed_image_data === null)) {
-		// Couldn't get image data from old file
+		// Could not get image data from old file
 		return false;
 	}
 
@@ -283,7 +283,7 @@ function get_jpeg_Comment($jpeg_header_data) {
 
 	// Check if a COM segment has been found
 	if ($i < count($jpeg_header_data)) {
-		// A COM segment was found, return it's contents
+		// A COM segment was found, return it is contents
 		return $jpeg_header_data[$i]['SegData'];
 	}
 
@@ -432,7 +432,7 @@ function get_jpeg_intrinsic_values($jpeg_header_data) {
 			);
 		}
 	} else {
-		// Couldn't find Start Of Frame segment, hence can't retrieve info
+		// Could not find Start Of Frame segment, hence cannot retrieve info
 		return false;
 	}
 
@@ -538,9 +538,9 @@ function get_jpeg_image_data($filename) {
 	//                                       3) or end of file is hit
 	while (($data[1] != "\xD9") && (!$hit_compressed_image_data) && (!feof($filehnd))) {
 		// Found a segment to look at.
-		// Check that the segment marker is not a Restart marker - restart markers don't have size or data after them
+		// Check that the segment marker is not a Restart marker - restart markers do not have size or data after them
 		if ((ord($data[1]) < 0xD0) || (ord($data[1]) > 0xD7)) {
-			// Segment isn't a Restart marker
+			// Segment is not a Restart marker
 			// Read the next two bytes (size)
 			$sizestr = network_safe_fread($filehnd, 2);
 
@@ -557,8 +557,8 @@ function get_jpeg_image_data($filename) {
 			$hit_compressed_image_data = true;
 
 			// read the rest of the file in
-			// Can't use the filesize function to work out
-			// how much to read, as it won't work for files being read by http or ftp
+			// Cannot use the filesize function to work out
+			// how much to read, as it would not work for files being read by http or ftp
 			// So instead read 1Mb at a time till EOF
 			$compressed_data = '';
 
@@ -649,7 +649,7 @@ function Generate_JPEG_APP_Segment_HTML($jpeg_header_data) {
 				$seg_name = 'HP segment full of "HHHHH"';
 			}
 
-			// Clean the segment name so it doesn't cause problems with HTML
+			// Clean the segment name so it does not cause problems with HTML
 			$seg_name = htmlentities($seg_name);
 
 			// Output a Table row containing this APP segment

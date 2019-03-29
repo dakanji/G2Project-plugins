@@ -134,7 +134,7 @@ class AlbumTimestampModule extends GalleryModule {
 			&& $eventName == 'GalleryEntity::save'
 			&& $isNew
 		) {
-			/* it's a new album
+			/* it is a new album
 			set the albumTimestampMode according to newAlbumTimestampMode
 			   no inheritance here - only set the mode if the parent album has an explicit setting */
 			list($ret, $newAlbumMode) = AlbumTimestampHelper::getItemParam(

@@ -181,11 +181,11 @@ Theme settings
             {/if}            
             <td>
                 <select name="{g->formVar var="form[ThumbBarPos]"}" value="{$form.MapWindowType}">
-                  <option value="0">{g->text text="Hide" hint="Don't display"}</option>
+                  <option value="0">{g->text text="Hide" hint="Do not display"}</option>
                   <option value="1" {if $form.ThumbBarPos eq 1}selected{/if}>{g->text text="Top" hint="Opposite of bottom"}</option>
                   <option value="2" {if $form.ThumbBarPos eq 2}selected{/if}>{g->text text="Bottom" hint="Opposite of top"}</option>
                   <option value="3" {if $form.ThumbBarPos eq 3}selected{/if}>{g->text text="Right" hint="Opposite of left"}</option>
-                  {*<option value="4" {if $form.ThumbBarPos eq 4}selected{/if}>{g->text text="Left" hint="Opposite of right"}</option> Ain't working right*}
+                  {*<option value="4" {if $form.ThumbBarPos eq 4}selected{/if}>{g->text text="Left" hint="Opposite of right"}</option> Ai not working right*}
                 </select>
             </td>
         </tr>

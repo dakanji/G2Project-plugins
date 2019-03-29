@@ -8,7 +8,7 @@
   <h2> {g->text text="Import from Coppermine"} </h2>
 
   <p class="giDescription">
-    {g->text text="Copy all or part of an existing Coppermine installation into your Gallery 2.  It won't modify your Coppermine data in any way."}
+    {g->text text="Copy all or part of an existing Coppermine installation into your Gallery 2.  It would not modify your Coppermine data in any way."}
   </p>
 </div>
 
@@ -17,7 +17,7 @@
   {capture name="url"}
     {g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminModules"}
   {/capture}
-  {g->text text="You don't have any Graphics Toolkit activated to handle JPEG images.  If you import now, you will not have any thumbnails.  Visit the <a href=\"%s\">Modules</a> page to activate a Graphics Toolkit." arg1=$smarty.capture.url}
+  {g->text text="You do not have any Graphics Toolkit activated to handle JPEG images.  If you import now, you will not have any thumbnails.  Visit the <a href=\"%s\">Modules</a> page to activate a Graphics Toolkit." arg1=$smarty.capture.url}
 </p></div>
 {/if}
 

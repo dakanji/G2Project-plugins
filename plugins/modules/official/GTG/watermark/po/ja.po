@@ -131,7 +131,7 @@ msgstr "ステップ 3.  どの画像に透かしを入れたいか選択して�
 msgid "You must choose something to watermark!"
 msgstr "透かしを入れるものを何か選択しなければなりません"
 
-msgid "Full size (won't damage the original file)"
+msgid "Full size (would not damage the original file)"
 msgstr "完全なサイズ (元の画像は破壊しません)"
 
 msgid "Resizes"
@@ -217,7 +217,7 @@ msgstr "位置"
 
 msgid ""
 "Place your watermark on the canvas below in the location where you'd like it to appear when "
-"you watermark newly uploaded photos.  You'll be able to edit individual photos to move the "
+"you watermark newly uploaded photos.  You will be able to edit individual photos to move the "
 "watermark later on, if you choose."
 msgstr ""
 "透かしを、下のカンバスの適用したい場所に置いてください。後で個々の画像の透かしの位置を変更す"
