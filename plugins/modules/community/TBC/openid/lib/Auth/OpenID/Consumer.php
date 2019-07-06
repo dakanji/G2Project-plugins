@@ -1136,9 +1136,8 @@ class Auth_OpenID_GenericConsumer {
 		}
 
 		if ($to_match->claimed_id === null) {
-			// This is a response without identifiers, so there's
-			// really no checking that we can do, so return an
-			// endpoint that is for the specified `openid.op_endpoint'
+			// This is a response without identifiers, so there is no checking that can be done.
+			// So return an endpoint that is for the specified `openid.op_endpoint'
 			return Auth_OpenID_ServiceEndpoint::fromOPEndpointURL($to_match->server_url);
 		}
 
