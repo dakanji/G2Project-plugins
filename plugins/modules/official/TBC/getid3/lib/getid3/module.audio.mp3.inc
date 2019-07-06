@@ -1585,9 +1585,8 @@ class getid3_mp3 extends getid3_handler {
 					$FirstFrameAVDataOffset = $avdataoffset + $SynchSeekOffset;
 
 					if (!$this->decodeMPEGaudioHeader($FirstFrameAVDataOffset, $FirstFrameThisfileInfo, false)) {
-						// if this is the first valid MPEG-audio frame, save it in case it is a VBR header frame
-						// and there is garbage between this frame and a valid sequence of MPEG-audio frames
-						// to be restored below
+						// if this is the first valid MPEG-audio frame, save it in case it is a VBR header frame and there's
+						// garbage between this frame and a valid sequence of MPEG-audio frames, to be restored below
 						unset($FirstFrameThisfileInfo);
 					}
 				}
